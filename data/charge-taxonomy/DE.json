@@ -1,0 +1,1635 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "11 Del. C. § 4177",
+    "statute_title": "Driving Under the Influence",
+    "offense_class": "Unclassified Misdemeanor (first-third); Class E Felony (fourth); Class D Felony (fifth); Class C Felony (sixth); Class B Felony (seventh+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (first); 18 months (second); 2 years (third); 5 years (fourth); 8 years (fifth); 15 years (sixth); 25 years (seventh+)",
+    "fine_max": "$1,500 (first); $2,500 (second); $5,000 (third); $7,000 (fourth); $10,000 (fifth); $10,000 (sixth); $10,000 (seventh+)",
+    "elements": [
+      "Defendant drove a vehicle",
+      "While under the influence of alcohol",
+      "Or while under the influence of any drug",
+      "Or with an alcohol concentration of .08 or more"
+    ],
+    "mandatory_minimum": "No mandatory minimum (first); 60 days (second); 3 months (third); 6 months (fourth); 1 year (fifth); 18 months (sixth); 30 months (seventh+)",
+    "enhancements": [
+      "BAC .15 or higher (enhanced penalties)",
+      "BAC .20 or higher (further enhanced penalties)",
+      "Child under 17 in vehicle (additional charge under § 11-1102)",
+      "Fourth or subsequent offense (felony)",
+      "Prior vehicular homicide"
+    ],
+    "notes": "Delaware's DUI statute escalates dramatically with repeat offenses. Fourth offense is a Class E Felony. Lookback period is lifetime. Ignition interlock required for most offenses. Zero tolerance (.02) for drivers under 21."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "11 Del. C. § 4177(d)(1)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Unclassified Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months",
+    "fine_max": "$1,500",
+    "elements": [
+      "Defendant drove a vehicle while under the influence or with BAC .08+",
+      "No prior DUI convictions"
+    ],
+    "mandatory_minimum": "No mandatory jail time; completion of course of instruction and rehabilitation; 12-month license revocation",
+    "enhancements": [
+      "BAC .15-.199 (enhanced fine and minimum 30-day license revocation period)",
+      "BAC .20+ (further enhanced fine)"
+    ],
+    "notes": "First offense may qualify for first offender election under § 4177(g), which allows reduced penalties and potential expungement after 5 years. Ignition interlock device may be ordered."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "11 Del. C. § 4177(d)",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Unclassified Misdemeanor (second/third); Class E Felony (fourth); Class D Felony (fifth); Class C Felony (sixth); Class B Felony (seventh+)",
+    "penalty_min": "60 days (second); 3 months (third); 6 months (fourth); 1 year (fifth); 18 months (sixth); 30 months (seventh+)",
+    "penalty_max": "18 months (second); 2 years (third); 5 years (fourth); 8 years (fifth); 15 years (sixth); 25 years (seventh+)",
+    "fine_max": "$2,500 (second); $5,000 (third); $7,000 (fourth); $10,000 (fifth+)",
+    "elements": [
+      "Defendant drove a vehicle while under the influence or with BAC .08+",
+      "One or more prior DUI convictions"
+    ],
+    "mandatory_minimum": "60 days (second); 3 months (third); 6 months (fourth); 1 year (fifth); 18 months (sixth); 30 months (seventh+)",
+    "enhancements": [
+      "BAC .15 or higher",
+      "BAC .20 or higher",
+      "Child in vehicle"
+    ],
+    "notes": "Lifetime lookback period — all prior DUI convictions count regardless of when they occurred. Fourth DUI is a felony. Mandatory minimums cannot be suspended."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "11 Del. C. § 4177(a)(3)-(5)",
+    "statute_title": "DUI — Drug Impairment",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant drove a vehicle",
+      "While under the influence of any drug",
+      "Or under the combined influence of alcohol and any drug",
+      "Or while the person has within the person's blood any amount of an illicit or recreational drug or substance"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs"
+    ],
+    "notes": "Delaware has a per se drugged driving provision — any amount of illicit substance in blood is sufficient. No impairment showing needed for illicit drugs."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "11 Del. C. § 4175",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Unclassified Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$300 (first); $600 (second+)",
+    "elements": [
+      "Defendant drove a vehicle",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common plea-down from DUI. Second or subsequent offense carries enhanced fine."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "11 Del. C. § 4202",
+    "statute_title": "Leaving the Scene of Accident Resulting in Injury or Death",
+    "offense_class": "Class E Felony (injury); Class D Felony (serious physical injury); Class C Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "5 years (injury); 8 years (serious injury); 15 years (death)",
+    "fine_max": "$5,000 (injury); $8,000 (serious injury); $10,000 (death)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury, serious injury, or death",
+      "Defendant failed to stop and provide information and render assistance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (Class C Felony)",
+      "Serious physical injury"
+    ],
+    "notes": "Property damage only hit-and-run is an unclassified misdemeanor under § 4201. Injury/death escalates to felony."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "11 Del. C. § 630A",
+    "statute_title": "Vehicular Homicide in the First Degree (DUI-related)",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "25 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant operated a vehicle while under the influence of alcohol or drugs",
+      "Caused the death of another person",
+      "The DUI was a proximate cause of the death"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Prior DUI convictions"
+    ],
+    "notes": "First-degree vehicular homicide applies to DUI-related deaths. Class B Felony with 2-year mandatory minimum. Second degree (§ 630) covers reckless or negligent vehicular deaths (Class E Felony)."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "11 Del. C. § 630",
+    "statute_title": "Vehicular Homicide in the Second Degree",
+    "offense_class": "Class E Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant operated a vehicle",
+      "With criminal negligence caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers non-DUI vehicular deaths caused by criminal negligence. Class E Felony."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "11 Del. C. § 2756",
+    "statute_title": "Driving While License Suspended or Revoked",
+    "offense_class": "Unclassified Misdemeanor (first/second); Class A Misdemeanor (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first/second); 1 year (third+)",
+    "fine_max": "$1,000 (first); $2,000 (second); $4,000 (third+)",
+    "elements": [
+      "Defendant drove a motor vehicle on a public road",
+      "Defendant's license was suspended or revoked",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": "30 days (if DUI-related suspension, second offense); 60 days (DUI-related, third+)",
+    "enhancements": [
+      "DUI-related suspension (enhanced mandatory minimum)",
+      "Third or subsequent offense (Class A Misdemeanor)"
+    ],
+    "notes": "Driving on a DUI-related suspension carries mandatory minimum jail time. Third offense is upgraded to Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "11 Del. C. § 4178",
+    "statute_title": "Disregarding a Police Officer's Signal",
+    "offense_class": "Class A Misdemeanor (basic); Class E Felony (if creating a risk of death or injury)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A Misdemeanor); 5 years (Class E Felony)",
+    "fine_max": "$2,300 (Class A Misdemeanor); $5,000 (Class E Felony)",
+    "elements": [
+      "Defendant was operating a motor vehicle",
+      "A police officer gave a signal to stop",
+      "Defendant willfully failed to stop or fled"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Creating a risk of death or injury to any person (Class E Felony)",
+      "Death results"
+    ],
+    "notes": "Basic violation is Class A Misdemeanor. Creating risk of death or injury elevates to Class E Felony."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "16 Del. C. § 4763",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Unclassified Misdemeanor (Schedule I-V, personal use quantity)",
+    "penalty_min": null,
+    "penalty_max": "1 year (most substances); 3 months (marijuana under 1 oz.)",
+    "fine_max": "$2,300 (most); $575 (marijuana under 1 oz.)",
+    "elements": [
+      "Defendant knowingly possessed a controlled substance",
+      "Substance is listed in Delaware Uniform Controlled Substances Act",
+      "Possession was without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school, park, or church (§ 4767, enhanced penalties)",
+      "Prior convictions"
+    ],
+    "notes": "Delaware reformed drug possession in 2015. Simple possession of personal use quantities is a misdemeanor for all schedules. Marijuana under 1 oz. was decriminalized to a civil fine in 2015."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "16 Del. C. § 4764",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Civil violation (under 1 oz.); Unclassified Misdemeanor (1-175g); Class B Felony (175g+)",
+    "penalty_min": null,
+    "penalty_max": "Civil fine (under 1 oz.); 3 months (1-175g); 5 years (175g+)",
+    "fine_max": "$100 (under 1 oz., 21+); $200 (under 1 oz., under 21); $575 (1-175g)",
+    "elements": [
+      "Defendant possessed marijuana",
+      "In excess of legal personal use quantity or without authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Over 175g (Tier 1 quantity, trafficking)",
+      "Near a school, park, or church"
+    ],
+    "notes": "Delaware legalized recreational marijuana for adults 21+ in 2023 (HB 1). Possession of up to 1 oz. is legal. Over 1 oz. but under 175g is a misdemeanor. Over 175g may be charged as trafficking."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "16 Del. C. § 4763(a)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Unclassified Misdemeanor (personal use); Class E Felony (Tier 1 quantity)",
+    "penalty_min": null,
+    "penalty_max": "1 year (personal use); 5 years (Tier 1)",
+    "fine_max": "$2,300 (personal use); $10,000 (Tier 1)",
+    "elements": [
+      "Defendant possessed cocaine",
+      "Cocaine is a Schedule II controlled substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Tier 1 quantity (5-50g) — Class E Felony",
+      "Near a school, park, or church"
+    ],
+    "notes": "Personal use quantity is a misdemeanor. Tier quantities trigger trafficking charges under § 4753A."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "16 Del. C. § 4763(a)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Unclassified Misdemeanor (personal use); Class E Felony (Tier 1 quantity)",
+    "penalty_min": null,
+    "penalty_max": "1 year (personal use); 5 years (Tier 1)",
+    "fine_max": "$2,300 (personal use); $10,000 (Tier 1)",
+    "elements": [
+      "Defendant possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Tier 1 quantity (5-50g) — Class E Felony",
+      "Near a school, park, or church",
+      "Presence of manufacturing equipment"
+    ],
+    "notes": "Same tier system as cocaine. Manufacturing carries separate, harsher penalties."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "16 Del. C. § 4753A",
+    "statute_title": "Drug Dealing — Aggravated Possession (Tier Quantities)",
+    "offense_class": "Class E Felony (Tier 1); Class D Felony (Tier 2); Class C Felony (Tier 3); Class B Felony (Tier 4); Class A Felony (Tier 5)",
+    "penalty_min": "Varies by tier",
+    "penalty_max": "5 years (Tier 1); 8 years (Tier 2); 15 years (Tier 3); 25 years (Tier 4); Life (Tier 5)",
+    "fine_max": "$10,000-$400,000 (varies by tier)",
+    "elements": [
+      "Defendant knowingly manufactured, delivered, or possessed with intent to deliver",
+      "A controlled substance in a quantity meeting tier thresholds"
+    ],
+    "mandatory_minimum": "Mandatory minimums vary by tier and substance",
+    "enhancements": [
+      "Higher tier quantities",
+      "Near a school, park, or church",
+      "Use of a minor"
+    ],
+    "notes": "Delaware uses a 5-tier system for drug dealing/trafficking based on weight. Tier 5 is a Class A Felony. Cocaine: Tier 1=5-50g, Tier 2=50-100g, Tier 3=100-500g, Tier 4=500g-2.5kg, Tier 5=2.5kg+."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "16 Del. C. § 4751",
+    "statute_title": "Delivery of a Controlled Substance",
+    "offense_class": "Class E Felony (most); Class D Felony (narcotic Schedule I/II); Class F Felony (Schedule III-V)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class E); 8 years (Class D); 3 years (Class F)",
+    "fine_max": "$10,000 (Class E); $10,000 (Class D); $5,000 (Class F)",
+    "elements": [
+      "Defendant delivered or sold a controlled substance",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery to a minor (§ 4761, enhanced penalty)",
+      "Delivery near a school, park, or church (§ 4767)"
+    ],
+    "notes": "Delaware uses 'delivery' and 'dealing.' Delivery to a minor or near protected areas carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "16 Del. C. § 4752",
+    "statute_title": "Manufacturing a Controlled Substance",
+    "offense_class": "Class D Felony (most); Class C Felony (meth manufacturing)",
+    "penalty_min": null,
+    "penalty_max": "8 years (Class D); 15 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant manufactured, created, or produced a controlled substance",
+      "Or possessed precursors with intent to manufacture",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing methamphetamine (Class C Felony)",
+      "Child present during manufacturing",
+      "Manufacturing near a school"
+    ],
+    "notes": "Manufacturing meth is enhanced to Class C Felony. Separate provisions for clandestine lab cleanup costs."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "16 Del. C. § 4771",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Unclassified Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,300",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With intent to use it for a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor (Class F Felony)"
+    ],
+    "notes": "Possession is an unclassified misdemeanor. Delivery to a minor is a Class F Felony. Cannabis paraphernalia is legal for adults 21+ following legalization."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "16 Del. C. § 4751",
+    "statute_title": "Possession with Intent to Deliver",
+    "offense_class": "Class E Felony (most); Class D Felony (narcotic Schedule I/II)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class E); 8 years (Class D)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With the intent to deliver",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near a school, park, or church (§ 4767)",
+      "Delivery to a minor",
+      "Prior drug felony conviction"
+    ],
+    "notes": "Intent can be inferred from quantity, packaging, scales, cash, and other circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "11 Del. C. § 636",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "Life without parole (or death if aggravating circumstances, though Delaware's death penalty is unconstitutional per Rauf v. State)",
+    "penalty_max": "Life without possibility of parole",
+    "fine_max": "$46,000",
+    "elements": [
+      "Defendant intentionally caused the death of another person",
+      "After a period of premeditation and deliberation",
+      "Or while engaged in the commission of certain felonies (felony murder)"
+    ],
+    "mandatory_minimum": "Life imprisonment without possibility of parole",
+    "enhancements": [
+      "Felony murder (during arson, kidnapping, rape, robbery, burglary, escape)",
+      "Murder of law enforcement officer",
+      "Murder for hire"
+    ],
+    "notes": "Delaware's death penalty was ruled unconstitutional by the Delaware Supreme Court in Rauf v. State (2016). Maximum sentence is now life without parole."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "11 Del. C. § 635",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "15 years",
+    "penalty_max": "Life (natural life possible)",
+    "fine_max": "$46,000",
+    "elements": [
+      "Defendant recklessly caused the death of another person",
+      "Under circumstances manifesting a cruel, wicked, and depraved indifference to human life"
+    ],
+    "mandatory_minimum": "15 years",
+    "enhancements": [],
+    "notes": "Second-degree murder covers depraved-heart killings and intentional killings without premeditation. 15-year mandatory minimum."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "11 Del. C. § 632",
+    "statute_title": "Manslaughter",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$11,500",
+    "elements": [
+      "Defendant recklessly caused the death of another person",
+      "Or intentionally caused the death under circumstances that do not constitute murder due to extreme emotional distress for which there was a reasonable explanation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Delaware's manslaughter statute covers reckless killings and heat-of-passion killings with extreme emotional distress as a mitigating factor."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "11 Del. C. § 631",
+    "statute_title": "Criminally Negligent Homicide",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "8 years",
+    "fine_max": "$6,900",
+    "elements": [
+      "Defendant caused the death of another person",
+      "With criminal negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminally negligent homicide is a Class D Felony. Lower culpability than manslaughter."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "11 Del. C. § 613",
+    "statute_title": "Assault in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "25 years",
+    "fine_max": "$46,000",
+    "elements": [
+      "Defendant intentionally caused serious physical injury to another person",
+      "By means of a deadly weapon or dangerous instrument",
+      "Or recklessly caused serious physical injury under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Against law enforcement (§ 612A)",
+      "Use of a firearm"
+    ],
+    "notes": "First-degree assault is a Class B Felony with a 2-year mandatory minimum. Assault on law enforcement carries additional mandatory minimums."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "11 Del. C. § 611",
+    "statute_title": "Assault in the Third Degree",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,300",
+    "elements": [
+      "Defendant intentionally or recklessly caused physical injury to another person",
+      "Or with criminal negligence caused physical injury by means of a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Third-degree assault is the base assault offense. Second degree (§ 612) is Class D Felony."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "11 Del. C. § 601",
+    "statute_title": "Offensive Touching",
+    "offense_class": "Unclassified Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$575",
+    "elements": [
+      "Defendant intentionally touched another person",
+      "Either with a member of the defendant's body or with any instrument",
+      "Knowing that the person would reasonably regard the contact as offensive or provocative"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Delaware has 'offensive touching' as a separate lesser offense below assault. Covers what many states call simple battery."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "11 Del. C. § 831",
+    "statute_title": "Robbery in the Second Degree",
+    "offense_class": "Class E Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$11,500",
+    "elements": [
+      "Defendant committed a theft",
+      "Defendant used or threatened the immediate use of force upon another person",
+      "For the purpose of preventing resistance to the taking or retaining"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second-degree robbery is the base offense. First degree (§ 832) involves a deadly weapon, serious injury, or display of what appears to be a deadly weapon (Class B Felony)."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "11 Del. C. § 832",
+    "statute_title": "Robbery in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "25 years",
+    "fine_max": "$46,000",
+    "elements": [
+      "Defendant committed a robbery",
+      "While armed with a deadly weapon or dangerous instrument",
+      "Or threatened use of a deadly weapon or dangerous instrument",
+      "Or caused physical injury to non-participant"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Use of a firearm (mandatory additional time)",
+      "Serious physical injury"
+    ],
+    "notes": "Class B Felony with 2-year mandatory minimum. First-degree robbery is a violent felony under Delaware law."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "11 Del. C. § 783A",
+    "statute_title": "Kidnapping in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "15 years",
+    "penalty_max": "Life",
+    "fine_max": "$46,000",
+    "elements": [
+      "Defendant unlawfully restrained another person",
+      "With intent to hold for ransom, use as a shield or hostage, facilitate a felony, inflict physical injury, terrorize, or interfere with governmental function"
+    ],
+    "mandatory_minimum": "15 years",
+    "enhancements": [
+      "Victim is under 18",
+      "Ransom demanded",
+      "Victim sexually assaulted"
+    ],
+    "notes": "First-degree kidnapping is a Class A Felony with 15-year mandatory minimum. Second degree (§ 783) is a Class C Felony."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "11 Del. C. § 803",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "25 years",
+    "fine_max": "$46,000",
+    "elements": [
+      "Defendant intentionally damaged a building",
+      "By starting a fire or causing an explosion",
+      "When another person whose presence was reasonably foreseeable was present"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death or serious injury results",
+      "Firefighter or emergency responder injured"
+    ],
+    "notes": "First-degree arson requires person present. Second degree (§ 802, Class D Felony) covers buildings. Third degree (§ 801, Class E Felony) covers property."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "11 Del. C. § 531 / § 636",
+    "statute_title": "Attempted Murder in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$46,000",
+    "elements": [
+      "Defendant intended to cause the death of another person",
+      "Defendant engaged in conduct constituting a substantial step toward the commission of murder"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim is a law enforcement officer"
+    ],
+    "notes": "Attempt to commit a Class A Felony is a Class B Felony. One of the most serious attempt charges."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "11 Del. C. § 613(a)(1)",
+    "statute_title": "Assault in the First Degree — With Deadly Weapon",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "25 years",
+    "fine_max": "$46,000",
+    "elements": [
+      "Defendant intentionally caused serious physical injury to another",
+      "By means of a deadly weapon or dangerous instrument"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Use of a firearm",
+      "Victim is law enforcement"
+    ],
+    "notes": "Class B Felony with 2-year mandatory minimum. Deadly weapon defined broadly."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "11 Del. C. § 841",
+    "statute_title": "Theft",
+    "offense_class": "Class F Felony ($1,500+); Class G Felony ($1,000-$1,500); Class A Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class F); 2 years (Class G); 1 year (Class A Misd.)",
+    "fine_max": "$6,900 (Class F); $4,600 (Class G); $2,300 (Class A Misd.)",
+    "elements": [
+      "Defendant took, exercised control over, or obtained the property of another person",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft of a firearm (automatic felony)",
+      "Prior theft convictions"
+    ],
+    "notes": "Delaware uses 'theft' as the general statute. Thresholds: $1,500+ = Class F Felony, $1,000-$1,500 = Class G Felony, under $1,000 = Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "11 Del. C. § 841(b)",
+    "statute_title": "Theft — Felony (over $1,500)",
+    "offense_class": "Class F Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$6,900",
+    "elements": [
+      "Defendant took or exercised control over property",
+      "Value exceeds $1,500",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Property is a firearm",
+      "Prior theft convictions"
+    ],
+    "notes": "Delaware's felony theft threshold is $1,500. Uses 'theft' terminology rather than 'grand theft.'"
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "11 Del. C. § 841(c)",
+    "statute_title": "Theft — Misdemeanor (under $1,000)",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,300",
+    "elements": [
+      "Defendant took or exercised control over property",
+      "Value is under $1,000",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft convictions"
+    ],
+    "notes": "Under $1,000 is Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "11 Del. C. § 840",
+    "statute_title": "Shoplifting",
+    "offense_class": "Class A Misdemeanor (under $1,000); Class G Felony ($1,000-$1,500); Class F Felony ($1,500+)",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value tier",
+    "fine_max": "Same as theft by value tier",
+    "elements": [
+      "Defendant concealed or took possession of merchandise",
+      "Of a retail establishment",
+      "With intent to deprive the merchant of value without paying"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized retail theft",
+      "Use of booster devices"
+    ],
+    "notes": "Delaware has a specific shoplifting statute. Penalties follow the theft value tiers."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "11 Del. C. § 826",
+    "statute_title": "Burglary in the Third Degree",
+    "offense_class": "Class F Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$6,900",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully",
+      "In a building",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Third degree is the base burglary. Second degree (§ 825, Class D Felony) covers dwelling entry. First degree (§ 826, Class C Felony) covers dwelling with weapon, injury, or at night."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "11 Del. C. § 826A",
+    "statute_title": "Burglary in the First Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$11,500",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully in a dwelling",
+      "With intent to commit a crime therein",
+      "And was armed with a deadly weapon, caused injury, or used or threatened force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with a deadly weapon",
+      "Causes physical injury"
+    ],
+    "notes": "First-degree burglary requires entry into a dwelling with aggravating circumstances. Class C Felony."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "11 Del. C. § 841",
+    "statute_title": "Theft — Motor Vehicle",
+    "offense_class": "Class F Felony (most vehicles); Class G Felony (under $1,500 value)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class F); 2 years (Class G)",
+    "fine_max": "$6,900 (Class F); $4,600 (Class G)",
+    "elements": [
+      "Defendant took or exercised control over a motor vehicle",
+      "Without authorization and with intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "No separate motor vehicle theft statute. Charged as theft based on vehicle value."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "11 Del. C. § 851",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Same as theft based on value tier",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value tier",
+    "fine_max": "Same as theft by value tier",
+    "elements": [
+      "Defendant received, retained, or disposed of stolen property",
+      "Knowing that it was stolen or believing it was probably stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Same value-tier classification as theft."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "11 Del. C. § 811",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class D Felony ($5,000+); Class G Felony ($1,000-$5,000); Class A Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "8 years (Class D); 2 years (Class G); 1 year (Class A Misd.)",
+    "fine_max": "$6,900 (Class D); $4,600 (Class G); $2,300 (Class A Misd.)",
+    "elements": [
+      "Defendant intentionally or recklessly damaged the property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to religious property"
+    ],
+    "notes": "Delaware uses 'criminal mischief.' Degree based on damage amount."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "11 Del. C. § 821",
+    "statute_title": "Criminal Trespass in the First Degree",
+    "offense_class": "Class A Misdemeanor (first degree, dwelling); Class B Misdemeanor (second degree, building); Unclassified Misdemeanor (third degree, premises)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first degree); 6 months (second degree); 30 days (third degree)",
+    "fine_max": "$2,300 (first); $1,150 (second); $575 (third)",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully",
+      "In a dwelling, building, or upon premises of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Three degrees. First degree (dwelling) is Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "11 Del. C. § 811",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class D Felony ($5,000+)",
+    "penalty_min": null,
+    "penalty_max": "8 years",
+    "fine_max": "$6,900",
+    "elements": [
+      "Defendant intentionally damaged property of another",
+      "Damage exceeds $5,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage by means of explosive",
+      "Damage to utility or communication property"
+    ],
+    "notes": "Over $5,000 damage. Lesser amounts are Class G Felony or misdemeanor."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "11 Del. C. § 1041",
+    "statute_title": "Domestic Violence — Offensive Touching or Assault",
+    "offense_class": "Depends on underlying offense (offensive touching through first-degree assault)",
+    "penalty_min": null,
+    "penalty_max": "Depends on underlying offense",
+    "fine_max": "Depends on underlying offense",
+    "elements": [
+      "Defendant committed an act constituting a crime against a family member, former spouse, cohabitant, or dating partner",
+      "As defined in 10 Del. C. § 1041"
+    ],
+    "mandatory_minimum": "Mandatory arrest; mandatory no-contact order",
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Serious physical injury",
+      "Strangulation (§ 607A, Class D Felony)",
+      "Prior domestic violence convictions"
+    ],
+    "notes": "Delaware addresses domestic violence through the general criminal statutes with domestic relationship designation. Mandatory arrest provisions apply. Protection from Abuse orders available under 10 Del. C. § 1041."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "11 Del. C. § 613 / § 612 / § 611",
+    "statute_title": "Assault — Domestic Context",
+    "offense_class": "Class B Felony (first degree); Class D Felony (second degree); Class A Misdemeanor (third degree)",
+    "penalty_min": null,
+    "penalty_max": "25 years (first); 8 years (second); 1 year (third)",
+    "fine_max": "Varies by degree",
+    "elements": [
+      "Defendant caused physical injury to a family or household member",
+      "With the intent level required for the applicable degree of assault"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Strangulation (§ 607A, Class D Felony)",
+      "Prior domestic violence convictions"
+    ],
+    "notes": "Domestic battery charged as assault of the applicable degree. Strangulation of a household member is a separate Class D Felony."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "11 Del. C. § 1102",
+    "statute_title": "Endangering the Welfare of a Child",
+    "offense_class": "Class E Felony (knowing/intentional); Class A Misdemeanor (reckless/negligent)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class E); 1 year (Class A Misd.)",
+    "fine_max": "$11,500 (Class E); $2,300 (Class A Misd.)",
+    "elements": [
+      "Defendant knowingly acted in a manner likely to be injurious to the physical, mental, or moral welfare of a child",
+      "Child is under 18 years of age"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI with child in vehicle",
+      "Drug exposure"
+    ],
+    "notes": "Broadly applied. Includes DUI with a child in the vehicle. Knowing/intentional endangerment is Class E Felony; reckless/negligent is Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "11 Del. C. § 1103",
+    "statute_title": "Abuse of a Child",
+    "offense_class": "Class D Felony (physical injury); Class B Felony (serious physical injury)",
+    "penalty_min": null,
+    "penalty_max": "8 years (Class D); 25 years (Class B)",
+    "fine_max": "$6,900 (Class D); $46,000 (Class B)",
+    "elements": [
+      "Defendant intentionally or recklessly caused physical injury to a child",
+      "Child is under 18 years of age",
+      "Defendant is responsible for the care, custody, or control of the child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (Class B Felony)",
+      "Pattern of abuse"
+    ],
+    "notes": "Mandatory reporting requirements apply. Serious physical injury elevates to Class B Felony."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "11 Del. C. § 1112A",
+    "statute_title": "Violation of a Protective Order",
+    "offense_class": "Class A Misdemeanor (first); Class G Felony (second); Class F Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 2 years (second); 3 years (third+)",
+    "fine_max": "$2,300 (first); $4,600 (second); $6,900 (third+)",
+    "elements": [
+      "A valid protection from abuse order was in effect",
+      "Defendant had notice of the order",
+      "Defendant knowingly violated a condition of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second violation (Class G Felony)",
+      "Third or subsequent (Class F Felony)"
+    ],
+    "notes": "Escalating penalties with each subsequent violation. Mandatory arrest upon violation."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "11 Del. C. § 1312A",
+    "statute_title": "Stalking",
+    "offense_class": "Class G Felony (basic); Class F Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "2 years (Class G); 3 years (Class F)",
+    "fine_max": "$4,600 (Class G); $6,900 (Class F)",
+    "elements": [
+      "Defendant knowingly engaged in a course of conduct directed at a specific person",
+      "That would cause a reasonable person to fear physical injury or death",
+      "Or suffer other significant emotional distress"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation of court order (aggravated, Class F Felony)",
+      "Prior stalking conviction"
+    ],
+    "notes": "Stalking is always a felony in Delaware. Aggravated stalking (in violation of a court order) is Class F Felony."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "11 Del. C. § 1311",
+    "statute_title": "Harassment",
+    "offense_class": "Unclassified Misdemeanor (basic); Class A Misdemeanor (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "30 days (basic); 1 year (aggravated)",
+    "fine_max": "$575 (basic); $2,300 (aggravated)",
+    "elements": [
+      "Defendant with intent to harass, annoy, or alarm another person",
+      "Struck, shoved, kicked, or otherwise subjected another to physical contact",
+      "Or used obscene language or made an obscene gesture in a public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Aggravated harassment (§ 1311A) involves repeated acts or credible threats."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "11 Del. C. § 1105",
+    "statute_title": "Abuse, Neglect, or Exploitation of an Adult Who Is Impaired or Infirm",
+    "offense_class": "Class F Felony (abuse/neglect); Class D Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class F); 8 years (Class D)",
+    "fine_max": "$6,900 (Class F); $6,900 (Class D)",
+    "elements": [
+      "Defendant abused, neglected, or exploited an impaired or infirm adult",
+      "Defendant had a caretaker relationship",
+      "Person is elderly or otherwise unable to protect their own interests"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (aggravated, Class D Felony)",
+      "Financial exploitation"
+    ],
+    "notes": "Mandatory reporting under 31 Del. C. § 3910. Includes physical, emotional, and financial abuse."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "11 Del. C. § 1448",
+    "statute_title": "Possession of a Deadly Weapon by a Person Prohibited",
+    "offense_class": "Class F Felony (basic); Class D Felony (violent felony prior)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class F); 8 years (Class D)",
+    "fine_max": "$6,900 (Class F); $6,900 (Class D)",
+    "elements": [
+      "Defendant possessed a deadly weapon",
+      "Defendant was a convicted felon, juvenile delinquent, or otherwise prohibited person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior violent felony (Class D Felony)"
+    ],
+    "notes": "Delaware requires a concealed carry permit for handguns. Prohibited persons include felons, those committed to mental institutions, and domestic violence misdemeanants."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "11 Del. C. § 1448(a)",
+    "statute_title": "Possession of a Firearm by a Convicted Felon",
+    "offense_class": "Class F Felony (non-violent prior); Class D Felony (violent felony prior)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class F); 8 years (Class D)",
+    "fine_max": "$6,900",
+    "elements": [
+      "Defendant possessed a firearm or destructive weapon",
+      "Defendant had been previously convicted of a felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Applies to all convicted felons. Prior violent felony elevates from Class F to Class D."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "11 Del. C. § 1442",
+    "statute_title": "Carrying a Concealed Deadly Weapon Without a License",
+    "offense_class": "Class G Felony (first); Class D Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "2 years (Class G); 8 years (Class D)",
+    "fine_max": "$4,600 (Class G); $6,900 (Class D)",
+    "elements": [
+      "Defendant carried a concealed deadly weapon",
+      "Without a valid Delaware concealed carry license"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Delaware requires a concealed carry license. First offense is Class G Felony. Subsequent offenses are Class D Felony."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "11 Del. C. § 1338",
+    "statute_title": "Reckless Endangering — Discharge of Firearm",
+    "offense_class": "Class D Felony (first degree); Class A Misdemeanor (second degree)",
+    "penalty_min": null,
+    "penalty_max": "8 years (first degree); 1 year (second degree)",
+    "fine_max": "$6,900 (first degree); $2,300 (second degree)",
+    "elements": [
+      "Defendant recklessly engaged in conduct creating a substantial risk of death or serious physical injury",
+      "By discharging a firearm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Discharge into an occupied dwelling (first degree)",
+      "Injury or death results"
+    ],
+    "notes": "Reckless endangering in the first degree (§ 604) is a Class D Felony. Second degree (§ 603) covers lesser reckless conduct."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "11 Del. C. § 854",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class D Felony (over $1,000); Class F Felony ($500-$1,000); Class G Felony ($250-$500); Class A Misdemeanor (under $250)",
+    "penalty_min": null,
+    "penalty_max": "8 years (Class D); 3 years (Class F); 2 years (Class G); 1 year (Class A Misd.)",
+    "fine_max": "Varies by class",
+    "elements": [
+      "Defendant knowingly obtained, produced, possessed, used, or transferred identifying information of another person",
+      "Without authorization",
+      "With intent to obtain benefit, credit, or other item of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly",
+      "Multiple victims"
+    ],
+    "notes": "Degree based on value obtained. Mandatory restitution."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "11 Del. C. § 841",
+    "statute_title": "Theft — By Embezzlement",
+    "offense_class": "Same as theft by degree based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value tier",
+    "fine_max": "Same as theft by value tier",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant knowingly took or exercised unauthorized control over the property",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public employee or fiduciary",
+      "Value exceeds $5,000"
+    ],
+    "notes": "Charged under the general theft statute. Embezzlement is a theory of theft."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "11 Del. C. § 861",
+    "statute_title": "Forgery",
+    "offense_class": "Class E Felony (first degree — government/financial); Class G Felony (second degree — deeds/wills); Class A Misdemeanor (third degree)",
+    "penalty_min": null,
+    "penalty_max": "5 years (first degree); 2 years (second degree); 1 year (third degree)",
+    "fine_max": "$11,500 (first degree); $4,600 (second degree); $2,300 (third degree)",
+    "elements": [
+      "Defendant with intent to defraud, deceive, or injure",
+      "Falsely made, completed, or altered a written instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Three degrees based on type of document. First degree covers government and financial instruments."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "11 Del. C. § 864",
+    "statute_title": "Criminal Possession of Forged Instrument",
+    "offense_class": "Same class as forgery degree",
+    "penalty_min": null,
+    "penalty_max": "Same as forgery by degree",
+    "fine_max": "Same as forgery by degree",
+    "elements": [
+      "Defendant possessed a forged instrument",
+      "Knowing it to be forged",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Counterfeiting of currency is primarily federal. State charges cover forged documents."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "11 Del. C. § 900",
+    "statute_title": "Issuing a Bad Check",
+    "offense_class": "Same as theft by value tier",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value tier",
+    "fine_max": "Same as theft by value tier",
+    "elements": [
+      "Defendant issued a check or other payment order",
+      "Knowing there were insufficient funds",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Classified by amount using the same value tiers as theft."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "11 Del. C. § 913",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class E Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$11,500",
+    "elements": [
+      "Defendant knowingly and with intent to defraud",
+      "Presented or caused to be presented a false or fraudulent claim",
+      "To an insurance company"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized fraud scheme"
+    ],
+    "notes": "Class E Felony. Mandatory restitution. Investigation by the Delaware Insurance Commissioner."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "11 Del. C. § 903",
+    "statute_title": "Unlawful Use of a Credit Card",
+    "offense_class": "Class G Felony (over $500); Class A Misdemeanor (under $500)",
+    "penalty_min": null,
+    "penalty_max": "2 years (Class G); 1 year (Class A Misd.)",
+    "fine_max": "$4,600 (Class G); $2,300 (Class A Misd.)",
+    "elements": [
+      "Defendant used a credit card or debit card",
+      "Knowing it was stolen, forged, revoked, or canceled",
+      "To obtain goods, services, or anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple cards used",
+      "Total fraud exceeding $1,500"
+    ],
+    "notes": "Delaware has specific credit card fraud provisions. Value threshold determines misdemeanor vs. felony."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "11 Del. C. § 1471",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "8 years",
+    "fine_max": "$100,000 or twice the value of the property",
+    "elements": [
+      "Defendant conducted or attempted to conduct a financial transaction",
+      "Involving proceeds of specified unlawful activity",
+      "With knowledge that the property represents proceeds of unlawful activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Class D Felony. Fine may be twice the value of the property involved."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "11 Del. C. § 843",
+    "statute_title": "Theft by False Pretense",
+    "offense_class": "Same as theft by degree based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value tier",
+    "fine_max": "Same as theft by value tier",
+    "elements": [
+      "Defendant obtained property by creating or confirming a false impression",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly",
+      "Fraud against government entity"
+    ],
+    "notes": "Fraud charged as theft by false pretense under the general theft statute."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "11 Del. C. § 769",
+    "statute_title": "Unlawful Sexual Contact in the Second Degree",
+    "offense_class": "Class G Felony (second degree); Class F Felony (first degree)",
+    "penalty_min": null,
+    "penalty_max": "2 years (second degree); 3 years (first degree)",
+    "fine_max": "$4,600 (second degree); $6,900 (first degree)",
+    "elements": [
+      "Defendant had sexual contact with another person",
+      "Without the victim's consent",
+      "Or the victim was incapable of consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or coercion (first degree, § 769A)",
+      "Defendant in position of trust or authority"
+    ],
+    "notes": "Delaware uses 'unlawful sexual contact' for non-penetration offenses. Rape statute covers penetration offenses."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "11 Del. C. § 773",
+    "statute_title": "Rape in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "15 years",
+    "penalty_max": "Life",
+    "fine_max": "$46,000",
+    "elements": [
+      "Defendant intentionally engaged in sexual intercourse with another person",
+      "Without the victim's consent",
+      "By use of force or threat"
+    ],
+    "mandatory_minimum": "15 years",
+    "enhancements": [
+      "Victim under 12",
+      "Use of a deadly weapon",
+      "Serious physical injury"
+    ],
+    "notes": "First-degree rape has a 15-year mandatory minimum. Four degrees of rape. Sex offender registration required. No statute of limitations."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "11 Del. C. § 764",
+    "statute_title": "Indecent Exposure in the Second Degree",
+    "offense_class": "Class B Misdemeanor (second degree); Class A Misdemeanor (first degree)",
+    "penalty_min": null,
+    "penalty_max": "6 months (second degree); 1 year (first degree)",
+    "fine_max": "$1,150 (second degree); $2,300 (first degree)",
+    "elements": [
+      "Defendant exposed their genitals or buttocks or her breasts",
+      "To a person who was not a member of the defendant's household",
+      "Under circumstances in which the defendant knew the conduct was likely to cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure to a child under 16 (first degree, § 765)"
+    ],
+    "notes": "Second degree is general indecent exposure. First degree involves exposure to a child under 16."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "11 Del. C. § 1342",
+    "statute_title": "Prostitution",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second+)",
+    "fine_max": "$1,150 (first); $2,300 (second+)",
+    "elements": [
+      "Defendant engaged in or offered to engage in sexual conduct",
+      "In exchange for a fee"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Patronizing a minor for prostitution (enhanced felony charges)"
+    ],
+    "notes": "Both the person offering and the patron can be charged. Patronizing a prostitute is a separate offense."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "11 Del. C. § 1111",
+    "statute_title": "Sexual Exploitation of a Child",
+    "offense_class": "Class B Felony (production); Class D Felony (distribution); Class F Felony (possession)",
+    "penalty_min": "2 years (production); mandatory registration",
+    "penalty_max": "25 years (production); 8 years (distribution); 3 years (possession)",
+    "fine_max": "$46,000 (production); $6,900 (distribution/possession)",
+    "elements": [
+      "Defendant knowingly possessed, distributed, or produced material depicting a child engaged in a prohibited sexual act",
+      "Defendant knew the character and content of the material"
+    ],
+    "mandatory_minimum": "2 years (production)",
+    "enhancements": [
+      "Production involving minors under 14",
+      "Distribution for commercial gain",
+      "Multiple victims"
+    ],
+    "notes": "Federal charges common. Sex offender registration required. Production carries 2-year mandatory minimum."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "11 Del. C. § 4120",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Class G Felony (first); Class E Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "2 years (Class G); 5 years (Class E)",
+    "fine_max": "$4,600 (Class G); $11,500 (Class E)",
+    "elements": [
+      "Defendant was required to register under the Sex Offender Registry",
+      "Defendant knowingly failed to register or update registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent failure (Class E Felony)"
+    ],
+    "notes": "Must register within 3 business days. Delaware has a tiered registration system."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "11 Del. C. § 770",
+    "statute_title": "Rape in the Fourth Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$11,500",
+    "elements": [
+      "Defendant intentionally engaged in sexual intercourse with another person",
+      "Victim was under 16 years of age",
+      "Defendant was 30 years of age or older"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Age of consent in Delaware is 18 (16 with close-in-age exception). Fourth-degree rape covers scenarios where defendant is significantly older. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "11 Del. C. § 1301",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Unclassified Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$575",
+    "elements": [
+      "Defendant intentionally caused public inconvenience, annoyance, or alarm",
+      "Or recklessly created a risk thereof",
+      "By engaging in fighting or violent behavior, making unreasonable noise, or using obscene language in public"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common add-on charge. Often paired with resisting arrest."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "11 Del. C. § 1257",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,300",
+    "elements": [
+      "Defendant intentionally prevented or attempted to prevent a law enforcement officer",
+      "From effecting a lawful arrest of the defendant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Physical injury to officer (additional assault charges)"
+    ],
+    "notes": "It is no defense that the arrest was unlawful. Physical resistance causing injury may lead to additional assault charges."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "11 Del. C. § 1244",
+    "statute_title": "Obstructing Justice",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,300",
+    "elements": [
+      "Defendant intentionally obstructed, impaired, or hindered",
+      "The administration of justice"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers interference with court proceedings, investigations, and law enforcement functions."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "11 Del. C. § 1271",
+    "statute_title": "Criminal Contempt",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year (or 6 months summary)",
+    "fine_max": "$2,300",
+    "elements": [
+      "Defendant willfully disobeyed a lawful order of the court",
+      "Or engaged in disruptive behavior in the courtroom",
+      "Or failed to appear as ordered"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminal contempt is punitive; civil contempt is coercive."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "11 Del. C. § 1326",
+    "statute_title": "Consumption of Alcohol on Public Streets",
+    "offense_class": "Violation (fine only)",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": "$100",
+    "elements": [
+      "Defendant consumed alcoholic beverages on a public street or sidewalk",
+      "Or appeared in public in an intoxicated condition"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Delaware treats public intoxication primarily as a civil/health matter. May be taken to a detoxification facility."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "11 Del. C. § 2113",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Class E Felony (felony case); Class A Misdemeanor (misdemeanor case)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony case); 1 year (misdemeanor case)",
+    "fine_max": "$11,500 (felony); $2,300 (misdemeanor)",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Required to appear at a specified time and place",
+      "Defendant knowingly failed to appear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Bench warrant issued. Bond forfeiture in addition to criminal charges."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "11 Del. C. § 1245",
+    "statute_title": "Falsely Reporting an Incident",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,300",
+    "elements": [
+      "Defendant reported false information to law enforcement",
+      "Knowing the information was false",
+      "Regarding a crime or emergency"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Class A Misdemeanor. False bomb threats or similar may be charged under separate terrorism-related statutes."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "11 Del. C. § 621",
+    "statute_title": "Terroristic Threatening",
+    "offense_class": "Class A Misdemeanor (basic); Class E Felony (threat to cause serious public inconvenience or evacuate a building)",
+    "penalty_min": null,
+    "penalty_max": "1 year (basic); 5 years (Class E Felony)",
+    "fine_max": "$2,300 (basic); $11,500 (Class E Felony)",
+    "elements": [
+      "Defendant threatened to commit any crime likely to result in death or serious physical injury",
+      "With intent to terrorize another person",
+      "Or to cause evacuation of a building, vehicle, or public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat to public building, school, or transportation (Class E Felony)"
+    ],
+    "notes": "Basic terroristic threatening is Class A Misdemeanor. Threats causing evacuations or targeting public buildings are Class E Felony."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "11 Del. C. § 1221",
+    "statute_title": "Perjury in the First Degree",
+    "offense_class": "Class D Felony (first degree); Class A Misdemeanor (second degree)",
+    "penalty_min": null,
+    "penalty_max": "8 years (first degree); 1 year (second degree)",
+    "fine_max": "$6,900 (first degree); $2,300 (second degree)",
+    "elements": [
+      "Defendant made a materially false statement under oath",
+      "In an official proceeding",
+      "Defendant did not believe the statement to be true"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree perjury in an official proceeding is a Class D Felony. Second degree (§ 1222) covers other sworn statements."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "11 Del. C. § 1201",
+    "statute_title": "Bribery",
+    "offense_class": "Class E Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$11,500",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer any benefit",
+      "Upon a public servant",
+      "With intent to influence the public servant's official action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the giver and receiver can be charged."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "11 Del. C. § 1253",
+    "statute_title": "Escape in the Second Degree",
+    "offense_class": "Class E Felony (second degree); Class D Felony (first degree, with force)",
+    "penalty_min": null,
+    "penalty_max": "5 years (second degree); 8 years (first degree)",
+    "fine_max": "$11,500 (second degree); $6,900 (first degree)",
+    "elements": [
+      "Defendant escaped from custody or detention",
+      "Defendant was in lawful custody"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or weapon (first degree, § 1252)",
+      "Escape from maximum security"
+    ],
+    "notes": "First degree involves force or a weapon. Second degree is escape without force. Third degree (§ 1254) covers absconding from community supervision."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "11 Del. C. § 1325",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Class A Misdemeanor (basic); Class F Felony (aggravated, torture/killing)",
+    "penalty_min": null,
+    "penalty_max": "1 year (basic); 3 years (aggravated)",
+    "fine_max": "$2,300 (basic); $6,900 (aggravated)",
+    "elements": [
+      "Defendant intentionally or recklessly subjected any animal to cruel mistreatment",
+      "Or cruelly killed or attempted to kill any animal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated cruelty (torture, mutilation) — Class F Felony",
+      "Animal fighting (§ 1326, Class E Felony)"
+    ],
+    "notes": "Basic cruelty is Class A Misdemeanor. Aggravated cruelty is Class F Felony. Animal fighting is Class E Felony."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "11 Del. C. § 4334",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining suspended sentence on underlying offense",
+    "fine_max": "Remaining fine on underlying offense",
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation",
+      "Absconding from supervision"
+    ],
+    "notes": "Court may revoke, modify, or continue probation. Graduated sanctions program for technical violations."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "11 Del. C. § 4352",
+    "statute_title": "Violation of Parole / Conditional Release",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole or supervised custody",
+      "Defendant violated a condition of release",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New felony while on parole",
+      "Absconding"
+    ],
+    "notes": "Delaware Board of Parole makes revocation decisions."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "11 Del. C. § 271",
+    "statute_title": "Liability for Conduct of Another — Complicity",
+    "offense_class": "Same as principal offense",
+    "penalty_min": "Same as principal offense",
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant aided, counseled, agreed to aid, or attempted to aid another person",
+      "In planning or committing an offense",
+      "With the intent required for the commission of the offense"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "A person is legally accountable for conduct of another when they are an accomplice. Punished to same extent as principal."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "11 Del. C. § 531",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One class below the attempted offense; attempt of Class A Felony = Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "Varies — one class below the attempted offense",
+    "fine_max": "Varies by class",
+    "elements": [
+      "Defendant intentionally engaged in conduct constituting a substantial step",
+      "Toward the commission of an offense",
+      "With the kind of culpability otherwise required for the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt reduces the offense by one class. Attempt to commit a Class A Felony is a Class B Felony."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "11 Del. C. § 512",
+    "statute_title": "Conspiracy",
+    "offense_class": "One class below the target offense",
+    "penalty_min": null,
+    "penalty_max": "Varies — one class below the target offense",
+    "fine_max": "Varies by class",
+    "elements": [
+      "Defendant agreed with one or more persons to engage in or cause conduct constituting a crime",
+      "Any party to the agreement committed an overt act in furtherance",
+      "With the intent to promote or facilitate the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy is one class below the target offense. Requires an overt act. Renunciation is a defense."
+  }
+]

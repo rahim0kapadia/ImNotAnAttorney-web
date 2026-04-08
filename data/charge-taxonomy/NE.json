@@ -1,0 +1,1741 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Neb. Rev. Stat. § 60-6,196",
+    "statute_title": "Driving Under the Influence of Alcoholic Liquor or Drug",
+    "offense_class": "Class W Misdemeanor (first/second); Class W Felony (third); Class IIA Felony (fourth+)",
+    "penalty_min": null,
+    "penalty_max": "60 days (first); 6 months (second); 3 years (third); 20 years (fourth+)",
+    "fine_max": "$500 (first); $500 (second); $10,000 (third); $25,000 (fourth+)",
+    "elements": [
+      "Defendant operated or had actual physical control of a motor vehicle",
+      "While under the influence of alcoholic liquor or any drug",
+      "Or had a BAC of .08 or higher within two hours of driving",
+      "On any highway or anywhere throughout the state"
+    ],
+    "mandatory_minimum": "7 days (first); 30 days (second); 90 days (third); 2 years (fourth+)",
+    "enhancements": [
+      "BAC .15 or higher (aggravated first offense)",
+      "Refusal of chemical test (enhanced license revocation)",
+      "Third offense within 15 years (Class W Felony)",
+      "Fourth or subsequent (Class IIA Felony)"
+    ],
+    "notes": "Nebraska uses a 15-year lookback period for prior offenses. Implied consent under § 60-6,197. Ignition interlock required for most offenses. Administrative license revocation is separate from criminal penalties."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Neb. Rev. Stat. § 60-6,196(2)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Class W Misdemeanor",
+    "penalty_min": "7 days",
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant operated or had actual physical control of a motor vehicle",
+      "While under the influence of alcohol or drugs",
+      "BAC .08 or higher, or impaired ability to operate",
+      "No prior DUI convictions within 15 years"
+    ],
+    "mandatory_minimum": "7 days imprisonment; 6-month license revocation",
+    "enhancements": [
+      "BAC .15 or higher (aggravated first offense — enhanced penalties)",
+      "Refusal of chemical test"
+    ],
+    "notes": "Court may impose 6 months probation in lieu of 7-day mandatory minimum. Ignition interlock device may be required. BAC .15+ is an aggravated first offense with longer revocation."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Neb. Rev. Stat. § 60-6,196(3)-(5)",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Class W Misdemeanor (second); Class W Felony (third); Class IIA Felony (fourth+)",
+    "penalty_min": "30 days (second); 90 days (third); 2 years (fourth+)",
+    "penalty_max": "6 months (second); 3 years (third); 20 years (fourth+)",
+    "fine_max": "$500 (second); $10,000 (third); $25,000 (fourth+)",
+    "elements": [
+      "Defendant operated or had actual physical control of a motor vehicle",
+      "While under the influence of alcohol or drugs",
+      "BAC .08 or higher, or impaired ability to operate",
+      "One or more prior DUI convictions within 15 years"
+    ],
+    "mandatory_minimum": "30 days (second); 90 days (third, cannot be suspended); 2 years (fourth+, cannot be suspended)",
+    "enhancements": [
+      "BAC .15 or higher",
+      "Refusal of chemical test",
+      "Accident causing injury"
+    ],
+    "notes": "Second offense: 18-month license revocation. Third: 15-year revocation. Fourth+: 15-year revocation. Ignition interlock required for all repeat offenders. Mandatory substance abuse evaluation."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Neb. Rev. Stat. § 60-6,196(1)(b)",
+    "statute_title": "DUI — Drugs",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant operated or had actual physical control of a motor vehicle",
+      "While under the influence of any drug",
+      "To a degree that rendered the defendant incapable of safely driving",
+      "Or while under the combined influence of alcohol and any drug"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs",
+      "Controlled substance involved"
+    ],
+    "notes": "No per se drug limits in Nebraska. Prosecution must prove actual impairment. Blood or urine testing may be used. Includes prescription medications that impair driving."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Neb. Rev. Stat. § 60-6,213",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Class III Misdemeanor (first); Class II Misdemeanor (second); Class I Misdemeanor (third+)",
+    "penalty_min": null,
+    "penalty_max": "3 months (first); 6 months (second); 1 year (third+)",
+    "fine_max": "$500 (first); $1,000 (second); $1,000 (third+)",
+    "elements": [
+      "Defendant drove a motor vehicle",
+      "In such a manner as to indicate an indifferent or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (Class II Misdemeanor)",
+      "Third or subsequent (Class I Misdemeanor)"
+    ],
+    "notes": "Common plea-down from DUI. Willful reckless driving under § 60-6,214 carries enhanced penalties. License revocation may be imposed."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Neb. Rev. Stat. § 60-697",
+    "statute_title": "Accidents — Duty to Stop — Injury or Death",
+    "offense_class": "Class IIIA Felony (injury/death); Class II Misdemeanor (property damage under § 60-696)",
+    "penalty_min": null,
+    "penalty_max": "5 years (injury/death); 6 months (property damage)",
+    "fine_max": "$10,000 (injury/death); $1,000 (property damage)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to stop at the scene",
+      "Defendant failed to provide name, address, and registration information"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim",
+      "Serious bodily injury"
+    ],
+    "notes": "Leaving the scene involving injury or death is a Class IIIA Felony. Property damage only is a Class II Misdemeanor. Must also render reasonable assistance to injured persons."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Neb. Rev. Stat. § 28-306",
+    "statute_title": "Motor Vehicle Homicide",
+    "offense_class": "Class I Misdemeanor (negligence); Class IIA Felony (DUI involved); Class IIIA Felony (reckless operation)",
+    "penalty_min": null,
+    "penalty_max": "1 year (negligent); 20 years (DUI involved); 5 years (reckless)",
+    "fine_max": "$1,000 (negligent); $25,000 (DUI); $10,000 (reckless)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "In a manner constituting negligence, reckless operation, or while DUI",
+      "Proximately caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI involved (Class IIA Felony)",
+      "Reckless driving (Class IIIA Felony)",
+      "Prior DUI convictions"
+    ],
+    "notes": "Nebraska has three levels of motor vehicle homicide based on culpability. DUI-related vehicular homicide carries the most severe penalties."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Neb. Rev. Stat. § 28-306(3)",
+    "statute_title": "Motor Vehicle Homicide — Criminal Negligence",
+    "offense_class": "Class I Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "In a criminally negligent manner",
+      "Proximately causing the death of another person",
+      "Not involving DUI or reckless operation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Lowest level of motor vehicle homicide. Requires proof of criminal negligence — more than ordinary negligence but less than recklessness."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Neb. Rev. Stat. § 60-4,108",
+    "statute_title": "Driving During Suspension or Revocation",
+    "offense_class": "Class III Misdemeanor (first); Class II Misdemeanor (second); Class I Misdemeanor (third+)",
+    "penalty_min": null,
+    "penalty_max": "3 months (first); 6 months (second); 1 year (third+)",
+    "fine_max": "$500 (first); $1,000 (second); $1,000 (third+)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While defendant's operator's license was suspended, revoked, or impounded",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense",
+      "Third or subsequent offense",
+      "Driving during DUI-related revocation"
+    ],
+    "notes": "Additional 1-year extension of revocation period. Driving during a DUI-related revocation may result in additional criminal charges."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Neb. Rev. Stat. § 28-905",
+    "statute_title": "Obstructing a Peace Officer — Flight",
+    "offense_class": "Class I Misdemeanor (basic); Class IV Felony (willful reckless driving during flight)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "A peace officer attempted to make a lawful stop",
+      "Defendant willfully fled to avoid arrest or citation",
+      "Officer was in uniform or operating a marked vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Willful reckless driving during flight (Class IV Felony under § 28-905(1)(b))",
+      "Resulting in serious bodily injury or death",
+      "High-speed pursuit"
+    ],
+    "notes": "Basic flight is a Class I Misdemeanor. If defendant drives recklessly during the flight, it becomes a Class IV Felony. Death resulting may be charged as motor vehicle homicide."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Neb. Rev. Stat. § 28-416(3)",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Class IV Felony (most substances); Infraction/Misdemeanor (marijuana, small amounts)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class IV Felony)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "Substance is listed on Nebraska controlled substance schedules",
+      "Possession was without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school, playground, or youth center (enhanced penalty)",
+      "Prior drug conviction"
+    ],
+    "notes": "Nebraska classifies most controlled substance possession as a Class IV Felony. Marijuana has separate, lesser provisions. Drug court diversion may be available."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Neb. Rev. Stat. § 28-416(13)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Infraction (≤1 oz, first); Class IV Misdemeanor (≤1 oz, second); Class IIIA Misdemeanor (≤1 oz, third); Class IIIA Misdemeanor (1 oz–1 lb)",
+    "penalty_min": null,
+    "penalty_max": "Citation only (≤1 oz first); 5 days (≤1 oz second); 7 days (≤1 oz third); 7 days (1 oz–1 lb first)",
+    "fine_max": "$300 (≤1 oz first); $500 (≤1 oz second); $500 (≤1 oz third); $500 (1 oz–1 lb first)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed marijuana",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (increased classification)",
+      "Possession of more than 1 pound (felony)",
+      "Possession near a school"
+    ],
+    "notes": "Nebraska partially decriminalized small amounts of marijuana. First offense under 1 ounce is an infraction (no jail). Over 1 pound is a felony. Nebraska does not have legal recreational marijuana."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Neb. Rev. Stat. § 28-416(3)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Class IV Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed cocaine",
+      "Cocaine is a Schedule II controlled substance in Nebraska",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school or youth facility",
+      "Prior drug felony conviction"
+    ],
+    "notes": "No minimum quantity for possession charge. Larger quantities may support distribution or trafficking charges."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Neb. Rev. Stat. § 28-416(3)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Class IV Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school or youth facility",
+      "Prior drug felony conviction"
+    ],
+    "notes": "Methamphetamine is a high-priority enforcement target in Nebraska. Drug courts and treatment-based diversion are available in many jurisdictions."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Neb. Rev. Stat. § 28-416(1)",
+    "statute_title": "Distribution, Delivery, or Manufacturing of a Controlled Substance",
+    "offense_class": "Class II Felony (most substances); Class IIA Felony (marijuana ≤1 lb)",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years (Class II Felony); 20 years (Class IIA)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant manufactured, distributed, delivered, or dispensed a controlled substance",
+      "Or possessed with intent to distribute or deliver",
+      "The substance was a controlled substance under Nebraska law"
+    ],
+    "mandatory_minimum": "1 year (general); 3 years (to a minor or near school under § 28-416(2))",
+    "enhancements": [
+      "Distribution to a minor (3-year mandatory minimum)",
+      "Distribution near a school, playground, or youth center (§ 28-416(2))",
+      "Large quantities (enhanced felony class)",
+      "Second or subsequent offense"
+    ],
+    "notes": "Nebraska's trafficking penalties are among the nation's most severe. Distribution near schools or to minors carries a mandatory 3-year minimum. Exceptionally large quantities may trigger federal prosecution."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Neb. Rev. Stat. § 28-416(1)(a)",
+    "statute_title": "Distribution or Delivery of Controlled Substance",
+    "offense_class": "Class II Felony (Schedule I/II); Class IIA Felony (Schedule III); Class IIIA Felony (Schedule IV/V)",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years (Schedule I/II); 20 years (Schedule III); 5 years (Schedule IV/V)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant distributed, delivered, or dispensed a controlled substance",
+      "To another person",
+      "Knowingly or intentionally"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Distribution to a minor",
+      "Distribution near a school or youth facility",
+      "Prior felony drug conviction"
+    ],
+    "notes": "Penalty depends on the schedule of the controlled substance. Schedule I and II substances carry the most severe penalties."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Neb. Rev. Stat. § 28-416(1)(b)",
+    "statute_title": "Manufacturing a Controlled Substance",
+    "offense_class": "Class II Felony (most substances); Class III Felony (marijuana cultivation)",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant manufactured or attempted to manufacture a controlled substance",
+      "Including cultivating, producing, preparing, or compounding",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Manufacturing methamphetamine (enhanced penalties)",
+      "Endangering children during manufacturing",
+      "Manufacturing near a school"
+    ],
+    "notes": "Manufacturing methamphetamine carries the most severe penalties. Environmental cleanup liability may be imposed. Child endangerment charges may also apply."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Neb. Rev. Stat. § 28-441",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Infraction (first); Class IV Misdemeanor (second); Class IIIA Misdemeanor (third+)",
+    "penalty_min": null,
+    "penalty_max": "Citation (first); 5 days (second); 7 days (third+)",
+    "fine_max": "$100 (first); $500 (second); $500 (third+)",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With intent to use the paraphernalia to introduce a controlled substance into the body",
+      "Items as defined in § 28-439"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor (Class I Misdemeanor under § 28-442)",
+      "Second or subsequent offense"
+    ],
+    "notes": "First offense is an infraction with a fine only. Distribution of paraphernalia to a minor is a more serious offense."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Neb. Rev. Stat. § 28-416(1)(a)",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Class II Felony (Schedule I/II); Class IIA Felony (Schedule III); Class IIIA Felony (Schedule IV/V)",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years (Schedule I/II); 20 years (Schedule III); 5 years (Schedule IV/V)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "With intent to manufacture, distribute, or deliver",
+      "Intent inferred from quantity, packaging, scales, cash, or other evidence"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Large quantity",
+      "Prior drug felony conviction",
+      "Proximity to schools or youth facilities"
+    ],
+    "notes": "Intent to distribute is inferred from circumstances including quantity, packaging, presence of scales, large amounts of cash, and communications."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Neb. Rev. Stat. § 28-303",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Class IA Felony",
+    "penalty_min": "Life imprisonment",
+    "penalty_max": "Death",
+    "fine_max": null,
+    "elements": [
+      "Defendant purposely and with deliberate and premeditated malice killed another person",
+      "Or killed another person in the perpetration of or attempt to perpetrate certain felonies (felony murder)"
+    ],
+    "mandatory_minimum": "Life imprisonment",
+    "enhancements": [
+      "Aggravating circumstances for death penalty consideration",
+      "Multiple victims",
+      "Victim was a law enforcement officer",
+      "Murder for hire"
+    ],
+    "notes": "Nebraska has the death penalty but rarely imposes it. Lethal injection is the method. Life imprisonment means life without parole. Felony murder applies to killings during robbery, sexual assault, arson, kidnapping, and hijacking."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Neb. Rev. Stat. § 28-304",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Class IB Felony",
+    "penalty_min": "20 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of a person intentionally",
+      "But without premeditation"
+    ],
+    "mandatory_minimum": "20 years",
+    "enhancements": [
+      "Use of a firearm",
+      "Prior violent felony"
+    ],
+    "notes": "Second-degree murder requires intentional killing without the deliberation and premeditation required for first-degree murder."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Neb. Rev. Stat. § 28-305",
+    "statute_title": "Manslaughter",
+    "offense_class": "Class IIA Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally killed another person",
+      "Under a sudden quarrel or in the heat of passion",
+      "Caused by legally adequate provocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Nebraska's manslaughter statute covers what other states call voluntary manslaughter. The provocation must be of a nature that would provoke a reasonable person."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Neb. Rev. Stat. § 28-306(1)",
+    "statute_title": "Motor Vehicle Homicide / Negligent Manslaughter",
+    "offense_class": "Class I Misdemeanor (negligent); Class IV Felony (reckless)",
+    "penalty_min": null,
+    "penalty_max": "1 year (negligent); 5 years (reckless)",
+    "fine_max": "$1,000 (negligent); $10,000 (reckless)",
+    "elements": [
+      "Defendant unintentionally caused the death of another person",
+      "Through criminal negligence or recklessness",
+      "Without lawful justification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Nebraska does not have a standalone involuntary manslaughter statute. Non-vehicular negligent killings may be charged under manslaughter. Vehicular deaths are charged under motor vehicle homicide."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Neb. Rev. Stat. § 28-308",
+    "statute_title": "Assault in the First Degree",
+    "offense_class": "Class II Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally or knowingly caused serious bodily injury to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly or dangerous weapon (§ 28-309)",
+      "Against a peace officer, health care provider, or other protected person",
+      "Causing permanent disfigurement or disability"
+    ],
+    "notes": "First-degree assault is the most serious non-homicide offense against persons. Serious bodily injury means injury creating a substantial risk of death or causing permanent disfigurement."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Neb. Rev. Stat. § 28-310",
+    "statute_title": "Assault in the Third Degree",
+    "offense_class": "Class I Misdemeanor; Class IIIA Felony (third+ within 12 years)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly caused bodily injury to another person",
+      "Or threatened another in a menacing manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third offense within 12 years (Class IIIA Felony)",
+      "Against a protected person (officer, healthcare worker)"
+    ],
+    "notes": "Third-degree assault is Nebraska's basic assault offense. Threatening behavior without actual injury is also covered. Repeat offenses within 12 years become felonies."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "Neb. Rev. Stat. § 28-310",
+    "statute_title": "Assault in the Third Degree (Battery Equivalent)",
+    "offense_class": "Class I Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly caused bodily injury to another person",
+      "Through physical contact"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Nebraska does not have a separate battery statute. Offensive physical contact resulting in injury is prosecuted as third-degree assault."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Neb. Rev. Stat. § 28-324",
+    "statute_title": "Robbery",
+    "offense_class": "Class II Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant took property from the person or presence of another",
+      "By force, threat of force, or intimidation",
+      "With the intent to deprive the owner of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Serious bodily injury inflicted"
+    ],
+    "notes": "All robbery in Nebraska is a Class II Felony. The distinction between robbery grades is based on weapon use and injury, but the felony class remains the same."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Neb. Rev. Stat. § 28-324",
+    "statute_title": "Robbery — Armed (With Deadly Weapon)",
+    "offense_class": "Class II Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant took property from the person or presence of another",
+      "By force, threat of force, or intimidation",
+      "While armed with a deadly weapon"
+    ],
+    "mandatory_minimum": "Mandatory minimum firearm enhancement under § 28-1205",
+    "enhancements": [
+      "Use of a firearm (mandatory minimum enhancement under § 28-1205)",
+      "Serious bodily injury",
+      "Victim was elderly or disabled"
+    ],
+    "notes": "Nebraska does not have a separate armed robbery statute. Use of a deadly weapon during robbery triggers the mandatory firearm enhancement under § 28-1205."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Neb. Rev. Stat. § 28-313",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class IA Felony (not voluntarily released); Class II Felony (voluntarily released unharmed)",
+    "penalty_min": null,
+    "penalty_max": "Life (not released); 50 years (released unharmed)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant abducted another person without consent",
+      "With intent to hold for ransom, as a shield or hostage",
+      "Or to facilitate commission of a felony",
+      "Or to terrorize the victim or a third person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim not voluntarily released alive and unharmed (Class IA Felony — life)",
+      "Kidnapping a minor",
+      "Ransom demand"
+    ],
+    "notes": "Class IA Felony (life imprisonment) if victim is not voluntarily released alive and unharmed in a safe place. Voluntary release before prosecution reduces to Class II Felony."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Neb. Rev. Stat. § 28-502",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Class II Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally started a fire or caused an explosion",
+      "Placing another person in danger of death or serious bodily harm",
+      "Or damaging or destroying a building or occupied structure"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person inside the structure at the time",
+      "Death or serious injury results",
+      "Fire set for insurance purposes"
+    ],
+    "notes": "First-degree arson requires danger to human life. Second-degree arson (§ 28-503) covers intentional damage to buildings without human endangerment (Class III Felony). Third-degree arson (§ 28-504) covers other property (Class IV Felony)."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Neb. Rev. Stat. § 28-201 / § 28-303",
+    "statute_title": "Attempted Murder in the First Degree",
+    "offense_class": "Class II Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally engaged in conduct that constituted a substantial step",
+      "Toward the commission of first-degree murder",
+      "With the intent to kill another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim was a peace officer",
+      "Multiple victims"
+    ],
+    "notes": "Attempt to commit a Class IA or IB Felony is a Class II Felony under § 28-201. Attempted murder carries up to 50 years imprisonment."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Neb. Rev. Stat. § 28-309",
+    "statute_title": "Assault in the Second Degree",
+    "offense_class": "Class IIA Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally or knowingly caused bodily injury to another",
+      "With a dangerous instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury resulting",
+      "Against a peace officer or protected person",
+      "Use of a firearm"
+    ],
+    "notes": "Second-degree assault covers assaults with dangerous instruments. A dangerous instrument is any item that can cause death or serious bodily injury in the manner it is used."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Neb. Rev. Stat. § 28-511",
+    "statute_title": "Theft — Unlawful Taking",
+    "offense_class": "Class II Misdemeanor (<$500); Class I Misdemeanor ($500–$1,500); Class IV Felony ($1,500–$5,000); Class IIA Felony (>$5,000)",
+    "penalty_min": null,
+    "penalty_max": "6 months (<$500); 1 year ($500–$1,500); 5 years ($1,500–$5,000); 20 years (>$5,000)",
+    "fine_max": "$1,000 (<$500); $1,000 ($500–$1,500); $10,000 ($1,500–$5,000); $25,000 (>$5,000)",
+    "elements": [
+      "Defendant took or exercised control over movable property of another",
+      "With the intent to deprive the owner of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds determine felony classification",
+      "Theft from a person",
+      "Theft by deception"
+    ],
+    "notes": "Nebraska grades theft by value. Multiple thefts may be aggregated to reach felony thresholds under § 28-518."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Neb. Rev. Stat. § 28-518(4)-(5)",
+    "statute_title": "Theft — Felony ($1,500+)",
+    "offense_class": "Class IV Felony ($1,500–$5,000); Class IIA Felony (>$5,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years ($1,500–$5,000); 20 years (>$5,000)",
+    "fine_max": "$10,000 ($1,500–$5,000); $25,000 (>$5,000)",
+    "elements": [
+      "Defendant committed theft as defined in § 28-511 through § 28-515",
+      "Value of property was $1,500 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeds $5,000",
+      "Theft from a vulnerable adult"
+    ],
+    "notes": "Nebraska does not use the term 'grand theft.' Felony theft begins at $1,500. Values may be aggregated from a common scheme."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Neb. Rev. Stat. § 28-518(1)-(2)",
+    "statute_title": "Theft — Misdemeanor (<$1,500)",
+    "offense_class": "Class II Misdemeanor (<$500); Class I Misdemeanor ($500–$1,500)",
+    "penalty_min": null,
+    "penalty_max": "6 months (<$500); 1 year ($500–$1,500)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed theft as defined in § 28-511 through § 28-515",
+      "Value of property was less than $1,500"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Nebraska does not use the term 'petty theft.' Misdemeanor theft applies when value is under $1,500."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Neb. Rev. Stat. § 28-511.01",
+    "statute_title": "Shoplifting",
+    "offense_class": "Same grading as general theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant concealed merchandise of any store or retail establishment",
+      "With intent to deprive the merchant of the merchandise",
+      "Without paying the purchase price"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds (same as general theft)",
+      "Organized retail theft"
+    ],
+    "notes": "Shoplifting is a specific form of theft under Nebraska law. Civil recovery by merchants is also available. Penalty grading follows general theft value thresholds."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Neb. Rev. Stat. § 28-507",
+    "statute_title": "Burglary",
+    "offense_class": "Class IIA Felony (occupied dwelling); Class III Felony (unoccupied building)",
+    "penalty_min": null,
+    "penalty_max": "20 years (occupied dwelling); 4 years (unoccupied building)",
+    "fine_max": "$25,000 (occupied); $25,000 (unoccupied)",
+    "elements": [
+      "Defendant willfully, maliciously, and forcibly broke and entered",
+      "Any real estate or any improvement erected thereon",
+      "With intent to commit a felony, steal property, or commit any offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed during burglary",
+      "Nighttime entry",
+      "Persons present in the structure"
+    ],
+    "notes": "Nebraska distinguishes between burglary of a dwelling and other buildings. Burglary of an occupied dwelling is the most serious form."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Neb. Rev. Stat. § 28-507(1)",
+    "statute_title": "Burglary — Dwelling",
+    "offense_class": "Class IIA Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant willfully, maliciously, and forcibly broke and entered",
+      "A dwelling house or any structure appurtenant to a dwelling",
+      "With intent to commit a felony, steal, or commit any offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed during the burglary",
+      "Persons present in the dwelling",
+      "Nighttime entry"
+    ],
+    "notes": "Burglary of a dwelling is a Class IIA Felony regardless of whether anyone was home at the time."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Neb. Rev. Stat. § 28-511",
+    "statute_title": "Theft — Motor Vehicle",
+    "offense_class": "Class IV Felony (most vehicles); Class IIA Felony (high value)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class IV); 20 years (Class IIA)",
+    "fine_max": "$10,000 (Class IV); $25,000 (Class IIA)",
+    "elements": [
+      "Defendant took or exercised control over a motor vehicle of another",
+      "With intent to deprive the owner of the vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Vehicle value exceeds $5,000 (Class IIA Felony)",
+      "Carjacking (robbery charges apply)"
+    ],
+    "notes": "Motor vehicle theft is graded by vehicle value under general theft thresholds. Most vehicle thefts exceed the $1,500 felony threshold."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Neb. Rev. Stat. § 28-517",
+    "statute_title": "Theft — Receiving Stolen Property",
+    "offense_class": "Graded same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value of property",
+    "fine_max": "Same as theft by value of property",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing the property was stolen or believing it was probably stolen",
+      "With the intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds (same as general theft)",
+      "Pattern of receiving stolen property"
+    ],
+    "notes": "Graded as theft by value of the stolen property. Belief that property is probably stolen is sufficient — absolute knowledge not required."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Neb. Rev. Stat. § 28-519",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class III Misdemeanor (<$500); Class I Misdemeanor ($500–$1,500); Class IV Felony ($1,500–$5,000); Class III Felony (>$5,000)",
+    "penalty_min": null,
+    "penalty_max": "3 months (<$500); 1 year ($500–$1,500); 5 years ($1,500–$5,000); 4 years (>$5,000)",
+    "fine_max": "$500 (<$500); $1,000 ($500–$1,500); $10,000 ($1,500–$5,000); $25,000 (>$5,000)",
+    "elements": [
+      "Defendant intentionally or recklessly damaged property of another",
+      "Without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage exceeding value thresholds",
+      "Damage to public property or utilities"
+    ],
+    "notes": "Nebraska uses 'criminal mischief' for vandalism. Graded by the amount of damage. Restitution commonly ordered."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Neb. Rev. Stat. § 28-520",
+    "statute_title": "Criminal Trespass — First Degree",
+    "offense_class": "Class I Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly entered or secretly remained in a building or occupied structure",
+      "Knowing that entry or remaining was not licensed or privileged"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree trespass applies to buildings and occupied structures. Second-degree trespass (§ 28-521) applies to fenced or posted property (Class III Misdemeanor)."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Neb. Rev. Stat. § 28-519",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class III Misdemeanor to Class III Felony (graded by damage amount)",
+    "penalty_min": null,
+    "penalty_max": "Varies by damage amount (see vandalism entry)",
+    "fine_max": "Varies by damage amount",
+    "elements": [
+      "Defendant intentionally or recklessly damaged property of another",
+      "Or intentionally tampered with property so as to endanger persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to public utilities",
+      "Damage exceeding $5,000"
+    ],
+    "notes": "Same statute as vandalism. Criminal mischief includes tampering with utilities, transportation, and communication systems."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Neb. Rev. Stat. § 28-323",
+    "statute_title": "Domestic Assault — Third Degree",
+    "offense_class": "Class I Misdemeanor (first/second); Class IIIA Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (third+ felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant intentionally and knowingly caused bodily injury to a family or household member",
+      "Or threatened a family or household member in a menacing manner",
+      "Family or household member includes spouse, former spouse, person residing together, person with shared child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third offense within 12 years (Class IIIA Felony)",
+      "Use of a dangerous instrument (§ 28-323(2) — second degree, Class IIA Felony)",
+      "Serious bodily injury (§ 28-323(1) — first degree, Class II Felony)",
+      "Strangulation or suffocation"
+    ],
+    "notes": "Nebraska has three degrees of domestic assault. First degree (serious bodily injury) is a Class II Felony. Second degree (with dangerous instrument) is Class IIA Felony. Third degree is Class I Misdemeanor."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Neb. Rev. Stat. § 28-323(4)",
+    "statute_title": "Domestic Assault — Third Degree (First Offense)",
+    "offense_class": "Class I Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally and knowingly caused bodily injury to a family or household member",
+      "First or second offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a dangerous instrument (elevated to second degree)",
+      "Serious bodily injury (elevated to first degree)"
+    ],
+    "notes": "Court typically orders batterers' intervention program. Victims eligible for protection orders under § 42-924."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Neb. Rev. Stat. § 28-707",
+    "statute_title": "Child Abuse — Negligent Treatment",
+    "offense_class": "Class I Misdemeanor (negligent/no injury); Class IIIA Felony (injury); Class IIA Felony (serious injury); Class IB Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "1 year (no injury); 5 years (injury); 20 years (serious injury); Life (death)",
+    "fine_max": "$1,000 (misdemeanor); $10,000–$25,000 (felony grades)",
+    "elements": [
+      "Defendant, being a parent, guardian, or person having custody of a child",
+      "Knowingly, intentionally, or negligently caused or permitted the child to be",
+      "Placed in a situation that endangered the child's life or health"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in injury (Class IIIA Felony)",
+      "Serious bodily injury (Class IIA Felony)",
+      "Death (Class IB Felony — 20 years to life)"
+    ],
+    "notes": "Nebraska's child abuse statute covers a wide range of conduct from negligent treatment to intentional acts causing death. Grading depends on resulting harm."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Neb. Rev. Stat. § 28-707",
+    "statute_title": "Child Abuse",
+    "offense_class": "Class IIIA Felony (injury); Class IIA Felony (serious injury); Class IB Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "5 years (injury); 20 years (serious injury); Life (death)",
+    "fine_max": "$10,000 (injury); $25,000 (serious injury/death)",
+    "elements": [
+      "Defendant knowingly, intentionally, or negligently caused or permitted",
+      "A minor child to be cruelly confined, punished, neglected, or deprived of necessary care",
+      "Resulting in bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (Class IIA Felony)",
+      "Death of child (Class IB Felony)",
+      "Prior child abuse conviction"
+    ],
+    "notes": "Child abuse resulting in death carries 20 years to life. DHHS involvement typically accompanies criminal prosecution."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Neb. Rev. Stat. § 42-924.02",
+    "statute_title": "Violation of Protection Order",
+    "offense_class": "Class I Misdemeanor (first); Class IV Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (second+)",
+    "fine_max": "$1,000 (first); $10,000 (second+)",
+    "elements": [
+      "A valid protection order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant knowingly violated a provision of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent violation (Class IV Felony)",
+      "Violation involving assault or threat"
+    ],
+    "notes": "Second or subsequent violation within 12 years is a Class IV Felony. Law enforcement must arrest upon probable cause of violation."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Neb. Rev. Stat. § 28-311.03",
+    "statute_title": "Stalking",
+    "offense_class": "Class I Misdemeanor (first); Class IV Felony (second+ or with credible threat)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant willfully harassed another person or a family or household member of such person",
+      "With the intent to intimidate, threaten, or frighten",
+      "On two or more separate occasions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class IV Felony)",
+      "Credible threat of death or bodily injury",
+      "Violation of a protective order while stalking"
+    ],
+    "notes": "Stalking includes following, monitoring, surveillance, threatening, and communicating to the victim or about the victim. Includes cyberstalking."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Neb. Rev. Stat. § 28-311.02",
+    "statute_title": "Harassment",
+    "offense_class": "Class III Misdemeanor (first); Class I Misdemeanor (second+)",
+    "penalty_min": null,
+    "penalty_max": "3 months (first); 1 year (second+)",
+    "fine_max": "$500 (first); $1,000 (second+)",
+    "elements": [
+      "Defendant, with intent to harass, annoy, or alarm another person",
+      "Communicated a threat to injure the person, property, or reputation of the threatened person",
+      "Or engaged in a course of alarming conduct directed at the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense"
+    ],
+    "notes": "Harassment includes telephone harassment, electronic communication harassment, and in-person threatening conduct."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Neb. Rev. Stat. § 28-386",
+    "statute_title": "Abuse, Neglect, or Exploitation of a Vulnerable Adult",
+    "offense_class": "Class IIIA Felony (abuse/neglect); Class IIA Felony (serious injury); Class IB Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "5 years (abuse/neglect); 20 years (serious injury); Life (death)",
+    "fine_max": "$10,000 (abuse/neglect); $25,000 (serious injury/death)",
+    "elements": [
+      "Defendant knowingly or intentionally abused, neglected, or exploited a vulnerable adult",
+      "Vulnerable adult includes persons 65+ or persons with disabilities",
+      "Defendant was a caretaker or person responsible for the adult's care"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (Class IIA Felony)",
+      "Death (Class IB Felony)",
+      "Financial exploitation exceeding $5,000"
+    ],
+    "notes": "Nebraska Adult Protective Services investigates. Financial exploitation of vulnerable adults is separately addressed under § 28-386. Mandatory reporting for suspected abuse."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Neb. Rev. Stat. § 28-1202",
+    "statute_title": "Carrying a Concealed Weapon",
+    "offense_class": "Class I Misdemeanor (first); Class IV Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (second+)",
+    "fine_max": "$1,000 (first); $10,000 (second+)",
+    "elements": [
+      "Defendant carried a weapon concealed on or about their person",
+      "Including a revolver, pistol, bowie knife, dirk, or other dangerous weapon",
+      "Without a valid concealed handgun permit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class IV Felony)",
+      "Carrying in a prohibited place"
+    ],
+    "notes": "Nebraska adopted constitutional carry (permitless concealed carry) effective September 2023. Some location restrictions remain. Concealed Handgun Permit still available for reciprocity."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Neb. Rev. Stat. § 28-1206",
+    "statute_title": "Possession of a Deadly Weapon by a Prohibited Person",
+    "offense_class": "Class ID Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant possessed a firearm, knife, or other deadly weapon",
+      "Defendant was a prohibited person (convicted felon, fugitive, under 18, or other prohibited category)",
+      "Possession was knowing"
+    ],
+    "mandatory_minimum": "3 years",
+    "enhancements": [
+      "Possession of a firearm (vs. other deadly weapon)",
+      "Commission of another felony while in possession"
+    ],
+    "notes": "One of the most seriously graded weapons offenses in Nebraska. Mandatory minimum of 3 years. Prohibited persons include felons, fugitives, persons under indictment for a felony, and persons subject to domestic violence protection orders."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Neb. Rev. Stat. § 69-2441",
+    "statute_title": "Carrying Concealed Handgun — Prohibited Places",
+    "offense_class": "Class III Misdemeanor (first); Class I Misdemeanor (second+)",
+    "penalty_min": null,
+    "penalty_max": "3 months (first); 1 year (second+)",
+    "fine_max": "$500 (first); $1,000 (second+)",
+    "elements": [
+      "Defendant carried a concealed handgun",
+      "In a location where carrying is prohibited by law",
+      "Such as a school, courthouse, polling place, or private property with posted notice"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense"
+    ],
+    "notes": "Even under constitutional carry, certain locations remain prohibited. Private property owners may prohibit concealed carry with posted notice."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Neb. Rev. Stat. § 28-1212.02",
+    "statute_title": "Discharge of Firearm at an Inhabited Building or Vehicle",
+    "offense_class": "Class IC Felony (at dwelling); Class ID Felony (at vehicle or other building)",
+    "penalty_min": "5 years (Class IC); 3 years (Class ID)",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally or recklessly discharged a firearm",
+      "At an inhabited dwelling house, building, or occupied vehicle"
+    ],
+    "mandatory_minimum": "5 years (at dwelling); 3 years (at vehicle/other building)",
+    "enhancements": [
+      "Resulting in injury or death",
+      "Discharge from a motor vehicle"
+    ],
+    "notes": "Very severe penalties with mandatory minimums. Discharge at an inhabited dwelling is a Class IC Felony with a 5-year mandatory minimum."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Neb. Rev. Stat. § 28-639",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class IV Felony (general); Class IIA Felony (≥$5,000 or multiple victims)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class IV); 20 years (Class IIA)",
+    "fine_max": "$10,000 (Class IV); $25,000 (Class IIA)",
+    "elements": [
+      "Defendant knowingly used, possessed, or transferred any personal identifying information of another",
+      "With intent to commit any unlawful act",
+      "Including obtaining credit, goods, services, or anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeds $5,000 (Class IIA Felony)",
+      "3 or more victims (Class IIA Felony)",
+      "Victim is a minor or elderly person"
+    ],
+    "notes": "Identity theft involving $5,000+ or 3+ victims is a Class IIA Felony. Restitution commonly ordered."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Neb. Rev. Stat. § 28-511(1)",
+    "statute_title": "Theft by Unlawful Taking — Embezzlement",
+    "offense_class": "Graded same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value (up to 20 years for >$5,000)",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant exercised unauthorized control over the property",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds (same as general theft)",
+      "Breach of fiduciary duty",
+      "Public official or employee"
+    ],
+    "notes": "Nebraska prosecutes embezzlement under the general theft statute. The fiduciary or employment relationship is the distinguishing element."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Neb. Rev. Stat. § 28-602",
+    "statute_title": "Forgery — First Degree",
+    "offense_class": "Class III Felony",
+    "penalty_min": null,
+    "penalty_max": "4 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant falsely made, completed, or altered a written instrument",
+      "With intent to deceive or harm",
+      "The instrument purported to be money, securities, stamps, or government documents"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forgery of government documents",
+      "Multiple forged instruments",
+      "Large-scale forgery operation"
+    ],
+    "notes": "First-degree forgery covers currency, securities, and government documents. Second-degree forgery (§ 28-603) covers other documents like checks and contracts (Class IV Felony)."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Neb. Rev. Stat. § 28-602",
+    "statute_title": "Forgery — Counterfeiting Currency or Securities",
+    "offense_class": "Class III Felony",
+    "penalty_min": null,
+    "penalty_max": "4 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant falsely made or possessed counterfeit currency, securities, or stamps",
+      "With intent to deceive or defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large-scale operation",
+      "Distribution of counterfeit instruments"
+    ],
+    "notes": "Counterfeiting of federal currency typically prosecuted federally. Nebraska's first-degree forgery covers state-level counterfeiting offenses."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Neb. Rev. Stat. § 28-611",
+    "statute_title": "Issuing a Bad Check",
+    "offense_class": "Class II Misdemeanor (<$500); Class I Misdemeanor ($500–$1,500); Class IV Felony ($1,500–$5,000); Class III Felony (>$5,000)",
+    "penalty_min": null,
+    "penalty_max": "6 months (<$500); 1 year ($500–$1,500); 5 years ($1,500–$5,000); 4 years (>$5,000)",
+    "fine_max": "$1,000 (<$500); $1,000 ($500–$1,500); $10,000 ($1,500–$5,000); $25,000 (>$5,000)",
+    "elements": [
+      "Defendant issued or passed a check or similar instrument",
+      "Knowing the check would not be paid by the drawee",
+      "Or issued a check drawn on an account with insufficient funds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds determine classification",
+      "Pattern of issuing bad checks"
+    ],
+    "notes": "Failure to make good within 10 days of notice creates a presumption of knowledge. Graded by the face value of the check."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Neb. Rev. Stat. § 28-631",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class IV Felony (<$5,000); Class III Felony ($5,000–$25,000); Class IIA Felony (>$25,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (<$5,000); 4 years ($5,000–$25,000); 20 years (>$25,000)",
+    "fine_max": "$10,000 (<$5,000); $25,000 ($5,000+)",
+    "elements": [
+      "Defendant knowingly and with intent to defraud",
+      "Presented or caused to be presented a false claim for insurance benefits",
+      "Or concealed information material to a claim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Claim value exceeding $5,000",
+      "Claim value exceeding $25,000",
+      "Organized fraud scheme"
+    ],
+    "notes": "Nebraska grades insurance fraud by the value of the fraudulent claim. Includes auto, health, property, and all other insurance types."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Neb. Rev. Stat. § 28-620",
+    "statute_title": "Criminal Possession of a Forged Instrument — Credit Card",
+    "offense_class": "Class IV Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant used a credit card, debit card, or account number of another",
+      "Without the cardholder's authorization",
+      "To obtain goods, services, or anything of value",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims",
+      "Large total value",
+      "Identity theft in conjunction"
+    ],
+    "notes": "Nebraska prosecutes credit card fraud under forgery, theft by deception, or identity theft statutes depending on circumstances."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Neb. Rev. Stat. § 28-1535",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class IIA Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000 or twice the value of property involved",
+    "elements": [
+      "Defendant conducted or attempted to conduct a financial transaction",
+      "Knowing the property involved was derived from criminal activity",
+      "With intent to promote criminal activity or conceal the source of funds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeding $100,000",
+      "Connection to drug trafficking",
+      "Use of financial institutions"
+    ],
+    "notes": "Nebraska's money laundering statute covers proceeds from any criminal activity. Fine may be up to twice the value of the property involved."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Neb. Rev. Stat. § 28-512",
+    "statute_title": "Theft by Deception",
+    "offense_class": "Graded same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant obtained property of another by deception",
+      "By creating or reinforcing a false impression",
+      "Including false impressions of law, value, intention, or other state of mind"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds (same as general theft)",
+      "Victim is elderly or vulnerable",
+      "Scheme affecting multiple victims"
+    ],
+    "notes": "Nebraska's general fraud offense is theft by deception. Graded by value of property obtained."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Neb. Rev. Stat. § 28-319",
+    "statute_title": "Sexual Assault — First Degree",
+    "offense_class": "Class II Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant subjected another person to sexual penetration",
+      "Without consent of the victim",
+      "By force, threat of force, or coercion",
+      "Or when the victim was physically or mentally incapable of resisting or appraising the nature of the conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a weapon",
+      "Serious personal injury inflicted",
+      "Victim was 12 years of age or younger (§ 28-319.01 — 15 years to life)",
+      "Prior sexual assault conviction"
+    ],
+    "notes": "First-degree sexual assault is the most serious sexual offense. Second degree (§ 28-320) covers sexual contact without consent (Class III Felony). Third degree covers other circumstances."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Neb. Rev. Stat. § 28-319(1)",
+    "statute_title": "Sexual Assault — First Degree (Rape Equivalent)",
+    "offense_class": "Class II Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "50 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant subjected another person to sexual penetration",
+      "Without consent of the victim",
+      "By force, threat of force, or coercion"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a weapon",
+      "Serious personal injury",
+      "Victim under 12 (enhanced under § 28-319.01)"
+    ],
+    "notes": "Nebraska does not use the term 'rape' in its statutes. What other states call rape is prosecuted as first-degree sexual assault."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Neb. Rev. Stat. § 28-806",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Class II Misdemeanor (first); Class I Misdemeanor (second+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second+)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant exposed genitals to another person",
+      "With the intent to affront or alarm",
+      "In a public place or place accessible to the public"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class I Misdemeanor)",
+      "Exposure to a minor"
+    ],
+    "notes": "Repeated offenses carry increased penalties. May require sex offender registration depending on circumstances."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Neb. Rev. Stat. § 28-801",
+    "statute_title": "Prostitution",
+    "offense_class": "Class I Misdemeanor (first); Class IV Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (subsequent)",
+    "fine_max": "$1,000 (first); $10,000 (subsequent)",
+    "elements": [
+      "Defendant performed or offered or agreed to perform sexual acts",
+      "In return for money or other thing of value",
+      "Or defendant solicited another to perform sexual acts for compensation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class IV Felony)",
+      "Solicitation of a minor (trafficking charges under § 28-831)"
+    ],
+    "notes": "Both the person soliciting and the person offering are subject to prosecution. Solicitation involving a minor triggers human trafficking charges."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Neb. Rev. Stat. § 28-1463.03",
+    "statute_title": "Visual Depiction of Sexually Explicit Conduct — Child",
+    "offense_class": "Class IC Felony (production); Class ID Felony (distribution); Class IIA Felony (possession)",
+    "penalty_min": "5 years (production); 3 years (distribution)",
+    "penalty_max": "50 years (production/distribution); 20 years (possession)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant knowingly possessed, manufactured, or distributed visual depictions",
+      "Of sexually explicit conduct involving a child",
+      "Defendant knew or should have known the subject was a child"
+    ],
+    "mandatory_minimum": "5 years (production); 3 years (distribution)",
+    "enhancements": [
+      "Production (Class IC Felony)",
+      "Distribution (Class ID Felony)",
+      "Victim under 12",
+      "Prior conviction for sexual offense involving a child"
+    ],
+    "notes": "Production and distribution carry mandatory minimum sentences. Each image/video may constitute a separate count."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Neb. Rev. Stat. § 29-4011",
+    "statute_title": "Failure to Comply with Sex Offender Registration Act",
+    "offense_class": "Class IV Felony (first); Class IIIA Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "5 years (first); 5 years (second+)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was required to register under the Sex Offender Registration Act",
+      "Defendant knowingly failed to register, update, or verify registration",
+      "Or defendant provided false information"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent failure to register"
+    ],
+    "notes": "Nebraska's Sex Offender Registration Act requires registration for 15 years, 25 years, or lifetime depending on the offense. Quarterly verification required."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Neb. Rev. Stat. § 28-319.01",
+    "statute_title": "Sexual Assault of a Child — First Degree",
+    "offense_class": "Class IB Felony",
+    "penalty_min": "15 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant subjected a person under 12 years of age to sexual penetration",
+      "Or defendant was 19 years of age or older and subjected a person 12–15 to sexual penetration"
+    ],
+    "mandatory_minimum": "15 years",
+    "enhancements": [
+      "Victim under 12 years of age",
+      "Defendant in position of authority",
+      "Prior sexual assault conviction"
+    ],
+    "notes": "Nebraska age of consent is 16. Sexual assault of a child in the first degree carries 15 years to life. Second degree (§ 28-320.01) covers sexual contact with children under 16 (Class IIIA Felony for 12–15; Class IC Felony for under 12)."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Neb. Rev. Stat. § 28-1322",
+    "statute_title": "Disturbing the Peace",
+    "offense_class": "Class III Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant intentionally disturbed the peace and quiet of any person, family, or neighborhood",
+      "By loud or unusual noise, tumultuous or offensive conduct, threatening, or fighting"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Nebraska uses 'disturbing the peace' rather than 'disorderly conduct.' Often used as a plea-down for more serious charges."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Neb. Rev. Stat. § 28-904",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Class I Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally prevented or attempted to prevent a peace officer",
+      "From effecting a lawful arrest",
+      "By using or threatening to use physical force or violence against the officer or another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing injury to the officer",
+      "Use of a deadly weapon during resistance"
+    ],
+    "notes": "Requires physical force or threat thereof. Passive resistance alone is not sufficient. Separate from obstructing a peace officer under § 28-906."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Neb. Rev. Stat. § 28-906",
+    "statute_title": "Obstructing a Peace Officer",
+    "offense_class": "Class I Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally obstructed, impaired, or hindered",
+      "The enforcement of criminal law, preservation of the peace, or a government function",
+      "By using or threatening to use force, violence, or physical interference"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Broader than resisting arrest. Covers interference with any law enforcement or government function. Includes providing false information to officers."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Neb. Rev. Stat. § 25-2121",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Varies (civil vs. criminal; direct vs. indirect)",
+    "penalty_min": null,
+    "penalty_max": "6 months (criminal contempt); indeterminate (civil contempt until compliance)",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant engaged in disorderly conduct in the presence of the court",
+      "Or disobeyed a lawful order of the court",
+      "Or willfully failed to comply with a court directive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Direct contempt (in the courtroom) may be punished summarily. Indirect contempt (violation of court order outside courtroom) requires notice and hearing."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Neb. Rev. Stat. § 53-333",
+    "statute_title": "Consumption of Alcohol in Public / Public Intoxication",
+    "offense_class": "Class V Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "None (fine only)",
+    "fine_max": "$100",
+    "elements": [
+      "Defendant consumed alcoholic liquor on a public highway or in a public place",
+      "Or was publicly intoxicated to a degree that endangered self or others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Minimal penalty — fine only, no jail. Many Nebraska municipalities have local ordinances with slightly different provisions."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Neb. Rev. Stat. § 29-901",
+    "statute_title": "Failure to Appear — Bail Jumping",
+    "offense_class": "Class IV Felony (if felony charge); Class I Misdemeanor (if misdemeanor charge)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$10,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant was released on bail, bond, or own recognizance",
+      "Defendant was required to appear before a court at a specified time",
+      "Defendant willfully failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Penalty depends on the seriousness of the underlying charge. Court issues a bench warrant upon failure to appear. Bail is forfeited."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Neb. Rev. Stat. § 28-907",
+    "statute_title": "Filing a False Report",
+    "offense_class": "Class II Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly gave false information to a law enforcement officer",
+      "About an alleged offense or incident",
+      "With the intent to mislead or obstruct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes false reports of crimes and false emergency calls. Defendant may be liable for investigation costs."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Neb. Rev. Stat. § 28-311.01",
+    "statute_title": "Terroristic Threats",
+    "offense_class": "Class IV Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant threatened to commit any crime of violence",
+      "With intent to terrorize another person",
+      "Or to cause evacuation of a building, place of assembly, or public transportation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat involving weapons of mass destruction",
+      "Threat targeting schools or public facilities"
+    ],
+    "notes": "Nebraska uses 'terroristic threats' for what other states call criminal threats. Includes bomb threats and threats against public facilities."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Neb. Rev. Stat. § 28-915",
+    "statute_title": "Perjury",
+    "offense_class": "Class II Felony (in a Class I or IA Felony proceeding); Class IV Felony (all other cases)",
+    "penalty_min": null,
+    "penalty_max": "50 years (Class II); 5 years (Class IV)",
+    "fine_max": "$25,000 (Class II); $10,000 (Class IV)",
+    "elements": [
+      "Defendant made a materially false statement under oath or equivalent affirmation",
+      "In any official proceeding",
+      "The statement was material",
+      "Defendant did not believe the statement to be true"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Perjury in a capital or Class IA Felony case (Class II Felony)"
+    ],
+    "notes": "Perjury in a capital or Class IA Felony proceeding is a Class II Felony — extremely severe. All other perjury is a Class IV Felony."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Neb. Rev. Stat. § 28-917",
+    "statute_title": "Bribery",
+    "offense_class": "Class IV Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer a benefit",
+      "Upon a public servant",
+      "As consideration for the public servant's decision, vote, or other official action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both offering and accepting bribes are criminal offenses. Public servant includes any government official or employee."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Neb. Rev. Stat. § 28-912",
+    "statute_title": "Escape",
+    "offense_class": "Class IV Felony (from felony custody); Class I Misdemeanor (from misdemeanor custody)",
+    "penalty_min": null,
+    "penalty_max": "5 years (from felony custody); 1 year (from misdemeanor custody)",
+    "fine_max": "$10,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant was in official custody or detention",
+      "Defendant purposely effected escape from the place of detention",
+      "Or failed to return from authorized temporary absence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or threat of force",
+      "Use of a weapon during escape"
+    ],
+    "notes": "Penalty graded by seriousness of the offense for which defendant was in custody. Sentence may be consecutive to original sentence."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Neb. Rev. Stat. § 28-1009",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Class I Misdemeanor (first); Class IV Felony (second+; or if torture/serious injury/death)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly cruelly mistreated an animal",
+      "By beating, abandoning, or subjecting the animal to unnecessary suffering",
+      "Or by failing to provide proper food, water, or shelter"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class IV Felony)",
+      "Torture or mutilation (Class IV Felony)",
+      "Animal fighting (§ 28-1005 — Class IV Felony)"
+    ],
+    "notes": "First offense is a misdemeanor. Repeated cruelty or aggravated acts become felonies. Animal fighting is separately criminalized."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Neb. Rev. Stat. § 29-2266",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Original sentence may be imposed",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation",
+      "Absconding from supervision"
+    ],
+    "notes": "Court may revoke probation and impose original sentence, continue probation with modified conditions, or impose graduated sanctions. Burden of proof is preponderance of the evidence."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Neb. Rev. Stat. § 83-1,119",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining sentence on underlying offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New felony while on parole",
+      "Absconding"
+    ],
+    "notes": "Board of Parole makes revocation decisions. May revoke parole and return offender to prison for the remainder of the sentence."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Neb. Rev. Stat. § 28-206",
+    "statute_title": "Aiding and Abetting — Criminal Responsibility",
+    "offense_class": "Same as principal offense",
+    "penalty_min": "Same as principal offense",
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant, acting with the kind of culpability required for the offense",
+      "Aided, abetted, procured, or caused another person to commit the offense",
+      "Or conspired with another to commit the offense"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "An accomplice is legally accountable for the conduct of the principal. Nebraska holds accomplices to the same liability as the person who directly committed the offense."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Neb. Rev. Stat. § 28-201",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One class lower than the completed offense (Class IA/IB attempted = Class II; Class II attempted = Class III; etc.)",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of attempted offense",
+    "fine_max": "Varies by class of attempted offense",
+    "elements": [
+      "Defendant, with intent to commit a specific crime",
+      "Engaged in conduct that constituted a substantial step",
+      "Toward the commission of the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is graded one class below the completed offense. Attempt to commit a Class IA or IB Felony is a Class II Felony. Voluntary abandonment is an affirmative defense."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Neb. Rev. Stat. § 28-202",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "One class lower than the target offense",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of target offense",
+    "fine_max": "Varies by class of target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to engage in or cause the performance of conduct",
+      "Which constitutes a crime or an attempt to commit a crime",
+      "Defendant or a co-conspirator committed an overt act in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy is graded one class below the target offense. Requires at least one overt act. Renunciation is a defense if defendant thwarted the success of the conspiracy."
+  }
+]

@@ -1,0 +1,1843 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "Aggravated first offense (BAC .15+) carries enhanced license revocation and penalties.",
+      "15-year lookback for prior DUI convictions captures more priors than many states.",
+      "Administrative License Revocation runs separately from criminal proceedings, ensuring consequences regardless of trial outcome."
+    ],
+    "defense_opportunities": [
+      "Challenge the legality of the stop — Nebraska courts strictly scrutinize Fourth Amendment compliance.",
+      "Question Intoxilyzer maintenance, calibration, and certification records under Nebraska Department of Health rules.",
+      "Challenge the 15-minute observation period before breath testing.",
+      "Rising blood alcohol defense — argue BAC was below .08 at time of driving.",
+      "Court may impose 6 months probation in lieu of 7-day mandatory minimum for first offense."
+    ],
+    "common_defenses": [
+      "Improper stop — no reasonable suspicion under Nebraska law.",
+      "Faulty breath test — instrument malfunction or expired calibration.",
+      "Rising BAC — alcohol still being absorbed.",
+      "Involuntary intoxication — unknowing consumption.",
+      "Necessity — emergency circumstances required driving."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "Per se .08 standard makes the case provable on chemical evidence alone.",
+      "6-month license revocation runs administratively from arrest date.",
+      "BAC .15+ aggravated first offense triggers enhanced license revocation."
+    ],
+    "defense_opportunities": [
+      "Court may impose 6 months probation in lieu of 7-day mandatory minimum.",
+      "Ignition interlock device may serve as alternative to extended revocation.",
+      "Challenge the breath test administration and observation period.",
+      "Medical conditions can produce false breath test readings."
+    ],
+    "common_defenses": [
+      "Improper FST administration.",
+      "Medical condition explaining apparent impairment.",
+      "Lack of probable cause for arrest.",
+      "Chain of custody issues with samples or testing."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "Fourth or subsequent is a Class IIA Felony with up to 20 years imprisonment.",
+      "Ignition interlock required for all repeat offenders.",
+      "15-year lookback period captures more priors than many states."
+    ],
+    "defense_opportunities": [
+      "Challenge whether prior convictions fall within the 15-year lookback period.",
+      "Attack validity of prior convictions taken without counsel or proper advisements.",
+      "Argue out-of-state priors do not qualify under Nebraska's prior DUI definition.",
+      "Negotiate for substance abuse treatment programs."
+    ],
+    "common_defenses": [
+      "Prior conviction outside 15-year lookback.",
+      "Constitutionally defective prior plea.",
+      "Out-of-state offense does not qualify.",
+      "Standard DUI defenses with heightened importance for felony exposure."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "Section 60-6,196(1)(b) covers driving under the influence of any drug — including legal and prescription medications.",
+      "Toxicology results combined with driving behavior support impairment findings.",
+      "DRE evaluations have been accepted in Nebraska courts.",
+      "Blood or urine testing may be used."
+    ],
+    "defense_opportunities": [
+      "No per se drug limits — prosecution must prove actual impairment.",
+      "Drug metabolites can persist for weeks without indicating impairment.",
+      "Valid prescription defense for medications taken as directed.",
+      "Challenge DRE methodology and certification."
+    ],
+    "common_defenses": [
+      "Lack of impairment.",
+      "Valid prescription.",
+      "Flawed DRE evaluation.",
+      "Alternative explanation for symptoms."
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "Section 60-6,213 covers driving with indifferent or wanton disregard for safety.",
+      "Class III Misdemeanor for first offense with progressive enhancement.",
+      "Witness testimony, dashcam footage, and accident scene evidence demonstrate dangerous driving.",
+      "Prior traffic violations can support pattern."
+    ],
+    "defense_opportunities": [
+      "First-offense maximum is only 3 months, providing room for diversion.",
+      "Common plea-down destination from DUI charges.",
+      "Challenge the 'wanton disregard' standard — argue ordinary negligence.",
+      "Emergency circumstances may explain the behavior."
+    ],
+    "common_defenses": [
+      "Emergency response.",
+      "Insufficient evidence of wanton disregard.",
+      "Mechanical failure.",
+      "Misidentification."
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Section 60-697 requires stopping, providing identification, and rendering aid — failure on any element satisfies the offense.",
+      "Vehicle identification through paint transfer and surveillance frequently identifies the responsible vehicle.",
+      "Witness testimony combined with vehicle damage establishes the link.",
+      "Forensic accident reconstruction can determine vehicle characteristics."
+    ],
+    "defense_opportunities": [
+      "Argue lack of knowledge of the collision.",
+      "Demonstrate the defendant returned or reported promptly.",
+      "Challenge identification of the defendant's vehicle.",
+      "Safety defense for credible threats at the scene."
+    ],
+    "common_defenses": [
+      "Lack of knowledge of collision.",
+      "Voluntary return or report.",
+      "Mistaken identity.",
+      "Duress or safety concerns."
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "Section 28-306 covers motor vehicle homicide with various culpability levels.",
+      "DUI-related vehicular homicide carries severe enhanced penalties.",
+      "Accident reconstruction expert testimony establishes negligent driving.",
+      "Victim impact testimony at sentencing carries substantial weight."
+    ],
+    "defense_opportunities": [
+      "Challenge causation — intervening factors may break the causal chain.",
+      "Dispute accident reconstruction methodology.",
+      "Argue ordinary negligence rather than the standard required.",
+      "Highlight comparative fault of the victim or third parties."
+    ],
+    "common_defenses": [
+      "Intervening cause.",
+      "Lack of criminal negligence.",
+      "Flawed accident reconstruction.",
+      "Unavoidable accident."
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Section 28-306(3) covers motor vehicle homicide while under the influence — felony charges.",
+      "Recklessness shown through speed, intoxication, or aggressive driving.",
+      "Physical evidence from the crash supports the narrative.",
+      "Prior dangerous driving may be admissible to show pattern."
+    ],
+    "defense_opportunities": [
+      "Distinguish ordinary negligence from criminal negligence.",
+      "Sudden medical emergency defense.",
+      "Mechanical failure defense.",
+      "Contributory fault of the victim."
+    ],
+    "common_defenses": [
+      "Lack of criminal negligence.",
+      "Sudden medical emergency.",
+      "Mechanical failure.",
+      "Contributory negligence."
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "Proof of notice eliminates the lack of knowledge defense.",
+      "Officer testimony confirming operation is straightforward.",
+      "Repeat violations carry escalating penalties."
+    ],
+    "defense_opportunities": [
+      "Challenge whether actual notice was received.",
+      "Argue good-faith belief in reinstatement.",
+      "Necessity defense for emergencies.",
+      "First offense provides room for alternative resolution."
+    ],
+    "common_defenses": [
+      "Lack of notice.",
+      "Necessity.",
+      "Invalid underlying suspension.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Section 28-905 covers operating a vehicle to flee in an effort to avoid arrest.",
+      "Dashcam and patrol video clearly document pursuits.",
+      "Officer testimony about lights/sirens is direct evidence.",
+      "Reckless driving during pursuit supports enhanced charges."
+    ],
+    "defense_opportunities": [
+      "Argue lack of awareness of law enforcement presence.",
+      "Challenge lawfulness of underlying stop.",
+      "Safety defense for seeking populated area.",
+      "Brief delay may not constitute flight."
+    ],
+    "common_defenses": [
+      "Lack of knowledge of officer.",
+      "Unlawful stop attempt.",
+      "Safety concerns.",
+      "Brief non-compliance."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Section 28-416(3) makes possession of controlled substances a felony for most schedules.",
+      "Physical evidence plus lab confirmation creates a strong case.",
+      "Constructive possession doctrine applies.",
+      "Statements made to officers may be admissible."
+    ],
+    "defense_opportunities": [
+      "Challenge the search — Fourth Amendment violations result in suppression.",
+      "Constructive possession requires knowledge plus dominion/control.",
+      "Treatment courts and diversion programs available.",
+      "Field test reliability challenges."
+    ],
+    "common_defenses": [
+      "Illegal search and seizure.",
+      "Lack of knowledge.",
+      "Lack of possession.",
+      "Entrapment."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Section 28-416(13) makes possession of marijuana over 1 ounce a misdemeanor (over 1 lb is a felony).",
+      "Possession of less than 1 ounce remains an infraction (decriminalized but not legalized).",
+      "Distribution-quantity possession can elevate charges.",
+      "Public consumption violations remain enforceable."
+    ],
+    "defense_opportunities": [
+      "Nebraska decriminalized small amounts — first offense for under 1 oz is an infraction with $300 fine.",
+      "Medical marijuana not legal in Nebraska, but valid prescriptions from other states may provide mitigation.",
+      "Weight disputes — challenge actual amount.",
+      "Illegal search defense."
+    ],
+    "common_defenses": [
+      "Decriminalized amount — first offense infraction.",
+      "Weight dispute.",
+      "Illegal search.",
+      "Lack of knowledge."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "Lab confirmation through chemical analysis is reliable.",
+      "Even residue amounts can support possession charges.",
+      "Cocaine's association with distribution often triggers additional investigation."
+    ],
+    "defense_opportunities": [
+      "Challenge the search and seizure.",
+      "Drug treatment court eligibility provides diversion.",
+      "Constructive possession defense in shared spaces.",
+      "Field test challenges."
+    ],
+    "common_defenses": [
+      "Illegal search and seizure.",
+      "Lack of knowledge.",
+      "Constructive possession failure.",
+      "Lab analysis errors."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "Meth-related paraphernalia provides corroborating evidence.",
+      "Residue testing confirms presence.",
+      "Nebraska has extensive meth enforcement."
+    ],
+    "defense_opportunities": [
+      "Treatment courts target meth offenders for treatment alternatives.",
+      "Constructive possession challenges in shared spaces.",
+      "Suppress evidence from warrantless searches.",
+      "Substance identification challenges."
+    ],
+    "common_defenses": [
+      "Illegal search and seizure.",
+      "Lack of knowledge.",
+      "Constructive possession failure.",
+      "Substance misidentification."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Section 28-416(1) covers manufacturing, distribution, delivery, or possession with intent to distribute.",
+      "Quantity-based charging with mandatory minimums for certain weights.",
+      "Wiretap evidence, confidential informants, and surveillance commonly used.",
+      "Federal adoption brings enhanced penalties."
+    ],
+    "defense_opportunities": [
+      "Challenge weight calculation and threshold.",
+      "Scrutinize informant credibility and incentives.",
+      "Challenge wiretap authorization.",
+      "Mere presence is not participation."
+    ],
+    "common_defenses": [
+      "Illegal search and seizure.",
+      "Entrapment.",
+      "Weight challenge.",
+      "Lack of knowledge."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "Section 28-416(1)(a) covers distribution and delivery of controlled substances.",
+      "Controlled buy operations with audio/video provide direct evidence.",
+      "Electronic communications about transactions are admissible.",
+      "Distribution-indicative evidence supports the charge."
+    ],
+    "defense_opportunities": [
+      "Challenge informant reliability.",
+      "Personal use defense.",
+      "Challenge controlled buy chain of custody.",
+      "Entrapment defense."
+    ],
+    "common_defenses": [
+      "Entrapment.",
+      "Personal use.",
+      "Unreliable informant.",
+      "Illegal search."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Section 28-416(1)(b) covers manufacturing controlled substances.",
+      "Chemical evidence at the scene establishes manufacturing.",
+      "Environmental hazards generate aggravating factors.",
+      "Co-defendant cooperation often corroborates."
+    ],
+    "defense_opportunities": [
+      "Challenge inference from possession of common chemicals.",
+      "Argue mere presence without participation.",
+      "Suppress evidence from warrantless entry.",
+      "Challenge expert testimony about feasibility."
+    ],
+    "common_defenses": [
+      "Illegal search.",
+      "Lack of participation.",
+      "Innocent possession of chemicals.",
+      "Insufficient feasibility evidence."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Section 28-441 covers possession of drug paraphernalia.",
+      "Residue testing connects paraphernalia to substances.",
+      "Proximity to drugs strengthens the charge.",
+      "Officer identification testimony is given weight."
+    ],
+    "defense_opportunities": [
+      "Challenge whether items are paraphernalia — many have legitimate uses.",
+      "Infraction-level offense provides minimal exposure.",
+      "Argue items belong to another person.",
+      "Challenge residue testing."
+    ],
+    "common_defenses": [
+      "Legitimate use.",
+      "Lack of knowledge of residue.",
+      "Ownership dispute.",
+      "Illegal search."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Section 28-416(1)(a) covers possession with intent to distribute.",
+      "Distribution intent inferred from quantity, packaging, scales, cash, communications.",
+      "Expert narcotics officer testimony is persuasive.",
+      "Multiple drug types or drugs plus firearms strengthen inference."
+    ],
+    "defense_opportunities": [
+      "Challenge intent inference — argue personal use.",
+      "Suppress illegally obtained evidence.",
+      "Contest expert testimony.",
+      "Argue another person was the distributor."
+    ],
+    "common_defenses": [
+      "Personal use.",
+      "Illegal search and seizure.",
+      "Lack of intent.",
+      "Third-party responsibility."
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "Section 28-303 covers premeditated, deliberate killing — Class IA Felony with potential life or death penalty.",
+      "Premeditation evidence establishes the deliberate element.",
+      "Forensic evidence provides physical linkage.",
+      "Co-defendant cooperation is a powerful tool.",
+      "Nebraska has the death penalty for aggravated first-degree murder."
+    ],
+    "defense_opportunities": [
+      "Challenge premeditation — argue impulsive killing.",
+      "Challenge forensic evidence methodology.",
+      "Alibi defense.",
+      "Mental disease or defect defense."
+    ],
+    "common_defenses": [
+      "Lack of premeditation.",
+      "Mistaken identity.",
+      "Alibi.",
+      "Mental disease or defect."
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "Section 28-304 covers killing intentionally but without premeditation — Class IB Felony.",
+      "Lower mental state than first-degree murder.",
+      "Forensic and circumstantial evidence typically available.",
+      "Felony murder doctrine may apply."
+    ],
+    "defense_opportunities": [
+      "Challenge intentional killing element — argue accidental or negligent.",
+      "Heat of passion supports manslaughter reduction.",
+      "Self-defense under Nebraska law.",
+      "Challenge underlying felony for felony murder."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Lack of intent — accidental.",
+      "Heat of passion.",
+      "Diminished capacity."
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "Section 28-305 covers killing without malice in a sudden quarrel.",
+      "Prosecution can argue provocation was insufficient.",
+      "Physical evidence of excessive force undermines heat-of-passion.",
+      "Time delays defeat sudden passion defense."
+    ],
+    "defense_opportunities": [
+      "This charge is often the defense goal — reducing from murder.",
+      "Provocation evidence supports sudden passion.",
+      "Sentencing range significantly lower than murder.",
+      "Demonstrate emotional state through 911 calls."
+    ],
+    "common_defenses": [
+      "Heat of passion.",
+      "Self-defense.",
+      "Imperfect self-defense.",
+      "Diminished capacity."
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "Section 28-306(1) covers unintentional killing while committing an unlawful act.",
+      "Lower mental state requirement.",
+      "Expert testimony on foreseeability is often available.",
+      "Inherent emotional weight from victim's death."
+    ],
+    "defense_opportunities": [
+      "Argue ordinary negligence rather than criminal.",
+      "Challenge causation.",
+      "Class IIA Felony but plea negotiations often achievable.",
+      "Lack of intent is central to mitigation."
+    ],
+    "common_defenses": [
+      "Ordinary negligence.",
+      "Intervening cause.",
+      "Unforeseeable result.",
+      "Accident."
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "Section 28-308 covers intentionally or knowingly causing serious bodily injury.",
+      "Class II Felony with up to 50 years imprisonment.",
+      "Medical records documenting injuries are compelling.",
+      "Use of a weapon strengthens the case."
+    ],
+    "defense_opportunities": [
+      "Challenge 'serious bodily injury' classification.",
+      "Mutual combat defense.",
+      "Challenge witness identification."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Defense of others.",
+      "Lack of intent to cause serious injury.",
+      "Mutual combat."
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Section 28-310 covers third-degree assault — intentionally, knowingly, or recklessly causing bodily injury.",
+      "Even minor injuries satisfy the charge.",
+      "Victim and witness testimony often suffices.",
+      "Broad statutory language captures diverse conduct."
+    ],
+    "defense_opportunities": [
+      "Class I Misdemeanor (1 year max) provides room for diversion.",
+      "Self-defense applies fully.",
+      "Diversion programs available.",
+      "Challenge whether injury occurred."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Consent.",
+      "De minimis contact.",
+      "Lack of intent."
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "Even minor physical contact in offensive manner satisfies the charge.",
+      "Victim testimony alone can sustain conviction.",
+      "Broad statutory definition."
+    ],
+    "defense_opportunities": [
+      "Self-defense.",
+      "Consent in athletic or social contexts.",
+      "De minimis contact.",
+      "Mistaken identity in crowd situations."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Consent.",
+      "Accidental contact.",
+      "Misidentification."
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Section 28-324 covers forcibly taking property from another by force or threat.",
+      "Class II Felony with up to 50 years imprisonment.",
+      "Surveillance video commonly captures robberies.",
+      "Victim identification plus recovered property is strong."
+    ],
+    "defense_opportunities": [
+      "Challenge victim identification — stress impairs accuracy.",
+      "Argue insufficient force to elevate theft to robbery.",
+      "Alibi defense.",
+      "Challenge confession voluntariness."
+    ],
+    "common_defenses": [
+      "Mistaken identification.",
+      "Insufficient force.",
+      "Alibi.",
+      "Duress."
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "Section 28-324 enhances robbery penalties when weapons are used.",
+      "Even simulated weapons satisfy the element.",
+      "Forensic evidence provides strong physical linkage.",
+      "Co-defendant cooperation produces testimony."
+    ],
+    "defense_opportunities": [
+      "Challenge whether a weapon was actually displayed.",
+      "Identification challenges in stress situations.",
+      "Argue lesser participation.",
+      "Suppress coerced or suggestive identifications."
+    ],
+    "common_defenses": [
+      "Mistaken identification.",
+      "No weapon displayed.",
+      "Coerced confession.",
+      "Duress."
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "Section 28-313 covers kidnapping with intent to hold for ransom, shield, terrorize, or interfere with public functions.",
+      "Class IA Felony (life) when victim is harmed; Class II Felony otherwise.",
+      "Victim testimony about confinement is powerful.",
+      "Electronic evidence establishes movement."
+    ],
+    "defense_opportunities": [
+      "Challenge the 'purpose' element.",
+      "Argue consent — alleged victim accompanied voluntarily.",
+      "Incidental movement during another offense.",
+      "Challenge duration and nature of confinement."
+    ],
+    "common_defenses": [
+      "Consent.",
+      "Incidental to another offense.",
+      "Lack of prohibited purpose.",
+      "Misidentification."
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Section 28-502 covers intentionally damaging property by fire or explosion.",
+      "Fire investigation experts determine origin and cause.",
+      "Accelerant detection provides physical evidence.",
+      "Insurance records and motive evidence support intent."
+    ],
+    "defense_opportunities": [
+      "Challenge fire investigator methodology — NFPA 921 standards required.",
+      "Argue accidental cause.",
+      "Challenge accelerant detection — false positives.",
+      "Alibi defense."
+    ],
+    "common_defenses": [
+      "Accidental fire.",
+      "Flawed investigation.",
+      "False accelerant positive.",
+      "Alibi."
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "Victim survival allows direct testimony.",
+      "Medical evidence of lethal-intent injuries supports the attempt.",
+      "Prior threats and planning establish premeditation."
+    ],
+    "defense_opportunities": [
+      "Challenge intent to kill — argue assault.",
+      "Self-defense.",
+      "Argue injuries inconsistent with intent to kill.",
+      "Voluntary intoxication negating specific intent."
+    ],
+    "common_defenses": [
+      "Lack of intent to kill.",
+      "Self-defense.",
+      "Voluntary intoxication.",
+      "Insufficient substantial step."
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "Section 28-309 (second-degree assault) covers intentionally or knowingly causing bodily injury with a deadly weapon.",
+      "Class IIA Felony with up to 20 years imprisonment.",
+      "Physical evidence of weapon directly links the defendant.",
+      "'Deadly weapon' definition is broad."
+    ],
+    "defense_opportunities": [
+      "Self-defense — defendant armed in response to threat.",
+      "Challenge 'deadly weapon' classification.",
+      "Argue weapon was present but not used.",
+      "Negotiate plea by challenging weapon element."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Object not deadly weapon.",
+      "Weapon not used.",
+      "Mutual combat."
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "Section 28-511 covers taking, exercising control over, or transferring movable property of another.",
+      "Surveillance footage and electronic records provide clear evidence.",
+      "Value thresholds determine classification.",
+      "Witness testimony establishes the taking."
+    ],
+    "defense_opportunities": [
+      "Challenge value to affect classification.",
+      "Claim of right defense.",
+      "Identification challenges.",
+      "Restitution and diversion programs."
+    ],
+    "common_defenses": [
+      "Claim of right.",
+      "Mistaken identity.",
+      "Lack of intent.",
+      "Consent of owner."
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Section 28-518(4)-(5) makes theft over $5,000 a Class IIA Felony; over $1,500 a Class IV Felony.",
+      "Financial records establish value.",
+      "Electronic evidence trails link the defendant.",
+      "Pattern evidence aggregates multiple thefts."
+    ],
+    "defense_opportunities": [
+      "Challenge valuation — fair market value disputes.",
+      "Argue authorization or claim of right.",
+      "Suppress illegally obtained evidence.",
+      "Negotiate restitution-based resolution."
+    ],
+    "common_defenses": [
+      "Valuation dispute.",
+      "Claim of right.",
+      "Authorization.",
+      "Insufficient evidence."
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "Section 28-518(1)-(2) makes theft under $500 a Class II Misdemeanor; $500-$1,500 is Class I Misdemeanor.",
+      "Surveillance footage and store testimony are typically straightforward.",
+      "Repeat offenders face enhanced charges.",
+      "Loss prevention officers are trained witnesses."
+    ],
+    "defense_opportunities": [
+      "Misdemeanor classification leaves room for negotiation.",
+      "Diversion programs widely available.",
+      "Value disputes can affect classification.",
+      "Lack of intent defense."
+    ],
+    "common_defenses": [
+      "Lack of intent.",
+      "Mistaken identity.",
+      "Value dispute.",
+      "Restitution and diversion."
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "Section 28-511.01 specifically covers willfully concealing unpurchased property.",
+      "Loss prevention officers document the entire sequence.",
+      "Store surveillance captures concealment and exit.",
+      "Civil recovery statutes allow stores to pursue damages."
+    ],
+    "defense_opportunities": [
+      "First-offense petty shoplifting carries minimal penalties.",
+      "Diversion programs specifically for shoplifting.",
+      "Challenge the stop — entire sequence must be observed.",
+      "Argue intent to pay."
+    ],
+    "common_defenses": [
+      "Intent to pay.",
+      "Lack of concealment.",
+      "Incomplete observation.",
+      "Absent-mindedness."
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "Section 28-507 covers willfully, maliciously, and forcibly breaking and entering with intent to commit a felony or steal.",
+      "Class IIA Felony with up to 20 years imprisonment.",
+      "Physical evidence of forced entry establishes unauthorized entry.",
+      "Forensic evidence at the entry point links the defendant."
+    ],
+    "defense_opportunities": [
+      "Challenge the intent element.",
+      "Argue authorized entry.",
+      "Challenge forensic evidence in spaces with legitimate access.",
+      "Lack of forced entry raises authorization questions."
+    ],
+    "common_defenses": [
+      "No intent to commit a crime inside.",
+      "Authorized entry.",
+      "Mistaken identity.",
+      "Insufficient evidence of unlawful purpose."
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "Section 28-507(1) covers burglary of dwellings with enhanced consideration for occupied homes.",
+      "Victim testimony about home invasion is emotionally compelling.",
+      "Physical evidence plus stolen property creates strong case.",
+      "Home security cameras increasingly capture intruders."
+    ],
+    "defense_opportunities": [
+      "Identification challenges if burglar was masked.",
+      "Argue dwelling was unoccupied or believed abandoned.",
+      "Suppress evidence from illegal searches.",
+      "Establish alibi."
+    ],
+    "common_defenses": [
+      "Mistaken identity.",
+      "Alibi.",
+      "Consent or authority from co-occupant.",
+      "No intent to commit a crime."
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "Section 28-511 covers theft of motor vehicles as a felony.",
+      "Vehicle identification through VIN and registration is straightforward.",
+      "Possession of recently stolen vehicle creates a presumption of knowledge.",
+      "Surveillance footage tracks vehicle movement."
+    ],
+    "defense_opportunities": [
+      "Argue permission from owner.",
+      "Challenge the 'taking' element — passenger status.",
+      "Joyriding/temporary use defense.",
+      "Identification challenges."
+    ],
+    "common_defenses": [
+      "Permission from owner.",
+      "Mistaken identity.",
+      "Lack of knowledge of stolen status.",
+      "Temporary use without permanent deprivation intent."
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Section 28-517 covers receiving, retaining, or disposing of stolen property knowing it is stolen.",
+      "Circumstances of acquisition support knowledge inference.",
+      "Serial numbers and victim identification establish stolen status.",
+      "Electronic records show defendant's knowledge."
+    ],
+    "defense_opportunities": [
+      "Challenge the knowledge element.",
+      "Argue good-faith purchase at favorable price.",
+      "Challenge whether property was actually stolen.",
+      "Lack of proof property is the specific stolen item."
+    ],
+    "common_defenses": [
+      "Lack of knowledge.",
+      "Ownership dispute.",
+      "Misidentification of property.",
+      "Innocent receipt."
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "Section 28-519 (criminal mischief) covers intentionally damaging property of another.",
+      "Surveillance footage, witness testimony, and physical evidence link the defendant.",
+      "Damage estimates establish financial impact.",
+      "Social media admissions are often available."
+    ],
+    "defense_opportunities": [
+      "Challenge value of damage to affect classification.",
+      "Argue accidental damage.",
+      "Claim of ownership.",
+      "Restitution-based resolution."
+    ],
+    "common_defenses": [
+      "Accident.",
+      "Claim of ownership.",
+      "Mistaken identity.",
+      "Consent of property owner."
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "Section 28-520 covers entering or remaining in a place where notice against trespass is given.",
+      "Posted signs, fences, and verbal warnings establish off-limits status.",
+      "Surveillance footage and witness testimony are direct evidence.",
+      "Prior trespass warnings establish knowledge."
+    ],
+    "defense_opportunities": [
+      "Misdemeanor classification provides room for resolution.",
+      "Argue lack of knowledge of private property.",
+      "Challenge whether proper notice was given.",
+      "Assert legal right to be on property."
+    ],
+    "common_defenses": [
+      "Lack of knowledge.",
+      "Permission or implied invitation.",
+      "Public access.",
+      "Necessity."
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "Section 28-519 broadly covers damaging or tampering with property.",
+      "Specific tampering acts demonstrate intent.",
+      "Motive evidence from disputes provides context.",
+      "Pattern of incidents strengthens the case."
+    ],
+    "defense_opportunities": [
+      "Challenge the 'intentional' element.",
+      "Argue ownership or shared interest.",
+      "Misdemeanor classification for first offense.",
+      "Restitution agreement."
+    ],
+    "common_defenses": [
+      "Accident.",
+      "Ownership claim.",
+      "Lack of knowledge.",
+      "Consent."
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "Section 28-323 covers third-degree assault by strangulation or against a household member.",
+      "Victim statements as excited utterances are admissible.",
+      "Physical evidence corroborates initial accounts.",
+      "Mandatory arrest policy ensures cases enter the system."
+    ],
+    "defense_opportunities": [
+      "Self-defense.",
+      "Recantation can create reasonable doubt.",
+      "Challenge the household member definition.",
+      "Mutual combat defense."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "False accusation.",
+      "Lack of physical evidence.",
+      "Mutual combat."
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "Section 28-323(4) specifically covers domestic assault and battery.",
+      "Even minor physical contact in domestic context satisfies the offense.",
+      "Bodycam footage is compelling evidence.",
+      "Prior domestic violence history may be admissible."
+    ],
+    "defense_opportunities": [
+      "Misdemeanor for first offense provides room for diversion.",
+      "Self-defense applies fully.",
+      "Challenge offensive contact threshold.",
+      "Counseling programs in lieu of prosecution."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Accidental contact.",
+      "False allegation.",
+      "De minimis contact."
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "Section 28-707 (child abuse statute) covers knowingly placing a child in a situation that endangers life or health.",
+      "Mandated reporter testimony is credible.",
+      "Environmental evidence documents endangerment.",
+      "Children's statements may be admissible."
+    ],
+    "defense_opportunities": [
+      "Challenge the 'substantial risk' standard.",
+      "Cultural and lifestyle differences should not be criminalized.",
+      "Temporary conditions being addressed.",
+      "Constitutional parental rights arguments."
+    ],
+    "common_defenses": [
+      "No substantial risk.",
+      "Lack of knowledge.",
+      "Temporary situation.",
+      "Alternative explanation."
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "Section 28-707 covers knowingly, intentionally, or negligently causing injury or endangering a child.",
+      "Medical evidence of inflicted injuries is highly persuasive.",
+      "Pediatric expert testimony distinguishes accidental from inflicted.",
+      "Child forensic interview statements are often admissible."
+    ],
+    "defense_opportunities": [
+      "Challenge medical evidence — accidental causes.",
+      "Identify alternative perpetrator.",
+      "Reasonable discipline defense.",
+      "Medical condition defense."
+    ],
+    "common_defenses": [
+      "Accidental injury.",
+      "Alternative perpetrator.",
+      "Reasonable discipline.",
+      "Medical condition."
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "Section 42-924.02 makes violation of a protection order criminal.",
+      "The order itself establishes prohibited conduct.",
+      "Electronic evidence proves violations.",
+      "Service records confirm awareness."
+    ],
+    "defense_opportunities": [
+      "Challenge service of the order.",
+      "Argue contact initiated by protected party.",
+      "Challenge scope of order.",
+      "Constitutional challenges to overbroad provisions."
+    ],
+    "common_defenses": [
+      "Improper service.",
+      "Contact initiated by protected party.",
+      "Conduct outside order scope.",
+      "Accidental or unavoidable contact."
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "Section 28-311.03 covers willfully harassing another with intent to injure, terrify, threaten, or intimidate.",
+      "Pattern evidence establishes course of conduct.",
+      "Electronic evidence creates detailed records.",
+      "Victim testimony about psychological impact is compelling."
+    ],
+    "defense_opportunities": [
+      "Challenge course of conduct.",
+      "Constitutionally protected activity defense.",
+      "Challenge reasonable apprehension standard.",
+      "Demonstrate legitimate purpose."
+    ],
+    "common_defenses": [
+      "Constitutionally protected activity.",
+      "No course of conduct.",
+      "Legitimate purpose.",
+      "Unreasonable fear."
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "Section 28-311.02 covers harassment by communicating with intent to disturb, annoy, or alarm.",
+      "Electronic communication records provide patterns.",
+      "Multiple witnesses corroborate.",
+      "Prior warnings establish awareness."
+    ],
+    "defense_opportunities": [
+      "Misdemeanor classification provides room for resolution.",
+      "Argue legitimate purpose.",
+      "Free speech defense.",
+      "Challenge whether conduct rises to harassment."
+    ],
+    "common_defenses": [
+      "Legitimate purpose.",
+      "Protected speech.",
+      "Not repeated conduct.",
+      "Mutual communication."
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "Section 28-386 covers knowingly abusing or exploiting a vulnerable adult.",
+      "Medical evidence of injuries or neglect is compelling.",
+      "Financial records document exploitation.",
+      "Adult Protective Services investigations are credible."
+    ],
+    "defense_opportunities": [
+      "Challenge causation — falls, medical conditions, medications.",
+      "Argue authorization for financial transactions.",
+      "Distinguish imperfect care from criminal abuse.",
+      "Power of attorney authorization defense."
+    ],
+    "common_defenses": [
+      "Authorized conduct.",
+      "Medical explanation.",
+      "Lack of intent.",
+      "Caregiver doing best."
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "Section 28-1202 covers carrying concealed weapons without a permit.",
+      "Physical recovery is direct evidence.",
+      "Witness testimony about display or use is strong.",
+      "Location-based violations are straightforward."
+    ],
+    "defense_opportunities": [
+      "Nebraska Constitutional carry as of 2023 — significant changes to permit requirements.",
+      "Challenge whether the location triggered a violation.",
+      "Constitutional challenges.",
+      "Argue lack of knowledge of weapon's presence."
+    ],
+    "common_defenses": [
+      "Lawful carry under Nebraska law.",
+      "No prohibited status.",
+      "Lack of knowledge.",
+      "Lawful purpose."
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "Section 28-1206 prohibits felons from possessing firearms — straightforward elements.",
+      "Class ID Felony with mandatory minimum 3 years.",
+      "Prior felony conviction is documented.",
+      "Constructive possession can suffice."
+    ],
+    "defense_opportunities": [
+      "Challenge constructive possession in shared spaces.",
+      "Argue lack of knowledge of weapon's presence.",
+      "Challenge underlying felony if constitutionally deficient.",
+      "Temporary, innocent possession."
+    ],
+    "common_defenses": [
+      "Lack of possession.",
+      "Lack of knowledge.",
+      "Invalid predicate felony.",
+      "Innocent temporary possession."
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "Section 69-2441 historically governed Nebraska's concealed handgun permit requirements.",
+      "Physical recovery and circumstance evidence is straightforward.",
+      "Officer testimony about discovery is direct.",
+      "Video evidence from restricted locations supports the charge."
+    ],
+    "defense_opportunities": [
+      "Nebraska adopted Constitutional carry in 2023, dramatically changing the landscape.",
+      "Challenge whether the location is actually restricted.",
+      "Argue lack of knowledge of restricted zone.",
+      "Improper stop or search."
+    ],
+    "common_defenses": [
+      "Lawful carry under post-2023 Nebraska law.",
+      "Lack of knowledge of restricted zone.",
+      "Improper stop or search.",
+      "Constitutional challenge."
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "Section 28-1212.02 covers discharging a firearm at certain locations.",
+      "Physical evidence (shell casings, bullet impacts, gunshot residue) links the defendant.",
+      "Witness testimony and surveillance footage are direct evidence.",
+      "Ballistic comparison provides forensic linkage."
+    ],
+    "defense_opportunities": [
+      "Self-defense.",
+      "Lawful discharge on private property.",
+      "Accidental discharge.",
+      "Challenge identification."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Accidental discharge.",
+      "Lawful discharge.",
+      "Misidentification."
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Section 28-639 covers obtaining personal identifying information with intent to use it without authorization.",
+      "Digital evidence trails trace fraudulent activity.",
+      "Financial records document unauthorized transactions.",
+      "Victim testimony establishes harm."
+    ],
+    "defense_opportunities": [
+      "Challenge digital evidence attribution.",
+      "Argue authorization from identity holder.",
+      "Challenge chain of custody for digital evidence.",
+      "Mistaken attribution defense."
+    ],
+    "common_defenses": [
+      "Authorization.",
+      "Mistaken attribution.",
+      "Lack of knowledge.",
+      "Insufficient evidence."
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Financial records and accounting analysis trace misappropriation.",
+      "Forensic accounting identifies unauthorized transactions.",
+      "Internal witnesses provide credible testimony."
+    ],
+    "defense_opportunities": [
+      "Argue authorization for transactions.",
+      "Challenge forensic accounting methodology.",
+      "Argue lack of intent to permanently deprive.",
+      "Challenge valuation."
+    ],
+    "common_defenses": [
+      "Authorization.",
+      "Accounting error.",
+      "Intent to repay.",
+      "Third-party responsibility."
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Section 28-602 covers making, completing, or altering documents with intent to deceive.",
+      "Document examination experts identify forgeries.",
+      "Handwriting comparison provides forensic evidence.",
+      "The forged document is direct evidence."
+    ],
+    "defense_opportunities": [
+      "Argue authorization to sign.",
+      "Challenge document examiner methodology.",
+      "Argue lack of fraudulent intent.",
+      "Identity defense."
+    ],
+    "common_defenses": [
+      "Authorization to sign.",
+      "Lack of fraudulent intent.",
+      "Misidentification of author.",
+      "Flawed analysis."
+    ]
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "prosecution_strengths": [
+      "Section 28-602 (forgery) covers counterfeiting of instruments and currency.",
+      "Physical evidence at defendant's location is strong.",
+      "Federal-state cooperation brings Secret Service resources.",
+      "Passing counterfeit items is documented."
+    ],
+    "defense_opportunities": [
+      "Argue lack of knowledge of counterfeit nature.",
+      "Challenge the search.",
+      "Argue legitimate purpose for materials.",
+      "Distinguish possession from production."
+    ],
+    "common_defenses": [
+      "Lack of knowledge.",
+      "Legitimate purpose.",
+      "Illegal search.",
+      "No intent to defraud."
+    ]
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "prosecution_strengths": [
+      "Section 28-611 covers issuing checks knowing they will not be honored.",
+      "Bank records document insufficient funds.",
+      "The check itself is physical evidence.",
+      "Notice of dishonor and failure to make good creates a presumption."
+    ],
+    "defense_opportunities": [
+      "Argue good-faith belief funds were available.",
+      "Challenge timing.",
+      "Restitution within statutory period as defense.",
+      "Post-dated check defense."
+    ],
+    "common_defenses": [
+      "Good faith belief.",
+      "Timely restitution.",
+      "Post-dated check.",
+      "Bank error."
+    ]
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "prosecution_strengths": [
+      "Section 28-631 makes insurance fraud a felony covering false claims.",
+      "Insurance company SIU units compile comprehensive evidence.",
+      "Surveillance footage contradicting claims is powerful.",
+      "Expert testimony undermines claim legitimacy."
+    ],
+    "defense_opportunities": [
+      "Argue legitimate claim with innocent discrepancies.",
+      "Reliance on professional advice defense.",
+      "Challenge surveillance context.",
+      "Dispute valuation as civil matter."
+    ],
+    "common_defenses": [
+      "Legitimate claim.",
+      "Reliance on professional advice.",
+      "Lack of intent to defraud.",
+      "Civil valuation dispute."
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "Section 28-620 covers fraudulent use of credit cards.",
+      "Electronic transaction records trace each charge.",
+      "Surveillance footage at point of sale identifies the user.",
+      "Digital forensics on devices reveals stored card data."
+    ],
+    "defense_opportunities": [
+      "Challenge identification of the user.",
+      "Argue authorization from cardholder.",
+      "Challenge digital evidence attribution.",
+      "Identity theft of the defendant."
+    ],
+    "common_defenses": [
+      "Authorization from cardholder.",
+      "Mistaken identity.",
+      "Lack of knowledge.",
+      "Third-party perpetrator."
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Section 28-1535 covers conducting financial transactions with criminally derived property.",
+      "Financial records and transaction analysis provide documentary evidence.",
+      "Structuring transactions creates additional charges.",
+      "Federal-state cooperation brings substantial resources."
+    ],
+    "defense_opportunities": [
+      "Challenge predicate offense.",
+      "Argue lack of knowledge of criminal source.",
+      "Challenge financial analysis methodology.",
+      "Argue legitimate business explanations."
+    ],
+    "common_defenses": [
+      "Lack of knowledge.",
+      "Legitimate source.",
+      "No predicate offense.",
+      "Reliance on professional advice."
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "Section 28-512 (criminal impersonation and theft by deception) covers a wide range of fraud schemes.",
+      "Documentary evidence typically provides clear picture.",
+      "Victim testimony establishes reliance and damages.",
+      "Pattern evidence supports the case."
+    ],
+    "defense_opportunities": [
+      "Challenge intent — good-faith representations.",
+      "Argue opinions or puffery rather than misrepresentations.",
+      "Challenge reliance element.",
+      "Civil dispute defense."
+    ],
+    "common_defenses": [
+      "Good faith.",
+      "Civil dispute.",
+      "No reliance.",
+      "Lack of intent to defraud."
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "Section 28-319 covers first-degree sexual assault with up to 50 years imprisonment.",
+      "DNA evidence from sexual assault kits provides forensic identification.",
+      "Victim testimony with consistent physical evidence is compelling.",
+      "SANE documentation supports the victim's account."
+    ],
+    "defense_opportunities": [
+      "Consent defense.",
+      "Challenge DNA interpretation.",
+      "Challenge victim credibility through inconsistencies.",
+      "Alibi defense."
+    ],
+    "common_defenses": [
+      "Consent.",
+      "Mistaken identity.",
+      "False allegation.",
+      "Alibi."
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "Section 28-319(1) covers sexual penetration without consent — Class II Felony with up to 50 years.",
+      "DNA and SANE exam findings provide powerful forensic evidence.",
+      "Expert testimony on rape trauma syndrome explains victim behavior.",
+      "Prior bad acts evidence may be admissible."
+    ],
+    "defense_opportunities": [
+      "Consent defense as the central issue.",
+      "Challenge forensic evidence interpretation.",
+      "Scrutinize delayed reporting respectfully.",
+      "Motion to exclude prior bad acts."
+    ],
+    "common_defenses": [
+      "Consent.",
+      "Misidentification.",
+      "False accusation.",
+      "Insufficient evidence of force or incapacity."
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "Section 28-806 covers public indecency with intentional exposure.",
+      "Witness testimony is often sufficient.",
+      "Surveillance footage provides definitive evidence.",
+      "Repeat offenses elevate penalties."
+    ],
+    "defense_opportunities": [
+      "First offense is a misdemeanor.",
+      "Argue accidental exposure.",
+      "Challenge whether circumstances were objectively offensive.",
+      "Privacy expectation defense."
+    ],
+    "common_defenses": [
+      "Accidental exposure.",
+      "Not objectively offensive.",
+      "Privacy expectation.",
+      "Misidentification."
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "Section 28-801 covers prostitution and solicitation as criminal offenses.",
+      "Undercover sting operations capture transactions directly.",
+      "Electronic communications document the agreement.",
+      "Recordings provide direct evidence."
+    ],
+    "defense_opportunities": [
+      "Entrapment defense.",
+      "Challenge whether a specific agreement was reached.",
+      "Misdemeanor classification.",
+      "Challenge recording quality and interpretation."
+    ],
+    "common_defenses": [
+      "Entrapment.",
+      "No agreement reached.",
+      "Misunderstanding.",
+      "Constitutional challenge."
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "Section 28-1463.03 covers visual depiction of sexually explicit conduct involving children.",
+      "Digital forensics recovers files, history, and metadata.",
+      "IP tracking identifies subscribers.",
+      "Federal-state cooperation brings comprehensive resources."
+    ],
+    "defense_opportunities": [
+      "Challenge the search warrant.",
+      "Argue unknowing possession from malware or shared networks.",
+      "Challenge IP attribution.",
+      "Challenge age of depicted individuals."
+    ],
+    "common_defenses": [
+      "Unknowing possession.",
+      "Illegal search.",
+      "IP attribution error.",
+      "Age dispute."
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "Section 29-4011 makes failure to register as a sex offender a serious offense.",
+      "Registration records document the obligation and non-compliance.",
+      "Address verification confirms non-residence.",
+      "Notification records establish defendant's knowledge."
+    ],
+    "defense_opportunities": [
+      "Argue attempted compliance.",
+      "Challenge notification of registration requirements.",
+      "Impossibility defense for transient individuals.",
+      "Challenge underlying conviction."
+    ],
+    "common_defenses": [
+      "Attempted compliance.",
+      "Lack of notice.",
+      "Impossibility.",
+      "Invalid predicate."
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "Section 28-319.01 covers sexual assault of a child — no consent defense.",
+      "Victim age is easily proven through birth records.",
+      "Forensic evidence and electronic communications support charges.",
+      "Strict liability — no consent defense."
+    ],
+    "defense_opportunities": [
+      "Misidentification.",
+      "Fabrication or coaching defense.",
+      "Challenge forensic evidence.",
+      "Challenge child forensic interview methodology."
+    ],
+    "common_defenses": [
+      "Misidentification.",
+      "False allegation.",
+      "No sexual contact occurred.",
+      "Flawed forensic interview."
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Section 28-1322 covers fighting or other tumultuous conduct.",
+      "Multiple witness accounts corroborate the conduct.",
+      "Officer testimony is given significant weight.",
+      "Video evidence directly captures the conduct."
+    ],
+    "defense_opportunities": [
+      "Misdemeanor classification leaves room for diversion.",
+      "First Amendment defense for speech-based charges.",
+      "Challenge subjective standards.",
+      "Argue overreaction."
+    ],
+    "common_defenses": [
+      "Constitutional protection.",
+      "Not unreasonable conduct.",
+      "Self-defense.",
+      "Overreaction."
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Section 28-904 covers resisting arrest by using or threatening to use force.",
+      "Bodycam and dashcam footage provides objective evidence.",
+      "Officer testimony is direct evidence.",
+      "Officer injuries corroborate resistance."
+    ],
+    "defense_opportunities": [
+      "Challenge lawfulness of underlying arrest.",
+      "Argue instinctive movement rather than purposeful resistance.",
+      "Challenge proportionality of force used by officers.",
+      "Medical condition causing involuntary movements."
+    ],
+    "common_defenses": [
+      "Unlawful arrest.",
+      "Excessive force by officer.",
+      "Instinctive or reflexive movement.",
+      "Medical condition."
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "Section 28-906 covers obstructing a peace officer in the lawful performance of duties.",
+      "Witness testimony from officers about false statements is direct evidence.",
+      "Electronic evidence shows warning or aiding suspects.",
+      "Physical evidence of concealment corroborates."
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge of investigation.",
+      "Argue truthful statements.",
+      "Fifth Amendment privilege.",
+      "Challenge causation of any actual obstruction."
+    ],
+    "common_defenses": [
+      "Lack of knowledge.",
+      "Truthful statement.",
+      "No interference.",
+      "Constitutional privilege."
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "Section 25-2121 covers contempt of court by willful disobedience.",
+      "Court orders and proof of service establish requirements.",
+      "Documentary evidence of non-compliance is straightforward.",
+      "Issuing judge often presides over contempt."
+    ],
+    "defense_opportunities": [
+      "Inability to comply defense.",
+      "Challenge service of the order.",
+      "Challenge order validity.",
+      "Demonstrate substantial compliance."
+    ],
+    "common_defenses": [
+      "Inability to comply.",
+      "Lack of notice.",
+      "Invalid order.",
+      "Substantial compliance."
+    ]
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "prosecution_strengths": [
+      "Section 53-333 historically covered public intoxication; now treated as health matter.",
+      "Officer testimony about visible intoxication is direct evidence.",
+      "Witness testimony from disturbed bystanders supports.",
+      "BAC or drug tests confirm intoxication when conducted."
+    ],
+    "defense_opportunities": [
+      "Nebraska treats public intoxication primarily as a health matter, with civil protective custody often used.",
+      "Argue intoxication without disturbance.",
+      "Medical condition mimicking intoxication.",
+      "Challenge whether location was public."
+    ],
+    "common_defenses": [
+      "No public disturbance.",
+      "Medical condition.",
+      "Not in public place.",
+      "Involuntary intoxication."
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "Section 29-901 covers failing to appear after release on bail or recognizance.",
+      "Court records document the missed appearance.",
+      "Notice to appear is typically documented.",
+      "Bond forfeiture creates additional consequences."
+    ],
+    "defense_opportunities": [
+      "Demonstrate lack of proper notice.",
+      "Argue involuntary absence.",
+      "Show prompt voluntary surrender.",
+      "Challenge the specific notice provided."
+    ],
+    "common_defenses": [
+      "Lack of notice.",
+      "Involuntary absence.",
+      "Prompt surrender.",
+      "Good cause."
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "Section 28-907 covers making false reports to law enforcement.",
+      "False statement is documented in police reports.",
+      "Witness testimony contradicts the report.",
+      "Electronic evidence disproves reported version."
+    ],
+    "defense_opportunities": [
+      "Argue good-faith belief in accuracy.",
+      "Challenge 'knowingly false' element.",
+      "Misdemeanor classification provides room for diversion.",
+      "Argue inconsistencies due to stress or memory."
+    ],
+    "common_defenses": [
+      "Good faith belief.",
+      "Stress-induced confusion.",
+      "Honest misperception.",
+      "Immaterial inconsistency."
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "Section 28-311.01 covers terroristic threats to commit violence.",
+      "Electronic evidence preserves exact words.",
+      "Witness testimony is direct evidence.",
+      "Context evidence supports seriousness."
+    ],
+    "defense_opportunities": [
+      "First Amendment protected speech defense.",
+      "Argue not a 'true threat'.",
+      "Challenge intent element.",
+      "Argue conditional, vague, or jest."
+    ],
+    "common_defenses": [
+      "Protected speech.",
+      "No intent to terrorize.",
+      "Not a true threat.",
+      "Made in jest or hyperbole."
+    ]
+  },
+  {
+    "common_charge_slug": "perjury",
+    "prosecution_strengths": [
+      "Section 28-915 covers perjury by knowingly making materially false statements under oath.",
+      "Sworn testimony is a matter of record.",
+      "Documentary evidence contradicts the statement.",
+      "Witness testimony establishes what defendant knew."
+    ],
+    "defense_opportunities": [
+      "Challenge materiality of false statement.",
+      "Argue technical truth or honest misrecollection.",
+      "Challenge 'knowingly false' element.",
+      "Recantation defense."
+    ],
+    "common_defenses": [
+      "Truth.",
+      "Honest mistake.",
+      "Immateriality.",
+      "Ambiguity."
+    ]
+  },
+  {
+    "common_charge_slug": "bribery",
+    "prosecution_strengths": [
+      "Section 28-917 covers offering benefits to public servants to influence official action.",
+      "Recorded conversations provide direct evidence.",
+      "Financial records create documentary trail.",
+      "Cooperating witness testimony is credible."
+    ],
+    "defense_opportunities": [
+      "Challenge whether payment was intended to influence.",
+      "Entrapment defense.",
+      "Challenge recording interpretation.",
+      "Argue legitimate services unrelated to official duties."
+    ],
+    "common_defenses": [
+      "Legitimate transaction.",
+      "Entrapment.",
+      "No intent to influence.",
+      "Ambiguous communication."
+    ]
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "prosecution_strengths": [
+      "Section 28-912 covers escape from official detention.",
+      "Institutional records are conclusive.",
+      "Surveillance footage captures escape.",
+      "Officer testimony is direct evidence."
+    ],
+    "defense_opportunities": [
+      "Argue unlawful custody.",
+      "Duress defense.",
+      "Administrative error defense.",
+      "Mitigation through walkaway from minimum security."
+    ],
+    "common_defenses": [
+      "Unlawful custody.",
+      "Duress.",
+      "Administrative error.",
+      "Voluntary return."
+    ]
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "prosecution_strengths": [
+      "Section 28-1009 covers intentionally, knowingly, or recklessly torturing or mistreating animals.",
+      "Veterinary evidence is compelling and detailed.",
+      "Photographs and video are visceral evidence.",
+      "Witness testimony establishes pattern."
+    ],
+    "defense_opportunities": [
+      "Argue accidental harm or financial inability.",
+      "Challenge veterinary expert conclusions.",
+      "Distinguish neglect from purposeful cruelty.",
+      "Argue pre-existing condition."
+    ],
+    "common_defenses": [
+      "Accidental harm.",
+      "Financial hardship.",
+      "Pre-existing condition.",
+      "Alternative perpetrator."
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "Section 29-2266 governs probation revocation procedures.",
+      "Probation officer testimony is direct evidence.",
+      "Drug test results are typically reliable.",
+      "New arrests prove no-criminal-conduct violations."
+    ],
+    "defense_opportunities": [
+      "Lower evidentiary standard than criminal trial.",
+      "Courts prefer continued probation over revocation.",
+      "Challenge drug test methodology.",
+      "Present mitigation evidence."
+    ],
+    "common_defenses": [
+      "Substantial compliance.",
+      "Good cause for violation.",
+      "Testing error.",
+      "Modified conditions request."
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "Section 83-1,119 governs parole revocation by the Parole Board.",
+      "Parole officer documentation is systematic.",
+      "GPS monitoring data provides location evidence.",
+      "New criminal charges support revocation."
+    ],
+    "defense_opportunities": [
+      "Present mitigating factors.",
+      "Challenge GPS reliability.",
+      "Argue technical vs. substantive violation.",
+      "Request graduated sanctions."
+    ],
+    "common_defenses": [
+      "Technical violation.",
+      "Good cause.",
+      "Monitoring error.",
+      "Disproportionate response."
+    ]
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "prosecution_strengths": [
+      "Section 28-206 covers aiding, abetting, procuring, or causing another to commit any offense.",
+      "Statements and actions showing assistance are admissible.",
+      "Accomplices face the same charges as principals.",
+      "Co-defendant cooperation testimony implicates accomplices."
+    ],
+    "defense_opportunities": [
+      "Challenge purposeful assistance — mere presence is insufficient.",
+      "Argue assistance for innocent purpose.",
+      "Withdrawal defense.",
+      "Challenge co-defendant credibility."
+    ],
+    "common_defenses": [
+      "Mere presence.",
+      "Lack of knowledge.",
+      "Withdrawal.",
+      "Coerced cooperation."
+    ]
+  },
+  {
+    "common_charge_slug": "attempt",
+    "prosecution_strengths": [
+      "Section 28-201 requires intentional engagement in conduct constituting a substantial step toward commission.",
+      "Evidence of planning and preparation establishes substantial step.",
+      "Statements of intent plus overt acts are strong.",
+      "Detection-based abandonment is no defense."
+    ],
+    "defense_opportunities": [
+      "Challenge substantial step element.",
+      "Voluntary abandonment defense.",
+      "Argue impossibility.",
+      "Penalty is one classification lower than completed crime."
+    ],
+    "common_defenses": [
+      "Voluntary abandonment.",
+      "No substantial step.",
+      "Legal impossibility.",
+      "Lack of specific intent."
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Section 28-202 requires agreement plus overt act in furtherance.",
+      "Co-conspirator statements are admissible against all members.",
+      "Communications evidence documents the agreement.",
+      "Each conspirator is liable for foreseeable acts of others."
+    ],
+    "defense_opportunities": [
+      "Challenge existence of actual agreement.",
+      "Argue defendant was not a member.",
+      "Withdrawal defense.",
+      "Challenge co-conspirator statement reliability."
+    ],
+    "common_defenses": [
+      "No agreement.",
+      "Withdrawal.",
+      "Not a member.",
+      "Unreliable informant."
+    ]
+  }
+]

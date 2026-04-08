@@ -1,0 +1,1738 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "RSA § 265-A:2",
+    "statute_title": "Driving or Operating Under the Influence of Drugs or Liquor",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second); Class B Felony (third, aggravated second); Class A Felony (fourth+)",
+    "penalty_min": null,
+    "penalty_max": "None beyond fine (first); 1 year (second); 3.5–7 years (third); 7.5–15 years (fourth+)",
+    "fine_max": "$1,000 (first); $2,000 (second); $5,000 (third); $5,000 (fourth+)",
+    "elements": [
+      "Defendant drove or attempted to operate a vehicle",
+      "Upon any way or in a place to which the public has access",
+      "While under the influence of intoxicating liquor or any controlled drug",
+      "Or had a BAC of 0.08 or higher"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC 0.16 or higher (aggravated DUI under § 265-A:3)",
+      "Prior DWI convictions within 10 years",
+      "Serious bodily injury (§ 265-A:3, I(b))",
+      "Passenger under 16 in vehicle"
+    ],
+    "notes": "New Hampshire uses a 10-year lookback period. Implied consent under § 265-A:4. Administrative License Suspension (ALS) is separate from criminal penalties. Third DWI is a felony. Aggravated DWI (BAC ≥.16, speed ≥30 over, causing injury, child in vehicle) enhances by one class."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "RSA § 265-A:18, I",
+    "statute_title": "DWI — First Offense",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "No jail (fine only for Class B Misdemeanor)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or attempted to operate a vehicle",
+      "While under the influence of intoxicating liquor or drugs",
+      "BAC 0.08 or higher, or impaired driving ability",
+      "No prior DWI convictions within 10 years"
+    ],
+    "mandatory_minimum": "License revocation 9 months to 2 years; completion of impaired driver intervention program (IDIP)",
+    "enhancements": [
+      "BAC 0.16 or higher (aggravated — Class A Misdemeanor)",
+      "Passenger under 16 (aggravated)",
+      "Excessive speed ≥30 over limit (aggravated)"
+    ],
+    "notes": "First offense non-aggravated is a Class B Misdemeanor — fine only, no jail. License revocation 9 months minimum. Must complete IDIP. Aggravating factors elevate to Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "RSA § 265-A:18, II-IV",
+    "statute_title": "DWI — Repeat Offense",
+    "offense_class": "Class A Misdemeanor (second); Class B Felony (third); Class A Felony (fourth+)",
+    "penalty_min": "17 days (second); 180 days (third); 2.5 years (fourth+)",
+    "penalty_max": "1 year (second); 3.5–7 years (third); 7.5–15 years (fourth+)",
+    "fine_max": "$2,000 (second); $5,000 (third); $5,000 (fourth+)",
+    "elements": [
+      "Defendant drove or attempted to operate a vehicle",
+      "While under the influence of intoxicating liquor or drugs",
+      "BAC 0.08 or higher, or impaired driving ability",
+      "One or more prior DWI convictions within 10 years"
+    ],
+    "mandatory_minimum": "17 consecutive days (second, cannot be suspended); 180 days (third); 2.5 years (fourth+)",
+    "enhancements": [
+      "BAC 0.16 or higher (aggravated)",
+      "Refusal of chemical test",
+      "Accident causing injury"
+    ],
+    "notes": "Second offense: 3-year license revocation. Third offense: indefinite revocation (minimum 5 years). Fourth+: indefinite revocation (minimum 7 years). Ignition interlock required for relicensing."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "RSA § 265-A:2, I(b)",
+    "statute_title": "DWI — Controlled Drug",
+    "offense_class": "Same as alcohol DWI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DWI by offense count",
+    "fine_max": "Same as alcohol DWI by offense count",
+    "elements": [
+      "Defendant drove or attempted to operate a vehicle",
+      "While under the influence of a controlled drug, prescription drug, or over-the-counter drug",
+      "Or under the combined influence of alcohol and any drug",
+      "To a degree that impaired driving ability"
+    ],
+    "mandatory_minimum": "Same as alcohol DWI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs",
+      "Controlled substance involved"
+    ],
+    "notes": "No per se drug limits. Prosecution must show actual impairment. Drug Recognition Expert (DRE) testimony commonly used. Includes prescription medications that impair driving ability."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "RSA § 265:79",
+    "statute_title": "Reckless Operation",
+    "offense_class": "Violation (first); Misdemeanor (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "Fine only (violation); 1 year (subsequent misdemeanor)",
+    "fine_max": "$1,000 (violation); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant drove a vehicle on a way",
+      "Recklessly or in a manner that endangered or was likely to endanger any person or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent conviction within 12 months"
+    ],
+    "notes": "Common plea-down from DWI. First offense is a violation (fine only). Second within 12 months becomes a misdemeanor. License may be revoked for 60 days."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "RSA § 264:25",
+    "statute_title": "Duty to Report — Accident Involving Injury or Death",
+    "offense_class": "Class B Felony (injury/death); Class A Misdemeanor (property damage under § 264:25-a)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (injury/death); 1 year (property damage)",
+    "fine_max": "$4,000 (injury/death); $2,000 (property damage)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to stop at the scene and provide information",
+      "Defendant failed to render reasonable assistance"
+    ],
+    "mandatory_minimum": "1 year license revocation",
+    "enhancements": [
+      "Death of victim",
+      "Serious bodily injury"
+    ],
+    "notes": "Leaving the scene involving injury or death is a Class B Felony. Property damage only accidents are a Class A Misdemeanor. Must remain at scene and provide name, address, and registration."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "RSA § 630:3, II",
+    "statute_title": "Negligent Homicide — DWI Related",
+    "offense_class": "Class A Felony (if DWI involved); Class B Felony (negligent operation)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "By driving under the influence of alcohol or drugs",
+      "Or by negligent operation of a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI involved (elevated to Class A Felony under § 630:3, II)",
+      "Prior DUI convictions",
+      "Excessive speed"
+    ],
+    "notes": "Negligent homicide while DUI is a Class A Felony. Non-DUI negligent vehicular homicide is a Class B Felony. License revocation for 7 years minimum."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "RSA § 630:3, I",
+    "statute_title": "Negligent Homicide — Vehicular",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "By negligent operation of a motor vehicle",
+      "Negligence was a gross deviation from the standard of care"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "New Hampshire does not have a separate vehicular manslaughter statute. Vehicular deaths are charged as negligent homicide. Non-DUI related vehicular homicide is a Class B Felony."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "RSA § 263:64",
+    "statute_title": "Operating After Suspension or Revocation",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second+)",
+    "penalty_min": null,
+    "penalty_max": "Fine only (first); 1 year (second+)",
+    "fine_max": "$1,000 (first); $2,000 (second+)",
+    "elements": [
+      "Defendant operated a motor vehicle on a public way",
+      "While defendant's license or driving privilege was suspended or revoked",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class A Misdemeanor)",
+      "Operating during DWI-related suspension (enhanced penalties)"
+    ],
+    "notes": "Additional 1-year extension added to suspension period. Operating after DWI-related suspension may result in additional charges and mandatory jail time."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "RSA § 265:4",
+    "statute_title": "Disobeying an Officer — Failure to Stop",
+    "offense_class": "Class A Misdemeanor (basic); Class B Felony (if creates serious risk)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5–7 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "A law enforcement officer signaled the defendant to stop",
+      "Signal given by blue lights, siren, or other authorized means",
+      "Defendant willfully failed to stop or attempted to flee",
+      "Defendant knew or should have known the person was a law enforcement officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Creating serious risk of death or serious bodily injury (Class B Felony)",
+      "High-speed chase",
+      "Accident resulting in injury"
+    ],
+    "notes": "Basic failure to stop is a Class A Misdemeanor. Becomes a Class B Felony if flight creates a serious risk of death or serious bodily injury to any person."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "RSA § 318-B:2, VII",
+    "statute_title": "Possession of a Controlled Drug",
+    "offense_class": "Class B Felony (Schedule I-IV); Class A Misdemeanor (small amounts of certain drugs)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (Class B Felony); 1 year (misdemeanor)",
+    "fine_max": "$25,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant knowingly possessed a controlled drug",
+      "Drug is listed on New Hampshire controlled drug schedules",
+      "Possession was without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school zone (§ 318-B:2-c)",
+      "Prior drug felony conviction",
+      "Large quantities"
+    ],
+    "notes": "New Hampshire classifies most controlled drug possession as a Class B Felony. Drug court and diversion programs available. Marijuana possession has been partially decriminalized."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "RSA § 318-B:2-c",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Violation (≤3/4 oz, first/second); Class B Misdemeanor (≤3/4 oz, third+); Misdemeanor (>3/4 oz)",
+    "penalty_min": null,
+    "penalty_max": "Fine only (≤3/4 oz first/second); Fine (third+); 1 year (>3/4 oz)",
+    "fine_max": "$100 (≤3/4 oz first); $100 (second); $300 (third+); $2,000 (>3/4 oz)",
+    "elements": [
+      "Defendant possessed marijuana",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense (Class B Misdemeanor)",
+      "Possession of more than 3/4 ounce (misdemeanor or felony depending on amount)",
+      "Possession near a school"
+    ],
+    "notes": "New Hampshire decriminalized possession of 3/4 ounce or less in 2017. First and second offenses are violations with $100 fine. Third+ becomes a Class B Misdemeanor. Larger amounts remain criminal."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "RSA § 318-B:2, VII",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant knowingly possessed cocaine",
+      "Cocaine is a Schedule II controlled drug in New Hampshire",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school zone",
+      "Prior drug felony conviction"
+    ],
+    "notes": "No minimum quantity for possession charge. Larger quantities may support sale/distribution charges."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "RSA § 318-B:2, VII",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant knowingly possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled drug",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school zone",
+      "Prior drug felony conviction"
+    ],
+    "notes": "Methamphetamine possession is prosecuted as a Class B Felony. Drug court diversion may be available for first-time offenders."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "RSA § 318-B:2, I",
+    "statute_title": "Manufacture, Sale, or Possession with Intent — Controlled Drug",
+    "offense_class": "Class A Felony (Schedule I-II, large quantities); Class B Felony (Schedule III-IV or smaller amounts)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B)",
+    "fine_max": "$500,000 (Class A); $300,000 (Class B)",
+    "elements": [
+      "Defendant manufactured, sold, prescribed, administered, or transported a controlled drug",
+      "Or possessed with intent to sell",
+      "The substance was a controlled drug under New Hampshire law"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale to a minor (enhanced penalty)",
+      "Sale near a school, park, or playground (§ 318-B:2-b)",
+      "Death resulting from distribution (§ 318-B:26 — up to 20 years)",
+      "Large quantities"
+    ],
+    "notes": "New Hampshire has some of the highest fines for drug trafficking in the country. Death resulting from drug distribution can add up to 20 years. Fines up to $500,000 for Class A drug felonies."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "RSA § 318-B:2, I(a)",
+    "statute_title": "Sale or Distribution of Controlled Drug",
+    "offense_class": "Class B Felony (most); Class A Felony (large quantity Schedule I/II)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (Class B); 7.5–15 years (Class A)",
+    "fine_max": "$300,000 (Class B); $500,000 (Class A)",
+    "elements": [
+      "Defendant sold, distributed, or dispensed a controlled drug",
+      "To another person",
+      "Knowingly or intentionally"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale to a minor",
+      "Sale near a school zone",
+      "Death resulting from the drug sold"
+    ],
+    "notes": "Distribution includes any transfer of controlled drugs. Sale to minors and near schools carry enhanced penalties."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "RSA § 318-B:2, I(a)",
+    "statute_title": "Manufacture of Controlled Drug",
+    "offense_class": "Class A Felony (Schedule I/II); Class B Felony (Schedule III-V)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B)",
+    "fine_max": "$500,000 (Class A); $300,000 (Class B)",
+    "elements": [
+      "Defendant manufactured, produced, or cultivated a controlled drug",
+      "Without lawful authority",
+      "Knowingly or intentionally"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing methamphetamine (enhanced penalties under § 318-B:2, I-a)",
+      "Endangering children during manufacturing",
+      "Manufacturing near a school"
+    ],
+    "notes": "Manufacturing methamphetamine carries additional penalties and mandatory environmental cleanup obligations."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "RSA § 318-B:2, V",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With knowledge of its nature and with intent to use",
+      "To introduce a controlled drug into the body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale of paraphernalia to a minor (enhanced penalty)"
+    ],
+    "notes": "Possession of hypodermic syringes was decriminalized by New Hampshire's syringe services program. Paraphernalia for injection may not be prosecuted under harm reduction policies."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "RSA § 318-B:2, I",
+    "statute_title": "Possession with Intent to Sell",
+    "offense_class": "Class B Felony (most); Class A Felony (large quantity Schedule I/II)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (Class B); 7.5–15 years (Class A)",
+    "fine_max": "$300,000 (Class B); $500,000 (Class A)",
+    "elements": [
+      "Defendant knowingly possessed a controlled drug",
+      "With intent to sell, distribute, or dispense",
+      "Intent inferred from quantity, packaging, scales, cash, or other evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large quantity",
+      "Prior drug felony conviction",
+      "Proximity to schools"
+    ],
+    "notes": "Intent to sell is inferred from circumstances. Penalties are the same as for actual distribution."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "RSA § 630:1-a",
+    "statute_title": "First Degree Murder",
+    "offense_class": "Capital/Unclassified Felony",
+    "penalty_min": "Life without parole",
+    "penalty_max": "Life without parole (death penalty repealed 2019)",
+    "fine_max": null,
+    "elements": [
+      "Defendant purposely caused the death of another",
+      "After deliberation and premeditation",
+      "Or killed during the commission of certain felonies (felony murder)"
+    ],
+    "mandatory_minimum": "Life without parole",
+    "enhancements": [
+      "Victim was a law enforcement officer or judicial officer",
+      "Murder for hire",
+      "Multiple victims",
+      "Felony murder (during kidnapping, rape, robbery, arson, burglary)"
+    ],
+    "notes": "New Hampshire repealed the death penalty in 2019 (override of governor's veto). Mandatory sentence is life without parole. Felony murder applies to killings during specified dangerous felonies."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "RSA § 630:1-b",
+    "statute_title": "Second Degree Murder",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (with possibility of parole)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly caused the death of another person",
+      "Without deliberation and premeditation",
+      "Or recklessly caused the death under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": "18 years minimum before parole eligibility (if firearm used)",
+    "enhancements": [
+      "Use of a firearm (mandatory minimum 18 years before parole)",
+      "Prior violent felony"
+    ],
+    "notes": "Second-degree murder is a Class A Felony with potential life sentence. Parole eligibility exists unlike first-degree murder. Minimum parole eligibility is typically 18 years."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "RSA § 630:2, I",
+    "statute_title": "Manslaughter — Voluntary (Heat of Passion)",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant recklessly caused the death of another person",
+      "Or caused the death while under the influence of extreme mental or emotional disturbance",
+      "For which there was a reasonable explanation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Manslaughter covers both reckless killing and heat-of-passion killing. The reasonableness of the emotional disturbance is determined from the viewpoint of a reasonable person in the defendant's situation."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "RSA § 630:2, II",
+    "statute_title": "Manslaughter — Involuntary",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through criminal negligence",
+      "A gross deviation from the standard of care a reasonable person would exercise"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Involuntary manslaughter in New Hampshire is a Class B Felony. Requires more than ordinary negligence — must be a gross deviation from the standard of care."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "RSA § 631:1",
+    "statute_title": "First Degree Assault",
+    "offense_class": "Class A Felony (serious bodily injury); Class B Felony (with deadly weapon)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant purposely caused serious bodily injury to another",
+      "Or purposely or knowingly caused bodily injury to another by means of a deadly weapon",
+      "Or knowingly caused injury while committing or attempting certain felonies"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon (minimum Class B Felony)",
+      "Against a law enforcement officer or emergency personnel",
+      "Victim suffered permanent disfigurement or disability",
+      "Strangulation (§ 631:1, I(d))"
+    ],
+    "notes": "First-degree assault is New Hampshire's most serious assault charge below homicide. Strangulation causing loss of consciousness is specifically included as a Class A Felony."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "RSA § 631:2-a",
+    "statute_title": "Simple Assault",
+    "offense_class": "Class A Misdemeanor (bodily contact/injury); Class B Misdemeanor (unprivileged physical contact only)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); Fine only (Class B)",
+    "fine_max": "$2,000 (Class A); $1,200 (Class B)",
+    "elements": [
+      "Defendant purposely or knowingly caused bodily injury or unprivileged physical contact to another",
+      "Or recklessly caused bodily injury to another",
+      "Or negligently caused bodily injury to another by means of a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against a person under 13 years old (enhanced under § 631:2-a, II(a))"
+    ],
+    "notes": "Simple assault causing bodily injury is a Class A Misdemeanor. Mere unprivileged physical contact without injury is a Class B Misdemeanor."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "RSA § 631:2-a",
+    "statute_title": "Simple Assault (Battery Equivalent)",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant purposely or knowingly caused bodily injury to another",
+      "Through physical contact"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "New Hampshire does not have a separate battery statute. Harmful physical contact is prosecuted as simple assault."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "RSA § 636:1",
+    "statute_title": "Robbery",
+    "offense_class": "Class B Felony (basic); Class A Felony (armed or injury)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (Class B); 7.5–15 years (Class A)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant committed theft",
+      "In the course of committing the theft, defendant used physical force or threatened imminent use of force",
+      "Against the person of the owner or anyone present",
+      "With the purpose of preventing resistance or compelling delivery"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with a deadly weapon (Class A Felony under § 636:1, III(a))",
+      "Inflicting or attempting to inflict death or serious bodily injury (Class A Felony)"
+    ],
+    "notes": "Basic robbery is a Class B Felony. Armed robbery or robbery causing serious injury is a Class A Felony."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "RSA § 636:1, III",
+    "statute_title": "Robbery — Armed",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant committed robbery",
+      "While armed with a deadly weapon",
+      "Or inflicted or attempted to inflict death or serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury inflicted",
+      "Multiple victims"
+    ],
+    "notes": "Armed robbery is a Class A Felony. The deadly weapon need not be used — merely being armed during the robbery is sufficient."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "RSA § 633:1",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class A Felony (general); Class B Felony (if victim released unharmed in safe place)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant knowingly confined another person",
+      "With purpose to hold for ransom or as a shield or hostage",
+      "Or to facilitate commission of a felony",
+      "Or to inflict bodily injury, terrorize, or interfere with governmental function"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim not released unharmed",
+      "Kidnapping a minor",
+      "Ransom demand"
+    ],
+    "notes": "Reduced to Class B Felony if defendant voluntarily releases victim alive and unharmed in a safe place before trial."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "RSA § 634:1",
+    "statute_title": "Arson",
+    "offense_class": "Class A Felony (occupied structure/danger to life); Class B Felony (unoccupied structure)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant knowingly started a fire or caused an explosion",
+      "Which unlawfully damaged or destroyed the property of another",
+      "Or the defendant's own property under circumstances endangering others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied structure at time of fire (Class A Felony)",
+      "Person endangered or injured (Class A Felony)",
+      "Fire set for insurance fraud"
+    ],
+    "notes": "Class A Felony when anyone is in danger. Class B Felony for property damage without danger to life. Separate offense for failure to control or report a fire under § 634:2."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "RSA § 629:1 / § 630:1-a",
+    "statute_title": "Attempted First Degree Murder",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (or up to life if court finds exceptional circumstances)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant purposely engaged in conduct constituting a substantial step",
+      "Toward the commission of first-degree murder",
+      "With the intent to kill another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Victim was a peace officer",
+      "Multiple victims"
+    ],
+    "notes": "Attempted murder carries the same felony class as the completed offense minus one degree, but attempted first-degree murder remains a Class A Felony."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "RSA § 631:1, II",
+    "statute_title": "First Degree Assault — Deadly Weapon",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant purposely or knowingly caused bodily injury to another",
+      "By means of a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (elevated to Class A Felony)",
+      "Against a law enforcement officer"
+    ],
+    "notes": "Assault with a deadly weapon causing bodily injury is a Class B Felony. If serious bodily injury results, it becomes a Class A Felony."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "RSA § 637:3",
+    "statute_title": "Theft by Unauthorized Taking or Transfer",
+    "offense_class": "Class A Felony (>$1,500); Class B Felony ($1,001–$1,500); Class A Misdemeanor (≤$1,000)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B); 1 year (Class A Misdemeanor)",
+    "fine_max": "$4,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant obtained or exercised unauthorized control over the property of another",
+      "With purpose to deprive the owner of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeding $1,500 (Class A Felony)",
+      "Theft from a person",
+      "Theft of a firearm (felony regardless of value)"
+    ],
+    "notes": "New Hampshire grades theft primarily by value. Theft of a firearm is always a Class B Felony regardless of value. Multiple thefts may be aggregated."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "RSA § 637:11, III",
+    "statute_title": "Theft — Felony (Value >$1,000)",
+    "offense_class": "Class A Felony (>$1,500); Class B Felony ($1,001–$1,500)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant committed theft as defined in RSA 637",
+      "Value of property exceeded $1,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeding $1,500 (Class A Felony)"
+    ],
+    "notes": "New Hampshire does not use the term 'grand theft.' Felony theft begins at $1,001."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "RSA § 637:11, I",
+    "statute_title": "Theft — Misdemeanor (Value ≤$1,000)",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant committed theft as defined in RSA 637",
+      "Value of property was $1,000 or less"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Misdemeanor theft applies for property valued at $1,000 or less. Prior theft convictions may be considered at sentencing."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "RSA § 637:3-a",
+    "statute_title": "Willful Concealment (Shoplifting)",
+    "offense_class": "Same grading as general theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant willfully concealed merchandise of a store",
+      "While on or off the premises",
+      "With intent to steal without paying the purchase price"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds (same as general theft)",
+      "Use of anti-shoplifting device removal tools"
+    ],
+    "notes": "New Hampshire has a specific willful concealment statute for shoplifting. Civil recovery by merchants also available. Penalty grading follows general theft thresholds."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "RSA § 635:1",
+    "statute_title": "Burglary",
+    "offense_class": "Class B Felony (general); Class A Felony (armed or nighttime dwelling)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (Class B); 7.5–15 years (Class A)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant entered a building or occupied structure",
+      "Or separately secured or occupied section thereof",
+      "With purpose to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with a deadly weapon (Class A Felony)",
+      "Nighttime entry of a dwelling (Class A Felony)",
+      "Inflicts or attempts to inflict bodily injury (Class A Felony)"
+    ],
+    "notes": "Basic burglary is a Class B Felony. Elevated to Class A Felony if defendant is armed, enters a dwelling at night, or causes injury."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "RSA § 635:1, II",
+    "statute_title": "Burglary — Dwelling at Night (Class A Felony)",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant entered a dwelling",
+      "During nighttime hours",
+      "With purpose to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed during the burglary",
+      "Inflicting bodily injury"
+    ],
+    "notes": "Nighttime entry of a dwelling is always a Class A Felony regardless of whether anyone was present."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "RSA § 637:3 / § 637:11",
+    "statute_title": "Theft — Motor Vehicle",
+    "offense_class": "Class A Felony (most vehicles exceed $1,500)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant obtained or exercised unauthorized control over a motor vehicle of another",
+      "With purpose to deprive the owner of the vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Carjacking (robbery charges apply)",
+      "Vehicle used in commission of another felony"
+    ],
+    "notes": "Motor vehicle theft is graded by value under general theft statutes. Most vehicles exceed the $1,500 Class A Felony threshold."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "RSA § 637:7",
+    "statute_title": "Theft — Receiving Stolen Property",
+    "offense_class": "Same grading as general theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing it was stolen or believing it was probably stolen",
+      "With the purpose to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds (same as general theft)"
+    ],
+    "notes": "Graded by value of stolen property. Belief that property is probably stolen is sufficient — absolute knowledge not required."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "RSA § 634:2",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class B Felony (>$1,500); Class A Misdemeanor ($100–$1,500); Class B Misdemeanor (<$100)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (Class B Felony); 1 year (Class A Misdemeanor); fine only (Class B Misdemeanor)",
+    "fine_max": "$4,000 (felony); $2,000 (Class A Misdemeanor); $1,200 (Class B Misdemeanor)",
+    "elements": [
+      "Defendant purposely or recklessly damaged property of another",
+      "Or purposely or recklessly tampered with property so as to endanger persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage exceeding $1,500 (Class B Felony)",
+      "Damage to utilities or public infrastructure"
+    ],
+    "notes": "New Hampshire uses 'criminal mischief' for vandalism. Graded by the amount of damage. Restitution commonly ordered."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "RSA § 635:2",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Class A Misdemeanor (occupied structure); Class B Misdemeanor (other premises)",
+    "penalty_min": null,
+    "penalty_max": "1 year (occupied structure); fine only (other premises)",
+    "fine_max": "$2,000 (Class A); $1,200 (Class B)",
+    "elements": [
+      "Defendant knowingly entered or remained in a place",
+      "Without license or privilege to do so",
+      "After being notified not to enter or to leave"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass in an occupied structure (Class A Misdemeanor)"
+    ],
+    "notes": "Trespass in an occupied structure is a Class A Misdemeanor. Trespass on other premises (land) is a Class B Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "RSA § 634:2",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class B Felony to Class B Misdemeanor (graded by damage amount)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (Class B Felony); 1 year (Class A Misdemeanor); fine only (Class B Misdemeanor)",
+    "fine_max": "$4,000 (felony); $2,000 (Class A Misdemeanor)",
+    "elements": [
+      "Defendant purposely or recklessly damaged property of another",
+      "Or purposely or recklessly tampered with property of another",
+      "So as to endanger persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Tampering with public utilities",
+      "Damage exceeding $1,500"
+    ],
+    "notes": "Same statute as vandalism. Criminal mischief includes tampering with utilities, transportation, and communication systems."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "RSA § 631:2-b",
+    "statute_title": "Domestic Violence — Assault",
+    "offense_class": "Class A Misdemeanor (simple); Class B Felony (second+ or with deadly weapon); Class A Felony (serious bodily injury)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5–7 years (Class B Felony); 7.5–15 years (Class A Felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant committed an assault against a family or household member",
+      "Or intimate partner",
+      "Family or household member includes spouse, former spouse, cohabitant, parent of shared child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class B Felony under § 631:2-b, III)",
+      "Use of a deadly weapon (first-degree assault applies)",
+      "Serious bodily injury (Class A Felony)",
+      "Strangulation (§ 631:2-b, I-a)"
+    ],
+    "notes": "New Hampshire enacted domestic violence-specific assault statute. Second or subsequent domestic violence assault is a Class B Felony. Strangulation is specifically addressed."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "RSA § 631:2-b, I",
+    "statute_title": "Domestic Violence — Simple Assault (First Offense)",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant purposely or knowingly caused bodily injury to a family or household member",
+      "Or recklessly caused bodily injury to a family or household member",
+      "First offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class B Felony)"
+    ],
+    "notes": "Court may order batterer intervention program. Victim eligible for protective order under RSA 173-B."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "RSA § 639:3",
+    "statute_title": "Endangering Welfare of a Child or Incompetent",
+    "offense_class": "Class B Felony (child under 18); Misdemeanor (less serious circumstances)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$4,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant knowingly endangered the welfare of a child under 18",
+      "By violating a duty of care, protection, or support",
+      "Or by inducing, aiding, or encouraging the child to engage in delinquent conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in serious bodily injury",
+      "Exposure to controlled drug manufacturing",
+      "Child under 6 years old"
+    ],
+    "notes": "Includes DWI with child in vehicle, exposure to drugs or violence, and failure to provide necessities."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "RSA § 631:1 / § 639:3",
+    "statute_title": "Assault on a Child / Child Abuse",
+    "offense_class": "Class A Felony (serious bodily injury); Class B Felony (bodily injury with deadly weapon); Class A Misdemeanor (simple assault)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B); 1 year (Class A Misdemeanor)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant caused bodily injury to a child",
+      "Purposely, knowingly, or recklessly",
+      "Injury was not the result of reasonable parental discipline"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (Class A Felony)",
+      "Use of a weapon",
+      "Child under 6 years old"
+    ],
+    "notes": "Child abuse is prosecuted under general assault statutes with age as an aggravating factor, or under the endangering welfare statute. DCYF involvement accompanies criminal prosecution."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "RSA § 173-B:9",
+    "statute_title": "Violation of Protective Order",
+    "offense_class": "Class A Misdemeanor (first); Class B Felony (subsequent or with assault)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 3.5–7 years (felony)",
+    "fine_max": "$2,000 (first); $4,000 (felony)",
+    "elements": [
+      "A valid protective order was in effect under RSA 173-B",
+      "Defendant had knowledge of the order",
+      "Defendant knowingly violated a provision of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent violation (Class B Felony)",
+      "Violation involving assault (additional charges)"
+    ],
+    "notes": "Law enforcement must arrest upon probable cause of violation. Subsequent violation or violation involving physical contact is a Class B Felony."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "RSA § 633:3-a",
+    "statute_title": "Stalking",
+    "offense_class": "Class A Misdemeanor (first); Class B Felony (second+ or with credible threat)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 3.5–7 years (felony)",
+    "fine_max": "$2,000 (first); $4,000 (felony)",
+    "elements": [
+      "Defendant purposely, on more than one occasion, followed, contacted, or placed under surveillance another person",
+      "Without legitimate purpose",
+      "Causing the person to fear for their safety"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class B Felony)",
+      "Threat of death or serious bodily injury",
+      "Violation of a protective order while stalking"
+    ],
+    "notes": "Includes electronic surveillance and cyberstalking. Second offense or stalking with credible threat is a Class B Felony."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "RSA § 644:4",
+    "statute_title": "Harassment",
+    "offense_class": "Class A Misdemeanor (most); Violation (single incident telephone harassment)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A Misdemeanor)",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant, with purpose to annoy or alarm another",
+      "Communicated threats, insults, or taunts",
+      "Or made repeated communications at extremely inconvenient hours or in offensive language"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes telephone harassment and electronic harassment. Repeated conduct may support stalking charges."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "RSA § 631:8",
+    "statute_title": "Criminal Neglect of Elderly, Disabled, or Impaired Adults",
+    "offense_class": "Class A Felony (serious bodily injury/death); Class B Felony (bodily injury); Class A Misdemeanor (general neglect)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B); 1 year (Class A Misdemeanor)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant knowingly or recklessly caused serious bodily injury or neglect to an elderly or disabled adult",
+      "Elderly is 60 years of age or older",
+      "Defendant had a duty of care for the adult"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death resulting (Class A Felony)",
+      "Serious bodily injury (Class A Felony)",
+      "Financial exploitation"
+    ],
+    "notes": "New Hampshire has specific criminal neglect provisions for elderly and disabled adults. Bureau of Elderly and Adult Services investigates."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "RSA § 159:4",
+    "statute_title": "Carrying Loaded Firearms — Prohibited Circumstances",
+    "offense_class": "Class A Misdemeanor (general); Class B Felony (certain prohibited circumstances)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5–7 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant carried or possessed a firearm",
+      "Under circumstances prohibited by law",
+      "Such as while intoxicated, in a courthouse, or as a prohibited person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession while intoxicated",
+      "Possession in a prohibited location (courthouse, school)"
+    ],
+    "notes": "New Hampshire does not require a permit for concealed carry (constitutional carry since 2017). Restrictions remain for prohibited persons and certain locations."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "RSA § 159:3",
+    "statute_title": "Possession of Firearm by Convicted Felon",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant had been convicted of a felony against the person or property of another",
+      "Or defendant had been convicted of a felony drug offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of firearm in commission of another offense",
+      "Violent felony conviction"
+    ],
+    "notes": "New Hampshire restricts felon possession more narrowly than federal law — applies primarily to violent felons and drug felons. Some felons may petition for restoration of rights."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "RSA § 159:4",
+    "statute_title": "Carrying Firearm in Prohibited Place",
+    "offense_class": "Class A Misdemeanor (general); Class B Felony (courtroom)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5–7 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant carried a firearm",
+      "In a location where firearms are prohibited",
+      "Such as a courtroom (§ 159:19) or while intoxicated"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Constitutional carry state — few location restrictions. Courtroom carry is a felony. Federal property, schools (federal law), and private property restrictions apply."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "RSA § 644:13",
+    "statute_title": "Firing Guns Near Buildings, Highways, or in Compact Areas",
+    "offense_class": "Class B Misdemeanor (general); Class A Misdemeanor (if endangering persons)",
+    "penalty_min": null,
+    "penalty_max": "Fine only (Class B); 1 year (Class A)",
+    "fine_max": "$1,200 (Class B); $2,000 (Class A)",
+    "elements": [
+      "Defendant discharged a firearm",
+      "Within 300 feet of a permanently occupied dwelling, public building, or highway",
+      "Without the property owner's permission"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Discharge endangering persons",
+      "Injury resulting"
+    ],
+    "notes": "New Hampshire has specific distance requirements for firearm discharge near buildings and highways. Discharge in compact areas is separately regulated by municipalities."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "RSA § 638:25",
+    "statute_title": "Identity Fraud",
+    "offense_class": "Class A Felony (posing as another to evade detection or liability); Class B Felony (general identity fraud)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant knowingly posed as another person",
+      "Or used the personal identifying information of another without authorization",
+      "To obtain credit, goods, services, or anything of value, or to avoid detection"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims",
+      "Victim is elderly",
+      "Large total value"
+    ],
+    "notes": "New Hampshire's identity fraud statute covers a broad range of identity theft conduct. Restitution commonly ordered."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "RSA § 637:3",
+    "statute_title": "Theft by Unauthorized Taking — Embezzlement",
+    "offense_class": "Same grading as general theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant obtained or exercised unauthorized control over the property",
+      "With purpose to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds (same as general theft)",
+      "Breach of fiduciary duty",
+      "Public official or employee"
+    ],
+    "notes": "New Hampshire prosecutes embezzlement under the general theft statute. The fiduciary or employment relationship is the distinguishing element."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "RSA § 638:1",
+    "statute_title": "Forgery",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant falsely made, completed, or altered a writing",
+      "With purpose to defraud or deceive",
+      "So that it purported to be the act of another or to have been executed at a different time or place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forgery of government documents",
+      "Multiple forged instruments"
+    ],
+    "notes": "Forgery is always a Class B Felony in New Hampshire. Includes checks, deeds, contracts, and identification documents."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "RSA § 638:2",
+    "statute_title": "Fraudulent Handling of Recordable Writings / Counterfeiting",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant falsely made, manufactured, or possessed counterfeit instruments",
+      "Including currency, securities, or identification documents",
+      "With intent to deceive or defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large-scale operation",
+      "Distribution of counterfeit instruments"
+    ],
+    "notes": "Counterfeiting of federal currency is typically prosecuted federally. New Hampshire's forgery statutes cover state-level counterfeiting."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "RSA § 638:4",
+    "statute_title": "Issuing Bad Checks",
+    "offense_class": "Class A Misdemeanor (general); Class B Felony (>$1,500)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5–7 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant issued or passed a check or other negotiable instrument",
+      "Knowing it would not be honored by the drawee",
+      "Or having insufficient funds and failing to make good within 14 days of notice"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeding $1,500 (Class B Felony)"
+    ],
+    "notes": "Failure to make good within 14 days of dishonor notice creates a presumption of knowledge. Graded by the amount of the check."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "RSA § 638:20",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant knowingly presented or caused to be presented a false or fraudulent claim",
+      "For payment under an insurance policy",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large claim value",
+      "Organized fraud ring",
+      "Staging of accidents"
+    ],
+    "notes": "New Hampshire Insurance Fraud Investigation Unit investigates. Restitution and civil penalties may apply in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "RSA § 638:5",
+    "statute_title": "Fraudulent Use of a Credit Card",
+    "offense_class": "Class A Misdemeanor (≤$1,000); Class B Felony (>$1,000)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5–7 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant used a credit card, debit card, or account number of another",
+      "Without authorization",
+      "To obtain goods, services, or anything of value",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeding $1,000 (Class B Felony)",
+      "Multiple victims",
+      "Identity theft in conjunction"
+    ],
+    "notes": "New Hampshire has a specific credit card fraud statute. Graded by value obtained."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "RSA § 318-B:2, II",
+    "statute_title": "Money Laundering (Drug Proceeds)",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant conducted or attempted to conduct a financial transaction",
+      "Knowing the property involved represented proceeds of drug trafficking",
+      "With intent to promote criminal activity or conceal the source of funds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeding $100,000",
+      "Connection to organized crime",
+      "Use of financial institutions"
+    ],
+    "notes": "New Hampshire's money laundering provisions are primarily connected to drug trafficking proceeds. Federal money laundering charges may also apply."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "RSA § 637:4",
+    "statute_title": "Theft by Deception",
+    "offense_class": "Same grading as general theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant obtained property of another by deception",
+      "By creating or reinforcing a false impression",
+      "Including false impressions of law, value, intention, or other state of mind"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds (same as general theft)",
+      "Victim is elderly",
+      "Scheme affecting multiple victims"
+    ],
+    "notes": "New Hampshire's general fraud offense is theft by deception. Graded by value of property obtained."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "RSA § 632-A:2",
+    "statute_title": "Aggravated Felonious Sexual Assault",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10–20 years (if victim under 13)",
+    "penalty_max": "10–20 years minimum to life (victim under 13); 7.5–15 years (other)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant engaged in sexual penetration with another person",
+      "By force, threat of force, or coercion",
+      "Or when the victim was unable to consent due to age, disability, or incapacity"
+    ],
+    "mandatory_minimum": "10–20 years (victim under 13 under § 632-A:10-a); none (other circumstances)",
+    "enhancements": [
+      "Victim under 13 (mandatory 10–20 years minimum, 25 years to life)",
+      "Use of a deadly weapon",
+      "Serious personal injury inflicted",
+      "Pattern of sexual assault (§ 632-A:1, I-a)"
+    ],
+    "notes": "Aggravated felonious sexual assault is New Hampshire's most serious sexual offense. Victim under 13 triggers mandatory minimum of 10–20 years with maximum of 25 years to life."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "RSA § 632-A:2",
+    "statute_title": "Aggravated Felonious Sexual Assault (Rape Equivalent)",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (general); 25 years to life (victim under 13)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant engaged in sexual penetration with another person",
+      "Without the victim's consent",
+      "Through force, threat of force, or other coercive circumstance"
+    ],
+    "mandatory_minimum": "10–20 years (victim under 13)",
+    "enhancements": [
+      "Victim under 13",
+      "Use of a deadly weapon",
+      "Serious personal injury"
+    ],
+    "notes": "New Hampshire does not use the term 'rape' in its statutes. What other states call rape is prosecuted as aggravated felonious sexual assault."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "RSA § 645:1",
+    "statute_title": "Indecent Exposure and Lewdness",
+    "offense_class": "Class A Misdemeanor (first); Class B Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 3.5–7 years (second+)",
+    "fine_max": "$2,000 (first); $4,000 (second+)",
+    "elements": [
+      "Defendant fornicates, exposes genitals, or performs any other act of gross lewdness",
+      "Under circumstances which the defendant should know will likely cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class B Felony)",
+      "Exposure to a person under 16 (Class B Felony)"
+    ],
+    "notes": "First offense is a Class A Misdemeanor. Second or subsequent offense is a Class B Felony. Exposure to a child under 16 is always a Class B Felony."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "RSA § 645:2",
+    "statute_title": "Prostitution and Related Offenses",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second+)",
+    "penalty_min": null,
+    "penalty_max": "Fine only (first); 1 year (second+)",
+    "fine_max": "$1,200 (first); $2,000 (second+)",
+    "elements": [
+      "Defendant engaged in or agreed to engage in sexual contact in return for consideration",
+      "Or defendant solicited another to engage in sexual contact for consideration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class A Misdemeanor)",
+      "Solicitation of a minor (trafficking charges)"
+    ],
+    "notes": "Both the person soliciting and the person offering are subject to prosecution. Promoting prostitution is a separate, more serious offense under § 645:2, II."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "RSA § 649-A:3",
+    "statute_title": "Manufacture, Distribution, or Possession of Child Sexual Abuse Images",
+    "offense_class": "Class A Felony (manufacture/distribution); Class B Felony (possession of 3+ images); Class A Misdemeanor (1–2 images)",
+    "penalty_min": null,
+    "penalty_max": "7.5–15 years (Class A); 3.5–7 years (Class B); 1 year (Class A Misdemeanor)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant knowingly manufactured, distributed, or possessed visual representations of child sexual abuse",
+      "Involving a child under 18",
+      "Defendant knew or should have known the subject was a child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacture (Class A Felony)",
+      "Distribution (Class A Felony)",
+      "3 or more images (Class B Felony minimum)",
+      "Victim under 13"
+    ],
+    "notes": "New Hampshire uses the term 'child sexual abuse images' rather than 'child pornography.' Each image may constitute a separate count."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "RSA § 651-B:9",
+    "statute_title": "Failure to Register as Sex Offender",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant was required to register under the Sex Offender Registration Act",
+      "Defendant knowingly failed to register, verify, or update registration",
+      "Or provided false registration information"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent failure to register"
+    ],
+    "notes": "New Hampshire requires sex offender registration for 10 years, 20 years, or lifetime depending on the offense tier. Verification required every 90 days to annually."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "RSA § 632-A:3",
+    "statute_title": "Felonious Sexual Assault — Age-Based",
+    "offense_class": "Class B Felony (13–15 and defendant 4+ years older); Class A Felony (under 13)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (Class B); 25 years to life (under 13 with penetration)",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant engaged in sexual contact or penetration with a person under 16",
+      "Defendant was 4 or more years older than the victim",
+      "Consent is not a defense due to victim's age"
+    ],
+    "mandatory_minimum": "10–20 years (victim under 13 with penetration)",
+    "enhancements": [
+      "Victim under 13 (Class A Felony with mandatory minimum)",
+      "Defendant in position of authority",
+      "Prior sexual offense conviction"
+    ],
+    "notes": "New Hampshire age of consent is 16. The 4-year age difference threshold applies. Victims under 13 face the most severe penalties under § 632-A:2."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "RSA § 644:2",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Violation (general); Class B Misdemeanor (certain circumstances)",
+    "penalty_min": null,
+    "penalty_max": "Fine only (violation); Fine only (Class B Misdemeanor)",
+    "fine_max": "$200 (violation); $1,200 (Class B Misdemeanor)",
+    "elements": [
+      "Defendant purposely caused a breach of the peace",
+      "By violent, tumultuous, or threatening behavior",
+      "Or by creating a hazardous condition by an act not serving a legitimate purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "New Hampshire disorderly conduct is a minor offense — typically a violation (fine only). Often used as a plea-down."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "RSA § 642:2",
+    "statute_title": "Resisting Arrest or Detention",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant knowingly or purposely physically interfered with a person",
+      "Recognized as a law enforcement official",
+      "Seeking to effect an arrest or detention",
+      "Regardless of whether the arrest or detention was legal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing injury to the officer"
+    ],
+    "notes": "Physical interference required — verbal refusal alone is not sufficient. Applies regardless of whether the underlying arrest was lawful."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "RSA § 642:1",
+    "statute_title": "Obstructing Government Administration",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant used force, violence, intimidation, or physical interference",
+      "Or committed any independently unlawful act",
+      "With purpose to interfere with a public servant performing an official function"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Broader than resisting arrest. Covers interference with any government function. Includes providing false information to officials."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "RSA § 491:19",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Varies (civil vs. criminal)",
+    "penalty_min": null,
+    "penalty_max": "Varies (up to jail until compliance for civil; defined sentence for criminal)",
+    "fine_max": "Varies",
+    "elements": [
+      "Defendant engaged in disorderly conduct in the presence of the court",
+      "Or disobeyed a lawful order of the court",
+      "Or willfully violated a court directive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Direct contempt may be punished summarily. Indirect contempt requires notice and hearing. Criminal contempt is punitive; civil contempt is coercive."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "RSA § 179:59",
+    "statute_title": "Intoxication",
+    "offense_class": "Violation",
+    "penalty_min": null,
+    "penalty_max": "Fine only",
+    "fine_max": "$100",
+    "elements": [
+      "Defendant was found intoxicated on a street, highway, or public place",
+      "Or on licensed premises where alcoholic beverages are sold"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Minor offense — violation level with fine only. Many jurisdictions use protective custody rather than prosecution."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "RSA § 597:6-e",
+    "statute_title": "Default or Breach of Bail Conditions — Failure to Appear",
+    "offense_class": "Class B Felony (if underlying charge is felony); Class A Misdemeanor (if underlying charge is misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$4,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Defendant was required to appear before a court",
+      "Defendant failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Penalty based on seriousness of underlying charge. Court issues a bench warrant. Bail is forfeited."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "RSA § 641:4",
+    "statute_title": "False Reports to Law Enforcement",
+    "offense_class": "Class A Misdemeanor (false crime report); Class B Misdemeanor (false alarm)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); Fine only (Class B)",
+    "fine_max": "$2,000 (Class A); $1,200 (Class B)",
+    "elements": [
+      "Defendant knowingly gave false information to a law enforcement officer",
+      "About the commission of a crime or other incident",
+      "With purpose to induce investigation or other action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes false reports of crimes and false emergency calls. Defendant may be liable for investigation costs."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "RSA § 631:4",
+    "statute_title": "Criminal Threatening",
+    "offense_class": "Class A Misdemeanor (general); Class B Felony (deadly weapon displayed or victim believes death is imminent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5–7 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant threatened to commit a crime against another",
+      "By placing the person in fear that the crime would be committed",
+      "With the purpose of terrorizing the person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Display of a deadly weapon (Class B Felony)",
+      "Threat placing victim in fear of imminent death (Class B Felony)",
+      "Threat against a school or public building"
+    ],
+    "notes": "Basic criminal threatening is a Class A Misdemeanor. Elevated to Class B Felony when a deadly weapon is displayed or when the threat places the victim in fear of imminent death."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "RSA § 641:1",
+    "statute_title": "Perjury",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant made a material false statement under oath or equivalent affirmation",
+      "In an official proceeding",
+      "Defendant did not believe the statement to be true"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Requires proof the statement was material to the proceeding. Retraction before discovery is an affirmative defense."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "RSA § 640:2",
+    "statute_title": "Bribery in Official and Political Matters",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer a benefit",
+      "Upon a public servant",
+      "As consideration for the public servant's decision, vote, or action in an official matter"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both offering and accepting bribes are criminal offenses. Public servant includes all government officials and employees."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "RSA § 642:6",
+    "statute_title": "Escape",
+    "offense_class": "Class B Felony (from felony custody); Class A Misdemeanor (from misdemeanor custody)",
+    "penalty_min": null,
+    "penalty_max": "3.5–7 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$4,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant was in official custody",
+      "Defendant removed themselves from custody without authorization",
+      "Or failed to return from authorized temporary absence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or threat of force",
+      "Use of a weapon"
+    ],
+    "notes": "Penalty graded by seriousness of underlying offense. Sentence may be consecutive to original sentence."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "RSA § 644:8",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Class A Misdemeanor (general); Class B Felony (torture, fighting, or death of animal)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5–7 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant knowingly tortured, beat, mutilated, or cruelly treated an animal",
+      "Or caused or procured such treatment",
+      "Or knowingly failed to provide necessary food, water, shelter, or veterinary care"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Torture or causing death (Class B Felony under § 644:8, III-a)",
+      "Animal fighting (Class B Felony under § 644:8-a)",
+      "Second or subsequent offense"
+    ],
+    "notes": "General animal cruelty is a Class A Misdemeanor. Torture, mutilation causing death, and animal fighting are Class B Felonies."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "RSA § 504-A:4",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Original suspended sentence may be imposed",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation",
+      "Absconding from supervision"
+    ],
+    "notes": "Court may revoke probation and impose original sentence, continue probation, or modify conditions. Burden of proof is preponderance of the evidence."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "RSA § 651-A:17",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining sentence on underlying offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New felony while on parole",
+      "Absconding"
+    ],
+    "notes": "Adult Parole Board makes revocation decisions. May revoke parole and return offender to prison for remaining sentence."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "RSA § 626:8",
+    "statute_title": "Criminal Liability for Conduct of Another",
+    "offense_class": "Same as principal offense",
+    "penalty_min": "Same as principal offense",
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant, acting with the kind of culpability required for the offense",
+      "Caused another to engage in the prohibited conduct",
+      "Or aided, agreed to aid, or attempted to aid another in planning or committing the offense"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "An accomplice is legally accountable for the conduct of the principal. New Hampshire holds accomplices to the same level of liability."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "RSA § 629:1",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One class below the completed offense (attempts to commit Class A Felonies remain Class A Felonies)",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of attempted offense",
+    "fine_max": "Varies by class of attempted offense",
+    "elements": [
+      "Defendant, acting with the kind of culpability otherwise required for the offense",
+      "Purposely engaged in conduct constituting a substantial step",
+      "Toward the commission of the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt to commit a Class A Felony is a Class A Felony. All other attempts are graded one class below the completed offense. Voluntary abandonment is an affirmative defense."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "RSA § 629:3",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "One class below the target offense (conspiracy to commit Class A Felony remains Class A Felony)",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of target offense",
+    "fine_max": "Varies by class of target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to commit or cause the commission of a crime",
+      "Defendant or a co-conspirator committed an overt act in furtherance of the agreement",
+      "Defendant had the purpose that the crime be committed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy to commit a Class A Felony is a Class A Felony. All other conspiracies are graded one class below the target offense. Requires at least one overt act."
+  }
+]

@@ -1,0 +1,1653 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "SDCL § 32-23-1",
+    "statute_title": "Driving Under the Influence",
+    "offense_class": "Class 1 Misdemeanor (first/second); Class 6 Felony (third); Class 5 Felony (fourth); Class 4 Felony (fifth+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first/second); 2 years (third); 5 years (fourth); 10 years (fifth+)",
+    "fine_max": "$2,000 (first/second); $4,000 (third); $10,000 (fourth); $20,000 (fifth+)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of alcohol, drugs, or any substance that impairs driving ability",
+      "Or had a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .17 or higher (mandatory chemical dependency evaluation)",
+      "Third offense within 10 years (Class 6 Felony)",
+      "Fourth offense (Class 5 Felony)",
+      "Fifth or subsequent offense (Class 4 Felony)"
+    ],
+    "notes": "Implied consent under SDCL § 32-23-10. Refusal to submit to testing results in automatic license revocation. 30-day minimum license revocation for first offense."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "SDCL § 32-23-1",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of alcohol or controlled substances",
+      "BAC .08 or higher, or impairment of driving ability",
+      "No prior DUI convictions"
+    ],
+    "mandatory_minimum": "30-day license revocation",
+    "enhancements": [
+      "BAC .17 or higher (mandatory chemical dependency evaluation)"
+    ],
+    "notes": "Court may order alcohol treatment program. Eligible for restricted license after 30 days."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "SDCL § 32-23-3 through 32-23-4.7",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Class 1 Misdemeanor (second); Class 6 Felony (third); Class 5 Felony (fourth); Class 4 Felony (fifth+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (second); 2 years (third); 5 years (fourth); 10 years (fifth+)",
+    "fine_max": "$2,000 (second); $4,000 (third); $10,000 (fourth); $20,000 (fifth+)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of alcohol or controlled substances",
+      "BAC .08 or higher, or impairment of driving ability",
+      "One or more prior DUI convictions"
+    ],
+    "mandatory_minimum": "1-year license revocation (third); 2-year license revocation (fourth); 3-year license revocation (fifth+)",
+    "enhancements": [
+      "BAC .17 or higher",
+      "Prior convictions within 10 years"
+    ],
+    "notes": "Third offense is a Class 6 Felony. Fourth is Class 5. Fifth and subsequent are Class 4 Felonies. 24/7 sobriety program may be ordered."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "SDCL § 32-23-1(1)-(2)",
+    "statute_title": "DUI — Controlled Substance",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of a controlled drug or substance",
+      "Or under the combined influence of alcohol and any controlled substance",
+      "To a degree that renders the defendant incapable of safely driving"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs",
+      "Ingestion of marijuana or any controlled substance listed in SDCL § 34-20B"
+    ],
+    "notes": "Any amount of a controlled substance in blood is sufficient for a charge. Includes prescription medications that impair driving."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "SDCL § 32-24-1",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant drove a vehicle",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common plea-down from DUI. May result in license suspension."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "SDCL § 32-34-5",
+    "statute_title": "Leaving Scene of Accident Involving Injury or Death",
+    "offense_class": "Class 6 Felony (injury); Class 5 Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "2 years (injury); 5 years (death)",
+    "fine_max": "$4,000 (injury); $10,000 (death)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to stop at the scene",
+      "Defendant failed to provide identification and render reasonable assistance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (Class 5 Felony)",
+      "Serious bodily injury"
+    ],
+    "notes": "Property-damage-only hit-and-run under SDCL § 32-34-6 is a Class 2 Misdemeanor. Duty to stop, identify, and render aid."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "SDCL § 22-16-41",
+    "statute_title": "Vehicular Homicide",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant operated a vehicle",
+      "While under the influence of alcohol or drugs",
+      "Proximately caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DUI convictions",
+      "Extremely high BAC"
+    ],
+    "notes": "Vehicular homicide while intoxicated is a Class 3 Felony. May also be charged as second-degree manslaughter under SDCL § 22-16-20."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "SDCL § 22-16-20",
+    "statute_title": "Manslaughter in the Second Degree (Vehicular)",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "By criminal negligence",
+      "While operating a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "South Dakota does not have a separate vehicular manslaughter statute. Vehicular deaths charged as second-degree manslaughter or vehicular homicide (SDCL § 22-16-41) depending on circumstances."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "SDCL § 32-12-65",
+    "statute_title": "Driving While License Suspended or Revoked",
+    "offense_class": "Class 2 Misdemeanor (first); Class 1 Misdemeanor (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "30 days (first); 1 year (subsequent)",
+    "fine_max": "$500 (first); $2,000 (subsequent)",
+    "elements": [
+      "Defendant drove a motor vehicle on a public highway",
+      "Defendant's license was suspended or revoked",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense"
+    ],
+    "notes": "Additional period of suspension may be added. DUI-related suspensions carry stricter penalties."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "SDCL § 32-33-18",
+    "statute_title": "Eluding a Police Officer",
+    "offense_class": "Class 6 Felony; Class 5 Felony if creating substantial risk of injury or death",
+    "penalty_min": null,
+    "penalty_max": "2 years; 5 years if substantial risk",
+    "fine_max": "$4,000; $10,000 if substantial risk",
+    "elements": [
+      "Defendant was operating a motor vehicle",
+      "A law enforcement officer signaled the defendant to stop",
+      "Defendant willfully failed to stop or fled",
+      "Defendant knew or should have known the person signaling was a law enforcement officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Creating substantial risk of serious injury or death to any person (Class 5 Felony)",
+      "Injuries resulting from the pursuit"
+    ],
+    "notes": "Enhanced if flight creates risk of serious injury. License revocation may be imposed."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "SDCL § 22-42-5",
+    "statute_title": "Unauthorized Possession of Controlled Drug or Substance",
+    "offense_class": "Class 5 Felony (Schedule I/II); Class 6 Felony (Schedule III/IV)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Schedule I/II); 2 years (Schedule III/IV)",
+    "fine_max": "$10,000 (Schedule I/II); $4,000 (Schedule III/IV)",
+    "elements": [
+      "Defendant knowingly possessed a controlled drug or substance",
+      "The substance was listed in the schedules of controlled substances",
+      "Defendant did not have a valid prescription or authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession within 1,000 feet of a school, park, or public housing (SDCL § 22-42-19)",
+      "Large quantity"
+    ],
+    "notes": "South Dakota has strict drug laws. Possession of any amount of Schedule I/II substances is a felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "SDCL § 22-42-6",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Class 1 Misdemeanor (2 oz or less); Class 6 Felony (2 oz to 1/2 lb); Class 5 Felony (1/2 lb to 1 lb); Class 4 Felony (1 lb to 10 lbs)",
+    "penalty_min": null,
+    "penalty_max": "1 year (2 oz or less); 2 years (2 oz to 1/2 lb); 5 years (1/2 lb to 1 lb); 10 years (1 lb to 10 lbs)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 to $20,000 (felony depending on amount)",
+    "elements": [
+      "Defendant knowingly possessed marijuana",
+      "The amount possessed determines the classification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near schools or parks",
+      "Prior drug convictions"
+    ],
+    "notes": "South Dakota voters approved recreational marijuana in 2020 but the measure was struck down by the state Supreme Court. Marijuana remains illegal. Medical marijuana program enacted in 2020."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "SDCL § 22-42-5",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed cocaine",
+      "Cocaine is a Schedule II controlled substance",
+      "Defendant did not have lawful authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near schools or parks (SDCL § 22-42-19)",
+      "Large quantity indicating distribution"
+    ],
+    "notes": "Cocaine is Schedule II. Any amount of possession is a felony. Larger amounts may support distribution charges."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "SDCL § 22-42-5",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Defendant did not have lawful authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near schools or parks",
+      "Large quantity indicating distribution"
+    ],
+    "notes": "Meth is the most commonly prosecuted drug in South Dakota. Any amount is a felony."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "SDCL § 22-42-2",
+    "statute_title": "Distribution of Controlled Drug or Substance",
+    "offense_class": "Class 4 Felony (first); Class 3 Felony (second); Class 2 Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first); 15 years (second); 25 years (third+)",
+    "fine_max": "$20,000 (first); $30,000 (second+)",
+    "elements": [
+      "Defendant distributed, dispensed, or manufactured a controlled substance",
+      "Or possessed with intent to distribute",
+      "The substance was a controlled drug or substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution to a minor (SDCL § 22-42-7)",
+      "Distribution near schools or parks (SDCL § 22-42-19)",
+      "Prior drug distribution convictions"
+    ],
+    "notes": "Distribution to a minor under 18 by a person over 18 is a Class 2 Felony. Enhanced penalties near schools."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "SDCL § 22-42-2",
+    "statute_title": "Distribution of Controlled Substance — Marijuana",
+    "offense_class": "Class 4 Felony (1 oz to 1/2 lb); Class 3 Felony (1/2 lb to 1 lb); Class 2 Felony (1 lb+)",
+    "penalty_min": null,
+    "penalty_max": "10 years (small amount); 15 years (medium); 25 years (large)",
+    "fine_max": "$20,000 to $30,000 depending on amount",
+    "elements": [
+      "Defendant distributed or dispensed marijuana",
+      "Or possessed marijuana with intent to distribute"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution to a minor",
+      "Distribution near schools or parks"
+    ],
+    "notes": "Separate penalties apply for marijuana distribution based on weight thresholds."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "SDCL § 22-42-2",
+    "statute_title": "Manufacture of Controlled Drug or Substance",
+    "offense_class": "Class 4 Felony (first); Class 3 Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first); 15 years (subsequent)",
+    "fine_max": "$20,000 (first); $30,000 (subsequent)",
+    "elements": [
+      "Defendant manufactured or attempted to manufacture a controlled substance",
+      "The substance was listed in the schedules of controlled substances"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing meth in the presence of a minor (SDCL § 22-42-18)",
+      "Manufacturing near schools"
+    ],
+    "notes": "Manufacturing methamphetamine or any controlled substance carries the same distribution penalties. Additional child endangerment charges if minors present."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "SDCL § 22-42A-3",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With the intent to use it to ingest, inhale, or introduce a controlled substance into the body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Distribution of paraphernalia is a Class 1 Misdemeanor. Distribution to a minor is a Class 6 Felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "SDCL § 22-42-2",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Class 4 Felony (first); Class 3 Felony (second)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first); 15 years (second)",
+    "fine_max": "$20,000 (first); $30,000 (second)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With the intent to distribute or dispense",
+      "Intent may be inferred from quantity, packaging, or other circumstances"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near schools or parks",
+      "Prior drug convictions"
+    ],
+    "notes": "Intent to distribute is typically inferred from large quantities, packaging materials, scales, large amounts of cash, or other indicative evidence."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "SDCL § 22-16-4",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Class A Felony (death eligible); Class B Felony (mandatory life without parole if death not sought)",
+    "penalty_min": "Life without parole",
+    "penalty_max": "Death",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "With premeditated design to effect the death",
+      "Or during the perpetration of certain enumerated felonies (felony murder)"
+    ],
+    "mandatory_minimum": "Life imprisonment without parole",
+    "enhancements": [
+      "Murder during commission of a felony (felony murder)",
+      "Multiple victims"
+    ],
+    "notes": "South Dakota retains the death penalty. Class A Felony if death penalty sought. Life without parole is the mandatory minimum."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "SDCL § 22-16-7",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Without premeditation but with intent to kill",
+      "Or with a depraved mind regardless of human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second-degree murder covers intentional killings without premeditation and depraved-heart killings."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "SDCL § 22-16-15",
+    "statute_title": "Manslaughter in the First Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Without a design to effect death",
+      "In a heat of passion or upon sudden quarrel",
+      "But in a cruel or unusual manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree manslaughter in South Dakota corresponds to voluntary manslaughter in other states. Heat of passion is the typical basis."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "SDCL § 22-16-20",
+    "statute_title": "Manslaughter in the Second Degree",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Without any design to effect death",
+      "By criminal negligence or reckless conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second-degree manslaughter corresponds to involuntary manslaughter. Covers unintentional killings resulting from criminal negligence."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "SDCL § 22-18-1.1",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant attempted to cause or caused serious bodily injury to another",
+      "Under circumstances manifesting extreme indifference to the value of human life",
+      "Or with a dangerous weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Serious bodily injury resulting",
+      "Victim is a law enforcement officer"
+    ],
+    "notes": "Aggravated assault is a Class 3 Felony. Serious bodily injury means injury creating a substantial risk of death."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "SDCL § 22-18-1",
+    "statute_title": "Simple Assault",
+    "offense_class": "Class 1 Misdemeanor; Class 6 Felony (third or subsequent offense within 5 years)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 2 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant attempted to cause bodily injury to another",
+      "Or recklessly caused bodily injury to another",
+      "Or negligently caused bodily injury with a dangerous weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent conviction within 5 years (Class 6 Felony)",
+      "Against a law enforcement officer"
+    ],
+    "notes": "First and second offenses are Class 1 Misdemeanors. Third or subsequent within 5 years becomes a Class 6 Felony."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "SDCL § 22-18-1",
+    "statute_title": "Simple Assault (Battery)",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant intentionally caused bodily injury to another person",
+      "Without legal justification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offenses within 5 years"
+    ],
+    "notes": "South Dakota combines assault and battery under the simple assault statute. No separate battery offense."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "SDCL § 22-30-1",
+    "statute_title": "Robbery in the First Degree",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant took personal property from the person or presence of another",
+      "Against the victim's will",
+      "By force, intimidation, or threat of force",
+      "While armed with a dangerous weapon or inflicting serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Serious bodily injury to victim"
+    ],
+    "notes": "First-degree robbery requires being armed with a dangerous weapon or inflicting serious bodily injury. Second-degree robbery (SDCL § 22-30-6) is a Class 4 Felony."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "SDCL § 22-30-1",
+    "statute_title": "Robbery in the First Degree — Armed",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant took personal property from the person or presence of another",
+      "Against the victim's will",
+      "By force or intimidation",
+      "While armed with a dangerous weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Serious bodily injury to victim"
+    ],
+    "notes": "Armed robbery falls under first-degree robbery in South Dakota. The dangerous weapon element elevates second-degree to first-degree."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "SDCL § 22-19-1",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class C Felony; Class 1 Felony if victim suffers serious injury",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant seized, confined, or carried away another person",
+      "Without lawful authority",
+      "With intent to hold for ransom, use as a shield, commit a felony, inflict injury, or terrorize"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim suffers serious bodily injury (Class 1 Felony)",
+      "Victim is a minor",
+      "Kidnapping for ransom"
+    ],
+    "notes": "Kidnapping in the first degree (SDCL § 22-19-1) carries up to life imprisonment. Second-degree kidnapping (SDCL § 22-19-1.1) is a Class 3 Felony."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "SDCL § 22-33-1",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly set fire to or burned any structure or property",
+      "Where there was a reasonable expectation that a human being was present"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death or serious bodily injury resulting",
+      "Occupied structure"
+    ],
+    "notes": "First-degree arson involves occupied structures. Second-degree arson (SDCL § 22-33-2) involves unoccupied structures and is a Class 4 Felony. Third-degree arson (SDCL § 22-33-3) is a Class 6 Felony."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "SDCL § 22-4-1",
+    "statute_title": "Attempted Murder",
+    "offense_class": "One class below the completed offense",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (attempted first-degree murder); varies by degree",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant intended to commit murder",
+      "Defendant engaged in conduct constituting a substantial step toward commission",
+      "The victim survived"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Multiple victims"
+    ],
+    "notes": "Attempted first-degree murder is a Class B Felony. Attempted second-degree murder is a Class C Felony."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "SDCL § 22-18-1.1",
+    "statute_title": "Aggravated Assault with a Dangerous Weapon",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant attempted to cause serious bodily injury to another",
+      "With a dangerous weapon",
+      "Or caused serious bodily injury under circumstances manifesting extreme indifference"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury resulting",
+      "Victim is a law enforcement officer"
+    ],
+    "notes": "Falls under the aggravated assault statute. A dangerous weapon includes firearms, knives, and any instrument capable of causing death or serious bodily harm."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "SDCL § 22-30A-1",
+    "statute_title": "Theft",
+    "offense_class": "Class 2 Misdemeanor (under $400); Class 1 Misdemeanor ($400-$1,000); Class 6 Felony ($1,000-$2,500); Class 5 Felony ($2,500-$5,000); Class 4 Felony ($5,000-$100,000); Class 3 Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "30 days to 15 years depending on value",
+    "fine_max": "$500 to $30,000 depending on value",
+    "elements": [
+      "Defendant took or exercised unauthorized control over property of another",
+      "With intent to deprive the owner of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of property determines classification",
+      "Theft from a person"
+    ],
+    "notes": "South Dakota consolidates larceny, embezzlement, and obtaining by false pretenses under a unified theft statute. Thresholds determine felony vs. misdemeanor."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "SDCL § 22-30A-17",
+    "statute_title": "Grand Theft",
+    "offense_class": "Class 4 Felony ($5,000-$100,000); Class 3 Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "10 years ($5,000-$100,000); 15 years ($100,000+)",
+    "fine_max": "$20,000 ($5,000-$100,000); $30,000 ($100,000+)",
+    "elements": [
+      "Defendant took property of another",
+      "The value of the property exceeded $5,000",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $100,000 (Class 3 Felony)"
+    ],
+    "notes": "Grand theft is theft of property valued at $5,000 or more. Includes theft of livestock."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "SDCL § 22-30A-17",
+    "statute_title": "Petty Theft",
+    "offense_class": "Class 2 Misdemeanor (under $400); Class 1 Misdemeanor ($400-$1,000)",
+    "penalty_min": null,
+    "penalty_max": "30 days (under $400); 1 year ($400-$1,000)",
+    "fine_max": "$500 (under $400); $2,000 ($400-$1,000)",
+    "elements": [
+      "Defendant took property of another",
+      "The value of the property was under $1,000",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft convictions may elevate charge"
+    ],
+    "notes": "Petty theft covers thefts under $1,000 in value."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "SDCL § 22-30A-19",
+    "statute_title": "Shoplifting — Concealment of Merchandise",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant concealed upon their person or in a container, unpurchased merchandise",
+      "From a retail establishment",
+      "With intent to deprive the merchant of the merchandise without paying"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior shoplifting convictions",
+      "Organized retail theft"
+    ],
+    "notes": "Penalties follow the same value thresholds as general theft. Merchants may also pursue civil penalties."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "SDCL § 22-32-1",
+    "statute_title": "Burglary in the First Degree",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant entered or remained in an occupied structure",
+      "With intent to commit any crime therein",
+      "While armed with a dangerous weapon or while inflicting or attempting to inflict bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a dangerous weapon",
+      "Bodily injury to an occupant"
+    ],
+    "notes": "First-degree burglary requires an occupied structure plus an aggravating factor. Second-degree burglary (SDCL § 22-32-3) is a Class 3 Felony. Third-degree burglary (SDCL § 22-32-8) is a Class 4 Felony."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "SDCL § 22-32-1",
+    "statute_title": "Burglary in the First Degree — Occupied Dwelling",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant entered or remained in an occupied dwelling",
+      "With intent to commit any crime therein",
+      "While armed or while inflicting bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a weapon",
+      "Bodily injury to an occupant"
+    ],
+    "notes": "Occupied dwelling burglary is the most serious form. Unoccupied dwelling burglary falls under second-degree."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "SDCL § 22-30A-1",
+    "statute_title": "Theft of Motor Vehicle",
+    "offense_class": "Class 4 Felony (most vehicles valued $5,000+)",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant took or exercised unauthorized control over a motor vehicle",
+      "Belonging to another",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of vehicle determines classification"
+    ],
+    "notes": "Charged under the general theft statute. Most vehicles exceed the $5,000 felony threshold."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "SDCL § 22-30A-7",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Same classification as theft based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing or having reason to know the property was stolen",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of property determines classification"
+    ],
+    "notes": "Penalties mirror theft classifications based on the value of the stolen property."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "SDCL § 22-34-1",
+    "statute_title": "Intentional Damage to Property",
+    "offense_class": "Class 1 Misdemeanor (under $1,000); Class 6 Felony ($1,000-$2,500); Class 5 Felony ($2,500-$5,000); Class 4 Felony ($5,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year to 10 years depending on damage amount",
+    "fine_max": "$2,000 to $20,000 depending on damage amount",
+    "elements": [
+      "Defendant intentionally damaged or destroyed property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to public property",
+      "Amount of damage determines classification"
+    ],
+    "notes": "Restitution is typically ordered in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "SDCL § 22-35-6",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Class 2 Misdemeanor (first); Class 1 Misdemeanor (second or subsequent)",
+    "penalty_min": null,
+    "penalty_max": "30 days (first); 1 year (subsequent)",
+    "fine_max": "$500 (first); $2,000 (subsequent)",
+    "elements": [
+      "Defendant knowingly entered or remained on property of another",
+      "Without authorization",
+      "After being notified to leave or stay off"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense"
+    ],
+    "notes": "Notice may be given verbally, in writing, or by conspicuous posting of signs."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "SDCL § 22-34-1",
+    "statute_title": "Intentional Damage to Property (Criminal Mischief)",
+    "offense_class": "Class 1 Misdemeanor (under $1,000); Class 6 Felony ($1,000-$2,500); higher for greater amounts",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 2 years (Class 6 Felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (Class 6 Felony)",
+    "elements": [
+      "Defendant intentionally damaged property of another",
+      "Without the owner's consent",
+      "The amount of damage determines the classification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage amount determines classification"
+    ],
+    "notes": "South Dakota uses the intentional damage to property statute rather than a separate criminal mischief statute."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "SDCL § 25-10-13",
+    "statute_title": "Domestic Abuse — Violation of Protection Order",
+    "offense_class": "Class 1 Misdemeanor (first); Class 6 Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 2 years (subsequent)",
+    "fine_max": "$2,000 (first); $4,000 (subsequent)",
+    "elements": [
+      "Defendant committed physical harm, bodily injury, or attempted bodily injury against a household member",
+      "Or violated a domestic protection order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior domestic violence convictions",
+      "Violation of protection order"
+    ],
+    "notes": "Domestic abuse is charged under the applicable assault statute with domestic enhancement. Protection order violations are separately charged under SDCL § 25-10-13."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "SDCL § 22-18-1",
+    "statute_title": "Simple Assault — Domestic (Battery)",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant intentionally caused bodily injury to a household member or former household member",
+      "Or attempted to cause bodily injury to a household member"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third offense within 5 years (Class 6 Felony)",
+      "Prior domestic convictions"
+    ],
+    "notes": "Domestic battery is prosecuted under the simple assault statute with the domestic relationship as context. Batterer's treatment program may be ordered."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "SDCL § 26-10-1",
+    "statute_title": "Abuse or Neglect of Child",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant abused, exposed, tortured, or cruelly punished a minor child",
+      "Or neglected a child in a manner that caused harm or risk of harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury to child",
+      "Pattern of abuse"
+    ],
+    "notes": "Mandatory reporting requirements apply. Child endangerment through DUI may be charged separately."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "SDCL § 26-10-1",
+    "statute_title": "Abuse of Child",
+    "offense_class": "Class 3 Felony (serious bodily injury); Class 4 Felony (other abuse)",
+    "penalty_min": null,
+    "penalty_max": "15 years (serious injury); 10 years (other)",
+    "fine_max": "$30,000 (serious injury); $20,000 (other)",
+    "elements": [
+      "Defendant intentionally abused a minor child",
+      "Causing bodily injury or serious bodily injury",
+      "Or creating a substantial risk of harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (Class 3 Felony)",
+      "Death resulting"
+    ],
+    "notes": "Child abuse resulting in death may be charged as manslaughter or murder."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "SDCL § 25-10-13",
+    "statute_title": "Violation of Protection Order",
+    "offense_class": "Class 1 Misdemeanor (first); Class 6 Felony (subsequent within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 2 years (subsequent)",
+    "fine_max": "$2,000 (first); $4,000 (subsequent)",
+    "elements": [
+      "A valid protection order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant willfully violated the terms of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent violation within 10 years (Class 6 Felony)"
+    ],
+    "notes": "Includes domestic abuse protection orders, stalking protection orders, and no-contact orders."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "SDCL § 22-19A-1",
+    "statute_title": "Stalking",
+    "offense_class": "Class 1 Misdemeanor (first); Class 6 Felony (second or subsequent within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 2 years (subsequent)",
+    "fine_max": "$2,000 (first); $4,000 (subsequent)",
+    "elements": [
+      "Defendant willfully, maliciously, and repeatedly followed or harassed another person",
+      "Making a credible threat with intent to place the victim in reasonable fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent conviction (Class 6 Felony)",
+      "Violation of a stalking protection order"
+    ],
+    "notes": "Includes in-person and electronic/cyber stalking. Protection orders available to victims."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "SDCL § 22-19A-4",
+    "statute_title": "Harassment",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant engaged in a pattern of conduct directed at a specific person",
+      "That would cause a reasonable person to feel frightened, threatened, or harassed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Harassment can be a predicate for stalking charges if it escalates to repeated conduct with credible threats."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "SDCL § 22-46-2",
+    "statute_title": "Abuse, Neglect, or Exploitation of Elder or Adult with Disability",
+    "offense_class": "Class 6 Felony (abuse/neglect); Class 5 Felony (exploitation over $1,000)",
+    "penalty_min": null,
+    "penalty_max": "2 years (abuse); 5 years (exploitation over $1,000)",
+    "fine_max": "$4,000 (abuse); $10,000 (exploitation)",
+    "elements": [
+      "Defendant abused, neglected, or exploited a person aged 65 or older or an adult with a disability",
+      "The conduct caused harm or risk of harm",
+      "Or the defendant financially exploited the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exploitation over $1,000 (Class 5 Felony)",
+      "Serious bodily injury or death"
+    ],
+    "notes": "Mandatory reporting requirements apply for suspected elder abuse."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "SDCL § 22-14-15",
+    "statute_title": "Carrying a Concealed Weapon Without a Permit",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant carried a concealed weapon on or about their person",
+      "Without a valid permit",
+      "The weapon was a pistol or loaded firearm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "South Dakota enacted constitutional carry in 2019, allowing permit-less concealed carry for persons 18+ who are not prohibited. This statute primarily applies to prohibited persons or minors."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "SDCL § 22-14-15.1",
+    "statute_title": "Possession of Firearm by Convicted Felon",
+    "offense_class": "Class 6 Felony",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant possessed or had control of a firearm",
+      "Defendant had been convicted of a crime of violence or a felony",
+      "Less than 15 years had elapsed since the conviction or release from imprisonment"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Persons convicted of crimes of violence lose firearm rights for 15 years after conviction or release. Certain felonies result in permanent prohibition."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "SDCL § 22-14-9",
+    "statute_title": "Carrying a Concealed Weapon — Violation of Restrictions",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant carried a concealed weapon",
+      "In violation of location restrictions or other conditions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Weapons are prohibited in certain locations including courthouses and schools regardless of permit status."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "SDCL § 22-14-26",
+    "statute_title": "Reckless Discharge of Firearm",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant discharged a firearm",
+      "In a reckless manner",
+      "Creating a risk of harm to persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Enhanced if injury results. May be charged alongside aggravated assault if directed at a person."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "SDCL § 22-40-8",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class 6 Felony (under $1,000); Class 5 Felony ($1,000-$2,500); Class 4 Felony ($2,500+)",
+    "penalty_min": null,
+    "penalty_max": "2 years to 10 years depending on loss amount",
+    "fine_max": "$4,000 to $20,000 depending on loss amount",
+    "elements": [
+      "Defendant used or attempted to use the personal identifying information of another",
+      "Without authorization",
+      "To obtain credit, money, goods, services, or other thing of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount of loss determines classification",
+      "Multiple victims"
+    ],
+    "notes": "Includes using another's Social Security number, driver's license, financial account numbers, or other identifying information."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "SDCL § 22-30A-1",
+    "statute_title": "Embezzlement (Theft by Fiduciary)",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant was entrusted with property or funds",
+      "Defendant fraudulently converted the property to their own use",
+      "Without authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value determines classification",
+      "Public employee or fiduciary"
+    ],
+    "notes": "Embezzlement is consolidated under the general theft statute in South Dakota. Classification based on value of property taken."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "SDCL § 22-39-36",
+    "statute_title": "Forgery",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant falsely made, altered, forged, or counterfeited a written instrument",
+      "With intent to defraud",
+      "The instrument purported to be genuine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes forging checks, legal documents, identification, and financial instruments."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "SDCL § 22-39-36",
+    "statute_title": "Counterfeiting",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant made, forged, or counterfeited any instrument",
+      "With intent to defraud another",
+      "The instrument was designed to appear genuine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Counterfeiting is prosecuted under the forgery statute. Federal charges may also apply for counterfeiting U.S. currency."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "SDCL § 22-41-1",
+    "statute_title": "Making or Issuing a No-Account or Insufficient-Funds Check",
+    "offense_class": "Class 2 Misdemeanor (under $500); Class 1 Misdemeanor ($500-$1,000); Class 6 Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "30 days to 2 years depending on amount",
+    "fine_max": "$500 to $4,000 depending on amount",
+    "elements": [
+      "Defendant issued a check or draft",
+      "Knowing at the time that there were insufficient funds",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount determines classification"
+    ],
+    "notes": "Presumption of intent if check is not made good within 30 days of notice."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "SDCL § 22-46-10",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class 6 Felony (under $2,500); Class 5 Felony ($2,500+)",
+    "penalty_min": null,
+    "penalty_max": "2 years (under $2,500); 5 years ($2,500+)",
+    "fine_max": "$4,000 to $10,000",
+    "elements": [
+      "Defendant knowingly presented false information in an insurance claim",
+      "With intent to defraud an insurer",
+      "The claim was material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount of fraud determines classification"
+    ],
+    "notes": "Includes auto, health, life, and property insurance fraud."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "SDCL § 22-30A-8.1",
+    "statute_title": "Fraudulent Use of Credit or Debit Card",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant used a credit or debit card",
+      "Knowing it was stolen, forged, expired, or revoked",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount determines classification"
+    ],
+    "notes": "Penalties mirror the general theft statute based on the amount obtained."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "SDCL § 22-46A-3",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class 5 Felony (under $5,000); Class 4 Felony ($5,000-$100,000); Class 3 Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years to 15 years depending on amount",
+    "fine_max": "$10,000 to $30,000 depending on amount",
+    "elements": [
+      "Defendant conducted a financial transaction",
+      "Knowing the property involved was derived from unlawful activity",
+      "With intent to promote the unlawful activity or conceal the source"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount of laundered funds determines classification"
+    ],
+    "notes": "Also may be prosecuted federally under 18 U.S.C. § 1956."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "SDCL § 22-30A-1",
+    "statute_title": "Theft by Deception (General Fraud)",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant obtained property of another by deception",
+      "Defendant created a false impression of fact or value",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value determines classification"
+    ],
+    "notes": "General fraud is prosecuted as theft by deception under the unified theft statute."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "SDCL § 22-22-1",
+    "statute_title": "Rape",
+    "offense_class": "Class C Felony (first degree); Class 1 Felony (if victim under 13)",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant engaged in an act of sexual penetration with another person",
+      "Through force, coercion, or threats of bodily harm",
+      "Or the victim was incapable of giving consent"
+    ],
+    "mandatory_minimum": "15 years (victim under 13)",
+    "enhancements": [
+      "Victim under 13 (Class 1 Felony, mandatory minimum 15 years)",
+      "Use of a weapon",
+      "Serious bodily injury"
+    ],
+    "notes": "South Dakota uses 'rape' rather than 'sexual assault.' First-degree rape is a Class C Felony carrying up to life. Second-degree rape (SDCL § 22-22-1(1)) is a Class 1 Felony with mandatory minimums for child victims."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "SDCL § 22-22-1",
+    "statute_title": "Rape in the First Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant engaged in an act of sexual penetration with another person",
+      "Through the use of force, coercion, or threats",
+      "Or the victim was incapable of giving consent due to physical or mental incapacity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under age 13 (Class 1 Felony, mandatory minimum 15 years)",
+      "Use of a dangerous weapon",
+      "Serious personal injury to victim"
+    ],
+    "notes": "South Dakota classifies sexual assault as 'rape.' Rape of a child under 13 carries a mandatory 15-year minimum."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "SDCL § 22-24-1.2",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Class 1 Misdemeanor (first); Class 6 Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 2 years (second+)",
+    "fine_max": "$2,000 (first); $4,000 (second+)",
+    "elements": [
+      "Defendant exposed their genitals or intimate parts",
+      "In a public place or in view of the public",
+      "Under circumstances likely to cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class 6 Felony)",
+      "In presence of a minor"
+    ],
+    "notes": "Second or subsequent offense elevates to a Class 6 Felony. May trigger sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "SDCL § 22-23-1",
+    "statute_title": "Prostitution",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant engaged in or offered to engage in sexual activity",
+      "For a fee or anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the person soliciting and the person providing services may be charged. Promoting prostitution is a separate, more serious offense."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "SDCL § 22-24A-3",
+    "statute_title": "Possession, Manufacture, or Distribution of Child Pornography",
+    "offense_class": "Class 4 Felony (possession); Class 2 Felony (distribution/manufacture)",
+    "penalty_min": null,
+    "penalty_max": "10 years (possession); 25 years (distribution/manufacture)",
+    "fine_max": "$20,000 (possession); $50,000 (distribution/manufacture)",
+    "elements": [
+      "Defendant possessed, manufactured, or distributed material depicting a minor in sexually explicit conduct",
+      "Defendant knew or should have known the material depicted a minor"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution or manufacture (Class 2 Felony)",
+      "Multiple victims or images"
+    ],
+    "notes": "Federal charges commonly also apply. Sex offender registration required upon conviction."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "SDCL § 22-24B-20",
+    "statute_title": "Failure to Register as Sex Offender",
+    "offense_class": "Class 6 Felony",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant knowingly failed to register, update, or verify registration information"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Registration requirements under SDCL Chapter 22-24B. Tier-based system with registration periods of 10 years, 25 years, or life."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "SDCL § 22-22-1(5)",
+    "statute_title": "Rape — Victim Under Age of Consent",
+    "offense_class": "Class 3 Felony (victim 13-15, defendant 3+ years older); Class 1 Felony (victim under 13)",
+    "penalty_min": null,
+    "penalty_max": "15 years (victim 13-15); life (victim under 13)",
+    "fine_max": "$30,000 (victim 13-15); $50,000 (victim under 13)",
+    "elements": [
+      "Defendant engaged in sexual penetration with a victim",
+      "The victim was under the age of consent (16)",
+      "The defendant was older than the victim by 3 or more years"
+    ],
+    "mandatory_minimum": "15 years (victim under 13)",
+    "enhancements": [
+      "Victim under 13 (Class 1 Felony)",
+      "Defendant in position of authority"
+    ],
+    "notes": "Age of consent in South Dakota is 16. Three-year age gap provision for victims 13-15. Sexual contact with a child under 16 is prosecuted under SDCL § 22-22-7."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "SDCL § 22-18-35",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant intentionally caused public alarm, nuisance, or disturbance",
+      "By engaging in fighting, violent, or tumultuous behavior",
+      "Or making unreasonable noise or offensive utterances"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common charge in public disturbance situations. May be combined with other charges."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "SDCL § 22-11-4",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant intentionally prevented or attempted to prevent a law enforcement officer",
+      "From effecting a lawful arrest",
+      "By using force or physical interference"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Applies even if the underlying arrest is later determined to be unlawful. Passive resistance alone is not typically sufficient."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "SDCL § 22-11-6",
+    "statute_title": "Obstructing Justice",
+    "offense_class": "Class 1 Misdemeanor; Class 6 Felony if involving a felony investigation",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 2 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant willfully obstructed, resisted, or opposed the administration of justice",
+      "Or interfered with a law enforcement officer in the performance of official duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Obstruction during felony investigation"
+    ],
+    "notes": "Includes providing false information, hiding evidence, or interfering with an investigation."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "SDCL § 21-32-2",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Punishable by fine and/or imprisonment at the court's discretion",
+    "penalty_min": null,
+    "penalty_max": "30 days (direct contempt); varies for indirect contempt",
+    "fine_max": "$500 (direct contempt); varies for indirect contempt",
+    "elements": [
+      "Defendant willfully disobeyed a court order",
+      "Or engaged in disorderly or disrespectful conduct in the court's presence",
+      "Or interfered with the orderly proceedings of the court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Direct contempt (in the court's presence) may be punished summarily. Indirect contempt requires notice and hearing."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "SDCL § 22-36-1",
+    "statute_title": "Public Intoxication",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant appeared in a public place while intoxicated",
+      "To the degree that the defendant was a danger to themselves or others",
+      "Or was causing a public disturbance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Protective custody may be used as an alternative to arrest."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "SDCL § 23A-43-31",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Class 1 Misdemeanor (misdemeanor underlying); Class 6 Felony (felony underlying)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 2 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $4,000 (felony)",
+    "elements": [
+      "Defendant was released on bond or personal recognizance",
+      "Defendant was required to appear in court at a specified time",
+      "Defendant willfully failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge is a felony (Class 6 Felony)"
+    ],
+    "notes": "Bond may be forfeited and a bench warrant issued. Classification depends on the underlying charge."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "SDCL § 22-11-11",
+    "statute_title": "Filing False Report with Law Enforcement",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant knowingly filed a false report",
+      "With a law enforcement agency",
+      "Claiming that a crime had been committed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Defendant may also be liable for the costs of any investigation initiated based on the false report."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "SDCL § 22-18-1.1",
+    "statute_title": "Threatening to Commit a Crime of Violence",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant threatened to commit a crime of violence",
+      "The threat was communicated to the victim or a third party",
+      "With intent to place the victim in fear of imminent serious bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Terroristic threats are taken seriously and may be charged alongside aggravated assault."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "SDCL § 22-29-1",
+    "statute_title": "Perjury",
+    "offense_class": "Class 6 Felony",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$4,000",
+    "elements": [
+      "Defendant made a false statement under oath or affirmation",
+      "In a judicial proceeding or other proceeding where an oath is required",
+      "The statement was material to the proceeding",
+      "Defendant knew the statement was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes testimony in court, depositions, and sworn affidavits."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "SDCL § 22-12A-7",
+    "statute_title": "Bribery of Public Official",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant offered, gave, or promised anything of value",
+      "To a public official",
+      "With intent to influence the official's vote, decision, or action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the person offering and the official accepting may be charged. Includes legislative, judicial, and executive officials."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "SDCL § 22-11A-2",
+    "statute_title": "Escape from Custody",
+    "offense_class": "Class 5 Felony (felony custody); Class 1 Misdemeanor (misdemeanor custody)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$10,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant was in lawful custody or confinement",
+      "Defendant escaped or attempted to escape from custody"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Escape from felony custody (Class 5 Felony)"
+    ],
+    "notes": "Sentence for escape is consecutive to any sentence being served. Includes escape from prison, jail, or lawful custody of an officer."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "SDCL § 40-1-2.3",
+    "statute_title": "Animal Cruelty",
+    "offense_class": "Class 1 Misdemeanor (first); Class 6 Felony (second or subsequent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 2 years (second+)",
+    "fine_max": "$2,000 (first); $4,000 (second+)",
+    "elements": [
+      "Defendant intentionally, willfully, or maliciously treated an animal cruelly",
+      "Including torture, mutilation, or unnecessary suffering"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class 6 Felony)"
+    ],
+    "notes": "Second offense within the lifetime of the defendant is a Class 6 Felony."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "SDCL § 23A-31-3",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Determined by original offense classification",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum sentence for the original offense",
+    "fine_max": "Up to the maximum fine for the original offense",
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated one or more conditions of probation",
+      "The violation was willful and substantial"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Court may revoke probation and impose the original sentence. Hearing required before revocation."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "SDCL § 24-15-8",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Determined by original offense classification",
+    "penalty_min": null,
+    "penalty_max": "Remainder of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated one or more conditions of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Board of Pardons and Paroles makes revocation decisions. Defendant may be returned to serve the remainder of the original sentence."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "SDCL § 22-3-3",
+    "statute_title": "Aiding, Abetting, or Advising — Principal Liability",
+    "offense_class": "Same as the principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as the principal offense",
+    "fine_max": "Same as the principal offense",
+    "elements": [
+      "A crime was committed by another person",
+      "Defendant knowingly aided, abetted, or advised the commission of the crime",
+      "Defendant intended to promote or facilitate the commission of the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "All persons who aid, abet, or advise the commission of a crime are equally liable as the principal."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "SDCL § 22-4-1",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One class below the target offense (except Class A/B/C Felony attempts remain at the same class)",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of the attempted offense",
+    "fine_max": "Varies by class of the attempted offense",
+    "elements": [
+      "Defendant intended to commit a specific offense",
+      "Defendant engaged in conduct constituting a substantial step toward commission",
+      "The conduct was strongly corroborative of the criminal intent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is generally one class below the completed offense. Exception: attempt to commit a Class A, B, or C Felony remains at the same class."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "SDCL § 22-3-8",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Same as the target offense",
+    "penalty_min": null,
+    "penalty_max": "Same as the target offense",
+    "fine_max": "Same as the target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to commit a crime",
+      "Defendant or a co-conspirator committed an overt act in furtherance of the agreement",
+      "Defendant intended that the crime be committed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Requires an overt act. Each conspirator may be liable for the acts of co-conspirators in furtherance of the conspiracy."
+  }
+]

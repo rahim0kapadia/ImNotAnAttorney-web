@@ -1,0 +1,1114 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "ORC § 4511.19",
+    "statute_title": "Operating a Vehicle Under the Influence (OVI)",
+    "offense_class": "1st Degree Misdemeanor (first/second); 4th Degree Felony (third within 10 years); 3rd Degree Felony (fourth+ within 10 years)",
+    "penalty_min": "3 days (first offense); 10 days (second within 10 years)",
+    "penalty_max": "180 days (first); 180 days (second); 60 months (fourth+)",
+    "fine_max": "$1,075 (first); $1,625 (second); $10,500 (third); $10,500 (fourth+)",
+    "elements": [
+      "Defendant operated a vehicle, streetcar, or trackless trolley within Ohio",
+      "Defendant was under the influence of alcohol, a drug of abuse, or a combination",
+      "Defendant had a BAC of .08 or higher, or tested positive for a listed controlled substance"
+    ],
+    "mandatory_minimum": "3 consecutive days in jail or 3-day Driver Intervention Program (first); 10 consecutive days (second within 10 years); 30 consecutive days (third within 10 years); 60 consecutive days (fourth within 10 years)",
+    "enhancements": [
+      "High-tier BAC (.17 or above) — mandatory 6 days jail (first offense)",
+      "Refusal of chemical test — enhanced administrative suspension",
+      "Third offense within 10 years (F4 felony)",
+      "Fourth or subsequent within 10 years (F3 felony)",
+      "Child passenger under 18"
+    ],
+    "notes": "Ohio uses 'OVI' not 'DUI.' Administrative License Suspension (ALS) is separate from criminal penalties. Refusal = 1-year ALS; failure = 90-day ALS. Ignition interlock may be required. Driver Intervention Program can substitute for 3 days jail on first offense."
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "statute_number": "ORC § 4511.19(A)(2)",
+    "statute_title": "OVI — Refusal of Chemical Test",
+    "offense_class": "1st Degree Misdemeanor (first/second)",
+    "penalty_min": "3 days (first offense)",
+    "penalty_max": "180 days",
+    "fine_max": "$1,075",
+    "elements": [
+      "Defendant operated a vehicle in Ohio",
+      "Defendant was under the influence of alcohol, drugs, or combination",
+      "Defendant refused to submit to a chemical test"
+    ],
+    "mandatory_minimum": "3 consecutive days (first); 10 consecutive days (second within 10 years)",
+    "enhancements": [
+      "Prior OVI conviction within 10 years",
+      "Accident causing injury or death"
+    ],
+    "notes": "Refusal triggers 1-year Administrative License Suspension. Refusal is admissible at trial. No per se BAC to prove but prosecution must still prove impairment. Limited driving privileges available after 30 days."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "ORC § 2903.06(A)(1)",
+    "statute_title": "Aggravated Vehicular Homicide",
+    "offense_class": "2nd Degree Felony; 1st Degree Felony (prior OVI conviction)",
+    "penalty_min": "2 years",
+    "penalty_max": "8 years (F2); 11 years (F1 with prior OVI)",
+    "fine_max": "$15,000 (F2); $20,000 (F1)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "Defendant caused the death of another",
+      "Defendant was operating under the influence of alcohol or drugs at the time"
+    ],
+    "mandatory_minimum": "Mandatory prison term",
+    "enhancements": [
+      "Prior OVI conviction (elevates to F1)",
+      "Multiple victims",
+      "Fleeing the scene"
+    ],
+    "notes": "Distinct from vehicular homicide (ORC § 2903.06(A)(2)) which requires recklessness without OVI element. Mandatory license suspension for life upon conviction."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "ORC § 2903.02",
+    "statute_title": "Murder",
+    "offense_class": "Unclassified Felony",
+    "penalty_min": "15 years to life",
+    "penalty_max": "Life imprisonment with parole eligibility after 15 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant purposely caused the death of another",
+      "OR defendant caused the death of another as a proximate result of committing or attempting to commit a felony offense of violence"
+    ],
+    "mandatory_minimum": "15 years to life (indefinite sentence)",
+    "enhancements": [
+      "Felony murder specifications",
+      "Prior conviction for murder or aggravated murder",
+      "Repeat violent offender specification"
+    ],
+    "notes": "Distinguished from aggravated murder (ORC § 2903.01) which requires prior calculation and design or specified circumstances. Murder carries 15-to-life; aggravated murder carries life without parole or death."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "ORC § 2903.03",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "1st Degree Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "11 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant knowingly caused the death of another",
+      "Defendant acted under the influence of sudden passion or sudden fit of rage brought on by serious provocation by the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Firearm specification",
+      "Repeat violent offender"
+    ],
+    "notes": "Often charged as lesser-included offense of murder. Provocation must be by the victim and sufficient to provoke a reasonable person. Heat of passion must not have cooled."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "ORC § 2903.04",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "1st Degree Felony (during felony); 3rd Degree Felony (during misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "11 years (F1); 60 months (F3)",
+    "fine_max": "$20,000 (F1); $10,000 (F3)",
+    "elements": [
+      "Defendant caused the death of another",
+      "The death was caused as a proximate result of committing or attempting to commit a felony or misdemeanor"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying offense was a felony of violence",
+      "Victim was a child or elderly person"
+    ],
+    "notes": "No intent to kill required. Degree depends on the underlying offense. Proximate cause must be established between the unlawful act and death."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "ORC § 2903.11",
+    "statute_title": "Felonious Assault",
+    "offense_class": "2nd Degree Felony; 1st Degree Felony (victim is peace officer/firefighter on duty)",
+    "penalty_min": "2 years",
+    "penalty_max": "8 years (F2); 11 years (F1)",
+    "fine_max": "$15,000 (F2); $20,000 (F1)",
+    "elements": [
+      "Defendant knowingly caused serious physical harm to another",
+      "OR defendant knowingly caused or attempted to cause physical harm to another by means of a deadly weapon or dangerous ordnance"
+    ],
+    "mandatory_minimum": "Mandatory prison term if firearm specification",
+    "enhancements": [
+      "Victim is peace officer, firefighter, or BCII investigator on duty (elevates to F1)",
+      "Firearm specification (mandatory consecutive 1, 3, or 5 years)",
+      "Repeat violent offender specification"
+    ],
+    "notes": "Two prongs: (1) serious physical harm or (2) deadly weapon. Serious physical harm includes risk of death, permanent disfigurement, or prolonged impairment. Mandatory prison for F2 felonious assault."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "ORC § 2903.13",
+    "statute_title": "Assault",
+    "offense_class": "1st Degree Misdemeanor; 5th Degree Felony (victim is peace officer, teacher, health worker, etc.)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 12 months (F5)",
+    "fine_max": "$1,000 (M1); $2,500 (F5)",
+    "elements": [
+      "Defendant knowingly caused or attempted to cause physical harm to another",
+      "OR defendant recklessly caused serious physical harm to another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is peace officer, firefighter, BCI investigator on duty (F5)",
+      "Victim is school teacher or administrator (F5)",
+      "Victim is health care professional (F5)",
+      "Prior assault conviction against same type of victim (F4)"
+    ],
+    "notes": "Simple assault is M1. Elevates to F5 when victim is a protected class on duty. 'Knowingly' means defendant was aware conduct would probably cause physical harm. 'Recklessly' for serious harm prong."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "ORC § 2919.25",
+    "statute_title": "Domestic Violence",
+    "offense_class": "1st Degree Misdemeanor (first); 4th or 3rd Degree Felony (repeat offenses)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 18 months (F4); 36 months (F3)",
+    "fine_max": "$1,000 (M1); $5,000 (F4); $10,000 (F3)",
+    "elements": [
+      "Defendant knowingly caused or attempted to cause physical harm to a family or household member",
+      "OR defendant recklessly caused serious physical harm to a family or household member",
+      "OR defendant threatened force or violence against a family or household member by a threat of force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "One prior DV or related conviction (F4)",
+      "Two or more prior DV or related convictions (F3)",
+      "Victim is pregnant (enhanced penalties)",
+      "Prior conviction for violence against same family member"
+    ],
+    "notes": "Family or household member includes spouse, former spouse, parent, child, person living together, or person who has a child in common. Conviction triggers federal firearms prohibition. CPO (civil protection order) is separate civil remedy."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "ORC § 2903.22",
+    "statute_title": "Menacing",
+    "offense_class": "4th Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$250",
+    "elements": [
+      "Defendant knowingly caused another to believe that the defendant would cause physical harm to the person or property of the other person",
+      "Or a member of the other person's immediate family or household"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Threat of harm — no physical contact required. Distinguished from aggravated menacing (ORC § 2903.21) which involves threats of serious physical harm and is an M1 or F5."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "ORC § 2905.01",
+    "statute_title": "Kidnapping",
+    "offense_class": "1st Degree Felony; 2nd Degree Felony (if victim released unharmed in safe place)",
+    "penalty_min": "3 years",
+    "penalty_max": "11 years (F1); 8 years (F2)",
+    "fine_max": "$20,000 (F1); $15,000 (F2)",
+    "elements": [
+      "Defendant by force, threat, or deception removed another from the place where found",
+      "OR restrained the liberty of another person",
+      "For the purpose of holding for ransom, facilitating a felony or flight, terrorizing, engaging in sexual activity, or hindering a governmental function"
+    ],
+    "mandatory_minimum": "Mandatory prison term",
+    "enhancements": [
+      "Sexual motivation specification",
+      "Firearm specification",
+      "Victim is a minor"
+    ],
+    "notes": "Reduced to F2 if victim is released unharmed in a safe place. Kidnapping merges with underlying felony in some circumstances per State v. Logan. Allied offense analysis required."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "ORC § 2907.02",
+    "statute_title": "Rape",
+    "offense_class": "1st Degree Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "11 years; life (if victim under 13)",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant engaged in sexual conduct with another person",
+      "The sexual conduct was by force or threat of force",
+      "OR the victim's ability to resist or consent was substantially impaired due to mental or physical condition or age"
+    ],
+    "mandatory_minimum": "5 years (if defendant drugged victim); 25 years to life (if victim under 10); 15 years to life (if victim under 13)",
+    "enhancements": [
+      "Victim under 10 (mandatory 25 years to life)",
+      "Victim under 13 (mandatory 15 years to life)",
+      "Defendant administered controlled substance surreptitiously (minimum 5 years)",
+      "Repeat sex offender specification"
+    ],
+    "notes": "Sexual conduct includes vaginal, anal, and oral intercourse and cunnilingus. Spousal rape is a crime in Ohio. Conviction requires sex offender registration (Tier III lifetime). Defendant may be subject to indefinite prison term under Reagan Tokes Law."
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "statute_number": "ORC § 2907.03",
+    "statute_title": "Sexual Battery",
+    "offense_class": "3rd Degree Felony; 2nd Degree Felony (victim under 13)",
+    "penalty_min": null,
+    "penalty_max": "60 months (F3); 8 years (F2)",
+    "fine_max": "$10,000 (F3); $15,000 (F2)",
+    "elements": [
+      "Defendant engaged in sexual conduct with another person who was not the defendant's spouse",
+      "Defendant knew the other person's ability to resist was substantially impaired",
+      "OR defendant held a position of authority over the victim (teacher, coach, clergy, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13 (elevates to F2)",
+      "Defendant in position of authority"
+    ],
+    "notes": "Distinct from rape — sexual battery involves coercion through position of authority or impairment without force. Requires sex offender registration. Position of authority includes teacher, coach, clergy, therapist, correctional officer."
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "statute_number": "ORC § 2907.05",
+    "statute_title": "Gross Sexual Imposition",
+    "offense_class": "4th Degree Felony; 3rd Degree Felony (victim under 13)",
+    "penalty_min": null,
+    "penalty_max": "18 months (F4); 60 months (F3)",
+    "fine_max": "$5,000 (F4); $10,000 (F3)",
+    "elements": [
+      "Defendant had sexual contact with another person",
+      "By force or threat of force",
+      "OR victim's ability to resist was substantially impaired",
+      "OR victim was under 13"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13 (elevates to F3)",
+      "Prior sex offense conviction"
+    ],
+    "notes": "Sexual contact means touching for sexual arousal (less than sexual conduct). Analogous to forcible fondling. Requires sex offender registration (Tier I or II depending on circumstances)."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "ORC § 2911.02",
+    "statute_title": "Robbery",
+    "offense_class": "2nd Degree Felony (force/threat used); 3rd Degree Felony (no force threat)",
+    "penalty_min": null,
+    "penalty_max": "8 years (F2); 60 months (F3)",
+    "fine_max": "$15,000 (F2); $10,000 (F3)",
+    "elements": [
+      "Defendant in attempting or committing a theft offense or fleeing immediately after",
+      "Had a deadly weapon on or about the defendant's person or under the defendant's control",
+      "OR inflicted, attempted, or threatened physical harm to another",
+      "OR used or threatened immediate use of force against another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Deadly weapon used or displayed",
+      "Firearm specification (mandatory consecutive prison term)",
+      "Victim is elderly or disabled"
+    ],
+    "notes": "F2 if defendant inflicted/threatened/attempted harm or had a deadly weapon. F3 if force or threat of force used without weapon or harm. Distinguished from aggravated robbery (ORC § 2911.01) which involves deadly weapon display or serious physical harm."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "ORC § 2911.01",
+    "statute_title": "Aggravated Robbery",
+    "offense_class": "1st Degree Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "11 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant in attempting or committing a theft offense or fleeing immediately after",
+      "Had a deadly weapon on or about the defendant's person or under the defendant's control and either displayed, brandished, indicated possession of, or used it",
+      "OR inflicted or attempted to inflict serious physical harm on another"
+    ],
+    "mandatory_minimum": "Mandatory prison term; 3-year mandatory consecutive for firearm specification",
+    "enhancements": [
+      "Firearm specification (mandatory 3 years consecutive)",
+      "Repeat violent offender",
+      "Major drug offender"
+    ],
+    "notes": "Most serious robbery offense in Ohio. Mandatory prison — community control not available. Firearm specification adds mandatory consecutive time. Armed robbery of financial institution often charged under this statute."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "ORC § 2911.12",
+    "statute_title": "Burglary",
+    "offense_class": "2nd Degree Felony (occupied structure, person present); 3rd Degree Felony (occupied structure); 4th Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "8 years (F2); 60 months (F3); 18 months (F4)",
+    "fine_max": "$15,000 (F2); $10,000 (F3); $5,000 (F4)",
+    "elements": [
+      "Defendant trespassed in an occupied structure or separately secured portion",
+      "With purpose to commit a criminal offense therein",
+      "OR defendant trespassed in a permanent or temporary habitation when any person was present or likely to be present"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person present in structure (elevates to F2)",
+      "Deadly weapon possessed",
+      "Firearm specification"
+    ],
+    "notes": "F2 if person present or likely present; F3 if occupied structure with no one present; F4 for other burglary. Distinguished from aggravated burglary (ORC § 2911.11) which involves weapon or harm. 'Occupied structure' means any structure used for overnight accommodation, business, or storage."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "ORC § 2911.11",
+    "statute_title": "Aggravated Burglary",
+    "offense_class": "1st Degree Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "11 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant trespassed in an occupied structure when another person (not accomplice) was present",
+      "With purpose to commit any criminal offense",
+      "AND defendant had a deadly weapon or dangerous ordnance, OR inflicted or attempted to inflict physical harm on another"
+    ],
+    "mandatory_minimum": "Mandatory prison term",
+    "enhancements": [
+      "Firearm specification (mandatory consecutive term)",
+      "Repeat violent offender"
+    ],
+    "notes": "Highest-level burglary offense. Requires both presence of another person AND weapon or infliction of harm. Mandatory prison — no community control."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "ORC § 2911.21",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "4th Degree Misdemeanor; 1st Degree Misdemeanor (certain habitations or critical infrastructure)",
+    "penalty_min": null,
+    "penalty_max": "30 days (M4); 180 days (M1)",
+    "fine_max": "$250 (M4); $1,000 (M1)",
+    "elements": [
+      "Defendant knowingly entered or remained on the land or premises of another",
+      "Without privilege, by force, stealth, deception, or by violating clearly posted notices or explicit warnings"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass in a habitation (M1)",
+      "Critical infrastructure facility (M1)",
+      "Prior trespass conviction"
+    ],
+    "notes": "M4 for standard trespass. Elevates to M1 for habitation trespass, certain agricultural, or critical infrastructure properties. Commonly charged as lesser-included of burglary."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "ORC § 2913.02",
+    "statute_title": "Theft",
+    "offense_class": "1st Degree Misdemeanor (under $1,000); 5th Degree Felony ($1,000-$7,500); 4th Degree Felony ($7,500-$150,000); 3rd Degree Felony ($150,000-$750,000); 2nd Degree Felony ($750,000+)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 12 months (F5); 18 months (F4); 60 months (F3); 8 years (F2)",
+    "fine_max": "$1,000 (M1); $2,500 (F5); $5,000 (F4); $10,000 (F3); $15,000 (F2)",
+    "elements": [
+      "Defendant knowingly obtained or exerted control over the property or services of another",
+      "Without the consent of the owner or person authorized to give consent",
+      "With the purpose to deprive the owner of the property or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds determine felony level",
+      "Victim is elderly or disabled (penalty one degree higher)",
+      "Motor vehicle theft (F4 minimum regardless of value)",
+      "Firearm theft (F3 minimum regardless of value)"
+    ],
+    "notes": "Value of property determines offense level. Elderly/disabled victim bumps penalty one degree. Theft of motor vehicle is minimum F4. Theft of firearm is minimum F3. Theft of a dangerous drug is F4."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "ORC § 2913.02(B)(2)",
+    "statute_title": "Petty Theft (Shoplifting Under $1,000)",
+    "offense_class": "1st Degree Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly obtained or exerted control over property of another",
+      "Without consent and with purpose to deprive",
+      "Value of property is less than $1,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elderly or disabled victim (elevates to F5)",
+      "Prior theft conviction"
+    ],
+    "notes": "Most common shoplifting charge. Repeat offenses can be elevated. Civil demand for restitution from retailer is separate from criminal prosecution."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "ORC § 2913.02(B)(3)",
+    "statute_title": "Grand Theft",
+    "offense_class": "4th Degree Felony ($7,500-$150,000); 3rd Degree Felony ($150,000-$750,000); 2nd Degree Felony ($750,000+)",
+    "penalty_min": null,
+    "penalty_max": "18 months (F4); 60 months (F3); 8 years (F2)",
+    "fine_max": "$5,000 (F4); $10,000 (F3); $15,000 (F2)",
+    "elements": [
+      "Defendant knowingly obtained or exerted control over property of another",
+      "Without consent and with purpose to deprive",
+      "Value of property exceeds $7,500"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Motor vehicle (F4 regardless of value)",
+      "Firearm (F3 regardless of value)",
+      "Dangerous drug (F4 regardless of value)"
+    ],
+    "notes": "Grand theft is theft at higher value thresholds. Auto theft is always at least F4 even if vehicle value is low. Restitution commonly ordered."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "ORC § 2913.49",
+    "statute_title": "Identity Fraud",
+    "offense_class": "5th Degree Felony; higher degrees based on value/victim",
+    "penalty_min": null,
+    "penalty_max": "12 months (F5); 18 months (F4); 60 months (F3)",
+    "fine_max": "$2,500 (F5); $5,000 (F4); $10,000 (F3)",
+    "elements": [
+      "Defendant without consent of the other person used, obtained, or possessed personal identifying information of another",
+      "With the intent to fraudulently obtain credit, property, services, or employment",
+      "OR to avoid criminal prosecution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly or disabled (one degree higher)",
+      "Value thresholds (F5 base; escalates with amount)",
+      "Multiple victims"
+    ],
+    "notes": "Personal identifying information includes SSN, driver's license, bank account, credit card numbers. Federal charges possible if interstate commerce involved."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "ORC § 2913.31",
+    "statute_title": "Forgery",
+    "offense_class": "5th Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "12 months",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant with purpose to defraud or knowing that the defendant is facilitating a fraud",
+      "Forged any writing of another without authority",
+      "OR forged any writing purporting to be genuine when it was actually spurious",
+      "OR uttered or possessed with purpose to utter any forged writing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forged instrument is a government document",
+      "Large financial loss to victim"
+    ],
+    "notes": "Covers checks, deeds, wills, contracts, and other writings. 'Uttering' means presenting or using a forged document. Often charged alongside theft and identity fraud."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "ORC § 2913.51",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "1st Degree Misdemeanor (under $1,000); escalates by value same as theft",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 12 months (F5); up to 8 years (F2) based on value",
+    "fine_max": "$1,000 (M1); escalates by value",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing or having reasonable cause to believe the property had been obtained through the commission of a theft offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds same as theft",
+      "Motor vehicle",
+      "Firearm"
+    ],
+    "notes": "Knowledge or reasonable cause to believe property was stolen is required. Value thresholds match theft offense escalation. Often charged alongside theft."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "ORC § 2925.11",
+    "statute_title": "Possession of Drugs",
+    "offense_class": "Varies by schedule and amount: Minor Misdemeanor to 1st Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "11 years (F1 for large amounts of Schedule I/II)",
+    "fine_max": "$20,000 (F1); varies by degree",
+    "elements": [
+      "Defendant knowingly obtained, possessed, or used a controlled substance"
+    ],
+    "mandatory_minimum": "Varies; mandatory prison for bulk amounts of certain drugs",
+    "enhancements": [
+      "Amount exceeds bulk amount (mandatory prison)",
+      "Proximity to school or juvenile",
+      "Prior drug conviction"
+    ],
+    "notes": "Penalty depends on drug schedule and amount. Marijuana under 100g is minor misdemeanor (no jail, $150 fine). Fentanyl and heroin possession carries enhanced penalties. Ohio has a pre-trial diversion program for first-time low-level offenders."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "ORC § 2925.11(C)(3)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Minor Misdemeanor (under 100g); 4th Degree Misdemeanor (100-200g); 5th Degree Felony (200g-1kg); escalates by amount",
+    "penalty_min": null,
+    "penalty_max": "$150 fine only (under 100g); 30 days (100-200g); 12 months (200g-1kg)",
+    "fine_max": "$150 (under 100g); $250 (100-200g); $2,500 (200g-1kg)",
+    "elements": [
+      "Defendant knowingly obtained, possessed, or used marijuana"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeds 200g (felony)",
+      "Near school",
+      "Prior conviction"
+    ],
+    "notes": "Under 100g is a minor misdemeanor — fine only, no jail, no criminal record if first offense. Ohio legalized recreational marijuana in 2023 (Issue 2) for adults 21+ up to 2.5 oz. Possession limits differ from pre-2023 thresholds."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "ORC § 2925.03",
+    "statute_title": "Trafficking in Drugs",
+    "offense_class": "4th or 5th Degree Felony (small amounts); up to 1st Degree Felony (major drug offender)",
+    "penalty_min": null,
+    "penalty_max": "11 years (F1); mandatory prison for bulk amounts",
+    "fine_max": "$20,000 (F1); varies by schedule and amount",
+    "elements": [
+      "Defendant knowingly sold or offered to sell a controlled substance",
+      "OR prepared for shipment, shipped, transported, delivered, prepared for distribution, or distributed a controlled substance",
+      "With knowledge or reasonable cause to believe it would be sold"
+    ],
+    "mandatory_minimum": "Mandatory prison for bulk amounts; major drug offender specification adds mandatory 11 years",
+    "enhancements": [
+      "Amount exceeds bulk amount (mandatory prison)",
+      "Near school or juvenile (one degree higher)",
+      "Major drug offender (mandatory maximum prison term)",
+      "Firearm specification"
+    ],
+    "notes": "Trafficking does not require an actual sale — offering to sell, transporting with intent, or preparation for distribution all qualify. Degree depends on schedule and amount of drug."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "ORC § 2925.14",
+    "statute_title": "Drug Paraphernalia Offenses",
+    "offense_class": "4th Degree Misdemeanor (possession); 2nd Degree Misdemeanor (sale/delivery)",
+    "penalty_min": null,
+    "penalty_max": "30 days (M4 possession); 90 days (M2 sale)",
+    "fine_max": "$250 (M4); $750 (M2)",
+    "elements": [
+      "Defendant knowingly used or possessed with purpose to use drug paraphernalia",
+      "OR sold, delivered, or manufactured with intent to sell drug paraphernalia"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale to a minor (one degree higher)"
+    ],
+    "notes": "Drug paraphernalia includes pipes, syringes (with certain exceptions), bongs, rolling papers when combined with other evidence of drug use. Needle exchange programs provide limited immunity."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "ORC § 2909.02",
+    "statute_title": "Aggravated Arson",
+    "offense_class": "1st Degree Felony (risk to person); 2nd Degree Felony (occupied structure)",
+    "penalty_min": "3 years (F1)",
+    "penalty_max": "11 years (F1); 8 years (F2)",
+    "fine_max": "$20,000 (F1); $15,000 (F2)",
+    "elements": [
+      "Defendant by means of fire or explosion knowingly created a substantial risk of serious physical harm to any person other than the defendant",
+      "OR caused physical harm to any occupied structure"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Risk of death to person (F1)",
+      "Occupied structure with person present",
+      "Insurance fraud motivation"
+    ],
+    "notes": "Aggravated arson is the most serious fire-related offense. Lesser offenses include arson (ORC § 2909.03, F4) and criminal mischief. Fire set in connection with insurance fraud is common aggravating factor."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "ORC § 2923.13",
+    "statute_title": "Having Weapons While Under Disability",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "36 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly acquired, had, carried, or used a firearm or dangerous ordnance",
+      "While under one of the listed disabilities: fugitive from justice, under indictment for or convicted of a felony of violence, drug offense, etc."
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession of loaded firearm",
+      "Proximity to school zone"
+    ],
+    "notes": "Disabilities include: felony conviction involving violence, drug offenses, adjudicated mentally incompetent, chronic alcoholic, fugitive from justice, under indictment. Federal parallel charge under 18 USC § 922(g)."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "ORC § 2923.12",
+    "statute_title": "Carrying Concealed Weapons",
+    "offense_class": "4th Degree Felony (without permit, non-qualifying); 1st Degree Misdemeanor (certain violations)",
+    "penalty_min": null,
+    "penalty_max": "18 months (F4); 180 days (M1)",
+    "fine_max": "$5,000 (F4); $1,000 (M1)",
+    "elements": [
+      "Defendant knowingly carried or had concealed on the defendant's person or within reach",
+      "A handgun, deadly weapon, or dangerous ordnance",
+      "Without a valid concealed handgun license when required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Loaded firearm",
+      "Prior conviction for offense of violence"
+    ],
+    "notes": "Ohio enacted constitutional carry (permitless carry) effective June 13, 2022 (SB 215). Adults 21+ who are not prohibited persons can carry concealed without a license. This significantly narrowed who can be charged. Still a crime for prohibited persons."
+  },
+  {
+    "common_charge_slug": "unlawful-carry",
+    "statute_number": "ORC § 2923.16",
+    "statute_title": "Improperly Handling Firearms in a Motor Vehicle",
+    "offense_class": "4th Degree Felony (loaded, accessible); 1st Degree Misdemeanor (other violations)",
+    "penalty_min": null,
+    "penalty_max": "18 months (F4); 180 days (M1)",
+    "fine_max": "$5,000 (F4); $1,000 (M1)",
+    "elements": [
+      "Defendant knowingly transported or had a loaded firearm in a motor vehicle",
+      "In a manner accessible to the operator or any passenger without leaving the vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction for gun offense"
+    ],
+    "notes": "Constitutional carry (SB 215, eff. 6/13/2022) changed the legal landscape. Lawful adults 21+ may have loaded handgun accessible in vehicle. Violations now mainly apply to prohibited persons or long guns."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "ORC § 2917.11",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Minor Misdemeanor; 4th Degree Misdemeanor (persists after warning)",
+    "penalty_min": null,
+    "penalty_max": "$150 fine (MM); 30 days (M4)",
+    "fine_max": "$150 (MM); $250 (M4)",
+    "elements": [
+      "Defendant recklessly caused inconvenience, annoyance, or alarm to another",
+      "By engaging in fighting, threatening harm, making unreasonable noise, or hindering movement of others",
+      "OR offensive conduct or language in public tending to provoke a violent response"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Persisting after reasonable warning or request to desist (elevates to M4)"
+    ],
+    "notes": "Most common public order offense. Alcohol-related disorderly conduct is frequently charged at bars, events, and college campuses. Often offered as plea deal from more serious charges."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "ORC § 2921.331",
+    "statute_title": "Failure to Comply with Order or Signal of Police Officer",
+    "offense_class": "1st Degree Misdemeanor (failure to comply with order); 4th Degree Felony (fleeing); 3rd Degree Felony (aggravated circumstances)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 18 months (F4); 60 months (F3)",
+    "fine_max": "$1,000 (M1); $5,000 (F4); $10,000 (F3)",
+    "elements": [
+      "Defendant failed to comply with a lawful order or signal of a police officer",
+      "OR defendant operated a motor vehicle so as to willfully elude or flee a police officer after receiving a visible or audible signal to stop"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Fleeing immediately after committing a felony (F3)",
+      "Operation caused substantial risk of serious physical harm (F3)",
+      "High-speed pursuit"
+    ],
+    "notes": "Division (A) is mere failure to comply (M1). Division (B) involves fleeing in a vehicle (F4 or F3). Court must impose a class 2 license suspension. Often charged alongside other offenses arising from the pursuit."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "ORC § 2921.31",
+    "statute_title": "Obstructing Official Business",
+    "offense_class": "2nd Degree Misdemeanor; 5th Degree Felony (if creates risk of physical harm)",
+    "penalty_min": null,
+    "penalty_max": "90 days (M2); 12 months (F5)",
+    "fine_max": "$750 (M2); $2,500 (F5)",
+    "elements": [
+      "Defendant without privilege to do so and with purpose to prevent, obstruct, or delay the performance by a public official of any authorized act within the official's capacity",
+      "Did an act that hampered or impeded the public official in the performance of the official's lawful duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Creates risk of physical harm to any person (F5)"
+    ],
+    "notes": "Commonly charged alongside resisting arrest. Does not require physical force. Providing false information to an officer can constitute obstruction. Passive resistance (going limp, etc.) may or may not qualify depending on circumstances."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "ORC § 2921.13",
+    "statute_title": "Falsification",
+    "offense_class": "1st Degree Misdemeanor (general); 5th, 4th, or 3rd Degree Felony (in certain contexts)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); up to 60 months (F3 in certain contexts)",
+    "fine_max": "$1,000 (M1); up to $10,000 (F3)",
+    "elements": [
+      "Defendant knowingly made a false statement or swore or affirmed the truth of a false statement previously made",
+      "When the statement is made in an official proceeding, to a law enforcement officer, on a government application, or in writing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "False statement to obtain firearms (F5)",
+      "False alarm of fire (F4)",
+      "False claim of an emergency (F3 if serious harm results)"
+    ],
+    "notes": "Covers lying to police, filing false police reports, and false statements on government forms. Distinguished from perjury (ORC § 2921.11) which requires sworn testimony."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "ORC § 2917.21",
+    "statute_title": "Telecommunications Harassment",
+    "offense_class": "1st Degree Misdemeanor; 5th Degree Felony (prior conviction or threat of violence)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 12 months (F5)",
+    "fine_max": "$1,000 (M1); $2,500 (F5)",
+    "elements": [
+      "Defendant knowingly made or caused a telecommunication or used a telecommunication facility",
+      "To make a threat of physical harm, to harass, to abuse, or to annoy another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction for same offense (F5)",
+      "Threat of violence (F5)"
+    ],
+    "notes": "Covers phone calls, texts, emails, and social media communications. Closely related to menacing by stalking (ORC § 2903.211). Frequently charged in domestic violence contexts."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "ORC § 2903.211",
+    "statute_title": "Menacing by Stalking",
+    "offense_class": "1st Degree Misdemeanor; 4th Degree Felony (prior conviction or pattern of conduct; 5th Degree Felony (trespass)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 18 months (F4)",
+    "fine_max": "$1,000 (M1); $5,000 (F4)",
+    "elements": [
+      "Defendant by engaging in a pattern of conduct knowingly caused another person to believe the defendant would cause physical harm to the other person or a family member",
+      "OR caused mental distress to the other person or a family member"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction for menacing by stalking (F4)",
+      "Made threat while in violation of protection order (F4)",
+      "Trespass on victim's property as part of pattern (F5)"
+    ],
+    "notes": "Pattern of conduct means two or more actions or incidents closely related in time. Includes surveillance, following, monitoring, and electronic tracking. CPO violation enhances penalty."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "ORC § 2919.22",
+    "statute_title": "Endangering Children",
+    "offense_class": "1st Degree Misdemeanor (general); 3rd, 2nd, or 1st Degree Felony (serious harm, drug exposure, torture)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 60 months (F3); 8 years (F2); 11 years (F1)",
+    "fine_max": "$1,000 (M1); $10,000 (F3); $15,000 (F2); $20,000 (F1)",
+    "elements": [
+      "Defendant being a parent, guardian, custodian, or person having custody of a child under 18",
+      "Created a substantial risk to the health or safety of the child by violating a duty of care, protection, or support",
+      "OR abused the child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical harm to child (F2 or F1)",
+      "Administration of drug of abuse to child (F2 or F1)",
+      "Torture or cruel abuse (F1)"
+    ],
+    "notes": "Commonly charged in drug cases where children are present. Methamphetamine lab exposure is automatic felony. Failure to provide adequate food, shelter, or medical care can constitute endangering."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "ORC § 2919.27",
+    "statute_title": "Violating a Protection Order",
+    "offense_class": "1st Degree Misdemeanor; 5th Degree Felony (prior violation or with violence); 3rd Degree Felony (with serious harm)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 12 months (F5); 60 months (F3)",
+    "fine_max": "$1,000 (M1); $2,500 (F5); $10,000 (F3)",
+    "elements": [
+      "Defendant recklessly violated the terms of a protection order, consent agreement, or anti-stalking order issued pursuant to Ohio law or substantially equivalent order from another state"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior violation of protection order (F5)",
+      "While committing a felony (F3)",
+      "Serious physical harm to protected person (F3)"
+    ],
+    "notes": "Applies to CPOs, TPOs, and consent agreements. Contact includes phone calls, texts, social media, and third-party contact. First violation is M1 but escalates quickly with priors."
+  },
+  {
+    "common_charge_slug": "witness-tampering",
+    "statute_number": "ORC § 2921.04",
+    "statute_title": "Intimidation of Attorney, Victim, or Witness",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "60 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly attempted to intimidate or hinder the attendance or testimony of a witness, victim, or attorney in a criminal case or delinquency proceeding",
+      "OR attempted to influence, corrupt, or prevent the testimony of such person by force, threat, or intimidation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of physical force",
+      "Threat against family member of witness"
+    ],
+    "notes": "Also covers intimidation or retaliation against witnesses who have already testified. Closely related to retaliation (ORC § 2921.05)."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "ORC § 2909.05",
+    "statute_title": "Vandalism",
+    "offense_class": "5th Degree Felony (under $7,500); 4th Degree Felony ($7,500-$150,000); 3rd Degree Felony ($150,000+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (F5); 18 months (F4); 60 months (F3)",
+    "fine_max": "$2,500 (F5); $5,000 (F4); $10,000 (F3)",
+    "elements": [
+      "Defendant knowingly caused serious physical harm to an occupied structure, its contents, or the real property on which the structure is situated",
+      "OR to property of another that is used in a profession, business, trade, or occupation, government property, or a place of worship"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Government property or place of worship",
+      "High value of damage"
+    ],
+    "notes": "Vandalism is always a felony in Ohio — the degree depends on value. This distinguishes it from criminal damaging/endangering (ORC § 2909.06) which is a M2 for lower-value damage."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "ORC § 2909.06",
+    "statute_title": "Criminal Damaging or Endangering",
+    "offense_class": "2nd Degree Misdemeanor; 1st Degree Misdemeanor (occupied structure)",
+    "penalty_min": null,
+    "penalty_max": "90 days (M2); 180 days (M1)",
+    "fine_max": "$750 (M2); $1,000 (M1)",
+    "elements": [
+      "Defendant knowingly caused or created a substantial risk of physical harm to any property of another",
+      "Without the other person's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied structure (M1)",
+      "Computer or telecommunications equipment"
+    ],
+    "notes": "The misdemeanor counterpart to vandalism. Commonly charged for property damage that doesn't rise to the 'serious physical harm' threshold required for vandalism."
+  },
+  {
+    "common_charge_slug": "dui-felony-injury",
+    "statute_number": "ORC § 2903.08",
+    "statute_title": "Aggravated Vehicular Assault",
+    "offense_class": "3rd Degree Felony (OVI-related); 4th Degree Felony (reckless); 1st Degree Misdemeanor (negligent)",
+    "penalty_min": null,
+    "penalty_max": "60 months (F3); 18 months (F4); 180 days (M1)",
+    "fine_max": "$10,000 (F3); $5,000 (F4); $1,000 (M1)",
+    "elements": [
+      "Defendant operated a motor vehicle and caused serious physical harm to another person",
+      "While under the influence, operating recklessly, or operating negligently"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "OVI-related (F3)",
+      "Prior OVI conviction",
+      "Construction zone"
+    ],
+    "notes": "Three levels: OVI-related (F3), reckless (F4), and negligent (M1). Must cause serious physical harm — not just injury. License suspension mandatory."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "ORC § 4510.11",
+    "statute_title": "Driving Under Suspension or Without a License",
+    "offense_class": "Unclassified Misdemeanor; 1st Degree Misdemeanor (OVI-related suspension)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1 for OVI-related); varies",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a motor vehicle on any street, highway, or property used by the public",
+      "While the defendant's license was suspended, revoked, or cancelled, or without ever having obtained a license"
+    ],
+    "mandatory_minimum": "3 consecutive days jail if suspension was OVI-related",
+    "enhancements": [
+      "OVI-related suspension (mandatory jail)",
+      "Repeat offenses"
+    ],
+    "notes": "Ohio consolidated many driving-under-suspension statutes into ORC Chapter 4510. OVI-related suspension carries mandatory minimum jail. BMV points accumulate."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "ORC § 2921.331(B)",
+    "statute_title": "Fleeing and Eluding Police",
+    "offense_class": "4th Degree Felony; 3rd Degree Felony (aggravated circumstances)",
+    "penalty_min": null,
+    "penalty_max": "18 months (F4); 60 months (F3)",
+    "fine_max": "$5,000 (F4); $10,000 (F3)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "Defendant willfully eluded or fled a police officer after receiving a visible or audible signal to bring the vehicle to a stop"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Fleeing after committing a felony (F3)",
+      "Substantial risk of serious physical harm during pursuit (F3)"
+    ],
+    "notes": "Division (B) of the failure to comply statute specifically addresses vehicular fleeing. Mandatory class 2 license suspension. Commonly results in additional charges based on pursuit conduct."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "ORC § 2907.24",
+    "statute_title": "Soliciting",
+    "offense_class": "3rd Degree Misdemeanor; 1st Degree Misdemeanor (near school or with prior); 5th Degree Felony (third offense)",
+    "penalty_min": null,
+    "penalty_max": "60 days (M3); 180 days (M1); 12 months (F5)",
+    "fine_max": "$500 (M3); $1,000 (M1); $2,500 (F5)",
+    "elements": [
+      "Defendant solicited another to engage in sexual activity for hire",
+      "OR engaged in conduct or communication inviting, requesting, or suggesting that another engage in sexual activity for hire"
+    ],
+    "mandatory_minimum": "Mandatory STD testing",
+    "enhancements": [
+      "Near school (M1)",
+      "Prior soliciting conviction (M1; then F5 on third+)",
+      "HIV-positive offender"
+    ],
+    "notes": "Ohio has shifted enforcement focus to buyers and traffickers rather than persons engaged in prostitution. Human trafficking (ORC § 2905.32) carries severe penalties for those who compel prostitution."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "ORC § 2913.21",
+    "statute_title": "Misuse of Credit Cards",
+    "offense_class": "1st Degree Misdemeanor (under $1,000); 5th Degree Felony ($1,000-$7,500); escalates by amount",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 12 months (F5); escalates",
+    "fine_max": "$1,000 (M1); $2,500 (F5); escalates",
+    "elements": [
+      "Defendant practiced deception for the purpose of procuring the issuance of a credit card",
+      "OR knowingly bought, sold, or received a credit card from anyone other than the issuer",
+      "OR used a credit card knowing it was expired, revoked, or obtained through theft"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds same as theft",
+      "Elderly or disabled victim"
+    ],
+    "notes": "Covers fraudulent applications, trafficking in stolen cards, and unauthorized use. Often charged alongside identity fraud and theft. Value determines felony level."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "ORC § 2913.11",
+    "statute_title": "Passing Bad Checks",
+    "offense_class": "1st Degree Misdemeanor (under $1,000); escalates by value",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); escalates with value",
+    "fine_max": "$1,000 (M1); escalates",
+    "elements": [
+      "Defendant with purpose to defraud issued or transferred or caused to be issued or transferred a check or other negotiable instrument",
+      "Knowing that it would be dishonored (insufficient funds or closed account)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeds $1,000 (F5)",
+      "Elderly victim"
+    ],
+    "notes": "Prosecution must prove knowledge that check would bounce. Failure to make good within 10 days of dishonor notice creates a prima facie case of intent. Bank notification is key evidence."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "ORC § 2921.34",
+    "statute_title": "Escape",
+    "offense_class": "3rd Degree Felony (from prison/detention); 5th Degree Felony (from supervision); 2nd Degree Felony (with violence)",
+    "penalty_min": null,
+    "penalty_max": "60 months (F3); 12 months (F5); 8 years (F2)",
+    "fine_max": "$10,000 (F3); $2,500 (F5); $15,000 (F2)",
+    "elements": [
+      "Defendant knowing the defendant is under detention or being reckless in that regard",
+      "Purposely broke or attempted to break the detention",
+      "OR purposely failed to return to detention after being granted temporary leave"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of physical force or threat (F2)",
+      "Escape from post-conviction detention (F2)"
+    ],
+    "notes": "Detention includes arrest, confinement in correctional facility, hospitalization, extradition, or supervision under community control. Failure to report to jail on scheduled date can constitute escape."
+  },
+  {
+    "common_charge_slug": "community-control-violation",
+    "statute_number": "ORC § 2951.08",
+    "statute_title": "Violation of Community Control (Probation Violation)",
+    "offense_class": "Not a separate criminal offense — violation of conditions of existing sentence",
+    "penalty_min": null,
+    "penalty_max": "Remaining prison term for underlying offense (up to original maximum sentence)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on community control sanctions as part of a criminal sentence",
+      "Defendant violated one or more conditions of community control (failed drug test, missed appointment, new arrest, absconding, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense during supervision",
+      "Multiple violations",
+      "Absconding supervision"
+    ],
+    "notes": "Probation violations are heard by the sentencing judge. Standard of proof is preponderance of evidence (lower than beyond reasonable doubt). Court may extend supervision, add conditions, or impose prison sentence up to the remaining time. Technical violations treated differently than new criminal conduct."
+  },
+  {
+    "common_charge_slug": "extortion",
+    "statute_number": "ORC § 2905.11",
+    "statute_title": "Extortion",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "60 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant with purpose to obtain anything of value or induce another to do an unlawful act",
+      "Threatened to commit a specified offense or made a threat to expose matter tending to subject any person to hatred, contempt, or ridicule",
+      "OR to harm another's business reputation or personal reputation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat of violence",
+      "Targeting public official"
+    ],
+    "notes": "Extortion requires a threat to obtain something of value. Distinguished from robbery (immediate force). Blackmail falls under this statute. Threats to expose criminal activity, sexual conduct, or embarrassing information all qualify."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "ORC § 2913.03",
+    "statute_title": "Unauthorized Use of a Vehicle",
+    "offense_class": "1st Degree Misdemeanor; 5th Degree Felony (elderly victim)",
+    "penalty_min": null,
+    "penalty_max": "180 days (M1); 12 months (F5)",
+    "fine_max": "$1,000 (M1); $2,500 (F5)",
+    "elements": [
+      "Defendant knowingly used or operated an aircraft, motor vehicle, motorboat, or other motor-propelled vehicle",
+      "Without the consent of the owner or person authorized to give consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elderly or disabled victim (F5)"
+    ],
+    "notes": "Distinct from theft — unauthorized use does not require intent to permanently deprive. Joyriding is the colloquial term. Commonly charged as lesser-included of motor vehicle theft."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "ORC § 2921.11",
+    "statute_title": "Perjury",
+    "offense_class": "3rd Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "60 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant in any official proceeding knowingly made a false statement under oath or affirmation",
+      "OR made a statement that the defendant does not believe to be true under oath or affirmation relating to a material issue in an official proceeding"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Requires the statement to be material to the proceeding. Recantation defense exists if retraction occurs in the same proceeding before the false statement substantially affects the proceeding."
+  },
+  {
+    "common_charge_slug": "impersonating-officer",
+    "statute_number": "ORC § 2921.51",
+    "statute_title": "Impersonation of a Peace Officer or Government Official",
+    "offense_class": "4th Degree Misdemeanor (general impersonation); 1st Degree Misdemeanor (commission of offense while impersonating); 3rd Degree Felony (arrest while impersonating)",
+    "penalty_min": null,
+    "penalty_max": "30 days (M4); 180 days (M1); 60 months (F3)",
+    "fine_max": "$250 (M4); $1,000 (M1); $10,000 (F3)",
+    "elements": [
+      "Defendant impersonated a peace officer, private police officer, or investigator of the bureau of criminal identification and investigation",
+      "OR impersonated an officer of a federal law enforcement agency"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Committing any offense while impersonating (M1)",
+      "Arresting or detaining someone while impersonating (F3)"
+    ],
+    "notes": "Wearing a fake uniform, displaying a fake badge, or verbally claiming to be an officer all qualify. Online impersonation may also be covered. F3 if defendant detains someone under pretense of authority."
+  }
+]

@@ -53,7 +53,7 @@ BEGIN;
 -- WAVE 4 ROLLBACK — Tier 4 Persona QA Loop + Tier 8C Page Verification
 -- =============================================================================
 
--- --- Tier 8C (20260407j): Page Verification — ALTER only, no new tables ---
+-- --- Tier 8C (20260407k): Page Verification — ALTER only, no new tables ---
 ALTER TABLE document_pages DROP COLUMN IF EXISTS verified;
 ALTER TABLE document_pages DROP COLUMN IF EXISTS last_verified;
 ALTER TABLE document_pages DROP COLUMN IF EXISTS correction_notes;

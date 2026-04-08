@@ -1,0 +1,1598 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "A.R.S. § 28-1381",
+    "statute_title": "Driving Under the Influence",
+    "offense_class": "Class 1 Misdemeanor (basic); Class 4 Felony (aggravated under § 28-1383)",
+    "penalty_min": "10 days (first, with 9 suspended); 90 days (second)",
+    "penalty_max": "6 months (misdemeanor); 2.5 years (aggravated felony)",
+    "fine_max": "$2,500+ surcharges (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of intoxicating liquor, any drug, a vapor releasing substance, or combination thereof",
+      "If impaired to the slightest degree, or with BAC .08+ (or .04+ commercial vehicle)"
+    ],
+    "mandatory_minimum": "24 consecutive hours in jail (first offense); 30 days (second); 10 days served (first, with 9 suspended)",
+    "enhancements": [
+      "BAC .15+ — Extreme DUI (§ 28-1382, enhanced mandatory minimums)",
+      "BAC .20+ — Super Extreme DUI (§ 28-1382(A)(2), further enhanced)",
+      "Aggravated DUI (§ 28-1383): suspended/revoked license, third within 84 months, wrong-way driving, child under 15 in vehicle"
+    ],
+    "notes": "Arizona is known for very strict DUI enforcement. Mandatory jail time even for first offense. Extreme DUI (.15+) has 30-day minimum jail. Super Extreme (.20+) has 45-day minimum."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "A.R.S. § 28-1381(A)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": "10 days (with 9 suspended)",
+    "penalty_max": "6 months",
+    "fine_max": "$2,500 plus surcharges (total often exceeds $3,000)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While impaired to the slightest degree by alcohol or drugs",
+      "Or with BAC .08 or higher",
+      "No prior DUI convictions within 84 months"
+    ],
+    "mandatory_minimum": "10 days jail (9 may be suspended with completion of screening); $1,250 fine plus surcharges",
+    "enhancements": [
+      "BAC .15+ (Extreme DUI — mandatory 30 consecutive days jail)",
+      "BAC .20+ (Super Extreme DUI — mandatory 45 consecutive days jail)",
+      "Child under 15 in vehicle (aggravated, Class 6 Felony)"
+    ],
+    "notes": "Mandatory ignition interlock device for 12 months. License suspension 90 days. Alcohol screening and education required."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "A.R.S. § 28-1381(O) / § 28-1383",
+    "statute_title": "DUI — Repeat Offense / Aggravated DUI",
+    "offense_class": "Class 1 Misdemeanor (second within 84 months); Class 4 Felony (third within 84 months — aggravated)",
+    "penalty_min": "90 days (second); 4 months (aggravated felony)",
+    "penalty_max": "6 months (second misdemeanor); 3.75 years (aggravated felony)",
+    "fine_max": "$3,500+ surcharges (second); $150,000 (aggravated felony)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle while impaired or with BAC .08+",
+      "One or more prior DUI convictions within 84 months (7 years)"
+    ],
+    "mandatory_minimum": "90 days jail with 60 suspended (second); 4 months prison (aggravated third)",
+    "enhancements": [
+      "BAC .15+ on second offense",
+      "Third offense within 84 months (aggravated, Class 4 Felony)",
+      "Driving on suspended/revoked license at time of DUI"
+    ],
+    "notes": "84-month (7-year) lookback period. Third offense within lookback is aggravated DUI — a Class 4 Felony with mandatory prison time. License revocation 1 year for second offense."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "A.R.S. § 28-1381(A)(1)-(3)",
+    "statute_title": "DUI — Drugs",
+    "offense_class": "Class 1 Misdemeanor (same as alcohol DUI)",
+    "penalty_min": "Same as alcohol DUI by offense count",
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of any drug defined in § 13-3401",
+      "Or while there is any drug or its metabolite in the defendant's body"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Metabolite of Schedule I substance in body (per se violation under § 28-1381(A)(3))"
+    ],
+    "notes": "Arizona has a per se drug DUI law — any detectable amount of a drug or its metabolite in the body while driving is a violation. Medical marijuana is an affirmative defense if not impaired (Dobson v. McClennen)."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "A.R.S. § 28-693",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "4 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant drove a vehicle",
+      "In reckless disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "8 points on driving record. Common plea-down from DUI. License suspension 90 days for excessive speed reckless driving."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "A.R.S. § 28-661",
+    "statute_title": "Duty to Stop — Accident Involving Injury or Death",
+    "offense_class": "Class 3 Felony (death); Class 5 Felony (serious injury); Class 2 Misdemeanor (injury, § 28-662); Class 3 Misdemeanor (property, § 28-663)",
+    "penalty_min": null,
+    "penalty_max": "8.75 years (death); 2.5 years (serious injury); 4 months (injury); 30 days (property)",
+    "fine_max": "$150,000 (felony); $750 (Class 2 Misdemeanor); $500 (Class 3 Misdemeanor)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to immediately stop at the scene",
+      "Defendant failed to render reasonable assistance or provide identification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (Class 3 Felony)",
+      "Serious physical injury (Class 5 Felony)"
+    ],
+    "notes": "Leaving the scene of a fatal accident is a Class 3 Felony in Arizona. Property damage only is a Class 3 Misdemeanor."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "A.R.S. § 13-1103(A)(1)",
+    "statute_title": "Manslaughter — Vehicular (Reckless)",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "3 years (presumptive first offense)",
+    "penalty_max": "12.5 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant recklessly caused the death of another person",
+      "While operating a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI at time of death",
+      "Prior felony convictions"
+    ],
+    "notes": "Arizona does not have a separate vehicular homicide statute. DUI deaths are typically charged as manslaughter (Class 2 Felony) or second-degree murder (depraved heart)."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "A.R.S. § 13-1103(A)(1)",
+    "statute_title": "Manslaughter (Vehicular)",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "3 years (presumptive)",
+    "penalty_max": "12.5 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant recklessly caused the death of another person",
+      "While operating a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Intoxication at time of offense",
+      "Prior felony convictions"
+    ],
+    "notes": "Charged under the general manslaughter statute. Negligent homicide (§ 13-1102, Class 4 Felony) available for criminal negligence deaths."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "A.R.S. § 28-3473",
+    "statute_title": "Driving on a Suspended, Revoked, or Canceled License",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant drove a motor vehicle on a highway",
+      "While defendant's license was suspended, canceled, revoked, or refused",
+      "Defendant had knowledge or notice of the suspension"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Driving on DUI-suspended license (aggravated DUI, Class 4 Felony under § 28-1383)"
+    ],
+    "notes": "Driving on a DUI-related suspension is an aggravated DUI — a Class 4 Felony. Other suspended license driving is a Class 1 Misdemeanor."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "A.R.S. § 28-622.01",
+    "statute_title": "Unlawful Flight from Pursuing Law Enforcement Vehicle",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "2.5 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "A law enforcement vehicle with activated emergency lights or siren pursued the defendant",
+      "Defendant willfully fled or attempted to elude the pursuing vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing death or serious injury during flight",
+      "Reckless driving during flight"
+    ],
+    "notes": "Class 5 Felony regardless of whether anyone is injured. Additional charges possible if others are endangered during the pursuit."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "A.R.S. § 13-3408 / § 13-3415",
+    "statute_title": "Possession of a Dangerous Drug / Drug Offense",
+    "offense_class": "Class 4 Felony (dangerous drugs); Class 6 Felony (other substances)",
+    "penalty_min": null,
+    "penalty_max": "3.75 years (Class 4); 2 years (Class 6)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly possessed a dangerous drug or narcotic drug",
+      "Without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school (§ 13-3411)",
+      "Prior drug felony convictions"
+    ],
+    "notes": "Prop 200 (1996) requires probation, not prison, for first and second possession offenses. Prop 207 (2020) legalized recreational marijuana for 21+. Possession of other drugs remains criminal."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "A.R.S. § 36-2852",
+    "statute_title": "Personal Possession and Use of Marijuana",
+    "offense_class": "Legal for 21+ (1 oz or less); Petty offense (2.5 oz or less over 1 oz); Class 6 Felony (over 2.5 oz); Class 5 Felony (over threshold for sale)",
+    "penalty_min": null,
+    "penalty_max": "Petty offense fine; 2 years (Class 6); 2.5 years (Class 5)",
+    "fine_max": "$300 (petty offense); $150,000 (felony)",
+    "elements": [
+      "For criminal charge: defendant possessed marijuana in excess of legal limits",
+      "Or defendant was under 21 and possessed marijuana"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession over 2.5 oz (felony)",
+      "Possession with intent to sell",
+      "Under 21 in possession"
+    ],
+    "notes": "Prop 207 (2020) legalized recreational marijuana. Adults 21+ may possess up to 1 oz (5g concentrate). Over 2.5 oz becomes a felony. Under 21 possession is a petty offense."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "A.R.S. § 13-3408(A)(1)",
+    "statute_title": "Possession of a Dangerous Drug — Cocaine",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3.75 years (first offense)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly possessed cocaine",
+      "Cocaine is classified as a dangerous drug under A.R.S. § 13-3401",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threshold amount (9 grams — triggers mandatory prison under § 13-3408(B))",
+      "Prior drug felony convictions"
+    ],
+    "notes": "Prop 200 mandates probation for first two simple possession convictions. Possession of threshold amount (9g cocaine) triggers mandatory prison."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "A.R.S. § 13-3407(A)(1)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3.75 years (first offense)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly possessed methamphetamine",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threshold amount (9 grams — mandatory prison)",
+      "Prior drug convictions"
+    ],
+    "notes": "Methamphetamine falls under the 'narcotic drugs' category in Arizona. Threshold amount is 9 grams for mandatory prison."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "A.R.S. § 13-3408(A)(7) / § 13-3407(A)(7)",
+    "statute_title": "Transportation of Dangerous Drugs / Narcotics for Sale",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "4 years (presumptive first offense)",
+    "penalty_max": "12.5 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant transported, imported, or offered to transport",
+      "A dangerous drug or narcotic drug into Arizona",
+      "For sale"
+    ],
+    "mandatory_minimum": "Mandatory prison (no probation) for threshold amounts",
+    "enhancements": [
+      "Threshold amounts (mandatory prison)",
+      "Use of minors in trafficking",
+      "Near school zone"
+    ],
+    "notes": "Threshold amounts: meth 9g, cocaine 9g, heroin 1g, LSD 0.5ml, marijuana 2 lbs. Over threshold = mandatory prison, no probation. Class 2 Felony."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "A.R.S. § 13-3408(A)(2)",
+    "statute_title": "Possession of Dangerous Drug for Sale",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "4 years (presumptive)",
+    "penalty_max": "12.5 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant possessed a dangerous drug",
+      "For the purpose of sale"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threshold amounts",
+      "Sale to a minor",
+      "Near a school (§ 13-3411)"
+    ],
+    "notes": "Possession for sale is the same class as actual sale. Intent to sell inferred from quantity, packaging, and circumstances."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "A.R.S. § 13-3408(A)(4)",
+    "statute_title": "Manufacturing a Dangerous Drug",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "4 years (presumptive)",
+    "penalty_max": "12.5 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant manufactured a dangerous drug",
+      "Or possessed equipment or chemicals with intent to manufacture"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Methamphetamine manufacturing (enhanced under § 13-3407.01)",
+      "Child present during manufacturing",
+      "Environmental hazard created"
+    ],
+    "notes": "Manufacturing methamphetamine carries additional penalties. Cleanup costs assessed as restitution."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "A.R.S. § 13-3415",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Class 6 Felony (possession); Class 6 Felony (use/possession with intent to use)",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant used or possessed with intent to use drug paraphernalia",
+      "To plant, propagate, cultivate, grow, harvest, manufacture, compound, convert, produce, process, prepare, test, analyze, pack, repack, store, contain, conceal, inject, ingest, inhale, or otherwise introduce into the human body a drug"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor"
+    ],
+    "notes": "Marijuana paraphernalia is legal for adults 21+ under Prop 207. Paraphernalia for other drugs remains a Class 6 Felony. Prop 200 mandates probation for first two drug possession offenses."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "A.R.S. § 13-3407(A)(2) / § 13-3408(A)(2)",
+    "statute_title": "Possession of Narcotic/Dangerous Drug for Sale",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "4 years (presumptive)",
+    "penalty_max": "12.5 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant possessed a narcotic or dangerous drug",
+      "With intent to sell or distribute",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": "Mandatory prison for threshold amounts",
+    "enhancements": [
+      "Threshold amounts",
+      "Sale to a minor (§ 13-3409)",
+      "Near a school (§ 13-3411)"
+    ],
+    "notes": "Intent inferred from quantity, packaging, scales, and cash. Threshold amounts trigger mandatory prison sentences."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "A.R.S. § 13-1105",
+    "statute_title": "First Degree Murder",
+    "offense_class": "Class 1 Felony",
+    "penalty_min": "Life with possibility of release after 25 years (non-capital)",
+    "penalty_max": "Death; natural life (life without parole)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "With premeditation",
+      "Or the death occurred during the commission of specified felonies (felony murder)",
+      "Or defendant intentionally killed a law enforcement officer in the line of duty"
+    ],
+    "mandatory_minimum": "Life imprisonment (natural life or 25 years to life)",
+    "enhancements": [
+      "Death penalty aggravating factors (§ 13-751)",
+      "Felony murder",
+      "Victim under 15",
+      "Multiple victims"
+    ],
+    "notes": "Arizona is a death penalty state. Natural life means no possibility of release. Felony murder applies during enumerated felonies. Death sentence requires unanimous jury finding of aggravating factors."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "A.R.S. § 13-1104",
+    "statute_title": "Second Degree Murder",
+    "offense_class": "Class 1 Felony",
+    "penalty_min": "10 years (presumptive first offense)",
+    "penalty_max": "25 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant intentionally caused the death of another person without premeditation",
+      "Or caused the death by conduct showing extreme indifference to human life",
+      "Or caused the death while intentionally committing the act causing death knowing it would cause death"
+    ],
+    "mandatory_minimum": "10 years (presumptive)",
+    "enhancements": [
+      "Prior felony convictions",
+      "Dangerous offense designation"
+    ],
+    "notes": "Covers intentional killing without premeditation and depraved-heart/extreme indifference murder. Presumptive sentence is 10 years for first offense."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "A.R.S. § 13-1103(A)(2)",
+    "statute_title": "Manslaughter — Adequate Provocation",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "3 years (presumptive)",
+    "penalty_max": "12.5 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "The killing was committed upon a sudden quarrel or heat of passion",
+      "Resulting from adequate provocation by the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior felony convictions"
+    ],
+    "notes": "Arizona's manslaughter statute (§ 13-1103) covers both heat-of-passion (what other states call voluntary manslaughter) and reckless killing."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "A.R.S. § 13-1102",
+    "statute_title": "Negligent Homicide",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": "1 year (presumptive)",
+    "penalty_max": "3.75 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "By criminal negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior felony convictions"
+    ],
+    "notes": "Arizona uses 'negligent homicide' (§ 13-1102) for what most states call involuntary manslaughter. Criminal negligence standard: failure to perceive a substantial and unjustifiable risk."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "A.R.S. § 13-1204",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Class 2 Felony (serious physical injury); Class 3 Felony (deadly weapon/dangerous instrument); Class 5-6 Felony (other aggravating factors)",
+    "penalty_min": null,
+    "penalty_max": "12.5 years (Class 2); 8.75 years (Class 3); 2.5 years (Class 5)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant committed assault as defined in § 13-1203",
+      "Plus an aggravating factor: causing serious physical injury, using a deadly weapon, victim is bound/restrained, victim is under 15, assault on officer/teacher/healthcare worker, etc."
+    ],
+    "mandatory_minimum": "5 years (if dangerous offense with deadly weapon/dangerous instrument)",
+    "enhancements": [
+      "Dangerous offense designation (mandatory prison)",
+      "Victim is law enforcement officer",
+      "Victim is under 15",
+      "Prior felony convictions"
+    ],
+    "notes": "Arizona has 13 ways to elevate simple assault to aggravated. 'Dangerous offense' designation (involving deadly weapon or causing serious injury) triggers mandatory prison time."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "A.R.S. § 13-1203",
+    "statute_title": "Assault",
+    "offense_class": "Class 1 Misdemeanor (physical injury); Class 2 Misdemeanor (reasonable apprehension); Class 3 Misdemeanor (touching to insult/provoke)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class 1); 4 months (Class 2); 30 days (Class 3)",
+    "fine_max": "$2,500 (Class 1); $750 (Class 2); $500 (Class 3)",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly caused physical injury to another (Class 1)",
+      "Or intentionally placed another in reasonable apprehension of imminent physical injury (Class 2)",
+      "Or knowingly touched another with intent to injure, insult, or provoke (Class 3)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Three classes based on the type of assault. Physical injury = Class 1, threat = Class 2, offensive touching = Class 3."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "A.R.S. § 13-1902",
+    "statute_title": "Robbery",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": "1 year (presumptive)",
+    "penalty_max": "3.75 years (first offense aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant, in the course of taking any property of another from their person or immediate presence",
+      "Threatened or used force against any person with intent to coerce surrender of property or prevent resistance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior felony convictions"
+    ],
+    "notes": "Base robbery is a Class 4 Felony. Aggravated robbery (§ 13-1903) with an accomplice is Class 3. Armed robbery (§ 13-1904) is Class 2."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "A.R.S. § 13-1904",
+    "statute_title": "Armed Robbery",
+    "offense_class": "Class 2 Felony (dangerous offense)",
+    "penalty_min": "7 years (presumptive first offense, dangerous)",
+    "penalty_max": "21 years (aggravated, dangerous)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant committed robbery",
+      "While armed with a deadly weapon or simulated deadly weapon",
+      "Or used or threatened to use a deadly weapon or dangerous instrument"
+    ],
+    "mandatory_minimum": "5 years (minimum, dangerous offense)",
+    "enhancements": [
+      "Dangerous offense (mandatory prison)",
+      "Prior felony convictions (significantly enhanced ranges)"
+    ],
+    "notes": "Dangerous offense designation makes prison mandatory. Presumptive term 7 years for first offense. Prior felonies dramatically increase the range."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "A.R.S. § 13-1304",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class 2 Felony (dangerous)",
+    "penalty_min": "7 years (dangerous, first offense)",
+    "penalty_max": "21 years (aggravated, first offense); natural life (if victim under 15 and sexual motivation)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly restrained another person",
+      "With intent to hold for ransom, as a shield or hostage, aid in commission of a felony, inflict injury, place in involuntary servitude, or sexual offense"
+    ],
+    "mandatory_minimum": "5 years (dangerous offense)",
+    "enhancements": [
+      "Victim under 15 (enhanced sentencing)",
+      "Sexual motivation (natural life possible)",
+      "Use of deadly weapon"
+    ],
+    "notes": "Always a dangerous offense when victim is restrained. If victim is released unharmed, may be mitigated. Kidnapping of a child under 15 with sexual motivation can result in natural life."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "A.R.S. § 13-1704",
+    "statute_title": "Arson of a Structure",
+    "offense_class": "Class 4 Felony (structure); Class 3 Felony (occupied structure)",
+    "penalty_min": null,
+    "penalty_max": "3.75 years (structure); 8.75 years (occupied structure)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly and unlawfully damaged a structure or property",
+      "By knowingly causing a fire or explosion"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied structure (§ 13-1705, Class 3 Felony)",
+      "Arson of an occupied structure is a dangerous offense",
+      "Death resulting"
+    ],
+    "notes": "Three arson statutes: property (§ 13-1703, Class 4), structure (§ 13-1704, Class 4), occupied structure (§ 13-1705, Class 3). Occupied structure arson is a dangerous offense with mandatory prison."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "A.R.S. § 13-1001 / § 13-1105",
+    "statute_title": "Attempted First Degree Murder",
+    "offense_class": "Class 2 Felony (dangerous)",
+    "penalty_min": "7 years (presumptive, dangerous first offense)",
+    "penalty_max": "21 years (aggravated, first offense)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant intended to commit first degree murder",
+      "Defendant engaged in conduct constituting a substantial step toward the commission of the offense"
+    ],
+    "mandatory_minimum": "5 years (dangerous offense minimum)",
+    "enhancements": [
+      "Dangerous offense (mandatory prison)",
+      "Prior felony convictions"
+    ],
+    "notes": "Attempt reduces the classification by one level (Class 1 → Class 2). Always a dangerous offense. Presumptive sentencing applies."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "A.R.S. § 13-1204(A)(2)",
+    "statute_title": "Aggravated Assault with Deadly Weapon",
+    "offense_class": "Class 3 Felony (dangerous offense)",
+    "penalty_min": "5 years (minimum, dangerous offense)",
+    "penalty_max": "15 years (aggravated, dangerous first offense)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant committed assault",
+      "Using a deadly weapon or dangerous instrument"
+    ],
+    "mandatory_minimum": "5 years (dangerous offense)",
+    "enhancements": [
+      "Serious physical injury caused",
+      "Victim is law enforcement",
+      "Prior felony convictions"
+    ],
+    "notes": "Dangerous offense designation makes prison mandatory. No probation available. Presumptive sentence is 5 years for first offense."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "A.R.S. § 13-1802",
+    "statute_title": "Theft",
+    "offense_class": "Class 2 Felony ($25,000+); Class 3 Felony ($4,000-$25,000); Class 4 Felony ($3,000-$4,000); Class 5 Felony ($2,000-$3,000); Class 6 Felony ($1,000-$2,000); Class 1 Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "12.5 years (Class 2); 6 months (Class 1 Misdemeanor)",
+    "fine_max": "$150,000 (felony); $2,500 (misdemeanor)",
+    "elements": [
+      "Defendant knowingly took control of property of another",
+      "With intent to permanently deprive the owner of the property",
+      "Without lawful authority or the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft of a firearm (Class 6 Felony minimum)",
+      "Theft from a vulnerable adult"
+    ],
+    "notes": "Arizona has detailed value thresholds determining felony class. Theft of a firearm is always at least a Class 6 Felony regardless of value. Shoplifting has a separate statute (§ 13-1805)."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "A.R.S. § 13-1802(A)",
+    "statute_title": "Theft — Felony (over $1,000)",
+    "offense_class": "Class 6 Felony ($1,000-$2,000) through Class 2 Felony ($25,000+)",
+    "penalty_min": null,
+    "penalty_max": "12.5 years (Class 2, $25,000+)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly took control of property of another",
+      "Value exceeds $1,000",
+      "With intent to permanently deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Property is a motor vehicle",
+      "Property is a firearm"
+    ],
+    "notes": "Arizona does not use 'grand theft' terminology. The felony class is determined by value thresholds."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "A.R.S. § 13-1802(G)",
+    "statute_title": "Theft — Misdemeanor (under $1,000)",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant knowingly took control of property of another",
+      "Value is less than $1,000",
+      "With intent to permanently deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Under $1,000 is a Class 1 Misdemeanor. Prior theft convictions may elevate classification."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "A.R.S. § 13-1805",
+    "statute_title": "Shoplifting",
+    "offense_class": "Class 1 Misdemeanor (under $1,000); Class 6 Felony ($1,000-$2,000); Class 5 Felony ($2,000+); Class 4 Felony (organized retail theft or third offense)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 3.75 years (Class 4 Felony)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant knowingly concealed, took possession of, or charged less than the purchase price of goods",
+      "With intent to deprive the merchant of the goods"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third shoplifting offense within 5 years (Class 4 Felony)",
+      "Organized retail theft (Class 4 Felony)",
+      "Use of device to defeat anti-theft measures"
+    ],
+    "notes": "Arizona has a specific shoplifting statute separate from general theft. Third offense within 5 years is automatic Class 4 Felony."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "A.R.S. § 13-1507",
+    "statute_title": "Burglary — Second Degree",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": "2 years (presumptive)",
+    "penalty_max": "8.75 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant entered or remained unlawfully in a residential structure",
+      "With intent to commit any theft or any felony therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession of a deadly weapon during burglary",
+      "Prior felony convictions"
+    ],
+    "notes": "Three degrees: first (§ 13-1508, armed in residential, Class 2), second (§ 13-1507, residential, Class 3), third (§ 13-1506, non-residential, Class 4)."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "A.R.S. § 13-1507",
+    "statute_title": "Burglary in the Second Degree (Residential)",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": "2 years (presumptive)",
+    "penalty_max": "8.75 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant entered or remained unlawfully in a residential structure",
+      "With intent to commit a theft or felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed during burglary (elevates to first degree, Class 2 Felony)",
+      "Prior felony convictions"
+    ],
+    "notes": "Residential structure includes houses, apartments, and fenced residential yards. First-degree burglary (§ 13-1508) involves possession of a weapon, explosive, or dangerous instrument."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "A.R.S. § 13-1814",
+    "statute_title": "Theft of Means of Transportation",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "8.75 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly took control of the means of transportation of another",
+      "Without lawful authority",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior convictions"
+    ],
+    "notes": "Arizona has a separate motor vehicle theft statute (§ 13-1814). Always a Class 3 Felony regardless of vehicle value."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "A.R.S. § 13-1802(A)(5)",
+    "statute_title": "Theft — Receiving Stolen Property",
+    "offense_class": "Same as theft classification by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "$150,000 (felony); $2,500 (misdemeanor)",
+    "elements": [
+      "Defendant knowingly received property that was stolen",
+      "With intent to deprive the owner",
+      "Defendant knew or had reason to know the property was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Charged under the general theft statute. Classification follows the same value thresholds as other theft."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "A.R.S. § 13-1602",
+    "statute_title": "Criminal Damage",
+    "offense_class": "Class 4 Felony ($10,000+); Class 5 Felony ($2,000-$10,000); Class 6 Felony ($1,000-$2,000); Class 1 Misdemeanor ($250-$1,000); Class 2 Misdemeanor (under $250)",
+    "penalty_min": null,
+    "penalty_max": "3.75 years (Class 4); 6 months (Class 1 Misdemeanor); 4 months (Class 2 Misdemeanor)",
+    "fine_max": "$150,000 (felony); $2,500 (Class 1); $750 (Class 2)",
+    "elements": [
+      "Defendant recklessly damaged or defaced property of another",
+      "Without the consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to utility property",
+      "Graffiti (may require community service restitution)"
+    ],
+    "notes": "Arizona uses 'criminal damage' rather than vandalism. Detailed value thresholds determine the classification."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "A.R.S. § 13-1502",
+    "statute_title": "Criminal Trespass — Third Degree",
+    "offense_class": "Class 3 Misdemeanor (third degree); Class 2 Misdemeanor (second degree); Class 1 Misdemeanor (first degree, residential)",
+    "penalty_min": null,
+    "penalty_max": "30 days (Class 3); 4 months (Class 2); 6 months (Class 1)",
+    "fine_max": "$500 (Class 3); $750 (Class 2); $2,500 (Class 1)",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully on property",
+      "After a reasonable request to leave, or where posted, or fenced"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Three degrees: first (§ 13-1504, residential, Class 1 Misdemeanor), second (§ 13-1503, non-residential structure, Class 2), third (§ 13-1502, land/real property, Class 3)."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "A.R.S. § 13-1602",
+    "statute_title": "Criminal Damage",
+    "offense_class": "Varies by value — Class 4 Felony ($10,000+) through Class 2 Misdemeanor (under $250)",
+    "penalty_min": null,
+    "penalty_max": "3.75 years (Class 4 Felony)",
+    "fine_max": "$150,000 (felony)",
+    "elements": [
+      "Defendant recklessly defaced, damaged, or tampered with property of another",
+      "Without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to utility property",
+      "Damage by fire or explosive"
+    ],
+    "notes": "Arizona uses 'criminal damage' as the equivalent of criminal mischief. Value thresholds determine the offense class."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "A.R.S. § 13-3601",
+    "statute_title": "Domestic Violence",
+    "offense_class": "Varies by underlying offense — misdemeanor to felony",
+    "penalty_min": null,
+    "penalty_max": "Varies by underlying offense",
+    "fine_max": "Varies by underlying offense",
+    "elements": [
+      "Defendant committed a predicate offense (assault, criminal damage, disorderly conduct, etc.)",
+      "Against a spouse, former spouse, cohabitant, person with a child in common, romantic/sexual partner, or related by blood/court order"
+    ],
+    "mandatory_minimum": "Domestic violence offender treatment program required; 24-hour hold after arrest if against spouse/cohabitant",
+    "enhancements": [
+      "Third DV offense within 84 months (aggravated DV, Class 5 Felony under § 13-3601.02)",
+      "Violation of order of protection (separate offense)",
+      "Strangulation/suffocation (§ 13-1204(A)(13), aggravated assault)"
+    ],
+    "notes": "Domestic violence is a designation in Arizona, not a standalone crime. It attaches to about 20 predicate offenses. Third conviction within 84 months is aggravated DV — a Class 5 Felony."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "A.R.S. § 13-1203 / § 13-3601",
+    "statute_title": "Assault — Domestic Violence",
+    "offense_class": "Class 1 Misdemeanor (with DV designation); Class 5 Felony (third within 84 months)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2.5 years (aggravated felony)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly caused physical injury",
+      "To a person in a domestic relationship"
+    ],
+    "mandatory_minimum": "DV treatment program; 24-hour hold possible",
+    "enhancements": [
+      "Third conviction within 84 months (aggravated DV)",
+      "Serious physical injury (aggravated assault)"
+    ],
+    "notes": "Arizona does not have a separate battery statute. Assault with DV designation covers domestic battery situations."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "A.R.S. § 13-3623",
+    "statute_title": "Child or Vulnerable Adult Abuse — Circumstances Likely to Produce Physical Injury",
+    "offense_class": "Class 6 Felony (reckless/negligent endangerment); Class 5 Felony (knowingly/intentionally); Class 2 Felony (serious injury)",
+    "penalty_min": null,
+    "penalty_max": "2 years (Class 6); 2.5 years (Class 5); 12.5 years (Class 2, serious injury)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant, under circumstances likely to produce death or serious physical injury",
+      "Caused or permitted a child or vulnerable adult to suffer physical injury or be placed in a situation of unreasonable risk"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury results (Class 2 Felony)",
+      "Death results (Class 2 Felony with dangerous designation)",
+      "Child under 12"
+    ],
+    "notes": "Arizona's child abuse statute (§ 13-3623) covers a broad range from negligent endangerment to intentional serious harm. Mental state determines the class."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "A.R.S. § 13-3623(A)(1)",
+    "statute_title": "Child Abuse — Intentional or Knowing",
+    "offense_class": "Class 2 Felony (serious injury); Class 4 Felony (physical injury); Class 5 Felony (without injury)",
+    "penalty_min": null,
+    "penalty_max": "12.5 years (Class 2, serious injury); 3.75 years (Class 4); 2.5 years (Class 5)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant intentionally or knowingly caused physical injury to a child",
+      "Under circumstances likely to produce death or serious physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (Class 2 Felony, dangerous offense)",
+      "Death of child",
+      "Pattern of abuse"
+    ],
+    "notes": "Intentional or knowing child abuse with serious injury is a Class 2 Dangerous Felony — mandatory prison. CPS investigation triggered by any charge."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "A.R.S. § 13-2810",
+    "statute_title": "Interfering with Judicial Proceedings — Violation of Order of Protection",
+    "offense_class": "Class 1 Misdemeanor (first); Class 6 Felony (second within 12 months or involving threats/injury); Class 4 Felony (third within 24 months)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years (Class 6); 3.75 years (Class 4)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "A valid order of protection was in effect",
+      "Defendant had notice of the order",
+      "Defendant knowingly violated the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second violation within 12 months (Class 6 Felony)",
+      "Third violation within 24 months (Class 4 Felony)",
+      "Violation involving threats or physical injury"
+    ],
+    "notes": "Increasingly severe penalties for repeat violations. Violation while possessing a firearm is an additional offense."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "A.R.S. § 13-2923",
+    "statute_title": "Stalking",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "2.5 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant intentionally or knowingly engaged in a course of conduct",
+      "Directed at a specific person",
+      "That would cause a reasonable person to fear for their safety or the safety of their immediate family",
+      "Or would cause a reasonable person to fear death or that of an immediate family member"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation of protective order while stalking",
+      "Prior stalking conviction"
+    ],
+    "notes": "Stalking is always a felony in Arizona. 'Course of conduct' means two or more acts directed at, but not necessarily in the presence of, the person."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "A.R.S. § 13-2921",
+    "statute_title": "Harassment",
+    "offense_class": "Class 1 Misdemeanor (basic); Class 6 Felony (against public officer or if prior DV harassment conviction)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years (Class 6 Felony)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant with intent to harass or with knowledge that the conduct was harassing",
+      "Anonymously or otherwise contacted, communicated, or made a credible threat to another person",
+      "Or followed another person in a public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against a public officer or employee (Class 6 Felony under § 13-2921.01)",
+      "With DV designation and prior DV conviction"
+    ],
+    "notes": "Harassment with DV designation becomes part of the DV count for aggravated DV purposes."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "A.R.S. § 13-3623(A)",
+    "statute_title": "Vulnerable Adult Abuse",
+    "offense_class": "Same as child abuse classifications by mental state and injury",
+    "penalty_min": null,
+    "penalty_max": "12.5 years (Class 2, serious injury)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant abused, neglected, or exploited a vulnerable adult",
+      "Under circumstances likely to produce death or serious physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (Class 2 Felony)",
+      "Financial exploitation (theft charges apply)"
+    ],
+    "notes": "Vulnerable adults are protected under the same statute as children (§ 13-3623). Financial exploitation charged as theft. Mandatory reporting under § 46-454."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "A.R.S. § 13-3102",
+    "statute_title": "Misconduct Involving Weapons",
+    "offense_class": "Class 6 Felony (most violations); Class 4 Felony (some aggravated violations)",
+    "penalty_min": null,
+    "penalty_max": "2 years (Class 6); 3.75 years (Class 4)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant possessed a deadly weapon or prohibited weapon",
+      "In a prohibited location or in a prohibited manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession on school grounds",
+      "Prohibited possessor (§ 13-3101)"
+    ],
+    "notes": "Arizona is a constitutional carry state — no permit needed for concealed carry by those legally allowed to possess firearms. Restrictions focus on prohibited persons and locations."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "A.R.S. § 13-3102(A)(4)",
+    "statute_title": "Possession of a Deadly Weapon by Prohibited Possessor",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3.75 years (first offense)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant possessed a deadly weapon",
+      "Defendant was a prohibited possessor as defined in § 13-3101",
+      "Prohibited persons include those convicted of a felony, undocumented persons, and those found mentally incompetent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior felony convictions"
+    ],
+    "notes": "Prohibited possessor defined in § 13-3101(A)(7). Includes felony convictions, domestic violence convictions, and those adjudicated mentally incompetent."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "A.R.S. § 13-3102(A)(1)",
+    "statute_title": "Carrying a Concealed Weapon in a Prohibited Location",
+    "offense_class": "Class 1 Misdemeanor (most); Class 6 Felony (government buildings)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years (Class 6 Felony)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant carried a deadly weapon",
+      "Into a prohibited location (polling place, school, government building, nuclear/hydroelectric facility, bar while consuming alcohol)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Arizona adopted constitutional carry in 2010. No permit needed. Violations relate only to prohibited locations and prohibited persons."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "A.R.S. § 13-3107",
+    "statute_title": "Unlawful Discharge of Firearms",
+    "offense_class": "Class 6 Felony",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant discharged a firearm",
+      "Within or into the limits of any municipality",
+      "With criminal negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Discharge at an occupied structure or vehicle (§ 13-1211, Class 2 Felony)"
+    ],
+    "notes": "Shannon's Law (§ 13-3107) makes random gunfire within city limits a felony. Intentional discharge at an occupied structure is a Class 2 Felony under § 13-1211."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "A.R.S. § 13-2008",
+    "statute_title": "Taking the Identity of Another Person or Entity",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3.75 years (first offense)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly took, purchased, manufactured, or recorded another person's personal identifying information",
+      "Without consent",
+      "With intent to obtain or use the information unlawfully"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Five or more victims (Class 3 Felony under § 13-2009)",
+      "Victim is elderly or vulnerable"
+    ],
+    "notes": "Aggravated identity theft (§ 13-2009, Class 3 Felony) applies when five or more victims or if the defendant is not a U.S. citizen. Restitution mandatory."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "A.R.S. § 13-1802(A)(2)",
+    "statute_title": "Theft — Conversion of Entrusted Property",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "$150,000 (felony)",
+    "elements": [
+      "Defendant, having control of property of another entrusted to defendant",
+      "Knowingly converted the property to defendant's own use or benefit",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public employee",
+      "Fiduciary position"
+    ],
+    "notes": "Charged under the general theft statute as conversion of entrusted property."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "A.R.S. § 13-2002",
+    "statute_title": "Forgery",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3.75 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant falsely made, completed, or altered a written instrument",
+      "With intent to defraud",
+      "Or knowingly possessed a forged instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers all types of forged documents. Possession of a forged instrument with intent to use is included."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "A.R.S. § 13-1807",
+    "statute_title": "Issuing a Bad Check",
+    "offense_class": "Class 1 Misdemeanor (under $1,000); Class 6 Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant issued a check knowing there were insufficient funds",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Defendant must be given 12 days' notice of dishonor before prosecution."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "A.R.S. § 13-2310",
+    "statute_title": "Fraud Schemes and Artifices",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "12.5 years (aggravated)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly obtained any benefit by means of false or fraudulent pretenses, representations, promises, or material omissions",
+      "Or defendant knowingly devised a scheme to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Scheme targeting elderly or vulnerable adults",
+      "Large dollar amounts"
+    ],
+    "notes": "Arizona's fraud statute is broad. Class 2 Felony regardless of amount — making it one of the harshest in the nation. Separate computer fraud statute (§ 13-2316)."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "A.R.S. § 13-2105",
+    "statute_title": "Fraudulent Use of a Credit Card",
+    "offense_class": "Class 5 Felony (any amount); Class 6 Felony (possession of blank cards)",
+    "penalty_min": null,
+    "penalty_max": "2.5 years (Class 5)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant used a credit card knowing it to be stolen, forged, canceled, or revoked",
+      "With intent to defraud",
+      "To obtain property or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Fraudulent credit card use is always a felony in Arizona regardless of amount."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "A.R.S. § 13-2317",
+    "statute_title": "Money Laundering — Second Degree",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "8.75 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant conducted a financial transaction",
+      "Knowing or having reason to know the property involved was proceeds of an offense",
+      "With intent to promote the carrying on of unlawful activity or to conceal the source"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "First-degree money laundering (§ 13-2317(A), Class 2 Felony)"
+    ],
+    "notes": "First degree: knowing the property is proceeds and conducting transaction to promote unlawful activity. Second degree: reason to know."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "A.R.S. § 13-1406",
+    "statute_title": "Sexual Assault (Rape)",
+    "offense_class": "Class 2 Felony (dangerous crime against children if victim under 15)",
+    "penalty_min": "5.25 years (presumptive, first offense)",
+    "penalty_max": "14 years (aggravated); natural life (victim under 15)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant intentionally or knowingly engaged in sexual intercourse or oral sexual contact",
+      "With any person without consent of that person"
+    ],
+    "mandatory_minimum": "5.25 years (presumptive)",
+    "enhancements": [
+      "Victim under 15 (dangerous crime against children — flat 13 years to natural life)",
+      "Victim under 12 (natural life, no release)",
+      "Use of drugging agent"
+    ],
+    "notes": "Arizona uses 'sexual assault' for what most states call rape. Dangerous crime against children designation when victim is under 15 triggers extremely severe mandatory sentences."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "A.R.S. § 13-1406",
+    "statute_title": "Sexual Assault",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "5.25 years (presumptive)",
+    "penalty_max": "14 years (aggravated); natural life (victim under 15)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant intentionally or knowingly engaged in sexual intercourse or oral sexual contact",
+      "Without the consent of the other person"
+    ],
+    "mandatory_minimum": "5.25 years (first offense presumptive)",
+    "enhancements": [
+      "Victim under 15 (DCAC)",
+      "Prior felony convictions"
+    ],
+    "notes": "Arizona does not have a separate 'rape' statute — sexual assault (§ 13-1406) covers all non-consensual sexual intercourse. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "A.R.S. § 13-1402",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Class 1 Misdemeanor (adult victim); Class 6 Felony (victim under 15)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant exposed genitals or anus or the areola or nipple of the female breast",
+      "And another person was present",
+      "Defendant was reckless about whether the other person would be alarmed or offended"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 15 (Class 6 Felony)",
+      "Prior sex offense convictions (may trigger sex offender registration)"
+    ],
+    "notes": "Exposure to a minor under 15 is a Class 6 Felony. Two or more convictions require sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "A.R.S. § 13-3214",
+    "statute_title": "Solicitation of Prostitution",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant offered or agreed to engage in sexual conduct with another person",
+      "For a fee",
+      "Or solicited another to engage in such conduct"
+    ],
+    "mandatory_minimum": "15 days (mandatory minimum upon conviction)",
+    "enhancements": [
+      "Solicitation of a minor (felony)",
+      "Prior convictions"
+    ],
+    "notes": "Arizona has mandatory minimum jail time for prostitution-related offenses. Soliciting a minor is a serious felony."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "A.R.S. § 13-3553",
+    "statute_title": "Sexual Exploitation of a Minor",
+    "offense_class": "Class 2 Felony (dangerous crime against children)",
+    "penalty_min": "10 years per image (presumptive, DCAC)",
+    "penalty_max": "24 years per image (aggravated, DCAC)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly distributing, transporting, exhibiting, receiving, selling, purchasing, electronically transmitting, possessing, or exchanging any visual depiction",
+      "In which a minor is engaged in exploitive exhibition or sexual conduct"
+    ],
+    "mandatory_minimum": "10 years per image (DCAC mandatory sentence for each count, must run consecutively)",
+    "enhancements": [
+      "Multiple images (consecutive sentences)",
+      "Production of material",
+      "Victim under 12"
+    ],
+    "notes": "Arizona has among the harshest child exploitation penalties in the nation. Each image can be a separate count. Sentences must run consecutively. DCAC = dangerous crime against children."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "A.R.S. § 13-3824",
+    "statute_title": "Failure to Register as Sex Offender",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3.75 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant knowingly failed to register or update registration as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent failure"
+    ],
+    "notes": "Must register within 10 days of release or change of address. Community notification applies. Level assignment determines notification scope."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "A.R.S. § 13-1405",
+    "statute_title": "Sexual Conduct with a Minor",
+    "offense_class": "Class 2 Felony (victim under 15 — DCAC); Class 6 Felony (victim 15-17)",
+    "penalty_min": "13 years (victim under 15, flat DCAC sentence)",
+    "penalty_max": "27 years (victim under 15, aggravated DCAC); 2 years (victim 15-17)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant intentionally or knowingly engaged in sexual intercourse or oral sexual contact",
+      "With a person under 18 years of age"
+    ],
+    "mandatory_minimum": "Flat 13 years (victim under 15, DCAC); no mandatory minimum (victim 15-17 if defendant is 19-)",
+    "enhancements": [
+      "Victim under 15 (DCAC — mandatory prison, no probation, no pardon, no commutation)",
+      "Defendant in position of trust"
+    ],
+    "notes": "Age of consent is 18 in Arizona. For victims 15-17, defense of close in age (no more than 24 months difference or defendant is still in high school). Victim under 15 = DCAC with mandatory flat time."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "A.R.S. § 13-2904",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class 1 Misdemeanor (basic); Class 6 Felony (involves weapon)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant with intent to disturb the peace or quiet of a neighborhood, family, or person",
+      "Engaged in fighting, violent, or seriously disruptive behavior",
+      "Or made unreasonable noise, or used abusive or offensive language or gestures"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Involving a weapon (§ 13-2904(A)(6), Class 6 Felony)"
+    ],
+    "notes": "Disorderly conduct involving display or discharge of a deadly weapon is a Class 6 Felony. Otherwise Class 1 Misdemeanor."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "A.R.S. § 13-2508",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Class 6 Felony",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant intentionally prevented or attempted to prevent a person reasonably known to be a peace officer",
+      "From effecting an arrest",
+      "By using or threatening to use physical force, or by creating a substantial risk of causing physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Resisting arrest is always a felony in Arizona. Passive resistance without force is not covered by this statute."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "A.R.S. § 13-2409",
+    "statute_title": "Obstructing Criminal Investigations or Prosecutions",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "2.5 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant knowingly attempted to obstruct, delay, or prevent",
+      "The communication of information or testimony",
+      "To a peace officer, prosecutor, or other official conducting a criminal investigation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Separate from hindering prosecution (§ 13-2510) and tampering with evidence (§ 13-2809)."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "A.R.S. § 12-861",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Varies (direct or indirect; civil or criminal)",
+    "penalty_min": null,
+    "penalty_max": "6 months (criminal contempt); indefinite (civil, until compliance)",
+    "fine_max": "$500 (direct criminal contempt); $1,000 (indirect)",
+    "elements": [
+      "Defendant willfully disobeyed a lawful order of the court",
+      "Or engaged in disorderly or disruptive behavior in the courtroom"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminal contempt is punitive; civil contempt is coercive. Arizona statute provides for both direct (in court) and indirect (outside court) contempt."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "A.R.S. § 13-2507",
+    "statute_title": "Failure to Appear — First Degree",
+    "offense_class": "Class 5 Felony (felony case); Class 1 Misdemeanor (misdemeanor case)",
+    "penalty_min": null,
+    "penalty_max": "2.5 years (felony); 6 months (misdemeanor)",
+    "fine_max": "$150,000 (felony); $2,500 (misdemeanor)",
+    "elements": [
+      "Defendant was required to appear in court",
+      "Defendant was released on own recognizance or bail",
+      "Defendant knowingly failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying felony charge (Class 5 Felony)"
+    ],
+    "notes": "First degree (felony case) is Class 5 Felony. Second degree (misdemeanor case, § 13-2506) is Class 1 Misdemeanor."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "A.R.S. § 13-2907.01",
+    "statute_title": "Making a False Report",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant initiated a false report to a law enforcement agency",
+      "Claiming that a felony or misdemeanor had occurred",
+      "Knowing the report was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Separate from false reporting of a bomb threat or emergency, which carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "A.R.S. § 13-1202",
+    "statute_title": "Threatening or Intimidating",
+    "offense_class": "Class 1 Misdemeanor (basic); Class 6 Felony (to promote criminal street gang)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant threatened or intimidated another person by word or conduct",
+      "To cause physical injury or serious damage to property",
+      "Or to cause a public inconvenience"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Gang-related (Class 6 Felony)"
+    ],
+    "notes": "Covers verbal threats, written threats, and threats by conduct. Gang enhancement elevates to felony."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "A.R.S. § 13-2702",
+    "statute_title": "Perjury",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3.75 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant made a false sworn statement",
+      "In an official proceeding",
+      "The statement was material",
+      "Defendant did not believe the statement to be true"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Perjury in a proceeding that results in conviction of another for a felony is enhanced."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "A.R.S. § 13-2602",
+    "statute_title": "Bribery of a Public Servant or Party Officer",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "3.75 years",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer any benefit",
+      "Upon a public servant or party officer",
+      "With intent to influence the official action of the public servant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the briber and the bribed official can be charged. Receiving a bribe (§ 13-2602(A)(2)) carries the same penalty."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "A.R.S. § 13-2503",
+    "statute_title": "Escape — Second Degree",
+    "offense_class": "Class 5 Felony (from detention); Class 3 Felony (from prison, first degree under § 13-2502)",
+    "penalty_min": null,
+    "penalty_max": "2.5 years (Class 5); 8.75 years (Class 3)",
+    "fine_max": "$150,000",
+    "elements": [
+      "Defendant escaped or attempted to escape from custody or detention",
+      "Defendant was held under authority of law"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force (§ 13-2502, first degree, Class 3 Felony)",
+      "From prison or correctional facility"
+    ],
+    "notes": "Second degree: escape from custody. First degree (§ 13-2502): escape using physical force, threat, or deadly weapon."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "A.R.S. § 13-2910",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Class 1 Misdemeanor (basic); Class 6 Felony (intentional cruelty, second offense); Class 5 Felony (extreme cruelty)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years (Class 6); 2.5 years (Class 5)",
+    "fine_max": "$2,500 (misdemeanor); $150,000 (felony)",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly subjected an animal to cruel mistreatment or neglect",
+      "Or failed to provide adequate food, water, shelter, or veterinary care"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second conviction (Class 6 Felony)",
+      "Extreme cruelty (Class 5 Felony)"
+    ],
+    "notes": "Animal fighting (§ 13-2910.01-.04) carries enhanced penalties. Extreme cruelty includes intentional infliction of serious physical injury."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "A.R.S. § 13-901",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Full sentence on underlying offense may be imposed",
+    "fine_max": "Full fine on underlying offense",
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation was intentional or without good cause"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation",
+      "Absconding"
+    ],
+    "notes": "Court may revoke probation and impose the original sentence, modify conditions, or continue probation. Hearing required. Preponderance of evidence standard."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "A.R.S. § 31-412",
+    "statute_title": "Violation of Community Supervision (Parole)",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining sentence on underlying offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on community supervision",
+      "Defendant violated a condition of supervision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New felony while on supervision"
+    ],
+    "notes": "Arizona uses 'community supervision' rather than traditional parole. Board of Executive Clemency makes revocation decisions."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "A.R.S. § 13-303",
+    "statute_title": "Accomplice Liability",
+    "offense_class": "Same as principal offense",
+    "penalty_min": "Same as principal offense",
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant aided, counseled, agreed to aid, or attempted to aid another person",
+      "In planning or committing an offense",
+      "With the intent to promote or facilitate the offense"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "An accomplice is liable to the same extent as the principal. Arizona's accomplice liability is broad — mere encouragement can be sufficient."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "A.R.S. § 13-1001",
+    "statute_title": "Attempt",
+    "offense_class": "One class lower than the target offense (Class 1 → Class 2, etc.)",
+    "penalty_min": null,
+    "penalty_max": "Varies — one class below target offense",
+    "fine_max": "Varies — one class below target offense",
+    "elements": [
+      "Defendant intentionally engaged in conduct",
+      "That would constitute a crime if the attendant circumstances were as the defendant believed them to be",
+      "Or defendant engaged in conduct constituting a substantial step toward commission of the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt reduces the offense by one class. Attempt to commit a Class 1 Felony is a Class 2 Felony."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "A.R.S. § 13-1003",
+    "statute_title": "Conspiracy",
+    "offense_class": "One class lower than the target offense",
+    "penalty_min": null,
+    "penalty_max": "Varies — one class below target offense",
+    "fine_max": "Varies — one class below target offense",
+    "elements": [
+      "Defendant agreed with one or more persons",
+      "That at least one of them would engage in conduct constituting an offense",
+      "With the intent to promote or aid in the commission of the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "No overt act required for felony conspiracy in Arizona. Renunciation is a defense if the defendant thwarted the success of the conspiracy."
+  }
+]

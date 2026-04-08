@@ -1,0 +1,1678 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Mo. Rev. Stat. § 577.010",
+    "statute_title": "Driving While Intoxicated",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second); Class D Felony (third); Class C Felony (fourth+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second); 7 years (third); 10 years (fourth+)",
+    "fine_max": "$1,000 (first); $2,000 (second); $10,000 (third); $10,000 (fourth+)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While in an intoxicated condition",
+      "Or with a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DWI convictions (progressive classification)",
+      "BAC .15 or higher (aggravated offender)",
+      "Child under 17 in vehicle (child endangerment)",
+      "Chronic/habitual offender (5+ priors, Class B Felony)"
+    ],
+    "notes": "Missouri uses 'DWI' (Driving While Intoxicated). Prior offender status is lifetime lookback. Aggravated offender (BAC .15+) or chronic offender (5+ priors) have enhanced penalties. 30-day license suspension first offense."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Mo. Rev. Stat. § 577.010(1)",
+    "statute_title": "DWI — First Offense",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a motor vehicle while intoxicated or with BAC .08+",
+      "No prior DWI convictions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .15 or higher (aggravated offender)"
+    ],
+    "notes": "30-day license suspension followed by 60-day restricted driving privilege. SIS (Suspended Imposition of Sentence) available for first offense."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Mo. Rev. Stat. § 577.010(2)-(5)",
+    "statute_title": "DWI — Prior Offender / Persistent / Chronic",
+    "offense_class": "Class A Misdemeanor (second); Class D Felony (third); Class C Felony (fourth); Class B Felony (fifth+)",
+    "penalty_min": "10 days or 240 hours community service (second)",
+    "penalty_max": "1 year (second); 7 years (third); 10 years (fourth); 15 years (fifth+)",
+    "fine_max": "$2,000 (second); $10,000 (third+)",
+    "elements": [
+      "Defendant operated a motor vehicle while intoxicated or with BAC .08+",
+      "One or more prior DWI convictions"
+    ],
+    "mandatory_minimum": "10 days or 240 hours community service (prior offender); 30 days (persistent offender); 60 days (chronic offender); 2 years (habitual offender)",
+    "enhancements": [
+      "Persistent offender — 2+ priors (Class D Felony, 30-day mandatory)",
+      "Chronic offender — 4+ priors (Class C Felony, 60-day mandatory)",
+      "Habitual offender — 5+ priors (Class B Felony, 2-year mandatory)"
+    ],
+    "notes": "Missouri uses lifetime lookback. Each prior increases classification. Chronic and habitual offenders face mandatory minimum incarceration."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Mo. Rev. Stat. § 577.010(1)",
+    "statute_title": "DWI — Drugs",
+    "offense_class": "Same as alcohol DWI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DWI by offense count",
+    "fine_max": "Same as alcohol DWI by offense count",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While in an intoxicated condition due to the influence of drugs or a combination of drugs and alcohol"
+    ],
+    "mandatory_minimum": "Same as alcohol DWI by offense count",
+    "enhancements": [
+      "Combined influence of drugs and alcohol",
+      "Prior DWI convictions"
+    ],
+    "notes": "No per se drug limit. Prosecution relies on officer observations, Drug Recognition Expert evaluations, and toxicology. Same penalties as alcohol DWI."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Mo. Rev. Stat. § 304.012",
+    "statute_title": "Careless and Imprudent Driving",
+    "offense_class": "Class B Misdemeanor (general); Class A Misdemeanor (involving accident)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 1 year (Class A)",
+    "fine_max": "$1,000 (Class B); $2,000 (Class A)",
+    "elements": [
+      "Defendant operated a motor vehicle in a careless and imprudent manner",
+      "Involving an accident or endangering the life, limb, or property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Accident causing injury (Class A Misdemeanor)"
+    ],
+    "notes": "Missouri uses 'careless and imprudent driving' rather than 'reckless driving.' Common plea-down from DWI."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Mo. Rev. Stat. § 577.060",
+    "statute_title": "Leaving Scene of Accident — Injury or Death",
+    "offense_class": "Class D Felony (injury); Class B Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "7 years (injury); 15 years (death)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury or death",
+      "Defendant failed to stop and remain at the scene",
+      "Defendant failed to provide identification and render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (Class B Felony)",
+      "Serious physical injury"
+    ],
+    "notes": "Hit-and-run causing death is a Class B Felony. Property damage only (§ 577.060(1)) is a Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Mo. Rev. Stat. § 565.024",
+    "statute_title": "Involuntary Manslaughter — First Degree (DWI-Related)",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant recklessly caused the death of another person",
+      "While operating a motor vehicle while intoxicated"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DWI convictions",
+      "Extremely high BAC"
+    ],
+    "notes": "DWI-related deaths are charged as involuntary manslaughter in Missouri. May also be charged as second-degree murder if extreme recklessness shown."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Mo. Rev. Stat. § 565.027",
+    "statute_title": "Involuntary Manslaughter — Second Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through criminal negligence while operating a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Lower standard than first-degree involuntary manslaughter. Criminal negligence rather than recklessness."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Mo. Rev. Stat. § 302.321",
+    "statute_title": "Driving While Revoked or Suspended",
+    "offense_class": "Class D Misdemeanor (first); Class A Misdemeanor (subsequent); Class D Felony (3+ or DWI-related)",
+    "penalty_min": null,
+    "penalty_max": "15 days (first); 1 year (subsequent); 7 years (felony)",
+    "fine_max": "$500 (first); $2,000 (subsequent); $10,000 (felony)",
+    "elements": [
+      "Defendant operated a motor vehicle on a public road",
+      "Defendant's license was revoked or suspended",
+      "Defendant had knowledge or notice of the revocation or suspension"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DWI-related suspension (Class D Felony)",
+      "Third or subsequent offense (Class D Felony)"
+    ],
+    "notes": "Driving while revoked due to DWI is automatically a felony. Additional suspension upon conviction."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Mo. Rev. Stat. § 575.150",
+    "statute_title": "Resisting Arrest by Fleeing — Motor Vehicle",
+    "offense_class": "Class D Felony (creating substantial risk of injury/death)",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "A law enforcement officer attempted to make a lawful stop or arrest",
+      "Defendant fled by means of a motor vehicle",
+      "Creating a substantial risk of serious physical injury or death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury results",
+      "Death results"
+    ],
+    "notes": "Fleeing that creates substantial risk is a Class D Felony. Resisting by fleeing on foot (§ 575.150(1)) is a Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Mo. Rev. Stat. § 579.015",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Class D Felony (most controlled substances)",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed a controlled substance",
+      "Substance is listed in Missouri Comprehensive Drug Control Act schedules",
+      "Possession was without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions (enhanced penalties)",
+      "Possession near a school, park, or public housing (§ 579.074)"
+    ],
+    "notes": "Simple possession of most controlled substances is a Class D Felony in Missouri. Drug courts and alternative sentencing available."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Mo. Rev. Stat. § 579.015",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Misdemeanor (personal use amounts); Class D Felony (over 3 oz without license)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor over 3 oz without license for those 21+); 7 years (Class D Felony large amounts)",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant possessed marijuana",
+      "Amount exceeded legal personal use limits for adults 21+"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession over 3 oz without license",
+      "Possession by person under 21",
+      "Distribution without license"
+    ],
+    "notes": "Missouri legalized recreational marijuana in 2022 (Amendment 3). Adults 21+ may possess up to 3 oz. Possession over 3 oz without a license is a misdemeanor; larger amounts or distribution without license remain criminal."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Mo. Rev. Stat. § 579.015(1)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed cocaine",
+      "Cocaine is a Schedule II controlled substance in Missouri",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school"
+    ],
+    "notes": "Simple possession of cocaine is a Class D Felony. Larger quantities trigger distribution or trafficking charges."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Mo. Rev. Stat. § 579.015(1)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school",
+      "Manufacturing equipment present"
+    ],
+    "notes": "Methamphetamine is a major enforcement priority in Missouri. Manufacturing carries separate enhanced penalties under § 579.055."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Mo. Rev. Stat. § 579.065",
+    "statute_title": "Drug Trafficking — First Degree",
+    "offense_class": "Class B Felony (general); Class A Felony (large quantities)",
+    "penalty_min": "10 years (most first-degree trafficking)",
+    "penalty_max": "15 years (Class B); 30 years or Life (Class A)",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant possessed, purchased, manufactured, or distributed",
+      "A quantity of controlled substance meeting trafficking thresholds"
+    ],
+    "mandatory_minimum": "10 years (cannot be probated or paroled before 80%)",
+    "enhancements": [
+      "Weight-based graduated mandatory minimums",
+      "Trafficking near a school",
+      "Prior trafficking convictions",
+      "Death resulting from trafficking"
+    ],
+    "notes": "First-degree trafficking thresholds: cocaine 150g, heroin 8g, methamphetamine 8g. Mandatory minimum served at 80%. Second-degree trafficking (§ 579.068) is a Class C Felony."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Mo. Rev. Stat. § 579.020",
+    "statute_title": "Delivery of a Controlled Substance",
+    "offense_class": "Class C Felony (most); Class B Felony (to minor or near school)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 15 years (Class B)",
+    "fine_max": "$10,000 (Class C); $20,000 (Class B)",
+    "elements": [
+      "Defendant knowingly distributed, delivered, manufactured, or produced a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution to a minor (Class B Felony)",
+      "Distribution near a school, park, or public housing (§ 579.074)",
+      "Prior drug convictions"
+    ],
+    "notes": "Delivery is distinguished from trafficking by quantity. Near-school zone enhancement elevates by one class."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Mo. Rev. Stat. § 579.055",
+    "statute_title": "Manufacturing a Controlled Substance",
+    "offense_class": "Class B Felony (general); Class A Felony (meth with child present)",
+    "penalty_min": "10 years (methamphetamine under § 579.055(3))",
+    "penalty_max": "15 years (Class B); 30 years (Class A)",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant knowingly manufactured or attempted to manufacture a controlled substance"
+    ],
+    "mandatory_minimum": "10 years (methamphetamine, cannot be probated)",
+    "enhancements": [
+      "Manufacturing methamphetamine (mandatory 10 years)",
+      "Child present during manufacturing",
+      "Causing environmental contamination"
+    ],
+    "notes": "Missouri was historically a leading state for meth production. Manufacturing meth carries a mandatory 10-year minimum."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Mo. Rev. Stat. § 579.074",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Class D Misdemeanor (general); Class A Misdemeanor (delivery to minor)",
+    "penalty_min": null,
+    "penalty_max": "15 days (Class D); 1 year (Class A)",
+    "fine_max": "$500 (Class D); $2,000 (Class A)",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With intent to use for planting, propagating, testing, analyzing, packing, or consuming a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor (Class A Misdemeanor)"
+    ],
+    "notes": "Low-level offense. Marijuana-related paraphernalia for personal use by adults 21+ is legal under Amendment 3."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Mo. Rev. Stat. § 579.020",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Class C Felony (most); Class B Felony (near school or to minor)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 15 years (Class B)",
+    "fine_max": "$10,000 (Class C); $20,000 (Class B)",
+    "elements": [
+      "Defendant knowingly possessed a controlled substance",
+      "With intent to distribute, deliver, or sell"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near a school zone",
+      "Distribution to a minor",
+      "Prior drug convictions"
+    ],
+    "notes": "Intent inferred from quantity, packaging, scales, cash, and other indicators. Same penalties as actual distribution."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Mo. Rev. Stat. § 565.020",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "Life without parole (if not death)",
+    "penalty_max": "Death or Life without parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly caused the death of another person",
+      "After deliberation upon the matter"
+    ],
+    "mandatory_minimum": "Life without parole (if death penalty not imposed)",
+    "enhancements": [
+      "Aggravating factors for death penalty consideration",
+      "Murder of a law enforcement officer",
+      "Murder during commission of certain felonies"
+    ],
+    "notes": "Missouri retains the death penalty. First-degree murder requires deliberation (premeditation). If death penalty not imposed, mandatory life without parole."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Mo. Rev. Stat. § 565.021",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "30 years or Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly caused the death of another person",
+      "Or knowingly caused or aided another to commit suicide",
+      "Without deliberation"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [],
+    "notes": "Second-degree murder is an intentional killing without deliberation, or a killing committed with extreme recklessness (depraved heart). 10-year minimum to life."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Mo. Rev. Stat. § 565.023",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "Under the influence of sudden passion arising from adequate provocation"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [],
+    "notes": "Heat of passion defense reduces murder to voluntary manslaughter. 5-year mandatory minimum."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Mo. Rev. Stat. § 565.024",
+    "statute_title": "Involuntary Manslaughter — First Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant recklessly caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree involuntary manslaughter requires recklessness. Second-degree (§ 565.027) requires criminal negligence and is a Class D Felony."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Mo. Rev. Stat. § 565.052",
+    "statute_title": "Assault in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant attempted to kill or knowingly caused or attempted to cause serious physical injury to another person"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Victim is a law enforcement officer (§ 565.082)",
+      "Victim is a special victim (§ 565.004)"
+    ],
+    "notes": "First-degree assault is the most serious assault charge. Second-degree (§ 565.054) is a Class D Felony."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Mo. Rev. Stat. § 565.056",
+    "statute_title": "Assault in the Third Degree",
+    "offense_class": "Class E Felony (general); Class D Felony (special victim)",
+    "penalty_min": null,
+    "penalty_max": "4 years (Class E); 7 years (Class D)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant attempted to cause or recklessly caused physical injury to another person",
+      "Or with criminal negligence caused physical injury by means of a deadly weapon",
+      "Or placed another person in apprehension of immediate physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Special victim (law enforcement, elderly, disabled, etc.)"
+    ],
+    "notes": "Third-degree assault is the general simple assault charge. Fourth-degree (§ 565.058) is a Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Mo. Rev. Stat. § 565.054",
+    "statute_title": "Assault in the Second Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly caused or attempted to cause physical injury to another",
+      "By means of a deadly weapon or dangerous instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury results",
+      "Special victim"
+    ],
+    "notes": "Second-degree assault covers injury by means of a deadly weapon. First-degree is reserved for serious physical injury or attempt to kill."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Mo. Rev. Stat. § 570.025",
+    "statute_title": "Robbery — Second Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant forcibly stole property",
+      "By use of physical force or threat of immediate use of physical force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second-degree robbery is unarmed robbery by force or threat. First-degree (§ 570.023) involves a dangerous instrument or weapon."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Mo. Rev. Stat. § 570.023",
+    "statute_title": "Robbery — First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "30 years or Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant forcibly stole property",
+      "While armed with or using or threatening the use of a dangerous instrument or deadly weapon"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [
+      "Use of a firearm",
+      "Serious physical injury to victim"
+    ],
+    "notes": "First-degree robbery is a Class A Felony. Armed criminal action (§ 571.015) may also be charged, adding mandatory minimum."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Mo. Rev. Stat. § 565.110",
+    "statute_title": "Kidnapping — First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "30 years or Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully removed another from the person's place of residence or business",
+      "Or unlawfully confined a person for a substantial period",
+      "For the purpose of ransom, facilitating a felony, terrorizing, or interfering with government function"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [
+      "Ransom demand",
+      "Victim is a child",
+      "Serious bodily injury"
+    ],
+    "notes": "First-degree kidnapping is a Class A Felony. Second-degree (§ 565.120) is a Class D Felony."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Mo. Rev. Stat. § 569.040",
+    "statute_title": "Arson — First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly damaged a building or inhabitable structure",
+      "By starting a fire or causing an explosion",
+      "Knowing the building was occupied or persons were in the building"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Serious physical injury results",
+      "Death results"
+    ],
+    "notes": "First-degree arson involves occupied structures. Second-degree (§ 569.050) involves unoccupied buildings. Third-degree involves property."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Mo. Rev. Stat. § 565.052",
+    "statute_title": "Assault First Degree (Attempt to Kill)",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant attempted to kill another person"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Use of a firearm (armed criminal action)",
+      "Victim was a law enforcement officer"
+    ],
+    "notes": "Attempted murder in Missouri is typically charged as first-degree assault (attempt to kill). Armed criminal action (§ 571.015) may be added."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Mo. Rev. Stat. § 570.030",
+    "statute_title": "Stealing",
+    "offense_class": "Class D Felony ($750+); Class A Misdemeanor (under $750)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class D); 1 year (Class A Misdemeanor)",
+    "fine_max": "$10,000 (Class D); $2,000 (Class A)",
+    "elements": [
+      "Defendant appropriated property or services of another",
+      "Without consent",
+      "With the purpose to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $750 (Class D Felony)",
+      "Value over $25,000 (Class C Felony)",
+      "Stealing from the person (Class D Felony regardless of value)",
+      "Third or subsequent stealing (Class D Felony)"
+    ],
+    "notes": "Missouri consolidated theft offenses under 'stealing.' Felony threshold is $750. Third stealing offense is a felony regardless of value."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Mo. Rev. Stat. § 570.030(3)",
+    "statute_title": "Stealing — Felony ($750 or More)",
+    "offense_class": "Class D Felony ($750–$25,000); Class C Felony ($25,000+)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class D); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant appropriated property of another without consent",
+      "Value of property was $750 or more",
+      "With purpose to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $25,000 (Class C Felony)"
+    ],
+    "notes": "Felony stealing threshold is $750 in Missouri."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Mo. Rev. Stat. § 570.030(4)",
+    "statute_title": "Stealing — Misdemeanor (Under $750)",
+    "offense_class": "Class A Misdemeanor (first/second); Class D Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 7 years (third offense Class D)",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant appropriated property of another without consent",
+      "Value was under $750",
+      "With purpose to deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense (Class D Felony)"
+    ],
+    "notes": "Third misdemeanor stealing is elevated to a Class D Felony."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Mo. Rev. Stat. § 570.030",
+    "statute_title": "Stealing — Shoplifting",
+    "offense_class": "Same as general stealing by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general stealing by value",
+    "fine_max": "Same as general stealing by value",
+    "elements": [
+      "Defendant concealed or took possession of retail merchandise",
+      "Without paying full consideration",
+      "With purpose to deprive the merchant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $750 (felony)",
+      "Third offense (felony)"
+    ],
+    "notes": "Shoplifting is charged under the general stealing statute. Merchants may also pursue civil remedies."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Mo. Rev. Stat. § 569.160",
+    "statute_title": "Burglary — Second Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly entered unlawfully or knowingly remained unlawfully in a building or inhabitable structure",
+      "For the purpose of committing a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed during the burglary"
+    ],
+    "notes": "Second-degree burglary covers non-residential structures. First-degree (§ 569.160) involves inhabitable structures at night or with a weapon."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Mo. Rev. Stat. § 569.160",
+    "statute_title": "Burglary — First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly entered unlawfully or knowingly remained unlawfully in a building or inhabitable structure",
+      "For the purpose of committing a crime",
+      "While armed with a dangerous instrument or deadly weapon, or while another person was present"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Armed with a weapon",
+      "Occupant was home"
+    ],
+    "notes": "First-degree burglary requires entry while armed, at night, or when another person is present. Class B Felony."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Mo. Rev. Stat. § 570.030(3)(d)",
+    "statute_title": "Stealing — Motor Vehicle",
+    "offense_class": "Class D Felony (regardless of value)",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant stole a motor vehicle",
+      "With purpose to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Vehicle value over $25,000 (Class C Felony)"
+    ],
+    "notes": "Motor vehicle theft is always a felony regardless of vehicle value."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Mo. Rev. Stat. § 570.080",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Same class as corresponding stealing offense",
+    "penalty_min": null,
+    "penalty_max": "Same as corresponding stealing offense",
+    "fine_max": "Same as corresponding stealing offense",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing the property was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds mirror stealing"
+    ],
+    "notes": "Classified at the same level as the corresponding stealing offense."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Mo. Rev. Stat. § 569.100",
+    "statute_title": "Property Damage — First Degree",
+    "offense_class": "Class D Felony (over $750); Class A Misdemeanor (under $750)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class D); 1 year (Class A)",
+    "fine_max": "$10,000 (Class D); $2,000 (Class A)",
+    "elements": [
+      "Defendant knowingly damaged property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage over $750 (Class D Felony)",
+      "Property was a place of worship (Class D Felony regardless of amount)"
+    ],
+    "notes": "Missouri uses 'property damage' rather than 'vandalism.' First-degree covers damage to specified structures; second-degree is general."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Mo. Rev. Stat. § 569.140",
+    "statute_title": "Trespass — First Degree",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly entered unlawfully upon real property of another",
+      "After being notified not to enter or to leave"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree trespass requires notification (signs, verbal, fencing). Second-degree (§ 569.150) is a Class C Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Mo. Rev. Stat. § 569.120",
+    "statute_title": "Property Damage — Second Degree",
+    "offense_class": "Class A Misdemeanor (general); Class D Felony (over $750)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 7 years (Class D)",
+    "fine_max": "$2,000 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant knowingly damaged the property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage over $750 (Class D Felony)"
+    ],
+    "notes": "Second-degree property damage is the general criminal mischief charge."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Mo. Rev. Stat. § 565.074",
+    "statute_title": "Domestic Assault — Third Degree",
+    "offense_class": "Class E Felony (general); Class D Felony (special victim or prior conviction)",
+    "penalty_min": null,
+    "penalty_max": "4 years (Class E); 7 years (Class D)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant attempted to cause or recklessly caused physical injury to a domestic victim",
+      "Domestic victim includes family/household member, spouse, former spouse, or person with whom defendant has a child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DV conviction (enhanced classification)",
+      "Strangulation (§ 565.073, Class D Felony)",
+      "First-degree domestic assault (§ 565.072, Class B Felony)"
+    ],
+    "notes": "Missouri has four degrees of domestic assault. First-degree (serious injury with weapon) is Class B Felony. Fourth-degree (§ 565.076) is Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Mo. Rev. Stat. § 565.076",
+    "statute_title": "Domestic Assault — Fourth Degree",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant attempted to cause or recklessly caused physical injury, pain, or illness to a domestic victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DV convictions"
+    ],
+    "notes": "Fourth-degree is the lowest-level domestic assault. Commonly charged for minor physical altercations."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Mo. Rev. Stat. § 568.045",
+    "statute_title": "Endangering the Welfare of a Child — First Degree",
+    "offense_class": "Class D Felony (general); Class C Felony (substantial risk of death or serious injury)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class D); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly acted in a manner that created a substantial risk to the life, body, or health of a child under 17"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Substantial risk of death (Class C Felony)",
+      "Pattern of endangerment"
+    ],
+    "notes": "First-degree endangerment is a felony. Second-degree (§ 568.050) is a Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Mo. Rev. Stat. § 568.060",
+    "statute_title": "Abuse of a Child",
+    "offense_class": "Class B Felony (general); Class A Felony (if serious injury or death)",
+    "penalty_min": "5 years (Class B)",
+    "penalty_max": "15 years (Class B); 30 years (Class A)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly inflicted cruel and inhuman punishment upon a child under 18",
+      "Or knowingly caused serious physical injury to a child"
+    ],
+    "mandatory_minimum": "5 years (Class B, cannot be probated for certain offenses)",
+    "enhancements": [
+      "Serious physical injury or death (Class A Felony)",
+      "Pattern of abuse"
+    ],
+    "notes": "Child abuse causing death is a Class A Felony. Mandatory reporting by professionals."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Mo. Rev. Stat. § 455.085",
+    "statute_title": "Violation of Order of Protection",
+    "offense_class": "Class A Misdemeanor (first); Class E Felony (second); Class D Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 4 years (second); 7 years (third+)",
+    "fine_max": "$2,000 (first); $10,000 (felony)",
+    "elements": [
+      "A valid order of protection was in effect",
+      "Defendant had notice of the order",
+      "Defendant violated a condition of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second violation (Class E Felony)",
+      "Third or subsequent violation (Class D Felony)"
+    ],
+    "notes": "First violation is a misdemeanor; second and subsequent violations are felonies. Mandatory arrest for violations."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Mo. Rev. Stat. § 565.225",
+    "statute_title": "Stalking — First Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant purposely and repeatedly harassed or followed another person",
+      "And made a credible threat directed at the victim",
+      "Causing the victim to reasonably fear for their safety"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation of protective order while stalking",
+      "Prior stalking convictions"
+    ],
+    "notes": "First-degree stalking requires a credible threat plus repeated harassment. Second-degree (§ 565.227) is a Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Mo. Rev. Stat. § 565.090",
+    "statute_title": "Harassment — First Degree",
+    "offense_class": "Class E Felony",
+    "penalty_min": null,
+    "penalty_max": "4 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly communicated a threat to commit a felony",
+      "And the threat placed the victim in reasonable fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree harassment involves felony threats. Second-degree (§ 565.091) is a Class A Misdemeanor for general harassment."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Mo. Rev. Stat. § 565.184",
+    "statute_title": "Abuse of an Elderly, Disabled, or Vulnerable Person",
+    "offense_class": "Class D Felony (general); Class B Felony (serious injury)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class D); 15 years (Class B serious injury)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly caused physical injury, unreasonable confinement, or cruel punishment",
+      "To an elderly (60+), disabled, or vulnerable person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (Class B Felony)",
+      "Death (Class A Felony)",
+      "Financial exploitation (§ 570.145)"
+    ],
+    "notes": "Financial exploitation of the elderly is a separate offense under § 570.145. Missouri Adult Protective Services investigates."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Mo. Rev. Stat. § 571.030",
+    "statute_title": "Unlawful Use of Weapons",
+    "offense_class": "Class E Felony (general); Class D Felony (certain circumstances)",
+    "penalty_min": null,
+    "penalty_max": "4 years (Class E); 7 years (Class D)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed, carried, or used a weapon in an unlawful manner",
+      "Including carrying concealed while intoxicated, carrying into restricted areas, or possessing certain prohibited weapons"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "While intoxicated",
+      "In a restricted location (school, government building, etc.)"
+    ],
+    "notes": "Missouri adopted permitless carry in 2017. Most adults 19+ can carry concealed without a permit. Restrictions remain for prohibited persons and locations."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Mo. Rev. Stat. § 571.070",
+    "statute_title": "Possession of Firearm by Convicted Felon",
+    "offense_class": "Class D Felony",
+    "penalty_min": "5 years (mandatory minimum under § 571.015 armed criminal action if used in crime)",
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant had been convicted of a felony under Missouri or federal law"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession during commission of another felony (armed criminal action, 3-year mandatory minimum)",
+      "Prior violent felony"
+    ],
+    "notes": "Felon in possession is a Class D Felony. Armed criminal action (§ 571.015) adds mandatory consecutive term if firearm used during felony."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Mo. Rev. Stat. § 571.030",
+    "statute_title": "Unlawful Use of Weapons — Prohibited Person/Location",
+    "offense_class": "Class E Felony (prohibited person); Class B Misdemeanor (prohibited location)",
+    "penalty_min": null,
+    "penalty_max": "4 years (Class E); 6 months (Class B)",
+    "fine_max": "$10,000 (Class E); $1,000 (Class B)",
+    "elements": [
+      "Defendant carried a concealed firearm",
+      "In a prohibited location or defendant was a prohibited person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Missouri is a constitutional carry state (permitless carry since 2017). Restrictions remain for felons, certain locations, and persons under 19."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Mo. Rev. Stat. § 571.030(1)(4)",
+    "statute_title": "Unlawful Use of Weapons — Discharge",
+    "offense_class": "Class E Felony (general); Class D Felony (at or near person)",
+    "penalty_min": null,
+    "penalty_max": "4 years (Class E); 7 years (Class D)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant discharged or shot a firearm",
+      "At or from a motor vehicle, into a dwelling, or in a manner creating risk of injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Discharge from motor vehicle",
+      "Into an inhabited dwelling",
+      "Injury or death results"
+    ],
+    "notes": "Discharge from a motor vehicle or into a dwelling is a serious felony. Local ordinances may impose additional restrictions."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Mo. Rev. Stat. § 570.223",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class D Felony (general); Class B Felony (elderly victim or amount over $25,000)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class D); 15 years (Class B)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly and with intent to deceive or defraud",
+      "Used the personal identifying information of another person",
+      "To obtain money, credit, goods, services, or other benefit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim over 60 (Class B Felony)",
+      "Amount over $25,000 (Class B Felony)",
+      "Multiple victims"
+    ],
+    "notes": "Enhanced penalties for elderly victims. Restitution ordered."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Mo. Rev. Stat. § 570.030",
+    "statute_title": "Stealing — Embezzlement",
+    "offense_class": "Same as general stealing by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general stealing by value",
+    "fine_max": "Same as general stealing by value",
+    "elements": [
+      "Defendant was entrusted with property by virtue of employment or position",
+      "Defendant appropriated the property to personal use",
+      "Without consent and with purpose to deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $750 (felony)",
+      "Breach of fiduciary duty"
+    ],
+    "notes": "Embezzlement is charged under the general stealing statute. Value determines classification."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Mo. Rev. Stat. § 570.090",
+    "statute_title": "Forgery",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, with the purpose to defraud, made, completed, altered, or authenticated a writing",
+      "So that it purported to be the act of another who did not authorize it"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forgery of government documents",
+      "Large-scale forgery scheme"
+    ],
+    "notes": "Includes forging checks, identification documents, and other written instruments."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Mo. Rev. Stat. § 570.090",
+    "statute_title": "Forgery — Counterfeiting Currency",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant counterfeited currency, stamps, or government obligations",
+      "With purpose to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Federal counterfeiting charges typically apply. State charges may be concurrent."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Mo. Rev. Stat. § 570.120",
+    "statute_title": "Passing Bad Checks",
+    "offense_class": "Class A Misdemeanor (under $750); Class D Felony ($750+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 7 years (Class D)",
+    "fine_max": "$2,000 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant issued a check or other instrument for the payment of money",
+      "Knowing there were insufficient funds",
+      "With purpose to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount over $750 (Class D Felony)"
+    ],
+    "notes": "Same value thresholds as stealing. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Mo. Rev. Stat. § 375.991",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly presented a false or fraudulent insurance claim",
+      "With intent to defraud an insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized fraud scheme"
+    ],
+    "notes": "Missouri Department of Insurance investigates. Restitution and civil penalties may also apply."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Mo. Rev. Stat. § 570.130",
+    "statute_title": "Fraudulent Use of a Credit Device or Debit Device",
+    "offense_class": "Class D Felony ($750+); Class A Misdemeanor (under $750)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class D); 1 year (Class A)",
+    "fine_max": "$10,000 (Class D); $2,000 (Class A)",
+    "elements": [
+      "Defendant used a credit card, debit card, or similar device",
+      "Knowing it was stolen, expired, or without authorization",
+      "To obtain goods, services, or money"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $750 (Class D Felony)"
+    ],
+    "notes": "Includes possession of stolen credit cards. Same value thresholds as stealing."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Mo. Rev. Stat. § 574.105",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class C Felony (general); Class B Felony (over $500,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 15 years (Class B)",
+    "fine_max": "$250,000 or double the amount laundered",
+    "elements": [
+      "Defendant conducted a financial transaction",
+      "Knowing the transaction involved proceeds of criminal activity",
+      "With intent to promote criminal activity or conceal the source"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount over $500,000 (Class B Felony)"
+    ],
+    "notes": "Federal money laundering charges may also apply."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Mo. Rev. Stat. § 570.030",
+    "statute_title": "Stealing by Deceit — General Fraud",
+    "offense_class": "Same as general stealing by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general stealing by value",
+    "fine_max": "Same as general stealing by value",
+    "elements": [
+      "Defendant obtained property or services through deception",
+      "With purpose to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $750 (felony)",
+      "Victim over 60"
+    ],
+    "notes": "General fraud charged as stealing by deceit under the consolidated stealing statute."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Mo. Rev. Stat. § 566.030",
+    "statute_title": "Rape — First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "5 years (most); Life (persistent offender)",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant had sexual intercourse with another person by forcible compulsion",
+      "Or the victim was incapacitated or incapable of consent"
+    ],
+    "mandatory_minimum": "5 years (cannot be probated)",
+    "enhancements": [
+      "Victim under 12 (enhanced sentencing)",
+      "Use of a deadly weapon",
+      "Serious physical injury"
+    ],
+    "notes": "First-degree rape is a Class A Felony. Second-degree (§ 566.031) is a Class D Felony. Persistent sex offender status carries life imprisonment."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Mo. Rev. Stat. § 566.030",
+    "statute_title": "Rape — First Degree (Forcible)",
+    "offense_class": "Class A Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant had sexual intercourse with another person",
+      "By forcible compulsion"
+    ],
+    "mandatory_minimum": "5 years (cannot be probated)",
+    "enhancements": [
+      "Victim under 12",
+      "Use of a deadly weapon",
+      "Kidnapping in connection"
+    ],
+    "notes": "Missouri uses 'rape' and 'sodomy' in statutes. Forcible compulsion includes physical force, threat, or placing victim in fear of serious injury."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Mo. Rev. Stat. § 566.093",
+    "statute_title": "Sexual Misconduct — First Degree (Indecent Exposure)",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second); Class E Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second); 4 years (third+)",
+    "fine_max": "$1,000 (first); $2,000 (second); $10,000 (third+)",
+    "elements": [
+      "Defendant exposed genitals",
+      "Under circumstances in which the defendant knew the conduct was likely to cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (Class A Misdemeanor)",
+      "Third+ offense (Class E Felony)"
+    ],
+    "notes": "Progressive penalties for repeat offenders. Third offense becomes a felony."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Mo. Rev. Stat. § 567.030",
+    "statute_title": "Patronizing Prostitution",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second); Class E Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second); 4 years (third+)",
+    "fine_max": "$1,000 (first); $2,000 (second); $10,000 (third+)",
+    "elements": [
+      "Defendant offered or agreed to engage in sexual conduct with another person",
+      "In return for something of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense (progressive)",
+      "Involving a minor (felony)"
+    ],
+    "notes": "Progressive penalties. Patronizing a minor for prostitution is a Class B Felony."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Mo. Rev. Stat. § 573.023",
+    "statute_title": "Sexual Exploitation of a Minor",
+    "offense_class": "Class B Felony (production); Class D Felony (possession under § 573.037)",
+    "penalty_min": "5 years (production)",
+    "penalty_max": "15 years (Class B production); 7 years (Class D possession)",
+    "fine_max": null,
+    "elements": [
+      "Defendant knowingly used, persuaded, or coerced a minor under 18",
+      "To engage in sexually explicit conduct for the purpose of producing visual depictions"
+    ],
+    "mandatory_minimum": "5 years (production, cannot be probated)",
+    "enhancements": [
+      "Victim under 14",
+      "Distribution",
+      "Commercial exploitation"
+    ],
+    "notes": "Possession (§ 573.037) is a Class D Felony. Production and distribution carry mandatory minimums."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Mo. Rev. Stat. § 589.425",
+    "statute_title": "Failure to Register as Sex Offender",
+    "offense_class": "Class E Felony (first); Class D Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "4 years (first); 7 years (subsequent)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant knowingly failed to register, verify, or update information"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent violation (Class D Felony)"
+    ],
+    "notes": "Missouri Sex Offender Registry. Registration periods vary by tier. Failure to register is itself a felony."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Mo. Rev. Stat. § 566.032",
+    "statute_title": "Statutory Rape — First Degree",
+    "offense_class": "Class A Felony (victim under 14); Class C Felony (victim 14-17 with § 566.034)",
+    "penalty_min": "5 years (Class A)",
+    "penalty_max": "Life (Class A); 10 years (Class C)",
+    "fine_max": null,
+    "elements": [
+      "Defendant had sexual intercourse with a person under 14 (first degree)",
+      "Or with a person under 17 and defendant was 21 or older (second degree)"
+    ],
+    "mandatory_minimum": "5 years (first degree, cannot be probated)",
+    "enhancements": [
+      "Victim under 12",
+      "Defendant in position of authority"
+    ],
+    "notes": "Age of consent in Missouri is 17. First-degree statutory rape (under 14) is a Class A Felony. Second-degree (under 17, defendant 21+) is a Class C Felony."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Mo. Rev. Stat. § 574.010",
+    "statute_title": "Peace Disturbance",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant unreasonably and knowingly disturbed or alarmed another person",
+      "By fighting, threatening, or violent conduct",
+      "Or by loud and unreasonable noise"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Missouri uses 'peace disturbance' rather than 'disorderly conduct.' Low-level public order offense."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Mo. Rev. Stat. § 575.150",
+    "statute_title": "Resisting or Interfering with Arrest",
+    "offense_class": "Class A Misdemeanor (general); Class E Felony (creating substantial risk of injury)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 4 years (Class E)",
+    "fine_max": "$2,000 (Class A); $10,000 (Class E)",
+    "elements": [
+      "A law enforcement officer attempted to make a lawful arrest, stop, or detention",
+      "Defendant knowingly resisted by using or threatening force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Fleeing in a motor vehicle creating substantial risk (Class D Felony)"
+    ],
+    "notes": "Resisting by force or threat is a Class A Misdemeanor. Fleeing by motor vehicle creating risk is elevated to felony."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Mo. Rev. Stat. § 575.030",
+    "statute_title": "Hindering Prosecution",
+    "offense_class": "Class A Misdemeanor (general); higher if aiding felony suspect",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 7 years (Class D if aiding felony suspect)",
+    "fine_max": "$2,000 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant knowingly harbored, concealed, or aided a person who committed a crime",
+      "Or hindered the discovery, apprehension, or prosecution of such person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aiding a felony suspect (Class D Felony)"
+    ],
+    "notes": "Covers harboring, concealing, tampering with evidence, and interfering with investigations."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Mo. Rev. Stat. § 476.110",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Civil or Criminal Contempt",
+    "penalty_min": null,
+    "penalty_max": "Varies; typically up to 6 months or until compliance",
+    "fine_max": "Varies by court",
+    "elements": [
+      "A valid court order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant willfully disobeyed the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminal contempt is punitive. Civil contempt is coercive — defendant can purge by compliance."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Mo. Rev. Stat. § 574.010",
+    "statute_title": "Peace Disturbance — Public Intoxication",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant appeared in a public place while intoxicated",
+      "Defendant's conduct unreasonably disturbed or alarmed others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Missouri does not have a standalone public intoxication statute. Charged as peace disturbance."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Mo. Rev. Stat. § 575.095",
+    "statute_title": "Failure to Appear — Bail Jumping",
+    "offense_class": "Class A Misdemeanor (if underlying misdemeanor); Class D Felony (if underlying felony)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 7 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Defendant was required to appear in court",
+      "Defendant willfully failed to appear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge was a felony (Class D Felony)"
+    ],
+    "notes": "Bail jumping classification depends on the underlying offense."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Mo. Rev. Stat. § 575.080",
+    "statute_title": "Making a False Report",
+    "offense_class": "Class B Misdemeanor (general); Class A Misdemeanor (false fire alarm); Class D Felony (bomb threat)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 1 year (Class A); 7 years (Class D)",
+    "fine_max": "$1,000 (Class B); $2,000 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant knowingly reported false information to law enforcement",
+      "About a crime that did not occur or was materially false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Bomb threat (Class D Felony)"
+    ],
+    "notes": "Includes false crime reports, false fire alarms, and bomb threats."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Mo. Rev. Stat. § 574.115",
+    "statute_title": "Making a Terrorist Threat",
+    "offense_class": "Class D Felony (general); Class C Felony (mass violence)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class D); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly communicated a threat to commit a crime of violence",
+      "With reckless disregard of the risk of causing terror or evacuation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat against a school or public building",
+      "Threat causing evacuation"
+    ],
+    "notes": "Making a terrorist threat is a serious felony in Missouri. Includes threats of mass violence."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Mo. Rev. Stat. § 575.040",
+    "statute_title": "Perjury",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, in an official proceeding, made a false statement under oath or affirmation",
+      "The statement was material",
+      "Defendant knew the statement was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes testimony, depositions, and sworn affidavits."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Mo. Rev. Stat. § 576.010",
+    "statute_title": "Bribery of a Public Servant",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer a benefit",
+      "Upon a public servant",
+      "With the purpose to influence the public servant's official action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers both offering and receiving bribes."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Mo. Rev. Stat. § 575.200",
+    "statute_title": "Escape from Confinement",
+    "offense_class": "Class D Felony (from confinement); Class A Misdemeanor (from custody)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Class D); 1 year (Class A)",
+    "fine_max": "$10,000 (Class D); $2,000 (Class A)",
+    "elements": [
+      "Defendant was in custody or confinement",
+      "Defendant escaped or attempted to escape"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force",
+      "Escape from prison (Class D Felony)"
+    ],
+    "notes": "Escape from confinement is a felony. Escape from custody (arrest, transport) is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Mo. Rev. Stat. § 578.012",
+    "statute_title": "Animal Abuse",
+    "offense_class": "Class A Misdemeanor (general); Class E Felony (torture or killing); Class D Felony (2+ prior convictions)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 4 years (Class E); 7 years (Class D)",
+    "fine_max": "$2,000 (Class A); $10,000 (felony)",
+    "elements": [
+      "Defendant intentionally or purposely killed, injured, tortured, or mutilated an animal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Torture or killing (Class E Felony)",
+      "Two or more prior convictions (Class D Felony)"
+    ],
+    "notes": "Missouri strengthened animal cruelty laws. Aggravated animal abuse (§ 578.012(2)) is a Class E Felony."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Mo. Rev. Stat. § 559.036",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Same as underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum of the original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation for a criminal conviction",
+      "Defendant violated a condition of probation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation"
+    ],
+    "notes": "Court may revoke probation and execute any sentence available. Missouri uses a 120-day shock incarceration program as an alternative."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Mo. Rev. Stat. § 217.720",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Administrative (revocation)",
+    "penalty_min": null,
+    "penalty_max": "Remaining term of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on parole",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal conduct"
+    ],
+    "notes": "Missouri Board of Probation and Parole conducts revocation hearings. Violator may serve remainder of original sentence."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Mo. Rev. Stat. § 562.041",
+    "statute_title": "Responsibility for Conduct of Another",
+    "offense_class": "Same as principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant aided or encouraged another person in the commission of a crime",
+      "With the purpose of promoting the commission of the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Accomplice liability. An aider carries the same criminal liability as the principal."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Mo. Rev. Stat. § 562.012",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One class lower than the target offense",
+    "penalty_min": null,
+    "penalty_max": "One class lower than the target offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant, with the purpose of committing a crime, did any act which was a substantial step toward the commission of the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is classified one class lower than the target offense. Attempted murder remains a serious felony."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Mo. Rev. Stat. § 562.014",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "One class lower than the target offense",
+    "penalty_min": null,
+    "penalty_max": "One class lower than the target offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant agreed with one or more persons to commit a crime",
+      "Defendant or a co-conspirator performed an overt act in furtherance of the agreement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy is classified one class lower than the target offense. An overt act is required."
+  },
+  {
+    "common_charge_slug": "human-trafficking",
+    "statute_number": "Mo. Rev. Stat. § 566.209",
+    "statute_title": "Trafficking for Sexual Exploitation",
+    "offense_class": "Class B Felony (adult victim); Class A Felony (minor victim)",
+    "penalty_min": "5 years (adult); 10 years (minor)",
+    "penalty_max": "15 years (Class B); 30 years or Life (Class A)",
+    "fine_max": "$250,000",
+    "elements": [
+      "Defendant knowingly recruited, enticed, harbored, transported, or obtained another person",
+      "Through force, fraud, or coercion",
+      "For the purpose of sexual exploitation or forced labor"
+    ],
+    "mandatory_minimum": "5 years (adult victim); 10 years (minor victim)",
+    "enhancements": [
+      "Victim is a minor (Class A Felony)",
+      "Serious physical injury"
+    ],
+    "notes": "Missouri enacted comprehensive anti-trafficking legislation. Safe harbor for minor victims."
+  },
+  {
+    "common_charge_slug": "unlawful-imprisonment",
+    "statute_number": "Mo. Rev. Stat. § 565.130",
+    "statute_title": "False Imprisonment",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly restrained another person",
+      "Without consent and without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "False imprisonment is a Class D Felony in Missouri. Lesser included offense of kidnapping."
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "Mo. Rev. Stat. § 579.015(1)",
+    "statute_title": "Possession of Opioids — Heroin/Fentanyl",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed an opioid drug",
+      "Including heroin, fentanyl, or prescription opioids without valid prescription",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school"
+    ],
+    "notes": "Opioid crisis is a major enforcement priority in Missouri. Drug court diversion programs available."
+  }
+]

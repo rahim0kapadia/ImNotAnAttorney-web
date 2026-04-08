@@ -1,0 +1,2100 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "Intoxilyzer 9000 results are presumptively admissible when proper foundation is laid by the State.",
+      "Georgia's per se prohibition extends to drugs — any amount of marijuana metabolites can support DUI-drugs conviction.",
+      "Georgia ALS (Administrative License Suspension) creates additional prosecution leverage independent of criminal case."
+    ],
+    "defense_opportunities": [
+      "Challenge the Intoxilyzer 9000 — source code and reliability litigation has been ongoing.",
+      "Less safe driver standard requires actual impairment evidence, not just BAC — challenge the impairment evidence specifically.",
+      "10-day window for ALS hearing is critical — failure to request waives administrative challenge but criminal case remains."
+    ],
+    "common_defenses": [
+      "Less safe driver challenge — for impairment-based DUI, prosecution must show actual impairment beyond mere alcohol consumption.",
+      "Breath test machine challenges — Intoxilyzer 9000 calibration, maintenance, and operator certification."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "First-offense DUI in Georgia is a misdemeanor of high and aggravated nature with mandatory minimum 24-hour jail or community service.",
+      "Mandatory $300-$1,000 fine, 12 months probation, 40 hours community service, and DUI Risk Reduction Program (DUI School)."
+    ],
+    "defense_opportunities": [
+      "Georgia first-offenders may petition for limited driving permit allowing work, school, and medical travel.",
+      "Pretrial diversion programs in some Georgia counties for first-time offenders.",
+      "Challenge ALS suspension separately from criminal proceedings — different burden and different forum."
+    ],
+    "common_defenses": [
+      "Improper stop — officer lacked articulable suspicion to initiate the traffic stop.",
+      "Faulty field sobriety test administration — NHTSA standards must be strictly followed for HGN, walk-and-turn, and one-leg stand.",
+      "Breath test challenges — Intoxilyzer 9000 reliability, calibration records, and operator qualifications."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "Second DUI within 10 years carries mandatory 72 hours jail; third within 10 years is felony with mandatory 15-day jail.",
+      "Mandatory ignition interlock for second and subsequent offenses upon license reinstatement.",
+      "License suspension extends to 3 years (second within 5 years) or 5 years (third within 5 years)."
+    ],
+    "defense_opportunities": [
+      "Challenge prior DUI convictions for proper Boykin colloquies — uncounseled pleas may not count for enhancement.",
+      "Lookback period calculation — Georgia uses dates of offenses, not convictions, providing potential challenges.",
+      "Negotiate to lesser charge if priors are weak or invalid."
+    ],
+    "common_defenses": [
+      "Prior conviction validity — uncounseled or improperly entered prior pleas cannot enhance current charges.",
+      "Lookback period challenge — calculate from dates of offense, not conviction, to potentially exclude older priors.",
+      "Constitutional challenges to mandatory minimums as applied to specific circumstances.",
+      "Same defenses applicable to underlying current DUI charge (suppression, faulty testing, etc.)."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "Drug Recognition Expert (DRE) testimony admissible to establish drug impairment.",
+      "Lab analysis of blood or urine samples provides forensic evidence of substance presence."
+    ],
+    "defense_opportunities": [
+      "Challenge DRE methodology — 12-step protocol has been challenged for scientific reliability.",
+      "Prescription medication defense for drugs taken as prescribed."
+    ],
+    "common_defenses": [
+      "Valid prescription — defendant took medication as prescribed by licensed physician.",
+      "Lack of impairment evidence — mere presence of drug metabolites does not prove impairment at time of driving.",
+      "DRE protocol unreliability — challenge scientific basis and officer's training in Drug Recognition Evaluation."
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "Misdemeanor of high and aggravated nature carrying up to 12 months jail and $1,000 fine.",
+      "Often used as a fallback or plea alternative to DUI charges."
+    ],
+    "defense_opportunities": [
+      "Reckless driving requires more than ordinary negligence — must show willful disregard for safety.",
+      "Negotiate from DUI to reckless driving (wet reckless) to avoid DUI-specific consequences.",
+      "Challenge speed measurement equipment certification and officer training.",
+      "Necessity defense — driving aggressively to avoid greater harm."
+    ],
+    "common_defenses": [
+      "Lack of willfulness — driving may have been negligent but did not show reckless disregard.",
+      "Necessity — defendant drove aggressively to avoid imminent harm or respond to emergency.",
+      "Mechanical failure — vehicle malfunction (brake failure, sticking accelerator) caused dangerous driving.",
+      "Speed measurement challenge — radar/lidar device calibration, certification, and officer training issues."
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Misdemeanor for property damage; felony for serious injury or death (1-5 years prison).",
+      "Surveillance footage, witness identification, and matching vehicle damage create strong identification.",
+      "Consciousness of guilt — fleeing the scene is powerful circumstantial evidence."
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge of accident — defendant must have known a collision occurred.",
+      "Prompt return or report — defendant left briefly but returned or called immediately.",
+      "Argue defendant left to seek help (call 911 from another location).",
+      "Challenge identification — vehicle damage matching is circumstantial."
+    ],
+    "common_defenses": [
+      "Lack of knowledge of accident — defendant did not realize a collision occurred (minor impact, loud music).",
+      "Necessity to leave — defendant left scene due to safety concerns or to seek emergency help.",
+      "Prompt reporting — defendant reported the accident to authorities within reasonable time.",
+      "Misidentification — defendant was not the driver, or vehicle was misidentified."
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "First-degree vehicular homicide carries 3-15 years prison; second-degree is misdemeanor.",
+      "First-degree based on DUI, fleeing, hit and run, reckless driving, or other serious traffic offenses.",
+      "Accident reconstruction evidence establishes speed, point of impact, and causation."
+    ],
+    "defense_opportunities": [
+      "Causation defense — argue death would have occurred regardless of defendant's conduct.",
+      "Challenge underlying offense — if no DUI/reckless/etc., charge cannot be first-degree.",
+      "Victim's contributory conduct or intervening cause.",
+      "Mechanical failure or unforeseen road condition."
+    ],
+    "common_defenses": [
+      "Causation challenge — victim's actions or intervening events were the actual cause of death.",
+      "No predicate offense — first-degree requires DUI, reckless driving, fleeing, or other serious traffic offense.",
+      "Accident, not negligence — death resulted from genuinely unavoidable accident.",
+      "Challenge accident reconstruction — assumptions about speed, timing, and physics."
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Combined DUI plus death establishes charge with strong evidence.",
+      "Carries 3-15 years prison sentence with potential for habitual violator enhancement.",
+      "Permanent license revocation under Georgia law upon conviction."
+    ],
+    "defense_opportunities": [
+      "Challenge BAC or DUI evidence using same defenses as underlying DUI cases.",
+      "Causation challenge — death would have occurred regardless of impairment.",
+      "Suppression of DUI evidence eliminates the predicate offense.",
+      "Negotiate to second-degree vehicular homicide (misdemeanor) if predicate is weak."
+    ],
+    "common_defenses": [
+      "Suppression of DUI evidence — challenge stop, arrest, breath test, or field sobriety exercises.",
+      "Causation defense — impairment did not cause the death; intervening cause or unavoidable accident.",
+      "Less safe challenge — even if alcohol present, defendant was not actually impaired.",
+      "Challenge accident reconstruction — physics, speed, and timing assumptions."
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "DPS records establish suspension status easily.",
+      "Constructive notice via mail establishes the knowledge element."
+    ],
+    "defense_opportunities": [
+      "Challenge actual notice — if defendant did not receive suspension notice and address was incorrect.",
+      "Verify suspension was properly imposed — administrative errors occur.",
+      "Challenge habitual violator designation if priors are weak.",
+      "Necessity defense for emergency driving."
+    ],
+    "common_defenses": [
+      "Lack of notice — defendant did not receive notice of the suspension and did not know.",
+      "Invalid suspension — underlying suspension was improperly imposed or had been reinstated.",
+      "Necessity — defendant drove due to emergency requiring transportation.",
+      "Mistaken identity — defendant was not the driver."
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Felony for second or subsequent offense, or when defendant flees at high speed.",
+      "Dashcam evidence from pursuing officer documents the duration and danger of flight.",
+      "GPS and radar data establish exact speeds during pursuit."
+    ],
+    "defense_opportunities": [
+      "Challenge whether emergency lights and siren were activated.",
+      "Defendant did not see or hear emergency signals.",
+      "Argue mental health crisis or panic attack caused failure to stop.",
+      "Officer was not in marked vehicle or properly identified as law enforcement."
+    ],
+    "common_defenses": [
+      "Lack of awareness — defendant did not see or hear emergency signals due to environmental factors.",
+      "Officer not properly marked — vehicle did not have required emergency equipment activated.",
+      "Fear for safety — defendant reasonably feared the pursuing person was not legitimate law enforcement.",
+      "Mental health crisis — defendant was experiencing panic, confusion, or medical emergency."
+    ]
+  },
+  {
+    "common_charge_slug": "open-container",
+    "prosecution_strengths": [
+      "Misdemeanor with $50 fine for first offense.",
+      "Officer observation during lawful traffic stop is sufficient evidence.",
+      "Often charged alongside DUI as corroborating evidence."
+    ],
+    "defense_opportunities": [
+      "Container in trunk or area not normally accessible — statutory exception.",
+      "Defendant was passenger, not driver — challenge possession.",
+      "Challenge the underlying lawfulness of the stop.",
+      "Container was sealed or contents were not actually alcoholic."
+    ],
+    "common_defenses": [
+      "Statutory exception — container stored in trunk or area not normally accessible to driver/passengers.",
+      "Not in possession — container belonged to another occupant.",
+      "Sealed container — alcohol container was actually sealed or not alcoholic.",
+      "Illegal stop — officer lacked legal basis for the traffic stop."
+    ]
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "prosecution_strengths": [
+      "Georgia implied consent law allows officer to read warning and request testing.",
+      "Refusal previously admissible as evidence of guilt (changed by Olevik/Elliott).",
+      "Hearing on ALS must be requested within 30 days or right is waived."
+    ],
+    "defense_opportunities": [
+      "Challenge implied consent warning for accuracy and completeness.",
+      "Request ALS hearing within 30 days to contest administrative suspension."
+    ],
+    "common_defenses": [
+      "Olevik/Elliott constitutional defense — refusal cannot be used as evidence of guilt under Georgia constitution.",
+      "Inadequate implied consent warning — warning was inaccurate, incomplete, or coercive.",
+      "Unlawful arrest — implied consent only applies after lawful arrest.",
+      "Equivocal refusal — defendant's response was confused or qualified, not flat refusal."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Schedule I and II possession is felony carrying 2-15 years prison.",
+      "Constructive possession doctrine allows conviction without actual physical possession.",
+      "Drug analysis from GBI Crime Lab provides forensic identification."
+    ],
+    "defense_opportunities": [
+      "Fourth Amendment suppression for illegal searches.",
+      "Drug Court alternative for eligible defendants."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know substance was present.",
+      "Illegal search — drugs discovered through unconstitutional search.",
+      "Constructive possession failure — prosecution cannot show dominion and control.",
+      "Conditional discharge — first offenders may qualify for charge dismissal upon completion of probation."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Felony marijuana possession carries 1-10 years prison.",
+      "Some Georgia counties (Atlanta, Savannah) have decriminalized small amounts via local ordinance.",
+      "Smell of marijuana provides probable cause for search in Georgia."
+    ],
+    "defense_opportunities": [
+      "Local decriminalization in some counties may provide lesser penalty option.",
+      "Challenge weight calculation — total weight including seeds, stems, packaging may not represent usable marijuana.",
+      "Hemp legalization complications — challenge whether substance was actually marijuana vs legal hemp."
+    ],
+    "common_defenses": [
+      "Hemp/CBD challenge — substance may have been legal hemp products that look identical to marijuana.",
+      "Lack of constructive possession — marijuana found in shared space without clear connection.",
+      "Illegal search — challenge basis for the search that discovered the marijuana."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "GBI Crime Lab confirms substance identification with reliable methodology.",
+      "Mandatory minimums for trafficking quantities cannot be suspended."
+    ],
+    "defense_opportunities": [
+      "Challenge trafficking weight — pure cocaine vs total mixture matters.",
+      "Constructive possession defense in vehicle/shared space cases."
+    ],
+    "common_defenses": [
+      "Constructive possession failure — cocaine found in shared area without clear link to defendant.",
+      "Illegal search — challenge constitutionality of search that discovered cocaine.",
+      "Conditional discharge — first offenders may qualify for charge dismissal program.",
+      "Weight challenge for trafficking — challenge whether cocaine quantity actually meets trafficking threshold."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "Manufacturing meth carries mandatory minimums and enhanced sentences.",
+      "Physical signs of meth use (tooth decay, sores) corroborate possession evidence."
+    ],
+    "defense_opportunities": [
+      "Conditional discharge for first offenders.",
+      "Drug Court alternative provides treatment-based resolution.",
+      "Challenge constructive possession in shared spaces.",
+      "Substantial assistance for trafficking quantities."
+    ],
+    "common_defenses": [
+      "Constructive possession failure — meth found in shared area without clear connection.",
+      "Illegal search — Fourth Amendment violations in stop or search.",
+      "Drug Court alternative — treatment-based resolution rather than incarceration.",
+      "Lack of knowledge — defendant unaware substance was present."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "prosecution_strengths": [
+      "Fentanyl trafficking threshold is just 4 grams, easily triggering mandatory minimums.",
+      "Heroin trafficking threshold is 4 grams.",
+      "PDMP records establish lack of valid prescription."
+    ],
+    "defense_opportunities": [
+      "Valid prescription defense for legitimately prescribed opioids.",
+      "Georgia Good Samaritan law provides limited immunity for overdose responders.",
+      "Constructive possession challenges in shared spaces.",
+      "Conditional discharge for first offenders."
+    ],
+    "common_defenses": [
+      "Valid prescription — defendant had legitimate prescription from licensed physician.",
+      "Good Samaritan immunity — defendant called 911 for overdose situation.",
+      "Constructive possession failure — opioids found in shared space without clear link.",
+      "Illegal search — Fourth Amendment challenges to discovery of opioids."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "prosecution_strengths": [
+      "PDMP (Prescription Drug Monitoring Program) records establish lack of valid prescription.",
+      "Pill identification through DEA database is reliable.",
+      "Doctor shopping patterns documented through PDMP."
+    ],
+    "defense_opportunities": [
+      "Valid prescription defense — defendant may have prescription from another provider.",
+      "Pill bottles in defendant's name with intact contents establish lawful possession.",
+      "Challenge identification of loose pills.",
+      "Conditional discharge for first offenders."
+    ],
+    "common_defenses": [
+      "Valid prescription — defendant had current valid prescription from licensed practitioner.",
+      "Pill identification challenge — loose pills require lab confirmation of substance.",
+      "Pharmacy error — wrong medication dispensed by pharmacist.",
+      "Conditional discharge — first offenders may qualify for diversion."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Mandatory minimums cannot be suspended, deferred, or probated.",
+      "Trafficking thresholds: cocaine 28g, marijuana 10 lbs, meth 28g, heroin/fentanyl 4g.",
+      "Weight-based prosecution — intent to distribute not required."
+    ],
+    "defense_opportunities": [
+      "Challenge weight calculations — pure substance vs total mixture.",
+      "Fourth Amendment suppression for unconstitutional searches.",
+      "Constructive possession defense in vehicle stops with multiple occupants."
+    ],
+    "common_defenses": [
+      "Substantial assistance — cooperation with prosecution to provide substantial assistance against others.",
+      "Weight challenge — actual controlled substance weight versus total mixture.",
+      "Illegal search — suppression of evidence obtained through Fourth Amendment violations.",
+      "Constructive possession failure — defendant did not have dominion and control."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "Controlled buy operations with informants and recordings provide direct evidence.",
+      "Intent to distribute inferred from quantity, packaging, scales, cash, and communications."
+    ],
+    "defense_opportunities": [
+      "Challenge informant credibility — informants typically have cooperation deals and motives to fabricate.",
+      "Entrapment defense for government-induced sales.",
+      "Argue accommodation sale (sharing with friends) rather than commercial distribution.",
+      "Challenge electronic surveillance authorization."
+    ],
+    "common_defenses": [
+      "Entrapment — law enforcement induced sale defendant would not otherwise have made.",
+      "Informant unreliability — confidential informant has bias, criminal history, and motive to fabricate.",
+      "Mere presence — defendant was present but did not participate in sale.",
+      "Illegal search or surveillance — challenge constitutionality of investigation methods."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Physical evidence of operation (precursors, equipment, residue) is compelling.",
+      "Marijuana cultivation included in manufacturing definition.",
+      "Meth lab cases trigger enhanced environmental and child endangerment charges."
+    ],
+    "defense_opportunities": [
+      "Challenge whether defendant's actions constitute manufacturing.",
+      "Argue precursors had legitimate uses (household chemicals).",
+      "Personal-use cultivation may not establish manufacturing intent.",
+      "Illegal entry or search may suppress evidence."
+    ],
+    "common_defenses": [
+      "Illegal search — manufacturing operations often discovered through warrantless searches requiring suppression analysis.",
+      "Lack of participation — defendant present but did not manufacture or know of operation.",
+      "Lawful purpose — items had legitimate household or commercial uses.",
+      "Constructive possession — multiple individuals had access to the location."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Broad definition includes pipes, syringes, scales, and packaging materials.",
+      "Drug residue on item provides forensic link.",
+      "Often charged alongside drug possession."
+    ],
+    "defense_opportunities": [
+      "Items have lawful alternative uses.",
+      "No drug residue undermines paraphernalia charge.",
+      "Challenge the search that discovered the items.",
+      "First-offense diversion may be available."
+    ],
+    "common_defenses": [
+      "Lawful use — item had legitimate non-drug purpose (tobacco, food preparation, crafts).",
+      "Lack of knowledge — defendant did not know item was paraphernalia.",
+      "Illegal search — items discovered through unconstitutional search.",
+      "No drug nexus — items had no connection to controlled substances."
+    ]
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "prosecution_strengths": [
+      "PDMP records document doctor shopping patterns.",
+      "Pharmacy surveillance footage captures fraudulent activity.",
+      "Handwriting analysis on forged prescriptions."
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge that prescription was fraudulent.",
+      "Argue legitimate medical need.",
+      "Identity theft — someone used defendant's identity.",
+      "Challenge handwriting analysis methodology."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant believed prescription was valid.",
+      "Identity theft — someone used defendant's identity to obtain prescriptions.",
+      "Medical necessity — defendant had legitimate medical condition.",
+      "Insufficient evidence of intent to defraud."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Intent inferred from quantity, packaging, scales, cash, and communications.",
+      "Expert testimony on distribution patterns and quantities.",
+      "Texts and phone records establish drug transactions."
+    ],
+    "defense_opportunities": [
+      "Challenge intent inference — quantity may be consistent with personal use.",
+      "Argue absence of typical distribution indicia.",
+      "Constructive possession defense.",
+      "Illegal search suppression."
+    ],
+    "common_defenses": [
+      "Personal use — defendant was a heavy user, not a distributor.",
+      "Illegal search — drugs and indicia discovered through unconstitutional search.",
+      "Constructive possession failure — defendant did not have dominion and control.",
+      "Insufficient evidence of intent — quantity alone is insufficient."
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "Felony murder doctrine eliminates need to prove malice if death occurred during felony.",
+      "DNA evidence and forensic science provide strong identification.",
+      "Death penalty available for malice murder with aggravating circumstances."
+    ],
+    "defense_opportunities": [
+      "Challenge malice — argue heat of passion or self-defense to reduce charge.",
+      "Challenge felony murder predicate.",
+      "Mitigating circumstances in penalty phase."
+    ],
+    "common_defenses": [
+      "Lack of malice — heat of passion or absence of premeditation reduces to manslaughter.",
+      "No felony murder predicate — underlying felony not enumerated or not properly proven.",
+      "Insanity defense — defendant unable to distinguish right from wrong (Georgia M'Naghten standard)."
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "Carries 10-30 years prison sentence.",
+      "Allows prosecution for conduct showing extreme indifference without specific intent to kill.",
+      "Limited application but creates middle-ground charge."
+    ],
+    "defense_opportunities": [
+      "Challenge underlying second-degree cruelty to children element.",
+      "Argue conduct did not show extreme indifference.",
+      "Self-defense or accident defense.",
+      "Mental state challenge."
+    ],
+    "common_defenses": [
+      "No predicate offense — second-degree cruelty to children element not satisfied.",
+      "Accident — death resulted from accidental conduct without criminal mental state.",
+      "Self-defense — defendant acted in reasonable defense.",
+      "Lack of extreme indifference — conduct did not rise to required level of disregard."
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "Heat of passion or sudden provocation reduces murder to manslaughter.",
+      "Often a compromise verdict in murder cases.",
+      "Lower burden than malice murder."
+    ],
+    "defense_opportunities": [
+      "Heat of passion — provocation defense reduces from murder.",
+      "Self-defense — even imperfect self-defense may reduce to manslaughter.",
+      "Mutual combat — both parties engaged in fight.",
+      "Challenge causation."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted in reasonable belief of imminent danger.",
+      "Adequate provocation — heat of passion from sudden provocation.",
+      "Mutual combat — both parties voluntarily engaged in physical altercation.",
+      "Causation defense — death resulted from intervening cause."
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "Misdemeanor or felony depending on underlying conduct.",
+      "Lower mens rea than murder — criminal negligence or unlawful act sufficient.",
+      "Often charged in DUI death cases as alternative."
+    ],
+    "defense_opportunities": [
+      "Challenge underlying unlawful act or criminal negligence.",
+      "Accident defense — death was truly accidental.",
+      "Causation challenge.",
+      "Argue ordinary negligence rather than criminal."
+    ],
+    "common_defenses": [
+      "Accident — death was result of true accident without criminal negligence.",
+      "Ordinary negligence — conduct was civilly negligent but not criminally so.",
+      "Causation — intervening cause was actual cause of death.",
+      "Lack of underlying unlawful act — predicate conduct was not unlawful."
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "Includes assault with deadly weapon, intent to murder/rape/rob, or strangulation.",
+      "Victim testimony plus weapon recovery creates strong case.",
+      "Enhanced penalties for victims who are public officials, elderly, or disabled."
+    ],
+    "defense_opportunities": [
+      "Self-defense under Georgia stand your ground law.",
+      "Challenge whether object qualifies as deadly weapon.",
+      "Argue absence of intent to murder/rape/rob for aggravated assault elements.",
+      "Mistaken identity."
+    ],
+    "common_defenses": [
+      "Not a deadly weapon — object did not qualify under statutory definition.",
+      "No specific intent — defendant lacked the specific intent for aggravated assault.",
+      "Mistaken identity — defendant was misidentified as the assailant."
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Misdemeanor with up to 12 months jail.",
+      "Victim testimony often sufficient.",
+      "Even attempts without contact qualify."
+    ],
+    "defense_opportunities": [
+      "Self-defense.",
+      "Challenge reasonable apprehension element.",
+      "Mutual combat.",
+      "Diversion programs for first offenders."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted in reasonable defense.",
+      "No reasonable apprehension — alleged victim's fear was not objectively reasonable.",
+      "Mutual combat — both parties voluntarily engaged.",
+      "No overt act — words alone without accompanying conduct."
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "Misdemeanor for first offense, felony for repeated offenses against same victim.",
+      "Visible injury required for battery (vs. simple battery).",
+      "Family violence designation triggers enhanced penalties."
+    ],
+    "defense_opportunities": [
+      "Self-defense.",
+      "Consent in mutual combat or sports.",
+      "Accidental contact.",
+      "Challenge visible injury element."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used reasonable force in response to attack.",
+      "Consent — alleged victim consented to physical contact.",
+      "Accidental contact — touching was unintentional.",
+      "No visible injury — failure to satisfy battery's injury element."
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "prosecution_strengths": [
+      "Requires malicious intent to cause harm rendering victim limbs useless or seriously disfigured.",
+      "Medical evidence of serious injury.",
+      "Enhanced penalties for public officials, elderly, disabled victims."
+    ],
+    "defense_opportunities": [
+      "Self-defense — Georgia stand your ground.",
+      "Challenge malicious intent.",
+      "Injuries do not rise to disfigurement or rendering useless.",
+      "Defense of others."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used reasonable force believing it necessary.",
+      "Lack of malicious intent — injury was not intentionally caused.",
+      "Injuries do not qualify — not sufficient disfigurement or impairment.",
+      "Defense of others — protecting third party from imminent harm."
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Force or intimidation element broadly construed.",
+      "Surveillance evidence from businesses.",
+      "Witness identification testimony."
+    ],
+    "defense_opportunities": [
+      "Challenge identification reliability.",
+      "Argue absence of force or fear.",
+      "Claim of right defense.",
+      "Alibi."
+    ],
+    "common_defenses": [
+      "Mistaken identification — cross-racial, stress, lighting affect reliability.",
+      "No force or fear — taking occurred without robbery elements.",
+      "Claim of right — defendant believed property was theirs.",
+      "Alibi — defendant was not at the location."
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "Mandatory minimum 10 years prison.",
+      "Weapon need not be loaded or operable.",
+      "Strong prosecution leverage with severe potential sentence."
+    ],
+    "defense_opportunities": [
+      "Challenge weapon identification.",
+      "Mistaken identification.",
+      "Withdrawal before completion.",
+      "Duress defense."
+    ],
+    "common_defenses": [
+      "Misidentification — weapon-focus effect impairs witness reliability.",
+      "Not a deadly weapon — object did not qualify under statute.",
+      "Duress — defendant committed offense under threat from third party.",
+      "Alibi — defendant was not present at robbery."
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "Carries life imprisonment if victim under 14.",
+      "Often charged with sexual or violent offenses."
+    ],
+    "defense_opportunities": [
+      "Garza asportation requirement — movement must be more than incidental.",
+      "Consent — victim accompanied defendant voluntarily.",
+      "Challenge intent element.",
+      "Parental authority in custody disputes."
+    ],
+    "common_defenses": [
+      "Consent — alleged victim accompanied defendant voluntarily.",
+      "Parental authority — in custody disputes, parent's actions may be defended.",
+      "No criminal intent — defendant did not intend to confine or restrain unlawfully."
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "First-degree arson (occupied structure) carries 1-20 years prison.",
+      "Fire investigation evidence including accelerant detection and burn patterns.",
+      "Insurance fraud motive provides intent evidence."
+    ],
+    "defense_opportunities": [
+      "Challenge fire investigation methodology under NFPA 921.",
+      "Accidental fire defense.",
+      "Lack of connection between defendant and fire.",
+      "Mens rea challenge."
+    ],
+    "common_defenses": [
+      "Accidental origin — fire caused by electrical malfunction or other non-criminal cause.",
+      "Faulty investigation — fire investigators failed to follow scientific methodology.",
+      "Lack of intent — defendant did not willfully start the fire.",
+      "Alibi — defendant was not present when fire was started."
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "Carries 1-30 years prison sentence.",
+      "Overt act requirement strengthens prosecution case.",
+      "Victim survival and testimony are powerful evidence."
+    ],
+    "defense_opportunities": [
+      "Self-defense.",
+      "Challenge intent to kill — may show intent to injure only.",
+      "Voluntary abandonment.",
+      "Insanity defense."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant reasonably believed deadly force necessary.",
+      "Lack of intent to kill — defendant intended to injure or frighten only.",
+      "Voluntary abandonment — defendant abandoned attempt before completion.",
+      "Insanity — defendant unable to understand right from wrong."
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "Felony carrying 1-20 years prison.",
+      "Display of weapon plus threat plus apprehension.",
+      "Enhanced for police officer victims."
+    ],
+    "defense_opportunities": [
+      "Challenge whether object is a deadly weapon.",
+      "Self-defense.",
+      "Stand your ground immunity.",
+      "No intent to threaten."
+    ],
+    "common_defenses": [
+      "Self-defense — Georgia's stand your ground law applies.",
+      "Object not a deadly weapon — does not meet statutory definition.",
+      "No threatening intent — display was for lawful purpose.",
+      "No reasonable apprehension — victim's fear was not objectively reasonable."
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "Felony if value exceeds $1,500.",
+      "Surveillance footage and witness testimony.",
+      "Recovery of stolen property."
+    ],
+    "defense_opportunities": [
+      "Challenge intent to permanently deprive.",
+      "Value below felony threshold.",
+      "Claim of right defense."
+    ],
+    "common_defenses": [
+      "Lack of intent to deprive — defendant intended to return property.",
+      "Claim of right — defendant believed property was theirs.",
+      "Value below threshold — property worth less than $1,500.",
+      "First-offender treatment — qualifying for charge dismissal upon completion."
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Property valued over $1,500 triggers felony grand theft in Georgia.",
+      "Theft by taking, deception, conversion, or extortion all qualify.",
+      "Documentation of property value through multiple sources.",
+      "Charged degrees increase with value (over $5,000, $25,000)."
+    ],
+    "defense_opportunities": [
+      "Challenge valuation to keep below threshold.",
+      "Claim of right.",
+      "Lack of intent to permanently deprive.",
+      "Mistake of fact regarding ownership."
+    ],
+    "common_defenses": [
+      "Value below felony threshold — challenge market value evidence.",
+      "Claim of right — good faith belief in ownership.",
+      "Lack of permanent deprivation intent — borrowing or temporary use.",
+      "Consent — owner authorized the taking."
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "Theft under $1,500 is misdemeanor in Georgia.",
+      "Loss prevention testimony and surveillance.",
+      "Recovery of merchandise.",
+      "Multiple petty thefts can elevate to felony under habitual offender provisions."
+    ],
+    "defense_opportunities": [
+      "First-offender diversion programs.",
+      "Lack of intent.",
+      "Mistake."
+    ],
+    "common_defenses": [
+      "Lack of intent — distracted, forgot, or intended to pay.",
+      "Diversion — first-offender programs available.",
+      "Value below threshold — challenges to retail value.",
+      "Mistaken identity — wrong person identified."
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "Felony for repeat offenders or amounts over $500.",
+      "Loss prevention video and testimony.",
+      "Anti-shoplifting civil demand provisions."
+    ],
+    "defense_opportunities": [
+      "Challenge intent to steal.",
+      "First-offender treatment.",
+      "Diversion programs.",
+      "Improper merchant detention."
+    ],
+    "common_defenses": [
+      "No intent to steal — defendant intended to pay or was distracted.",
+      "First-offender treatment — qualifying for charge dismissal.",
+      "Improper detention — store personnel exceeded reasonable bounds.",
+      "Mistaken identification."
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "First-degree (dwelling) carries 1-20 years; second-degree (other structure) carries 1-5 years.",
+      "Physical evidence of entry, surveillance, and forensics.",
+      "Tool possession can support burglary tools charge."
+    ],
+    "defense_opportunities": [
+      "Challenge intent at time of entry.",
+      "Consent or authorization.",
+      "Challenge structure classification.",
+      "Mere presence inside is insufficient."
+    ],
+    "common_defenses": [
+      "Authorization — defendant had permission to enter.",
+      "No intent at entry — intent to commit offense formed after lawful entry.",
+      "Mistaken identity — forensic evidence does not conclusively identify defendant.",
+      "Not a qualifying structure."
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "First-degree burglary of a dwelling is felony carrying 1-20 years.",
+      "Increased penalties for armed burglary or with persons present.",
+      "Forensic evidence linking defendant to scene.",
+      "Strong emotional impact on jury."
+    ],
+    "defense_opportunities": [
+      "Authorization to enter dwelling.",
+      "Challenge dwelling classification (vacant, under construction).",
+      "Forensic evidence challenges.",
+      "No criminal intent at time of entry."
+    ],
+    "common_defenses": [
+      "Authorization — defendant had invitation or right to enter.",
+      "Not a dwelling — structure does not meet statutory definition.",
+      "Insufficient identification — forensic evidence is inconclusive.",
+      "No criminal intent at entry — entered for lawful purpose."
+    ]
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "prosecution_strengths": [
+      "Second-degree burglary of non-dwelling structure carries 1-5 years.",
+      "Surveillance and alarm system records.",
+      "Tools and equipment recovered.",
+      "Alarm time stamps establish entry time."
+    ],
+    "defense_opportunities": [
+      "Business open to public at time of entry.",
+      "No criminal intent.",
+      "Surveillance quality challenges.",
+      "Reduce to trespass without intent to commit offense."
+    ],
+    "common_defenses": [
+      "Open to public — business was open during entry.",
+      "No criminal intent — entered for lawful purpose.",
+      "Mistaken identity — surveillance is unclear.",
+      "Trespass, not burglary — no underlying intent to commit offense."
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "Felony if vehicle value exceeds $1,500.",
+      "VIN, registration, and GPS tracking provide identification.",
+      "Owner testimony establishes lack of permission."
+    ],
+    "defense_opportunities": [
+      "Authorization or believed authorization.",
+      "Joyriding/temporary use.",
+      "Mistaken identity.",
+      "Challenge value for felony classification."
+    ],
+    "common_defenses": [
+      "Authorization — defendant had permission or believed they did.",
+      "Temporary use — intended to return the vehicle (joyriding).",
+      "Mistaken identity — defendant was not the person who took the vehicle.",
+      "Co-ownership — defendant had an ownership interest."
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Recent unexplained possession creates presumption of knowledge.",
+      "Felony if value exceeds $1,500.",
+      "Pattern of receiving multiple items shows knowledge."
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge element.",
+      "Good faith purchase from apparent owner.",
+      "Property was not actually stolen.",
+      "Constructive possession defense."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know property was stolen.",
+      "Good faith purchase — bought for fair value from apparent legitimate source.",
+      "Property not stolen — was abandoned or given.",
+      "No constructive possession."
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "First-degree (felony) or second-degree (misdemeanor) based on damage.",
+      "Surveillance and witness testimony.",
+      "Damage estimates document costs."
+    ],
+    "defense_opportunities": [
+      "Accidental damage.",
+      "Value below felony threshold.",
+      "Mistaken identity.",
+      "Consent."
+    ],
+    "common_defenses": [
+      "Accidental damage — destruction was unintentional.",
+      "Value dispute — repair costs are inflated.",
+      "Misidentification.",
+      "Consent — owner authorized the conduct."
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "Misdemeanor with up to 12 months jail.",
+      "Notice to leave or posted signs establish unlawful entry.",
+      "Property owner testimony."
+    ],
+    "defense_opportunities": [
+      "Lack of notice.",
+      "Authorization.",
+      "Necessity defense.",
+      "First Amendment activity."
+    ],
+    "common_defenses": [
+      "No notice — defendant was not warned to leave.",
+      "Authorization — had permission to be present.",
+      "Necessity — emergency required entry.",
+      "Public access — location was open to public."
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "Damage value determines charge level.",
+      "Surveillance and witness testimony.",
+      "Repair estimates document cost."
+    ],
+    "defense_opportunities": [
+      "Challenge damage value.",
+      "Accidental damage.",
+      "Misidentification.",
+      "Restitution agreement."
+    ],
+    "common_defenses": [
+      "Accidental damage — not willful and malicious.",
+      "Value below threshold — damage cost is low.",
+      "Misidentification.",
+      "Consent — owner authorized the conduct."
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "Family violence designation triggers mandatory arrest in many cases.",
+      "Excited utterance and 911 admissible despite recantation.",
+      "No-drop policies in many counties."
+    ],
+    "defense_opportunities": [
+      "Self-defense.",
+      "False accusation defense (custody disputes).",
+      "Challenge family violence relationship element.",
+      "Mutual combat."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant defended against attack and was not primary aggressor.",
+      "False accusation — alleged victim has motive (custody, divorce).",
+      "Insufficient evidence — prosecution lacks evidence beyond reasonable doubt.",
+      "Not qualifying relationship — does not meet family violence definition."
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "Family violence battery is high and aggravated misdemeanor with enhanced penalties.",
+      "Photographs of injuries.",
+      "Mandatory arrest policies."
+    ],
+    "defense_opportunities": [
+      "Self-defense.",
+      "Mutual combat.",
+      "Challenge primary aggressor designation.",
+      "False accusation."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used reasonable force.",
+      "False accusation — fabricated for family court advantage.",
+      "Accidental contact — touching during argument was unintentional.",
+      "Primary aggressor misidentification."
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "Second-degree cruelty to children is felony carrying 1-10 years.",
+      "DFCS records and testimony.",
+      "Medical evidence of risk to child."
+    ],
+    "defense_opportunities": [
+      "Challenge endangerment definition.",
+      "Reasonable parenting choices.",
+      "Lack of knowledge of danger.",
+      "No actual harm or risk."
+    ],
+    "common_defenses": [
+      "Reasonable parenting — actions within range of acceptable choices.",
+      "No actual risk — situation did not actually endanger child.",
+      "Lack of knowledge — defendant unaware of dangerous condition.",
+      "No willful or culpable conduct."
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "First-degree cruelty to children carries 5-20 years prison.",
+      "Medical evidence including expert testimony on injuries.",
+      "Forensic interviews of child victims."
+    ],
+    "defense_opportunities": [
+      "Challenge medical testimony — alternative explanations.",
+      "Accidental injury.",
+      "Reasonable corporal discipline — Georgia permits it.",
+      "Misidentification of abuser."
+    ],
+    "common_defenses": [
+      "Accidental injury — child injured through normal activity.",
+      "Reasonable discipline — Georgia permits reasonable corporal punishment.",
+      "Alternative perpetrator — another caregiver caused injury.",
+      "Medical condition — child has condition explaining injuries."
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "Court order documents the prohibited conduct.",
+      "Phone records, texts, emails document violations.",
+      "Aggravated stalking elevates penalties."
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge of order's terms.",
+      "Accidental contact.",
+      "Victim-initiated contact.",
+      "Invalid order."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — not properly served with order.",
+      "Accidental contact — encounter was unintentional.",
+      "Victim-initiated — protected person initiated contact.",
+      "Invalid order — improperly issued or expired."
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "Pattern of conduct documented through multiple sources.",
+      "Emotional distress evidence from victim."
+    ],
+    "defense_opportunities": [
+      "Challenge pattern element.",
+      "First Amendment protected activity.",
+      "Legitimate purpose for contact.",
+      "No reasonable fear."
+    ],
+    "common_defenses": [
+      "No course of conduct — isolated incidents.",
+      "Legitimate purpose — work, family, business.",
+      "Protected speech — First Amendment activity.",
+      "No emotional distress — alleged victim was not actually distressed."
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "Phone records, texts, emails document conduct.",
+      "Pattern evidence of repeated communications.",
+      "Threat element supports enhanced charges."
+    ],
+    "defense_opportunities": [
+      "Legitimate purpose for communications.",
+      "First Amendment protected speech.",
+      "Single incident defense.",
+      "No actual harassment."
+    ],
+    "common_defenses": [
+      "Legitimate purpose — communications for lawful reason.",
+      "Protected speech — First Amendment activity.",
+      "No course of conduct — isolated communications.",
+      "No actual annoyance — alleged victim was not actually harassed."
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "Felony for serious forms of abuse.",
+      "Mandatory reporting by healthcare workers.",
+      "Pattern evidence from medical records."
+    ],
+    "defense_opportunities": [
+      "Challenge victim's qualifying status.",
+      "Accident defense.",
+      "Caregiver resource limitations.",
+      "Medical condition causation."
+    ],
+    "common_defenses": [
+      "Accidental injury — falls common in elderly.",
+      "No willful conduct — not intentional abuse.",
+      "Caregiver limitations — insufficient training or resources.",
+      "Medical causation — pre-existing conditions."
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "Carrying without weapons license is misdemeanor for valid candidates; felony otherwise.",
+      "Recovery of weapon with forensics.",
+      "Open carry generally allowed for licensed individuals."
+    ],
+    "defense_opportunities": [
+      "Constitutional carry expansion (2022 law).",
+      "Location exemptions (home, vehicle, business).",
+      "Constructive possession challenges."
+    ],
+    "common_defenses": [
+      "Valid weapons license — defendant had current Georgia weapons carry license.",
+      "Constitutional carry — Georgia allows lawful carry without license (2022 law).",
+      "Location exemption — defendant was in home, vehicle, or business.",
+      "No constructive possession — weapon found in shared area."
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "Prior felony easily proven through court records.",
+      "Recovery of firearm in possession or accessible.",
+      "Rights restoration not automatic in Georgia."
+    ],
+    "defense_opportunities": [
+      "Challenge actual or constructive possession.",
+      "Rights restoration if granted.",
+      "Out-of-state prior may not qualify.",
+      "Temporary or innocent possession."
+    ],
+    "common_defenses": [
+      "No possession — did not actually or constructively possess firearm.",
+      "Rights restored — civil rights restoration order.",
+      "Prior conviction does not qualify — not a felony under Georgia law.",
+      "Temporary possession — brief handling for lawful purpose."
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "Some prohibited locations remain (schools, courthouses, government buildings).",
+      "Prohibited persons cannot carry regardless of license status."
+    ],
+    "defense_opportunities": [
+      "Constitutional carry under 2022 law eliminates most license requirements.",
+      "Challenge location designation as prohibited.",
+      "Valid license defense.",
+      "Lawful candidate status."
+    ],
+    "common_defenses": [
+      "Constitutional carry — defendant qualified to carry without license under 2022 law.",
+      "Valid weapons license — current Georgia weapons carry license.",
+      "Not in prohibited location — challenge whether location qualifies as off-limits.",
+      "Not a prohibited person — defendant not subject to firearm prohibition."
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "Witness testimony and ballistic evidence.",
+      "Local ordinances prohibit discharge in city limits.",
+      "Misdemeanor or felony depending on circumstances."
+    ],
+    "defense_opportunities": [
+      "Self-defense.",
+      "Accidental discharge.",
+      "Lawful hunting or sporting use.",
+      "Misidentification."
+    ],
+    "common_defenses": [
+      "Self-defense — discharged in defense against threat.",
+      "Accidental discharge — unintentional firing.",
+      "Lawful purpose — hunting, sport shooting on appropriate location.",
+      "Misidentification — defendant was not the shooter."
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-trafficking",
+    "prosecution_strengths": [
+      "Georgia and federal statutes prohibit firearms trafficking.",
+      "Multiple firearms transactions establish trafficking pattern.",
+      "ATF involvement in many cases.",
+      "Pattern evidence from gun show purchases or straw buyers."
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge of buyer's prohibited status.",
+      "Argue private sales without trafficking intent.",
+      "Lack of pattern showing trafficking.",
+      "Challenge straw purchase allegations."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know buyer was prohibited.",
+      "Lawful private sale — transaction was lawful private firearm transfer.",
+      "No pattern — isolated transactions do not establish trafficking.",
+      "Mere presence — defendant was not actively involved in trafficking."
+    ]
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "prosecution_strengths": [
+      "Federal NFA registration required for certain items.",
+      "Physical evidence and expert classification.",
+      "Possession alone is sufficient for conviction."
+    ],
+    "defense_opportunities": [
+      "Challenge weapon classification.",
+      "NFA registration if applicable.",
+      "Lack of knowledge.",
+      "Antique exception."
+    ],
+    "common_defenses": [
+      "Misclassification — weapon does not meet statutory definition.",
+      "Lack of knowledge — defendant did not know weapon was prohibited.",
+      "Illegal search — Fourth Amendment violation.",
+      "NFA registered — properly registered under federal law."
+    ]
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "prosecution_strengths": [
+      "Federal wire fraud parallel charges.",
+      "Electronic evidence trail through emails, texts, and financial records.",
+      "Pattern evidence with multiple victims."
+    ],
+    "defense_opportunities": [
+      "Good faith belief.",
+      "No interstate wire used.",
+      "Statute of limitations.",
+      "Challenge materiality."
+    ],
+    "common_defenses": [
+      "Good faith — believed representations were true.",
+      "No scheme to defraud — legitimate business transactions.",
+      "No material misrepresentation.",
+      "Statute of limitations expired."
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Digital forensics including IP addresses and device data.",
+      "Financial records showing fraudulent transactions.",
+      "Victim testimony about unauthorized use."
+    ],
+    "defense_opportunities": [
+      "Authorization defense.",
+      "Defendant was also a victim.",
+      "Lack of intent.",
+      "Digital evidence challenges."
+    ],
+    "common_defenses": [
+      "Authorization — victim consented to use of information.",
+      "Defendant's identity stolen — defendant was also a victim.",
+      "Lack of fraudulent intent — used for lawful purpose.",
+      "Digital evidence challenges — IP addresses and devices can be spoofed."
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Financial records and accounting evidence.",
+      "Felony if value exceeds $1,500.",
+      "Forensic accounting expert testimony."
+    ],
+    "defense_opportunities": [
+      "Authorization defense.",
+      "Claim of right (owed money).",
+      "Accounting errors.",
+      "Intent to repay."
+    ],
+    "common_defenses": [
+      "Authorization — believed had permission to use funds.",
+      "Claim of right — believed owed money as compensation.",
+      "Accounting error — bookkeeping mistakes, not theft.",
+      "Lack of intent to permanently deprive."
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Handwriting analysis and document examination.",
+      "Felony for first-degree forgery.",
+      "Digital forensics for electronic forgery."
+    ],
+    "defense_opportunities": [
+      "Authorization to sign.",
+      "No intent to defraud.",
+      "Challenge handwriting analysis.",
+      "Mistake or misunderstanding."
+    ],
+    "common_defenses": [
+      "Authorization — had permission to sign.",
+      "No intent to defraud — purpose was not deceptive.",
+      "Not legally operative document — does not meet forgery definition.",
+      "Handwriting analysis challenges."
+    ]
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "prosecution_strengths": [
+      "Federal currency counterfeiting prosecuted federally.",
+      "Physical evidence and Secret Service involvement.",
+      "Pattern of transactions."
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge.",
+      "Innocent receipt of counterfeit.",
+      "Challenge identification of items as counterfeit.",
+      "Authorization."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — did not know items were counterfeit.",
+      "Innocent receipt — received counterfeit unknowingly.",
+      "Challenge identification — items may be authentic or low-quality replicas.",
+      "Authorization — legitimate copies for lawful purposes."
+    ]
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "prosecution_strengths": [
+      "Bank records establish insufficient funds.",
+      "Pattern of bad checks."
+    ],
+    "defense_opportunities": [
+      "Restitution within 10 days of demand letter.",
+      "Funds available at time of writing.",
+      "Post-dated checks.",
+      "Stop payment defense."
+    ],
+    "common_defenses": [
+      "Payment within statutory period — eliminates presumption of intent.",
+      "Good faith — believed account had sufficient funds.",
+      "Post-dated check — payee knew check was post-dated.",
+      "Stop payment for legitimate dispute."
+    ]
+  },
+  {
+    "common_charge_slug": "tax-fraud",
+    "prosecution_strengths": [
+      "Georgia tax fraud statutes plus federal IRS prosecution.",
+      "Tax records and financial documentation.",
+      "Pattern of returns showing willful evasion.",
+      "Forensic accounting expert testimony."
+    ],
+    "defense_opportunities": [
+      "Good faith belief in tax positions.",
+      "Reliance on tax professional.",
+      "No willfulness.",
+      "Statute of limitations."
+    ],
+    "common_defenses": [
+      "Good faith — believed tax positions were valid.",
+      "Reliance on professional — relied on accountant or attorney.",
+      "Lack of willfulness — innocent mistake or negligent omission.",
+      "Statute of limitations — beyond applicable period."
+    ]
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "prosecution_strengths": [
+      "Insurance company SIU investigations.",
+      "Surveillance contradicting claims.",
+      "Pattern evidence from multiple claims."
+    ],
+    "defense_opportunities": [
+      "Good faith belief in claim validity.",
+      "Disagreement over claim value.",
+      "Insurance company bad faith.",
+      "Surveillance interpretation."
+    ],
+    "common_defenses": [
+      "Good faith — honestly believed information was accurate.",
+      "No material misrepresentation — minor errors or estimates.",
+      "Claim dispute is civil matter — not criminal fraud.",
+      "Insurance company bad faith — insurer has motive to deny."
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "Transaction records, surveillance, and digital evidence.",
+      "Pattern of fraudulent transactions.",
+      "Identity verification evidence."
+    ],
+    "defense_opportunities": [
+      "Authorization from cardholder.",
+      "Mistaken identity.",
+      "Challenge transaction identification.",
+      "Lack of knowledge."
+    ],
+    "common_defenses": [
+      "Authorization — cardholder gave permission.",
+      "Mistaken identity — defendant was not perpetrator.",
+      "Lack of knowledge — did not know card was unauthorized.",
+      "Cardholder acquiescence — knowingly allowed use."
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Financial records tracing fund movement.",
+      "Bank reports of suspicious activity.",
+      "Expert testimony on money laundering techniques."
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge of illegal source.",
+      "Legitimate business purpose.",
+      "Challenge predicate offense.",
+      "No concealment intent."
+    ],
+    "common_defenses": [
+      "No knowledge of illegal source — funds appeared legitimate.",
+      "Legitimate business purpose — transactions had lawful justification.",
+      "No predicate offense — funds not from specified unlawful activity.",
+      "Cuellar challenge — no concealment intent in fund movement."
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "Material misrepresentation evidence.",
+      "Victim reliance testimony.",
+      "Pattern evidence."
+    ],
+    "defense_opportunities": [
+      "Good faith belief.",
+      "No material misrepresentation.",
+      "Puffery vs fraud.",
+      "Victim due diligence."
+    ],
+    "common_defenses": [
+      "Good faith — honestly believed representations were true.",
+      "No intent to defraud — no purpose to deceive.",
+      "Not material — alleged misrepresentation was not material.",
+      "No reliance — victim did not rely on statements."
+    ]
+  },
+  {
+    "common_charge_slug": "bank-fraud",
+    "prosecution_strengths": [
+      "Georgia's banking statutes provide additional state charges.",
+      "Bank records and forensic accounting.",
+      "Federal/state joint task force investigations."
+    ],
+    "defense_opportunities": [
+      "Good faith belief.",
+      "No federal jurisdiction (federally insured bank required for federal).",
+      "Statute of limitations.",
+      "Lack of intent."
+    ],
+    "common_defenses": [
+      "Good faith — believed transactions were legitimate.",
+      "No scheme to defraud — legitimate business activity.",
+      "Statute of limitations — beyond applicable period.",
+      "Lack of materiality — alleged misrepresentations were immaterial."
+    ]
+  },
+  {
+    "common_charge_slug": "securities-fraud",
+    "prosecution_strengths": [
+      "Georgia's Securities Act parallels federal securities laws.",
+      "SEC and state securities commissioner investigations.",
+      "Documentary evidence of disclosures.",
+      "Expert testimony on securities regulations."
+    ],
+    "defense_opportunities": [
+      "Adequate disclosure.",
+      "Reliance on counsel.",
+      "Good faith.",
+      "Market causation."
+    ],
+    "common_defenses": [
+      "Adequate disclosure — all material facts were disclosed.",
+      "Good faith — believed in legitimacy of investment.",
+      "Reliance on professionals — relied on attorneys and accountants.",
+      "Market loss not fraud — losses caused by market conditions."
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "prosecution_strengths": [
+      "Victim testimony often primary evidence.",
+      "Forensic evidence in some cases."
+    ],
+    "defense_opportunities": [
+      "Consent.",
+      "False accusation.",
+      "Misidentification.",
+      "Accidental contact."
+    ],
+    "common_defenses": [
+      "Consent — sexual contact was consensual.",
+      "False accusation — fabricated with motive.",
+      "Accidental contact — touching was incidental.",
+      "Insufficient evidence."
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "Georgia treats sexual assault under various statutes including rape, sexual battery, and statutory rape.",
+      "DNA evidence from sexual assault kits.",
+      "Victim testimony powerful with juries."
+    ],
+    "defense_opportunities": [
+      "Consent.",
+      "Challenge DNA significance.",
+      "False accusation.",
+      "Alibi."
+    ],
+    "common_defenses": [
+      "Consent — sexual activity was consensual.",
+      "False accusation — fabricated with demonstrable motive.",
+      "Misidentification — DNA inconclusive.",
+      "Insufficient evidence — cannot prove non-consent."
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "Death penalty available for rape with aggravating circumstances (limited).",
+      "DNA evidence from rape kits.",
+      "Expert testimony on victim trauma."
+    ],
+    "defense_opportunities": [
+      "Consent.",
+      "Misidentification.",
+      "False accusation.",
+      "Challenge victim credibility."
+    ],
+    "common_defenses": [
+      "Consent — sexual activity was consensual.",
+      "Misidentification — defendant not the perpetrator.",
+      "False accusation — motive to fabricate.",
+      "Insufficient physical evidence."
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "Misdemeanor for first offense; felony for repeat or with minors present.",
+      "Witness testimony.",
+      "Surveillance footage."
+    ],
+    "defense_opportunities": [
+      "No lewd intent.",
+      "Accidental exposure.",
+      "Private location.",
+      "Misidentification."
+    ],
+    "common_defenses": [
+      "Accidental exposure — wardrobe malfunction or necessity.",
+      "No lewd intent — exposure was not for sexual gratification.",
+      "Private location — not a public place.",
+      "Misidentification."
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "Misdemeanor for solicitation.",
+      "Undercover operations with recording.",
+      "Pattern evidence of multiple solicitations."
+    ],
+    "defense_opportunities": [
+      "Entrapment.",
+      "No agreement.",
+      "Mistaken identity.",
+      "Diversion programs."
+    ],
+    "common_defenses": [
+      "Entrapment — government induced solicitation.",
+      "No explicit agreement for sexual acts in exchange for money.",
+      "Diversion — first-offender programs.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "prosecution_strengths": [
+      "Digital forensics on devices and cloud accounts.",
+      "IP addresses and login records.",
+      "Hash matching for known illegal content."
+    ],
+    "defense_opportunities": [
+      "Unauthorized device access.",
+      "No knowledge.",
+      "Challenge digital forensics.",
+      "Reasonable belief of adult age."
+    ],
+    "common_defenses": [
+      "Unauthorized access — device or account was compromised.",
+      "Lack of knowledge — files downloaded without awareness.",
+      "Reasonable belief of adult age.",
+      "Digital forensic flaws."
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "Federal prosecution with mandatory minimums.",
+      "Hash matching identifies known illegal files.",
+      "Internet activity logs."
+    ],
+    "defense_opportunities": [
+      "Unauthorized access.",
+      "No knowledge.",
+      "Challenge forensic methodology.",
+      "Age challenges."
+    ],
+    "common_defenses": [
+      "Unauthorized access — computer compromised by malware or third party.",
+      "No knowledge of content.",
+      "Hash matching errors.",
+      "Cannot prove minor age of depicted person."
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "Failure to register is felony carrying 1-30 years.",
+      "GBI registry records document compliance.",
+      "Address verification by law enforcement."
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge of requirement.",
+      "Substantial compliance.",
+      "Invalid predicate conviction.",
+      "Homelessness defense."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — not properly notified of registration requirements.",
+      "Substantial compliance — good-faith efforts to register.",
+      "Invalid predicate — underlying conviction overturned or expunged.",
+      "Impossibility — homeless or unable to comply due to circumstances."
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "Strict liability — consent is not a defense.",
+      "Age proven through documentary evidence.",
+      "Romeo and Juliet exception is limited."
+    ],
+    "defense_opportunities": [
+      "Challenge sexual contact element.",
+      "Reasonable mistake of age (limited).",
+      "Constitutional challenges."
+    ],
+    "common_defenses": [
+      "Romeo and Juliet exception — close-in-age provides reduced penalty.",
+      "No sexual contact — challenge whether contact actually occurred.",
+      "Reasonable mistake of age — very limited defense in Georgia.",
+      "Insufficient evidence."
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "prosecution_strengths": [
+      "Misdemeanor for first offense; felony aggravated sexual battery for victims under 16.",
+      "Victim testimony often sufficient.",
+      "Pattern evidence admissible."
+    ],
+    "defense_opportunities": [
+      "Consent.",
+      "Challenge intimate area element.",
+      "False accusation.",
+      "Misidentification."
+    ],
+    "common_defenses": [
+      "Consent — contact was consensual.",
+      "Not intimate area — touching was not of intimate body part.",
+      "False accusation — fabricated allegation.",
+      "Insufficient evidence of unwanted nature."
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Officer testimony about disruptive behavior.",
+      "Bodycam footage.",
+      "Witness testimony."
+    ],
+    "defense_opportunities": [
+      "First Amendment.",
+      "No actual breach of peace.",
+      "Private location.",
+      "Vagueness challenge."
+    ],
+    "common_defenses": [
+      "Protected speech — First Amendment activity.",
+      "No actual disturbance — conduct did not breach peace.",
+      "Private location.",
+      "Vagueness — statute too vague as applied."
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Misdemeanor for non-violent obstruction; felony for violent.",
+      "Officer testimony and bodycam.",
+      "Injuries to officers."
+    ],
+    "defense_opportunities": [
+      "Unlawful arrest.",
+      "Excessive force response.",
+      "No actual obstruction.",
+      "Passive noncompliance."
+    ],
+    "common_defenses": [
+      "Unlawful arrest — initial arrest lacked probable cause.",
+      "Excessive force — defendant responded to officer's unlawful force.",
+      "No obstruction — conduct did not actually impede officer.",
+      "Passive noncompliance — not active resistance."
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "Specific evidence of obstructive acts.",
+      "Officer testimony.",
+      "Bodycam footage."
+    ],
+    "defense_opportunities": [
+      "First Amendment.",
+      "Fifth Amendment.",
+      "No actual obstruction.",
+      "Officer not in lawful execution."
+    ],
+    "common_defenses": [
+      "No obstruction — did not actually hinder officer.",
+      "Constitutional rights — silence or refusal to consent.",
+      "Officer not in lawful duty.",
+      "Lack of willfulness."
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "Georgia's contempt power is broad — direct contempt punished summarily.",
+      "Court records document violations.",
+      "Judge's observations for direct contempt.",
+      "Documentary evidence of non-compliance."
+    ],
+    "defense_opportunities": [
+      "Inability to comply.",
+      "Ambiguous order.",
+      "Substantial compliance.",
+      "Due process for indirect contempt."
+    ],
+    "common_defenses": [
+      "Inability to comply — good faith efforts but unable due to circumstances.",
+      "Ambiguous order — court order was unclear.",
+      "Substantial compliance — defendant substantially complied.",
+      "Due process violation — inadequate notice and hearing."
+    ]
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "prosecution_strengths": [
+      "Officer testimony about behavior and appearance.",
+      "Bodycam footage.",
+      "Breathalyzer or blood test results."
+    ],
+    "defense_opportunities": [
+      "Constitutional challenges.",
+      "Not in public place.",
+      "Medical condition mimicking intoxication.",
+      "First Amendment activity."
+    ],
+    "common_defenses": [
+      "Not in public — defendant was on private property.",
+      "Medical condition — diabetes, medication effects mimic intoxication.",
+      "No disturbance — defendant was not creating public nuisance.",
+      "Insufficient evidence of public intoxication."
+    ]
+  },
+  {
+    "common_charge_slug": "loitering",
+    "prosecution_strengths": [
+      "Georgia's loitering statutes prohibit specific suspicious circumstances.",
+      "Officer testimony about defendant's conduct.",
+      "Trespass warnings.",
+      "Pattern of police contacts."
+    ],
+    "defense_opportunities": [
+      "Constitutional vagueness challenge.",
+      "Right to be in public place.",
+      "No safety concern.",
+      "First Amendment."
+    ],
+    "common_defenses": [
+      "Vagueness — statute unconstitutionally vague.",
+      "Right to public access — public place where defendant had right to be.",
+      "No safety threat.",
+      "Protected activity — panhandling, leafleting, expression."
+    ]
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "prosecution_strengths": [
+      "Charged under disorderly conduct or specific noise ordinances.",
+      "Witness testimony about disturbance.",
+      "Audio/video recordings.",
+      "Multiple complaints."
+    ],
+    "defense_opportunities": [
+      "First Amendment.",
+      "Reasonable conduct.",
+      "Private property.",
+      "Selective enforcement."
+    ],
+    "common_defenses": [
+      "Protected expression.",
+      "Not actually disturbing — minor noise or annoyance.",
+      "Private location.",
+      "Selective enforcement."
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "Court records and notice documentation.",
+      "Bond agreement establishes obligation.",
+      "Bench warrant issued."
+    ],
+    "defense_opportunities": [
+      "Lack of notice.",
+      "Excusable absence.",
+      "Voluntary surrender.",
+      "Administrative error."
+    ],
+    "common_defenses": [
+      "Lack of notice — defendant was not properly notified.",
+      "Good cause — medical emergency, hospitalization, incarceration elsewhere.",
+      "Voluntary surrender — appeared shortly after missed date.",
+      "Administrative error — court records contain errors."
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "Documentation of false report.",
+      "Investigation records.",
+      "Contradicting evidence."
+    ],
+    "defense_opportunities": [
+      "Good faith belief.",
+      "Mistake of fact.",
+      "Coercion.",
+      "Recantation."
+    ],
+    "common_defenses": [
+      "Good faith — believed information was true.",
+      "Mistake of fact — honestly mistaken.",
+      "No knowledge of falsity.",
+      "Coercion — pressured into making report."
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "Written threats provide documentary evidence.",
+      "Victim testimony about fear.",
+      "Context evidence of intent."
+    ],
+    "defense_opportunities": [
+      "First Amendment — true threat doctrine.",
+      "Conditional/hyperbolic statement.",
+      "No intent to threaten.",
+      "Context."
+    ],
+    "common_defenses": [
+      "Not a true threat — hyperbolic, conditional, or rhetorical.",
+      "Protected speech — First Amendment.",
+      "No intent — venting, humor, or protected speech.",
+      "Context — fiction, art, online argument."
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "Lower burden of proof — preponderance of evidence.",
+      "Probation officer testimony.",
+      "Documentary evidence of non-compliance.",
+      "Court has broad discretion in sentencing."
+    ],
+    "defense_opportunities": [
+      "Substantial compliance.",
+      "Inability to comply.",
+      "Modify rather than revoke.",
+      "Due process protections."
+    ],
+    "common_defenses": [
+      "Substantial compliance — complied with most conditions.",
+      "Inability to comply — circumstances beyond control.",
+      "Modification over revocation — request modified terms.",
+      "Due process — inadequate notice or hearing."
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "prosecution_strengths": [
+      "Records of missed check-ins, failed drug tests.",
+      "Probation officer testimony.",
+      "Lower burden of proof.",
+      "Cumulative effect of multiple violations."
+    ],
+    "defense_opportunities": [
+      "De minimis violation.",
+      "Good cause.",
+      "Graduated sanctions.",
+      "Substantial compliance."
+    ],
+    "common_defenses": [
+      "Good cause — legitimate reason for non-compliance.",
+      "De minimis — minor technical violation.",
+      "Alternative sanctions — graduated rather than revocation.",
+      "Substantial compliance with major conditions."
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "prosecution_strengths": [
+      "New criminal charge as direct evidence.",
+      "Police reports and arrest records.",
+      "Lower burden than reasonable doubt.",
+      "May revoke even if charge dismissed."
+    ],
+    "defense_opportunities": [
+      "Challenge new offense evidence.",
+      "Acquittal or dismissal.",
+      "Self-defense for new charge.",
+      "Negotiate concurrent disposition."
+    ],
+    "common_defenses": [
+      "Insufficient evidence of new offense.",
+      "Justification for new conduct.",
+      "Dismissal of underlying charge.",
+      "Mitigating circumstances."
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "Georgia State Board of Pardons and Paroles oversees revocation.",
+      "Parole officer testimony.",
+      "Lower burden of proof.",
+      "Return to prison for remainder of sentence."
+    ],
+    "defense_opportunities": [
+      "Substantial compliance.",
+      "Good cause.",
+      "Modification over revocation.",
+      "Positive adjustment."
+    ],
+    "common_defenses": [
+      "Substantial compliance with parole conditions.",
+      "Good cause for non-compliance.",
+      "Modification over revocation.",
+      "Due process protections."
+    ]
+  },
+  {
+    "common_charge_slug": "community-control-violation",
+    "prosecution_strengths": [
+      "Strict conditions with electronic monitoring.",
+      "Officer testimony about violations.",
+      "GPS data and curfew records.",
+      "Up to maximum original sentence upon revocation."
+    ],
+    "defense_opportunities": [
+      "Equipment malfunction.",
+      "Emergency circumstances.",
+      "Ambiguous boundaries.",
+      "Substantial compliance."
+    ],
+    "common_defenses": [
+      "Equipment malfunction — GPS errors.",
+      "Emergency — left for medical or safety emergency.",
+      "Substantial compliance overall.",
+      "Ambiguous conditions."
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Co-conspirator statements admissible.",
+      "Cooperator testimony.",
+      "Electronic communications."
+    ],
+    "defense_opportunities": [
+      "No agreement.",
+      "Withdrawal.",
+      "Mere presence.",
+      "Co-conspirator statement challenges."
+    ],
+    "common_defenses": [
+      "No agreement — defendant did not enter into agreement.",
+      "Withdrawal — defendant withdrew before overt act.",
+      "Mere association — relationship does not prove conspiracy.",
+      "Entrapment."
+    ]
+  },
+  {
+    "common_charge_slug": "rico",
+    "prosecution_strengths": [
+      "Two predicate acts within four years establish pattern.",
+      "Felony with 5-20 years prison.",
+      "Asset forfeiture provisions."
+    ],
+    "defense_opportunities": [
+      "Challenge enterprise element.",
+      "Pattern of racketeering activity.",
+      "Statute of limitations.",
+      "Predicate offense challenges."
+    ],
+    "common_defenses": [
+      "No enterprise — required organizational structure absent.",
+      "No pattern — predicate acts insufficient or not connected.",
+      "Predicate offense challenges — underlying offenses not properly established.",
+      "Statute of limitations — beyond applicable period."
+    ]
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "prosecution_strengths": [
+      "Prosecution must disprove self-defense beyond reasonable doubt once raised.",
+      "Physical evidence may contradict self-defense narrative.",
+      "Disproportionate force evidence.",
+      "Prior relationship showing aggression."
+    ],
+    "defense_opportunities": [
+      "Castle doctrine for home defense.",
+      "Reasonable belief of imminent harm.",
+      "Defense of others."
+    ],
+    "common_defenses": [
+      "Stand your ground — no duty to retreat under Georgia law.",
+      "Castle doctrine — defending dwelling, vehicle, or place of business.",
+      "Reasonable belief of imminent harm.",
+      "Defense of others — protecting third party."
+    ]
+  },
+  {
+    "common_charge_slug": "other",
+    "prosecution_strengths": [
+      "Georgia criminal code covers wide range of offenses.",
+      "Specific statutory language defines elements.",
+      "Documented evidence specific to offense.",
+      "Expert testimony when needed."
+    ],
+    "defense_opportunities": [
+      "Statutory interpretation.",
+      "Constitutional challenges.",
+      "Element-by-element defense.",
+      "Diversion alternatives."
+    ],
+    "common_defenses": [
+      "Statutory construction — conduct not within plain language.",
+      "Constitutional challenge — vagueness or overbreadth.",
+      "Insufficient evidence — cannot prove elements.",
+      "Mistake of fact or law."
+    ]
+  }
+]

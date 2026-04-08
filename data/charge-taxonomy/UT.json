@@ -1,0 +1,1616 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Utah Code § 41-6a-502",
+    "statute_title": "Driving Under the Influence of Alcohol, Drugs, or a Combination of Both",
+    "offense_class": "Class B Misdemeanor (first/second); Class A Misdemeanor (with injury or child passenger); Third Degree Felony (third+ or with serious injury)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A); 5 years (Third Degree Felony)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A); $5,000 (Third Degree Felony)",
+    "elements": [
+      "Defendant operated or was in actual physical control of a vehicle",
+      "Within the state",
+      "While under the influence of alcohol, any drug, or combination of alcohol and any drug",
+      "To a degree that renders the person incapable of safely operating a vehicle",
+      "Or had a BAC of .05 or higher"
+    ],
+    "mandatory_minimum": "48 consecutive hours or 48 hours community service (first); drug/alcohol screening",
+    "enhancements": [
+      "Bodily injury to another (Class A Misdemeanor)",
+      "Child passenger under 16 (Class A Misdemeanor)",
+      "Passenger under 18 and defendant 21+ (Class A Misdemeanor)",
+      "Third or subsequent conviction within 10 years (Third Degree Felony)",
+      "Prior automobile homicide conviction (Third Degree Felony)"
+    ],
+    "notes": "Utah has the nation's lowest BAC limit at .05. Implied consent under Utah Code § 41-6a-520. License suspension: 120 days (first), 2 years (second+). Drug and alcohol screening required."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Utah Code § 41-6a-502",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": "48 consecutive hours imprisonment or 48 hours community service",
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated or was in actual physical control of a vehicle",
+      "While under the influence of alcohol, drugs, or combination",
+      "BAC .05 or higher, or impairment of ability to safely operate",
+      "No prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "48 consecutive hours imprisonment or 48 hours community service; drug/alcohol screening",
+    "enhancements": [
+      "Bodily injury (Class A Misdemeanor)",
+      "Child passenger under 16 (Class A Misdemeanor)"
+    ],
+    "notes": "120-day license suspension. Ignition interlock may be ordered. Must complete screening and recommended treatment."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Utah Code § 41-6a-502",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Class B Misdemeanor (second); Third Degree Felony (third+ within 10 years)",
+    "penalty_min": "240 hours community service or 5 days imprisonment plus 30 days electronic monitoring (second)",
+    "penalty_max": "6 months (second); 5 years (third+)",
+    "fine_max": "$1,000 (second); $5,000 (third+)",
+    "elements": [
+      "Defendant operated or was in actual physical control of a vehicle",
+      "While under the influence of alcohol, drugs, or combination",
+      "BAC .05 or higher, or impairment of ability",
+      "One or more prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "5 days imprisonment plus 30 days electronic monitoring or 240 hours community service (second)",
+    "enhancements": [
+      "Third offense within 10 years (Third Degree Felony)",
+      "Prior automobile homicide conviction (Third Degree Felony)"
+    ],
+    "notes": "Second offense: 2-year license revocation. Third+ within 10 years is a Third Degree Felony. Ignition interlock required."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Utah Code § 41-6a-502(1)(b)",
+    "statute_title": "DUI — Controlled Substance",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": "Same as alcohol DUI by offense count",
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant operated or was in actual physical control of a vehicle",
+      "While under the influence of any drug or combination of alcohol and any drug",
+      "To a degree rendering the person incapable of safely operating a vehicle"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Any measurable controlled substance or metabolite in the body (per se violation under § 41-6a-517)"
+    ],
+    "notes": "Utah has a metabolite DUI law — any measurable amount of a controlled substance metabolite in the body while driving is a per se violation, even without impairment."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Utah Code § 41-6a-528",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove a vehicle",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common DUI plea-down. Adds points to driving record."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Utah Code § 41-6a-401",
+    "statute_title": "Duty to Stop and Render Aid — Accident Involving Injury or Death",
+    "offense_class": "Third Degree Felony (injury); Second Degree Felony (serious injury or death)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Third Degree); 15 years (Second Degree)",
+    "fine_max": "$5,000 (Third Degree); $10,000 (Second Degree)",
+    "elements": [
+      "Defendant was the operator of a vehicle involved in an accident",
+      "Accident resulted in injury, serious injury, or death",
+      "Defendant failed to immediately stop at the scene",
+      "Defendant failed to render reasonable assistance and provide identification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury or death (Second Degree Felony)"
+    ],
+    "notes": "Hit-and-run involving property damage only (§ 41-6a-401.3) is a Class B Misdemeanor."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Utah Code § 76-5-207",
+    "statute_title": "Automobile Homicide",
+    "offense_class": "Second Degree Felony (DUI-related); Third Degree Felony (criminally negligent)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Second Degree); 5 years (Third Degree)",
+    "fine_max": "$10,000 (Second Degree); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "In a criminally negligent manner or while under the influence of alcohol, drugs, or with BAC .05+",
+      "Proximately caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI-related (Second Degree Felony)",
+      "Prior DUI convictions"
+    ],
+    "notes": "Automobile homicide while DUI is a Second Degree Felony. Automobile homicide by criminal negligence without intoxication is a Third Degree Felony."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Utah Code § 76-5-207",
+    "statute_title": "Automobile Homicide — Criminal Negligence",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant operated a motor vehicle in a criminally negligent manner",
+      "Causing the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Utah does not have a separate vehicular manslaughter statute. Vehicular deaths are charged as automobile homicide."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Utah Code § 53-3-227",
+    "statute_title": "Driving While License Denied, Suspended, Disqualified, or Revoked",
+    "offense_class": "Class C Misdemeanor (first); Class B Misdemeanor (second within 3 years); Class A Misdemeanor (third+ within 3 years)",
+    "penalty_min": null,
+    "penalty_max": "90 days (first); 6 months (second); 364 days (third+)",
+    "fine_max": "$750 (first); $1,000 (second); $2,500 (third+)",
+    "elements": [
+      "Defendant operated a motor vehicle on a highway",
+      "While the defendant's license was denied, suspended, disqualified, or revoked",
+      "Defendant had notice of the denial, suspension, disqualification, or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense within 3 years"
+    ],
+    "notes": "Additional period of suspension added upon conviction."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Utah Code § 41-6a-210",
+    "statute_title": "Failure to Respond to Officer's Signal to Stop — Fleeing",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was operating a motor vehicle",
+      "A peace officer signaled the defendant to stop",
+      "Defendant willfully failed to stop or attempted to flee by vehicle or other means"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing bodily injury during flight",
+      "Creating substantial risk of serious injury"
+    ],
+    "notes": "Fleeing from police in a vehicle is a Third Degree Felony. License revocation of 1 year."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Utah Code § 58-37-8(2)",
+    "statute_title": "Possession of Controlled Substance",
+    "offense_class": "Class B Misdemeanor (marijuana under 1 oz, first/second); Class A Misdemeanor (Schedule III-V); Third Degree Felony (Schedule I/II)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A); 5 years (Third Degree Felony)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A); $5,000 (Third Degree Felony)",
+    "elements": [
+      "Defendant knowingly and intentionally possessed a controlled substance",
+      "Unless obtained by a valid prescription",
+      "The substance was listed in the schedules"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near school, park, or church (enhanced)",
+      "Prior drug convictions"
+    ],
+    "notes": "Utah reformed drug possession laws. Simple possession of small amounts may qualify for drug court or diversion programs."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Utah Code § 58-37-8(2)(a)(i)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Class B Misdemeanor (under 1 oz, first/second); Class A Misdemeanor (under 1 oz, third+); Third Degree Felony (1 oz to 1 lb)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A); 5 years (Third Degree Felony)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A); $5,000 (Third Degree Felony)",
+    "elements": [
+      "Defendant knowingly and intentionally possessed marijuana",
+      "Amount determines classification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense for under 1 oz (Class A Misdemeanor)",
+      "Over 1 oz (Third Degree Felony)"
+    ],
+    "notes": "Utah has a medical cannabis program but recreational marijuana remains illegal. Possession of under 1 oz is a Class B Misdemeanor for first and second offenses."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Utah Code § 58-37-8(2)(a)(i)",
+    "statute_title": "Possession of Cocaine (Schedule II)",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly and intentionally possessed cocaine",
+      "Cocaine is a Schedule II controlled substance",
+      "Without lawful authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near schools or parks",
+      "Large quantities"
+    ],
+    "notes": "Possession of any amount of cocaine is a Third Degree Felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Utah Code § 58-37-8(2)(a)(i)",
+    "statute_title": "Possession of Methamphetamine (Schedule II)",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly and intentionally possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Without lawful authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near schools or parks",
+      "Large quantities"
+    ],
+    "notes": "Meth is a major enforcement concern in Utah. Possession of any amount is a Third Degree Felony."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Utah Code § 58-37-8(1)(a)",
+    "statute_title": "Production, Manufacturing, or Distribution of Controlled Substance",
+    "offense_class": "Second Degree Felony (Schedule I/II); Third Degree Felony (Schedule III/IV)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Second Degree); 5 years (Third Degree)",
+    "fine_max": "$10,000 (Second Degree); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant knowingly and intentionally produced, manufactured, distributed, or possessed with intent to distribute",
+      "A controlled substance",
+      "The substance was listed in the schedules"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution within 1,000 feet of a school, park, church, or library",
+      "Distribution to a minor",
+      "Large quantities"
+    ],
+    "notes": "Enhanced penalties for drug-free zone violations. Distribution to a minor carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Utah Code § 58-37-8(1)(a)(ii)",
+    "statute_title": "Distribution of Controlled Substance",
+    "offense_class": "Second Degree Felony (Schedule I/II); Third Degree Felony (Schedule III/IV)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Second Degree); 5 years (Third Degree)",
+    "fine_max": "$10,000 (Second Degree); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant distributed or dispensed a controlled substance",
+      "To another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Drug-free zone",
+      "Distribution to a minor"
+    ],
+    "notes": "Distribution and manufacturing fall under the same statute section."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Utah Code § 58-37-8(1)(a)(i)",
+    "statute_title": "Manufacture of Controlled Substance",
+    "offense_class": "Second Degree Felony (Schedule I/II); Third Degree Felony (Schedule III/IV)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Second Degree); 5 years (Third Degree)",
+    "fine_max": "$10,000 (Second Degree); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant knowingly and intentionally manufactured a controlled substance",
+      "Including producing, preparing, compounding, or processing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing meth (Clandestine Drug Lab Act penalties)",
+      "Manufacturing in presence of child"
+    ],
+    "notes": "Utah Clandestine Drug Lab Act provides additional penalties for meth labs including environmental cleanup liability."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Utah Code § 58-37a-5",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant used or possessed with intent to use drug paraphernalia",
+      "To introduce a controlled substance into the body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Delivery of paraphernalia is a Class A Misdemeanor. Delivery to a minor is a Third Degree Felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Utah Code § 58-37-8(1)(a)(iii)",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Second Degree Felony (Schedule I/II); Third Degree Felony (Schedule III/IV)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Second Degree); 5 years (Third Degree)",
+    "fine_max": "$10,000 (Second Degree); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With intent to distribute",
+      "Intent inferred from quantity, packaging, scales, cash, or other circumstances"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Drug-free zone",
+      "Prior drug convictions"
+    ],
+    "notes": "Intent to distribute inferred from large quantities, packaging materials, scales, large amounts of cash, and communications."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Utah Code § 76-5-202",
+    "statute_title": "Aggravated Murder",
+    "offense_class": "First Degree Felony (capital offense)",
+    "penalty_min": "25 years to life without parole",
+    "penalty_max": "Life without parole",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally or knowingly caused the death of another",
+      "Under one or more aggravating circumstances (murder of peace officer, during commission of aggravated robbery/burglary/kidnapping/sexual assault, murder for hire, multiple victims, prior murder conviction, etc.)"
+    ],
+    "mandatory_minimum": "25 years to life without parole",
+    "enhancements": [
+      "Aggravating circumstances determine sentence"
+    ],
+    "notes": "Utah abolished the death penalty in 2023. Aggravated murder carries mandatory 25 years to life without parole or life without parole."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Utah Code § 76-5-203",
+    "statute_title": "Murder",
+    "offense_class": "First Degree Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally or knowingly caused the death of another",
+      "Or acting under circumstances evidencing depraved indifference to human life, engaged in conduct creating a grave risk of death that caused the death",
+      "Or committed or attempted to commit a felony and in the course thereof a death occurred"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Murder is a First Degree Felony carrying 5 years to life. Includes depraved indifference murder and felony murder."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Utah Code § 76-5-205",
+    "statute_title": "Manslaughter",
+    "offense_class": "Second Degree Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant recklessly caused the death of another",
+      "Or caused the death of another under the influence of extreme emotional disturbance (reasonable explanation or excuse)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Manslaughter includes reckless killings and killings under extreme emotional disturbance (heat of passion)."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Utah Code § 76-5-206",
+    "statute_title": "Negligent Homicide",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "364 days",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant caused the death of another",
+      "With criminal negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Negligent homicide is the lowest level of criminal homicide in Utah. Covers unintentional deaths from criminal negligence."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Utah Code § 76-5-103",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Third Degree Felony; Second Degree Felony (serious bodily injury or loss of consciousness)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Third Degree); 15 years (Second Degree)",
+    "fine_max": "$5,000 (Third Degree); $10,000 (Second Degree)",
+    "elements": [
+      "Defendant committed assault as defined in § 76-5-102",
+      "And used a dangerous weapon or other means or force likely to produce death or serious bodily injury",
+      "Or caused serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (Second Degree Felony)",
+      "Loss of consciousness (Second Degree Felony)",
+      "Use of a dangerous weapon"
+    ],
+    "notes": "Aggravated assault causing serious bodily injury is a Second Degree Felony."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Utah Code § 76-5-102",
+    "statute_title": "Assault",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (substantial bodily injury)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A)",
+    "elements": [
+      "Defendant attempted, with unlawful force or violence, to cause bodily injury to another",
+      "Or committed an act with unlawful force or violence that caused or created a substantial risk of bodily injury",
+      "Or committed a threat of violence against another accompanied by a show of immediate force or violence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Substantial bodily injury (Class A Misdemeanor)"
+    ],
+    "notes": "Simple assault is generally a Class B Misdemeanor. Elevated to Class A if substantial bodily injury results."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "Utah Code § 76-5-102",
+    "statute_title": "Assault (Battery)",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed an act with unlawful force or violence",
+      "That caused bodily injury to another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Utah combines assault and battery under the single assault statute. No separate battery offense."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Utah Code § 76-6-301",
+    "statute_title": "Robbery",
+    "offense_class": "Second Degree Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully and intentionally took or attempted to take personal property",
+      "In the possession of another",
+      "From the person or immediate presence against the person's will",
+      "By means of force or fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Robbery is a Second Degree Felony. Aggravated robbery (§ 76-6-302) is a First Degree Felony."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Utah Code § 76-6-302",
+    "statute_title": "Aggravated Robbery",
+    "offense_class": "First Degree Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant committed robbery as defined in § 76-6-301",
+      "And used or threatened to use a dangerous weapon",
+      "Or caused serious bodily injury to another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Serious bodily injury"
+    ],
+    "notes": "Aggravated robbery is a First Degree Felony with 5 years to life. One of the most seriously punished property/violent crimes."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Utah Code § 76-5-301",
+    "statute_title": "Kidnapping",
+    "offense_class": "Second Degree Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally or knowingly, without authority of law and against the will of the victim",
+      "Detained or restrained the victim for any substantial period of time"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is a child"
+    ],
+    "notes": "Aggravated kidnapping (§ 76-5-302) involving ransom, use as shield, serious bodily injury, or sexual assault is a First Degree Felony."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Utah Code § 76-6-102",
+    "statute_title": "Arson",
+    "offense_class": "Second Degree Felony (habitation or occupied structure); Third Degree Felony (other property valued $1,500+)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Second Degree); 5 years (Third Degree)",
+    "fine_max": "$10,000 (Second Degree); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant, by means of fire or explosives, unlawfully damaged",
+      "A habitation, building, or other property",
+      "Whether the property belonged to the defendant or another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Habitation or occupied structure (Second Degree Felony)",
+      "Injury or death resulting"
+    ],
+    "notes": "Aggravated arson (§ 76-6-103) involving occupied buildings with knowledge of occupancy is a First Degree Felony."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Utah Code § 76-4-101",
+    "statute_title": "Attempted Murder",
+    "offense_class": "First Degree Felony (attempted murder); Second Degree Felony (attempted aggravated murder)",
+    "penalty_min": "5 years (First Degree)",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intended to commit murder",
+      "Defendant engaged in conduct constituting a substantial step toward commission",
+      "The victim survived"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Multiple victims"
+    ],
+    "notes": "Criminal attempt for a First Degree Felony is a Second Degree Felony. However, attempted murder and aggravated murder have specific enhanced penalties."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Utah Code § 76-5-103",
+    "statute_title": "Aggravated Assault with a Dangerous Weapon",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant committed assault",
+      "Using a dangerous weapon or other means of force likely to produce death or serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury resulting (Second Degree Felony)"
+    ],
+    "notes": "Dangerous weapon includes firearms, knives, and any instrument capable of causing death or serious bodily harm."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Utah Code § 76-6-404",
+    "statute_title": "Theft",
+    "offense_class": "Class B Misdemeanor (under $500); Class A Misdemeanor ($500-$1,500); Third Degree Felony ($1,500-$5,000); Second Degree Felony ($5,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months to 15 years depending on value",
+    "fine_max": "$1,000 to $10,000 depending on value",
+    "elements": [
+      "Defendant obtained or exercised unauthorized control over property of another",
+      "With a purpose to deprive the owner thereof"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of property determines classification",
+      "Theft from person"
+    ],
+    "notes": "Utah consolidates larceny, embezzlement, and false pretenses under a unified theft statute. Value thresholds determine classification."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Utah Code § 76-6-412",
+    "statute_title": "Theft — Felony Level ($1,500+)",
+    "offense_class": "Third Degree Felony ($1,500-$5,000); Second Degree Felony ($5,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Third Degree); 15 years (Second Degree)",
+    "fine_max": "$5,000 (Third Degree); $10,000 (Second Degree)",
+    "elements": [
+      "Defendant took property of another",
+      "The value of the property exceeded $1,500",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $5,000 (Second Degree Felony)"
+    ],
+    "notes": "Felony theft in Utah begins at $1,500."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Utah Code § 76-6-412",
+    "statute_title": "Theft — Under $1,500",
+    "offense_class": "Class B Misdemeanor (under $500); Class A Misdemeanor ($500-$1,500)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A)",
+    "elements": [
+      "Defendant took property of another",
+      "The value of the property was under $1,500",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft convictions"
+    ],
+    "notes": "Petty theft covers thefts under $1,500."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Utah Code § 76-6-602",
+    "statute_title": "Retail Theft (Shoplifting)",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant took possession of, concealed, or carried away unpurchased merchandise",
+      "From a retail establishment",
+      "With intent to deprive the merchant of the merchandise without paying"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of device to overcome security system",
+      "Organized retail theft"
+    ],
+    "notes": "Penalties follow the same value thresholds as general theft. Civil liability to the merchant also applies."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Utah Code § 76-6-202",
+    "statute_title": "Burglary",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant entered or remained unlawfully in a building or portion of a building",
+      "With intent to commit a felony, theft, assault, lewdness, sexual battery, or voyeurism"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Standard burglary is a Third Degree Felony. Aggravated burglary (§ 76-6-203) — entering a dwelling with a person present — is a First Degree Felony."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Utah Code § 76-6-203",
+    "statute_title": "Aggravated Burglary — Dwelling",
+    "offense_class": "First Degree Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant committed burglary of a dwelling",
+      "While a person other than a participant was present in the building",
+      "Or defendant was armed with a dangerous weapon or explosive",
+      "Or defendant assaulted someone during the burglary"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person present in dwelling",
+      "Armed with weapon"
+    ],
+    "notes": "Aggravated burglary of an occupied dwelling is a First Degree Felony (5 years to life). One of the most serious property crimes in Utah."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Utah Code § 76-6-404",
+    "statute_title": "Theft of Motor Vehicle",
+    "offense_class": "Second Degree Felony (most vehicles valued $5,000+); Third Degree Felony ($1,500-$5,000)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Second Degree); 5 years (Third Degree)",
+    "fine_max": "$10,000 (Second Degree); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant obtained or exercised unauthorized control over a motor vehicle",
+      "Belonging to another",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of vehicle determines classification"
+    ],
+    "notes": "Charged under the general theft statute. Most vehicles exceed the $5,000 threshold for Second Degree Felony."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Utah Code § 76-6-408",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Same classification as theft based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing that it had been stolen or believing that it probably had been stolen",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value determines classification"
+    ],
+    "notes": "Penalties mirror theft classifications based on value of stolen property."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Utah Code § 76-6-106",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class B Misdemeanor (under $500); Class A Misdemeanor ($500-$1,500); Third Degree Felony ($1,500-$5,000); Second Degree Felony ($5,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months to 15 years depending on damage",
+    "fine_max": "$1,000 to $10,000 depending on damage",
+    "elements": [
+      "Defendant intentionally damaged, defaced, or destroyed property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount of damage determines classification"
+    ],
+    "notes": "Restitution typically ordered. Criminal mischief is Utah's primary property destruction statute."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Utah Code § 76-6-206",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (dwelling)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A)",
+    "elements": [
+      "Defendant entered or remained unlawfully on property of another",
+      "Knowing or having reason to know the entry was unlawful"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass of a dwelling (Class A Misdemeanor)"
+    ],
+    "notes": "Trespass of a dwelling is elevated to a Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Utah Code § 76-6-106",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class B Misdemeanor (under $500); Class A Misdemeanor ($500-$1,500); Third Degree Felony ($1,500+)",
+    "penalty_min": null,
+    "penalty_max": "6 months to 5 years depending on damage",
+    "fine_max": "$1,000 to $5,000 depending on damage",
+    "elements": [
+      "Defendant intentionally damaged, defaced, or destroyed property of another",
+      "Or recklessly or with criminal negligence caused damage by fire, explosives, or other means"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage amount determines classification"
+    ],
+    "notes": "Criminal mischief is Utah's vandalism and property destruction statute."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Utah Code § 77-36-1",
+    "statute_title": "Domestic Violence — Cohabitant Abuse",
+    "offense_class": "Class B Misdemeanor (simple assault); Class A Misdemeanor (substantial bodily injury); Third Degree Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "6 months to 5 years depending on severity",
+    "fine_max": "$1,000 to $5,000",
+    "elements": [
+      "Defendant committed a criminal offense involving violence or physical harm",
+      "Against a cohabitant (spouse, former spouse, person residing in same dwelling, person related by blood or marriage, person with shared child)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior domestic violence convictions within 5 years",
+      "Aggravated assault in domestic context"
+    ],
+    "notes": "Domestic violence is an enhancement to the underlying offense. Mandatory arrest policy. Protective orders available."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Utah Code § 76-5-102",
+    "statute_title": "Assault (Domestic Battery)",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (substantial injury)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A)",
+    "elements": [
+      "Defendant committed an act of unlawful force or violence against a cohabitant",
+      "Causing bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Substantial bodily injury (Class A Misdemeanor)",
+      "Prior domestic violence convictions"
+    ],
+    "notes": "Domestic battery is charged under the assault statute with the domestic violence designation. Domestic violence designation triggers mandatory arrest."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Utah Code § 76-5-112.5",
+    "statute_title": "Endangerment of a Child or Vulnerable Adult",
+    "offense_class": "Class A Misdemeanor; Third Degree Felony (grave risk)",
+    "penalty_min": null,
+    "penalty_max": "364 days (Class A); 5 years (Third Degree Felony)",
+    "fine_max": "$2,500 (Class A); $5,000 (Third Degree Felony)",
+    "elements": [
+      "Defendant, having care or custody of a child",
+      "Caused or permitted the child to be exposed to or placed at risk of harm",
+      "Or failed to provide necessary care"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Grave risk of death or serious bodily injury (Third Degree Felony)"
+    ],
+    "notes": "Mandatory reporting. DUI with child in vehicle may trigger separate endangerment charges."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Utah Code § 76-5-109",
+    "statute_title": "Child Abuse",
+    "offense_class": "Class A Misdemeanor (simple); Third Degree Felony (serious physical injury); Second Degree Felony (serious bodily injury)",
+    "penalty_min": null,
+    "penalty_max": "364 days (Class A); 5 years (Third Degree); 15 years (Second Degree)",
+    "fine_max": "$2,500 (Class A); $5,000 (Third Degree); $10,000 (Second Degree)",
+    "elements": [
+      "Defendant inflicted physical injury upon a child",
+      "Or having care or custody of a child, caused or permitted another to inflict physical injury",
+      "Under circumstances likely to produce death or serious injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (Third Degree Felony)",
+      "Serious bodily injury (Second Degree Felony)"
+    ],
+    "notes": "Child abuse resulting in death may be charged as homicide."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Utah Code § 76-5-108",
+    "statute_title": "Violation of Protective Order",
+    "offense_class": "Class A Misdemeanor (first); Third Degree Felony (subsequent within 5 years)",
+    "penalty_min": null,
+    "penalty_max": "364 days (first); 5 years (subsequent)",
+    "fine_max": "$2,500 (first); $5,000 (subsequent)",
+    "elements": [
+      "A valid protective order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant intentionally or knowingly violated the terms of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent violation within 5 years (Third Degree Felony)"
+    ],
+    "notes": "Includes domestic violence protective orders, stalking injunctions, and civil protective orders."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Utah Code § 76-5-106.5",
+    "statute_title": "Stalking",
+    "offense_class": "Class A Misdemeanor (first); Third Degree Felony (subsequent or with prior domestic violence)",
+    "penalty_min": null,
+    "penalty_max": "364 days (first); 5 years (subsequent)",
+    "fine_max": "$2,500 (first); $5,000 (subsequent)",
+    "elements": [
+      "Defendant intentionally or knowingly engaged in a course of conduct directed at a specific person",
+      "That would cause a reasonable person to fear for their safety or suffer emotional distress"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent conviction (Third Degree Felony)",
+      "Violation of a stalking injunction"
+    ],
+    "notes": "Includes in-person and electronic/cyber stalking. Stalking injunctions available."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Utah Code § 76-5-106",
+    "statute_title": "Harassment",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant, with intent to frighten or harass another",
+      "Communicated a written or recorded threat to commit a violent felony",
+      "Or engaged in a course of conduct that would cause a reasonable person fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Harassment may escalate to stalking charges with repeated conduct."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Utah Code § 76-5-111",
+    "statute_title": "Abuse, Neglect, or Exploitation of a Vulnerable Adult",
+    "offense_class": "Class A Misdemeanor (abuse/neglect); Third Degree Felony (exploitation under $5,000); Second Degree Felony (exploitation $5,000+)",
+    "penalty_min": null,
+    "penalty_max": "364 days (Class A); 5 years (Third Degree); 15 years (Second Degree)",
+    "fine_max": "$2,500 (Class A); $5,000 (Third Degree); $10,000 (Second Degree)",
+    "elements": [
+      "Defendant abused, neglected, or exploited a vulnerable adult (65+ or disabled)",
+      "The conduct caused harm or risk of harm",
+      "Or the defendant financially exploited the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Financial exploitation over $5,000 (Second Degree Felony)"
+    ],
+    "notes": "Mandatory reporting required. Financial exploitation penalties based on amount."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Utah Code § 76-10-503",
+    "statute_title": "Restrictions on Possession, Purchase, Transfer, and Ownership of Dangerous Weapons",
+    "offense_class": "Class A Misdemeanor (minor possession); Third Degree Felony (unlawful transfer)",
+    "penalty_min": null,
+    "penalty_max": "364 days (Class A); 5 years (Third Degree)",
+    "fine_max": "$2,500 (Class A); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant possessed or transferred a dangerous weapon",
+      "While prohibited by law (minor, convicted felon, mentally ill person, or in prohibited location)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Utah allows permit-less concealed carry for persons 21+ (constitutional carry since 2021). Restrictions apply to prohibited persons and locations."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Utah Code § 76-10-503(2)",
+    "statute_title": "Possession of Dangerous Weapon by Restricted Person",
+    "offense_class": "Second Degree Felony (Category I — violent felony); Third Degree Felony (Category II — non-violent felony)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Second Degree); 5 years (Third Degree)",
+    "fine_max": "$10,000 (Second Degree); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant intentionally or knowingly possessed or had under their custody or control a dangerous weapon",
+      "Defendant was a restricted person (convicted of a felony, on probation/parole for a felony, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior violent felony (Second Degree Felony)"
+    ],
+    "notes": "Category I restricted persons (violent felons) face Second Degree Felony. Category II (non-violent felons, drug offenders) face Third Degree Felony."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Utah Code § 76-10-530",
+    "statute_title": "Carrying a Dangerous Weapon in Prohibited Area",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a dangerous weapon",
+      "In a location prohibited by law or a secure area"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Prohibited areas include secure areas of airports, courthouses, and mental health facilities."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Utah Code § 76-10-508",
+    "statute_title": "Discharge of Firearm",
+    "offense_class": "Class B Misdemeanor (general); Class A Misdemeanor (from vehicle or at building); Third Degree Felony (at habitation or vehicle with occupants)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A); 5 years (Third Degree)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant discharged a firearm",
+      "Under circumstances creating a risk of injury or death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "From or at a vehicle (Class A Misdemeanor)",
+      "At an occupied habitation or vehicle (Third Degree Felony)"
+    ],
+    "notes": "Discharge at an occupied structure or vehicle is a Third Degree Felony."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Utah Code § 76-6-1102",
+    "statute_title": "Identity Fraud",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant obtained personal identifying information of another person",
+      "Without authorization",
+      "And used or attempted to use that information to obtain credit, goods, services, or other thing of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elderly victim",
+      "Multiple victims"
+    ],
+    "notes": "Includes Social Security numbers, driver's license numbers, bank account numbers, and other personally identifying information."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Utah Code § 76-6-404",
+    "statute_title": "Theft by Fiduciary (Embezzlement)",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant obtained or exercised unauthorized control over the property",
+      "With purpose to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value determines classification"
+    ],
+    "notes": "Embezzlement is consolidated under the general theft statute."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Utah Code § 76-6-501",
+    "statute_title": "Forgery",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant, with purpose to defraud anyone or with knowledge that it is facilitating a fraud",
+      "Altered, made, completed, executed, or authenticated any writing so that it purports to be the act of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Forgery is always a Third Degree Felony in Utah regardless of amount."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Utah Code § 76-6-501",
+    "statute_title": "Forgery (Counterfeiting)",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant made or altered a writing",
+      "So that it purports to have value or authenticity it does not have",
+      "With purpose to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Counterfeiting is prosecuted under the forgery statute. Federal charges may also apply."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Utah Code § 76-6-505",
+    "statute_title": "Issuing a Bad Check or Draft",
+    "offense_class": "Class B Misdemeanor (under $500); Class A Misdemeanor ($500-$1,500); Third Degree Felony ($1,500+)",
+    "penalty_min": null,
+    "penalty_max": "6 months to 5 years depending on amount",
+    "fine_max": "$1,000 to $5,000 depending on amount",
+    "elements": [
+      "Defendant issued or passed a check or draft",
+      "Knowing it would not be paid by the drawee",
+      "With purpose to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount determines classification"
+    ],
+    "notes": "Presumption of knowledge if check not made good within 14 days of notice."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Utah Code § 76-6-521",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Second Degree Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly presented false information in connection with an insurance transaction",
+      "With intent to defraud an insurer",
+      "The information was material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Insurance fraud is a Second Degree Felony in Utah regardless of amount. Includes all types of insurance."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Utah Code § 76-6-506.2",
+    "statute_title": "Fraudulent Use of a Credit Card",
+    "offense_class": "Same as theft by value obtained",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant used a credit or debit card",
+      "Knowing it was stolen, forged, expired, or revoked",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount determines classification"
+    ],
+    "notes": "Penalties mirror general theft based on value obtained through fraudulent use."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Utah Code § 76-10-1903",
+    "statute_title": "Money Laundering",
+    "offense_class": "Second Degree Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant conducted or attempted to conduct a financial transaction",
+      "Involving property the defendant knew was derived from unlawful activity",
+      "With intent to promote the unlawful activity or conceal the source"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Money laundering is a Second Degree Felony. Also subject to federal prosecution."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Utah Code § 76-6-405",
+    "statute_title": "Theft by Deception (General Fraud)",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant obtained or exercised control over property by deception",
+      "With purpose to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value determines classification"
+    ],
+    "notes": "General fraud is prosecuted as theft by deception. Specific fraud statutes also exist for securities, communications, and insurance."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Utah Code § 76-5-402",
+    "statute_title": "Rape",
+    "offense_class": "First Degree Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant had sexual intercourse with the victim",
+      "Without the victim's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 14 (mandatory 25 years to life under § 76-5-402.1)"
+    ],
+    "notes": "Rape in Utah is a First Degree Felony (5 years to life). Rape of a child under 14 carries a mandatory 25 years to life."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Utah Code § 76-5-402",
+    "statute_title": "Rape",
+    "offense_class": "First Degree Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant had sexual intercourse with the victim",
+      "Without the victim's consent",
+      "Consent is not a defense if victim is under 14"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 14 (mandatory 25 years to life)",
+      "Use of a dangerous weapon"
+    ],
+    "notes": "Rape is always a First Degree Felony. Rape of a child (§ 76-5-402.1) carries mandatory 25 years to life."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Utah Code § 76-9-702.5",
+    "statute_title": "Lewdness",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 364 days (second+)",
+    "fine_max": "$1,000 (first); $2,500 (second+)",
+    "elements": [
+      "Defendant performed an act of lewdness",
+      "In a public place or under circumstances which the defendant should know would likely cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class A Misdemeanor)",
+      "Lewdness involving a child (Third Degree Felony under § 76-9-702.5)"
+    ],
+    "notes": "Lewdness involving a child is a Third Degree Felony. May trigger sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Utah Code § 76-10-1303",
+    "statute_title": "Patronizing a Prostitute",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 364 days (subsequent)",
+    "fine_max": "$1,000 (first); $2,500 (subsequent)",
+    "elements": [
+      "Defendant paid or offered to pay another person for sexual activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense (Class A Misdemeanor)",
+      "Minor victim (Second Degree Felony)"
+    ],
+    "notes": "Patronizing a prostitute who is a minor is a Second Degree Felony."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Utah Code § 76-5b-201",
+    "statute_title": "Sexual Exploitation of a Minor",
+    "offense_class": "Second Degree Felony (possession/distribution); First Degree Felony (production)",
+    "penalty_min": "1 year (Second Degree); 5 years (First Degree)",
+    "penalty_max": "15 years (Second Degree); Life (First Degree)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly produced, possessed, or distributed a visual depiction of a minor engaged in sexually explicit conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Production (First Degree Felony)",
+      "Multiple images or victims"
+    ],
+    "notes": "Each image may be charged as a separate offense. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Utah Code § 77-41-107",
+    "statute_title": "Failure to Register as Sex Offender or Kidnap Offender",
+    "offense_class": "Third Degree Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was required to register as a sex offender or kidnap offender",
+      "Defendant knowingly failed to register, update, or verify registration information"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Registration required for 10 years or lifetime depending on offense. Failure to register is always a Third Degree Felony."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Utah Code § 76-5-401",
+    "statute_title": "Unlawful Sexual Activity with a Minor",
+    "offense_class": "Third Degree Felony (defendant 7+ years older than victim 14-15); Second Degree Felony (defendant 10+ years older)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Third Degree); 15 years (Second Degree)",
+    "fine_max": "$5,000 (Third Degree); $10,000 (Second Degree)",
+    "elements": [
+      "Defendant engaged in sexual activity with a minor",
+      "The minor was 14 or 15 years old",
+      "The defendant was 4 or more years older"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Defendant 10+ years older (Second Degree Felony)"
+    ],
+    "notes": "Age of consent in Utah is 18 for persons in positions of authority, 16 generally. Unlawful sexual activity with a minor 14-15 applies when defendant is significantly older."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Utah Code § 76-9-102",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class C Misdemeanor; Infraction (if defendant desists on request)",
+    "penalty_min": null,
+    "penalty_max": "90 days (Class C); fine only (infraction)",
+    "fine_max": "$750 (Class C)",
+    "elements": [
+      "Defendant intended to cause public inconvenience, annoyance, or alarm",
+      "Or recklessly created a risk thereof",
+      "By engaging in fighting, violent, tumultuous behavior, or making unreasonable noise"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Reduced to an infraction if defendant desists upon request by a peace officer."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Utah Code § 76-8-305",
+    "statute_title": "Interference with Arresting Officer",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally interfered with a person recognized to be a law enforcement officer",
+      "While the officer was performing any act within the scope of their authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Does not require physical force — interference by any means is sufficient."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Utah Code § 76-8-306",
+    "statute_title": "Obstruction of Justice",
+    "offense_class": "Second Degree Felony (capital/first degree felony underlying); Third Degree Felony (other felony); Class A Misdemeanor (misdemeanor underlying)",
+    "penalty_min": null,
+    "penalty_max": "15 years (Second Degree); 5 years (Third Degree); 364 days (Class A)",
+    "fine_max": "$10,000 (Second Degree); $5,000 (Third Degree); $2,500 (Class A)",
+    "elements": [
+      "Defendant, with intent to hinder, delay, or prevent the investigation, apprehension, prosecution, or defense of any person",
+      "Provided false information, altered evidence, harbored the suspect, or interfered with proceedings"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Severity depends on classification of the underlying offense"
+    ],
+    "notes": "Obstruction involving a capital or first degree felony investigation is a Second Degree Felony."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Utah Code § 78B-6-301",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Punishable by fine and/or imprisonment at the court's discretion",
+    "penalty_min": null,
+    "penalty_max": "30 days (direct contempt); varies (indirect)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant willfully disobeyed a court order",
+      "Or engaged in disorderly, disrespectful, or insolent behavior in the court's presence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Courts have inherent contempt power. Direct and indirect contempt procedures differ."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Utah Code § 76-9-701",
+    "statute_title": "Intoxication",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant was intoxicated in a public place",
+      "To the degree that the defendant was a danger to themselves or others",
+      "Or was unreasonably disturbing others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Officers may take to detoxification facility. Utah has a strong temperance culture."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Utah Code § 77-7-22",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Class A Misdemeanor (misdemeanor underlying); Third Degree Felony (felony underlying)",
+    "penalty_min": null,
+    "penalty_max": "364 days (Class A); 5 years (Third Degree)",
+    "fine_max": "$2,500 (Class A); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Defendant was required to appear in court",
+      "Defendant willfully failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge is a felony (Third Degree Felony)"
+    ],
+    "notes": "Bond forfeiture and bench warrant. Classification depends on the underlying charge."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Utah Code § 76-8-506",
+    "statute_title": "Filing a False or Fraudulent Report with Law Enforcement",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly gave false information to a law enforcement officer",
+      "With intent to mislead the officer regarding the commission of a crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Filing a false report is a Class B Misdemeanor. False emergency reports (§ 76-9-606) carry enhanced penalties."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Utah Code § 76-5-107",
+    "statute_title": "Threat of Violence",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (threat to commit a violent felony)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A)",
+    "elements": [
+      "Defendant threatened to commit any offense involving violence",
+      "With intent to place the victim in fear of imminent serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat to commit a violent felony (Class A Misdemeanor)"
+    ],
+    "notes": "Threat of violence against a school is a separate offense with enhanced penalties."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Utah Code § 76-8-502",
+    "statute_title": "Perjury",
+    "offense_class": "Second Degree Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant made a false statement under oath or affirmation",
+      "Regarding a material matter",
+      "In an official proceeding",
+      "The defendant did not believe the statement to be true"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Perjury is a Second Degree Felony in Utah — one of the stricter perjury penalties nationwide."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Utah Code § 76-8-103",
+    "statute_title": "Bribery of a Public Servant",
+    "offense_class": "Second Degree Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer any benefit",
+      "Upon a public servant",
+      "With the purpose of influencing the public servant's action, decision, or vote"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the person offering and the official accepting may be charged."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Utah Code § 76-8-309",
+    "statute_title": "Escape from Custody",
+    "offense_class": "Third Degree Felony (felony custody); Class A Misdemeanor (misdemeanor custody)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Third Degree); 364 days (Class A)",
+    "fine_max": "$5,000 (Third Degree); $2,500 (Class A)",
+    "elements": [
+      "Defendant was in official custody or confinement",
+      "Defendant escaped or attempted to escape"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Escape from felony custody (Third Degree Felony)"
+    ],
+    "notes": "Sentence runs consecutively to any existing sentence."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Utah Code § 76-9-301",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (subsequent); Third Degree Felony (torture, companion animal)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 364 days (Class A); 5 years (Third Degree)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A); $5,000 (Third Degree)",
+    "elements": [
+      "Defendant intentionally, knowingly, recklessly, or with criminal negligence tortured, abused, or cruelly treated an animal",
+      "Or failed to provide necessary food, water, care, or shelter"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Torture of a companion animal (Third Degree Felony)",
+      "Subsequent offense (Class A Misdemeanor)"
+    ],
+    "notes": "Aggravated cruelty to animals (torture of a companion animal) is a Third Degree Felony."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Utah Code § 77-18-1",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Determined by original offense classification",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum sentence for the original offense",
+    "fine_max": "Up to the maximum fine for the original offense",
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated one or more conditions of probation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Court may revoke probation and impose the original sentence. Graduated sanctions available for technical violations."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Utah Code § 77-27-11",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Determined by original offense classification",
+    "penalty_min": null,
+    "penalty_max": "Remainder of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated one or more conditions of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Board of Pardons and Parole makes revocation decisions."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Utah Code § 76-2-202",
+    "statute_title": "Criminal Responsibility for Conduct of Another",
+    "offense_class": "Same as the principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as the principal offense",
+    "fine_max": "Same as the principal offense",
+    "elements": [
+      "A crime was committed by another person",
+      "Defendant, acting with the mental state required for the commission of the offense",
+      "Solicited, requested, commanded, encouraged, or intentionally aided another to engage in the conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Person who aids or encourages is criminally responsible as if they committed the offense."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Utah Code § 76-4-101",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One degree lower than the target offense",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of the attempted offense",
+    "fine_max": "Varies by class of the attempted offense",
+    "elements": [
+      "Defendant, acting with the kind of culpability required for the commission of the offense",
+      "Engaged in conduct constituting a substantial step toward commission of the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is generally one degree lower than the completed offense. Attempt to commit a First Degree Felony is a Second Degree Felony."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Utah Code § 76-4-201",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "One degree lower than the target offense",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of the target offense",
+    "fine_max": "Varies by class of the target offense",
+    "elements": [
+      "Defendant, intending that conduct constituting a crime be performed",
+      "Agreed with one or more persons to engage in or cause the performance of such conduct",
+      "Any one of them committed an overt act in pursuance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy is one degree lower than the target offense. Requires an overt act. Renunciation is an affirmative defense."
+  }
+]

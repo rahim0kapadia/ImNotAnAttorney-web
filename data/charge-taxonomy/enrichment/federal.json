@@ -1,0 +1,823 @@
+[
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Pinkerton liability allows co-conspirators to be liable for substantive offenses of other members committed in furtherance of the conspiracy",
+      "Co-conspirator statements are admissible against all members under FRE 801(d)(2)(E)"
+    ],
+    "defense_opportunities": [
+      "Challenge the existence of an agreement — mere association, parallel conduct, or knowledge of criminal activity is not enough",
+      "Argue withdrawal — the defendant must take affirmative steps to disavow the conspiracy and communicate withdrawal to co-conspirators",
+      "Contest the scope of the conspiracy and the defendant's foreseeable role to limit Pinkerton exposure"
+    ],
+    "common_defenses": [
+      "No agreement — defendant did not enter into an unlawful agreement",
+      "Withdrawal — defendant took affirmative steps to withdraw from the conspiracy",
+      "Lack of knowledge of the conspiracy's scope or objectives",
+      "Buyer-seller exception in drug cases — single transaction does not establish conspiracy"
+    ]
+  },
+  {
+    "common_charge_slug": "rico",
+    "prosecution_strengths": [
+      "Civil and criminal forfeiture of all interests in the enterprise is mandatory",
+      "Pattern of racketeering activity requires only two predicate acts within 10 years"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'enterprise' element — must show an ongoing organization with structure separate from the pattern of racketeering",
+      "Argue insufficient nexus to interstate or foreign commerce",
+      "Challenge predicate acts individually — if the predicates fail, the RICO charge fails"
+    ],
+    "common_defenses": [
+      "No enterprise — the alleged group lacks the structural requirements",
+      "No pattern of racketeering — predicate acts lack relationship or continuity",
+      "Defendant did not participate in directing the enterprise's affairs (Reves)",
+      "Predicate acts insufficient — the underlying offenses do not qualify",
+      "Insufficient interstate commerce nexus"
+    ]
+  },
+  {
+    "common_charge_slug": "federal-drug-trafficking",
+    "prosecution_strengths": [],
+    "defense_opportunities": [
+      "Challenge drug quantity calculations — only the actual controlled substance counts for some thresholds, not the total mixture",
+      "Challenge the lab analysis methodology and chain of custody"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — particularly in highway interdiction stops",
+      "Insufficient evidence of knowing participation",
+      "Safety valve eligibility for first-time offenders",
+      "Entrapment by government informant"
+    ]
+  },
+  {
+    "common_charge_slug": "federal-firearms",
+    "prosecution_strengths": [
+      "Constructive possession is sufficient — the firearm need not be on the defendant's person",
+      "Interstate commerce nexus is easily established — virtually all firearms have crossed state lines"
+    ],
+    "defense_opportunities": [
+      "Contest constructive possession in shared residences and vehicles",
+      "Challenge the knowledge element under Rehaif by showing the defendant lacked actual knowledge of the disqualifying condition"
+    ],
+    "common_defenses": [
+      "Rehaif challenge — defendant did not know of their prohibited status",
+      "ACCA categorical approach challenge — prior convictions do not qualify",
+      "Constructive possession insufficient — defendant lacked dominion and control",
+      "Illegal search and seizure under the Fourth Amendment"
+    ]
+  },
+  {
+    "common_charge_slug": "tax-evasion",
+    "prosecution_strengths": [
+      "IRS-CI investigators have extensive forensic accounting resources",
+      "Civil tax liability runs parallel to criminal exposure"
+    ],
+    "defense_opportunities": [
+      "Argue good-faith reliance on a tax professional or honest misunderstanding of complex tax law",
+      "Challenge the calculation of tax loss — disputed deductions, basis calculations, and characterization issues can substantially reduce the loss figure"
+    ],
+    "common_defenses": [
+      "Lack of willfulness — Cheek good faith defense",
+      "Reliance on professional tax advice",
+      "Disputed tax loss calculation",
+      "No affirmative act of evasion — only failure to file"
+    ]
+  },
+  {
+    "common_charge_slug": "immigration-offense",
+    "prosecution_strengths": [
+      "Border districts process thousands of immigration cases through fast-track programs",
+      "Prior removal documents are typically straightforward to authenticate"
+    ],
+    "defense_opportunities": [
+      "Negotiate fast-track resolution in border districts for sentence reduction",
+      "Argue for Time Served sentences and immediate removal as resolution"
+    ],
+    "common_defenses": [
+      "Collateral attack on prior removal order — Mendoza-Lopez challenge",
+      "Prior conviction does not qualify as aggravated felony under categorical approach",
+      "Lack of voluntary entry — defendant was brought against their will",
+      "Defendant had derivative citizenship or other immigration status",
+      "Prior removal was unlawful"
+    ]
+  },
+  {
+    "common_charge_slug": "mail-fraud",
+    "prosecution_strengths": [
+      "No requirement that the victim was actually defrauded — attempt is sufficient",
+      "Private mail carriers (FedEx, UPS) qualify under the statute"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'scheme to defraud' element — puffery, opinions, and predictions are not actionable",
+      "Contest the use of mails — the mailing must be in furtherance of the scheme, not merely incidental",
+      "Challenge intent to defraud — good faith belief in the truth of representations is a complete defense"
+    ],
+    "common_defenses": [
+      "No scheme to defraud — statements were puffery or opinion",
+      "Good-faith belief in the truthfulness of representations",
+      "Mailing not in furtherance of the scheme",
+      "No intent to defraud — defendant believed transactions were legitimate",
+      "Statute of limitations expired (5 years; 10 years for financial institution fraud)"
+    ]
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "prosecution_strengths": [
+      "Up to 20 years; 30 years if a financial institution or federal disaster relief is involved",
+      "10+ victims add 2 levels; 50+ add 4; 250+ add 6"
+    ],
+    "defense_opportunities": [
+      "Challenge intent to defraud through good-faith defense — defendant must have specific intent to deceive for personal gain",
+      "Challenge the wire transmission element — incidental use of electronic communications without specific furtherance is insufficient",
+      "Argue the victim's reliance was not reasonable or that victim knew the truth"
+    ],
+    "common_defenses": [
+      "Good-faith belief in the truth of representations",
+      "No intent to defraud",
+      "Transmission was not in furtherance of the scheme",
+      "Loss amount disputed",
+      "Statute of limitations expired"
+    ]
+  },
+  {
+    "common_charge_slug": "bank-fraud",
+    "prosecution_strengths": [
+      "Covers virtually all federally insured banks, credit unions, and savings associations",
+      "No requirement that the institution actually lose money — attempted fraud sufficient",
+      "Mandatory restitution to financial institutions"
+    ],
+    "defense_opportunities": [
+      "Challenge the loss amount — credits for value provided and disputes over intended versus actual loss can substantially reduce sentencing",
+      "Contest the 'federally insured' element if the targeted institution does not qualify"
+    ],
+    "common_defenses": [
+      "Bank not the target — Loughrin/Shaw challenge",
+      "No scheme to defraud the bank",
+      "Lack of intent to defraud",
+      "Institution not federally insured",
+      "Loss amount disputed"
+    ]
+  },
+  {
+    "common_charge_slug": "securities-fraud",
+    "prosecution_strengths": [
+      "Both DOJ (criminal) and SEC (civil) may prosecute in parallel proceedings",
+      "Insider trading prosecutions under Rule 10b-5 carry significant exposure"
+    ],
+    "defense_opportunities": [
+      "Argue reliance on counsel or auditors as good-faith defense",
+      "Challenge the SEC parallel investigation for use of compelled testimony from the civil case"
+    ],
+    "common_defenses": [
+      "Lack of materiality",
+      "No scienter — good faith belief in accuracy",
+      "No personal benefit (insider trading)",
+      "Reliance on counsel or auditors",
+      "Statute of limitations (5 years from offense)"
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Three theories of liability: promotion, concealment, and sting operations",
+      "Over 250 predicate 'specified unlawful activities' qualify",
+      "Each transaction is a separate count, allowing aggressive count stacking"
+    ],
+    "defense_opportunities": [
+      "Challenge the knowledge element — defendant must know the funds were proceeds of some unlawful activity",
+      "Challenge the underlying specified unlawful activity — if the predicate fails, money laundering fails",
+      "Contest the financial transaction element — purely intra-bank transfers may not qualify"
+    ],
+    "common_defenses": [
+      "Lack of knowledge that funds were criminal proceeds",
+      "No underlying specified unlawful activity",
+      "Concealment was not the purpose of the transaction (Cuellar)",
+      "Legitimate business activity",
+      "Insufficient evidence linking defendant to the transactions"
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "Constructive and joint possession both cognizable",
+      "Expunged state convictions may still qualify under federal law"
+    ],
+    "defense_opportunities": [
+      "Contest constructive possession in shared residence or vehicle",
+      "Challenge the interstate commerce nexus, though this is rarely successful"
+    ],
+    "common_defenses": [
+      "Rehaif knowledge challenge",
+      "ACCA categorical approach — priors don't qualify",
+      "Constructive possession insufficient",
+      "Illegal search and seizure"
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-trafficking",
+    "prosecution_strengths": [
+      "Ghost guns and Glock auto switches are major enforcement priorities"
+    ],
+    "defense_opportunities": [
+      "Contest knowledge that the buyer was a prohibited person in straw purchase cases",
+      "Challenge the willfulness element on Form 4473 false statements",
+      "Argue minimal role for low-level participants in trafficking schemes"
+    ],
+    "common_defenses": [
+      "Not engaged in the business — hobbyist or occasional seller",
+      "Lack of knowledge of buyer's prohibited status",
+      "No willful false statement on Form 4473",
+      "Minimal role in trafficking scheme",
+      "Illegal search and seizure"
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "Image count, sadomasochistic content, and use of computer all add levels",
+      "Mandatory SORNA sex offender registration"
+    ],
+    "defense_opportunities": [
+      "Challenge the search warrant — child exploitation cases turn heavily on the validity of digital device searches",
+      "Contest knowledge of the material's presence on devices — malware, automatic downloads, shared computers, and unsolicited content can negate the knowledge element"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure",
+      "Lack of knowledge — malware or unsolicited content",
+      "Images do not depict minors",
+      "Insufficient nexus to interstate commerce"
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "prosecution_strengths": [
+      "Government need not prove an actual minor was involved — adult decoy in sting operations sufficient"
+    ],
+    "defense_opportunities": [
+      "Challenge entrapment — government conduct in sting operations can sometimes establish predisposition or inducement defenses",
+      "Contest the 'attempt' or 'persuade/induce/entice' elements — mere conversation without specific solicitation may be insufficient",
+      "Challenge the underlying state law violation that the federal charge requires",
+      "Argue that the defendant believed they were communicating with an adult"
+    ],
+    "common_defenses": [
+      "Entrapment by government agent",
+      "Lack of intent — conversation was fantasy or roleplay",
+      "Defendant believed communication was with an adult",
+      "No substantial step toward attempt",
+      "Underlying state law violation does not apply"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Threshold quantities trigger 5-year mandatory minimums; high quantities trigger 10 years",
+      "Death or serious bodily injury results in 20-year mandatory minimum",
+      "Fentanyl enhancements significantly increased post-2018"
+    ],
+    "defense_opportunities": [
+      "FIRST STEP Act (2018) reduced crack cocaine sentencing disparities and expanded safety valve eligibility"
+    ],
+    "common_defenses": [
+      "Safety valve eligibility",
+      "Insufficient evidence of knowing participation",
+      "Drug quantity attribution challenge",
+      "Illegal search and seizure",
+      "Entrapment"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Prior drug convictions elevate the offense to a felony",
+      "Cocaine base receives special treatment with up to 3 years regardless of priors"
+    ],
+    "defense_opportunities": [
+      "Federal simple possession is rare — most federal drug cases involve trafficking",
+      "Challenge the search and seizure that produced the drugs",
+      "Negotiate diversion or deferred prosecution"
+    ],
+    "common_defenses": [
+      "First Offense Act diversion",
+      "Illegal search and seizure",
+      "Lack of knowledge",
+      "Constructive possession insufficient",
+      "Substance not actually a controlled substance"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "5-year mandatory minimum for threshold quantities, life for large quantities",
+      "Combat Methamphetamine Epidemic Act (2005) imposes precursor chemical tracking"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the activity constituted 'manufacturing' under federal law",
+      "Contest knowledge of and participation in the operation",
+      "Argue mere presence at a manufacturing location",
+      "Safety valve eligibility for first-time offenders"
+    ],
+    "common_defenses": [
+      "Lack of knowledge",
+      "Mere presence",
+      "Illegal search and seizure",
+      "Insufficient evidence of manufacturing acts",
+      "Safety valve eligibility"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Intent inferred from quantity, packaging, scales, ledgers, communications, and cash",
+      "Constructive possession is sufficient"
+    ],
+    "defense_opportunities": [
+      "Challenge the inference of intent — argue quantities are consistent with personal use given the user's tolerance",
+      "Contest the drug quantity to fall below threshold for mandatory minimums",
+      "Safety valve eligibility for qualifying first-time offenders",
+      "Challenge the search and seizure under the Fourth Amendment"
+    ],
+    "common_defenses": [
+      "Personal use rather than distribution",
+      "Illegal search and seizure",
+      "Insufficient evidence of distribution intent",
+      "Safety valve eligibility",
+      "Constructive possession challenge"
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "Death results triggers life imprisonment or death penalty",
+      "Federal jurisdiction triggered by interstate transportation or 24-hour presumption (Lindbergh Law)",
+      "FBI has primary jurisdiction"
+    ],
+    "defense_opportunities": [
+      "Challenge interstate nexus — federal jurisdiction requires interstate commerce element",
+      "Contest the 'unlawful' seizure element in custody disputes",
+      "Argue the movement was incidental to another offense"
+    ],
+    "common_defenses": [
+      "Consent",
+      "No interstate commerce nexus",
+      "Parental rights in custody disputes",
+      "Incidental movement to another offense",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Death results triggers 20 years to life"
+    ],
+    "defense_opportunities": [
+      "Contest fire investigation methodology under NFPA 921",
+      "Argue accidental cause for the fire"
+    ],
+    "common_defenses": [
+      "No interstate commerce nexus (Jones)",
+      "Accidental fire",
+      "Lack of malice",
+      "Faulty fire investigation",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [],
+    "defense_opportunities": [
+      "Challenge the interstate commerce nexus — though courts have found nexus from single convenience store robberies",
+      "Challenge identification through alibi and witness reliability"
+    ],
+    "common_defenses": [
+      "No interstate commerce nexus",
+      "Misidentification",
+      "Alibi",
+      "No force or threat — taking was theft"
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "5 years consecutive for terrorism-related offenses",
+      "Each use of a different victim's identity is a separate count",
+      "Restitution to victims is mandatory"
+    ],
+    "defense_opportunities": [
+      "Contest the 'use' element — passive possession may not qualify"
+    ],
+    "common_defenses": [
+      "Flores-Figueroa challenge — defendant did not know identity was real",
+      "Dubin challenge — identity use was incidental, not at crux of offense",
+      "No knowing use of identity",
+      "Insufficient evidence linking defendant to use"
+    ]
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "prosecution_strengths": [
+      "Secret Service has primary investigative jurisdiction with substantial resources"
+    ],
+    "defense_opportunities": [
+      "Challenge intent to defraud — possession of counterfeit notes without intent to pass them is not criminal",
+      "Contest knowledge that the items were counterfeit",
+      "Argue the items were obvious props or novelty items not intended to deceive"
+    ],
+    "common_defenses": [
+      "Lack of intent to defraud",
+      "Lack of knowledge that items were counterfeit",
+      "Items were obvious props or novelty",
+      "Insufficient evidence of dealing or passing",
+      "Illegal search and seizure"
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [],
+    "defense_opportunities": [
+      "Challenge the 'corrupt' intent element — defendant must act with consciousness of wrongdoing",
+      "Contest knowledge of the pending proceeding"
+    ],
+    "common_defenses": [
+      "Lack of corrupt intent",
+      "No knowledge of pending proceeding",
+      "Conduct did not impair evidence",
+      "Activity protected by attorney-client privilege"
+    ]
+  },
+  {
+    "common_charge_slug": "supervised-release-violation",
+    "prosecution_strengths": [
+      "Mandatory revocation for possession of controlled substance, dangerous weapon, or new felony conviction",
+      "Grade A violations (new felony with 1+ year sentence) require revocation",
+      "Lower burden of proof and no jury at revocation hearings",
+      "Original sentence may be reimposed in addition to new charges"
+    ],
+    "defense_opportunities": [
+      "Challenge the alleged violation through hearing testimony and evidence",
+      "Argue technical violation rather than substantive — court has discretion to modify rather than revoke for Grade C violations",
+      "Present substantial compliance with all other conditions",
+      "Argue mitigating circumstances at the revocation hearing"
+    ],
+    "common_defenses": [
+      "No violation occurred",
+      "Substantial compliance overall",
+      "Good cause for the violation",
+      "Technical violation warranting modification not revocation",
+      "Condition was unreasonable or ambiguous"
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "Failure to comply with grand jury subpoenas charged as contempt",
+      "Sentences run independently from other criminal sentences"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the order was clear and unambiguous",
+      "Fifth Amendment privilege may justify refusal to testify"
+    ],
+    "common_defenses": [
+      "Ambiguous order",
+      "Inability to comply",
+      "Fifth Amendment privilege",
+      "Order was unlawful",
+      "No willful violation"
+    ]
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "prosecution_strengths": [
+      "Up to 10 years imprisonment",
+      "Glock auto switches (machine gun conversion devices) are a major enforcement priority"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the weapon meets the NFA definition"
+    ],
+    "common_defenses": [
+      "Cargill challenge — device is not a machine gun",
+      "Staples challenge — defendant did not know of NFA-regulated features",
+      "Weapon was properly registered",
+      "Illegal search and seizure"
+    ]
+  },
+  {
+    "common_charge_slug": "healthcare-fraud",
+    "prosecution_strengths": [
+      "False Claims Act civil liability adds treble damages plus per-claim penalties",
+      "OIG mandatory exclusion from federal healthcare programs",
+      "DOJ Medicare Fraud Strike Force is well-resourced and active"
+    ],
+    "defense_opportunities": [
+      "Argue good-faith reliance on billing consultants or compliance programs",
+      "Challenge medical necessity determinations — physician disagreement is not fraud"
+    ],
+    "common_defenses": [
+      "Lack of willfulness",
+      "Good-faith reliance on billing consultants",
+      "Medical necessity dispute is not fraud",
+      "Loss amount disputed",
+      "Insufficient evidence of intent"
+    ]
+  },
+  {
+    "common_charge_slug": "false-statement",
+    "prosecution_strengths": [
+      "Up to 5 years imprisonment; 8 years for terrorism or sex offense related",
+      "Each individual false statement may be charged as a separate count",
+      "No requirement that the government was actually deceived"
+    ],
+    "defense_opportunities": [
+      "Contest the 'knowing and willful' element — honest mistake or confusion is a defense",
+      "Challenge the federal jurisdiction element — the matter must be within federal jurisdiction"
+    ],
+    "common_defenses": [
+      "Lack of knowledge that the statement was false",
+      "Statement was literally true (Bronston)",
+      "Immaterial — not capable of influencing government action",
+      "No federal jurisdiction over the matter",
+      "Honest mistake or confusion"
+    ]
+  },
+  {
+    "common_charge_slug": "perjury",
+    "prosecution_strengths": [
+      "Court transcripts provide the exact false statement"
+    ],
+    "defense_opportunities": [],
+    "common_defenses": [
+      "Bronston technical truth defense",
+      "Lack of materiality",
+      "Honest mistake or faulty memory"
+    ]
+  },
+  {
+    "common_charge_slug": "bribery",
+    "prosecution_strengths": [
+      "Forfeiture of bribe proceeds is mandatory",
+      "Foreign Corrupt Practices Act covers bribery of foreign officials"
+    ],
+    "defense_opportunities": [
+      "Argue the payment was a lawful campaign contribution or legitimate gift",
+      "Contest the corrupt intent element"
+    ],
+    "common_defenses": [
+      "McDonnell challenge — no 'official act' involved",
+      "Lawful campaign contribution",
+      "No quid pro quo agreement",
+      "Lack of corrupt intent",
+      "Legitimate business payment"
+    ]
+  },
+  {
+    "common_charge_slug": "extortion",
+    "prosecution_strengths": [
+      "Extortion 'under color of official right' is the primary mechanism for prosecuting public corruption"
+    ],
+    "defense_opportunities": [
+      "Challenge the interstate commerce nexus",
+      "Contest the 'wrongful' element — labor disputes and legitimate business demands may not qualify"
+    ],
+    "common_defenses": [
+      "Sekhar challenge — no obtainable property",
+      "No quid pro quo (Evans)",
+      "Demand was lawful",
+      "No interstate commerce nexus",
+      "First Amendment protected speech"
+    ]
+  },
+  {
+    "common_charge_slug": "cybercrime",
+    "prosecution_strengths": [
+      "Up to 20 years for reckless damage; life if death results",
+      "$5,000 financial damage triggers felony threshold"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'protected computer' element",
+      "Contest the damage calculation — actual costs versus aggregated theoretical losses",
+      "Argue authorized access defense"
+    ],
+    "common_defenses": [
+      "Van Buren — authorized access used for unauthorized purpose",
+      "Authorized user defense",
+      "Damage calculation disputed",
+      "Computer not 'protected' under the statute",
+      "Lack of intent"
+    ]
+  },
+  {
+    "common_charge_slug": "human-trafficking",
+    "prosecution_strengths": [
+      "Strict liability as to victim's age if under 18",
+      "Restitution mandatory to all victims"
+    ],
+    "defense_opportunities": [
+      "Challenge the force, fraud, or coercion element for adult victims",
+      "Contest the defendant's reckless disregard of victim's age — actual knowledge or reckless disregard required",
+      "Argue lack of knowing involvement in commercial sex acts",
+      "Challenge the 'commercial sex act' element"
+    ],
+    "common_defenses": [
+      "No force, fraud, or coercion (adult victims)",
+      "Lack of knowledge or reckless disregard of age",
+      "No knowing involvement in commercial sex",
+      "Insufficient evidence of recruitment or maintenance",
+      "Illegal search and seizure"
+    ]
+  },
+  {
+    "common_charge_slug": "carjacking",
+    "prosecution_strengths": [
+      "Federal jurisdiction triggered by interstate commerce — virtually all modern vehicles qualify"
+    ],
+    "defense_opportunities": [
+      "Challenge the specific intent to cause death or serious bodily harm — Holloway permits conditional intent but mere intent to take vehicle is not enough",
+      "Challenge identification through alibi and witness reliability",
+      "Argue duress or coercion if defendant was a minor participant"
+    ],
+    "common_defenses": [
+      "Lack of specific intent to harm",
+      "Misidentification",
+      "Duress",
+      "No interstate commerce nexus"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-conspiracy",
+    "prosecution_strengths": [
+      "No overt act required — the agreement itself is the crime",
+      "Pinkerton liability extends to substantive offenses of co-conspirators"
+    ],
+    "defense_opportunities": [
+      "Challenge the agreement element — buyer-seller relationships alone do not establish conspiracy",
+      "Argue withdrawal — affirmative steps to disassociate plus communication to co-conspirators",
+      "Contest the foreseeable quantity attribution to limit sentencing exposure",
+      "Safety valve eligibility for qualifying first-time offenders"
+    ],
+    "common_defenses": [
+      "Buyer-seller exception — no agreement to distribute",
+      "Withdrawal from the conspiracy",
+      "Limited foreseeable quantity attribution",
+      "Lack of knowledge of conspiracy scope",
+      "Safety valve eligibility"
+    ]
+  },
+  {
+    "common_charge_slug": "environmental-crime",
+    "prosecution_strengths": [
+      "Knowing endangerment under CWA carries up to 15 years",
+      "Civil EPA penalties run parallel to criminal prosecution"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'knowingly' element — most environmental crimes require knowing conduct",
+      "Contest the RCO doctrine — executives must have had authority and ability to prevent the violation",
+      "Argue good-faith reliance on environmental compliance programs",
+      "Challenge the regulatory definition of 'pollutant' or 'hazardous waste' as applied"
+    ],
+    "common_defenses": [
+      "Lack of knowing conduct",
+      "RCO doctrine — no authority to prevent violation",
+      "Good-faith compliance efforts",
+      "Substance does not qualify as pollutant or hazardous waste",
+      "Permit defense"
+    ]
+  },
+  {
+    "common_charge_slug": "public-corruption",
+    "prosecution_strengths": [
+      "Up to 10 years imprisonment",
+      "Often paired with honest services wire/mail fraud"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'agent' element — defendant must be an agent of an organization receiving federal funds",
+      "Contest whether the organization received the required $10,000 in federal benefits",
+      "Challenge the value threshold ($5,000) for the misappropriation or transaction"
+    ],
+    "common_defenses": [
+      "McDonnell challenge — no qualifying official act",
+      "No agent relationship",
+      "Below $5,000 value threshold",
+      "Federal funds threshold not met",
+      "Lack of corrupt intent"
+    ]
+  },
+  {
+    "common_charge_slug": "mortgage-fraud",
+    "prosecution_strengths": [
+      "10-year statute of limitations for financial institution fraud",
+      "FBI and HUD-OIG have primary jurisdiction with substantial resources",
+      "Often charged with wire fraud and aggravated identity theft"
+    ],
+    "defense_opportunities": [
+      "Challenge the materiality of any false statements — minor discrepancies on loan applications may not be material",
+      "Contest the loss amount — credits for value provided to lenders and disputes over actual versus intended loss",
+      "Argue good-faith reliance on real estate professionals or mortgage brokers",
+      "Challenge whether the institution was federally insured"
+    ],
+    "common_defenses": [
+      "Immaterial false statements",
+      "Good-faith reliance on professionals",
+      "Loss amount disputed",
+      "Institution not federally insured",
+      "No intent to defraud"
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Up to 10 years for either statute",
+      "Restitution is mandatory"
+    ],
+    "defense_opportunities": [
+      "Contest the conversion element — temporary borrowing or authorized use is not embezzlement",
+      "Argue good-faith claim of right"
+    ],
+    "common_defenses": [
+      "Authorized use",
+      "Claim of right",
+      "Below $1,000 value threshold",
+      "Federal funds threshold not met",
+      "Insufficient evidence"
+    ]
+  },
+  {
+    "common_charge_slug": "witness-tampering",
+    "prosecution_strengths": [
+      "20 years for force or threats; 10 years for harassment",
+      "No requirement that an official proceeding be pending — contemplated proceedings covered"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'corrupt' intent element — defendant must act with consciousness of wrongdoing",
+      "Contest knowledge of the official proceeding",
+      "Argue First Amendment protection for legitimate communication with witnesses"
+    ],
+    "common_defenses": [
+      "Lack of corrupt intent",
+      "No knowledge of official proceeding",
+      "First Amendment protected communication",
+      "Legitimate communication unrelated to proceeding"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-import-export",
+    "prosecution_strengths": [
+      "5-year mandatory minimum for threshold quantities; 10 years for higher amounts",
+      "DEA and CBP have joint jurisdiction",
+      "Fentanyl importation is a top enforcement priority"
+    ],
+    "defense_opportunities": [
+      "Challenge the knowledge element — defendant must have known the substance was controlled and was being imported",
+      "Contest constructive importation — knowledge of contraband in shipment is required",
+      "Safety valve eligibility for qualifying first-time offenders",
+      "Challenge the search and seizure at the border, though border searches have lower Fourth Amendment requirements"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of the substance or importation",
+      "Safety valve eligibility",
+      "Insufficient evidence of intent to import",
+      "Constructive importation challenge",
+      "Coercion or duress"
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering-conspiracy",
+    "prosecution_strengths": [
+      "Up to 20 years imprisonment",
+      "Forfeiture of all funds involved",
+      "Often charged alongside drug trafficking and fraud predicates",
+      "Sweeps in financial institutions and their employees"
+    ],
+    "defense_opportunities": [
+      "Challenge the agreement element — knowledge of money laundering activity by others is not enough",
+      "Argue withdrawal from the conspiracy",
+      "Contest the underlying specified unlawful activity — if predicates fail, the conspiracy fails"
+    ],
+    "common_defenses": [
+      "No agreement to launder money",
+      "Withdrawal from the conspiracy",
+      "No underlying specified unlawful activity",
+      "Cuellar challenge — no concealment purpose",
+      "Lack of knowledge of criminal proceeds"
+    ]
+  },
+  {
+    "common_charge_slug": "federal-other",
+    "prosecution_strengths": [
+      "Federal statutory index covers thousands of offenses — virtually any conduct with a federal nexus may be charged",
+      "U.S. Sentencing Guidelines apply to all federal felony and Class A misdemeanor offenses",
+      "Recidivism enhancements under USSG Chapter 4 substantially increase sentencing",
+      "Federal nexus requirements (interstate commerce, federal property, federal official) are typically easy to establish"
+    ],
+    "defense_opportunities": [
+      "Specific defenses depend entirely on the charged statute — consult the federal statutory provision and applicable case law",
+      "Challenge the federal nexus where it is not obvious or substantial"
+    ],
+    "common_defenses": [
+      "Statute-specific defenses",
+      "Federal nexus challenge",
+      "Lack of intent or knowledge",
+      "Statute of limitations",
+      "Constitutional challenges"
+    ]
+  }
+]

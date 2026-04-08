@@ -1,0 +1,1606 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Wis. Stat. § 346.63",
+    "statute_title": "Operating Under the Influence of an Intoxicant or Other Drug (OWI)",
+    "offense_class": "Civil Forfeiture (first); Misdemeanor (second/third); Class H Felony (fourth); Class G Felony (fifth/sixth); Class F Felony (seventh/eighth); Class E Felony (ninth/tenth); Class D Felony (eleventh+)",
+    "penalty_min": null,
+    "penalty_max": "Civil forfeiture only (first); 6 months (second); 1 year (third); 6 years (fourth); 10 years (fifth/sixth); 12.5 years (seventh+)",
+    "fine_max": "$300 (first); $1,100 (second); $2,000 (third); $10,000 (fourth+)",
+    "elements": [
+      "Defendant operated a motor vehicle on a public highway",
+      "While under the influence of an intoxicant, controlled substance, or other drug",
+      "Or with a BAC of .08 or higher (prohibited alcohol concentration)",
+      "Or with a detectable amount of a restricted controlled substance in blood"
+    ],
+    "mandatory_minimum": "5 days (second); 45 days (third); 60 days (fourth); 18 months (fifth/sixth)",
+    "enhancements": [
+      "BAC .17 or higher (doubled minimum penalties on second offense)",
+      "Passenger under 16 (enhanced penalties — additional 6 months maximum, § 346.65(2)(f))",
+      "Prior OWI homicide or injury conviction (enhanced sentencing)",
+      "Causing great bodily harm (Class F Felony under § 940.25)"
+    ],
+    "notes": "Wisconsin is the only state where first-offense OWI is a civil forfeiture (non-criminal) unless a passenger under 16 is present. Implied consent under § 343.305. Administrative license revocation 6-9 months."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Wis. Stat. § 346.63(1); § 346.65(2)(am)1",
+    "statute_title": "OWI — First Offense",
+    "offense_class": "Civil Forfeiture (not criminal)",
+    "penalty_min": "$150 forfeiture",
+    "penalty_max": "$300 forfeiture",
+    "fine_max": "$300",
+    "elements": [
+      "Defendant operated a motor vehicle on a public highway",
+      "While under the influence of an intoxicant or drugs",
+      "BAC .08 or higher",
+      "No prior OWI convictions"
+    ],
+    "mandatory_minimum": "$150 forfeiture; 6-9 month license revocation; Alcohol assessment",
+    "enhancements": [
+      "Passenger under 16 (criminal misdemeanor — up to 6 months jail)",
+      "BAC .20 or higher (ignition interlock required)"
+    ],
+    "notes": "First-offense OWI in Wisconsin is NOT a criminal offense — it is a civil forfeiture. No jail time unless a child under 16 is in the vehicle. License revocation 6-9 months. Ignition interlock if BAC .15+."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Wis. Stat. § 346.65(2)(am)2-7",
+    "statute_title": "OWI — Repeat Offense",
+    "offense_class": "Misdemeanor (second/third); Felony (fourth+)",
+    "penalty_min": "5 days (second); 45 days (third); 60 days (fourth); 18 months (fifth/sixth)",
+    "penalty_max": "6 months (second); 1 year (third); 6 years (fourth); 10 years (fifth/sixth)",
+    "fine_max": "$1,100 (second); $2,000 (third); $10,000 (fourth+)",
+    "elements": [
+      "Defendant operated a motor vehicle on a public highway",
+      "While under the influence of an intoxicant or drugs",
+      "BAC .08 or higher",
+      "One or more prior OWI convictions (lifetime lookback)"
+    ],
+    "mandatory_minimum": "5 days (second); 45 days (third); 60 days (fourth); 18 months (fifth/sixth)",
+    "enhancements": [
+      "BAC .17+ on second offense (doubled mandatory minimum to 10 days)",
+      "Passenger under 16",
+      "Prior OWI homicide/injury conviction"
+    ],
+    "notes": "Wisconsin uses a lifetime lookback for OWI counts. Fourth offense is Class H Felony regardless of when priors occurred. Ignition interlock required 1-4 years. Mandatory AODA assessment."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Wis. Stat. § 346.63(1)(a); § 346.63(1)(am)",
+    "statute_title": "OWI — Drugs or Restricted Controlled Substance",
+    "offense_class": "Same as alcohol OWI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol OWI by offense count",
+    "fine_max": "Same as alcohol OWI by offense count",
+    "elements": [
+      "Defendant operated a motor vehicle on a public highway",
+      "While under the influence of a controlled substance or other drug",
+      "Or with a detectable amount of a restricted controlled substance in blood (per se — § 346.63(1)(am))",
+      "Restricted substances include THC, cocaine, heroin, methamphetamine, PCP"
+    ],
+    "mandatory_minimum": "Same as alcohol OWI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs",
+      "Detectable amount of restricted controlled substance (per se violation)"
+    ],
+    "notes": "Wisconsin has a per se drugged driving law — any detectable amount of certain restricted controlled substances (delta-9-THC, cocaine, heroin, meth, PCP) is a violation. No threshold needed."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Wis. Stat. § 346.62",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor (first); Felony — Class I (if causing great bodily harm)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5 years (if great bodily harm)",
+    "fine_max": "$10,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "In a manner that endangered the safety of any person or property",
+      "With a wanton disregard for safety"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing great bodily harm (Class I Felony)",
+      "Causing death (reckless homicide under § 940.02)"
+    ],
+    "notes": "Common plea-down from OWI. Points added to driving record. May result in license suspension."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Wis. Stat. § 346.67",
+    "statute_title": "Duty to Stop at Scene of Accident — Injury or Death",
+    "offense_class": "Class H Felony (injury); Class D Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "6 years (injury); 25 years (death)",
+    "fine_max": "$10,000 (injury); $100,000 (death)",
+    "elements": [
+      "Defendant was the operator of a vehicle involved in an accident",
+      "Accident resulted in injury or death of any person",
+      "Defendant knowingly failed to stop at the scene",
+      "Defendant failed to provide identification and render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (Class D Felony)",
+      "Property damage only (misdemeanor under § 346.68)"
+    ],
+    "notes": "Hit-and-run involving death is a Class D Felony. Property damage only hit-and-run is a civil forfeiture. License revocation upon conviction."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Wis. Stat. § 940.09",
+    "statute_title": "Homicide by Intoxicated Use of a Vehicle",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant operated a motor vehicle while under the influence of an intoxicant or drugs",
+      "Or with a prohibited alcohol concentration",
+      "Defendant's operation of the vehicle caused the death of another person"
+    ],
+    "mandatory_minimum": "5 years imprisonment (mandatory minimum)",
+    "enhancements": [
+      "Prior OWI convictions",
+      "Multiple victims"
+    ],
+    "notes": "Mandatory minimum 5 years imprisonment. OWI homicide is one of the most serious OWI-related charges. License revocation 5 years."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Wis. Stat. § 940.10",
+    "statute_title": "Homicide by Negligent Operation of a Vehicle",
+    "offense_class": "Class G Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant operated a vehicle in a criminally negligent manner",
+      "Defendant's operation caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Negligent homicide by vehicle does not require intoxication — criminal negligence is sufficient. Less serious than OWI homicide."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Wis. Stat. § 343.44",
+    "statute_title": "Operating After Suspension or Revocation",
+    "offense_class": "Misdemeanor (first); Misdemeanor (subsequent — enhanced)",
+    "penalty_min": null,
+    "penalty_max": "1 year (OWI-related suspension); 6 months (other suspension)",
+    "fine_max": "$2,500 (OWI-related); $2,500 (other)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While defendant's operating privilege was suspended or revoked",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "OWI-related suspension (enhanced penalties)",
+      "Subsequent offense"
+    ],
+    "notes": "OWI-related license suspension driving carries enhanced penalties. Additional suspension period upon conviction."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Wis. Stat. § 346.04(3)",
+    "statute_title": "Attempting to Flee or Elude an Officer",
+    "offense_class": "Class I Felony (basic); Class H Felony (if endangering safety); Class F Felony (if death results)",
+    "penalty_min": null,
+    "penalty_max": "3.5 years (Class I); 6 years (Class H); 12.5 years (Class F)",
+    "fine_max": "$10,000 (Class I/H); $25,000 (Class F)",
+    "elements": [
+      "A traffic officer signaled the defendant to stop",
+      "Defendant knowingly fled or attempted to elude the officer",
+      "By driving at high speed or operating in a reckless manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Endangering safety of others (Class H Felony)",
+      "Causing bodily harm (Class H Felony)",
+      "Death results (Class F Felony)"
+    ],
+    "notes": "Fleeing is always a felony in Wisconsin. Class F Felony if fleeing results in death of another person."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Wis. Stat. § 961.41(3g)",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Misdemeanor (most first offenses); Class I Felony (certain substances or second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3.5 years (Class I Felony for second+)",
+    "fine_max": "$5,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "Without a valid prescription",
+      "Substance is listed in Schedules I through V"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class I Felony)",
+      "Possession near a school, park, or public housing (sentence doubles under § 961.495)"
+    ],
+    "notes": "First-offense simple possession of most controlled substances is a misdemeanor. Second or subsequent is a Class I Felony. Drug court and diversion programs available."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Wis. Stat. § 961.41(3g)(e)",
+    "statute_title": "Possession of THC (Marijuana)",
+    "offense_class": "Misdemeanor (first); Class I Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 3.5 years (second+)",
+    "fine_max": "$1,000 (first); $10,000 (second+)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed tetrahydrocannabinols (THC)",
+      "Any amount",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class I Felony)"
+    ],
+    "notes": "Wisconsin has not legalized recreational or medical marijuana at the state level. First offense THC possession is a misdemeanor with up to 6 months and $1,000 fine. Some municipalities have local ordinances with lesser penalties."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Wis. Stat. § 961.41(3g)(c)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Misdemeanor (first); Class I Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 3.5 years (second+)",
+    "fine_max": "$5,000 (first); $10,000 (second+)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed cocaine or cocaine base",
+      "Cocaine is a Schedule II controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class I Felony)",
+      "Near school or park (doubled sentence)"
+    ],
+    "notes": "Crack cocaine (cocaine base) is treated the same as powder cocaine under Wisconsin law for possession."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Wis. Stat. § 961.41(3g)(c)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Misdemeanor (first); Class I Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 3.5 years (second+)",
+    "fine_max": "$5,000 (first); $10,000 (second+)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class I Felony)",
+      "Near school or park (doubled sentence)"
+    ],
+    "notes": "Manufacturing methamphetamine is a separate Class F Felony under § 961.41(1)(e). Possession of precursors for meth production also criminalized."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Wis. Stat. § 961.41(1)(cm)",
+    "statute_title": "Manufacturing or Delivering Cocaine/Heroin/Methamphetamine",
+    "offense_class": "Class F Felony (1-5g); Class E Felony (5-15g); Class D Felony (15-40g); Class C Felony (40g+)",
+    "penalty_min": null,
+    "penalty_max": "12.5 years (Class F); 15 years (Class E); 25 years (Class D); 40 years (Class C)",
+    "fine_max": "$25,000 (Class F); $50,000 (Class E); $100,000 (Class D); $100,000 (Class C)",
+    "elements": [
+      "Defendant manufactured, distributed, or delivered",
+      "Cocaine, heroin, methamphetamine, or other Schedule I/II narcotic",
+      "Amount determines felony class"
+    ],
+    "mandatory_minimum": "3 years (5-15g); 5 years (15-40g); 10 years (40g+)",
+    "enhancements": [
+      "Delivery to a minor (additional 5 years)",
+      "Within 1,000 feet of school, park, or public housing (sentence doubles)",
+      "Large quantities (escalating felony classes)"
+    ],
+    "notes": "Wisconsin uses weight-based tiers for trafficking penalties. School zone enhancement doubles the sentence. Conspiracy to deliver carries same penalties."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Wis. Stat. § 961.41(1)(b)-(h)",
+    "statute_title": "Manufacturing or Delivering a Controlled Substance — Non-Narcotic",
+    "offense_class": "Class H Felony (most Schedule I-IV); Class I Felony (Schedule V)",
+    "penalty_min": null,
+    "penalty_max": "6 years (Class H); 3.5 years (Class I)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant manufactured, distributed, or delivered",
+      "A non-narcotic controlled substance",
+      "From Schedule I through V"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery to a minor",
+      "Near school or park",
+      "Second or subsequent offense"
+    ],
+    "notes": "THC (marijuana) delivery of 200g-1000g is a Class I Felony; over 10,000g is a Class F Felony. Non-narcotic schedule penalties vary by weight."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Wis. Stat. § 961.41(1)(e)",
+    "statute_title": "Manufacturing Methamphetamine",
+    "offense_class": "Class F Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "12.5 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant manufactured or attempted to manufacture methamphetamine",
+      "Through chemical synthesis or extraction"
+    ],
+    "mandatory_minimum": "3 years imprisonment",
+    "enhancements": [
+      "Child under 18 in area of manufacturing (additional enhancement)",
+      "Clandestine lab near school or residence",
+      "Explosion or fire during manufacturing"
+    ],
+    "notes": "Mandatory minimum 3 years. Cleanup costs assessed against defendant. Child endangerment charges added if minors present."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Wis. Stat. § 961.573",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor (use/possession); Class I Felony (delivery to minor)",
+    "penalty_min": null,
+    "penalty_max": "30 days (possession); 3.5 years (delivery to minor)",
+    "fine_max": "$500 (possession); $10,000 (delivery to minor)",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "Knowing or intending it to be used for manufacturing, testing, or consuming a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor (Class I Felony under § 961.574)"
+    ],
+    "notes": "Paraphernalia possession is a misdemeanor with relatively low penalties. Delivery to a minor is a felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Wis. Stat. § 961.41(1m)",
+    "statute_title": "Possession with Intent to Deliver",
+    "offense_class": "Varies by substance and weight: Class F to Class I Felony",
+    "penalty_min": null,
+    "penalty_max": "12.5 years (Class F for narcotic); 6 years (Class H); 3.5 years (Class I)",
+    "fine_max": "$25,000 (Class F); $10,000 (Class H/I)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With intent to manufacture or deliver",
+      "Intent may be inferred from quantity, packaging, scales, cash, or other evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school, park, or public housing (sentence doubles)",
+      "Delivery to a minor",
+      "Large quantities"
+    ],
+    "notes": "Possession with intent is charged based on substance type and weight. Penalties mirror delivery statutes. Intent inferred from totality of circumstances."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Wis. Stat. § 940.01",
+    "statute_title": "First-Degree Intentional Homicide",
+    "offense_class": "Class A Felony",
+    "penalty_min": "Life imprisonment",
+    "penalty_max": "Life imprisonment without the possibility of extended supervision (parole)",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another human being",
+      "With intent to kill that person or another"
+    ],
+    "mandatory_minimum": "Life imprisonment (parole eligibility after 20 years unless court sets later date)",
+    "enhancements": [
+      "Court may deny extended supervision eligibility (life without parole)",
+      "Multiple victims",
+      "Victim is a law enforcement officer, firefighter, or judge"
+    ],
+    "notes": "Wisconsin's only Class A Felony. Mandatory life sentence. Court determines extended supervision eligibility date (minimum 20 years). Wisconsin does not have the death penalty."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Wis. Stat. § 940.02",
+    "statute_title": "First-Degree Reckless Homicide",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "60 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant recklessly caused the death of another human being",
+      "Under circumstances showing utter disregard for human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a dangerous weapon (additional 5 years under § 939.63)"
+    ],
+    "notes": "Wisconsin does not use 'second-degree murder.' First-degree reckless homicide is the equivalent. Requires 'utter disregard for human life' — higher than ordinary recklessness."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Wis. Stat. § 940.01(2)",
+    "statute_title": "First-Degree Intentional Homicide — Mitigated (Adequate Provocation)",
+    "offense_class": "Class B Felony (mitigated from Class A)",
+    "penalty_min": null,
+    "penalty_max": "60 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant caused the death of another human being",
+      "With intent to kill",
+      "Under the influence of adequate provocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wisconsin does not have a separate voluntary manslaughter statute. Adequate provocation is a mitigating defense that reduces first-degree intentional homicide to a Class B Felony."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Wis. Stat. § 940.06",
+    "statute_title": "Second-Degree Reckless Homicide",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant recklessly caused the death of another human being",
+      "Ordinary recklessness (not utter disregard for human life)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of dangerous weapon (additional 5 years)"
+    ],
+    "notes": "Wisconsin's equivalent of involuntary manslaughter. Requires criminal recklessness but not the 'utter disregard' needed for first-degree reckless homicide."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Wis. Stat. § 940.19(4)",
+    "statute_title": "Aggravated Battery — Causing Great Bodily Harm with Intent",
+    "offense_class": "Class E Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant caused great bodily harm to another person",
+      "By an act done with intent to cause great bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a dangerous weapon (additional 5 years under § 939.63)",
+      "Domestic abuse (additional 2 years under § 939.621)"
+    ],
+    "notes": "Wisconsin's most serious battery charge. 'Great bodily harm' includes injuries creating substantial risk of death, serious permanent disfigurement, or permanent loss of function."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Wis. Stat. § 940.19(1)",
+    "statute_title": "Battery — Causing Bodily Harm",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "9 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant caused bodily harm to another person",
+      "By an act done with intent to cause bodily harm",
+      "Without the consent of the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Domestic abuse modifier (additional 2 years if felony)",
+      "Against certain protected persons"
+    ],
+    "notes": "Simple battery is a Class A Misdemeanor — the most serious misdemeanor in Wisconsin. 'Bodily harm' means physical pain or injury, illness, or impairment of physical condition."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "Wis. Stat. § 940.19(2)",
+    "statute_title": "Substantial Battery — Causing Substantial Bodily Harm",
+    "offense_class": "Class I Felony",
+    "penalty_min": null,
+    "penalty_max": "3.5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant caused substantial bodily harm to another person",
+      "By an act done with intent to cause bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of dangerous weapon (additional 5 years)",
+      "Domestic abuse modifier"
+    ],
+    "notes": "'Substantial bodily harm' means bodily injury that causes a laceration requiring stitches, any fracture of a bone, a burn, temporary loss of a bodily function, or a concussion."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Wis. Stat. § 943.32(1)",
+    "statute_title": "Robbery — Class E Felony",
+    "offense_class": "Class E Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant took property from the person or presence of the owner",
+      "By use or threat of use of force against the person of the owner",
+      "With intent to steal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of dangerous weapon (armed robbery — Class C Felony)",
+      "Use of force that may cause bodily harm"
+    ],
+    "notes": "Basic robbery in Wisconsin is a Class E Felony. Armed robbery is significantly enhanced."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Wis. Stat. § 943.32(2)",
+    "statute_title": "Armed Robbery",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "40 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant committed robbery",
+      "While armed with a dangerous weapon or any article used or fashioned as a weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm (additional 5 years mandatory minimum under § 939.63)",
+      "Injury to victim"
+    ],
+    "notes": "Armed robbery is one of the most seriously punished property crimes. Firearm enhancer adds mandatory minimum consecutive time."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Wis. Stat. § 940.31",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class C Felony (basic); Class B Felony (with bodily harm or ransom)",
+    "penalty_min": null,
+    "penalty_max": "40 years (Class C); 60 years (Class B)",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant seized and carried away another person",
+      "By force or threat of imminent force",
+      "Without the person's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Bodily harm to victim (Class B Felony)",
+      "Ransom demanded (Class B Felony)",
+      "Victim is a child under 13"
+    ],
+    "notes": "False imprisonment (§ 940.30) is a Class H Felony. Taking hostages (§ 940.305) is a Class C Felony."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Wis. Stat. § 943.02",
+    "statute_title": "Arson of a Building",
+    "offense_class": "Class C Felony (building); Class F Felony (property other than building)",
+    "penalty_min": null,
+    "penalty_max": "40 years (building); 12.5 years (other property)",
+    "fine_max": "$100,000 (building); $25,000 (other property)",
+    "elements": [
+      "Defendant intentionally damaged a building",
+      "By means of fire",
+      "Without the consent of all persons with an interest in the building"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Building occupied at the time of fire",
+      "Death results",
+      "Arson committed for insurance fraud"
+    ],
+    "notes": "Arson of a building is a Class C Felony regardless of whether it is a dwelling. Arson of other property (§ 943.03) is Class F Felony."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Wis. Stat. § 939.32; § 940.01",
+    "statute_title": "Attempted First-Degree Intentional Homicide",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "60 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant had intent to kill another person",
+      "Defendant performed acts demonstrating unequivocal intent to kill",
+      "The killing was not completed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a dangerous weapon (additional 5 years)"
+    ],
+    "notes": "Attempted murder in Wisconsin is a Class B Felony — the same class as first-degree reckless homicide. Maximum penalty is the maximum for the attempted offense."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Wis. Stat. § 941.20; § 940.19",
+    "statute_title": "Reckless Use of a Weapon / Battery with Dangerous Weapon",
+    "offense_class": "Class G Felony (reckless endangerment with weapon); Class H Felony (battery with weapon enhancer)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class G); 6 years + 5 year enhancer (Class H + weapon)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant recklessly endangered safety by use of a dangerous weapon",
+      "Or committed battery while armed with a dangerous weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Dangerous weapon enhancer adds up to 5 additional years (§ 939.63)"
+    ],
+    "notes": "Wisconsin does not have a separate 'assault with a deadly weapon' statute. Such conduct is charged as battery with a dangerous weapon enhancer or reckless endangerment."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Wis. Stat. § 943.20",
+    "statute_title": "Theft",
+    "offense_class": "Class A Misdemeanor (under $2,500); Class I Felony ($2,500-$5,000); Class H Felony ($5,000-$10,000); Class G Felony ($10,000+)",
+    "penalty_min": null,
+    "penalty_max": "9 months (Class A Misdemeanor); 3.5 years (Class I); 6 years (Class H); 10 years (Class G)",
+    "fine_max": "$10,000 (misdemeanor/Class I/H); $25,000 (Class G)",
+    "elements": [
+      "Defendant intentionally took and carried away movable property of another",
+      "Without the owner's consent",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value-based felony escalation",
+      "From a person (Class G Felony regardless of value)"
+    ],
+    "notes": "Wisconsin uses a tiered theft system based on value. Theft from the person (pickpocketing) is always a Class G Felony."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Wis. Stat. § 943.20(3)(bf)-(bm)",
+    "statute_title": "Theft — Felony (Value $2,500+)",
+    "offense_class": "Class I Felony ($2,500-$5,000); Class H Felony ($5,000-$10,000); Class G Felony ($10,000-$100,000); Class F Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "3.5 years (Class I); 6 years (Class H); 10 years (Class G); 12.5 years (Class F)",
+    "fine_max": "$10,000 (Class I/H); $25,000 (Class G/F)",
+    "elements": [
+      "Defendant committed theft of property or services",
+      "Value exceeds $2,500"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wisconsin does not use the term 'grand theft.' Felony theft begins at $2,500. Values over $100,000 are Class F Felony."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Wis. Stat. § 943.20(3)(a)",
+    "statute_title": "Theft — Misdemeanor (Value Under $2,500)",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "9 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant committed theft of property or services",
+      "Value does not exceed $2,500"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Misdemeanor theft threshold is $2,500. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Wis. Stat. § 943.50",
+    "statute_title": "Retail Theft",
+    "offense_class": "Class A Misdemeanor (under $500); Class I Felony ($500-$5,000); Class H Felony ($5,000-$10,000); Class G Felony ($10,000+)",
+    "penalty_min": null,
+    "penalty_max": "9 months (Class A); 3.5 years (Class I); 6 years (Class H); 10 years (Class G)",
+    "fine_max": "$10,000 (misdemeanor/Class I/H); $25,000 (Class G)",
+    "elements": [
+      "Defendant intentionally took and carried away, transferred, or concealed merchandise",
+      "From a retail establishment",
+      "Without payment and with intent to permanently deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of emergency exit (additional penalty)",
+      "Use of device to defeat security"
+    ],
+    "notes": "Wisconsin has a separate retail theft statute with lower felony thresholds than general theft ($500 vs $2,500). Civil recovery available to retailers."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Wis. Stat. § 943.10(1m)",
+    "statute_title": "Burglary",
+    "offense_class": "Class F Felony",
+    "penalty_min": null,
+    "penalty_max": "12.5 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally entered a building",
+      "Without the consent of the person in lawful possession",
+      "With intent to commit a felony therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with a dangerous weapon (Class E Felony under § 943.10(2)(a))",
+      "Battery to someone in the building (Class E Felony)"
+    ],
+    "notes": "Basic burglary in Wisconsin is a Class F Felony. Armed burglary or burglary with battery is elevated to Class E Felony."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Wis. Stat. § 943.10(1m)(a)",
+    "statute_title": "Burglary — Dwelling",
+    "offense_class": "Class F Felony",
+    "penalty_min": null,
+    "penalty_max": "12.5 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally entered a dwelling",
+      "Without the consent of the person in lawful possession",
+      "With intent to commit a felony therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with dangerous weapon (Class E Felony)",
+      "Person present in dwelling (enhanced sentencing consideration)"
+    ],
+    "notes": "Wisconsin does not separately classify residential burglary — the same statute covers all buildings. Sentencing may be enhanced if it is a dwelling."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Wis. Stat. § 943.23",
+    "statute_title": "Operating Vehicle Without Owner's Consent",
+    "offense_class": "Class H Felony (driving); Class I Felony (riding); Class A Misdemeanor (if abandoned undamaged)",
+    "penalty_min": null,
+    "penalty_max": "6 years (Class H); 3.5 years (Class I); 9 months (misdemeanor)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally took and drove a motor vehicle",
+      "Without the consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wisconsin uses 'operating vehicle without owner's consent' rather than 'motor vehicle theft.' Includes joyriding. Class H Felony for the driver, Class I for passengers who know the vehicle is stolen."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Wis. Stat. § 943.34",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Same tiers as theft by value: Class A Misdemeanor (under $2,500) through Class F Felony ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "Same as theft tiers",
+    "fine_max": "Same as theft tiers",
+    "elements": [
+      "Defendant intentionally received, retained, or disposed of stolen property",
+      "Knowing the property was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Penalties mirror general theft statute value tiers. Knowledge that property was stolen must be proven."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Wis. Stat. § 943.01",
+    "statute_title": "Criminal Damage to Property",
+    "offense_class": "Class A Misdemeanor (under $2,500); Class I Felony ($2,500+); Class H Felony (if reduces value by $2,500+)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 3.5 years (Class I); 6 years (Class H)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally caused damage to physical property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to religious or educational property (Class I Felony regardless of amount)",
+      "Graffiti (restitution plus community service)"
+    ],
+    "notes": "Felony threshold is $2,500 in damages. Graffiti specifically addressed under § 943.017. Restitution required."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Wis. Stat. § 943.13",
+    "statute_title": "Trespass to Land",
+    "offense_class": "Class B Forfeiture (civil); Class A Misdemeanor (if warning given)",
+    "penalty_min": null,
+    "penalty_max": "$1,000 forfeiture; 9 months (misdemeanor for subsequent or after warning)",
+    "fine_max": "$1,000 (forfeiture); $10,000 (misdemeanor)",
+    "elements": [
+      "Defendant entered or remained on land of another",
+      "After being notified not to enter or remain",
+      "Through verbal warning, posted signs, or fencing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass to a dwelling (Class A Misdemeanor under § 943.14)",
+      "Trespass to medical facility (enhanced under § 943.145)"
+    ],
+    "notes": "Trespass to land is initially a civil forfeiture. Trespass to a dwelling (§ 943.14) is always a Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Wis. Stat. § 943.01(1)",
+    "statute_title": "Criminal Damage to Property",
+    "offense_class": "Class A Misdemeanor (under $2,500); Class I Felony ($2,500+)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 3.5 years (Class I Felony)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally caused damage to physical property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wisconsin uses 'criminal damage to property' for what other states call 'criminal mischief.' Value of damage determines the penalty tier."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Wis. Stat. § 968.075; § 940.19(1)",
+    "statute_title": "Domestic Abuse — Battery",
+    "offense_class": "Class A Misdemeanor (simple battery); enhanced by domestic abuse surcharge and modifier",
+    "penalty_min": null,
+    "penalty_max": "9 months (simple battery); additional 2 years if felony with DV modifier (§ 939.621)",
+    "fine_max": "$10,000 plus $100 domestic abuse surcharge",
+    "elements": [
+      "Defendant caused bodily harm to a spouse, former spouse, person with child in common, or cohabitant",
+      "With intent to cause bodily harm"
+    ],
+    "mandatory_minimum": "72-hour no-contact period (mandatory arrest policy)",
+    "enhancements": [
+      "Domestic abuse modifier adds up to 2 years on felony charges (§ 939.621)",
+      "Strangulation (Class H Felony under § 940.235)",
+      "Repeated acts (Class H Felony under § 940.19(1m))"
+    ],
+    "notes": "Wisconsin has a mandatory arrest policy for domestic abuse. 72-hour no-contact period. $100 domestic abuse surcharge. Strangulation is a standalone felony."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Wis. Stat. § 940.19(2); § 939.621",
+    "statute_title": "Substantial Battery — Domestic Abuse",
+    "offense_class": "Class I Felony + domestic abuse modifier (additional 2 years)",
+    "penalty_min": null,
+    "penalty_max": "5.5 years (3.5 + 2 year DV modifier)",
+    "fine_max": "$10,000 plus $100 surcharge",
+    "elements": [
+      "Defendant caused substantial bodily harm to a family or household member",
+      "With intent to cause bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Domestic abuse modifier (additional 2 years)",
+      "Dangerous weapon enhancer (additional 5 years)",
+      "Strangulation (separate Class H Felony)"
+    ],
+    "notes": "Felony domestic battery in Wisconsin is charged as substantial or aggravated battery with the domestic abuse modifier. Federal firearms prohibition applies."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Wis. Stat. § 948.21",
+    "statute_title": "Neglecting a Child — Contributing to Delinquency",
+    "offense_class": "Class A Misdemeanor (basic); Class F Felony (if death results); Class H Felony (if bodily harm results)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 6 years (Class H if bodily harm); 12.5 years (Class F if death)",
+    "fine_max": "$10,000 (misdemeanor); $10,000 (Class H); $25,000 (Class F)",
+    "elements": [
+      "Defendant was a person responsible for a child's welfare",
+      "Defendant failed to exercise ordinary care to prevent bodily harm or death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Bodily harm results (Class H Felony)",
+      "Death results (Class F Felony)"
+    ],
+    "notes": "Wisconsin also charges child endangerment under § 948.21 and recklessly endangering safety (§ 941.30) when a child is the victim."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Wis. Stat. § 948.03",
+    "statute_title": "Physical Abuse of a Child",
+    "offense_class": "Class A Misdemeanor (bodily harm); Class H Felony (great bodily harm — reckless); Class F Felony (great bodily harm — intentional)",
+    "penalty_min": null,
+    "penalty_max": "9 months (Class A); 6 years (Class H); 12.5 years (Class F)",
+    "fine_max": "$10,000 (Class A/H); $25,000 (Class F)",
+    "elements": [
+      "Defendant intentionally caused bodily harm to a child",
+      "Or recklessly caused great bodily harm to a child",
+      "Or intentionally caused great bodily harm to a child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeated acts (Class H Felony under § 948.03(5))",
+      "Death of child (charged as homicide)"
+    ],
+    "notes": "Intentional great bodily harm to a child is a Class F Felony. Chronic child abuse (repeated acts) is a standalone Class H Felony."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Wis. Stat. § 813.12(8)",
+    "statute_title": "Violation of a Domestic Abuse Restraining Order",
+    "offense_class": "Class A Misdemeanor (first); Class I Felony (second+ within 72 months or assault during violation)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 3.5 years (felony)",
+    "fine_max": "$10,000",
+    "elements": [
+      "A valid domestic abuse restraining order or injunction was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant knowingly violated the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent violation within 72 months (Class I Felony)",
+      "Assault during violation"
+    ],
+    "notes": "Includes temporary restraining orders and final injunctions. Violation of a harassment injunction (§ 813.125) carries similar penalties."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Wis. Stat. § 940.32",
+    "statute_title": "Stalking",
+    "offense_class": "Class I Felony (basic); Class H Felony (second+ or with weapon); Class F Felony (causing bodily harm)",
+    "penalty_min": null,
+    "penalty_max": "3.5 years (Class I); 6 years (Class H); 12.5 years (Class F)",
+    "fine_max": "$10,000 (Class I/H); $25,000 (Class F)",
+    "elements": [
+      "Defendant intentionally engaged in a course of conduct directed at a specific person",
+      "That would cause a reasonable person to suffer serious emotional distress or fear of bodily harm or death",
+      "Defendant knew or should have known the conduct would cause fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of dangerous weapon (Class H Felony)",
+      "Causing bodily harm (Class F Felony)",
+      "Prior stalking conviction (Class H Felony)",
+      "Victim under 18 (Class H Felony)"
+    ],
+    "notes": "Stalking is always a felony in Wisconsin. Course of conduct means two or more acts carried out over time. Cyberstalking included."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Wis. Stat. § 947.013",
+    "statute_title": "Harassment",
+    "offense_class": "Class B Forfeiture (first); Class A Misdemeanor (after warning or injunction)",
+    "penalty_min": null,
+    "penalty_max": "$1,000 forfeiture; 9 months (misdemeanor after injunction)",
+    "fine_max": "$1,000 (forfeiture); $10,000 (misdemeanor)",
+    "elements": [
+      "Defendant, with intent to harass or intimidate another person",
+      "Engaged in a course of conduct that served no legitimate purpose",
+      "And would cause a reasonable person to feel harassed, threatened, or intimidated"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation of harassment injunction (Class A Misdemeanor)",
+      "Use of telephone or electronic communication for harassment (§ 947.0125)"
+    ],
+    "notes": "First-offense harassment is a civil forfeiture. Criminal penalties apply if the defendant violates a harassment injunction."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Wis. Stat. § 940.285",
+    "statute_title": "Abuse of Vulnerable Adults",
+    "offense_class": "Class I Felony (basic); Class H Felony (great bodily harm or repeated)",
+    "penalty_min": null,
+    "penalty_max": "3.5 years (Class I); 6 years (Class H)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was a caregiver for an elder or vulnerable adult",
+      "Defendant intentionally subjected the elder to cruel maltreatment",
+      "Or caused bodily harm or neglected the elder's basic needs"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Great bodily harm (Class H Felony)",
+      "Repeated acts",
+      "Financial exploitation (separate offense under § 943.20(1)(b))"
+    ],
+    "notes": "Financial exploitation of an elder is charged under the general theft statute with 'vulnerable adult' status as an aggravator."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Wis. Stat. § 941.29",
+    "statute_title": "Possession of a Firearm by a Prohibited Person",
+    "offense_class": "Class G Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant was prohibited from possessing firearms (convicted felon, adjudicated delinquent, subject to DV injunction, involuntary commitment)"
+    ],
+    "mandatory_minimum": "3 years (mandatory minimum under § 941.29(1m))",
+    "enhancements": [
+      "Possession during commission of a felony"
+    ],
+    "notes": "Mandatory minimum 3 years imprisonment for felon in possession. Prohibited persons include convicted felons, persons adjudicated delinquent for certain offenses, and persons subject to DV injunctions."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Wis. Stat. § 941.29(1m)",
+    "statute_title": "Felon in Possession of a Firearm",
+    "offense_class": "Class G Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant had previously been convicted of a felony in Wisconsin or any other jurisdiction"
+    ],
+    "mandatory_minimum": "3 years imprisonment",
+    "enhancements": [
+      "Possession during commission of another felony"
+    ],
+    "notes": "Mandatory minimum 3 years. Cannot be reduced by sentencing adjustment or early release. Federal felon-in-possession (18 U.S.C. § 922(g)) may also apply."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Wis. Stat. § 941.23",
+    "statute_title": "Carrying a Concealed Weapon Without a License",
+    "offense_class": "Class A Misdemeanor (first); Class G Felony (if prohibited person)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 10 years (felony if prohibited)",
+    "fine_max": "$10,000 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Defendant carried a concealed and dangerous weapon",
+      "Without a valid concealed carry license",
+      "Not in defendant's own dwelling or place of business"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prohibited person (Class G Felony)"
+    ],
+    "notes": "Wisconsin enacted concealed carry in 2011. CCW license required. Open carry is legal without a license for non-prohibited persons."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Wis. Stat. § 941.20",
+    "statute_title": "Endangering Safety by Use of a Dangerous Weapon",
+    "offense_class": "Class G Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant endangered the safety of another person",
+      "By recklessly operating or handling a firearm or dangerous weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "While intoxicated (additional penalty)"
+    ],
+    "notes": "Includes reckless discharge of a firearm. Operating a firearm while intoxicated is a separate Class H Felony under § 941.20(1)(b)."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Wis. Stat. § 943.201",
+    "statute_title": "Unauthorized Use of Personal Identifying Information (Identity Theft)",
+    "offense_class": "Class H Felony",
+    "penalty_min": null,
+    "penalty_max": "6 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally used or attempted to use personal identifying information of another",
+      "To obtain credit, money, goods, services, or anything of value",
+      "Without the authorization or consent of the individual"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is an elder (enhanced sentencing consideration)",
+      "Multiple victims"
+    ],
+    "notes": "Includes use of Social Security numbers, driver's license numbers, financial account numbers. Restitution to victims required."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Wis. Stat. § 943.20(1)(b)",
+    "statute_title": "Theft by Embezzlement (Theft by Bailee)",
+    "offense_class": "Same value tiers as general theft: Class A Misdemeanor through Class F Felony",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant was entrusted with property of another by virtue of a fiduciary relationship",
+      "Defendant intentionally used, transferred, or concealed the property",
+      "Without the owner's consent and with intent to convert"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public employee",
+      "Vulnerable adult victim"
+    ],
+    "notes": "Wisconsin does not have a separate embezzlement statute. Embezzlement is prosecuted as theft by bailee under the general theft statute."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Wis. Stat. § 943.38",
+    "statute_title": "Forgery",
+    "offense_class": "Class H Felony",
+    "penalty_min": null,
+    "penalty_max": "6 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant falsely made or altered a writing",
+      "With intent to defraud",
+      "Writing purports to have been made by another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Uttering a forged instrument is also a Class H Felony under the same statute. Includes checks, deeds, contracts, and public documents."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Wis. Stat. § 943.20(1)(d)",
+    "statute_title": "Theft by Fraud / False Representation",
+    "offense_class": "Same value tiers as general theft",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant obtained property or services from another",
+      "By intentionally deceiving through false representation",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Vulnerable adult victim",
+      "Organized fraud scheme"
+    ],
+    "notes": "Fraud is prosecuted under the theft statute as theft by false representation. Insurance fraud has specific statutes under § 943.395."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Wis. Stat. § 943.41",
+    "statute_title": "Financial Transaction Card Crime",
+    "offense_class": "Class A Misdemeanor (under $2,500); Class I Felony ($2,500+)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 3.5 years (felony)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant used a financial transaction card (credit/debit card)",
+      "Knowing it was stolen, forged, or revoked",
+      "To obtain money, goods, or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeds $2,500 (Class I Felony)"
+    ],
+    "notes": "Includes possession of a stolen or forged card, card number theft, and unauthorized use. Multiple transactions may be aggregated."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Wis. Stat. § 946.86",
+    "statute_title": "Money Laundering — Racketeering",
+    "offense_class": "Class E Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant received or acquired proceeds known to be derived from criminal activity",
+      "Or used such proceeds to acquire property",
+      "Or conducted a financial transaction designed to conceal criminal proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Prosecuted under Wisconsin's RICO statute. Forfeiture of proceeds and property authorized."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Wis. Stat. § 940.225(2)",
+    "statute_title": "Second-Degree Sexual Assault",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "40 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant had sexual contact or intercourse with another person",
+      "By use or threat of force or violence",
+      "Or without consent",
+      "Or while the victim was incapable of consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of dangerous weapon (first degree — Class B Felony)",
+      "Causing pregnancy, great bodily harm, or injury (first degree)"
+    ],
+    "notes": "Second-degree is the most commonly charged sexual assault. First-degree (§ 940.225(1)) is a Class B Felony requiring use of weapon or causing great bodily harm."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Wis. Stat. § 940.225(1)",
+    "statute_title": "First-Degree Sexual Assault",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "60 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant had sexual contact or intercourse with another person",
+      "Without consent and by use of a dangerous weapon",
+      "Or causing great bodily harm",
+      "Or aided by one or more persons using force or threat of force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wisconsin uses 'sexual assault' rather than 'rape.' First-degree is the most serious — requires weapon, great bodily harm, or multiple assailants. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Wis. Stat. § 944.20",
+    "statute_title": "Lewd and Lascivious Behavior",
+    "offense_class": "Class A Misdemeanor (first); Class I Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "9 months (first); 3.5 years (second+)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant committed an indecent act of sexual gratification",
+      "In public or within view of the public",
+      "Or exposed genitals or pubic area in a public or semi-public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class I Felony)"
+    ],
+    "notes": "First offense is a misdemeanor. Second or subsequent is a felony. May trigger sex offender registration depending on circumstances."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Wis. Stat. § 944.30(1m)",
+    "statute_title": "Solicitation of Prostitution — Patronizing",
+    "offense_class": "Class A Misdemeanor (first); Class I Felony (second+); Class H Felony (if minor)",
+    "penalty_min": null,
+    "penalty_max": "9 months (first); 3.5 years (second+); 6 years (minor)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant entered or remained in a place of prostitution",
+      "With intent to engage in sexual activity for a fee"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class I Felony)",
+      "Soliciting a minor (Class H Felony)"
+    ],
+    "notes": "Promoting prostitution (keeping a place of prostitution, § 944.34) is a Class H Felony. Sex trafficking of a child is a Class C Felony."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Wis. Stat. § 948.05",
+    "statute_title": "Sexual Exploitation of a Child",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "40 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant employed, used, or permitted a child to engage in sexually explicit conduct",
+      "For the purpose of recording or displaying it"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Child under 13 (enhanced sentencing)",
+      "Distribution of material"
+    ],
+    "notes": "Possession of child pornography (§ 948.12) is a Class D Felony. Distribution is a Class C Felony. Registration as sex offender required."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Wis. Stat. § 301.45(6)",
+    "statute_title": "Failure to Comply with Sex Offender Registration",
+    "offense_class": "Class H Felony",
+    "penalty_min": null,
+    "penalty_max": "6 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant knowingly failed to register, update, or verify registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Registration requirements vary by offense: 15 years, lifetime, or GPS monitoring. Failure to register is always a felony."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Wis. Stat. § 948.02(2)",
+    "statute_title": "Second-Degree Sexual Assault of a Child",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "40 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant had sexual contact or intercourse with a person under 16",
+      "Defendant was 18 years of age or older"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13 (first degree — Class B Felony, up to 60 years)"
+    ],
+    "notes": "Wisconsin's age of consent is 18 for position of authority, 16 general. Sexual assault of a child under 13 is first-degree (§ 948.02(1)) — Class B Felony."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Wis. Stat. § 947.01",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant engaged in violent, abusive, indecent, profane, boisterous, unreasonably loud, or otherwise disorderly conduct",
+      "Under circumstances in which such conduct tends to cause or provoke a disturbance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Domestic abuse modifier (if involving household member)"
+    ],
+    "notes": "Disorderly conduct is the most commonly charged misdemeanor in Wisconsin. Often used as a plea-down from more serious charges including DV."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Wis. Stat. § 946.41",
+    "statute_title": "Resisting or Obstructing an Officer",
+    "offense_class": "Class A Misdemeanor (basic); Class I Felony (if causing injury); Class H Felony (if causing substantial bodily harm)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 3.5 years (Class I); 6 years (Class H)",
+    "fine_max": "$10,000",
+    "elements": [
+      "A peace officer was acting in an official capacity",
+      "Defendant knowingly resisted or obstructed the officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing injury to officer (Class I Felony)",
+      "Causing substantial bodily harm (Class H Felony)"
+    ],
+    "notes": "Does not require physical force — verbal obstruction, giving false information, or fleeing on foot sufficient. Separate from fleeing in a vehicle (§ 346.04)."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Wis. Stat. § 946.41; § 946.44",
+    "statute_title": "Obstructing Justice / Resisting an Officer",
+    "offense_class": "Class A Misdemeanor (obstructing officer); Class I Felony (obstructing justice — destroying evidence)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 3.5 years (felony)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly gave false information to an officer",
+      "Or concealed or destroyed evidence",
+      "With intent to hinder an investigation or prosecution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Destroying evidence (Class I Felony under § 946.60)"
+    ],
+    "notes": "Obstructing an officer is commonly charged alongside resisting arrest. Destroying evidence is a separate felony."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Wis. Stat. § 785.01",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Criminal contempt (punitive); Civil contempt (remedial)",
+    "penalty_min": null,
+    "penalty_max": "7 days or $2,000 fine per occurrence (summary); greater for non-summary",
+    "fine_max": "$2,000 per occurrence",
+    "elements": [
+      "Defendant willfully disobeyed a court order",
+      "Or engaged in disorderly or disrespectful conduct in court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Summary contempt may be imposed immediately for in-court misconduct. Non-summary contempt requires notice and hearing. Remedial contempt uses coercive sanctions."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Wis. Stat. § 125.07(4)(a)",
+    "statute_title": "Intoxicated Persons on Licensed Premises",
+    "offense_class": "Civil forfeiture (not criminal)",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": "$100-$500",
+    "elements": [
+      "Defendant was intoxicated in a public place",
+      "Specifically on premises licensed for alcohol sale"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wisconsin does not have a general public intoxication crime. Being drunk in public is not itself illegal. Intoxicated persons on licensed premises may be a civil forfeiture. Disorderly conduct may be charged if behavior is disruptive."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Wis. Stat. § 946.49",
+    "statute_title": "Bail Jumping",
+    "offense_class": "Class A Misdemeanor (if underlying is misdemeanor); Class H Felony (if underlying is felony)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 6 years (felony)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was released from custody by court order",
+      "With a condition of bail (including appearing at future hearings)",
+      "Defendant intentionally failed to comply with the terms of release"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wisconsin bail jumping is unique — it criminalizes ANY violation of a bail condition, not just failure to appear. If the underlying charge is a felony, bail jumping is a Class H Felony."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Wis. Stat. § 946.41(2m)",
+    "statute_title": "Obstructing an Officer — False Information",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "9 months",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly gave false information to an officer",
+      "With intent to mislead the officer in the performance of official duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Filing a false police report is charged under the obstruction statute. Bomb threats and false emergency reports have specific enhanced statutes."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Wis. Stat. § 947.019",
+    "statute_title": "Threat to a Law Enforcement Officer, Judge, Prosecutor, or Other Person",
+    "offense_class": "Class I Felony (threat to official); Class A Misdemeanor (general threat)",
+    "penalty_min": null,
+    "penalty_max": "3.5 years (Class I); 9 months (misdemeanor)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant made a threat to cause bodily harm or death to another person",
+      "With intent to frighten or intimidate"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat to judge, prosecutor, or law enforcement officer (Class I Felony)"
+    ],
+    "notes": "General threats may be charged as disorderly conduct. Threats against certain officials are specifically enhanced to felony."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Wis. Stat. § 946.31",
+    "statute_title": "Perjury",
+    "offense_class": "Class H Felony",
+    "penalty_min": null,
+    "penalty_max": "6 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant made a false material statement",
+      "Under oath in an official proceeding or on a document required by law",
+      "Knowing the statement was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "False swearing in non-official matters is a Class A Misdemeanor. Subornation of perjury carries the same penalty."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Wis. Stat. § 946.10",
+    "statute_title": "Bribery of Public Officers and Employees",
+    "offense_class": "Class H Felony",
+    "penalty_min": null,
+    "penalty_max": "6 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant offered, gave, or agreed to give a benefit",
+      "To a public officer or employee",
+      "With intent to influence the officer's official actions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Accepting a bribe (§ 946.12) is also a Class H Felony. Commercial bribery (§ 134.05) is a separate offense."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Wis. Stat. § 946.42",
+    "statute_title": "Escape — Criminal",
+    "offense_class": "Class A Misdemeanor (misdemeanor custody); Class H Felony (felony custody)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 6 years (felony)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was lawfully in custody or confinement",
+      "Defendant intentionally escaped from custody or confinement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or violence during escape"
+    ],
+    "notes": "Escape severity depends on the custody level. Failure to report to jail is also charged under this statute."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Wis. Stat. § 951.02; § 951.18",
+    "statute_title": "Crimes Against Animals — Mistreatment",
+    "offense_class": "Class A Misdemeanor (basic); Class I Felony (intentional/repeated); Class H Felony (death or torture)",
+    "penalty_min": null,
+    "penalty_max": "9 months (misdemeanor); 3.5 years (Class I); 6 years (Class H)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant treated an animal in a cruel manner",
+      "Or caused unnecessary suffering or injury to an animal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Intentional cruelty (Class I Felony)",
+      "Causing death or disfigurement (Class H Felony)",
+      "Animal fighting (Class I Felony under § 951.08)"
+    ],
+    "notes": "Animal fighting is a separate Class I Felony. Felony animal cruelty may result in prohibition from owning animals."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Wis. Stat. § 973.10",
+    "statute_title": "Control and Supervision of Probationers",
+    "offense_class": "Varies — court may revoke probation and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Department of Corrections may hold revocation hearing. Alternatives to revocation include sanctions, treatment programs, and modified conditions."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Wis. Stat. § 302.11; § 304.06",
+    "statute_title": "Violation of Extended Supervision (Parole)",
+    "offense_class": "Varies — return to prison for remaining term",
+    "penalty_min": null,
+    "penalty_max": "Remaining extended supervision time reconverted to imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on extended supervision or parole",
+      "Defendant violated a condition of supervision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wisconsin largely replaced traditional parole with 'extended supervision.' Revocation sends the person to prison for the remaining extended supervision time."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Wis. Stat. § 939.05",
+    "statute_title": "Parties to Crime — Aiding and Abetting",
+    "offense_class": "Same as principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant directly committed the crime, or aided and abetted its commission",
+      "Defendant was a party to a conspiracy to commit the crime",
+      "Or defendant advised, hired, counseled, or conspired with another to commit the crime"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "All parties to a crime are equally liable in Wisconsin. Mere presence is not sufficient — must show intentional assistance."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Wis. Stat. § 939.32",
+    "statute_title": "Attempt",
+    "offense_class": "Same as the completed offense",
+    "penalty_min": null,
+    "penalty_max": "Same as completed offense",
+    "fine_max": "Same as completed offense",
+    "elements": [
+      "Defendant had intent to commit a specific crime",
+      "Defendant performed acts indicating unequivocal intent to commit the crime",
+      "Defendant would have committed the crime except for intervention or failure of means"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wisconsin punishes attempts at the same level as the completed offense — no mandatory reduction. Voluntary abandonment is an affirmative defense."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Wis. Stat. § 939.31",
+    "statute_title": "Conspiracy",
+    "offense_class": "Same felony class as the target offense (if felony); Class A Misdemeanor (if target is misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "Same as target offense (felony); 9 months (misdemeanor)",
+    "fine_max": "Same as target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to commit a felony",
+      "An act was performed in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy to commit a felony is punished at the same level as the target felony. Conspiracy to commit a misdemeanor is a Class A Misdemeanor."
+  }
+]

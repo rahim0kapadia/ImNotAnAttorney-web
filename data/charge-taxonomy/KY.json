@@ -1,0 +1,1611 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "KRS § 189A.010",
+    "statute_title": "Operating a Motor Vehicle Under the Influence (DUI)",
+    "offense_class": "Misdemeanor (first-third); Class D Felony (fourth+ within 10 years)",
+    "penalty_min": "48 hours (first); 7 days (second); 30 days (third); 120 days (fourth)",
+    "penalty_max": "30 days (first); 6 months (second); 12 months (third); 5 years (fourth+)",
+    "fine_max": "$500 (first); $1,000 (second); $2,000 (third); $10,000 (fourth+)",
+    "elements": [
+      "Defendant operated or was in physical control of a motor vehicle",
+      "While under the influence of alcohol, a controlled substance, or other substance that impairs driving",
+      "Or with a BAC of .08 or higher",
+      "Or while under the influence of a combination of alcohol and any substance"
+    ],
+    "mandatory_minimum": "48 hours (first); 7 days (second); 30 days (third); 120 days (fourth+)",
+    "enhancements": [
+      "Aggravating circumstances — BAC .15+, excessive speed (30+ over limit), wrong way, accident causing injury, minor in vehicle, refusal of test (doubled mandatory minimums)",
+      "Second offense within 10 years (increased penalties)",
+      "Fourth offense within 10 years (Class D Felony)",
+      "DUI causing death (separate charge under KRS § 507.050)"
+    ],
+    "notes": "Kentucky uses a 10-year lookback period. Aggravating circumstances double the mandatory minimum. Implied consent under KRS § 189A.103. License suspension 30-120 days (first), 12-18 months (second), 24-36 months (third), 60 months (fourth+). Ignition interlock required."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "KRS § 189A.010(5)(a)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "48 hours (96 hours with aggravating circumstances)",
+    "penalty_max": "30 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant operated a motor vehicle while under the influence",
+      "BAC .08 or higher or impairment shown",
+      "No prior DUI within 10 years"
+    ],
+    "mandatory_minimum": "48 hours imprisonment; alcohol/drug assessment; 90-day license suspension; fees and costs",
+    "enhancements": [
+      "Aggravating circumstances double mandatory minimum to 96 hours"
+    ],
+    "notes": "First offense is a misdemeanor. Hardship license available after 30 days. Community service may substitute for jail time. DUI school required."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "KRS § 189A.010(5)(b)-(d)",
+    "statute_title": "DUI — Second, Third, or Subsequent Offense",
+    "offense_class": "Misdemeanor (second/third within 10 years); Class D Felony (fourth+ within 10 years)",
+    "penalty_min": "7 days (second); 30 days (third); 120 days (fourth+)",
+    "penalty_max": "6 months (second); 12 months (third); 5 years (fourth+)",
+    "fine_max": "$1,000 (second); $2,000 (third); $10,000 (fourth+)",
+    "elements": [
+      "Defendant operated a motor vehicle while under the influence",
+      "Defendant has prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "7 days (second); 30 days (third); 120 days (fourth+); mandatory treatment; license revocation",
+    "enhancements": [
+      "Aggravating circumstances double mandatory minimums",
+      "Fifth+ offense"
+    ],
+    "notes": "Fourth offense within 10 years is a Class D Felony. Kentucky allows treatment-based alternatives for some offenders. Mandatory alcohol/substance abuse treatment program."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "KRS § 189A.010(1)(c)-(d)",
+    "statute_title": "DUI — Drug Impairment",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": "Same as alcohol DUI",
+    "penalty_max": "Same as alcohol DUI",
+    "fine_max": "Same as alcohol DUI",
+    "elements": [
+      "Defendant operated or was in physical control of a motor vehicle",
+      "While under the influence of any other substance or combination of substances that impairs driving ability",
+      "Or while under combined influence of alcohol and any substance"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI",
+    "enhancements": [
+      "Same aggravating circumstances as alcohol DUI"
+    ],
+    "notes": "Kentucky does not have a per se drug DUI provision — prosecution must prove actual impairment. This differs from some states that criminalize any detectable amount."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "KRS § 189.290",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Violation (first); Misdemeanor (second+)",
+    "penalty_min": null,
+    "penalty_max": "$100 fine (first violation); 90 days (misdemeanor)",
+    "fine_max": "$100 (first); $500 (second+)",
+    "elements": [
+      "Defendant operated a vehicle upon a highway",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent (Misdemeanor)"
+    ],
+    "notes": "First offense reckless driving is only a violation (non-criminal) in Kentucky — one of the least severe in the nation. Common plea-down from DUI."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "KRS § 189.580",
+    "statute_title": "Leaving the Scene of an Accident",
+    "offense_class": "Class D Felony (death or serious physical injury); Class A Misdemeanor (physical injury); Class B Misdemeanor (property only)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 12 months (Class A); 90 days (Class B)",
+    "fine_max": "$10,000 (Class D); $500 (Class A); $250 (Class B)",
+    "elements": [
+      "Defendant was the operator of a vehicle involved in an accident",
+      "Resulting in injury, death, or property damage",
+      "Defendant failed to stop, identify self, and render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death or serious physical injury (Class D Felony)",
+      "Physical injury (Class A Misdemeanor)"
+    ],
+    "notes": "Must stop immediately and provide name, address, and registration. Must render reasonable assistance to injured persons. Failure involving death is a Class D Felony."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "KRS § 507.050",
+    "statute_title": "Reckless Homicide (DUI-Related)",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, under circumstances manifesting extreme indifference to human life",
+      "Wantonly engaged in conduct which created a grave risk of death",
+      "And thereby caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI aggravator may support additional charges"
+    ],
+    "notes": "Kentucky charges DUI-related vehicular deaths as reckless homicide. Wanton murder (KRS § 507.020) may apply for more egregious cases. Manslaughter second degree (KRS § 507.040) is another option."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "KRS § 507.040",
+    "statute_title": "Manslaughter in the Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant wantonly caused the death of another person",
+      "Including but not limited to operation of a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second-degree manslaughter covers wanton killings without the extreme indifference required for murder. Often charged in DUI death cases as an alternative to reckless homicide."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "KRS § 186.620",
+    "statute_title": "Operating on a Suspended or Revoked License",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second); Class D Felony (third+ or DUI-related suspension)",
+    "penalty_min": "2 days (DUI-related, first)",
+    "penalty_max": "90 days (Class B); 12 months (Class A); 5 years (Class D)",
+    "fine_max": "$250 (Class B); $500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant operated a motor vehicle on a public highway",
+      "While driving privileges were suspended or revoked",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": "2 days (if DUI-related suspension)",
+    "enhancements": [
+      "DUI-related suspension (mandatory jail)",
+      "Third or subsequent (Class D Felony)"
+    ],
+    "notes": "Driving on a DUI-suspended license carries mandatory jail time. Third offense is a felony. Notice of suspension creates presumption of knowledge."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "KRS § 520.095",
+    "statute_title": "Fleeing or Evading Police",
+    "offense_class": "Class D Felony (motor vehicle); Class A Misdemeanor (on foot)",
+    "penalty_min": "1 year (Class D felony)",
+    "penalty_max": "5 years (Class D); 12 months (Class A)",
+    "fine_max": "$10,000 (Class D); $500 (Class A)",
+    "elements": [
+      "Defendant, while operating a motor vehicle, fled or attempted to evade law enforcement",
+      "After being given a visual or audible signal to stop by a person recognized as a police officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Wanton endangerment during flight (additional charges)",
+      "Causing serious physical injury (Class C Felony under § 520.095(2))",
+      "Causing death (Class B Felony under § 520.095(3))"
+    ],
+    "notes": "Motor vehicle flight is automatically a Class D Felony. Serious injury during flight elevates to Class C. Death during flight is Class B. On-foot evasion is Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "KRS § 218A.1415",
+    "statute_title": "Possession of a Controlled Substance — First Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years (first); 10 years (second+)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly and unlawfully possessed a controlled substance",
+      "Classified in Schedule I or II (except marijuana)",
+      "Or a controlled substance analogue"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class D Felony, 1-5 years; Class C Felony, 5-10 years after second felony)",
+      "Proximity to school (additional penalty)"
+    ],
+    "notes": "Kentucky splits possession into first degree (Schedule I/II) and second degree (Schedule IV/V) and third degree (drug paraphernalia). First degree is a Class D Felony. Presumptive probation for first offense under HB 463."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "KRS § 218A.1422",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Class B Misdemeanor (under 8 oz); Class A Misdemeanor (8 oz or more)",
+    "penalty_min": null,
+    "penalty_max": "45 days (Class B); 12 months (Class A)",
+    "fine_max": "$250 (Class B); $500 (Class A)",
+    "elements": [
+      "Defendant knowingly and unlawfully possessed marijuana"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "8 ounces or more (Class A Misdemeanor)",
+      "5 or more plants (cultivation — Class D Felony under § 218A.1421)"
+    ],
+    "notes": "Kentucky has not legalized recreational marijuana. Simple possession under 8 oz is a Class B Misdemeanor. Possession of 8 oz or more is Class A. Cultivation of 5+ plants is a felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "KRS § 218A.1415",
+    "statute_title": "Possession of Cocaine — First Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly and unlawfully possessed cocaine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent drug felony (enhanced penalties)",
+      "Proximity to school"
+    ],
+    "notes": "Cocaine is Schedule II. Possession is a Class D Felony regardless of amount. HB 463 presumptive probation may apply for first offense."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "KRS § 218A.1415",
+    "statute_title": "Possession of Methamphetamine — First Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly and unlawfully possessed methamphetamine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "2 grams or more (Trafficking charge possible under § 218A.1412)",
+      "Prior drug felony"
+    ],
+    "notes": "Meth possession is a Class D Felony. Kentucky has significant meth enforcement. Possession of 2 grams or more creates presumption of trafficking. HB 463 presumptive probation for first offense."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "KRS § 218A.1412",
+    "statute_title": "Trafficking in a Controlled Substance — First Degree",
+    "offense_class": "Class C Felony (first); Class B Felony (second+)",
+    "penalty_min": "5 years (Class C); 10 years (Class B)",
+    "penalty_max": "10 years (Class C); 20 years (Class B)",
+    "fine_max": "$10,000 (Class C); $20,000 (Class B)",
+    "elements": [
+      "Defendant knowingly and unlawfully trafficked in a controlled substance classified in Schedule I or II",
+      "Trafficking includes manufacturing, distributing, dispensing, selling, or possessing with intent to distribute"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class B Felony)",
+      "Aggravating factors — near school, to minor, large quantity",
+      "Causing death by distribution (enhanced)"
+    ],
+    "notes": "First-degree trafficking covers Schedule I and II substances. Weight thresholds vary by substance — for cocaine, 4 grams or more; for meth, 2 grams or more. Not eligible for probation without court finding of extraordinary circumstances."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "KRS § 218A.1413",
+    "statute_title": "Trafficking in a Controlled Substance — Second Degree",
+    "offense_class": "Class D Felony (first); Class C Felony (second+)",
+    "penalty_min": "1 year (Class D); 5 years (Class C)",
+    "penalty_max": "5 years (Class D); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly and unlawfully trafficked in a controlled substance classified in Schedule III, IV, or V"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class C Felony)"
+    ],
+    "notes": "Second-degree trafficking covers lower schedule substances. Less severe than first-degree trafficking."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "KRS § 218A.1432",
+    "statute_title": "Manufacturing Methamphetamine",
+    "offense_class": "Class B Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant knowingly manufactured or attempted to manufacture methamphetamine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing serious physical injury (Class A Felony)",
+      "Causing death (Class A Felony, 20-50 years or life)",
+      "Manufacture in presence of a minor (enhanced)"
+    ],
+    "notes": "Kentucky's separate meth manufacturing statute carries significantly harsher penalties than general trafficking. Class B Felony — 10-20 years. Environmental cleanup costs may be assessed."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "KRS § 218A.500",
+    "statute_title": "Use or Possession of Drug Paraphernalia",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant used or possessed with intent to use drug paraphernalia",
+      "To introduce into the human body a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery to a minor (Class D Felony under § 218A.500(3))"
+    ],
+    "notes": "Use or possession is a Class A Misdemeanor. Sale of paraphernalia is a Class A Misdemeanor. Delivery to a minor is a Class D Felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "KRS § 218A.1412",
+    "statute_title": "Possession with Intent to Distribute — First Degree",
+    "offense_class": "Class C Felony (first); Class B Felony (second+)",
+    "penalty_min": "5 years (Class C)",
+    "penalty_max": "10 years (Class C); 20 years (Class B)",
+    "fine_max": "$10,000 (Class C); $20,000 (Class B)",
+    "elements": [
+      "Defendant possessed a controlled substance (Schedule I or II)",
+      "With intent to manufacture, sell, or distribute"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class B Felony)",
+      "Near school property",
+      "Distribution to minor"
+    ],
+    "notes": "Intent is inferred from quantity, packaging, scales, and other circumstantial evidence. Charged under the trafficking statute."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "KRS § 507.020",
+    "statute_title": "Murder",
+    "offense_class": "Capital Offense or Class A Felony",
+    "penalty_min": "20 years (Class A); death or life without parole (capital)",
+    "penalty_max": "50 years or life without parole (Class A); death (capital)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, with intent to cause the death of another person, caused the death of that person or a third person",
+      "Including situations where the person wantonly engages in conduct creating a grave risk of death under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": "20 years before parole eligibility (without aggravating factors); death or life without parole (with aggravating factors)",
+    "enhancements": [
+      "Aggravating factors for capital sentencing (KRS § 532.025)"
+    ],
+    "notes": "Kentucky has a single murder statute covering both intentional killing and wanton murder (extreme indifference). Kentucky retains the death penalty. Murder is not split into 'degrees' — instead, severity ranges from Class A to capital based on aggravating factors."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "KRS § 507.020(1)(b)",
+    "statute_title": "Wanton Murder",
+    "offense_class": "Class A Felony",
+    "penalty_min": "20 years",
+    "penalty_max": "50 years or life without parole",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant wantonly engaged in conduct which created a grave risk of death to another person",
+      "Under circumstances manifesting extreme indifference to human life",
+      "And thereby caused the death of another person"
+    ],
+    "mandatory_minimum": "20 years before parole eligibility",
+    "enhancements": [],
+    "notes": "Wanton murder is the functional equivalent of second-degree murder in Kentucky. Same statute as intentional murder but under the 'wanton/extreme indifference' prong. Class A Felony with 20-50 years or LWOP."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "KRS § 507.030",
+    "statute_title": "Manslaughter in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, with intent to cause the death of another person, caused the death of that person",
+      "Under the influence of extreme emotional disturbance for which there was a reasonable explanation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kentucky uses 'extreme emotional disturbance' (EED) rather than 'heat of passion.' EED is a partial defense that reduces murder to first-degree manslaughter. Defendant bears the burden of production on EED."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "KRS § 507.040",
+    "statute_title": "Manslaughter in the Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant wantonly caused the death of another person",
+      "Including but not limited to situations involving reckless operation of a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second-degree manslaughter is the wanton (not intentional) killing of another person — equivalent to involuntary manslaughter in other states. Common in vehicular death cases."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "KRS § 508.010",
+    "statute_title": "Assault in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally caused serious physical injury to another person by means of a deadly weapon or dangerous instrument",
+      "Or wantonly engaged in conduct which created a grave risk of death and caused serious physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon (element of the offense)"
+    ],
+    "notes": "First-degree assault is the most serious non-homicide violent offense. Class B Felony — 10-20 years. Requires serious physical injury (risk of death, extreme physical pain, protracted impairment)."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "KRS § 508.030",
+    "statute_title": "Assault in the Fourth Degree",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant intentionally or wantonly caused physical injury to another person",
+      "Or recklessly caused physical injury by means of a deadly weapon or dangerous instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against certain protected persons — school employees, social workers, corrections officers (Class D Felony)"
+    ],
+    "notes": "Fourth-degree assault is Kentucky's simple assault/battery. 'Physical injury' means substantial physical pain or visible physical injury. Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "KRS § 508.025",
+    "statute_title": "Assault in the Third Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant recklessly caused serious physical injury to another person by means of a deadly weapon or dangerous instrument",
+      "Or intentionally caused or attempted to cause physical injury to certain protected persons"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against police, firefighter, EMT, or corrections officer (Class D Felony)"
+    ],
+    "notes": "Third-degree assault is a Class D Felony. Bridges the gap between simple assault (misdemeanor) and first-degree assault (Class B Felony). Often charged when serious injury results from reckless conduct."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "KRS § 515.030",
+    "statute_title": "Robbery in the Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant took property from another person or in the presence of another person",
+      "By the use or threatened use of physical force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of deadly weapon or serious physical injury (First Degree — Class B Felony)"
+    ],
+    "notes": "Second-degree robbery is the base robbery charge — force or threat of force without a weapon. Class C Felony, 5-10 years."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "KRS § 515.020",
+    "statute_title": "Robbery in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant committed robbery",
+      "While armed with a deadly weapon or dangerous instrument",
+      "Or caused serious physical injury to a non-participant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violent offender provision (KRS § 439.3401) — must serve 85% of sentence"
+    ],
+    "notes": "First-degree robbery is a Class B violent felony. Subject to violent offender provision — 85% of sentence must be served before parole eligibility."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "KRS § 509.040",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class B Felony; Class A Felony (serious physical injury or ransom)",
+    "penalty_min": "10 years (Class B); 20 years (Class A)",
+    "penalty_max": "20 years (Class B); 50 years or LWOP (Class A)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully restrained another person",
+      "And moved or confined the person with intent to hold for ransom, facilitate a felony, inflict injury, terrorize, or interfere with government function"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (Class A Felony)",
+      "Ransom demand (Class A Felony)"
+    ],
+    "notes": "Kidnapping requires unlawful restraint plus movement or confinement with specified intent. Unlawful imprisonment (§ 509.020) is a lesser included offense requiring only restraint."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "KRS § 513.020",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Class A Felony (first degree — building with persons); Class B Felony (second — occupied building); Class C Felony (third — building)",
+    "penalty_min": "20 years (Class A); 10 years (Class B); 5 years (Class C)",
+    "penalty_max": "50 years or LWOP (Class A); 20 years (Class B); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant started a fire or caused an explosion with intent to destroy or damage a building",
+      "First degree: building in which a person was present",
+      "Second degree: building that is the dwelling of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person present in building (First Degree — Class A Felony)",
+      "Dwelling (Second Degree — Class B Felony)"
+    ],
+    "notes": "First-degree arson with persons present is Class A Felony — among the most serious charges in Kentucky. Three degrees based on building type and occupancy."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "KRS § 506.010; § 507.020",
+    "statute_title": "Criminal Attempt — Murder",
+    "offense_class": "Class B Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, with intent to commit murder",
+      "Engaged in conduct which constituted a substantial step toward the commission of murder"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violent offender provision — 85% of sentence before parole"
+    ],
+    "notes": "Criminal attempt of a capital offense is a Class B Felony under KRS § 506.010. Subject to violent offender statute — 85% must be served."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "KRS § 508.020",
+    "statute_title": "Assault in the Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally caused physical injury to another person by means of a deadly weapon or dangerous instrument",
+      "Or wantonly caused serious physical injury by means of a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury — may elevate to first-degree assault (Class B Felony)"
+    ],
+    "notes": "Second-degree assault fills the gap between first-degree (serious injury with weapon) and fourth-degree (simple assault). Class C Felony — 5-10 years."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "KRS § 514.030",
+    "statute_title": "Theft by Unlawful Taking",
+    "offense_class": "Class A Misdemeanor (under $500); Class D Felony ($500-$9,999); Class C Felony ($10,000+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D); 10 years (Class C)",
+    "fine_max": "$500 (Class A); $10,000 (Class D/C)",
+    "elements": [
+      "Defendant unlawfully took or exercised control over movable property of another",
+      "With intent to deprive the owner thereof"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $500+ (Class D Felony)",
+      "Value $10,000+ (Class C Felony)",
+      "Theft of a firearm (Class D Felony regardless of value)"
+    ],
+    "notes": "Kentucky's felony theft threshold is $500 — among the lowest in the nation. Theft of a firearm is automatically a Class D Felony."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "KRS § 514.030(2)",
+    "statute_title": "Theft by Unlawful Taking — $500 or More",
+    "offense_class": "Class D Felony ($500-$9,999); Class C Felony ($10,000+)",
+    "penalty_min": "1 year (Class D); 5 years (Class C)",
+    "penalty_max": "5 years (Class D); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully took property of another",
+      "With intent to deprive",
+      "Value $500 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $10,000+ (Class C Felony)"
+    ],
+    "notes": "Kentucky does not use 'grand theft' terminology. Felony theft based on $500 threshold — very low compared to national averages."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "KRS § 514.030(1)",
+    "statute_title": "Theft by Unlawful Taking — Under $500",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant unlawfully took property of another",
+      "With intent to deprive",
+      "Value under $500"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft convictions may enhance"
+    ],
+    "notes": "Misdemeanor theft for property valued under $500. Diversion programs available in some jurisdictions for first offenders."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "KRS § 514.030",
+    "statute_title": "Theft by Unlawful Taking — Retail Theft (Shoplifting)",
+    "offense_class": "Class A Misdemeanor (under $500); Class D Felony ($500+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D)",
+    "fine_max": "$500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant unlawfully took merchandise from a retail establishment",
+      "With intent to deprive the retailer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $500+ (Class D Felony)",
+      "Organized retail theft"
+    ],
+    "notes": "Shoplifting is charged under the general theft statute. $500 felony threshold. Retailers may pursue civil recovery."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "KRS § 511.030",
+    "statute_title": "Burglary in the Second Degree",
+    "offense_class": "Class C Felony (second degree — building); Class B Felony (first degree — dwelling with person present)",
+    "penalty_min": "5 years (Class C); 10 years (Class B)",
+    "penalty_max": "10 years (Class C); 20 years (Class B)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully in a building",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Dwelling with person present (First Degree — Class B Felony)",
+      "Armed with a deadly weapon or explosive (First Degree)",
+      "Causing physical injury (First Degree)"
+    ],
+    "notes": "Second-degree burglary is entry into any building. First-degree is dwelling while person present, or entry with weapon/injury. Third degree (§ 511.040) covers non-building structures."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "KRS § 511.020",
+    "statute_title": "Burglary in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully in a dwelling",
+      "With intent to commit a crime",
+      "While another person was present",
+      "Or while armed with a deadly weapon or causing physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violent offender provision — 85% of sentence before parole"
+    ],
+    "notes": "First-degree burglary is a Class B violent felony. Subject to violent offender statute — 85% must be served. Requires either a person present, a weapon, or injury."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "KRS § 514.030",
+    "statute_title": "Theft of a Motor Vehicle",
+    "offense_class": "Class D Felony (most vehicles exceed $500 threshold); Class C Felony ($10,000+)",
+    "penalty_min": "1 year (Class D)",
+    "penalty_max": "5 years (Class D); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully took or exercised control over a motor vehicle of another",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Vehicle value over $10,000 (Class C Felony)"
+    ],
+    "notes": "Motor vehicle theft follows the general theft statute. Most vehicles exceed the $500 felony threshold. Unauthorized use of a vehicle (§ 514.100) is a lesser charge."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "KRS § 514.110",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Class A Misdemeanor (under $500); Class D Felony ($500-$9,999); Class C Felony ($10,000+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D); 10 years (Class C)",
+    "fine_max": "$500 (Class A); $10,000 (Class D/C)",
+    "elements": [
+      "Defendant received, retained, or disposed of movable property of another",
+      "Knowing or believing it was stolen",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value tiers as theft"
+    ],
+    "notes": "Separate statute from theft but same value thresholds apply. 'Knowing or believing' standard — actual knowledge not strictly required."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "KRS § 512.020",
+    "statute_title": "Criminal Mischief in the First Degree",
+    "offense_class": "Class D Felony ($1,000+); Class A Misdemeanor ($500-$999); Class B Misdemeanor (under $500)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 12 months (Class A); 90 days (Class B)",
+    "fine_max": "$10,000 (Class D); $500 (Class A); $250 (Class B)",
+    "elements": [
+      "Defendant intentionally or wantonly destroyed or damaged the property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage $1,000+ (Class D Felony)"
+    ],
+    "notes": "Three degrees of criminal mischief in Kentucky based on damage amount and intent. First degree ($1,000+) is a Class D Felony. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "KRS § 511.070",
+    "statute_title": "Criminal Trespass in the Third Degree",
+    "offense_class": "Violation; Class A Misdemeanor (first degree — dwelling)",
+    "penalty_min": null,
+    "penalty_max": "$250 fine (violation); 12 months (Class A)",
+    "fine_max": "$250 (violation); $500 (Class A)",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully in or upon the premises of another",
+      "After notice from owner or agent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Building (Second Degree — Class B Misdemeanor)",
+      "Dwelling (First Degree — Class A Misdemeanor)"
+    ],
+    "notes": "Three degrees: third degree (premises), second degree (building), first degree (dwelling). Notice can be posted signs, fencing, or verbal notice."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "KRS § 512.020",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Same as vandalism entry",
+    "penalty_min": null,
+    "penalty_max": "Same as vandalism entry",
+    "fine_max": "Same as vandalism entry",
+    "elements": [
+      "Defendant intentionally or wantonly destroyed or damaged the property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same as vandalism entry"
+    ],
+    "notes": "Criminal mischief is Kentucky's statutory term for vandalism/property destruction. Three degrees based on damage amount."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "KRS § 508.032",
+    "statute_title": "Assault in the Fourth Degree — Domestic Violence",
+    "offense_class": "Class A Misdemeanor; Class D Felony (third+ within 5 years or strangulation)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D)",
+    "fine_max": "$500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant intentionally or wantonly caused physical injury to a family member or member of an unmarried couple",
+      "As defined in KRS § 403.720"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent within 5 years (Class D Felony under § 508.032)",
+      "Strangulation (Class D Felony under § 508.032(2))"
+    ],
+    "notes": "Kentucky has a specific domestic violence assault statute. Strangulation was elevated to a felony in recent legislation. Mandatory arrest. Emergency protective order automatically issued."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "KRS § 508.032",
+    "statute_title": "Assault Fourth Degree — Domestic Violence",
+    "offense_class": "Class A Misdemeanor; Class D Felony (enhanced)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D)",
+    "fine_max": "$500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant intentionally caused physical injury to a family member or member of an unmarried couple",
+      "Or made physical contact of an insulting or provoking nature"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third offense within 5 years (Class D Felony)",
+      "Strangulation (Class D Felony)"
+    ],
+    "notes": "Same statute as domestic violence entry. Federal firearms prohibition upon conviction (18 U.S.C. § 922(g)(9)). 'Family member or member of an unmarried couple' includes co-parents and persons in dating relationships."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "KRS § 530.060",
+    "statute_title": "Endangering the Welfare of a Minor",
+    "offense_class": "Class A Misdemeanor; Class D Felony (if involving custody violation or serious risk)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D)",
+    "fine_max": "$500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant knowingly failed to provide adequate food, clothing, shelter, education, or medical care to a minor",
+      "Or placed a minor in a situation which endangered the minor's life or health"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in serious physical injury (additional assault charges)",
+      "Drug exposure"
+    ],
+    "notes": "Covers neglect and reckless endangerment of children. Cabinet for Health and Family Services (CHFS) investigates. Criminal charges and dependency proceedings may run in parallel."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "KRS § 508.100",
+    "statute_title": "Criminal Abuse in the First Degree",
+    "offense_class": "Class C Felony (first degree — serious physical injury); Class D Felony (second degree — physical injury)",
+    "penalty_min": "5 years (Class C); 1 year (Class D)",
+    "penalty_max": "10 years (Class C); 5 years (Class D)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally abused a person 12 or under, or a person who is physically helpless or mentally helpless",
+      "And the abuse resulted in serious physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (First Degree — Class C Felony)"
+    ],
+    "notes": "Kentucky's criminal abuse statute covers abuse of children under 12 and vulnerable adults. First degree requires serious physical injury. Second degree (§ 508.110) covers abuse causing physical injury or risk."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "KRS § 403.763",
+    "statute_title": "Violation of a Domestic Violence Order (DVO)",
+    "offense_class": "Class A Misdemeanor; Class D Felony (with physical injury, third+ offense, or possession of weapon during violation)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D)",
+    "fine_max": "$500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "A domestic violence order (DVO) or emergency protective order (EPO) was issued",
+      "Defendant intentionally violated the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Physical injury to protected person (Class D Felony)",
+      "Third or subsequent violation (Class D Felony)",
+      "Possession of a weapon during violation (Class D Felony)"
+    ],
+    "notes": "Kentucky takes DVO violations seriously. Felony charges apply for injury, weapons, or repeat violations. Mandatory arrest when officer has probable cause."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "KRS § 508.140",
+    "statute_title": "Stalking in the First Degree",
+    "offense_class": "Class D Felony (first degree — explicit/implicit threat); Class A Misdemeanor (second degree — pattern without threat)",
+    "penalty_min": "1 year (Class D)",
+    "penalty_max": "5 years (Class D); 12 months (Class A)",
+    "fine_max": "$10,000 (Class D); $500 (Class A)",
+    "elements": [
+      "Defendant intentionally stalked another person",
+      "Made an explicit or implicit threat with intent to place person in reasonable fear of sexual contact, physical injury, or death",
+      "Or engaged in a course of conduct directed at a specific person that would cause a reasonable person to feel terrorized"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat of violence (First Degree — Class D Felony)",
+      "Protective order in effect (enhanced)"
+    ],
+    "notes": "First-degree stalking requires an explicit or implicit threat. Second-degree covers harassment patterns without direct threats. Cyberstalking included."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "KRS § 525.070",
+    "statute_title": "Harassment",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (physical contact or against specific officials)",
+    "penalty_min": null,
+    "penalty_max": "90 days (Class B); 12 months (Class A)",
+    "fine_max": "$250 (Class B); $500 (Class A)",
+    "elements": [
+      "Defendant, with intent to harass, annoy, or alarm another person",
+      "Subjected that person to physical contact, or threatened to do so",
+      "Or made repeated unwanted communications"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Physical contact (Class A Misdemeanor)"
+    ],
+    "notes": "Harassment covers unwanted communications, following, and minor physical contact. More serious conduct may be charged as stalking or assault."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "KRS § 508.100",
+    "statute_title": "Criminal Abuse — Physically Helpless or Mentally Helpless Person",
+    "offense_class": "Class C Felony (first degree); Class D Felony (second degree)",
+    "penalty_min": "5 years (Class C); 1 year (Class D)",
+    "penalty_max": "10 years (Class C); 5 years (Class D)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally abused a person who is physically helpless or mentally helpless",
+      "Causing serious physical injury (first degree) or physical injury or risk thereof (second degree)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (Class C Felony)"
+    ],
+    "notes": "Kentucky charges elder abuse under the criminal abuse statute. Financial exploitation is covered under KRS § 209.990. Adult Protective Services investigates."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "KRS § 527.020",
+    "statute_title": "Carrying a Concealed Deadly Weapon",
+    "offense_class": "Class A Misdemeanor (first); Class D Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D)",
+    "fine_max": "$500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant carried a concealed deadly weapon on or about the person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class D Felony)"
+    ],
+    "notes": "Kentucky enacted permitless concealed carry (constitutional carry) in 2019 for persons 21 and older. This statute now primarily applies to prohibited persons and persons under 21."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "KRS § 527.040",
+    "statute_title": "Possession of a Firearm by a Convicted Felon",
+    "offense_class": "Class D Felony; Class C Felony (violent felony prior)",
+    "penalty_min": "1 year (Class D); 5 years (Class C)",
+    "penalty_max": "5 years (Class D); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed, manufactured, or transported a firearm",
+      "Defendant has been convicted of a felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior violent felony (Class C Felony)"
+    ],
+    "notes": "Applies to all convicted felons. Prior violent felony elevates to Class C Felony. Federal charges (18 U.S.C. § 922(g)(1)) may also apply."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "KRS § 527.020",
+    "statute_title": "Carrying Concealed Weapon — Prohibited Person",
+    "offense_class": "Class A Misdemeanor; Class D Felony (prohibited person or second+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D)",
+    "fine_max": "$500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant carried a concealed deadly weapon",
+      "Defendant is a prohibited person (under 21, felon, or subject of DVO)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "With 2019 constitutional carry, this primarily applies to prohibited persons. Persons subject to active domestic violence orders are prohibited from carrying."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "KRS § 527.070",
+    "statute_title": "Unlawful Discharge of a Weapon",
+    "offense_class": "Class D Felony (at occupied dwelling/vehicle); Class A Misdemeanor (other)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 12 months (Class A)",
+    "fine_max": "$10,000 (Class D); $500 (Class A)",
+    "elements": [
+      "Defendant discharged a firearm",
+      "At or into a dwelling, building, or occupied vehicle",
+      "Under circumstances which create a risk of physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "At occupied dwelling or vehicle (Class D Felony)"
+    ],
+    "notes": "Discharging at an occupied structure is a Class D Felony. General reckless discharge may also be charged as wanton endangerment under § 508.060."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "KRS § 514.160",
+    "statute_title": "Theft of Identity",
+    "offense_class": "Class D Felony; Class C Felony ($500+ loss)",
+    "penalty_min": "1 year (Class D); 5 years (Class C)",
+    "penalty_max": "5 years (Class D); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed or used the personal identifying information of another person",
+      "Without authorization",
+      "With intent to represent that the defendant is the other person for the purpose of committing fraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Loss $500+ (Class C Felony)",
+      "Victim over 60 or disabled (Class C Felony)"
+    ],
+    "notes": "Kentucky identity theft statute covers SSN, driver's license numbers, bank account numbers, and other personal identifiers. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "KRS § 514.070",
+    "statute_title": "Theft by Failure to Make Required Disposition of Property (Embezzlement)",
+    "offense_class": "Same as theft by value — Class A Misdemeanor to Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant obtained property of another upon agreement or known legal obligation to make specified payment or disposition",
+      "Defendant intentionally dealt with the property in a manner inconsistent with the agreement or obligation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value tiers as theft"
+    ],
+    "notes": "Kentucky has a separate embezzlement statute within the consolidated theft chapter. Same penalty structure as general theft based on value."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "KRS § 516.020",
+    "statute_title": "Forgery in the First Degree",
+    "offense_class": "Class C Felony (first degree — money/securities/government); Class D Felony (second degree — deeds/wills/contracts)",
+    "penalty_min": "5 years (Class C); 1 year (Class D)",
+    "penalty_max": "10 years (Class C); 5 years (Class D)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, with intent to defraud, deceive, or injure another",
+      "Falsely made, completed, or altered a written instrument",
+      "First degree: money, stamps, securities, or government documents"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Government documents or money (First Degree — Class C Felony)"
+    ],
+    "notes": "Three degrees of forgery in Kentucky. First degree covers money and government instruments (Class C). Second degree covers deeds, wills, and commercial instruments (Class D). Third degree covers other documents (Class A Misdemeanor)."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "KRS § 516.020",
+    "statute_title": "Counterfeiting — Forgery of Currency",
+    "offense_class": "Class C Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant falsely made, completed, or altered currency or government instruments",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Counterfeiting is charged as first-degree forgery in Kentucky. Primarily a federal offense but state charges may apply."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "KRS § 514.040",
+    "statute_title": "Theft by Deception — Cold Checks",
+    "offense_class": "Same as theft by value — Class A Misdemeanor to Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant issued a check knowing there were insufficient funds",
+      "With intent to defraud",
+      "In exchange for property, services, or anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value tiers as theft"
+    ],
+    "notes": "Cold check offenses follow the theft by deception statute. Separate cold check complaint procedures exist under KRS § 514.040. 10-day notice before prosecution."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "KRS § 304.47-020",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly presented or caused to be presented a false or fraudulent claim for insurance benefits",
+      "Or knowingly prepared false documentation to support a claim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kentucky Department of Insurance investigates. Restitution and civil penalties in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "KRS § 434.550",
+    "statute_title": "Fraudulent Use of a Credit Card",
+    "offense_class": "Class A Misdemeanor (under $500); Class D Felony ($500+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D)",
+    "fine_max": "$500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant used a credit card knowing it was stolen, forged, revoked, or expired",
+      "Or used another's card without authorization",
+      "To obtain money, goods, or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $500+ (Class D Felony)"
+    ],
+    "notes": "Kentucky has specific credit card fraud statutes within the commercial fraud chapter. May also be charged as identity theft or theft by deception."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "KRS § 218A.1443",
+    "statute_title": "Money Laundering — Use of Proceeds from Controlled Substance Trafficking",
+    "offense_class": "Class C Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000 or twice the value of the property involved, whichever is greater",
+    "elements": [
+      "Defendant knowingly conducted a financial transaction involving proceeds derived from trafficking in controlled substances",
+      "With intent to promote trafficking or to conceal the nature/source of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kentucky's money laundering statute is located in the controlled substances chapter. Covers proceeds from drug trafficking. Forfeiture provisions under KRS § 218A.410 also apply."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "KRS § 514.040",
+    "statute_title": "Theft by Deception",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant obtained property of another by creating or reinforcing a false impression",
+      "As to value, intention, or other material fact",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value tiers as theft"
+    ],
+    "notes": "Theft by deception is Kentucky's general fraud statute within the consolidated theft chapter. Covers false representations, bait-and-switch, and con schemes."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "KRS § 510.130",
+    "statute_title": "Sexual Abuse in the First Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant subjected another person to sexual contact by forcible compulsion",
+      "Or the person was incapable of consent due to physical helplessness or mental incapacity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 12 (enhanced — typically charged as first-degree sexual abuse of a minor)"
+    ],
+    "notes": "Sexual abuse in the first degree is Kentucky's term for sexual assault involving forcible compulsion or incapacity. Class D Felony. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "KRS § 510.040",
+    "statute_title": "Rape in the First Degree",
+    "offense_class": "Class B Felony; Class A Felony (serious physical injury or victim under 12)",
+    "penalty_min": "10 years (Class B); 20 years (Class A)",
+    "penalty_max": "20 years (Class B); 50 years or LWOP (Class A)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant engaged in sexual intercourse with another person by forcible compulsion",
+      "Or the person was incapable of consent due to physical helplessness or being less than 12 years old"
+    ],
+    "mandatory_minimum": "Violent offender statute — 85% of sentence before parole",
+    "enhancements": [
+      "Serious physical injury (Class A Felony)",
+      "Victim under 12 (Class A Felony)"
+    ],
+    "notes": "Rape first degree is a Class B violent felony — 85% must be served. Rape involving serious injury or victim under 12 is Class A Felony. Sex offender registration is lifetime."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "KRS § 510.148",
+    "statute_title": "Indecent Exposure in the First Degree",
+    "offense_class": "Class B Misdemeanor (second degree); Class A Misdemeanor (first degree — to minor); Class D Felony (second+ or registered sex offender)",
+    "penalty_min": null,
+    "penalty_max": "90 days (Class B); 12 months (Class A); 5 years (Class D)",
+    "fine_max": "$250 (Class B); $500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant intentionally exposed the person's genitals under circumstances in which the conduct is likely to be seen by others",
+      "First degree: directed toward a minor under 18 or by a registered sex offender"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure to minor (First Degree — Class A Misdemeanor or Class D Felony)",
+      "Registered sex offender (Class D Felony)"
+    ],
+    "notes": "Two degrees of indecent exposure. Second degree is general exposure. First degree involves minors or sex offender status. Second+ offense of first degree is a Class D Felony."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "KRS § 529.020",
+    "statute_title": "Prostitution — Soliciting",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second+); Class D Felony (patronizing minor)",
+    "penalty_min": null,
+    "penalty_max": "90 days (Class B); 12 months (Class A); 5 years (Class D)",
+    "fine_max": "$250 (Class B); $500 (Class A); $10,000 (Class D)",
+    "elements": [
+      "Defendant engaged in or offered to engage in sexual conduct for a fee",
+      "Or agreed to pay a fee for sexual conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent (Class A Misdemeanor)",
+      "Patronizing a minor (Class D Felony under § 529.040)"
+    ],
+    "notes": "Base prostitution is a Class B Misdemeanor. Promoting prostitution (§ 529.040) is a Class D Felony. Human trafficking charges (§ 529.100) apply when force, fraud, or coercion is involved."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "KRS § 531.335",
+    "statute_title": "Possession or Viewing of Matter Portraying a Sexual Performance by a Minor",
+    "offense_class": "Class D Felony (first); Class C Felony (second+)",
+    "penalty_min": "1 year (Class D); 5 years (Class C)",
+    "penalty_max": "5 years (Class D); 10 years (Class C)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed or viewed material portraying a sexual performance by a minor"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution (Class C Felony under § 531.340)",
+      "Production (Class B Felony under § 531.310)",
+      "Second or subsequent possession (Class C Felony)"
+    ],
+    "notes": "Each image/video is a separate count. Production is Class B Felony. Distribution is Class C Felony. Sex offender registration required for all offenses."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "KRS § 17.510(11)",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant is required to register under the Kentucky Sex Offender Registry",
+      "Defendant knowingly failed to register, verify, or update registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Must register within 5 business days of establishing residence. Must verify every 90 days (sexually violent predators) or annually (others). Each day of failure may constitute a separate offense."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "KRS § 510.060",
+    "statute_title": "Rape in the Third Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, being 21 or older, engaged in sexual intercourse with a person under 16",
+      "Or being any age, engaged in sexual intercourse with a person under 14"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 12 (First Degree Rape — Class B or A Felony)"
+    ],
+    "notes": "Kentucky's age of consent is 16. Rape third degree covers consensual intercourse where the victim is under age. Penalty increases significantly for victims under 12."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "KRS § 525.060",
+    "statute_title": "Disorderly Conduct in the Second Degree",
+    "offense_class": "Violation (second degree); Class B Misdemeanor (first degree)",
+    "penalty_min": null,
+    "penalty_max": "$250 fine (violation); 90 days (Class B)",
+    "fine_max": "$250 (violation); $250 (Class B)",
+    "elements": [
+      "Defendant, with intent to cause public inconvenience, annoyance, or alarm",
+      "Or recklessly creating a risk thereof",
+      "Engaged in fighting, made unreasonable noise, or created a hazardous condition"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "First degree (Class B Misdemeanor) — in a public place where 10 or more people are gathered"
+    ],
+    "notes": "Second-degree disorderly conduct is only a violation (non-criminal). First degree requires a gathering of 10+ people. Common charge for bar fights and public disturbances."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "KRS § 520.090",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant intentionally prevented or attempted to prevent a peace officer",
+      "Known or reasonably known to be a peace officer",
+      "From effecting an arrest by using or threatening physical force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing physical injury to officer (additional assault charges)"
+    ],
+    "notes": "Resisting arrest is a Class A Misdemeanor in Kentucky. Does not require the underlying arrest to be lawful — lawfulness of arrest is not a defense. Passive resistance may not be sufficient."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "KRS § 524.010",
+    "statute_title": "Obstructing Governmental Operations",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant, by using or threatening physical force",
+      "Intentionally obstructed, impaired, or perverted the administration of law or government function"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "General obstruction statute. Covers evidence tampering and witness intimidation under separate statutes (KRS §§ 524.040, 524.050). Tampering with physical evidence is a Class D Felony."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "KRS § 432.264",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Court-imposed sanctions",
+    "penalty_min": null,
+    "penalty_max": "6 months for criminal contempt; indefinite for civil contempt until compliance",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant willfully disobeyed or violated a court order",
+      "Or disrupted court proceedings",
+      "Or refused to comply with a lawful court directive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kentucky distinguishes criminal contempt (punitive) from civil contempt (coercive). Direct contempt may be punished summarily. Indirect contempt requires notice and hearing."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "KRS § 222.202",
+    "statute_title": "Alcohol Intoxication",
+    "offense_class": "Class B Misdemeanor (first/second); Class A Misdemeanor (third+ within 12 months)",
+    "penalty_min": null,
+    "penalty_max": "90 days (Class B); 12 months (Class A)",
+    "fine_max": "$250 (Class B); $500 (Class A)",
+    "elements": [
+      "Defendant appeared in a public place under the influence of alcohol",
+      "Or any other substance to the degree that the person was a danger to self or others",
+      "Or was manifestly under the influence to the degree that the person unreasonably annoyed others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent within 12 months (Class A Misdemeanor)"
+    ],
+    "notes": "Kentucky calls this 'alcohol intoxication' rather than public intoxication. Must be a danger to self/others or manifestly annoying. Officers may transport to a treatment facility instead of jail."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "KRS § 520.070",
+    "statute_title": "Bail Jumping in the First Degree",
+    "offense_class": "Class D Felony (felony case); Class A Misdemeanor (misdemeanor case under § 520.080)",
+    "penalty_min": "1 year (Class D)",
+    "penalty_max": "5 years (Class D); 12 months (Class A)",
+    "fine_max": "$10,000 (Class D); $500 (Class A)",
+    "elements": [
+      "Defendant, while released on bail or recognizance",
+      "Intentionally failed to appear as required",
+      "With intent to evade or delay the judicial process"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying felony case (Class D Felony — bail jumping first degree)"
+    ],
+    "notes": "Bail jumping first degree (felony case) is a Class D Felony. Bail jumping second degree (misdemeanor case) is Class A Misdemeanor. Bond forfeiture and bench warrant issued."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "KRS § 519.040",
+    "statute_title": "Making a False Report",
+    "offense_class": "Class A Misdemeanor; Class B Misdemeanor (false alarm)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 90 days (Class B)",
+    "fine_max": "$500 (Class A); $250 (Class B)",
+    "elements": [
+      "Defendant gave false information to a law enforcement officer",
+      "Or made a false report of a crime or emergency",
+      "Knowing the report to be false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "False police reports and false emergency calls. Swatting may lead to additional charges if harm results."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "KRS § 508.080",
+    "statute_title": "Terroristic Threatening in the First Degree",
+    "offense_class": "Class D Felony (first degree); Class A Misdemeanor (third degree under § 508.080(2))",
+    "penalty_min": "1 year (Class D)",
+    "penalty_max": "5 years (Class D); 12 months (Class A)",
+    "fine_max": "$10,000 (Class D); $500 (Class A)",
+    "elements": [
+      "Defendant threatened to commit any crime likely to result in death or serious physical injury",
+      "Or to cause serious disruption to public services or transportation",
+      "The threat placed persons in fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Terroristic threatening first degree is a Class D Felony. Third degree (general threats causing alarm) is a Class A Misdemeanor. Bomb threats to schools are first degree."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "KRS § 523.020",
+    "statute_title": "Perjury in the First Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant made a material false statement under oath",
+      "In an official proceeding",
+      "Knowing it to be false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree perjury requires the statement be in an official proceeding. Second-degree perjury (Class A Misdemeanor) covers sworn written statements."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "KRS § 521.020",
+    "statute_title": "Bribery of a Public Servant",
+    "offense_class": "Class C Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer any benefit upon a public servant",
+      "With intent to influence the public servant's vote, opinion, judgment, or action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Class C Felony — Kentucky treats public corruption seriously. Both the giver and receiver of a bribe may be charged."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "KRS § 520.020",
+    "statute_title": "Escape in the First Degree",
+    "offense_class": "Class C Felony (first degree — from custody on felony); Class D Felony (second degree — from custody on misdemeanor); Class A Misdemeanor (third degree — from protective custody)",
+    "penalty_min": "5 years (Class C); 1 year (Class D)",
+    "penalty_max": "10 years (Class C); 5 years (Class D); 12 months (Class A)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant escaped from custody or a detention facility",
+      "While held on a criminal charge or conviction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or weapon (enhanced)"
+    ],
+    "notes": "Three degrees based on the underlying custody. First degree (felony custody) is Class C Felony. Includes walking away from work release or home incarceration."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "KRS § 525.125",
+    "statute_title": "Cruelty to Animals in the First Degree",
+    "offense_class": "Class A Misdemeanor (first); Class D Felony (second+ or torture causing death); Class C Felony (dogfighting)",
+    "penalty_min": null,
+    "penalty_max": "12 months (Class A); 5 years (Class D); 10 years (Class C)",
+    "fine_max": "$500 (Class A); $10,000 (Class D/C)",
+    "elements": [
+      "Defendant intentionally caused or permitted the torture, mutilation, or death of an animal",
+      "Or subjected an animal to cruel mistreatment"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Torture causing serious physical injury or death (Class D Felony)",
+      "Second or subsequent (Class D Felony)",
+      "Dogfighting (Class C Felony under § 525.125(2))"
+    ],
+    "notes": "Kentucky strengthened animal cruelty laws. First offense animal torture causing serious injury or death is a Class D Felony. Dogfighting is a Class C Felony."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "KRS § 533.020",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Not a new criminal charge — court may revoke probation and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum sentence for the original offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation or conditional discharge",
+      "Defendant violated a condition of supervision",
+      "Violation proven by preponderance of the evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kentucky uses graduated sanctions for probation violations. Court may continue, modify, or revoke probation. New criminal conduct typically results in revocation."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "KRS § 439.340",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Not a new criminal charge — Parole Board determines consequences",
+    "penalty_min": null,
+    "penalty_max": "Return to incarceration for remainder of sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kentucky Parole Board conducts revocation hearings. Parolee has right to counsel. Graduated sanctions available for technical violations."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "KRS § 502.020",
+    "statute_title": "Liability for Conduct of Another — Complicity",
+    "offense_class": "Same as the underlying offense",
+    "penalty_min": "Same as the underlying offense",
+    "penalty_max": "Same as the underlying offense",
+    "fine_max": "Same as the underlying offense",
+    "elements": [
+      "Defendant, acting with the kind of culpability sufficient for the commission of the offense",
+      "Solicited, counseled, commanded, or intentionally aided another to commit the offense"
+    ],
+    "mandatory_minimum": "Same as the underlying offense",
+    "enhancements": [],
+    "notes": "Kentucky uses 'complicity' rather than 'aiding and abetting.' A person is legally accountable for the conduct of another. Mere presence is insufficient — must show active participation."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "KRS § 506.010",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One class below the underlying offense (Class B for capital/Class A offenses; Class C for Class B; Class D for Class C; Class A Misdemeanor for Class D)",
+    "penalty_min": null,
+    "penalty_max": "One class below the completed offense",
+    "fine_max": "Varies by class of attempt",
+    "elements": [
+      "Defendant, with intent to commit a specific crime",
+      "Engaged in conduct which constituted a substantial step toward the commission of the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is graded one class below the completed offense. Attempted murder (capital/Class A) is a Class B Felony. Renunciation is a defense if complete and voluntary."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "KRS § 506.040",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "One class below the target offense",
+    "penalty_min": null,
+    "penalty_max": "Same as attempt — one class below the target",
+    "fine_max": "Varies by class",
+    "elements": [
+      "Defendant, with intent to promote or facilitate the commission of a crime",
+      "Agreed with one or more persons to engage in or cause conduct constituting a crime",
+      "Defendant or co-conspirator performed an overt act in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy requires agreement, intent, and an overt act. Graded one class below the target offense. Renunciation is a defense if the defendant notified co-conspirators and law enforcement."
+  }
+]

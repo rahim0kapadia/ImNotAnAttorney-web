@@ -1,0 +1,1680 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Miss. Code Ann. § 63-11-30",
+    "statute_title": "Driving Under the Influence",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "48 hours (first); 1 year (second); 5 years (third); 10 years (fourth+)",
+    "fine_max": "$1,000 (first); $1,500 (second); $5,000 (third); $10,000 (fourth+)",
+    "elements": [
+      "Defendant operated a vehicle",
+      "On a public highway or street",
+      "While under the influence of intoxicating liquor, drugs, or a combination",
+      "Or with a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .15 or higher",
+      "Child under 16 in vehicle (child endangerment)",
+      "Prior DUI convictions within 5 years",
+      "Fourth or subsequent offense (felony)"
+    ],
+    "notes": "Mississippi uses a 5-year lookback for DUI sentencing. Implied consent under § 63-11-5. Administrative license suspension 90 days first offense. Non-adjudication available for first offense."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Miss. Code Ann. § 63-11-30(1)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "48 hours in jail or 48 hours community service",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a vehicle on a public road",
+      "While under the influence or with BAC .08+",
+      "No prior DUI convictions within 5 years"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .15 or higher"
+    ],
+    "notes": "Eligible for non-adjudication (MASEP program). 90-day license suspension. Ignition interlock may be ordered."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Miss. Code Ann. § 63-11-30(2)",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Misdemeanor (second); Felony (third+)",
+    "penalty_min": "5 days or 10 days community service (second); 1 year (third); 2 years (fourth+)",
+    "penalty_max": "1 year (second); 5 years (third); 10 years (fourth+)",
+    "fine_max": "$1,500 (second); $5,000 (third); $10,000 (fourth+)",
+    "elements": [
+      "Defendant operated a vehicle while under the influence or with BAC .08+",
+      "One or more prior DUI convictions within 5 years"
+    ],
+    "mandatory_minimum": "5 days or 10 days community service (second); 1 year and 1 day (third); 2 years (fourth+)",
+    "enhancements": [
+      "Fourth or subsequent offense (habitual DUI offender)"
+    ],
+    "notes": "Second offense: 2-year suspension. Third: 5-year suspension. Fourth+: lifetime revocation. Lookback period is 5 years."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Miss. Code Ann. § 63-11-30(1)(b)-(d)",
+    "statute_title": "DUI — Drugs or Combined Substances",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant operated a vehicle on a public road",
+      "While under the influence of any substance that impairs driving ability",
+      "Including controlled substances, prescription medications, or any drug"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Combined influence of drugs and alcohol",
+      "Prior DUI convictions"
+    ],
+    "notes": "No per se drug limit. Prosecution relies on impairment evidence and toxicology. Same penalties as alcohol DUI."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Miss. Code Ann. § 63-3-1213",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days (first); 6 months (second+)",
+    "fine_max": "$100 (first); $500 (second+)",
+    "elements": [
+      "Defendant drove a vehicle in willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense"
+    ],
+    "notes": "Common plea-down from DUI. Points assessed against driving record."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Miss. Code Ann. § 63-3-401",
+    "statute_title": "Duty to Stop — Accident Involving Death or Injury",
+    "offense_class": "Felony (death/injury); Misdemeanor (property damage under § 63-3-405)",
+    "penalty_min": null,
+    "penalty_max": "5 years (death); 1 year (injury); 30 days (property damage)",
+    "fine_max": "$5,000 (death); $1,000 (injury); $100 (property damage)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in death, injury, or property damage",
+      "Defendant failed to stop and remain at the scene",
+      "Defendant failed to provide identification and render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (felony)",
+      "Serious bodily injury"
+    ],
+    "notes": "Hit-and-run resulting in death is a felony. License revocation upon conviction."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Miss. Code Ann. § 63-11-30(5)",
+    "statute_title": "DUI Death — Vehicular Homicide",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a vehicle while under the influence of alcohol or drugs",
+      "Defendant's operation caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DUI convictions",
+      "Extremely high BAC"
+    ],
+    "notes": "DUI death carries up to 25 years. May also be charged under manslaughter statutes."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Miss. Code Ann. § 97-3-47",
+    "statute_title": "Culpable Negligent Manslaughter (Vehicular)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$500–$1,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through culpably negligent operation of a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Culpable negligence is a higher standard than ordinary negligence. May be charged in addition to or instead of DUI death."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Miss. Code Ann. § 63-1-59",
+    "statute_title": "Driving While License Suspended or Revoked",
+    "offense_class": "Misdemeanor (first); Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 5 years (subsequent if DUI-related)",
+    "fine_max": "$500 (first); $1,000 (subsequent)",
+    "elements": [
+      "Defendant drove a motor vehicle on a public road",
+      "Defendant's license was suspended or revoked",
+      "Defendant had knowledge or notice of the suspension"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI-related suspension",
+      "Subsequent offense"
+    ],
+    "notes": "Driving on a DUI-suspended license carries enhanced penalties. Additional suspension upon conviction."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Miss. Code Ann. § 97-9-72",
+    "statute_title": "Fleeing or Eluding a Law Enforcement Officer",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "A law enforcement officer signaled the defendant to stop",
+      "Signal was by siren, emergency lights, or other lawful means",
+      "Defendant willfully failed to stop",
+      "Defendant attempted to flee by operating the vehicle recklessly"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing death or serious bodily injury",
+      "Damage to property"
+    ],
+    "notes": "Officer must be in uniform and operating a marked vehicle, or defendant must otherwise know it is law enforcement."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Miss. Code Ann. § 41-29-139(c)",
+    "statute_title": "Possession of Controlled Substance",
+    "offense_class": "Felony (Schedule I/II); Misdemeanor (Schedule III-V small amounts)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Schedule I/II); 1 year (Schedule III-V first)",
+    "fine_max": "$3,000 (Schedule I/II first); $1,000 (Schedule III-V first)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "Substance is listed in Mississippi Uniform Controlled Substances Law schedules",
+      "Possession was without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions (enhanced penalties)",
+      "Possession near a school, church, or public park (§ 41-29-142)"
+    ],
+    "notes": "Mississippi treats most simple possession as a felony for Schedule I/II substances. Drug court diversion programs available."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Miss. Code Ann. § 41-29-139(c)(2)(A)",
+    "statute_title": "Possession of Marijuana — 30 Grams or Less",
+    "offense_class": "Misdemeanor (30g or less first); Felony (over 30g or subsequent)",
+    "penalty_min": null,
+    "penalty_max": "90 days (first, 30g or less); 1 year (subsequent, 30g or less); 3 years (over 30g)",
+    "fine_max": "$250 (first, 30g or less); $1,000 (subsequent); $3,000 (over 30g)",
+    "elements": [
+      "Defendant possessed marijuana",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount over 30 grams (felony)",
+      "Subsequent offense",
+      "Possession near a school"
+    ],
+    "notes": "Mississippi decriminalized small amounts (30g or less) for first offense. Over 30g or subsequent offenses are felonies. Medical marijuana legalized 2022."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Miss. Code Ann. § 41-29-139(c)(1)(A)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years (first)",
+    "fine_max": "$3,000 (first)",
+    "elements": [
+      "Defendant knowingly possessed cocaine",
+      "Cocaine is a Schedule II controlled substance in Mississippi",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school or church"
+    ],
+    "notes": "Simple possession is a felony. Larger quantities trigger trafficking charges under § 41-29-139(f)."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Miss. Code Ann. § 41-29-139(c)(1)(A)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years (first)",
+    "fine_max": "$3,000 (first)",
+    "elements": [
+      "Defendant knowingly possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school or church",
+      "Manufacturing equipment present"
+    ],
+    "notes": "Meth is a significant enforcement priority in Mississippi. Manufacturing carries separate enhanced penalties."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Miss. Code Ann. § 41-29-139(f)",
+    "statute_title": "Trafficking in Controlled Substances",
+    "offense_class": "Felony",
+    "penalty_min": "10 years (cocaine 200-500g); varies by substance and weight",
+    "penalty_max": "30 years (most); Life (large quantities or certain substances)",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant knowingly sold, manufactured, delivered, or possessed with intent to deliver",
+      "A quantity of controlled substance meeting trafficking thresholds"
+    ],
+    "mandatory_minimum": "10 years (most trafficking thresholds, cannot be reduced or suspended)",
+    "enhancements": [
+      "Weight-based graduated mandatory minimums",
+      "Trafficking near a school",
+      "Prior trafficking convictions"
+    ],
+    "notes": "Trafficking thresholds: cocaine 200g, heroin 200g, methamphetamine 200g. Mandatory minimums cannot be suspended or paroled."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Miss. Code Ann. § 41-29-139(a)",
+    "statute_title": "Sale, Distribution, or Manufacture of Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (Schedule I/II); 10 years (Schedule III/IV); 5 years (Schedule V)",
+    "fine_max": "$1,000,000 (Schedule I/II); $30,000 (Schedule III/IV); $5,000 (Schedule V)",
+    "elements": [
+      "Defendant knowingly or intentionally sold, delivered, manufactured, or possessed with intent to sell or deliver",
+      "A controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution to a minor",
+      "Distribution near a school, church, or park (§ 41-29-142)",
+      "Subsequent offense (doubled penalties)"
+    ],
+    "notes": "Second offense penalties are doubled. Third offense carries life imprisonment for Schedule I/II."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Miss. Code Ann. § 41-29-139(a)(1)",
+    "statute_title": "Manufacturing Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (Schedule I/II)",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant knowingly manufactured a controlled substance",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing methamphetamine (§ 41-29-313, additional penalties)",
+      "Manufacturing in presence of a child",
+      "Environmental contamination"
+    ],
+    "notes": "Methamphetamine manufacturing (§ 41-29-313) carries additional penalties and cleanup costs."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Miss. Code Ann. § 41-29-139(d)",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With knowledge that it would be used to plant, propagate, test, analyze, pack, or consume a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale or delivery of paraphernalia to a minor"
+    ],
+    "notes": "Misdemeanor offense. Sale of paraphernalia to a minor carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Miss. Code Ann. § 41-29-139(a)(1)",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (Schedule I/II); 10 years (Schedule III/IV)",
+    "fine_max": "$1,000,000 (Schedule I/II); $30,000 (Schedule III/IV)",
+    "elements": [
+      "Defendant knowingly possessed a controlled substance",
+      "With intent to sell, deliver, or distribute"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near a school, church, or park",
+      "Prior drug convictions",
+      "Quantity indicating distribution intent"
+    ],
+    "notes": "Intent inferred from quantity, packaging, scales, cash, and other indicators. Same penalties as actual distribution."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Miss. Code Ann. § 97-3-19(2)",
+    "statute_title": "Capital Murder",
+    "offense_class": "Felony (Capital)",
+    "penalty_min": "Life without parole",
+    "penalty_max": "Death or Life without parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully killed a human being",
+      "With deliberate design",
+      "Under circumstances enumerated in § 97-3-19(2) (e.g., during robbery, sexual assault, kidnapping, arson, or killing a peace officer)"
+    ],
+    "mandatory_minimum": "Life without parole (if death not imposed)",
+    "enhancements": [
+      "Murder of a law enforcement officer",
+      "Murder during commission of enumerated felony",
+      "Murder for hire"
+    ],
+    "notes": "Mississippi retains the death penalty. Capital murder requires specific aggravating circumstances. Non-capital murder (§ 97-3-19(1)) carries life imprisonment."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Miss. Code Ann. § 97-3-19(1)",
+    "statute_title": "Murder — Non-Capital",
+    "offense_class": "Felony",
+    "penalty_min": "20 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant killed a human being",
+      "With deliberate design to effect the death",
+      "Without circumstances elevating to capital murder"
+    ],
+    "mandatory_minimum": "20 years",
+    "enhancements": [],
+    "notes": "Mississippi does not formally distinguish first and second-degree murder. Non-capital murder carries 20 years to life."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Miss. Code Ann. § 97-3-35",
+    "statute_title": "Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$500–$1,000",
+    "elements": [
+      "Defendant killed a human being",
+      "Without malice, in the heat of passion",
+      "By a cruel or unusual weapon",
+      "Or in an unnecessary manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Mississippi manslaughter statute is broad. Heat of passion is the classic voluntary manslaughter scenario."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Miss. Code Ann. § 97-3-47",
+    "statute_title": "Culpable Negligence Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$500–$1,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through culpable negligence",
+      "Without intent to kill"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Culpable negligence is higher than ordinary negligence but less than intent. Includes deaths from reckless behavior."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Miss. Code Ann. § 97-3-7(2)",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant attempted to cause or purposely, knowingly, or recklessly caused serious bodily injury to another",
+      "Or attempted to cause or caused bodily injury with a deadly weapon or other means likely to produce death or serious injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim is a law enforcement officer",
+      "Domestic aggravated assault (§ 97-3-7(4))"
+    ],
+    "notes": "Aggravated domestic violence (§ 97-3-7(4)) carries specific enhanced penalties."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Miss. Code Ann. § 97-3-7(1)",
+    "statute_title": "Simple Assault",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant attempted to cause or purposely, knowingly, or recklessly caused bodily injury to another",
+      "Or negligently caused bodily injury with a deadly weapon",
+      "Or attempted by physical menace to put another in fear of imminent serious injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is a law enforcement officer"
+    ],
+    "notes": "Simple assault includes both physical contact and threatening conduct. Low-level misdemeanor."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Miss. Code Ann. § 97-3-7(2)(b)",
+    "statute_title": "Aggravated Assault — Deadly Weapon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant caused or attempted to cause bodily injury",
+      "With a deadly weapon or other means likely to produce death or serious injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury results",
+      "Victim is a law enforcement officer"
+    ],
+    "notes": "Deadly weapon includes any object used in a manner capable of causing death or serious injury."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Miss. Code Ann. § 97-3-73",
+    "statute_title": "Robbery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant feloniously took the personal property of another",
+      "From the person or in the presence of the person",
+      "Against the person's will by violence or putting in fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Simple robbery without a weapon. Armed robbery is a separate, more serious offense."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Miss. Code Ann. § 97-3-79",
+    "statute_title": "Armed Robbery",
+    "offense_class": "Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant feloniously took the personal property of another",
+      "By putting the person in fear of immediate injury",
+      "While exhibiting a deadly weapon"
+    ],
+    "mandatory_minimum": "3 years (cannot be reduced or suspended)",
+    "enhancements": [
+      "Use of a firearm",
+      "Serious bodily injury"
+    ],
+    "notes": "Armed robbery carries a mandatory minimum of 3 years that cannot be suspended. Maximum is life imprisonment."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Miss. Code Ann. § 97-3-53",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "30 years (general); Life (if ransom demanded or victim sexually assaulted)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant willfully seized, confined, or kidnapped another person",
+      "With intent to secretly confine, hold for ransom, or cause bodily injury"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Ransom demand (up to life)",
+      "Sexual assault during kidnapping",
+      "Victim is a child"
+    ],
+    "notes": "Kidnapping of a child carries enhanced penalties. Separate from unlawful restraint."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Miss. Code Ann. § 97-17-1",
+    "statute_title": "Arson — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant willfully and maliciously set fire to or burned a dwelling",
+      "Or aided, counseled, or procured the burning"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person was in the dwelling",
+      "Death results"
+    ],
+    "notes": "First-degree arson involves dwellings. Second-degree (§ 97-17-3) involves non-dwelling structures. Third-degree (§ 97-17-5) involves personal property."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Miss. Code Ann. § 97-1-7",
+    "statute_title": "Attempt — Murder",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years (attempt at non-capital murder); Life (attempt at capital murder)",
+    "fine_max": null,
+    "elements": [
+      "Defendant designed and endeavored to kill another person",
+      "Defendant took a substantial step toward the killing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim was a law enforcement officer"
+    ],
+    "notes": "Attempted murder carries up to half the maximum of the completed offense for non-capital murder, or up to life for capital murder attempt."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Miss. Code Ann. § 97-17-41",
+    "statute_title": "Grand Larceny / Petit Larceny",
+    "offense_class": "Felony (over $1,000); Misdemeanor ($1,000 or less)",
+    "penalty_min": null,
+    "penalty_max": "5 years (grand larceny $1,000–$5,000); 10 years ($5,000–$25,000); 20 years ($25,000+); 6 months (petit larceny)",
+    "fine_max": "$10,000 (grand larceny); $1,000 (petit larceny)",
+    "elements": [
+      "Defendant took and carried away personal property of another",
+      "Without consent",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds determine felony grade"
+    ],
+    "notes": "Mississippi raised the felony theft threshold to $1,000 in 2014. Graduated sentencing based on value."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Miss. Code Ann. § 97-17-41(1)",
+    "statute_title": "Grand Larceny",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years ($1,000–$5,000); 10 years ($5,000–$25,000); 20 years ($25,000+)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant took and carried away personal property of another",
+      "Value exceeded $1,000",
+      "With intent to permanently deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Higher value thresholds"
+    ],
+    "notes": "Grand larceny threshold is $1,000 in Mississippi."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Miss. Code Ann. § 97-17-43",
+    "statute_title": "Petit Larceny",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant took and carried away personal property of another",
+      "Value was $1,000 or less",
+      "With intent to permanently deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior larceny convictions"
+    ],
+    "notes": "Third petit larceny conviction is elevated to a felony carrying up to 5 years."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Miss. Code Ann. § 97-23-93",
+    "statute_title": "Shoplifting — Retail Theft",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (under $500); 1 year ($500–$1,000); 5 years ($1,000+)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant willfully concealed or took possession of retail merchandise",
+      "Without paying full purchase price",
+      "With intent to convert to personal use"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,000 (felony)",
+      "Organized retail theft",
+      "Third conviction (felony)"
+    ],
+    "notes": "Separate shoplifting statute. Third shoplifting conviction regardless of value is a felony."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Miss. Code Ann. § 97-17-23",
+    "statute_title": "Burglary — General",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years (non-dwelling); 25 years (dwelling)",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke and entered a building, structure, or dwelling",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Burglary of a dwelling (§ 97-17-23, up to 25 years)",
+      "While armed"
+    ],
+    "notes": "Burglary of a dwelling carries up to 25 years. Burglary of other structures carries up to 7 years."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Miss. Code Ann. § 97-17-23",
+    "statute_title": "Burglary — Dwelling",
+    "offense_class": "Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "25 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke and entered a dwelling house",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": "3 years (cannot be suspended or reduced)",
+    "enhancements": [
+      "Armed during burglary",
+      "Occupant was home"
+    ],
+    "notes": "Burglary of a dwelling carries a mandatory minimum of 3 years. One of the most seriously punished property crimes in Mississippi."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Miss. Code Ann. § 97-17-42",
+    "statute_title": "Grand Larceny — Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (most vehicles valued over $1,000)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant took and carried away a motor vehicle belonging to another",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Vehicle value over $25,000"
+    ],
+    "notes": "Motor vehicle theft is charged as grand larceny. Value determines the sentencing range."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Miss. Code Ann. § 97-17-70",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Felony (over $1,000); Misdemeanor ($1,000 or less)",
+    "penalty_min": null,
+    "penalty_max": "5 years (over $1,000); 6 months ($1,000 or less)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant received, retained, or disposed of stolen property",
+      "Knowing or having reasonable grounds to believe it was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,000 (felony)"
+    ],
+    "notes": "Same value thresholds as larceny. Knowledge of stolen character is an essential element."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Miss. Code Ann. § 97-17-67",
+    "statute_title": "Malicious Mischief",
+    "offense_class": "Felony (over $1,000); Misdemeanor ($1,000 or less)",
+    "penalty_min": null,
+    "penalty_max": "5 years (over $1,000); 6 months ($1,000 or less)",
+    "fine_max": "$10,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant willfully and maliciously destroyed, damaged, or defaced property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage over $1,000 (felony)"
+    ],
+    "notes": "Mississippi uses 'malicious mischief' as the statutory term. Includes graffiti and vandalism."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Miss. Code Ann. § 97-17-87",
+    "statute_title": "Trespass — Posted Land",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant entered upon land of another",
+      "After being forbidden to do so by the owner or signs",
+      "Without permission"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Trespass after notice carries up to 6 months. Trespass on private property is common in rural Mississippi."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Miss. Code Ann. § 97-17-67",
+    "statute_title": "Malicious Mischief — Criminal Damage",
+    "offense_class": "Felony (over $1,000); Misdemeanor ($1,000 or less)",
+    "penalty_min": null,
+    "penalty_max": "5 years (over $1,000); 6 months ($1,000 or less)",
+    "fine_max": "$10,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant willfully and maliciously damaged, destroyed, or defaced the property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage over $1,000"
+    ],
+    "notes": "Covers property damage, tampering, and destruction. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Miss. Code Ann. § 97-3-7(3)",
+    "statute_title": "Simple Domestic Violence",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second); 5 years (third+)",
+    "fine_max": "$1,000 (first); $5,000 (second); $10,000 (third+)",
+    "elements": [
+      "Defendant attempted to cause or purposely, knowingly, or recklessly caused bodily injury",
+      "Against a current or former spouse, cohabitant, parent of a common child, or other family/household member"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense (felony, up to 5 years or 10 years under § 97-3-7(4))",
+      "Strangulation (§ 97-3-7(4)(c), up to 5 years)"
+    ],
+    "notes": "Third DV offense is a felony regardless of severity. Aggravated domestic violence (§ 97-3-7(4)) carries up to 20 years."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Miss. Code Ann. § 97-3-7(3)",
+    "statute_title": "Simple Domestic Violence — Battery",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months (first)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed a battery against a domestic partner",
+      "Battery includes unwanted physical contact"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DV convictions (progressive penalties)"
+    ],
+    "notes": "Mississippi uses the same statute for DV assault and battery. No separate battery statute."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Miss. Code Ann. § 97-5-39(2)",
+    "statute_title": "Child Endangerment — Neglect or Abuse",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (endangerment); 20 years (serious bodily harm)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was a parent, guardian, or custodian of a child",
+      "Defendant willfully committed an act or omission",
+      "That caused or contributed to the neglect, abuse, or endangerment of the child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily harm results (up to 20 years)",
+      "Death of the child (life or 20–40 years)"
+    ],
+    "notes": "Mississippi has aggressive child protection enforcement. Death of a child from abuse carries 20–40 years or life."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Miss. Code Ann. § 97-5-39(1)",
+    "statute_title": "Child Abuse — Felonious Abuse",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years (serious bodily harm); 40 years to life (death results)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly caused serious bodily injury to a child under 18",
+      "Defendant was a parent, guardian, custodian, or person having custody"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of the child (20–40 years or life)",
+      "Pattern of abuse"
+    ],
+    "notes": "Death resulting from child abuse carries the harshest penalties. Mandatory reporting by professionals."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Miss. Code Ann. § 93-21-21",
+    "statute_title": "Violation of Domestic Abuse Protection Order",
+    "offense_class": "Misdemeanor (first); Felony (subsequent or with assault)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 5 years (felony)",
+    "fine_max": "$1,000 (first); $5,000 (felony)",
+    "elements": [
+      "A valid protection order was in effect",
+      "Defendant had notice of the order",
+      "Defendant intentionally violated a condition of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent violation",
+      "Violation involving assault (felony)"
+    ],
+    "notes": "First violation is a misdemeanor. Second or subsequent, or violation with assault, is a felony."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Miss. Code Ann. § 97-3-107",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor (first); Felony (subsequent or with threats)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (subsequent or aggravated)",
+    "fine_max": "$1,000 (first); $3,000 (subsequent)",
+    "elements": [
+      "Defendant purposefully engaged in a course of conduct directed at a specific person",
+      "That would cause a reasonable person to fear for their safety or the safety of others",
+      "Defendant knew or should have known the conduct would cause fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense (felony)",
+      "Violation of protective order while stalking"
+    ],
+    "notes": "Includes cyberstalking. Second or subsequent offense is a felony."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Miss. Code Ann. § 97-3-107",
+    "statute_title": "Harassment",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant engaged in conduct directed at a specific person",
+      "With intent to harass or annoy",
+      "Including following, telephoning repeatedly, or sending unwanted communications"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Harassment is a lesser offense than stalking. Includes telephone and electronic harassment."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Miss. Code Ann. § 43-47-19",
+    "statute_title": "Exploitation or Abuse of Vulnerable Person",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (abuse); 15 years (exploitation over $1,000)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant willfully abused, neglected, or exploited a vulnerable person",
+      "Vulnerable person includes elderly or disabled adults"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Financial exploitation over $1,000",
+      "Serious bodily injury"
+    ],
+    "notes": "Mississippi's vulnerable adult protection statute. Financial exploitation is aggressively prosecuted."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Miss. Code Ann. § 97-37-1",
+    "statute_title": "Carrying Concealed Weapon — Prohibited Persons",
+    "offense_class": "Felony (prohibited persons); Misdemeanor (others in restricted areas)",
+    "penalty_min": null,
+    "penalty_max": "3 years (concealed by prohibited person)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a concealed weapon",
+      "Defendant was a prohibited person (felon, minor, or intoxicated)",
+      "Or carried in a prohibited location"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Mississippi is a constitutional carry state (permitless open and concealed carry for most adults 18+). Restrictions remain for felons, certain locations, and persons under 18."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Miss. Code Ann. § 97-37-5",
+    "statute_title": "Possession of Firearm by Convicted Felon",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years (first); 10 years (subsequent)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant had been convicted of a felony"
+    ],
+    "mandatory_minimum": "1 year (cannot be suspended or reduced)",
+    "enhancements": [
+      "Subsequent offense (up to 10 years)",
+      "Possession during commission of another felony"
+    ],
+    "notes": "Mandatory minimum of 1 year that cannot be suspended. Rights restoration available after certain waiting periods."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Miss. Code Ann. § 97-37-1",
+    "statute_title": "Concealed Weapon — Prohibited Location or Person",
+    "offense_class": "Misdemeanor (location violation); Felony (prohibited person)",
+    "penalty_min": null,
+    "penalty_max": "6 months (location); 3 years (prohibited person)",
+    "fine_max": "$500 (location); $1,000 (prohibited person)",
+    "elements": [
+      "Defendant carried a concealed weapon",
+      "In a prohibited location (courthouse, police station, school, etc.)",
+      "Or defendant was a prohibited person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Mississippi adopted constitutional carry. Most adults 18+ can carry without a permit. Prohibited locations remain restricted."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Miss. Code Ann. § 97-37-29",
+    "statute_title": "Discharge of Firearm in Prohibited Area",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant discharged a firearm",
+      "Within city limits or in a prohibited area"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Injury results (separate assault charges)"
+    ],
+    "notes": "Municipal ordinances may impose additional restrictions. Reckless discharge causing injury charged under separate statutes."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Miss. Code Ann. § 97-19-85",
+    "statute_title": "Identity Theft",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (general); 15 years (financial exploitation of elderly)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly used the personal identifying information of another",
+      "Without the other person's consent",
+      "With intent to obtain a benefit, credit, or goods"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly or vulnerable",
+      "Multiple victims"
+    ],
+    "notes": "Includes use of SSN, credit card numbers, and other personal data. Restitution ordered."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Miss. Code Ann. § 97-23-19",
+    "statute_title": "Embezzlement",
+    "offense_class": "Felony (over $1,000); Misdemeanor ($1,000 or less)",
+    "penalty_min": null,
+    "penalty_max": "10 years (over $1,000); 6 months ($1,000 or less)",
+    "fine_max": "$10,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant was entrusted with property, money, or goods by an employer or principal",
+      "Defendant fraudulently converted the property to personal use"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $25,000",
+      "Breach of public trust"
+    ],
+    "notes": "Mississippi has specific embezzlement statutes for public officials and employees."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Miss. Code Ann. § 97-21-33",
+    "statute_title": "Forgery — Uttering Forged Instrument",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (general); 15 years (government documents)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant falsely made, altered, or counterfeited a written instrument",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forgery of government documents"
+    ],
+    "notes": "Includes forging checks, deeds, and other legal instruments."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Miss. Code Ann. § 97-21-17",
+    "statute_title": "Counterfeiting Currency",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant counterfeited or forged currency, bank notes, or government obligations"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Federal counterfeiting charges typically apply. State charges may be concurrent."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Miss. Code Ann. § 97-19-55",
+    "statute_title": "Bad Checks — Fraudulent",
+    "offense_class": "Misdemeanor (under $100); Felony ($100+)",
+    "penalty_min": null,
+    "penalty_max": "30 days (under $100); 5 years ($100+)",
+    "fine_max": "$500 (under $100); $1,000 ($100+)",
+    "elements": [
+      "Defendant issued a check or draft",
+      "Knowing there were insufficient funds",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount over $100 (felony)"
+    ],
+    "notes": "Low threshold ($100) for felony bad check in Mississippi."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Miss. Code Ann. § 83-1-39",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly presented a false or fraudulent insurance claim",
+      "With intent to defraud an insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized fraud scheme"
+    ],
+    "notes": "Mississippi Department of Insurance investigates. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Miss. Code Ann. § 97-19-17",
+    "statute_title": "Credit Card Fraud",
+    "offense_class": "Felony (over $250); Misdemeanor ($250 or less)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 6 months (misdemeanor)",
+    "fine_max": "$5,000 (felony); $500 (misdemeanor)",
+    "elements": [
+      "Defendant used a credit card or credit card number",
+      "Knowing it was stolen, forged, or without authorization",
+      "To obtain goods, services, or money"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $250 (felony)"
+    ],
+    "notes": "Low felony threshold ($250). Includes possession of stolen credit cards."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Miss. Code Ann. § 97-23-101",
+    "statute_title": "Money Laundering",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$500,000 or double the amount laundered",
+    "elements": [
+      "Defendant conducted or attempted to conduct a financial transaction",
+      "Knowing the property involved was derived from criminal activity",
+      "With intent to promote criminal activity or conceal the source"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeds $100,000"
+    ],
+    "notes": "Federal money laundering charges may also apply."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Miss. Code Ann. § 97-19-39",
+    "statute_title": "False Pretenses — General Fraud",
+    "offense_class": "Felony (over $1,000); Misdemeanor ($1,000 or less)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 6 months (misdemeanor)",
+    "fine_max": "$10,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant obtained property or money by false pretenses",
+      "With intent to cheat and defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,000 (felony)",
+      "Victim was elderly"
+    ],
+    "notes": "General fraud statute. Classification depends on value obtained."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Miss. Code Ann. § 97-3-95",
+    "statute_title": "Sexual Battery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (general); Life (victim under 14 or with weapon)",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in sexual penetration with another person",
+      "Without the victim's consent",
+      "By use of force, threat, or where victim was incapable of consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 14 (up to life)",
+      "Use of a deadly weapon (up to life)",
+      "Serious bodily injury"
+    ],
+    "notes": "Mississippi uses 'sexual battery' rather than 'rape' or 'sexual assault' in statutes. Separate statutory rape provisions under § 97-3-65."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Miss. Code Ann. § 97-3-65",
+    "statute_title": "Statutory Rape / Rape",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (forcible); 30 years (statutory)",
+    "fine_max": null,
+    "elements": [
+      "Defendant had sexual intercourse with another person",
+      "By force, against the person's will, or with a person incapable of consent",
+      "Or with a person under 14 years of age"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 14",
+      "Use of a weapon",
+      "Kidnapping in connection with assault"
+    ],
+    "notes": "Forcible rape can carry a death sentence in Mississippi for offenses involving minors under certain circumstances (though constitutionality is limited by Kennedy v. Louisiana)."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Miss. Code Ann. § 97-29-31",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Misdemeanor (first); Felony (subsequent or before minors)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 5 years (subsequent or with minor)",
+    "fine_max": "$500 (first); $5,000 (subsequent)",
+    "elements": [
+      "Defendant willfully and lewdly exposed their person or private parts",
+      "In a public place or in the presence of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure to a minor (felony)",
+      "Subsequent offense (felony)"
+    ],
+    "notes": "Second offense or exposure to a minor is a felony. Sex offender registration may be required."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Miss. Code Ann. § 97-29-51",
+    "statute_title": "Prostitution — Solicitation",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$200",
+    "elements": [
+      "Defendant offered or agreed to engage in sexual conduct",
+      "In exchange for compensation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Involving a minor (felony)"
+    ],
+    "notes": "Low-level misdemeanor. Solicitation involving a minor carries enhanced felony penalties."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Miss. Code Ann. § 97-5-33",
+    "statute_title": "Exploitation of a Child",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "40 years (production); 10 years (possession)",
+    "fine_max": "$50,000 (production); $10,000 (possession)",
+    "elements": [
+      "Defendant used, employed, persuaded, or coerced a child under 18",
+      "To engage in sexually explicit conduct for the purpose of producing visual depictions"
+    ],
+    "mandatory_minimum": "5 years (production)",
+    "enhancements": [
+      "Victim under 14",
+      "Distribution of material",
+      "Commercial exploitation"
+    ],
+    "notes": "Mississippi aggressively prosecutes child exploitation. Federal charges typically apply as well."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Miss. Code Ann. § 45-33-33",
+    "statute_title": "Failure to Register as Sex Offender",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant knowingly failed to register or update registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent violations"
+    ],
+    "notes": "Mississippi Sex Offender Registry. Registration may be required for life depending on the offense."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Miss. Code Ann. § 97-3-65(1)",
+    "statute_title": "Statutory Rape",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (victim 14-16 and defendant 3+ years older); Life (victim under 14)",
+    "fine_max": null,
+    "elements": [
+      "Defendant had sexual intercourse with a person under 16",
+      "Defendant was at least 36 months older than the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 14 (up to life)",
+      "Defendant in position of authority"
+    ],
+    "notes": "Age of consent in Mississippi is 16. Close-in-age exception: within 36 months of age. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Miss. Code Ann. § 97-35-7",
+    "statute_title": "Disturbing the Peace",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant willfully disturbed the peace of another",
+      "By loud or offensive conduct",
+      "Or by threatening, quarrelsome, or otherwise disorderly behavior"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Low-level public order offense. Often charged alongside other offenses."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Miss. Code Ann. § 97-9-73",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Misdemeanor (general); Felony (causing injury)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 5 years (felony with injury)",
+    "fine_max": "$500 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "A law enforcement officer attempted to make a lawful arrest",
+      "Defendant willfully opposed or resisted the officer",
+      "By use of force, threat, or intimidation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing injury to the officer (felony)"
+    ],
+    "notes": "Passive resistance generally is not sufficient. Must involve force, threat, or intimidation."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Miss. Code Ann. § 97-9-55",
+    "statute_title": "Obstruction of Justice",
+    "offense_class": "Felony (general); Misdemeanor (lesser interference)",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant obstructed, resisted, or opposed any officer or court",
+      "In the discharge of their official duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Broad obstruction statute. Covers interference with law enforcement, court proceedings, and government operations."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Miss. Code Ann. § 9-1-17",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Civil or Criminal Contempt",
+    "penalty_min": null,
+    "penalty_max": "Varies; typically up to 6 months or until compliance",
+    "fine_max": "$100 (statutory, but courts exercise discretion)",
+    "elements": [
+      "A valid court order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant willfully disobeyed the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminal contempt is punitive. Civil contempt is coercive — defendant can purge by compliance."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Miss. Code Ann. § 97-29-47",
+    "statute_title": "Public Drunkenness",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$200",
+    "elements": [
+      "Defendant was found drunk or intoxicated in a public place",
+      "And was disturbing others or endangering themselves"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Low-level offense. Many jurisdictions use protective custody rather than arrest."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Miss. Code Ann. § 99-5-27",
+    "statute_title": "Failure to Appear — Bail Jumping",
+    "offense_class": "Misdemeanor (if underlying was misdemeanor); Felony (if underlying was felony)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$500 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant was released on bail or recognizance",
+      "Defendant was required to appear in court",
+      "Defendant willfully failed to appear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge was a felony"
+    ],
+    "notes": "Bail jumping is charged based on the severity of the underlying offense."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Miss. Code Ann. § 97-7-41",
+    "statute_title": "False Report of Crime",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant knowingly made a false report of a crime to law enforcement",
+      "Knowing the report was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes filing false police reports and making false emergency calls."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Miss. Code Ann. § 97-3-85",
+    "statute_title": "Threatening — Intimidation",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully threatened to commit an act of violence",
+      "Against another person or their property",
+      "Putting the victim in reasonable fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat against a public official",
+      "Threat causing evacuation"
+    ],
+    "notes": "Covers both verbal and written threats. Bomb threats and mass violence threats carry additional penalties."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Miss. Code Ann. § 97-9-59",
+    "statute_title": "Perjury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant made a false statement under oath",
+      "In a judicial proceeding",
+      "Knowing the statement was false",
+      "Statement was material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes testimony, depositions, and sworn affidavits."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Miss. Code Ann. § 97-11-11",
+    "statute_title": "Bribery — Public Officials",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer a benefit",
+      "Upon a public official",
+      "With intent to influence the official's action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers both offering and receiving bribes. Mississippi has aggressive public corruption enforcement."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Miss. Code Ann. § 97-9-43",
+    "statute_title": "Escape from Custody",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was lawfully confined or in custody",
+      "Defendant escaped or attempted to escape"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or violence",
+      "Escape from maximum security"
+    ],
+    "notes": "Includes escape from prison, jail, and lawful custody during transport."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Miss. Code Ann. § 97-41-16",
+    "statute_title": "Aggravated Cruelty to Animals",
+    "offense_class": "Felony (aggravated); Misdemeanor (simple cruelty under § 97-41-1)",
+    "penalty_min": null,
+    "penalty_max": "5 years (aggravated); 6 months (simple)",
+    "fine_max": "$10,000 (aggravated); $1,000 (simple)",
+    "elements": [
+      "Defendant intentionally or with criminal negligence tortured, mutilated, or cruelly killed a domesticated dog or cat"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior animal cruelty convictions"
+    ],
+    "notes": "Aggravated cruelty to dogs and cats is a felony. Simple animal cruelty (§ 97-41-1) is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Miss. Code Ann. § 47-7-37",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Same as underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum of the original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation for a criminal conviction",
+      "Defendant violated a condition of probation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation"
+    ],
+    "notes": "Court may revoke probation and impose any sentence available at time of original conviction. Mississippi uses graduated sanctions."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Miss. Code Ann. § 47-7-27",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Administrative (revocation)",
+    "penalty_min": null,
+    "penalty_max": "Remaining term of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on parole",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal conduct"
+    ],
+    "notes": "Mississippi Parole Board conducts revocation hearings. Violator may serve remainder of original sentence."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Miss. Code Ann. § 97-1-3",
+    "statute_title": "Accessory Before the Fact",
+    "offense_class": "Same as principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant aided, counseled, or encouraged another person in the commission of a crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "An accessory before the fact is punished the same as the principal in Mississippi."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Miss. Code Ann. § 97-1-7",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "Generally one-half the maximum of the completed offense",
+    "penalty_min": null,
+    "penalty_max": "Up to one-half the penalty of the completed offense",
+    "fine_max": "Up to one-half the fine of the completed offense",
+    "elements": [
+      "Defendant designed and endeavored to commit a crime",
+      "Defendant took a substantial step toward its commission",
+      "But failed to complete the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is punished at up to half the penalty of the completed offense under Mississippi law."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Miss. Code Ann. § 97-1-1",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Felony (if target offense is felony); Misdemeanor (if target is misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony conspiracy); 1 year (misdemeanor conspiracy)",
+    "fine_max": "$5,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant agreed with one or more persons to commit a crime",
+      "An overt act was performed in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy to commit a felony is itself a felony. An overt act by any conspirator is required."
+  },
+  {
+    "common_charge_slug": "human-trafficking",
+    "statute_number": "Miss. Code Ann. § 97-3-54.1",
+    "statute_title": "Human Trafficking",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "30 years (labor trafficking); Life (sex trafficking of minor)",
+    "fine_max": "$50,000 (labor); $500,000 (sex trafficking of minor)",
+    "elements": [
+      "Defendant knowingly recruited, enticed, harbored, transported, or obtained another person",
+      "Through force, fraud, or coercion",
+      "For the purpose of involuntary servitude, forced labor, or commercial sexual activity"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Victim is a minor (up to life)",
+      "Serious bodily injury"
+    ],
+    "notes": "Mississippi enacted comprehensive anti-trafficking legislation. Safe harbor provisions for minor victims."
+  },
+  {
+    "common_charge_slug": "unlawful-imprisonment",
+    "statute_number": "Miss. Code Ann. § 97-3-53",
+    "statute_title": "Unlawful Restraint (Lesser Kidnapping)",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant restrained or confined another person",
+      "Without consent and without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Lesser included offense of kidnapping. Covers unlawful restraint without the specific intent elements of kidnapping."
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "Miss. Code Ann. § 41-29-139(c)(1)(A)",
+    "statute_title": "Possession of Opioids — Heroin/Fentanyl",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years (first)",
+    "fine_max": "$3,000",
+    "elements": [
+      "Defendant knowingly possessed an opioid drug",
+      "Including heroin, fentanyl, or prescription opioids without valid prescription",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school or church"
+    ],
+    "notes": "Opioid crisis has increased enforcement and prosecution in Mississippi. Fentanyl-related offenses are a priority."
+  }
+]

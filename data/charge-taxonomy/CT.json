@@ -1,0 +1,1640 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Conn. Gen. Stat. § 14-227a",
+    "statute_title": "Operating Under the Influence of Liquor or Drug",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 2 years (second); 3 years (third+)",
+    "fine_max": "$1,000 (first); $4,000 (second); $8,000 (third+)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While under the influence of intoxicating liquor or any drug or both",
+      "Or had a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": "48 hours or 100 hours community service (first); 120 days (second); 1 year (third+)",
+    "enhancements": [
+      "BAC .16 or higher (enhanced minimum sentence)",
+      "Child under 16 in vehicle (additional charge under § 53-21)",
+      "Third or subsequent offense (felony)",
+      "Prior vehicular manslaughter"
+    ],
+    "notes": "Connecticut uses 'OUI' (Operating Under the Influence). Implied consent under § 14-227b. Refusal results in 45-day license suspension. Lookback period is 10 years. Ignition interlock required for all offenses."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Conn. Gen. Stat. § 14-227a(g)",
+    "statute_title": "OUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "48 hours (or 100 hours community service)",
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While under the influence or with BAC .08+",
+      "No prior OUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "48 hours imprisonment or 100 hours community service; 45-day license suspension; ignition interlock for 1 year",
+    "enhancements": [
+      "BAC .16 or higher (enhanced mandatory minimum)",
+      "Child under 16 in vehicle"
+    ],
+    "notes": "Eligible for the Pretrial Alcohol Education Program (diversionary program) on first offense. Completion results in dismissal."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Conn. Gen. Stat. § 14-227a(g)",
+    "statute_title": "OUI — Repeat Offense",
+    "offense_class": "Misdemeanor (second); Felony (third+)",
+    "penalty_min": "120 days (second); 1 year (third+)",
+    "penalty_max": "2 years (second); 3 years (third+)",
+    "fine_max": "$4,000 (second); $8,000 (third+)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While under the influence or with BAC .08+",
+      "One or more prior OUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "120 days (second, no suspension); 1 year (third+, no suspension)",
+    "enhancements": [
+      "BAC .16 or higher",
+      "Child under 16 in vehicle",
+      "Third or subsequent offense"
+    ],
+    "notes": "Second offense: 120-day mandatory minimum (not suspendable). Third+: 1-year mandatory minimum. License revocation: 3 years (second), permanent (third+). Ignition interlock required."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Conn. Gen. Stat. § 14-227a(a)",
+    "statute_title": "OUI — Drug Impairment",
+    "offense_class": "Same as alcohol OUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol OUI by offense count",
+    "fine_max": "Same as alcohol OUI by offense count",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While under the influence of any drug or the combined influence of alcohol and any drug",
+      "To a degree that rendered the defendant incapable of safely operating a vehicle"
+    ],
+    "mandatory_minimum": "Same as alcohol OUI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs"
+    ],
+    "notes": "No per se drug limit. Prosecution must show actual impairment from drugs. Drug Recognition Expert (DRE) evaluations frequently used. Same penalty structure as alcohol OUI."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Conn. Gen. Stat. § 14-222",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days (first); 1 year (second+)",
+    "fine_max": "$600 (first); $600 (second+)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "On a public highway recklessly, having regard to the width, traffic, and use of the highway, the intersection of streets, and the weather conditions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common plea-down from OUI. May include racing on highways (§ 14-224a)."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Conn. Gen. Stat. § 14-224",
+    "statute_title": "Evading Responsibility — Accident Involving Death or Injury",
+    "offense_class": "Class C Felony (death); Class D Felony (serious physical injury); Class A Misdemeanor (injury); Infraction (property damage)",
+    "penalty_min": null,
+    "penalty_max": "10 years (death); 5 years (serious injury); 1 year (injury)",
+    "fine_max": "$10,000 (death); $5,000 (serious injury); $2,000 (injury)",
+    "elements": [
+      "Defendant was the operator of a motor vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to stop and provide identification and render assistance"
+    ],
+    "mandatory_minimum": "1 year (death)",
+    "enhancements": [
+      "Death of victim (Class C Felony)",
+      "Serious physical injury"
+    ],
+    "notes": "Connecticut uses 'evading responsibility' rather than 'hit-and-run.' Death-resulting is a Class C Felony with 1-year mandatory minimum."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Conn. Gen. Stat. § 14-222a",
+    "statute_title": "Manslaughter in the Second Degree with a Motor Vehicle (DUI-related)",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a motor vehicle while under the influence of intoxicating liquor or drugs",
+      "Recklessly caused the death of another person"
+    ],
+    "mandatory_minimum": "1 year (not suspendable)",
+    "enhancements": [
+      "Prior OUI convictions",
+      "Extremely high BAC"
+    ],
+    "notes": "Connecticut charges DUI-related vehicular deaths under the manslaughter statute with motor vehicle enhancement. Class C Felony with 1-year mandatory minimum."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Conn. Gen. Stat. § 53a-56b",
+    "statute_title": "Manslaughter in the Second Degree with a Motor Vehicle",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "With criminal negligence caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Non-DUI vehicular deaths may be charged as second-degree manslaughter with motor vehicle. May also be charged as misconduct with a motor vehicle (§ 53a-57)."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Conn. Gen. Stat. § 14-215",
+    "statute_title": "Operating While License Suspended or Revoked",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 1 year (subsequent)",
+    "fine_max": "$1,000 (first); $1,000 (subsequent)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While license was under suspension or revocation",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": "30 days (if suspension was OUI-related, under § 14-215(c))",
+    "enhancements": [
+      "OUI-related suspension (30-day mandatory minimum under § 14-215(c))"
+    ],
+    "notes": "Operating on an OUI-related suspension carries a 30-day mandatory minimum. Additional license suspension upon conviction."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Conn. Gen. Stat. § 14-223(b)",
+    "statute_title": "Engaging Police in Pursuit / Eluding",
+    "offense_class": "Class A Misdemeanor (basic); Class C Felony (death or serious injury results)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A Misdemeanor); 10 years (Class C Felony)",
+    "fine_max": "$2,000 (Class A Misdemeanor); $10,000 (Class C Felony)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "When signaled to stop by a uniformed police officer",
+      "Defendant refused to stop or fled"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death or serious physical injury results (Class C Felony)",
+      "High-speed chase"
+    ],
+    "notes": "Basic eluding is a Class A Misdemeanor. If death or serious injury results, elevated to Class C Felony."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Conn. Gen. Stat. § 21a-279(a)",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Class A Misdemeanor (first); Class D Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (subsequent)",
+    "fine_max": "$2,000 (first); $5,000 (subsequent)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "Substance is listed in Connecticut's Controlled Substance Act schedules",
+      "Possession was without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense (Class D Felony)",
+      "Possession near a school (§ 21a-278a)"
+    ],
+    "notes": "First-offense simple possession is a Class A Misdemeanor. Subsequent offenses are Class D Felony. Diversionary programs available for first offenders."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Conn. Gen. Stat. § 21a-279a",
+    "statute_title": "Possession of Less Than 1.5 Ounces of Cannabis",
+    "offense_class": "Civil violation (under 1.5 oz.); Class A Misdemeanor (1.5 oz.-4 oz.)",
+    "penalty_min": null,
+    "penalty_max": "No incarceration (under 1.5 oz.); 1 year (1.5-4 oz.)",
+    "fine_max": "$150 (first, under 1.5 oz.); $500 (subsequent, under 1.5 oz.); $2,000 (1.5-4 oz.)",
+    "elements": [
+      "Defendant possessed cannabis",
+      "Amount exceeds the legal limit for personal use"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Over 4 oz. (criminal possession)",
+      "Under 21 possessing cannabis"
+    ],
+    "notes": "Connecticut legalized recreational cannabis in 2021 for adults 21+. Possession of 1.5 oz. or less is legal for adults. Over 1.5 oz. but under 4 oz. is a civil violation or misdemeanor depending on quantity."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Conn. Gen. Stat. § 21a-279(a)(1)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Class A Misdemeanor (first); Class D Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (subsequent)",
+    "fine_max": "$2,000 (first); $5,000 (subsequent)",
+    "elements": [
+      "Defendant possessed cocaine",
+      "Cocaine is a Schedule II controlled substance in Connecticut",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense (Class D Felony)",
+      "Possession near a school"
+    ],
+    "notes": "First-offense cocaine possession is a Class A Misdemeanor. Drug court and diversionary programs available."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Conn. Gen. Stat. § 21a-279(a)(1)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Class A Misdemeanor (first); Class D Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (subsequent)",
+    "fine_max": "$2,000 (first); $5,000 (subsequent)",
+    "elements": [
+      "Defendant possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense (Class D Felony)",
+      "Presence of manufacturing equipment"
+    ],
+    "notes": "Same penalty structure as other controlled substance possession. Meth manufacturing carries separate, harsher penalties."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Conn. Gen. Stat. § 21a-278(b)",
+    "statute_title": "Sale of Controlled Substance — Penalty Enhancement for Large Quantities",
+    "offense_class": "Unclassified Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "20 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant sold, manufactured, or possessed with intent to sell",
+      "A controlled substance in a quantity meeting trafficking thresholds",
+      "Specific weight thresholds vary by substance"
+    ],
+    "mandatory_minimum": "5 years (not suspendable)",
+    "enhancements": [
+      "Sale to a minor",
+      "Sale near a school (§ 21a-278a, 2-year mandatory minimum)",
+      "Use of a minor in trafficking"
+    ],
+    "notes": "Mandatory minimum of 5 years, not suspendable. Sale near a school adds a 2-year mandatory minimum consecutive."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Conn. Gen. Stat. § 21a-277(a)",
+    "statute_title": "Sale, Possession with Intent to Sell a Controlled Substance",
+    "offense_class": "Class B Felony (narcotic, hallucinogen, amphetamine); Class C Felony (other controlled substances)",
+    "penalty_min": null,
+    "penalty_max": "20 years (Class B); 10 years (Class C)",
+    "fine_max": "$25,000 (Class B); $10,000 (Class C)",
+    "elements": [
+      "Defendant sold, dispensed, or offered to sell a controlled substance",
+      "Or possessed a controlled substance with intent to sell"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale to a minor (§ 21a-278a)",
+      "Sale near a school, day care center, or public housing project (§ 21a-278a)"
+    ],
+    "notes": "Sale of narcotics/hallucinogens/amphetamines is a Class B Felony. Other controlled substances are Class C Felony."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Conn. Gen. Stat. § 21a-277(a)",
+    "statute_title": "Manufacturing a Controlled Substance",
+    "offense_class": "Class B Felony (narcotic/hallucinogen); Class C Felony (other)",
+    "penalty_min": null,
+    "penalty_max": "20 years (Class B); 10 years (Class C)",
+    "fine_max": "$25,000 (Class B); $10,000 (Class C)",
+    "elements": [
+      "Defendant manufactured, compounded, or processed a controlled substance",
+      "Or possessed precursors with intent to manufacture",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing methamphetamine",
+      "Child present during manufacturing",
+      "Manufacturing near a school"
+    ],
+    "notes": "Manufacturing is included in the general sale/distribution statute. Methamphetamine manufacturing has specific provisions."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Conn. Gen. Stat. § 21a-267(a)",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With intent to use it for a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor"
+    ],
+    "notes": "Possession of paraphernalia is a Class C Misdemeanor. Delivery to a minor carries enhanced penalties. Cannabis paraphernalia is legal for adults 21+."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Conn. Gen. Stat. § 21a-277(a)",
+    "statute_title": "Possession with Intent to Sell",
+    "offense_class": "Class B Felony (narcotic/hallucinogen/amphetamine); Class C Felony (other)",
+    "penalty_min": null,
+    "penalty_max": "20 years (Class B); 10 years (Class C)",
+    "fine_max": "$25,000 (Class B); $10,000 (Class C)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With intent to sell or dispense",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near a school, day care center, or public housing (§ 21a-278a)",
+      "Prior drug felony convictions"
+    ],
+    "notes": "Intent can be inferred from quantity, packaging, scales, cash, and other circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Conn. Gen. Stat. § 53a-54a",
+    "statute_title": "Murder",
+    "offense_class": "Class A Felony (Capital Felony abolished 2012)",
+    "penalty_min": "25 years",
+    "penalty_max": "Life without parole; 60 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant with intent to cause the death of another person caused the death of such person",
+      "Or of a third person"
+    ],
+    "mandatory_minimum": "25 years",
+    "enhancements": [
+      "Aggravating factors (§ 53a-54b) — murder of law enforcement, multiple victims, murder during kidnapping or sexual assault",
+      "Felony murder (§ 53a-54c)"
+    ],
+    "notes": "Connecticut abolished the death penalty in 2012. Maximum is life without parole. Felony murder (§ 53a-54c) applies when death occurs during commission of certain felonies."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Conn. Gen. Stat. § 53a-54c",
+    "statute_title": "Felony Murder",
+    "offense_class": "Class A Felony",
+    "penalty_min": "25 years",
+    "penalty_max": "Life without parole; 60 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant committed or attempted to commit a specified felony",
+      "During the commission of such felony, a person other than a participant was killed",
+      "The death was caused by the defendant or another participant"
+    ],
+    "mandatory_minimum": "25 years",
+    "enhancements": [],
+    "notes": "Connecticut's felony murder statute serves as its equivalent to second-degree murder. Applies to deaths during robbery, burglary, kidnapping, sexual assault, arson, and escape."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Conn. Gen. Stat. § 53a-55",
+    "statute_title": "Manslaughter in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant with intent to cause serious physical injury to another person caused the death of such person",
+      "Or under circumstances evincing an extreme indifference to human life, recklessly engaged in conduct creating a grave risk of death and thereby caused the death",
+      "Or committed an act intended to cause death under the influence of extreme emotional disturbance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree manslaughter covers heat-of-passion killings (extreme emotional disturbance) and reckless killings showing extreme indifference."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Conn. Gen. Stat. § 53a-56",
+    "statute_title": "Manslaughter in the Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant recklessly caused the death of another person",
+      "Defendant was aware of and consciously disregarded a substantial and unjustifiable risk"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second-degree manslaughter covers reckless killings. Less culpable than first-degree (extreme indifference). Class C Felony."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Conn. Gen. Stat. § 53a-59",
+    "statute_title": "Assault in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years (mandatory minimum)",
+    "penalty_max": "20 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant with intent to cause serious physical injury caused such injury to another person by means of a deadly weapon or dangerous instrument",
+      "Or recklessly engaged in conduct creating risk of death and caused serious physical injury",
+      "Or caused serious physical injury with extreme indifference to human life"
+    ],
+    "mandatory_minimum": "5 years (not suspendable)",
+    "enhancements": [
+      "Against law enforcement (§ 53a-59a)",
+      "Use of a firearm (mandatory additional time)"
+    ],
+    "notes": "First-degree assault has a 5-year mandatory minimum. Class B Felony. One of the most serious assault charges in Connecticut."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Conn. Gen. Stat. § 53a-61",
+    "statute_title": "Assault in the Third Degree",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant with intent to cause physical injury to another person caused such injury",
+      "Or recklessly caused physical injury to another person",
+      "Or with criminal negligence caused physical injury by means of a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Third-degree assault is the base assault offense. Class A Misdemeanor. Second-degree assault (§ 53a-60) is a Class D Felony."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "Conn. Gen. Stat. § 53a-61",
+    "statute_title": "Assault in the Third Degree (Battery equivalent)",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant intentionally caused physical injury to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Connecticut merged assault and battery into the assault statutes. There is no separate battery offense."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Conn. Gen. Stat. § 53a-136",
+    "statute_title": "Robbery in the Third Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant committed a larceny",
+      "Defendant used or threatened the immediate use of physical force upon another person",
+      "For the purpose of preventing resistance to the taking or compel the owner to deliver the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Third-degree robbery is the base offense. Second degree (§ 53a-135) is aided by another or causes injury (Class C Felony). First degree (§ 53a-134) involves a deadly weapon or serious injury (Class B Felony)."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Conn. Gen. Stat. § 53a-134",
+    "statute_title": "Robbery in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "20 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant committed a robbery",
+      "While armed with a deadly weapon",
+      "Or caused serious physical injury to a non-participant"
+    ],
+    "mandatory_minimum": "5 years (not suspendable)",
+    "enhancements": [
+      "Use of a firearm",
+      "Serious bodily injury"
+    ],
+    "notes": "Class B Felony with 5-year mandatory minimum. Armed with a deadly weapon or causing serious injury elevates to first degree."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Conn. Gen. Stat. § 53a-92",
+    "statute_title": "Kidnapping in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "25 years (or life if certain aggravating factors)",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant abducted another person and restrained such person",
+      "With intent to compel a third person to do or refrain from doing something, or to inflict physical injury",
+      "Or held for ransom"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is under 16",
+      "Ransom demanded",
+      "Victim sexually assaulted"
+    ],
+    "notes": "First-degree kidnapping is a Class A Felony. Second-degree (§ 53a-94) is a Class B Felony involving abduction with intent to prevent liberation."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Conn. Gen. Stat. § 53a-111",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "25 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant intentionally damaged a building",
+      "By starting a fire or causing an explosion",
+      "When another person was present in the building and the defendant knew or had reason to know that fact"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death or serious injury results",
+      "Multiple buildings"
+    ],
+    "notes": "First-degree arson requires knowledge of person in building. Second degree (§ 53a-112, Class B Felony) covers buildings without persons. Third degree (§ 53a-113, Class C Felony) covers property."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Conn. Gen. Stat. § 53a-49 / § 53a-54a",
+    "statute_title": "Attempt to Commit Murder",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant with intent to cause the death of another person",
+      "Engaged in conduct constituting a substantial step toward the commission of murder"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim is a law enforcement officer"
+    ],
+    "notes": "Attempt to commit a Class A Felony is a Class B Felony. Assault in the first degree with intent to cause death may be charged instead."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Conn. Gen. Stat. § 53a-59(a)(1)",
+    "statute_title": "Assault in the First Degree — With Deadly Weapon",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "20 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant with intent to cause serious physical injury",
+      "Caused serious physical injury to another person",
+      "By means of a deadly weapon or dangerous instrument"
+    ],
+    "mandatory_minimum": "5 years (not suspendable)",
+    "enhancements": [
+      "Use of a firearm",
+      "Victim is law enforcement"
+    ],
+    "notes": "5-year mandatory minimum. Deadly weapon includes any firearm, knife, or instrument capable of causing death or serious physical injury."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Conn. Gen. Stat. § 53a-122",
+    "statute_title": "Larceny in the First Degree",
+    "offense_class": "Class B Felony ($20,000+); Class C Felony ($10,000-$20,000); Class D Felony ($2,000-$10,000); Class A Misdemeanor ($500-$2,000); Class B Misdemeanor ($250-$500); Class C Misdemeanor (under $250)",
+    "penalty_min": null,
+    "penalty_max": "20 years (Class B); 10 years (Class C); 5 years (Class D); 1 year (Class A Misd.); 6 months (Class B Misd.); 3 months (Class C Misd.)",
+    "fine_max": "Varies by class",
+    "elements": [
+      "Defendant committed larceny (§ 53a-119)",
+      "Obtained or withheld property from the owner by deception, embezzlement, false pretenses, extortion, or other unauthorized taking"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft from an elderly person (enhanced penalties)",
+      "Prior larceny convictions"
+    ],
+    "notes": "Connecticut uses 'larceny' as the general theft statute. Six degrees based on value. First degree ($20,000+) is a Class B Felony."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Conn. Gen. Stat. § 53a-122",
+    "statute_title": "Larceny in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant committed larceny",
+      "Value of property or services exceeds $20,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Property is a firearm",
+      "Prior larceny convictions"
+    ],
+    "notes": "Connecticut uses 'larceny' with degree-based value thresholds rather than 'grand theft' terminology."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Conn. Gen. Stat. § 53a-125a",
+    "statute_title": "Larceny in the Sixth Degree",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant committed larceny",
+      "Value of property or services is under $250"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior larceny convictions"
+    ],
+    "notes": "Under $250 is sixth-degree larceny, a Class C Misdemeanor."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Conn. Gen. Stat. § 53a-119",
+    "statute_title": "Larceny — Shoplifting",
+    "offense_class": "Same as larceny by value tier",
+    "penalty_min": null,
+    "penalty_max": "Same as larceny by value tier",
+    "fine_max": "Same as larceny by value tier",
+    "elements": [
+      "Defendant concealed, removed, or altered merchandise",
+      "Of a retail establishment",
+      "With intent to deprive the merchant of value without paying"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized retail theft",
+      "Use of booster devices"
+    ],
+    "notes": "Shoplifting is charged as larceny in Connecticut. Penalties follow the same degree/value structure."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Conn. Gen. Stat. § 53a-103",
+    "statute_title": "Burglary in the Third Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant entered or remained unlawfully in a building",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Third-degree is the base burglary. Second degree (§ 53a-102, Class C Felony) involves dwelling or armed. First degree (§ 53a-101, Class B Felony) involves armed with explosives or deadly weapon in a dwelling."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Conn. Gen. Stat. § 53a-101",
+    "statute_title": "Burglary in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "20 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant entered or remained unlawfully in a building",
+      "With intent to commit a crime therein",
+      "Defendant was armed with explosives or a deadly weapon",
+      "Or in the course of committing the offense, used or threatened use of physical force"
+    ],
+    "mandatory_minimum": "5 years (not suspendable)",
+    "enhancements": [
+      "Armed with explosives",
+      "Causes physical injury"
+    ],
+    "notes": "First-degree burglary is Class B Felony with 5-year mandatory minimum. Must involve a weapon or physical force in a building."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Conn. Gen. Stat. § 53a-119(8)",
+    "statute_title": "Larceny — Theft of Motor Vehicle",
+    "offense_class": "Class D Felony (under $10,000); Class C Felony ($10,000-$20,000); Class B Felony ($20,000+)",
+    "penalty_min": null,
+    "penalty_max": "Varies by value",
+    "fine_max": "Varies by value",
+    "elements": [
+      "Defendant committed larceny of a motor vehicle",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "No separate motor vehicle theft statute. Charged as larceny based on value."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Conn. Gen. Stat. § 53a-119(8)",
+    "statute_title": "Larceny by Receiving Stolen Property",
+    "offense_class": "Same as larceny by value tier",
+    "penalty_min": null,
+    "penalty_max": "Same as larceny by value tier",
+    "fine_max": "Same as larceny by value tier",
+    "elements": [
+      "Defendant received, retained, or disposed of stolen property",
+      "Knowing that it was stolen or believing it was probably stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Receiving stolen property is included under the general larceny statute § 53a-119(8). Degree determined by value."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Conn. Gen. Stat. § 53a-115",
+    "statute_title": "Criminal Mischief in the First Degree",
+    "offense_class": "Class D Felony ($10,000+); Class A Misdemeanor ($1,000-$10,000); Class B Misdemeanor ($250-$1,000); Class C Misdemeanor (under $250)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 1 year (Class A Misd.)",
+    "fine_max": "$5,000 (Class D); $2,000 (Class A Misd.)",
+    "elements": [
+      "Defendant intentionally or recklessly damaged the property of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to religious property"
+    ],
+    "notes": "Connecticut uses 'criminal mischief.' First degree covers $10,000+ damage. Four degrees based on damage amount."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Conn. Gen. Stat. § 53a-107",
+    "statute_title": "Criminal Trespass in the First Degree",
+    "offense_class": "Class A Misdemeanor (first degree); Class B Misdemeanor (second degree); Class C Misdemeanor (third degree)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 6 months (second); 3 months (third)",
+    "fine_max": "$2,000 (first); $1,000 (second); $500 (third)",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully",
+      "In a building (first degree) or premises (second degree) or posted land (third degree)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Three degrees. First degree (building) is Class A Misdemeanor. Third degree (posted land) is Class C Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Conn. Gen. Stat. § 53a-115",
+    "statute_title": "Criminal Mischief in the First Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant intentionally damaged property of another",
+      "Damage exceeds $10,000",
+      "Or damage was by means of explosive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage by means of explosive",
+      "Damage to utility or communication property"
+    ],
+    "notes": "First degree: $10,000+ or explosive. Second degree (§ 53a-116): $1,000-$10,000 (Class A Misdemeanor). Third degree (§ 53a-117): $250-$1,000 (Class B Misdemeanor)."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Conn. Gen. Stat. § 46b-38a",
+    "statute_title": "Family Violence — Assault, Threatening, or Harassment of a Family or Household Member",
+    "offense_class": "Depends on underlying offense (assault, threatening, etc.)",
+    "penalty_min": null,
+    "penalty_max": "Depends on underlying offense",
+    "fine_max": "Depends on underlying offense",
+    "elements": [
+      "Defendant committed an act of family violence",
+      "Against a family or household member (spouse, former spouse, parent of common child, cohabitant, or dating partner)",
+      "Including assault, threatening, harassment, stalking, or sexual assault"
+    ],
+    "mandatory_minimum": "Mandatory arrest under § 46b-38b",
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Serious physical injury",
+      "Strangulation (§ 53a-64bb)",
+      "Prior family violence convictions"
+    ],
+    "notes": "Connecticut addresses domestic violence through the family violence statute (§ 46b-38a). Not a standalone offense but triggers mandatory arrest, protective orders, and enhanced processing. Family Violence Education Program (diversionary) available for first offense."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Conn. Gen. Stat. § 53a-59 / § 46b-38a",
+    "statute_title": "Assault — Family Violence",
+    "offense_class": "Class B Felony (first degree); Class D Felony (second degree); Class A Misdemeanor (third degree)",
+    "penalty_min": null,
+    "penalty_max": "20 years (first degree); 5 years (second degree); 1 year (third degree)",
+    "fine_max": "Varies by degree",
+    "elements": [
+      "Defendant caused physical injury to a family or household member",
+      "With the intent required for the applicable degree of assault"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Strangulation or suffocation (§ 53a-64bb, Class D Felony)",
+      "Prior family violence convictions"
+    ],
+    "notes": "Domestic battery charged as assault of the applicable degree with family violence designation triggering additional protections."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Conn. Gen. Stat. § 53-21",
+    "statute_title": "Risk of Injury to a Minor",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant willfully or unlawfully caused or permitted a child under 16",
+      "To be placed in a situation that its life or health was endangered",
+      "Or committed an act likely to impair the health or morals of a child under 16"
+    ],
+    "mandatory_minimum": "1 year (not suspendable) if involving sexual contact",
+    "enhancements": [
+      "Involving sexual contact (mandatory minimum)",
+      "Resulting in serious physical injury"
+    ],
+    "notes": "Broadly applied statute covering various forms of child endangerment. One of the most commonly charged child-related offenses in Connecticut."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Conn. Gen. Stat. § 53-20",
+    "statute_title": "Cruelty to Persons",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was responsible for the care of a child under 19",
+      "Defendant intentionally maltreated, tortured, overworked, or cruelly punished the child",
+      "Causing physical harm or risk thereof"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury",
+      "Pattern of abuse"
+    ],
+    "notes": "Cruelty to persons statute covers child abuse. More serious injuries may also be charged under assault statutes. Mandatory reporting requirements apply."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Conn. Gen. Stat. § 53a-223",
+    "statute_title": "Violation of a Protective Order",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "A valid protective or restraining order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant willfully violated the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation involving physical contact or threat",
+      "Multiple violations"
+    ],
+    "notes": "All violations of protective orders are Class D Felonies in Connecticut. Mandatory arrest upon violation."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Conn. Gen. Stat. § 53a-181d",
+    "statute_title": "Stalking in the Second Degree",
+    "offense_class": "Class A Misdemeanor (second degree); Class D Felony (first degree)",
+    "penalty_min": null,
+    "penalty_max": "1 year (second degree); 5 years (first degree)",
+    "fine_max": "$2,000 (second degree); $5,000 (first degree)",
+    "elements": [
+      "Defendant knowingly engaged in a course of conduct directed at a specific person",
+      "That would cause a reasonable person to fear for their physical safety",
+      "Or suffer emotional distress"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior stalking conviction (first degree, Class D Felony)",
+      "Stalking in violation of court order (first degree)"
+    ],
+    "notes": "Second-degree stalking is Class A Misdemeanor. First degree (§ 53a-181c) is Class D Felony when done in violation of court order or with prior conviction."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Conn. Gen. Stat. § 53a-183",
+    "statute_title": "Harassment in the Second Degree",
+    "offense_class": "Class C Misdemeanor (second degree); Class D Felony (first degree)",
+    "penalty_min": null,
+    "penalty_max": "3 months (second degree); 5 years (first degree)",
+    "fine_max": "$500 (second degree); $5,000 (first degree)",
+    "elements": [
+      "Defendant with intent to harass, annoy, or alarm another person",
+      "By telephone or electronic means communicated threats or obscenities",
+      "Or made repeated contacts to the other person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second-degree harassment covers most verbal/electronic harassment. First degree (§ 53a-182b) involves threats of physical contact or following."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Conn. Gen. Stat. § 53a-321",
+    "statute_title": "Abuse, Neglect, or Exploitation of an Elderly Person",
+    "offense_class": "Class D Felony (abuse/neglect); Class B Felony (causing death)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 20 years (Class B)",
+    "fine_max": "$5,000 (Class D); $15,000 (Class B)",
+    "elements": [
+      "Defendant was responsible for the care of an elderly person (60+)",
+      "Defendant abused, neglected, or exploited such person",
+      "Resulting in harm to the elderly person's health or welfare"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death results (Class B Felony)",
+      "Financial exploitation"
+    ],
+    "notes": "Mandatory reporting under § 17b-451. Includes physical abuse, neglect, emotional abuse, and financial exploitation."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Conn. Gen. Stat. § 53a-217",
+    "statute_title": "Criminal Possession of a Firearm or Electronic Defense Weapon",
+    "offense_class": "Class D Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant was a convicted felon, had been adjudicated delinquent for a serious juvenile offense, was subject to a protective order, or was otherwise prohibited"
+    ],
+    "mandatory_minimum": "2 years (not suspendable)",
+    "enhancements": [],
+    "notes": "2-year mandatory minimum. Connecticut has strict gun laws. Permit required for handguns and most long guns."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Conn. Gen. Stat. § 53a-217(a)(1)",
+    "statute_title": "Criminal Possession of a Firearm — Convicted Felon",
+    "offense_class": "Class D Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm or electronic defense weapon",
+      "Defendant had previously been convicted of a felony"
+    ],
+    "mandatory_minimum": "2 years (not suspendable)",
+    "enhancements": [],
+    "notes": "2-year mandatory minimum. Applies to all convicted felons. Connecticut also prohibits those convicted of certain misdemeanors from possessing firearms."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Conn. Gen. Stat. § 29-35",
+    "statute_title": "Carrying a Pistol or Revolver Without a Permit",
+    "offense_class": "Class D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant carried a pistol or revolver",
+      "Upon the person or in a vehicle",
+      "Without a valid Connecticut pistol permit"
+    ],
+    "mandatory_minimum": "1 year (not suspendable)",
+    "enhancements": [],
+    "notes": "Connecticut requires a pistol permit for carrying. 1-year mandatory minimum. SB 1 (2023) aligned Connecticut with federal NYSRPA v. Bruen requirements."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Conn. Gen. Stat. § 53-203",
+    "statute_title": "Discharge of Firearm — Reckless/Negligent",
+    "offense_class": "Class A Misdemeanor (basic); Class D Felony (into dwelling)",
+    "penalty_min": null,
+    "penalty_max": "1 year (basic); 5 years (into dwelling)",
+    "fine_max": "$2,000 (basic); $5,000 (into dwelling)",
+    "elements": [
+      "Defendant discharged a firearm",
+      "In a reckless or negligent manner",
+      "Creating risk of harm to persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Discharge into a dwelling (Class D Felony)",
+      "Injury or death results"
+    ],
+    "notes": "Basic reckless discharge is a Class A Misdemeanor. Discharge into an occupied dwelling is a Class D Felony."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Conn. Gen. Stat. § 53a-129b",
+    "statute_title": "Identity Theft in the Second Degree",
+    "offense_class": "Class D Felony (second degree); Class B Felony (first degree, $10,000+); Class C Felony (third degree)",
+    "penalty_min": null,
+    "penalty_max": "5 years (second degree); 20 years (first degree); 10 years (third degree)",
+    "fine_max": "$5,000 (second degree); $15,000 (first degree); $10,000 (third degree)",
+    "elements": [
+      "Defendant knowingly used personal identifying information of another person",
+      "Without authorization",
+      "To obtain anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly (60+)",
+      "Multiple victims",
+      "Value exceeds $10,000 (first degree)"
+    ],
+    "notes": "Three degrees based on value and circumstances. Mandatory restitution. Enhanced penalties for targeting elderly victims."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Conn. Gen. Stat. § 53a-119(1)",
+    "statute_title": "Larceny by Embezzlement",
+    "offense_class": "Same as larceny by degree based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as larceny by value tier",
+    "fine_max": "Same as larceny by value tier",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant wrongfully took, obtained, or withheld the property",
+      "From the owner with intent to deprive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public employee or fiduciary",
+      "Value exceeds $20,000"
+    ],
+    "notes": "Charged under the general larceny statute. Embezzlement is a theory of larceny under § 53a-119(1)."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Conn. Gen. Stat. § 53a-138",
+    "statute_title": "Forgery in the First Degree",
+    "offense_class": "Class D Felony (first degree); Class A Misdemeanor (second degree); Class B Misdemeanor (third degree)",
+    "penalty_min": null,
+    "penalty_max": "5 years (first degree); 1 year (second degree); 6 months (third degree)",
+    "fine_max": "$5,000 (first degree)",
+    "elements": [
+      "Defendant with intent to defraud, deceive, or injure",
+      "Falsely made, completed, or altered a written instrument",
+      "Which is or purports to be a government-issued document, deed, will, or financial instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First degree covers government documents and financial instruments. Second degree (§ 53a-139) covers deeds, wills, and contracts. Third degree (§ 53a-140) covers other documents."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Conn. Gen. Stat. § 53a-141",
+    "statute_title": "Criminal Possession of a Forged Instrument in the First Degree",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a forged instrument",
+      "Knowing it to be forged",
+      "With intent to defraud, deceive, or injure"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Counterfeiting of currency is primarily federal. State charges cover forged documents."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Conn. Gen. Stat. § 53a-128",
+    "statute_title": "Issuing a Bad Check",
+    "offense_class": "Class A Misdemeanor ($250+); Class B Misdemeanor (under $250)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A Misd.); 6 months (Class B Misd.)",
+    "fine_max": "$2,000 (Class A Misd.); $1,000 (Class B Misd.)",
+    "elements": [
+      "Defendant issued a check, draft, or order for payment",
+      "Knowing there were insufficient funds",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Defendant must have 10 days after notice to make good on the check before prosecution."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Conn. Gen. Stat. § 53a-215",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class D Felony (over $1,000); Class A Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 1 year (Class A Misd.)",
+    "fine_max": "$5,000 (Class D); $2,000 (Class A Misd.)",
+    "elements": [
+      "Defendant knowingly and with intent to defraud",
+      "Presented or caused to be presented a false or fraudulent claim",
+      "To an insurance company"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized fraud scheme"
+    ],
+    "notes": "Includes filing false claims, staged accidents, and arson-for-profit. Mandatory restitution."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Conn. Gen. Stat. § 53a-128c",
+    "statute_title": "Misuse of a Credit Card",
+    "offense_class": "Same as larceny by value tier",
+    "penalty_min": null,
+    "penalty_max": "Same as larceny by value tier",
+    "fine_max": "Same as larceny by value tier",
+    "elements": [
+      "Defendant used a credit card or debit card",
+      "Knowing it was stolen, forged, revoked, or canceled",
+      "To obtain goods, services, or anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple cards used",
+      "Total fraud exceeding $10,000"
+    ],
+    "notes": "Credit card fraud is classified using the same value tiers as larceny."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Conn. Gen. Stat. § 53a-252",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$250,000 or twice the value of the property",
+    "elements": [
+      "Defendant conducted or attempted to conduct a financial transaction",
+      "Involving proceeds of criminal activity",
+      "With knowledge that the property represents proceeds of criminal activity",
+      "With intent to promote the criminal activity or to conceal the source"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Class B Felony. Connecticut enacted money laundering provisions that align with federal statutes."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Conn. Gen. Stat. § 53a-119(2)",
+    "statute_title": "Larceny by False Pretenses",
+    "offense_class": "Same as larceny by degree based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as larceny by value tier",
+    "fine_max": "Same as larceny by value tier",
+    "elements": [
+      "Defendant obtained property by creating or confirming a false impression",
+      "As to fact, value, intention, or law",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly",
+      "Fraud against government entity"
+    ],
+    "notes": "General fraud charged as larceny by false pretenses under § 53a-119(2)."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Conn. Gen. Stat. § 53a-72a",
+    "statute_title": "Sexual Assault in the Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant compelled another person to submit to sexual contact",
+      "By use of force or threat of use of force against such person",
+      "Or the victim was physically helpless or mentally incapacitated"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 16 (§ 53a-71, first degree)",
+      "Defendant in position of authority"
+    ],
+    "notes": "Second-degree sexual assault covers non-penetration offenses by force. First degree (§ 53a-70) covers forcible penetration."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Conn. Gen. Stat. § 53a-70",
+    "statute_title": "Sexual Assault in the First Degree",
+    "offense_class": "Class A Felony (aggravated); Class B Felony (basic)",
+    "penalty_min": "10 years (aggravated); 5 years (basic)",
+    "penalty_max": "25 years (aggravated); 20 years (basic)",
+    "fine_max": "$20,000 (aggravated); $15,000 (basic)",
+    "elements": [
+      "Defendant compelled another person to engage in sexual intercourse",
+      "By use of force or threat of use of force against such person",
+      "Or the victim was physically helpless or mentally incapacitated"
+    ],
+    "mandatory_minimum": "10 years (aggravated, not suspendable); 5 years (basic, not suspendable)",
+    "enhancements": [
+      "Use of a dangerous instrument (aggravated, Class A Felony)",
+      "Serious physical injury inflicted",
+      "Aided by another"
+    ],
+    "notes": "Connecticut uses 'sexual assault in the first degree' for what is commonly called rape. Aggravated sexual assault (§ 53a-70a) involving weapons, serious injury, or multiple perpetrators is Class A Felony. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Conn. Gen. Stat. § 53a-186",
+    "statute_title": "Public Indecency",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant performed an act of public indecency",
+      "Exposed private parts in a public place",
+      "With intent to arouse or gratify sexual desire, or to affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure to a minor"
+    ],
+    "notes": "Class B Misdemeanor. Exposure to children may result in more serious charges under risk of injury to a minor (§ 53-21)."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Conn. Gen. Stat. § 53a-82",
+    "statute_title": "Prostitution",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant engaged in or offered to engage in sexual conduct",
+      "In exchange for a fee"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Patronizing a minor for prostitution (§ 53a-83b, Class B Felony)"
+    ],
+    "notes": "Both the person offering and the patron can be charged. Patronizing a prostitute (§ 53a-83a) is a Class A Misdemeanor. Patronizing a minor is a Class B Felony."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Conn. Gen. Stat. § 53a-196d",
+    "statute_title": "Possession of Child Pornography in the Second Degree",
+    "offense_class": "Class D Felony (possession, second degree); Class C Felony (possession, first degree); Class B Felony (distribution); Class A Felony (production)",
+    "penalty_min": null,
+    "penalty_max": "5 years (second degree); 10 years (first degree); 20 years (distribution); 25 years (production)",
+    "fine_max": "Varies by degree",
+    "elements": [
+      "Defendant knowingly possessed material depicting a minor engaged in sexually explicit conduct",
+      "Defendant knew the character and content of the material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "50 or more images/videos (first degree)",
+      "Distribution for commercial gain",
+      "Production involving minors under 16"
+    ],
+    "notes": "Federal charges are common. Sex offender registration required. First degree (§ 53a-196c) covers 50+ items."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Conn. Gen. Stat. § 54-253",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was required to register under the Sex Offender Registration Act",
+      "Defendant knowingly failed to register or update registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent failure to register"
+    ],
+    "notes": "Must register within 3 days. Connecticut's Megan's Law requires registration and community notification."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Conn. Gen. Stat. § 53a-71",
+    "statute_title": "Sexual Assault in the Second Degree — Statutory",
+    "offense_class": "Class C Felony (if 3+ years age difference); Class D Felony (if 2-3 years age difference)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 5 years (Class D)",
+    "fine_max": "$10,000 (Class C); $5,000 (Class D)",
+    "elements": [
+      "Defendant engaged in sexual intercourse with another person",
+      "Other person was 13-15 years old",
+      "Defendant was more than 2 years older than the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Age of consent in Connecticut is 16. For victims aged 13-15, the offense requires a specified age difference. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Conn. Gen. Stat. § 53a-182",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant with intent to cause inconvenience, annoyance, or alarm",
+      "Or recklessly creating a risk thereof",
+      "Engaged in fighting or violent, tumultuous, or threatening behavior",
+      "Or made unreasonable noise or obscene gestures"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common add-on charge. Often paired with resisting arrest or breach of peace (§ 53a-181)."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Conn. Gen. Stat. § 53a-167a",
+    "statute_title": "Interfering with an Officer / Resisting Arrest",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant obstructed, resisted, hindered, or endangered",
+      "Any peace officer or firefighter in the performance of their duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Physical injury to the officer"
+    ],
+    "notes": "Connecticut uses 'interfering with an officer' which covers resisting arrest. Physical resistance causing injury may lead to additional assault charges."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Conn. Gen. Stat. § 53a-166",
+    "statute_title": "Obstruction of Justice",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant intentionally obstructed, impaired, or perverted",
+      "The administration of justice"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers tampering with witnesses, concealing evidence, and other interference with judicial proceedings."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Conn. Gen. Stat. § 51-33a",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Varies (civil or criminal; summary or constructive)",
+    "penalty_min": null,
+    "penalty_max": "6 months (criminal contempt)",
+    "fine_max": "$500 (summary)",
+    "elements": [
+      "Defendant willfully disobeyed a lawful order of the court",
+      "Or engaged in disruptive behavior in the courtroom",
+      "Or failed to appear as ordered"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminal contempt is punitive; civil contempt is coercive. Right to jury trial for serious criminal contempt."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Conn. Gen. Stat. § 53a-214",
+    "statute_title": "Intoxication — Public Safety Concern",
+    "offense_class": "Not a criminal offense in most circumstances",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Person appears in a public place",
+      "Under the influence of alcohol or drugs",
+      "To the degree that the person is incapacitated or a danger"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Connecticut does not have a general public intoxication crime. Intoxicated persons may be taken to a treatment facility. Disorderly conduct may apply if behavior is disruptive."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Conn. Gen. Stat. § 53a-172",
+    "statute_title": "Failure to Appear in the First Degree",
+    "offense_class": "Class D Felony (first degree, felony case); Class A Misdemeanor (second degree, misdemeanor case)",
+    "penalty_min": null,
+    "penalty_max": "5 years (first degree); 1 year (second degree)",
+    "fine_max": "$5,000 (first degree); $2,000 (second degree)",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Required to appear in connection with a charge of a felony",
+      "Defendant intentionally failed to appear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First degree: FTA in a felony case (Class D Felony). Second degree (§ 53a-173): FTA in a misdemeanor case (Class A Misdemeanor). Bench warrant issued."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Conn. Gen. Stat. § 53a-180c",
+    "statute_title": "Filing a False Police Report",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant reported false information to a law enforcement agency",
+      "Knowing the information was false",
+      "Regarding the alleged commission of a felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Filing a false report of a felony is Class A Misdemeanor. False report of a misdemeanor (§ 53a-180d) is Class B Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Conn. Gen. Stat. § 53a-62",
+    "statute_title": "Threatening in the Second Degree",
+    "offense_class": "Class A Misdemeanor (second degree); Class D Felony (first degree)",
+    "penalty_min": null,
+    "penalty_max": "1 year (second degree); 5 years (first degree)",
+    "fine_max": "$2,000 (second degree); $5,000 (first degree)",
+    "elements": [
+      "Defendant threatened to commit any crime of violence",
+      "With intent to terrorize another person",
+      "Or in reckless disregard of the risk of causing terror"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat to commit a crime of violence involving a deadly weapon (first degree, § 53a-61aa, Class D Felony)"
+    ],
+    "notes": "Second-degree threatening covers general threats. First degree (§ 53a-61aa) involves threats with deadly weapons."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Conn. Gen. Stat. § 53a-156",
+    "statute_title": "Perjury",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant made a material false statement under oath",
+      "In an official proceeding",
+      "Defendant did not believe the statement to be true"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Perjury in any official proceeding is a Class D Felony. False statement (§ 53a-157b) covers other sworn statements."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Conn. Gen. Stat. § 53a-148",
+    "statute_title": "Bribery of a Public Servant",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer any benefit",
+      "Upon a public servant",
+      "With intent to influence the public servant's official action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the giver and receiver can be charged. Receiving a bribe (§ 53a-147) is also a Class C Felony."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Conn. Gen. Stat. § 53a-169",
+    "statute_title": "Escape in the First Degree",
+    "offense_class": "Class C Felony (first degree); Class D Felony (second degree)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first degree); 5 years (second degree)",
+    "fine_max": "$10,000 (first degree); $5,000 (second degree)",
+    "elements": [
+      "Defendant escaped from custody",
+      "Using physical force or threat of physical force",
+      "Or from a correctional institution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a weapon",
+      "Injury to officer"
+    ],
+    "notes": "First degree involves use of force. Second degree (§ 53a-170) is escape without force."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Conn. Gen. Stat. § 53-247",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Class D Felony (intentional torture/killing); Class A Misdemeanor (other cruelty)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 1 year (Class A Misd.)",
+    "fine_max": "$5,000 (Class D); $2,000 (Class A Misd.)",
+    "elements": [
+      "Defendant unjustifiably injured, maimed, mutilated, or killed an animal",
+      "Or failed to provide proper food, drink, or shelter"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Intentional torture or malicious killing (Class D Felony)",
+      "Animal fighting (§ 53-247, Class D Felony)"
+    ],
+    "notes": "Intentional cruelty is a Class D Felony. Negligent cruelty is a Class A Misdemeanor. Animal fighting is separately classified."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Conn. Gen. Stat. § 53a-32",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining suspended sentence on underlying offense",
+    "fine_max": "Remaining fine on underlying offense",
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation was willful"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation",
+      "Absconding from supervision"
+    ],
+    "notes": "Court may revoke, modify, or continue probation. Defendant entitled to a violation hearing. Standard of proof is preponderance of the evidence."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Conn. Gen. Stat. § 54-131",
+    "statute_title": "Violation of Parole / Special Parole",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining sentence or remaining special parole period",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole or special parole",
+      "Defendant violated a condition of parole",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New felony while on parole",
+      "Absconding"
+    ],
+    "notes": "Board of Pardons and Paroles makes revocation decisions. Connecticut has 'special parole' which is a defined post-incarceration supervision period that is part of the original sentence."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Conn. Gen. Stat. § 53a-8",
+    "statute_title": "Criminal Liability for Acts of Another",
+    "offense_class": "Same as principal offense",
+    "penalty_min": "Same as principal offense",
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant solicited, requested, commanded, importune, or intentionally aided another person",
+      "To engage in conduct constituting an offense",
+      "With the mental state required for the commission of the offense"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "A person is criminally liable for the conduct of another when they are an accomplice. Punishable to the same extent as the principal."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Conn. Gen. Stat. § 53a-49",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One class below the attempted offense (attempt of Class A = Class B; etc.)",
+    "penalty_min": null,
+    "penalty_max": "Varies — one class below the attempted offense",
+    "fine_max": "Varies by class",
+    "elements": [
+      "Defendant acting with the kind of mental state required for commission of the crime",
+      "Intentionally engaged in conduct which would constitute the crime if attendant circumstances were as the defendant believed them to be",
+      "Intentionally did or omitted to do anything constituting a substantial step toward the commission"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt reduces the offense classification by one level. Attempt to commit a Class A Felony is a Class B Felony."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Conn. Gen. Stat. § 53a-48",
+    "statute_title": "Conspiracy",
+    "offense_class": "One class below the target offense",
+    "penalty_min": null,
+    "penalty_max": "Varies — one class below the target offense",
+    "fine_max": "Varies by class",
+    "elements": [
+      "Defendant with intent that conduct constituting a crime be performed",
+      "Agreed with one or more persons to engage in or cause the performance of such conduct",
+      "Any of them committed an overt act in pursuance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy reduces the offense by one class level. Requires an overt act. Renunciation is a defense if defendant thwarts the success of the conspiracy."
+  }
+]

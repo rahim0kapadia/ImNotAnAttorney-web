@@ -1,0 +1,1991 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "Officers in South Dakota are trained on standardized NHTSA field sobriety testing, and courts give significant weight to the HGN (horizontal gaze nystagmus) test as a scientific indicator.",
+      "Prosecutors may charge based solely on actual physical control (engine off, keys in pocket can suffice) — the state need not prove the vehicle was in motion."
+    ],
+    "defense_opportunities": [
+      "Attack chemical test foundation: South Dakota requires a 20-minute observation period before breath testing under SD Admin Rules 64:37, and any contamination invalidates results.",
+      "Source code/maintenance records for the Intoxilyzer 8000 are discoverable in South Dakota and can reveal calibration issues.",
+      "Question whether the defendant was in 'actual physical control' if the vehicle was parked, off, and the defendant was not in the driver's seat.",
+      "Review the dashcam and bodycam footage against the officer's report — discrepancies in recorded driving patterns versus narrative reports often produce suppression motions."
+    ],
+    "common_defenses": [
+      "Lack of reasonable suspicion for the initial stop (Fourth Amendment suppression).",
+      "Improper administration of field sobriety tests (medical conditions, footwear, surface, lighting).",
+      "Rising blood alcohol defense — BAC was below limit while driving and rose during the delay before testing.",
+      "Medical conditions mimicking intoxication (diabetes, GERD/acid reflux causing mouth alcohol, neurological conditions).",
+      "Chain of custody or calibration failures with the breath or blood testing instrument."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "First-offense DUI in South Dakota requires no proof of prior history, simplifying the prosecution's case.",
+      "Class 1 Misdemeanor classification allows prosecution in magistrate court with streamlined procedures.",
+      "Prosecutors can use the implied consent advisory and refusal as substantive evidence.",
+      "Courts routinely admit BAC evidence with minimal foundational challenges in first-offense cases."
+    ],
+    "defense_opportunities": [
+      "Negotiation toward reckless driving (a 'wet reckless') is possible when chemical test results are weak.",
+      "Challenge the 20-minute observation rule for breath testing — common compliance failures.",
+      "Invoke administrative hearing rights within 30 days to contest license revocation separately from criminal case."
+    ],
+    "common_defenses": [
+      "Insufficient probable cause for arrest.",
+      "Breath test machine maintenance and calibration deficiencies.",
+      "Officer failure to follow NHTSA SFST protocol.",
+      "Necessity or duress (rare but recognized when fleeing immediate harm)."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "South Dakota maintains a centralized DUI tracking system through the Department of Public Safety, making prior convictions easy to prove.",
+      "Mandatory minimum jail time applies to repeat offenders, eliminating probation-only outcomes.",
+      "Permanent ignition interlock requirements apply for third+ offenses.",
+      "Felony classification enables longer probation tails and broader collateral consequences."
+    ],
+    "defense_opportunities": [
+      "Challenge the validity of prior convictions on Boykin grounds (proper plea colloquy, knowing waiver of rights).",
+      "Out-of-state prior convictions must be substantially similar to SD DUI law to count as predicates — analyze each carefully.",
+      "Negotiate down to a non-DUI alcohol offense if the chemical test is suppressible.",
+      "24/7 Sobriety Program participation can mitigate sentencing exposure even for repeat offenders.",
+      "Challenge the 10-year lookback calculation when prior convictions are near the threshold."
+    ],
+    "common_defenses": [
+      "Constitutional invalidity of prior convictions used for enhancement.",
+      "Double jeopardy challenges to administrative + criminal penalties.",
+      "Same defenses as first-offense DUI applied to current charge.",
+      "Statute of limitations on stale priors.",
+      "Identity dispute when prior convictions belong to a different person with similar identifiers."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "Drug Recognition Experts (DREs) trained under the IACP protocol provide expert testimony on impairment.",
+      "Blood testing for drugs is admissible without breath test challenges.",
+      "Prescription medications can support DUI-drugs charges even when lawfully prescribed.",
+      "The state need not specify which drug caused impairment — any controlled substance suffices."
+    ],
+    "defense_opportunities": [
+      "Challenge per se metabolite rule when defendant has medical marijuana or prescription history showing residual metabolites without impairment.",
+      "Attack DRE protocol — the 12-step DRE evaluation has known scientific weaknesses.",
+      "Question chain of custody for blood samples through the State Health Lab."
+    ],
+    "common_defenses": [
+      "Lack of impairment despite presence of metabolites (especially marijuana).",
+      "Prescription medication defense with valid prescription and no warning labels violated.",
+      "Improper blood draw procedures (untrained phlebotomist, contaminated swab, wrong vial).",
+      "Involuntary intoxication.",
+      "Polypharmacy confounding DRE conclusions."
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "Officer testimony alone often suffices for conviction; no scientific evidence required.",
+      "Often used as a fallback when DUI evidence is weak.",
+      "Court points and license suspension consequences create plea leverage.",
+      "Can be enhanced when combined with other moving violations on the same incident."
+    ],
+    "defense_opportunities": [
+      "'Wilful or wanton' is a high mens rea standard — mere negligence or carelessness is insufficient.",
+      "Challenge officer's vantage point and ability to observe alleged conduct.",
+      "Dashcam evidence frequently contradicts officer narratives about driving behavior.",
+      "Weather, road conditions, and emergency circumstances are mitigating factors."
+    ],
+    "common_defenses": [
+      "Insufficient evidence of wilful or wanton conduct.",
+      "Mistake of fact regarding road conditions or traffic.",
+      "Necessity (avoiding a greater harm).",
+      "Mechanical failure of the vehicle.",
+      "Officer misidentification of driver."
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Class 6 Felony classification (injury) and Class 5 Felony (death) make this a serious felony with significant exposure.",
+      "Vehicle damage and witness IDs frequently link defendants conclusively.",
+      "Knowledge of the accident can be inferred from circumstances (impact, debris, vehicle damage).",
+      "Surveillance cameras and license plate readers increasingly identify fleeing vehicles."
+    ],
+    "defense_opportunities": [
+      "Attack the knowledge element — defendant must have known an accident occurred involving injury.",
+      "Identification defenses are common when only the vehicle is identified, not the driver.",
+      "Defendant returning to the scene within a reasonable time may negate intent.",
+      "Question whether the alleged 'accident' actually involved another vehicle or person.",
+      "Medical emergency exception when defendant left to seek aid."
+    ],
+    "common_defenses": [
+      "Lack of knowledge that an accident occurred.",
+      "Mistaken identity of the driver.",
+      "Necessity (medical emergency, threat to safety at scene).",
+      "Defendant did stop and provide information adequately.",
+      "No injury occurred (downgrade to misdemeanor leaving scene)."
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "Class 3 Felony with significant prison exposure (up to 15 years).",
+      "Medical examiner testimony establishing cause of death is typically uncontested.",
+      "Accident reconstruction experts provide compelling visual evidence.",
+      "BAC evidence carries enormous weight when paired with a fatality."
+    ],
+    "defense_opportunities": [
+      "Causation is often the strongest defense — was the DUI actually the cause, or were other factors (other driver's actions, road conditions, mechanical failure) responsible?",
+      "Challenge BAC results aggressively given the stakes.",
+      "Independent accident reconstruction may show alternative causes.",
+      "Victim's contributory conduct (failure to wear seatbelt, sudden lane change) can mitigate or eliminate causation.",
+      "Negotiate to vehicular manslaughter (Class 4 Felony) when DUI evidence is borderline."
+    ],
+    "common_defenses": [
+      "Lack of causation (intervening cause).",
+      "Insufficient proof of impairment at time of crash.",
+      "Constitutional challenges to blood draw without warrant.",
+      "Mechanical failure of the vehicle.",
+      "Sudden medical emergency (involuntary intoxication, seizure)."
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Lower mens rea standard than vehicular homicide makes conviction easier.",
+      "Class 4 Felony exposure still significant (up to 10 years).",
+      "Frequently charged as a fallback to vehicular homicide when DUI cannot be proven.",
+      "Eyewitness testimony about driving behavior is typically admissible without scientific foundation."
+    ],
+    "defense_opportunities": [
+      "Criminal negligence requires gross deviation from reasonable care — argue the conduct was at most ordinary negligence (civil, not criminal).",
+      "Causation defenses are equally strong here as in vehicular homicide.",
+      "Accident reconstruction can show intervening or superseding causes.",
+      "Mechanical failure or unexpected medical event defenses.",
+      "Victim conduct contributing to the accident."
+    ],
+    "common_defenses": [
+      "Conduct did not rise to criminal negligence.",
+      "Intervening superseding cause.",
+      "Mechanical failure.",
+      "Sudden unexpected medical emergency.",
+      "Victim's own negligence as the proximate cause."
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "DPS records easily prove the suspended status at the time of stop.",
+      "Class 2 Misdemeanor classification allows quick disposition.",
+      "Often charged alongside the original offense that caused the suspension, compounding penalties.",
+      "Subsequent offenses escalate to Class 1 Misdemeanor with mandatory jail time."
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant received proper notice of suspension under SD Department of Public Safety procedures.",
+      "Verify the underlying suspension was actually valid and not procedurally defective.",
+      "Mistake of fact regarding the date the suspension took effect or ended.",
+      "Hardship license eligibility may have been valid at time of stop.",
+      "Reinstatement may have technically occurred but not yet processed in DPS database."
+    ],
+    "common_defenses": [
+      "Lack of notice of suspension.",
+      "Necessity (medical emergency, fleeing harm).",
+      "Mistake of fact regarding license status.",
+      "Defective underlying suspension order.",
+      "Identity defense (someone else was driving)."
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Class 5 Felony enhancement when fleeing creates substantial risk of injury or death.",
+      "Dashcam and bodycam evidence makes the elements easy to prove.",
+      "Officer testimony about lights, sirens, and visual contact is generally credible to juries.",
+      "Often paired with traffic offenses, DUI, or drug charges — significant charging leverage."
+    ],
+    "defense_opportunities": [
+      "'Willful' element requires defendant know an officer was attempting to stop the vehicle.",
+      "Lighting conditions, music volume, and distance can negate awareness of police signals.",
+      "Defendant pulling over at the next safe location is not necessarily fleeing.",
+      "Challenge the substantial risk enhancement — speed alone may not suffice.",
+      "GPS and event data recorder (EDR) evidence may contradict officer's claims about pursuit conditions."
+    ],
+    "common_defenses": [
+      "Lack of willful intent (didn't know police were signaling).",
+      "Necessity (fleeing actual or perceived threat).",
+      "Defendant was looking for a safe location to stop.",
+      "Mistaken identity of the vehicle.",
+      "Officer signals were inadequate or non-conforming."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Constructive possession doctrine allows charges based on proximity and dominion over an area where drugs are found.",
+      "South Dakota's 'internal possession' statute allows charging based on metabolites in urine alone — unique to SD.",
+      "Lab testing of substances is generally uncontested in routine cases.",
+      "Schedule I/II covers virtually all street drugs (meth, cocaine, heroin, fentanyl)."
+    ],
+    "defense_opportunities": [
+      "Challenge constructive possession — mere proximity is insufficient; dominion and control must be proven.",
+      "Fourth Amendment suppression for unlawful searches is the most powerful defense.",
+      "Challenge the internal possession statute under privacy and equal protection grounds (constitutional challenges have had mixed success).",
+      "Contest the lab analysis — substance identification, weight, and chain of custody."
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure (Fourth Amendment).",
+      "Lack of knowing possession.",
+      "Substance was not actually a controlled substance (lab error).",
+      "Constructive possession insufficient (drugs belonged to another).",
+      "Entrapment by law enforcement informant."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Internal possession via blood/urine testing is enforceable for marijuana.",
+      "Field testing kits provide presumptive identification at scene.",
+      "Visible smoke or odor remains valid probable cause in most contexts.",
+      "Felony enhancement at 2 oz makes even modest amounts felonies."
+    ],
+    "defense_opportunities": [
+      "Medical marijuana cardholders under IM 26 have an affirmative defense for compliant possession.",
+      "Hemp and CBD products can produce false positives with field tests — demand lab confirmation.",
+      "Odor-based searches face increasing scrutiny in jurisdictions with legal medical marijuana.",
+      "Challenge weight calculations, especially when drying or stem inclusion affects classification.",
+      "Negotiate to paraphernalia or attempted possession to avoid felony exposure."
+    ],
+    "common_defenses": [
+      "Valid medical marijuana card and compliant amount.",
+      "Substance was lawful hemp or CBD.",
+      "Unlawful search.",
+      "Lack of knowing possession.",
+      "Insufficient quantity for the alleged classification."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "Cocaine is unmistakable in lab testing with high reliability.",
+      "Internal possession statute applies to cocaine metabolites.",
+      "Possession with intent to distribute can be inferred from packaging, scales, or cash.",
+      "Schedule II classification removes any defense based on medical use."
+    ],
+    "defense_opportunities": [
+      "Suppression of evidence based on illegal search is the strongest defense.",
+      "Constructive possession challenges in vehicle/shared residence cases.",
+      "Demand independent lab testing of the substance.",
+      "Negotiate to attempted possession to reduce felony class."
+    ],
+    "common_defenses": [
+      "Fourth Amendment suppression.",
+      "Lack of dominion and control.",
+      "Lab error in substance identification.",
+      "Unwitting possession (someone else placed it).",
+      "Coerced or involuntary statements."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "Methamphetamine is a Schedule II controlled substance — Class 5 Felony for any amount.",
+      "Internal possession by metabolites in urine is also a felony in SD.",
+      "Meth indicia (pipes, baggies, scales) are commonly found and admissible.",
+      "Confidential informants often provide controlled buy evidence.",
+      "Meth possession often paired with manufacturing or trafficking charges."
+    ],
+    "defense_opportunities": [
+      "Internal possession charges are vulnerable to constitutional privacy challenges and chain of custody attacks on urine samples.",
+      "Suppress searches that lacked clear probable cause (odor of meth is harder to establish than alcohol).",
+      "Challenge substance identification — over-the-counter decongestants can produce false positives in field tests.",
+      "Constructive possession defenses in shared environments."
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure.",
+      "Lack of knowing possession.",
+      "Lab misidentification.",
+      "Constructive possession insufficient."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Threshold quantities create automatic trafficking charges regardless of intent.",
+      "Wiretap evidence, controlled buys, and informant testimony build strong cases.",
+      "Conspiracy charges can sweep in peripheral participants."
+    ],
+    "defense_opportunities": [
+      "Challenge quantity calculations — packaging weight versus pure substance weight.",
+      "Attack informant credibility and prior cooperation deals.",
+      "Suppress wiretap evidence on minimization and necessity grounds.",
+      "Entrapment when informants instigated otherwise non-existent transactions.",
+      "Conspiracy requires actual agreement — mere presence or association is insufficient."
+    ],
+    "common_defenses": [
+      "Entrapment.",
+      "Lack of knowing participation in trafficking.",
+      "Insufficient quantity for trafficking threshold.",
+      "Unlawful search and seizure.",
+      "Withdrawal from conspiracy."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "Quantity-based escalation: 1/2 lb of marijuana triggers Class 3 Felony.",
+      "Hand-to-hand controlled buys provide compelling evidence.",
+      "Cell phone records of drug-related communications are routinely admitted."
+    ],
+    "defense_opportunities": [
+      "Distinguish distribution from possession — was there an actual transfer?",
+      "Personal use defense when quantity is borderline.",
+      "Challenge informant testimony with prior inconsistent statements.",
+      "Suppress searches and seizures that produced the underlying drugs.",
+      "Negotiate to simple possession when transfer evidence is weak."
+    ],
+    "common_defenses": [
+      "No actual transfer occurred (mere possession).",
+      "Entrapment by law enforcement.",
+      "Mistaken identity of the seller.",
+      "Lack of knowledge that the substance was controlled.",
+      "Coerced or unreliable confidential informant."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Pseudoephedrine purchase tracking under NPLEx provides direct evidence of meth manufacturing.",
+      "Lab equipment, precursors, and chemicals create strong circumstantial cases.",
+      "Photographs of grow operations are powerful jury evidence.",
+      "Marijuana cultivation of any plant count is a felony under SD law."
+    ],
+    "defense_opportunities": [
+      "Challenge the existence of an actual manufacturing operation versus possession of items with legal uses.",
+      "Pseudoephedrine purchases must connect to manufacturing activity, not personal cold/allergy use.",
+      "Suppress searches based on inadequate warrants for residential grow operations.",
+      "Medical marijuana defense for compliant cultivation under IM 26.",
+      "Challenge plant counts and weight calculations."
+    ],
+    "common_defenses": [
+      "Items had lawful purposes (no manufacturing intent).",
+      "Medical marijuana compliance.",
+      "Unlawful search of residence/property.",
+      "Lack of knowledge of activities by others on property.",
+      "Insufficient evidence linking defendant to operation."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Class 2 Misdemeanor with lower burden of proof.",
+      "Visible residue on items often supports charges without separate possession.",
+      "Frequently charged alongside possession to maintain leverage.",
+      "Even legal items become paraphernalia based on intent or use."
+    ],
+    "defense_opportunities": [
+      "Challenge intent — pipes and scales have lawful uses (tobacco, cooking).",
+      "Negotiate dismissal in exchange for plea on more serious charge.",
+      "Constitutional vagueness challenges to broad paraphernalia definitions.",
+      "Suppression of underlying search.",
+      "Lack of knowledge of paraphernalia presence."
+    ],
+    "common_defenses": [
+      "Item had lawful use and purpose.",
+      "Lack of knowing possession.",
+      "Unlawful search.",
+      "Constitutional vagueness.",
+      "Item belonged to another."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Class 4 Felony for first offense — significantly more serious than simple possession.",
+      "Cell phone evidence of drug-related communications routinely admitted.",
+      "Cash without legitimate source is treated as drug proceeds.",
+      "Statements to officers about distribution are powerful admissions."
+    ],
+    "defense_opportunities": [
+      "Personal use defense — argue quantity reflects heavy personal use, not distribution.",
+      "Cash defense — establish lawful source of money found with drugs.",
+      "Challenge inferences from packaging when defendant purchased pre-packaged.",
+      "Suppress search that produced the indicia of distribution.",
+      "Negotiate down to simple possession."
+    ],
+    "common_defenses": [
+      "Quantity consistent with personal use.",
+      "Lawful source of cash.",
+      "Lack of intent to distribute.",
+      "Unlawful search.",
+      "Mistaken identification of substance or quantity."
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "Death penalty eligibility for Class A Felony creates enormous plea leverage.",
+      "DNA, ballistic, and forensic evidence carry enormous weight.",
+      "South Dakota allows capital aggravating factors that broaden death-eligible cases."
+    ],
+    "defense_opportunities": [
+      "Challenge premeditation — heat of passion or impulse defenses can reduce to second-degree.",
+      "Mental state defenses (insanity, diminished capacity, intoxication) may negate premeditation.",
+      "Challenge identification through eyewitness reliability research.",
+      "Forensic challenges to DNA contamination, ballistic match certainty."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Defense of others.",
+      "Heat of passion (reduces to manslaughter).",
+      "Mistaken identity.",
+      "Insanity or diminished capacity."
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "Class B Felony with mandatory life without parole.",
+      "Often used as a compromise charge during plea negotiations.",
+      "Implied malice from reckless conduct can support the charge.",
+      "Forensic evidence carries weight regardless of premeditation."
+    ],
+    "defense_opportunities": [
+      "Negotiate down to manslaughter by establishing heat of passion or imperfect self-defense.",
+      "Challenge implied malice — mere recklessness may not suffice.",
+      "Self-defense defenses can fully exonerate.",
+      "Challenge causation, especially in attenuated circumstances.",
+      "Mental state defenses including voluntary intoxication negating specific intent."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Heat of passion (manslaughter reduction).",
+      "Lack of malice or knowing conduct.",
+      "Causation challenges.",
+      "Insanity."
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "Class C Felony with significant exposure (up to life).",
+      "Often used as a fallback when murder charges face self-defense issues.",
+      "Provocation can be physical or verbal in some circumstances.",
+      "Plea negotiations frequently land here from initial murder charges."
+    ],
+    "defense_opportunities": [
+      "Self-defense remains a complete defense and can result in acquittal.",
+      "Challenge whether the provocation was 'adequate' — words alone are generally insufficient.",
+      "Cooling-off period analysis — too much time between provocation and act negates the charge.",
+      "Imperfect self-defense in some scenarios.",
+      "Causation challenges in attenuated cases."
+    ],
+    "common_defenses": [
+      "Self-defense (complete defense).",
+      "Defense of others.",
+      "Lack of adequate provocation.",
+      "Mistaken identity.",
+      "Accidental death."
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "Class 4 Felony with up to 10 years exposure.",
+      "Lower mens rea standard makes conviction easier than higher homicide charges.",
+      "Frequently charged in DUI fatalities, child endangerment deaths, and weapon accidents.",
+      "Misdemeanor manslaughter rule allows charges where death results from any unlawful act."
+    ],
+    "defense_opportunities": [
+      "Argue conduct was at most ordinary negligence, not criminal.",
+      "Challenge causation — was the negligent act the proximate cause?",
+      "Intervening cause defenses are common.",
+      "Accident defense when no underlying unlawful act occurred.",
+      "Constitutional challenges to misdemeanor manslaughter rule."
+    ],
+    "common_defenses": [
+      "Conduct did not rise to criminal negligence.",
+      "Intervening superseding cause.",
+      "Pure accident with no underlying misconduct.",
+      "Self-defense.",
+      "Causation insufficient."
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "Class 3 Felony with up to 15 years exposure.",
+      "Photographic evidence of injuries is powerful jury evidence.",
+      "911 calls are admissible as excited utterances.",
+      "Domestic violence enhancement applies in many household contexts."
+    ],
+    "defense_opportunities": [
+      "South Dakota recognizes 'stand your ground' principles in some contexts.",
+      "Challenge 'serious bodily injury' classification — temporary injuries may not qualify.",
+      "Mutual combat defense in bar fights and similar scenarios.",
+      "Challenge identification when assailant is not clearly identified."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Defense of others.",
+      "Mutual combat.",
+      "Mistaken identity.",
+      "Lack of intent to cause serious injury."
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Class 1 Misdemeanor with quick disposition possible.",
+      "Third or subsequent offense within 5 years escalates to Class 6 Felony.",
+      "Verbal threats accompanied by gestures can suffice.",
+      "Officer testimony about visible injuries is generally credible."
+    ],
+    "defense_opportunities": [
+      "Self-defense applies even to simple assault charges.",
+      "Mutual combat negates one-sided assault claims.",
+      "Challenge whether the alleged conduct put the victim in actual fear.",
+      "Negotiate to disorderly conduct as a lesser offense.",
+      "Lack of intent — accidental contact is not assault."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Mutual combat.",
+      "Accidental contact.",
+      "False allegation (especially in domestic disputes).",
+      "Lack of intent."
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "Any unwanted physical contact can suffice.",
+      "Visible injuries are not required for conviction.",
+      "Often charged in conjunction with assault for charging leverage."
+    ],
+    "defense_opportunities": [
+      "Self-defense and defense of others.",
+      "Accidental contact defense.",
+      "Mutual combat in physical altercations.",
+      "Lack of intent to make contact.",
+      "Consent (in sporting events, certain physical interactions)."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Consent.",
+      "Accidental contact.",
+      "Mutual combat.",
+      "False allegation."
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Class 2 Felony with up to 25 years exposure.",
+      "Force element is broadly construed — any physical contact during the taking suffices.",
+      "Surveillance video and eyewitness identification provide strong evidence.",
+      "Implied threats with no weapon present can still qualify."
+    ],
+    "defense_opportunities": [
+      "Challenge identification through eyewitness reliability research.",
+      "Distinguish robbery from theft — was force or fear actually used?",
+      "Claim of right defense when defendant believed property was lawfully theirs.",
+      "Mistaken identity is the most common successful defense.",
+      "Challenge the force element — was it incidental to the taking or used to overcome resistance?"
+    ],
+    "common_defenses": [
+      "Mistaken identity.",
+      "Claim of right.",
+      "Insufficient force or fear element.",
+      "Alibi.",
+      "Coerced confession or unreliable eyewitness."
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "Class 2 Felony with up to 25 years and strong jury sympathy.",
+      "Visible firearms in surveillance video are highly persuasive.",
+      "Co-defendant testimony often available through plea cooperation."
+    ],
+    "defense_opportunities": [
+      "Challenge weapon identification — was it actually a firearm or a replica/toy?",
+      "Suppress eyewitness identifications through reliability challenges.",
+      "Co-defendant testimony is impeachable through cooperation deals.",
+      "Mere presence at the scene is not robbery.",
+      "Withdrawal from criminal enterprise before commission."
+    ],
+    "common_defenses": [
+      "Mistaken identity.",
+      "Mere presence (not a participant).",
+      "Withdrawal.",
+      "Weapon was inoperable or fake.",
+      "Duress."
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "Class C Felony with up to life imprisonment.",
+      "Class 1 Felony if victim suffers serious injury (mandatory life).",
+      "Even brief detentions can support kidnapping charges.",
+      "Frequently charged with sexual assault or robbery to enhance exposure."
+    ],
+    "defense_opportunities": [
+      "Challenge whether the movement or confinement was substantial — incidental movements during another crime may not support separate kidnapping charges.",
+      "Consent of the alleged victim is a defense.",
+      "Parental defense for noncustodial parents in family disputes (some limits apply).",
+      "Lack of specific intent to hold for required purposes.",
+      "Constitutional challenges to overlapping kidnapping/robbery convictions."
+    ],
+    "common_defenses": [
+      "Consent of the alleged victim.",
+      "Movement was merely incidental to another offense.",
+      "Lack of required specific intent.",
+      "Mistaken identity.",
+      "Parental rights in custody disputes."
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Class 2 Felony with up to 25 years exposure.",
+      "Fire investigators provide expert testimony on origin and cause.",
+      "Insurance fraud investigations often uncover arson motives.",
+      "Accelerant residue analysis is generally admissible."
+    ],
+    "defense_opportunities": [
+      "Challenge fire investigator's origin and cause analysis — modern arson science has discredited many traditional 'indicators.'",
+      "Demand independent fire science expert review.",
+      "Accidental fire defenses are increasingly successful with modern science.",
+      "Insurance company motives for finding arson can bias investigations.",
+      "Alibi defenses when defendant was demonstrably elsewhere."
+    ],
+    "common_defenses": [
+      "Accidental fire.",
+      "Lack of intent (mens rea).",
+      "Mistaken identity.",
+      "Alibi.",
+      "Discredited fire science methods."
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "Specific intent to kill plus a substantial step is sufficient.",
+      "Victim survival evidence is powerful.",
+      "Statements of intent are highly damaging.",
+      "Often charged alongside aggravated assault for charging leverage."
+    ],
+    "defense_opportunities": [
+      "Challenge specific intent to kill — assault or recklessness is not attempted murder.",
+      "Self-defense applies fully to attempted murder charges.",
+      "Challenge whether the action was a 'substantial step' or mere preparation.",
+      "Negotiate to aggravated assault when intent is borderline."
+    ],
+    "common_defenses": [
+      "Lack of specific intent to kill.",
+      "Renunciation/abandonment.",
+      "Self-defense.",
+      "Mistaken identity.",
+      "Accident."
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "'Dangerous weapon' is broadly defined to include any object capable of inflicting serious harm.",
+      "Vehicles, broken bottles, and household objects can qualify.",
+      "Brandishing alone may suffice if intended to intimidate.",
+      "Photographic evidence of weapons enhances jury impact."
+    ],
+    "defense_opportunities": [
+      "Self-defense applies fully and is broadly construed in SD.",
+      "Challenge whether the object qualified as a 'dangerous weapon' under the circumstances.",
+      "Mere possession of a weapon during a verbal altercation is not assault.",
+      "Mistaken identity defenses.",
+      "Negotiate to simple assault when weapon involvement is unclear."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Object was not a dangerous weapon under circumstances.",
+      "Lack of intent to assault.",
+      "Defense of others.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "Felony threshold begins at $1,000 — relatively low compared to other states.",
+      "Aggregation rule allows multiple thefts within a single course of conduct to be combined for charging.",
+      "Constructive possession theories support theft from joint accounts and shared property.",
+      "Restitution is mandatory and creates additional financial pressure."
+    ],
+    "defense_opportunities": [
+      "Challenge value calculations — fair market value at time of theft, not replacement cost.",
+      "Claim of right defense when defendant believed property was lawfully owed.",
+      "Civil dispute defense — many alleged thefts are actually contract disputes.",
+      "Challenge the aggregation theory when incidents are unrelated.",
+      "Negotiate to a misdemeanor when value is borderline."
+    ],
+    "common_defenses": [
+      "Claim of right.",
+      "Lack of intent to permanently deprive.",
+      "Civil dispute (no criminal theft).",
+      "Mistake of fact.",
+      "Consent of the owner."
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Bank records and financial documents create strong paper trails.",
+      "Aggregation of multiple smaller thefts can reach grand theft thresholds.",
+      "Identity theft and embezzlement often charged as grand theft.",
+      "Restitution amounts create powerful plea leverage."
+    ],
+    "defense_opportunities": [
+      "Challenge value calculations meticulously — small adjustments can reduce felony class.",
+      "Claim of right defenses for disputed property.",
+      "Forensic accounting can show legitimate transactions misclassified as theft.",
+      "Statute of limitations defenses for older transactions.",
+      "Negotiate restitution-based dispositions to avoid conviction."
+    ],
+    "common_defenses": [
+      "Claim of right.",
+      "Insufficient value to support felony class.",
+      "Lack of intent to permanently deprive.",
+      "Authorization to take or use the property.",
+      "Statute of limitations."
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "Surveillance video commonly captures the act.",
+      "Store loss prevention testimony is generally credible.",
+      "Recovery of stolen merchandise is direct evidence.",
+      "Often charged alongside trespassing or other offenses."
+    ],
+    "defense_opportunities": [
+      "Diversion programs are commonly available for first-time petty theft offenders.",
+      "Challenge intent — defendant may have intended to pay or believed payment was made.",
+      "Suspended imposition of sentence preserves clean record.",
+      "Challenge the value if it affects classification.",
+      "Negotiate dismissal with restitution and community service."
+    ],
+    "common_defenses": [
+      "Lack of intent to steal.",
+      "Mistake of fact.",
+      "Reasonable belief of right to take the property.",
+      "Mistaken identity (especially in store theft).",
+      "Diversion eligibility."
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "Loss prevention officers in retail settings provide professional witnesses.",
+      "Surveillance video makes most cases self-proving.",
+      "Aggregation across multiple incidents can reach felony levels."
+    ],
+    "defense_opportunities": [
+      "Challenge the concealment-equals-intent presumption.",
+      "Forgetfulness or distraction defenses for items in carts or hands.",
+      "First-time offender diversion programs.",
+      "Challenge value when discounts or sale prices apply."
+    ],
+    "common_defenses": [
+      "Lack of intent to steal (forgetfulness).",
+      "Mistaken identity.",
+      "Loss prevention overreach.",
+      "Defendant intended to pay.",
+      "Diversion eligibility."
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "Class 2 Felony with up to 25 years exposure.",
+      "Intent can be inferred from circumstances — tools, time of day, manner of entry.",
+      "DNA, fingerprints, and surveillance commonly available.",
+      "Confederate cooperation is common in burglary rings."
+    ],
+    "defense_opportunities": [
+      "Challenge the intent element — was there actual intent to commit a crime inside, or mere unlawful entry?",
+      "Trespass is a lesser included offense available for negotiation.",
+      "Permission to enter defense for ambiguous relationships.",
+      "Mistaken identity from limited identification evidence.",
+      "Withdrawal before completion of intended crime."
+    ],
+    "common_defenses": [
+      "Lack of intent to commit a crime inside.",
+      "Permission to enter.",
+      "Mistaken identity.",
+      "Alibi.",
+      "Mistake of fact regarding ownership/right to enter."
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "Occupancy enhancement applies when residents are home.",
+      "Home security systems and Ring/doorbell cameras provide modern evidence.",
+      "DNA evidence on touched surfaces is increasingly probative.",
+      "Strong jury sympathy for residential victims."
+    ],
+    "defense_opportunities": [
+      "Permission to enter from a household member.",
+      "Challenge the 'dwelling' classification for outbuildings or unoccupied properties.",
+      "Eyewitness identification is often unreliable, especially in nighttime entries.",
+      "Mistaken identity defenses.",
+      "Lack of intent if defendant was confused or impaired."
+    ],
+    "common_defenses": [
+      "Permission to enter.",
+      "Lack of criminal intent.",
+      "Mistaken identity.",
+      "Alibi.",
+      "Wrong house defense."
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "VIN tracking and license plate readers identify stolen vehicles quickly.",
+      "Insurance reports provide documentation of value and theft.",
+      "Joyriding can be charged as theft if intent to deprive can be shown.",
+      "Often combined with other charges like fleeing or possession of burglary tools."
+    ],
+    "defense_opportunities": [
+      "Joyriding defense — temporary use without intent to permanently deprive (lesser offense).",
+      "Permission of the owner defense.",
+      "Mistaken identity in cases of recovered abandoned vehicles.",
+      "Negotiate to unauthorized use of motor vehicle.",
+      "Challenge value calculations for older vehicles."
+    ],
+    "common_defenses": [
+      "Permission of owner.",
+      "Joyriding (lesser offense).",
+      "Lack of intent to permanently deprive.",
+      "Mistaken identity.",
+      "Mistake of fact regarding ownership."
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Constructive knowledge can be inferred from circumstances (price, source, condition).",
+      "Possession of recently stolen property creates a presumption of knowledge.",
+      "Pawn shop records are easily subpoenaed.",
+      "Same classification scale as theft based on value."
+    ],
+    "defense_opportunities": [
+      "Challenge the knowledge element — defendant must have known or reasonably should have known.",
+      "Innocent purchaser defense for legitimate transactions.",
+      "Challenge the value affecting classification.",
+      "Challenge identification of property as actually stolen.",
+      "Suppression of search that produced the property."
+    ],
+    "common_defenses": [
+      "Lack of knowledge that property was stolen.",
+      "Innocent purchaser for value.",
+      "Mistaken identification of property.",
+      "Insufficient value for classification.",
+      "Unlawful search."
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "Felony threshold at $1,000 is relatively low.",
+      "Surveillance video and graffiti tag identification provide direct evidence.",
+      "Restitution requirements create plea leverage.",
+      "Multiple incidents can be aggregated for charging."
+    ],
+    "defense_opportunities": [
+      "Challenge damage estimates — actual repair cost, not inflated estimates.",
+      "Lack of intent for accidental damage.",
+      "Civil dispute defense for boundary disputes and joint property.",
+      "Mistaken identity defenses.",
+      "Negotiate to a lesser misdemeanor when value is borderline."
+    ],
+    "common_defenses": [
+      "Accidental damage.",
+      "Lack of intent.",
+      "Civil dispute.",
+      "Mistaken identity.",
+      "Insufficient damage value for felony classification."
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "No-trespass orders create easy enforcement.",
+      "Body camera footage of warnings creates clear records.",
+      "Repeat offenses escalate to Class 1 Misdemeanor.",
+      "Often used as a base charge to support other allegations."
+    ],
+    "defense_opportunities": [
+      "Public access defense for ostensibly public spaces.",
+      "Necessity defense for emergencies.",
+      "Challenge the specific date and time of alleged trespass.",
+      "Negotiate dismissal for first offense."
+    ],
+    "common_defenses": [
+      "Lack of notice.",
+      "Public access right.",
+      "Necessity.",
+      "Mistake of fact regarding ownership/boundaries.",
+      "Permission to be present."
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "Same classification scale as vandalism by damage value.",
+      "Surveillance and witness evidence easily obtained.",
+      "Restitution mandatory.",
+      "Often charged in domestic disputes for damage to shared property."
+    ],
+    "defense_opportunities": [
+      "Same defenses as vandalism apply.",
+      "Joint ownership defense for damage to shared property.",
+      "Challenge damage estimates.",
+      "Mistake of fact about ownership.",
+      "Negotiate to lower offense or restitution-based disposition."
+    ],
+    "common_defenses": [
+      "Joint ownership.",
+      "Accidental damage.",
+      "Mistaken identity.",
+      "Lack of intent.",
+      "Civil dispute."
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "Subsequent offenses escalate to felony quickly.",
+      "Excited utterance and 911 call evidence routinely admitted.",
+      "Protection order violations can be charged additionally."
+    ],
+    "defense_opportunities": [
+      "False allegation defense — common in custody and divorce contexts.",
+      "Self-defense applies in domestic settings.",
+      "Mutual combat defense for fights between intimate partners.",
+      "Recantation by the alleged victim, though prosecutors may proceed without victim cooperation.",
+      "Challenge the household member relationship element."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "False allegation.",
+      "Mutual combat.",
+      "Lack of qualifying relationship.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "Visible injuries documented with photographs are powerful evidence.",
+      "911 calls and excited utterances are admissible.",
+      "Federal Lautenberg Amendment firearm prohibition follows conviction.",
+      "Mandatory arrest policies mean charges are nearly automatic."
+    ],
+    "defense_opportunities": [
+      "Self-defense is the strongest defense.",
+      "Mutual combat defense.",
+      "Lack of intent (accidental contact).",
+      "False allegation in custody disputes.",
+      "Negotiate to disorderly conduct to avoid Lautenberg consequences."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Mutual combat.",
+      "Accidental contact.",
+      "False allegation.",
+      "Lack of qualifying relationship."
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "Class 4 Felony with significant exposure.",
+      "DUI with child passenger triggers automatic enhancement.",
+      "Subjective endangerment standard makes prosecution easier.",
+      "DCS investigations often run parallel and create additional pressure."
+    ],
+    "defense_opportunities": [
+      "Challenge whether the conduct created a 'substantial risk' as opposed to minor risk.",
+      "Parental discretion defense for ordinary parenting decisions.",
+      "Lack of knowledge defense when child was unexpectedly present.",
+      "Cultural or generational parenting practice defenses (limited).",
+      "Negotiate to misdemeanor child neglect when borderline."
+    ],
+    "common_defenses": [
+      "Reasonable parental decisions.",
+      "Lack of knowledge of risk.",
+      "Lack of qualifying relationship/duty.",
+      "No substantial risk created.",
+      "Necessity."
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "Mandatory reporters create cascading evidence sources.",
+      "Medical examination evidence carries strong weight.",
+      "Pediatric forensic specialists are available as experts.",
+      "Prior CPS involvement is admissible in some circumstances."
+    ],
+    "defense_opportunities": [
+      "Challenge medical findings — many alleged abuse injuries have benign explanations (mongolian spots, hair follicle conditions, accidental injuries).",
+      "Reasonable parental discipline defense (limited but available).",
+      "Mistaken identity in households with multiple caregivers.",
+      "Suggestibility of child witnesses, especially under repeated questioning.",
+      "Forensic interviewer protocol challenges."
+    ],
+    "common_defenses": [
+      "Reasonable discipline.",
+      "Mistaken identity (other caregiver responsible).",
+      "Accidental injury.",
+      "Medical condition mimicking abuse.",
+      "False or coached allegation."
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "No proof of harm required — mere contact violates the order.",
+      "Phone records, text messages, and social media create easy documentation.",
+      "Third-party contact through intermediaries also violates the order.",
+      "Subsequent violations within 10 years escalate to Class 6 Felony."
+    ],
+    "defense_opportunities": [
+      "Challenge whether defendant had actual notice of the order.",
+      "Inadvertent contact defense (chance encounter in public).",
+      "Necessity defense in emergencies.",
+      "Challenge the validity of the underlying order.",
+      "Protected party initiated contact (not always a defense but mitigating)."
+    ],
+    "common_defenses": [
+      "Lack of notice of the order.",
+      "Inadvertent or chance contact.",
+      "Necessity.",
+      "Defective underlying order.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "Pattern of conduct can be established through multiple incidents.",
+      "Subsequent offenses within 10 years escalate to Class 6 Felony.",
+      "Electronic communications and GPS tracking provide modern evidence.",
+      "Victim's subjective fear is admissible."
+    ],
+    "defense_opportunities": [
+      "Challenge whether the conduct was actually 'willful and malicious' versus persistent but lawful contact.",
+      "Constitutional First Amendment defenses for protected speech.",
+      "Challenge reasonableness of victim's fear in light of all circumstances.",
+      "Mistaken identity for online or anonymous contact.",
+      "Negotiate to harassment charge."
+    ],
+    "common_defenses": [
+      "Lack of malicious intent.",
+      "First Amendment protected speech.",
+      "Mistaken identity.",
+      "Insufficient pattern of conduct.",
+      "Lawful business or family contact."
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "Phone calls, texts, and online messages provide direct evidence.",
+      "Lower bar than stalking — single incidents may suffice in some cases.",
+      "Class 1 Misdemeanor with quick disposition.",
+      "Often paired with stalking or domestic violence charges."
+    ],
+    "defense_opportunities": [
+      "Challenge intent — communication for legitimate purposes is not harassment.",
+      "First Amendment defenses for political or critical speech.",
+      "Recipient was not actually alarmed or annoyed.",
+      "Mistaken identity for online contact.",
+      "Negotiate dismissal for first offense."
+    ],
+    "common_defenses": [
+      "Legitimate purpose for communication.",
+      "First Amendment.",
+      "Lack of intent to harass.",
+      "Mistaken identity.",
+      "No actual alarm or annoyance."
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "Class 6 Felony minimum with higher classes for financial exploitation.",
+      "Adult Protective Services investigations create parallel evidence sources.",
+      "Bank records easily prove financial exploitation.",
+      "Strong jury sympathy for elderly victims."
+    ],
+    "defense_opportunities": [
+      "Challenge the 'elder' classification — must meet statutory definition.",
+      "Authorization defense for financial transactions (powers of attorney, joint accounts).",
+      "Family member dispute defenses for inheritance and gift disputes.",
+      "Capacity of the elderly person to consent.",
+      "Mistaken identity in shared care environments."
+    ],
+    "common_defenses": [
+      "Authorization for financial transactions.",
+      "Capacity and consent of the elder.",
+      "Mistaken identity.",
+      "Lack of qualifying relationship/duty.",
+      "Civil dispute."
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "Strict liability in many circumstances.",
+      "Possession in prohibited locations (schools, government buildings) creates per se violations.",
+      "Officer testimony about visible weapons is generally credible.",
+      "Often paired with other charges to enhance plea leverage."
+    ],
+    "defense_opportunities": [
+      "Challenge the 'possession' element — constructive possession requires dominion and control.",
+      "Lawful possession defenses for permits and exemptions.",
+      "Challenge the search that revealed the weapon.",
+      "Necessity defense in self-defense situations.",
+      "Negotiate to lesser violation."
+    ],
+    "common_defenses": [
+      "Lawful possession with permit.",
+      "Lack of knowing possession.",
+      "Unlawful search.",
+      "Necessity.",
+      "Statutory exemption."
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "Class 6 Felony with significant prison exposure.",
+      "Prior felony conviction is easily proven through court records.",
+      "Constructive possession theories apply to vehicles and residences."
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge that the firearm was present.",
+      "Constructive possession defenses in shared residences.",
+      "Challenge the validity of the underlying felony conviction.",
+      "Civil rights restoration defense if rights were restored.",
+      "Antique firearm exception under federal law."
+    ],
+    "common_defenses": [
+      "Lack of knowing possession.",
+      "Civil rights restored.",
+      "Constructive possession insufficient.",
+      "Underlying felony invalid.",
+      "Antique firearm exception."
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "Officer testimony establishes the concealment and lack of permit.",
+      "Class 1 Misdemeanor with potential additional charges.",
+      "Prohibited locations (schools, courthouses) are absolute.",
+      "South Dakota's permitless carry law has specific limits and exclusions."
+    ],
+    "defense_opportunities": [
+      "South Dakota is a permitless carry state since 2019 — many alleged violations are not actually criminal.",
+      "Challenge whether the location qualified as prohibited.",
+      "Reciprocity defense for out-of-state permit holders.",
+      "Challenge what 'concealed' means in light of constitutional carry laws.",
+      "Lawful possession defenses."
+    ],
+    "common_defenses": [
+      "Constitutional carry compliance.",
+      "Valid permit (in or out of state).",
+      "Location was not prohibited.",
+      "Lack of intent to conceal.",
+      "Statutory exemption."
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "Witness testimony and shell casings provide direct evidence.",
+      "Often paired with reckless endangerment for serious incidents.",
+      "Strict liability in many municipal contexts.",
+      "Hunting violations can also support charges."
+    ],
+    "defense_opportunities": [
+      "Self-defense and defense of property.",
+      "Challenge whether the location qualified as a prohibited area.",
+      "Lawful purpose defenses (target shooting on private property).",
+      "Necessity defense for warning shots in genuine threats.",
+      "Mistake of location/boundary defense."
+    ],
+    "common_defenses": [
+      "Self-defense.",
+      "Lawful purpose on private property.",
+      "Necessity.",
+      "Mistake of location.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Felony classification triggered at relatively low values.",
+      "Bank and credit records provide clear paper trails.",
+      "Forensic computer evidence is powerful."
+    ],
+    "defense_opportunities": [
+      "Authorization defense for joint accounts and shared identities.",
+      "Mistaken identity (someone else used the defendant's computer or accounts).",
+      "Challenge the value/classification.",
+      "Statute of limitations on older transactions.",
+      "Civil dispute defenses for family financial arrangements."
+    ],
+    "common_defenses": [
+      "Authorization to use the information.",
+      "Mistaken identity (defendant didn't commit the act).",
+      "Lack of intent to defraud.",
+      "Statute of limitations.",
+      "Civil dispute."
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Position of trust enhances the moral weight before juries.",
+      "Bank and employment records create strong paper trails.",
+      "Forensic accountants can reconstruct complex schemes.",
+      "Restitution amounts create significant plea leverage."
+    ],
+    "defense_opportunities": [
+      "Authorization defenses — defendant believed they had permission for transactions.",
+      "Civil dispute over compensation, expenses, or commissions.",
+      "Challenge specific transactions while conceding others.",
+      "Statute of limitations defenses for older transactions.",
+      "Forensic accounting can show legitimate alternative explanations."
+    ],
+    "common_defenses": [
+      "Authorization for the transactions.",
+      "Civil dispute over compensation.",
+      "Lack of intent to permanently deprive.",
+      "Statute of limitations.",
+      "Mistake of fact."
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Class 5 Felony classification for most forms.",
+      "Handwriting and document analysis experts available.",
+      "Bank records easily prove cashed forged checks.",
+      "Possession of forgery instruments is also criminalized."
+    ],
+    "defense_opportunities": [
+      "Challenge the intent to defraud.",
+      "Authorization defense for endorsements and signatures.",
+      "Mistaken identity (someone else forged documents).",
+      "Handwriting analysis is more art than science — challenge expert qualifications.",
+      "Civil dispute over the underlying transaction."
+    ],
+    "common_defenses": [
+      "Authorization to sign or endorse.",
+      "Lack of intent to defraud.",
+      "Mistaken identity.",
+      "Civil dispute.",
+      "Unreliable handwriting analysis."
+    ]
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "prosecution_strengths": [
+      "Federal jurisdiction often takes over significant cases.",
+      "Specialized counterfeiting equipment is incriminating.",
+      "Secret Service investigations create strong evidence.",
+      "Counterfeit detection is generally reliable."
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge that currency was counterfeit.",
+      "Innocent receipt and unknowing passing.",
+      "Challenge the investigation chain of custody.",
+      "Mere possession without intent to pass.",
+      "Constitutional challenges to dual sovereign prosecution."
+    ],
+    "common_defenses": [
+      "Lack of knowledge of counterfeit nature.",
+      "Innocent receipt.",
+      "No intent to pass.",
+      "Mistaken identity.",
+      "Insufficient evidence of source."
+    ]
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "prosecution_strengths": [
+      "Bank records easily prove insufficient funds.",
+      "Notice of dishonor creates a presumption of intent.",
+      "Restitution requirements drive plea negotiations.",
+      "Felony threshold at $1,000 is relatively low."
+    ],
+    "defense_opportunities": [
+      "Challenge intent to defraud — many bad checks reflect honest financial mistakes.",
+      "Lack of notice of dishonor.",
+      "Stop payment defense if defendant acted in good faith.",
+      "Civil dispute defense over the underlying transaction.",
+      "Negotiate restitution-based dispositions."
+    ],
+    "common_defenses": [
+      "Lack of intent to defraud.",
+      "Honest mistake.",
+      "Stop payment in good faith.",
+      "Civil dispute.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "prosecution_strengths": [
+      "Insurance company investigators create extensive records.",
+      "Surveillance evidence in personal injury fraud cases.",
+      "Cooperation between insurers and prosecutors is common.",
+      "Recorded statements often provide direct evidence."
+    ],
+    "defense_opportunities": [
+      "Challenge whether statements were materially false.",
+      "Honest mistake defense for inadvertent misstatements.",
+      "Challenge insurance company motives in finding fraud.",
+      "Medical evidence may support legitimate claims.",
+      "Negotiate civil settlement to resolve criminal exposure."
+    ],
+    "common_defenses": [
+      "Statements were truthful or non-material.",
+      "Honest mistake.",
+      "Lack of intent to defraud.",
+      "Legitimate claim despite insurer dispute.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "Card issuer records and surveillance video provide direct evidence.",
+      "Federal parallel charges common.",
+      "Bank cooperation is routine.",
+      "Identity theft charges often follow."
+    ],
+    "defense_opportunities": [
+      "Authorization defense for shared cards and joint accounts.",
+      "Challenge identification of the user.",
+      "Civil dispute over the underlying transaction.",
+      "Mistaken identity in online transactions.",
+      "Negotiate restitution-based resolution."
+    ],
+    "common_defenses": [
+      "Authorization to use the card.",
+      "Mistaken identity.",
+      "Lack of intent to defraud.",
+      "Civil dispute.",
+      "Card recovery and return."
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Class 5 Felony with escalation by amount.",
+      "Bank reporting requirements (CTRs and SARs) create paper trails.",
+      "Forensic accountants establish complex schemes."
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge that funds were proceeds of unlawful activity.",
+      "Legitimate business purpose for transactions.",
+      "Challenge the underlying predicate offense.",
+      "Statute of limitations defenses.",
+      "Constitutional challenges to commingled fund tracing."
+    ],
+    "common_defenses": [
+      "Lack of knowledge of unlawful source.",
+      "Legitimate business purpose.",
+      "No predicate offense established.",
+      "Statute of limitations.",
+      "Constitutional challenges."
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "Aggregation rule allows combining multiple incidents.",
+      "Bank, business, and digital records create strong evidence.",
+      "Restitution requirements are mandatory.",
+      "Civil parallel proceedings often produce admissions."
+    ],
+    "defense_opportunities": [
+      "Challenge the deception element — was the statement actually false and material?",
+      "Challenge intent to defraud.",
+      "Civil dispute defense for contract disputes.",
+      "Statute of limitations.",
+      "Mistaken identity."
+    ],
+    "common_defenses": [
+      "Lack of intent to defraud.",
+      "Civil dispute.",
+      "Statements were truthful.",
+      "Statute of limitations.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "Class C Felony with significant exposure (up to life).",
+      "DNA evidence is generally reliable when present.",
+      "SANE nurse documentation is powerful evidence.",
+      "Strong jury sympathy for sexual assault victims."
+    ],
+    "defense_opportunities": [
+      "Consent defense remains the most common.",
+      "Challenge identification through DNA challenges and eyewitness reliability.",
+      "Forensic interview protocols can be challenged for suggestiveness.",
+      "Delayed reporting can affect credibility."
+    ],
+    "common_defenses": [
+      "Consent.",
+      "Mistaken identity.",
+      "False allegation.",
+      "Insufficient evidence of contact.",
+      "Constitutional challenges to evidentiary limits."
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "DNA evidence carries enormous weight.",
+      "Class C Felony with up to life imprisonment.",
+      "Victim testimony alone can support conviction in SD.",
+      "Capacity-based rape (intoxication, mental disability) doesn't require force."
+    ],
+    "defense_opportunities": [
+      "Consent is the primary defense — must be voluntary and competent.",
+      "Capacity questions are factually intensive — challenge intoxication levels.",
+      "Mistaken identity through DNA analysis.",
+      "Rape shield law has exceptions worth exploring.",
+      "Cross-examination on inconsistencies in accuser's account."
+    ],
+    "common_defenses": [
+      "Consent.",
+      "Capacity to consent (no impairment).",
+      "Mistaken identity.",
+      "Reasonable belief in consent.",
+      "False allegation."
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "Witness testimony supports most cases.",
+      "Subsequent offenses escalate to Class 6 Felony.",
+      "Sex offender registration consequences create plea leverage.",
+      "Public urination can sometimes be charged this way."
+    ],
+    "defense_opportunities": [
+      "Challenge the lewd intent — incidental exposure is not criminal.",
+      "Public/private distinction defenses.",
+      "Mistaken identity for brief encounters.",
+      "Public urination should not result in registration — negotiate to disorderly conduct.",
+      "Mental health or impairment defenses."
+    ],
+    "common_defenses": [
+      "Lack of lewd intent.",
+      "Not in a public place.",
+      "Mistaken identity.",
+      "Mental health defense.",
+      "Accidental exposure."
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "Sting operations with undercover officers provide direct evidence.",
+      "Recorded conversations are powerful.",
+      "Class 1 Misdemeanor with collateral consequences.",
+      "Public shaming through publication is sometimes used."
+    ],
+    "defense_opportunities": [
+      "Entrapment is the most common defense.",
+      "Challenge the specific intent for sexual conduct in exchange for money.",
+      "Lawful purpose defenses for ambiguous communications.",
+      "Constitutional challenges to overbroad enforcement.",
+      "Negotiate diversion."
+    ],
+    "common_defenses": [
+      "Entrapment.",
+      "Lack of specific intent.",
+      "Mistake of fact.",
+      "Constitutional vagueness.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "Forensic computer evidence is generally reliable.",
+      "ICAC task force investigations create strong cases.",
+      "Mandatory minimum sentencing applies in many circumstances."
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge that material was on the device.",
+      "Constructive possession in shared devices.",
+      "Suppression of search warrants.",
+      "Challenge computer forensic methodology.",
+      "Age verification challenges for borderline ages."
+    ],
+    "common_defenses": [
+      "Lack of knowing possession.",
+      "Constructive possession insufficient.",
+      "Unlawful search.",
+      "Mistaken identity (someone else used the device).",
+      "Forensic methodology challenges."
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "Registry records create clear documentation.",
+      "Strict liability in many circumstances.",
+      "Federal SORNA parallel charges possible.",
+      "Recidivism enhancement creates significant exposure."
+    ],
+    "defense_opportunities": [
+      "Challenge actual notice of registration requirements.",
+      "Challenge whether the underlying conviction triggered registration.",
+      "Reasonable mistake about registration deadline.",
+      "Necessity defenses for hardship cases.",
+      "Constitutional challenges to retroactive registration."
+    ],
+    "common_defenses": [
+      "Lack of notice of requirements.",
+      "Reasonable mistake.",
+      "Necessity.",
+      "Constitutional challenges.",
+      "Registration was actually completed."
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "Birth records easily prove age.",
+      "Class 3 Felony for victims 13-15 with significant exposure.",
+      "Class 1 Felony (mandatory life) for victims under 13.",
+      "Sex offender registration consequences."
+    ],
+    "defense_opportunities": [
+      "Romeo and Juliet defenses where age gap is small.",
+      "Challenge identification when contact is disputed.",
+      "Marriage defense in some circumstances.",
+      "Challenge specific dates of alleged conduct.",
+      "Challenge whether the conduct meets the statutory definition."
+    ],
+    "common_defenses": [
+      "Mistaken identity.",
+      "Conduct did not occur.",
+      "Marriage exception.",
+      "Romeo and Juliet age gap defense.",
+      "Insufficient evidence of penetration or contact."
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Officer testimony alone usually suffices.",
+      "Class 2 Misdemeanor with quick disposition.",
+      "Often used as a fallback charge for plea negotiations.",
+      "Public intoxication and noise complaints both qualify."
+    ],
+    "defense_opportunities": [
+      "First Amendment defenses for protected speech and protest.",
+      "Challenge the 'disturbance' element — minor noise may not qualify.",
+      "Negotiate dismissal or diversion.",
+      "Self-defense in physical altercations.",
+      "Mistaken identity in crowd contexts."
+    ],
+    "common_defenses": [
+      "First Amendment protected speech.",
+      "Lack of actual disturbance.",
+      "Self-defense.",
+      "Mistaken identity.",
+      "Lawful protest activity."
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Officer testimony is generally credible.",
+      "Bodycam footage provides direct evidence.",
+      "Class 1 Misdemeanor with significant consequences.",
+      "Often charged alongside the underlying offense for leverage."
+    ],
+    "defense_opportunities": [
+      "Challenge the lawfulness of the underlying arrest — unlawful arrest may justify resistance.",
+      "Excessive force by officers may justify defensive conduct.",
+      "Distinguish passive non-compliance from active resistance.",
+      "Reflexive movements are not intentional resistance.",
+      "Negotiate dismissal when underlying charges are dismissed."
+    ],
+    "common_defenses": [
+      "Unlawful arrest.",
+      "Excessive police force.",
+      "Reflexive or involuntary movement.",
+      "Lack of intent to resist.",
+      "Self-defense against excessive force."
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "Felony enhancement for obstruction of felony investigations.",
+      "Witness tampering and evidence destruction are easily proven.",
+      "Conspiracy theories sweep in peripheral participants."
+    ],
+    "defense_opportunities": [
+      "Challenge the materiality of the alleged obstruction.",
+      "First Amendment defenses for speech-based charges.",
+      "Lack of knowledge of official proceeding.",
+      "Innocent purpose for the alleged conduct.",
+      "Negotiate to lesser misdemeanor."
+    ],
+    "common_defenses": [
+      "Lack of knowledge of proceeding.",
+      "Innocent purpose.",
+      "First Amendment.",
+      "Lack of intent to obstruct.",
+      "Conduct was not material to investigation."
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "Direct contempt observed by the court is summarily punishable.",
+      "No jury trial right for indirect contempt under 6 months.",
+      "Court orders create clear violation evidence.",
+      "Both civil and criminal contempt are available."
+    ],
+    "defense_opportunities": [
+      "Challenge the validity of the underlying order.",
+      "Inability to comply defense for civil contempt.",
+      "Procedural due process challenges for indirect contempt.",
+      "First Amendment defenses for speech-based contempt.",
+      "Negotiate purge conditions to avoid jail."
+    ],
+    "common_defenses": [
+      "Inability to comply.",
+      "Lack of notice of order.",
+      "Defective underlying order.",
+      "First Amendment.",
+      "Procedural due process violation."
+    ]
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "prosecution_strengths": [
+      "Officer observations are generally credible.",
+      "Quick disposition possible.",
+      "Often paired with disorderly conduct.",
+      "PBT or chemical evidence may support charges."
+    ],
+    "defense_opportunities": [
+      "Challenge whether the location was actually 'public.'",
+      "Challenge the danger element.",
+      "Medical conditions mimicking intoxication.",
+      "Diversion programs available.",
+      "Negotiate dismissal for first offense."
+    ],
+    "common_defenses": [
+      "Not in a public place.",
+      "Medical condition mimicking intoxication.",
+      "No danger to self or others.",
+      "Mistaken identity.",
+      "Lack of intoxication."
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "Court records easily prove the failure.",
+      "Felony classification when underlying offense is a felony.",
+      "Bail forfeiture creates additional financial pressure.",
+      "Bench warrants quickly issued."
+    ],
+    "defense_opportunities": [
+      "Challenge the willfulness — emergency, illness, or lack of notice may excuse failure.",
+      "Lack of notice of court date.",
+      "Quash motion to clear bench warrant when defendant voluntarily appears.",
+      "Negotiate dismissal in exchange for prompt appearance.",
+      "Medical or family emergency defenses."
+    ],
+    "common_defenses": [
+      "Lack of willful failure.",
+      "Lack of notice.",
+      "Medical emergency.",
+      "Family emergency.",
+      "Mistake of date or time."
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "Recorded 911 calls provide direct evidence.",
+      "Subsequent investigation can prove falsity.",
+      "Restitution for investigation costs may be ordered.",
+      "Often charged in domestic disputes when allegations are recanted."
+    ],
+    "defense_opportunities": [
+      "Challenge the willfulness — defendant must have known the report was false.",
+      "Mistake of fact defense for honest but incorrect reports.",
+      "Mental health defenses.",
+      "Lack of materiality.",
+      "Recantation is not the same as falsity."
+    ],
+    "common_defenses": [
+      "Honest but mistaken belief.",
+      "Mental health defense.",
+      "Lack of material false statement.",
+      "Statement was substantially true.",
+      "Recantation does not establish original falsity."
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "Class 5 Felony classification for terroristic threats.",
+      "Recorded communications provide direct evidence.",
+      "Witnesses to verbal threats are often available.",
+      "Modern emphasis on school threats has increased prosecutorial focus."
+    ],
+    "defense_opportunities": [
+      "First Amendment defenses for hyperbolic or political speech.",
+      "Context defense — angry words in personal disputes are often not criminal.",
+      "Lack of specific intent to threaten.",
+      "Challenge reasonable fear of victim."
+    ],
+    "common_defenses": [
+      "First Amendment protected speech.",
+      "Hyperbolic statement, not true threat.",
+      "Lack of intent to threaten.",
+      "Mistaken identity.",
+      "No reasonable fear by victim."
+    ]
+  },
+  {
+    "common_charge_slug": "perjury",
+    "prosecution_strengths": [
+      "Court records and transcripts provide direct evidence.",
+      "Class 6 Felony with significant collateral consequences.",
+      "Often charged in conjunction with the case where perjury occurred.",
+      "Materiality is broadly construed."
+    ],
+    "defense_opportunities": [
+      "Challenge whether the statement was actually false.",
+      "Challenge materiality — false statements about non-essential matters.",
+      "Two-witness rule still applies in some perjury contexts.",
+      "Recantation defense if defendant corrected the statement promptly.",
+      "Honest mistake or memory failure."
+    ],
+    "common_defenses": [
+      "Statement was true.",
+      "Lack of materiality.",
+      "Honest mistake.",
+      "Recantation.",
+      "Two-witness rule failure."
+    ]
+  },
+  {
+    "common_charge_slug": "bribery",
+    "prosecution_strengths": [
+      "Class 4 Felony with significant exposure.",
+      "Wiretap and recorded evidence often available.",
+      "Cooperator testimony from co-conspirators."
+    ],
+    "defense_opportunities": [
+      "Challenge the corrupt intent — campaign contributions and gifts may have lawful purposes.",
+      "Entrapment when government instigated the transaction.",
+      "First Amendment defenses for political contributions.",
+      "Mistaken identity in conspiracy contexts."
+    ],
+    "common_defenses": [
+      "Lack of corrupt intent.",
+      "Entrapment.",
+      "No qualifying official act.",
+      "First Amendment.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "prosecution_strengths": [
+      "Class 5 Felony for felony custody escapes.",
+      "Direct evidence from corrections officers.",
+      "Often paired with additional charges from circumstances of escape.",
+      "Strict liability in many contexts."
+    ],
+    "defense_opportunities": [
+      "Necessity defense — escape from imminent harm in custody.",
+      "Challenge the lawfulness of underlying custody.",
+      "Lack of intent to escape (confusion, mental health).",
+      "Mistaken identity in transport situations.",
+      "Voluntary surrender mitigates penalties."
+    ],
+    "common_defenses": [
+      "Necessity (escape from harm).",
+      "Unlawful custody.",
+      "Lack of intent to escape.",
+      "Mental health defense.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "prosecution_strengths": [
+      "Felony enhancement for repeat offenses.",
+      "Veterinary testimony establishes injury and neglect.",
+      "Photographic evidence is powerful.",
+      "Strong jury sympathy and animal welfare advocate involvement."
+    ],
+    "defense_opportunities": [
+      "Challenge the standard of care — veterinary practices and rural norms differ.",
+      "Lack of knowledge about animal's condition.",
+      "Necessity defenses for euthanasia and discipline.",
+      "Religious or cultural practice defenses (limited).",
+      "Mistaken identity for found animals."
+    ],
+    "common_defenses": [
+      "Reasonable care standard met.",
+      "Lack of knowledge of condition.",
+      "Necessity (euthanasia).",
+      "Mistaken identity.",
+      "Lawful animal husbandry."
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "No jury trial right.",
+      "Hearsay evidence generally admissible.",
+      "Probation officers' testimony receives significant deference.",
+      "Original sentence becomes the maximum exposure."
+    ],
+    "defense_opportunities": [
+      "Challenge whether the violation was willful — lack of resources or ability to comply.",
+      "Procedural due process challenges to inadequate notice.",
+      "Mitigation evidence carries significant weight at disposition.",
+      "Negotiate continuation with modified conditions.",
+      "Treatment placement alternatives."
+    ],
+    "common_defenses": [
+      "Lack of willful violation.",
+      "Inability to comply.",
+      "Procedural due process violation.",
+      "Substantial compliance.",
+      "Mitigation."
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "Preponderance standard.",
+      "Hearsay generally admissible.",
+      "Original sentence remains as maximum exposure.",
+      "Limited appellate review."
+    ],
+    "defense_opportunities": [
+      "Challenge the willfulness of violations.",
+      "Mitigation evidence at disposition.",
+      "Treatment alternatives.",
+      "Negotiate with parole officer for continuation."
+    ],
+    "common_defenses": [
+      "Procedural due process violation.",
+      "Lack of willful violation.",
+      "Inability to comply.",
+      "Substantial compliance.",
+      "Mitigation."
+    ]
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "prosecution_strengths": [
+      "Same penalty as the underlying offense.",
+      "Knowledge of the criminal purpose plus assistance suffices.",
+      "Conspiracy charges often pile on.",
+      "Co-defendant testimony commonly available."
+    ],
+    "defense_opportunities": [
+      "Mere presence at the scene is not aiding and abetting.",
+      "Challenge knowledge of the criminal purpose.",
+      "Withdrawal defense if defendant abandoned the criminal enterprise.",
+      "Lack of substantial assistance.",
+      "Mistaken identity."
+    ],
+    "common_defenses": [
+      "Mere presence.",
+      "Lack of knowledge.",
+      "Withdrawal.",
+      "No substantial assistance.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "attempt",
+    "prosecution_strengths": [
+      "Substantial step toward commission suffices.",
+      "Specific intent often inferred from circumstances.",
+      "Class A/B/C Felony attempts remain at the same class.",
+      "Renunciation must be voluntary and complete."
+    ],
+    "defense_opportunities": [
+      "Challenge the specific intent element.",
+      "Mere preparation is not a substantial step.",
+      "Factual or legal impossibility (limited).",
+      "Mistaken identity."
+    ],
+    "common_defenses": [
+      "Lack of specific intent.",
+      "Mere preparation.",
+      "Renunciation.",
+      "Impossibility.",
+      "Mistaken identity."
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Agreement plus overt act suffices.",
+      "Co-conspirator statements admissible against all members.",
+      "Pinkerton liability extends responsibility broadly.",
+      "Wiretap and surveillance evidence often available."
+    ],
+    "defense_opportunities": [
+      "Challenge the existence of an actual agreement — mere parallel conduct insufficient.",
+      "Withdrawal defense before commission of overt act.",
+      "Challenge knowledge of the conspiracy's purpose.",
+      "Wharton's Rule for offenses requiring multiple participants.",
+      "Mistaken identity in large conspiracy cases."
+    ],
+    "common_defenses": [
+      "No agreement existed.",
+      "Withdrawal.",
+      "Lack of knowledge.",
+      "Wharton's Rule.",
+      "Mistaken identity."
+    ]
+  }
+]

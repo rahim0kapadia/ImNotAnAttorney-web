@@ -1,0 +1,2047 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "Illinois field sobriety tests administered by NHTSA-trained officers carry significant evidentiary weight",
+      "Implied consent provisions create administrative penalties for refusal independent of the criminal case",
+      "Body camera and dashcam footage from Illinois agencies preserves observable impairment indicators in real time",
+      "Officer testimony regarding odor of alcohol, slurred speech, and bloodshot eyes is established probable cause in Illinois courts"
+    ],
+    "defense_opportunities": [
+      "Challenge breathalyzer calibration and maintenance records required under Illinois administrative regulations",
+      "Rising-BAC defense — defendant's BAC was below 0.08 at time of driving but rose between driving and testing",
+      "Challenge SFST administration deviations from NHTSA protocols",
+      "Medical conditions (GERD, diabetes, low-carb diet) can produce falsely elevated breath test readings"
+    ],
+    "common_defenses": [
+      "Failure to observe the 20-minute deprivation period required by Illinois testing regulations",
+      "Independent blood test results contradicting the state's chemical test"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "Implied consent administrative suspension creates immediate consequences regardless of criminal outcome",
+      "Body camera footage preserves real-time evidence of impairment indicators",
+      "Illinois mandatory minimum penalties apply even on first offense for elevated BAC"
+    ],
+    "defense_opportunities": [
+      "Challenge 20-minute observation compliance before breath testing",
+      "Negotiate reduction to reckless driving as a plea alternative",
+      "Portable breath test (PBT) results have limited admissibility — challenge any reliance on them at trial"
+    ],
+    "common_defenses": [
+      "Improper breathalyzer calibration challenge under Illinois testing regulations",
+      "Medical condition defense — GERD, acid reflux, or diabetes producing false-positive BAC",
+      "Rising blood alcohol — defendant was below 0.08 at time of actual driving"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "Mandatory minimum jail time on second+ offense leaves limited judicial discretion",
+      "Third or subsequent offense becomes a felony with permanent record consequences",
+      "Department of Motor Vehicles records reliably document prior offenses for enhancement purposes",
+      "Treatment program requirements compound the consequences of repeat offenses"
+    ],
+    "defense_opportunities": [
+      "Challenge the constitutional validity of prior convictions used for enhancement (uncounseled pleas)",
+      "Argue out-of-state priors do not satisfy Illinois enhancement standards",
+      "Negotiate residential treatment in lieu of extended incarceration",
+      "Challenge current offense elements independently — prior record does not prove current impairment"
+    ],
+    "common_defenses": [
+      "Constitutional invalidity of prior convictions used for enhancement",
+      "Suppression of evidence from an unlawful traffic stop applies equally on repeat offenses",
+      "Procedural challenges to breath testing and chain of custody",
+      "Actual physical control vs. operation — defendant was not driving the vehicle"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "Illinois Drug Recognition Expert (DRE) evaluations provide structured impairment evidence",
+      "Blood and urine test results from certified labs carry strong evidentiary weight",
+      "Prosecution can proceed on general impairment theory without quantitative drug results",
+      "Cannabis metabolites can persist in blood, supporting per se cases days after use"
+    ],
+    "defense_opportunities": [
+      "Challenge DRE officer qualifications and protocol compliance — DRE methodology is not universally accepted science",
+      "Drug metabolites persist long after impairment ends — challenge temporal correlation to driving",
+      "Lawful prescription medication does not automatically establish drug DUI",
+      "Challenge blood draw chain of custody and lab testing methodology"
+    ],
+    "common_defenses": [
+      "Involuntary intoxication — defendant unknowingly consumed a drug-laced substance",
+      "Per se metabolite presence does not equal impairment at time of driving",
+      "Medical necessity — prescription medication taken as directed by physician"
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "Witness testimony from other motorists or pedestrians documenting dangerous driving conduct",
+      "Dashboard and surveillance camera footage showing specific reckless driving acts",
+      "Officer observations of speed, lane changes, and signal disregard"
+    ],
+    "defense_opportunities": [
+      "Challenge officer's ability to estimate speed accurately from their vantage point",
+      "Present road, weather, or emergency circumstances explaining the driving",
+      "Negotiate reduction to improper lane usage or basic speeding"
+    ],
+    "common_defenses": [
+      "Insufficient evidence of 'willful or wanton' disregard — mere negligence is not enough",
+      "Visibility, distance, and conditions affecting reliability of officer observations",
+      "Mechanical failure caused the erratic driving behavior"
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Surveillance footage and ALPR data linking defendant's vehicle to the scene",
+      "Physical evidence — paint transfer, debris, and vehicle damage matching at the scene",
+      "Defendant's own vehicle damage consistent with the reported accident",
+      "Cell phone location data placing defendant at the scene at time of impact"
+    ],
+    "defense_opportunities": [
+      "Challenge identification evidence — lighting, distance, and camera quality",
+      "Demonstrate that defendant stopped but left for safety reasons before police arrived",
+      "Negotiate restitution-based reduction for cooperative defendants"
+    ],
+    "common_defenses": [
+      "Lack of knowledge that an accident occurred — required element under Illinois law",
+      "Mistaken identity — vehicle was not operated by defendant at the time",
+      "Duress — defendant left scene due to threatening circumstances and reported later",
+      "Alternative explanations for vehicle damage or paint transfer"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "Accident reconstruction establishing causation between defendant's conduct and the death",
+      "Toxicology results when alcohol or drugs are involved",
+      "Multiple witness accounts establishing the recklessness of defendant's driving",
+      "Medical examiner testimony linking cause of death directly to the collision"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'recklessness' element — argue conduct was negligent, not conscious disregard of risk",
+      "Present accident reconstruction showing decedent's contributing actions",
+      "Challenge toxicology timing and causal connection to the crash",
+      "Sudden medical emergency theory — defendant experienced an unforeseeable medical event"
+    ],
+    "common_defenses": [
+      "Intervening cause — third-party action or mechanical failure was the proximate cause",
+      "Sudden medical emergency — defendant was incapacitated before the collision",
+      "Challenge the state's accident reconstruction methodology and expert qualifications"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Accident reconstruction establishing that defendant's manner of driving caused the death",
+      "Witness testimony about defendant's driving behavior immediately before the collision",
+      "Physical evidence at scene (skid marks, debris field, point of impact) establishing fault",
+      "Expert testimony on vehicle dynamics and impact speed"
+    ],
+    "defense_opportunities": [
+      "Present comparative fault evidence by the decedent (jaywalking, unsafe lane change)",
+      "Challenge state accident reconstruction assumptions and methodology",
+      "Argue for reduction to a lesser included offense if recklessness is not proven"
+    ],
+    "common_defenses": [
+      "Lack of recklessness — conduct was ordinary negligence at most",
+      "Contributory fault by decedent or third party as superseding cause",
+      "Sudden mechanical failure — unforeseeable brake/tire failure",
+      "Unavoidable accident despite reasonable care"
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "Illinois motor vehicle agency records establishing the suspension or revocation status",
+      "Notice of suspension mailed to address on file creates rebuttable presumption of knowledge",
+      "Officer verification of suspended status through state databases at time of stop"
+    ],
+    "defense_opportunities": [
+      "Challenge actual knowledge of the suspension — notice may not have been received",
+      "Show suspension was improper or already resolved by the date of the alleged offense",
+      "Defendant had applied for or been granted restricted driving privileges",
+      "Challenge the underlying traffic stop"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not receive notice of suspension",
+      "Administrative error — suspension was entered in error or rescinded before offense date",
+      "Underlying suspension based on a constitutionally infirm conviction"
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Dashcam and bodycam footage documenting the pursuit and defendant's failure to stop",
+      "GPS and radio communications logs documenting pursuit speed and duration",
+      "Multiple-officer corroboration and identification of the driver"
+    ],
+    "defense_opportunities": [
+      "Argue defendant did not see or hear the officer's signals — siren or lights not visible",
+      "Challenge identification — argue someone else was driving",
+      "Present evidence defendant stopped as soon as safely possible (looking for well-lit area)"
+    ],
+    "common_defenses": [
+      "Lack of willfulness — road noise, music, or obstructed view",
+      "Misidentification — no positive ID made during the pursuit",
+      "Duress — defendant feared a non-police pursuer or believed the stop was not legitimate",
+      "Officer's lights and siren were not properly activated"
+    ]
+  },
+  {
+    "common_charge_slug": "open-container",
+    "prosecution_strengths": [
+      "Officer observation of an open alcoholic beverage container in the vehicle",
+      "Defendant's own statements about the container or its contents",
+      "Passenger testimony confirming open alcohol in the passenger area",
+      "Container with alcohol residue recovered within reach of the driver"
+    ],
+    "defense_opportunities": [
+      "Container was empty — not 'containing alcohol' as the statute requires",
+      "Challenge whether the liquid was tested as alcoholic",
+      "Container belonged to a passenger, not the driver"
+    ],
+    "common_defenses": [
+      "Container was in a locked glove compartment, trunk, or area behind the last upright seat",
+      "No evidence that defendant personally possessed the container",
+      "Vehicle was not on a covered highway or area at time of observation"
+    ]
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "prosecution_strengths": [
+      "Officer documented refusal to submit to chemical testing after proper warnings",
+      "Implied consent warning was properly administered and documented on video",
+      "Refusal triggers automatic statutory license suspension independent of criminal case",
+      "Refusal admissible at trial as consciousness of guilt in Illinois"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the implied consent warning was read in full as required",
+      "Argue defendant's behavior did not constitute a 'refusal' — confusion, medical condition, or language barrier",
+      "Challenge the administrative suspension at hearing",
+      "Physical inability to perform the test (breathing problems, injury) is not a refusal"
+    ],
+    "common_defenses": [
+      "Improper warning — officer did not read the complete implied consent advisory",
+      "No actual refusal — defendant could not understand or perform the test",
+      "Equivocal response — defendant asked questions or hesitated but did not clearly refuse"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Controlled substance found on defendant's person or in immediate possession",
+      "Defendant's statements or admissions regarding the substance during arrest",
+      "Proximity to drug paraphernalia linking defendant to knowing possession",
+      "Illinois sentencing tiers escalate based on weight, supporting felony charging"
+    ],
+    "defense_opportunities": [
+      "Argue lack of knowledge — defendant did not know the substance was present or controlled",
+      "Challenge constructive possession — mere proximity does not establish knowing possession",
+      "Challenge weight calculations — ensure lab tested actual controlled substance weight, not packaging or cut material"
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — evidence obtained without warrant must be suppressed",
+      "Lack of knowledge — defendant was unaware of the controlled substance's presence",
+      "Challenge chain of custody from seizure to lab testing",
+      "Illinois drug court or treatment-based disposition for qualifying first offenders"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Lab confirmation of cannabis substance and quantity exceeding legal possession limits in Illinois",
+      "Quantity inconsistent with personal use suggesting distribution intent",
+      "Evidence of public consumption or possession in prohibited locations (school zones, vehicles)"
+    ],
+    "defense_opportunities": [
+      "Challenge the weight measurement — stems, seeds, and packaging should not be included",
+      "Cannabis odor alone may be insufficient for probable cause in many Illinois circumstances",
+      "Medical cannabis patient with valid registration where applicable",
+      "Challenge lab testing methodology and weight determination"
+    ],
+    "common_defenses": [
+      "Legal possession within Illinois statutory limits where applicable",
+      "Unlawful search — challenge probable cause for the search",
+      "Authorized medical cannabis patient with valid registry card where applicable",
+      "Lack of knowledge — cannabis was not defendant's and they did not know it was present"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "Cocaine found on defendant's person or in immediate possession",
+      "Defendant's statements or admissions regarding the substance during arrest",
+      "Proximity to drug paraphernalia linking defendant to knowing possession",
+      "Illinois sentencing tiers escalate based on weight, supporting felony charging"
+    ],
+    "defense_opportunities": [
+      "Argue lack of knowledge — defendant did not know the substance was present or controlled",
+      "Challenge constructive possession — mere proximity does not establish knowing possession",
+      "Challenge weight calculations — ensure lab tested actual cocaine weight, not packaging or cut material"
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — evidence obtained without warrant must be suppressed",
+      "Lack of knowledge — defendant was unaware of the controlled substance's presence",
+      "Challenge chain of custody from seizure to lab testing",
+      "Illinois drug court or treatment-based disposition for qualifying first offenders"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "Methamphetamine found on defendant's person or in immediate possession",
+      "Defendant's statements or admissions regarding the substance during arrest",
+      "Proximity to drug paraphernalia linking defendant to knowing possession",
+      "Illinois sentencing tiers escalate based on weight, supporting felony charging"
+    ],
+    "defense_opportunities": [
+      "Argue lack of knowledge — defendant did not know the substance was present or controlled",
+      "Challenge constructive possession — mere proximity does not establish knowing possession",
+      "Challenge weight calculations — ensure lab tested actual methamphetamine weight, not packaging or cut material"
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — evidence obtained without warrant must be suppressed",
+      "Lack of knowledge — defendant was unaware of the controlled substance's presence",
+      "Challenge chain of custody from seizure to lab testing",
+      "Illinois drug court or treatment-based disposition for qualifying first offenders"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "prosecution_strengths": [
+      "Opioid found on defendant's person or in immediate possession",
+      "Defendant's statements or admissions regarding the substance during arrest",
+      "Proximity to drug paraphernalia linking defendant to knowing possession",
+      "Illinois sentencing tiers escalate based on weight, supporting felony charging"
+    ],
+    "defense_opportunities": [
+      "Valid prescription defense — defendant had a legitimate medical prescription for the opioid",
+      "Argue lack of knowledge — defendant did not know the substance was present or controlled",
+      "Challenge constructive possession — mere proximity does not establish knowing possession",
+      "Challenge weight calculations — ensure lab tested actual opioid weight, not packaging or cut material"
+    ],
+    "common_defenses": [
+      "Valid prescription — defendant possessed the opioid pursuant to a lawful prescription",
+      "Unlawful search and seizure — evidence obtained without warrant must be suppressed",
+      "Lack of knowledge — defendant was unaware of the controlled substance's presence",
+      "Challenge chain of custody from seizure to lab testing",
+      "Illinois drug court or treatment-based disposition for qualifying first offenders"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "prosecution_strengths": [
+      "Illinois Prescription Monitoring Program records showing no valid prescription in defendant's name",
+      "Quantity and packaging inconsistent with legitimate medical possession",
+      "Multiple different prescription medications suggest illegal acquisition",
+      "Defendant's statements regarding how the medications were obtained"
+    ],
+    "defense_opportunities": [
+      "Valid prescription exists but was not in defendant's possession at time of arrest",
+      "Medication belonged to a household member with colorable authorization",
+      "Challenge the officer's basis for searching — prescription bottles in plain view may not establish probable cause",
+      "Seek diversion or treatment-based disposition"
+    ],
+    "common_defenses": [
+      "Valid prescription defense — defendant had or recently had a legitimate prescription",
+      "Unlawful search — evidence obtained without warrant or applicable exception must be suppressed",
+      "Lack of knowledge — defendant did not know the medication was a controlled substance",
+      "Diversion program eligibility for first-time non-violent prescription drug offenses"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Evidence of distribution activity: scales, baggies, large cash, multiple phones, customer lists",
+      "Wiretap or controlled buy recordings establishing distribution network",
+      "Cooperating witness testimony identifying defendant as a distributor",
+      "Pattern evidence of multiple transactions over time"
+    ],
+    "defense_opportunities": [
+      "Challenge wiretap authorization compliance with Illinois eavesdropping statute",
+      "Challenge quantity calculations — demand accurate measurement excluding cutting agents",
+      "Attack cooperating witness credibility — examine plea deals and incentives",
+      "Challenge constructive possession of drugs found in shared spaces"
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — suppress evidence from defective searches",
+      "Mere presence or association — being near drugs does not establish trafficking",
+      "Entrapment — government agents induced trafficking defendant was not predisposed to commit",
+      "Challenge informant credibility — unreliable informants with incentives to fabricate"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "Controlled buy evidence with audio/video documentation establishing actual distribution",
+      "Quantity and packaging consistent with distribution rather than personal use",
+      "Communication evidence (texts, calls) showing coordination of drug sales",
+      "Confidential informant testimony about distribution activities"
+    ],
+    "defense_opportunities": [
+      "Challenge the controlled buy procedure — argue entrapment or government overreach",
+      "Dispute distribution intent — argue possession only",
+      "Attack credibility of cooperating witnesses",
+      "Challenge digital evidence collection methods — phone search warrant scope"
+    ],
+    "common_defenses": [
+      "Entrapment — government informant provided opportunity, means, or motivation",
+      "Possession only — defendant possessed drugs for personal use, not distribution",
+      "Unlawful search — suppress communications and physical evidence",
+      "Challenge identification — defendant was not the person who conducted the sale"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Physical evidence of manufacturing operation (lab equipment, precursor chemicals)",
+      "Environmental hazards from manufacturing operations strengthen prosecution narrative",
+      "Expert testimony on manufacturing processes linking seized materials to drug production"
+    ],
+    "defense_opportunities": [
+      "Challenge that materials were actually used for manufacturing — many chemicals have legitimate household uses",
+      "Argue defendant's role was peripheral and they lacked knowledge of the operation",
+      "Challenge the search warrant — manufacturing evidence often discovered during residence searches",
+      "Seek safety valve provisions for defendants who provide substantial assistance"
+    ],
+    "common_defenses": [
+      "Unlawful search — manufacturing evidence suppressed if warrant was defective",
+      "Lack of knowledge — defendant was unaware that manufacturing was occurring on the premises",
+      "Mere presence — defendant's presence at a manufacturing location does not establish participation",
+      "Constitutional challenge to the warrant — probable cause affidavit was stale or unreliable"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Physical evidence of paraphernalia with drug residue confirmed by lab testing",
+      "Proximity of paraphernalia to controlled substances strengthens both charges",
+      "Defendant's statements regarding the use or purpose of the paraphernalia"
+    ],
+    "defense_opportunities": [
+      "Argue items have legitimate non-drug uses — many items sold in convenience stores",
+      "Challenge that the residue testing was properly conducted",
+      "Paraphernalia charge may be leveraged for dismissal of more serious drug charges",
+      "No residue found — items without drug residue are harder to classify as paraphernalia"
+    ],
+    "common_defenses": [
+      "Legitimate use — items had lawful purposes (tobacco use, medical supplies, household items)",
+      "Unlawful search — paraphernalia evidence suppressed if discovered through unconstitutional search",
+      "Lack of knowledge — defendant did not know the items were considered drug paraphernalia",
+      "Challenge residue testing — demand lab confirmation of any substance found on items"
+    ]
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "prosecution_strengths": [
+      "Pharmacy records and Illinois PMP data documenting the fraudulent prescription activity",
+      "Surveillance footage from pharmacies showing defendant presenting forged or altered prescriptions",
+      "Pattern evidence of doctor shopping documented in PMP database",
+      "Handwriting analysis or digital forensics on forged prescriptions"
+    ],
+    "defense_opportunities": [
+      "Argue defendant had a good-faith belief that the prescription was valid",
+      "Challenge the PMP evidence — multiple prescriptions may have been legitimately obtained",
+      "Seek treatment-focused disposition given substance use disorder context",
+      "Challenge identification of defendant as the person who presented the prescription"
+    ],
+    "common_defenses": [
+      "Good faith — defendant genuinely believed the prescription was legitimate and valid",
+      "Lack of intent — defendant did not knowingly present a fraudulent prescription",
+      "Medical necessity — defendant was in genuine pain and acted out of desperation",
+      "Challenge the evidence linking defendant to the fraudulent prescription"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Quantity significantly exceeds personal use amounts, indicating distribution intent",
+      "Packaging materials (baggies, scales, cutting agents) found alongside the controlled substance",
+      "Large amounts of cash, especially in small denominations, associated with drug sales",
+      "Communication evidence discussing drug transactions"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'intent to distribute' inference — argue quantity was for personal use by a heavy user",
+      "Explain alternative reasons for cash and packaging materials",
+      "Challenge expert testimony on drug distribution indicators as speculative",
+      "Negotiate reduction to simple possession"
+    ],
+    "common_defenses": [
+      "Personal use — defendant possessed the drugs for personal consumption, not distribution",
+      "Unlawful search — all evidence of intent suppressed along with drugs",
+      "Lack of intent — circumstantial evidence is insufficient to prove beyond reasonable doubt",
+      "Challenge quantity measurement — improper weighing methods inflated the amount"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "Physical evidence (DNA, fingerprints, ballistics) placing defendant at the crime scene",
+      "Witness testimony or surveillance footage identifying defendant as the perpetrator",
+      "Digital evidence (cell phone location data, communications) establishing motive and opportunity",
+      "Confession or statements by defendant implicating themselves"
+    ],
+    "defense_opportunities": [
+      "Challenge witness identifications — cross-racial identification, suggestive lineups",
+      "Present alibi evidence — defendant was elsewhere at the time",
+      "Challenge forensic evidence methodology — DNA contamination, ballistics analysis"
+    ],
+    "common_defenses": [
+      "Mistaken identity — defendant was not the person who committed the killing",
+      "Lack of premeditation — heat of passion or absence of intent reduces to lesser homicide",
+      "Insanity defense — defendant lacked substantial capacity to appreciate the criminality of conduct"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "Physical and forensic evidence tying defendant to the killing",
+      "Witness testimony establishing defendant's actions leading to the death",
+      "Prosecution argues mitigating factors claimed by defense are unsupported"
+    ],
+    "defense_opportunities": [
+      "Present strong evidence of serious provocation",
+      "Argue unreasonable belief in self-defense",
+      "Challenge state's evidence on intent to kill or knowledge of probable death",
+      "Negotiate plea to voluntary manslaughter if provocation evidence is strong"
+    ],
+    "common_defenses": [
+      "Serious provocation — sudden and intense passion from victim's conduct",
+      "Imperfect self-defense — belief in need for deadly force was genuine but unreasonable",
+      "Diminished capacity — mental illness or intoxication affecting state of mind"
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "Evidence that defendant intentionally or knowingly caused the victim's death",
+      "Forensic and physical evidence establishing defendant's role in the killing",
+      "Witness testimony placing defendant at the scene with means and opportunity",
+      "Provocation evidence claimed by defense is insufficient to mitigate further"
+    ],
+    "defense_opportunities": [
+      "Present evidence of victim's conduct that provoked defendant's reaction",
+      "Challenge forensic evidence linking defendant to the homicide",
+      "Negotiate plea with credit for time served and acceptance of responsibility",
+      "Argue heat of passion and lack of cooling-off time"
+    ],
+    "common_defenses": [
+      "Serious provocation by the victim — sudden and intense passion",
+      "Imperfect self-defense — genuine but unreasonable belief in the need for deadly force",
+      "Accident — death was unintentional and occurred during lawful activity"
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "Evidence establishing defendant's reckless acts proximately caused the death",
+      "Expert testimony on how defendant's conduct created substantial and unjustifiable risk",
+      "Physical evidence showing the mechanism of death",
+      "Pattern evidence of prior similar reckless behavior"
+    ],
+    "defense_opportunities": [
+      "Challenge causation — argue intervening cause",
+      "Present mitigating circumstances showing conduct was not gross deviation from standard of care",
+      "Argue accident — unforeseeable consequence of otherwise lawful activity"
+    ],
+    "common_defenses": [
+      "Intervening cause — independent event was the actual cause of death",
+      "Accident defense — death resulted from an unforeseeable event",
+      "Challenge proximate causation — too attenuated to establish legal causation"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "Victim testimony describing the threatening conduct and its effect",
+      "Physical evidence of a weapon or dangerous instrument used during the assault",
+      "Surveillance or body camera footage documenting the conduct",
+      "Medical records documenting injuries"
+    ],
+    "defense_opportunities": [
+      "Challenge the victim's perception of threat as objectively unreasonable",
+      "Challenge the aggravating factor — argue the location, victim status, or weapon element was not established",
+      "Present evidence of mutual combat or that victim was the initial aggressor"
+    ],
+    "common_defenses": [
+      "Lack of intent — defendant did not intend to place victim in apprehension of harm",
+      "Insufficient evidence of aggravating factor — should be reduced to simple assault"
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Victim testimony that defendant placed them in reasonable apprehension",
+      "Witness corroboration of threatening conduct or gestures",
+      "Physical evidence of threatening objects or aggressive positioning",
+      "Prior history between parties providing context for the threat"
+    ],
+    "defense_opportunities": [
+      "Argue victim's apprehension was not objectively reasonable",
+      "Conduct was protected speech — verbal threats alone may be insufficient",
+      "Challenge witness credibility and present conflicting accounts"
+    ],
+    "common_defenses": [
+      "No reasonable apprehension — conduct would not cause reasonable person to fear imminent battery",
+      "Free speech — mere words without physical action"
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "Victim testimony describing unwanted physical contact or bodily harm",
+      "Medical records documenting injuries consistent with battery",
+      "Witness testimony corroborating the battery",
+      "Physical evidence — torn clothing, defensive wounds, DNA transfer"
+    ],
+    "defense_opportunities": [
+      "Consent defense — victim consented to contact (mutual combat, contact sports)",
+      "Accident — contact was unintentional",
+      "Challenge the element of 'bodily harm' or insulting/provoking contact"
+    ],
+    "common_defenses": [
+      "Consent — physical contact was consensual",
+      "Accidental contact — no intent to make harmful or offensive contact"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "prosecution_strengths": [
+      "Medical evidence of great bodily harm, permanent disability, or disfigurement",
+      "Protected victim status — officer, child, elderly — establishes aggravating element",
+      "Severity of injuries supported by medical testimony and photographic evidence",
+      "Multiple witnesses to the violent act"
+    ],
+    "defense_opportunities": [
+      "Challenge 'great bodily harm' element — injuries may not meet statutory threshold",
+      "Self-defense with reasonable force — even serious injury can result from justified action",
+      "Challenge whether the instrument qualifies as a 'deadly weapon'",
+      "Argue for reduction to simple battery if aggravating factors not established"
+    ],
+    "common_defenses": [
+      "Injuries do not constitute 'great bodily harm'",
+      "Mutual combat — both parties voluntarily engaged in physical altercation"
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Victim identification of defendant as the person who took property by force",
+      "Surveillance footage capturing the robbery and identifying the perpetrator",
+      "Recovery of stolen property from defendant's possession shortly after the offense",
+      "Physical evidence linking defendant to the scene (DNA, fingerprints, clothing)"
+    ],
+    "defense_opportunities": [
+      "Challenge eyewitness identification reliability — cross-racial identification, suggestive procedures",
+      "Present alibi evidence",
+      "Question victim's credibility regarding use of force"
+    ],
+    "common_defenses": [
+      "Mistaken identity — defendant was not the person who committed the robbery",
+      "Lack of force or threat — taking did not involve force, reducing to theft",
+      "Claim of right — defendant had a good-faith belief of ownership",
+      "Alibi — defendant was at a different location"
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "Weapon recovered and linked to defendant through forensic evidence",
+      "Victim testimony regarding display or use of weapon during the robbery",
+      "Surveillance footage showing defendant possessing a firearm during the taking",
+      "Firearm enhancement adds substantial prison time when applicable"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the object was actually a 'dangerous weapon'",
+      "Mistaken identity — challenge witness identification",
+      "Challenge the firearm enhancement — argue defendant did not personally possess",
+      "Present evidence the alleged weapon was a toy, replica, or non-functional"
+    ],
+    "common_defenses": [
+      "Mistaken identity",
+      "Duress — defendant participated under threat of imminent harm",
+      "Challenge identification procedures — suggestive lineup or unreliable testimony"
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "Victim testimony describing unlawful restraint, confinement, or movement",
+      "Physical evidence of restraint",
+      "Witness testimony or surveillance documenting the taking or confinement",
+      "Digital evidence (GPS, cell tower data) tracking movement"
+    ],
+    "defense_opportunities": [
+      "Consent — argue victim voluntarily accompanied defendant",
+      "Parental rights — in custody disputes, defendant had lawful authority",
+      "Challenge 'secret confinement' or 'involuntary' movement element",
+      "Argue movement was incidental to another offense and should merge"
+    ],
+    "common_defenses": [
+      "Consent — alleged victim voluntarily went with defendant",
+      "Parental authority — defendant had lawful custody",
+      "Insufficient asportation — movement merges with another crime",
+      "Mistaken identity or false accusation"
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Fire investigation evidence — accelerant residue, ignition pattern",
+      "Expert testimony from fire investigators identifying arson indicators",
+      "Surveillance footage or witness testimony placing defendant near the scene",
+      "Motive evidence — insurance claims, revenge, financial gain"
+    ],
+    "defense_opportunities": [
+      "Challenge fire investigation methodology — accidental causes can mimic arson",
+      "Alibi — defendant was not present",
+      "Challenge motive evidence as speculative",
+      "Independent expert fire investigation analysis"
+    ],
+    "common_defenses": [
+      "Accidental fire — electrical, mechanical, or natural causes",
+      "Alibi",
+      "Mistaken identification",
+      "Challenge fire investigation science under NFPA 921 standards"
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "Evidence of specific intent to kill — weapon selection, targeting, statements",
+      "Severity of injuries indicating intent to cause death",
+      "Premeditation evidence — prior threats, planning, weapon procurement"
+    ],
+    "defense_opportunities": [
+      "Challenge specific intent to kill — argue defendant intended injury, not death",
+      "Argue for reduction to aggravated battery if intent to kill not proven",
+      "Challenge identification of defendant"
+    ],
+    "common_defenses": [
+      "Lack of intent to kill — actions were harmful but not directed at causing death",
+      "Voluntary intoxication negating specific intent",
+      "Abandonment — defendant voluntarily abandoned the attempt before completion"
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "Recovery and identification of the weapon used",
+      "Victim testimony describing use of a deadly weapon during the assault",
+      "Injury evidence consistent with the identified weapon",
+      "Surveillance evidence of defendant's possession and use of the weapon"
+    ],
+    "defense_opportunities": [
+      "Self-defense — defendant armed in response to victim's deadly threat",
+      "Argue weapon was not actually used or displayed in a threatening manner",
+      "Challenge witness identification and weapon recovery procedures"
+    ],
+    "common_defenses": [
+      "Object was not a 'deadly weapon' under the circumstances",
+      "No intent to assault — possessed but did not use or threaten",
+      "Mistaken identity"
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "Evidence of unauthorized control over the owner's property",
+      "Victim testimony identifying stolen property and denying consent",
+      "Recovery of stolen property from defendant's person or residence"
+    ],
+    "defense_opportunities": [
+      "Claim of right — defendant had a good-faith belief of ownership",
+      "Consent — owner gave permission for defendant to take or use property",
+      "Challenge value of property to reduce charge classification",
+      "Argue defendant did not intend to permanently deprive"
+    ],
+    "common_defenses": [
+      "Claim of right — bona fide belief of ownership",
+      "Lack of intent — no intent to permanently deprive",
+      "Consent — owner authorized the taking",
+      "Mistaken identity"
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Appraisal or fair market value evidence documenting the value",
+      "Chain of possession evidence tracing property from owner to defendant",
+      "Multiple theft incidents showing pattern and aggregate value"
+    ],
+    "defense_opportunities": [
+      "Challenge stated value — depreciation and condition may reduce below felony threshold",
+      "Claim of right — defendant believed in lawful ownership",
+      "Argue single transaction to avoid aggregation",
+      "Negotiate restitution and reduced charges"
+    ],
+    "common_defenses": [
+      "Property value below felony threshold",
+      "Claim of right",
+      "Consent",
+      "Lack of intent to permanently deprive"
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "Surveillance footage or witness testimony documenting the taking",
+      "Recovery of stolen property from defendant's possession",
+      "Store loss prevention officer testimony for retail theft",
+      "Defendant's statements admitting to the taking"
+    ],
+    "defense_opportunities": [
+      "Argue mistake or accident",
+      "Challenge identification of defendant",
+      "Negotiate conditional discharge or community service"
+    ],
+    "common_defenses": [
+      "Mistake — accidentally walked out without paying",
+      "Lack of intent to permanently deprive",
+      "Claim of right — believed they had paid",
+      "Diversion eligibility for first offense"
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "Store surveillance video documenting concealment and removal of merchandise",
+      "Loss prevention officer testimony observing the theft",
+      "Recovery of unpaid merchandise from defendant"
+    ],
+    "defense_opportunities": [
+      "Challenge surveillance footage quality",
+      "Argue defendant intended to pay — distracted or confused",
+      "Challenge loss prevention procedures — continuous observation requirement",
+      "Seek diversion for first-time offense"
+    ],
+    "common_defenses": [
+      "No intent to steal",
+      "Mistaken observation by loss prevention",
+      "Value challenge — actual retail value is lower than charged",
+      "Diversion eligibility"
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "Evidence of unauthorized entry — forced entry marks, broken locks",
+      "Surveillance or witness evidence placing defendant at the burglarized location",
+      "Recovery of stolen property from defendant's possession"
+    ],
+    "defense_opportunities": [
+      "Challenge 'intent to commit a felony or theft' at time of entry",
+      "Authorized entry — defendant had permission",
+      "Challenge forensic evidence — fingerprints may have innocent explanations",
+      "Argue for reduction to criminal trespass"
+    ],
+    "common_defenses": [
+      "Authorization — defendant had permission to enter",
+      "Mistaken identity",
+      "Challenge entry evidence — prosecution cannot prove unauthorized entry"
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "Evidence of entry into an inhabited dwelling with intent to commit a crime",
+      "Victim testimony regarding missing property and signs of forced entry",
+      "Forensic evidence inside the residence",
+      "Surveillance camera footage from the residence or neighborhood"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'dwelling' element — was the structure used as a residence?",
+      "Authorized entry — defendant had a key or invitation",
+      "Challenge identification",
+      "Negotiate to non-residential burglary if dwelling element is in dispute"
+    ],
+    "common_defenses": [
+      "Authorization to enter",
+      "Mistaken identity",
+      "Challenge 'dwelling' classification",
+      "Lack of intent to commit felony at time of entry"
+    ]
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "prosecution_strengths": [
+      "Security system footage documenting unauthorized entry into commercial premises",
+      "Alarm system records showing the time and manner of forced entry",
+      "Recovery of stolen commercial property or tools used for entry",
+      "Forensic evidence at point of entry or inside the business"
+    ],
+    "defense_opportunities": [
+      "Challenge whether entry was unauthorized — employee access",
+      "Challenge intent — defendant entered for a lawful purpose",
+      "Forensic evidence may have innocent explanations",
+      "Argue for reduction to criminal trespass"
+    ],
+    "common_defenses": [
+      "Authorized entry — employee, contractor, or customer access",
+      "Lack of intent",
+      "Mistaken identity",
+      "Criminal trespass — entered but did not commit a crime inside"
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "Vehicle registration records establishing lack of authorization",
+      "Defendant found operating a vehicle reported stolen",
+      "Forensic evidence (fingerprints, DNA) inside the stolen vehicle",
+      "Surveillance footage or ALPR data tracking the stolen vehicle"
+    ],
+    "defense_opportunities": [
+      "Argue defendant had permission from the owner",
+      "Challenge knowledge — defendant did not know vehicle was stolen",
+      "Challenge identification",
+      "Claim of right — defendant believed they had ownership interest"
+    ],
+    "common_defenses": [
+      "Permission — defendant had owner's consent",
+      "Lack of knowledge — purchased or received without knowing it was stolen",
+      "Mistaken identity",
+      "Claim of right"
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Recovery of property identified as stolen from defendant's possession",
+      "Evidence defendant purchased property significantly below market value",
+      "Communications showing defendant was aware of the stolen nature",
+      "Pattern of possessing multiple stolen items indicating fencing operation"
+    ],
+    "defense_opportunities": [
+      "Challenge 'knowledge' element — defendant did not know property was stolen",
+      "Argue good-faith purchase from a legitimate source",
+      "Challenge identification of property as stolen",
+      "Argue mere presence at a location with stolen property"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know property was stolen",
+      "Good-faith purchase at fair market value",
+      "Ownership dispute — civil disagreement, not theft",
+      "Mere presence"
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "Photographic evidence of damage and repair estimates",
+      "Witness or surveillance footage identifying defendant",
+      "Defendant's statements admitting to the damage"
+    ],
+    "defense_opportunities": [
+      "Challenge cost of damage — inflated repair estimates",
+      "Argue accident — damage was unintentional",
+      "Challenge identification",
+      "Negotiate restitution for charge reduction"
+    ],
+    "common_defenses": [
+      "Accident — damage was unintentional",
+      "Mistaken identity",
+      "Authorization — property owner consented",
+      "Challenge damage valuation"
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "Evidence of posted 'No Trespassing' signs or fencing",
+      "Prior verbal or written warning to defendant",
+      "Witness testimony from owner that defendant was told to leave and refused",
+      "Surveillance footage showing defendant entering or remaining after notice"
+    ],
+    "defense_opportunities": [
+      "Defendant had a right to be on property — easement or invitation",
+      "First Amendment defense — public property or protected activity",
+      "Argue defendant left when asked"
+    ],
+    "common_defenses": [
+      "Lack of notice — no posted signs or warnings",
+      "Authorization — permission, invitation, or lawful business",
+      "Mistake of fact — believed property was public"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "Photographic evidence of damage and repair estimates",
+      "Witness or surveillance footage identifying defendant",
+      "Defendant's statements admitting to the damage"
+    ],
+    "defense_opportunities": [
+      "Challenge cost of damage — inflated repair estimates",
+      "Argue accident — damage was unintentional",
+      "Challenge identification",
+      "Negotiate restitution for charge reduction"
+    ],
+    "common_defenses": [
+      "Accident — damage was unintentional",
+      "Mistaken identity",
+      "Authorization — property owner consented",
+      "Challenge damage valuation"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "Victim's 911 call and initial statements often provide compelling evidence",
+      "Photographs of injuries taken at the scene by responding officers",
+      "Medical records documenting injuries consistent with the reported assault",
+      "Illinois prosecution policies often proceed even if victim recants"
+    ],
+    "defense_opportunities": [
+      "Self-defense — defendant was the actual victim responding to aggression",
+      "Inconsistent statements between 911 call, police report, and testimony",
+      "Challenge 'household member' or 'family' relationship element",
+      "No-contact compliance and rehabilitation evidence for sentencing"
+    ],
+    "common_defenses": [
+      "False accusation — fabrication motivated by custody, divorce, or revenge",
+      "Insufficient evidence — no independent witnesses, no injuries",
+      "Mutual combat — both parties engaged in physical altercation"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "Victim's 911 call and initial statements often provide compelling evidence",
+      "Photographs of injuries taken at the scene by responding officers",
+      "Medical records documenting injuries consistent with the reported assault",
+      "Illinois prosecution policies often proceed even if victim recants"
+    ],
+    "defense_opportunities": [
+      "Self-defense — defendant was the actual victim responding to aggression",
+      "Inconsistent statements between 911 call, police report, and testimony",
+      "Challenge 'household member' or 'family' relationship element",
+      "No-contact compliance and rehabilitation evidence for sentencing"
+    ],
+    "common_defenses": [
+      "False accusation — fabrication motivated by custody, divorce, or revenge",
+      "Insufficient evidence — no independent witnesses, no injuries",
+      "Mutual combat — both parties engaged in physical altercation"
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "Illinois child welfare investigation findings documenting endangering conditions",
+      "Medical evidence of child's condition",
+      "Witness testimony from teachers, doctors, or neighbors",
+      "Photographs documenting hazardous conditions"
+    ],
+    "defense_opportunities": [
+      "Challenge child welfare findings — administrative standards differ from criminal proof",
+      "Distinguish poverty from neglect",
+      "Present evidence of parenting efforts and compliance"
+    ],
+    "common_defenses": [
+      "No actual endangerment",
+      "Poverty defense — financial hardship is not willful disregard",
+      "Parental discretion within reasonable parenting",
+      "Constitutional parental rights"
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "Medical evidence — documented injuries, X-rays showing fractures, expert testimony on non-accidental trauma",
+      "Illinois child welfare investigation reports",
+      "Child's own statements through forensic interview protocols",
+      "Prior child welfare contacts establishing pattern"
+    ],
+    "defense_opportunities": [
+      "Alternative medical explanation for injuries (brittle bone disease, etc.)",
+      "Challenge forensic interview techniques — suggestive questioning",
+      "Identify alternative perpetrators with access to the child",
+      "Present evidence of defendant's positive parenting"
+    ],
+    "common_defenses": [
+      "Accident — normal childhood activity",
+      "Medical condition — osteogenesis imperfecta, bleeding disorders",
+      "Misidentification of abuser",
+      "Reasonable parental discipline within Illinois law"
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "Documented proof of valid, served protective order",
+      "Evidence of contact with the protected person (texts, calls, proximity)",
+      "GPS monitoring or surveillance data showing prohibited locations",
+      "Victim testimony about the violation"
+    ],
+    "defense_opportunities": [
+      "Argue defendant was not properly served and lacked knowledge of terms",
+      "Contact initiated by the protected person — relevant to mitigation",
+      "Argue contact was accidental or incidental"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant not properly served",
+      "No violation — conduct did not fall within prohibited terms",
+      "Accidental contact — encounter was unplanned",
+      "Invited contact (mitigation factor)"
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "Victim testimony about pattern and resulting emotional distress",
+      "Electronic evidence — GPS trackers, repeated calls/texts",
+      "Illinois aggravated stalking enhancements when threats or protective orders involved"
+    ],
+    "defense_opportunities": [
+      "Challenge 'course of conduct' — isolated incidents may not establish pattern",
+      "Argue legitimate purpose (co-parenting, property recovery)",
+      "Challenge 'reasonable person' standard for emotional distress",
+      "Present evidence the alleged victim encouraged contact"
+    ],
+    "common_defenses": [
+      "Legitimate purpose — lawful activity",
+      "Constitutionally protected activity",
+      "Insufficient evidence of reasonable emotional distress"
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "Documented pattern of unwanted communications",
+      "Threatening or obscene content establishing harassing nature",
+      "Victim testimony regarding impact on daily life",
+      "Phone records and electronic evidence documenting frequency"
+    ],
+    "defense_opportunities": [
+      "First Amendment — many forms of communication are protected",
+      "Argue communications were not objectively threatening",
+      "Show defendant ceased contact when asked"
+    ],
+    "common_defenses": [
+      "Protected speech",
+      "Legitimate purpose",
+      "Not objectively threatening",
+      "Isolated incident — single communication does not establish pattern"
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "Medical evidence of injuries, neglect, or financial exploitation",
+      "Financial records showing unauthorized transfers",
+      "Testimony from healthcare professionals or family members"
+    ],
+    "defense_opportunities": [
+      "Challenge characterization of financial transactions — elder authorized them",
+      "Argue defendant acted in elder's best interest as caretaker",
+      "Medical conditions may explain injuries or decline",
+      "Power of attorney defense — legal authority over financial affairs"
+    ],
+    "common_defenses": [
+      "Authorization — elder consented",
+      "Acting in best interest",
+      "Medical explanation — injuries from elder's conditions",
+      "Legitimate authority — POA or guardianship"
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "Physical recovery of the weapon from defendant's person, vehicle, or residence",
+      "Officer testimony regarding circumstances of weapon discovery",
+      "Defendant's statements acknowledging possession"
+    ],
+    "defense_opportunities": [
+      "Lawful possession — defendant had valid permits where required",
+      "Challenge the search — Fourth Amendment suppression",
+      "Argue weapon was transported lawfully",
+      "Challenge constructive possession in shared spaces"
+    ],
+    "common_defenses": [
+      "Lawful possession with valid permits",
+      "Unlawful search",
+      "Constructive possession challenge",
+      "Lawful transport — properly stored during transport"
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "Physical recovery of the firearm",
+      "DNA, fingerprints, or other forensic evidence linking defendant",
+      "Illinois habitual offender enhancements add substantial prison time"
+    ],
+    "defense_opportunities": [
+      "Challenge constructive possession — firearm in shared space",
+      "Argue prior conviction does not qualify as a prohibited offense",
+      "Challenge the search",
+      "Present evidence of restoration of firearm rights"
+    ],
+    "common_defenses": [
+      "Lack of possession — actual or constructive",
+      "Unlawful search",
+      "Prior conviction challenge — vacated, reduced, or disqualifying",
+      "Momentary possession for safety purposes"
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "Recovery of concealed firearm without valid permit",
+      "Officer testimony about manner of concealment",
+      "Database confirmation defendant lacks valid permit"
+    ],
+    "defense_opportunities": [
+      "Argue defendant was in process of obtaining or renewing permit",
+      "Challenge whether firearm was actually 'concealed'",
+      "Constitutional Second Amendment challenge",
+      "Argue lawful transport in case"
+    ],
+    "common_defenses": [
+      "Valid permit defense",
+      "Not concealed — openly carried or transported lawfully",
+      "Unlawful search",
+      "Home or place of business exception"
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "Ballistic evidence linking discharged rounds to defendant's weapon",
+      "Witness testimony regarding the discharge",
+      "Surveillance or body camera footage"
+    ],
+    "defense_opportunities": [
+      "Accidental discharge — malfunction or mishandling",
+      "Challenge identification of the shooter",
+      "Challenge ballistic evidence matching methodology"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Accidental discharge",
+      "Mistaken identity",
+      "Lawful discharge on private property"
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-trafficking",
+    "prosecution_strengths": [
+      "Evidence of multiple firearm transactions",
+      "Undercover buy operations with audio/video documentation",
+      "Financial records showing proceeds from weapons sales",
+      "ATF trace data linking firearms to crimes"
+    ],
+    "defense_opportunities": [
+      "Challenge undercover procedure — entrapment",
+      "Argue lawful firearms dealer or collector activity",
+      "Challenge number of firearms attributed",
+      "Argue defendant believed buyers were lawful purchasers"
+    ],
+    "common_defenses": [
+      "Lawful private sales",
+      "Entrapment",
+      "Lack of knowledge of buyers' status",
+      "Challenge evidence linking specific firearms"
+    ]
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "prosecution_strengths": [
+      "Physical recovery of a prohibited weapon",
+      "Defendant's statements regarding possession",
+      "Circumstances of discovery"
+    ],
+    "defense_opportunities": [
+      "Challenge whether weapon meets statutory definition",
+      "Argue antique, collectible, or non-functional",
+      "Challenge the search"
+    ],
+    "common_defenses": [
+      "Not a prohibited weapon",
+      "Unlawful search",
+      "Lack of knowledge of prohibited classification",
+      "Second Amendment challenge"
+    ]
+  },
+  {
+    "common_charge_slug": "unlawful-carry",
+    "prosecution_strengths": [
+      "Recovery of concealed firearm without valid permit",
+      "Officer testimony about manner of concealment",
+      "Database confirmation defendant lacks valid permit"
+    ],
+    "defense_opportunities": [
+      "Argue defendant was in process of obtaining or renewing permit",
+      "Challenge whether firearm was actually 'concealed'",
+      "Constitutional Second Amendment challenge",
+      "Argue lawful transport in case"
+    ],
+    "common_defenses": [
+      "Valid permit defense",
+      "Not concealed — openly carried or transported lawfully",
+      "Unlawful search",
+      "Home or place of business exception"
+    ]
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "prosecution_strengths": [
+      "Documentary evidence of false representations or fraudulent transactions",
+      "Financial records showing victim losses and defendant gains",
+      "Victim testimony about reliance on defendant's misrepresentations"
+    ],
+    "defense_opportunities": [
+      "Good faith — defendant believed representations were true",
+      "Challenge reliance — victim did not actually rely",
+      "Argue legitimate business transaction that simply failed",
+      "Challenge causation between misrepresentation and loss"
+    ],
+    "common_defenses": [
+      "Good faith belief in truth of representations",
+      "Puffery — opinions or sales talk, not actionable misrepresentations",
+      "No reliance by victim",
+      "Legitimate business failure, not fraud"
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Digital evidence of defendant's use of another's personal identifying information",
+      "Financial records documenting fraudulent transactions",
+      "Possession of identity documents belonging to multiple victims"
+    ],
+    "defense_opportunities": [
+      "Authorization — person whose identity was used gave consent",
+      "Mistaken identity — defendant's own identity was stolen",
+      "Challenge digital evidence chain of custody",
+      "Argue lack of knowledge that information belonged to a real person"
+    ],
+    "common_defenses": [
+      "Authorization",
+      "Lack of intent to commit fraud",
+      "Mistaken identity",
+      "Challenge digital forensic evidence — IP attribution errors"
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Financial records showing systematic diversion of funds by defendant in trust position",
+      "Audit trail documenting discrepancies",
+      "Defendant's personal financial records showing unexplained income",
+      "Witness testimony from employers or accountants"
+    ],
+    "defense_opportunities": [
+      "Authorization — defendant had permission to access and use funds",
+      "Accounting errors — bookkeeping mistakes, not theft",
+      "Challenge the amount",
+      "Argue defendant believed they were owed the funds"
+    ],
+    "common_defenses": [
+      "Authorization",
+      "Claim of right — entitlement to funds",
+      "Accounting error",
+      "Insufficient evidence of specific acts of conversion"
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Physical evidence of forged documents with handwriting analysis or digital forensics",
+      "Victim testimony identifying forged documents and denying authorization",
+      "Financial records showing benefit gained",
+      "Expert testimony on document alteration techniques"
+    ],
+    "defense_opportunities": [
+      "Challenge handwriting analysis — not an exact science",
+      "Authorization — defendant had permission to sign",
+      "Argue alteration was not material",
+      "Lack of intent to defraud"
+    ],
+    "common_defenses": [
+      "Authorization",
+      "Challenge handwriting or document analysis",
+      "Immateriality of alleged alteration"
+    ]
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "prosecution_strengths": [
+      "Bank records confirming insufficient funds at time check was presented",
+      "Evidence defendant knew the account had insufficient funds",
+      "Pattern of issuing bad checks to multiple payees"
+    ],
+    "defense_opportunities": [
+      "Argue defendant believed sufficient funds were in the account",
+      "Show defendant made check good within notice period",
+      "Challenge whether proper notice of dishonor was given",
+      "Accounting error — automatic deposits delayed"
+    ],
+    "common_defenses": [
+      "Good faith — believed account had sufficient funds",
+      "Timely payment within statutory notice period",
+      "Lack of notice of dishonor",
+      "Banking error"
+    ]
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "prosecution_strengths": [
+      "Insurance company investigation documenting inconsistencies in the claim",
+      "Surveillance evidence contradicting injuries or damages",
+      "Expert testimony on staged accidents or inflated claims"
+    ],
+    "defense_opportunities": [
+      "Argue claim was legitimate and insurer is denying valid claim",
+      "Challenge surveillance interpretation",
+      "Present medical evidence supporting injury claims",
+      "Argue mistake or miscommunication, not intentional fraud"
+    ],
+    "common_defenses": [
+      "Legitimate claim",
+      "Mistake or misunderstanding",
+      "Challenge insurer's investigation methods",
+      "Lack of intent to defraud"
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "Transaction records linking defendant to unauthorized credit card purchases",
+      "Surveillance footage from retail locations",
+      "Possession of stolen credit cards or skimming devices",
+      "Digital evidence linking defendant to online purchases"
+    ],
+    "defense_opportunities": [
+      "Authorization — cardholder gave permission",
+      "Mistaken identity — defendant's identity was stolen",
+      "Challenge digital evidence connecting defendant to online transactions",
+      "Argue lack of knowledge card was stolen"
+    ],
+    "common_defenses": [
+      "Authorization",
+      "Mistaken identity",
+      "Lack of knowledge",
+      "Challenge digital evidence — IP and device attribution"
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Financial records showing complex transactions designed to conceal source of funds",
+      "Expert testimony on money laundering techniques and patterns",
+      "Connection between laundered funds and predicate criminal activity",
+      "Cooperation from financial institutions identifying suspicious activity reports"
+    ],
+    "defense_opportunities": [
+      "Challenge 'knowledge' element",
+      "Argue legitimate business activities with lawful sources",
+      "Challenge predicate offense",
+      "Argue financial transactions had legitimate commercial purposes"
+    ],
+    "common_defenses": [
+      "Lack of knowledge that money was from criminal activity",
+      "Legitimate source of funds",
+      "No predicate offense proven",
+      "Legitimate business transactions"
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "Documentary evidence of false representations or fraudulent transactions",
+      "Financial records showing victim losses and defendant gains",
+      "Victim testimony about reliance on defendant's misrepresentations"
+    ],
+    "defense_opportunities": [
+      "Good faith — defendant believed representations were true",
+      "Challenge reliance — victim did not actually rely",
+      "Argue legitimate business transaction that simply failed",
+      "Challenge causation between misrepresentation and loss"
+    ],
+    "common_defenses": [
+      "Good faith belief in truth of representations",
+      "Puffery — opinions or sales talk, not actionable misrepresentations",
+      "No reliance by victim",
+      "Legitimate business failure, not fraud"
+    ]
+  },
+  {
+    "common_charge_slug": "bank-fraud",
+    "prosecution_strengths": [
+      "Documentary evidence of false representations or fraudulent transactions",
+      "Financial records showing victim losses and defendant gains",
+      "Victim testimony about reliance on defendant's misrepresentations"
+    ],
+    "defense_opportunities": [
+      "Good faith — defendant believed representations were true",
+      "Challenge reliance — victim did not actually rely",
+      "Argue legitimate business transaction that simply failed",
+      "Challenge causation between misrepresentation and loss"
+    ],
+    "common_defenses": [
+      "Good faith belief in truth of representations",
+      "Puffery — opinions or sales talk, not actionable misrepresentations",
+      "No reliance by victim",
+      "Legitimate business failure, not fraud"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "Victim testimony describing the sexual assault in detail",
+      "DNA evidence linking defendant through sexual assault kit analysis",
+      "Medical examination findings consistent with sexual assault",
+      "Electronic evidence between defendant and victim before/after"
+    ],
+    "defense_opportunities": [
+      "Consent defense where applicable",
+      "Challenge DNA evidence interpretation — presence does not prove lack of consent",
+      "Alibi",
+      "Challenge timeline and circumstances"
+    ],
+    "common_defenses": [
+      "Consent",
+      "Mistaken identity",
+      "False accusation — fabrication evidence",
+      "Challenge forensic evidence — contamination or alternative explanations"
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "Victim testimony describing the sexual assault in detail",
+      "DNA evidence linking defendant through sexual assault kit analysis",
+      "Medical examination findings consistent with sexual assault",
+      "Electronic evidence between defendant and victim before/after"
+    ],
+    "defense_opportunities": [
+      "Consent defense where applicable",
+      "Challenge DNA evidence interpretation — presence does not prove lack of consent",
+      "Alibi",
+      "Challenge timeline and circumstances"
+    ],
+    "common_defenses": [
+      "Consent",
+      "Mistaken identity",
+      "False accusation — fabrication evidence",
+      "Challenge forensic evidence — contamination or alternative explanations"
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "Victim and witness testimony describing public exposure",
+      "Surveillance footage documenting the act",
+      "Multiple victims or pattern of incidents"
+    ],
+    "defense_opportunities": [
+      "Argue exposure was accidental, not for sexual arousal",
+      "Challenge witness identification",
+      "Context defense — appropriate setting (changing area)",
+      "Mental health mitigation"
+    ],
+    "common_defenses": [
+      "Accidental exposure",
+      "Mistaken identity",
+      "Privacy — reasonable expectation in location",
+      "Not in public"
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "Undercover officer testimony describing solicitation conversation",
+      "Audio or video recordings from undercover operation",
+      "Text messages or online communications arranging the exchange",
+      "Cash matching agreed-upon amount"
+    ],
+    "defense_opportunities": [
+      "Entrapment",
+      "Ambiguous communication",
+      "Challenge undercover procedure",
+      "Argue defendant was seeking companionship"
+    ],
+    "common_defenses": [
+      "Entrapment",
+      "No agreement — communications were ambiguous",
+      "Lack of intent to exchange money for sex",
+      "Constitutional challenge — selective enforcement"
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "prosecution_strengths": [
+      "Digital forensic evidence from defendant's devices",
+      "Metadata evidence linking defendant to creation or distribution",
+      "Victim testimony regarding lack of consent"
+    ],
+    "defense_opportunities": [
+      "Consent — victim consented to creation and/or distribution",
+      "Challenge whether images meet statutory definition",
+      "Argue defendant did not distribute the images (account hacked)",
+      "First Amendment challenge in some categories"
+    ],
+    "common_defenses": [
+      "Consent",
+      "Not defendant — account hacked or images stolen",
+      "Images do not meet statutory definition",
+      "Challenge digital forensic methodology and device attribution"
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "Digital forensic evidence of child sexual abuse material on devices",
+      "ISP records and IP address tracking",
+      "NCMEC CyberTipline report initiating investigation"
+    ],
+    "defense_opportunities": [
+      "Argue defendant did not knowingly possess (malware, file sharing)",
+      "Challenge IP address attribution",
+      "Dispute age determination of individuals depicted"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — malware or shared computer",
+      "Fourth Amendment — challenge warrant scope",
+      "IP address does not equal identity",
+      "Age challenge — prosecution must prove minor age"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "Law enforcement records documenting failure to register",
+      "Defendant's prior registration history establishing knowledge",
+      "Address verification confirming non-compliance"
+    ],
+    "defense_opportunities": [
+      "Argue defendant attempted to register but encountered administrative barriers",
+      "Challenge underlying conviction triggering registration",
+      "Show defendant was homeless and could not maintain a fixed address",
+      "Constitutional challenge as applied"
+    ],
+    "common_defenses": [
+      "Attempted compliance — administrative obstacles",
+      "Lack of notice of registration requirements",
+      "Homelessness — could not maintain fixed address",
+      "Constitutional challenge — due process or cruel and unusual punishment as applied"
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "Age of victim established through birth records and testimony",
+      "Evidence of sexual conduct between defendant and minor",
+      "Communications indicating the relationship"
+    ],
+    "defense_opportunities": [
+      "Reasonable mistake of age where the defense is recognized",
+      "Challenge evidence of sexual conduct",
+      "Close-in-age defense where applicable",
+      "False allegation"
+    ],
+    "common_defenses": [
+      "Mistake of age (where statutorily recognized)",
+      "No sexual conduct occurred",
+      "False accusation",
+      "Constitutional challenge to age framework"
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "prosecution_strengths": [
+      "Victim testimony describing the sexual assault in detail",
+      "DNA evidence linking defendant through sexual assault kit analysis",
+      "Medical examination findings consistent with sexual assault",
+      "Electronic evidence between defendant and victim before/after"
+    ],
+    "defense_opportunities": [
+      "Consent defense where applicable",
+      "Challenge DNA evidence interpretation — presence does not prove lack of consent",
+      "Alibi",
+      "Challenge timeline and circumstances"
+    ],
+    "common_defenses": [
+      "Consent",
+      "Mistaken identity",
+      "False accusation — fabrication evidence",
+      "Challenge forensic evidence — contamination or alternative explanations"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "prosecution_strengths": [
+      "Victim testimony describing the sexual assault in detail",
+      "DNA evidence linking defendant through sexual assault kit analysis",
+      "Medical examination findings consistent with sexual assault",
+      "Electronic evidence between defendant and victim before/after"
+    ],
+    "defense_opportunities": [
+      "Consent defense where applicable",
+      "Challenge DNA evidence interpretation — presence does not prove lack of consent",
+      "Alibi",
+      "Challenge timeline and circumstances"
+    ],
+    "common_defenses": [
+      "Consent",
+      "Mistaken identity",
+      "False accusation — fabrication evidence",
+      "Challenge forensic evidence — contamination or alternative explanations"
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Witness testimony describing defendant's disorderly behavior",
+      "Body camera or surveillance footage",
+      "Officer testimony about the disturbance"
+    ],
+    "defense_opportunities": [
+      "First Amendment — protected speech or expression",
+      "Challenge whether conduct actually caused alarm",
+      "Argue statute is overbroad as applied",
+      "Necessity or self-defense — response to a threatening situation"
+    ],
+    "common_defenses": [
+      "Protected speech",
+      "No breach of peace",
+      "Overbreadth challenge",
+      "Provocation — response to another's threatening behavior"
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Officer testimony describing physical resistance",
+      "Body camera footage documenting resistance and lawful commands",
+      "Injuries to officers consistent with physical resistance",
+      "Additional charges from underlying conduct"
+    ],
+    "defense_opportunities": [
+      "Unlawful arrest — limited applicability as defense",
+      "Passive resistance only — not active force",
+      "Excessive force — defendant was protecting themselves",
+      "Challenge what constitutes 'resistance' — reflexive movements"
+    ],
+    "common_defenses": [
+      "Unlawful arrest (limited)",
+      "No resistance — reflexive movements",
+      "Excessive force by officers",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "Evidence defendant provided false information or concealed evidence",
+      "Officer testimony about obstructive conduct",
+      "Communication evidence showing witness coaching or evidence destruction"
+    ],
+    "defense_opportunities": [
+      "Fifth Amendment — silence cannot be charged as obstruction",
+      "Argue statements were not 'material'",
+      "Challenge underlying investigation",
+      "Argue good-faith provision of information"
+    ],
+    "common_defenses": [
+      "Exercise of constitutional rights",
+      "Good faith — believed information was true",
+      "No legitimate investigation to obstruct",
+      "Immateriality"
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "Court records documenting the order violated",
+      "Testimony from court personnel",
+      "Evidence of willful violation",
+      "Judge's direct observation (direct contempt)"
+    ],
+    "defense_opportunities": [
+      "Inability to comply, not unwillingness",
+      "Ambiguous order — reasonable interpretation",
+      "Purge conditions — willingness to comply now",
+      "Due process challenge — adequate notice and hearing"
+    ],
+    "common_defenses": [
+      "Inability to comply — financial or physical",
+      "Ambiguity in court order",
+      "Lack of willfulness",
+      "Due process — improper notice or hearing"
+    ]
+  },
+  {
+    "common_charge_slug": "loitering",
+    "prosecution_strengths": [
+      "Officer testimony about prohibited area presence",
+      "Prior warnings to defendant",
+      "Surveillance evidence of extended presence without apparent purpose"
+    ],
+    "defense_opportunities": [
+      "Constitutional vagueness challenge",
+      "Legitimate purpose for being in the area",
+      "Constitutional right to be present on public property",
+      "No prior warning where required"
+    ],
+    "common_defenses": [
+      "Vagueness — unconstitutional as applied",
+      "Legitimate purpose",
+      "Constitutional right to public presence",
+      "No prior warning"
+    ]
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "prosecution_strengths": [
+      "Witness testimony describing defendant's disorderly behavior",
+      "Body camera or surveillance footage",
+      "Officer testimony about the disturbance"
+    ],
+    "defense_opportunities": [
+      "First Amendment — protected speech or expression",
+      "Challenge whether conduct actually caused alarm",
+      "Argue statute is overbroad as applied",
+      "Necessity or self-defense — response to a threatening situation"
+    ],
+    "common_defenses": [
+      "Protected speech",
+      "No breach of peace",
+      "Overbreadth challenge",
+      "Provocation — response to another's threatening behavior"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "Court records documenting scheduled date and absence",
+      "Evidence defendant was properly served",
+      "Bond records showing release condition"
+    ],
+    "defense_opportunities": [
+      "Argue defendant did not receive actual notice",
+      "Present evidence of emergency or impossibility",
+      "Argue defendant appeared at wrong courthouse or date",
+      "Voluntary surrender once defendant learned"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of court date",
+      "Emergency or impossibility",
+      "Good faith attempt",
+      "Voluntary surrender"
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "Evidence the report was materially false",
+      "Defendant's own statements indicating fabrication",
+      "Witness testimony contradicting the report",
+      "Law enforcement resources expended on the false report"
+    ],
+    "defense_opportunities": [
+      "Good faith — defendant believed report was true",
+      "Mistake of fact",
+      "Challenge investigation determining the report was false",
+      "Mental health affecting perception"
+    ],
+    "common_defenses": [
+      "Good faith belief",
+      "Mistake of fact",
+      "Substantially true report",
+      "Coercion to make the report"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "Witness testimony describing threatening statements",
+      "Written or recorded threats",
+      "History of conflict providing context"
+    ],
+    "defense_opportunities": [
+      "First Amendment — distinguish true threats from protected speech",
+      "Argue statements were hyperbolic or venting",
+      "Heat-of-argument context",
+      "Challenge interpretation of ambiguous words"
+    ],
+    "common_defenses": [
+      "Protected speech — not a 'true threat'",
+      "Hyperbolic or metaphorical statements",
+      "Conditional or future threat",
+      "Heat-of-argument context"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "Documented evidence of specific probation conditions violated",
+      "Probation officer testimony",
+      "Lower burden — preponderance of the evidence",
+      "Pattern of non-compliance"
+    ],
+    "defense_opportunities": [
+      "Argue substantial compliance overall",
+      "Present mitigating circumstances",
+      "Challenge evidence of specific violation",
+      "Request graduated sanctions"
+    ],
+    "common_defenses": [
+      "Substantial compliance",
+      "Mitigating circumstances",
+      "Challenge evidence accuracy",
+      "Graduated sanctions appropriate"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "prosecution_strengths": [
+      "Documented evidence of specific probation conditions violated",
+      "Probation officer testimony",
+      "Lower burden — preponderance of the evidence",
+      "Pattern of non-compliance"
+    ],
+    "defense_opportunities": [
+      "Argue substantial compliance overall",
+      "Present mitigating circumstances",
+      "Challenge evidence of specific violation",
+      "Request graduated sanctions"
+    ],
+    "common_defenses": [
+      "Substantial compliance",
+      "Mitigating circumstances",
+      "Challenge evidence accuracy",
+      "Graduated sanctions appropriate"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "prosecution_strengths": [
+      "Documented evidence of specific probation conditions violated",
+      "Probation officer testimony",
+      "Lower burden — preponderance of the evidence",
+      "Pattern of non-compliance"
+    ],
+    "defense_opportunities": [
+      "Argue substantial compliance overall",
+      "Present mitigating circumstances",
+      "Challenge evidence of specific violation",
+      "Request graduated sanctions"
+    ],
+    "common_defenses": [
+      "Substantial compliance",
+      "Mitigating circumstances",
+      "Challenge evidence accuracy",
+      "Graduated sanctions appropriate"
+    ]
+  },
+  {
+    "common_charge_slug": "supervised-release-violation",
+    "prosecution_strengths": [
+      "Documented evidence of specific probation conditions violated",
+      "Probation officer testimony",
+      "Lower burden — preponderance of the evidence",
+      "Pattern of non-compliance"
+    ],
+    "defense_opportunities": [
+      "Argue substantial compliance overall",
+      "Present mitigating circumstances",
+      "Challenge evidence of specific violation",
+      "Request graduated sanctions"
+    ],
+    "common_defenses": [
+      "Substantial compliance",
+      "Mitigating circumstances",
+      "Challenge evidence accuracy",
+      "Graduated sanctions appropriate"
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "Documented evidence of specific probation conditions violated",
+      "Probation officer testimony",
+      "Lower burden — preponderance of the evidence",
+      "Pattern of non-compliance"
+    ],
+    "defense_opportunities": [
+      "Argue substantial compliance overall",
+      "Present mitigating circumstances",
+      "Challenge evidence of specific violation",
+      "Request graduated sanctions"
+    ],
+    "common_defenses": [
+      "Substantial compliance",
+      "Mitigating circumstances",
+      "Challenge evidence accuracy",
+      "Graduated sanctions appropriate"
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Communications between co-conspirators establishing the agreement",
+      "Evidence of overt acts in furtherance of the conspiracy",
+      "Cooperating witness testimony"
+    ],
+    "defense_opportunities": [
+      "Challenge existence of an 'agreement' — mere association is not conspiracy",
+      "Withdrawal defense — defendant withdrew before any overt act",
+      "Challenge co-conspirator statements — hearsay foundations",
+      "Mere presence"
+    ],
+    "common_defenses": [
+      "No agreement",
+      "Withdrawal",
+      "Mere presence or association",
+      "Entrapment"
+    ]
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "prosecution_strengths": [
+      "Evidence defendant's use of force was not objectively reasonable",
+      "Defendant was the initial aggressor",
+      "Force used was disproportionate to perceived threat",
+      "Physical evidence contradicting defendant's account"
+    ],
+    "defense_opportunities": [
+      "Present evidence of the threat defendant faced",
+      "Prior history of violence by alleged victim supports reasonable fear",
+      "Castle doctrine — defendant was in their dwelling"
+    ],
+    "common_defenses": [
+      "No duty to retreat in many jurisdictions",
+      "Defense of others",
+      "Defense of dwelling"
+    ]
+  },
+  {
+    "common_charge_slug": "other",
+    "prosecution_strengths": [
+      "Specific elements supported by physical or testimonial evidence",
+      "Defendant's statements or conduct establishing required mental state",
+      "Witness testimony and documentary evidence",
+      "Statutory provisions clearly defining the prohibited conduct"
+    ],
+    "defense_opportunities": [
+      "Challenge each element — prosecution must prove every element beyond reasonable doubt",
+      "Constitutional defenses — Fourth, Fifth, Sixth Amendments",
+      "Affirmative defenses under the Illinois criminal code",
+      "Procedural defenses — statute of limitations, speedy trial, jurisdiction"
+    ],
+    "common_defenses": [
+      "Insufficient evidence",
+      "Constitutional violation",
+      "Affirmative defense",
+      "Procedural defense"
+    ]
+  }
+]

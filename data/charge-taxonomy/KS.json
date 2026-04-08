@@ -1,0 +1,1621 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "K.S.A. § 8-1567",
+    "statute_title": "Driving Under the Influence (DUI)",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second); Nonperson Felony (third+)",
+    "penalty_min": "48 hours (first); 90 days (second); 90 days (third)",
+    "penalty_max": "6 months (first); 1 year (second); 1 year (third); 1 year (fourth+)",
+    "fine_max": "$1,000 (first); $1,750 (second); $2,500 (third); $2,500 (fourth+)",
+    "elements": [
+      "Defendant operated or attempted to operate a vehicle",
+      "While under the influence of alcohol or drugs to a degree that rendered the person incapable of safely driving",
+      "Or with a BAC of .08 or higher",
+      "Or while there was any amount of a controlled substance in the person's blood or urine"
+    ],
+    "mandatory_minimum": "48 hours imprisonment or 100 hours community service (first); 90 days (second); 90 days (third); 90 days (fourth+)",
+    "enhancements": [
+      "Second offense within 10 years (Class A Misdemeanor)",
+      "Third offense (Nonperson Felony, severity level 6)",
+      "Fourth or subsequent (Nonperson Felony, severity level 6)",
+      "BAC .15 or higher (enhanced mandatory minimums)",
+      "Minor under 14 in vehicle (enhanced penalties)"
+    ],
+    "notes": "Kansas uses a lookback period — prior convictions within lifetime count for enhancement after 2012 changes. Implied consent under K.S.A. § 8-1001. License suspension 30 days + 330 days restricted (first)."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "K.S.A. § 8-1567(b)(1)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": "48 hours or 100 hours community service",
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a vehicle while under the influence of alcohol or drugs",
+      "BAC .08 or higher, or impairment shown",
+      "No prior DUI convictions"
+    ],
+    "mandatory_minimum": "48 hours imprisonment or 100 hours community service; completion of alcohol evaluation; license suspension 30 days + 330 days ignition interlock",
+    "enhancements": [
+      "BAC .15 or higher (additional mandatory minimum of 48 hours)",
+      "Transporting a minor under 14"
+    ],
+    "notes": "First offense with standard evaluation and compliance. Diversion may be available for first-time offenders in some jurisdictions."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "K.S.A. § 8-1567(b)(2)-(4)",
+    "statute_title": "DUI — Second or Subsequent Offense",
+    "offense_class": "Class A Misdemeanor (second); Nonperson Felony (third+)",
+    "penalty_min": "90 days (second); 90 days (third); 90 days (fourth+)",
+    "penalty_max": "1 year (second); 1 year (third); 1 year (fourth+)",
+    "fine_max": "$1,750 (second); $2,500 (third); $2,500 (fourth+)",
+    "elements": [
+      "Defendant operated a vehicle while under the influence",
+      "Defendant has one or more prior DUI convictions or diversions"
+    ],
+    "mandatory_minimum": "90 days imprisonment (second+); cannot be reduced below 90 days (third+); mandatory treatment program",
+    "enhancements": [
+      "BAC .15 or higher",
+      "Fifth or subsequent offense"
+    ],
+    "notes": "Third and subsequent DUIs are felonies in Kansas. 90-day mandatory minimum cannot be reduced for third+. License revocation 1 year (second), 1 year (third+). Prior diversions count as convictions."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "K.S.A. § 8-1567(a)(3)-(5)",
+    "statute_title": "DUI — Drug Impairment",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": "Same as alcohol DUI",
+    "penalty_max": "Same as alcohol DUI",
+    "fine_max": "Same as alcohol DUI",
+    "elements": [
+      "Defendant operated a vehicle",
+      "While under the influence of any drug or combination of drugs to a degree that rendered the person incapable of safely driving",
+      "Or with any amount of a controlled substance or its metabolite in blood or urine"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI",
+    "enhancements": [
+      "Same as alcohol DUI"
+    ],
+    "notes": "Kansas has a per se drug DUI provision — any detectable amount of a controlled substance in blood or urine is sufficient for conviction. Includes marijuana metabolites. No impairment showing needed for per se violation."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "K.S.A. § 8-1566",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second+)",
+    "penalty_min": "5 days (first); 90 days (second+)",
+    "penalty_max": "6 months (first); 1 year (second+)",
+    "fine_max": "$500 (first); $1,000 (second+)",
+    "elements": [
+      "Defendant drove a vehicle on any highway",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": "5 days (first); 90 days (second+)",
+    "enhancements": [
+      "Second or subsequent conviction (Class A Misdemeanor)"
+    ],
+    "notes": "Kansas has a mandatory minimum for reckless driving. Commonly used as a plea reduction from DUI charges."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "K.S.A. § 8-1602",
+    "statute_title": "Duty to Stop at Accident — Leaving the Scene",
+    "offense_class": "Person Felony severity level 9 (injury); Class B Misdemeanor (property only)",
+    "penalty_min": null,
+    "penalty_max": "Presumptive guidelines (felony); 6 months (misdemeanor)",
+    "fine_max": "$100,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Resulting in injury, death, or property damage",
+      "Defendant failed to stop, provide information, or render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Great bodily harm or death (Person Felony severity level 7)",
+      "Resulting in serious injury"
+    ],
+    "notes": "Leaving scene with injury is a person felony — sentencing follows Kansas sentencing guidelines grid. Property damage only is a Class B Misdemeanor."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "K.S.A. § 21-5406",
+    "statute_title": "Involuntary Manslaughter While DUI",
+    "offense_class": "Person Felony, severity level 4",
+    "penalty_min": null,
+    "penalty_max": "Presumptive guidelines — typically 38-172 months depending on criminal history",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant unintentionally killed a human being",
+      "While committing, attempting, or fleeing from a DUI offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Criminal history elevates sentence on guidelines grid"
+    ],
+    "notes": "Kansas charges DUI-related vehicular deaths as involuntary manslaughter under § 21-5405(a)(3). Severity level 4 person felony — one of the most serious vehicular offenses. Sentencing follows the Kansas Sentencing Guidelines grid."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "K.S.A. § 21-5405(a)(1)",
+    "statute_title": "Involuntary Manslaughter — Reckless Conduct",
+    "offense_class": "Person Felony, severity level 5",
+    "penalty_min": null,
+    "penalty_max": "Presumptive guidelines — typically 31-136 months depending on criminal history",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant unintentionally killed a human being",
+      "While committing a lawful act in an unlawful manner",
+      "Or while committing an unlawful act not amounting to a felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Criminal history on guidelines grid"
+    ],
+    "notes": "Non-DUI vehicular deaths caused by reckless or negligent driving. Lower severity level than DUI involuntary manslaughter."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "K.S.A. § 8-262",
+    "statute_title": "Driving While Suspended, Cancelled, or Revoked",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second); Nonperson Felony severity level 9 (third+)",
+    "penalty_min": "5 days (first); 90 days (second)",
+    "penalty_max": "6 months (first); 1 year (second); per guidelines (third+)",
+    "fine_max": "$1,000 (first/second); $100,000 (felony)",
+    "elements": [
+      "Defendant operated a motor vehicle on a highway",
+      "While driving privilege was cancelled, suspended, or revoked"
+    ],
+    "mandatory_minimum": "5 days (first); 90 days (second+)",
+    "enhancements": [
+      "Second offense (Class A Misdemeanor with 90-day mandatory)",
+      "Third or subsequent (Nonperson Felony severity level 9)"
+    ],
+    "notes": "Mandatory minimum jail for all offenses. Third offense becomes a felony. Habitual violator provisions may apply."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "K.S.A. § 8-1568",
+    "statute_title": "Fleeing or Attempting to Elude a Police Officer",
+    "offense_class": "Nonperson Felony, severity level 9 (vehicle); Class B Misdemeanor (on foot)",
+    "penalty_min": null,
+    "penalty_max": "Per guidelines (felony); 6 months (misdemeanor)",
+    "fine_max": "$100,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant, while driving a motor vehicle",
+      "Willfully failed or refused to bring the vehicle to a stop",
+      "Or otherwise fled or attempted to elude a pursuing police vehicle",
+      "When given visual or audible signal to stop"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Committed in a reckless manner — at least 5 mph over limit, driving through a residential zone, or causing property damage (Person Felony severity level 9)",
+      "Resulting in bodily harm (Person Felony severity level 7)"
+    ],
+    "notes": "Felony when using a vehicle. Becomes a person felony when committed recklessly. Kansas sentencing guidelines apply."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "K.S.A. § 21-5706",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Drug severity level 5 (most substances); Drug severity level 4 (cocaine, heroin, meth); Drug severity level 3 (large amounts)",
+    "penalty_min": null,
+    "penalty_max": "Per drug sentencing guidelines grid — typically 10-42 months depending on history and severity",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly possessed a controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense",
+      "Proximity to school (additional penalty under § 21-5710)"
+    ],
+    "notes": "Kansas has a separate drug sentencing guidelines grid. Possession of opiates, cocaine, and meth is a higher drug severity level. Mandatory drug abuse treatment for first-time offenders under SB 123."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "K.S.A. § 21-5706(b)(3)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second); Drug severity level 5 (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second); per drug grid (third+)",
+    "fine_max": "$1,000 (first); $2,500 (second); $100,000 (third+)",
+    "elements": [
+      "Defendant knowingly possessed marijuana or tetrahydrocannabinol"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (Class A Misdemeanor)",
+      "Third or subsequent (Drug severity level 5)"
+    ],
+    "notes": "Kansas has not legalized marijuana. First possession is a Class B Misdemeanor — one of the lowest penalties. Third offense becomes a felony on the drug grid. Possession of paraphernalia is a separate charge."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "K.S.A. § 21-5706(b)(1)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Drug severity level 5 (first); Drug severity level 4 (subsequent or 3.5g+)",
+    "penalty_min": null,
+    "penalty_max": "Per drug sentencing guidelines grid",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly possessed cocaine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount of 3.5 grams or more (Drug severity level 4)",
+      "Prior drug felony"
+    ],
+    "notes": "Cocaine possession is a drug severity level 5 felony. Sentencing follows the Kansas drug sentencing guidelines grid. SB 123 treatment provisions may apply for first offenders."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "K.S.A. § 21-5706(b)(1)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Drug severity level 5 (first); Drug severity level 4 (subsequent or 3.5g+)",
+    "penalty_min": null,
+    "penalty_max": "Per drug sentencing guidelines grid",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly possessed methamphetamine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount of 3.5 grams or more (Drug severity level 4)",
+      "Prior drug felony"
+    ],
+    "notes": "Same severity level as cocaine. Meth is a significant enforcement priority in Kansas. SB 123 treatment program may apply for eligible first offenders."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "K.S.A. § 21-5705(d)",
+    "statute_title": "Sale or Distribution of Controlled Substance — Trafficking Amounts",
+    "offense_class": "Drug severity level 1 (largest amounts); Drug severity level 2 (large amounts)",
+    "penalty_min": null,
+    "penalty_max": "Per drug sentencing guidelines — up to 204 months for level 1 with criminal history",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant knowingly sold, offered for sale, or possessed with intent to sell a controlled substance",
+      "In amounts exceeding statutory trafficking thresholds"
+    ],
+    "mandatory_minimum": "Mandatory imprisonment — no probation for drug severity level 1 or 2",
+    "enhancements": [
+      "Amount-based severity increases",
+      "Proximity to school (additional consecutive term under § 21-5710)"
+    ],
+    "notes": "Kansas drug trafficking carries the highest drug severity levels. No probation available. Sentencing follows the drug grid with mandatory prison terms."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "K.S.A. § 21-5705(a)",
+    "statute_title": "Sale or Distribution of a Controlled Substance",
+    "offense_class": "Drug severity level 3 (Schedule I/II); Drug severity level 4 (Schedule III/IV)",
+    "penalty_min": null,
+    "penalty_max": "Per drug sentencing guidelines grid",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant knowingly sold, offered for sale, or distributed a controlled substance",
+      "Or possessed with intent to sell or distribute"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution to a minor (additional severity)",
+      "Within 1,000 feet of school property (additional consecutive term under § 21-5710)"
+    ],
+    "notes": "Distribution covers smaller amounts than trafficking. Drug severity level depends on the schedule of the substance."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "K.S.A. § 21-5703",
+    "statute_title": "Manufacturing of a Controlled Substance",
+    "offense_class": "Drug severity level 1 (meth); Drug severity level 2 (other Schedule I/II)",
+    "penalty_min": null,
+    "penalty_max": "Per drug sentencing guidelines — up to 204 months (level 1)",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant knowingly manufactured or attempted to manufacture a controlled substance"
+    ],
+    "mandatory_minimum": "Mandatory imprisonment — no probation",
+    "enhancements": [
+      "Meth manufacturing (Drug severity level 1)",
+      "Manufacturing in presence of minors",
+      "Environmental contamination"
+    ],
+    "notes": "Meth manufacturing is drug severity level 1 — the highest level on the drug grid. No probation available. Includes possession of precursors with intent to manufacture."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "K.S.A. § 21-5709",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Class A Misdemeanor (marijuana paraphernalia); Drug severity level 5 (other substance paraphernalia, if possession with intent to use)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); per drug grid (drug severity level 5)",
+    "fine_max": "$2,500 (Class A); $100,000 (drug grid)",
+    "elements": [
+      "Defendant knowingly possessed drug paraphernalia",
+      "With intent to use to introduce a controlled substance into the body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Selling paraphernalia (enhanced)",
+      "Selling to a minor (enhanced)"
+    ],
+    "notes": "Marijuana paraphernalia possession is a Class A Misdemeanor. Paraphernalia associated with harder drugs may be charged at a higher severity level."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "K.S.A. § 21-5705(a)",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Drug severity level 3 (Schedule I/II); Drug severity level 4 (Schedule III/IV/V)",
+    "penalty_min": null,
+    "penalty_max": "Per drug sentencing guidelines grid",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant knowingly possessed a controlled substance",
+      "With intent to sell, distribute, or deliver"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school property (additional consecutive term)",
+      "Distribution to a minor"
+    ],
+    "notes": "Intent inferred from quantity, packaging, scales, large cash, and other circumstantial evidence. Charged under the distribution statute."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "K.S.A. § 21-5402",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Off-grid Person Felony",
+    "penalty_min": "25 years (Hard 25) or 50 years (Hard 50) before parole eligibility",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant intentionally and with premeditation killed a human being",
+      "Or killed a human being in the commission of, attempt to commit, or flight from an inherently dangerous felony"
+    ],
+    "mandatory_minimum": "Hard 25 — 25 years minimum before parole eligibility; Hard 50 for certain aggravated cases",
+    "enhancements": [
+      "Hard 50 sentencing for specified aggravating factors (K.S.A. § 21-6620)"
+    ],
+    "notes": "Kansas abolished the death penalty in practice via judicial interpretation, reinstated it, and currently has it on the books but no executions since 1965. First-degree murder is an off-grid felony — not on the sentencing guidelines grid. Hard 25 or Hard 50 minimum."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "K.S.A. § 21-5403",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Person Felony, severity level 1 (intentional); Person Felony, severity level 2 (unintentional but reckless)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines — up to 653 months (severity level 1 with criminal history)",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant intentionally killed a human being (without premeditation)",
+      "Or unintentionally killed while committing an act clearly dangerous to human life under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Criminal history on sentencing grid"
+    ],
+    "notes": "Intentional second-degree murder (no premeditation) is severity level 1. Reckless/depraved-heart murder is severity level 2. Both follow the sentencing guidelines grid."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "K.S.A. § 21-5404",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Person Felony, severity level 3",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines — up to 247 months with criminal history",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant knowingly killed a human being",
+      "Upon a sudden quarrel or in the heat of passion"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Criminal history on sentencing grid"
+    ],
+    "notes": "Heat of passion must result from adequate provocation. Cannot claim imperfect self-defense in Kansas — this is the primary voluntary manslaughter theory."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "K.S.A. § 21-5405",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Person Felony, severity level 5 (general); severity level 4 (DUI-related)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant unintentionally killed a human being",
+      "During the commission of a lawful act in an unlawful manner",
+      "Or during the commission of an unlawful act not amounting to a felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI-related (severity level 4)"
+    ],
+    "notes": "Involuntary manslaughter while DUI is severity level 4 — significantly higher than general involuntary manslaughter (level 5). Sentencing follows Kansas guidelines grid."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "K.S.A. § 21-5412",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Person Felony, severity level 7",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines — typically 11-34 months depending on criminal history",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly placed another person in reasonable apprehension of immediate bodily harm",
+      "While using a deadly weapon",
+      "Or while disguised"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against law enforcement (severity level 6)"
+    ],
+    "notes": "Aggravated assault requires a deadly weapon or disguise. Person felony — affects criminal history score for future offenses. Kansas distinguishes assault (threat) from battery (contact)."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "K.S.A. § 21-5412(a)",
+    "statute_title": "Assault",
+    "offense_class": "Class C Person Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 month",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant knowingly placed another person in reasonable apprehension of immediate bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "With a deadly weapon or while disguised (Aggravated Assault — felony)"
+    ],
+    "notes": "Simple assault in Kansas is only a threat — no physical contact. Class C person misdemeanor is the lowest level. Contact offenses are 'battery' in Kansas."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "K.S.A. § 21-5413(a)",
+    "statute_title": "Battery",
+    "offense_class": "Class B Person Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or recklessly caused bodily harm to another person",
+      "Or caused physical contact with another person in a rude, insulting, or angry manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against a law enforcement officer (Class A Person Misdemeanor)",
+      "Domestic battery (separate statute § 21-5414)"
+    ],
+    "notes": "Battery is the physical contact offense in Kansas. Assault is the threat-only offense. Important distinction for charging purposes."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "K.S.A. § 21-5420",
+    "statute_title": "Robbery",
+    "offense_class": "Person Felony, severity level 5",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines — typically 31-136 months depending on criminal history",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant took property from the person or presence of another",
+      "By threat of bodily harm or by force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of deadly weapon or infliction of bodily harm (Aggravated Robbery — severity level 3)"
+    ],
+    "notes": "Robbery requires force or threat of force. Taking without force is theft. Person felony affects future criminal history scoring."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "K.S.A. § 21-5420(b)",
+    "statute_title": "Aggravated Robbery",
+    "offense_class": "Person Felony, severity level 3",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines — up to 247 months with criminal history",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant committed robbery",
+      "While armed with a dangerous weapon",
+      "Or while inflicting bodily harm upon any person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Criminal history score"
+    ],
+    "notes": "Aggravated robbery is severity level 3 — the same level as voluntary manslaughter. Sentencing follows the guidelines grid."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "K.S.A. § 21-5408",
+    "statute_title": "Kidnapping / Aggravated Kidnapping",
+    "offense_class": "Person Felony, severity level 5 (kidnapping); Off-grid Person Felony (aggravated kidnapping — bodily harm to extort)",
+    "penalty_min": null,
+    "penalty_max": "Per guidelines (kidnapping); Life with Hard 20/25 (aggravated)",
+    "fine_max": "$300,000 (kidnapping); $500,000 (aggravated)",
+    "elements": [
+      "Defendant took or confined any person by force, threat, or deception",
+      "With intent to hold for ransom, as a shield/hostage, to facilitate a crime, or to inflict bodily injury or terrorize"
+    ],
+    "mandatory_minimum": "Hard 20 or Hard 25 for aggravated kidnapping",
+    "enhancements": [
+      "Bodily harm inflicted (Aggravated Kidnapping — off-grid)",
+      "Ransom demand (Aggravated Kidnapping)"
+    ],
+    "notes": "Aggravated kidnapping is an off-grid person felony with Hard 20 or Hard 25 minimum before parole. Regular kidnapping is severity level 5 on the grid."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "K.S.A. § 21-5812",
+    "statute_title": "Arson / Aggravated Arson",
+    "offense_class": "Nonperson Felony, severity level 6 (arson); Person Felony, severity level 3 (aggravated arson — occupied building)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant knowingly, by means of fire or explosive, damaged or destroyed property",
+      "With intent to injure or defraud an insurer or another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied building or structure (Aggravated Arson — severity level 3)"
+    ],
+    "notes": "Arson is a nonperson felony unless the building is occupied. Aggravated arson (occupied) is a person felony severity level 3 — extremely serious."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "K.S.A. § 21-5301; § 21-5402",
+    "statute_title": "Attempted First-Degree Murder",
+    "offense_class": "Off-grid Person Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment with Hard 20",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant, with intent to commit first-degree murder, performed an overt act toward the commission of murder",
+      "That was more than mere preparation"
+    ],
+    "mandatory_minimum": "Hard 20 — 20 years before parole eligibility",
+    "enhancements": [],
+    "notes": "Attempted first-degree murder is an off-grid person felony in Kansas. The Hard 20 minimum applies. Attempted second-degree murder follows the sentencing grid."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "K.S.A. § 21-5413(b)",
+    "statute_title": "Aggravated Battery — With a Deadly Weapon",
+    "offense_class": "Person Felony, severity level 4",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines — typically 38-172 months depending on criminal history",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant knowingly caused bodily harm to another person",
+      "With a deadly weapon",
+      "Or in a manner that could have caused great bodily harm, disfigurement, or death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Great bodily harm (enhanced severity)"
+    ],
+    "notes": "Kansas calls this aggravated battery when physical contact occurs. Aggravated assault with a deadly weapon (threat only, no contact) is severity level 7."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "K.S.A. § 21-5801",
+    "statute_title": "Theft",
+    "offense_class": "Class A Misdemeanor (under $1,500); Nonperson Felony, severity level 9 ($1,500-$24,999); severity level 7 ($25,000-$99,999); severity level 5 ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); per guidelines (felony)",
+    "fine_max": "$2,500 (misdemeanor); $100,000+ (felony)",
+    "elements": [
+      "Defendant knowingly obtained or exerted unauthorized control over property of another",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $1,500+ (felony)",
+      "Value $25,000+ (severity level 7)",
+      "Value $100,000+ (severity level 5)",
+      "Theft of a firearm (severity level 9 regardless of value)"
+    ],
+    "notes": "Kansas unified theft statute. Felony threshold is $1,500. Theft of a firearm is automatically a severity level 9 nonperson felony. Sentencing follows Kansas guidelines."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "K.S.A. § 21-5801(b)(2)-(5)",
+    "statute_title": "Theft — Felony ($1,500+)",
+    "offense_class": "Nonperson Felony, severity level 9 ($1,500-$24,999); level 7 ($25,000-$99,999); level 5 ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000+",
+    "elements": [
+      "Defendant obtained or exerted unauthorized control over property",
+      "With intent to permanently deprive",
+      "Value $1,500 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value-based severity level increases"
+    ],
+    "notes": "Kansas does not use 'grand theft' terminology. Felony theft at various severity levels based on property value."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "K.S.A. § 21-5801(b)(1)",
+    "statute_title": "Theft — Misdemeanor (Under $1,500)",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant obtained or exerted unauthorized control over property",
+      "With intent to permanently deprive",
+      "Value under $1,500"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft conviction may enhance"
+    ],
+    "notes": "Misdemeanor theft covers property valued under $1,500. Kansas has a relatively high felony threshold compared to many states."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "K.S.A. § 21-5801(a)(1)",
+    "statute_title": "Theft — Shoplifting / Retail Theft",
+    "offense_class": "Class A Misdemeanor (under $1,500); Nonperson Felony (severity level 9 for $1,500+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); per guidelines (felony)",
+    "fine_max": "$2,500 (misdemeanor); $100,000 (felony)",
+    "elements": [
+      "Defendant obtained or exerted unauthorized control over merchandise from a retail establishment",
+      "With intent to permanently deprive the retailer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $1,500+ (felony)",
+      "Organized retail theft"
+    ],
+    "notes": "Shoplifting is charged under the general theft statute. Civil recovery may also be pursued by the retailer."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "K.S.A. § 21-5807",
+    "statute_title": "Burglary / Aggravated Burglary",
+    "offense_class": "Nonperson Felony, severity level 7 (burglary); Person Felony, severity level 4 (aggravated burglary — occupied dwelling)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000 (burglary); $300,000 (aggravated)",
+    "elements": [
+      "Defendant, without authority, entered into or remained within any building or structure",
+      "With intent to commit a felony, theft, or sexually motivated crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Dwelling (Nonperson Felony severity level 7)",
+      "Occupied dwelling (Aggravated Burglary — Person Felony severity level 4)"
+    ],
+    "notes": "Burglary of a non-dwelling is severity level 7. Burglary of a dwelling is also level 7. Aggravated burglary (occupied dwelling) is severity level 4 person felony. Kansas no longer requires 'breaking' — unauthorized entry is sufficient."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "K.S.A. § 21-5807(b)",
+    "statute_title": "Aggravated Burglary — Occupied Dwelling",
+    "offense_class": "Person Felony, severity level 4",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines — typically 38-172 months depending on criminal history",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant, without authority, entered into or remained within an occupied dwelling",
+      "With intent to commit a felony, theft, or sexually motivated crime",
+      "While a person was present"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Criminal history score"
+    ],
+    "notes": "Aggravated burglary of an occupied dwelling is one of the most serious property crimes. Severity level 4 person felony — same as aggravated battery with a deadly weapon."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "K.S.A. § 21-5801",
+    "statute_title": "Theft of a Motor Vehicle",
+    "offense_class": "Nonperson Felony, severity level 9 ($1,500-$24,999); higher levels for more valuable vehicles",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant obtained or exerted unauthorized control over a motor vehicle of another",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Vehicle value determines severity level"
+    ],
+    "notes": "Motor vehicle theft follows the general theft statute. Most vehicles exceed the $1,500 felony threshold. Joyriding without intent to deprive permanently is a lesser offense."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "K.S.A. § 21-5801(a)(4)",
+    "statute_title": "Theft — Receiving Stolen Property",
+    "offense_class": "Same as theft based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft",
+    "fine_max": "Same as theft",
+    "elements": [
+      "Defendant obtained control over stolen property",
+      "Knowing the property to be stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value-based tiers as theft"
+    ],
+    "notes": "Receiving stolen property is included within Kansas's unified theft statute. Knowledge that property was stolen is required."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "K.S.A. § 21-5813",
+    "statute_title": "Criminal Damage to Property",
+    "offense_class": "Class B Misdemeanor (under $1,500); Nonperson Felony, severity level 9 ($1,500+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); per guidelines (felony)",
+    "fine_max": "$1,000 (misdemeanor); $100,000 (felony)",
+    "elements": [
+      "Defendant knowingly damaged, destroyed, or substantially impaired the use of property",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage $1,500+ (felony)",
+      "Damage to critical infrastructure"
+    ],
+    "notes": "Kansas calls vandalism 'criminal damage to property.' Felony threshold matches theft at $1,500. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "K.S.A. § 21-5808",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Class B Nonperson Misdemeanor; Class A Nonperson Misdemeanor (dwelling or occupied structure)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 1 year (Class A)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A)",
+    "elements": [
+      "Defendant entered or remained upon or in any land, structure, vehicle, aircraft, or watercraft",
+      "Without authorization or consent",
+      "After having been notified not to enter or to leave"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass of a dwelling (Class A Nonperson Misdemeanor)"
+    ],
+    "notes": "Notice requirement — posted signs, fencing, or actual notice. Trespass on agricultural land requires 'no trespass' signage or personal notice."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "K.S.A. § 21-5813",
+    "statute_title": "Criminal Damage to Property",
+    "offense_class": "Same as vandalism entry",
+    "penalty_min": null,
+    "penalty_max": "Same as vandalism entry",
+    "fine_max": "Same as vandalism entry",
+    "elements": [
+      "Defendant knowingly damaged, destroyed, or substantially impaired the use of property",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same as vandalism entry"
+    ],
+    "notes": "Criminal damage to property is Kansas's statutory term for criminal mischief/vandalism. Same statute as the vandalism entry."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "K.S.A. § 21-5414",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Class B Person Misdemeanor (first); Class A Person Misdemeanor (second); Person Felony severity level 7 (third+)",
+    "penalty_min": "48 hours (first); 90 days (second); per guidelines (third+)",
+    "penalty_max": "6 months (first); 1 year (second); per guidelines (third+)",
+    "fine_max": "$1,000 (first); $2,500 (second); $100,000 (third+)",
+    "elements": [
+      "Defendant knowingly or recklessly caused bodily harm to a family or household member",
+      "Or caused physical contact with a family or household member in a rude, insulting, or angry manner"
+    ],
+    "mandatory_minimum": "48 hours (first); 90 days (second); per guidelines (third+ as felony)",
+    "enhancements": [
+      "Second conviction within 5 years (Class A Person Misdemeanor with 90-day mandatory)",
+      "Third or subsequent conviction (Person Felony severity level 7)"
+    ],
+    "notes": "Kansas has a dedicated domestic battery statute. Mandatory arrest for probable cause. 48-hour mandatory minimum on first offense. Third offense is a felony. Batterer intervention program typically ordered."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "K.S.A. § 21-5414(a)",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Class B Person Misdemeanor (first); escalating with priors",
+    "penalty_min": "48 hours",
+    "penalty_max": "6 months (first); 1 year (second); per guidelines (third+)",
+    "fine_max": "$1,000 (first); $2,500 (second); $100,000 (third+)",
+    "elements": [
+      "Defendant knowingly or recklessly caused bodily harm",
+      "To a family or household member",
+      "Or caused physical contact in a rude, insulting, or angry manner"
+    ],
+    "mandatory_minimum": "48 hours (first offense)",
+    "enhancements": [
+      "Second within 5 years (Class A with 90-day mandatory)",
+      "Third or subsequent (Person Felony severity level 7)"
+    ],
+    "notes": "Same statute as domestic violence entry. Federal firearms prohibition applies upon conviction. 'Family or household member' includes spouses, former spouses, persons who have been in a dating relationship, co-parents, and cohabitants."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "K.S.A. § 21-5601",
+    "statute_title": "Endangering a Child",
+    "offense_class": "Person Felony, severity level 9 (knowing endangerment); Class A Person Misdemeanor (reckless endangerment)",
+    "penalty_min": null,
+    "penalty_max": "Per guidelines (felony); 1 year (misdemeanor)",
+    "fine_max": "$100,000 (felony); $2,500 (misdemeanor)",
+    "elements": [
+      "Defendant knowingly or recklessly caused or permitted a child under 18 to be in a situation",
+      "In which the child's life, body, or health was injured or endangered"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Knowing endangerment (felony)",
+      "Resulting in great bodily harm or death"
+    ],
+    "notes": "Knowing endangerment is a felony; reckless endangerment is a misdemeanor. Includes leaving children in hot cars, drug exposure, and other negligent supervision."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "K.S.A. § 21-5602",
+    "statute_title": "Abuse of a Child",
+    "offense_class": "Person Felony, severity level 5",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines — typically 31-136 months with criminal history",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant knowingly tortured, cruelly beat, or inflicted cruel and inhuman corporal punishment upon a child under 18",
+      "Or shook, kicked, burned, or cut a child under 18 in a manner likely to cause bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Great bodily harm (severity level 3)"
+    ],
+    "notes": "Kansas child abuse statute specifically enumerates prohibited acts. Severity level 5 person felony — serious charge affecting future criminal history scoring. DCF investigation accompanies criminal charges."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "K.S.A. § 21-5924",
+    "statute_title": "Violation of a Protection Order",
+    "offense_class": "Class A Person Misdemeanor (first); Person Felony severity level 6 (second+ within 5 years)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); per guidelines (felony)",
+    "fine_max": "$2,500 (first); $100,000 (felony)",
+    "elements": [
+      "A protection from abuse or stalking order was issued",
+      "Defendant knowingly violated the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent violation within 5 years (Person Felony severity level 6)"
+    ],
+    "notes": "First violation is a person misdemeanor. Second within 5 years becomes a person felony. Contact through third parties can constitute a violation."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "K.S.A. § 21-5427",
+    "statute_title": "Stalking",
+    "offense_class": "Person Felony, severity level 7 (first); Person Felony, severity level 5 (second+)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000 (first); $300,000 (second+)",
+    "elements": [
+      "Defendant intentionally engaged in a course of conduct targeted at a specific person",
+      "That would cause a reasonable person to feel fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (severity level 5)",
+      "While subject to protective order",
+      "Involving a deadly weapon"
+    ],
+    "notes": "Stalking is a person felony even for first offense. 'Course of conduct' requires two or more acts. Cyberstalking is included."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "K.S.A. § 21-6206",
+    "statute_title": "Harassment by Telecommunication Device / Harassment",
+    "offense_class": "Class A Nonperson Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant, with intent to harass, intimidate, or annoy another",
+      "Made a phone call, sent electronic communication, or caused contact to be made",
+      "Without legitimate purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers unwanted phone calls, texts, emails, and social media contact. Must be without legitimate purpose and intended to harass."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "K.S.A. § 21-5417",
+    "statute_title": "Mistreatment of an Elder Person or Dependent Adult",
+    "offense_class": "Person Felony, severity level 5 (knowing infliction of harm); Class A Person Misdemeanor (unreasonable treatment)",
+    "penalty_min": null,
+    "penalty_max": "Per guidelines (felony); 1 year (misdemeanor)",
+    "fine_max": "$300,000 (felony); $2,500 (misdemeanor)",
+    "elements": [
+      "Defendant knowingly committed an act against a person 60 or older, or an adult with a disability",
+      "That was unjustifiable physical pain or the taking of financial resources"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Financial exploitation (additional charges under § 21-5801)"
+    ],
+    "notes": "Kansas has a specific elder/dependent adult mistreatment statute. Covers physical abuse, neglect, and financial exploitation. Adult Protective Services investigates."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "K.S.A. § 21-6302",
+    "statute_title": "Criminal Carrying of a Weapon",
+    "offense_class": "Class A Misdemeanor (general); Nonperson Felony severity level 9 (prohibited person)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); per guidelines (felony)",
+    "fine_max": "$2,500 (misdemeanor); $100,000 (felony)",
+    "elements": [
+      "Defendant carried a concealed weapon",
+      "In a prohibited place or while a prohibited person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prohibited person (felony)",
+      "In a government building"
+    ],
+    "notes": "Kansas enacted permitless carry in 2015. Criminal carrying now primarily applies to prohibited persons and carrying in restricted locations (government buildings, courthouses, etc.)."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "K.S.A. § 21-6304",
+    "statute_title": "Criminal Possession of a Firearm by a Convicted Felon",
+    "offense_class": "Nonperson Felony, severity level 8 (nonperson felony prior); Person Felony, severity level 8 (person felony prior)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant has been convicted of a person or nonperson felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior person felony makes this a person felony"
+    ],
+    "notes": "Kansas law prohibits firearm possession for 5-10 years after felony conviction depending on the felony type. Drug felony = 5 years. Person felony = 10 years or lifetime for certain offenses."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "K.S.A. § 21-6302(a)",
+    "statute_title": "Criminal Carrying — Prohibited Person or Location",
+    "offense_class": "Class A Nonperson Misdemeanor; Nonperson Felony (prohibited person)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); per guidelines (felony)",
+    "fine_max": "$2,500 (misdemeanor); $100,000 (felony)",
+    "elements": [
+      "Defendant carried a concealed weapon",
+      "In a location prohibited by law or while a prohibited person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "With Kansas's 2015 permitless carry law, this applies primarily to restricted locations and prohibited persons. Persons under 21 cannot carry concealed handguns."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "K.S.A. § 21-6308",
+    "statute_title": "Criminal Discharge of a Firearm",
+    "offense_class": "Person Felony, severity level 6 (at occupied dwelling/vehicle); Nonperson Felony, severity level 8 (at unoccupied building)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000+",
+    "elements": [
+      "Defendant recklessly discharged a firearm",
+      "At an occupied dwelling, building, or vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied dwelling or vehicle (Person Felony severity level 6)"
+    ],
+    "notes": "Kansas has a specific criminal discharge statute. Shooting at an occupied dwelling is a severity level 6 person felony — very serious charge."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "K.S.A. § 21-6107",
+    "statute_title": "Identity Theft / Identity Fraud",
+    "offense_class": "Nonperson Felony, severity level 8 (first, under $100,000); severity level 5 ($100,000+)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly and with intent to defraud",
+      "Obtained, possessed, transferred, used, or attempted to use the personal identifying information of another",
+      "For economic benefit or to harm another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $100,000+ (severity level 5)",
+      "Multiple victims"
+    ],
+    "notes": "Kansas's identity theft statute covers use of names, SSNs, dates of birth, and other personal identifiers. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "K.S.A. § 21-5801",
+    "statute_title": "Theft — Embezzlement",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant had lawful possession of property",
+      "Defendant obtained or exerted unauthorized control over the property",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value tiers as theft"
+    ],
+    "notes": "Embezzlement is charged under the unified theft statute. The distinguishing element is lawful initial possession. Common in employee, fiduciary, and public official contexts."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "K.S.A. § 21-5824",
+    "statute_title": "Forgery",
+    "offense_class": "Nonperson Felony, severity level 8 (negotiable/government); Class A Nonperson Misdemeanor (other)",
+    "penalty_min": null,
+    "penalty_max": "Per guidelines (felony); 1 year (misdemeanor)",
+    "fine_max": "$100,000 (felony); $2,500 (misdemeanor)",
+    "elements": [
+      "Defendant, with intent to defraud",
+      "Made, altered, or endorsed a written instrument purporting to be the act of another",
+      "Or falsely made or altered a written instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Negotiable instruments or government documents (felony)"
+    ],
+    "notes": "Forgery of checks, currency, and government documents is a felony. Other forgery is a misdemeanor. Uttering a forged document is included."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "K.S.A. § 21-5824(a)(1)",
+    "statute_title": "Counterfeiting — Forgery of Currency",
+    "offense_class": "Nonperson Felony, severity level 8",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant made, altered, or possessed counterfeit currency or government instruments",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Primarily a federal crime. State charges may be filed under Kansas forgery statute. Relatively rare at the state level."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "K.S.A. § 21-5821",
+    "statute_title": "Giving a Worthless Check",
+    "offense_class": "Class A Nonperson Misdemeanor (under $1,500); Nonperson Felony, severity level 9 ($1,500+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); per guidelines (felony)",
+    "fine_max": "$2,500 (misdemeanor); $100,000 (felony)",
+    "elements": [
+      "Defendant made, issued, or drew a check",
+      "Knowing at the time there were insufficient funds",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $1,500+ (felony)"
+    ],
+    "notes": "Kansas has a separate worthless check statute. Dishonor notice triggers presumption of intent if not made good within 7 days."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "K.S.A. § 21-5825",
+    "statute_title": "Insurance Fraud — Making a False Claim",
+    "offense_class": "Nonperson Felony, severity level 7 ($25,000+); severity level 9 (under $25,000)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly presented or caused to be presented a false or fraudulent insurance claim",
+      "With intent to defraud an insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $25,000+ (severity level 7)"
+    ],
+    "notes": "Kansas Insurance Department investigates. Restitution and civil penalties apply in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "K.S.A. § 21-5828",
+    "statute_title": "Credit Card Fraud",
+    "offense_class": "Nonperson Felony, severity level 9 (under $25,000); severity level 7 ($25,000+)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant used a credit card knowing it was stolen, forged, expired, or revoked",
+      "Or used another person's credit card without authorization",
+      "To obtain money, goods, or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $25,000+ (severity level 7)"
+    ],
+    "notes": "Kansas has a specific credit card fraud statute. May also be charged as identity theft or theft."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "K.S.A. § 21-5826",
+    "statute_title": "Money Laundering",
+    "offense_class": "Nonperson Felony, severity level 7 ($100,000+); severity level 9 (under $100,000)",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant knowingly conducted a financial transaction",
+      "Involving proceeds of criminal activity",
+      "With intent to promote criminal activity or conceal the source/nature of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $100,000+ (severity level 7)"
+    ],
+    "notes": "Kansas money laundering statute applies to proceeds from any felony. Forfeiture provisions also apply."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "K.S.A. § 21-5801(a)(2)",
+    "statute_title": "Theft by Deception (Fraud)",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant obtained control over property by deception",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value tiers as theft"
+    ],
+    "notes": "General fraud is charged as theft by deception under Kansas's unified theft statute. Covers false representations, promises, and schemes to defraud."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "K.S.A. § 21-5503",
+    "statute_title": "Sexual Battery",
+    "offense_class": "Class A Person Misdemeanor (first); Person Felony severity level 9 (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); per guidelines (second+)",
+    "fine_max": "$2,500 (first); $100,000 (second+)",
+    "elements": [
+      "Defendant intentionally touched the intimate parts of another person",
+      "Without consent",
+      "Done for the purpose of arousing or satisfying the sexual desires of either party"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Person Felony severity level 9)"
+    ],
+    "notes": "Sexual battery is Kansas's term for sexual assault not involving penetration. First offense is a person misdemeanor. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "K.S.A. § 21-5503(a)",
+    "statute_title": "Rape",
+    "offense_class": "Off-grid Person Felony",
+    "penalty_min": "Hard 25 — 25 years before parole eligibility",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant knowingly engaged in sexual intercourse with another person",
+      "Who did not consent, when the victim was overcome by force or fear",
+      "Or was unconscious or physically incapacitated",
+      "Or was incapable of giving consent due to mental deficiency or disease"
+    ],
+    "mandatory_minimum": "Hard 25 — 25 years minimum before parole eligibility (Jessica's Law for child victims)",
+    "enhancements": [
+      "Victim under 14 (Hard 25 — Jessica's Law under § 21-6627)"
+    ],
+    "notes": "Rape in Kansas is an off-grid person felony. Jessica's Law mandates Hard 25 for rape of a child under 14. Sex offender registration is lifetime. Kansas defines rape as nonconsensual sexual intercourse."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "K.S.A. § 21-5513",
+    "statute_title": "Lewd and Lascivious Behavior",
+    "offense_class": "Class B Misdemeanor (first); Class A Misdemeanor (second); Person Felony severity level 9 (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second); per guidelines (third+)",
+    "fine_max": "$1,000 (first); $2,500 (second); $100,000 (third+)",
+    "elements": [
+      "Defendant intentionally exposed a sex organ or engaged in sexual intercourse, lewd fondling, or touching",
+      "In the presence of another person who was not consenting",
+      "Done with intent to arouse or gratify sexual desires"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (Class A Misdemeanor)",
+      "Third or subsequent (Person Felony severity level 9)"
+    ],
+    "notes": "Kansas uses 'lewd and lascivious behavior.' First offense is a Class B Misdemeanor. Third offense becomes a person felony with sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "K.S.A. § 21-6419",
+    "statute_title": "Selling Sexual Relations / Buying Sexual Relations",
+    "offense_class": "Class B Misdemeanor (selling, first); Class A Misdemeanor (buying); Person Felony severity level 9 (buying, if victim under 18)",
+    "penalty_min": null,
+    "penalty_max": "6 months (Class B); 1 year (Class A); per guidelines (felony)",
+    "fine_max": "$1,000 (Class B); $2,500 (Class A); $100,000 (felony)",
+    "elements": [
+      "Defendant performed or offered to perform sexual intercourse or sodomy for money",
+      "Or hired or offered to hire a person for sexual intercourse or sodomy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 18 (Person Felony severity level 9)",
+      "Promoting prostitution (Person Felony)"
+    ],
+    "notes": "Kansas treats buying as more serious than selling. Buying from a minor under 18 is a person felony. Promoting prostitution (pimping) is separately charged under § 21-6420."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "K.S.A. § 21-5510",
+    "statute_title": "Sexual Exploitation of a Child",
+    "offense_class": "Person Felony, severity level 5 (possession); Off-grid (production)",
+    "penalty_min": null,
+    "penalty_max": "Per guidelines (possession); Life (production)",
+    "fine_max": "$300,000 (possession); $500,000 (production)",
+    "elements": [
+      "Defendant knowingly possessed material depicting a child under 18 engaged in sexually explicit conduct",
+      "Or produced, promoted, or distributed such material"
+    ],
+    "mandatory_minimum": "Hard 25 for production involving child under 14",
+    "enhancements": [
+      "Production (Off-grid Person Felony)",
+      "Distribution (severity level 3)"
+    ],
+    "notes": "Possession is severity level 5. Production is off-grid. Each image/video is a separate count. Lifetime sex offender registration required."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "K.S.A. § 22-4903",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Person Felony, severity level 5",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines — typically 31-136 months with criminal history",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant is required to register under the Kansas Offender Registration Act",
+      "Defendant knowingly failed to register, verify, or update registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Failure to register is a severity level 5 person felony — very serious charge in Kansas. Must register within 3 business days of any change."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "K.S.A. § 21-5506",
+    "statute_title": "Indecent Liberties with a Child / Unlawful Sexual Relations",
+    "offense_class": "Person Felony, severity level 5 (indecent liberties, 14-15); Off-grid Person Felony (aggravated, under 14)",
+    "penalty_min": null,
+    "penalty_max": "Per guidelines (severity level 5); Life with Hard 25 (under 14)",
+    "fine_max": "$300,000",
+    "elements": [
+      "Defendant engaged in sexual intercourse or lewd fondling with a child",
+      "Who was 14 or 15 years of age and the defendant was 4+ years older",
+      "Or the child was under 14"
+    ],
+    "mandatory_minimum": "Hard 25 for victim under 14 (Jessica's Law)",
+    "enhancements": [
+      "Victim under 14 (Off-grid with Hard 25)"
+    ],
+    "notes": "Kansas's age of consent is 16. Indecent liberties with a child applies when victim is 14-15 and defendant is 4+ years older. Aggravated indecent liberties (under 14) triggers Jessica's Law Hard 25."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "K.S.A. § 21-6203",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 month",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant engaged in brawling or fighting",
+      "Or disturbed an assembly or meeting",
+      "Or used offensive, obscene, or abusive language calculated to provoke a breach of the peace"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Class C Misdemeanor — the lowest level in Kansas. Common charge for minor public disturbances."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "K.S.A. § 21-5904",
+    "statute_title": "Interference with Law Enforcement — Obstruction",
+    "offense_class": "Class A Misdemeanor (obstruction); Person Felony severity level 9 (physical interference with officer)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); per guidelines (felony)",
+    "fine_max": "$2,500 (misdemeanor); $100,000 (felony)",
+    "elements": [
+      "Defendant knowingly obstructed, resisted, or opposed a person authorized to serve legal process or maintain public order",
+      "While the person was performing a lawful duty"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Physical interference with a law enforcement officer (Person Felony severity level 9)"
+    ],
+    "notes": "Obstruction is a misdemeanor. Physical interference with a law enforcement officer is a person felony. Kansas distinguishes between passive resistance and active physical interference."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "K.S.A. § 21-5905",
+    "statute_title": "Obstruction of Justice / Obstructing Legal Process",
+    "offense_class": "Class A Nonperson Misdemeanor (general); Person Felony severity level 9 (witness intimidation)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); per guidelines (felony)",
+    "fine_max": "$2,500 (misdemeanor); $100,000 (felony)",
+    "elements": [
+      "Defendant knowingly and willfully obstructed, hindered, or delayed the enforcement of law",
+      "Or destroyed, altered, or concealed evidence",
+      "Or induced a witness to withhold testimony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Witness intimidation (Person Felony)"
+    ],
+    "notes": "Separate from interference with law enforcement. Covers evidence tampering, witness intimidation, and obstruction of legal proceedings."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "K.S.A. § 20-1202",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Court-imposed sanctions",
+    "penalty_min": null,
+    "penalty_max": "6 months for criminal contempt; civil contempt until compliance",
+    "fine_max": "$500 (direct contempt); $1,000 (indirect contempt)",
+    "elements": [
+      "Defendant willfully disobeyed a court order",
+      "Or disrupted court proceedings",
+      "Or engaged in conduct disrespectful to the court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kansas distinguishes direct contempt (in court's presence) from indirect contempt (outside court). Summary punishment available for direct contempt. Due process hearing required for indirect."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "K.S.A. § 21-6202",
+    "statute_title": "Drinking in Public",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 month",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant consumed alcoholic liquor on public property or in a public place",
+      "Or possessed an open container of alcoholic liquor in a public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kansas does not have a traditional 'public intoxication' statute. Instead, it criminalizes drinking in public/open container. Local ordinances may have additional provisions."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "K.S.A. § 22-2616",
+    "statute_title": "Failure to Appear / Aggravated Failure to Appear",
+    "offense_class": "Nonperson Felony, severity level 9 (felony case); Class A Misdemeanor (misdemeanor case)",
+    "penalty_min": null,
+    "penalty_max": "Per guidelines (felony); 1 year (misdemeanor)",
+    "fine_max": "$100,000 (felony); $2,500 (misdemeanor)",
+    "elements": [
+      "Defendant was released on bond or recognizance",
+      "Defendant willfully failed to appear before any court as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying felony case (Nonperson Felony severity level 9)"
+    ],
+    "notes": "Aggravated failure to appear (felony case) is a felony itself. Bond forfeiture and bench warrant issued. Consecutive sentence possible."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "K.S.A. § 21-5904(a)(4)",
+    "statute_title": "Making a False Report / Filing a False Report",
+    "offense_class": "Class A Nonperson Misdemeanor; Class B Person Misdemeanor (false alarm)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 6 months (Class B)",
+    "fine_max": "$2,500 (Class A); $1,000 (Class B)",
+    "elements": [
+      "Defendant knowingly gave a false alarm or report of a crime or emergency",
+      "Knowing the report to be false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "False police reports and false emergency calls. Swatting may be charged under this statute or as more serious offenses if harm results."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "K.S.A. § 21-5415",
+    "statute_title": "Criminal Threat",
+    "offense_class": "Person Felony, severity level 9",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly communicated a threat to commit violence",
+      "With intent to place another person in fear",
+      "Or to cause evacuation of a building, vehicle, or place of assembly"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminal threat is a person felony in Kansas, even for first offense. Covers bomb threats, death threats, and threats to cause serious harm."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "K.S.A. § 21-5903",
+    "statute_title": "Perjury",
+    "offense_class": "Nonperson Felony, severity level 7",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly made a false statement under oath",
+      "Material to the issue or matter of inquiry",
+      "In any proceeding before a court, tribunal, or public body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Perjury is a severity level 7 nonperson felony — serious charge. The statement must be material. Includes sworn testimony, affidavits, and depositions."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "K.S.A. § 21-5901",
+    "statute_title": "Bribery",
+    "offense_class": "Person Felony, severity level 7",
+    "penalty_min": null,
+    "penalty_max": "Per sentencing guidelines",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant offered, gave, or promised anything of value to a public official",
+      "With intent to influence the official's act, vote, opinion, or judgment"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Bribery of a public official is a person felony. Both the giver and receiver can be charged. Includes bribery of witnesses and jurors."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "K.S.A. § 21-5911",
+    "statute_title": "Escape from Custody",
+    "offense_class": "Nonperson Felony, severity level 8 (felony custody); Class A Nonperson Misdemeanor (misdemeanor custody)",
+    "penalty_min": null,
+    "penalty_max": "Per guidelines (felony); 1 year (misdemeanor)",
+    "fine_max": "$100,000 (felony); $2,500 (misdemeanor)",
+    "elements": [
+      "Defendant escaped from custody",
+      "While held in lawful custody on a criminal charge or conviction"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force (enhanced felony level)"
+    ],
+    "notes": "Escape charge level corresponds to custody level. Includes walking away from work release and community corrections. Aggravated escape (using force) carries higher severity."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "K.S.A. § 21-6412",
+    "statute_title": "Animal Cruelty",
+    "offense_class": "Class A Nonperson Misdemeanor (first); Nonperson Felony severity level 10 (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); per guidelines (felony)",
+    "fine_max": "$2,500 (misdemeanor); $100,000 (felony)",
+    "elements": [
+      "Defendant knowingly killed, injured, maimed, tortured, or cruelly beat an animal",
+      "Or abandoned or neglected an animal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (felony)",
+      "Torture (enhanced)"
+    ],
+    "notes": "Kansas passed stronger animal cruelty laws in recent years. Second offense is a felony. Dogfighting and cockfighting have separate enhanced provisions."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "K.S.A. § 22-3716",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Not a new criminal charge — court may revoke probation and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum sentence for the original offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation must be established by a preponderance of the evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kansas uses a graduated sanctions system for probation violations. Quick-dip jail sanctions (2-3 day increments) before full revocation. Court must make findings on the record."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "K.S.A. § 22-3717",
+    "statute_title": "Violation of Parole / Postrelease Supervision",
+    "offense_class": "Not a new criminal charge — Kansas Prisoner Review Board determines consequences",
+    "penalty_min": null,
+    "penalty_max": "Return to incarceration — up to remainder of sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on postrelease supervision",
+      "Defendant violated a condition of supervision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Kansas uses 'postrelease supervision' rather than 'parole.' Kansas Prisoner Review Board conducts revocation hearings. Graduated sanctions apply. New criminal charges may also be filed."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "K.S.A. § 21-5210",
+    "statute_title": "Aiding and Abetting / Criminal Responsibility",
+    "offense_class": "Same as the underlying offense",
+    "penalty_min": "Same as the underlying offense",
+    "penalty_max": "Same as the underlying offense",
+    "fine_max": "Same as the underlying offense",
+    "elements": [
+      "Defendant intentionally aided, abetted, advised, hired, counseled, or procured another to commit a crime"
+    ],
+    "mandatory_minimum": "Same as the underlying offense",
+    "enhancements": [],
+    "notes": "An aider is equally liable with the principal. Mere association or presence is insufficient — must show intentional assistance. Applies to all Kansas crimes."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "K.S.A. § 21-5301",
+    "statute_title": "Attempt",
+    "offense_class": "Generally one severity level below the completed offense on the sentencing grid",
+    "penalty_min": null,
+    "penalty_max": "One severity level below the completed offense",
+    "fine_max": "Varies by severity level",
+    "elements": [
+      "Defendant performed an overt act toward the commission of a crime",
+      "With the intent to commit the crime",
+      "The act was more than mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is graded one severity level below the completed offense. Exception: attempted first-degree murder is off-grid. Renunciation may be a defense if complete and voluntary."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "K.S.A. § 21-5302",
+    "statute_title": "Conspiracy",
+    "offense_class": "Generally one severity level below the target offense",
+    "penalty_min": null,
+    "penalty_max": "One severity level below the target offense",
+    "fine_max": "Varies by severity level",
+    "elements": [
+      "Defendant agreed with another person to commit a crime",
+      "With the intent to promote or facilitate the commission of the crime",
+      "One or more parties performed an overt act in furtherance of the agreement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy requires an agreement, intent, and an overt act. Conspiracy to commit an off-grid offense may itself be an off-grid offense. Withdrawal is a defense if timely."
+  }
+]

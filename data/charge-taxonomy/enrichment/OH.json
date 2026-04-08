@@ -1,0 +1,1068 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "High-tier BAC (.17 or above) triggers a mandatory 6 days jail on a first offense — double the baseline minimum",
+      "Refusal of chemical test triggers a 1-year ALS independently, providing leverage against test refusers",
+      "Per se BAC threshold of .08 eliminates the need to prove actual impairment when test results are valid"
+    ],
+    "defense_opportunities": [
+      "The Driver Intervention Program can substitute for the 3-day mandatory jail on a first offense, providing a non-custodial path",
+      "The arresting officer must observe the defendant for 20 minutes prior to breath testing — gaps in observation can invalidate results",
+      "Field sobriety tests must be administered in substantial compliance with NHTSA standards or are inadmissible under Ohio law"
+    ],
+    "common_defenses": [
+      "Improper stop — no reasonable, articulable suspicion for the initial traffic stop",
+      "Rising BAC — defendant's BAC was below the legal limit at the time of driving but rose between driving and testing",
+      "Medical conditions — diabetes, GERD, or auto-brewery syndrome producing false positive readings"
+    ]
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "prosecution_strengths": [
+      "Refusal evidence is typically admissible as consciousness of guilt in Ohio DUI prosecutions",
+      "1-year Administrative License Suspension is automatic for refusal, providing immediate consequence",
+      "Without a BAC number, prosecution can still proceed based on observational evidence of impairment"
+    ],
+    "defense_opportunities": [
+      "Limited driving privileges become available after 30 days of the ALS, providing some relief",
+      "The arresting officer must have provided proper implied consent advisement — failure invalidates the refusal",
+      "Without breath/blood test results, the prosecution must rely entirely on subjective observations, which are vulnerable to challenge",
+      "Medical inability to provide a sample is not a refusal under Ohio law"
+    ],
+    "common_defenses": [
+      "Inadequate implied consent warning — officer failed to read the BMV 2255 form or provide required advisements",
+      "Medical inability — defendant was physically unable to provide a breath sample due to a medical condition",
+      "No probable cause for arrest — the underlying arrest was unlawful, making the implied consent demand improper",
+      "Confusion or language barrier — defendant did not understand what was being requested"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "Mandatory life license suspension upon conviction adds severe collateral consequence",
+      "OVI predicate makes the case primarily about whether the defendant was impaired and whether impairment caused the death",
+      "Reagan Tokes Law indefinite sentencing applies to qualifying offenses, extending exposure"
+    ],
+    "defense_opportunities": [
+      "Ohio accident reconstruction experts can challenge prosecution causation theories",
+      "Causation is the key battleground — the OVI must be a proximate cause of the death, and intervening factors break the chain",
+      "All underlying OVI defenses remain available — if the OVI charge fails, the homicide theory based on impairment fails"
+    ],
+    "common_defenses": [
+      "Lack of causation — intervening factors (other drivers, road conditions, victim conduct) were the proximate cause of death",
+      "OVI invalidity — challenges to the underlying OVI eliminate the predicate for aggravated vehicular homicide",
+      "Accident reconstruction — expert testimony challenging the prosecution's theory of how the collision occurred",
+      "Medical condition — sudden medical event caused the collision, not impairment"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "Ohio first-degree murder carries the most severe penalties in the criminal code",
+      "Murder carries 15 years to life — an indefinite sentence with parole eligibility only after 15 years",
+      "Felony murder doctrine eliminates the need to prove specific intent to kill when the death occurs during a felony of violence"
+    ],
+    "defense_opportunities": [
+      "Premeditation and deliberation must be proven beyond reasonable doubt for first-degree murder",
+      "The distinction between murder (15 to life) and aggravated murder (life without parole or death) often turns on prior calculation and design — extensively litigated"
+    ],
+    "common_defenses": [
+      "Lack of purpose — the killing was reckless or accidental, not purposeful, supporting a lesser charge",
+      "Heat of passion — adequate provocation reduces the offense to voluntary manslaughter",
+      "Alibi — defendant was not present at the time and place of the killing",
+      "Felony murder challenge — defendant did not participate in the underlying felony"
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "Ohio voluntary manslaughter is the most common reduction theory from murder charges",
+      "Often charged as a lesser-included offense to murder, meaning the jury hears the full evidence of the killing",
+      "Provocation must be by the victim and sufficient to provoke a reasonable person — narrow definition can be exploited"
+    ],
+    "defense_opportunities": [
+      "Voluntary manslaughter is itself often a defense theory — a successful reduction from murder",
+      "The provocation and heat-of-passion analysis is fact-intensive and favorable to defense theories",
+      "Self-defense remains fully available and may result in acquittal entirely"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant reasonably believed deadly force was necessary",
+      "Heat of passion — the killing was the immediate response to adequate provocation",
+      "Imperfect self-defense — defendant honestly but unreasonably believed deadly force was necessary",
+      "Accident — the death was unintentional"
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "Ohio involuntary manslaughter requires only criminal negligence, a lower mental state than recklessness",
+      "No intent to kill is required — only proximate causation between the unlawful act and death",
+      "The underlying offense provides the unlawful conduct, simplifying the prosecution's burden"
+    ],
+    "defense_opportunities": [
+      "The underlying felony or misdemeanor must be independently proven — if it fails, so does the manslaughter charge",
+      "Proximate cause is contestable — intervening factors break the causal chain",
+      "3rd-degree felony version (misdemeanor predicate) is significantly less severe than the 1st-degree version"
+    ],
+    "common_defenses": [
+      "No proximate cause — the death was not a foreseeable result of defendant's conduct",
+      "No underlying offense — the predicate felony or misdemeanor was not actually committed",
+      "Intervening cause — third party or victim actions were the proximate cause of death",
+      "Accident — the death was an unforeseeable accident"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "Two prongs (serious physical harm OR deadly weapon) provide alternative theories",
+      "Victim is a peace officer or firefighter elevates to 1st-degree felony with up to 11 years",
+      "Firearm specification adds mandatory consecutive 1, 3, or 5 years to any sentence"
+    ],
+    "defense_opportunities": [
+      "The 'serious physical harm' element is statutorily defined and may not match the prosecution's claim",
+      "The deadly weapon prong requires the object to be capable of inflicting death — not every dangerous item qualifies"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted to protect themselves from imminent harm; prosecution must disprove this beyond reasonable doubt",
+      "Defense of others — defendant was protecting another person from harm",
+      "Object not a deadly weapon — the item used does not meet the statutory definition",
+      "No serious physical harm — the victim's injuries do not meet the statutory definition"
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Simple assault is broadly applied in Ohio for both fights and threatening conduct",
+      "Elevation to 5th-degree felony when the victim is a peace officer, teacher, BCI investigator, or healthcare professional on duty",
+      "Frequently charged alongside other offenses, building cumulative exposure"
+    ],
+    "defense_opportunities": [
+      "M1 classification is relatively low and often suitable for diversion or plea alternatives",
+      "The 'knowingly' or 'recklessly' mental state can be challenged — pure accident is not assault"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted to protect themselves; prosecution must disprove beyond reasonable doubt",
+      "Accident — the contact was unintentional",
+      "Mutual combat — both parties consented to the physical altercation",
+      "Defense of others — defendant was protecting another from harm"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "Ohio 911 call recordings are typically admissible as excited utterances even when victims later recant",
+      "Mandatory CPO consideration adds civil protection order to criminal exposure",
+      "911 call recordings and excited utterances by victims are admissible even when victims later recant"
+    ],
+    "defense_opportunities": [
+      "Victim recantation is common and significantly weakens the prosecution's case",
+      "The 'family or household member' definition must be established — not every relationship qualifies",
+      "Mutual combat scenarios reduce the prosecution's narrative"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was protecting themselves from the alleged victim's aggression; prosecution must disprove beyond reasonable doubt",
+      "False allegation — fabricated for custody, divorce, or protective order leverage",
+      "Mutual combat — both parties were equally engaged in the physical altercation"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "Ohio threat statutes apply to electronic communications including texts and social media",
+      "Ohio prosecutors typically rely on objective evidence including witness testimony and physical evidence",
+      "Text messages and electronic communications provide documented evidence of the threat"
+    ],
+    "defense_opportunities": [
+      "M4 baseline (max 30 days, $250 fine) makes the offense relatively minor for first-time charges",
+      "The threat must cause the victim to believe physical harm will occur — vague or hyperbolic statements may not qualify",
+      "First Amendment protections apply to political speech and rhetorical hyperbole"
+    ],
+    "common_defenses": [
+      "Not a true threat — the statement was hyperbolic, conditional, or constitutionally protected speech",
+      "No reasonable belief — a reasonable person would not have believed harm would occur",
+      "Context — the statement was made in jest, frustration, or fiction",
+      "Misinterpretation — the alleged victim misread the defendant's words or intent"
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "Multiple theories cover ransom, facilitating felony, terrorizing, sexual activity, and government interference",
+      "Sexual motivation specification adds further enhancement",
+      "Firearm specifications add mandatory consecutive prison time"
+    ],
+    "defense_opportunities": [
+      "Reduction to F2 (8-year max) when the victim is released unharmed in a safe place",
+      "Allied offense merger doctrine can result in merger with the underlying offense",
+      "When kidnapping is incidental to another crime (robbery, sexual assault), merger doctrine may apply"
+    ],
+    "common_defenses": [
+      "Released unharmed in safe place — reduces charge from F1 to F2",
+      "Allied offense merger — the kidnapping was incidental to another offense and should merge",
+      "Consent — alleged victim voluntarily accompanied the defendant",
+      "No restraint — the alleged confinement did not actually limit the victim's freedom"
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "Mandatory minimum 25 years to life when victim is under 10; 15 years to life when under 13",
+      "Reagan Tokes Law indefinite sentencing applies, adding potential additional years",
+      "Tier III sex offender registration is lifetime",
+      "Spousal rape is criminalized in Ohio"
+    ],
+    "defense_opportunities": [
+      "Consent is a complete defense to force-based rape charges (when both parties are competent adults)",
+      "Substantial impairment must be proven — temporary intoxication may not qualify",
+      "DNA evidence can be challenged on contamination, transfer theories, and lab procedures",
+      "Witness credibility, particularly delayed disclosure cases, is fertile ground for cross-examination"
+    ],
+    "common_defenses": [
+      "Consent — sexual conduct was consensual between competent adults",
+      "Misidentification — defendant was not the perpetrator",
+      "False accusation — allegation is fabricated due to relationship disputes, custody battles, or other motives",
+      "No substantial impairment — alleged victim was not so impaired as to be unable to consent"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "prosecution_strengths": [
+      "Position of authority theory (teacher, coach, clergy, therapist) does not require force or impairment",
+      "Tier III sex offender registration triggered upon conviction",
+      "Power-imbalance cases are particularly compelling to juries"
+    ],
+    "defense_opportunities": [
+      "Position of authority must fit the statutory definition — not every relationship qualifies",
+      "Distinct from rape — sexual battery does not require force, but the prosecution must prove the position-of-authority element",
+      "Consent is generally not a defense for position-of-authority cases, but the relationship itself can be contested"
+    ],
+    "common_defenses": [
+      "No qualifying authority relationship — defendant was not in a position of authority as defined by statute",
+      "False allegation — accusation is fabricated",
+      "No sexual conduct — the prosecution cannot prove sexual conduct occurred",
+      "Misidentification — defendant was not the person involved"
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "prosecution_strengths": [
+      "Tier I or II sex offender registration triggered upon conviction",
+      "Sexual contact is a lower threshold than sexual conduct, expanding the range of charged conduct",
+      "Child victim cases benefit from forensic interview procedures and testimony of trained interviewers"
+    ],
+    "defense_opportunities": [
+      "Sexual purpose must be proven — incidental contact (during sports, accidents) is not gross sexual imposition",
+      "F4 classification (max 18 months) is significantly less severe than rape charges",
+      "Witness credibility, particularly with child witnesses, is subject to challenge through expert testimony"
+    ],
+    "common_defenses": [
+      "No sexual purpose — the contact was for a legitimate, non-sexual reason",
+      "Accidental contact — the touching was unintentional",
+      "False allegation — accusation is fabricated or the result of suggestive questioning",
+      "Misidentification — defendant was not the person involved"
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Ohio robbery requires proof of force or intimidation that distinguishes it from theft",
+      "F2 carries up to 8 years, with potential firearm specifications adding mandatory consecutive time",
+      "Surveillance footage and witness identification commonly support robbery cases"
+    ],
+    "defense_opportunities": [
+      "Distinguishing between robbery (force or threat) and theft (no force) is significant — theft is a much lesser charge",
+      "F3 robbery (mere threat without weapon or harm) is less severe than F2",
+      "Identification challenges are common, particularly for masked or brief encounters"
+    ],
+    "common_defenses": [
+      "Misidentification — defendant was not the person who committed the robbery",
+      "No force or threat — the taking did not involve force, reducing to theft",
+      "Alibi — defendant has evidence of being elsewhere",
+      "Claim of right — defendant believed they had a legal right to the property"
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "Firearm specification adds a mandatory 3 years consecutive — meaning the minimum is 3 years prison plus the underlying sentence",
+      "Display, brandishing, or even indication of possession of a deadly weapon is sufficient — actual use is not required",
+      "Community control is not available — mandatory prison"
+    ],
+    "defense_opportunities": [
+      "If the weapon element is removed, the charge drops to robbery (F2 or F3), a substantial reduction",
+      "Alibi and identification defenses apply with full force — victim ID under stress is often unreliable",
+      "The firearm specification can sometimes be plea-negotiated separately from the underlying charge"
+    ],
+    "common_defenses": [
+      "Misidentification — defendant was not the perpetrator",
+      "No deadly weapon — the object was not actually a deadly weapon as defined by statute",
+      "Alibi — defendant has evidence of being elsewhere",
+      "Duress — defendant was coerced into participation"
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "Ohio burglary law captures unlawful entry with intent to commit a crime, regardless of completion",
+      "Trespass plus purpose to commit a criminal offense is sufficient — the offense need not actually be committed inside",
+      "Surveillance, tool marks, and DNA evidence increasingly link defendants to scenes"
+    ],
+    "defense_opportunities": [
+      "F4 burglary (max 18 months) for lower-level burglary is dramatically less severe than F2",
+      "The 'likely to be present' element is fact-specific and litigable",
+      "Intent to commit a criminal offense must exist at the time of entry — afterthought criminal acts do not retroactively create burglary"
+    ],
+    "common_defenses": [
+      "No criminal intent at entry — defendant entered for an innocent purpose",
+      "Authorized entry — defendant had permission or a right to be present",
+      "No one present or likely to be present — reduces F2 to F3 or F4",
+      "Misidentification — defendant was not the person who entered"
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "Requires both another person present AND a deadly weapon or harm — extreme circumstances",
+      "Mandatory prison eliminates community control as an option",
+      "Firearm specifications add mandatory consecutive time"
+    ],
+    "defense_opportunities": [
+      "Both elements (presence + weapon/harm) must be proven — missing either reduces to F2 burglary",
+      "If no other person was present, the charge cannot be aggravated burglary regardless of other factors",
+      "The deadly weapon must be possessed by the defendant — accomplice possession may not always count"
+    ],
+    "common_defenses": [
+      "No other person present — eliminates the aggravated element",
+      "No deadly weapon — defendant did not possess or use a deadly weapon",
+      "No criminal intent at entry — defendant did not enter with intent to commit a criminal offense",
+      "Misidentification — defendant was not the person who entered the structure"
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "Ohio trespass law applies after notice is given by signs, fencing, or verbal warning",
+      "Notice can be express, implied, or via posted signs — all easily provable",
+      "Habitation trespass and critical infrastructure trespass elevate to M1"
+    ],
+    "defense_opportunities": [
+      "M4 baseline (30 days max, $250 fine) is among Ohio's lowest criminal classifications",
+      "Implied invitation, public access areas, and easements can negate the trespass element",
+      "Necessity (emergency entry to render aid) is a defense"
+    ],
+    "common_defenses": [
+      "No notice — defendant was not informed entry was prohibited",
+      "Implied invitation — premises were generally open to the public",
+      "Mistake of fact — defendant believed they had a right to be on the property",
+      "Necessity — defendant entered due to emergency"
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "Elderly or disabled victim provision elevates the offense by one degree, adding leverage",
+      "Motor vehicle theft is automatically minimum F4 regardless of value",
+      "Firearm theft is automatically minimum F3"
+    ],
+    "defense_opportunities": [
+      "Value determination is the critical issue — defense appraisals can reduce the assessed value below felony thresholds",
+      "Knowingly obtained or exerted control requires proof of intent — accidental possession is not theft",
+      "Claim of right defense (good-faith belief of ownership) negates the criminal element"
+    ],
+    "common_defenses": [
+      "Value dispute — the property is worth less than alleged when properly appraised",
+      "Claim of right — defendant believed they had a legal claim to the property",
+      "No intent to deprive — defendant intended to return the property",
+      "Misidentification — defendant was not the person who took the property"
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "Ohio retail theft prosecutions are supported by store loss prevention testimony and surveillance",
+      "Elderly or disabled victim elevates to F5, adding significant exposure",
+      "Repeat offenses can be elevated based on prior theft convictions"
+    ],
+    "defense_opportunities": [
+      "M1 maximum 180 days makes first-offense petty theft suitable for diversion or pretrial intervention",
+      "Many Ohio counties offer pretrial diversion for first-time offenders, resulting in dismissal upon completion",
+      "Civil restitution to retailer is often separate from criminal prosecution and can resolve cases short of trial"
+    ],
+    "common_defenses": [
+      "No intent — defendant accidentally left store with merchandise or forgot to pay",
+      "Pretrial diversion — first-time offender qualifies for diversion program",
+      "Misidentification — defendant was not the person who took the merchandise",
+      "Claim of right — defendant believed they were entitled to the property"
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Motor vehicle theft is F4 minimum regardless of vehicle value",
+      "Firearm theft is F3 minimum regardless of value",
+      "Restitution is commonly ordered, adding financial pressure"
+    ],
+    "defense_opportunities": [
+      "Value disputes are central — defense appraisals can reduce the offense level",
+      "Specialty rules for vehicles and firearms can sometimes be challenged based on the specific item",
+      "Aggregation rules require careful examination — separate thefts may not be aggregable"
+    ],
+    "common_defenses": [
+      "Value dispute — the property is worth less than alleged",
+      "Claim of right — defendant believed they had a legal interest in the property",
+      "No intent to permanently deprive — defendant intended to return the property",
+      "Misidentification — defendant was not the perpetrator"
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Digital evidence including account records and IP addresses commonly support Ohio identity theft prosecutions",
+      "F5 baseline with escalation based on value and victim characteristics",
+      "Multiple victims can result in stacked charges"
+    ],
+    "defense_opportunities": [
+      "The defendant must have acted with intent to commit fraud — mere possession of identifying information is insufficient",
+      "Authorization from the identity owner is a complete defense",
+      "Identity confusion cases (similar names, shared addresses) create reasonable doubt"
+    ],
+    "common_defenses": [
+      "Authorization — the identity owner consented to the use",
+      "Lack of fraudulent intent — defendant did not intend to commit fraud",
+      "Mistaken identity — confusion between similar names",
+      "No knowledge — defendant did not know the information belonged to another person"
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Ohio forgery law covers both creating and uttering false documents",
+      "F5 baseline with potential escalation for government documents or large losses",
+      "Handwriting analysis and digital forensics can link defendants to forged documents"
+    ],
+    "defense_opportunities": [
+      "Authorization to sign on behalf of another person is a complete defense",
+      "Intent to defraud must be proven — signing for non-fraudulent purposes is not forgery",
+      "Uttering charges require knowledge that the document was forged"
+    ],
+    "common_defenses": [
+      "Authorization — defendant was authorized to sign the document",
+      "No intent to defraud — defendant did not intend to deceive anyone",
+      "Lack of knowledge — defendant did not know the document was forged (uttering)",
+      "Honest belief — defendant believed the document was genuine"
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Ohio receiving stolen property statutes capture both knowing and willfully blind possession",
+      "Knowledge or 'reasonable cause to believe' standard captures willful blindness",
+      "Often charged alongside theft, providing alternative theories"
+    ],
+    "defense_opportunities": [
+      "The 'reasonable cause to believe' standard is objective — defense can argue a reasonable person would not have known",
+      "Good-faith purchase from a seemingly legitimate seller negates the knowledge element",
+      "Value disputes can reduce the offense level"
+    ],
+    "common_defenses": [
+      "No knowledge — defendant genuinely did not know the property was stolen",
+      "Good-faith purchase — defendant bought the property in a legitimate transaction",
+      "Value dispute — property worth less than alleged",
+      "Claim of right — defendant believed they were the lawful owner"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Bulk amount thresholds trigger mandatory prison time",
+      "Fentanyl and heroin possession carry heightened penalties due to opioid crisis legislation",
+      "Constructive possession doctrine extends liability to drugs found in vehicles or homes"
+    ],
+    "defense_opportunities": [
+      "Pre-trial diversion programs exist for first-time low-level offenders, resulting in dismissal",
+      "Constructive possession requires both knowledge and ability to control — proximity is insufficient",
+      "Fourth Amendment suppression motions remain the most powerful tool in drug cases",
+      "Marijuana under 100g is a minor misdemeanor — no jail, $150 fine"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — drugs were discovered during an unconstitutional search",
+      "Lack of knowledge — defendant did not know the drugs were present",
+      "Constructive possession failure — drugs were in shared space without proof of dominion",
+      "Pre-trial diversion — first-time offender qualifies for diversion program"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Ohio still criminalizes marijuana possession despite Issue 2 (2023) recreational legalization for adults 21+",
+      "Possession over 2.5 oz remains illegal, and use in motor vehicles or public places is restricted",
+      "Minors and non-compliant possession are still charged",
+      "Trafficking quantities remain serious felonies"
+    ],
+    "defense_opportunities": [
+      "Issue 2 (2023) legalized recreational marijuana for adults 21+ up to 2.5 oz, dramatically narrowing prosecution",
+      "Possession under 100g remains a minor misdemeanor with $150 fine and no jail",
+      "Fourth Amendment challenges to vehicle searches based on marijuana smell are increasingly viable post-legalization",
+      "Pre-trial diversion remains available"
+    ],
+    "common_defenses": [
+      "Lawful possession under Issue 2 — defendant is 21+ and possessed less than 2.5 oz",
+      "Illegal search — vehicle search based solely on marijuana smell may no longer establish probable cause",
+      "Quantity dispute — actual amount falls within legal limits or below felony threshold",
+      "Minor misdemeanor — no criminal record consequences for first offense under 100g"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Bulk amount triggers mandatory prison; major drug offender specification adds mandatory maximum prison",
+      "Schoolyard or juvenile presence escalates penalties one degree",
+      "Firearm specifications add mandatory consecutive prison time"
+    ],
+    "defense_opportunities": [
+      "Trafficking does not require an actual sale, but the conduct must show preparation for distribution — mere possession is not trafficking",
+      "Confidential informant credibility is frequently challenged",
+      "Substantial assistance to law enforcement can reduce mandatory minimums",
+      "Quantity disputes can reduce the offense from trafficking to simple possession"
+    ],
+    "common_defenses": [
+      "Personal use — quantity and packaging consistent with personal consumption",
+      "Illegal search — evidence obtained through unconstitutional search",
+      "Entrapment — government agent induced sale defendant would not have made",
+      "Unreliable informant — cooperating witness lacks credibility"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Ohio drug paraphernalia statutes broadly capture items used with controlled substances",
+      "Sale or delivery of paraphernalia is M2",
+      "Often charged alongside drug possession, layering exposure"
+    ],
+    "defense_opportunities": [
+      "M4 (max 30 days, $250 fine) is among Ohio's lowest criminal classifications",
+      "Multi-purpose items have legitimate uses — defense can argue innocent purpose",
+      "Needle exchange programs provide limited immunity for harm-reduction participants"
+    ],
+    "common_defenses": [
+      "Legitimate purpose — item has a lawful use unrelated to drugs",
+      "No drug nexus — item was not actually used for drug consumption",
+      "Lack of intent — defendant did not intend to use the item for drug purposes",
+      "Needle exchange immunity — defendant participating in syringe service program"
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Mandatory prison and lengthy sentences for endangering lives",
+      "Origin-and-cause investigations provide forensic evidence",
+      "Insurance fraud motivation provides comprehensible motive for juries"
+    ],
+    "defense_opportunities": [
+      "Origin-and-cause forensic methodology is subject to expert challenge",
+      "Fire investigation conclusions can often be disputed by defense experts",
+      "Origin-and-cause forensic methodology has known reliability issues — outdated techniques can be challenged",
+      "Accidental fire is a complete defense to the willful element"
+    ],
+    "common_defenses": [
+      "Accidental fire — fire was caused by electrical, cooking, or natural origin",
+      "Faulty fire investigation — origin-and-cause analysis used outdated or unreliable methodology",
+      "Misidentification — defendant was not the person who set the fire",
+      "Structure not occupied — eliminates the F1 enhancement"
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "Ohio bars felons from possessing firearms with both state and federal exposure",
+      "Disability includes felony violence, drug offenses, mental incompetency, and fugitive status",
+      "Constructive possession doctrine reaches firearms in shared spaces"
+    ],
+    "defense_opportunities": [
+      "The disability must be a qualifying one — not all felonies trigger the prohibition",
+      "Civil rights restoration through expungement or pardon can eliminate the disability",
+      "Constructive possession requires proof of knowledge and control over the specific firearm"
+    ],
+    "common_defenses": [
+      "No qualifying disability — prior conviction does not trigger weapons disability",
+      "Rights restored — defendant's firearm rights have been restored through legal process",
+      "No possession — firearm belonged to another person",
+      "Illegal search — firearm discovered through unconstitutional search"
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "Ohio prosecutors typically rely on objective evidence including witness testimony and physical evidence",
+      "Loaded firearms and prior violence convictions enhance penalties",
+      "Carrying in restricted locations (courthouses, schools, federal buildings) remains prohibited"
+    ],
+    "defense_opportunities": [
+      "This significantly narrowed who can be charged — many cases that were criminal before 2022 are no longer prosecutable",
+      "Open carry remains lawful for non-prohibited persons"
+    ],
+    "common_defenses": [
+      "Not concealed — weapon was openly carried (legal in Ohio)",
+      "Valid permit — defendant had a valid CCW license",
+      "Illegal search — weapon discovered through unconstitutional search"
+    ]
+  },
+  {
+    "common_charge_slug": "unlawful-carry",
+    "prosecution_strengths": [
+      "Ohio firearms in vehicles laws apply to loaded, accessible weapons",
+      "F4 felony for loaded and accessible weapons in vehicles",
+      "Prior gun offense enhancements add exposure"
+    ],
+    "defense_opportunities": [
+      "Long guns remain restricted in some scenarios",
+      "Most modern violations apply to prohibited persons, not lawful gun owners"
+    ],
+    "common_defenses": [
+      "Not accessible — firearm was secured in a manner not accessible without leaving the vehicle",
+      "Not loaded — firearm was unloaded at the time",
+      "Valid permit — defendant had appropriate license"
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Persisting after warning elevates to M4",
+      "Officer testimony alone is often sufficient",
+      "Frequently used as a plea-down option"
+    ],
+    "defense_opportunities": [
+      "Minor misdemeanor (fine only, no jail) is the lowest criminal classification",
+      "First Amendment protections limit prosecutions based on speech",
+      "Frequently negotiable down to a non-criminal civil infraction in some courts"
+    ],
+    "common_defenses": [
+      "Free speech — conduct was protected expression",
+      "No public disturbance — conduct did not actually disturb anyone",
+      "Self-defense — defendant was responding to provocation",
+      "No persistence — first warning did not give defendant adequate opportunity to comply"
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Mandatory class 2 license suspension applies upon conviction",
+      "Bodycam footage increasingly documents the encounter",
+      "Often added to other charges, building cumulative exposure"
+    ],
+    "defense_opportunities": [
+      "The arrest must be lawful — resistance to an unlawful arrest may be defended",
+      "Passive non-compliance may not rise to criminal resistance",
+      "The defendant must have known the person was a peace officer"
+    ],
+    "common_defenses": [
+      "Unlawful arrest — underlying arrest lacked probable cause",
+      "Excessive force — defendant's actions were natural response to officer's excessive force",
+      "Medical condition — defendant could not comply due to medical issue",
+      "No intent to resist — defendant did not knowingly resist"
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "M2 baseline; F5 if creates risk of physical harm",
+      "Providing false information to officers can constitute obstruction",
+      "Frequently charged alongside resisting arrest"
+    ],
+    "defense_opportunities": [
+      "Fifth Amendment privilege protects silence — refusing to answer is not obstruction",
+      "The defendant must have committed an affirmative act — passive non-cooperation may not qualify",
+      "M2 (max 90 days) is relatively minor as a standalone charge"
+    ],
+    "common_defenses": [
+      "Constitutional rights — defendant exercising right to remain silent",
+      "No affirmative act — defendant did not actively interfere with official business",
+      "No intent to obstruct — actions were inadvertent",
+      "Officer not performing lawful duty — official function was outside the officer's authority"
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "Ohio false report statutes apply to police reports and emergency calls",
+      "M1 baseline with felony enhancement for serious contexts (firearms applications, false alarms causing harm)",
+      "Documentary evidence of the false statement is typically clear"
+    ],
+    "defense_opportunities": [
+      "Statement must be knowingly false — honest mistake is a defense",
+      "Materiality requirement applies in some contexts",
+      "Recantation before harm occurs may mitigate consequences"
+    ],
+    "common_defenses": [
+      "Honest mistake — defendant believed the statement was true",
+      "No materiality — false statement was about an immaterial detail",
+      "Recantation — defendant corrected the false statement",
+      "Constitutional protection — refusing to provide truthful information based on Fifth Amendment"
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "M1 baseline with F5 enhancement for prior conviction or threats of violence",
+      "Digital communications create permanent records of harassing conduct",
+      "Frequently charged in domestic violence contexts"
+    ],
+    "defense_opportunities": [
+      "First Amendment protections apply to non-threatening speech",
+      "Intent to harass, abuse, or annoy must be proven",
+      "Legitimate communications (debt collection, custody arrangements) are not harassment"
+    ],
+    "common_defenses": [
+      "Free speech — communications were protected expression",
+      "Legitimate purpose — communications had lawful business or personal purpose",
+      "No intent to harass — communications were not intended to threaten or annoy",
+      "Consensual communication — alleged victim was participating willingly"
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "M1 baseline with F4 for prior conviction or violation of protection order",
+      "Mental distress is broadly defined to include any mental anguish",
+      "Electronic surveillance and tracking add to the pattern"
+    ],
+    "defense_opportunities": [
+      "Pattern of conduct requires two or more incidents — isolated events do not qualify",
+      "Mental distress must be the result of conduct that knowingly caused fear or distress",
+      "Constitutionally protected activities (lawful observation, public communication) are not stalking"
+    ],
+    "common_defenses": [
+      "No pattern — only isolated incidents, not a course of conduct",
+      "No knowledge — defendant did not know conduct would cause distress",
+      "Constitutionally protected — conduct was lawful expression",
+      "Legitimate purpose — defendant had a lawful reason for the contact"
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "M1 baseline with F1, F2, or F3 enhancements for serious harm, drug exposure, or torture",
+      "Methamphetamine lab exposure is automatic felony",
+      "Mandatory prison for serious cases"
+    ],
+    "defense_opportunities": [
+      "The substantial risk requirement is a high bar — speculative risk is insufficient",
+      "Cultural and contextual differences in parenting can support defense theories",
+      "Many cases are appropriately handled through child protective services rather than criminal prosecution"
+    ],
+    "common_defenses": [
+      "No substantial risk — conduct did not create genuine risk of harm",
+      "Reasonable parenting — actions within range of acceptable parenting",
+      "Lack of knowledge — defendant unaware of dangerous condition",
+      "Medical care provided — defendant sought appropriate help for child"
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "Court records establish the order's existence and terms",
+      "Electronic evidence (calls, texts, social media) documents violations",
+      "Frequently charged as a recurring offense in DV cases"
+    ],
+    "defense_opportunities": [
+      "The defendant must have had knowledge of the order — improper service is a defense",
+      "Recklessness standard requires more than mere accidental contact",
+      "Many violations involve ambiguous situations (incidental encounters)"
+    ],
+    "common_defenses": [
+      "No knowledge — defendant was not properly served and did not know order existed",
+      "Unintentional contact — encounter was coincidental, not reckless",
+      "Invited contact — protected party initiated the contact",
+      "Order modified — protective order had been modified to allow the contact"
+    ]
+  },
+  {
+    "common_charge_slug": "witness-tampering",
+    "prosecution_strengths": [
+      "Phone records, recorded jail calls, and social media commonly document the intimidation",
+      "Even threats against witnesses' family members qualify",
+      "Often charged alongside the underlying offense, increasing leverage"
+    ],
+    "defense_opportunities": [
+      "The defendant must have knowingly attempted to intimidate or hinder — innocent communications are not witness tampering",
+      "Family communications about the case can be misinterpreted",
+      "First Amendment protections apply to non-threatening communications"
+    ],
+    "common_defenses": [
+      "No intent to intimidate — communication had a legitimate purpose",
+      "Family dialogue — communication was between family members about a shared concern",
+      "Misinterpretation — innocent statement was misread as intimidation",
+      "Constitutional speech — communication was protected expression"
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "Government property and places of worship trigger automatic application",
+      "Repair estimates and photographs document the damage",
+      "Restitution often ordered in addition to sentence"
+    ],
+    "defense_opportunities": [
+      "The 'serious physical harm' element distinguishes vandalism (F5) from criminal damaging (M2)",
+      "Damages below the threshold should be charged as criminal damaging, not vandalism",
+      "Accidental damage is a defense to the knowing element"
+    ],
+    "common_defenses": [
+      "Not serious physical harm — damage does not meet the statutory threshold for vandalism",
+      "Accidental damage — defendant did not knowingly cause the damage",
+      "Misidentification — defendant did not cause the damage",
+      "Consent — owner authorized the action"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "Ohio criminal mischief charges are commonly resolved through restitution agreements",
+      "Lower threshold than vandalism, capturing minor property damage",
+      "Frequently charged alongside other offenses"
+    ],
+    "defense_opportunities": [
+      "M2 (90 days max) is among Ohio's lower criminal classifications",
+      "Restitution can resolve many cases short of conviction",
+      "The 'substantial risk' element for endangering requires actual risk, not speculative"
+    ],
+    "common_defenses": [
+      "Accidental damage — conduct was unintentional",
+      "No risk created — defendant's conduct did not create substantial risk",
+      "Misidentification — defendant did not cause the damage",
+      "Consent — owner authorized the action"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-felony-injury",
+    "prosecution_strengths": [
+      "Serious physical harm element captures significant injuries",
+      "Mandatory license suspension and mandatory prison for OVI-related cases",
+      "Construction zone enhancement adds exposure"
+    ],
+    "defense_opportunities": [
+      "Reckless version (F4) and negligent version (M1) are significantly less severe",
+      "All underlying OVI defenses remain available — if OVI fails, the felony injury collapses to a lesser charge",
+      "Causation between impairment and injury must be proven"
+    ],
+    "common_defenses": [
+      "OVI defenses — underlying impaired driving charge fails",
+      "Lack of causation — injury was not caused by defendant's driving",
+      "Not serious physical harm — injuries do not meet the statutory threshold",
+      "Accident reconstruction — collision was caused by other factors"
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "Ohio's driving under suspension statutes under Chapter 4510 cover various scenarios",
+      "BMV records provide objective evidence of suspension status",
+      "OVI-related suspension carries mandatory minimum 3 days jail",
+      "Points accumulate, leading to additional consequences"
+    ],
+    "defense_opportunities": [
+      "The defendant must have known about the suspension — improper notice is a defense",
+      "Limited driving privileges may have been authorized",
+      "Administrative errors in BMV records are not uncommon"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant was not properly notified of suspension",
+      "Limited privileges — driving was within authorized hours and purposes",
+      "BMV error — records were inaccurate",
+      "Necessity — emergency required immediate driving"
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Mandatory class 2 license suspension upon conviction",
+      "Dashcam and helicopter footage provide compelling evidence",
+      "Additional charges from pursuit conduct compound exposure"
+    ],
+    "defense_opportunities": [
+      "The signal must have been visible or audible — perception issues are a defense",
+      "The defendant must have willfully eluded — brief delay in stopping is not necessarily fleeing",
+      "Officer must have been recognizable as law enforcement"
+    ],
+    "common_defenses": [
+      "Did not perceive signal — defendant did not see or hear the officer",
+      "Brief delay — defendant was looking for safe place to pull over",
+      "Officer not identifiable — defendant did not know it was law enforcement",
+      "Duress — defendant fled out of fear for safety"
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "Ohio undercover operations targeting solicitation are well-established",
+      "Undercover sting operations are well-established and provide direct evidence",
+      "Mandatory STD testing adds collateral consequence"
+    ],
+    "defense_opportunities": [
+      "Entrapment is a viable defense when undercover officers initiated and pushed the transaction",
+      "The agreement must be specific — ambiguous conversations may not qualify",
+      "M3 (60 days max) is relatively minor as a standalone charge"
+    ],
+    "common_defenses": [
+      "Entrapment — law enforcement induced the offense",
+      "No agreement — conversation did not amount to clear solicitation",
+      "Misunderstanding — statements were misinterpreted",
+      "No intent — defendant did not intend to engage in prostitution"
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "M1 baseline with felony escalation by value",
+      "Bank records, surveillance footage, and digital trails document the offense",
+      "Often charged alongside identity theft and theft"
+    ],
+    "defense_opportunities": [
+      "Authorization from the cardholder is a complete defense",
+      "Knowledge that the card was stolen, expired, or revoked must be proven",
+      "Many cases involve genuine confusion or family disputes about authorized use"
+    ],
+    "common_defenses": [
+      "Authorization — cardholder consented to the use",
+      "No knowledge — defendant did not know the card was invalid",
+      "Family dispute — alleged misuse was within a family or domestic relationship with shared finances",
+      "Mistaken identity — defendant was not the person who used the card"
+    ]
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "prosecution_strengths": [
+      "Ohio bad check statutes create a presumption of fraud upon dishonor and failure to pay after notice",
+      "Bank records provide objective proof of insufficient funds",
+      "Frequently charged in retail and small business contexts"
+    ],
+    "defense_opportunities": [
+      "Honest mistake about account balance is a defense",
+      "Payment within the 10-day notice period eliminates the presumption",
+      "Many counties offer bad check restitution programs in lieu of prosecution"
+    ],
+    "common_defenses": [
+      "Honest mistake — defendant believed funds were available",
+      "Payment within notice period — defendant cured the deficiency within 10 days",
+      "Bank error — dishonor was the result of bank error",
+      "No intent to defraud — defendant intended to cover the check"
+    ]
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "prosecution_strengths": [
+      "Detention is broadly defined to include arrest, jail, hospitalization, and supervision",
+      "Failure to return from temporary leave or scheduled jail report can constitute escape",
+      "Enhanced penalties for escape from post-conviction detention"
+    ],
+    "defense_opportunities": [
+      "The defendant must have known they were in detention — confusion about supervision status can negate knowledge",
+      "Necessity defense (escape to avoid imminent serious harm) is recognized in extreme cases",
+      "Voluntary return promptly after departure can mitigate consequences"
+    ],
+    "common_defenses": [
+      "No knowledge of detention — defendant was confused about their custody status",
+      "Necessity — defendant escaped due to threat of imminent serious harm",
+      "Voluntary return — defendant returned voluntarily before authorities pursued",
+      "No intent — defendant did not purposely break detention"
+    ]
+  },
+  {
+    "common_charge_slug": "community-control-violation",
+    "prosecution_strengths": [
+      "Standard of proof is preponderance of evidence — much lower than reasonable doubt",
+      "Probation officers have detailed records of compliance failures",
+      "Court can impose any portion of the suspended sentence up to the original maximum",
+      "New criminal offenses during supervision strongly support revocation"
+    ],
+    "defense_opportunities": [
+      "The court has broad discretion to continue supervision with modified conditions",
+      "Technical violations can often be addressed through graduated sanctions rather than revocation",
+      "Good-faith efforts and substantial compliance are mitigating factors",
+      "Treatment-based responses may be available for substance abuse violations"
+    ],
+    "common_defenses": [
+      "Substantial compliance — defendant complied with the majority of conditions",
+      "Inability to comply — circumstances beyond defendant's control prevented compliance (illness, employment, transportation)",
+      "Technical nature — violation was minor and technical, not substantive",
+      "Treatment alternative — defendant requesting treatment instead of incarceration"
+    ]
+  },
+  {
+    "common_charge_slug": "extortion",
+    "prosecution_strengths": [
+      "Threats need not be of physical violence — threats to expose embarrassing information qualify",
+      "Documentary evidence (texts, emails, recordings) commonly available",
+      "Both the threat and the demand need to be proven, but the demand can be implicit"
+    ],
+    "defense_opportunities": [
+      "Lawful demands (debt collection, settlement negotiations) are not extortion even if accompanied by unwelcome consequences",
+      "First Amendment protects truthful statements and lawful threats to take legal action",
+      "The 'thing of value' must be unjustly obtained — claims of right negate the offense"
+    ],
+    "common_defenses": [
+      "Lawful demand — defendant was seeking payment of a legitimate debt or claim",
+      "No threat — communication did not contain a threat of unlawful action",
+      "Constitutional speech — statements were truthful and protected by First Amendment",
+      "Claim of right — defendant believed they were entitled to the property"
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "Modern vehicle tracking technology aids Ohio prosecutors in linking suspects to stolen vehicles",
+      "GPS tracking and surveillance commonly link suspects to vehicles",
+      "Joyriding cases may be charged as unauthorized use rather than theft, capturing more conduct"
+    ],
+    "defense_opportunities": [
+      "Unauthorized use does not require intent to permanently deprive — narrower than theft",
+      "Authorization or implied permission is a complete defense",
+      "M1 maximum 180 days makes this a relatively minor felony alternative"
+    ],
+    "common_defenses": [
+      "Authorization — defendant had permission to use the vehicle",
+      "Implied permission — defendant reasonably believed they had permission",
+      "Misidentification — defendant was not the person who used the vehicle",
+      "Mistake of fact — defendant believed the vehicle belonged to themselves or a friend"
+    ]
+  },
+  {
+    "common_charge_slug": "perjury",
+    "prosecution_strengths": [
+      "Sworn testimony or statements provide documentary evidence",
+      "Material false statements undermine the integrity of judicial proceedings",
+      "Often charged when investigations reveal perjury during prior testimony"
+    ],
+    "defense_opportunities": [
+      "The statement must be material — minor or peripheral inaccuracies are not perjury",
+      "Recantation in the same proceeding is a defense if it occurs before the false statement substantially affects the proceeding",
+      "Honest belief in the truth of the statement is a defense to the knowing element"
+    ],
+    "common_defenses": [
+      "Recantation — defendant corrected the false statement before harm occurred",
+      "No materiality — false statement was not material to the proceeding",
+      "Honest belief — defendant believed the statement was true",
+      "Confusion or memory failure — inaccurate statement was the product of confusion, not knowing falsehood"
+    ]
+  },
+  {
+    "common_charge_slug": "impersonating-officer",
+    "prosecution_strengths": [
+      "Wearing uniforms, displaying fake badges, or verbal claims all qualify",
+      "Online impersonation is increasingly prosecuted",
+      "Detaining someone under pretense of authority is the most serious version (F3)"
+    ],
+    "defense_opportunities": [
+      "M4 baseline (max 30 days, $250 fine) for general impersonation is relatively minor",
+      "Costume or theatrical use is not criminal impersonation",
+      "The defendant must have actually impersonated — claiming to know an officer or having past law enforcement experience is not impersonation"
+    ],
+    "common_defenses": [
+      "Costume or theatrical purpose — defendant was wearing a uniform for entertainment, not deception",
+      "No actual impersonation — defendant did not claim to be an officer",
+      "Lack of intent — defendant did not intend to deceive anyone",
+      "Former officer — defendant was a retired or former officer entitled to identification"
+    ]
+  }
+]

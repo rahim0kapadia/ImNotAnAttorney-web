@@ -1,0 +1,1625 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "W. Va. Code § 17C-5-2",
+    "statute_title": "Driving Under the Influence of Alcohol, Controlled Substances, or Drugs",
+    "offense_class": "Misdemeanor (first/second); Felony (third+ within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second); 1-3 years (third+)",
+    "fine_max": "$500 (first); $1,000-$3,000 (second); $3,000-$5,000 (third+)",
+    "elements": [
+      "Defendant drove a vehicle in West Virginia",
+      "While under the influence of alcohol, controlled substances, or drugs",
+      "Or had a BAC of .08 or higher",
+      "Or was under the combined influence of alcohol and any controlled substance or drug"
+    ],
+    "mandatory_minimum": "24 hours (first); 6 months (second); 1 year (third+)",
+    "enhancements": [
+      "BAC .15 or higher (enhanced penalties and mandatory treatment)",
+      "Child under 16 in vehicle (additional penalties under § 17C-5-2(o))",
+      "Third conviction within 10 years (felony)",
+      "Causing serious bodily injury while DUI (§ 17C-5-4)"
+    ],
+    "notes": "Implied consent under § 17C-5-4. Admin license revocation 15 days. Ignition interlock required for repeat offenders. Test refusal results in 1-year revocation."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "W. Va. Code § 17C-5-2(d)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "24 hours",
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant drove a vehicle in West Virginia",
+      "While under the influence of alcohol or drugs",
+      "BAC .08 or higher, or impairment of driving ability",
+      "No prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "24 hours imprisonment; license revocation 15 days (may apply for conditional); completion of Safety and Treatment Program",
+    "enhancements": [
+      "BAC .15 or higher (enhanced penalties)",
+      "Child under 16 in vehicle"
+    ],
+    "notes": "First offense with BAC under .15 may qualify for deferred adjudication. Must complete DUI Safety and Treatment Program. License revocation 15 days minimum."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "W. Va. Code § 17C-5-2(e)-(i)",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Misdemeanor (second); Felony (third+ within 10 years)",
+    "penalty_min": "6 months (second); 1 year (third)",
+    "penalty_max": "1 year (second); 3 years (third+)",
+    "fine_max": "$1,000-$3,000 (second); $3,000-$5,000 (third+)",
+    "elements": [
+      "Defendant drove a vehicle in West Virginia",
+      "While under the influence of alcohol or drugs",
+      "BAC .08 or higher, or impairment of driving ability",
+      "One or more prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "6 months confinement (second); 1 year confinement (third); 2 years (fourth+)",
+    "enhancements": [
+      "BAC .15 or higher",
+      "Child under 16 in vehicle",
+      "Serious bodily injury"
+    ],
+    "notes": "Second offense: license revocation 10 years. Third offense: lifetime revocation (eligible for reinstatement after 10 years). Ignition interlock required."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "W. Va. Code § 17C-5-2(a)(2)",
+    "statute_title": "DUI — Controlled Substance or Drug",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant drove a vehicle in West Virginia",
+      "While under the influence of any controlled substance",
+      "Or under the combined influence of alcohol and any controlled substance or drug",
+      "To a degree which renders the defendant incapable of safely driving"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs",
+      "Presence of Schedule I substance"
+    ],
+    "notes": "No per se limit for drugs. Prosecution must show actual impairment. Drug Recognition Experts (DRE) used for evaluation. Includes prescription medications."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "W. Va. Code § 17C-5-3",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "5 days (first); 10 days (subsequent)",
+    "penalty_max": "90 days (first); 6 months (subsequent)",
+    "fine_max": "$500 (first); $1,000 (subsequent)",
+    "elements": [
+      "Defendant drove a vehicle on a public highway",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": "5 days (first); 10 days (subsequent)",
+    "enhancements": [
+      "Subsequent offense within 5 years"
+    ],
+    "notes": "Common plea-down from DUI. 6-point license penalty. May result in license suspension."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "W. Va. Code § 17C-4-1",
+    "statute_title": "Duty to Stop at Scene of Accident Involving Injury or Death",
+    "offense_class": "Felony (injury/death); Misdemeanor (property damage only)",
+    "penalty_min": null,
+    "penalty_max": "5 years (injury/death); 6 months (property damage)",
+    "fine_max": "$1,000 (injury); $500 (property damage)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to stop at the scene",
+      "Defendant failed to provide identification and render assistance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim",
+      "Serious bodily injury"
+    ],
+    "notes": "Failure to stop at an accident involving injury or death is a felony. Property damage only is a misdemeanor under § 17C-4-2."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "W. Va. Code § 17C-5-4",
+    "statute_title": "DUI Causing Death",
+    "offense_class": "Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "15 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant drove a vehicle while under the influence of alcohol or drugs",
+      "Defendant's impaired driving proximately caused the death of another person"
+    ],
+    "mandatory_minimum": "3 years imprisonment",
+    "enhancements": [
+      "Prior DUI convictions",
+      "Extremely high BAC"
+    ],
+    "notes": "West Virginia treats DUI-related deaths as an enhanced DUI offense rather than a separate vehicular homicide statute. Mandatory minimum 3 years."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "W. Va. Code § 61-2-10",
+    "statute_title": "Involuntary Manslaughter (Vehicular)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through criminal negligence while operating a motor vehicle",
+      "Without malice"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Vehicular deaths without DUI may be charged as involuntary manslaughter. If DUI involved, prosecution typically uses § 17C-5-4 for enhanced penalties."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "W. Va. Code § 17B-4-3",
+    "statute_title": "Driving While License Suspended or Revoked",
+    "offense_class": "Misdemeanor (first); Felony (third+ or DUI-related revocation)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second); 1-5 years (DUI-related third+)",
+    "fine_max": "$500 (first); $1,000 (second); $5,000 (third+)",
+    "elements": [
+      "Defendant drove a motor vehicle on a public road",
+      "Defendant's license was suspended or revoked",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": "72 hours (first); 10 days (second); 6 months (third+)",
+    "enhancements": [
+      "DUI-related suspension (enhanced penalties)",
+      "Third or subsequent offense (felony)"
+    ],
+    "notes": "Driving on a DUI-related suspension carries enhanced penalties. Conviction extends suspension period."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "W. Va. Code § 61-5-17(e)",
+    "statute_title": "Fleeing from a Law Enforcement Officer in a Vehicle",
+    "offense_class": "Misdemeanor (basic); Felony (reckless or injury)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$500 (misdemeanor); $1,000 (felony)",
+    "elements": [
+      "A law enforcement officer gave a visual or audible signal to stop",
+      "Defendant was operating a motor vehicle",
+      "Defendant willfully failed to stop",
+      "Defendant attempted to flee or elude the officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Reckless indifference to safety (felony)",
+      "Serious bodily injury results (felony)",
+      "Death results (1-5 years)"
+    ],
+    "notes": "Fleeing on foot is a separate misdemeanor. Vehicular fleeing with reckless driving or injury is a felony."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "W. Va. Code § 60A-4-401(c)",
+    "statute_title": "Simple Possession of a Controlled Substance",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days-6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "Without a valid prescription",
+      "Substance is listed in Schedules I through V"
+    ],
+    "mandatory_minimum": "90 days (minimum confinement or fine)",
+    "enhancements": [
+      "Second or subsequent offense (6-12 months)",
+      "Possession near a school (enhanced penalties)"
+    ],
+    "notes": "First offense may be eligible for conditional discharge. Upon successful completion of probation, charges dismissed. Drug court diversion available."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "W. Va. Code § 60A-4-401(c)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days-6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed marijuana",
+      "Without a valid medical cannabis card",
+      "Any amount of marijuana for recreational use"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense (6-12 months)"
+    ],
+    "notes": "Medical cannabis legal under § 16A-12-1 et seq. since 2017 with registered patient card. Recreational marijuana remains illegal. First offense eligible for conditional discharge."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "W. Va. Code § 60A-4-401(c); § 60A-2-206",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days-6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed cocaine",
+      "Cocaine is a Schedule II controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense (6-12 months)"
+    ],
+    "notes": "Simple possession of cocaine is a misdemeanor. Possession with intent to deliver is a felony under § 60A-4-401(a)."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "W. Va. Code § 60A-4-401(c); § 60A-2-206",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days-6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense (6-12 months)"
+    ],
+    "notes": "Manufacturing methamphetamine is a separate felony under § 60A-4-411 with 2-10 years imprisonment."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "W. Va. Code § 60A-4-401(a)(i)",
+    "statute_title": "Manufacture, Delivery, or Possession with Intent — Schedule I or II Narcotic",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant manufactured, delivered, or possessed with intent to deliver",
+      "A narcotic drug classified in Schedule I or II",
+      "Including heroin, cocaine, fentanyl, or oxycodone"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Second offense (5-30 years; $50,000 fine)",
+      "Third offense (life imprisonment)",
+      "Delivery to a minor (additional penalties)",
+      "Within 1,000 feet of a school"
+    ],
+    "notes": "Trafficking penalties are significantly enhanced for repeat offenders. Fentanyl trafficking carries additional scrutiny. School zone enhancement doubles penalties."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "W. Va. Code § 60A-4-401(a)(ii)-(iv)",
+    "statute_title": "Manufacture, Delivery, or Possession with Intent — Non-Narcotic",
+    "offense_class": "Felony (Schedule I-II non-narcotic); Misdemeanor (Schedule V)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Schedule I-II non-narcotic); 3 years (Schedule III); 2 years (Schedule IV); 1 year (Schedule V)",
+    "fine_max": "$15,000 (Schedule I-II); $10,000 (Schedule III); $5,000 (Schedule IV-V)",
+    "elements": [
+      "Defendant manufactured, delivered, or possessed with intent to deliver",
+      "A non-narcotic controlled substance",
+      "From Schedule I through V"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (doubled penalties)",
+      "Delivery to a minor"
+    ],
+    "notes": "Non-narcotic Schedule I-II includes hallucinogens, amphetamines. Schedule V delivery is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "W. Va. Code § 60A-4-411",
+    "statute_title": "Clandestine Drug Laboratory — Manufacturing",
+    "offense_class": "Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant manufactured or attempted to manufacture a controlled substance",
+      "Through chemical synthesis or extraction",
+      "Operated a clandestine drug laboratory"
+    ],
+    "mandatory_minimum": "2 years imprisonment",
+    "enhancements": [
+      "Child under 18 present (additional 5 years under § 60A-4-411(f))",
+      "Within 200 feet of a dwelling",
+      "Explosion, fire, or environmental contamination"
+    ],
+    "notes": "Separate from general manufacturing under § 60A-4-401. Clandestine lab statute carries additional cleanup and restitution costs."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "W. Va. Code § 60A-4-403a",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500-$5,000",
+    "elements": [
+      "Defendant possessed drug paraphernalia with knowledge of its intended use",
+      "Paraphernalia used or intended for use in manufacturing, growing, or consuming a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor (felony — 1-5 years)"
+    ],
+    "notes": "Delivery of paraphernalia to a minor under 18 is a felony. Needle exchange programs authorized under public health statutes."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "W. Va. Code § 60A-4-401(a)",
+    "statute_title": "Possession with Intent to Deliver",
+    "offense_class": "Felony",
+    "penalty_min": "1 year (Schedule I-II narcotic); lesser for other schedules",
+    "penalty_max": "15 years (Schedule I-II narcotic); 5 years (Schedule I-II non-narcotic)",
+    "fine_max": "$25,000 (Schedule I-II narcotic); $15,000 (other)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With intent to manufacture or deliver",
+      "Intent inferred from quantity, packaging, scales, cash, communications"
+    ],
+    "mandatory_minimum": "1 year (Schedule I-II narcotic)",
+    "enhancements": [
+      "Near schools",
+      "Delivery to a minor",
+      "Prior offenses"
+    ],
+    "notes": "Intent may be inferred from circumstantial evidence. Quantity thresholds, packaging, and presence of distribution materials are key factors."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "W. Va. Code § 61-2-1",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "15 years",
+    "penalty_max": "Life imprisonment without mercy (no parole)",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "With malice aforethought",
+      "With premeditation and deliberation",
+      "Or by lying in wait, or by poison, or during commission of arson, robbery, sexual assault, kidnapping, or burglary"
+    ],
+    "mandatory_minimum": "Life with mercy recommendation (15 years before parole eligibility); life without mercy (no parole)",
+    "enhancements": [
+      "No mercy recommendation (life without parole)",
+      "Multiple victims"
+    ],
+    "notes": "West Virginia abolished the death penalty in 1965. Jury recommends mercy or no mercy. With mercy: eligible for parole after 15 years. Without mercy: no parole."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "W. Va. Code § 61-2-3",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "40 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "With malice aforethought",
+      "Without premeditation or deliberation"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [],
+    "notes": "Second degree murder requires malice but not premeditation. Includes depraved heart murder — extreme recklessness showing indifference to human life."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "W. Va. Code § 61-2-4",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3-15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "Without malice",
+      "Upon sudden quarrel or in the heat of passion",
+      "Or upon provocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Provocation must be such as would cause a reasonable person to lose self-control. Cooling-off period negates heat-of-passion defense."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "W. Va. Code § 61-2-5",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Misdemeanor (common law); Felony (some circumstances)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony under certain circumstances)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through criminal negligence",
+      "Or during commission of an unlawful act not amounting to a felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Involuntary manslaughter may be charged as a misdemeanor or felony depending on the circumstances. DUI-related deaths typically charged under § 17C-5-4."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "W. Va. Code § 61-2-9(a)",
+    "statute_title": "Malicious Assault (Wounding with Intent to Maim, Disfigure, Disable, or Kill)",
+    "offense_class": "Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant maliciously shot, stabbed, cut, or wounded another person",
+      "Or caused bodily injury by means of any weapon or substance",
+      "With intent to maim, disfigure, disable, or kill"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Use of firearm",
+      "Victim is a law enforcement officer"
+    ],
+    "notes": "West Virginia distinguishes between malicious assault (intent to maim/kill) and unlawful assault (no specific intent). Malicious assault is the aggravated form."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "W. Va. Code § 61-2-9(c)",
+    "statute_title": "Battery (Unlawful, Intentional Physical Contact)",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant unlawfully and intentionally made physical contact",
+      "With another person of an insulting or provoking nature",
+      "Or caused physical harm to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against government representative (enhanced under § 61-2-10b)"
+    ],
+    "notes": "Simple battery in West Virginia is a misdemeanor. Assault (threat without contact) is also a misdemeanor. Battery requires physical contact."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "W. Va. Code § 61-2-9(b)",
+    "statute_title": "Unlawful Assault (Wounding Without Intent to Kill)",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant unlawfully shot, stabbed, cut, or wounded another person",
+      "Or assaulted or beat another person causing bodily injury",
+      "Without intent to kill or maim"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Use of weapon",
+      "Serious bodily injury"
+    ],
+    "notes": "Unlawful assault is the mid-tier assault in West Virginia — between simple battery (misdemeanor) and malicious assault (felony with intent to maim/kill)."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "W. Va. Code § 61-2-12",
+    "statute_title": "Robbery",
+    "offense_class": "Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "18 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant took property from the person or in the presence of another",
+      "By violence or threat of violence",
+      "Against the will of the victim"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [],
+    "notes": "West Virginia has a single robbery statute. Armed robbery is charged as robbery with additional weapons charges."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "W. Va. Code § 61-2-12; § 61-7-11a",
+    "statute_title": "Robbery with Firearm or Deadly Weapon",
+    "offense_class": "Felony",
+    "penalty_min": "10 years (robbery) + 5 years (weapon enhancement)",
+    "penalty_max": "18 years (robbery) + additional weapon penalty",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed robbery",
+      "While armed with a firearm or deadly weapon",
+      "Or displayed what appeared to be a firearm or deadly weapon"
+    ],
+    "mandatory_minimum": "10 years (robbery); additional consecutive sentence for firearm",
+    "enhancements": [
+      "Use of firearm (5-year consecutive enhancement under § 61-7-11a)",
+      "Prior violent felony"
+    ],
+    "notes": "Armed robbery is charged as robbery plus a firearm enhancement. The firearm enhancement runs consecutive to the robbery sentence."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "W. Va. Code § 61-2-14a",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony",
+    "penalty_min": "20 years (if released unharmed)",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully seized, confined, or detained another person",
+      "And transported that person from one place to another",
+      "Against their will",
+      "By force, threat, or deception"
+    ],
+    "mandatory_minimum": "20 years (if victim released unharmed); life (if victim physically injured or not released)",
+    "enhancements": [
+      "Victim physically injured (life imprisonment)",
+      "Victim is a child",
+      "Ransom demanded"
+    ],
+    "notes": "West Virginia kidnapping carries severe mandatory minimums. No parole eligibility for life sentence without mercy recommendation."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "W. Va. Code § 61-3-1",
+    "statute_title": "Arson — First Degree (Dwelling)",
+    "offense_class": "Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully and maliciously set fire to or burned",
+      "A dwelling house or outbuilding",
+      "Whether owned by defendant or another"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Death results (first degree murder charge possible)",
+      "Occupied structure"
+    ],
+    "notes": "Second degree arson (§ 61-3-2) covers non-dwelling structures — 1-10 years. Third degree (§ 61-3-3) covers personal property — 1-3 years."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "W. Va. Code § 61-11-8; § 61-2-1",
+    "statute_title": "Attempted First Degree Murder",
+    "offense_class": "Felony",
+    "penalty_min": "3 years",
+    "penalty_max": "18 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant took a direct act toward committing murder",
+      "With specific intent to kill",
+      "Act went beyond mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Firearm used",
+      "Prior violent felony"
+    ],
+    "notes": "Attempted felonies in West Virginia are punished under the general attempt statute. Maximum is typically the minimum sentence for the completed offense."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "W. Va. Code § 61-2-9(a)",
+    "statute_title": "Malicious Assault with a Weapon",
+    "offense_class": "Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant maliciously assaulted another person",
+      "Using a deadly weapon",
+      "With intent to maim, disfigure, disable, or kill"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Use of firearm (additional enhancement under § 61-7-11a)",
+      "Victim is law enforcement officer"
+    ],
+    "notes": "Malicious assault with a weapon is the most serious assault charge. Without specific intent, it may be charged as unlawful assault under § 61-2-9(b)."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "W. Va. Code § 61-3-13(a)",
+    "statute_title": "Grand Larceny",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant took and carried away the personal property of another",
+      "With intent to permanently deprive the owner",
+      "Value of property $1,000 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Grand larceny threshold is $1,000. Values below $1,000 are petit larceny (misdemeanor)."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "W. Va. Code § 61-3-13(a)",
+    "statute_title": "Grand Larceny",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant took and carried away the personal property of another",
+      "With intent to permanently deprive the owner",
+      "Value of property $1,000 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "West Virginia uses 'grand larceny' for theft of property valued at $1,000 or more."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "W. Va. Code § 61-3-13(b)",
+    "statute_title": "Petit Larceny",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant took and carried away the personal property of another",
+      "With intent to permanently deprive the owner",
+      "Value of property less than $1,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third offense becomes a felony (1-5 years)"
+    ],
+    "notes": "Third petit larceny conviction is a felony. Shoplifting also prosecuted under this statute."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "W. Va. Code § 61-3A-1",
+    "statute_title": "Shoplifting",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "60 days (first under $1,000); 1 year (subsequent); 10 years (felony)",
+    "fine_max": "$500 (first); $1,000 (subsequent); $2,500 (felony)",
+    "elements": [
+      "Defendant willfully concealed unpurchased merchandise of a store",
+      "Or altered a price tag or label",
+      "Or transferred merchandise between containers",
+      "With intent to deprive the merchant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $1,000+ (grand larceny — felony)",
+      "Third or subsequent offense"
+    ],
+    "notes": "West Virginia has a specific shoplifting statute. Retailers may also pursue civil recovery up to $750 plus retail value."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "W. Va. Code § 61-3-11",
+    "statute_title": "Entry of Building Other Than Dwelling — Burglary",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke and entered",
+      "A non-dwelling building or structure",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with a deadly weapon",
+      "Nighttime entry"
+    ],
+    "notes": "Daytime dwelling burglary is covered under § 61-3-11(a). Nighttime dwelling burglary (§ 61-3-11(a)) carries 1-15 years."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "W. Va. Code § 61-3-11(a)",
+    "statute_title": "Burglary — Dwelling (Day or Night)",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke and entered",
+      "A dwelling house or building adjoining and occupied as a dwelling",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Nighttime entry (enhanced penalty)",
+      "Armed with a deadly weapon",
+      "Persons present in dwelling"
+    ],
+    "notes": "Nighttime residential burglary traditionally carries higher sentences. Armed burglary of a dwelling may be charged alongside robbery."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "W. Va. Code § 61-3-13(a); § 17A-8-4",
+    "statute_title": "Grand Larceny of a Motor Vehicle / Unauthorized Taking",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years (larceny); 5 years (unauthorized taking)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant took a motor vehicle belonging to another",
+      "Without consent of the owner",
+      "With intent to permanently deprive (larceny) or temporarily use (unauthorized taking)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Joyriding (unauthorized temporary use) is charged under § 17A-8-4 as a felony with up to 5 years. Permanent theft is grand larceny."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "W. Va. Code § 61-3-18",
+    "statute_title": "Receiving or Transferring Stolen Goods",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$2,500 (felony); $500 (misdemeanor)",
+    "elements": [
+      "Defendant received, concealed, or transferred stolen property",
+      "Knowing or having reason to believe the property was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Penalty mirrors the value thresholds of the underlying theft — $1,000 divides felony from misdemeanor."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "W. Va. Code § 61-3-30",
+    "statute_title": "Destruction of Property",
+    "offense_class": "Misdemeanor (under $2,500); Felony ($2,500+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 10 years (felony)",
+    "fine_max": "$500 (misdemeanor); $2,500 (felony)",
+    "elements": [
+      "Defendant unlawfully and intentionally destroyed or damaged property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to government property",
+      "Damage to religious property"
+    ],
+    "notes": "Felony threshold is $2,500 in damages. Restitution typically ordered in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "W. Va. Code § 61-3B-2",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant knowingly entered or remained on property of another",
+      "Without permission or lawful authority",
+      "After being notified to leave or seeing no-trespassing signs"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass on critical infrastructure (felony under § 61-3B-5)"
+    ],
+    "notes": "Trespass on critical infrastructure (pipelines, utilities, mines) is a separate felony. Posted land with purple paint markers creates constructive notice."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "W. Va. Code § 61-3-30",
+    "statute_title": "Destruction or Injury to Property (Criminal Mischief)",
+    "offense_class": "Misdemeanor (under $2,500); Felony ($2,500+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 10 years (felony)",
+    "fine_max": "$500 (misdemeanor); $2,500 (felony)",
+    "elements": [
+      "Defendant intentionally or recklessly damaged property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "West Virginia uses 'destruction of property' rather than 'criminal mischief.' Same statute covers both vandalism and reckless damage."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "W. Va. Code § 61-2-28",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "12 months (first); 12 months (second); 1-5 years (third+)",
+    "fine_max": "$500 (first); $1,000 (second); $2,500 (third+)",
+    "elements": [
+      "Defendant unlawfully and intentionally made physical contact",
+      "Of an insulting or provoking nature with a family or household member",
+      "Or caused physical harm to a family or household member"
+    ],
+    "mandatory_minimum": "24 hours (second offense)",
+    "enhancements": [
+      "Second offense within 10 years (24-hour mandatory minimum)",
+      "Third or subsequent (felony — 1-5 years)",
+      "Strangulation (felony under § 61-2-9d)"
+    ],
+    "notes": "Family/household member includes spouse, former spouse, persons with a child in common, cohabitants, or persons in a dating relationship. Protective orders under § 48-27-501."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "W. Va. Code § 61-2-28(a)",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Misdemeanor (first); Felony (third+ or causing serious injury)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$500 (first); $2,500 (felony)",
+    "elements": [
+      "Defendant intentionally made physical contact of an insulting or provoking nature",
+      "With a family or household member",
+      "Or caused physical harm to a family or household member"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third offense (felony)",
+      "Serious bodily injury (domestic assault § 61-2-9d)",
+      "Strangulation (felony)"
+    ],
+    "notes": "Domestic assault (§ 61-2-9d) covers threatening a family member — misdemeanor (first/second); felony (third+). Federal firearms prohibition applies to misdemeanor DV convictions."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "W. Va. Code § 61-8D-4",
+    "statute_title": "Child Neglect Creating Risk of Injury",
+    "offense_class": "Misdemeanor (risk of injury); Felony (serious injury)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 1-5 years (felony if injury results)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant was a parent, guardian, or custodian of a minor child",
+      "Defendant's negligent treatment created a substantial risk of bodily injury",
+      "Or resulted in bodily injury to the child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury results (felony)",
+      "Death of child (§ 61-8D-2 — 3-15 years)"
+    ],
+    "notes": "Child neglect resulting in death carries 3-15 years. Child abuse causing bodily injury (§ 61-8D-3) carries 1-5 years."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "W. Va. Code § 61-8D-3",
+    "statute_title": "Child Abuse Causing Bodily Injury",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years (bodily injury); 10 years (serious bodily injury)",
+    "fine_max": "$5,000 (bodily injury); $10,000 (serious bodily injury)",
+    "elements": [
+      "Defendant was a parent, guardian, or custodian of a child",
+      "Defendant knowingly or intentionally inflicted physical injury upon the child",
+      "Or caused cruel or inhuman treatment"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Serious bodily injury (2-10 years)",
+      "Death of child (3-15 years under § 61-8D-2)",
+      "Sexual abuse (§ 61-8D-5)"
+    ],
+    "notes": "Child abuse causing death (§ 61-8D-2) carries 3-15 years. Pattern of abuse treated more severely."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "W. Va. Code § 48-27-903",
+    "statute_title": "Violation of a Protective Order",
+    "offense_class": "Misdemeanor (first); Felony (third+)",
+    "penalty_min": "24 hours (first)",
+    "penalty_max": "1 year (first/second); 1-5 years (third+)",
+    "fine_max": "$2,000 (first); $5,000 (subsequent)",
+    "elements": [
+      "A valid domestic violence protective order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant violated the terms of the order"
+    ],
+    "mandatory_minimum": "24 hours (first); 72 hours (second); 6 months (third+)",
+    "enhancements": [
+      "Third violation (felony — 1-5 years)",
+      "Violation involving assault"
+    ],
+    "notes": "Mandatory minimum confinement for every violation. Third violation within a 10-year period is a felony."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "W. Va. Code § 61-2-9a",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor (first); Felony (second+ or violation of protective order)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1-5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant knowingly and willfully engaged in a pattern of conduct",
+      "Reasonably calculated to intimidate, harass, or place the victim in fear",
+      "Of bodily injury or death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (felony)",
+      "In violation of protective order (felony)",
+      "Victim is a minor"
+    ],
+    "notes": "Pattern of conduct requires two or more acts. Cyberstalking included. Second offense or stalking in violation of a protective order is a felony."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "W. Va. Code § 61-2-9a(b)",
+    "statute_title": "Harassment",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly made repeated unwanted contact with another person",
+      "Or communicated threats to another person",
+      "At a time or in a manner that would cause a reasonable person to feel harassed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense"
+    ],
+    "notes": "Harassment is a lesser included offense of stalking. Includes telephone harassment and electronic communications."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "W. Va. Code § 61-2-29",
+    "statute_title": "Abuse or Neglect of an Incapacitated Adult",
+    "offense_class": "Felony (abuse causing injury); Misdemeanor (neglect)",
+    "penalty_min": null,
+    "penalty_max": "10 years (serious injury); 5 years (bodily injury); 1 year (neglect)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was a caretaker or person with a duty of care",
+      "Victim was an incapacitated adult or elder",
+      "Defendant knowingly or intentionally abused or neglected the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (2-10 years)",
+      "Death results",
+      "Financial exploitation"
+    ],
+    "notes": "Financial exploitation of an elder is a separate felony under § 61-2-29b. Adult Protective Services must be notified."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "W. Va. Code § 61-7-7",
+    "statute_title": "Unlawful Possession of Firearms by Prohibited Persons",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant was a prohibited person (convicted felon, involuntarily committed, subject to DV protective order, etc.)"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Possession during commission of another crime"
+    ],
+    "notes": "West Virginia is a constitutional carry state (no permit required for concealed carry) but prohibited persons remain barred. Prohibitions include felony convictions and certain DV misdemeanors."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "W. Va. Code § 61-7-7(a)",
+    "statute_title": "Possession of a Firearm by a Convicted Felon",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant had previously been convicted of a felony",
+      "Including felonies involving violence, narcotics, or crimes against persons"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Possession during commission of another felony (additional consecutive enhancement under § 61-7-11a)"
+    ],
+    "notes": "Federal felon-in-possession (18 U.S.C. § 922(g)) may also apply. West Virginia does not have a restoration-of-rights process for firearm possession after felony conviction."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "W. Va. Code § 61-7-3",
+    "statute_title": "Carrying a Deadly Weapon Without License — Prohibited Persons",
+    "offense_class": "Misdemeanor (general); Felony (prohibited person)",
+    "penalty_min": null,
+    "penalty_max": "12 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant carried a concealed deadly weapon",
+      "Defendant was a prohibited person or under 21 without a permit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prohibited person (felony)"
+    ],
+    "notes": "West Virginia enacted constitutional carry in 2016 for persons 21+ who are not prohibited. Persons 18-20 need a provisional license. Under 18 is unlawful."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "W. Va. Code § 61-7-12",
+    "statute_title": "Wanton Endangerment Involving a Firearm",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant discharged a firearm",
+      "In a manner that created substantial risk of death or serious bodily harm to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Injury results",
+      "In a residential area or public place"
+    ],
+    "notes": "Separate from brandishing (§ 61-7-11). Discharging a firearm in a public place or near a dwelling is prosecuted under this statute."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "W. Va. Code § 61-3-54",
+    "statute_title": "Taking Identity of Another Person; Penalty",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly took the personal identification of another person",
+      "Including name, Social Security number, or financial account information",
+      "With intent to fraudulently represent themselves as the other person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly or disabled",
+      "Multiple victims"
+    ],
+    "notes": "Includes use of identification information to obtain credit, goods, or services. Restitution to victims is standard."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "W. Va. Code § 61-3-20",
+    "statute_title": "Embezzlement",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$2,500 (felony); $500 (misdemeanor)",
+    "elements": [
+      "Defendant was entrusted with personal property of another",
+      "Defendant fraudulently converted the property to own use",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public officer embezzlement (§ 61-3-21 — enhanced penalties)"
+    ],
+    "notes": "West Virginia has a specific embezzlement statute. Public officer embezzlement carries enhanced penalties. Threshold is $1,000 for felony."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "W. Va. Code § 61-4-5",
+    "statute_title": "Forgery",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant falsely made, altered, forged, or counterfeited a writing",
+      "With intent to defraud",
+      "Writing includes checks, deeds, contracts, public records"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Uttering a forged instrument (§ 61-4-6 — same penalties)"
+    ],
+    "notes": "Uttering (passing a forged instrument knowing it is forged) is a separate offense with the same penalties."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "W. Va. Code § 61-3-24d",
+    "statute_title": "Fraudulent Schemes",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly devised or participated in a scheme to defraud",
+      "Through false representations, promises, or pretenses",
+      "To obtain money, property, or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeds $10,000",
+      "Victim is elderly or disabled"
+    ],
+    "notes": "Covers wire fraud, mail fraud, and other scheme-based fraud. Restitution required."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "W. Va. Code § 61-3-24b",
+    "statute_title": "Fraudulent Use of Credit Card",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 10 years (felony)",
+    "fine_max": "$500 (misdemeanor); $2,500 (felony)",
+    "elements": [
+      "Defendant used a credit card, debit card, or account number",
+      "Obtained without consent of the cardholder",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeds $1,000 (felony)"
+    ],
+    "notes": "Includes stolen, forged, or expired credit card use. Aggregation of multiple transactions allowed for felony threshold."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "W. Va. Code § 61-15-4",
+    "statute_title": "Money Laundering",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$500,000 or twice the value of the transaction",
+    "elements": [
+      "Defendant conducted a financial transaction",
+      "Involving proceeds known to be derived from criminal activity",
+      "With intent to promote or conceal the criminal activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Structured transactions to avoid reporting",
+      "Connection to drug trafficking"
+    ],
+    "notes": "West Virginia Money Laundering Act covers structuring, layering, and integration of criminal proceeds."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "W. Va. Code § 61-8B-3",
+    "statute_title": "Sexual Assault in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "15 years",
+    "penalty_max": "35 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in sexual intercourse or sexual intrusion with another person",
+      "By forcible compulsion",
+      "And inflicted serious bodily injury",
+      "Or used a deadly weapon"
+    ],
+    "mandatory_minimum": "15 years",
+    "enhancements": [
+      "Use of deadly weapon",
+      "Serious bodily injury",
+      "Victim is a minor"
+    ],
+    "notes": "Sexual assault 2 (§ 61-8B-4) is 10-25 years for forcible compulsion without serious injury or weapon. Sexual assault 3 (§ 61-8B-5) is 1-5 years."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "W. Va. Code § 61-8B-3",
+    "statute_title": "Sexual Assault in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "15 years",
+    "penalty_max": "35 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in sexual intercourse with another person",
+      "By forcible compulsion",
+      "And inflicted serious bodily injury or used a deadly weapon"
+    ],
+    "mandatory_minimum": "15 years",
+    "enhancements": [
+      "Victim under 12 (§ 61-8B-3(a)(2) — 25-100 years)"
+    ],
+    "notes": "West Virginia uses 'sexual assault' rather than 'rape.' First degree sexual assault with a child under 12 carries 25-100 years."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "W. Va. Code § 61-8-12",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days-6 months",
+    "fine_max": "$250",
+    "elements": [
+      "Defendant intentionally exposed private parts",
+      "In a public place or in view of the public",
+      "Under circumstances likely to cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense",
+      "In the presence of a minor"
+    ],
+    "notes": "Exposure to a minor may be prosecuted as sexual abuse under § 61-8D-5. Repeat offenses may trigger sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "W. Va. Code § 61-8-5(b)",
+    "statute_title": "Soliciting Prostitution",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (subsequent)",
+    "fine_max": "$250 (first); $500 (subsequent)",
+    "elements": [
+      "Defendant offered or agreed to pay a fee",
+      "For the purpose of engaging in sexual conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Soliciting a minor (felony)",
+      "Subsequent offense"
+    ],
+    "notes": "Promoting prostitution is a felony. Soliciting a minor for prostitution triggers human trafficking charges."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "W. Va. Code § 61-8C-2",
+    "statute_title": "Use of Minors in Filming Sexually Explicit Conduct",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant caused or knowingly permitted a minor to engage in sexually explicit conduct",
+      "For the purpose of producing a visual portrayal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 12",
+      "Distribution of material"
+    ],
+    "notes": "Possession of child pornography (§ 61-8C-3) is also a felony — up to 5 years. Distribution carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "W. Va. Code § 15-12-8",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant knowingly failed to register, verify, or update registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense"
+    ],
+    "notes": "Registration required under the Sex Offender Registration Act. Must register within 10 business days of change of address or release."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "W. Va. Code § 61-8B-5",
+    "statute_title": "Sexual Assault in the Third Degree (Statutory)",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant, aged 16 or older, engaged in sexual intercourse",
+      "With a person under 16 years of age",
+      "And the age difference was 4 years or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 12 (first degree sexual assault — 25-100 years)"
+    ],
+    "notes": "West Virginia's age of consent is 16. Sexual contact with a child under 12 is first degree sexual assault regardless of force."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "W. Va. Code § 61-6-1b",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant disturbed the peace of others by violent, profane, indecent, or boisterous conduct",
+      "Or made unreasonable noise in a public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "General catch-all for public disturbances. Separate from breach of peace statutes."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "W. Va. Code § 61-5-17(a)",
+    "statute_title": "Obstructing an Officer — Resisting Arrest",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$500",
+    "elements": [
+      "A law enforcement officer was making a lawful arrest",
+      "Defendant knowingly and willfully obstructed or resisted the officer",
+      "By use or threat of force or violence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing physical injury to the officer (felony under § 61-2-10b)"
+    ],
+    "notes": "Resisting without force is still a misdemeanor. Assault on an officer during arrest may be charged as a felony separately."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "W. Va. Code § 61-5-17(b)",
+    "statute_title": "Obstruction of Justice",
+    "offense_class": "Misdemeanor (general); Felony (witness tampering)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 1-5 years (felony witness tampering)",
+    "fine_max": "$500 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant knowingly and willfully obstructed, delayed, or hindered",
+      "A law enforcement officer or judicial officer",
+      "In the performance of official duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Witness tampering or intimidation (felony)",
+      "Destroying evidence (felony)"
+    ],
+    "notes": "Includes providing false information to police, tampering with evidence, and witness intimidation. Witness tampering is a separate felony."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "W. Va. Code § 61-5-26",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Misdemeanor (criminal contempt); Civil (remedial)",
+    "penalty_min": null,
+    "penalty_max": "10 days (summary); 6 months (after hearing)",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant willfully disobeyed a lawful court order",
+      "Or engaged in disruptive conduct in court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Summary contempt (in the court's presence) may be punished immediately. Constructive contempt requires notice and hearing."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "W. Va. Code § 60-6-9",
+    "statute_title": "Public Intoxication",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant appeared in a public place",
+      "While visibly intoxicated",
+      "And was creating a disturbance or endangering self or others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Law enforcement may take intoxicated persons to a treatment facility instead of jail. Separate from drunk in public disorderly conduct."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "W. Va. Code § 62-1C-17a",
+    "statute_title": "Failure to Appear — Bail Jumping",
+    "offense_class": "Misdemeanor (if underlying is misdemeanor); Felony (if underlying is felony)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 1-5 years (felony)",
+    "fine_max": "$500 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Defendant willfully failed to appear as required by the court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Bail jumping severity matches the underlying charge. Bail bond may be forfeited. Bench warrant issued for arrest."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "W. Va. Code § 61-6-20",
+    "statute_title": "Making a False Report to Law Enforcement",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant knowingly made a false statement or report",
+      "To any law enforcement officer",
+      "Regarding the commission of a crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes filing false police reports. Making a bomb threat or false emergency report carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "W. Va. Code § 61-6-24",
+    "statute_title": "Terroristic Threats",
+    "offense_class": "Misdemeanor (general threat); Felony (threat involving WMD or public panic)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 1-5 years (felony)",
+    "fine_max": "$500 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant threatened to commit a crime of violence",
+      "With intent to terrorize another person",
+      "Or with reckless disregard of the risk of causing terror"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat involving WMD or explosive (felony)",
+      "Causing evacuation of public building"
+    ],
+    "notes": "Bomb threats and hoax WMD threats are separate felonies. Threats causing public panic carry enhanced penalties."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "W. Va. Code § 61-5-2",
+    "statute_title": "Perjury",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant made a false statement",
+      "Under oath in a judicial proceeding or official matter",
+      "Knowing the statement was false",
+      "The false statement was material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Subornation of perjury (inducing another to commit perjury) carries the same penalties. False swearing in non-judicial proceedings is also punishable."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "W. Va. Code § 61-5-1",
+    "statute_title": "Bribery of a Public Official",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant offered, gave, or promised something of value",
+      "To a public official or public servant",
+      "With intent to influence the official's action or decision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Accepting a bribe is also a felony under the same statute. Includes bribery of witnesses and jurors."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "W. Va. Code § 61-5-10",
+    "statute_title": "Escape from Custody or Confinement",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant was lawfully confined or in lawful custody",
+      "Defendant escaped from confinement or custody"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of violence during escape",
+      "Escape from state prison vs. county jail"
+    ],
+    "notes": "Sentence for escape runs consecutive to the original sentence. Failure to return from furlough or work release is also escape."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "W. Va. Code § 61-8-19",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Misdemeanor (first); Felony (aggravated or subsequent)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 1-5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant intentionally tortured, mutilated, or killed an animal",
+      "Or cruelly beat or inflicted unnecessary suffering on an animal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated cruelty (torture/mutilation — felony)",
+      "Subsequent offense (felony)",
+      "Animal fighting (felony under § 61-8-19a)"
+    ],
+    "notes": "Animal fighting is a separate felony. Aggravated animal cruelty involving torture or sadistic conduct is a felony."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "W. Va. Code § 62-12-10",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Varies — court may revoke probation and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Court has discretion to continue, modify, or revoke probation. New criminal charges typically result in revocation. Graduated sanctions available."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "W. Va. Code § 62-12-19",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Varies — return to prison for remaining term",
+    "penalty_min": null,
+    "penalty_max": "Remaining original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Parole Board may revoke parole for any violation. Technical violations may result in graduated sanctions before revocation."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "W. Va. Code § 61-11-6",
+    "statute_title": "Aiding and Abetting — Accessory Before the Fact",
+    "offense_class": "Same as principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant counseled, hired, or procured another to commit a felony",
+      "Or aided, abetted, or assisted in the commission of a crime"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "Accessories before the fact are punished as principals. Accessories after the fact (§ 61-11-7) face lesser penalties."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "W. Va. Code § 61-11-8",
+    "statute_title": "Attempts to Commit Offenses",
+    "offense_class": "Lesser penalty than completed offense — generally half the maximum",
+    "penalty_min": null,
+    "penalty_max": "Generally half the penalty for the completed offense",
+    "fine_max": "Generally half the fine for the completed offense",
+    "elements": [
+      "Defendant had intent to commit a specific crime",
+      "Defendant performed an overt act toward committing the crime",
+      "Defendant failed to complete the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt carries up to half the penalty for the completed offense. Attempt to commit a misdemeanor is also a misdemeanor."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "W. Va. Code § 61-10-31",
+    "statute_title": "Conspiracy",
+    "offense_class": "Felony (conspiracy to commit felony); Misdemeanor (conspiracy to commit misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "5 years (conspiracy to commit felony); 1 year (conspiracy to commit misdemeanor)",
+    "fine_max": "$10,000 (felony); $500 (misdemeanor)",
+    "elements": [
+      "Two or more persons agreed to commit a crime",
+      "An overt act was performed in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy is a separate crime from the underlying offense. Co-conspirators are liable for all acts committed in furtherance of the conspiracy."
+  }
+]

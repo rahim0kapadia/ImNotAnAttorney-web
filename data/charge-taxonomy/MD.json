@@ -1,0 +1,1702 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Md. Code, Transp. § 21-902",
+    "statute_title": "Driving Under the Influence / Driving While Impaired",
+    "offense_class": "Misdemeanor (DUI and DWI)",
+    "penalty_min": null,
+    "penalty_max": "1 year (DUI); 60 days (DWI)",
+    "fine_max": "$1,000 (DUI); $500 (DWI)",
+    "elements": [
+      "Defendant drove or attempted to drive a vehicle",
+      "While under the influence of alcohol (DUI) or while impaired by alcohol (DWI)",
+      "Or with a BAC of .08 or higher (DUI) or .07+ (DWI)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .15 or higher (enhanced penalties under § 21-902.1)",
+      "Minor under 18 in vehicle",
+      "Prior DUI/DWI convictions",
+      "Transporting a minor while impaired"
+    ],
+    "notes": "Maryland distinguishes between DUI (.08+ BAC) and DWI (.07+ BAC or impaired). Noah's Law (2016) requires ignition interlock for all DUI/DWI convictions. 12 points assessed."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Md. Code, Transp. § 21-902(a)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or attempted to drive a vehicle",
+      "While under the influence of alcohol or with BAC .08+",
+      "No prior DUI convictions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .15 or higher",
+      "Minor in vehicle"
+    ],
+    "notes": "Noah's Law requires ignition interlock device for all first-offense DUI convictions. License suspension up to 6 months."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Md. Code, Transp. § 21-902(a)",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "5 days (second); 10 days (third+)",
+    "penalty_max": "2 years (second); 3 years (third+)",
+    "fine_max": "$2,000 (second); $3,000 (third+)",
+    "elements": [
+      "Defendant drove or attempted to drive a vehicle",
+      "While under the influence of alcohol or with BAC .08+",
+      "One or more prior DUI/DWI convictions"
+    ],
+    "mandatory_minimum": "5 days (second); 10 days (third+)",
+    "enhancements": [
+      "BAC .15 or higher",
+      "Third or subsequent offense"
+    ],
+    "notes": "Second offense: mandatory 5 days jail. Third+: mandatory 10 days. Extended ignition interlock period. License revocation up to 1 year."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Md. Code, Transp. § 21-902(c)",
+    "statute_title": "DUI — Controlled Dangerous Substance",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year (DUI-CDS); 60 days (DWI-drugs)",
+    "fine_max": "$1,000 (DUI-CDS); $500 (DWI-drugs)",
+    "elements": [
+      "Defendant drove or attempted to drive a vehicle",
+      "While so far impaired by a drug, combination of drugs, or combination of drugs and alcohol",
+      "That the defendant could not drive safely"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Combined influence of drugs and alcohol",
+      "Prior drug-DUI convictions"
+    ],
+    "notes": "No per se drug limit. Drug Recognition Expert (DRE) evaluation and toxicology used. Same penalties as alcohol DUI."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Md. Code, Transp. § 21-901.1",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove a vehicle in willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "6 points on license. Negligent driving (§ 21-901.1(b)) is a lesser offense. Common plea-down from DUI."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Md. Code, Transp. § 20-102",
+    "statute_title": "Failure to Remain at Scene — Bodily Injury or Death",
+    "offense_class": "Misdemeanor (injury); Felony (death under § 20-102(b))",
+    "penalty_min": null,
+    "penalty_max": "5 years (injury); 10 years (death)",
+    "fine_max": "$5,000 (injury); $10,000 (death)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in bodily injury or death",
+      "Defendant failed to stop and remain at the scene",
+      "Defendant failed to provide identification and render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (§ 20-102(b))",
+      "Serious bodily injury"
+    ],
+    "notes": "Hit-and-run resulting in death is a felony. Property damage only (§ 20-103) carries up to 60 days and $500."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Md. Code, Crim. Law § 2-501",
+    "statute_title": "Manslaughter by Vehicle or Vessel",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "As a result of driving a motor vehicle in a grossly negligent manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Under the influence of alcohol or drugs at time of incident",
+      "Excessive speed"
+    ],
+    "notes": "Separate from criminal negligent manslaughter by vehicle (§ 2-501.1) which carries up to 3 years."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Md. Code, Crim. Law § 2-501.1",
+    "statute_title": "Criminal Negligent Manslaughter by Vehicle",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "As a result of driving a motor vehicle in a criminally negligent manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Lesser offense than manslaughter by vehicle (§ 2-501). Criminal negligence is a lower standard than gross negligence."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Md. Code, Transp. § 16-303",
+    "statute_title": "Driving While License Suspended or Revoked",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove a motor vehicle on a highway or public property",
+      "Defendant's license was suspended or revoked",
+      "Defendant had knowledge or notice of the suspension or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Suspension was DUI-related",
+      "Subsequent offense"
+    ],
+    "notes": "Driving on suspended carries additional license suspension. May result in vehicle impoundment."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Md. Code, Transp. § 21-904",
+    "statute_title": "Fleeing or Attempting to Elude Police",
+    "offense_class": "Misdemeanor (general); Felony (if causing life-threatening injury or death)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 3 years (felony injury); 10 years (felony death)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "A police officer signaled the defendant to stop",
+      "Signal was by visual or audible means",
+      "Defendant willfully failed to stop",
+      "Defendant attempted to flee or elude the officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Life-threatening injury results (felony)",
+      "Death results (felony, up to 10 years)"
+    ],
+    "notes": "Officer must be in uniform or in a marked vehicle. Felony enhancement if serious injury or death results."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Md. Code, Crim. Law § 5-601",
+    "statute_title": "Possession of Controlled Dangerous Substance",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "4 years (most CDS); 1 year (marijuana 10g-2.5oz)",
+    "fine_max": "$25,000 (most CDS); $1,000 (marijuana 10g-2.5oz)",
+    "elements": [
+      "Defendant possessed a controlled dangerous substance",
+      "Substance is listed in Maryland CDS schedules",
+      "Possession was without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school (§ 5-627)"
+    ],
+    "notes": "Maryland decriminalized marijuana under 10g (civil citation). 10g-2.5oz is a misdemeanor. Over 2.5oz may trigger intent to distribute charges."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Md. Code, Crim. Law § 5-601",
+    "statute_title": "Possession of Cannabis",
+    "offense_class": "Civil Citation (under 10g); Misdemeanor (10g-2.5oz); Felony (2.5oz+ with intent)",
+    "penalty_min": null,
+    "penalty_max": "Civil fine (under 10g); 1 year (10g-2.5oz); 5 years (with intent)",
+    "fine_max": "$100 (under 10g, first); $250 (under 10g, second); $500 (under 10g, third); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant possessed cannabis",
+      "Amount exceeded legal personal use limits for adults 21+"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession over 2.5 oz without valid registration",
+      "Possession with intent to distribute"
+    ],
+    "notes": "Maryland legalized recreational cannabis for adults 21+ in July 2023 (up to 1.5 oz usable, 12g concentrate). Amounts over 2.5 oz without registration remain criminal. Under 21 possession remains a civil violation."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Md. Code, Crim. Law § 5-601(a)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "4 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant possessed cocaine",
+      "Cocaine is a Schedule II controlled dangerous substance in Maryland",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school"
+    ],
+    "notes": "Simple possession is a misdemeanor. Larger quantities may support distribution charges."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Md. Code, Crim. Law § 5-601(a)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "4 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled dangerous substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school"
+    ],
+    "notes": "Simple possession carries up to 4 years. Manufacturing meth is charged separately under § 5-603."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Md. Code, Crim. Law § 5-612",
+    "statute_title": "Trafficking — Controlled Dangerous Substances",
+    "offense_class": "Felony",
+    "penalty_min": "5 years (most); 10 years (fentanyl/heroin large quantity)",
+    "penalty_max": "25 years (most); 40 years (large quantity)",
+    "fine_max": "$100,000 (most); $1,000,000 (large quantity)",
+    "elements": [
+      "Defendant brought a controlled dangerous substance into Maryland",
+      "Or manufactured, distributed, or possessed with intent to distribute",
+      "Quantity met or exceeded trafficking thresholds"
+    ],
+    "mandatory_minimum": "5 years (cannot be suspended)",
+    "enhancements": [
+      "Large quantity (double thresholds)",
+      "Fentanyl or fentanyl analog involvement",
+      "Use of a firearm"
+    ],
+    "notes": "Drug trafficking carries a mandatory 5-year minimum that cannot be suspended. Thresholds vary by substance: 448g cocaine, 28g heroin, 5g fentanyl."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Md. Code, Crim. Law § 5-602",
+    "statute_title": "Distribution of Controlled Dangerous Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years (Schedule I/II); 5 years (Schedule III-V)",
+    "fine_max": "$25,000 (Schedule I/II); $15,000 (Schedule III-V)",
+    "elements": [
+      "Defendant distributed, dispensed, or possessed with intent to distribute a CDS",
+      "Substance is listed in Maryland CDS schedules"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution to a minor (§ 5-627)",
+      "Distribution near a school (§ 5-627)",
+      "Prior distribution convictions"
+    ],
+    "notes": "Second offense for Schedule I/II narcotics: up to 20 years. Third offense: mandatory minimum 25 years."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Md. Code, Crim. Law § 5-603",
+    "statute_title": "Manufacturing Controlled Dangerous Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant manufactured, created, or produced a controlled dangerous substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing near a school or child care facility",
+      "Creating environmental hazards (meth labs)"
+    ],
+    "notes": "Manufacturing methamphetamine carries additional environmental and child endangerment charges. Cleanup costs may be assessed."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Md. Code, Crim. Law § 5-619",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "4 years (use/possession); 4 years (delivery/sale)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant used or possessed with intent to use drug paraphernalia",
+      "To plant, propagate, cultivate, grow, harvest, manufacture, compound, convert, produce, process, prepare, test, analyze, pack, repack, store, contain, or conceal a CDS"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale or delivery to a minor"
+    ],
+    "notes": "Maryland decriminalized paraphernalia associated with marijuana. Paraphernalia for other drugs remains criminal."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Md. Code, Crim. Law § 5-602(2)",
+    "statute_title": "Possession with Intent to Distribute CDS",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years (Schedule I/II); 5 years (Schedule III-V)",
+    "fine_max": "$25,000 (Schedule I/II); $15,000 (Schedule III-V)",
+    "elements": [
+      "Defendant possessed a controlled dangerous substance",
+      "With intent to distribute"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Quantity indicating distribution intent",
+      "Near a school or park",
+      "Prior drug convictions"
+    ],
+    "notes": "Intent inferred from quantity, packaging, scales, cash, communications. Same penalties as actual distribution."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Md. Code, Crim. Law § 2-201",
+    "statute_title": "First-Degree Murder",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully, deliberately, and with premeditation killed another person",
+      "Or killed another person during the commission of a felony (felony murder)"
+    ],
+    "mandatory_minimum": "Life without parole (if defendant was 18+, certain circumstances)",
+    "enhancements": [
+      "Murder of a law enforcement officer",
+      "Murder during commission of certain felonies",
+      "Multiple victims"
+    ],
+    "notes": "Maryland abolished the death penalty in 2013. First-degree murder includes premeditated killing, felony murder, and murder by poison or lying in wait."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Md. Code, Crim. Law § 2-204",
+    "statute_title": "Second-Degree Murder",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "40 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant killed another person",
+      "With intent to kill or with implied malice",
+      "But without premeditation or deliberation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Prior violent felony convictions"
+    ],
+    "notes": "Includes intentional killings without premeditation and depraved-heart murder (extreme recklessness showing disregard for human life)."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Md. Code, Crim. Law § 2-207",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant intentionally killed another person",
+      "The killing occurred in the heat of passion",
+      "Upon adequate provocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Heat of passion reduces what would otherwise be murder to manslaughter. Must be provocation that would cause a reasonable person to lose self-control."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Md. Code, Crim. Law § 2-207",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through grossly negligent or reckless conduct",
+      "Without intent to kill"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common law offense codified in Maryland. Includes deaths resulting from criminal negligence and unlawful acts not amounting to felonies."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Md. Code, Crim. Law § 3-202",
+    "statute_title": "Assault in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed an assault",
+      "Defendant intended to cause serious physical injury",
+      "Or used a firearm to commit the assault"
+    ],
+    "mandatory_minimum": "10 years (if firearm used, mandatory minimum under § 4-305)",
+    "enhancements": [
+      "Use of a firearm (mandatory minimum 10 years for subsequent)",
+      "Victim was a law enforcement officer",
+      "Serious physical injury"
+    ],
+    "notes": "First-degree assault is the most serious assault charge in Maryland. Use of a firearm triggers mandatory minimum under separate statute."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Md. Code, Crim. Law § 3-203",
+    "statute_title": "Assault in the Second Degree",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant committed an assault, battery, or threatened assault against another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is a law enforcement officer (§ 3-203(c), up to 10 years)",
+      "Victim is a parole/probation agent"
+    ],
+    "notes": "Maryland merged assault and battery into a single offense. Second-degree assault is the general misdemeanor assault."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Md. Code, Crim. Law § 3-202",
+    "statute_title": "First-Degree Assault — Dangerous Weapon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed an assault",
+      "Defendant used a firearm or other dangerous weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury resulted",
+      "Victim was a law enforcement officer"
+    ],
+    "notes": "Assault with a firearm constitutes first-degree assault automatically. Other weapons must be shown to be dangerous in the manner used."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Md. Code, Crim. Law § 3-402",
+    "statute_title": "Robbery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed or attempted to commit theft",
+      "Defendant used force or threat of force to obtain property",
+      "Or placed the victim in fear of force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a dangerous weapon (armed robbery under § 3-403)"
+    ],
+    "notes": "Robbery in Maryland is a common law felony. No weapon is required — force or fear is sufficient."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Md. Code, Crim. Law § 3-403",
+    "statute_title": "Robbery with a Dangerous Weapon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed or attempted to commit theft",
+      "Defendant used a dangerous weapon during the robbery",
+      "Or displayed what appeared to be a dangerous weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Serious bodily injury"
+    ],
+    "notes": "Armed robbery carries up to 20 years — 5 more than unarmed robbery. Display of a replica weapon is sufficient."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Md. Code, Crim. Law § 3-502",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant forcibly seized, confined, carried, or transported another person",
+      "Without consent and without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Kidnapping for ransom",
+      "Kidnapping of a minor",
+      "Serious bodily injury"
+    ],
+    "notes": "Child kidnapping (§ 3-503) carries up to 25 years. False imprisonment (§ 3-405) is a lesser included offense."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Md. Code, Crim. Law § 6-102",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant willfully and maliciously set fire to or burned a structure",
+      "Structure was a dwelling or occupied structure"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death results",
+      "Serious bodily injury",
+      "Multiple structures"
+    ],
+    "notes": "First-degree arson involves occupied structures. Second-degree (§ 6-103) involves unoccupied structures, up to 20 years."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Md. Code, Crim. Law § 2-205",
+    "statute_title": "Attempted First-Degree Murder",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant took a substantial step toward intentionally killing another person",
+      "With specific intent to kill",
+      "With willfulness, deliberation, and premeditation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim was a law enforcement officer"
+    ],
+    "notes": "Attempted first-degree murder carries the same maximum as completed first-degree murder. Attempted second-degree murder carries up to 30 years."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Md. Code, Crim. Law § 7-104",
+    "statute_title": "General Theft",
+    "offense_class": "Misdemeanor (under $1,500); Felony ($1,500+)",
+    "penalty_min": null,
+    "penalty_max": "90 days (under $100); 18 months (under $1,500); 5 years ($1,500–$25,000); 10 years ($25,000–$100,000); 15 years ($100,000+)",
+    "fine_max": "$500 (under $100); $500 (under $1,500); $10,000 ($1,500–$25,000); $15,000 ($25,000–$100,000); $25,000 ($100,000+)",
+    "elements": [
+      "Defendant willfully or knowingly obtained control over property of another",
+      "By deception, willful concealment, or unauthorized taking",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds increase penalty ranges",
+      "Theft from a person"
+    ],
+    "notes": "Maryland consolidated theft offenses under a single statute. Value thresholds determine misdemeanor vs. felony classification."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Md. Code, Crim. Law § 7-104",
+    "statute_title": "Felony Theft — Value $1,500 or More",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years ($1,500–$25,000); 10 years ($25,000–$100,000); 15 years ($100,000+)",
+    "fine_max": "$10,000 ($1,500–$25,000); $15,000 ($25,000–$100,000); $25,000 ($100,000+)",
+    "elements": [
+      "Defendant willfully or knowingly obtained control over property of another",
+      "Value of property was $1,500 or more",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Higher value thresholds"
+    ],
+    "notes": "Felony theft threshold is $1,500 in Maryland."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Md. Code, Crim. Law § 7-104",
+    "statute_title": "Misdemeanor Theft — Value Under $1,500",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days (under $100); 18 months ($100–$1,500)",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant willfully or knowingly obtained control over property of another",
+      "Value of property was under $1,500",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Under $100 is a petty misdemeanor. $100–$1,500 is a regular misdemeanor."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Md. Code, Crim. Law § 7-104",
+    "statute_title": "Theft — Shoplifting",
+    "offense_class": "Same as general theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant willfully concealed or took possession of retail merchandise",
+      "Without paying full consideration",
+      "With intent to deprive the merchant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds apply",
+      "Organized retail theft"
+    ],
+    "notes": "Shoplifting is charged under the general theft statute. Merchants may also pursue civil penalties."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Md. Code, Crim. Law § 6-202",
+    "statute_title": "Burglary — Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke into and entered a storehouse or other structure",
+      "With intent to commit theft or a crime of violence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person was present in the structure",
+      "Defendant was armed"
+    ],
+    "notes": "Second-degree burglary covers non-dwelling structures. First-degree burglary (§ 6-201) involves dwellings."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Md. Code, Crim. Law § 6-202",
+    "statute_title": "Burglary — First Degree (Dwelling)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke into and entered a dwelling",
+      "With intent to commit a crime of violence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupant was home",
+      "Defendant was armed"
+    ],
+    "notes": "First-degree burglary requires a dwelling and intent to commit a crime of violence. If intent is only theft, it may be charged as third-degree."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Md. Code, Crim. Law § 7-105",
+    "statute_title": "Unauthorized Use of a Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly and willfully took or used a motor vehicle",
+      "Without the consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Separate from general theft. May also be charged as theft if intent to permanently deprive is proven."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Md. Code, Crim. Law § 7-104",
+    "statute_title": "Theft — Receiving Stolen Property",
+    "offense_class": "Same as general theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing or having reason to believe the property was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds apply"
+    ],
+    "notes": "Charged under the general theft statute. Same value thresholds and penalties as other theft offenses."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Md. Code, Crim. Law § 6-301",
+    "statute_title": "Malicious Destruction of Property",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "60 days (under $1,000); 3 years ($1,000+)",
+    "fine_max": "$500 (under $1,000); $2,500 ($1,000+)",
+    "elements": [
+      "Defendant willfully and maliciously destroyed, damaged, or defaced property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage exceeds $1,000 (felony)"
+    ],
+    "notes": "Includes graffiti and property destruction. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Md. Code, Crim. Law § 6-402",
+    "statute_title": "Trespass on Posted Property",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant entered or crossed over posted property of another",
+      "After being notified not to enter by posted signs or fencing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wanton trespass on private property (§ 6-403) carries similar penalties. Trespass on a railroad carries specific penalties."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Md. Code, Crim. Law § 6-301",
+    "statute_title": "Malicious Destruction — Criminal Mischief",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "60 days (under $1,000); 3 years ($1,000+)",
+    "fine_max": "$500 (under $1,000); $2,500 ($1,000+)",
+    "elements": [
+      "Defendant willfully and maliciously damaged or destroyed property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage exceeds $1,000"
+    ],
+    "notes": "Maryland uses 'malicious destruction of property' as the statutory term. Covers vandalism, graffiti, and other property damage."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Md. Code, Crim. Law § 3-203",
+    "statute_title": "Second-Degree Assault — Domestic",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant committed an assault against a person in a domestic relationship",
+      "Domestic relationship includes spouse, former spouse, cohabitant, parent of common child, or relative"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Strangulation (§ 3-204, felony)",
+      "Use of a weapon",
+      "Prior DV convictions"
+    ],
+    "notes": "Maryland charges DV under general assault statutes with domestic relationship as a factor. Protective orders available under Family Law § 4-501."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Md. Code, Crim. Law § 3-203",
+    "statute_title": "Second-Degree Assault — Domestic Battery",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant committed a battery against a person in a domestic relationship",
+      "Battery involves unwanted physical contact"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DV convictions",
+      "Strangulation"
+    ],
+    "notes": "Maryland merged assault and battery. No separate battery statute. DV cases handled under second-degree assault."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Md. Code, Crim. Law § 3-601.1",
+    "statute_title": "Neglect of a Minor",
+    "offense_class": "Misdemeanor (first degree); Felony (if cause of death)",
+    "penalty_min": null,
+    "penalty_max": "5 years (first degree); 15 years (causing death)",
+    "fine_max": "$5,000 (first degree); $15,000 (causing death)",
+    "elements": [
+      "Defendant was a parent, guardian, or custodian of a minor",
+      "Defendant failed to provide proper care and attention",
+      "Under circumstances creating a substantial risk of harm to the child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of the child",
+      "Severe physical injury"
+    ],
+    "notes": "Separate from child abuse (§ 3-601). Neglect focuses on failure to provide care rather than affirmative harmful conduct."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Md. Code, Crim. Law § 3-601",
+    "statute_title": "Child Abuse — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years (first degree); 15 years (second degree)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant caused severe physical injury to a child under 18",
+      "Through an intentional or knowing act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of the child",
+      "Prior child abuse convictions"
+    ],
+    "notes": "First-degree requires severe physical injury. Second-degree (§ 3-601(b)) involves abuse without severe injury, up to 15 years."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Md. Code, Fam. Law § 4-509",
+    "statute_title": "Violation of a Protective Order",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days (first); 1 year (subsequent)",
+    "fine_max": "$1,000 (first); $2,500 (subsequent)",
+    "elements": [
+      "A valid protective order was in effect",
+      "Defendant had notice of the order",
+      "Defendant violated a provision of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense",
+      "Violation involved assault"
+    ],
+    "notes": "Mandatory arrest for violations. Federal firearms prohibition applies while protective order is in effect."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Md. Code, Crim. Law § 3-802",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant engaged in a persistent pattern of conduct",
+      "Directed at a specific person",
+      "That would cause a reasonable person to fear death, bodily injury, or assault",
+      "Or the conduct placed the victim in reasonable fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior stalking convictions",
+      "Violation of a protective order"
+    ],
+    "notes": "Includes cyberstalking. Harassment (§ 3-803) is a related lesser offense."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Md. Code, Crim. Law § 3-803",
+    "statute_title": "Harassment",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant followed or engaged in a course of conduct directed at a specific person",
+      "With intent to harass, alarm, or annoy",
+      "After being warned to stop"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes electronic and telephone harassment. Lesser offense than stalking."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Md. Code, Crim. Law § 3-604",
+    "statute_title": "Abuse or Neglect of a Vulnerable Adult",
+    "offense_class": "Felony (abuse causing harm); Misdemeanor (neglect)",
+    "penalty_min": null,
+    "penalty_max": "10 years (abuse); 5 years (neglect)",
+    "fine_max": "$10,000 (abuse); $5,000 (neglect)",
+    "elements": [
+      "Defendant caused physical injury, sexual abuse, or severe emotional abuse to a vulnerable adult",
+      "Defendant was a household member, caretaker, or person with authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of the victim",
+      "Financial exploitation"
+    ],
+    "notes": "Vulnerable adult includes persons 68+ and disabled adults. Financial exploitation is a separate offense under § 8-801."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Md. Code, Crim. Law § 4-203",
+    "statute_title": "Wearing, Carrying, or Transporting a Handgun",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "30 days (second offense); 3 years (third+)",
+    "penalty_max": "3 years (first); 5 years (second); 10 years (third+)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant wore, carried, or transported a handgun",
+      "On or about the person",
+      "Without a valid permit"
+    ],
+    "mandatory_minimum": "30 days (second offense, no suspension); 3 years (third+, no suspension)",
+    "enhancements": [
+      "Second offense (mandatory 30 days)",
+      "Third+ offense (mandatory 3 years)",
+      "Loaded handgun"
+    ],
+    "notes": "Post-Bruen (2022), Maryland's permit process changed significantly. Carry restrictions near certain sensitive locations remain. Second and third offenses carry mandatory minimums."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Md. Code, Pub. Safety § 5-133",
+    "statute_title": "Possession of Regulated Firearm by Prohibited Person",
+    "offense_class": "Felony",
+    "penalty_min": "5 years (mandatory minimum, no suspension)",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant possessed a regulated firearm",
+      "Defendant had a prior felony conviction or was otherwise a prohibited person"
+    ],
+    "mandatory_minimum": "5 years (cannot be suspended or paroled before serving)",
+    "enhancements": [
+      "Prior violent felony",
+      "Possession during commission of a crime"
+    ],
+    "notes": "Mandatory minimum of 5 years that cannot be suspended. One of the most strictly enforced firearms offenses in Maryland."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Md. Code, Crim. Law § 4-203",
+    "statute_title": "Carrying Handgun Without Permit",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 years (first); 5 years (second); 10 years (third+)",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant carried a handgun on or about the person",
+      "Without a valid wear-and-carry permit"
+    ],
+    "mandatory_minimum": "30 days (second); 3 years (third+)",
+    "enhancements": [
+      "Second offense",
+      "Third or subsequent offense"
+    ],
+    "notes": "Maryland transitioned to shall-issue permits following the Bruen decision. Sensitive location restrictions remain in effect."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Md. Code, Crim. Law § 4-203.1",
+    "statute_title": "Discharge of Firearm from Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": "5 years (mandatory minimum)",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant discharged a firearm from a motor vehicle",
+      "In a manner that created a risk of death or injury to another"
+    ],
+    "mandatory_minimum": "5 years (cannot be suspended)",
+    "enhancements": [
+      "Injury or death results"
+    ],
+    "notes": "Mandatory 5-year minimum without suspension. Separate from reckless endangerment."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Md. Code, Crim. Law § 8-301",
+    "statute_title": "Identity Fraud",
+    "offense_class": "Misdemeanor (general); Felony (over $1,500 or benefit obtained)",
+    "penalty_min": null,
+    "penalty_max": "18 months (misdemeanor); 5 years (felony); 15 years ($100,000+)",
+    "fine_max": "$5,000 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Defendant knowingly, willfully, and with fraudulent intent used personal identifying information of another",
+      "To obtain money, goods, services, or other benefit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims",
+      "Amount over $1,500 (felony)",
+      "Amount over $100,000 (up to 15 years)"
+    ],
+    "notes": "Includes Social Security numbers, driver's license numbers, financial account information."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Md. Code, Crim. Law § 7-113",
+    "statute_title": "Embezzlement — Misappropriation by Fiduciary",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant was entrusted with property in a fiduciary capacity",
+      "Defendant fraudulently converted the property to personal use"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeds $100,000"
+    ],
+    "notes": "May also be charged under general theft statutes. Fiduciary misappropriation carries separate penalties."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Md. Code, Crim. Law § 8-601",
+    "statute_title": "Forgery",
+    "offense_class": "Felony (private documents); Felony (public documents under § 8-602)",
+    "penalty_min": null,
+    "penalty_max": "10 years (private); 10 years (public)",
+    "fine_max": "$1,000 (private); $1,000 (public)",
+    "elements": [
+      "Defendant falsely made, altered, or counterfeited a document",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forgery of public documents or currency"
+    ],
+    "notes": "Separate statutes for private documents (§ 8-601) and public documents (§ 8-602). Both carry up to 10 years."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Md. Code, Crim. Law § 8-604",
+    "statute_title": "Counterfeiting — Currency and Obligations",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant made, possessed, or uttered counterfeit currency or government obligations"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Federal counterfeiting charges typically apply. State charges may be concurrent."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Md. Code, Crim. Law § 8-103",
+    "statute_title": "Bad Checks — Issuing",
+    "offense_class": "Misdemeanor (under $1,500); Felony ($1,500+)",
+    "penalty_min": null,
+    "penalty_max": "18 months (misdemeanor); 15 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant obtained property, services, or credit by issuing a check",
+      "Knowing there were insufficient funds in the account",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeds $1,500 (felony)"
+    ],
+    "notes": "Value thresholds align with general theft. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Md. Code, Ins. § 27-406",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$100,000 or triple the amount of the fraudulent claim",
+    "elements": [
+      "Defendant knowingly presented a false or fraudulent insurance claim",
+      "With intent to defraud or deceive an insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized fraud scheme",
+      "Amount exceeds $100,000"
+    ],
+    "notes": "Maryland Insurance Administration investigates. Separate from general theft by deception."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Md. Code, Crim. Law § 8-204",
+    "statute_title": "Misuse of Credit Card",
+    "offense_class": "Misdemeanor (under $1,500); Felony ($1,500+)",
+    "penalty_min": null,
+    "penalty_max": "18 months (misdemeanor); 15 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant used a credit card or credit card number",
+      "Knowing it was stolen, counterfeit, or without authorization",
+      "To obtain goods, services, or money"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,500 (felony)"
+    ],
+    "notes": "Includes possession of stolen credit cards and use of credit card numbers obtained through fraud."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Md. Code, Crim. Law § 5-623",
+    "statute_title": "Money Laundering",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$500,000 or double the amount laundered",
+    "elements": [
+      "Defendant conducted a financial transaction",
+      "Knowing the transaction involved proceeds of criminal activity",
+      "With intent to promote criminal activity or conceal the source"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeds $100,000",
+      "Pattern of laundering"
+    ],
+    "notes": "Drug-related money laundering under § 5-623. General financial crimes laundering also applies."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Md. Code, Crim. Law § 7-104",
+    "statute_title": "Theft by Deception — General Fraud",
+    "offense_class": "Same as general theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as general theft by value",
+    "fine_max": "Same as general theft by value",
+    "elements": [
+      "Defendant obtained property or services through deception",
+      "Deception includes creating false impressions, preventing acquisition of relevant information, or failing to disclose known defects",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds apply",
+      "Victim was elderly or vulnerable"
+    ],
+    "notes": "General fraud charged under the consolidated theft statute. Classification by value."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Md. Code, Crim. Law § 3-303",
+    "statute_title": "Rape in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in vaginal intercourse with another by force or threat of force",
+      "Without consent of the victim",
+      "Or the victim was under 13"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13",
+      "Use of a dangerous weapon",
+      "Aided by another person"
+    ],
+    "notes": "First-degree rape is the most serious sex offense. Second-degree rape (§ 3-304) carries up to 20 years."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Md. Code, Crim. Law § 3-303",
+    "statute_title": "Rape — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in vaginal intercourse by force or threat of force",
+      "Without consent",
+      "Using a weapon, threat of force, suffocation, or strangulation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13",
+      "Kidnapping in connection with rape",
+      "Serious bodily injury"
+    ],
+    "notes": "Maryland defines rape under four degrees. First-degree carries life imprisonment."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Md. Code, Crim. Law § 11-107",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant exposed their person or genitals",
+      "In a public place or in the sight of another",
+      "Under circumstances likely to be observed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure to a minor"
+    ],
+    "notes": "May require sex offender registration depending on circumstances."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Md. Code, Crim. Law § 11-306",
+    "statute_title": "Solicitation of Prostitution",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant offered or agreed to engage in a sexual act",
+      "In exchange for compensation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Involving a minor (felony under § 11-306(b))"
+    ],
+    "notes": "Solicitation involving a minor is a felony carrying up to 10 years. General prostitution also up to 1 year."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Md. Code, Crim. Law § 3-602",
+    "statute_title": "Sexual Abuse of a Minor",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant engaged in sexual contact or a sexual act with a minor",
+      "Defendant was a household member, family member, or person in a position of authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13",
+      "Pattern of abuse"
+    ],
+    "notes": "Covers sexual abuse by household members and persons in authority. Child pornography offenses under § 11-207."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Md. Code, Crim. Proc. § 11-721",
+    "statute_title": "Failure to Register as Sex Offender",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant knowingly failed to register or update registration information"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent violations"
+    ],
+    "notes": "Maryland Sex Offender Registry. Registration periods: Tier I (15 years), Tier II (25 years), Tier III (lifetime)."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Md. Code, Crim. Law § 3-304",
+    "statute_title": "Rape — Second Degree (Statutory)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in vaginal intercourse with a person under 14",
+      "Defendant was at least 4 years older than the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13"
+    ],
+    "notes": "Age of consent in Maryland is 16. Close-in-age exception: if victim is 14-15 and defendant is less than 4 years older."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Md. Code, Crim. Law § 10-201",
+    "statute_title": "Disturbing the Public Peace — Disorderly Conduct",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant willfully acted in a disorderly manner",
+      "That disturbed the public peace"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Low-level public order offense. Often charged alongside other offenses."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Md. Code, Crim. Law § 9-408",
+    "statute_title": "Resisting or Interfering with Arrest",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "A law enforcement officer attempted to make a lawful arrest or detention",
+      "Defendant intentionally resisted, interfered with, or obstructed the officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes both physical resistance and flight. Assault on a law enforcement officer is a separate, more serious charge."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Md. Code, Crim. Law § 9-302",
+    "statute_title": "Obstructing or Hindering — Law Enforcement",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant obstructed, hindered, or prevented a law enforcement officer",
+      "In the performance of official duties",
+      "Defendant acted with knowledge that the person was a law enforcement officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Broader than resisting arrest. Covers any interference with police duties."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Md. Code, Cts. & Jud. Proc. § 12-304",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Civil or Criminal Contempt",
+    "penalty_min": null,
+    "penalty_max": "Varies by court; typically up to 30 days or until compliance",
+    "fine_max": "Varies",
+    "elements": [
+      "A valid court order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant willfully disobeyed the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Constructive contempt (out of court) and direct contempt (in court) have different procedures. Civil contempt is coercive."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Md. Code, Crim. Law § 10-201",
+    "statute_title": "Disorderly Conduct — Public Intoxication",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant appeared in a public place while intoxicated",
+      "Defendant's conduct was disorderly or created a public nuisance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Maryland does not have a standalone public intoxication statute. Charged under disorderly conduct."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Md. Code, Crim. Law § 9-202",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Defendant was required to appear in court",
+      "Defendant willfully failed to appear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Bench warrant issued upon failure to appear. May also result in bail forfeiture."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Md. Code, Crim. Law § 9-501",
+    "statute_title": "False Statement to Law Enforcement Officer",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant made a false statement to a law enforcement officer",
+      "Regarding the commission of a crime",
+      "Knowing the statement was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Separate from perjury (sworn testimony). Applies to statements made during investigations."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Md. Code, Crim. Law § 3-1001",
+    "statute_title": "Threat of Mass Violence",
+    "offense_class": "Misdemeanor (general threats under § 3-707); Felony (mass violence threats)",
+    "penalty_min": null,
+    "penalty_max": "10 years (mass violence); 3 years (general threats to public officials under § 3-708)",
+    "fine_max": "$10,000 (mass violence)",
+    "elements": [
+      "Defendant threatened to commit an act of mass violence",
+      "At a place of public use, government facility, or place of worship"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat directed at a school",
+      "Threat caused evacuation"
+    ],
+    "notes": "Threat of mass violence statute enacted 2019. General threatening is charged as second-degree assault or harassment."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Md. Code, Crim. Law § 9-101",
+    "statute_title": "Perjury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant made a false statement under oath",
+      "In a judicial or official proceeding",
+      "Knowing the statement was false",
+      "Statement was material to the proceeding"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes testimony, depositions, and sworn affidavits."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Md. Code, Crim. Law § 9-201",
+    "statute_title": "Bribery of Public Employee",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "12 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant offered, gave, or promised a benefit to a public employee",
+      "With intent to influence the employee's official action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers both offering and receiving bribes. Bribery of a juror is a separate offense under § 9-202."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Md. Code, Crim. Law § 9-404",
+    "statute_title": "Escape — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant was confined in a place of confinement",
+      "Defendant departed without authorization or failed to return"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or violence",
+      "Escape from maximum security"
+    ],
+    "notes": "First-degree escape is from confinement. Second-degree (§ 9-405) is from custody (arrest, transport). Third-degree is leaving temporary release."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Md. Code, Crim. Law § 10-604",
+    "statute_title": "Aggravated Cruelty to Animals",
+    "offense_class": "Felony (aggravated); Misdemeanor (general under § 10-604)",
+    "penalty_min": null,
+    "penalty_max": "3 years (aggravated); 90 days (general cruelty)",
+    "fine_max": "$5,000 (aggravated); $1,000 (general)",
+    "elements": [
+      "Defendant intentionally mutilated, tortured, or cruelly killed an animal",
+      "Or caused or procured the same"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior animal cruelty convictions"
+    ],
+    "notes": "Aggravated cruelty is a felony. General cruelty, overworking, and neglect are misdemeanors."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Md. Code, Crim. Proc. § 6-222",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Same as underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum of the original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation for a criminal conviction",
+      "Defendant violated a condition of probation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation"
+    ],
+    "notes": "Court may revoke probation and impose any sentence available at the time of original conviction. Graduated sanctions may be used."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Md. Code, Corr. Servs. § 7-401",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Administrative (revocation)",
+    "penalty_min": null,
+    "penalty_max": "Remaining term of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on parole from a correctional institution",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal conduct"
+    ],
+    "notes": "Maryland Parole Commission conducts revocation hearings. Violator may serve remainder of original sentence."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Md. Code, Crim. Law § 1-301",
+    "statute_title": "Accessory Before the Fact / Aiding and Abetting",
+    "offense_class": "Same as principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant aided, abetted, advised, or encouraged another person",
+      "In the commission of a crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "An accessory before the fact is liable to the same extent as the principal. Maryland common law and statutory provisions apply."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Md. Code, Crim. Law § 1-301",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "Same as the target offense (common law)",
+    "penalty_min": null,
+    "penalty_max": "Same as the target offense",
+    "fine_max": "Same as the target offense",
+    "elements": [
+      "Defendant intended to commit a specific crime",
+      "Defendant took a substantial step toward commission of the crime",
+      "Beyond mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Maryland follows common law attempt doctrine. Attempt carries the same penalty as the completed offense for most crimes."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Md. Code, Crim. Law § 1-301",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Same as the target offense (common law)",
+    "penalty_min": null,
+    "penalty_max": "Same as the target offense",
+    "fine_max": "Same as the target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to commit a crime",
+      "An overt act was performed in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Maryland follows common law conspiracy principles. Conspiracy carries the same penalty as the completed offense."
+  },
+  {
+    "common_charge_slug": "human-trafficking",
+    "statute_number": "Md. Code, Crim. Law § 3-324",
+    "statute_title": "Human Trafficking",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years (sex trafficking); 10 years (labor trafficking)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant knowingly took or caused another person to be taken to any place",
+      "For the purpose of prostitution, sexual exploitation, or forced labor",
+      "Through force, fraud, or coercion"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is a minor",
+      "Serious bodily injury"
+    ],
+    "notes": "Maryland enacted comprehensive anti-trafficking laws. Victims may seek civil remedies. Safe harbor provisions for minor victims."
+  },
+  {
+    "common_charge_slug": "unlawful-imprisonment",
+    "statute_number": "Md. Code, Crim. Law § 3-405",
+    "statute_title": "False Imprisonment",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "Varies (common law)",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally confined or restrained another person",
+      "Without consent and without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common law offense. Lesser included offense of kidnapping. No specific statutory maximum — court discretion."
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "Md. Code, Crim. Law § 5-601(a)",
+    "statute_title": "Possession of Opioids — Heroin/Fentanyl",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "4 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant possessed an opioid drug (heroin, fentanyl, or similar)",
+      "Opioid is a Schedule I or II controlled dangerous substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior drug convictions",
+      "Possession near a school"
+    ],
+    "notes": "Maryland focuses enforcement on distribution rather than simple possession. Diversion programs available for first-time offenders."
+  },
+  {
+    "common_charge_slug": "carjacking",
+    "statute_number": "Md. Code, Crim. Law § 3-405",
+    "statute_title": "Carjacking",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant obtained unauthorized possession of a motor vehicle from another",
+      "By force, violence, or intimidation",
+      "Or by threat of force, violence, or intimidation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed carjacking (§ 3-405(b), up to 30 years)",
+      "Serious bodily injury"
+    ],
+    "notes": "Armed carjacking carries the same 30-year maximum. Carjacking is one of the most aggressively prosecuted offenses in Maryland."
+  }
+]

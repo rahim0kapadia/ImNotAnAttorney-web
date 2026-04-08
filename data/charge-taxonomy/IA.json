@@ -1,0 +1,1632 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Iowa Code § 321J.2",
+    "statute_title": "Operating While Intoxicated (OWI)",
+    "offense_class": "Serious Misdemeanor (first); Aggravated Misdemeanor (second); Class D Felony (third+)",
+    "penalty_min": "48 hours (first); 7 days (second); 30 days (third)",
+    "penalty_max": "1 year (first); 2 years (second); 5 years (third+)",
+    "fine_max": "$1,875 (first); $6,250 (second); $9,375 (third+)",
+    "elements": [
+      "Defendant operated a motor vehicle in Iowa",
+      "While under the influence of alcohol or a drug or combination thereof",
+      "Or with a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": "48 hours imprisonment or community service (first); 7 days (second); 30 days (third)",
+    "enhancements": [
+      "BAC .15 or higher (increased mandatory minimum)",
+      "Second offense within 12 years (Aggravated Misdemeanor)",
+      "Third or subsequent offense (Class D Felony)",
+      "OWI causing serious injury (Class D Felony under § 321J.2(2)(c))",
+      "OWI causing death (Class B Felony under § 321J.2(2)(c))"
+    ],
+    "notes": "Iowa uses 'OWI' (Operating While Intoxicated). Implied consent under § 321J.6. License revocation 180 days (first), 1-2 years (second), 6 years (third). Iowa counts all prior OWI convictions regardless of age — no washout period."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Iowa Code § 321J.2(2)(a)",
+    "statute_title": "OWI — First Offense",
+    "offense_class": "Serious Misdemeanor",
+    "penalty_min": "48 hours",
+    "penalty_max": "1 year",
+    "fine_max": "$1,875",
+    "elements": [
+      "Defendant operated a motor vehicle while intoxicated",
+      "BAC .08 or higher, or impairment proven",
+      "No prior OWI convictions"
+    ],
+    "mandatory_minimum": "48 hours imprisonment or community service; substance abuse evaluation; drinking drivers course",
+    "enhancements": [
+      "BAC .15 or higher (additional mandatory minimum)",
+      "Minor passenger (additional penalties)"
+    ],
+    "notes": "First offense OWI is a serious misdemeanor. License revocation 180 days. Temporary restricted license may be available after 30 days with ignition interlock."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Iowa Code § 321J.2(2)(b)-(c)",
+    "statute_title": "OWI — Second or Subsequent Offense",
+    "offense_class": "Aggravated Misdemeanor (second); Class D Felony (third+)",
+    "penalty_min": "7 days (second); 30 days (third)",
+    "penalty_max": "2 years (second); 5 years (third+)",
+    "fine_max": "$6,250 (second); $9,375 (third+)",
+    "elements": [
+      "Defendant operated a motor vehicle while intoxicated",
+      "Defendant has one or more prior OWI convictions"
+    ],
+    "mandatory_minimum": "7 days (second); 30 days (third+); substance abuse treatment",
+    "enhancements": [
+      "BAC .15 or higher",
+      "Prior felony OWI"
+    ],
+    "notes": "Iowa has no washout period — all lifetime OWI convictions count. Third offense is a Class D Felony. License revocation 1-2 years (second), 6 years (third+). Barring order for 6 years on third offense."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Iowa Code § 321J.2(1)(b)-(c)",
+    "statute_title": "OWI — Drug Impairment",
+    "offense_class": "Same as alcohol OWI by offense count",
+    "penalty_min": "Same as alcohol OWI",
+    "penalty_max": "Same as alcohol OWI",
+    "fine_max": "Same as alcohol OWI",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While under the influence of a drug or combination of alcohol and drug",
+      "Or with any amount of a controlled substance present in the defendant's blood or urine"
+    ],
+    "mandatory_minimum": "Same as alcohol OWI",
+    "enhancements": [
+      "Same enhancements as alcohol OWI apply"
+    ],
+    "notes": "Iowa has a per se drug OWI provision — any detectable amount of a controlled substance in blood or urine is sufficient. This includes marijuana metabolites. No impairment showing required for per se violation."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Iowa Code § 321.277",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Simple Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$855",
+    "elements": [
+      "Defendant drove a vehicle on any highway",
+      "In a reckless manner",
+      "With willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Simple misdemeanor — relatively minor charge. Often used as a plea reduction from OWI. Not an OWI-related offense for enhancement purposes."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Iowa Code § 321.261",
+    "statute_title": "Duty to Provide Aid and Information — Leaving the Scene",
+    "offense_class": "Class D Felony (injury/death); Simple Misdemeanor (property under $1,500); Serious Misdemeanor (property $1,500+)",
+    "penalty_min": null,
+    "penalty_max": "5 years (injury/death); 30 days (property under $1,500); 1 year (property $1,500+)",
+    "fine_max": "$7,500 (felony); $855 (simple); $1,875 (serious)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Resulting in injury, death, or property damage",
+      "Defendant failed to stop, provide identification, and render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in death (Class D Felony)",
+      "Resulting in serious injury (Class D Felony)"
+    ],
+    "notes": "Leaving the scene with injury/death is a Class D Felony. Property damage only is graded by the dollar amount. Driver must provide name, address, license, and registration."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Iowa Code § 707.6A",
+    "statute_title": "Homicide by Vehicle — OWI",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": "$13,660",
+    "elements": [
+      "Defendant unintentionally caused the death of another person",
+      "While operating a motor vehicle under the influence of alcohol or drugs",
+      "Or while eluding or attempting to elude a pursuing law enforcement vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Class B Felony — one of the most serious motor vehicle offenses. OWI causing death under § 321J.2 may be charged alternatively. Separate from vehicular homicide (reckless driving) under § 707.6A(2)."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Iowa Code § 707.6A(2)",
+    "statute_title": "Homicide by Vehicle — Reckless Driving",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$13,660",
+    "elements": [
+      "Defendant unintentionally caused the death of another person",
+      "While driving recklessly as defined in § 321.277"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Class C Felony — applies to vehicular deaths caused by reckless driving without intoxication. Less severe than OWI vehicular homicide (Class B)."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Iowa Code § 321J.21",
+    "statute_title": "Operating While License Denied, Suspended, Revoked, or Barred",
+    "offense_class": "Serious Misdemeanor (OWI-related suspension); Simple Misdemeanor (other suspensions under § 321.218)",
+    "penalty_min": "2 days (OWI-related, first); 7 days (OWI-related, second)",
+    "penalty_max": "1 year (serious); 30 days (simple)",
+    "fine_max": "$1,875 (serious); $855 (simple)",
+    "elements": [
+      "Defendant operated a motor vehicle on a public highway",
+      "While driving privilege was denied, suspended, revoked, or barred",
+      "Defendant had knowledge or notice of the suspension"
+    ],
+    "mandatory_minimum": "2 days (first, OWI-related); 7 days (second, OWI-related)",
+    "enhancements": [
+      "OWI-related suspension carries mandatory jail time",
+      "Habitual offender status under § 321.555"
+    ],
+    "notes": "OWI-related license suspensions carry mandatory jail time. Non-OWI suspensions are simple misdemeanors. DOT mailing creates presumption of notice."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Iowa Code § 321.279",
+    "statute_title": "Eluding or Attempting to Elude a Pursuing Law Enforcement Vehicle",
+    "offense_class": "Aggravated Misdemeanor; Class D Felony (exceeding 25 mph over limit or causing injury)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D Felony)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While being pursued by a law enforcement vehicle with lights and siren",
+      "Defendant willfully failed to stop"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exceeding speed limit by 25+ mph during pursuit (Class D Felony)",
+      "Causing bodily injury (Class D Felony)",
+      "Causing death (Class B Felony)"
+    ],
+    "notes": "The pursuing officer must have lights and siren activated. If death results, charged as a Class B Felony (vehicular homicide)."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Iowa Code § 124.401(5)",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Serious Misdemeanor (Schedule I, II, III); Simple Misdemeanor (Schedule IV, V)",
+    "penalty_min": null,
+    "penalty_max": "1 year (serious); 30 days (simple); enhanced to Aggravated Misdemeanor or felony with priors",
+    "fine_max": "$1,875 (serious); $855 (simple)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "Without a valid prescription or authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (Aggravated Misdemeanor)",
+      "Third or subsequent offense (Class D Felony)",
+      "Possession near school, park, or public housing"
+    ],
+    "notes": "Iowa classifies possession by drug schedule. Prior offenses increase the charge level. Drug court and deferred judgment available for first offenders."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Iowa Code § 124.401(5)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Serious Misdemeanor (first); Aggravated Misdemeanor (second); Class D Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 2 years (second); 5 years (third)",
+    "fine_max": "$1,875 (first); $6,250 (second); $7,500 (third)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed marijuana",
+      "Without valid medical cannabidiol card"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (Aggravated Misdemeanor)",
+      "Third or subsequent offense (Class D Felony)"
+    ],
+    "notes": "Iowa has not legalized recreational marijuana. Medical cannabidiol program is very limited (low-THC only under § 124E). Any amount of marijuana remains criminal."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Iowa Code § 124.401(5)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Serious Misdemeanor (first); Aggravated Misdemeanor (second); Class D Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 2 years (second); 5 years (third+)",
+    "fine_max": "$1,875 (first); $6,250 (second); $7,500 (third+)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed cocaine",
+      "Without valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (Aggravated Misdemeanor)",
+      "Third or subsequent offense (Class D Felony)"
+    ],
+    "notes": "Cocaine is Schedule II in Iowa. Possession is charged under the general possession statute. Crack and powder cocaine treated the same at the state level."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Iowa Code § 124.401(5)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Serious Misdemeanor (first); Aggravated Misdemeanor (second); Class D Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 2 years (second); 5 years (third+)",
+    "fine_max": "$1,875 (first); $6,250 (second); $7,500 (third+)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed methamphetamine",
+      "Without valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (Aggravated Misdemeanor)",
+      "Third or subsequent offense (Class D Felony)"
+    ],
+    "notes": "Meth is Schedule II in Iowa. Same possession penalties as other Schedule II substances. Iowa has significant meth enforcement given Midwest prevalence."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Iowa Code § 124.401(1)",
+    "statute_title": "Manufacture, Delivery, or Possession with Intent — Large Amounts",
+    "offense_class": "Class B Felony (large amounts); Class C Felony (moderate amounts)",
+    "penalty_min": null,
+    "penalty_max": "25 years (Class B); 10 years (Class C); 50 years (repeat or death results)",
+    "fine_max": "$13,660 (Class B); $13,660 (Class C)",
+    "elements": [
+      "Defendant manufactured, delivered, or possessed with intent to deliver a controlled substance",
+      "In amounts meeting statutory thresholds for Class B or C felony"
+    ],
+    "mandatory_minimum": "Mandatory one-third of sentence before parole eligibility (Class B)",
+    "enhancements": [
+      "5+ kg of marijuana or 100+ kg (Class B Felony)",
+      "5+ g of cocaine/meth or specified amounts (Class B Felony)",
+      "Death resulting from delivery (Class B Felony with 10-year mandatory minimum)"
+    ],
+    "notes": "Iowa's drug trafficking provisions have weight-based tiers. Class B felony drug offenses require serving one-third of the sentence before parole eligibility. Tax stamp violations under § 453B may apply."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Iowa Code § 124.401(1)(c)-(d)",
+    "statute_title": "Manufacturing, Delivery, or Possession with Intent to Deliver",
+    "offense_class": "Class C Felony (Schedule I/II under threshold); Class D Felony (Schedule III)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 5 years (Class D)",
+    "fine_max": "$13,660 (Class C); $7,500 (Class D)",
+    "elements": [
+      "Defendant manufactured, delivered, or possessed with intent to deliver a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery to a minor (enhanced penalty)",
+      "Within 1,000 feet of school, park, or public housing (additional 5 years under § 124.401D)",
+      "Amount exceeding weight thresholds"
+    ],
+    "notes": "Covers distribution below the trafficking thresholds. School zone enhancement adds up to 5 years consecutive. Tax stamp law may add additional charges."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Iowa Code § 124.401(1)",
+    "statute_title": "Manufacturing a Controlled Substance",
+    "offense_class": "Class B Felony (meth or large amounts); Class C Felony (other)",
+    "penalty_min": null,
+    "penalty_max": "25 years (Class B); 10 years (Class C)",
+    "fine_max": "$13,660",
+    "elements": [
+      "Defendant knowingly manufactured or attempted to manufacture a controlled substance"
+    ],
+    "mandatory_minimum": "One-third of sentence before parole eligibility (Class B)",
+    "enhancements": [
+      "Meth manufacturing (Class B Felony)",
+      "Manufacturing in presence of minors",
+      "Environmental contamination"
+    ],
+    "notes": "Meth manufacturing is particularly prosecuted in Iowa. Precursor purchase restrictions under § 124.212A. Environmental remediation costs may be assessed against the defendant."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Iowa Code § 124.414",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Simple Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$855",
+    "elements": [
+      "Defendant knowingly possessed drug paraphernalia",
+      "Used or intended for use in manufacturing, testing, packaging, or introducing a controlled substance into the body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor (Aggravated Misdemeanor under § 124.414(3))"
+    ],
+    "notes": "Simple misdemeanor for possession. Selling paraphernalia is a serious misdemeanor. Delivering to a minor is an aggravated misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Iowa Code § 124.401(1)(c)",
+    "statute_title": "Possession with Intent to Deliver — Schedule I or II",
+    "offense_class": "Class C Felony; Class B Felony (above weight thresholds)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 25 years (Class B)",
+    "fine_max": "$13,660",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With intent to manufacture or deliver"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeding weight thresholds (Class B Felony)",
+      "Near school or park (additional 5 years)",
+      "Delivery to a minor"
+    ],
+    "notes": "Intent to deliver is inferred from quantity, packaging, scales, baggies, large cash amounts, and other circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Iowa Code § 707.2",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "Life without parole",
+    "penalty_max": "Life without parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed murder as defined in § 707.1",
+      "With premeditation and deliberation",
+      "Or while participating in a forcible felony",
+      "Or by poison, lying in wait, or torture"
+    ],
+    "mandatory_minimum": "Life imprisonment without possibility of parole",
+    "enhancements": [],
+    "notes": "Iowa abolished the death penalty in 1965. Life without parole is the mandatory sentence for first-degree murder. No judicial discretion in sentencing."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Iowa Code § 707.3",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "50 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed murder as defined in § 707.1",
+      "Not qualifying as first-degree murder"
+    ],
+    "mandatory_minimum": "Must serve 70% of sentence before parole eligibility",
+    "enhancements": [],
+    "notes": "Second-degree murder is an intentional killing without premeditation, or a killing during certain felonies not qualifying for first-degree. 70% of sentence must be served before parole."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Iowa Code § 707.4",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$13,660",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Acting in a sudden, violent, and irresistible passion resulting from serious provocation",
+      "By the victim or another person the defendant reasonably believed was responsible"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Voluntary manslaughter requires adequate provocation. The provocation must be such as would excite irresistible passion in a reasonable person."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Iowa Code § 707.5",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Aggravated Misdemeanor; Class D Felony (if public offense)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant unintentionally caused the death of another person",
+      "By acting in a manner likely to cause death or serious injury",
+      "Or while committing a public offense other than a forcible felony or an escape"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Commission during a public offense (Class D Felony)"
+    ],
+    "notes": "Involuntary manslaughter covers deaths caused by reckless or criminally negligent conduct. Often charged in cases of accidental death during lower-level criminal activity."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Iowa Code § 708.2(2)-(3)",
+    "statute_title": "Assault Causing Serious Injury / Assault with a Dangerous Weapon",
+    "offense_class": "Class D Felony (serious injury); Class C Felony (dangerous weapon with intent to cause serious injury)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 10 years (Class C)",
+    "fine_max": "$7,500 (Class D); $13,660 (Class C)",
+    "elements": [
+      "Defendant committed an assault",
+      "Causing serious injury to another person",
+      "Or used or displayed a dangerous weapon in connection with the assault"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Intent to cause serious injury with a dangerous weapon (Class C Felony)",
+      "Resulting in serious injury (Class D Felony minimum)"
+    ],
+    "notes": "Iowa defines assault broadly under § 708.1 to include threats, attempted battery, and completed battery. Aggravated assault elevates by injury severity and weapon use."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Iowa Code § 708.2(6)",
+    "statute_title": "Assault — Simple Misdemeanor",
+    "offense_class": "Simple Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$855",
+    "elements": [
+      "Defendant committed an act intended to cause pain or injury",
+      "Or placed another in fear of immediate physical contact that would be injurious or offensive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing bodily injury (Serious Misdemeanor)",
+      "Against a peace officer or other protected person (enhanced)"
+    ],
+    "notes": "Simple assault without injury is a simple misdemeanor. Iowa's assault definition includes both threats (putting in fear) and completed battery (physical contact)."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "Iowa Code § 708.2(5)",
+    "statute_title": "Assault Causing Bodily Injury",
+    "offense_class": "Serious Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,875",
+    "elements": [
+      "Defendant committed an assault",
+      "Resulting in bodily injury to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious injury (Class D Felony)",
+      "Use of dangerous weapon (Class D or C Felony)"
+    ],
+    "notes": "Iowa combines assault and battery into a single 'assault' statute. Assault causing bodily injury is the equivalent of misdemeanor battery in other states."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Iowa Code § 711.1",
+    "statute_title": "Robbery in the Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$13,660",
+    "elements": [
+      "Defendant had the intent to commit a theft",
+      "And in carrying out the theft or in attempting to escape",
+      "Did any of the following: committed an assault, threatened force, or threatened purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Purporting to be armed or actually armed (First-Degree Robbery)"
+    ],
+    "notes": "Second-degree robbery is the base robbery offense. Any taking by force or threat of force qualifies. No weapon needed."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Iowa Code § 711.2",
+    "statute_title": "Robbery in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed robbery as defined in § 711.1",
+      "While armed with a dangerous weapon",
+      "Or purposely inflicting or attempting to inflict serious injury"
+    ],
+    "mandatory_minimum": "Must serve 70% of sentence before parole eligibility",
+    "enhancements": [],
+    "notes": "First-degree robbery requires a weapon or serious injury. 70% of the sentence must be served before parole eligibility. Purporting to be armed (even if not) is sufficient."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Iowa Code § 710.1",
+    "statute_title": "Kidnapping in the First Degree",
+    "offense_class": "Class A Felony (first degree); Class B Felony (second degree); Class C Felony (third degree)",
+    "penalty_min": "Life without parole (first degree)",
+    "penalty_max": "Life without parole (first); 25 years (second); 10 years (third)",
+    "fine_max": null,
+    "elements": [
+      "Defendant confined, removed, or held another person by force, intimidation, fraud, or stealth",
+      "With intent to hold for ransom, as a shield or hostage, to commit another crime, or to inflict injury or sexual abuse"
+    ],
+    "mandatory_minimum": "Life without parole (first degree); 70% before parole (second degree)",
+    "enhancements": [
+      "Victim suffers serious injury (First Degree under § 710.2)",
+      "Ransom or sexual abuse intent (First Degree)"
+    ],
+    "notes": "First-degree kidnapping is a Class A Felony with mandatory life without parole. Third-degree kidnapping (§ 710.4) covers less serious confinement offenses."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Iowa Code § 712.2",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Class B Felony (first degree — occupied); Class C Felony (second degree — unoccupied building); Class D Felony (third degree — property)",
+    "penalty_min": null,
+    "penalty_max": "25 years (first); 10 years (second); 5 years (third)",
+    "fine_max": "$13,660 (Class C); $7,500 (Class D)",
+    "elements": [
+      "Defendant set fire to or burned, or caused to be burned, or aided in the burning of property",
+      "Intentionally and without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied structure (First Degree — Class B Felony)",
+      "Resulting in death or serious injury"
+    ],
+    "notes": "First-degree arson requires an occupied structure. Second degree is an unoccupied building. Third degree is other property valued over $200."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Iowa Code § 707.11",
+    "statute_title": "Attempted Murder",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant intended to commit murder",
+      "And did some act toward the commission of murder"
+    ],
+    "mandatory_minimum": "Must serve 70% of sentence before parole eligibility",
+    "enhancements": [],
+    "notes": "Attempted murder is specifically codified as a Class B Felony. The 70% mandatory minimum before parole eligibility applies."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Iowa Code § 708.2(3)",
+    "statute_title": "Assault with a Dangerous Weapon — Intent to Cause Serious Injury",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$13,660",
+    "elements": [
+      "Defendant assaulted another person",
+      "While using or displaying a dangerous weapon",
+      "With the intent to cause serious injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Assault with a dangerous weapon without intent to cause serious injury is a Class D Felony under § 708.2(2). The intent to cause serious injury elevates it to Class C."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Iowa Code § 714.1",
+    "statute_title": "Theft",
+    "offense_class": "Simple Misdemeanor (under $300); Serious Misdemeanor ($300-$749); Aggravated Misdemeanor ($750-$9,999); Class D Felony ($10,000-$14,999); Class C Felony ($15,000+)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 1 year (serious); 2 years (aggravated); 5 years (Class D); 10 years (Class C)",
+    "fine_max": "$855 (simple); $1,875 (serious); $6,250 (aggravated); $7,500 (Class D); $13,660 (Class C)",
+    "elements": [
+      "Defendant took, obtained, or exerted control over the property of another",
+      "With the intent to deprive the other person of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value-based escalation through five tiers",
+      "Theft from a person (automatic Serious Misdemeanor minimum)"
+    ],
+    "notes": "Iowa's theft statute consolidates larceny, embezzlement, false pretenses, and other theft-type offenses. Five tiers based on property value."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Iowa Code § 714.2(2)-(4)",
+    "statute_title": "Theft — Felony Level ($10,000+)",
+    "offense_class": "Class D Felony ($10,000-$14,999); Class C Felony ($15,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 10 years (Class C)",
+    "fine_max": "$7,500 (Class D); $13,660 (Class C)",
+    "elements": [
+      "Defendant took, obtained, or exerted control over property of another",
+      "With intent to deprive",
+      "Value of property exceeds $10,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $15,000+ (Class C Felony)"
+    ],
+    "notes": "Iowa does not use the term 'grand theft.' These are felony theft charges based on the value thresholds in the unified theft statute."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Iowa Code § 714.2(5)",
+    "statute_title": "Theft — Fifth Degree (Under $300)",
+    "offense_class": "Simple Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$855",
+    "elements": [
+      "Defendant took, obtained, or exerted control over property of another",
+      "With intent to deprive",
+      "Value of property is under $300"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft conviction increases degree"
+    ],
+    "notes": "Fifth-degree theft is Iowa's lowest theft charge. Often used for shoplifting under $300. Diversion may be available for first offenders."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Iowa Code § 714.5",
+    "statute_title": "Theft of Services / Shoplifting",
+    "offense_class": "Same as theft by value: Simple Misdemeanor to Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant concealed or took possession of merchandise displayed for sale",
+      "With intent to deprive the merchant of the merchandise without paying"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value-based escalation same as general theft",
+      "Organized retail theft (enhanced)"
+    ],
+    "notes": "Shoplifting is charged under the general theft statute. Merchants may also pursue civil penalties under § 537.5002 (civil demand for treble damages, minimum $50)."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Iowa Code § 713.1",
+    "statute_title": "Burglary",
+    "offense_class": "Class B Felony (first degree — occupied); Class C Felony (second degree — unoccupied); Class D Felony (third degree)",
+    "penalty_min": null,
+    "penalty_max": "25 years (first); 10 years (second); 5 years (third)",
+    "fine_max": "$13,660 (Class C); $7,500 (Class D)",
+    "elements": [
+      "Defendant entered an occupied structure without permission",
+      "With the intent to commit a felony, assault, or theft"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied structure with persons present (First Degree — Class B Felony)",
+      "Armed with a dangerous weapon or explosive (First Degree)",
+      "Inflicting bodily injury (First Degree)"
+    ],
+    "notes": "Iowa burglary requires entry into an 'occupied structure' — any building, vehicle, or place for overnight accommodation. Intent must exist at time of entry."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Iowa Code § 713.5",
+    "statute_title": "Burglary in the First Degree — Occupied Dwelling",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered an occupied structure that is a dwelling",
+      "While persons are present",
+      "With intent to commit a felony, assault, or theft"
+    ],
+    "mandatory_minimum": "Must serve 70% of sentence before parole eligibility",
+    "enhancements": [],
+    "notes": "First-degree burglary of an occupied dwelling is the most serious burglary charge. 70% minimum before parole. Applies when people are present during the entry."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Iowa Code § 714.1(4)",
+    "statute_title": "Theft of a Motor Vehicle",
+    "offense_class": "Class D Felony (most vehicles); Class C Felony ($15,000+)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 10 years (Class C)",
+    "fine_max": "$7,500 (Class D); $13,660 (Class C)",
+    "elements": [
+      "Defendant took, obtained, or exerted control over a motor vehicle of another",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $15,000+ (Class C Felony)"
+    ],
+    "notes": "Motor vehicle theft is charged under the general theft statute based on vehicle value. Operating a vehicle without consent under § 714.7 is a lesser charge (Aggravated Misdemeanor)."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Iowa Code § 714.1(4)",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Same degree as theft based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing it had been stolen",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value-based escalation same as theft"
+    ],
+    "notes": "Receiving stolen property is included in Iowa's consolidated theft statute. The 'knowing' element can be proved by circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Iowa Code § 716.1",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Simple Misdemeanor (under $300); Serious Misdemeanor ($300-$749); Aggravated Misdemeanor ($750-$9,999); Class D Felony ($10,000+)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 1 year (serious); 2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$855 (simple); $1,875 (serious); $6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant knowingly damaged, defaced, altered, or destroyed property of another",
+      "Without the consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage amount determines charge level",
+      "Graffiti (restitution for cleanup)"
+    ],
+    "notes": "Iowa's criminal mischief statute covers all property damage/vandalism. Same value tiers as theft. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Iowa Code § 716.7",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Simple Misdemeanor; Serious Misdemeanor (dwelling or habitable structure)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 1 year (serious)",
+    "fine_max": "$855 (simple); $1,875 (serious)",
+    "elements": [
+      "Defendant entered or remained upon the property of another",
+      "Without justification",
+      "After being notified to leave or knowing entry was forbidden"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Dwelling or habitable structure (Serious Misdemeanor)"
+    ],
+    "notes": "Notice requirement — must be actual or posted notice. Trespass on agricultural land has specific provisions under § 716.7(2)(a)(4)."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Iowa Code § 716.1",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Same as vandalism — value-based tiers",
+    "penalty_min": null,
+    "penalty_max": "Same as vandalism by value tier",
+    "fine_max": "Same as vandalism by value tier",
+    "elements": [
+      "Defendant knowingly damaged, defaced, altered, or destroyed property of another",
+      "Without the consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same as vandalism entry"
+    ],
+    "notes": "Criminal mischief is Iowa's statutory term for vandalism/property destruction. Same statute and provisions as the vandalism entry."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Iowa Code § 708.2A",
+    "statute_title": "Domestic Abuse Assault",
+    "offense_class": "Simple Misdemeanor (first without injury); Serious Misdemeanor (bodily injury or second offense); Aggravated Misdemeanor (injury with intent or serious injury); Class D Felony (third+ or strangulation)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 1 year (serious); 2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$855 (simple); $1,875 (serious); $6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant committed an assault as defined in § 708.1",
+      "Against a family or household member as defined in § 236.2"
+    ],
+    "mandatory_minimum": "Minimum 2 days (second offense); minimum 30 days (third+)",
+    "enhancements": [
+      "Bodily injury (Serious Misdemeanor)",
+      "Injury with intent to cause serious injury (Aggravated Misdemeanor)",
+      "Third or subsequent offense (Class D Felony)",
+      "Strangulation or impeding breathing (Class D Felony)"
+    ],
+    "notes": "Iowa has a specific domestic abuse assault statute. Mandatory arrest when officer has probable cause. No-contact orders automatically issued. Batterer's education program typically required."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Iowa Code § 708.2A(2)(b)",
+    "statute_title": "Domestic Abuse Assault Causing Bodily Injury",
+    "offense_class": "Serious Misdemeanor; Aggravated Misdemeanor (intent to cause serious injury)",
+    "penalty_min": null,
+    "penalty_max": "1 year (serious); 2 years (aggravated)",
+    "fine_max": "$1,875 (serious); $6,250 (aggravated)",
+    "elements": [
+      "Defendant committed an assault against a family or household member",
+      "Resulting in bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Intent to cause serious injury (Aggravated Misdemeanor)",
+      "Causing serious injury (Aggravated Misdemeanor)",
+      "Use of weapon (additional charges)"
+    ],
+    "notes": "Domestic abuse assault causing bodily injury is a serious misdemeanor. Federal firearms prohibition applies (18 U.S.C. § 922(g)(9))."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Iowa Code § 726.6",
+    "statute_title": "Child Endangerment",
+    "offense_class": "Aggravated Misdemeanor (no injury); Class D Felony (bodily injury); Class C Felony (serious injury); Class B Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D); 10 years (Class C); 25 years (Class B)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D); $13,660 (Class C)",
+    "elements": [
+      "Defendant was a parent, guardian, or person having custody or control of a child",
+      "Defendant knowingly acted in a manner that created a substantial risk to the child's physical, mental, or emotional health or safety"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in bodily injury (Class D Felony)",
+      "Resulting in serious injury (Class C Felony)",
+      "Resulting in death (Class B Felony)",
+      "Involving manufacture or possession of meth in presence of child"
+    ],
+    "notes": "Iowa's child endangerment statute is broad — covers physical abuse, neglect, drug exposure, and other reckless conduct. DHS involvement typically accompanies criminal charges."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Iowa Code § 726.6(1)(a)",
+    "statute_title": "Child Endangerment — Physical Abuse",
+    "offense_class": "Aggravated Misdemeanor to Class B Felony based on injury",
+    "penalty_min": null,
+    "penalty_max": "2 years (no injury); 5 years (bodily injury); 10 years (serious injury); 25 years (death)",
+    "fine_max": "$6,250 to $13,660 based on severity",
+    "elements": [
+      "Defendant committed an act which resulted in physical injury to a child",
+      "Or knowingly allowed a child to be placed in a situation likely to result in physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in serious injury (Class C Felony)",
+      "Resulting in death (Class B Felony)"
+    ],
+    "notes": "Physical child abuse is charged under the child endangerment statute. Iowa uses a mandatory reporter system — certain professionals must report suspected child abuse."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Iowa Code § 664A.7",
+    "statute_title": "Violation of a Protective Order — Contempt",
+    "offense_class": "Simple Misdemeanor (first); Serious Misdemeanor (second+); may also be charged as contempt",
+    "penalty_min": null,
+    "penalty_max": "30 days (first); 1 year (second+)",
+    "fine_max": "$855 (first); $1,875 (second+)",
+    "elements": [
+      "A no-contact or protective order was issued",
+      "Defendant had knowledge of the order",
+      "Defendant willfully violated the order"
+    ],
+    "mandatory_minimum": "Minimum 7 days (second violation); minimum 30 days (third+)",
+    "enhancements": [
+      "Second violation (Serious Misdemeanor with 7-day mandatory minimum)",
+      "Third+ violation (Serious Misdemeanor with 30-day mandatory minimum)"
+    ],
+    "notes": "Iowa treats protective order violations seriously with escalating mandatory minimums. Both criminal charges and contempt of court may apply simultaneously."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Iowa Code § 708.11",
+    "statute_title": "Stalking",
+    "offense_class": "Aggravated Misdemeanor (first); Class D Felony (second or with weapon or protective order in effect)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant purposefully engaged in a course of conduct directed at a specific person",
+      "That would cause a reasonable person to feel terrorized, frightened, intimidated, or threatened",
+      "And the person actually felt that way"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class D Felony)",
+      "While carrying a dangerous weapon (Class D Felony)",
+      "Protective order in effect (Class D Felony)",
+      "Violation of conditions of bail (Class D Felony)"
+    ],
+    "notes": "Stalking requires a 'course of conduct' — at least two acts. Includes cyberstalking. Protective order typically issued upon arrest."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Iowa Code § 708.7",
+    "statute_title": "Harassment",
+    "offense_class": "Simple Misdemeanor; Aggravated Misdemeanor (third+ in same household or threat of serious bodily injury)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 2 years (aggravated)",
+    "fine_max": "$855 (simple); $6,250 (aggravated)",
+    "elements": [
+      "Defendant, with the intent to intimidate, annoy, or alarm another person",
+      "Communicated a threat to commit a violent act, or made repeated unwanted communications, or engaged in a course of conduct to harass"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent in same household (Aggravated Misdemeanor)",
+      "Threat of serious bodily injury (Aggravated Misdemeanor)"
+    ],
+    "notes": "Harassment in Iowa includes threatening communications, unwanted contact, and repeated annoying behavior. Cyberbullying provisions also exist."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Iowa Code § 235B.20",
+    "statute_title": "Dependent Adult Abuse",
+    "offense_class": "Class C Felony (exploitation of $10,000+); Class D Felony ($200-$9,999); Aggravated Misdemeanor (other abuse)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 5 years (Class D); 2 years (aggravated)",
+    "fine_max": "$13,660 (Class C); $7,500 (Class D); $6,250 (aggravated)",
+    "elements": [
+      "Defendant committed physical abuse, neglect, or exploitation",
+      "Against a dependent adult as defined in § 235B.2"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Financial exploitation over $10,000 (Class C Felony)",
+      "Causing serious injury (enhanced)"
+    ],
+    "notes": "Iowa has a mandatory reporter system for dependent adult abuse. DHS investigates. Criminal charges may be filed in addition to civil protective measures."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Iowa Code § 724.4",
+    "statute_title": "Carrying Weapons",
+    "offense_class": "Aggravated Misdemeanor; Class D Felony (concealed weapon, felon, or dangerous weapon)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant went armed with a dangerous weapon concealed on or about the person",
+      "Or carried a firearm of any kind on or about the person",
+      "Without a valid professional or nonprofessional permit to carry weapons"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Carrying a dangerous weapon (Class D Felony)",
+      "On school grounds (enhanced)"
+    ],
+    "notes": "Iowa's permit-to-carry system. As of 2021, Iowa is a 'shall issue' state with a permitless carry law (HF 756). However, prohibited persons still may not carry."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Iowa Code § 724.26",
+    "statute_title": "Felon in Possession of a Firearm",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$7,500",
+    "elements": [
+      "Defendant possessed, received, transported, or caused to be transported a firearm or offensive weapon",
+      "Defendant is a person convicted of a felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Applies to persons convicted of any felony in any jurisdiction. Includes constructive possession. Federal felon-in-possession charges (18 U.S.C. § 922(g)(1)) may also apply."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Iowa Code § 724.4(1)",
+    "statute_title": "Carrying a Concealed Weapon — Prohibited Person",
+    "offense_class": "Aggravated Misdemeanor; Class D Felony (prohibited person)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant carried a concealed weapon",
+      "Defendant is a prohibited person (felon, domestic abuser, subject of protective order)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "With Iowa's 2021 permitless carry law, this primarily applies to prohibited persons. Minors under 21 carrying a handgun in public without a permit may also be charged."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Iowa Code § 724.30",
+    "statute_title": "Reckless Use of a Firearm",
+    "offense_class": "Aggravated Misdemeanor; Class D Felony (causing injury)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D with injury)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant intentionally discharged a firearm",
+      "In a reckless manner",
+      "Creating a substantial risk of death or serious injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing bodily injury (Class D Felony)",
+      "Discharging at an occupied structure"
+    ],
+    "notes": "Covers reckless discharge of firearms within city limits, into the air, or toward occupied structures. Additional city ordinances may apply."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Iowa Code § 715A.8",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$7,500",
+    "elements": [
+      "Defendant knowingly and without authorization used, transferred, or obtained the personal identification information of another person",
+      "With intent to obtain credit, property, services, or other benefit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victims over 60 or disabled (enhanced penalties)",
+      "Large financial loss",
+      "Multiple victims"
+    ],
+    "notes": "Iowa's identity theft statute covers use of SSN, driver's license, bank account numbers, and other personal identifiers. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Iowa Code § 714.1(3)",
+    "statute_title": "Theft by Misappropriation (Embezzlement)",
+    "offense_class": "Same as theft by value — Simple Misdemeanor to Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant had lawful access to or possession of property of another",
+      "Defendant misappropriated or converted the property to personal use",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value-based tiers as theft"
+    ],
+    "notes": "Embezzlement is charged under Iowa's unified theft statute as 'theft by misappropriation.' Common in employer-employee and fiduciary relationships."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Iowa Code § 715A.2",
+    "statute_title": "Forgery",
+    "offense_class": "Class D Felony (negotiable instruments, government documents); Aggravated Misdemeanor (other documents)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 2 years (aggravated)",
+    "fine_max": "$7,500 (Class D); $6,250 (aggravated)",
+    "elements": [
+      "Defendant, with intent to defraud or injure anyone",
+      "Made, completed, executed, authenticated, issued, or transferred a writing",
+      "Knowing the writing to be false or forged"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Government documents or negotiable instruments (Class D Felony)"
+    ],
+    "notes": "Forgery of checks, deeds, and other negotiable instruments is a Class D Felony. Forgery of other documents is an aggravated misdemeanor."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Iowa Code § 715A.2(2)(a)",
+    "statute_title": "Counterfeiting — Forgery of Money or Government Instruments",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$7,500",
+    "elements": [
+      "Defendant made, completed, or possessed a forged writing",
+      "Purporting to be issued by a government or government agency",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Primarily a federal crime. State charges under forgery statute are possible for possession of counterfeit currency or forged government documents."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Iowa Code § 714.1(6)",
+    "statute_title": "Theft by Check (Bad Checks)",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant issued or delivered a check, draft, or order on a financial institution",
+      "Knowing there were insufficient funds or no account to cover it",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value-based tiers as theft"
+    ],
+    "notes": "Bad checks are charged under the theft statute. Intent may be inferred from failure to make good within 10 days of notice of dishonor."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Iowa Code § 507E.3",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$7,500",
+    "elements": [
+      "Defendant knowingly presented or caused to be presented a false or fraudulent claim for insurance benefits",
+      "Or prepared false documentation to support a claim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Iowa Insurance Fraud Bureau investigates. Restitution and civil penalties may be imposed in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Iowa Code § 715A.6",
+    "statute_title": "Credit Card Fraud",
+    "offense_class": "Aggravated Misdemeanor; Class D Felony (large amounts or organized activity)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant used a credit card, debit card, or account number",
+      "Knowing it was stolen, expired, cancelled, revoked, or without authorization",
+      "To obtain money, goods, or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large amounts or organized fraud ring (Class D Felony)"
+    ],
+    "notes": "May also be charged as theft or identity theft depending on circumstances. Online credit card fraud is increasingly common."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Iowa Code § 706B.2",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class C Felony ($10,000+); Class D Felony (under $10,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 5 years (Class D)",
+    "fine_max": "$13,660 (Class C); $7,500 (Class D)",
+    "elements": [
+      "Defendant knowingly conducted or attempted to conduct a financial transaction",
+      "Involving proceeds of specified unlawful activity",
+      "With intent to promote the carrying on of specified unlawful activity, or to conceal the nature/source/ownership of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $10,000+ (Class C Felony)"
+    ],
+    "notes": "Iowa's money laundering statute mirrors federal law in structure. Applies to proceeds of any specified unlawful activity."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Iowa Code § 714.8",
+    "statute_title": "Fraudulent Practice",
+    "offense_class": "Same as theft by value — Simple Misdemeanor to Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant obtained property, services, or other advantage",
+      "By means of a false pretense, promise, or representation",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value-based tiers as theft"
+    ],
+    "notes": "Iowa's general fraud statute. Covers schemes to defraud, false representations, and obtaining property by false pretenses."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Iowa Code § 709.2",
+    "statute_title": "Sexual Abuse in the First Degree",
+    "offense_class": "Class A Felony (first degree); Class B Felony (second degree); Class C Felony (third degree)",
+    "penalty_min": "Life without parole (first degree)",
+    "penalty_max": "Life without parole (first); 25 years (second); 10 years (third)",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed a sex act by force or against the will of the other person",
+      "Or the other person was incapacitated or lacked capacity to consent",
+      "First degree: resulting in serious injury or use of a dangerous weapon"
+    ],
+    "mandatory_minimum": "Life without parole (first degree); 70% before parole (second degree)",
+    "enhancements": [
+      "Serious injury or weapon (First Degree — Class A)",
+      "Aided and abetted (First Degree — Class A)"
+    ],
+    "notes": "Iowa uses 'sexual abuse' rather than 'sexual assault.' Three degrees based on force, injury, and victim vulnerability. Sex offender registration required for all degrees."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Iowa Code § 709.3",
+    "statute_title": "Sexual Abuse in the Second Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed a sex act by force or against the will of another",
+      "Aided by one or more persons",
+      "Or the victim was under 12"
+    ],
+    "mandatory_minimum": "Must serve 70% of sentence before parole eligibility",
+    "enhancements": [],
+    "notes": "Second-degree sexual abuse is Iowa's rough equivalent of rape in other states. 70% minimum before parole. Special sentence of lifetime parole supervision upon release."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Iowa Code § 709.9",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Aggravated Misdemeanor (first); Class D Felony (second+ or in presence of minor)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant knowingly exposed the defendant's genitals or committed a sex act",
+      "In the presence of or directed toward a person who is not consenting"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class D Felony)",
+      "In presence of a minor (Class D Felony)"
+    ],
+    "notes": "First offense is an aggravated misdemeanor. Repeat offenses or exposure to minors is a Class D Felony. May trigger sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Iowa Code § 725.1",
+    "statute_title": "Prostitution — Solicitation",
+    "offense_class": "Aggravated Misdemeanor (first solicitation/patronizing); Class D Felony (second+); Class C Felony (promoting, victim under 18)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D); 10 years (Class C)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D); $13,660 (Class C)",
+    "elements": [
+      "Defendant solicited, offered, or agreed to engage in sexual activity in exchange for payment",
+      "Or patronized a prostitute"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class D Felony)",
+      "Promoting prostitution involving a minor (Class C Felony)",
+      "Human trafficking nexus (Class B or C Felony under § 710A.2)"
+    ],
+    "notes": "Iowa treats both the buyer and seller as criminal actors. Promoting prostitution (pimping/pandering) is more severely punished. Minors involved in prostitution are treated as victims, not offenders."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Iowa Code § 728.12",
+    "statute_title": "Sexual Exploitation of a Minor",
+    "offense_class": "Class C Felony (possession); Class B Felony (production or distribution)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 25 years (Class B)",
+    "fine_max": "$13,660 (Class C)",
+    "elements": [
+      "Defendant knowingly purchased or possessed a depiction of a minor engaged in a prohibited sexual act",
+      "Or promoted, sold, or distributed such material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Production (Class B Felony)",
+      "Distribution (Class B Felony)"
+    ],
+    "notes": "Each image or video may be charged as a separate count. Sex offender registration required. Special sentence of lifetime parole supervision applies."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Iowa Code § 692A.111",
+    "statute_title": "Failure to Comply with Sex Offender Registry Requirements",
+    "offense_class": "Class D Felony; Aggravated Misdemeanor (certain violations)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 2 years (aggravated)",
+    "fine_max": "$7,500 (Class D); $6,250 (aggravated)",
+    "elements": [
+      "Defendant is required to register under the sex offender registry",
+      "Defendant knowingly failed to register, verify, or update registration information"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Iowa's sex offender registry has strict compliance requirements. Must register within 5 business days of any change. Residency restrictions under § 692A.114 apply."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Iowa Code § 709.4(2)(c)",
+    "statute_title": "Sexual Abuse in the Third Degree — Victim Under Age of Consent",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$13,660",
+    "elements": [
+      "Defendant performed a sex act with a person who was 12 to 15 years of age",
+      "And the defendant was 4 or more years older"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 12 (Second Degree — Class B Felony)"
+    ],
+    "notes": "Iowa's age of consent is 16. Third-degree sexual abuse applies when the victim is 12-15 and the defendant is 4+ years older. Victim under 12 is second degree (Class B Felony). Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Iowa Code § 723.4",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Simple Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$855",
+    "elements": [
+      "Defendant engaged in fighting, violent or threatening behavior",
+      "Or made loud and raucous noise in the vicinity of a residence or public place",
+      "And the conduct tended to provoke a breach of the peace"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Simple misdemeanor. Common charge for public disturbances, loud parties, and minor altercations."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Iowa Code § 719.1",
+    "statute_title": "Interference with Official Acts",
+    "offense_class": "Simple Misdemeanor; Aggravated Misdemeanor (with weapon, injury, or display of weapon)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 2 years (aggravated)",
+    "fine_max": "$855 (simple); $6,250 (aggravated)",
+    "elements": [
+      "Defendant knowingly resisted or obstructed a person known to be a peace officer or other authorized person",
+      "In the performance of official duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use or display of a dangerous weapon (Aggravated Misdemeanor)",
+      "Causing bodily injury (Aggravated Misdemeanor)"
+    ],
+    "notes": "Iowa uses 'interference with official acts' instead of 'resisting arrest.' Simple misdemeanor unless a weapon is involved or injury results."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Iowa Code § 719.3",
+    "statute_title": "Preventing Apprehension, Obstruction of Prosecution",
+    "offense_class": "Aggravated Misdemeanor; Class D Felony (aiding a Class A or B felon)",
+    "penalty_min": null,
+    "penalty_max": "2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant, with intent to prevent apprehension or prosecution",
+      "Harbored, concealed, warned, or aided a person who had committed a public offense",
+      "Or destroyed, altered, or concealed evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aiding a person who committed a Class A or B Felony (Class D Felony)"
+    ],
+    "notes": "Covers harboring fugitives, evidence tampering, and witness tampering. Separate statute from interference with official acts."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Iowa Code § 665.2",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Court-imposed sanctions",
+    "penalty_min": null,
+    "penalty_max": "6 months for criminal contempt; civil contempt until compliance",
+    "fine_max": "$500",
+    "elements": [
+      "A court order existed",
+      "Defendant had knowledge of the order",
+      "Defendant willfully disobeyed or violated the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Iowa distinguishes between direct contempt (in the court's presence) and indirect contempt (outside court). Summary punishment for direct contempt; notice and hearing required for indirect."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Iowa Code § 123.46",
+    "statute_title": "Intoxication in a Public Place",
+    "offense_class": "Simple Misdemeanor; Serious Misdemeanor (third+ within 12 months)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 1 year (serious)",
+    "fine_max": "$855 (simple); $1,875 (serious)",
+    "elements": [
+      "Defendant was found in an intoxicated condition in a public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent within 12 months (Serious Misdemeanor)"
+    ],
+    "notes": "Simple misdemeanor for first two offenses. Third offense within a year becomes a serious misdemeanor. Officers may transport to a facility instead of jail."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Iowa Code § 811.2A",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Simple Misdemeanor (simple/serious misd case); Aggravated Misdemeanor (aggravated misd/Class D case); Class D Felony (Class A-C felony case)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$855 (simple); $6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant was released pending trial on bail or conditions",
+      "Defendant failed to appear at required court date",
+      "Defendant acted willfully"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge level determines FTA charge level"
+    ],
+    "notes": "Failure to appear charge level tracks the seriousness of the underlying case. Bond forfeiture also applies. Bench warrant issued immediately."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Iowa Code § 718.6",
+    "statute_title": "False Reports to a Public Entity",
+    "offense_class": "Simple Misdemeanor; Serious Misdemeanor (false emergency report)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 1 year (serious)",
+    "fine_max": "$855 (simple); $1,875 (serious)",
+    "elements": [
+      "Defendant knowingly conveyed or caused to be conveyed a false report to a public entity",
+      "Concerning the commission of a crime or emergency"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "False emergency report (Serious Misdemeanor)"
+    ],
+    "notes": "Covers false police reports and false emergency calls. False 911 calls (swatting) may be charged as a serious misdemeanor or higher."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Iowa Code § 708.6",
+    "statute_title": "Threat — Extortion",
+    "offense_class": "Class D Felony (threat to commit forcible felony); Aggravated Misdemeanor (other threats)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 2 years (aggravated)",
+    "fine_max": "$7,500 (Class D); $6,250 (aggravated)",
+    "elements": [
+      "Defendant threatened to commit a forcible felony or other public offense",
+      "Or threatened to commit an act dangerous to human life",
+      "With the intent to compel action or inaction, or to intimidate"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat to commit a forcible felony (Class D Felony)"
+    ],
+    "notes": "Iowa's threat statute covers both terroristic threats and extortion. Threat must be communicated to the victim or a third party. Anonymous threats are still covered."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Iowa Code § 720.2",
+    "statute_title": "Perjury",
+    "offense_class": "Class D Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$7,500",
+    "elements": [
+      "Defendant, while under oath or affirmation",
+      "Made a false statement material to the issue or matter of inquiry",
+      "Knowing the statement to be false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "The statement must be material — false statements on immaterial matters are not perjury. Includes sworn testimony, affidavits, and depositions."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Iowa Code § 722.1",
+    "statute_title": "Bribery",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$13,660",
+    "elements": [
+      "Defendant offered or gave anything of value to a public official",
+      "With intent to influence the official's act, vote, opinion, or judgment"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the giver and receiver of a bribe may be charged. Class C Felony reflects Iowa's serious treatment of public corruption."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Iowa Code § 719.4",
+    "statute_title": "Escape from Custody",
+    "offense_class": "Class D Felony (felony custody); Aggravated Misdemeanor (misdemeanor custody)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Class D); 2 years (aggravated)",
+    "fine_max": "$7,500 (Class D); $6,250 (aggravated)",
+    "elements": [
+      "Defendant was in lawful custody",
+      "Defendant escaped or attempted to escape"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Using force or threat (enhanced)"
+    ],
+    "notes": "Escape charge level corresponds to the custody level (felony vs. misdemeanor). Includes walking away from work release or community-based corrections."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Iowa Code § 717B.2",
+    "statute_title": "Animal Abuse / Animal Neglect",
+    "offense_class": "Simple Misdemeanor (neglect, first); Serious Misdemeanor (abuse, first); Aggravated Misdemeanor (second abuse or torture); Class D Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "30 days (simple); 1 year (serious); 2 years (aggravated); 5 years (Class D)",
+    "fine_max": "$855 (simple); $1,875 (serious); $6,250 (aggravated); $7,500 (Class D)",
+    "elements": [
+      "Defendant knowingly injured, tortured, or destroyed an animal",
+      "Or failed to provide food, water, shelter, or veterinary care"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Torture (Aggravated Misdemeanor)",
+      "Third or subsequent offense (Class D Felony)"
+    ],
+    "notes": "Iowa's animal cruelty laws have been strengthened but remain controversial due to agricultural exemptions. Livestock managed under standard agricultural practices are generally exempt."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Iowa Code § 908.11",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Not a new criminal charge — court may revoke probation and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum sentence for the original offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "The violation must be established by a preponderance of the evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Iowa uses graduated sanctions for probation violations. Technical violations may result in brief incarceration through administrative sanctions. New criminal conduct may lead to full revocation."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Iowa Code § 906.5",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Not a new criminal charge — Board of Parole determines consequences",
+    "penalty_min": null,
+    "penalty_max": "Return to incarceration for remainder of sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Iowa Board of Parole conducts revocation hearings. Parolee is entitled to counsel. Parole may be revoked, modified, or continued."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Iowa Code § 703.1",
+    "statute_title": "Aiding and Abetting",
+    "offense_class": "Same as the underlying offense",
+    "penalty_min": "Same as the underlying offense",
+    "penalty_max": "Same as the underlying offense",
+    "fine_max": "Same as the underlying offense",
+    "elements": [
+      "Defendant knowingly aided, abetted, or assisted another person in the commission of a public offense"
+    ],
+    "mandatory_minimum": "Same as the underlying offense",
+    "enhancements": [],
+    "notes": "All persons involved in the commission of a public offense are equally liable. The aider need not be present at the scene. Mere knowledge of the crime without participation is insufficient."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Iowa Code § 707.11 (murder); § 902.10 (general attempt)",
+    "statute_title": "Attempt",
+    "offense_class": "Generally one class below the completed offense",
+    "penalty_min": null,
+    "penalty_max": "One class below the completed offense (e.g., attempt Class B = Class C)",
+    "fine_max": "Same as the reduced class",
+    "elements": [
+      "Defendant did an act which was a substantial step toward the commission of a public offense",
+      "With the specific intent to commit the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Iowa generally punishes attempts one class below the completed offense. Attempted murder is specifically codified as a Class B Felony under § 707.11. Renunciation may be a defense."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Iowa Code § 706.1",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Generally one class below the target offense",
+    "penalty_min": null,
+    "penalty_max": "Same as the target offense minus one class level",
+    "fine_max": "Same as the reduced class",
+    "elements": [
+      "Defendant agreed with one or more persons to commit a public offense",
+      "One or more of the conspirators performed an overt act in furtherance of the agreement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy requires an agreement and an overt act. Withdrawal before commission of the target offense may be a defense. Conspiracy to commit a Class A Felony is a Class B Felony."
+  }
+]

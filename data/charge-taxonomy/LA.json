@@ -1,0 +1,1610 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "La. R.S. § 14:98",
+    "statute_title": "Operating a Vehicle While Intoxicated (DWI/OWI)",
+    "offense_class": "Misdemeanor (first/second); Felony (third/fourth+)",
+    "penalty_min": "10 days or 32 hours community service (first); 30 days (second); 1 year with work release (third); 10 years hard labor (fourth+)",
+    "penalty_max": "6 months (first); 6 months (second); 5 years hard labor (third); 30 years hard labor (fourth+)",
+    "fine_max": "$1,000 (first); $1,000 (second); $5,000 (third); $5,000 (fourth+)",
+    "elements": [
+      "Defendant operated a vehicle, aircraft, watercraft, or other means of conveyance",
+      "While under the influence of alcoholic beverages or any controlled dangerous substance",
+      "Or with a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": "10 days or 32 hours community service (first); 30 days (second); 1 year with or without hard labor (third, minimum 6 months without probation or parole); 10 years hard labor (fourth+, minimum 10 years without probation or parole)",
+    "enhancements": [
+      "BAC .15-.19 (increased penalties)",
+      "BAC .20+ (further increased mandatory minimum)",
+      "Child under 12 in vehicle (additional penalties under § 14:98.4)",
+      "Third offense (Felony — 1-5 years hard labor)",
+      "Fourth or subsequent (Felony — 10-30 years hard labor)"
+    ],
+    "notes": "Louisiana uses 'DWI' (Driving While Intoxicated). Implied consent under La. R.S. § 32:661. Refusal results in administrative license suspension. 10-year lookback period for enhancement. Ignition interlock required for all offenses. Louisiana has some of the harshest DWI penalties nationally for repeat offenders."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "La. R.S. § 14:98(B)",
+    "statute_title": "DWI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "10 days or 32 hours community service",
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a vehicle while intoxicated",
+      "BAC .08 or higher or impairment shown",
+      "No prior DWI convictions within 10 years"
+    ],
+    "mandatory_minimum": "10 days imprisonment or 32 hours community service; substance abuse evaluation; driver improvement program; 90-day license suspension",
+    "enhancements": [
+      "BAC .15-.19 (minimum 48 hours imprisonment)",
+      "BAC .20+ (minimum 48 hours imprisonment, mandatory ignition interlock 12 months)"
+    ],
+    "notes": "First offense is a misdemeanor. License suspension 90 days (restricted license may be available with ignition interlock). Diversion programs available in some parishes."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "La. R.S. § 14:98(C)-(F)",
+    "statute_title": "DWI — Second or Subsequent Offense",
+    "offense_class": "Misdemeanor (second); Felony (third/fourth+)",
+    "penalty_min": "30 days (second); 1 year (third); 10 years (fourth+)",
+    "penalty_max": "6 months (second); 5 years (third); 30 years (fourth+)",
+    "fine_max": "$1,000 (second); $5,000 (third); $5,000 (fourth+)",
+    "elements": [
+      "Defendant operated a vehicle while intoxicated",
+      "Defendant has prior DWI convictions within 10 years"
+    ],
+    "mandatory_minimum": "30 days (second); 1 year hard labor, minimum 6 months without suspension (third); 10 years hard labor without probation, parole, or suspension (fourth+)",
+    "enhancements": [
+      "BAC .15+ (enhanced penalties at all levels)",
+      "Child in vehicle"
+    ],
+    "notes": "Fourth offense DWI is 10-30 years at hard labor — one of the harshest in the nation. Third offense requires minimum 6 months incarceration without suspension. Louisiana counts convictions within 10 years."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "La. R.S. § 14:98(A)(1)(b)",
+    "statute_title": "DWI — Controlled Dangerous Substance",
+    "offense_class": "Same as alcohol DWI by offense count",
+    "penalty_min": "Same as alcohol DWI",
+    "penalty_max": "Same as alcohol DWI",
+    "fine_max": "Same as alcohol DWI",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While under the influence of any controlled dangerous substance as defined by the Uniform Controlled Dangerous Substances Law"
+    ],
+    "mandatory_minimum": "Same as alcohol DWI",
+    "enhancements": [
+      "Same as alcohol DWI"
+    ],
+    "notes": "Louisiana does not have a per se drug DWI provision — prosecution must prove actual impairment. Includes prescription medications that impair driving."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "La. R.S. § 14:99",
+    "statute_title": "Reckless Operation of a Vehicle",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$200",
+    "elements": [
+      "Defendant operated a vehicle in a criminally negligent or reckless manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Misdemeanor with relatively low penalties. Common plea reduction from DWI. Louisiana uses 'reckless operation' rather than 'reckless driving.'"
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "La. R.S. § 14:100",
+    "statute_title": "Hit-and-Run Driving",
+    "offense_class": "Felony (death/serious bodily injury); Misdemeanor (non-serious injury or property damage)",
+    "penalty_min": null,
+    "penalty_max": "10 years hard labor (death/serious injury); 6 months (property/minor injury)",
+    "fine_max": "$5,000 (felony); $500 (misdemeanor)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Resulting in death, injury, or property damage",
+      "Defendant intentionally failed to stop and give identifying information and render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death (imprisonment at hard labor not more than 10 years)",
+      "Serious bodily injury (enhanced)"
+    ],
+    "notes": "Hit-and-run involving death or serious injury is a felony with hard labor. Must stop, give name, address, and license information, and render reasonable assistance."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "La. R.S. § 14:32.1",
+    "statute_title": "Vehicular Homicide",
+    "offense_class": "Felony",
+    "penalty_min": "5 years hard labor (minimum 3 years without suspension)",
+    "penalty_max": "30 years hard labor",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant killed another human being while engaged in the operation of a motor vehicle",
+      "While intoxicated (BAC .08+ or under the influence of drugs)",
+      "Or while in violation of certain traffic laws"
+    ],
+    "mandatory_minimum": "Minimum 5 years, at least 3 years without benefit of probation, parole, or suspension of sentence",
+    "enhancements": [
+      "BAC .15+ (minimum 5 years without probation/parole/suspension)",
+      "BAC .20+ (minimum 10 years without probation/parole/suspension)",
+      "Prior DWI (minimum 10 years without suspension)"
+    ],
+    "notes": "Vehicular homicide in Louisiana carries 5-30 years at hard labor — among the harshest nationally. BAC level at time of offense significantly impacts mandatory minimum. Separate from negligent homicide."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "La. R.S. § 14:32",
+    "statute_title": "Negligent Homicide",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant killed a human being",
+      "By criminal negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Negligent homicide covers vehicular deaths caused by criminal negligence without intoxication. Less severe than vehicular homicide (DWI-related). Criminal negligence is a higher standard than civil negligence."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "La. R.S. § 32:415",
+    "statute_title": "Driving Under Suspension or Revocation",
+    "offense_class": "Misdemeanor (first/second); Felony (third+ or DWI-related suspension)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 6 months (second); 2 years hard labor (third+)",
+    "fine_max": "$500 (first/second); $1,000 (third+)",
+    "elements": [
+      "Defendant operated a motor vehicle on a public highway",
+      "While driving privilege was suspended or revoked",
+      "Defendant had knowledge of the suspension"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DWI-related suspension (enhanced)",
+      "Third or subsequent (felony)"
+    ],
+    "notes": "Third offense driving while suspended is a felony in Louisiana. DWI-related suspensions carry additional consequences. Notice of suspension creates presumption of knowledge."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "La. R.S. § 14:108.1",
+    "statute_title": "Flight from an Officer",
+    "offense_class": "Misdemeanor (on foot); Felony (aggravated flight — vehicle endangering human life)",
+    "penalty_min": null,
+    "penalty_max": "6 months (on foot); 5 years hard labor (aggravated flight, first); 10 years (aggravated flight, second+)",
+    "fine_max": "$500 (misdemeanor); $2,000 (felony)",
+    "elements": [
+      "Defendant intentionally refused to stop or fled from a law enforcement officer",
+      "After being given a visual or audible signal to stop",
+      "Aggravated: flight by vehicle that creates serious risk to human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated flight (vehicle, endangering life) — felony up to 5 years hard labor",
+      "Serious bodily injury to another person during flight",
+      "Second or subsequent aggravated flight (up to 10 years)"
+    ],
+    "notes": "Simple flight (on foot) is a misdemeanor. Aggravated flight from an officer (vehicle, endangering human life) is a felony. Louisiana specifies 'hard labor' for felony sentences."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "La. R.S. § 40:966(C)",
+    "statute_title": "Possession of a Controlled Dangerous Substance (Schedule I)",
+    "offense_class": "Felony (Schedule I/II); Misdemeanor (Schedule III-V for smaller amounts)",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor (Schedule I, first); 5 years hard labor (Schedule II, first); lesser for III-V",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled dangerous substance",
+      "Classified in Schedule I"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (up to 10 years hard labor)",
+      "Third or subsequent (up to 20 years hard labor)"
+    ],
+    "notes": "Louisiana reformed drug possession laws significantly in 2017 (Justice Reinvestment). Possession penalties were reduced. Schedule I/II possession is still a felony. Drug court diversion widely available."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "La. R.S. § 40:966(C)(2)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Misdemeanor (14g or less, first/second); Misdemeanor (14g-2.5 lbs, first); Felony (third+ or large amounts)",
+    "penalty_min": null,
+    "penalty_max": "15 days (14g or less, first); 6 months (14g or less, second); 5 years (14g-2.5 lbs, first); 20 years (third+)",
+    "fine_max": "$300 (14g first); $1,000 (14g second); $5,000 (over 14g); $5,000 (third+)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed marijuana"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount over 14 grams (felony for repeat offenders)",
+      "Third or subsequent (up to 20 years hard labor)"
+    ],
+    "notes": "Louisiana reformed marijuana penalties in 2021. Possession of 14 grams or less is a misdemeanor (max 15 days first offense). Larger amounts remain felonies for repeat offenders. Louisiana has a medical marijuana program."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "La. R.S. § 40:967(C)",
+    "statute_title": "Possession of Cocaine (Schedule II)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor (first); 10 years (second); 20 years (third+)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed cocaine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (up to 10 years hard labor)",
+      "Third or subsequent (up to 20 years hard labor)"
+    ],
+    "notes": "Cocaine is Schedule II in Louisiana. First possession is up to 5 years hard labor after 2017 reform (previously up to 5 years without reform). Drug court diversion available."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "La. R.S. § 40:967(C)",
+    "statute_title": "Possession of Methamphetamine (Schedule II)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor (first); 10 years (second); 20 years (third+)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed methamphetamine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (up to 10 years hard labor)",
+      "Third or subsequent (up to 20 years hard labor)"
+    ],
+    "notes": "Meth is Schedule II. Same penalties as cocaine possession. 2017 reform reduced maximums. Drug court available for eligible offenders."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "La. R.S. § 40:966(B); § 40:967(B)",
+    "statute_title": "Distribution or Possession with Intent to Distribute — Large Amounts",
+    "offense_class": "Felony",
+    "penalty_min": "5 years hard labor (cocaine 28g+); 10 years hard labor (heroin 28g+)",
+    "penalty_max": "40 years hard labor (cocaine 28g-199g); 99 years hard labor (heroin 400g+); life (Schedule I large amounts)",
+    "fine_max": "$50,000-$600,000 depending on substance and amount",
+    "elements": [
+      "Defendant produced, manufactured, distributed, or dispensed, or possessed with intent to distribute",
+      "A controlled dangerous substance in trafficking amounts"
+    ],
+    "mandatory_minimum": "Mandatory minimum without benefit of probation, parole, or suspension for trafficking-level amounts",
+    "enhancements": [
+      "Amount-based mandatory minimums",
+      "Distribution to a minor (enhanced)",
+      "Near school, church, or housing project (additional penalties under § 40:981.3)"
+    ],
+    "notes": "Louisiana has specific trafficking penalties with mandatory minimums based on weight. Cocaine 28g+, heroin 28g+, and meth 28g+ trigger enhanced trafficking provisions. Some of the harshest drug penalties in the nation."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "La. R.S. § 40:966(A); § 40:967(A)",
+    "statute_title": "Distribution of a Controlled Dangerous Substance",
+    "offense_class": "Felony",
+    "penalty_min": "2 years hard labor (Schedule I, first)",
+    "penalty_max": "30 years hard labor (Schedule I, first); 60 years (Schedule I, second); life (Schedule I, third+)",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly or intentionally produced, manufactured, distributed, or dispensed",
+      "Or possessed with intent to produce, manufacture, distribute, or dispense",
+      "A controlled dangerous substance"
+    ],
+    "mandatory_minimum": "Minimum 2 years without benefit of probation or suspension (Schedule I, first)",
+    "enhancements": [
+      "Second offense (Schedule I: 5-60 years hard labor)",
+      "Third or subsequent (Schedule I: life imprisonment at hard labor)",
+      "Distribution to a minor (additional 5 years)",
+      "Near school or public housing (enhanced under § 40:981.3)"
+    ],
+    "notes": "Distribution of Schedule I substances carries severe penalties. Third offense carries mandatory life imprisonment. School zone enhancement adds consecutive time."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "La. R.S. § 40:967(A); § 40:966(A)",
+    "statute_title": "Manufacturing a Controlled Dangerous Substance",
+    "offense_class": "Felony",
+    "penalty_min": "5 years hard labor (meth manufacturing)",
+    "penalty_max": "30 years hard labor (first); 60 years (second); life (third+)",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly or intentionally manufactured or attempted to manufacture a controlled dangerous substance"
+    ],
+    "mandatory_minimum": "Minimum 5 years without benefit of probation, parole, or suspension (meth manufacturing under § 40:967(A))",
+    "enhancements": [
+      "Manufacturing in presence of a minor (enhanced)",
+      "Creating environmental hazard",
+      "Second or subsequent offense"
+    ],
+    "notes": "Manufacturing is covered under the distribution statutes. Meth manufacturing has specific enhanced provisions. Environmental contamination remediation costs may be assessed."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "La. R.S. § 40:1023",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$300",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "Knowing or under circumstances where one reasonably should know that it will be used for controlled substance purposes"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery to a minor (felony under § 40:1024)"
+    ],
+    "notes": "Possession is a misdemeanor. Sale or delivery of paraphernalia is also a misdemeanor. Delivery to a minor is a felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "La. R.S. § 40:966(A); § 40:967(A)",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Felony — same as distribution",
+    "penalty_min": "2 years hard labor (Schedule I, first)",
+    "penalty_max": "Same as distribution penalties",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant possessed a controlled dangerous substance",
+      "With intent to produce, manufacture, distribute, or dispense"
+    ],
+    "mandatory_minimum": "Same as distribution",
+    "enhancements": [
+      "Same as distribution"
+    ],
+    "notes": "Possession with intent to distribute carries the same penalties as actual distribution in Louisiana. Intent inferred from quantity, packaging, scales, and other evidence."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "La. R.S. § 14:30",
+    "statute_title": "First Degree Murder",
+    "offense_class": "Capital Felony",
+    "penalty_min": "Life imprisonment at hard labor without benefit of parole, probation, or suspension",
+    "penalty_max": "Death",
+    "fine_max": null,
+    "elements": [
+      "Defendant had specific intent to kill or inflict great bodily harm",
+      "And one or more aggravating circumstances exist (e.g., victim was police officer, killing during felony, killing for hire, victim under 12, serial killing)"
+    ],
+    "mandatory_minimum": "Life at hard labor without parole (if death penalty not imposed)",
+    "enhancements": [],
+    "notes": "Louisiana retains the death penalty for first-degree murder. If the death penalty is not sought or imposed, the sentence is mandatory life at hard labor without parole. Unanimous jury required for conviction."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "La. R.S. § 14:30.1",
+    "statute_title": "Second Degree Murder",
+    "offense_class": "Felony",
+    "penalty_min": "Life imprisonment at hard labor without benefit of parole, probation, or suspension",
+    "penalty_max": "Life imprisonment at hard labor without parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant had specific intent to kill or inflict great bodily harm",
+      "Without the aggravating circumstances required for first-degree murder",
+      "Or defendant engaged in the perpetration of certain felonies during which a human being was killed"
+    ],
+    "mandatory_minimum": "Mandatory life imprisonment at hard labor without parole, probation, or suspension",
+    "enhancements": [],
+    "notes": "Second-degree murder carries mandatory life without parole — same sentence as first-degree without the death penalty. This is one of the most severe second-degree murder penalties nationally. Includes felony murder rule."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "La. R.S. § 14:31",
+    "statute_title": "Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "40 years hard labor",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant killed a human being",
+      "When the offender has a specific intent to kill or inflict great bodily harm",
+      "While in sudden passion or heat of blood immediately caused by provocation sufficient to deprive an average person of self-control"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Louisiana manslaughter covers what other states call voluntary manslaughter. Up to 40 years at hard labor — very severe for manslaughter. 'Sudden passion' or 'heat of blood' is the mitigating factor."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "La. R.S. § 14:32",
+    "statute_title": "Negligent Homicide",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant killed a human being by criminal negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Negligent homicide with a motor vehicle while DWI — charged as vehicular homicide under § 14:32.1"
+    ],
+    "notes": "Louisiana uses 'negligent homicide' instead of 'involuntary manslaughter.' Criminal negligence is conduct that demonstrates gross deviation from the standard of care. Maximum 5 years hard labor."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "La. R.S. § 14:37",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor) or 5 years hard labor (with firearm under § 14:37.4)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed an assault",
+      "With a dangerous weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "With a firearm (Aggravated Assault with a Firearm — felony, up to 10 years hard labor under § 14:37.4)"
+    ],
+    "notes": "Louisiana defines aggravated assault as assault with a dangerous weapon. Aggravated assault with a firearm (§ 14:37.4) carries up to 10 years at hard labor. Distinction between assault (attempt) and battery (contact) is maintained."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "La. R.S. § 14:38",
+    "statute_title": "Simple Assault",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$200",
+    "elements": [
+      "Defendant committed an assault on another person",
+      "An assault is an attempt to commit a battery or the intentional placing of another in reasonable apprehension of receiving a battery"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against certain protected persons (enhanced)"
+    ],
+    "notes": "Simple assault in Louisiana is a threat-based offense — no physical contact required. Physical contact is 'battery.' Low penalties — 90 days max and $200 fine."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "La. R.S. § 14:35",
+    "statute_title": "Simple Battery",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed a battery upon another person",
+      "A battery is the intentional use of force or violence upon the person of another",
+      "Or the administration of a poison or noxious liquid or substance to another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against certain protected persons (enhanced)",
+      "Causing serious bodily injury — aggravated battery under § 14:34"
+    ],
+    "notes": "Simple battery is a misdemeanor. Louisiana maintains the assault (threat) / battery (contact) distinction. Aggravated battery (§ 14:34) causing serious bodily injury is up to 10 years hard labor."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "La. R.S. § 14:65",
+    "statute_title": "Simple Robbery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years hard labor",
+    "fine_max": "$3,000",
+    "elements": [
+      "Defendant took anything of value belonging to another from the person of another or in the immediate control of another",
+      "By use of force or intimidation, but not armed with a dangerous weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with a dangerous weapon — Armed Robbery (§ 14:64)"
+    ],
+    "notes": "Simple robbery is the base robbery offense without a weapon. Up to 7 years at hard labor. Louisiana has several robbery classifications."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "La. R.S. § 14:64",
+    "statute_title": "Armed Robbery",
+    "offense_class": "Felony",
+    "penalty_min": "10 years hard labor without benefit of parole, probation, or suspension",
+    "penalty_max": "99 years hard labor",
+    "fine_max": null,
+    "elements": [
+      "Defendant took anything of value from the person or immediate control of another",
+      "By use of force or intimidation",
+      "While armed with a dangerous weapon"
+    ],
+    "mandatory_minimum": "10 years without benefit of parole, probation, or suspension",
+    "enhancements": [
+      "Use of a firearm (additional mandatory consecutive sentence under § 14:64.3)"
+    ],
+    "notes": "Armed robbery carries 10-99 years at hard labor — among the harshest in the nation. Minimum 10 years without parole. Armed robbery with a firearm under § 14:64.3 adds a mandatory 5 years consecutive."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "La. R.S. § 14:44",
+    "statute_title": "Aggravated Kidnapping",
+    "offense_class": "Capital Felony (aggravated); Felony (simple, second degree)",
+    "penalty_min": "Life at hard labor without parole (aggravated); 5 years (simple under § 14:45)",
+    "penalty_max": "Death or life without parole (aggravated); 5 years (simple); 40 years (second degree under § 14:44.1)",
+    "fine_max": null,
+    "elements": [
+      "Defendant forcibly seized and carried another from one place to another",
+      "Aggravated: with intent to extort, use as hostage, physical injury, or sexual abuse"
+    ],
+    "mandatory_minimum": "Life at hard labor without parole (aggravated kidnapping if death penalty not imposed); 5 years without probation/parole (second degree, if victim under 18)",
+    "enhancements": [
+      "Victim under 18 (enhanced mandatory minimum)",
+      "Sexual abuse (aggravating factor)"
+    ],
+    "notes": "Louisiana has aggravated kidnapping (capital offense), second-degree kidnapping (§ 14:44.1, up to 40 years), and simple kidnapping (§ 14:45, up to 5 years). Aggravated kidnapping carries death or mandatory life."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "La. R.S. § 14:51",
+    "statute_title": "Aggravated Arson",
+    "offense_class": "Felony (aggravated — occupied building); Felony (simple — unoccupied)",
+    "penalty_min": "6 years hard labor without probation/parole (aggravated)",
+    "penalty_max": "20 years hard labor (aggravated); 15 years hard labor (simple under § 14:52)",
+    "fine_max": "$25,000 (aggravated); $15,000 (simple)",
+    "elements": [
+      "Defendant intentionally set fire to or damaged by explosive a structure",
+      "Aggravated: when the structure is foreseeable to be occupied by one or more persons"
+    ],
+    "mandatory_minimum": "6 years without benefit of probation, parole, or suspension (aggravated)",
+    "enhancements": [
+      "Occupied structure (Aggravated Arson)",
+      "Resulting in bodily harm or death"
+    ],
+    "notes": "Aggravated arson (occupied building) carries 6-20 years at hard labor with a 6-year mandatory minimum. Simple arson (unoccupied) is up to 15 years."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "La. R.S. § 14:30; § 14:27",
+    "statute_title": "Attempted First Degree Murder",
+    "offense_class": "Felony",
+    "penalty_min": "10 years hard labor without probation, parole, or suspension",
+    "penalty_max": "50 years hard labor",
+    "fine_max": null,
+    "elements": [
+      "Defendant had specific intent to commit first-degree murder",
+      "And committed an overt act toward the commission thereof"
+    ],
+    "mandatory_minimum": "10 years without benefit of probation, parole, or suspension",
+    "enhancements": [],
+    "notes": "Attempted first-degree murder carries 10-50 years at hard labor. Attempted second-degree murder carries 10-50 years. Both have mandatory minimums without parole."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "La. R.S. § 14:37.4",
+    "statute_title": "Aggravated Assault with a Firearm",
+    "offense_class": "Felony",
+    "penalty_min": "1 year hard labor without probation, parole, or suspension",
+    "penalty_max": "10 years hard labor",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant committed an assault upon another person",
+      "With a firearm"
+    ],
+    "mandatory_minimum": "1 year without benefit of probation, parole, or suspension",
+    "enhancements": [],
+    "notes": "Aggravated assault with a firearm is a specific statute with harsher penalties than general aggravated assault. 1-year mandatory minimum without parole."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "La. R.S. § 14:67",
+    "statute_title": "Theft",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000-$4,999); Felony ($5,000-$24,999); Felony ($25,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (under $1,000); 5 years (with or without hard labor, $1,000-$4,999); 10 years (hard labor, $5,000-$24,999); 20 years (hard labor, $25,000+)",
+    "fine_max": "$1,000 (misdemeanor); $3,000 ($1,000-$4,999); $10,000 ($5,000-$24,999); $50,000 ($25,000+)",
+    "elements": [
+      "Defendant misappropriated or took anything of value belonging to another",
+      "Either without the consent of the other to the misappropriation or taking",
+      "Or by means of fraudulent conduct, practices, or representations",
+      "With intent to deprive the other permanently of the thing of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value-based tier escalation",
+      "Theft of a firearm (felony regardless of value)"
+    ],
+    "notes": "Louisiana unified theft statute. Felony threshold is $1,000. Multiple value tiers with increasing penalties. Theft of a firearm (§ 14:67.15) is always a felony."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "La. R.S. § 14:67(B)(2)-(4)",
+    "statute_title": "Theft — Felony ($1,000+)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years ($1,000-$4,999); 10 years hard labor ($5,000-$24,999); 20 years hard labor ($25,000+)",
+    "fine_max": "$3,000 ($1,000-$4,999); $10,000 ($5,000-$24,999); $50,000 ($25,000+)",
+    "elements": [
+      "Defendant took or misappropriated property of another",
+      "With intent to permanently deprive",
+      "Value $1,000 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value-based tiers"
+    ],
+    "notes": "Louisiana does not use 'grand theft' terminology. Felony theft based on $1,000 threshold with multiple tiers."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "La. R.S. § 14:67(B)(1)",
+    "statute_title": "Theft — Misdemeanor (Under $1,000)",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant took or misappropriated property of another",
+      "With intent to permanently deprive",
+      "Value under $1,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Misdemeanor theft for property under $1,000. Diversion available in some parishes for first offenders."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "La. R.S. § 14:67.10",
+    "statute_title": "Theft of Goods (Shoplifting)",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (under $500, first); 2 years hard labor (third+, under $1,000); felony penalties for $1,000+",
+    "fine_max": "$500 (first, under $500); $2,000 (third+); felony fines for higher values",
+    "elements": [
+      "Defendant committed theft of goods held for sale in a retail establishment",
+      "By concealing, taking, or otherwise appropriating goods"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (increased penalties)",
+      "Third or subsequent (up to 2 years hard labor even for misdemeanor amounts)",
+      "Organized retail theft"
+    ],
+    "notes": "Louisiana has a separate shoplifting statute. Third offense shoplifting carries up to 2 years at hard labor even for amounts under $1,000. Civil recovery also available to merchants."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "La. R.S. § 14:62",
+    "statute_title": "Simple Burglary",
+    "offense_class": "Felony",
+    "penalty_min": "1 year hard labor (inhabited dwelling)",
+    "penalty_max": "12 years hard labor",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant entered a structure, vehicle, or watercraft",
+      "Without authorization",
+      "With intent to commit a felony or theft therein"
+    ],
+    "mandatory_minimum": "1 year without probation, parole, or suspension if of an inhabited dwelling",
+    "enhancements": [
+      "Inhabited dwelling (mandatory minimum 1 year without probation/parole)",
+      "Aggravated Burglary — while armed or committing battery (§ 14:60)"
+    ],
+    "notes": "Simple burglary is up to 12 years hard labor. Aggravated burglary (§ 14:60 — entry while armed or committing battery) carries 1-30 years hard labor."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "La. R.S. § 14:62.2",
+    "statute_title": "Simple Burglary of an Inhabited Dwelling",
+    "offense_class": "Felony",
+    "penalty_min": "1 year hard labor without benefit of probation, parole, or suspension",
+    "penalty_max": "12 years hard labor",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant entered an inhabited dwelling without authorization",
+      "With intent to commit a felony or theft therein"
+    ],
+    "mandatory_minimum": "1 year without benefit of probation, parole, or suspension",
+    "enhancements": [
+      "While armed (Aggravated Burglary — 1-30 years hard labor)",
+      "Committing battery on occupant (Aggravated Burglary)"
+    ],
+    "notes": "Burglary of an inhabited dwelling has a 1-year mandatory minimum without parole. 'Inhabited' means used as a place of abode whether or not occupied at the time."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "La. R.S. § 14:68.4",
+    "statute_title": "Unauthorized Use of a Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "2 years hard labor (first); 5 years (second+)",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant intentionally took or used a motor vehicle belonging to another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (up to 5 years hard labor)"
+    ],
+    "notes": "Louisiana's motor vehicle theft statute. Separate from general theft. Carjacking (§ 14:64.2) is a separate, much more serious offense (up to 20 years hard labor)."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "La. R.S. § 14:69",
+    "statute_title": "Illegal Possession of Stolen Things",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (under $1,000); 10 years hard labor ($1,000-$4,999); 20 years hard labor ($5,000+)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 ($1,000-$4,999); $20,000 ($5,000+)",
+    "elements": [
+      "Defendant intentionally procured, received, or concealed stolen things",
+      "Knowing or having good reason to believe the things were stolen",
+      "With intent to deprive the owner permanently"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value-based tiers same as theft"
+    ],
+    "notes": "Louisiana uses 'illegal possession of stolen things.' Value tiers match the theft statute. The 'good reason to believe' standard is less than actual knowledge."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "La. R.S. § 14:56",
+    "statute_title": "Simple Criminal Damage to Property",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000-$49,999); Felony ($50,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (under $1,000); 2 years hard labor ($1,000-$49,999); 3 years hard labor ($50,000+)",
+    "fine_max": "$500 (under $1,000); $10,000 ($1,000+)",
+    "elements": [
+      "Defendant intentionally damaged the property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value-based escalation"
+    ],
+    "notes": "Louisiana uses 'criminal damage to property.' Value tiers determine whether it's a misdemeanor or felony. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "La. R.S. § 14:63",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days (first); 90 days (second+)",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant entered upon immovable property of another without authorization",
+      "After having been forbidden to do so by the owner or authorized agent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (up to 90 days)"
+    ],
+    "notes": "Louisiana criminal trespass requires notice (verbal, posted signs, or enclosure). Simple trespass is a misdemeanor. Trespass of critical infrastructure carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "La. R.S. § 14:56",
+    "statute_title": "Simple Criminal Damage to Property",
+    "offense_class": "Same as vandalism entry",
+    "penalty_min": null,
+    "penalty_max": "Same as vandalism entry",
+    "fine_max": "Same as vandalism entry",
+    "elements": [
+      "Defendant intentionally damaged the property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same as vandalism entry"
+    ],
+    "notes": "Louisiana uses 'criminal damage to property' — same statute as vandalism entry."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "La. R.S. § 14:35.3",
+    "statute_title": "Domestic Abuse Battery",
+    "offense_class": "Misdemeanor (first); enhanced misdemeanor/felony (subsequent or aggravated)",
+    "penalty_min": "30 days (second offense, minimum without suspension)",
+    "penalty_max": "6 months (first); 1 year (second); 3 years hard labor (child or pregnant victim); 5 years hard labor (strangulation or aggravated under § 14:34.9)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed a battery upon a family member or household member as defined by the Protection from Domestic Abuse Act",
+      "Or dating partner"
+    ],
+    "mandatory_minimum": "Minimum 30 days (second offense, without probation or suspension); minimum 1 year (aggravated — strangulation, child, pregnant)",
+    "enhancements": [
+      "Second offense (minimum 30 days without suspension)",
+      "Child present or pregnant victim (up to 3 years hard labor)",
+      "Strangulation (up to 3 years hard labor under § 14:35.3(L))",
+      "Aggravated domestic abuse battery — causing serious bodily injury (§ 14:34.9, up to 30 years)"
+    ],
+    "notes": "Louisiana has a specific domestic abuse battery statute with escalating penalties. Aggravated domestic abuse battery (§ 14:34.9 — serious injury) carries 1-30 years hard labor with a 1-year mandatory minimum. Mandatory arrest policy."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "La. R.S. § 14:35.3",
+    "statute_title": "Domestic Abuse Battery",
+    "offense_class": "Misdemeanor (first); escalating with priors",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally used force or violence upon a family or household member",
+      "Or dating partner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (minimum 30 days)",
+      "Third offense (minimum 2 years)",
+      "Serious injury (aggravated — § 14:34.9)"
+    ],
+    "notes": "Same statute as domestic violence entry. Federal firearms prohibition applies upon conviction (18 U.S.C. § 922(g)(9)). Family or household member includes spouses, former spouses, co-parents, and cohabitants."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "La. R.S. § 14:93",
+    "statute_title": "Cruelty to Juveniles",
+    "offense_class": "Felony",
+    "penalty_min": "1 year hard labor without probation, parole, or suspension",
+    "penalty_max": "10 years hard labor",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally or criminally negligently caused unjustifiable pain or suffering to a child",
+      "Or mistreated or neglected a child"
+    ],
+    "mandatory_minimum": "1 year without benefit of probation, parole, or suspension",
+    "enhancements": [
+      "Serious bodily injury (enhanced under § 14:93.2.3)",
+      "Second or subsequent (enhanced)"
+    ],
+    "notes": "Louisiana's cruelty to juveniles statute covers abuse, neglect, and endangerment. 1-year mandatory minimum. DCFS investigation accompanies criminal charges."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "La. R.S. § 14:93.2.3",
+    "statute_title": "Second Degree Cruelty to Juveniles",
+    "offense_class": "Felony",
+    "penalty_min": "2 years hard labor without probation, parole, or suspension",
+    "penalty_max": "40 years hard labor",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant committed cruelty to a juvenile that results in serious bodily injury",
+      "Or the child required medical treatment for injuries"
+    ],
+    "mandatory_minimum": "2 years without benefit of probation, parole, or suspension",
+    "enhancements": [],
+    "notes": "Second-degree cruelty to juveniles (serious bodily injury) carries 2-40 years at hard labor with a 2-year mandatory minimum. First-degree (death) carries 10-40 years."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "La. R.S. § 14:79",
+    "statute_title": "Violation of Protective Orders",
+    "offense_class": "Misdemeanor (first); Felony (subsequent or with additional crimes)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 2 years hard labor (felony)",
+    "fine_max": "$500 (first); $1,000 (felony)",
+    "elements": [
+      "A protective order was issued under the Domestic Abuse Assistance Act or Protection from Dating Violence Act",
+      "Defendant intentionally violated the order"
+    ],
+    "mandatory_minimum": "14 days (first, if physical abuse involved); increased mandatory for subsequent",
+    "enhancements": [
+      "Second or subsequent violation (felony, up to 2 years hard labor)",
+      "Violation involving physical abuse (mandatory jail)"
+    ],
+    "notes": "Louisiana takes protective order violations seriously. First violation with abuse carries a mandatory 14-day jail sentence. Subsequent violations are felonies."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "La. R.S. § 14:40.2",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor (first); Felony (second+ or cyberstalking under § 14:40.3)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years hard labor (second+)",
+    "fine_max": "$1,000 (first); $5,000 (second+)",
+    "elements": [
+      "Defendant willfully, maliciously, and repeatedly followed or harassed another person",
+      "Such that the victim felt seriously alarmed, annoyed, or harassed",
+      "And the conduct would cause a reasonable person to feel seriously alarmed, annoyed, or harassed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent (felony, up to 5 years hard labor)",
+      "While subject to protective order (enhanced)"
+    ],
+    "notes": "Stalking requires repeated conduct. First offense is a misdemeanor. Second offense becomes a felony. Cyberstalking is a separate offense under § 14:40.3."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "La. R.S. § 14:40.7",
+    "statute_title": "Cyberstalking / Harassment",
+    "offense_class": "Misdemeanor; Felony (if against minor or second+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years hard labor (felony)",
+    "fine_max": "$500 (misdemeanor); $2,000 (felony)",
+    "elements": [
+      "Defendant, using electronic communication, transmitted threats, harassment, or repeated unwanted messages",
+      "With intent to harass, intimidate, or cause emotional distress"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against a minor (felony)",
+      "Second or subsequent (felony)"
+    ],
+    "notes": "Louisiana has specific cyberstalking/online harassment statutes. General harassment may also be charged as disturbing the peace under § 14:103."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "La. R.S. § 14:93.3",
+    "statute_title": "Abuse of the Infirm — Cruelty to Persons with Infirmities",
+    "offense_class": "Felony",
+    "penalty_min": "1 year hard labor without probation, parole, or suspension",
+    "penalty_max": "10 years hard labor",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally or criminally negligently mistreated, neglected, or abused a person with an infirmity (including elderly)",
+      "By an act that caused unjustifiable physical or mental suffering"
+    ],
+    "mandatory_minimum": "1 year without benefit of probation, parole, or suspension",
+    "enhancements": [
+      "Serious bodily injury (enhanced)",
+      "Financial exploitation (§ 14:93.4)"
+    ],
+    "notes": "Louisiana has a specific statute for cruelty to persons with infirmities, which covers elder abuse. 1-year mandatory minimum. Financial exploitation of the infirm (§ 14:93.4) carries up to 15 years."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "La. R.S. § 14:95",
+    "statute_title": "Illegal Carrying of Weapons",
+    "offense_class": "Misdemeanor (general); Felony (concealed by prohibited person under § 14:95.1)",
+    "penalty_min": null,
+    "penalty_max": "6 months (general); 5 years hard labor (convicted felon under § 14:95.1)",
+    "fine_max": "$500 (general); $5,000 (felon)",
+    "elements": [
+      "Defendant carried a concealed weapon",
+      "Or carried a firearm while intoxicated or on certain prohibited premises"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Convicted felon (§ 14:95.1 — felony)"
+    ],
+    "notes": "Louisiana enacted permitless concealed carry effective July 4, 2024. Illegal carrying now primarily applies to prohibited persons, those carrying while intoxicated, and carrying in restricted locations."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "La. R.S. § 14:95.1",
+    "statute_title": "Possession of a Firearm by a Convicted Felon",
+    "offense_class": "Felony",
+    "penalty_min": "5 years hard labor without benefit of probation, parole, or suspension",
+    "penalty_max": "20 years hard labor",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm or carried a concealed weapon",
+      "Defendant has been convicted of certain enumerated felonies"
+    ],
+    "mandatory_minimum": "5 years without benefit of probation, parole, or suspension (first); 10 years (second+)",
+    "enhancements": [
+      "Second or subsequent (minimum 10 years without probation/parole)"
+    ],
+    "notes": "Louisiana has one of the harshest felon-in-possession statutes. 5-year mandatory minimum without parole for first offense. 10-year mandatory for second. Applies to conviction of enumerated felonies, not all felonies."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "La. R.S. § 14:95",
+    "statute_title": "Illegal Carrying of Weapons — Prohibited Person",
+    "offense_class": "Felony (convicted felon); Misdemeanor (other prohibited circumstances)",
+    "penalty_min": null,
+    "penalty_max": "20 years hard labor (convicted felon); 6 months (other)",
+    "fine_max": "$5,000 (felon); $500 (other)",
+    "elements": [
+      "Defendant carried a concealed weapon",
+      "While a prohibited person or in a prohibited location or condition (intoxicated)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "With 2024 permitless carry, this applies to prohibited persons (felons, domestic abusers, those under 18), those carrying while intoxicated, and restricted locations (courthouses, schools, etc.)."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "La. R.S. § 14:94",
+    "statute_title": "Illegal Use of Weapons or Dangerous Instrumentalities",
+    "offense_class": "Felony (if injury or at occupied structure); Misdemeanor (general)",
+    "penalty_min": null,
+    "penalty_max": "2 years hard labor (general); 5 years hard labor (at inhabited dwelling); 10 years (injury)",
+    "fine_max": "$1,000 (general); $5,000 (felony)",
+    "elements": [
+      "Defendant intentionally discharged a firearm",
+      "Where it was foreseeable that it might result in death or great bodily harm to a human being"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "At an inhabited dwelling (up to 5 years hard labor)",
+      "Resulting in injury (up to 10 years hard labor)"
+    ],
+    "notes": "Covers reckless discharge, shooting into occupied structures, and other dangerous use of weapons. Shooting into an inhabited dwelling is a serious felony."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "La. R.S. § 14:67.16",
+    "statute_title": "Identity Theft",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years hard labor",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally used, possessed, transferred, or attempted to transfer the personal identifying information of another",
+      "To obtain, possess, or transfer anything of value",
+      "Without the authorization or consent of the other person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim over 60 (enhanced penalty)",
+      "Amount over $1,000 (enhanced)"
+    ],
+    "notes": "Identity theft is a felony in Louisiana carrying up to 10 years at hard labor. Covers SSN, driver's license, bank account, and other identifying information."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "La. R.S. § 14:67",
+    "statute_title": "Theft — Embezzlement (Misappropriation)",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant misappropriated anything of value entrusted to the defendant",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value tiers as theft"
+    ],
+    "notes": "Embezzlement is charged as misappropriation under the unified theft statute. Same value tiers apply. Common in employee and fiduciary situations."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "La. R.S. § 14:72",
+    "statute_title": "Forgery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years hard labor",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant, with intent to defraud, made or altered a writing or object",
+      "So that it purports to be the act of another",
+      "Or to have been executed at a time, place, or in a manner different than was in fact the case"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Forgery is a felony carrying up to 10 years at hard labor. Covers documents, checks, deeds, and any writing. Uttering (presenting a forged document) is included."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "La. R.S. § 14:72(A)(1)",
+    "statute_title": "Counterfeiting — Forgery of Currency or Government Documents",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years hard labor",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant made, altered, or possessed counterfeit currency or government documents",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Charged under the forgery statute. Primarily a federal offense. State charges may apply for possession of counterfeit bills."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "La. R.S. § 14:71",
+    "statute_title": "Issuing Worthless Checks",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (under $1,000); 10 years hard labor ($1,000+)",
+    "fine_max": "$500 (under $1,000); $3,000 ($1,000+)",
+    "elements": [
+      "Defendant issued a check or draft knowing there were insufficient funds",
+      "With intent to defraud",
+      "And the check was dishonored upon presentation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $1,000+ (felony)"
+    ],
+    "notes": "Louisiana has a separate worthless checks statute. Intent to defraud may be inferred from failure to make good within 10 days of notice."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "La. R.S. § 22:1924",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor (under $1,000); 10 years hard labor ($1,000+)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly presented or caused to be presented a false or misleading material statement in support of an insurance claim",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $1,000+ (up to 10 years)"
+    ],
+    "notes": "Louisiana has specific insurance fraud statutes. Covers auto, health, property, and life insurance fraud. Restitution and civil penalties also apply."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "La. R.S. § 14:67.3",
+    "statute_title": "Illegal Use of Credit Cards",
+    "offense_class": "Misdemeanor (under $500); Felony ($500+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (under $500); 10 years hard labor ($500+)",
+    "fine_max": "$500 (misdemeanor); $3,000 (felony)",
+    "elements": [
+      "Defendant, with intent to defraud, used or attempted to use a credit card",
+      "Knowing it was stolen, forged, expired, revoked, or unauthorized"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $500+ (felony)"
+    ],
+    "notes": "Louisiana has a specific credit card fraud statute. May also be charged as identity theft or theft by deception."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "La. R.S. § 14:230",
+    "statute_title": "Money Laundering",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years hard labor",
+    "fine_max": "$500,000 or twice the amount involved, whichever is greater",
+    "elements": [
+      "Defendant knowingly conducted or attempted to conduct a financial transaction involving proceeds of specified criminal activity",
+      "With intent to promote the carrying on of specified criminal activity or to conceal the nature/source/ownership of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Louisiana money laundering carries up to 20 years at hard labor and severe fines. Applies to proceeds from any specified criminal activity. Forfeiture provisions also apply."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "La. R.S. § 14:67",
+    "statute_title": "Theft by Fraud (Theft by Fraudulent Conduct)",
+    "offense_class": "Same as theft by value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value",
+    "fine_max": "Same as theft by value",
+    "elements": [
+      "Defendant obtained anything of value by means of fraudulent conduct, practices, or representations",
+      "With intent to deprive the owner permanently"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same value tiers as theft"
+    ],
+    "notes": "General fraud is charged as theft by fraudulent conduct under Louisiana's unified theft statute. Covers false representations, con schemes, and fraudulent inducement."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "La. R.S. § 14:43.1",
+    "statute_title": "Sexual Battery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years hard labor",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally engaged in the touching of the anus or genitals of the victim",
+      "Using any instrumentality or any part of the body of the offender",
+      "Without the consent of the victim",
+      "The act was for the purpose of arousing or gratifying sexual desires"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13 (enhanced — charged as aggravated sexual battery under § 14:43.5)"
+    ],
+    "notes": "Sexual battery is up to 10 years hard labor. Louisiana distinguishes sexual battery (touching) from rape (penetration). Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "La. R.S. § 14:42",
+    "statute_title": "First Degree Rape (Aggravated Rape)",
+    "offense_class": "Capital Felony",
+    "penalty_min": "Life at hard labor without parole",
+    "penalty_max": "Life at hard labor without parole (death penalty for child victims held unconstitutional by Kennedy v. Louisiana)",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed an act of sexual intercourse without the victim's lawful consent",
+      "When the victim resists to the utmost but is overcome by force",
+      "Or is prevented from resisting by threats of great and immediate bodily harm",
+      "Or when the victim is under 13 regardless of consent"
+    ],
+    "mandatory_minimum": "Life imprisonment at hard labor without benefit of parole, probation, or suspension",
+    "enhancements": [],
+    "notes": "First-degree rape (aggravated rape) carries mandatory life without parole. Second-degree rape (§ 14:42.1) carries 5-40 years without parole. Third-degree rape (§ 14:43) carries up to 25 years hard labor. Sex offender registration is lifetime."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "La. R.S. § 14:106",
+    "statute_title": "Obscenity — Indecent Exposure",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 6 months (second); 3 years hard labor (third+)",
+    "fine_max": "$2,500 (first); $2,500 (second); $5,000 (third+)",
+    "elements": [
+      "Defendant intentionally exposed the genitals, pubic hair, anus, vulva, or female breast nipple",
+      "In a public place or place open to public view",
+      "With the intent of arousing sexual desire or simulating sexual activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent (felony, up to 3 years hard labor)",
+      "Exposure to a minor (enhanced — may trigger sex offender registration)"
+    ],
+    "notes": "First two offenses are misdemeanors. Third offense is a felony. Exposure to minors may trigger sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "La. R.S. § 14:82",
+    "statute_title": "Prostitution / Solicitation",
+    "offense_class": "Misdemeanor (first/second); Felony (third+ or involving a minor)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 6 months (second, mandatory 5 days); 5 years hard labor (third+); 20 years hard labor (involving minor)",
+    "fine_max": "$500 (first); $1,000 (second); $5,000 (third+)",
+    "elements": [
+      "Defendant engaged in sexual intercourse for compensation",
+      "Or solicited another for prostitution"
+    ],
+    "mandatory_minimum": "5 days (second offense); 2 years without probation (third+)",
+    "enhancements": [
+      "Third or subsequent (felony, 2-5 years hard labor without probation)",
+      "Involving a minor (15-50 years under human trafficking)",
+      "Patronizing a person who is a victim of human trafficking (felony)"
+    ],
+    "notes": "Louisiana treats both buyer and seller as criminal actors. Third offense prostitution is a felony. Human trafficking charges (§ 14:46.2) apply when minors are involved — extremely severe penalties."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "La. R.S. § 14:81.1",
+    "statute_title": "Pornography Involving Juveniles",
+    "offense_class": "Felony",
+    "penalty_min": "2 years hard labor without probation, parole, or suspension (possession); 5 years (production/distribution)",
+    "penalty_max": "10 years hard labor (possession); 20 years hard labor (production/distribution)",
+    "fine_max": "$10,000 (possession); $50,000 (production)",
+    "elements": [
+      "Defendant possessed visual depictions of a child engaged in sexual conduct",
+      "Or produced, distributed, or sold such material"
+    ],
+    "mandatory_minimum": "2 years without benefit of probation, parole, or suspension (possession); 5 years (production/distribution)",
+    "enhancements": [
+      "Production (5-20 years hard labor)",
+      "Distribution (5-20 years hard labor)",
+      "Second or subsequent (enhanced)"
+    ],
+    "notes": "Each image/video is a separate count. Mandatory minimum 2 years for possession. Production and distribution carry 5-year mandatory minimums. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "La. R.S. § 15:542.1.4",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Felony",
+    "penalty_min": "2 years hard labor without probation, parole, or suspension",
+    "penalty_max": "10 years hard labor",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant is required to register under the Sex Offender Registration and Notification Law",
+      "Defendant knowingly failed to register, verify, or update information"
+    ],
+    "mandatory_minimum": "2 years without benefit of probation, parole, or suspension",
+    "enhancements": [],
+    "notes": "Louisiana has a 2-year mandatory minimum for failure to register — among the harshest nationally. Must register within 3 business days. Lifetime registration for many offenses."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "La. R.S. § 14:80",
+    "statute_title": "Felony Carnal Knowledge of a Juvenile",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years hard labor (with or without hard labor)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant, who is 17 or older, had sexual intercourse with consent of a person who is 13 to 16 years old",
+      "When the age difference between the defendant and the victim is 4 or more years"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13 (First Degree Rape — mandatory life without parole)"
+    ],
+    "notes": "Louisiana's age of consent is 17. Felony carnal knowledge covers consensual sex with 13-16 year olds when the age difference is 4+ years. Misdemeanor carnal knowledge (§ 14:80.1) covers situations with smaller age gaps. Under 13 is first-degree rape."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "La. R.S. § 14:103",
+    "statute_title": "Disturbing the Peace",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant engaged in an act in a violent or tumultuous manner",
+      "Such that it disturbed the public peace or decorum"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Louisiana uses 'disturbing the peace' rather than 'disorderly conduct.' Covers loud noise, fighting, inciting others, and public intoxication that disturbs others."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "La. R.S. § 14:108",
+    "statute_title": "Resisting an Officer",
+    "offense_class": "Misdemeanor (without force); Felony (with force or violence under § 14:108.2)",
+    "penalty_min": null,
+    "penalty_max": "6 months (without force); 5 years hard labor (with force)",
+    "fine_max": "$500 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant intentionally interfered with, resisted, or obstructed a law enforcement officer",
+      "In the performance of official duties",
+      "By force or threatening force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or violence (Felony under § 14:108.2 — Battery of a Police Officer)"
+    ],
+    "notes": "Simple resisting (no force) is a misdemeanor. Battery of a police officer (§ 14:34.2) is a separate felony charge. Flight from an officer (§ 14:108.1) is also separate."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "La. R.S. § 14:130.1",
+    "statute_title": "Obstruction of Justice",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor (general); 40 years hard labor (in capital or life imprisonment case)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant tampered with evidence, intimidated a witness, or otherwise obstructed the administration of criminal justice",
+      "With intent to distort the outcome of any criminal investigation or proceeding"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Obstruction in a capital or life imprisonment case (up to 40 years hard labor)"
+    ],
+    "notes": "Louisiana's obstruction of justice statute has extremely harsh penalties when the underlying case involves capital or life imprisonment charges. General obstruction carries up to 5 years."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "La. C.C.P. art. 222; La. R.S. § 13:4611",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Court-imposed sanctions",
+    "penalty_min": null,
+    "penalty_max": "6 months (criminal contempt); indefinite for civil contempt",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant willfully disobeyed a court order",
+      "Or disrupted court proceedings",
+      "Or engaged in conduct that obstructed the administration of justice"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Louisiana distinguishes direct contempt (in court) from constructive contempt (outside court). Direct contempt may be punished summarily. Constructive contempt requires a rule to show cause."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "La. R.S. § 14:103",
+    "statute_title": "Disturbing the Peace — Public Intoxication",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant appeared in an intoxicated condition in a public place",
+      "Such that the defendant disturbed the peace or endangered the safety of self or others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Louisiana does not have a standalone public intoxication statute — it falls under disturbing the peace. Must be disruptive; mere intoxication in public is not enough."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "La. R.S. § 14:110",
+    "statute_title": "Jumping Bail",
+    "offense_class": "Felony (felony case); Misdemeanor (misdemeanor case)",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor (felony); 6 months (misdemeanor)",
+    "fine_max": "$5,000 (felony); $500 (misdemeanor)",
+    "elements": [
+      "Defendant was released on bail or personal surety",
+      "Defendant willfully failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying felony (felony jumping bail)"
+    ],
+    "notes": "Louisiana calls this 'jumping bail.' Felony jumping bail carries up to 5 years at hard labor. Bond forfeiture and bench warrant automatically issued."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "La. R.S. § 14:126",
+    "statute_title": "Filing or Maintaining a False Report",
+    "offense_class": "Misdemeanor; Felony (false report of terrorism under § 14:126.2)",
+    "penalty_min": null,
+    "penalty_max": "6 months (general); 15 years hard labor (terrorism report)",
+    "fine_max": "$500 (general); $10,000 (terrorism)",
+    "elements": [
+      "Defendant knowingly filed a false report with law enforcement",
+      "Concerning the commission of a crime",
+      "Knowing the report to be false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "False terrorism report (felony, up to 15 years)"
+    ],
+    "notes": "General false reporting is a misdemeanor. False terrorism reports carry up to 15 years. Swatting is treated very seriously."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "La. R.S. § 14:40.1",
+    "statute_title": "Terrorizing",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years hard labor",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant intentionally communicated information that the commission of a crime of violence was imminent or in progress",
+      "Knowing the information to be false",
+      "Or threatening to commit a crime of violence with intent to place a person in fear of bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Louisiana uses 'terrorizing' for criminal threats. Felony carrying up to 15 years at hard labor. Includes bomb threats, mass violence threats, and threats targeting individuals."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "La. R.S. § 14:123",
+    "statute_title": "Perjury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant, while under oath or affirmation in a judicial proceeding",
+      "Made a false statement material to the issue or matter of inquiry",
+      "Knowing the statement to be false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Perjury is a felony in Louisiana carrying up to 5 years at hard labor. Subornation of perjury (§ 14:124) — inducing another to commit perjury — carries the same penalty."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "La. R.S. § 14:118",
+    "statute_title": "Public Bribery",
+    "offense_class": "Felony",
+    "penalty_min": "1 year without probation, parole, or suspension",
+    "penalty_max": "5 years hard labor",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant gave or offered to give anything of apparent present or prospective value to a public official",
+      "With intent to influence the official's conduct in relation to official capacity"
+    ],
+    "mandatory_minimum": "1 year without benefit of probation, parole, or suspension",
+    "enhancements": [],
+    "notes": "Public bribery carries a 1-year mandatory minimum in Louisiana. Both the giver and receiver can be charged. Louisiana has a history of aggressive public corruption prosecution."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "La. R.S. § 14:110",
+    "statute_title": "Simple Escape",
+    "offense_class": "Felony (from felony custody); Misdemeanor (from misdemeanor custody)",
+    "penalty_min": null,
+    "penalty_max": "5 years hard labor (simple escape); 10 years hard labor (aggravated escape with violence under § 14:110(B))",
+    "fine_max": null,
+    "elements": [
+      "Defendant escaped from lawful custody",
+      "While confined pursuant to arrest or court order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of violence or threat of violence (Aggravated Escape — up to 10 years)"
+    ],
+    "notes": "Simple escape carries up to 5 years. Aggravated escape (with force) carries up to 10 years. Includes walking away from work release."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "La. R.S. § 14:102",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Misdemeanor (simple, first); Felony (aggravated under § 14:102.1 or second+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (simple, first); 3 years hard labor (aggravated); 10 years hard labor (aggravated, second+)",
+    "fine_max": "$1,000 (simple); $5,000 (aggravated); $25,000 (aggravated second+)",
+    "elements": [
+      "Defendant intentionally or negligently mistreated an animal",
+      "Causing unjustifiable suffering or pain",
+      "Aggravated: torture or mutilation, or causing death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated (torture, serious injury, death) — felony up to 3 years",
+      "Second or subsequent aggravated — up to 10 years"
+    ],
+    "notes": "Louisiana has strengthened animal cruelty laws. Aggravated cruelty (§ 14:102.1) covering torture and mutilation is a felony. Dogfighting (§ 14:102.5) carries up to 10 years."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "La. C.Cr.P. art. 900",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Not a new criminal charge — court may revoke probation and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum sentence for the original offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation proven by preponderance of the evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Louisiana courts may revoke, modify, or continue probation. 2017 Justice Reinvestment Act introduced graduated sanctions and capped technical violation revocations. New criminal conduct typically leads to full revocation."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "La. R.S. § 15:574.9",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Not a new criminal charge — Board of Pardons and Committee on Parole determines consequences",
+    "penalty_min": null,
+    "penalty_max": "Return to incarceration for remainder of sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Louisiana Board of Pardons and Committee on Parole conducts revocation hearings. 2017 reforms introduced graduated sanctions for technical violations. New criminal conduct typically results in full revocation."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "La. R.S. § 14:24",
+    "statute_title": "Principals",
+    "offense_class": "Same as the underlying offense",
+    "penalty_min": "Same as the underlying offense",
+    "penalty_max": "Same as the underlying offense",
+    "fine_max": "Same as the underlying offense",
+    "elements": [
+      "Defendant aided and abetted in the commission of a crime",
+      "Or procured, counseled, or commanded another to commit a crime"
+    ],
+    "mandatory_minimum": "Same as the underlying offense",
+    "enhancements": [],
+    "notes": "All persons concerned in the commission of a crime, whether present or absent, and whether they directly commit the act or aid and abet in its commission, are principals. Each is equally liable."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "La. R.S. § 14:27",
+    "statute_title": "Attempt",
+    "offense_class": "Generally one-half the maximum sentence of the completed offense; special rules for certain crimes",
+    "penalty_min": null,
+    "penalty_max": "One-half the maximum for the completed offense (e.g., attempted second-degree murder = 10-50 years)",
+    "fine_max": "One-half the maximum fine",
+    "elements": [
+      "Defendant had specific intent to commit a crime",
+      "And did or omitted an act for the purpose of and tending directly toward the accomplishment thereof"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "General rule: attempt carries one-half the maximum of the completed offense. Exceptions exist — attempted first-degree murder carries 10-50 years. Attempted armed robbery carries 10-49.5 years. Renunciation is not recognized as a defense."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "La. R.S. § 14:26",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Generally one-half the maximum sentence of the target offense",
+    "penalty_min": null,
+    "penalty_max": "One-half the maximum for the target offense",
+    "fine_max": "One-half the maximum fine",
+    "elements": [
+      "Defendant agreed or combined with one or more persons for the specific purpose of committing any crime",
+      "And one or more parties performed an overt act in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy carries one-half the maximum of the target offense. Requires an agreement and an overt act. Each conspirator is liable. Drug conspiracy has specific enhanced provisions."
+  }
+]

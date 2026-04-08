@@ -1,0 +1,1582 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "Wyoming uses 'actual physical control' standard, allowing prosecution even when the vehicle is parked or the defendant is sleeping behind the wheel",
+      "Per se BAC of .08 eliminates the need to prove actual impairment when chemical test results are available",
+      "Wyoming's wide-open rural geography makes traffic stops on long stretches of I-80 and I-25 a major source of DWUI prosecutions"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'actual physical control' element — Wyoming case law allows defenses where the defendant was sleeping it off and not intending to drive",
+      "Contest the calibration and maintenance of breath testing instruments used in remote rural areas where maintenance schedules may be irregular",
+      "Wyoming has no per se drugged driving law — prosecution must prove actual impairment for drug-related DWUI, opening defenses for prescription medication users",
+      "Challenge the legality of the traffic stop — Wyoming's rural highways generate stops based on minor violations that may not justify expanded DWUI investigation"
+    ],
+    "common_defenses": [
+      "Improper stop — officer lacked reasonable suspicion for the initial traffic stop",
+      "Sleeping it off — defendant had no intent to drive while in actual physical control",
+      "Rising blood alcohol — BAC was below .08 at time of driving but rose between the stop and the test",
+      "Field sobriety test inaccuracy — fatigue, weather conditions, terrain, or medical conditions affected performance"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "First-offense DWUI in Wyoming is a criminal misdemeanor (up to 6 months and $750), unlike Wisconsin's civil approach",
+      "Aggravated DWUI at .15+ BAC triggers mandatory jail and increased license suspension",
+      "Implied consent refusal results in 90-day administrative suspension regardless of criminal outcome"
+    ],
+    "defense_opportunities": [
+      "Wyoming's deferred prosecution and treatment court programs may allow first-time offenders to avoid a conviction with successful completion",
+      "Challenge the BAC reading by contesting the 15-minute observation period before breath testing",
+      "For BAC just above .08, present evidence of test margin of error to argue the actual BAC was below the per se threshold"
+    ],
+    "common_defenses": [
+      "Mouth alcohol contamination — mouthwash, GERD, or recent drinking affecting breath test",
+      "Improper observation period before testing",
+      "Medical condition mimicking impairment (diabetes, neurological conditions, fatigue from long-distance driving)",
+      "Test margin of error — actual BAC was below .08"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "Wyoming uses a 10-year lookback period for prior DWUI convictions",
+      "Mandatory minimum incarceration: 7 days (2nd), 30 days (3rd), 180 days (4th+)",
+      "Fourth offense within 10 years is a felony carrying up to 7 years imprisonment",
+      "Aggravated DWUI (BAC .15+) doubles penalties on repeat offenses"
+    ],
+    "defense_opportunities": [
+      "Challenge prior DWUI convictions that fall outside the 10-year lookback window",
+      "Contest the validity of out-of-state prior convictions used for enhancement",
+      "Seek treatment court or 24/7 sobriety program placement as alternatives to mandatory jail",
+      "Argue for reduced charges where the prior convictions are dated near the 10-year boundary"
+    ],
+    "common_defenses": [
+      "Prior conviction outside the 10-year window",
+      "Invalid prior conviction — taken without counsel or constitutional protections",
+      "Constitutional challenge to the traffic stop or arrest procedure",
+      "Chemical test reliability — instrument calibration or operator certification issues"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "Wyoming requires proof of actual impairment for drug DWUI, but Drug Recognition Expert (DRE) testimony is regularly admitted",
+      "Combined alcohol and drug influence creates additional charging options",
+      "Schedule I and II substances trigger enhanced prosecutorial attention"
+    ],
+    "defense_opportunities": [
+      "Wyoming has no per se drug limit — prosecution must prove actual impairment, not mere presence of a substance",
+      "Challenge DRE testimony — the 12-step protocol has documented error rates and is subjective",
+      "For prescription medications, present evidence of lawful use and proper dosing",
+      "Contest blood draw procedures, particularly chain of custody in remote areas where samples must be transported long distances"
+    ],
+    "common_defenses": [
+      "No actual impairment — chemical presence alone does not prove driving impairment",
+      "Lawful prescription use — medication taken as directed",
+      "Blood sample contamination or improper preservation",
+      "DRE evaluation was unreliable — protocol not properly followed"
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "'Willful or wanton disregard for the safety of persons or property' is a broad standard",
+      "Wyoming's high-speed rural highways generate frequent reckless driving prosecutions",
+      "Often charged as a plea reduction from DWUI, providing leverage in negotiations"
+    ],
+    "defense_opportunities": [
+      "Negotiate reckless driving as a plea reduction from DWUI to avoid the license suspension and ignition interlock consequences",
+      "Challenge whether the conduct rose to 'willful or wanton' versus mere negligence or carelessness",
+      "Present evidence of road conditions (ice, snow, wildlife) common in Wyoming that explain the driving behavior"
+    ],
+    "common_defenses": [
+      "Wildlife avoidance — sudden swerving to avoid deer, antelope, or livestock",
+      "Weather conditions — ice, snow, high winds caused the driving behavior",
+      "Mechanical failure",
+      "Conduct did not rise to willful or wanton disregard"
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Hit-and-run with death carries up to 10 years under Wyoming law",
+      "Vehicle identification through paint transfer, debris, and surveillance creates strong evidence",
+      "Consciousness of guilt inference from leaving the scene is powerful before juries"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant had actual knowledge an accident occurred — wildlife strikes are common in Wyoming and may not be obviously distinguishable from minor collisions",
+      "Argue the defendant left to seek help in remote areas where cell service is unavailable"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant believed they had hit a wild animal",
+      "Seeking help — defendant left to find cell signal or assistance in a remote area",
+      "Misidentification of the vehicle",
+      "No actual collision occurred"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "Chemical test evidence combined with the fatal collision creates a straightforward causation theory",
+      "Wyoming's rural highways generate fatal accidents with limited witness availability, often making the driver's account unverifiable"
+    ],
+    "defense_opportunities": [
+      "Challenge the causation between intoxication and the fatal collision — argue an independent cause (other driver, wildlife, road defect) was responsible",
+      "Contest BAC test results through chain of custody challenges, particularly when blood was drawn far from a hospital",
+      "Present accident reconstruction evidence showing the defendant's intoxication did not cause the fatal outcome"
+    ],
+    "common_defenses": [
+      "Intervening cause — wildlife strike, other driver's negligence, or road conditions",
+      "Causation challenge — intoxication was not the proximate cause of death",
+      "Chemical test unreliability — blood draw timing, contamination, or instrument error",
+      "Victim's contributory conduct"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Physical evidence at the crash scene and vehicle data recorders establish negligence",
+      "Does not require proof of intoxication, making prosecution easier"
+    ],
+    "defense_opportunities": [
+      "Distinguish between ordinary negligence (civil) and criminal negligence (criminal) — the conduct must be a gross deviation from the standard of care",
+      "Present evidence of unforeseeable circumstances (wildlife, sudden mechanical failure, weather)",
+      "Negotiate for a reduced charge or probation given Wyoming's relatively lenient sentencing in non-DUI cases"
+    ],
+    "common_defenses": [
+      "Ordinary negligence does not equal criminal negligence",
+      "Sudden emergency doctrine",
+      "Mechanical failure caused the accident",
+      "Weather or wildlife contributed to the fatal outcome"
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "DMV records establish suspension status conclusively",
+      "Notice of suspension by certified mail creates a presumption of knowledge"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant had actual knowledge of the suspension, particularly in cases involving recent address changes or mail delivery issues in rural areas",
+      "Argue necessity — driving was required for an emergency in a state where alternative transportation is often unavailable",
+      "Contest the validity of the underlying suspension"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not receive notice",
+      "Necessity — driving was required for an emergency",
+      "Invalid underlying suspension",
+      "Wyoming's rural geography made alternatives unavailable"
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Police pursuit footage from dashcam and aerial units provides clear evidence",
+      "Wyoming's open highways enable extended pursuits with multiple officer witnesses"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the officer's signal to stop was clearly visible or audible, particularly on remote stretches of highway",
+      "Argue the defendant was attempting to reach a safe, populated area before stopping",
+      "Contest whether the pursuit was 'reckless' to keep the charge at misdemeanor level"
+    ],
+    "common_defenses": [
+      "Lack of awareness of the officer's signal",
+      "Seeking a safe location with witnesses before stopping",
+      "Mistaken identity — officer pursued the wrong vehicle",
+      "Conduct was not reckless under the statutory standard"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Possession on Wyoming highways (especially I-80) is a major source of drug prosecutions due to the state's role as a transit corridor",
+      "Third or subsequent offense escalates to a felony with up to 5 years",
+      "Drug-sniffing dog alerts during traffic stops provide probable cause for searches"
+    ],
+    "defense_opportunities": [
+      "First and second possession offenses are misdemeanors — drug court and diversion programs commonly available",
+      "Challenge the legality of the traffic stop and any expansion into a drug investigation under recent Fourth Amendment jurisprudence"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — stop was unlawfully prolonged for canine sniff",
+      "Lack of knowledge — defendant did not know the substance was present",
+      "Constructive possession — drugs belonged to another person in a shared vehicle",
+      "Entrapment in informant-driven cases"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Wyoming has not legalized recreational or medical marijuana — possession remains criminal at any amount",
+      "Possession of 3 oz or less is a misdemeanor; over 3 oz triggers PWID charges",
+      "I-80 and I-25 corridors generate substantial marijuana possession cases as travelers pass through from legal states"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the substance was legal hemp/CBD versus marijuana — Wyoming hemp law allows CBD products with THC below 0.3%",
+      "Contest the legality of the traffic stop and search, particularly involving out-of-state travelers",
+      "Misdemeanor status allows for diversion and deferred prosecution for first-time offenders"
+    ],
+    "common_defenses": [
+      "Legal hemp or CBD product — substance contained THC below 0.3% threshold",
+      "Illegal search and seizure — stop was unlawfully extended",
+      "Out-of-state legal possession — defendant transported the substance from a legal state without intent to distribute in Wyoming",
+      "Lack of knowledge"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "Schedule II classification triggers higher penalties than marijuana",
+      "Lab confirmation of cocaine is highly reliable",
+      "Third offense escalates to a felony"
+    ],
+    "defense_opportunities": [
+      "First and second offenses remain misdemeanors — diversion and treatment court are commonly available",
+      "Challenge the search that produced the cocaine, particularly in highway interdiction cases",
+      "Contest constructive possession in shared vehicle situations"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure",
+      "Lack of knowledge",
+      "Constructive possession challenge",
+      "Entrapment"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "Methamphetamine is a major drug enforcement priority in Wyoming",
+      "Presence of paraphernalia (pipes, residue) corroborates knowing possession",
+      "Third offense becomes a felony"
+    ],
+    "defense_opportunities": [
+      "First and second offenses are misdemeanors — drug treatment court is a commonly available alternative",
+      "Challenge the search and seizure that produced the meth",
+      "Contest the weight of the substance to argue trace residue rather than usable quantity"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure",
+      "Lack of knowledge of the substance",
+      "Constructive possession in shared spaces",
+      "Trace residue does not constitute usable quantity"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Wyoming's interstate highways are a known transit corridor, generating significant federal-state cooperation in trafficking cases",
+      "Second offense doubles the maximum penalty"
+    ],
+    "defense_opportunities": [
+      "Challenge highway interdiction stops and the scope of the search under recent Fourth Amendment cases",
+      "Contest the role of confidential informants — informants often have credibility issues that can be exposed",
+      "Argue the defendant was a courier or user-dealer with minimal role to seek lower sentencing",
+      "Challenge the school zone measurement"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — particularly in highway interdiction contexts",
+      "Entrapment by confidential informant",
+      "Insufficient evidence of intent to deliver — possession was for personal use",
+      "Confidential informant unreliability"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "Non-narcotic Schedule I-II delivery carries up to 10 years",
+      "Controlled buys with audio/video recording provide strong direct evidence",
+      "Schedule III delivery is up to 5 years"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'delivery' element — sharing or accommodation may not constitute commercial distribution",
+      "Contest substance identification — field tests are presumptive and lab confirmation may show different substances",
+      "Negotiate from delivery to simple possession where evidence is circumstantial"
+    ],
+    "common_defenses": [
+      "Accommodation — sharing rather than commercial distribution",
+      "Entrapment",
+      "Illegal search and seizure",
+      "Misidentification of the substance"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Manufacturing a Schedule I/II narcotic carries up to 20 years",
+      "Clandestine lab evidence (chemicals, equipment, residue) is typically overwhelming",
+      "Section 35-7-1059 imposes additional penalties for lab operations and cleanup costs"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the activity constituted 'manufacturing' versus possession of precursor chemicals",
+      "Contest the defendant's knowledge of and participation in the manufacturing operation in shared residences",
+      "Argue mere presence at a lab location does not establish active manufacturing"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of manufacturing on the premises",
+      "Mere presence at the location",
+      "Illegal search and seizure",
+      "Insufficient evidence of any manufacturing act"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Paraphernalia possession is a misdemeanor with up to 6 months",
+      "Delivery of paraphernalia to a minor under 18 is a felony",
+      "Often charged alongside possession of the underlying controlled substance"
+    ],
+    "defense_opportunities": [
+      "Misdemeanor status allows for plea reductions and diversion",
+      "Challenge the 'knowing' element — argue the item had a legitimate purpose",
+      "Negotiate dismissal of paraphernalia charges as part of broader plea resolution"
+    ],
+    "common_defenses": [
+      "Legitimate purpose for the item",
+      "Lack of knowledge of drug residue or association",
+      "Illegal search",
+      "Item does not meet statutory definition of paraphernalia"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "PWID for Schedule I/II narcotics carries up to 20 years",
+      "Intent inferred from quantity, packaging, scales, cash, and communications",
+      "Marijuana over 3 oz triggers PWID charges automatically"
+    ],
+    "defense_opportunities": [
+      "Challenge the inference of intent — quantity may be consistent with personal use given the user's tolerance",
+      "Contest the school zone enhancement",
+      "Negotiate reduction to simple possession where intent evidence is weak"
+    ],
+    "common_defenses": [
+      "Personal use — quantity consistent with consumption",
+      "Illegal search and seizure",
+      "Insufficient evidence of distribution intent",
+      "Constructive possession challenge"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "Felony murder applies to deaths during arson, sexual assault, robbery, burglary, kidnapping, or escape",
+      "Premeditation can be inferred from circumstances (weapon brought to scene, lying in wait, prior threats)"
+    ],
+    "defense_opportunities": [
+      "Challenge premeditation — argue the killing was the result of sudden passion or heat of the moment",
+      "Contest aggravating circumstances at penalty phase to avoid death penalty exposure",
+      "Present mental health evidence to challenge specific intent"
+    ],
+    "common_defenses": [
+      "Self-defense under Stand Your Ground — no duty to retreat",
+      "Defense of others",
+      "Heat of passion — reducing the charge to manslaughter",
+      "Insanity or mental disease/defect",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "Mandatory minimum 20 years limits judicial discretion",
+      "Depraved heart murder (extreme recklessness) is included within the statute"
+    ],
+    "defense_opportunities": [
+      "Challenge malice — argue the killing was the result of sudden passion (voluntary manslaughter) or criminal negligence (involuntary manslaughter)",
+      "Self-defense under Wyoming's robust Stand Your Ground laws",
+      "Distinguish between depraved heart conduct and ordinary recklessness"
+    ],
+    "common_defenses": [
+      "Self-defense — Wyoming's Stand Your Ground law applies broadly",
+      "Heat of passion — reducing to voluntary manslaughter",
+      "Lack of malice — conduct was negligent rather than malicious",
+      "Accident"
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "Heat of passion is a question of fact for the jury, allowing prosecution to argue the cooling-off period had passed",
+      "Premeditated killings typically charge as murder, with manslaughter as a fallback"
+    ],
+    "defense_opportunities": [
+      "Heat of passion is a mitigating defense that reduces from murder to manslaughter, providing significant sentencing benefit",
+      "Present evidence of adequate provocation immediately preceding the killing",
+      "Argue self-defense or imperfect self-defense"
+    ],
+    "common_defenses": [
+      "Heat of passion after adequate provocation",
+      "Imperfect self-defense — defendant honestly but unreasonably believed deadly force necessary",
+      "Self-defense — complete defense under Stand Your Ground",
+      "Mental health evidence supporting diminished capacity"
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "Criminal negligence standard is lower than recklessness or malice",
+      "Often charged alongside other offenses as a fallback theory"
+    ],
+    "defense_opportunities": [
+      "Distinguish between criminal negligence and ordinary negligence — civil liability does not equal criminal liability",
+      "Present evidence of unforeseeable circumstances (wildlife, weather, mechanical failure) that contributed to the death",
+      "Argue accident defense — death was not the foreseeable result of the conduct"
+    ],
+    "common_defenses": [
+      "Ordinary negligence does not meet criminal standard",
+      "Accident — unforeseeable death",
+      "Intervening cause",
+      "Lawful activity that unexpectedly resulted in death"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "Use of a deadly weapon is an explicit aggravator"
+    ],
+    "defense_opportunities": [
+      "Self-defense under Wyoming's Stand Your Ground law — no duty to retreat",
+      "Challenge whether the injury constitutes 'serious bodily injury' under the statute",
+      "Contest the use of a deadly weapon if the object's use was incidental"
+    ],
+    "common_defenses": [
+      "Self-defense — Wyoming Stand Your Ground",
+      "Defense of others",
+      "Lack of intent — injury was accidental",
+      "Mutual combat",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Witness testimony alone is typically sufficient"
+    ],
+    "defense_opportunities": [
+      "Self-defense under Stand Your Ground laws",
+      "Negotiate for disorderly conduct or other lesser charges to avoid assault-specific consequences",
+      "Challenge the credibility of the alleged victim"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Consent — contact during consensual activity",
+      "No bodily injury",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "Simple battery is a misdemeanor with up to 6 months and $750",
+      "Aggravated battery escalates to felony aggravated assault for serious bodily injury or deadly weapon use",
+      "Medical records document the injury level"
+    ],
+    "defense_opportunities": [
+      "Challenge the level of injury to keep the charge at misdemeanor level",
+      "Self-defense under Wyoming's robust self-defense laws",
+      "Negotiate to lesser non-violent charges to avoid collateral consequences"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Consent",
+      "Accident",
+      "Injury does not meet aggravating threshold"
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Force or threat of force is a low threshold",
+      "Witness identification combined with surveillance creates strong evidence"
+    ],
+    "defense_opportunities": [
+      "Distinguish between robbery (force) and theft (no force) — if the taking was without force or threat, the robbery charge fails",
+      "Challenge identification through alibi or witness reliability issues",
+      "Negotiate reduction to larceny if force evidence is weak"
+    ],
+    "common_defenses": [
+      "No force or threat — taking was theft, not robbery",
+      "Misidentification",
+      "Alibi",
+      "Claim of right"
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "Display of what appears to be a deadly weapon is sufficient — actual operability not required",
+      "One of the most seriously punished property crimes in Wyoming"
+    ],
+    "defense_opportunities": [
+      "Challenge identification — armed robberies often involve disguised perpetrators",
+      "Contest whether the object qualifies as a 'deadly weapon' under Wyoming law",
+      "Argue the weapon was not displayed or that the defendant did not have actual possession"
+    ],
+    "common_defenses": [
+      "Misidentification",
+      "Object did not constitute a deadly weapon",
+      "Duress — defendant forced to participate",
+      "Alibi"
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "If the victim is injured or not released safely, sentence is life imprisonment",
+      "Severe mandatory minimums limit judicial discretion"
+    ],
+    "defense_opportunities": [
+      "Argue the movement was incidental to another offense and does not constitute separate kidnapping",
+      "Challenge the 'without consent' element in custody disputes or domestic situations",
+      "If the victim was released unharmed, argue for the lower end of the sentencing range (20 years)"
+    ],
+    "common_defenses": [
+      "Consent — voluntary accompaniment",
+      "Incidental movement to another offense",
+      "Parental rights in custody disputes",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Fire investigation evidence (NFPA 921) is highly technical and persuasive",
+      "Insurance fraud motive provides circumstantial corroboration"
+    ],
+    "defense_opportunities": [
+      "Challenge the fire investigation methodology — NFPA 921 standards are complex and frequently misapplied",
+      "Contest origin and cause determination — accidental causes are common",
+      "Negotiate to second or third degree arson where the structure was unoccupied"
+    ],
+    "common_defenses": [
+      "Accidental fire — electrical, mechanical, or natural cause",
+      "Lack of intent",
+      "Faulty fire investigation",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "Wyoming punishes attempts at one class below the completed offense",
+      "Specific intent to kill can be inferred from severity of attack",
+      "Attempted first degree murder is a serious felony"
+    ],
+    "defense_opportunities": [
+      "Challenge specific intent to kill — argue intent was only to cause harm",
+      "Self-defense under Stand Your Ground",
+      "Argue voluntary abandonment before completion"
+    ],
+    "common_defenses": [
+      "Lack of specific intent to kill",
+      "Self-defense",
+      "Voluntary abandonment",
+      "Insufficient overt act"
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "Display of a deadly weapon during a threat is sufficient — actual injury not required",
+      "Physical evidence of the weapon strengthens prosecution"
+    ],
+    "defense_opportunities": [
+      "Self-defense under Wyoming Stand Your Ground",
+      "Challenge whether the object was a 'deadly weapon' under the statute",
+      "Contest whether the weapon was actually displayed or used as a threat"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Object did not qualify as deadly weapon",
+      "Accidental display",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "Wyoming's felony larceny threshold is $1,000 — relatively low compared to other states",
+      "Surveillance and inventory records establish loss amounts"
+    ],
+    "defense_opportunities": [
+      "Challenge property valuation to push below the $1,000 felony threshold",
+      "Argue lack of intent to permanently deprive — temporary use is not larceny",
+      "Negotiate restitution and diversion for first-time offenders"
+    ],
+    "common_defenses": [
+      "Claim of right",
+      "Lack of intent to permanently deprive",
+      "Misidentification",
+      "Consent of the owner"
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Grand larceny ($1,000+) carries up to 10 years",
+      "Documentary evidence of value (receipts, appraisals) is typically clear",
+      "Restitution is mandatory"
+    ],
+    "defense_opportunities": [
+      "Contest the valuation to push below the $1,000 threshold",
+      "Challenge the link between the defendant and the theft",
+      "Negotiate plea to misdemeanor petit larceny"
+    ],
+    "common_defenses": [
+      "Valuation dispute — fair market value below threshold",
+      "Claim of right",
+      "Insufficient evidence",
+      "Consent of the owner"
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "Petit larceny is a misdemeanor with up to 6 months and $750",
+      "Surveillance and witness testimony are typically clear",
+      "Repeat offenders face enhanced scrutiny"
+    ],
+    "defense_opportunities": [
+      "Misdemeanor status allows for diversion and deferred prosecution",
+      "Negotiate for municipal ordinance violations",
+      "First-time offenders often qualify for dismissal upon completion of pretrial programs"
+    ],
+    "common_defenses": [
+      "Lack of intent",
+      "Claim of right",
+      "Misidentification",
+      "De minimis"
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "Felony threshold at $1,000 means most shoplifting is a misdemeanor",
+      "Loss prevention officers and surveillance establish identification"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant actually concealed merchandise or attempted to leave the store",
+      "Misdemeanor status allows for civil compromise and diversion",
+      "Argue intent to pay was present"
+    ],
+    "common_defenses": [
+      "No concealment or no attempt to leave without paying",
+      "Lack of intent",
+      "Misidentification",
+      "Item already paid for"
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "Aggravated burglary (armed or causing injury) carries up to 25 years",
+      "Physical evidence (tool marks, fingerprints, DNA) frequently links defendants to entries"
+    ],
+    "defense_opportunities": [
+      "Challenge intent to commit a crime inside — entry without criminal intent is trespass, not burglary",
+      "Contest 'without authority' element where the defendant had permission",
+      "Negotiate to criminal trespass where intent evidence is weak"
+    ],
+    "common_defenses": [
+      "No intent to commit larceny or felony inside",
+      "Authority to enter",
+      "Misidentification",
+      "Alibi"
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "Same statute covers residential and other burglary in Wyoming",
+      "Aggravated burglary with weapon carries up to 25 years",
+      "Home invasion creates strong jury sympathy"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the structure qualifies as a dwelling",
+      "Contest 'without authority' if the defendant had permission",
+      "Negotiate to trespass charges where felony intent is weak"
+    ],
+    "common_defenses": [
+      "Authority to enter",
+      "No felonious intent",
+      "Misidentification",
+      "Voluntary abandonment"
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "Permanent vehicle theft is grand larceny carrying up to 10 years",
+      "Vehicle tracking and license plate readers enable rapid recovery"
+    ],
+    "defense_opportunities": [
+      "Argue intent was temporary use (joyriding) rather than permanent theft",
+      "Contest 'without consent' in shared vehicle situations",
+      "Challenge identification of the driver"
+    ],
+    "common_defenses": [
+      "Consent — defendant believed they had permission",
+      "Temporary use rather than permanent theft",
+      "Claim of right",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Penalty mirrors theft tiers — $1,000 threshold divides felony from misdemeanor",
+      "Knowledge can be inferred from below-market price, lack of receipt, altered serial numbers",
+      "Possession of stolen property creates strong circumstantial evidence"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'knowing' element — defendant must have actually known the property was stolen",
+      "Contest property valuation",
+      "Argue good-faith purchase through normal transaction"
+    ],
+    "common_defenses": [
+      "Lack of knowledge",
+      "Good faith purchase",
+      "Claim of right",
+      "Property was not stolen"
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "Restitution mandatory",
+      "Surveillance frequently captures the conduct"
+    ],
+    "defense_opportunities": [
+      "Contest damage valuation to stay below $1,000",
+      "Argue accident rather than intentional damage",
+      "Negotiate restitution for reduced charges"
+    ],
+    "common_defenses": [
+      "Accident",
+      "Consent of the owner",
+      "Misidentification",
+      "Valuation dispute"
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "Posted land with signs creates constructive notice"
+    ],
+    "defense_opportunities": [
+      "Challenge the constitutionality of Wyoming's ag-gag trespass laws under recent First Amendment jurisprudence",
+      "Argue lack of notice or permission",
+      "Contest whether posting was adequate"
+    ],
+    "common_defenses": [
+      "Lack of notice",
+      "Permission to be on property",
+      "Necessity",
+      "First Amendment challenge to ag-gag enhancement"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "Physical evidence of damage is typically clear",
+      "Restitution is mandatory"
+    ],
+    "defense_opportunities": [
+      "Contest damage amount",
+      "Argue accident or unintentional damage",
+      "Negotiate civil compromise"
+    ],
+    "common_defenses": [
+      "Accident",
+      "Consent",
+      "Misidentification",
+      "De minimis damage"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "Third domestic battery within Wyoming is a felony with up to 5 years",
+      "Strangulation triggers aggravated assault charges (felony)"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the relationship qualifies as a 'household member' under the statute",
+      "Self-defense under Wyoming's robust Stand Your Ground laws",
+      "Negotiate for non-domestic charges to avoid federal firearms prohibition",
+      "Present evidence of mutual combat or victim's aggression"
+    ],
+    "common_defenses": [
+      "Self-defense — Wyoming Stand Your Ground",
+      "Mutual combat",
+      "False allegation motivated by custody or divorce",
+      "Lack of bodily injury"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "Third offense is a felony with up to 5 years",
+      "Medical records corroborate injury",
+      "Federal firearms prohibition applies upon any DV conviction"
+    ],
+    "defense_opportunities": [
+      "Challenge prior convictions used for enhancement",
+      "Self-defense under Stand Your Ground",
+      "Negotiate to avoid the third-strike felony charge"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Invalid prior conviction",
+      "Mutual combat",
+      "False allegation"
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "Often charged alongside DUI when a child is in the vehicle",
+      "Jury sympathy strongly favors child victims"
+    ],
+    "defense_opportunities": [
+      "Misdemeanor status allows for diversion and deferred prosecution",
+      "Challenge whether the child was actually in danger",
+      "Argue reasonable parenting judgment"
+    ],
+    "common_defenses": [
+      "Reasonable parenting",
+      "No actual danger",
+      "Lack of responsibility for the child",
+      "Accident"
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "Medical evidence of patterned injuries provides forensic corroboration",
+      "Mandatory reporters ensure early detection"
+    ],
+    "defense_opportunities": [
+      "Challenge medical conclusions — alternative medical explanations for injuries",
+      "Contest identification of the perpetrator in shared caregiver situations",
+      "Distinguish between reasonable discipline and abuse"
+    ],
+    "common_defenses": [
+      "Accidental injury",
+      "Underlying medical condition",
+      "Misidentification of the abuser",
+      "Reasonable discipline"
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "Phone records, GPS data, and texts document violations",
+      "Repeat violations escalate penalties"
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge of the order's specific terms",
+      "Argue incidental contact rather than willful violation",
+      "Contest validity of the underlying order"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of the order",
+      "Incidental contact",
+      "Consent — protected person initiated contact",
+      "Invalid underlying order"
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "Pattern evidence from multiple incidents builds a compelling narrative",
+      "Electronic communications provide documentary evidence"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'course of conduct' element",
+      "Contest the victim's claimed fear under an objective standard",
+      "Argue legitimate purpose for the contact"
+    ],
+    "common_defenses": [
+      "Constitutionally protected activity",
+      "No course of conduct",
+      "Legitimate purpose",
+      "Unreasonable fear claim"
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "Harassment may be charged as breach of peace or related misdemeanors",
+      "Electronic harassment evidence is easily preserved",
+      "Restraining order violations compound the charges"
+    ],
+    "defense_opportunities": [
+      "Misdemeanor status allows for diversion",
+      "Challenge whether the conduct meets the harassment definition",
+      "First Amendment defense"
+    ],
+    "common_defenses": [
+      "Protected speech",
+      "Legitimate purpose",
+      "Consent",
+      "Misunderstanding"
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "Wyoming's elder abuse statutes provide enhanced penalties for abuse of vulnerable adults",
+      "Financial exploitation creates a paper trail",
+      "Mandatory reporting ensures detection"
+    ],
+    "defense_opportunities": [
+      "Challenge the caretaker relationship",
+      "Contest the elder's competency to report accurately",
+      "Argue authorized financial transactions"
+    ],
+    "common_defenses": [
+      "No caretaker relationship",
+      "Consent of the elder",
+      "Authorized transactions",
+      "False allegation"
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "Wyoming has strong Second Amendment protections, but felons in possession face state and federal charges",
+      "Possession in restricted locations (schools, government buildings) is criminal",
+      "Physical evidence of the weapon is typically clear"
+    ],
+    "defense_opportunities": [
+      "Wyoming's permissive gun laws mean most possession is legal — challenge whether any prohibition actually applies",
+      "Contest constructive possession in shared spaces",
+      "Challenge the legality of the search"
+    ],
+    "common_defenses": [
+      "Lawful possession under Wyoming law",
+      "Lack of knowledge",
+      "Constructive possession insufficient",
+      "Illegal search and seizure"
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "Wyoming felons are prohibited from possessing firearms under both state and federal law",
+      "Prior felony conviction is public record",
+      "Constructive possession doctrine applies"
+    ],
+    "defense_opportunities": [
+      "Challenge constructive possession in shared residence or vehicle",
+      "Contest whether the prior conviction qualifies as a disqualifying felony"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of the firearm",
+      "Constructive possession insufficient",
+      "Prior conviction does not qualify",
+      "Illegal search and seizure"
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "Wyoming has constitutional carry — most concealed carry by adults is legal without a permit since 2011",
+      "Concealed carry by prohibited persons remains criminal",
+      "Carrying in restricted locations (schools, courthouses) is criminal"
+    ],
+    "defense_opportunities": [
+      "Wyoming's constitutional carry law makes most concealed carry by adults legal — challenge whether any prohibition applies",
+      "Argue the defendant was eligible for constitutional carry",
+      "Contest whether the location was actually restricted"
+    ],
+    "common_defenses": [
+      "Constitutional carry — Wyoming permits concealed carry without permit",
+      "Defendant was not a prohibited person",
+      "Not in a restricted location",
+      "Lack of knowledge"
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "Discharge of a firearm in occupied or populated areas is criminal",
+      "Ballistic evidence traces discharge to specific weapons",
+      "Reckless endangerment charges may accompany illegal discharge"
+    ],
+    "defense_opportunities": [
+      "Wyoming's rural geography means many discharge scenarios involve legal hunting or target practice",
+      "Argue accidental discharge",
+      "Self-defense — discharge was in response to imminent threat"
+    ],
+    "common_defenses": [
+      "Lawful hunting or target practice",
+      "Self-defense",
+      "Accidental discharge",
+      "Defense of property"
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Identity theft is a felony in Wyoming",
+      "Digital evidence is extensively preserved",
+      "Financial institution records document unauthorized transactions"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'intentional use' element",
+      "Contest evidence linking defendant to the unauthorized use",
+      "Argue authorization from the identity holder"
+    ],
+    "common_defenses": [
+      "Authorization",
+      "Mistaken identity",
+      "Lack of intent",
+      "Insufficient evidence"
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Charged as theft in Wyoming with the same penalty tiers",
+      "Forensic accounting creates a paper trail",
+      "Position of trust appears egregious to juries"
+    ],
+    "defense_opportunities": [
+      "Challenge intent — argue defendant intended to repay",
+      "Contest the amount attributable to the defendant",
+      "Negotiate restitution for reduced charges"
+    ],
+    "common_defenses": [
+      "Authorization",
+      "Accounting error",
+      "Claim of right",
+      "Insufficient evidence"
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Forgery is a felony in Wyoming",
+      "Document examination provides expert evidence",
+      "Financial records corroborate passage of forged instruments"
+    ],
+    "defense_opportunities": [
+      "Challenge handwriting analysis methodology",
+      "Argue authorization to sign",
+      "Contest fraudulent intent"
+    ],
+    "common_defenses": [
+      "Authorization to sign",
+      "Lack of intent to defraud",
+      "Misidentification",
+      "Document was genuine"
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "Fraud charged under various Wyoming theft and false pretenses statutes",
+      "Documentary evidence establishes the scheme",
+      "Victim testimony about reliance is compelling"
+    ],
+    "defense_opportunities": [
+      "Challenge false representation element",
+      "Contest victim's reliance",
+      "Argue good-faith intent"
+    ],
+    "common_defenses": [
+      "No false representation",
+      "Good faith belief",
+      "No reliance",
+      "Insufficient evidence of fraudulent intent"
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "Credit card fraud is a felony",
+      "Transaction records and surveillance provide clear evidence",
+      "Financial institutions actively investigate"
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge of unauthorized use",
+      "Contest identification at points of sale",
+      "Dispute total amount"
+    ],
+    "common_defenses": [
+      "Authorization from cardholder",
+      "Misidentification",
+      "Lack of knowledge",
+      "Identity theft of defendant's own information"
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Wyoming has limited state money laundering charges — most cases are federal",
+      "Financial forensics create a paper trail",
+      "Federal partnerships expand investigative resources"
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge that funds were criminal proceeds",
+      "Contest the connection to underlying criminal activity",
+      "Argue legitimate business activity"
+    ],
+    "common_defenses": [
+      "Lack of knowledge",
+      "Legitimate business",
+      "No underlying criminal activity",
+      "Insufficient evidence"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "DNA evidence is highly reliable",
+      "Wyoming's statute does not require physical resistance",
+      "SANE evidence collection provides forensic corroboration"
+    ],
+    "defense_opportunities": [
+      "Challenge the consent element",
+      "Contest identification reliability",
+      "Challenge forensic evidence collection and chain of custody"
+    ],
+    "common_defenses": [
+      "Consent",
+      "Misidentification",
+      "Fabrication",
+      "Insufficient corroboration"
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "First degree sexual assault carries up to 50 years",
+      "Sexual assault of a minor carries enhanced penalties",
+      "SANE evidence and DNA provide strong corroboration"
+    ],
+    "defense_opportunities": [
+      "Challenge timing and circumstances of evidence collection",
+      "Present evidence of consent through communications and witnesses",
+      "Contest delayed disclosure inconsistencies"
+    ],
+    "common_defenses": [
+      "Consent",
+      "Misidentification",
+      "False allegation",
+      "Alibi"
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "Witness testimony is typically clear",
+      "Surveillance frequently captures public exposure"
+    ],
+    "defense_opportunities": [
+      "Challenge lewd intent",
+      "Argue exposure was not public or visible",
+      "Contest the statutory definition"
+    ],
+    "common_defenses": [
+      "Accidental exposure",
+      "Not public",
+      "Lack of lewd intent",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "Sting operations produce direct evidence",
+      "Online solicitation creates digital trail"
+    ],
+    "defense_opportunities": [
+      "Challenge entrapment",
+      "Contest the agreement element",
+      "Argue ambiguous communication"
+    ],
+    "common_defenses": [
+      "Entrapment",
+      "No agreement",
+      "Misunderstanding",
+      "Protected speech"
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "Child pornography possession is a felony in Wyoming",
+      "Digital forensics recover deleted files and metadata",
+      "Federal charges may be filed concurrently"
+    ],
+    "defense_opportunities": [
+      "Challenge the search warrant",
+      "Contest knowledge of the material on devices",
+      "Argue the depicted individuals are not minors"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure",
+      "Lack of knowledge",
+      "Not a minor",
+      "Unsolicited material"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "Failure to register as a sex offender is a felony",
+      "Registration requirements are clearly documented",
+      "Compliance is easily verified"
+    ],
+    "defense_opportunities": [
+      "Challenge proper notice of requirements",
+      "Argue impossibility due to circumstances",
+      "Contest whether the underlying conviction triggers registration"
+    ],
+    "common_defenses": [
+      "Lack of notice",
+      "Impossibility",
+      "Good-faith compliance attempt",
+      "Underlying conviction does not trigger registration"
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "Age alone establishes the offense — consent is not a defense",
+      "Wyoming has long statute of limitations for child sex offenses"
+    ],
+    "defense_opportunities": [
+      "Challenge the defendant's knowledge of the victim's age",
+      "Contest the nature of the contact",
+      "Argue close-in-age circumstances for sentencing mitigation"
+    ],
+    "common_defenses": [
+      "Mistake of age (limited defense)",
+      "No sexual contact occurred",
+      "Misidentification",
+      "Close in age (mitigating)"
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Disorderly conduct is broadly defined",
+      "Officer testimony is typically sufficient",
+      "Often charged alongside other offenses"
+    ],
+    "defense_opportunities": [
+      "First Amendment challenge for protected speech",
+      "Misdemeanor status allows for negotiation",
+      "Challenge public disturbance element"
+    ],
+    "common_defenses": [
+      "Protected speech",
+      "No public disturbance",
+      "Self-defense",
+      "De minimis"
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Body camera evidence is typically clear",
+      "Even passive resistance may be charged"
+    ],
+    "defense_opportunities": [
+      "Challenge lawfulness of underlying arrest",
+      "Argue involuntary or instinctive movements",
+      "Contest officer identification"
+    ],
+    "common_defenses": [
+      "Unlawful arrest",
+      "No intent to resist",
+      "Self-defense against excessive force",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "Obstruction can include providing false information or destroying evidence",
+      "Easily provable when contradicted by physical evidence",
+      "Witness tampering creates additional charges"
+    ],
+    "defense_opportunities": [
+      "Challenge knowing element",
+      "Argue Fifth Amendment exercise",
+      "Contest officer's official capacity"
+    ],
+    "common_defenses": [
+      "Fifth Amendment",
+      "Truthful statements",
+      "Lack of knowledge of falsity",
+      "Officer not acting in official capacity"
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "Contempt carries court-determined penalties",
+      "Order violations are typically clear",
+      "Judges have broad discretion"
+    ],
+    "defense_opportunities": [
+      "Challenge order clarity",
+      "Argue inability to comply",
+      "Present good-faith compliance efforts"
+    ],
+    "common_defenses": [
+      "Ambiguous order",
+      "Inability to comply",
+      "No willful violation",
+      "Invalid underlying order"
+    ]
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "prosecution_strengths": [
+      "Wyoming may charge under disturbing the peace or local ordinances",
+      "Officer observation typically suffices",
+      "Often combined with other misdemeanors"
+    ],
+    "defense_opportunities": [
+      "Challenge whether intoxication actually disturbed the peace",
+      "Argue medical condition rather than intoxication",
+      "Contest public location element"
+    ],
+    "common_defenses": [
+      "No disturbance",
+      "Medical condition",
+      "Not in public",
+      "Involuntary intoxication"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "Bail jumping under Wyoming statutes carries serious consequences",
+      "Court records establish the missed appearance",
+      "Bond conditions are documented"
+    ],
+    "defense_opportunities": [
+      "Argue unintentional failure",
+      "Present evidence of good-faith efforts to contact court",
+      "Challenge notice of court date"
+    ],
+    "common_defenses": [
+      "Lack of notice",
+      "Emergency",
+      "Good-faith mistake",
+      "Impossibility"
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "False reporting wastes law enforcement resources and is criminal",
+      "Inconsistencies with physical evidence expose falsity",
+      "Digital evidence frequently contradicts the report"
+    ],
+    "defense_opportunities": [
+      "Argue good-faith belief",
+      "Challenge evidence of falsity",
+      "Contest knowing element"
+    ],
+    "common_defenses": [
+      "Good-faith belief",
+      "Mistake",
+      "Report was true",
+      "Coercion"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "Threats charged under various Wyoming statutes including terroristic threats",
+      "Electronic communications provide documentary evidence",
+      "Reasonable fear is assessed objectively"
+    ],
+    "defense_opportunities": [
+      "First Amendment challenge for hyperbole and protected expression",
+      "Challenge credibility of fear",
+      "Argue conditional or vague statements"
+    ],
+    "common_defenses": [
+      "Protected speech",
+      "Not a true threat",
+      "Lack of intent to threaten",
+      "Context shows non-threatening nature"
+    ]
+  },
+  {
+    "common_charge_slug": "perjury",
+    "prosecution_strengths": [
+      "Court transcripts provide the exact false statement",
+      "Contradictory evidence disproves the statement"
+    ],
+    "defense_opportunities": [
+      "Challenge materiality",
+      "Argue technical truth",
+      "Contest knowing element"
+    ],
+    "common_defenses": [
+      "Honest mistake",
+      "Immaterial",
+      "Literally true",
+      "Faulty memory"
+    ]
+  },
+  {
+    "common_charge_slug": "bribery",
+    "prosecution_strengths": [
+      "Financial records and communications document quid pro quo",
+      "Both parties can be prosecuted"
+    ],
+    "defense_opportunities": [
+      "Challenge quid pro quo agreement",
+      "Argue legitimate payment for services",
+      "Contest corrupt intent"
+    ],
+    "common_defenses": [
+      "No quid pro quo",
+      "Legitimate payment",
+      "Lawful campaign contribution",
+      "Lack of corrupt intent"
+    ]
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "prosecution_strengths": [
+      "Escape from custody is a felony in Wyoming",
+      "Custody is typically undisputed",
+      "Tracking technology enables recapture"
+    ],
+    "defense_opportunities": [
+      "Argue unlawful underlying custody",
+      "Present duress or coercion evidence",
+      "Contest whether conduct constituted escape"
+    ],
+    "common_defenses": [
+      "Unlawful custody",
+      "Duress",
+      "Administrative error rather than escape",
+      "Voluntary return"
+    ]
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "prosecution_strengths": [
+      "Veterinary evidence is objective",
+      "Public sympathy favors prosecution"
+    ],
+    "defense_opportunities": [
+      "Wyoming agricultural exemptions protect lawful livestock practices",
+      "Challenge intent",
+      "Distinguish lawful activities from cruelty"
+    ],
+    "common_defenses": [
+      "Lawful agricultural practice",
+      "No intent to mistreat",
+      "Not the responsible party",
+      "Animal's condition due to illness"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "Revocation hearings use preponderance standard",
+      "Conditions are documented in writing",
+      "Original sentence can be reimposed"
+    ],
+    "defense_opportunities": [
+      "Challenge alleged violation",
+      "Argue technical rather than substantive violation",
+      "Present substantial compliance evidence"
+    ],
+    "common_defenses": [
+      "No violation occurred",
+      "Substantial compliance",
+      "Good cause",
+      "Unreasonable condition"
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "Lower burden of proof at revocation hearings",
+      "GPS monitoring and drug tests document violations",
+      "Full remaining sentence may be reimposed"
+    ],
+    "defense_opportunities": [
+      "Challenge evidence of violation",
+      "Present mitigating circumstances",
+      "Argue alternatives to revocation"
+    ],
+    "common_defenses": [
+      "No violation",
+      "Good cause",
+      "Technical violation",
+      "Substantial compliance"
+    ]
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "prosecution_strengths": [
+      "Wyoming treats aiders and abettors as principals",
+      "Circumstantial evidence of involvement is sufficient",
+      "Full penalties of underlying offense apply"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'intentionally aided' element",
+      "Argue withdrawal before commission",
+      "Contest knowledge of principal's intent"
+    ],
+    "common_defenses": [
+      "Mere presence",
+      "Withdrawal",
+      "Lack of knowledge",
+      "No assistance provided"
+    ]
+  },
+  {
+    "common_charge_slug": "attempt",
+    "prosecution_strengths": [
+      "Acts demonstrating intent to commit the crime are sufficient",
+      "Impossibility is generally not a defense"
+    ],
+    "defense_opportunities": [
+      "Challenge whether acts went beyond mere preparation",
+      "Argue voluntary abandonment",
+      "Contest specific intent"
+    ],
+    "common_defenses": [
+      "Mere preparation",
+      "Voluntary abandonment",
+      "Lack of specific intent",
+      "Legal impossibility"
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Co-conspirator statements admissible against all members",
+      "Pinkerton liability extends to foreseeable acts of co-conspirators"
+    ],
+    "defense_opportunities": [
+      "Challenge existence of agreement",
+      "Argue withdrawal",
+      "Contest knowledge of conspiracy scope"
+    ],
+    "common_defenses": [
+      "No agreement",
+      "Withdrawal",
+      "Lack of knowledge",
+      "No overt act"
+    ]
+  }
+]

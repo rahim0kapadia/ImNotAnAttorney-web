@@ -1,0 +1,1742 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Okla. Stat. tit. 47 § 11-902",
+    "statute_title": "Driving Under the Influence",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 1 year (second); 10 years (third+)",
+    "fine_max": "$1,000 (first); $2,500 (second); $5,000 (third+)",
+    "elements": [
+      "Defendant drove, operated, or was in actual physical control of a motor vehicle",
+      "Within the State of Oklahoma",
+      "While under the influence of alcohol, any intoxicating substance, or a combination",
+      "Or had a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .15 or higher (aggravated DUI)",
+      "Child under 18 in vehicle (child endangerment enhancement)",
+      "Third or subsequent offense within 10 years (felony)",
+      "Prior felony DUI conviction"
+    ],
+    "notes": "Implied consent under § 11-902(A). Admin license revocation 180 days first offense. Ignition interlock required. Oklahoma has a 10-year look-back period for enhancement purposes. Aggravated DUI (BAC .15+) carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Okla. Stat. tit. 47 § 11-902(A)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "10 days imprisonment or community service",
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle",
+      "While under the influence of alcohol or intoxicating substance",
+      "BAC .08 or higher, or impairment of driving ability",
+      "No prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "10 days imprisonment or community service; substance abuse assessment",
+    "enhancements": [
+      "BAC .15 or higher (aggravated — mandatory 1 year interlock)",
+      "Child under 18 in vehicle"
+    ],
+    "notes": "License revocation 180 days. Ignition interlock device may be required. Must complete substance abuse assessment and recommended treatment."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Okla. Stat. tit. 47 § 11-902(C)-(D)",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Misdemeanor (second); Felony (third+)",
+    "penalty_min": "1 year (second); 1 year (third+)",
+    "penalty_max": "1-5 years (second); 1-10 years (third+)",
+    "fine_max": "$2,500 (second); $5,000 (third+)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle",
+      "While under the influence of alcohol or intoxicating substance",
+      "BAC .08 or higher, or impairment of driving ability",
+      "One or more prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "1 year imprisonment (second); 1 year imprisonment (third+)",
+    "enhancements": [
+      "BAC .15 or higher",
+      "Child under 18 in vehicle",
+      "Causing great bodily injury"
+    ],
+    "notes": "Second offense: 1-5 year license revocation. Third offense: 3-year revocation. Mandatory ignition interlock for all repeat offenders. GPS monitoring may be ordered."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Okla. Stat. tit. 47 § 11-902(A)(3)-(4)",
+    "statute_title": "DUI — Drugs or Intoxicating Substance",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle",
+      "While under the influence of any intoxicating substance other than alcohol",
+      "Or under the combined influence of alcohol and any other intoxicating substance",
+      "To a degree rendering the defendant incapable of safely driving"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs",
+      "Presence of Schedule I substance"
+    ],
+    "notes": "No per se drug limit. Prosecution must prove impairment. Includes prescription medications. Blood or urine test may be required under implied consent."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Okla. Stat. tit. 47 § 11-901",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "5 days",
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant drove a vehicle",
+      "In a careless or wanton manner without regard for the safety of persons or property"
+    ],
+    "mandatory_minimum": "5 days imprisonment",
+    "enhancements": [],
+    "notes": "Common plea-down from DUI. Adds points to driving record. May result in license suspension."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Okla. Stat. tit. 47 § 10-102",
+    "statute_title": "Leaving the Scene of an Accident — Injury or Death",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury or death to any person",
+      "Defendant failed to immediately stop at the scene",
+      "Defendant failed to render aid and provide identification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim",
+      "Serious bodily injury"
+    ],
+    "notes": "Property damage only is a misdemeanor under § 10-103. Leaving scene involving death can result in enhanced penalties. Must report to nearest law enforcement."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Okla. Stat. tit. 47 § 11-903",
+    "statute_title": "DUI Causing Death — First Degree Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "Life",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant drove a motor vehicle",
+      "While under the influence of alcohol or intoxicating substance",
+      "Defendant's intoxicated driving caused the death of another person"
+    ],
+    "mandatory_minimum": "4 years",
+    "enhancements": [
+      "Prior DUI convictions",
+      "Extremely high BAC",
+      "Multiple victims"
+    ],
+    "notes": "DUI-related deaths prosecuted as first-degree manslaughter under Okla. Stat. tit. 21 § 711. Penalties are severe with mandatory minimum. May also be charged as second-degree murder in egregious cases."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Okla. Stat. tit. 21 § 711",
+    "statute_title": "First Degree Manslaughter — Vehicular",
+    "offense_class": "Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "Life",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "While operating a motor vehicle in a negligent or reckless manner",
+      "Or while committing a misdemeanor offense (DUI)"
+    ],
+    "mandatory_minimum": "4 years",
+    "enhancements": [],
+    "notes": "Oklahoma charges vehicular deaths under the general manslaughter statute. If DUI-related, charged as first-degree manslaughter (misdemeanor-manslaughter rule). Non-DUI vehicular deaths may be second-degree manslaughter."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Okla. Stat. tit. 47 § 6-303",
+    "statute_title": "Driving While License Suspended, Revoked, or Denied",
+    "offense_class": "Misdemeanor (first); Felony (subsequent or DUI-related suspension)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (first); $2,500 (felony)",
+    "elements": [
+      "Defendant drove a motor vehicle on a public road",
+      "Defendant's license was suspended, revoked, canceled, or denied",
+      "Defendant had knowledge of the suspension"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Driving on DUI-related suspension (felony)",
+      "Subsequent offense"
+    ],
+    "notes": "Driving on DUI-related suspension is a felony. Additional suspension period imposed. May require SR-22 insurance filing."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Okla. Stat. tit. 21 § 540A",
+    "statute_title": "Eluding a Police Officer",
+    "offense_class": "Misdemeanor (basic); Felony (if endangerment or injury)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5-10 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "A peace officer signaled the defendant to stop",
+      "Signal was given by hand, voice, siren, or light",
+      "Defendant willfully attempted to elude or flee from the officer",
+      "Defendant knew or should have known the person was a peace officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Endangering others during flight (felony)",
+      "Causing serious bodily injury (felony)",
+      "Causing death (felony)"
+    ],
+    "notes": "Eluding causing injury or death is a felony with substantially enhanced penalties. License revocation mandatory. Commonly charged alongside other traffic offenses."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Okla. Stat. tit. 63 § 2-402",
+    "statute_title": "Possession of a Controlled Dangerous Substance",
+    "offense_class": "Misdemeanor (simple possession under SQ 780); Felony (distribution quantities)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); varies (felony)",
+    "fine_max": "$1,000 (misdemeanor); varies (felony)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed",
+      "A controlled dangerous substance",
+      "Without a valid prescription or legal authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near school or park",
+      "Prior drug convictions",
+      "Possession of distribution quantities"
+    ],
+    "notes": "State Question 780 (2016) reclassified simple drug possession from felony to misdemeanor. Applies to personal-use amounts only. Distribution quantities remain felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Okla. Stat. tit. 63 § 2-402(B)(2)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Misdemeanor (personal use without medical card)",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed",
+      "Marijuana",
+      "Without a valid medical marijuana license"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near school",
+      "Possession with intent to distribute (felony)"
+    ],
+    "notes": "Oklahoma legalized medical marijuana in 2018 (SQ 788). Personal possession without a medical card remains a misdemeanor under SQ 780. Growing without a license is a felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Okla. Stat. tit. 63 § 2-402(A)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Misdemeanor (simple possession under SQ 780)",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed",
+      "Cocaine or crack cocaine (Schedule II)",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near school",
+      "Distribution quantities (felony)"
+    ],
+    "notes": "Simple possession reclassified to misdemeanor under SQ 780. Distribution quantities or intent to distribute remain felonies. Cocaine is Schedule II in Oklahoma."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Okla. Stat. tit. 63 § 2-402(A)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Misdemeanor (simple possession under SQ 780)",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed",
+      "Methamphetamine (Schedule II)",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near school",
+      "Distribution quantities (felony)",
+      "Presence of children"
+    ],
+    "notes": "Simple possession reclassified to misdemeanor under SQ 780. Manufacturing meth remains a serious felony under § 2-401. Oklahoma has anti-meth manufacturing provisions restricting pseudoephedrine purchases."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Okla. Stat. tit. 63 § 2-415",
+    "statute_title": "Trafficking in Illegal Drugs",
+    "offense_class": "Felony",
+    "penalty_min": "4 years (marijuana 25+ lbs); varies by substance",
+    "penalty_max": "Life (large quantities of hard drugs)",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant knowingly possessed, transported, or distributed",
+      "A controlled substance in a trafficking quantity",
+      "Quantity met or exceeded statutory trafficking thresholds"
+    ],
+    "mandatory_minimum": "4 years (marijuana 25+ lbs); 10 years (cocaine 28g+); 10 years (meth 20g+)",
+    "enhancements": [
+      "Trafficking near schools or parks",
+      "Use of minors in trafficking",
+      "Quantities far exceeding thresholds"
+    ],
+    "notes": "Trafficking thresholds: marijuana 25+ lbs, cocaine 28g+, meth 20g+, heroin 10g+. Mandatory minimum sentences. No suspended sentence for trafficking. 85% rule applies — must serve 85% before parole eligibility."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Okla. Stat. tit. 63 § 2-401(A)",
+    "statute_title": "Distribution of a Controlled Dangerous Substance",
+    "offense_class": "Felony",
+    "penalty_min": "2 years (Schedule I-II first offense)",
+    "penalty_max": "Life (Schedule I-II); 10 years (Schedule III-IV); 5 years (Schedule V)",
+    "fine_max": "$20,000 (first); $100,000 (subsequent)",
+    "elements": [
+      "Defendant knowingly distributed, dispensed, or possessed with intent to distribute",
+      "A controlled dangerous substance",
+      "To another person",
+      "Without legal authorization"
+    ],
+    "mandatory_minimum": "2 years (Schedule I-II first offense)",
+    "enhancements": [
+      "Distribution to a minor (double penalties)",
+      "Distribution near school or park",
+      "Prior distribution convictions"
+    ],
+    "notes": "Distribution to minors doubles the penalty. Second offense doubles the applicable range. Distribution near schools carries mandatory enhanced penalties."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Okla. Stat. tit. 63 § 2-401(G)",
+    "statute_title": "Manufacturing a Controlled Dangerous Substance",
+    "offense_class": "Felony",
+    "penalty_min": "7 years (meth manufacturing)",
+    "penalty_max": "Life",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly manufactured or attempted to manufacture",
+      "A controlled dangerous substance",
+      "Without legal authorization"
+    ],
+    "mandatory_minimum": "7 years (meth manufacturing); 20 years (if child present during meth manufacturing)",
+    "enhancements": [
+      "Manufacturing in presence of a minor (20 years mandatory)",
+      "Environmental contamination",
+      "Causing injury to another"
+    ],
+    "notes": "Methamphetamine manufacturing carries especially severe penalties. Manufacturing in presence of a child under 12 is 20 years mandatory minimum. Cleanup costs assessed to defendant."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Okla. Stat. tit. 63 § 2-405",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly used or possessed with intent to use",
+      "Drug paraphernalia",
+      "For the purpose of ingesting, inhaling, or otherwise introducing a controlled substance into the body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution of paraphernalia to a minor (felony)"
+    ],
+    "notes": "Reclassified to misdemeanor under SQ 780. Distribution of paraphernalia is a separate offense. Distribution to a minor is a felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Okla. Stat. tit. 63 § 2-401(A)(1)",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Felony",
+    "penalty_min": "2 years (Schedule I-II first offense)",
+    "penalty_max": "Life (Schedule I-II); 10 years (Schedule III-IV)",
+    "fine_max": "$20,000 (first); $100,000 (subsequent)",
+    "elements": [
+      "Defendant knowingly possessed a controlled dangerous substance",
+      "With the intent to manufacture, distribute, or dispense",
+      "Intent may be inferred from quantity, packaging, or other evidence"
+    ],
+    "mandatory_minimum": "2 years (Schedule I-II first offense)",
+    "enhancements": [
+      "Possession near school",
+      "Large quantity",
+      "Presence of distribution materials (scales, baggies)"
+    ],
+    "notes": "Intent inferred from circumstantial evidence including quantity, packaging, scales, cash, and communications. Same penalties as distribution."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Okla. Stat. tit. 21 § 701.7",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "Life without parole",
+    "penalty_max": "Death",
+    "fine_max": null,
+    "elements": [
+      "Defendant deliberately and with premeditation caused the death of another person",
+      "Or caused death during the commission of a forcible felony (felony murder)"
+    ],
+    "mandatory_minimum": "Life without parole",
+    "enhancements": [
+      "Aggravating circumstances (death penalty eligible)",
+      "Victim was a child, law enforcement officer, or other protected person",
+      "Murder for hire"
+    ],
+    "notes": "Oklahoma has the death penalty. Aggravating circumstances must be found for death sentence. Felony murder applies during commission of certain forcible felonies."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Okla. Stat. tit. 21 § 701.8",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "Life",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "With imminently dangerous conduct evincing a depraved mind",
+      "Without premeditation or during commission of certain felonies"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [],
+    "notes": "Second degree murder includes depraved-mind murder (reckless conduct showing extreme indifference to human life) and certain felony murders not qualifying as first degree."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Okla. Stat. tit. 21 § 711",
+    "statute_title": "Manslaughter — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "Life",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "In the heat of passion upon adequate provocation",
+      "Without premeditation or malice aforethought"
+    ],
+    "mandatory_minimum": "4 years",
+    "enhancements": [],
+    "notes": "First degree manslaughter includes heat-of-passion killings and deaths during misdemeanor offenses. Mandatory minimum 4 years. No suspended or deferred sentence."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Okla. Stat. tit. 21 § 716",
+    "statute_title": "Manslaughter — Second Degree",
+    "offense_class": "Misdemeanor (negligence); Felony (culpable negligence)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 4 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through culpable negligence",
+      "Without intent to kill"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second degree manslaughter covers unintentional killings resulting from criminal negligence. Less culpable than first degree. Vehicular deaths without DUI may be charged here."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Okla. Stat. tit. 21 § 646",
+    "statute_title": "Assault and Battery with a Dangerous Weapon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully caused bodily injury to another person",
+      "With a dangerous or deadly weapon",
+      "Or with intent to cause great bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is a law enforcement officer or emergency responder",
+      "Serious bodily injury",
+      "Use of a firearm"
+    ],
+    "notes": "Includes assault with a dangerous weapon, intent to kill, and shooting with intent to kill (§ 652). Penalties vary by specific subsection and circumstances."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Okla. Stat. tit. 21 § 642",
+    "statute_title": "Assault",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant willfully and unlawfully attempted or threatened",
+      "To commit a violent injury upon another person",
+      "With the apparent ability to carry out the threat"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Simple assault without battery (no physical contact). Assault AND battery is a separate offense under § 644."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "Okla. Stat. tit. 21 § 644",
+    "statute_title": "Assault and Battery",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant willfully and unlawfully used force or violence upon another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against a law enforcement officer (felony under § 649)"
+    ],
+    "notes": "Oklahoma combines assault and battery into one offense. Simple assault and battery is a misdemeanor. Enhanced versions include battery on officers, the elderly, and children."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Okla. Stat. tit. 21 § 791",
+    "statute_title": "Robbery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant took personal property of another from the person or immediate presence",
+      "By means of force or fear",
+      "Against the will of the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with a dangerous weapon (armed robbery)",
+      "Infliction of great bodily injury"
+    ],
+    "notes": "Robbery by force or fear without a weapon. Armed robbery is a separate, more serious offense under § 801."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Okla. Stat. tit. 21 § 801",
+    "statute_title": "Robbery with a Dangerous Weapon (Armed Robbery)",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed robbery",
+      "While armed with a firearm or other dangerous weapon",
+      "Or the defendant or an accomplice displayed or threatened the use of a weapon"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Use of a firearm (additional mandatory minimum)",
+      "Serious bodily injury",
+      "Prior robbery conviction"
+    ],
+    "notes": "Armed robbery carries a 5-year mandatory minimum. Must serve 85% before parole eligibility. One of the most severely punished property crimes in Oklahoma."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Okla. Stat. tit. 21 § 741",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony",
+    "penalty_min": "20 years",
+    "penalty_max": "Life (without parole if for extortion or ransom)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant seized, confined, inveigled, decoyed, kidnapped, abducted, or carried away another person",
+      "By any means whatsoever",
+      "With intent to hold for ransom, extort money, commit a felony, or inflict bodily injury"
+    ],
+    "mandatory_minimum": "20 years",
+    "enhancements": [
+      "Victim is a child under 12",
+      "For purpose of extortion or ransom",
+      "Sexual assault during kidnapping"
+    ],
+    "notes": "Kidnapping for extortion or ransom is punishable by life without parole or death (in extreme cases). Must serve 85% of sentence before parole eligibility."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Okla. Stat. tit. 21 § 1401",
+    "statute_title": "Arson — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "35 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant willfully and maliciously set fire to or burned",
+      "An occupied dwelling, building, or structure",
+      "Or aided, counseled, or procured the burning"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person injured or killed",
+      "Arson for insurance fraud",
+      "Occupied structure"
+    ],
+    "notes": "First degree arson involves occupied or insured structures. Second degree arson (§ 1402) covers unoccupied structures. Third degree (§ 1403) covers personal property. Arson causing death may be charged as first-degree murder."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Okla. Stat. tit. 21 § 44; § 701.7",
+    "statute_title": "Attempted Murder",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life",
+    "fine_max": null,
+    "elements": [
+      "Defendant intended to cause the death of another person",
+      "Defendant performed an overt act toward the commission of murder",
+      "The act went beyond mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of firearm",
+      "Victim is a law enforcement officer",
+      "Aggravating circumstances"
+    ],
+    "notes": "Attempted first-degree murder carries up to life imprisonment. Shooting with intent to kill (§ 652) is a related but distinct charge."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Okla. Stat. tit. 21 § 645",
+    "statute_title": "Assault with a Deadly Weapon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant assaulted another person",
+      "With a deadly or dangerous weapon",
+      "With intent to do bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury",
+      "Use of a firearm",
+      "Victim is a protected person"
+    ],
+    "notes": "Distinct from shooting with intent to kill (§ 652). Deadly weapon includes firearms, knives, and any object used in a manner capable of causing death."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Okla. Stat. tit. 21 § 1704",
+    "statute_title": "Larceny (Theft)",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$5,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant took personal property of another",
+      "Without the owner's consent",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft from a person",
+      "Prior theft convictions"
+    ],
+    "notes": "SQ 780 raised the felony threshold from $500 to $1,000. Larceny of merchandise from a retailer is covered under § 1731."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Okla. Stat. tit. 21 § 1705",
+    "statute_title": "Grand Larceny",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant took personal property of another",
+      "Value exceeded $1,000",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $15,000",
+      "Theft of a vehicle",
+      "Prior larceny convictions"
+    ],
+    "notes": "Grand larceny is theft of property valued over $1,000 (threshold raised by SQ 780 from $500). Prior convictions may enhance penalties."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Okla. Stat. tit. 21 § 1706",
+    "statute_title": "Petit Larceny",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant took personal property of another",
+      "Value was under $1,000",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior larceny convictions"
+    ],
+    "notes": "SQ 780 raised the petit/grand larceny threshold from $500 to $1,000. Multiple petit larceny convictions may enhance subsequent offenses to felony."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Okla. Stat. tit. 21 § 1731",
+    "statute_title": "Larceny of Merchandise from a Retailer (Shoplifting)",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant took merchandise from a retail establishment",
+      "Without paying the full purchase price",
+      "With intent to deprive the retailer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of theft-detection countermeasures",
+      "Organized retail theft"
+    ],
+    "notes": "Includes concealment of merchandise, price tag alteration, and transfer between containers. Civil liability to merchant also applies."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Okla. Stat. tit. 21 § 1431",
+    "statute_title": "Burglary — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "7 years",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke and entered a dwelling house of another",
+      "In which a human being was present at the time",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": "7 years",
+    "enhancements": [
+      "Armed with a dangerous weapon",
+      "Assault during burglary",
+      "Prior burglary convictions"
+    ],
+    "notes": "First degree burglary requires occupied dwelling. Second degree (§ 1435) covers unoccupied buildings and structures. Must serve 85% of first-degree burglary sentence."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Okla. Stat. tit. 21 § 1431",
+    "statute_title": "Burglary — First Degree (Residential)",
+    "offense_class": "Felony",
+    "penalty_min": "7 years",
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant broke and entered a dwelling house",
+      "A human being was present at the time of the entry",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": "7 years",
+    "enhancements": [
+      "Armed with a dangerous weapon",
+      "Assault of occupant",
+      "Nighttime entry"
+    ],
+    "notes": "Same as first degree burglary. Human presence at time of entry is the key element distinguishing first from second degree. 85% rule applies."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Okla. Stat. tit. 47 § 4-103",
+    "statute_title": "Unauthorized Use of a Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant took, drove, or used a motor vehicle belonging to another",
+      "Without the owner's consent",
+      "With intent to temporarily or permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior auto theft convictions",
+      "Vehicle valued over $15,000"
+    ],
+    "notes": "May also be charged as grand larceny if value exceeds $1,000 (virtually all vehicles). Separate statute for unauthorized use emphasizes taking without consent."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Okla. Stat. tit. 21 § 1713",
+    "statute_title": "Receiving or Concealing Stolen Property",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$5,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant received, concealed, or aided in concealing property",
+      "Knowing or having reasonable cause to believe it was stolen",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,000 (felony)",
+      "Property is a firearm"
+    ],
+    "notes": "Same felony/misdemeanor threshold as larceny ($1,000 under SQ 780). Knowledge of stolen status may be inferred from circumstances."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Okla. Stat. tit. 21 § 1760",
+    "statute_title": "Malicious Injury to Property (Vandalism)",
+    "offense_class": "Felony ($1,000+ damage); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$5,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant willfully and maliciously damaged or destroyed property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to public property",
+      "Hate crime motivation",
+      "Use of fire or explosives"
+    ],
+    "notes": "SQ 780 raised the felony threshold to $1,000 in property damage. Restitution commonly ordered in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Okla. Stat. tit. 21 § 1835",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$250",
+    "elements": [
+      "Defendant entered or remained upon the land or premises of another",
+      "Without permission or lawful authority",
+      "After notice that entry was prohibited"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass with intent to commit a crime (burglary)",
+      "Trespass on critical infrastructure"
+    ],
+    "notes": "Notice may be given by posting signs, fencing, or verbal communication. Trespass on critical infrastructure carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Okla. Stat. tit. 21 § 1760",
+    "statute_title": "Malicious Injury and Destruction of Property",
+    "offense_class": "Felony ($1,000+ damage); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "Varies by damage amount",
+    "fine_max": "Varies by damage amount",
+    "elements": [
+      "Defendant willfully and maliciously injured or destroyed property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to critical infrastructure",
+      "Use of fire or explosives"
+    ],
+    "notes": "Same statute as vandalism. Oklahoma uses 'malicious injury to property' rather than 'criminal mischief.'"
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Okla. Stat. tit. 21 § 644(C)-(J)",
+    "statute_title": "Domestic Assault and Battery",
+    "offense_class": "Misdemeanor (first); Felony (subsequent or strangulation)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 4 years (subsequent); 10 years (strangulation)",
+    "fine_max": "$5,000 (first); $5,000 (subsequent); $20,000 (strangulation)",
+    "elements": [
+      "Defendant committed assault and battery",
+      "Against a current or former spouse, partner, parent of a shared child, or household member"
+    ],
+    "mandatory_minimum": "Batterer's intervention program (all offenses)",
+    "enhancements": [
+      "Second offense within 10 years (felony)",
+      "Strangulation or attempted strangulation (felony under § 644(J))",
+      "In presence of a child",
+      "With a dangerous weapon"
+    ],
+    "notes": "Domestic assault by strangulation was added as a specific felony in 2017. First offense requires completion of batterer's intervention program. Protective orders available under 22 O.S. § 60."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Okla. Stat. tit. 21 § 644(C)",
+    "statute_title": "Domestic Assault and Battery — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant committed assault and battery upon a family or household member"
+    ],
+    "mandatory_minimum": "Batterer's intervention program",
+    "enhancements": [
+      "Great bodily injury",
+      "Prior domestic violence history"
+    ],
+    "notes": "Oklahoma combines assault and battery into one offense. First domestic offense is a misdemeanor. Mandatory batterer's intervention program."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Okla. Stat. tit. 21 § 852.1",
+    "statute_title": "Child Endangerment",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly permitted a child to be present where controlled substances are manufactured or stored",
+      "Or exposed a child to the risk of serious harm or death",
+      "Through criminal negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Drug manufacturing in presence of child (mandatory 20 years)",
+      "Serious injury to child",
+      "DUI with child in vehicle"
+    ],
+    "notes": "Broad statute covering exposure to drugs, DUI with child passenger, and general endangerment. Especially severe penalties when linked to drug manufacturing."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Okla. Stat. tit. 21 § 843.5",
+    "statute_title": "Child Abuse by Injury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully or maliciously injured, tortured, or maimed a child under 18",
+      "Or used unreasonable force upon a child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (enhanced penalties)",
+      "Sexual abuse component",
+      "Child under 6"
+    ],
+    "notes": "Child abuse causing serious injury can carry life sentence. Mandatory reporting by certain professionals under tit. 10A § 1-2-101. Child neglect is a separate offense under § 843.5(C)."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Okla. Stat. tit. 22 § 60.6",
+    "statute_title": "Violation of Protective Order",
+    "offense_class": "Misdemeanor (first); Felony (subsequent within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 3 years (subsequent)",
+    "fine_max": "$1,000 (first); $10,000 (subsequent)",
+    "elements": [
+      "A valid protective order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant willfully violated a term of the order"
+    ],
+    "mandatory_minimum": "Minimum 20 days (first); minimum 20 days (subsequent felony)",
+    "enhancements": [
+      "Second or subsequent violation within 10 years (felony)",
+      "Violation involving assault or stalking"
+    ],
+    "notes": "First violation carries mandatory minimum 20 days jail. Second violation within 10 years is a felony. GPS monitoring may be ordered."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Okla. Stat. tit. 21 § 1173",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor (first); Felony (subsequent or with threat of death)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (subsequent); 10 years (with death threat)",
+    "fine_max": "$1,000 (first); $2,500 (subsequent); $10,000 (with death threat)",
+    "elements": [
+      "Defendant willfully, maliciously, and repeatedly followed or harassed another person",
+      "In a manner that would cause a reasonable person to feel frightened, intimidated, or threatened",
+      "Defendant made a credible threat with intent to place the person in fear of death or great bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation of protective order during stalking (felony)",
+      "Prior stalking conviction",
+      "Threat of death or bodily harm"
+    ],
+    "notes": "Includes cyberstalking. First offense without threat of bodily harm is a misdemeanor. Protective orders may be issued alongside criminal charges."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Okla. Stat. tit. 21 § 1172",
+    "statute_title": "Harassment",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant contacted another person by telephone, electronic means, or mail",
+      "With intent to terrify, intimidate, threaten, or harass",
+      "The communication placed the victim in reasonable fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior harassment convictions",
+      "Threat of bodily harm"
+    ],
+    "notes": "Includes telephone harassment, electronic harassment, and threatening communications. May escalate to stalking if conduct is repeated."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Okla. Stat. tit. 21 § 843.1",
+    "statute_title": "Abuse of a Vulnerable Adult",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant willfully abused, neglected, or exploited a vulnerable adult",
+      "Victim was an incapacitated or vulnerable adult",
+      "Defendant was a caregiver or person responsible for the victim's welfare"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury",
+      "Financial exploitation over $1,000",
+      "Pattern of abuse",
+      "Death of victim"
+    ],
+    "notes": "Vulnerable adult includes elderly and disabled persons. Financial exploitation is increasingly prosecuted. Mandatory reporting by certain professionals."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Okla. Stat. tit. 21 § 1272",
+    "statute_title": "Unlawful Carry of a Weapon",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a weapon on their person or in a vehicle",
+      "Under circumstances prohibited by law"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Carry in prohibited location (bars, schools, government buildings)"
+    ],
+    "notes": "Oklahoma enacted constitutional carry (permitless carry) in 2019 (HB 2597). Most adults 21+ can carry without a permit. Prohibited locations include bars, schools, courthouses, and government buildings. Some restrictions remain for ages 18-20."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Okla. Stat. tit. 21 § 1283",
+    "statute_title": "Possession of a Firearm by a Convicted Felon",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant had a prior felony conviction"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Prior violent felony conviction",
+      "Possession during commission of another crime"
+    ],
+    "notes": "Includes adjudicated delinquent felonies. Federal 18 U.S.C. § 922(g) also applies. Oklahoma allows some felons to possess firearms after completing sentence and waiting period for non-violent offenses."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Okla. Stat. tit. 21 § 1277",
+    "statute_title": "Carrying Weapons in Prohibited Places",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a firearm or weapon",
+      "In a location prohibited by law (school, bar, courthouse, etc.)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Constitutional carry enacted in 2019 but prohibited locations still apply. Carrying in a bar while consuming alcohol is specifically prohibited. Schools and government buildings remain gun-free zones."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Okla. Stat. tit. 21 § 1289.17A",
+    "statute_title": "Reckless Discharge of a Firearm",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "2 years",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant discharged a firearm",
+      "In a reckless or negligent manner",
+      "Without regard for the safety of others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Discharge resulting in injury",
+      "Discharge in populated area"
+    ],
+    "notes": "Includes celebratory gunfire and negligent discharges. Discharge resulting in injury may be charged as assault with a deadly weapon."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Okla. Stat. tit. 21 § 1533.1",
+    "statute_title": "Identity Theft",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant willfully and with fraudulent intent obtained, possessed, transferred, or used",
+      "Identifying information of another person",
+      "Without that person's consent",
+      "For the purpose of committing or aiding any unlawful act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims",
+      "Financial loss over $1,000",
+      "Victim is elderly or disabled"
+    ],
+    "notes": "Fine up to $100,000. Restitution ordered. Includes use of another's name, SSN, birth date, driver's license number, or biometric data."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Okla. Stat. tit. 21 § 1451",
+    "statute_title": "Embezzlement",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was entrusted with property belonging to another",
+      "By virtue of employment, office, or position of trust",
+      "Defendant fraudulently converted the property to personal use"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public official embezzlement",
+      "Value over $25,000",
+      "Breach of fiduciary duty"
+    ],
+    "notes": "Oklahoma has a specific embezzlement statute. Public officer embezzlement is separately addressed under § 1452. SQ 780 raised the felony threshold to $1,000."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Okla. Stat. tit. 21 § 1561",
+    "statute_title": "Forgery — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant, with intent to defraud",
+      "Falsely made, altered, forged, or counterfeited a written instrument",
+      "Or knowingly uttered a forged instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forgery of government documents",
+      "Multiple counts"
+    ],
+    "notes": "First degree forgery involves instruments that evidence rights or obligations (checks, deeds, contracts). Second degree forgery (§ 1577) covers less significant instruments."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Okla. Stat. tit. 21 § 1561; § 1587",
+    "statute_title": "Counterfeiting",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant made, forged, or counterfeited currency, coins, or obligations",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large-scale operation",
+      "Distribution of counterfeit currency"
+    ],
+    "notes": "Most currency counterfeiting is prosecuted federally. State charges may apply to counterfeit documents, tickets, or other instruments of value."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Okla. Stat. tit. 21 § 1541.1",
+    "statute_title": "Bogus Check — Issuing Check Without Sufficient Funds",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$5,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant made, drew, issued, or delivered a check",
+      "Knowing at the time there were insufficient funds",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple bogus checks",
+      "Prior bad check convictions"
+    ],
+    "notes": "SQ 780 raised felony threshold to $1,000. Written demand and failure to pay within 10 days creates presumption of intent. First-time offenders may qualify for diversion."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Okla. Stat. tit. 36 § 308.1",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly presented or caused to be presented",
+      "A false or fraudulent claim or material misrepresentation",
+      "To an insurance company",
+      "For the purpose of obtaining payment or benefit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Staged accident",
+      "Amount exceeding $10,000",
+      "Pattern of fraud"
+    ],
+    "notes": "Oklahoma Insurance Fraud Bureau investigates claims. Includes auto, health, property, and workers' compensation fraud. Restitution required."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Okla. Stat. tit. 21 § 1550.21",
+    "statute_title": "Credit Card or Debit Card Fraud",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$5,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant knowingly used a credit or debit card",
+      "Without the cardholder's authorization",
+      "To obtain money, goods, or services by fraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims",
+      "Total value over $1,000",
+      "Use of skimming device"
+    ],
+    "notes": "Oklahoma has specific credit card fraud statutes. Includes theft of card, fraudulent use, and trafficking in stolen cards. Federal charges common for interstate transactions."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Okla. Stat. tit. 63 § 2-503.1",
+    "statute_title": "Money Laundering",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$250,000 or twice the amount laundered",
+    "elements": [
+      "Defendant knowingly conducted a financial transaction",
+      "Involving proceeds of unlawful activity",
+      "With intent to promote criminal activity or disguise the source of funds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeding $100,000",
+      "Use of financial institutions",
+      "Part of organized criminal enterprise"
+    ],
+    "notes": "Often charged alongside drug trafficking. Asset forfeiture provisions apply. Fine can be up to twice the amount laundered. Federal charges common."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Okla. Stat. tit. 21 § 1541.2",
+    "statute_title": "Obtaining Money or Property by False Pretenses (Fraud)",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "Same as larceny by value",
+    "elements": [
+      "Defendant obtained money, property, or a valuable thing from another",
+      "By means of false pretense, representation, or fraud",
+      "With intent to cheat or defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly or disabled",
+      "Fraud against government programs",
+      "Amount over $25,000"
+    ],
+    "notes": "General fraud catch-all statute. SQ 780 raised felony threshold to $1,000. Specific fraud statutes may apply for particular types of fraud."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Okla. Stat. tit. 21 § 1111",
+    "statute_title": "Rape — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Death",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed an act of sexual intercourse with another person",
+      "By force, violence, or threats",
+      "Or with a person incapable of consent due to mental illness, intoxication, or unconsciousness",
+      "Or with a victim under 14"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Victim under 14 (death eligible)",
+      "Use of weapon",
+      "Serious bodily injury"
+    ],
+    "notes": "Oklahoma is one of few states authorizing death for rape of a child under 14 (though constitutionality is unsettled). Lifetime sex offender registration required. 85% rule applies."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Okla. Stat. tit. 21 § 1114",
+    "statute_title": "Rape — Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed an act of sexual intercourse with another person",
+      "Victim was between 14 and 16 and defendant was over 18",
+      "Or victim was intoxicated by an administered substance",
+      "Or consent was given under duress"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Victim under 16",
+      "Position of trust or authority"
+    ],
+    "notes": "Second degree rape covers statutory situations and some non-violent but non-consensual encounters. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Okla. Stat. tit. 21 § 1021",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Misdemeanor (first); Felony (subsequent or exposure to minor)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 10 years (subsequent or to minor)",
+    "fine_max": "$1,000 (first); $20,000 (subsequent or to minor)",
+    "elements": [
+      "Defendant willfully exposed their person in a public place",
+      "In a lewd or indecent manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure to a minor under 16 (felony)",
+      "Prior indecent exposure conviction (felony)"
+    ],
+    "notes": "First offense is a misdemeanor. Subsequent offenses or exposure to minors are felonies. May require sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Okla. Stat. tit. 21 § 1029",
+    "statute_title": "Engaging in Prostitution / Solicitation",
+    "offense_class": "Misdemeanor (first); Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (subsequent or near school/church)",
+    "fine_max": "$5,000 (first); $5,000 (subsequent)",
+    "elements": [
+      "Defendant offered or agreed to engage in sexual conduct",
+      "In exchange for money or other consideration",
+      "Or solicited another to engage in prostitution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school or church (felony)",
+      "Soliciting a minor (felony — human trafficking)",
+      "Prior solicitation conviction"
+    ],
+    "notes": "Soliciting a minor is charged as human trafficking under § 748. Near school/church enhancement makes it a felony. STD testing may be required."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Okla. Stat. tit. 21 § 1021.2",
+    "statute_title": "Sexual Exploitation of a Child (Child Pornography)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years (production/distribution); 5 years (possession)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant knowingly produced, possessed, or distributed",
+      "Material depicting a minor under 18 engaged in sexual conduct",
+      "Defendant knew or should have known the person depicted was a minor"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Production involving victim under 12",
+      "Large volume of material",
+      "Distribution to a minor",
+      "Use of internet for distribution"
+    ],
+    "notes": "Federal charges commonly apply. Oklahoma law covers production, distribution, and possession. 85% rule applies to production charges. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Okla. Stat. tit. 57 § 587",
+    "statute_title": "Failure to Register as Sex Offender",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was required to register under the Sex Offenders Registration Act",
+      "Defendant knowingly failed to register, verify, or update registration",
+      "Within the time period required by law"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior failure to register",
+      "Absconding"
+    ],
+    "notes": "Must register within 3 business days of establishing residence. Verification required every 90 days (habitual/aggravated) or annually. Failure to comply is a separate felony."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Okla. Stat. tit. 21 § 1112; § 1114",
+    "statute_title": "Rape — Victim Under Age of Consent",
+    "offense_class": "Felony",
+    "penalty_min": "1 year (second degree); 5 years (first degree)",
+    "penalty_max": "Death (under 14); 15 years (14-16 with adult 18+)",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in sexual intercourse with a minor",
+      "Victim was below the age of consent (16)",
+      "Defendant was the age specified by the applicable statute"
+    ],
+    "mandatory_minimum": "5 years (under 14); 1 year (14-16 with 18+ defendant)",
+    "enhancements": [
+      "Victim under 14 (first degree — death eligible)",
+      "Position of trust or authority",
+      "Significant age difference"
+    ],
+    "notes": "Age of consent is 16 in Oklahoma. Under 14 with defendant over 18 is first degree rape. 14-16 with defendant over 18 is second degree rape. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Okla. Stat. tit. 21 § 1362",
+    "statute_title": "Disturbing the Peace / Disorderly Conduct",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$400",
+    "elements": [
+      "Defendant willfully and wrongfully disturbed the peace of others",
+      "By engaging in fighting, violent behavior, or loud/unreasonable noise",
+      "Or used obscene or threatening language in a public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Broad catch-all offense. Commonly charged alongside other offenses. Oklahoma also has specific noise ordinances in municipalities."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Okla. Stat. tit. 21 § 268",
+    "statute_title": "Resisting a Public Officer",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant willfully resisted, delayed, or obstructed",
+      "A public officer in the discharge of official duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Physical force against officer",
+      "Causing injury to officer"
+    ],
+    "notes": "Resisting by physical force may be charged as assault and battery on a police officer (§ 649), a felony. Verbal objection alone is not sufficient."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Okla. Stat. tit. 21 § 540",
+    "statute_title": "Obstructing Justice / Obstruction of an Officer",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant willfully hindered, delayed, or obstructed",
+      "A peace officer in the discharge of official duties",
+      "Or aided a person in escaping arrest or prosecution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Accessory after the fact to a felony (felony under § 175)"
+    ],
+    "notes": "Includes hiding evidence, providing false information to officers, and harboring fugitives. Accessory after the fact to a felony is a separate, more serious offense."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Okla. Stat. tit. 21 § 565",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Varies — up to 6 months per count for criminal contempt",
+    "penalty_min": null,
+    "penalty_max": "6 months per count",
+    "fine_max": "$500 per count",
+    "elements": [
+      "Defendant willfully disobeyed a lawful order of the court",
+      "Or engaged in disorderly behavior in the presence of the court",
+      "Or interfered with court proceedings"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes both direct (in presence of court) and indirect (violation of court order) contempt. Court has broad discretion. Due process protections apply to criminal contempt."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Okla. Stat. tit. 37A § 8-101",
+    "statute_title": "Public Intoxication",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant appeared in a public place",
+      "Under the influence of alcohol or drugs",
+      "In a condition that posed a direct danger to self or others or was otherwise incapacitated"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Law enforcement may take intoxicated persons to a detox facility rather than jail. Chronic offenders may be referred to treatment programs."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Okla. Stat. tit. 22 § 1115.2",
+    "statute_title": "Failure to Appear (Bail Jumping)",
+    "offense_class": "Felony (felony case); Misdemeanor (misdemeanor case)",
+    "penalty_min": null,
+    "penalty_max": "2 years (felony case); 1 year (misdemeanor case)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Defendant was required to appear in court",
+      "Defendant willfully failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony case failure to appear (felony)"
+    ],
+    "notes": "Bond may be forfeited and bench warrant issued. Bail jumping in a felony case is a separate felony. Sentence runs consecutive to any sentence in the underlying case."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Okla. Stat. tit. 21 § 589",
+    "statute_title": "Filing a False Report",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly communicated false information",
+      "To a law enforcement officer",
+      "Regarding the commission of a crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "False report causing emergency response"
+    ],
+    "notes": "Includes filing false police reports, false 911 calls, and false accusations. False bomb threats are charged under separate, more serious statutes."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Okla. Stat. tit. 21 § 1378",
+    "statute_title": "Threatening an Act of Violence",
+    "offense_class": "Misdemeanor (basic); Felony (threat to bomb or attack school/government)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 10 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant threatened to commit an act of violence",
+      "Against another person or property",
+      "With intent to place another in fear of serious harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat against school or government building",
+      "Bomb threat",
+      "Use of electronic means"
+    ],
+    "notes": "Bomb threats and threats against schools carry felony charges. Electronic threats (email, text, social media) are covered. Need not have actual intent to carry out threat."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Okla. Stat. tit. 21 § 491",
+    "statute_title": "Perjury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant made a willful and corrupt false statement",
+      "Under oath or affirmation",
+      "In a judicial proceeding or before an authorized officer",
+      "On a matter material to the issue in question"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Subornation of perjury (inducing another to commit perjury) is the same offense class. Corroboration typically required. False statements outside judicial proceedings may be charged under § 504."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Okla. Stat. tit. 21 § 381",
+    "statute_title": "Bribery of a Public Official",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant offered, gave, or promised money or thing of value",
+      "To a public official or public servant",
+      "With intent to influence the official's action, decision, or vote"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Bribery of a judge",
+      "Bribery of a juror"
+    ],
+    "notes": "Both the giver and receiver can be charged. Bribery of jurors (§ 383) and witnesses (§ 386) are separate offenses. Public official permanently disqualified from office."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Okla. Stat. tit. 21 § 443",
+    "statute_title": "Escape from Arrest or Detention",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was in lawful custody or confinement",
+      "Defendant escaped or attempted to escape from custody"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or weapons",
+      "Escape from prison (§ 438 — up to life)",
+      "Aiding escape"
+    ],
+    "notes": "Escape from state penitentiary carries up to life imprisonment under § 438. Sentence runs consecutive to original sentence. Assisting escape is a separate felony."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Okla. Stat. tit. 21 § 1685",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Misdemeanor (first, non-aggravated); Felony (subsequent or aggravated)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 5 years (felony)",
+    "fine_max": "$5,000 (first); $25,000 (felony)",
+    "elements": [
+      "Defendant willfully or maliciously tortured, maimed, or killed an animal",
+      "Or failed to provide adequate food, water, or shelter"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Torture or mutilation (felony under § 1685(B))",
+      "Prior animal cruelty conviction",
+      "Animal fighting (felony under § 1692.1)"
+    ],
+    "notes": "Aggravated cruelty (torture, mutilation, malicious killing) is a felony. Animal fighting is a separate felony. Court may order forfeiture of animals and psychological evaluation."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Okla. Stat. tit. 22 § 991b",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Varies — court may revoke and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Original sentence for the underlying offense",
+    "fine_max": "Original fine for the underlying offense",
+    "elements": [
+      "Defendant was placed on probation with specific conditions",
+      "Defendant violated one or more conditions of probation",
+      "Violation was willful and without valid excuse"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Court may continue probation, modify conditions, or revoke. Hearing required. Burden of proof is preponderance of evidence. Technical violations distinguished from new criminal conduct."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Okla. Stat. tit. 57 § 515",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Varies — Pardon and Parole Board may revoke parole",
+    "penalty_min": null,
+    "penalty_max": "Remainder of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole with specific conditions",
+      "Defendant violated one or more conditions of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Oklahoma Pardon and Parole Board determines revocation. Revocation hearing required. May serve remainder of sentence. New criminal conduct typically results in revocation."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Okla. Stat. tit. 21 § 172",
+    "statute_title": "Aiding and Abetting (Accessory)",
+    "offense_class": "Same as the principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as the principal offense",
+    "fine_max": "Same as the principal offense",
+    "elements": [
+      "Defendant aided, abetted, counseled, or encouraged another person",
+      "In planning or committing a criminal offense",
+      "With intent to promote or facilitate the commission of the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Oklahoma treats all participants in a crime equally (§ 172). Principals and accessories before the fact are punished the same. Accessory after the fact (§ 175) is a separate, lesser offense."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Okla. Stat. tit. 21 § 44",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "Same as the target offense (Oklahoma punishes attempt the same as completed crime)",
+    "penalty_min": null,
+    "penalty_max": "Same as the target offense",
+    "fine_max": "Same as the target offense",
+    "elements": [
+      "Defendant intended to commit a specific offense",
+      "Defendant performed an overt act toward the commission of the offense",
+      "The act went beyond mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Oklahoma is unusual in that attempt carries the same penalty as the completed offense under § 44. Every person who attempts to commit a crime and performs an overt act is punishable as if the crime were committed."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Okla. Stat. tit. 21 § 421",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Same as the target offense (or as specifically provided)",
+    "penalty_min": null,
+    "penalty_max": "Same as the target offense or 10 years (whichever applies)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Two or more persons agreed to commit a crime",
+      "At least one overt act was committed in furtherance of the conspiracy",
+      "Defendant intended that the crime be committed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Oklahoma conspiracy penalties vary based on the target offense. Conspiracy to commit a felony is itself a felony. Requires an overt act by any co-conspirator."
+  }
+]

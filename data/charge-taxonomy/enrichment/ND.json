@@ -1,0 +1,1687 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "BAC of .16 or higher triggers enhanced penalties on every offense level",
+      "Mandatory addiction evaluation for all DUI offenses, adding compliance burden",
+      "Per se BAC threshold of .08 eliminates the need to prove actual impairment when test results exist"
+    ],
+    "defense_opportunities": [
+      "ND administrative license suspensions are subject to a separate hearing process where rules of evidence are relaxed but procedural rights still apply",
+      "The 7-year and 15-year look-back windows are strict — prior convictions outside the windows cannot be used for enhancement",
+      "Field sobriety tests must be administered properly, and ND courts have addressed reliability issues in case law",
+      "24/7 sobriety program participation can be a path to reduced penalties for repeat offenders"
+    ],
+    "common_defenses": [
+      "Improper stop — no reasonable suspicion for the initial traffic stop",
+      "Rising BAC defense — defendant's BAC was below the legal limit at the time of driving",
+      "Implied consent procedural violation — officer failed to provide proper advisement of rights",
+      "Medical condition — diabetes, GERD, or auto-brewery syndrome producing false positive readings"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "Mandatory addiction evaluation creates compliance leverage",
+      "BAC of .16+ triggers mandatory 4 days imprisonment or 10 days community service",
+      "91-day administrative license suspension is automatic"
+    ],
+    "defense_opportunities": [
+      "First offense without aggravating factors is the lowest classification — diversionary outcomes are possible",
+      "Temporary restricted license becomes available after 30 days of suspension",
+      "ND courts have suppression precedents for protocol violations on chemical testing",
+      "Rural areas often have more flexible plea options for first-time offenders"
+    ],
+    "common_defenses": [
+      "Improper stop — no reasonable suspicion for the initial traffic stop",
+      "Chemical test inadmissibility — protocol violations under ND DOT testing rules",
+      "Rising BAC — actual BAC at time of driving was below legal limit",
+      "No actual physical control — defendant was not operating or in actual physical control of the vehicle"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "Third offense escalates to mandatory 120 days, fourth+ to mandatory 1 year and 1 day (Class C felony)",
+      "License suspensions extend to 365 days (second), 2 years (third), 3 years (fourth+)",
+      "24/7 sobriety program is mandatory for repeat offenders",
+      "Look-back is 15 years for the felony enhancement, capturing older priors"
+    ],
+    "defense_opportunities": [
+      "The 7-year and 15-year look-back windows are strict — older convictions cannot enhance",
+      "Constitutional challenges to the validity of prior convictions (uncounseled pleas) can eliminate priors",
+      "Even at felony level, ND has flexibility in sentencing including 24/7 sobriety program participation",
+      "Prior convictions from other states must be substantially equivalent to qualify for enhancement"
+    ],
+    "common_defenses": [
+      "Invalid priors — prior convictions were uncounseled or constitutionally infirm",
+      "Look-back period — prior conviction falls outside the statutory 7-year or 15-year window",
+      "Out-of-state prior — prior conviction is not substantially equivalent to ND DUI",
+      "Chemical test challenges — same suppression arguments apply regardless of prior record"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "Schedule I and II substances trigger enhanced scrutiny",
+      "Includes legally prescribed medications if they impair driving"
+    ],
+    "defense_opportunities": [
+      "ND has no per se drug limit — prosecution must prove actual impairment, not just presence",
+      "Drug Recognition Expert (DRE) protocols have known reliability issues subject to expert challenge",
+      "Blood and urine collection procedures must comply with ND administrative rules",
+      "Prescription drug defense — lawful use as prescribed without impairment is not criminal"
+    ],
+    "common_defenses": [
+      "No actual impairment — substance was present but did not actually impair driving",
+      "Lawful prescription use — defendant was using medication as prescribed",
+      "Invalid chemical testing — blood draw or lab analysis violated protocol",
+      "DRE evaluation deficient — expert deviated from standardized 12-step protocol"
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "Willful or wanton disregard standard captures a broad range of driving behavior",
+      "Often pleaded down from DUI, providing prosecution leverage",
+      "Adds points to driving record with insurance consequences"
+    ],
+    "defense_opportunities": [
+      "The willful or wanton standard requires more than ordinary negligence — defense can argue conduct didn't rise to that level",
+      "Class B misdemeanor (max 30 days) is among ND's lower criminal classifications",
+      "Mechanical failure or emergency circumstances can negate willfulness"
+    ],
+    "common_defenses": [
+      "No willful or wanton conduct — driving was negligent at most, not reckless",
+      "Mechanical failure — vehicle malfunction caused the erratic driving",
+      "Emergency circumstances — defendant was responding to or avoiding a greater harm",
+      "Misidentification — defendant was not the driver"
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Strict duty to stop, identify, and render assistance — each element provable",
+      "Surveillance and traffic cameras frequently capture both the accident and the leaving vehicle",
+      "Death or serious injury triggers felony exposure with up to 5 years"
+    ],
+    "defense_opportunities": [
+      "Knowledge of the accident must be proven — minor contact may not have been perceived",
+      "Reasonable assistance is the standard — defendant may have summoned help even if they left",
+      "Misidentification of the leaving vehicle is common"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant was unaware an accident occurred",
+      "Subsequent reporting — defendant promptly reported the accident to law enforcement",
+      "Misidentification — defendant's vehicle was not involved",
+      "Duress — defendant left due to fear for personal safety"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "Most severe vehicular death charges in ND",
+      "Causal link between intoxication and death is the central question",
+      "Prior DUIs and high BAC are aggravating factors"
+    ],
+    "defense_opportunities": [
+      "Causation between impairment and death must be proven — intervening factors break the chain",
+      "Underlying DUI defenses remain available — if DUI fails, the manslaughter theory based on intoxication fails",
+      "Accident reconstruction expert testimony is critical to challenge the prosecution's theory"
+    ],
+    "common_defenses": [
+      "Lack of causation — intervening factors were the proximate cause of death",
+      "DUI invalidity — challenges to the underlying DUI undermine the manslaughter theory",
+      "Accident reconstruction — expert testimony challenges the prosecution's collision theory",
+      "Medical event — sudden medical event caused the collision, not impairment"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Criminal negligence is a lower mental state than recklessness",
+      "Vehicular deaths without DUI typically charged here",
+      "ND combines what other states call voluntary and involuntary manslaughter"
+    ],
+    "defense_opportunities": [
+      "Criminal negligence requires a gross deviation from reasonable care — ordinary negligence is insufficient",
+      "Class C felony (5 years max) is the lowest felony level in ND",
+      "Causation arguments and accident reconstruction remain available"
+    ],
+    "common_defenses": [
+      "Ordinary negligence — defendant's conduct did not rise to criminal negligence",
+      "No proximate cause — death was not a foreseeable result of defendant's driving",
+      "Intervening cause — third party or victim conduct was the proximate cause",
+      "Accident — death was an unforeseeable accident"
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "DOT records provide objective proof of suspension status",
+      "Knowledge can be presumed from mailed notice",
+      "Enhanced penalties when underlying suspension was DUI-related"
+    ],
+    "defense_opportunities": [
+      "The defendant must have known about the suspension — improper notice negates the element",
+      "Class B misdemeanor (max 30 days) is among ND's lower criminal classifications",
+      "Administrative errors in DOT records are not uncommon"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant was not properly notified of the suspension",
+      "Administrative error — DOT records were incorrect",
+      "Necessity — emergency required immediate driving",
+      "Reinstatement completed — suspension had been satisfied at time of driving"
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Death results elevates to Class B felony",
+      "Dashcam and helicopter footage provide compelling evidence",
+      "Mandatory license suspension upon conviction"
+    ],
+    "defense_opportunities": [
+      "The signal must have been visible or audible — perception issues are a defense",
+      "The officer must have been recognizable as law enforcement",
+      "Brief delay in stopping for safety reasons is not necessarily fleeing"
+    ],
+    "common_defenses": [
+      "Did not perceive signal — defendant did not see or hear the officer",
+      "Officer not identifiable — defendant did not know it was law enforcement",
+      "Brief delay — defendant was looking for safe place to pull over",
+      "Duress — defendant fled from perceived threat, not knowing it was police"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Constructive possession doctrine extends liability to drugs found in shared spaces",
+      "Possession near schools triggers enhanced penalties",
+      "Personal use amounts may still result in felony exposure for harder drugs"
+    ],
+    "defense_opportunities": [
+      "Schedule IV-V possession is only a Class A misdemeanor — significant reduction",
+      "Constructive possession requires both knowledge and ability to control",
+      "Fourth Amendment suppression motions are highly effective in drug cases",
+      "Personal-use amounts may qualify for deferred imposition of sentence under ND law"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — drugs discovered through unconstitutional search",
+      "Lack of knowledge — defendant did not know drugs were present",
+      "Constructive possession failure — drugs in shared space without proof of dominion",
+      "Deferred imposition — eligibility for deferred sentencing program"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Possession over 1 oz remains a Class A misdemeanor in ND",
+      "Concentrate may be charged differently than plant material",
+      "Possession near schools triggers enhanced penalties"
+    ],
+    "defense_opportunities": [
+      "ND decriminalized half-ounce or less to an infraction in 2019 — fine only, no criminal record",
+      "Half-ounce to one ounce is only Class B misdemeanor (max 30 days)",
+      "Medical marijuana is legal under Chapter 19-24.1 — patients with valid cards have a complete defense",
+      "Fourth Amendment challenges to marijuana-based vehicle searches are increasingly viable"
+    ],
+    "common_defenses": [
+      "Half-ounce or less — only an infraction, not a criminal offense",
+      "Medical marijuana patient — defendant has valid medical marijuana card",
+      "Illegal search — vehicle or person searched without probable cause",
+      "Constructive possession failure — marijuana was in shared vehicle or residence"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "Cocaine is classified as Schedule II under North Dakota controlled substance law",
+      "Up to 5 years and $10,000 fine even for personal-use amounts",
+      "Distribution quantities support intent-to-deliver charges"
+    ],
+    "defense_opportunities": [
+      "Class C felony is ND's lowest felony class — sentencing alternatives exist",
+      "Constructive possession requires proof of knowledge and dominion",
+      "Deferred imposition of sentence may be available for first-time offenders",
+      "Fourth Amendment challenges to the search remain the strongest defense tool"
+    ],
+    "common_defenses": [
+      "Illegal search — cocaine discovered through unconstitutional search",
+      "Constructive possession failure — drugs in shared space",
+      "Lack of knowledge — defendant did not know substance was present",
+      "Deferred sentencing — first-time offender qualifies for deferred imposition"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "Methamphetamine is Schedule II — any amount is a Class C felony",
+      "ND has dedicated meth enforcement initiatives and significant prosecutorial focus",
+      "Presence of children during possession can trigger child endangerment charges"
+    ],
+    "defense_opportunities": [
+      "Class C felony is ND's lowest felony level",
+      "Deferred imposition of sentence available for first-time offenders",
+      "Fourth Amendment challenges remain the most effective tool",
+      "Constructive possession in shared spaces is contestable"
+    ],
+    "common_defenses": [
+      "Illegal search — meth discovered through unconstitutional search",
+      "Constructive possession failure — drugs in shared space without dominion",
+      "Lack of knowledge — defendant did not know substance was present",
+      "Deferred sentencing — first-time offender eligibility"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Class A felony (large quantities) with mandatory 10 years; Class B (lesser) with mandatory 4 years",
+      "Asset forfeiture provisions apply",
+      "Trafficking near schools or use of minors trigger enhancements"
+    ],
+    "defense_opportunities": [
+      "Trafficking thresholds are quantity-based — accurate weight determination is critical",
+      "Constitutional challenges to the search remain the most effective tool",
+      "ND has procedures for substantial assistance reductions in trafficking cases",
+      "Quantity disputes can reduce trafficking to simple possession"
+    ],
+    "common_defenses": [
+      "Weight below trafficking threshold — net weight, excluding adulterants and packaging, falls below threshold",
+      "Illegal search — evidence obtained unconstitutionally",
+      "Entrapment — government induced trafficking conduct",
+      "Substantial assistance — cooperation with law enforcement to reduce sentence"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "North Dakota delivery statutes capture both actual and constructive transfers",
+      "Constructive delivery and undercover purchases support delivery charges",
+      "Delivery to minors and near schools enhances penalties"
+    ],
+    "defense_opportunities": [
+      "Schedule III-V delivery is only a Class C felony — significant reduction",
+      "Confidential informant credibility is frequently challenged",
+      "Actual transfer must be proven — mere possession is not delivery"
+    ],
+    "common_defenses": [
+      "No delivery — defendant possessed but did not transfer",
+      "Entrapment — government agent induced the sale",
+      "Unreliable informant — cooperating witness lacks credibility",
+      "Illegal search — evidence obtained unconstitutionally"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Manufacturing Schedule I-II substances is a Class B felony with up to 10 years",
+      "Meth manufacturing carries additional penalties for child presence and contamination",
+      "Cleanup costs may be assessed against defendant",
+      "Physical evidence of labs and chemicals is difficult to explain away"
+    ],
+    "defense_opportunities": [
+      "Manufacturing requires actual production — possession of precursors alone may not qualify",
+      "Schedule III-V manufacturing is Class C felony — less severe",
+      "Mere presence at manufacturing site is insufficient — affirmative participation required"
+    ],
+    "common_defenses": [
+      "No manufacturing — defendant possessed materials but did not engage in production",
+      "Mere presence — defendant was at the location but did not participate",
+      "Lack of knowledge — defendant unaware of manufacturing activities",
+      "Illegal search — evidence obtained through unconstitutional search"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Broad statutory definition captures many items",
+      "Often charged alongside drug possession to layer exposure",
+      "Delivery to minor under 18 escalates to Class C felony"
+    ],
+    "defense_opportunities": [
+      "Class C misdemeanor is ND's lowest criminal classification",
+      "Multi-purpose items have legitimate uses",
+      "Intent to use for drug purposes must be proven"
+    ],
+    "common_defenses": [
+      "Legitimate purpose — item has lawful, non-drug use",
+      "No intent — defendant did not intend to use the item for drug purposes",
+      "No drug nexus — item has no connection to controlled substance use",
+      "Illegal search — discovered through unconstitutional search"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Same penalties as delivery: Class B felony for Schedule I-II",
+      "Intent inferred from quantity, packaging, scales, currency",
+      "Enhancements for school proximity and minors"
+    ],
+    "defense_opportunities": [
+      "Intent is circumstantial — alternative explanations for quantity and packaging are available",
+      "Personal use defense remains viable when inferred indicators are ambiguous",
+      "Constitutional challenges to the search apply with full force"
+    ],
+    "common_defenses": [
+      "Personal use — quantity and packaging consistent with personal consumption",
+      "Illegal search — evidence obtained unconstitutionally",
+      "Insufficient circumstantial evidence — packaging and indicators have innocent explanations",
+      "Constructive possession — drugs in shared space without proof of defendant's possession"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "North Dakota first-degree murder carries the most severe penalties in the criminal code",
+      "Mandatory life without parole upon conviction — no parole eligibility ever",
+      "Premeditation and deliberation required, but inferable from circumstances"
+    ],
+    "defense_opportunities": [
+      "ND does not have the death penalty, which removes the most severe outcome",
+      "Premeditation and deliberation must be proven beyond a reasonable doubt — fact-intensive battleground",
+      "Manslaughter (Class B felony, 10 years max) is a major reduction available through extreme emotional disturbance defense",
+      "Self-defense remains a complete defense"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant reasonably believed deadly force was necessary",
+      "Lack of premeditation — killing was impulsive, supporting reduction to manslaughter",
+      "Extreme emotional disturbance — affirmative defense reducing murder to manslaughter under ND law",
+      "Alibi — defendant was not present at the time and place",
+      "Diminished capacity — defendant could not form the required intent"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "North Dakota second-degree murder requires malice without premeditation",
+      "Felony murder doctrine applies during specified felonies (robbery, burglary, kidnapping, arson, sexual assault)",
+      "No premeditation required — only intentional or knowing causation of death"
+    ],
+    "defense_opportunities": [
+      "Class A felony permits parole eligibility, unlike Class AA first-degree murder",
+      "Manslaughter is a lesser-included offense reducing exposure significantly",
+      "Self-defense applies and is a complete defense"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted to protect themselves from imminent harm",
+      "Heat of passion / extreme emotional disturbance — reduces to manslaughter",
+      "Accident — death was unintentional",
+      "Lack of intent — killing was reckless rather than knowing"
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "North Dakota voluntary manslaughter is the most common reduction theory from murder charges",
+      "ND combines voluntary and involuntary manslaughter under one statute",
+      "Includes recklessness with extreme indifference to human life"
+    ],
+    "defense_opportunities": [
+      "Manslaughter is itself often a defense theory — successful reduction from murder",
+      "Extreme emotional disturbance is an affirmative defense reducing murder to manslaughter",
+      "ND's combined manslaughter approach can sometimes be used to argue for lower sentencing within the class"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant reasonably believed force was necessary",
+      "Extreme emotional disturbance — reasonable excuse for emotional disturbance reduces murder to manslaughter",
+      "Accident — death was unintentional and not the result of reckless extreme indifference",
+      "No proximate cause — defendant's conduct did not cause the death"
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "North Dakota involuntary manslaughter requires only criminal negligence, a lower mental state than recklessness",
+      "Criminal negligence is the standard — gross deviation from reasonable care",
+      "Vehicular deaths without DUI typically charged here"
+    ],
+    "defense_opportunities": [
+      "Class C felony (5 years max) is ND's lowest felony level",
+      "Criminal negligence requires more than ordinary negligence",
+      "Causation must be proven — intervening factors break the chain"
+    ],
+    "common_defenses": [
+      "Ordinary negligence — conduct did not rise to criminal negligence",
+      "No proximate cause — death was not a foreseeable result of defendant's actions",
+      "Accident — death was an unforeseeable accident",
+      "Intervening cause — third party or victim actions caused the death"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "Multiple theories: serious bodily injury, dangerous weapon, or attempted serious bodily injury",
+      "Firearm specifications add mandatory minimums",
+      "Enhanced when victim is a peace officer or emergency responder"
+    ],
+    "defense_opportunities": [
+      "Serious bodily injury has a specific statutory definition — substantial risk of death, permanent disfigurement, or protracted loss of function",
+      "The dangerous weapon prong requires the object to be capable of causing death or serious bodily injury",
+      "Self-defense remains a complete defense"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted to protect themselves from imminent harm",
+      "Defense of others — defendant was protecting another person",
+      "Object not a dangerous weapon — item used does not meet statutory definition",
+      "No serious bodily injury — injuries do not meet the statutory threshold"
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Bodily injury includes any impairment of physical condition, including pain",
+      "Enhanced when victim is a peace officer or emergency responder",
+      "Frequently charged alongside other offenses"
+    ],
+    "defense_opportunities": [
+      "Class B misdemeanor (max 30 days) is among ND's lower classifications",
+      "Self-defense applies as a complete defense",
+      "The willfulness element can be challenged for accidental contact"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was protecting themselves",
+      "Accident — physical contact was unintentional",
+      "Mutual combat — both parties consented to the altercation",
+      "Defense of others — defendant was protecting another person"
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "North Dakota battery law captures both intentional contact and offensive touching",
+      "Bodily injury threshold is low — any pain or impairment qualifies",
+      "Class B misdemeanor baseline with enhancement for repeat offenses"
+    ],
+    "defense_opportunities": [
+      "ND has no separate battery statute — limits charging options",
+      "Same defenses as simple assault apply",
+      "Class B misdemeanor is ND's lower-tier criminal classification"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was protecting themselves",
+      "Accident — contact was unintentional",
+      "Consent — physical contact occurred in consensual context",
+      "Misidentification — defendant was not the person who caused the contact"
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Force or threat of imminent force is the central element",
+      "Class A felony carries up to 20 years",
+      "Surveillance and witness identification commonly support prosecution"
+    ],
+    "defense_opportunities": [
+      "Distinction between robbery (force) and theft (no force) is significant",
+      "Identification challenges are common in robbery cases",
+      "Intent to permanently deprive must be proven"
+    ],
+    "common_defenses": [
+      "Misidentification — defendant was not the perpetrator",
+      "No force or threat — taking was by stealth, reducing to theft",
+      "Alibi — defendant was elsewhere",
+      "Claim of right — defendant believed they had a legal right to the property"
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "North Dakota armed robbery carries some of the most severe penalties for property crimes",
+      "Mere possession of a dangerous weapon during robbery is sufficient — actual use not required",
+      "Firearm enhancement adds further exposure"
+    ],
+    "defense_opportunities": [
+      "Without the weapon element, charge drops to Class B felony robbery — substantial reduction",
+      "Definition of 'dangerous weapon' is litigable for non-traditional objects",
+      "Identification and alibi defenses apply with full force"
+    ],
+    "common_defenses": [
+      "Misidentification — defendant was not the perpetrator",
+      "No dangerous weapon — object did not qualify under statutory definition",
+      "Alibi — defendant has evidence of being elsewhere",
+      "Duress — defendant was coerced into participation"
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "Class B felony for other kidnapping",
+      "Up to 20 years for Class A; 10 years for Class B",
+      "Ransom demands or sexual assault during kidnapping are significant aggravating factors"
+    ],
+    "defense_opportunities": [
+      "Restraint incidental to another offense may not support a separate kidnapping charge in North Dakota",
+      "Consent of the victim (or parent/guardian for minors) eliminates the offense",
+      "When restraint is incidental to another crime, defense can argue against separate kidnapping charge"
+    ],
+    "common_defenses": [
+      "Consent — victim voluntarily accompanied defendant",
+      "Incidental restraint — restraint was incidental to another offense, not separate kidnapping",
+      "Parental right — parent moved their own child without criminal purpose",
+      "No restraint — alleged confinement was momentary or de minimis"
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Class C felony for other property — up to 5 years",
+      "Insurance fraud motivation is a common aggravating factor",
+      "Forensic origin-and-cause investigations provide strong evidence"
+    ],
+    "defense_opportunities": [
+      "Reckless arson is a lesser-included offense significantly reducing exposure",
+      "Origin-and-cause forensic methodology is subject to expert challenge",
+      "Accidental fire is a complete defense to the intentional element",
+      "Insurance fraud cases require proof of motive in addition to setting the fire"
+    ],
+    "common_defenses": [
+      "Accidental fire — fire had natural, electrical, or cooking origin",
+      "Faulty fire investigation — origin-and-cause analysis used outdated methodology",
+      "Misidentification — defendant was not the person who set the fire",
+      "No intent — fire was set without willful or malicious intent"
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "North Dakota attempt law requires proof of specific intent and a substantial step beyond preparation",
+      "Substantial step requirement is met by clear acts toward killing",
+      "Use of firearm and victim being a peace officer trigger enhancements"
+    ],
+    "defense_opportunities": [
+      "Specific intent to kill must be proven beyond a reasonable doubt",
+      "Mere preparation is not a substantial step — defense can argue conduct did not go far enough",
+      "Voluntary abandonment is a defense if it occurs before any substantial step is completed"
+    ],
+    "common_defenses": [
+      "No intent to kill — defendant intended to injure or threaten, not kill",
+      "Self-defense — defendant's actions were in response to imminent deadly threat",
+      "Abandonment — defendant voluntarily abandoned the attempt",
+      "No substantial step — conduct did not go beyond preparation"
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "Class C felony with up to 5 years",
+      "Firearm use triggers mandatory minimum",
+      "Enhanced when victim is a peace officer or emergency responder"
+    ],
+    "defense_opportunities": [
+      "Without bodily injury, charge drops to simple assault (misdemeanor)",
+      "Definition of 'dangerous weapon' is litigable",
+      "Self-defense applies as a complete defense"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used force to protect themselves",
+      "No bodily injury — victim suffered no actual injury",
+      "Object not a dangerous weapon — item used does not qualify",
+      "Accident — use of object was unintentional"
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "North Dakota theft thresholds determine whether the offense is felony or misdemeanor",
+      "Aggregation of thefts from same victim within 180 days permitted",
+      "Theft of firearm is automatically Class C felony regardless of value"
+    ],
+    "defense_opportunities": [
+      "Value is the critical threshold — defense appraisals can reduce the offense level",
+      "Class B misdemeanor (max 30 days) is ND's lowest criminal classification",
+      "Claim of right defense (good-faith belief of ownership) negates the offense"
+    ],
+    "common_defenses": [
+      "Claim of right — defendant believed they owned or were entitled to the property",
+      "No intent to deprive — defendant intended to return the property",
+      "Value dispute — property worth less than alleged",
+      "Misidentification — defendant did not take the property"
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "North Dakota grand theft applies to property over the felony threshold",
+      "Class B felony for theft over $10,000 — up to 10 years",
+      "Theft of firearm is automatic Class C felony regardless of value"
+    ],
+    "defense_opportunities": [
+      "Value disputes can reduce the offense level significantly",
+      "Class C felony (5 years max) is ND's lowest felony classification",
+      "Aggregation rules can be challenged when thefts are not part of a single scheme"
+    ],
+    "common_defenses": [
+      "Value dispute — property worth less than the felony threshold",
+      "Claim of right — defendant believed they had a legal interest",
+      "No intent to deprive — defendant intended to return the property",
+      "Misidentification — defendant was not the perpetrator"
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "North Dakota retail theft prosecutions are supported by store loss prevention testimony and surveillance",
+      "Class A misdemeanor for $250-$999",
+      "Surveillance and loss prevention testimony commonly available"
+    ],
+    "defense_opportunities": [
+      "Class B misdemeanor (max 30 days) is ND's lowest criminal classification",
+      "Civil restitution may resolve cases short of prosecution",
+      "First-time offender programs may be available"
+    ],
+    "common_defenses": [
+      "No intent — defendant accidentally took the item or forgot to pay",
+      "Claim of right — defendant believed they were entitled to the property",
+      "Mistake of fact — confusion about ownership",
+      "Misidentification — defendant was not the person who took the property"
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "North Dakota merchant detention laws support concealment-based prosecutions",
+      "Use of theft-detection countermeasures is an enhancement",
+      "Organized retail theft is increasingly prosecuted"
+    ],
+    "defense_opportunities": [
+      "Most shoplifting cases are Class B misdemeanors (under $250) — ND's lowest classification",
+      "Concealment must be proven, not just unusual carrying",
+      "First-time offender programs may resolve cases without conviction"
+    ],
+    "common_defenses": [
+      "No intent to steal — defendant intended to pay but had not reached checkout",
+      "Absent-mindedness — defendant forgot they were carrying the item",
+      "Misidentification — defendant was not the shoplifter",
+      "Merchant error — pricing or inventory errors caused confusion"
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "Class B felony carries up to 10 years",
+      "Surreptitious remaining is sufficient — defendant need not have entered unlawfully if they remained after lawful entry",
+      "Armed burglary or burglary involving assault is automatically Class B felony"
+    ],
+    "defense_opportunities": [
+      "Class C felony (other structures) carries only 5 years maximum — significant reduction from Class B",
+      "Intent to commit a crime therein must exist at time of entry or when remaining became surreptitious",
+      "Consent or invitation to enter eliminates the trespass element"
+    ],
+    "common_defenses": [
+      "No criminal intent at time of entry — defendant entered for innocent purpose",
+      "Consent — defendant had permission to enter the premises",
+      "Not a building or occupied structure — premises did not qualify under the statute",
+      "Misidentification — defendant was not the person who entered"
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "North Dakota residential burglary carries enhanced penalties when occupants are present",
+      "Dwelling includes any structure where a person lives or sleeps",
+      "Nighttime entry and weapons enhance the case"
+    ],
+    "defense_opportunities": [
+      "Consent or invitation to enter eliminates the trespass element",
+      "Intent to commit a crime must have existed at time of entry",
+      "Identification challenges are common in burglary cases"
+    ],
+    "common_defenses": [
+      "Consent — defendant had permission to enter the dwelling",
+      "No criminal intent at entry — defendant entered for innocent purpose",
+      "Misidentification — physical or forensic evidence does not link defendant",
+      "Not a dwelling — premises did not qualify as a dwelling under statute"
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "Modern vehicle tracking technology aids North Dakota prosecutors in linking suspects to stolen vehicles",
+      "GPS tracking and surveillance commonly link suspects to vehicles",
+      "VIN and title records establish ownership"
+    ],
+    "defense_opportunities": [
+      "ND has no separate auto theft statute — limits charging options",
+      "Authorization or implied permission is a complete defense",
+      "Class C felony is ND's lowest felony classification"
+    ],
+    "common_defenses": [
+      "Authorization — defendant had permission to use the vehicle",
+      "Implied permission — defendant reasonably believed they had permission",
+      "Misidentification — defendant was not the person who took the vehicle",
+      "No intent to deprive — defendant intended to return the vehicle"
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "North Dakota receiving stolen property statutes capture both knowing and willfully blind possession",
+      "Knowledge or 'reason to know' standard captures willful blindness",
+      "Often charged alongside theft for prosecution flexibility"
+    ],
+    "defense_opportunities": [
+      "Knowledge or reason to know is the central battleground",
+      "Good-faith purchase from seemingly legitimate seller is a defense",
+      "Value disputes can reduce the offense level"
+    ],
+    "common_defenses": [
+      "No knowledge — defendant did not know property was stolen",
+      "Good-faith purchase — defendant bought property in legitimate transaction",
+      "Value dispute — property worth less than alleged",
+      "Claim of right — defendant believed they were the lawful owner"
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "North Dakota vandalism law applies to both real and personal property damage",
+      "Damage value typically determines whether the offense is a felony or misdemeanor",
+      "Recklessness during another offense is sufficient — purely intentional damage not required",
+      "Restitution commonly ordered"
+    ],
+    "defense_opportunities": [
+      "Class B misdemeanor (under $100) is ND's lowest criminal classification",
+      "Damage value is often disputed and subject to competing estimates",
+      "Accidental damage is a defense to the intentional element"
+    ],
+    "common_defenses": [
+      "Accidental damage — defendant did not intentionally cause the damage",
+      "Misidentification — defendant did not cause the damage",
+      "Value dispute — damage cost is less than alleged",
+      "Consent — owner authorized the action"
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "North Dakota trespass law applies after notice is given by signs, fencing, or verbal warning",
+      "Notice can be given by posting, fencing, or personal communication — all easily proven",
+      "Trespass on dwelling is automatically Class A misdemeanor"
+    ],
+    "defense_opportunities": [
+      "Class B misdemeanor (max 30 days) is ND's lower criminal classification",
+      "Notice requirement can be challenged when signs were unclear or absent",
+      "Public easements and rights-of-way negate trespass"
+    ],
+    "common_defenses": [
+      "No notice — defendant was not informed entry was prohibited",
+      "Authorization — defendant had permission to be on the property",
+      "Mistake of fact — defendant believed they were on public property",
+      "Necessity — defendant entered due to emergency"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "North Dakota criminal mischief charges are commonly resolved through restitution agreements",
+      "Recklessness during another offense is sufficient",
+      "Damage to critical infrastructure carries enhanced penalties"
+    ],
+    "defense_opportunities": [
+      "Lower-tier classifications carry minimal exposure",
+      "Damage assessment is subject to competing valuations",
+      "Restitution can resolve many cases short of conviction"
+    ],
+    "common_defenses": [
+      "Accidental damage — defendant did not intentionally damage the property",
+      "Misidentification — defendant was not responsible",
+      "Value dispute — damage less than alleged",
+      "Consent — owner authorized the action"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "North Dakota 911 call recordings are typically admissible as excited utterances even when victims later recant",
+      "Mandatory domestic violence assessment for all convictions",
+      "Protection orders available under Chapter 14-07.1"
+    ],
+    "defense_opportunities": [
+      "Victim recantation is common and weakens the prosecution's case",
+      "The 5-year look-back is strict — older priors cannot enhance",
+      "Self-defense applies as a complete defense",
+      "Class B misdemeanor (max 30 days) is the baseline first offense"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was protecting themselves from victim's aggression",
+      "False allegation — fabricated for custody, divorce, or protective order leverage",
+      "Mutual combat — both parties engaged in physical conflict",
+      "No qualifying relationship — alleged victim is not a family or household member under the statute"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "Bodily injury threshold is low",
+      "Mandatory domestic violence assessment",
+      "Federal firearms prohibition triggered"
+    ],
+    "defense_opportunities": [
+      "ND combines domestic battery into the domestic violence statute — limits charging variation",
+      "Self-defense applies",
+      "Same defenses as simple assault apply"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was protecting themselves",
+      "False allegation — fabricated accusation",
+      "Mutual combat — both parties engaged in physical conflict",
+      "Accident — physical contact was unintentional"
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "North Dakota child endangerment statutes broadly capture conduct creating risk to children",
+      "Drug manufacturing in presence of child triggers significant enhancements",
+      "DUI with child passenger commonly results in additional child endangerment charges"
+    ],
+    "defense_opportunities": [
+      "Substantial risk requirement is a high bar",
+      "Class A misdemeanor version is significantly less severe than the felony",
+      "Reasonable parenting decisions are not criminal endangerment"
+    ],
+    "common_defenses": [
+      "No substantial risk — conduct did not create genuine risk of harm",
+      "Reasonable parenting — actions within range of acceptable parenting",
+      "Lack of knowledge — defendant unaware of dangerous condition",
+      "Medical care provided — defendant sought help when needed"
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "Mandatory reporting laws ensure cases reach law enforcement",
+      "Medical evidence of injuries is highly persuasive",
+      "Pattern of abuse and child under age 6 are aggravating factors"
+    ],
+    "defense_opportunities": [
+      "Medical conditions mimicking abuse (brittle bone disease, bleeding disorders) are recognized defenses",
+      "Identity of perpetrator is uncertain in multi-caretaker households",
+      "Reasonable corporal discipline is not criminal abuse"
+    ],
+    "common_defenses": [
+      "Accidental injury — child's injuries were accidental, not intentional",
+      "Alternative perpetrator — someone else caused the injuries",
+      "Medical condition — child has condition mimicking abuse",
+      "Reasonable discipline — defendant exercised lawful parental discipline"
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "North Dakota protective order violations are documented through court records and electronic evidence",
+      "Court records establish the order's existence and terms",
+      "Electronic evidence (calls, texts, social media) documents violations"
+    ],
+    "defense_opportunities": [
+      "Knowledge of the order must be proven — improper service is a defense",
+      "Willful violation is required — accidental contact is not criminal",
+      "Many alleged violations involve ambiguous situations"
+    ],
+    "common_defenses": [
+      "No knowledge — defendant was not properly served",
+      "Unintentional contact — encounter was coincidental",
+      "Invited contact — protected party initiated the contact",
+      "Order modified or expired — order had been changed to allow contact"
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "Course of conduct requires only two or more acts",
+      "Cyberstalking is included in the statute",
+      "Protective order violation during stalking enhances to Class C felony"
+    ],
+    "defense_opportunities": [
+      "Course of conduct requires two or more acts evidencing continuity of purpose — isolated incidents do not qualify",
+      "Reasonable person standard — subjective fear alone is insufficient",
+      "Constitutionally protected activities are not stalking"
+    ],
+    "common_defenses": [
+      "No course of conduct — only isolated incidents, not a pattern",
+      "Constitutionally protected activity — defendant's conduct was lawful expression",
+      "Reasonable person standard not met — alleged victim's fear was subjective",
+      "Legitimate purpose — defendant had a lawful reason for the contact"
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "North Dakota harassment statutes apply to repeated unwanted communications",
+      "Includes following, monitoring, threats, and repeated unwanted contact",
+      "Digital communications create permanent records"
+    ],
+    "defense_opportunities": [
+      "Intent to frighten, intimidate, or harass must be proven",
+      "First Amendment protections apply to protected speech",
+      "Legitimate communications are not harassment"
+    ],
+    "common_defenses": [
+      "Legitimate purpose — communications had lawful, non-harassing purpose",
+      "Free speech — communications were constitutionally protected",
+      "No intent to harass — communications were not intended to threaten",
+      "Consensual communication — alleged victim was participating willingly"
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "North Dakota elder abuse statutes protect vulnerable adults from physical and financial exploitation",
+      "Vulnerable adult includes persons aged 60+ and disabled adults",
+      "Financial exploitation is increasingly prosecuted with bank record evidence"
+    ],
+    "defense_opportunities": [
+      "Vulnerable adult definition and caretaker relationship are litigable elements",
+      "Financial transactions between family members often have legitimate explanations",
+      "Class A misdemeanor version (neglect) carries significantly less exposure"
+    ],
+    "common_defenses": [
+      "No caretaker duty — defendant was not in a position of trust",
+      "Consent — victim authorized the financial transactions",
+      "No harm — victim was not actually harmed",
+      "Family financial arrangements — alleged exploitation was within an authorized family arrangement"
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "North Dakota weapons laws prohibit specific categories of weapons regardless of permit status",
+      "School and public gathering restrictions remain in force",
+      "Possession while under the influence is enhanced"
+    ],
+    "defense_opportunities": [
+      "ND is generally permissive on firearms — constitutional carry was enacted in 2017",
+      "Most violations apply to prohibited persons or restricted locations, not lawful gun owners",
+      "The specific prohibition must apply — not all firearms violations qualify"
+    ],
+    "common_defenses": [
+      "Lawful possession — defendant is not a prohibited person and was in a permitted location",
+      "Constitutional carry — defendant was lawfully carrying under ND's permitless carry law",
+      "Lack of knowledge — defendant was unaware the location was restricted",
+      "Illegal search — weapon discovered through unconstitutional search"
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "North Dakota bars felons from possessing firearms with both state and federal exposure",
+      "North Dakota prosecutors typically rely on objective evidence including witness testimony and physical evidence",
+      "Prior felony provable through certified court records"
+    ],
+    "defense_opportunities": [
+      "ND allows firearm rights restoration for non-violent felons after 10 years",
+      "The disability must be a qualifying one — not all felonies trigger the prohibition",
+      "Constructive possession in shared spaces requires proof of dominion"
+    ],
+    "common_defenses": [
+      "Rights restored — defendant's firearm rights have been restored after 10 years",
+      "No qualifying disability — prior conviction does not trigger weapons prohibition",
+      "No possession — firearm belonged to another person",
+      "Illegal search — firearm discovered through unconstitutional search"
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "North Dakota prosecutors typically rely on objective evidence including witness testimony and physical evidence",
+      "Prohibited locations include schools, courthouses, and secured government buildings",
+      "Non-residents still need a recognized permit"
+    ],
+    "defense_opportunities": [
+      "This dramatically narrowed who can be charged for permitless carry",
+      "Open carry is generally legal in ND"
+    ],
+    "common_defenses": [
+      "Open carry — weapon was openly carried, which is legal in ND",
+      "Valid permit — defendant had a recognized permit",
+      "Not in prohibited location — location was not actually restricted under the statute"
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "North Dakota prohibits reckless or negligent discharge of firearms in populated areas",
+      "Discharge within city limits triggers municipal enhancements",
+      "Injury elevates to assault charges"
+    ],
+    "defense_opportunities": [
+      "The discharge must have endangered safety — discharges in safe, legal contexts are not criminal",
+      "Self-defense is a complete defense to discharge claims",
+      "Accidental discharge negates the willful or reckless element"
+    ],
+    "common_defenses": [
+      "Self-defense — discharge was in lawful self-defense",
+      "Accidental discharge — weapon fired unintentionally",
+      "Lawful hunting or target shooting — discharge occurred in a permitted context",
+      "No endangerment — discharge did not endanger anyone"
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Broad definition covers SSN, financial accounts, biometric data",
+      "Multiple victims and high value escalate exposure",
+      "Restitution commonly ordered"
+    ],
+    "defense_opportunities": [
+      "Authorization from the identity owner is a complete defense",
+      "Intent to commit unlawful activity must be proven — mere possession is insufficient",
+      "Class C felony is ND's lowest felony classification"
+    ],
+    "common_defenses": [
+      "Authorization — identity owner consented to the use",
+      "Lack of intent — defendant did not intend to commit unlawful activity",
+      "Mistaken identity — confusion between similar identifying information",
+      "No knowledge — defendant did not know information belonged to another person"
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Financial records and audit trails provide objective proof",
+      "Position of trust is typically easy to establish",
+      "Value over $10,000 escalates to Class B felony"
+    ],
+    "defense_opportunities": [
+      "ND has no separate embezzlement statute — limits charging options",
+      "Authorization for the use of funds is a complete defense",
+      "Accounting errors and bookkeeping mistakes can create reasonable doubt"
+    ],
+    "common_defenses": [
+      "Authorization — defendant was authorized to use the funds",
+      "Accounting error — alleged shortfall is the result of bookkeeping mistakes",
+      "Lack of intent — defendant intended to repay or restore the property",
+      "No position of trust — defendant was not in a fiduciary relationship"
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Covers checks, deeds, contracts, currency, and official documents",
+      "Uttering forged instruments is the same offense class as creating them",
+      "Handwriting analysis and digital forensics commonly link defendants"
+    ],
+    "defense_opportunities": [
+      "Authorization to sign on behalf of another is a complete defense",
+      "Intent to defraud must be proven",
+      "Class C felony is ND's lowest felony level"
+    ],
+    "common_defenses": [
+      "Authorization — defendant was authorized to sign the document",
+      "No intent to defraud — defendant did not intend to deceive anyone",
+      "Lack of knowledge — defendant did not know document was forged (uttering)",
+      "Honest belief — defendant believed document was genuine"
+    ]
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "prosecution_strengths": [
+      "Most currency counterfeiting is prosecuted federally with stiff penalties",
+      "State charges apply to simulated objects of value",
+      "Up to 5 years and $10,000 fine"
+    ],
+    "defense_opportunities": [
+      "Intent to defraud must be proven — replicas for non-fraudulent purposes (props, art) are not criminal",
+      "Federal prosecution preempts most state currency cases",
+      "The object must have appeared to have value it did not possess"
+    ],
+    "common_defenses": [
+      "No intent to defraud — item was made for legitimate purposes (art, education, theatrical use)",
+      "Not a simulation of value — item was clearly not intended to deceive about value",
+      "Lack of knowledge — defendant did not know item was counterfeit",
+      "Mere possession — defendant possessed but did not utter or attempt to use the item"
+    ]
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "prosecution_strengths": [
+      "North Dakota bad check statutes create a presumption of fraud upon dishonor and failure to pay after notice",
+      "Knowledge of insufficient funds at time of issuance must be proven",
+      "Bank records provide objective proof of dishonor"
+    ],
+    "defense_opportunities": [
+      "Defendant must be given written notice and 10 days to make the check good before prosecution",
+      "Payment within the 10-day notice period is a defense",
+      "Honest mistake about account balance negates the knowledge element"
+    ],
+    "common_defenses": [
+      "Honest mistake — defendant believed funds were available",
+      "Payment within notice period — defendant cured the deficiency within 10 days",
+      "Bank error — dishonor was the result of bank error, not insufficient funds",
+      "No intent to defraud — defendant intended to cover the check"
+    ]
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "prosecution_strengths": [
+      "Insurance company SIU investigations provide detailed evidence",
+      "Staged accidents and inflated claims are aggravating factors",
+      "Restitution and civil penalties may also apply"
+    ],
+    "defense_opportunities": [
+      "The claim must be knowingly false — honest disagreements about value are not fraud",
+      "Insurance company denial is not proof of fraud",
+      "Class C felony is ND's lowest felony level"
+    ],
+    "common_defenses": [
+      "Good-faith claim — defendant genuinely believed claim was accurate",
+      "Valuation dispute — claim was based on defendant's honest assessment",
+      "No intent to defraud — any inaccuracy was inadvertent",
+      "Insurance company error — investigation is flawed or biased"
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "Bank records and surveillance commonly establish fraudulent use",
+      "Multiple victims and high value escalate exposure",
+      "Skimming devices trigger enhancements"
+    ],
+    "defense_opportunities": [
+      "Authorization from the cardholder is a complete defense",
+      "Knowledge that the card was unauthorized must be proven",
+      "Family financial disputes often involve genuine confusion"
+    ],
+    "common_defenses": [
+      "Authorization — cardholder consented to the use",
+      "Family dispute — alleged misuse was within shared family finances",
+      "No knowledge — defendant did not know card was stolen or unauthorized",
+      "Mistaken identity — defendant was not the person who used the card"
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Bank transaction patterns (structuring, layering) provide documentary evidence",
+      "Federal parallel charges add enormous exposure",
+      "Asset forfeiture provisions apply"
+    ],
+    "defense_opportunities": [
+      "The underlying criminal activity generating the funds must be proven",
+      "Knowledge of the criminal source is required",
+      "Legitimate business transactions can appear suspicious without being criminal"
+    ],
+    "common_defenses": [
+      "Legitimate funds — money involved was from lawful sources",
+      "No knowledge — defendant did not know funds were from criminal activity",
+      "Legitimate transaction — financial activity had a lawful business purpose",
+      "No predicate offense — prosecution cannot prove the underlying criminal activity"
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "North Dakota fraud statutes capture a broad range of false-pretense conduct",
+      "Deception includes false impression of law, value, intention, or other state of mind",
+      "Vulnerable victims and government program fraud trigger enhancements"
+    ],
+    "defense_opportunities": [
+      "False impression must be material and intentional — opinions and puffery are not fraud",
+      "Reliance must be reasonable — sophisticated parties may have a higher burden",
+      "Value disputes can reduce the offense level"
+    ],
+    "common_defenses": [
+      "No false impression — statements were true or constituted opinion",
+      "No reliance — alleged victim did not rely on the representations",
+      "Lack of intent — defendant believed statements were true",
+      "Value dispute — property value below felony threshold"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "Class AA felony (life without parole) when victim is under 15",
+      "Class A felony (20 years) for force-based or incapacity-based theories",
+      "Lifetime sex offender registration required"
+    ],
+    "defense_opportunities": [
+      "Consent is a complete defense to force-based theories with competent adults",
+      "DNA evidence is subject to challenge on contamination and transfer theories",
+      "Witness credibility is central, particularly in delayed disclosure cases"
+    ],
+    "common_defenses": [
+      "Consent — sexual activity was consensual between competent adults",
+      "Misidentification — defendant was not the perpetrator",
+      "False allegation — allegation is fabricated",
+      "Alibi — defendant was elsewhere at the time"
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "North Dakota rape statutes apply to both forcible and incapacity-based theories",
+      "ND uses 'gross sexual imposition' rather than 'rape' but covers the same conduct",
+      "Lifetime sex offender registration required"
+    ],
+    "defense_opportunities": [
+      "Witness credibility and DNA chain of custody are central battlegrounds in North Dakota rape cases",
+      "Consent is a complete defense for force-based charges with competent adults",
+      "DNA evidence challenges and witness credibility issues remain available"
+    ],
+    "common_defenses": [
+      "Consent — sexual conduct was consensual",
+      "Misidentification — defendant was not the perpetrator",
+      "False accusation — allegation is fabricated",
+      "Alibi — defendant was elsewhere"
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "Includes intent to arouse or satisfy sexual desires",
+      "Subsequent conviction triggers significant escalation",
+      "May require sex offender registration"
+    ],
+    "defense_opportunities": [
+      "Class A misdemeanor (first offense) is a misdemeanor classification",
+      "Sexual intent must be proven — accidental exposure is not criminal",
+      "Public place definition is litigable for ambiguous locations"
+    ],
+    "common_defenses": [
+      "Accidental exposure — exposure was unintentional",
+      "No sexual intent — defendant was not seeking arousal or satisfaction",
+      "Private location — exposure did not occur in a public place",
+      "Misidentification — defendant was not the person who exposed themselves"
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "North Dakota undercover operations targeting solicitation are well-established",
+      "Undercover operations are well-established",
+      "Soliciting a minor triggers significant felony enhancement"
+    ],
+    "defense_opportunities": [
+      "Class A misdemeanor first offense is relatively low exposure",
+      "Entrapment is available when undercover officers initiated the transaction",
+      "Specific agreement must be proven, not just general conversation"
+    ],
+    "common_defenses": [
+      "Entrapment — law enforcement induced the offense",
+      "No agreement — conversation did not amount to clear solicitation",
+      "Misunderstanding — statements were misinterpreted",
+      "No intent — defendant did not intend to engage in prostitution"
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "Federal parallel charges commonly apply",
+      "Lifetime sex offender registration required",
+      "Production involving minor under 12 triggers enhancements"
+    ],
+    "defense_opportunities": [
+      "Knowledge that the person depicted was a minor must be proven",
+      "Unauthorized device access by third parties is a recognized defense",
+      "Class C felony is ND's lowest felony classification for possession/distribution"
+    ],
+    "common_defenses": [
+      "No knowledge — defendant did not know material was on their device",
+      "Third-party access — someone else used defendant's device",
+      "Not CSAM — material does not depict an actual minor",
+      "Illegal search — device searched without valid warrant"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "Registration required for 15 years or lifetime depending on offense",
+      "Annual address verification required",
+      "Up to 5 years and $10,000 fine"
+    ],
+    "defense_opportunities": [
+      "Knowledge of registration requirement must be proven",
+      "Homelessness creates compliance challenges that courts must consider",
+      "Class C felony is ND's lowest felony level"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant was not informed of the registration requirement",
+      "Good-faith compliance — defendant attempted to register but was prevented",
+      "Address instability — defendant was homeless and unable to maintain registered address",
+      "Administrative error — registration attempt was not properly recorded"
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "North Dakota age of consent laws are strictly enforced regardless of victim's apparent maturity",
+      "Class B felony for corruption of a minor",
+      "Age of consent is 18 in ND"
+    ],
+    "defense_opportunities": [
+      "Close-in-age exceptions may apply for younger defendants",
+      "Position of authority must be specifically proven for the older-victim enhancement",
+      "Mistake of age may be available in limited circumstances"
+    ],
+    "common_defenses": [
+      "Close-in-age exception — defendant and victim are close in age",
+      "Mistake of age — defendant reasonably believed victim was of age (limited applicability)",
+      "No sexual contact — alleged sexual activity did not occur",
+      "False allegation — accusation is fabricated"
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Broad statutory language captures fighting, threatening, noise, and abusive language",
+      "Includes disturbing lawful assembly and obstructing traffic",
+      "Officer testimony is typically the primary evidence"
+    ],
+    "defense_opportunities": [
+      "Class B misdemeanor (max 30 days) is among ND's lower classifications",
+      "First Amendment protections limit prosecutions based on speech",
+      "Intent to harass, annoy, or alarm must be proven"
+    ],
+    "common_defenses": [
+      "Free speech — conduct was constitutionally protected expression",
+      "No intent — defendant did not intend to harass, annoy, or alarm",
+      "Self-defense — defendant was responding to provocation",
+      "No public disturbance — conduct did not actually disturb anyone"
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Use of deadly weapon escalates to Class C felony",
+      "Bodycam footage commonly documents the encounter",
+      "Often added to other charges"
+    ],
+    "defense_opportunities": [
+      "Physical resistance is required — verbal objection or refusal to cooperate is insufficient",
+      "The arrest must have been lawful",
+      "ND courts have held that fleeing alone may be charged separately, not as resisting"
+    ],
+    "common_defenses": [
+      "Unlawful arrest — underlying arrest lacked probable cause",
+      "No physical resistance — defendant only verbally objected",
+      "Excessive force — defendant was responding to officer's excessive force",
+      "Medical condition — defendant could not comply due to medical issue"
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "North Dakota obstruction statutes are broadly applied and frequently charged alongside other offenses",
+      "Aiding a felony fugitive escalates to Class C felony",
+      "Includes false information and hiding evidence"
+    ],
+    "defense_opportunities": [
+      "Intent to obstruct must be proven",
+      "Fifth Amendment privilege protects silence",
+      "Means must be intimidation, force, or physical interference — passive non-cooperation is insufficient"
+    ],
+    "common_defenses": [
+      "Constitutional rights — defendant was exercising right to remain silent",
+      "No intent to obstruct — actions were inadvertent",
+      "No affirmative act — defendant did not actively interfere",
+      "Officer not performing lawful duty — official function was outside authority"
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "North Dakota courts have broad inherent authority to enforce orders through contempt",
+      "Direct contempt can be summarily punished without separate proceeding",
+      "Up to 30 days per count, $1,500 fine per count"
+    ],
+    "defense_opportunities": [
+      "Court order must be clear and unambiguous",
+      "Inability to comply is a defense to civil contempt",
+      "Due process protections apply to criminal contempt"
+    ],
+    "common_defenses": [
+      "Inability to comply — defendant was unable to comply despite good-faith efforts",
+      "Ambiguous order — court order was unclear",
+      "No willful violation — failure to comply was inadvertent",
+      "Due process violation — proceeding did not afford adequate notice"
+    ]
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "prosecution_strengths": [
+      "ND decriminalized public intoxication — protective custody only, not criminal charges",
+      "Person may be held up to 24 hours for safety",
+      "Voluntary treatment is encouraged"
+    ],
+    "defense_opportunities": [
+      "Many North Dakota jurisdictions use protective custody rather than criminal arrest for intoxicated persons",
+      "Protective custody is administrative, not criminal",
+      "Subsequent charges (disorderly conduct, assault) require independent proof"
+    ],
+    "common_defenses": [
+      "Not a criminal offense — public intoxication itself is not chargeable in ND",
+      "No incapacitation — defendant was not actually incapacitated",
+      "Not in public — defendant was on private property",
+      "Medical condition — appearance was caused by medical issue, not intoxication"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "Court records document scheduled appearance and absence",
+      "Bail forfeiture and bench warrant typically follow",
+      "Charged in addition to original offense"
+    ],
+    "defense_opportunities": [
+      "Willful failure must be proven — accidental or excused absence is a defense",
+      "Notice of the court date must have been received",
+      "Voluntary surrender after missing a date demonstrates lack of willful intent"
+    ],
+    "common_defenses": [
+      "No notice — defendant did not receive notice of the court date",
+      "Excusable reason — illness, accident, or emergency prevented attendance",
+      "Voluntary surrender — defendant turned themselves in promptly",
+      "No willful intent — failure was due to confusion or scheduling error"
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "North Dakota false report statutes apply to police reports and emergency calls",
+      "Includes false 911 calls, bomb threats, and fabricated crime reports",
+      "May be charged as felony if results in injury or significant emergency response costs"
+    ],
+    "defense_opportunities": [
+      "Statement must be knowingly false — honest mistake is a defense",
+      "Purpose to induce a response must be proven",
+      "Recantation may mitigate consequences"
+    ],
+    "common_defenses": [
+      "Honest mistake — defendant believed report was accurate",
+      "No purpose to induce response — statement was conversational, not intended to trigger response",
+      "Recantation — defendant corrected the false information",
+      "Mistaken belief — defendant genuinely thought a crime was occurring"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "ND uses 'terrorizing' rather than 'criminal threat'",
+      "Includes bomb threats and threats against schools",
+      "No actual intent to carry out the threat is required"
+    ],
+    "defense_opportunities": [
+      "The threat must cause fear or evacuation — vague or hyperbolic statements may not qualify",
+      "First Amendment protects political speech and rhetorical hyperbole",
+      "Class C felony is ND's lowest felony level"
+    ],
+    "common_defenses": [
+      "Not a true threat — statement was hyperbolic, conditional, or protected speech",
+      "No intent to terrorize — statement was misinterpreted",
+      "Constitutional speech — communication was protected First Amendment expression",
+      "Context — statement was made in jest, frustration, or fiction"
+    ]
+  },
+  {
+    "common_charge_slug": "perjury",
+    "prosecution_strengths": [
+      "North Dakota perjury law requires material false statements made under oath",
+      "Perjury in felony trial enhances penalty",
+      "Sworn testimony provides documentary evidence"
+    ],
+    "defense_opportunities": [
+      "Statement must be material to the issue",
+      "Corroboration or documentary proof typically required for perjury convictions",
+      "Honest belief in truth of statement is a defense to the knowing element"
+    ],
+    "common_defenses": [
+      "No materiality — statement was not material to the proceeding",
+      "Honest belief — defendant believed statement was true",
+      "Confusion — inaccurate statement was the product of confusion or memory failure",
+      "No corroboration — only one witness contradicts defendant's testimony"
+    ]
+  },
+  {
+    "common_charge_slug": "bribery",
+    "prosecution_strengths": [
+      "Both giver and receiver may be charged",
+      "Public servant includes elected officials, government employees, and jurors",
+      "Bribery of judges or jurors triggers enhancements"
+    ],
+    "defense_opportunities": [
+      "Intent to influence official action must be proven — innocent gifts are not bribery",
+      "Class C felony is ND's lowest felony level",
+      "The benefit must be quid pro quo for official action"
+    ],
+    "common_defenses": [
+      "No intent to influence — gift or payment was not connected to any official action",
+      "No quid pro quo — there was no agreement linking the benefit to official action",
+      "Lawful campaign contribution — payment was a lawful political contribution",
+      "Entrapment — government agent induced the offer"
+    ]
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "prosecution_strengths": [
+      "North Dakota escape statutes apply to detention from arrest through post-conviction supervision",
+      "Sentence runs consecutive to original sentence",
+      "Use of force or escape from secure facility triggers enhancements"
+    ],
+    "defense_opportunities": [
+      "Defendant must have known they were in official custody",
+      "Necessity defense (escape to avoid imminent serious harm) is recognized",
+      "Voluntary return promptly after departure can mitigate"
+    ],
+    "common_defenses": [
+      "No knowledge of detention — defendant was confused about custody status",
+      "Necessity — escape was due to imminent serious harm threat",
+      "Voluntary return — defendant returned voluntarily before pursuit",
+      "No intent — defendant did not purposely break custody"
+    ]
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "prosecution_strengths": [
+      "North Dakota animal cruelty statutes carry felony exposure for aggravated cases",
+      "Court may order forfeiture of animals",
+      "Veterinary evidence documents the abuse"
+    ],
+    "defense_opportunities": [
+      "The conduct must be willful and unjustifiable — accidental harm or lawful disciplinary action is not criminal",
+      "Necessary euthanasia and lawful animal husbandry practices are not cruelty",
+      "Class A misdemeanor (general cruelty) is the baseline charge"
+    ],
+    "common_defenses": [
+      "Lawful animal husbandry — actions were within accepted farming or veterinary practice",
+      "Necessary euthanasia — animal was euthanized for legitimate reasons",
+      "No willful intent — harm was accidental or unintentional",
+      "Misidentification — defendant was not responsible for the animal's condition"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "Probation officer reports document compliance failures",
+      "Court can revoke and impose original sentence",
+      "New criminal offenses strongly support revocation"
+    ],
+    "defense_opportunities": [
+      "Court has discretion to continue probation with modified conditions",
+      "Hearing required before revocation — due process protections apply",
+      "Good-faith efforts and substantial compliance are mitigating factors"
+    ],
+    "common_defenses": [
+      "Substantial compliance — defendant complied with majority of conditions",
+      "Inability to comply — circumstances beyond defendant's control prevented compliance",
+      "Technical nature — violation was minor and technical",
+      "Mitigating circumstances — emergency or changed circumstances caused the violation"
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "Standard of proof is lower than criminal trial",
+      "May result in serving remainder of original sentence",
+      "Detailed parole conditions provide objective basis for violations"
+    ],
+    "defense_opportunities": [
+      "Revocation hearing required — procedural protections apply",
+      "Parole Board has discretion to modify conditions instead of revoking",
+      "Technical violations may be addressed without re-incarceration"
+    ],
+    "common_defenses": [
+      "Good-faith compliance — parolee was making genuine efforts",
+      "Inability to comply — circumstances beyond parolee's control",
+      "Technical violation — minor or technical breach not warranting revocation",
+      "Community integration — strong employment and family ties supporting continued parole"
+    ]
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "prosecution_strengths": [
+      "Intent to promote or facilitate the crime must be proven",
+      "Phone records and communications often document the assistance",
+      "Captures broad range of assistance including planning and advice"
+    ],
+    "defense_opportunities": [
+      "Mere presence at the scene is insufficient",
+      "Knowledge of the criminal objective must be proven",
+      "Intent to promote or facilitate is the key element"
+    ],
+    "common_defenses": [
+      "Mere presence — defendant was at the scene but did not assist",
+      "No knowledge — defendant did not know about criminal objective",
+      "No intent — defendant did not intend to promote or facilitate the crime",
+      "Withdrawal — defendant withdrew before the crime was committed"
+    ]
+  },
+  {
+    "common_charge_slug": "attempt",
+    "prosecution_strengths": [
+      "Substantial step requirement captures conduct beyond mere preparation",
+      "Conduct must be strongly corroborative of criminal intent",
+      "Attempted murder is Class A felony (one below Class AA)"
+    ],
+    "defense_opportunities": [
+      "Mere preparation is not a substantial step",
+      "Voluntary abandonment is a defense if complete and voluntary",
+      "Specific intent to commit the target offense must be proven"
+    ],
+    "common_defenses": [
+      "No substantial step — conduct did not go beyond mere preparation",
+      "Voluntary abandonment — defendant abandoned the attempt before completion",
+      "Lack of specific intent — defendant did not intend to commit the target offense",
+      "Mistake — defendant's actions were misconstrued as criminal preparation"
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Requires only an agreement and one overt act",
+      "Co-conspirator statements admissible against all members",
+      "Each conspirator liable for acts of others in furtherance of the conspiracy"
+    ],
+    "defense_opportunities": [
+      "Agreement itself must be proven — mere association is insufficient",
+      "Renunciation is a defense if defendant thwarted the conspiracy's success",
+      "Each defendant's individual role and knowledge must be separately established"
+    ],
+    "common_defenses": [
+      "No agreement — defendant did not agree to commit the crime",
+      "Renunciation — defendant withdrew and prevented the crime's completion",
+      "No knowledge — defendant did not know about criminal objective",
+      "Mere association — defendant's relationship with conspirators does not prove participation"
+    ]
+  }
+]

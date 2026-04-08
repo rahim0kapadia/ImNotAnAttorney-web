@@ -81,7 +81,7 @@
     "notes": "NJ drug DWI uses same statute as alcohol DWI. Drug recognition expert (DRE) testimony used. Urine test for CDS presence. No per se level for most drugs except marijuana (still disputed)."
   },
   {
-    "common_charge_slug": "dui-vehicular-homicide",
+    "common_charge_slug": "vehicular-homicide",
     "statute_number": "N.J.S.A. 2C:11-5",
     "statute_title": "Vehicular Homicide",
     "offense_class": "2nd Degree Crime",
@@ -143,7 +143,7 @@
     "notes": "Reckless driving is a motor vehicle offense handled in municipal court. Points assessed (5 points). First offense up to 60 days jail and $200 fine. Distinguished from careless driving (N.J.S.A. 39:4-97)."
   },
   {
-    "common_charge_slug": "driving-suspended-license",
+    "common_charge_slug": "driving-on-suspended",
     "statute_number": "N.J.S.A. 39:3-40",
     "statute_title": "Driving While Suspended",
     "offense_class": "Traffic Offense",
@@ -163,7 +163,7 @@
     "notes": "DWI-related suspension driving carries mandatory jail time escalating with offense number. Non-DWI suspension driving is fine/community service. Insurance surcharges apply."
   },
   {
-    "common_charge_slug": "possession-marijuana",
+    "common_charge_slug": "drug-possession-marijuana",
     "statute_number": "N.J.S.A. 2C:35-10",
     "statute_title": "Possession of CDS — Marijuana (Residual Amounts)",
     "offense_class": "Disorderly Persons Offense (small amounts for those under 21 or excess amounts)",
@@ -184,7 +184,7 @@
     "notes": "Adult recreational marijuana legalized in NJ effective April 2022 (up to 6 oz). Under-21 possession of any amount is civil violation or disorderly persons. Large quantities still criminal under distribution or trafficking statutes."
   },
   {
-    "common_charge_slug": "possession-controlled-substance",
+    "common_charge_slug": "drug-possession",
     "statute_number": "N.J.S.A. 2C:35-10(a)",
     "statute_title": "Possession of CDS — Schedule I/II (Not Marijuana)",
     "offense_class": "3rd Degree Crime (heroin, cocaine, meth, fentanyl); 4th Degree (Schedule III-IV)",
@@ -206,7 +206,7 @@
     "notes": "NJ's Drug Free Zone law doubles mandatory minimums for possession within 500 feet of school or within 500 feet of public housing. School zone carries mandatory 1-year parole ineligibility. Drug courts widely available."
   },
   {
-    "common_charge_slug": "possession-with-intent-distribute",
+    "common_charge_slug": "drug-possession-with-intent",
     "statute_number": "N.J.S.A. 2C:35-5",
     "statute_title": "Manufacturing, Distributing, or Dispensing CDS",
     "offense_class": "1st-3rd Degree Crime (amount and substance dependent)",
@@ -310,7 +310,7 @@
     "notes": "NJ felony murder is still 1st Degree Crime level (murder) — does not reduce to manslaughter. NJ Supreme Court has narrowed felony murder in recent years (State v. Doolin). Accomplice liability broadly applied."
   },
   {
-    "common_charge_slug": "manslaughter-voluntary",
+    "common_charge_slug": "voluntary-manslaughter",
     "statute_number": "N.J.S.A. 2C:11-4(a)",
     "statute_title": "Aggravated Manslaughter",
     "offense_class": "1st Degree Crime",
@@ -330,7 +330,7 @@
     "notes": "NJ's aggravated manslaughter is a 1st Degree Crime — unusual among states. NERA applies. Regular manslaughter (N.J.S.A. 2C:11-4(b)) is 2nd Degree. Passion/provocation manslaughter is also 2nd Degree."
   },
   {
-    "common_charge_slug": "manslaughter-involuntary",
+    "common_charge_slug": "involuntary-manslaughter",
     "statute_number": "N.J.S.A. 2C:11-5(a)",
     "statute_title": "Vehicular Homicide — Reckless Driving",
     "offense_class": "2nd Degree Crime",
@@ -351,7 +351,7 @@
     "notes": "NJ vehicular homicide under reckless driving is 2nd Degree. DWI-related vehicular homicide carries no probation and possible 1st Degree upgrade with prior DWI."
   },
   {
-    "common_charge_slug": "assault-simple",
+    "common_charge_slug": "simple-assault",
     "statute_number": "N.J.S.A. 2C:12-1(a)",
     "statute_title": "Simple Assault",
     "offense_class": "Disorderly Persons Offense",
@@ -395,7 +395,7 @@
     "notes": "NJ's aggravated assault has multiple subsets. Pointing a firearm: 4th Degree. Using firearm to cause injury: 3rd Degree. Causing serious bodily injury: 2nd Degree with NERA. Strangulation: 3rd Degree — N.J.S.A. 2C:12-1(b)(12)."
   },
   {
-    "common_charge_slug": "assault-deadly-weapon",
+    "common_charge_slug": "assault-with-deadly-weapon",
     "statute_number": "N.J.S.A. 2C:12-1(b)(2)",
     "statute_title": "Aggravated Assault with Deadly Weapon",
     "offense_class": "3rd Degree Crime",
@@ -545,7 +545,7 @@
     "notes": "NJ uses 2nd Degree burglary for occupied structures — equivalent to home invasion. NERA mandatory. Graves Act firearm minimum of 5 years without parole if gun is involved."
   },
   {
-    "common_charge_slug": "larceny",
+    "common_charge_slug": "theft-larceny",
     "statute_number": "N.J.S.A. 2C:20-3",
     "statute_title": "Theft by Unlawful Taking or Disposition",
     "offense_class": "2nd-4th Degree Crime or Disorderly Persons (value-based)",
@@ -695,7 +695,7 @@
     "notes": "NJ stalking statute covers both physical and electronic (cyber) stalking. 'Course of conduct' requires 2+ acts. Second offense or violation of TRO/FRO elevates to 3rd Degree."
   },
   {
-    "common_charge_slug": "violating-protective-order",
+    "common_charge_slug": "violation-protective-order",
     "statute_number": "N.J.S.A. 2C:29-9",
     "statute_title": "Violation of Final Restraining Order (FRO)",
     "offense_class": "4th Degree Crime",
@@ -758,7 +758,7 @@
     "notes": "NJ child endangerment under N.J.S.A. 2C:24-4(a) is the companion criminal statute. DCPP/DYFS proceedings run concurrently. Endangering welfare of children (N.J.S.A. 2C:24-4) is the more commonly used criminal charge."
   },
   {
-    "common_charge_slug": "firearm-felon-in-possession",
+    "common_charge_slug": "felon-in-possession",
     "statute_number": "N.J.S.A. 2C:39-7",
     "statute_title": "Certain Persons Not to Have Weapons",
     "offense_class": "2nd Degree Crime",
@@ -779,7 +779,7 @@
     "notes": "NJ's felon-in-possession equivalent. 2nd Degree Crime. Graves Act applies — mandatory 5-year minimum without parole. Also applies to persons convicted of DV predicate offenses who possess ANY weapon, not just firearms. One of the most heavily prosecuted NJ gun laws."
   },
   {
-    "common_charge_slug": "carrying-concealed-weapon",
+    "common_charge_slug": "concealed-carry-violation",
     "statute_number": "N.J.S.A. 2C:39-5(b)",
     "statute_title": "Unlawful Possession of a Handgun",
     "offense_class": "2nd Degree Crime",
@@ -841,7 +841,7 @@
     "notes": "Both aggravated assault with firearm and possession for unlawful purpose are 2nd Degree with Graves Act mandatory and NERA. Frequently charged together. Most common felony gun charges in NJ."
   },
   {
-    "common_charge_slug": "fraud-identity-theft",
+    "common_charge_slug": "identity-theft",
     "statute_number": "N.J.S.A. 2C:21-17",
     "statute_title": "Impersonation / Identity Theft",
     "offense_class": "2nd-4th Degree Crime (harm-based)",
@@ -863,7 +863,7 @@
     "notes": "NJ identity theft tiered by number of victims and financial loss. Senior victim (62+) triggers mandatory $10,000 fine. Restitution mandatory. Impersonation using internet or computer carries additional charges."
   },
   {
-    "common_charge_slug": "fraud-credit-card",
+    "common_charge_slug": "credit-card-fraud",
     "statute_number": "N.J.S.A. 2C:21-6",
     "statute_title": "Credit Card Fraud",
     "offense_class": "4th Degree Crime (under $75,000); 3rd Degree ($75,000+)",
@@ -884,7 +884,7 @@
     "notes": "NJ credit card fraud under N.J.S.A. 2C:21-6. Skimming devices are separately criminalized under N.J.S.A. 2C:21-6.1. Restitution mandatory."
   },
   {
-    "common_charge_slug": "fraud-insurance",
+    "common_charge_slug": "insurance-fraud",
     "statute_number": "N.J.S.A. 2C:21-4.6",
     "statute_title": "Insurance Fraud",
     "offense_class": "4th Degree Crime (under $1,000); 3rd Degree ($1,000-$75,000); 2nd Degree ($75,000+)",
@@ -1624,7 +1624,7 @@
     "notes": "NJ escape is 3rd Degree for facility escape. Failure to return from furlough is 4th Degree. Sentence for escape runs consecutive to existing sentence."
   },
   {
-    "common_charge_slug": "false-police-report",
+    "common_charge_slug": "false-report",
     "statute_number": "N.J.S.A. 2C:28-4",
     "statute_title": "Falsely Reporting an Incident",
     "offense_class": "4th Degree Crime; 3rd Degree if bomb threat or mass casualty",
@@ -1711,7 +1711,7 @@
     "notes": "Federal wire fraud frequently charged for interstate fraud. NJ state fraud under N.J.S.A. 2C:21-4 covers scheme to defraud. Both charges often filed together."
   },
   {
-    "common_charge_slug": "fraud-mortgage",
+    "common_charge_slug": "mortgage-fraud",
     "statute_number": "N.J.S.A. 2C:21-4.5",
     "statute_title": "Residential Mortgage Fraud",
     "offense_class": "2nd-4th Degree Crime (loss-based)",
@@ -1797,7 +1797,7 @@
     "notes": "NJ harassment (Petty Disorderly) is a common predicate for domestic violence FRO proceedings. 4th Degree elevation for bias-based harassment. Electronic harassment increasingly charged."
   },
   {
-    "common_charge_slug": "eluding-police",
+    "common_charge_slug": "fleeing-eluding",
     "statute_number": "N.J.S.A. 2C:29-2(b)",
     "statute_title": "Eluding an Officer",
     "offense_class": "3rd Degree Crime (default); 2nd Degree if creates risk of injury",

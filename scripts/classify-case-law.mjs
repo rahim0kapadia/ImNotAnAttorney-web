@@ -63,6 +63,12 @@ function esc(val) {
   return `'${String(val).split("'").join("''")}'`;
 }
 
+function escArray(arr) {
+  if (!arr || arr.length === 0) return "'{}'";
+  const items = arr.map((s) => `"${String(s).split('"').join('\\"').split("'").join("''")}"` );
+  return `'{${items.join(",")}}'`;
+}
+
 function supabaseQuery(sql) {
   return new Promise((resolve, reject) => {
     const data = JSON.stringify({ query: sql });
@@ -276,6 +282,110 @@ function classifyFromName(caseName) {
   };
 }
 
+// ── Good Law Verification (negative treatment via citing opinions) ──────────
+// Per CASE persona (CASE-LAW-VALIDATION-PERSONA.md):
+// A case is BAD LAW if any later case overrules, abrogates, or supersedes it.
+// We check this via CourtListener's citing-opinions endpoint.
+
+const NEGATIVE_TREATMENT_SIGNALS = [
+  "overruled",
+  "overrule ",
+  "overruling",
+  "abrogated",
+  "abrogating",
+  "abrogate ",
+  "superseded",
+  "supersede ",
+  "superseding",
+  "receded from",
+  "recede from",
+  "no longer good law",
+  "is no longer the law",
+  "rejecting the holding",
+  "expressly disapproved",
+  "we disapprove",
+];
+
+/**
+ * Check if a case has been overruled/abrogated/superseded by later opinions.
+ * Returns { isGoodLaw, treatment, citingClusterId, checkedUrls }.
+ *
+ * isGoodLaw values:
+ *   true  — checked, no negative treatment found
+ *   false — checked, negative treatment found
+ *   null  — could not check (no citing opinions or API error)
+ *
+ * checkedUrls: every CourtListener URL that was fetched during verification.
+ * Per hard rule: no verification URL = unverified = does not exist in the system.
+ * These get stored in source_urls[] so anyone can audit the verification chain.
+ */
+async function checkNegativeTreatment(clusterId) {
+  if (!clusterId) {
+    return { isGoodLaw: null, treatment: null, citingClusterId: null, checkedUrls: [] };
+  }
+
+  // Collect every URL we check so we can store the full verification chain
+  const checkedUrls = [];
+
+  try {
+    // CourtListener v4: search for opinions that cite this cluster
+    const searchUrl = `https://www.courtlistener.com/api/rest/v4/search/?type=o&cites=${clusterId}&order_by=dateFiled+desc&page_size=20`;
+    checkedUrls.push(searchUrl);
+    const result = await clFetch(`/api/rest/v4/search/?type=o&cites=${clusterId}&order_by=dateFiled+desc&page_size=20`);
+    const citingOps = result.results || [];
+
+    if (citingOps.length === 0) {
+      // No citing opinions found — cannot verify negative treatment
+      return { isGoodLaw: null, treatment: null, citingClusterId: null, checkedUrls };
+    }
+
+    // For each citing opinion, fetch its text and check for negative treatment
+    for (const citingOp of citingOps) {
+      const citingClusterId = citingOp.cluster_id;
+      if (!citingClusterId) continue;
+
+      try {
+        const clusterUrl = `https://www.courtlistener.com/api/rest/v4/clusters/${citingClusterId}/`;
+        checkedUrls.push(clusterUrl);
+        const cluster = await clFetch(`/api/rest/v4/clusters/${citingClusterId}/?fields=sub_opinions`);
+        const opUrls = cluster.sub_opinions || [];
+        if (opUrls.length === 0) continue;
+
+        const opPath = opUrls[0].replace("https://www.courtlistener.com", "");
+        const opFullUrl = `https://www.courtlistener.com${opPath}`;
+        checkedUrls.push(opFullUrl);
+        const opinion = await clFetch(`${opPath}?fields=plain_text,html_with_citations`);
+        const rawText = opinion.plain_text || stripHtml(opinion.html_with_citations || "");
+        const lower = rawText.toLowerCase();
+
+        // Check for negative treatment signals
+        for (const signal of NEGATIVE_TREATMENT_SIGNALS) {
+          if (lower.includes(signal)) {
+            const idx = lower.indexOf(signal);
+            const context = rawText.slice(Math.max(0, idx - 200), idx + 200);
+
+            return {
+              isGoodLaw: false,
+              treatment: `${signal}: "${context.split(/\s+/).join(" ").trim().slice(0, 400)}"`,
+              citingClusterId: String(citingClusterId),
+              checkedUrls,
+            };
+          }
+        }
+
+        await sleep(CL_DELAY_MS);
+      } catch {
+        continue;
+      }
+    }
+
+    // Checked all citing opinions, no negative treatment found
+    return { isGoodLaw: true, treatment: null, citingClusterId: null, checkedUrls };
+  } catch {
+    return { isGoodLaw: null, treatment: null, citingClusterId: null, checkedUrls };
+  }
+}
+
 // ── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -298,6 +408,8 @@ async function main() {
     process.stdout.write(`[${i + 1}/${rows.length}] ${(row.case_name || "").slice(0, 50)}...`);
 
     let result;
+
+    let goodLawResult = { isGoodLaw: null, treatment: null, citingClusterId: null };
 
     if (clId) {
       try {
@@ -322,6 +434,11 @@ async function main() {
         }
 
         await sleep(CL_DELAY_MS);
+
+        // Step 3: Good Law Verification — check negative treatment via citing opinions
+        // Per CASE persona: every cited case must be verified not overruled
+        process.stdout.write(" [checking good law...]");
+        goodLawResult = await checkNegativeTreatment(clId);
       } catch (err) {
         result = classifyFromName(row.case_name);
         stats.errors++;
@@ -330,11 +447,52 @@ async function main() {
       result = classifyFromName(row.case_name);
     }
 
-    console.log(` -> ${result.partySide}${result.isBinding ? " [BINDING]" : ""}${result.outcome ? " -- " + result.outcome.slice(0, 50) : ""}`);
+    const goodLawTag =
+      goodLawResult.isGoodLaw === false
+        ? " [BAD LAW]"
+        : goodLawResult.isGoodLaw === true
+          ? " [GOOD LAW]"
+          : " [UNVERIFIED]";
+
+    console.log(` -> ${result.partySide}${result.isBinding ? " [BINDING]" : ""}${goodLawTag}${result.outcome ? " -- " + result.outcome.slice(0, 50) : ""}`);
     stats[result.partySide] = (stats[result.partySide] || 0) + 1;
+
+    if (goodLawResult.isGoodLaw === false) {
+      stats.badLaw = (stats.badLaw || 0) + 1;
+    } else if (goodLawResult.isGoodLaw === true) {
+      stats.goodLaw = (stats.goodLaw || 0) + 1;
+    } else {
+      stats.unverified = (stats.unverified || 0) + 1;
+    }
 
     if (!dryRun) {
       try {
+        // Build is_good_law SQL value: NULL if unknown, true/false if checked
+        const isGoodLawSql =
+          goodLawResult.isGoodLaw === null
+            ? "NULL"
+            : goodLawResult.isGoodLaw
+              ? "true"
+              : "false";
+
+        // Build verification URLs array — merge existing source_urls with
+        // all URLs checked during classification + negative treatment verification.
+        // Per hard rule: no verification URL = unverified = does not exist.
+        const verificationUrls = [];
+        // Add the cluster URL for the case itself
+        if (clId) verificationUrls.push(`https://www.courtlistener.com/api/rest/v4/clusters/${clId}/`);
+        // Add all URLs checked during negative treatment verification
+        if (goodLawResult.checkedUrls) {
+          for (const u of goodLawResult.checkedUrls) {
+            if (!verificationUrls.includes(u)) verificationUrls.push(u);
+          }
+        }
+
+        // Append new URLs to existing source_urls (don't overwrite)
+        const sourceUrlsSql = verificationUrls.length > 0
+          ? `source_urls = array_cat(COALESCE(source_urls, '{}'), ${escArray(verificationUrls)})`
+          : `source_urls = source_urls`;
+
         await supabaseQuery(
           `UPDATE statute_case_law SET
             party_side = ${esc(result.partySide)},
@@ -342,7 +500,11 @@ async function main() {
             holding_excerpt = ${esc(result.holdingExcerpt?.slice(0, 500) || null)},
             key_quote = ${esc(result.keyQuote?.slice(0, 500) || null)},
             is_binding = ${result.isBinding},
-            application = ${esc(result.application?.slice(0, 500) || null)}
+            application = ${esc(result.application?.slice(0, 500) || null)},
+            is_good_law = ${isGoodLawSql},
+            negative_treatment = ${esc(goodLawResult.treatment)},
+            negative_treatment_checked_at = now(),
+            ${sourceUrlsSql}
           WHERE id = ${esc(row.id)}`
         );
       } catch (err) {

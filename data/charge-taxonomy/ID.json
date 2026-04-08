@@ -1,0 +1,3095 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "18-8004",
+    "statute_title": "Driving Under the Influence",
+    "offense_class": "Misdemeanor (first/second); Felony (third within 10 years or two excessive BAC within 5 years)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second or excessive BAC first); 5 years (felony DUI)",
+    "fine_max": "$1,000 (first); $2,000 (second); $5,000 (felony)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle",
+      "On a highway, street, bridge, or public/private property open to the public",
+      "While under the influence of alcohol, drugs, or other intoxicating substances",
+      "Or while having a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": "None (first offense, BAC under .20); 10 days if BAC .20+ (first); 30 days (third offense felony)",
+    "enhancements": [
+      "Excessive BAC (.20 or higher): mandatory minimum 10 days, up to 1 year, $2,000 fine — I.C. § 18-8004C",
+      "Two excessive BAC DUIs within 5 years: automatic felony — I.C. § 18-8004C",
+      "Third offense within 10 years: felony — I.C. § 18-8005(6)",
+      "Minor under 16 in vehicle: additional penalties",
+      "Injury to another: felony — I.C. § 18-8006"
+    ],
+    "notes": "Idaho uses implied consent under I.C. § 18-8002. Administrative license suspension (ALS) is separate from criminal penalties. First 30 days of suspension are absolute; restricted permit with ignition interlock available after. Idaho has no per se drug limit — impairment must be proven."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "18-8004; 18-8005(1)",
+    "statute_title": "Driving Under the Influence — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle",
+      "On a highway or other place open to the public",
+      "While under the influence of alcohol, drugs, or intoxicating substances OR with a BAC of .08 or higher",
+      "No prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "None (standard first offense); 10 days if BAC .20 or higher (first 48 hours consecutive)",
+    "enhancements": [
+      "BAC .20 or higher (excessive): up to 1 year jail, $2,000 fine — I.C. § 18-8004C",
+      "Minor under 16 in vehicle"
+    ],
+    "notes": "License suspension 90-210 days. First 30 days absolute, then restricted driving privileges with ignition interlock device available. Substance abuse evaluation required."
+  },
+  {
+    "common_charge_slug": "dui-second-offense",
+    "statute_number": "18-8005(2)",
+    "statute_title": "Driving Under the Influence — Second Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "10 days",
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle while under the influence",
+      "One prior DUI conviction within 10 years"
+    ],
+    "mandatory_minimum": "10 days imprisonment (first 48 hours consecutive)",
+    "enhancements": [
+      "Two excessive BAC (.20+) DUIs within 5 years: automatic felony — I.C. § 18-8004C",
+      "BAC .20 or higher: enhanced penalties"
+    ],
+    "notes": "License suspension minimum 1 year. Ignition interlock device required upon reinstatement. Mandatory substance abuse treatment program."
+  },
+  {
+    "common_charge_slug": "dui-third-offense",
+    "statute_number": "18-8005(6)",
+    "statute_title": "Driving Under the Influence — Third or Subsequent Offense (Felony)",
+    "offense_class": "Felony",
+    "penalty_min": "30 days",
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle while under the influence",
+      "Two or more prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "30 days imprisonment",
+    "enhancements": [
+      "Additional prior convictions: enhanced sentencing",
+      "Injury to another: separate felony under I.C. § 18-8006"
+    ],
+    "notes": "License suspension minimum 1 year, up to 5 years. Felony DUI triggers mandatory ignition interlock for life upon license reinstatement. Court may order substance abuse treatment."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "18-8005(2)-(6)",
+    "statute_title": "Driving Under the Influence — Repeat Offense",
+    "offense_class": "Misdemeanor (second); Felony (third within 10 years)",
+    "penalty_min": "10 days (second); 30 days (third/felony)",
+    "penalty_max": "1 year (second); 5 years (third/felony)",
+    "fine_max": "$2,000 (second); $5,000 (third/felony)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle while under the influence",
+      "One or more prior DUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "10 days (second offense); 30 days (third offense)",
+    "enhancements": [
+      "Third offense within 10 years: felony — I.C. § 18-8005(6)",
+      "Two excessive BAC (.20+) within 5 years: felony — I.C. § 18-8004C",
+      "Injury to another: additional felony charge"
+    ],
+    "notes": "Idaho counts prior DUI convictions within a 10-year lookback period. License suspension escalates with each conviction. Ignition interlock required on reinstatement for repeat offenders."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "18-8004(1)(a)",
+    "statute_title": "Driving Under the Influence — Drugs",
+    "offense_class": "Misdemeanor (first offense); escalates same as alcohol DUI for repeat offenses",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); same escalation as alcohol DUI on subsequent offenses",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle",
+      "While under the influence of drugs or other intoxicating substances",
+      "Influence impaired defendant's ability to drive safely"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple substances combined",
+      "Prescription drugs taken outside prescribed manner",
+      "Prior DUI conviction of any type"
+    ],
+    "notes": "Idaho has no per se drug impairment limit. Prosecution must prove impairment through officer testimony, Drug Recognition Expert (DRE) evaluation, or toxicology results. Blood or urine testing used instead of breath test."
+  },
+  {
+    "common_charge_slug": "dui-felony-injury",
+    "statute_number": "18-8006",
+    "statute_title": "Aggravated DUI — Injury to Another",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle while under the influence",
+      "Defendant caused great bodily harm, permanent disability, or permanent disfigurement to another person"
+    ],
+    "mandatory_minimum": "30 days",
+    "enhancements": [
+      "Death resulting from DUI: vehicular manslaughter — I.C. § 18-4006(3)",
+      "Prior DUI convictions"
+    ],
+    "notes": "Aggravated DUI carries its own penalty separate from the underlying DUI charge. License suspension minimum 1 year, up to 5 years. Restitution to victims commonly ordered."
+  },
+  {
+    "common_charge_slug": "owi-minor-in-vehicle",
+    "statute_number": "18-8004; 18-1501",
+    "statute_title": "DUI With Minor Passenger",
+    "offense_class": "Misdemeanor (DUI) plus potential Misdemeanor or Felony (injury to child)",
+    "penalty_min": null,
+    "penalty_max": "6 months (DUI) plus up to 10 years (injury to child if applicable)",
+    "fine_max": "$1,000 (DUI); $10,000 (felony injury to child)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle while under the influence",
+      "A minor under 16 was present in the vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Injury to child: felony under I.C. § 18-1501",
+      "Prior DUI convictions"
+    ],
+    "notes": "Idaho does not have a standalone DUI-with-minor enhancement statute. The child's presence may result in additional charges under I.C. § 18-1501 (injury to children) if circumstances likely to produce great bodily harm or death. Prosecutors frequently file both DUI and child endangerment charges."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "49-1401",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second within 5 years)",
+    "fine_max": "$1,000 (first); $2,000 (second within 5 years)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "On a highway or public property open to the public",
+      "In a manner that was careless and heedless or without due caution",
+      "At a speed or in a manner likely to endanger any person or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense within 5 years: 1 year/$2,000",
+      "License suspension under I.C. § 49-326"
+    ],
+    "notes": "Reckless driving is in Title 49 (Motor Vehicles) rather than Title 18 (Crimes). Commonly used as a plea-down from DUI. License suspension is mandatory."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "18-8007",
+    "statute_title": "Leaving the Scene of an Accident",
+    "offense_class": "Misdemeanor (property damage only); Felony (injury or death)",
+    "penalty_min": null,
+    "penalty_max": "1 year (property damage); 5 years (injury/death)",
+    "fine_max": "$1,000 (property damage); $5,000 (injury/death)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in damage to property, injury, or death",
+      "Defendant failed to stop at or near the scene",
+      "Defendant failed to provide required information or render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Accident involving injury or death: felony",
+      "License revocation 1 year minimum for injury/death accident"
+    ],
+    "notes": "Driver must stop, provide name/address/license/registration/insurance, and render reasonable assistance to injured persons. License revocation for injury or death accident precludes any work permit or limited driving privileges."
+  },
+  {
+    "common_charge_slug": "hit-run-injury",
+    "statute_number": "18-8007",
+    "statute_title": "Leaving the Scene of an Accident Involving Injury or Death",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in bodily injury or death to another person",
+      "Defendant failed to stop and render aid or provide information"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death resulting: potential additional homicide charges"
+    ],
+    "notes": "License revocation minimum 1 year. No work permit or limited driving privileges allowed during revocation period."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "18-4006(3)",
+    "statute_title": "Vehicular Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "Operation of the vehicle was a significant cause contributing to the death of another person",
+      "Death occurred because of the commission of an unlawful act not amounting to a felony",
+      "Defendant acted with gross negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI involvement: separate felony DUI charge — I.C. § 18-8004",
+      "Prior DUI convictions"
+    ],
+    "notes": "Idaho distinguishes vehicular manslaughter (I.C. § 18-4006(3)) from voluntary and involuntary manslaughter. The unlawful act must not amount to a felony, and gross negligence in operating the vehicle must be shown."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "18-4006(3)",
+    "statute_title": "Vehicular Manslaughter (Idaho Term)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "Operation was a significant cause contributing to death",
+      "Death resulted from commission of an unlawful act with gross negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI involvement: potential murder charges under depraved mind theory",
+      "Prior DUI convictions: may elevate to second-degree murder"
+    ],
+    "notes": "Idaho does not have a separate 'vehicular homicide' statute. Deaths caused by vehicle are charged as vehicular manslaughter under I.C. § 18-4006(3), or as murder/manslaughter under standard homicide statutes depending on mental state. DUI-related deaths may be charged as second-degree murder."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "18-8001",
+    "statute_title": "Driving Without Privileges",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months (first/second); 1 year (third within 5 years)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a motor vehicle",
+      "On Idaho highways",
+      "With knowledge that driver's license, driving privileges, or permit to drive was revoked, disqualified, or suspended"
+    ],
+    "mandatory_minimum": "2 days (second offense); 10 days (third within 5 years)",
+    "enhancements": [
+      "Second offense: mandatory 2 days jail — I.C. § 18-8001(3)",
+      "Third or more within 5 years: mandatory 10 days jail — I.C. § 18-8001(4)"
+    ],
+    "notes": "Idaho uses the term 'Driving Without Privileges' rather than 'Driving on Suspended License.' Knowledge of the suspension is an element of the offense. Additional license suspension of 1 year on first conviction."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "49-1404",
+    "statute_title": "Fleeing or Attempting to Elude a Peace Officer",
+    "offense_class": "Misdemeanor (basic); Felony (aggravating factors)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $50,000 (felony)",
+    "elements": [
+      "Defendant was driving a motor vehicle",
+      "A peace officer gave a visual or audible signal to stop",
+      "Defendant willfully fled or attempted to elude the pursuing police vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Traveling 30+ mph over posted speed limit: felony",
+      "Causing damage to property or bodily injury: felony",
+      "Driving in a manner endangering persons or property: felony",
+      "Leaving the state: felony"
+    ],
+    "notes": "Felony eluding carries license suspension 1-3 years with absolutely no driving privileges of any kind. The signal from the peace officer may be by emergency lights or siren."
+  },
+  {
+    "common_charge_slug": "racing-speed-contest",
+    "statute_number": "49-1401; 49-1402",
+    "statute_title": "Speed Contest / Racing on Highway",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated a motor vehicle on a public highway",
+      "Defendant engaged in a race, speed contest, or drag race with another vehicle",
+      "Or defendant facilitated or aided such a contest"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Injury to another: potential felony charges",
+      "Reckless driving enhancement — I.C. § 49-1401"
+    ],
+    "notes": "Idaho addresses racing under general reckless driving and traffic violation statutes. No standalone racing statute exists — prosecuted under reckless driving (I.C. § 49-1401) or exhibition of speed provisions."
+  },
+  {
+    "common_charge_slug": "open-container",
+    "statute_number": "23-505",
+    "statute_title": "Open Container in Motor Vehicle",
+    "offense_class": "Infraction",
+    "penalty_min": null,
+    "penalty_max": "None (civil penalty only)",
+    "fine_max": "$300",
+    "elements": [
+      "An open container of an alcoholic beverage was present in a motor vehicle",
+      "The container was in the passenger area of the vehicle",
+      "The vehicle was on a public highway or right-of-way"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Idaho's open container law is found in Title 23 (Alcoholic Beverages). It is an infraction, not a criminal offense. The penalty is a fine only — no jail time or criminal record. Does not apply to passengers in certain commercial vehicles."
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "statute_number": "18-8002",
+    "statute_title": "Tests for Alcohol Concentration and Presence of Drugs — Implied Consent",
+    "offense_class": "Civil/Administrative (first refusal); Misdemeanor (second refusal within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "Administrative license suspension only (first); 1 year (second refusal misdemeanor)",
+    "fine_max": "None (first); $1,000 (second refusal)",
+    "elements": [
+      "Defendant was lawfully arrested for DUI or had reasonable grounds for testing",
+      "Officer requested defendant submit to evidentiary testing",
+      "Defendant refused to submit to testing"
+    ],
+    "mandatory_minimum": "180-day license suspension (first refusal); 1-year suspension (second refusal within 10 years)",
+    "enhancements": [
+      "Second refusal within 10 years: misdemeanor criminal charge",
+      "Refusal is admissible as evidence at DUI trial"
+    ],
+    "notes": "Idaho implied consent law under I.C. § 18-8002. First refusal is administrative only (license suspension). A second refusal within 10 years becomes a misdemeanor. Refusal to submit to testing may be used as evidence of consciousness of guilt at trial."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "37-2732(c)",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Felony (Schedule I narcotics, Schedule II); Misdemeanor (non-narcotic Schedule I except LSD, Schedules III-VI)",
+    "penalty_min": null,
+    "penalty_max": "7 years (Schedule I narcotic/Schedule II); 3 years (LSD); 1 year (non-narcotic Schedule I, Schedules III-VI)",
+    "fine_max": "$15,000 (Schedule I narcotic/Schedule II); $5,000 (LSD); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "The substance is listed in the Idaho Uniform Controlled Substances schedules",
+      "Defendant did not have a valid prescription or other lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession with intent to deliver: felony with enhanced penalties — I.C. § 37-2732(a)",
+      "Proximity to school or park: enhanced penalties",
+      "Prior drug convictions"
+    ],
+    "notes": "Idaho classifies controlled substances into Schedules I through VI under I.C. § 37-2705 through 37-2713. Possession of Schedule I narcotics (heroin, etc.) or Schedule II substances is always a felony. Non-narcotic Schedule I (except LSD), III, IV, V, and VI possession is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "37-2732(c)(3)",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Misdemeanor (3 oz or less); Felony (more than 3 oz)",
+    "penalty_min": null,
+    "penalty_max": "1 year (3 oz or less); 5 years (more than 3 oz)",
+    "fine_max": "$1,000 (3 oz or less); $10,000 (more than 3 oz)",
+    "elements": [
+      "Defendant possessed marijuana",
+      "Defendant did not have lawful authority for possession"
+    ],
+    "mandatory_minimum": "$300 mandatory minimum fine (3 oz or less, age 18+)",
+    "enhancements": [
+      "More than 3 ounces: felony — I.C. § 37-2732(c)(2)",
+      "Delivery or possession with intent to deliver: felony — I.C. § 37-2732(a)",
+      "Cultivation/manufacturing: felony — I.C. § 37-2732(b)"
+    ],
+    "notes": "Idaho has NOT legalized recreational or medical marijuana. Marijuana is classified as a Schedule I controlled substance. Possession of 3 ounces or less is a misdemeanor with a mandatory minimum $300 fine for adults 18+. Idaho remains one of the strictest states for marijuana possession."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "37-2732(c)(1)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant possessed cocaine (a Schedule II controlled substance)",
+      "Defendant did not have a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession with intent to deliver: up to life imprisonment, $25,000 fine — I.C. § 37-2732(a)",
+      "Drug trafficking quantities: mandatory minimum sentences — I.C. § 37-2732B"
+    ],
+    "notes": "Cocaine is a Schedule II controlled substance in Idaho. Any amount of possession is a felony. Trafficking thresholds (28 grams+) trigger mandatory minimum sentences under the trafficking statute."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "37-2732(c)(1)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant possessed methamphetamine (a Schedule II controlled substance)",
+      "Defendant did not have lawful authority for possession"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession with intent to deliver: up to life imprisonment, $25,000 fine",
+      "Trafficking quantities (28 grams+): mandatory minimum 1 year, $10,000 fine — I.C. § 37-2732B",
+      "Manufacturing: additional felony charges — I.C. § 37-2732(b)"
+    ],
+    "notes": "Methamphetamine is a Schedule II controlled substance. Idaho has specific trafficking thresholds: 28g+ triggers mandatory minimums. Manufacturing meth carries additional penalties and potential environmental cleanup liability."
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "37-2732(c)(1)",
+    "statute_title": "Possession of Opioids (Heroin, Fentanyl)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant possessed heroin (Schedule I narcotic), fentanyl (Schedule II), or other opioids",
+      "Defendant did not have a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession with intent to deliver: up to life imprisonment",
+      "Trafficking quantities: mandatory minimum sentences — I.C. § 37-2732B",
+      "Death resulting from distribution: potential homicide charges"
+    ],
+    "notes": "Heroin is a Schedule I narcotic; fentanyl and most prescription opioids are Schedule II. Any possession without a valid prescription is a felony. Idaho has seen increased fentanyl-related prosecutions with trafficking charges at lower weight thresholds."
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "statute_number": "37-2732(c)",
+    "statute_title": "Possession of Prescription Drugs Without Valid Prescription",
+    "offense_class": "Misdemeanor (Schedule III-VI); Felony (Schedule II)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Schedule III-VI misdemeanor); 7 years (Schedule II felony)",
+    "fine_max": "$1,000 (misdemeanor); $15,000 (felony)",
+    "elements": [
+      "Defendant possessed a prescription-controlled substance",
+      "Defendant did not have a valid prescription from a licensed practitioner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession with intent to distribute",
+      "Obtaining by fraud: additional charges under I.C. § 37-2734(a)"
+    ],
+    "notes": "Classification depends on the drug schedule. Schedule II drugs (oxycodone, hydrocodone, etc.) are felonies. Schedule III-VI drugs are misdemeanors. Prescription fraud is a separate offense under I.C. § 37-2734."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "37-2732B",
+    "statute_title": "Trafficking in Controlled Substances",
+    "offense_class": "Felony",
+    "penalty_min": "1 year (lowest threshold)",
+    "penalty_max": "Life imprisonment",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly possessed, delivered, manufactured, or brought into the state",
+      "A controlled substance in a quantity meeting or exceeding trafficking thresholds"
+    ],
+    "mandatory_minimum": "1 year and $10,000 fine (lowest threshold); escalates with quantity",
+    "enhancements": [
+      "Higher quantities: escalating mandatory minimums",
+      "Marijuana 25+ lbs: 5 years mandatory, $50,000 fine",
+      "Cocaine/meth 200+ grams: 10 years mandatory, $50,000 fine",
+      "Heroin 7+ grams: 10 years mandatory, $50,000 fine"
+    ],
+    "notes": "Idaho has some of the harshest drug trafficking mandatory minimums in the nation. Trafficking thresholds: marijuana (1 lb+), cocaine/meth (28g+), heroin (2g+). Judge cannot impose less than mandatory minimum. No parole eligibility during mandatory minimum period."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "37-2732(a)",
+    "statute_title": "Delivery or Distribution of a Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (Schedule I narcotic/Schedule II); 5 years (non-narcotic Schedule I, Schedule III)",
+    "fine_max": "$25,000 (Schedule I narcotic/Schedule II); $15,000 (non-narcotic Schedule I, Schedule III)",
+    "elements": [
+      "Defendant delivered or distributed a controlled substance",
+      "Or possessed a controlled substance with intent to deliver",
+      "Delivery was not authorized by a valid prescription or lawful purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery to a minor: enhanced penalties",
+      "Within 1,000 feet of school: enhanced penalties",
+      "Trafficking quantities: mandatory minimums under I.C. § 37-2732B"
+    ],
+    "notes": "Delivery of Schedule I narcotics or Schedule II substances carries a maximum of life imprisonment. The statute covers sale, delivery, and possession with intent to deliver."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "37-2732(b)",
+    "statute_title": "Manufacturing a Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (Schedule I narcotic/Schedule II); 5 years (non-narcotic Schedule I, Schedule III)",
+    "fine_max": "$25,000 (Schedule I narcotic/Schedule II); $15,000 (non-narcotic Schedule I, Schedule III)",
+    "elements": [
+      "Defendant manufactured, compounded, converted, produced, or processed a controlled substance",
+      "Manufacturing was not authorized by law"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Meth lab endangering children: additional charges under I.C. § 37-2737A",
+      "Environmental contamination: cleanup liability",
+      "Trafficking quantities: mandatory minimums"
+    ],
+    "notes": "Manufacturing methamphetamine is heavily prosecuted in Idaho. Clandestine lab operations carry additional charges for child endangerment if minors are present and environmental cleanup costs."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "37-2734A",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant used or possessed with intent to use drug paraphernalia",
+      "Paraphernalia was intended to plant, propagate, cultivate, grow, manufacture, prepare, test, analyze, inject, ingest, inhale, or introduce a controlled substance into the body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia: up to 9 years, $30,000 fine",
+      "Delivery of paraphernalia to a minor (3+ years younger): felony up to 9 years, $30,000 fine"
+    ],
+    "notes": "Possession of paraphernalia is a misdemeanor, but delivery/sale of paraphernalia is a felony. Common paraphernalia includes pipes, bongs, syringes (when used for drug purposes), and rolling papers."
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "statute_number": "37-2734(a)",
+    "statute_title": "Obtaining Controlled Substance by Fraud",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "4 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant obtained or attempted to obtain a controlled substance by fraud, deceit, misrepresentation, or subterfuge",
+      "Or defendant used a false name or gave false address in obtaining a prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple prescriptions from different providers ('doctor shopping')",
+      "Forging a prescription: additional forgery charges"
+    ],
+    "notes": "Covers prescription fraud, doctor shopping, and obtaining controlled substances through misrepresentation. Separate from general fraud statutes."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "37-2732(a)",
+    "statute_title": "Possession With Intent to Deliver a Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (Schedule I narcotic/Schedule II); 5 years (non-narcotic Schedule I, Schedule III)",
+    "fine_max": "$25,000 (Schedule I narcotic/Schedule II); $15,000 (non-narcotic Schedule I, Schedule III)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "Defendant intended to deliver or distribute the substance",
+      "Intent may be inferred from quantity, packaging, scales, cash, or other indicia"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery to a minor",
+      "Within 1,000 feet of school",
+      "Trafficking quantities trigger mandatory minimums"
+    ],
+    "notes": "Intent to deliver is typically inferred from circumstantial evidence: quantity exceeding personal use, packaging materials, scales, large amounts of cash, multiple phones, pay/owe sheets. Same penalty structure as delivery/distribution."
+  },
+  {
+    "common_charge_slug": "drug-conspiracy",
+    "statute_number": "37-2732(a); 18-1701",
+    "statute_title": "Drug Conspiracy",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Same as the underlying drug offense",
+    "fine_max": "Same as the underlying drug offense",
+    "elements": [
+      "Defendant agreed with one or more persons to commit a drug offense",
+      "At least one overt act was committed in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Conspiracy to traffic: subject to trafficking mandatory minimums",
+      "Multiple co-conspirators: potential RICO charges"
+    ],
+    "notes": "Idaho's conspiracy statute (I.C. § 18-1701) applies to drug offenses. Penalties mirror the underlying substantive drug offense. All members of a conspiracy are liable for foreseeable acts of co-conspirators."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "18-4003(a)",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Felony (Capital)",
+    "penalty_min": "10 years",
+    "penalty_max": "Death or life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully killed a human being",
+      "With malice aforethought",
+      "The killing was willful, deliberate, and premeditated",
+      "Or perpetrated by means of poison, lying in wait, or torture"
+    ],
+    "mandatory_minimum": "Fixed term of not less than 10 years",
+    "enhancements": [
+      "Killing of a peace officer, judicial officer, firefighter, or prosecutor: automatic first degree — I.C. § 18-4003(b)",
+      "Felony murder: killing during commission of arson, rape, robbery, burglary, kidnapping, or mayhem — I.C. § 18-4003(d)",
+      "Death penalty aggravators under I.C. § 19-2515"
+    ],
+    "notes": "Idaho retains the death penalty. First-degree murder includes premeditated killing, felony murder (during enumerated felonies), and killing of certain officials. Prosecution must prove premeditation, which can be formed in an instant. Felony murder does not require intent to kill."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "18-4003",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully killed a human being",
+      "With malice aforethought",
+      "The killing was not premeditated or deliberate (or does not qualify as first degree)"
+    ],
+    "mandatory_minimum": "Fixed term of not less than 10 years",
+    "enhancements": [
+      "Use of a firearm during commission",
+      "Prior violent felony convictions"
+    ],
+    "notes": "All murder that is not first degree is second degree in Idaho. Second-degree murder requires malice (express or implied) but not premeditation. Commonly charged in cases involving extreme recklessness or depraved indifference to human life. Includes DUI deaths where defendant had prior DUI convictions."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "18-4006(1)",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant unlawfully killed a human being",
+      "Without malice",
+      "Upon a sudden quarrel or heat of passion",
+      "There was legally adequate provocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Prior violent felony convictions"
+    ],
+    "notes": "Voluntary manslaughter is the intentional killing without malice, typically in the heat of passion after adequate provocation. The provocation must be such that a reasonable person would have been provoked. Cooling-off period negates the heat-of-passion defense."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "18-4006(2)",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully killed a human being",
+      "Without malice",
+      "During the perpetration of an unlawful act not amounting to a felony",
+      "Or in the commission of a lawful act without due caution and circumspection",
+      "Or in reckless, careless, or negligent operation of a firearm or deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm or deadly weapon",
+      "Reckless conduct in the presence of others"
+    ],
+    "notes": "Involuntary manslaughter covers unintentional killings resulting from criminal negligence or during commission of a non-felony unlawful act. Distinguished from vehicular manslaughter (I.C. § 18-4006(3)) when a motor vehicle is the instrumentality."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "18-306; 18-4003",
+    "statute_title": "Attempted Murder",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (attempted first degree); 15 years (attempted second degree)",
+    "fine_max": null,
+    "elements": [
+      "Defendant intended to kill another person",
+      "Defendant took a direct but ineffectual act toward committing murder",
+      "The act went beyond mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Attempted murder of a law enforcement officer"
+    ],
+    "notes": "Under I.C. § 18-306, attempted first-degree murder carries a maximum of life imprisonment. Attempted second-degree murder is punishable by up to 15 years. Specific intent to kill must be proven for attempted murder — recklessness is insufficient."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "18-905",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant committed an assault",
+      "With a deadly weapon or instrument without intent to kill",
+      "Or by any means or force likely to produce great bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Assault on certain persons (officers, teachers, health workers): enhanced penalties — I.C. § 18-915",
+      "Use of a firearm",
+      "Gang-related: enhancement under I.C. § 18-8502"
+    ],
+    "notes": "Aggravated assault includes assault with a deadly weapon (even if unloaded or defective), assault by means likely to produce great bodily harm, or assault with vitriol, corrosive acid, or caustic chemical. Distinguished from simple assault (misdemeanor under I.C. § 18-901)."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "18-901",
+    "statute_title": "Assault",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed an unlawful attempt, coupled with apparent ability, to commit a violent injury on the person of another",
+      "Or defendant committed an intentional, unlawful threat by word or act to do violence to the person of another, coupled with an apparent ability to carry out the threat, creating a well-founded fear in the other person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Assault on certain persons (officers, teachers, health workers): felony under I.C. § 18-915",
+      "Use of a deadly weapon: aggravated assault — I.C. § 18-905"
+    ],
+    "notes": "Simple assault in Idaho is a misdemeanor punishable by up to 3 months in jail. Idaho defines assault (I.C. § 18-901) separately from battery (I.C. § 18-903). No physical contact is required — only the threat or attempt with apparent ability."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "18-903",
+    "statute_title": "Battery",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months; 1 year if victim is pregnant and defendant knew",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant willfully and unlawfully used force or violence upon the person of another",
+      "Or actually, intentionally, and unlawfully touched or struck another person against their will",
+      "Or unlawfully and intentionally caused bodily harm to another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is pregnant and defendant knew: up to 1 year jail",
+      "Battery on certain persons: felony — I.C. § 18-915",
+      "Aggravating circumstances: aggravated battery — I.C. § 18-907"
+    ],
+    "notes": "Battery is the actual physical contact; assault is the threat or attempt. Battery on a known pregnant victim doubles the maximum jail time to 1 year. Battery on officers, teachers, or health workers is a felony under I.C. § 18-915."
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "statute_number": "18-907",
+    "statute_title": "Aggravated Battery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed a battery",
+      "And caused great bodily harm, permanent disability, or permanent disfigurement",
+      "Or used a deadly weapon or instrument",
+      "Or used any vitriol, corrosive acid, or caustic chemical",
+      "Or committed battery by means of poison or other noxious or destructive substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm: additional enhancement",
+      "Gang-related: enhancement under I.C. § 18-8502",
+      "Battery on certain protected persons: enhanced penalties"
+    ],
+    "notes": "Aggravated battery under I.C. § 18-907 is punishable by up to 15 years in state prison. No fine specified in the statute — the general felony fine of up to $50,000 may apply. Great bodily harm means serious physical injury."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "18-905",
+    "statute_title": "Assault With a Deadly Weapon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant committed an assault",
+      "With a deadly weapon or instrument, including any firearm (even if unloaded or defective)",
+      "Without intent to kill"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Intent to kill: attempted murder charges instead",
+      "Victim is a law enforcement officer: enhanced under I.C. § 18-915"
+    ],
+    "notes": "Assault with a deadly weapon is covered under the aggravated assault statute (I.C. § 18-905). A 'deadly weapon' includes any firearm, even if unloaded or so defective it cannot be fired. If intent to kill is present, the charge escalates to attempted murder."
+  },
+  {
+    "common_charge_slug": "assault-firearm",
+    "statute_number": "18-905",
+    "statute_title": "Assault With a Firearm",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant committed an assault using a firearm",
+      "The firearm need not be loaded or functional",
+      "Without intent to kill"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Discharge of the firearm: potential additional charges",
+      "Victim is a law enforcement officer: I.C. § 18-915",
+      "Intent to kill: attempted murder"
+    ],
+    "notes": "Covered under the general aggravated assault statute I.C. § 18-905. Idaho specifically includes firearms — even unloaded or defective — as deadly weapons in the aggravated assault definition."
+  },
+  {
+    "common_charge_slug": "assault-police-officer",
+    "statute_number": "18-915",
+    "statute_title": "Assault or Battery Upon Certain Personnel",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant committed an assault or battery",
+      "Upon a law enforcement officer, firefighter, emergency medical personnel, school employee, judge, prosecutor, or other protected person",
+      "The victim was acting in the lawful discharge of official duties",
+      "Defendant knew or should have known the victim was such a person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon: additional charges under I.C. § 18-905 or 18-907",
+      "Causing great bodily harm: aggravated battery"
+    ],
+    "notes": "Idaho has a specific statute (I.C. § 18-915) elevating assault or battery on protected personnel to a felony. Protected persons include law enforcement, firefighters, EMTs, school employees, judges, and prosecutors."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "18-6501",
+    "statute_title": "Robbery",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant feloniously took personal property",
+      "Property was in the possession of another person",
+      "Property was taken from the person or immediate presence of another",
+      "Against the will of the victim",
+      "Accomplished by means of force or fear"
+    ],
+    "mandatory_minimum": "5 years imprisonment",
+    "enhancements": [
+      "Use of a deadly weapon: armed robbery potential",
+      "Use of a firearm: sentencing enhancement",
+      "Great bodily injury to victim"
+    ],
+    "notes": "Robbery in Idaho carries a minimum of 5 years to life imprisonment under I.C. § 18-6503. Idaho does not have a separate 'armed robbery' statute — use of a weapon is a sentencing factor. The 'fear' element includes fear of injury to the person, their property, or anyone in their company."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "18-6501; 18-6503",
+    "statute_title": "Robbery (Armed)",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed robbery as defined in I.C. § 18-6501",
+      "Defendant was armed with a deadly weapon during the commission of the robbery"
+    ],
+    "mandatory_minimum": "5 years imprisonment",
+    "enhancements": [
+      "Firearm enhancement",
+      "Great bodily injury to victim",
+      "Multiple victims"
+    ],
+    "notes": "Idaho does not have a separate armed robbery statute. Armed robbery is charged under the general robbery statute (I.C. § 18-6501) with weapon use as an aggravating factor at sentencing. The penalty range (5 years to life) is the same as unarmed robbery, but judges typically impose higher sentences when weapons are involved."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "18-4501",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony",
+    "penalty_min": "1 year (second degree)",
+    "penalty_max": "Death or life imprisonment (first degree); 25 years (second degree)",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully seized, confined, inveigled, decoyed, kidnapped, abducted, or carried away another person",
+      "By any means whatsoever",
+      "With intent to cause the victim to be confined or imprisoned against their will",
+      "For first degree: with intent to obtain ransom, extort, commit robbery, commit lewd acts, inflict bodily harm, or facilitate a felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Kidnapping a child under 16: first-degree kidnapping",
+      "Kidnapping for ransom or extortion: first-degree",
+      "Rape or sexual assault during kidnapping: first-degree"
+    ],
+    "notes": "Idaho distinguishes first-degree kidnapping (I.C. § 18-4502, punishable by death or life) from second-degree kidnapping (I.C. § 18-4503, punishable by 1-25 years). First-degree involves specific aggravating intents. Parental kidnapping has separate provisions."
+  },
+  {
+    "common_charge_slug": "unlawful-imprisonment",
+    "statute_number": "18-2901",
+    "statute_title": "False Imprisonment",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant unlawfully violated the personal liberty of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "If force or threat used: potential felony charges",
+      "If victim is a minor: enhanced penalties"
+    ],
+    "notes": "Idaho uses the term 'false imprisonment' (I.C. § 18-2901) rather than 'unlawful imprisonment.' It is generally a misdemeanor but can escalate depending on circumstances. Distinguished from kidnapping by the absence of movement or specific criminal intent."
+  },
+  {
+    "common_charge_slug": "carjacking",
+    "statute_number": "18-6501",
+    "statute_title": "Robbery (Vehicle Taking by Force)",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant took a motor vehicle from the person or immediate presence of the victim",
+      "By means of force or fear",
+      "Against the will of the victim"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Use of a firearm or deadly weapon",
+      "Great bodily injury to victim",
+      "Multiple victims"
+    ],
+    "notes": "Idaho does not have a standalone carjacking statute. Vehicle takings by force are prosecuted as robbery under I.C. § 18-6501 with the same penalty range of 5 years to life."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "18-802 through 18-805",
+    "statute_title": "Arson",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "25 years (first degree); 15 years (second degree); 10 years (third degree)",
+    "fine_max": "$100,000 (first degree); $75,000 (second degree); $50,000 (third degree)",
+    "elements": [
+      "Defendant willfully and unlawfully set fire to or burned, or caused to be burned",
+      "Any structure, forest land, or property",
+      "First degree: occupied structure or causing bodily harm",
+      "Second degree: unoccupied structure",
+      "Third degree: personal property valued over $1,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "First degree (occupied structure or bodily injury): up to 25 years, $100,000 — I.C. § 18-805",
+      "Arson resulting in death: potential murder charges under felony murder rule",
+      "Insurance fraud motivation: additional charges"
+    ],
+    "notes": "Idaho has three degrees of arson. First degree involves occupied structures or bodily harm. Second degree involves unoccupied structures. Third degree involves personal property over $1,000. Arson is an enumerated felony for felony murder purposes."
+  },
+  {
+    "common_charge_slug": "home-invasion",
+    "statute_number": "18-1401",
+    "statute_title": "Burglary (Occupied Dwelling)",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered an occupied dwelling",
+      "With intent to commit theft or any felony therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon: additional charges",
+      "Assault or battery during entry: aggravated charges",
+      "Victim present: aggravating factor at sentencing"
+    ],
+    "notes": "Idaho does not have a separate home invasion statute. Burglary of an occupied dwelling is prosecuted under the general burglary statute (I.C. § 18-1401). Entry of an inhabited dwelling is an aggravating factor considered at sentencing."
+  },
+  {
+    "common_charge_slug": "extortion",
+    "statute_number": "18-2403(2)(e); 18-2408",
+    "statute_title": "Theft by Extortion",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "14 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant obtained property of another by threatening to inflict bodily injury, accuse of crime, expose secrets, take or withhold official action, or bring about a strike",
+      "The threat compelled the victim to surrender property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threats involving violence: potential additional charges",
+      "Public official involvement: enhanced penalties"
+    ],
+    "notes": "Idaho treats extortion as a form of theft under I.C. § 18-2403(2)(e). If the property value exceeds $1,000, it is grand theft (felony). Blackmail and extortion are prosecuted under the theft statutes rather than a standalone extortion law."
+  },
+  {
+    "common_charge_slug": "terroristic-threats",
+    "statute_number": "18-901(b); 18-905",
+    "statute_title": "Criminal Threat / Terroristic Threat",
+    "offense_class": "Misdemeanor (simple threat); Felony (aggravated or with deadly weapon)",
+    "penalty_min": null,
+    "penalty_max": "3 months (simple threat); 5 years (aggravated)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant made an intentional, unlawful threat by word or act to do violence",
+      "Defendant had apparent ability to carry out the threat",
+      "The threat created a well-founded fear in the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon: aggravated assault — I.C. § 18-905",
+      "Threat directed at school, government building, or public gathering: potential federal charges"
+    ],
+    "notes": "Idaho does not have a standalone 'terroristic threats' statute. Threats are prosecuted under assault (I.C. § 18-901), aggravated assault (I.C. § 18-905), or telephone harassment statutes. Bomb threats are prosecuted under I.C. § 18-3302."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "18-2403",
+    "statute_title": "Theft",
+    "offense_class": "Misdemeanor (petit theft, under $1,000); Felony (grand theft, $1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (petit theft); 14 years (grand theft)",
+    "fine_max": "$1,000 (petit theft); $5,000 (grand theft)",
+    "elements": [
+      "Defendant wrongfully took, obtained, or withheld property from an owner",
+      "With intent to deprive the owner of the property",
+      "Or with intent to appropriate the property to themselves or a third person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,000: grand theft (felony) — I.C. § 18-2407",
+      "Theft of a firearm: grand theft regardless of value",
+      "Theft from the person: grand theft regardless of value",
+      "Theft of livestock: grand theft regardless of value"
+    ],
+    "notes": "Idaho's felony theft threshold is $1,000 — one of the lowest in the nation. Grand theft is also triggered regardless of value for certain property types: firearms, livestock taken from the range, property taken from the person, and public records. Idaho consolidated theft statutes under I.C. § 18-2403."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "18-2407(1)",
+    "statute_title": "Grand Theft",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "14 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant committed theft as defined in I.C. § 18-2403",
+      "Value of property taken exceeds $1,000",
+      "Or the property is a firearm, livestock from the range, or was taken from the person of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft of a motor vehicle: separate charge under I.C. § 49-228",
+      "Pattern of theft activity: organized retail theft"
+    ],
+    "notes": "Grand theft threshold in Idaho is $1,000. Felony punishable by 1-14 years in state prison and/or up to $5,000 fine. Certain property types (firearms, livestock, property from the person, public records) qualify as grand theft regardless of value."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "18-2407(2)",
+    "statute_title": "Petit Theft",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant committed theft as defined in I.C. § 18-2403",
+      "Value of property taken is under $1,000",
+      "Property does not fall into grand theft categories"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second petit theft conviction: potential enhanced misdemeanor",
+      "Value approaching $1,000: close to felony threshold"
+    ],
+    "notes": "Idaho uses the term 'petit theft' (not 'petty theft'). Misdemeanor punishable by up to 1 year in county jail and/or $1,000 fine. The $1,000 threshold is one of the lowest felony thresholds in the United States."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "18-4624",
+    "statute_title": "Shoplifting — Taken or Converted Merchandise as Theft",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 14 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant altered, transferred, or removed a label, price tag, or marking on merchandise",
+      "From a retail mercantile establishment",
+      "With intent to purchase at less than retail price",
+      "Or defendant concealed merchandise with intent to deprive the merchant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,000: grand theft (felony)",
+      "Organized retail theft: enhanced penalties",
+      "Use of device to defeat anti-theft measures"
+    ],
+    "notes": "Shoplifting in Idaho is covered by I.C. § 18-4624 (price tag alteration) and prosecuted as theft under the general theft statute. Civil liability to the merchant is also available under I.C. § 48-703 (up to $300 or 3x damages)."
+  },
+  {
+    "common_charge_slug": "retail-fraud",
+    "statute_number": "18-4624; 18-2403",
+    "statute_title": "Retail Fraud / Organized Retail Theft",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 14 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant committed theft from a retail establishment",
+      "By price tag switching, concealment, or fraudulent return"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized scheme involving multiple thefts",
+      "Value aggregation over multiple incidents"
+    ],
+    "notes": "Idaho prosecutes retail fraud under general theft and shoplifting statutes. No standalone organized retail theft statute exists, but aggregate value across incidents can elevate charges to grand theft."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "18-1401",
+    "statute_title": "Burglary",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered a house, room, apartment, tenement, store, shop, warehouse, mill, barn, stable, outhouse, building, tent, vessel, vehicle, trailer, airplane, or railroad car",
+      "With intent to commit theft or any felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied dwelling: aggravating factor at sentencing",
+      "Nighttime entry: considered aggravating",
+      "Armed during entry: additional weapons charges"
+    ],
+    "notes": "Idaho has a single burglary statute (I.C. § 18-1401) — no degree system. Punishable by 1-10 years under I.C. § 18-1403. Intent must exist at the time of entry. Unlike many states, Idaho burglary covers virtually any structure, including vehicles and railroad cars."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "18-1401",
+    "statute_title": "Burglary — Residential",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered a house, room, or apartment",
+      "With intent to commit theft or any felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied at the time: aggravating sentencing factor",
+      "Violence during entry: additional assault/battery charges"
+    ],
+    "notes": "Idaho does not distinguish residential from commercial burglary in statute — both fall under I.C. § 18-1401 with the same 1-10 year penalty range. However, residential burglary is treated as more serious at sentencing and is an enumerated felony under the felony murder rule."
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "statute_number": "18-1401",
+    "statute_title": "Burglary — Commercial",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered a store, shop, warehouse, mill, or commercial building",
+      "With intent to commit theft or any felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "After-hours entry: commonly charged factor",
+      "Security system bypass: evidence of premeditation"
+    ],
+    "notes": "Same statute and penalty range as residential burglary (I.C. § 18-1401). Commercial burglary typically involves entry into closed businesses with intent to steal. Idaho does not have a 'shoplifting by entry' statute — unlawful entry with intent to steal from a store is burglary."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "18-2403; 49-228",
+    "statute_title": "Motor Vehicle Theft",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "14 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant wrongfully took or withheld a motor vehicle from the owner",
+      "With intent to deprive the owner of the vehicle",
+      "Or with intent to temporarily appropriate the vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple vehicle thefts: pattern of criminal activity",
+      "Theft for use in another crime: additional charges"
+    ],
+    "notes": "Motor vehicle theft is prosecuted as grand theft under I.C. § 18-2407 since vehicles typically exceed the $1,000 threshold. Idaho also has I.C. § 49-228 covering vehicle registration fraud. Joyriding may be charged as a lesser offense."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "18-2403(4); 18-2408",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 14 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing that the property had been stolen",
+      "With intent to deprive the owner thereof"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,000: grand theft (felony)",
+      "Dealing in stolen property as business"
+    ],
+    "notes": "Idaho treats receiving stolen property as a form of theft under I.C. § 18-2403(4). Same penalty structure as other theft — petit (misdemeanor) or grand (felony) based on value or property type."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "18-7001",
+    "statute_title": "Malicious Injury to Property",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant maliciously injured or destroyed real or personal property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage over $1,000: felony",
+      "Damage to public property or infrastructure: potential enhanced penalties",
+      "Hate crime motivation: enhancement under I.C. § 18-7902"
+    ],
+    "notes": "Idaho uses 'malicious injury to property' rather than 'vandalism' or 'criminal mischief.' The $1,000 damage threshold determines felony versus misdemeanor. Restitution is commonly ordered. Graffiti offenses are included."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "18-7001",
+    "statute_title": "Malicious Injury to Property",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant maliciously injured or destroyed property belonging to another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage exceeding $1,000: felony — I.C. § 18-7001",
+      "Damage to critical infrastructure"
+    ],
+    "notes": "Idaho does not have a separate 'criminal mischief' statute. Property destruction is charged under I.C. § 18-7001 (malicious injury to property). Same statute as vandalism."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "18-7008",
+    "statute_title": "Trespass",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant entered the real property of another",
+      "After being forbidden to enter by the owner or authorized agent",
+      "Or remained on the property after being asked to leave"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass with intent to commit a crime: burglary charges",
+      "Repeat trespass after warning"
+    ],
+    "notes": "Idaho's trespass statute (I.C. § 18-7008) covers various forms of unlawful entry including entering posted land, entering after being forbidden, and remaining after being told to leave. Trespass on railroad property, agricultural land, and mining claims have specific provisions."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "18-918",
+    "statute_title": "Domestic Violence",
+    "offense_class": "Misdemeanor (no traumatic injury); Felony (traumatic injury)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first misdemeanor); 1 year (second misdemeanor); 10 years (felony with traumatic injury)",
+    "fine_max": "$1,000 (first misdemeanor); $2,000 (second misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant committed an assault or battery",
+      "Against a household member",
+      "Household member includes spouse, former spouse, person cohabiting, or person with a child in common"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Traumatic injury: felony, up to 10 years — I.C. § 18-918(2)",
+      "Prior domestic violence conviction: enhanced misdemeanor penalties",
+      "In the presence of a child: maximum penalties doubled — I.C. § 18-918(4)",
+      "Attempted strangulation: separate felony up to 15 years — I.C. § 18-923"
+    ],
+    "notes": "Idaho's domestic violence statute (I.C. § 18-918) covers both assault and battery against household members. Traumatic injury elevates to felony. Penalties are doubled when committed in the presence of a child under 16. Attempted strangulation is a separate, more serious felony."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "18-918(3)(b)",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Misdemeanor (no traumatic injury); Felony (traumatic injury)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (prior conviction); 10 years (traumatic injury felony)",
+    "fine_max": "$1,000 (first); $2,000 (prior conviction); $10,000 (felony)",
+    "elements": [
+      "Defendant committed a battery (willful and unlawful use of force or violence)",
+      "Against a household member",
+      "Battery did not result in traumatic injury (misdemeanor) OR resulted in traumatic injury (felony)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior domestic violence conviction: enhanced penalty — I.C. § 18-918(3)(b)",
+      "Traumatic injury: felony — I.C. § 18-918(2)",
+      "In the presence of a child: penalties doubled",
+      "Attempted strangulation: I.C. § 18-923"
+    ],
+    "notes": "Domestic battery without traumatic injury is a misdemeanor. With a prior conviction, the maximum increases to 1 year and $2,000 fine. Traumatic injury elevates to felony with up to 10 years. Idaho mandates a domestic violence evaluation for all convictions."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "18-1501",
+    "statute_title": "Injury to Children",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully caused or permitted a child to suffer",
+      "Or inflicted unjustifiable physical pain or mental suffering on a child",
+      "Under circumstances or conditions likely to produce great bodily harm or death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of a child: potential murder charges",
+      "Pattern of abuse: aggravating factor",
+      "Child under 12: aggravating factor at sentencing"
+    ],
+    "notes": "Idaho uses 'Injury to Children' (I.C. § 18-1501) rather than 'child abuse.' The statute has both misdemeanor and felony provisions. Felony applies when circumstances are likely to produce great bodily harm or death. Mandatory reporting requirements apply to professionals."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "18-1501",
+    "statute_title": "Injury to Children — Endangerment",
+    "offense_class": "Misdemeanor (circumstances not likely to produce great harm); Felony (circumstances likely to produce great bodily harm or death)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); general felony fine",
+    "elements": [
+      "Defendant had care or custody of a child",
+      "Defendant willfully caused or permitted the child to be placed in a situation that endangered the child's person or health"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI with child in vehicle: concurrent I.C. § 18-8004 charges",
+      "Drug exposure: additional charges if drugs present",
+      "Bodily injury or death resulting: felony"
+    ],
+    "notes": "Child endangerment is prosecuted under the same statute as child abuse (I.C. § 18-1501). The misdemeanor version covers situations not likely to produce great harm. The felony version covers situations likely to produce great bodily harm or death."
+  },
+  {
+    "common_charge_slug": "child-neglect",
+    "statute_number": "18-1501",
+    "statute_title": "Injury to Children — Neglect",
+    "offense_class": "Misdemeanor (no great harm likely); Felony (great bodily harm or death likely)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$1,000 (misdemeanor)",
+    "elements": [
+      "Defendant had care or custody of a child",
+      "Defendant willfully caused or permitted the person or health of the child to be injured",
+      "Or willfully caused or permitted the child to be placed in an endangering situation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death resulting from neglect: potential manslaughter or murder charges",
+      "Pattern of neglect: aggravating factor"
+    ],
+    "notes": "Child neglect is prosecuted under I.C. § 18-1501 (Injury to Children). Idaho does not have a separate neglect statute. Includes failure to provide necessary food, clothing, shelter, medical care, or supervision."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "39-6312",
+    "statute_title": "Violation of Protection Order",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "A protection order was issued against the defendant",
+      "Defendant had notice of the order",
+      "Defendant violated a term or condition of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second violation: enhanced penalties",
+      "Violation involving assault or battery: additional criminal charges",
+      "Violation while on probation: probation revocation"
+    ],
+    "notes": "Protection order violations are under I.C. § 39-6312 (Title 39 Health and Safety, not Title 18 Crimes). First violation is a misdemeanor. Contact or no-contact order violations may also be prosecuted under I.C. § 18-920."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "18-7906",
+    "statute_title": "Stalking in the Second Degree",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly and maliciously engaged in a course of conduct",
+      "That seriously alarmed, annoyed, or harassed the victim",
+      "Such as would cause a reasonable person substantial emotional distress",
+      "Or such as would cause a reasonable person to fear death or physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravating factors elevate to first-degree stalking (felony) — I.C. § 18-7905",
+      "Prior stalking conviction within 7 years: first-degree stalking"
+    ],
+    "notes": "Idaho has two degrees of stalking. Second degree (I.C. § 18-7906) is a misdemeanor. 'Course of conduct' means repeated acts of nonconsensual contact. Single incidents generally do not constitute stalking."
+  },
+  {
+    "common_charge_slug": "aggravated-stalking",
+    "statute_number": "18-7905",
+    "statute_title": "Stalking in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant committed stalking in the second degree (I.C. § 18-7906)",
+      "Plus one or more aggravating factors: violation of a protective/no-contact order, violation of probation/parole, victim under 16, possession of a deadly weapon, or prior stalking conviction within 7 years"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeat first-degree stalking within 7 years: enhanced sentencing",
+      "Stalking combined with other offenses (assault, threats)"
+    ],
+    "notes": "First-degree stalking under I.C. § 18-7905 is a felony requiring the base stalking conduct plus an aggravating factor. A prior conviction for either degree of stalking within 7 years automatically elevates a new stalking charge to first degree."
+  },
+  {
+    "common_charge_slug": "stalking-cyber",
+    "statute_number": "18-7906; 18-7907",
+    "statute_title": "Cyberstalking / Electronic Harassment",
+    "offense_class": "Misdemeanor (second degree); Felony (first degree with aggravating factors)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant used electronic communications to knowingly and maliciously engage in a course of conduct",
+      "That seriously alarmed, annoyed, or harassed the victim",
+      "Such as would cause a reasonable person substantial emotional distress"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravating factors: elevates to first-degree stalking",
+      "Threats of death or bodily injury via electronic means"
+    ],
+    "notes": "Idaho prosecutes cyberstalking under the general stalking statutes (I.C. § 18-7905 and 18-7906). I.C. § 18-7907 specifically addresses use of telephone or electronic communication to harass. Electronic communications are included in the definition of 'nonconsensual contact.'"
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "18-7907",
+    "statute_title": "Harassment by Telephone or Electronic Communication",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant used a telephone or electronic communication device",
+      "To annoy, terrify, threaten, intimidate, harass, or offend another person",
+      "The communication was made with intent to harass"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threats of violence: potential felony assault charges",
+      "Repeated conduct: stalking charges — I.C. § 18-7906"
+    ],
+    "notes": "Idaho's harassment statute (I.C. § 18-7907) specifically addresses telephone and electronic harassment. Broader harassment patterns may be charged as stalking. In-person harassment is typically charged as disturbing the peace or assault."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "18-1505",
+    "statute_title": "Abuse, Exploitation, or Neglect of a Vulnerable Adult",
+    "offense_class": "Misdemeanor to Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony for abuse/exploitation); 1 year (misdemeanor for neglect)",
+    "fine_max": "$10,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant committed abuse, exploitation, or neglect",
+      "Against a vulnerable adult (person 18+ who is unable to protect themselves from abuse, neglect, or exploitation due to physical or mental condition)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death resulting from abuse: potential homicide charges",
+      "Financial exploitation exceeding $1,000: felony",
+      "Pattern of abuse: aggravating factor"
+    ],
+    "notes": "Idaho uses 'Vulnerable Adult' rather than 'Elder' — covers adults of any age with qualifying physical or mental conditions, not just the elderly. Financial exploitation is a common form prosecuted under this statute. Mandatory reporting requirements apply."
+  },
+  {
+    "common_charge_slug": "financial-exploitation-elder",
+    "statute_number": "18-1505",
+    "statute_title": "Financial Exploitation of a Vulnerable Adult",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant exploited a vulnerable adult",
+      "Exploitation includes misuse of funds, property, or assets of a vulnerable adult",
+      "Through undue influence, coercion, manipulation, or deception"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeding $1,000: felony",
+      "Position of trust (caregiver, fiduciary): aggravating factor"
+    ],
+    "notes": "Financial exploitation of vulnerable adults is prosecuted under I.C. § 18-1505. Idaho's definition of vulnerable adult covers those unable to protect themselves due to physical or mental condition, regardless of age."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "18-3302",
+    "statute_title": "Concealed Weapons",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a concealed weapon on or about their person",
+      "Without being exempted under Idaho law"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Carrying in a prohibited location: additional charges — I.C. § 18-3302C",
+      "Felony conviction: separate offense under I.C. § 18-3316"
+    ],
+    "notes": "Idaho enacted constitutional carry in 2016 — most adults 18+ can carry concealed without a permit within city limits, and 21+ outside city limits. Restrictions remain for certain persons (felons, mentally ill, juveniles under 18) and certain locations (courthouses, schools, jails). Idaho is one of the most permissive states for firearms."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "18-3316",
+    "statute_title": "Unlawful Possession of a Firearm",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant has been previously convicted of a felony",
+      "Defendant purchased, owned, possessed, or had under custody or control any firearm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession during commission of another felony",
+      "Federal prosecution under 18 USC 922(g)"
+    ],
+    "notes": "Under I.C. § 18-3316, convicted felons are prohibited from possessing firearms. Idaho has an automatic rights restoration provision — firearm rights are automatically restored 5 years after completion of sentence for most felons, unless the felony is listed in I.C. § 18-310. Violent felons and certain sex offenders are permanently prohibited."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "18-3302",
+    "statute_title": "Concealed Weapons Violation",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a concealed weapon",
+      "Defendant was not eligible under Idaho's constitutional carry provisions",
+      "Or defendant carried in a location where concealed carry is prohibited"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prohibited person (felon, juvenile): separate felony charge",
+      "Prohibited location (courthouse, school): additional charges"
+    ],
+    "notes": "Idaho's 2016 constitutional carry law dramatically reduced concealed carry violations. Violations now primarily involve prohibited persons (felons, certain minors) or prohibited locations. Out-of-state residents under 21 are subject to different rules within city limits."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "18-3317",
+    "statute_title": "Unlawful Discharge of a Firearm at a Dwelling or Occupied Building",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally and unlawfully discharged a firearm",
+      "At an inhabited dwelling house, occupied building, occupied motor vehicle, inhabited mobile home, or inhabited camper"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Injury to any person: additional assault/battery charges",
+      "Death resulting: potential murder/manslaughter charges"
+    ],
+    "notes": "I.C. § 18-3317 specifically addresses discharging a firearm at occupied structures. General discharge of firearms in prohibited areas may also be addressed by local ordinances. Discharging at an occupied vehicle is included."
+  },
+  {
+    "common_charge_slug": "unlawful-carry",
+    "statute_number": "18-3302; 18-3302C",
+    "statute_title": "Unlawful Carrying of a Weapon",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant carried a weapon in an unauthorized manner or location",
+      "Without being eligible under constitutional carry or permit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Carrying in a school: felony under I.C. § 18-3302D",
+      "Carrying in courthouse or jail: I.C. § 18-3302C"
+    ],
+    "notes": "Idaho's constitutional carry significantly limits this charge. Most violations involve prohibited locations (courthouses, schools, jails) or prohibited persons. City and county governments cannot enact firearm restrictions more restrictive than state law (preemption under I.C. § 18-3302J)."
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "statute_number": "18-3318",
+    "statute_title": "Possession of a Destructive Device or Prohibited Weapon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a destructive device, bomb, or prohibited weapon",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use in commission of a crime: additional charges",
+      "Possession near schools or public buildings"
+    ],
+    "notes": "Idaho is generally permissive on firearms but prohibits destructive devices and certain other weapons. Short-barreled rifles and shotguns, silencers, and machine guns are legal under Idaho law if compliant with federal NFA requirements."
+  },
+  {
+    "common_charge_slug": "felony-firearm",
+    "statute_number": "18-3316; 19-2520",
+    "statute_title": "Use of a Firearm During Commission of a Felony",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Enhanced sentence added to underlying felony",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed or attempted to commit a felony",
+      "Defendant displayed, used, threatened, or attempted to use a firearm or deadly weapon during the commission of the felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Mandatory minimum sentence enhancement under I.C. § 19-2520",
+      "Discharge of the firearm: additional enhancement"
+    ],
+    "notes": "I.C. § 19-2520 provides for enhanced sentences when a deadly weapon is used during a felony. Not a standalone charge but an enhancement to the underlying felony. Judge must consider the use of a weapon at sentencing."
+  },
+  {
+    "common_charge_slug": "weapons-carrying-prohibited",
+    "statute_number": "18-3302C",
+    "statute_title": "Carrying a Weapon in a Prohibited Place",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant possessed a firearm or other weapon",
+      "In a courthouse, juvenile detention facility, or jail/prison"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "On school grounds: felony under I.C. § 18-3302D"
+    ],
+    "notes": "Idaho's list of prohibited locations is very short compared to most states: courthouses, juvenile detention facilities, and jails. Schools are addressed under a separate statute. Private property owners may prohibit weapons but violation is trespass, not a weapons offense."
+  },
+  {
+    "common_charge_slug": "weapons-school-zone",
+    "statute_number": "18-3302D",
+    "statute_title": "Possession of a Weapon on School Property",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm or other weapon",
+      "On or about school property, a school bus, or at a school-sponsored event",
+      "Defendant was not an exempt person (school security, law enforcement, person with written permission)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Discharge of weapon on school property: additional charges",
+      "Threatening with weapon: felony assault charges"
+    ],
+    "notes": "Exemptions include law enforcement, authorized security, persons with written permission from school officials, and unloaded firearms in locked vehicles on school parking lots. Enhanced concealed weapons license holders may be exempt in some circumstances."
+  },
+  {
+    "common_charge_slug": "possession-explosives",
+    "statute_number": "18-3318",
+    "statute_title": "Possession of Explosives / Destructive Device",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed, manufactured, or transported an explosive or destructive device",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of explosive to damage property: arson charges",
+      "Injury or death resulting: additional charges"
+    ],
+    "notes": "Explosives for lawful purposes (mining, construction, agriculture) require proper permits. Possession of materials with intent to manufacture an explosive device is separately criminal."
+  },
+  {
+    "common_charge_slug": "weapons-trafficking",
+    "statute_number": "18-3302; federal statutes",
+    "statute_title": "Weapons Trafficking",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (state); higher under federal law",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant illegally sold, transferred, or trafficked firearms",
+      "Without proper federal firearms license",
+      "Or sold to prohibited persons"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale to a prohibited person: enhanced penalties",
+      "Interstate trafficking: federal prosecution"
+    ],
+    "notes": "Weapons trafficking is primarily prosecuted under federal law (18 USC 922). Idaho state law addresses illegal sales but most trafficking cases are handled federally. Idaho does not have a standalone state weapons trafficking statute."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "18-3126",
+    "statute_title": "Misappropriation of Personal Identifying Information",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant obtained or recorded personal identifying information of another person",
+      "Without authorization",
+      "With intent to use or to aid another person in using the information to obtain credit, money, goods, services, or anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims: enhanced penalties",
+      "Elderly victim: additional charges under I.C. § 18-1505",
+      "Financial loss exceeding $1,000: additional restitution"
+    ],
+    "notes": "Idaho's identity theft statute (I.C. § 18-3126) covers misappropriation of personal identifying information. The $50,000 fine maximum is unusually high for Idaho. Restitution to victims is mandatory."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "18-2403(3); 18-2408",
+    "statute_title": "Theft by Embezzlement",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 14 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant knowingly appropriated the property to their own use or benefit",
+      "Without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Embezzlement by public officer: enhanced under I.C. § 18-5701",
+      "Amount exceeding $1,000: felony"
+    ],
+    "notes": "Idaho treats embezzlement as a form of theft under I.C. § 18-2403(3) rather than a standalone offense. Penalties follow the grand theft/petit theft structure based on value. Embezzlement by public officers is a separate, more serious offense."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "18-3601",
+    "statute_title": "Forgery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "14 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant falsely made, altered, forged, or counterfeited a document",
+      "Including deeds, wills, bonds, bank notes, checks, or other financial instruments",
+      "With intent to defraud another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple forged instruments: aggregate charges",
+      "Government documents: additional charges"
+    ],
+    "notes": "Forgery under I.C. § 18-3601 is a felony punishable by up to 14 years. This is one of the more severely punished property crimes in Idaho. Covers a broad range of documents including commercial instruments, public records, and official documents."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "18-3601; 18-3614",
+    "statute_title": "Counterfeiting",
+    "offense_class": "Felony (currency); Misdemeanor (trade-marks)",
+    "penalty_min": null,
+    "penalty_max": "14 years (currency/instruments); 6 months (trade-marks)",
+    "fine_max": "$50,000 (general felony); $1,000 (trade-mark misdemeanor)",
+    "elements": [
+      "Defendant falsely made or counterfeited currency, instruments, or trade-marks",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large-scale counterfeiting operation: federal prosecution",
+      "Distribution of counterfeit goods: enhanced penalties"
+    ],
+    "notes": "Currency counterfeiting is primarily a federal offense. Idaho's forgery statute (I.C. § 18-3601) covers counterfeiting of instruments. Counterfeiting trade-marks (I.C. § 18-3614) is a separate misdemeanor offense."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "18-3106",
+    "statute_title": "Issuance of Insufficient Funds Check",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 14 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant issued a check",
+      "Knowing there were insufficient funds to cover the check",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Pattern of bad check writing: aggregate value",
+      "Amount exceeding $1,000: felony"
+    ],
+    "notes": "Bad checks under I.C. § 18-3106 follow the general theft penalty structure. The check writer has a period to make good on the check after notification before criminal prosecution proceeds. Civil remedies are also available to the payee."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "18-3124; 18-3125",
+    "statute_title": "Credit Card Fraud",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant used a credit card, debit card, or card number",
+      "That belonged to another person or was counterfeit",
+      "With intent to obtain goods, services, or money",
+      "Or defendant used their own card knowing it was revoked or expired"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims: aggregate charges",
+      "Use of stolen identity: additional I.C. § 18-3126 charges",
+      "Interstate fraud: federal prosecution"
+    ],
+    "notes": "Idaho has specific credit card crime statutes (I.C. § 18-3124 through 18-3128). Covers theft of cards, fraudulent use, counterfeiting, and possession of machinery for counterfeiting. Distinct from general fraud and identity theft statutes."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "18-2403; 41-293",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "14 years (if over $1,000 under theft statute); 5 years (general felony)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly made a false or fraudulent insurance claim",
+      "Or prepared false documentation to support a claim",
+      "With intent to defraud an insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Arson to collect insurance: additional I.C. § 18-802 charges",
+      "Pattern of fraud: organized crime potential"
+    ],
+    "notes": "Insurance fraud may be prosecuted under general theft/fraud statutes or specific insurance code provisions. Arson committed for insurance purposes carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "tax-fraud",
+    "statute_number": "63-3076; 63-3077",
+    "statute_title": "Tax Fraud / Tax Evasion",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$25,000 plus costs of prosecution",
+    "elements": [
+      "Defendant willfully attempted to evade or defeat any Idaho tax",
+      "Or filed a fraudulent return with intent to evade tax"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large-scale evasion: federal prosecution under 26 USC 7201",
+      "Pattern of fraud: enhanced penalties"
+    ],
+    "notes": "Idaho tax fraud is prosecuted under Title 63 (Revenue and Taxation). Willful failure to file or fraudulent filing can result in felony charges. Most significant tax fraud cases are prosecuted federally."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "18-8201",
+    "statute_title": "Money Laundering and Illegal Investment",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (state); higher under federal law",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly conducted a financial transaction",
+      "Involving proceeds of unlawful activity",
+      "With intent to promote the unlawful activity or conceal the nature/source of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large amounts: federal prosecution under 18 USC 1956",
+      "Connection to drug trafficking: enhanced penalties"
+    ],
+    "notes": "Idaho's money laundering statute (I.C. § 18-8201) covers transactions involving proceeds of unlawful activity. Most significant money laundering cases are prosecuted federally. State charges typically accompany other felony prosecutions."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "18-2403(2)",
+    "statute_title": "Theft by Fraud / Deception",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 14 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant obtained property of another by deception",
+      "Created or reinforced a false impression including false promises",
+      "With intent to deprive the owner of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Elderly victim: enhanced under I.C. § 18-1505",
+      "Value over $1,000: grand theft (felony)"
+    ],
+    "notes": "General fraud is prosecuted as theft by deception under Idaho's consolidated theft statute (I.C. § 18-2403(2)). Covers a broad range of fraudulent schemes. Penalty depends on value of property obtained."
+  },
+  {
+    "common_charge_slug": "fraud-welfare",
+    "statute_number": "56-227",
+    "statute_title": "Welfare Fraud",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 14 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant obtained public assistance benefits",
+      "Through false statements, misrepresentation, or concealment of material facts",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeding $1,000: felony",
+      "Pattern of fraud: aggregate amounts"
+    ],
+    "notes": "Welfare fraud is prosecuted under both the specific public assistance fraud statute (I.C. § 56-227) and general theft statutes. Repayment of fraudulently obtained benefits is mandatory in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "healthcare-fraud",
+    "statute_number": "56-227; 18-2403",
+    "statute_title": "Healthcare Fraud / Medicaid Fraud",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "14 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant submitted false claims for healthcare services",
+      "To Medicaid, Medicare, or other healthcare programs",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large-scale fraud: federal prosecution",
+      "Harm to patients: additional charges"
+    ],
+    "notes": "Healthcare fraud involving federal programs (Medicaid, Medicare) is typically prosecuted federally. Idaho state charges are brought under general fraud/theft statutes. The Idaho Attorney General's Medicaid Fraud Control Unit handles state-level investigations."
+  },
+  {
+    "common_charge_slug": "cybercrime",
+    "statute_number": "18-2201; 18-2202",
+    "statute_title": "Computer Crime",
+    "offense_class": "Misdemeanor to Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$50,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant knowingly accessed or attempted to access a computer, computer system, or computer network without authorization",
+      "Or exceeded authorized access",
+      "With intent to commit theft, fraud, or cause damage"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage exceeding $1,000: felony",
+      "Access to government systems: enhanced penalties",
+      "Interstate activity: federal prosecution under CFAA"
+    ],
+    "notes": "Idaho's Computer Crime Act (I.C. § 18-2201 through 18-2202) covers unauthorized access, data theft, and computer fraud. Severity depends on intent and damage caused. Federal prosecution is common for significant cases."
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "statute_number": "18-6608",
+    "statute_title": "Forcible Sexual Penetration by Use of Foreign Object",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant penetrated the oral, anal, or vaginal opening of the victim",
+      "By use of a foreign object, substance, instrument, or device",
+      "Against the victim's will by force, violence, duress, menace, or threat of great bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 16: enhanced penalties",
+      "Use of a weapon: additional charges",
+      "Repeat sex offense: registration and enhanced sentencing"
+    ],
+    "notes": "Idaho does not use the term 'sexual battery' or 'criminal sexual conduct.' Forcible sexual penetration with a foreign object is charged under I.C. § 18-6608. Other sexual contact offenses are covered under the lewd conduct statute (I.C. § 18-6607)."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "18-6101",
+    "statute_title": "Rape",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant accomplished penetration (however slight) of the oral, anal, or vaginal opening",
+      "Against the victim's will by force or threat of force",
+      "Or where the victim was incapable of giving consent due to mental condition or incapacity",
+      "Or where the victim was under the age of consent"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Victim under 16, perpetrator 18+: mandatory sex offender registration",
+      "Use of a weapon: additional charges",
+      "Kidnapping: first-degree kidnapping potential"
+    ],
+    "notes": "Idaho uses the term 'rape' (I.C. § 18-6101) rather than 'sexual assault.' Punishment is 1 year to life under I.C. § 18-6104. Idaho's rape statute covers multiple scenarios including force, incapacity, age, and position of authority."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "18-6101",
+    "statute_title": "Rape",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant perpetrated an act of penetration (however slight) of the oral, anal, or vaginal opening with the defendant's penis",
+      "Where the victim was under 16 and defendant was 18+",
+      "Or where the victim was 16-17 and defendant was 3+ years older",
+      "Or where accomplished by force, violence, duress, menace, or threat",
+      "Or where victim was incapable of consent due to mental condition or intoxication",
+      "Or where victim was unconscious"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Defendant held position of authority over victim",
+      "Use of a deadly weapon",
+      "Victim suffered great bodily harm"
+    ],
+    "notes": "Idaho defines rape under I.C. § 18-6101 and punishment under I.C. § 18-6104. The sentence is not less than 1 year, up to life at the discretion of the judge. Male rape is covered. Spousal rape is recognized. Sex offender registration is mandatory."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "18-6101(1)-(2)",
+    "statute_title": "Statutory Rape",
+    "offense_class": "Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant perpetrated an act of penetration",
+      "Victim was under 16 and defendant was 18 or older (subsection 1)",
+      "Or victim was 16 or 17 and defendant was 3 or more years older (subsection 2)"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Victim under 12: aggravating factor",
+      "Position of trust or authority: aggravating factor"
+    ],
+    "notes": "Idaho has a two-tier age-of-consent structure: under 16 (defendant must be 18+) and 16-17 (defendant must be 3+ years older). Both are felonies carrying 1 year to life. There is no Romeo-and-Juliet exception for close-in-age peers when the victim is under 16."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "18-4116",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally exposed their genitals",
+      "In a public place or where others were present",
+      "Under circumstances likely to cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure to a minor: potential lewd conduct charges — I.C. § 18-1508",
+      "Prior sex offense conviction: enhanced penalties"
+    ],
+    "notes": "Misdemeanor indecent exposure is a relatively minor offense. However, if exposure is directed at a minor under 16, it can be charged as lewd conduct with a minor (I.C. § 18-1508), which is a felony punishable by up to life imprisonment."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "18-5614",
+    "statute_title": "Patronizing a Prostitute / Solicitation",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant solicited or agreed to pay for sexual conduct",
+      "Or defendant entered a house of prostitution for the purpose of engaging in sexual conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense: enhanced misdemeanor — 1 year",
+      "Involving a minor: felony sex trafficking charges — I.C. § 18-8602"
+    ],
+    "notes": "Idaho criminalizes both the buyer (patronizing, I.C. § 18-5614) and seller (prostitution, I.C. § 18-5613). Both are misdemeanors for first offense. Solicitation involving a minor triggers human trafficking charges."
+  },
+  {
+    "common_charge_slug": "prostitution",
+    "statute_number": "18-5613",
+    "statute_title": "Prostitution",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 1 year (second)",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant engaged in or offered to engage in sexual conduct",
+      "In exchange for a fee"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense: enhanced misdemeanor",
+      "Promoting prostitution: felony — I.C. § 18-5608"
+    ],
+    "notes": "Prostitution in Idaho is a misdemeanor for the individual. Promoting, facilitating, or profiting from another's prostitution (pandering) is a felony. Human trafficking charges apply when force, fraud, or coercion is involved."
+  },
+  {
+    "common_charge_slug": "pandering",
+    "statute_number": "18-5608; 18-5609",
+    "statute_title": "Pandering / Promoting Prostitution",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (I.C. § 18-5609 for recruiting)",
+    "fine_max": null,
+    "elements": [
+      "Defendant procured, encouraged, or induced another person to engage in prostitution",
+      "Or defendant received money or other consideration for arranging prostitution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Involving a minor: human trafficking under I.C. § 18-8602",
+      "Force, fraud, or coercion: human trafficking"
+    ],
+    "notes": "Idaho has severe penalties for pandering. I.C. § 18-5609 (procuring for purposes of prostitution) carries up to life imprisonment. I.C. § 18-5608 covers keeping a house of prostitution. These are far more serious than the prostitution offense itself."
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "statute_number": "18-1509A",
+    "statute_title": "Sexual Exploitation of a Child by Use of Technology",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant used the internet or electronic communication",
+      "To entice, induce, or solicit a child to engage in sexual activity",
+      "Or to distribute sexually explicit material to a child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Actual meeting with the child: enhanced penalties",
+      "Production of child exploitation material: additional charges",
+      "Distribution across state lines: federal prosecution"
+    ],
+    "notes": "Idaho's online solicitation statute (I.C. § 18-1509A) covers using technology to sexually exploit minors. Separate from child pornography statutes. Undercover sting operations are common. The penalty is significant at up to 15 years."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "18-1507",
+    "statute_title": "Sexual Exploitation of a Child",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (production); 10 years (distribution/possession)",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant produced, distributed, or possessed sexually exploitative material",
+      "Involving a child under 18",
+      "Material depicts actual sexual conduct by the child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Production: up to 30 years — I.C. § 18-1507(2)",
+      "Distribution: up to 10 years",
+      "Victim under 12: aggravating factor",
+      "Large collection: evidence of pattern"
+    ],
+    "notes": "Idaho's child exploitation statutes are severe. Production carries up to 30 years. Mandatory sex offender registration. Federal prosecution is common and carries mandatory minimums that Idaho state law does not impose."
+  },
+  {
+    "common_charge_slug": "possession-child-pornography",
+    "statute_number": "18-1507A",
+    "statute_title": "Possession of Sexually Exploitative Material of a Child",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed sexually exploitative material",
+      "The material depicted a child under 18 engaged in sexual conduct",
+      "Defendant knew or should have known the material depicted a minor"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Large volume of material: aggravating factor",
+      "Distribution: enhanced penalties under I.C. § 18-1507",
+      "Federal prosecution: mandatory minimums under 18 USC 2252"
+    ],
+    "notes": "Possession alone is a felony in Idaho carrying up to 10 years. Mandatory sex offender registration upon conviction. Many cases are referred to federal authorities for prosecution under federal mandatory minimums."
+  },
+  {
+    "common_charge_slug": "production-child-pornography",
+    "statute_number": "18-1507(2)",
+    "statute_title": "Production of Sexually Exploitative Material of a Child",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant produced, directed, or promoted sexually exploitative material",
+      "Involving a child under 18",
+      "Material depicts the child engaged in actual sexual conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims: separate charges per victim",
+      "Victim under 12: aggravating factor",
+      "Use of force or coercion: additional charges"
+    ],
+    "notes": "Production carries up to 30 years — the most severe penalty for child exploitation offenses in Idaho. Lifetime sex offender registration required. Federal charges commonly run concurrent."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "18-8311",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant was required to register as a sex offender under the Idaho Sex Offender Registration Act",
+      "Defendant failed to register, update registration, or provide required information",
+      "Failure was knowing and willful"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple failures to register: enhanced sentencing",
+      "Absconding from jurisdiction: additional charges"
+    ],
+    "notes": "Idaho's Sex Offender Registration Act (I.C. § 18-8301 et seq.) requires registration for violent sexual predators, sexual offenders, and kidnapping offenders. Failure to register, update address, or comply with registration requirements is a felony up to 10 years."
+  },
+  {
+    "common_charge_slug": "sex-trafficking",
+    "statute_number": "18-8602",
+    "statute_title": "Human Trafficking — Sexual Servitude",
+    "offense_class": "Felony",
+    "penalty_min": "2 years (adult victim)",
+    "penalty_max": "25 years (adult victim); life imprisonment (minor victim)",
+    "fine_max": null,
+    "elements": [
+      "Defendant recruited, harbored, transported, or obtained a person",
+      "For the purpose of sexual servitude",
+      "Through force, fraud, or coercion"
+    ],
+    "mandatory_minimum": "2 years (adult victim)",
+    "enhancements": [
+      "Minor victim: up to life imprisonment — I.C. § 18-8602(2)",
+      "Multiple victims: separate charges",
+      "Use of force or serious harm: aggravating factors"
+    ],
+    "notes": "Idaho has specific human trafficking statutes (I.C. § 18-8601 through 18-8605). Sexual trafficking of a minor does not require proof of force, fraud, or coercion — the minor's age alone is sufficient. Victims of trafficking have affirmative defenses to prostitution charges."
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "statute_number": "18-6608; 18-6607",
+    "statute_title": "Sexual Contact Offenses",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (I.C. § 18-6608); 5 years (I.C. § 18-6607)",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed non-consensual sexual contact or penetration with a foreign object",
+      "Against the victim's will by force or threat"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is a minor",
+      "Use of a weapon",
+      "Prior sex offense"
+    ],
+    "notes": "Idaho does not have a statute specifically titled 'sexual battery.' Non-consensual sexual contact is prosecuted under rape (I.C. § 18-6101), forcible penetration by foreign object (I.C. § 18-6608), or lewd conduct statutes (I.C. § 18-6607). Terminology varies from other states."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "18-6409",
+    "statute_title": "Disturbing the Peace",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant maliciously and willfully disturbed the peace or quiet of any neighborhood or person",
+      "By loud or unusual noise, tumultuous or offensive conduct, threatening, traducing, quarreling, challenging to fight, or fighting"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Involving violence: potential assault/battery charges",
+      "Resisting officers called to the disturbance: additional charges"
+    ],
+    "notes": "Idaho uses 'Disturbing the Peace' (I.C. § 18-6409) rather than 'Disorderly Conduct.' It is a broad misdemeanor covering a range of disruptive behavior. Often used as a plea-down from more serious charges."
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "statute_number": "18-6409",
+    "statute_title": "Disturbing the Peace",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant maliciously and willfully disturbed the peace or quiet of any neighborhood or person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Same statute as disorderly conduct in Idaho (I.C. § 18-6409). Idaho does not distinguish between 'disturbing the peace' and 'disorderly conduct' — they are the same offense."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "18-705",
+    "statute_title": "Resisting or Obstructing Officers",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully resisted, delayed, or obstructed a public officer",
+      "In the discharge or attempt to discharge any duty of the officer's office"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violence against officer: additional assault/battery charges — I.C. § 18-915",
+      "Causing injury to officer: felony"
+    ],
+    "notes": "Idaho's resisting arrest statute (I.C. § 18-705) is a misdemeanor. It covers resisting, delaying, or obstructing — not just physical resistance. The arrest being resisted must be lawful, but defendants resist unlawful arrests at their own risk. Verbal resistance alone is generally insufficient."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "18-2604",
+    "statute_title": "Intimidating, Impeding, or Influencing Officers, Jurors, Witnesses",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant willfully attempted to influence, intimidate, or impede",
+      "A juror, witness, or officer in the discharge of their duty",
+      "In any case pending in any court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threats of violence: additional charges",
+      "Conspiracy to obstruct: additional charges"
+    ],
+    "notes": "Idaho's obstruction statute (I.C. § 18-2604) specifically addresses interference with judicial proceedings. Broader obstruction may also be charged under I.C. § 18-705 (resisting/obstructing officers). Destruction of evidence is a separate offense."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "7-601 through 7-610",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Misdemeanor to Felony (indirect criminal contempt)",
+    "penalty_min": null,
+    "penalty_max": "5 days (direct contempt); varies (indirect contempt, up to 5 years if felony-related)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully disobeyed a lawful court order",
+      "Or was disrespectful or disruptive in court proceedings",
+      "Or failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeated contempt: cumulative sanctions",
+      "Contempt involving violence: additional criminal charges"
+    ],
+    "notes": "Idaho's contempt statutes are in Title 7 (Special Proceedings). Direct contempt (in the presence of the judge) can be punished summarily. Indirect contempt (out of court, e.g., violating a court order) requires notice and hearing. Criminal contempt can carry jail time."
+  },
+  {
+    "common_charge_slug": "criminal-contempt",
+    "statute_number": "7-601; 18-1801",
+    "statute_title": "Criminal Contempt",
+    "offense_class": "Misdemeanor to Felony",
+    "penalty_min": null,
+    "penalty_max": "5 days (direct contempt); up to 5 years (certain violations)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully defied the authority of the court",
+      "Beyond the scope of civil contempt remedies",
+      "The contempt was criminal in nature (punishment, not coercion)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeat violations: escalating sanctions"
+    ],
+    "notes": "Criminal contempt in Idaho is punitive rather than coercive. Distinguished from civil contempt, which aims to compel compliance. Criminal contempt requires proof beyond a reasonable doubt."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "18-7001 (repealed); local ordinances",
+    "statute_title": "Public Intoxication",
+    "offense_class": "Infraction to Misdemeanor (local ordinance dependent)",
+    "penalty_min": null,
+    "penalty_max": "6 months (varies by jurisdiction)",
+    "fine_max": "$1,000 (varies by jurisdiction)",
+    "elements": [
+      "Defendant appeared in a public place",
+      "While intoxicated to a degree that constituted a danger to themselves, others, or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Idaho does not have a statewide public intoxication statute. Most public intoxication enforcement occurs under local city ordinances. The Idaho Supreme Court has noted that public intoxication alone is not a crime under state law — there must be an additional element (disturbing the peace, endangerment, etc.). Often addressed through protective custody rather than criminal charges."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "18-7019",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Misdemeanor (if underlying charge is misdemeanor); Felony (if underlying charge is felony)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $50,000 (felony)",
+    "elements": [
+      "Defendant was released on bail or own recognizance",
+      "Defendant was required to appear in court",
+      "Defendant willfully failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Felony failure to appear: separate felony charge",
+      "Forfeiture of bail"
+    ],
+    "notes": "Failure to appear matches the severity of the underlying charge. If the underlying charge is a felony, failure to appear is also a felony. Bail forfeiture is a separate civil consequence. A bench warrant is issued upon failure to appear."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "18-5413",
+    "statute_title": "Providing False Information to Law Enforcement",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly gave false information to a law enforcement officer or government agency",
+      "Concerning the commission of an offense",
+      "Knowing that the offense did not occur or that defendant had no information relating to the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "False report leading to arrest of another: potential additional charges",
+      "Filing a false police report: same statute"
+    ],
+    "notes": "Idaho's false report statute (I.C. § 18-5413) covers providing false information to law enforcement, state/local government agencies, and certain licensed professionals (social workers, psychologists, counselors). A misdemeanor offense."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "18-901(b); 18-905",
+    "statute_title": "Criminal Threat / Threatening Violence",
+    "offense_class": "Misdemeanor (verbal threat without weapon); Felony (with deadly weapon or force likely to cause great harm)",
+    "penalty_min": null,
+    "penalty_max": "3 months (simple assault/threat); 5 years (aggravated)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant made an intentional, unlawful threat by word or act",
+      "To do violence to another person",
+      "Coupled with an apparent ability to carry out the threat",
+      "Creating a well-founded fear in the other person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon: aggravated assault (felony)",
+      "Threat directed at school: additional charges"
+    ],
+    "notes": "Idaho does not have a standalone 'criminal threats' statute. Threats are prosecuted under assault (I.C. § 18-901), which includes threats to do violence coupled with apparent ability. If a deadly weapon is involved, it becomes aggravated assault (I.C. § 18-905)."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "20-222; 19-2602",
+    "statute_title": "Probation Violation",
+    "offense_class": "Same as underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Original maximum sentence for the underlying offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation for a criminal offense",
+      "Defendant violated one or more conditions of probation",
+      "The violation was willful or the defendant is unable to comply"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense: substantive violation",
+      "Repeat violations: less discretion for continued probation"
+    ],
+    "notes": "Idaho courts have broad discretion in handling probation violations. The court may revoke probation and impose the original suspended sentence, modify conditions, or continue probation. A probation violation hearing uses a preponderance of evidence standard, not beyond a reasonable doubt."
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "statute_number": "20-222; 19-2602",
+    "statute_title": "Probation Violation — Technical",
+    "offense_class": "Same as underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Original maximum sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant violated a non-criminal condition of probation",
+      "Such as missed appointment, failed drug test, missed curfew, failed to complete required program"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Pattern of technical violations: may lead to revocation"
+    ],
+    "notes": "Technical violations are non-criminal breaches of probation conditions. Idaho courts often use graduated sanctions (additional conditions, brief jail time, more restrictive probation) before full revocation. The Idaho Department of Correction uses evidence-based practices for technical violations."
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "statute_number": "20-222; 19-2602",
+    "statute_title": "Probation Violation — Substantive (New Crime)",
+    "offense_class": "Same as underlying offense plus new offense",
+    "penalty_min": null,
+    "penalty_max": "Original maximum sentence plus penalties for new offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed a new criminal offense while on probation",
+      "The new offense constitutes a violation of probation conditions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violent new offense: strong presumption of revocation",
+      "New felony while on felony probation: likely revocation"
+    ],
+    "notes": "A substantive probation violation (committing a new crime) is treated more seriously than a technical violation. Courts are more likely to revoke probation and impose the original suspended sentence. The new offense is prosecuted separately."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "20-229A",
+    "statute_title": "Parole Violation",
+    "offense_class": "Same as underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remainder of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated one or more conditions of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense: separate prosecution plus revocation",
+      "Absconding supervision: enhanced response"
+    ],
+    "notes": "The Idaho Commission of Pardons and Parole handles parole decisions. Parole violations may result in return to incarceration for the remainder of the sentence. Idaho uses a progressive sanctions model for technical parole violations."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "18-1701",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Same as underlying offense (felony conspiracy is a felony; misdemeanor conspiracy is a misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "Same as the underlying target offense",
+    "fine_max": "Same as the underlying target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to commit a crime",
+      "At least one overt act was committed by any member of the conspiracy in furtherance of the agreement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple co-conspirators: enhanced scope of liability",
+      "Conspiracy to commit violent crime: aggravating factor"
+    ],
+    "notes": "Idaho's conspiracy statute (I.C. § 18-1701) requires an agreement plus an overt act. A conspiracy to commit a felony is a felony; conspiracy to commit a misdemeanor is a misdemeanor. Each conspirator is liable for foreseeable acts of co-conspirators committed in furtherance of the conspiracy."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "18-5401",
+    "statute_title": "Perjury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "14 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully made a false statement",
+      "Under oath or affirmation",
+      "In a proceeding where the oath or affirmation was required by law",
+      "The statement was material to the proceeding"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Perjury causing conviction of another: aggravating factor",
+      "Multiple instances of perjury: cumulative charges"
+    ],
+    "notes": "Perjury in Idaho is a felony punishable by up to 14 years — one of the more severely punished non-violent offenses. The false statement must be material to the proceeding. Subornation of perjury (inducing another to commit perjury) carries the same penalty."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "18-1301",
+    "statute_title": "Bribery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant gave, offered, or promised something of value",
+      "To a public officer or employee",
+      "With corrupt intent to influence the officer's official act, vote, or decision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public official accepting bribe: same penalty",
+      "Pattern of bribery: additional charges"
+    ],
+    "notes": "Idaho's bribery statute (I.C. § 18-1301) covers both the giving and receiving of bribes. Punishable by up to 10 years in state prison. Covers executive, legislative, and judicial officials. The official forfeits their office upon conviction."
+  },
+  {
+    "common_charge_slug": "witness-tampering",
+    "statute_number": "18-2604; 18-2605",
+    "statute_title": "Witness Tampering / Intimidation",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant willfully attempted to influence, intimidate, or impede a witness",
+      "In connection with any case or proceeding",
+      "Through threats, force, or corrupt persuasion"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or threats of violence: additional assault charges",
+      "Conspiracy to tamper: additional charges"
+    ],
+    "notes": "Witness tampering is prosecuted under I.C. § 18-2604 (intimidating witnesses) and I.C. § 18-2605 (bribing witnesses). Both are felonies. Includes preventing testimony, altering testimony, or retaliating against witnesses."
+  },
+  {
+    "common_charge_slug": "jury-tampering",
+    "statute_number": "18-2604",
+    "statute_title": "Jury Tampering / Influencing Juror",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant willfully attempted to influence, intimidate, or impede a juror",
+      "In connection with any pending case",
+      "Through improper communication, threats, or bribes"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or threats: additional charges",
+      "Conspiracy: additional charges"
+    ],
+    "notes": "Jury tampering falls under the same statute as witness tampering (I.C. § 18-2604). Any attempt to influence a juror through improper means is a felony. Includes contact with jurors during trial and post-verdict intimidation."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "18-2505",
+    "statute_title": "Escape from Custody",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (additional to existing sentence)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was lawfully confined in a prison, jail, or other correctional facility",
+      "Or was in the lawful custody of an officer",
+      "Defendant escaped or attempted to escape from such confinement or custody"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or violence during escape: additional charges",
+      "Escape from prison: runs consecutive to existing sentence"
+    ],
+    "notes": "Under I.C. § 18-2505, escape or attempt to escape is a felony carrying up to 5 years in addition to the existing sentence. Sentences for escape run consecutive to (not concurrent with) the sentence being served at the time of escape."
+  },
+  {
+    "common_charge_slug": "impersonating-officer",
+    "statute_number": "18-7007",
+    "statute_title": "Impersonating a Public Officer",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant falsely assumed or pretended to be a public officer",
+      "And acted in such pretended capacity",
+      "Or performed any act in such pretended capacity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Impersonation to commit another crime: additional charges for underlying offense"
+    ],
+    "notes": "Idaho's impersonation statute (I.C. § 18-7007) covers impersonation of any public officer, not just law enforcement. It is a misdemeanor. If the impersonation is used to facilitate another crime (such as robbery or sexual assault), the underlying crime is charged separately."
+  },
+  {
+    "common_charge_slug": "hate-crime",
+    "statute_number": "18-7902",
+    "statute_title": "Malicious Harassment",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant maliciously and with specific intent to intimidate or harass another person",
+      "Because of that person's race, color, religion, ancestry, or national origin",
+      "Committed or threatened physical harm, property damage, or harassment"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Bodily injury: aggravated charges",
+      "Pattern of harassment: enhanced sentencing"
+    ],
+    "notes": "Idaho's hate crime statute is called 'Malicious Harassment' (I.C. § 18-7902). It covers bias-motivated crimes based on race, color, religion, ancestry, or national origin. Notably does NOT include sexual orientation, gender identity, or disability as protected categories. Civil remedies are also available under I.C. § 18-7903."
+  },
+  {
+    "common_charge_slug": "gang-participation",
+    "statute_number": "18-8502 through 18-8510",
+    "statute_title": "Criminal Gang Activity",
+    "offense_class": "Felony (enhancement to underlying offense)",
+    "penalty_min": null,
+    "penalty_max": "5 additional years on top of underlying offense",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant committed a criminal offense",
+      "For the benefit of, at the direction of, or in association with a criminal gang",
+      "With the specific intent to promote, further, or assist criminal conduct by gang members"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Additional 5 years beyond the underlying offense sentence — I.C. § 18-8504",
+      "Recruiting juveniles into a gang: separate felony — I.C. § 18-8505"
+    ],
+    "notes": "The Idaho Criminal Gang Enforcement Act (I.C. § 18-8501 through 18-8510) provides sentence enhancements for gang-related crimes. It is an enhancement, not a standalone charge. The additional sentence runs consecutive to the underlying crime's sentence. Recruiting minors into gangs is a separate felony."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "25-3504; 18-6605",
+    "statute_title": "Animal Cruelty",
+    "offense_class": "Misdemeanor (cruelty); Felony (torture or intentional killing)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$5,000 (misdemeanor); $9,000 (felony)",
+    "elements": [
+      "Defendant intentionally and cruelly abused, mistreated, or neglected an animal",
+      "Or defendant tortured an animal",
+      "Or defendant intentionally or maliciously killed an animal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Torture or intentional maiming: felony — I.C. § 25-3504",
+      "Repeat offense: felony"
+    ],
+    "notes": "Idaho's animal cruelty laws are under Title 25 (Animals). Basic cruelty is a misdemeanor. Torture, intentional maiming, or malicious killing of an animal is a felony. Exemptions exist for agricultural practices, hunting, and pest control."
+  },
+  {
+    "common_charge_slug": "bomb-threat",
+    "statute_number": "18-3302",
+    "statute_title": "Bomb Threat / Threatening Use of Explosives",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant threatened to place or detonate an explosive device",
+      "In a building, vehicle, or public place",
+      "With intent to cause fear or disruption"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Actual possession of explosive materials: additional charges",
+      "Threat against a school: federal prosecution potential",
+      "Resulting evacuation or injury: enhanced penalties"
+    ],
+    "notes": "Bomb threats are prosecuted as felonies in Idaho. Threats against schools, government buildings, and transportation infrastructure may also trigger federal prosecution. Even hoax threats carry serious penalties."
+  },
+  {
+    "common_charge_slug": "cyberbullying",
+    "statute_number": "18-917A",
+    "statute_title": "Student Harassment / Cyberbullying",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant used electronic communication to bully, harass, or intimidate another person",
+      "The conduct was repeated or severe",
+      "The conduct caused substantial emotional distress"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threats of violence: potential felony assault charges",
+      "Targeting based on protected characteristics: malicious harassment — I.C. § 18-7902"
+    ],
+    "notes": "Idaho addressed cyberbullying primarily through school anti-bullying statutes (I.C. § 18-917A for student harassment). Criminal harassment and stalking statutes (I.C. § 18-7906, 18-7907) also apply to cyberbullying conduct."
+  },
+  {
+    "common_charge_slug": "illegal-dumping",
+    "statute_number": "18-3904",
+    "statute_title": "Illegal Dumping / Littering",
+    "offense_class": "Misdemeanor; Felony (toxic or hazardous waste)",
+    "penalty_min": null,
+    "penalty_max": "6 months (general); 5 years (hazardous waste)",
+    "fine_max": "$3,000 (general); $50,000 (hazardous waste)",
+    "elements": [
+      "Defendant deposited waste, refuse, or materials on public or private property",
+      "Without authorization",
+      "In violation of environmental regulations"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Hazardous or toxic waste: felony charges",
+      "Environmental contamination: cleanup liability plus criminal penalties"
+    ],
+    "notes": "General littering and illegal dumping are misdemeanors under I.C. § 18-3904. Illegal disposal of hazardous waste elevates to a felony. Idaho's environmental statutes also impose civil cleanup liability separate from criminal penalties."
+  },
+  {
+    "common_charge_slug": "human-trafficking",
+    "statute_number": "18-8602; 18-8603",
+    "statute_title": "Human Trafficking",
+    "offense_class": "Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "25 years (adult victim); life imprisonment (minor victim)",
+    "fine_max": null,
+    "elements": [
+      "Defendant recruited, harbored, transported, or obtained a person",
+      "Through force, fraud, or coercion (adult victim)",
+      "Or the victim was a minor (no force/fraud/coercion required)",
+      "For the purpose of labor or sexual servitude"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Minor victim: life imprisonment potential",
+      "Serious bodily injury: enhanced sentencing",
+      "Multiple victims: separate charges per victim"
+    ],
+    "notes": "Idaho enacted comprehensive human trafficking statutes in 2013 (I.C. § 18-8601 through 18-8605). Trafficking of a minor for sexual servitude does not require proof of force, fraud, or coercion. Victims have an affirmative defense to related prostitution charges. Idaho also provides for asset forfeiture in trafficking cases."
+  },
+  {
+    "common_charge_slug": "public-corruption",
+    "statute_number": "18-1301; 18-5702",
+    "statute_title": "Public Corruption / Official Misconduct",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (bribery); 5 years (general corruption)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was a public officer or employee",
+      "Defendant corruptly used their official position",
+      "To obtain personal benefit, accept bribes, or misuse public funds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Embezzlement of public funds: I.C. § 18-5701",
+      "Pattern of corruption: aggregate charges"
+    ],
+    "notes": "Idaho addresses public corruption through multiple statutes: bribery (I.C. § 18-1301), embezzlement by public officers (I.C. § 18-5701), and official misconduct. Conviction results in forfeiture of office and permanent disqualification from holding public office."
+  },
+  {
+    "common_charge_slug": "environmental-crime",
+    "statute_number": "39-4401 through 39-4432",
+    "statute_title": "Environmental Crime",
+    "offense_class": "Misdemeanor to Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony violations); 1 year (misdemeanor violations)",
+    "fine_max": "$50,000 per day (felony); $25,000 per day (misdemeanor)",
+    "elements": [
+      "Defendant violated Idaho environmental protection statutes",
+      "Including illegal disposal of hazardous waste, water pollution, or air quality violations",
+      "The violation was knowing or negligent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Knowing endangerment: enhanced penalties",
+      "Repeat violations: higher fines",
+      "Federal prosecution under RCRA, Clean Water Act, or Clean Air Act"
+    ],
+    "notes": "Idaho's environmental crimes are primarily under Title 39 (Health and Safety). The Idaho Department of Environmental Quality investigates violations. Significant cases are often referred to the EPA for federal prosecution."
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "statute_number": "18-4009; 19-202A",
+    "statute_title": "Self-Defense / Justifiable Homicide",
+    "offense_class": "Affirmative Defense",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Defendant reasonably believed they were in imminent danger of great bodily harm or death",
+      "Defendant used no more force than reasonably necessary to defend against the threat",
+      "Defendant was not the initial aggressor"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Idaho is a Stand Your Ground state (I.C. § 19-202A) — there is no duty to retreat before using force in self-defense. Idaho also has Castle Doctrine provisions. Justifiable homicide is defined in I.C. § 18-4009 (defense of person) and I.C. § 18-4010 (defense of habitation). The burden shifts to the prosecution to disprove self-defense beyond a reasonable doubt once raised."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "18-204",
+    "statute_title": "Aiding and Abetting / Principal Liability",
+    "offense_class": "Same as the underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Same as the underlying offense",
+    "fine_max": "Same as the underlying offense",
+    "elements": [
+      "Defendant aided, abetted, counseled, or encouraged another person to commit a crime",
+      "Defendant acted with the intent to promote or assist in the commission of the crime",
+      "The crime was committed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "All enhancements applicable to the principal offense"
+    ],
+    "notes": "Under I.C. § 18-204, all persons who aid and abet in the commission of a crime are treated as principals. They face the same penalties as the person who directly committed the offense. No distinction between principal and accessory before the fact in Idaho."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "18-306",
+    "statute_title": "Attempt (Inchoate Offense)",
+    "offense_class": "Same as the underlying offense (reduced maximum for some crimes)",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (attempt of crime punishable by death or life); 5 years or half the maximum term for other crimes",
+    "fine_max": "Same as the underlying offense",
+    "elements": [
+      "Defendant had the specific intent to commit a crime",
+      "Defendant took a direct but ineffectual act toward committing the crime",
+      "The act went beyond mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Attempt of a capital crime: up to life imprisonment"
+    ],
+    "notes": "Under I.C. § 18-306, attempt carries up to life imprisonment if the target crime is punishable by death or life. For other crimes, the maximum is 5 years or half the maximum of the target crime, whichever is greater. Specific intent must be proven — recklessness or negligence is insufficient for attempt."
+  },
+  {
+    "common_charge_slug": "loitering",
+    "statute_number": "Local ordinances",
+    "statute_title": "Loitering",
+    "offense_class": "Infraction to Misdemeanor (local ordinance dependent)",
+    "penalty_min": null,
+    "penalty_max": "Varies by jurisdiction",
+    "fine_max": "Varies by jurisdiction",
+    "elements": [
+      "Defendant remained in a public place with no apparent lawful purpose",
+      "Under circumstances that warrant alarm for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Idaho does not have a statewide loitering statute. Loitering enforcement occurs under local city ordinances. Many loitering ordinances have been challenged on constitutional grounds (vagueness). Enforcement varies significantly by jurisdiction."
+  },
+  {
+    "common_charge_slug": "noise-ordinance",
+    "statute_number": "Local ordinances",
+    "statute_title": "Noise Ordinance Violation",
+    "offense_class": "Infraction to Misdemeanor (local ordinance dependent)",
+    "penalty_min": null,
+    "penalty_max": "Varies by jurisdiction",
+    "fine_max": "Varies by jurisdiction",
+    "elements": [
+      "Defendant produced noise exceeding local noise level regulations",
+      "During hours prohibited by local ordinance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Idaho does not have a statewide noise ordinance. Noise violations are enforced under city and county ordinances. Excessive noise may also be prosecuted as disturbing the peace under I.C. § 18-6409 if it rises to that level."
+  },
+  {
+    "common_charge_slug": "hazing",
+    "statute_number": "18-917",
+    "statute_title": "Hazing",
+    "offense_class": "Misdemeanor; Felony (if causing significant bodily harm or involving sexual conduct)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant subjected another person to physical or psychological abuse",
+      "As part of initiation into or membership in an organization",
+      "Consent of the victim is not a defense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Significant bodily injury: felony",
+      "Forced sexual conduct: felony plus sex offense charges",
+      "Death resulting: potential manslaughter charges"
+    ],
+    "notes": "Idaho's anti-hazing statute (I.C. § 18-917) covers any act of hazing regardless of the victim's consent. Organizations and individuals can be prosecuted. Schools and universities may impose additional administrative sanctions."
+  },
+  {
+    "common_charge_slug": "community-control-violation",
+    "statute_number": "20-222; 19-2602",
+    "statute_title": "Probation/Supervision Violation (Idaho equivalent)",
+    "offense_class": "Same as underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Original maximum sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was under court-ordered supervision",
+      "Defendant violated the terms of supervision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Idaho does not use the term 'community control.' The equivalent is probation or community supervision, handled under the same probation violation statutes. Withheld judgments and suspended sentences may be revoked upon violation."
+  },
+  {
+    "common_charge_slug": "mortgage-fraud",
+    "statute_number": "18-2403(2); 18-3601",
+    "statute_title": "Mortgage Fraud",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "14 years (theft by deception/forgery)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant made material misrepresentations in a mortgage loan application",
+      "Or defendant forged documents in connection with a mortgage transaction",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple transactions: aggregate charges",
+      "Federal prosecution under 18 USC 1014"
+    ],
+    "notes": "Idaho does not have a standalone mortgage fraud statute. Mortgage fraud is prosecuted under general theft by deception (I.C. § 18-2403) and forgery (I.C. § 18-3601) statutes. Most significant mortgage fraud cases are prosecuted federally."
+  },
+  {
+    "common_charge_slug": "other",
+    "statute_number": null,
+    "statute_title": "Other Criminal Charge",
+    "offense_class": "Varies",
+    "penalty_min": null,
+    "penalty_max": "Varies by specific offense",
+    "fine_max": "Varies by specific offense",
+    "elements": [
+      "Elements vary by specific offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Idaho criminal offenses not specifically categorized. Default penalties: misdemeanor maximum 6 months jail and $1,000 fine (I.C. § 18-113); felony maximum 5 years prison and $50,000 fine (I.C. § 18-112) when no specific penalty is prescribed."
+  }
+]

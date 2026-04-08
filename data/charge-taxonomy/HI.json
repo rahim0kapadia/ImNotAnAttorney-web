@@ -1,0 +1,1922 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "HRS § 291E-61",
+    "statute_title": "Operating a Vehicle Under the Influence of an Intoxicant (OVUII)",
+    "offense_class": "Petty Misdemeanor (first offense); Misdemeanor (second within 10 years); Class C Felony (third+ within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "30 days (first); 1 year (second); 5 years (third+)",
+    "fine_max": "$1,000 (first); $3,000 (second); $10,000 (third+)",
+    "elements": [
+      "Defendant operated or assumed actual physical control of a vehicle",
+      "On a public way, street, road, or highway",
+      "While under the influence of alcohol or any drug that impaired the ability to operate safely",
+      "OR with BAC of .08 or more"
+    ],
+    "mandatory_minimum": "14 hours community service (first); 240 hours community service or 5 days imprisonment (second); 10 days imprisonment (third)",
+    "enhancements": [
+      "BAC .15 or higher (additional mandatory minimums)",
+      "Minor passenger under 15 years of age",
+      "Third or subsequent offense within 10 years (Class C felony)",
+      "Causing serious bodily injury or death (separate charges under HRS § 291E-61.5)"
+    ],
+    "notes": "Hawaii uses the term OVUII rather than DUI/DWI. Implied consent under HRS § 291E-11. Administrative license revocation separate from criminal penalties. Ignition interlock required for repeat offenses."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "HRS § 291E-61(b)(1)",
+    "statute_title": "OVUII — First Offense",
+    "offense_class": "Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated or assumed actual physical control of a vehicle",
+      "While under the influence of alcohol or drugs impairing ability to operate safely",
+      "OR BAC of .08 or more",
+      "No prior OVUII convictions within 10 years"
+    ],
+    "mandatory_minimum": "14 hours community service; 1-year license revocation",
+    "enhancements": [
+      "BAC .15 or higher (enhanced mandatory minimums)",
+      "Minor passenger under 15"
+    ],
+    "notes": "Substance abuse assessment required. Court may order alcohol or drug treatment program. License revocation is 1 year for first offense."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "HRS § 291E-61(b)(2)-(3)",
+    "statute_title": "OVUII — Repeat Offense",
+    "offense_class": "Misdemeanor (second within 10 years); Class C Felony (third+ within 10 years)",
+    "penalty_min": "5 days (second); 10 days (third+)",
+    "penalty_max": "1 year (second); 5 years (third+)",
+    "fine_max": "$3,000 (second); $10,000 (third+)",
+    "elements": [
+      "Defendant operated or assumed actual physical control of a vehicle",
+      "While under the influence of alcohol or drugs",
+      "OR BAC of .08 or more",
+      "One or more prior OVUII convictions within 10 years"
+    ],
+    "mandatory_minimum": "240 hours community service or 5 days imprisonment (second); 10 days imprisonment (third+)",
+    "enhancements": [
+      "Third offense within 10 years (Class C felony)",
+      "BAC .15 or higher",
+      "Habitual OVUII offender designation"
+    ],
+    "notes": "Mandatory ignition interlock device. Extended license revocation. Mandatory substance abuse treatment program."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "HRS § 291E-61(a)(1)",
+    "statute_title": "OVUII — Drug Impairment",
+    "offense_class": "Petty Misdemeanor (first); escalates same as alcohol OVUII",
+    "penalty_min": null,
+    "penalty_max": "30 days (first); same escalation as alcohol OVUII",
+    "fine_max": "$1,000 (first)",
+    "elements": [
+      "Defendant operated or assumed actual physical control of a vehicle",
+      "While under the influence of any drug that impaired ability to operate the vehicle safely",
+      "Impairment rendered the person incapable of driving safely"
+    ],
+    "mandatory_minimum": "Same as alcohol OVUII by offense count",
+    "enhancements": [
+      "Combination of alcohol and drugs",
+      "Prior OVUII convictions within 10 years"
+    ],
+    "notes": "No per se drug limit in Hawaii. Prosecution must prove impairment. Drug Recognition Expert (DRE) evaluations commonly used."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "HRS § 291-2",
+    "statute_title": "Reckless Driving of Vehicle or Riding of Animals",
+    "offense_class": "Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove a vehicle or rode an animal on a highway",
+      "Recklessly in disregard of the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Often charged as a lesser included offense in OVUII cases. Highway includes any public road or street in Hawaii."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "HRS § 291C-12",
+    "statute_title": "Accidents Involving Death or Serious Bodily Injury — Duty to Stop",
+    "offense_class": "Class B Felony (death or serious bodily injury); Class C Felony (bodily injury); Misdemeanor (property only, HRS § 291C-13)",
+    "penalty_min": null,
+    "penalty_max": "10 years (death/SBI); 5 years (bodily injury); 1 year (property only)",
+    "fine_max": "$25,000 (death/SBI); $10,000 (bodily injury); $2,000 (property only)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury or death to any person (or damage to property)",
+      "Defendant failed to immediately stop at the scene or render aid",
+      "Defendant failed to give information and render assistance as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Accident resulting in death (Class B felony)",
+      "Leaving the scene of a fatality (additional penalties)"
+    ],
+    "notes": "Driver must provide name, address, registration number, and exhibit driver's license. Must render reasonable assistance to injured persons."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "HRS § 707-702.5",
+    "statute_title": "Negligent Homicide in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "By operation of a vehicle in a negligent manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Operating under the influence at time of offense",
+      "Excessive speed",
+      "Prior traffic convictions"
+    ],
+    "notes": "Hawaii does not have a separate vehicular homicide statute — negligent homicide covers vehicle-related deaths. See also HRS § 707-703 for negligent homicide in second and third degree."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "HRS § 707-702(1)(b)",
+    "statute_title": "Manslaughter — Reckless Causing of Death (Vehicle Context)",
+    "offense_class": "Class A Felony (reckless manslaughter); Class B Felony (negligent)",
+    "penalty_min": null,
+    "penalty_max": "20 years (reckless); 10 years (negligent)",
+    "fine_max": "$50,000 (reckless); $25,000 (negligent)",
+    "elements": [
+      "Defendant recklessly caused the death of another person",
+      "Death occurred in the context of operating a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Intoxication at time of offense",
+      "Prior OVUII convictions"
+    ],
+    "notes": "Manslaughter in Hawaii is recklessly causing the death of another. When a vehicle is involved, this statute applies rather than a separate vehicular manslaughter provision."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "HRS § 286-132",
+    "statute_title": "Driving While License Suspended or Revoked",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant drove a motor vehicle on a public highway",
+      "While defendant's license was suspended, revoked, or restricted",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": "7 days (if suspended for OVUII-related reasons)",
+    "enhancements": [
+      "Driving while license suspended for OVUII (enhanced penalties)",
+      "Prior convictions for driving on suspended"
+    ],
+    "notes": "Separate from HRS § 291E-62 (driving after OVUII administrative revocation), which carries additional mandatory minimums."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "HRS § 710-1026.9",
+    "statute_title": "Resisting an Order to Stop a Motor Vehicle in the Second Degree",
+    "offense_class": "Misdemeanor; Class C Felony (first degree under HRS § 710-1026.8 if risk of death or SBI)",
+    "penalty_min": null,
+    "penalty_max": "1 year (second degree); 5 years (first degree)",
+    "fine_max": "$2,000 (second degree); $10,000 (first degree)",
+    "elements": [
+      "Defendant intentionally failed to obey a direction of a law enforcement officer",
+      "Direction was to stop the defendant's motor vehicle",
+      "Law enforcement officer was acting under color of official authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Creating a risk of death or serious bodily injury (first degree — Class C felony)",
+      "High-speed pursuit",
+      "Operating under the influence while fleeing"
+    ],
+    "notes": "First degree (HRS § 710-1026.8) applies when fleeing creates substantial risk of death or serious bodily injury."
+  },
+  {
+    "common_charge_slug": "open-container",
+    "statute_number": "HRS § 291-3.1",
+    "statute_title": "Consuming or Possessing Intoxicating Liquor While Operating Motor Vehicle",
+    "offense_class": "Traffic Infraction (first); Petty Misdemeanor (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "Fine only (first); 30 days (subsequent)",
+    "fine_max": "$500 (first); $1,000 (subsequent)",
+    "elements": [
+      "Defendant consumed or possessed an open container of intoxicating liquor",
+      "While operating a motor vehicle on a public highway"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Open container laws in Hawaii are less strict than many mainland states. Passengers may possess open containers in some circumstances."
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "statute_number": "HRS § 291E-68",
+    "statute_title": "Refusal to Submit to Breath, Blood, or Urine Test",
+    "offense_class": "Administrative penalty (license revocation); no separate criminal charge for refusal",
+    "penalty_min": null,
+    "penalty_max": "Administrative — 1 year revocation (first); 2 years (second); 4 years (third+)",
+    "fine_max": null,
+    "elements": [
+      "Defendant was lawfully arrested for OVUII",
+      "Defendant was informed of the implied consent law",
+      "Defendant refused to submit to a breath, blood, or urine test"
+    ],
+    "mandatory_minimum": "1-year administrative license revocation (first refusal)",
+    "enhancements": [
+      "Second refusal (2-year revocation)",
+      "Third or subsequent refusal (4-year revocation)"
+    ],
+    "notes": "Hawaii's implied consent law (HRS § 291E-11) does not impose a separate criminal charge for refusal but imposes administrative license revocation. Refusal can be used as evidence in the underlying OVUII prosecution."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "HRS § 712-1243",
+    "statute_title": "Promoting a Dangerous Drug in the Third Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed any dangerous drug in any amount"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near schools or parks",
+      "Prior drug convictions"
+    ],
+    "notes": "Dangerous drugs include methamphetamine, cocaine, heroin, and other Schedule I/II substances. Hawaii treats simple possession as a felony. Deferred acceptance of guilty plea available for first offenders."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "HRS § 712-1249",
+    "statute_title": "Promoting a Detrimental Drug in the Third Degree",
+    "offense_class": "Petty Misdemeanor (possession of 3 grams or less); Misdemeanor (possession of 1 oz or less); Class C Felony (over 1 oz under HRS § 712-1247)",
+    "penalty_min": null,
+    "penalty_max": "30 days (petty misd.); 1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (petty misd.); $2,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant knowingly possessed marijuana",
+      "Amount determines the degree of offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution (elevates to first or second degree promoting)",
+      "Cultivation of 25+ plants (Class B felony under HRS § 712-1249.5)"
+    ],
+    "notes": "Hawaii has a medical marijuana program under HRS Chapter 329. Possession of 3 grams or less was decriminalized (no jail, fine only). Amounts over 1 oz are felony-level under HRS § 712-1247."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "HRS § 712-1243",
+    "statute_title": "Promoting a Dangerous Drug in the Third Degree — Cocaine",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed cocaine in any amount",
+      "Cocaine is classified as a dangerous drug under HRS § 712-1240"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession of 1/8 ounce or more (second degree — Class B felony under HRS § 712-1242)",
+      "Distribution (first or second degree promoting)"
+    ],
+    "notes": "Any amount of cocaine possession is a Class C felony. Quantities of 1/8 oz or more elevate to Class B felony (second degree promoting)."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "HRS § 712-1243",
+    "statute_title": "Promoting a Dangerous Drug in the Third Degree — Methamphetamine",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed methamphetamine in any amount",
+      "Methamphetamine is classified as a dangerous drug under HRS § 712-1240"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession of 1/8 ounce or more (second degree — Class B felony under HRS § 712-1242)",
+      "Possession of 1 ounce or more (first degree — Class A felony under HRS § 712-1241)",
+      "Distribution or manufacturing (enhanced penalties)"
+    ],
+    "notes": "Methamphetamine is a major enforcement priority in Hawaii. First degree promoting (1 oz+) is a Class A felony with up to 20 years imprisonment."
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "statute_number": "HRS § 712-1243",
+    "statute_title": "Promoting a Dangerous Drug in the Third Degree — Opioids",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly possessed heroin, fentanyl, or other opioids in any amount",
+      "Substance is classified as a dangerous drug under HRS § 712-1240"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession of 1/8 ounce or more of heroin (second degree — Class B felony)",
+      "Distribution (first or second degree promoting)"
+    ],
+    "notes": "Heroin and fentanyl are classified as dangerous drugs. Opioid prescription medications possessed without valid prescription also fall under this statute."
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "statute_number": "HRS § 712-1245",
+    "statute_title": "Promoting a Harmful Drug in the Third Degree",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant knowingly possessed a harmful drug without a valid prescription",
+      "Harmful drugs include Schedule III-V controlled substances"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution (elevates to first or second degree)",
+      "Large quantities (second degree under HRS § 712-1244)"
+    ],
+    "notes": "Harmful drugs include anabolic steroids, barbiturates, benzodiazepines, and other Schedule III-V substances possessed without prescription."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "HRS § 712-1241",
+    "statute_title": "Promoting a Dangerous Drug in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly possessed one or more preparations of a dangerous drug",
+      "In an aggregate weight of 1 ounce or more containing methamphetamine, heroin, morphine, or cocaine",
+      "OR 1 ounce or more of any other dangerous drug",
+      "OR possessed one or more preparations of 50 or more capsules or tablets"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior felony drug convictions",
+      "Use of a minor in drug operations",
+      "Distribution near schools"
+    ],
+    "notes": "First degree promoting is Hawaii's most serious drug charge. Class A felony carries indeterminate 20-year maximum with minimum set by parole authority."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "HRS § 712-1242",
+    "statute_title": "Promoting a Dangerous Drug in the Second Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years (indeterminate minimum set by parole authority)",
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant knowingly distributed any dangerous drug in any amount",
+      "OR possessed 1/8 ounce or more of methamphetamine, heroin, morphine, or cocaine",
+      "OR possessed 50 or more capsules, tablets, or units of a dangerous drug"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution to a minor",
+      "Distribution near schools or parks",
+      "Prior felony drug convictions"
+    ],
+    "notes": "Distribution means to sell, transfer, give, deliver, barter, or exchange. Second degree covers both distribution of any amount and possession of threshold quantities."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "HRS § 712-1241",
+    "statute_title": "Promoting a Dangerous Drug in the First Degree — Manufacturing",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly manufactured or cultivated a dangerous drug",
+      "Drug was a substance classified under HRS § 712-1240"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing near schools or residential areas",
+      "Manufacturing methamphetamine in presence of minors",
+      "Environmental damage from manufacturing"
+    ],
+    "notes": "Manufacturing any dangerous drug is treated as first degree promoting regardless of quantity. Methamphetamine lab operations are heavily prosecuted."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "HRS § 329-43.5",
+    "statute_title": "Prohibited Acts Related to Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant used, or possessed with intent to use, drug paraphernalia",
+      "Paraphernalia was used to plant, propagate, cultivate, grow, harvest, manufacture, compound, convert, produce, process, prepare, test, analyze, pack, repack, store, contain, conceal, inject, ingest, inhale, or otherwise introduce into the body a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of drug paraphernalia to a minor (Class C felony)"
+    ],
+    "notes": "Drug paraphernalia includes items used for ingesting, inhaling, or injecting controlled substances. Delivery to a minor elevates the charge."
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "statute_number": "HRS § 329-42",
+    "statute_title": "Prohibited Acts — Fraud in Obtaining Controlled Substances",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant obtained or attempted to obtain a controlled substance by fraud, deceit, misrepresentation, or subterfuge",
+      "OR used a false name or gave a false address in obtaining or attempting to obtain a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple prescriptions from different providers (doctor shopping)",
+      "Forging prescriptions"
+    ],
+    "notes": "Includes doctor shopping, forging prescriptions, and altering prescriptions. Each fraudulent obtaining is a separate offense."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "HRS § 712-1242",
+    "statute_title": "Promoting a Dangerous Drug in the Second Degree — Possession with Intent",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years (indeterminate)",
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant knowingly possessed a dangerous drug",
+      "In a quantity indicating intent to distribute (1/8 oz+ of meth/cocaine/heroin or 50+ units)",
+      "OR evidence of intent to distribute (scales, packaging, large cash)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exceeding first-degree thresholds (1 oz+ — Class A felony)",
+      "Prior drug convictions",
+      "Possession near schools"
+    ],
+    "notes": "Hawaii uses quantity thresholds rather than explicit 'possession with intent' language. Threshold quantities create a presumption of distribution intent."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "HRS § 707-701",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Class A Felony (life imprisonment without possibility of parole)",
+    "penalty_min": "Life without parole",
+    "penalty_max": "Life without parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally or knowingly caused the death of another person",
+      "With premeditation",
+      "OR during the course of specified felonies (felony murder)",
+      "OR victim was a witness, law enforcement officer, judge, or prosecutor in an official capacity",
+      "OR multiple victims killed"
+    ],
+    "mandatory_minimum": "Life imprisonment without possibility of parole",
+    "enhancements": [
+      "Multiple victims",
+      "Killing of a law enforcement officer or official",
+      "Murder committed during another felony"
+    ],
+    "notes": "Hawaii abolished the death penalty in 1957. First degree murder carries mandatory life without parole. HRS § 706-656 governs the sentence."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "HRS § 707-701.5",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Class A Felony (life imprisonment with possibility of parole)",
+    "penalty_min": null,
+    "penalty_max": "Life with possibility of parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant intentionally or knowingly caused the death of another person",
+      "Without premeditation or other first-degree aggravating factors"
+    ],
+    "mandatory_minimum": "Minimum term set by Hawaii Paroling Authority (typically not less than 10 years)",
+    "enhancements": [
+      "Use of a firearm (mandatory minimum enhanced)",
+      "Prior violent felony convictions"
+    ],
+    "notes": "Second degree murder is an intentional killing without the aggravating factors required for first degree. Parole eligibility determined by the Hawaii Paroling Authority."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "HRS § 707-702(1)",
+    "statute_title": "Manslaughter — Reckless",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant recklessly caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Prior felony convictions"
+    ],
+    "notes": "Hawaii does not distinguish between voluntary and involuntary manslaughter by name. Manslaughter under HRS § 707-702(1) covers reckless killings, which includes heat-of-passion killings that might be voluntary manslaughter in other jurisdictions."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "HRS § 707-702(2)",
+    "statute_title": "Manslaughter — Intentional or Knowing Causing of Death Under Extreme Mental or Emotional Disturbance",
+    "offense_class": "Class A Felony (HRS § 707-702(1)); Class B Felony (negligent homicide under HRS § 707-702.5)",
+    "penalty_min": null,
+    "penalty_max": "20 years (manslaughter); 10 years (negligent homicide first degree)",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through criminal negligence (negligent homicide)",
+      "OR recklessly (manslaughter)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Negligent homicide while intoxicated (enhanced)",
+      "Use of a motor vehicle"
+    ],
+    "notes": "Hawaii covers what other states call involuntary manslaughter through both manslaughter (reckless) and negligent homicide (HRS § 707-702.5). Negligent homicide has three degrees."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "HRS § 707-711",
+    "statute_title": "Assault in the Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant recklessly caused serious or substantial bodily injury to another",
+      "OR intentionally or knowingly caused bodily injury to another with a dangerous instrument",
+      "OR intentionally or knowingly caused bodily injury to a correctional worker, emergency personnel, or educational worker"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a dangerous instrument or weapon",
+      "Victim is a public official or emergency worker",
+      "Assault in the first degree (HRS § 707-710) if serious bodily injury is intentionally caused — Class B felony"
+    ],
+    "notes": "Assault in the first degree (HRS § 707-710, Class B felony) applies when the defendant intentionally or knowingly causes serious bodily injury."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "HRS § 707-712",
+    "statute_title": "Assault in the Third Degree",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly caused bodily injury to another person",
+      "OR negligently caused bodily injury to another with a dangerous instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against a sports official (separate offense under HRS § 707-712.6)",
+      "Mutual affray defense available"
+    ],
+    "notes": "Third degree assault is the most commonly charged assault offense in Hawaii. Bodily injury means physical pain, illness, or any impairment of physical condition."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "HRS § 707-712",
+    "statute_title": "Assault in the Third Degree (Hawaii Combines Assault and Battery)",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant caused bodily injury to another person",
+      "Intentionally, knowingly, or recklessly"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Hawaii combines assault and battery into a single offense category. There is no separate battery statute. All offensive touching that causes bodily injury is prosecuted as assault."
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "statute_number": "HRS § 707-710",
+    "statute_title": "Assault in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years (indeterminate)",
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally or knowingly caused serious bodily injury to another person",
+      "OR intentionally or knowingly caused bodily injury to another with a dangerous instrument creating a substantial risk of death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm (mandatory minimum)",
+      "Victim is a first responder, correctional worker, or government official"
+    ],
+    "notes": "Serious bodily injury means bodily injury which creates a substantial risk of death or causes serious permanent disfigurement, protracted loss, or impairment of a bodily member or organ."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "HRS § 708-841",
+    "statute_title": "Robbery in the Second Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years (indeterminate)",
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant, in the course of committing a theft from a person",
+      "Used force against the person of anyone present with intent to overcome resistance to the theft",
+      "OR threatened the imminent use of force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Infliction of serious bodily injury (may elevate to first degree)",
+      "Armed with a dangerous instrument (first degree)"
+    ],
+    "notes": "Robbery is theft from a person by force or threat of force. Second degree is the base offense; first degree applies with aggravating factors."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "HRS § 708-840",
+    "statute_title": "Robbery in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant, in the course of committing a theft or non-consensual taking of a motor vehicle",
+      "Was armed with a dangerous instrument or simulated firearm",
+      "OR inflicted or attempted to inflict serious bodily injury on another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm (mandatory minimum under HRS § 706-660.1)",
+      "Injury to victim",
+      "Multiple victims"
+    ],
+    "notes": "First degree robbery is one of the most serious property offenses. Mandatory minimum of imprisonment may apply when a firearm is used."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "HRS § 707-720",
+    "statute_title": "Kidnapping",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant intentionally or knowingly restrained another person",
+      "With intent to hold for ransom, reward, or shield",
+      "OR facilitate commission of a felony or flight from a felony",
+      "OR inflict bodily injury or terrorize the victim",
+      "OR interfere with government or political function"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a weapon",
+      "Victim is a minor",
+      "Kidnapping for ransom",
+      "Sexual motivation"
+    ],
+    "notes": "Kidnapping is a Class A felony carrying up to 20 years. Unlawful imprisonment (HRS § 707-721, Class C felony; § 707-722, Misdemeanor) covers lesser restraint offenses."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "HRS § 708-8251",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Class A Felony (first degree); Class B Felony (second degree, HRS § 708-8252); Class C Felony (third degree, HRS § 708-8253)",
+    "penalty_min": null,
+    "penalty_max": "20 years (first); 10 years (second); 5 years (third)",
+    "fine_max": "$50,000 (first); $25,000 (second); $10,000 (third)",
+    "elements": [
+      "Defendant intentionally or knowingly set fire to or caused to be burned property",
+      "And thereby recklessly placed another person in danger of death or bodily injury (first degree)",
+      "OR intentionally or knowingly damaged property of another by fire (second degree)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Endangering life (first degree)",
+      "Damage to occupied structure",
+      "Use of accelerants"
+    ],
+    "notes": "Hawaii has four degrees of arson. First degree requires reckless endangerment of life. Fourth degree (HRS § 708-8254) is a misdemeanor for reckless burning."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "HRS § 705-500; HRS § 707-701/701.5",
+    "statute_title": "Criminal Attempt — Murder",
+    "offense_class": "Class A Felony (attempt of murder 1st or 2nd degree)",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant intentionally engaged in conduct which would constitute murder",
+      "OR intentionally engaged in conduct constituting a substantial step toward commission of murder",
+      "Defendant had the intent to cause the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim is a public official",
+      "Prior violent felony convictions"
+    ],
+    "notes": "Attempted murder is graded one level below the completed offense under HRS § 705-502, but attempted first or second degree murder remains a Class A felony."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "HRS § 707-711(1)(b)",
+    "statute_title": "Assault in the Second Degree — Dangerous Instrument",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally or knowingly caused bodily injury to another person",
+      "With a dangerous instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury caused (may elevate to first degree assault — Class B felony)",
+      "Use of a firearm (mandatory minimum under HRS § 706-660.1)"
+    ],
+    "notes": "Dangerous instrument includes any firearm, weapon, or other instrument that in the manner used is capable of producing death or serious bodily injury."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "HRS § 708-830",
+    "statute_title": "Theft",
+    "offense_class": "Class B Felony (first degree, $20,000+); Class C Felony (second degree, $750+); Misdemeanor (third degree, $250+); Petty Misdemeanor (fourth degree, under $250)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first); 5 years (second); 1 year (third); 30 days (fourth)",
+    "fine_max": "$25,000 (first); $10,000 (second); $2,000 (third); $1,000 (fourth)",
+    "elements": [
+      "Defendant obtained or exerted unauthorized control over the property of another",
+      "With intent to deprive the owner of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value thresholds determine degree",
+      "Theft of a firearm (Class B felony regardless of value)",
+      "Theft from a person (elevated degree)"
+    ],
+    "notes": "Hawaii consolidates all theft offenses under HRS § 708-830. Degree based on value: 1st ($20,000+), 2nd ($750+), 3rd ($250+), 4th (under $250)."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "HRS § 708-830.5",
+    "statute_title": "Theft in the First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years (indeterminate)",
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant obtained or exerted unauthorized control over property of another",
+      "Value exceeds $20,000",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft from vulnerable person",
+      "Organized theft ring"
+    ],
+    "notes": "First degree theft applies when the value of property exceeds $20,000 or the property is a firearm."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "HRS § 708-833",
+    "statute_title": "Theft in the Fourth Degree",
+    "offense_class": "Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant obtained or exerted unauthorized control over property of another",
+      "Value under $250",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeat petty theft offenses"
+    ],
+    "notes": "Fourth degree theft is the lowest theft offense. Community service often imposed in lieu of jail for first offenders."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "HRS § 708-830(8)",
+    "statute_title": "Shoplifting (Concealment of Merchandise)",
+    "offense_class": "Depends on value — Petty Misdemeanor to Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "30 days (under $250) to 10 years ($20,000+)",
+    "fine_max": "$1,000 to $25,000 depending on value",
+    "elements": [
+      "Defendant concealed merchandise of a retail store",
+      "With intent to defraud the merchant",
+      "Without paying the purchase price"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of merchandise determines degree",
+      "Organized retail theft"
+    ],
+    "notes": "Shoplifting is prosecuted under the general theft statute based on value of goods taken. Concealment of merchandise gives rise to inference of intent to steal."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "HRS § 708-810",
+    "statute_title": "Burglary in the First Degree",
+    "offense_class": "Class B Felony (first degree); Class C Felony (second degree, HRS § 708-811)",
+    "penalty_min": "5 years (first degree, indeterminate)",
+    "penalty_max": "10 years (first degree); 5 years (second degree)",
+    "fine_max": "$25,000 (first); $10,000 (second)",
+    "elements": [
+      "Defendant intentionally entered or remained unlawfully in a building",
+      "With intent to commit therein a crime against a person or against property rights",
+      "First degree: was recklessly disregarding risk that building was occupied, OR was armed, OR caused physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Building was a dwelling (first degree)",
+      "Defendant was armed",
+      "Injury to occupant",
+      "Nighttime entry"
+    ],
+    "notes": "First degree burglary requires either that building was occupied, defendant was armed, or injury was caused. Second degree is entry with criminal intent without aggravating factors."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "HRS § 708-810(1)(a)",
+    "statute_title": "Burglary in the First Degree — Dwelling",
+    "offense_class": "Class B Felony",
+    "penalty_min": "5 years (indeterminate)",
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant intentionally entered or remained unlawfully in a building",
+      "Building was a dwelling or the defendant recklessly disregarded the risk it was occupied",
+      "Defendant intended to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Defendant was armed",
+      "Occupant was present and suffered injury",
+      "Nighttime entry"
+    ],
+    "notes": "Entry into an occupied dwelling is automatically first degree burglary in Hawaii."
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "statute_number": "HRS § 708-811",
+    "statute_title": "Burglary in the Second Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally entered or remained unlawfully in a building",
+      "With intent to commit therein a crime against a person or property rights",
+      "No first-degree aggravating factors present"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of tools or instruments to gain entry",
+      "Repeat burglary offenses"
+    ],
+    "notes": "Second degree covers non-dwelling burglary without aggravating factors such as occupancy, weapons, or injury."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "HRS § 708-836",
+    "statute_title": "Unauthorized Control of Propelled Vehicle",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally or knowingly exerted unauthorized control over another's propelled vehicle",
+      "By operating the vehicle without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of vehicle in commission of another felony",
+      "Prior convictions for UCPV",
+      "Vehicle valued over $20,000 (may also be charged as first degree theft)"
+    ],
+    "notes": "UCPV is Hawaii's primary motor vehicle theft statute. Also known as joyriding. Can be charged alongside theft depending on intent."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "HRS § 708-830(7)",
+    "statute_title": "Theft — Receiving Stolen Property",
+    "offense_class": "Class C Felony (if value $750+); Misdemeanor (under $750)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$10,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant received, retained, or disposed of the property of another",
+      "Knowing that it had been stolen",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of property determines degree"
+    ],
+    "notes": "Prosecuted under Hawaii's consolidated theft statute. Degree determined by value of stolen property received."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "HRS § 708-820",
+    "statute_title": "Criminal Property Damage in the First Degree",
+    "offense_class": "Class B Felony (first, $20,000+); Class C Felony (second, $1,500+, HRS § 708-821); Misdemeanor (third, $500+, HRS § 708-822); Petty Misdemeanor (fourth, under $500, HRS § 708-823)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first); 5 years (second); 1 year (third); 30 days (fourth)",
+    "fine_max": "$25,000 (first); $10,000 (second); $2,000 (third); $1,000 (fourth)",
+    "elements": [
+      "Defendant intentionally or knowingly damaged the property of another",
+      "Without the owner's consent",
+      "Degree depends on value of damage or nature of property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to a utility or public infrastructure (first degree regardless of value)",
+      "Graffiti (HRS § 708-823.5)"
+    ],
+    "notes": "Hawaii uses criminal property damage rather than vandalism. Four degrees based on value of damage."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "HRS § 708-814",
+    "statute_title": "Criminal Trespass in the Second Degree",
+    "offense_class": "Petty Misdemeanor (second degree); Misdemeanor (first degree, HRS § 708-813)",
+    "penalty_min": null,
+    "penalty_max": "30 days (second degree); 1 year (first degree)",
+    "fine_max": "$1,000 (second degree); $2,000 (first degree)",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully in or upon premises",
+      "Premises were enclosed in a manner designed to exclude intruders OR premises were fenced or property of the state"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "First degree: commercial premises at night, dwelling, or with dangerous instrument"
+    ],
+    "notes": "First degree criminal trespass (HRS § 708-813) is a misdemeanor and applies to dwelling entries, commercial premises at night, or when carrying dangerous instruments."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "HRS § 708-820",
+    "statute_title": "Criminal Property Damage (Criminal Mischief)",
+    "offense_class": "Varies by degree — Class B Felony to Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "10 years (first degree) to 30 days (fourth degree)",
+    "fine_max": "$25,000 (first) to $1,000 (fourth)",
+    "elements": [
+      "Defendant intentionally damaged property of another",
+      "OR recklessly damaged property of another in the course of committing a crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of damage determines degree"
+    ],
+    "notes": "Hawaii uses 'criminal property damage' as its equivalent of criminal mischief. Same statutes as vandalism entry."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "HRS § 709-906",
+    "statute_title": "Abuse of Family or Household Members",
+    "offense_class": "Misdemeanor (first offense); Class C Felony (with prior conviction within 2 years under HRS § 709-906(9))",
+    "penalty_min": null,
+    "penalty_max": "1 year (first offense misdemeanor); 5 years (felony for repeat)",
+    "fine_max": "$2,000 (first); $10,000 (felony)",
+    "elements": [
+      "Defendant physically abused a family or household member",
+      "Family or household members include spouses, former spouses, persons in a dating relationship, persons with a common child, persons related by blood, and cohabitants"
+    ],
+    "mandatory_minimum": "48 hours (first offense with prior conviction); 15 days (if prior TRO violation); 30 days (second TRO violation)",
+    "enhancements": [
+      "Prior conviction within 2 years (Class C felony)",
+      "Violation of TRO (enhanced mandatory minimum)",
+      "Strangulation (separate charge under HRS § 709-906(8))"
+    ],
+    "notes": "Mandatory arrest required for domestic abuse calls. Court must order domestic violence intervention assessment. No-contact order imposed during pendency of the case."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "HRS § 709-906",
+    "statute_title": "Abuse of Family or Household Members — Physical Harm",
+    "offense_class": "Misdemeanor; Class C Felony (repeat within 2 years)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant physically abused a family or household member",
+      "Causing bodily injury"
+    ],
+    "mandatory_minimum": "48 hours (with aggravating factors)",
+    "enhancements": [
+      "Prior DV conviction within 2 years",
+      "Strangulation or impeding breathing",
+      "Use of a weapon"
+    ],
+    "notes": "Hawaii does not have a separate domestic battery statute — all domestic violence is prosecuted under HRS § 709-906. Bodily injury cases may also be charged as assault."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "HRS § 709-903.5",
+    "statute_title": "Endangering the Welfare of a Minor in the First Degree",
+    "offense_class": "Class C Felony (first degree); Misdemeanor (second degree, HRS § 709-904)",
+    "penalty_min": null,
+    "penalty_max": "5 years (first degree); 1 year (second degree)",
+    "fine_max": "$10,000 (first degree); $2,000 (second degree)",
+    "elements": [
+      "Defendant, being a parent, guardian, or other person responsible for the welfare of a minor",
+      "Intentionally or knowingly allowed the minor to be placed in a situation of substantial risk of serious harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Child suffered actual harm",
+      "Exposure to drug manufacturing",
+      "Repeated conduct"
+    ],
+    "notes": "Second degree (HRS § 709-904) covers lesser endangerment where parent or guardian knowingly endangers the child's welfare."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "HRS § 707-750",
+    "statute_title": "Promoting Child Abuse in the First Degree",
+    "offense_class": "Class A Felony (first degree); Class B Felony (second degree, HRS § 707-751); Class C Felony (third degree, HRS § 707-752)",
+    "penalty_min": null,
+    "penalty_max": "20 years (first); 10 years (second); 5 years (third)",
+    "fine_max": "$50,000 (first); $25,000 (second); $10,000 (third)",
+    "elements": [
+      "Defendant intentionally or knowingly caused substantial bodily injury to a minor under 18 (first degree)",
+      "OR recklessly caused substantial bodily injury to a minor (second degree)",
+      "OR caused bodily injury to a minor (third degree)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under age 8 (enhanced penalties)",
+      "Pattern of abuse",
+      "Use of an instrument or weapon"
+    ],
+    "notes": "Hawaii specifically designates child abuse as 'promoting child abuse' in three degrees. First degree involves intentionally causing substantial bodily injury to a child."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "HRS § 586-11",
+    "statute_title": "Violation of an Order for Protection",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "A protective order was issued against the defendant",
+      "Defendant knowingly or intentionally violated the order",
+      "Violation involved contact with, or proximity to, the protected person"
+    ],
+    "mandatory_minimum": "48 hours (if prior DV conviction); 15 days (second TRO violation)",
+    "enhancements": [
+      "Prior violations of protective orders",
+      "Physical contact or assault during violation",
+      "Violation accompanied by another criminal offense"
+    ],
+    "notes": "Hawaii has both temporary restraining orders (TROs) and protective orders. Violation of either is a criminal offense. Mandatory minimum jail time increases with each subsequent violation."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "HRS § 711-1106.5",
+    "statute_title": "Stalking in the First Degree",
+    "offense_class": "Class C Felony (first degree); Misdemeanor (second degree, HRS § 711-1106.4)",
+    "penalty_min": null,
+    "penalty_max": "5 years (first degree); 1 year (second degree)",
+    "fine_max": "$10,000 (first degree); $2,000 (second degree)",
+    "elements": [
+      "Defendant intentionally or knowingly engaged in a course of conduct directed at a specific person",
+      "That would cause a reasonable person to feel fear for their safety or to suffer emotional distress",
+      "First degree requires prior conviction for stalking or violation of a TRO"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior stalking conviction (first degree)",
+      "Stalking in violation of a TRO",
+      "Use of electronic surveillance"
+    ],
+    "notes": "First degree stalking requires a prior conviction for stalking or a prior violation of a TRO against the same victim."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "HRS § 711-1106",
+    "statute_title": "Harassment",
+    "offense_class": "Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant, with intent to harass, annoy, or alarm another person",
+      "Struck, shoved, kicked, or otherwise touched another in an offensive manner",
+      "OR insulted, taunted, or challenged in a manner likely to provoke an immediate violent response",
+      "OR repeatedly made communications anonymously or at inconvenient hours"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Harassment by stalking (elevated to stalking charge)"
+    ],
+    "notes": "Harassment is a petty misdemeanor. Often used as a lesser included offense for assault cases."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "HRS § 709-906; HRS § 28-94",
+    "statute_title": "Abuse of Family or Household Members — Elder; Elder Abuse",
+    "offense_class": "Misdemeanor to Class C Felony (criminal); Civil remedies also available",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$2,000 to $10,000",
+    "elements": [
+      "Defendant abused, neglected, or exploited a vulnerable elder",
+      "Victim was 62 years or older or a dependent adult"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Financial exploitation",
+      "Repeated acts of abuse",
+      "Victim suffered serious bodily injury"
+    ],
+    "notes": "Elder abuse can be charged under the domestic violence statute (HRS § 709-906) if the victim is a family member, or under separate elder abuse provisions. Financial exploitation of elders is separately prosecuted."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "HRS § 134-6",
+    "statute_title": "Carrying or Use of Firearm in the Commission of a Separate Felony; Possession of a Firearm with an Altered Serial Number",
+    "offense_class": "Class A Felony (firearm use during felony); Class B Felony (altered serial number)",
+    "penalty_min": null,
+    "penalty_max": "20 years (during felony); 10 years (altered serial number)",
+    "fine_max": "$50,000 (during felony); $25,000 (altered serial number)",
+    "elements": [
+      "Defendant possessed a firearm with intent to facilitate a felony",
+      "OR possessed a firearm with an altered, removed, or obliterated serial number"
+    ],
+    "mandatory_minimum": "Mandatory minimum term of imprisonment when firearm used in felony",
+    "enhancements": [
+      "Discharge of firearm during felony",
+      "Use of a semi-automatic firearm"
+    ],
+    "notes": "Hawaii has strict firearms regulations. Separate permits required for acquisition, registration, and carry. See HRS Chapter 134 for comprehensive firearms regulation."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "HRS § 134-7",
+    "statute_title": "Ownership or Possession Prohibited — Convicted Felons",
+    "offense_class": "Class B Felony (firearm); Class C Felony (ammunition)",
+    "penalty_min": "5 years (firearm, indeterminate)",
+    "penalty_max": "10 years (firearm); 5 years (ammunition)",
+    "fine_max": "$25,000 (firearm); $10,000 (ammunition)",
+    "elements": [
+      "Defendant had been convicted of a felony or certain enumerated misdemeanors",
+      "Defendant owned, possessed, or controlled a firearm or ammunition"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior violent felony convictions",
+      "Possession of multiple firearms"
+    ],
+    "notes": "Also prohibits firearm possession by persons convicted of domestic violence misdemeanors, persons adjudicated mentally defective, fugitives, illegal drug users, and illegal aliens."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "HRS § 134-9",
+    "statute_title": "Licenses to Carry — Carrying Without a License",
+    "offense_class": "Class B Felony (place to keep loaded or unloaded firearm, HRS § 134-6(c)-(e)); Misdemeanor (various permit violations)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$25,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant carried a firearm in public",
+      "Without a valid license to carry",
+      "OR carried in a prohibited location"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Loaded firearm",
+      "Carrying in a prohibited area (schools, government buildings)"
+    ],
+    "notes": "Hawaii requires a license to carry a concealed firearm. Following the Bruen decision, Hawaii updated its permitting system. Places of worship, schools, bars, and government buildings remain prohibited."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "HRS § 134-6; HRS § 134-17",
+    "statute_title": "Unlawful Discharge of a Firearm",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant discharged a firearm",
+      "In a manner that endangered persons or property",
+      "In a populated area or without lawful justification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Discharge into an occupied structure",
+      "Injury resulting from discharge"
+    ],
+    "notes": "Reckless discharge of a firearm is a separate offense from assault with a dangerous weapon."
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "statute_number": "HRS § 134-16",
+    "statute_title": "Restriction on Possession, Sale, Gift, or Delivery of Electric Guns and Other Prohibited Weapons",
+    "offense_class": "Misdemeanor (electric guns); Class C Felony (switchblades, butterfly knives, and other prohibited weapons)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$2,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant knowingly possessed, manufactured, sold, or transported a prohibited weapon",
+      "Prohibited weapons include switchblades, butterfly knives, metal knuckles, and other specified weapons"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Hawaii prohibits many categories of weapons beyond firearms, including switchblade knives, butterfly knives, and metal knuckles."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "HRS § 708-839.6",
+    "statute_title": "Identity Theft in the First Degree",
+    "offense_class": "Class A Felony (first degree, $20,000+); Class B Felony (second degree, $300+, HRS § 708-839.7); Class C Felony (third degree, HRS § 708-839.8)",
+    "penalty_min": null,
+    "penalty_max": "20 years (first); 10 years (second); 5 years (third)",
+    "fine_max": "$50,000 (first); $25,000 (second); $10,000 (third)",
+    "elements": [
+      "Defendant made or caused to be made a transmission of personal information of another",
+      "By any oral statement, written statement, or electronically",
+      "Without authorization and with intent to commit fraud, harm, or profit"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims",
+      "Victim is elderly or disabled",
+      "Amount of financial harm exceeds thresholds"
+    ],
+    "notes": "Hawaii has three degrees of identity theft based on the amount of financial harm or number of victims. Includes computer fraud and unauthorized access."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "HRS § 708-830",
+    "statute_title": "Theft by Deception or Breach of Fiduciary Obligation",
+    "offense_class": "Depends on value — same as theft degrees (Class B Felony to Petty Misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first degree); 5 years (second); 1 year (third); 30 days (fourth)",
+    "fine_max": "$25,000 (first) to $1,000 (fourth)",
+    "elements": [
+      "Defendant obtained or exerted control over property entrusted to them",
+      "In a fiduciary capacity",
+      "Used or disposed of the property in a manner inconsistent with the terms of the trust or fiduciary obligation",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of embezzled funds determines degree",
+      "Breach of public trust (government employee)"
+    ],
+    "notes": "Embezzlement is prosecuted under Hawaii's consolidated theft statute. No separate embezzlement crime — it falls under theft by deception or breach of fiduciary obligation."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "HRS § 708-851",
+    "statute_title": "Forgery in the First Degree",
+    "offense_class": "Class B Felony (first degree); Class C Felony (second degree, HRS § 708-852); Misdemeanor (third degree, HRS § 708-853)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first); 5 years (second); 1 year (third)",
+    "fine_max": "$25,000 (first); $10,000 (second); $2,000 (third)",
+    "elements": [
+      "Defendant, with intent to defraud, falsely made, completed, endorsed, or altered a written instrument",
+      "OR uttered a forged instrument knowing it to be forged",
+      "First degree: government-issued instrument (money, stamps, securities)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forgery of government documents (first degree)",
+      "Multiple forged instruments"
+    ],
+    "notes": "Three degrees based on the type of document forged. First degree covers government-issued instruments. Third degree covers general written instruments."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "HRS § 708-858",
+    "statute_title": "Issuing a Bad Check",
+    "offense_class": "Misdemeanor ($150+); Petty Misdemeanor (under $150)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 30 days (petty misdemeanor)",
+    "fine_max": "$2,000 (misdemeanor); $1,000 (petty misdemeanor)",
+    "elements": [
+      "Defendant issued a check knowing it would not be honored by the drawee",
+      "Check was not paid upon presentation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple bad checks",
+      "Large amounts"
+    ],
+    "notes": "Presumption of knowledge if check is not paid within 30 days of notice of dishonor."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "HRS § 431:10C-307.7",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly presented a false or fraudulent claim for payment",
+      "To an insurance company or self-insured entity",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized insurance fraud ring",
+      "Value of fraudulent claim over $20,000"
+    ],
+    "notes": "Hawaii insurance fraud includes false motor vehicle accident claims, medical billing fraud, and staged accidents."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "HRS § 708-8100",
+    "statute_title": "Fraudulent Use of a Credit Card",
+    "offense_class": "Class C Felony ($300+); Misdemeanor (under $300)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$10,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant used a credit card or credit card number belonging to another",
+      "Without authorization and with intent to defraud",
+      "To obtain goods, services, or anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple unauthorized uses",
+      "Value exceeds $20,000 (elevated degree)"
+    ],
+    "notes": "Also covers use of forged, expired, or revoked credit cards. Part of Hawaii's broader fraud offense framework."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "HRS § 708A-3",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant conducted or attempted to conduct a financial transaction",
+      "Knowing that the property involved represents the proceeds of specified unlawful activity",
+      "With intent to promote the carrying on of specified unlawful activity",
+      "OR knowing the transaction was designed to conceal the nature, location, source, ownership, or control of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeds $100,000",
+      "Connection to organized crime"
+    ],
+    "notes": "Hawaii's money laundering statute (Chapter 708A) closely follows the federal model."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "HRS § 708-830(2)",
+    "statute_title": "Theft by Deception",
+    "offense_class": "Depends on value — Class B Felony ($20,000+) to Petty Misdemeanor (under $250)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first degree) to 30 days (fourth degree)",
+    "fine_max": "$25,000 (first) to $1,000 (fourth)",
+    "elements": [
+      "Defendant obtained property of another by creating or reinforcing a false impression",
+      "Including false impressions of law, value, intention, or other state of mind",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value determines degree",
+      "Victim is elderly or vulnerable"
+    ],
+    "notes": "General fraud in Hawaii is prosecuted as theft by deception under the consolidated theft statute. Degree based on value of property obtained."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "HRS § 707-730",
+    "statute_title": "Sexual Assault in the First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly subjected another person to an act of sexual penetration",
+      "By compulsion through strong compulsion or by force",
+      "OR victim was less than 14 years old",
+      "OR victim was mentally defective or mentally incapacitated"
+    ],
+    "mandatory_minimum": "Indeterminate sentence with minimum set by parole authority",
+    "enhancements": [
+      "Victim under 14 (mandatory extended sentence)",
+      "Use of a weapon",
+      "Multiple victims",
+      "Prior sex offense convictions (mandatory extended sentence)"
+    ],
+    "notes": "Hawaii uses 'sexual assault' rather than 'rape.' Four degrees exist. First degree (Class A) involves penetration by force or with a victim under 14."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "HRS § 707-730",
+    "statute_title": "Sexual Assault in the First Degree (Hawaii Equivalent of Rape)",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly subjected another to an act of sexual penetration by compulsion",
+      "Compulsion means the use of physical force or a threat of imminent death, serious bodily injury, or kidnapping"
+    ],
+    "mandatory_minimum": "Indeterminate life sentence or extended sentence may apply for repeat offenders",
+    "enhancements": [
+      "Victim under 14 years old",
+      "Use of a dangerous weapon",
+      "Prior sex offense convictions"
+    ],
+    "notes": "Hawaii does not use the term 'rape' in its criminal code. Sexual assault in the first degree (HRS § 707-730) is the functional equivalent. Covers penetration by force or against a victim under 14."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "HRS § 707-734",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally exposed their genitals to another person",
+      "Under circumstances in which the defendant's conduct was likely to cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure to a minor",
+      "Prior convictions"
+    ],
+    "notes": "Classified as a petty misdemeanor. Repeat offenses may result in sex offender registration requirements."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "HRS § 712-1200",
+    "statute_title": "Prostitution",
+    "offense_class": "Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant engaged in or agreed to engage in sexual conduct with another person",
+      "For a fee or compensation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Promoting prostitution (Class B or C felony under HRS § 712-1202 to 712-1204)",
+      "Solicitation of a minor (Class A felony)"
+    ],
+    "notes": "Simple prostitution and solicitation are petty misdemeanors. Promoting prostitution carries much more serious penalties."
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "statute_number": "HRS § 707-732",
+    "statute_title": "Sexual Assault in the Third Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant recklessly subjected another to sexual contact",
+      "By compulsion or by threat of forcible compulsion",
+      "OR the victim was less than 14 years old"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 14",
+      "Position of authority over victim"
+    ],
+    "notes": "Sexual contact offenses (as opposed to penetration) are covered under third and fourth degree sexual assault."
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "statute_number": "HRS § 711-1110.9",
+    "statute_title": "Violation of Privacy in the First Degree — Intimate Images",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally disclosed an image of another identifiable person",
+      "Whose intimate parts are exposed or who is engaged in a sexual act",
+      "Without the depicted person's consent and with intent to harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution to multiple persons",
+      "Victim is a minor",
+      "Use of electronic media for wide distribution"
+    ],
+    "notes": "Hawaii's revenge porn and non-consensual intimate image distribution law. Also covers voyeurism under HRS § 711-1110.9."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "HRS § 707-750; HRS § 707-751; HRS § 707-752",
+    "statute_title": "Promoting Child Abuse in the First, Second, and Third Degree; Electronic Enticement of a Child (HRS § 707-756)",
+    "offense_class": "Class A Felony (promoting child abuse first); Class B Felony (electronic enticement); Class C Felony (promoting child abuse third)",
+    "penalty_min": null,
+    "penalty_max": "20 years (first degree promoting); 10 years (electronic enticement); 5 years (third degree promoting)",
+    "fine_max": "$50,000 (first); $25,000 (electronic enticement); $10,000 (third)",
+    "elements": [
+      "Defendant produced, distributed, or possessed child sexual abuse material",
+      "OR used a computer or electronic device to entice a minor to engage in sexual conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Production of material (vs. possession)",
+      "Victim under 14",
+      "Commercial exploitation"
+    ],
+    "notes": "Electronic enticement of a child (HRS § 707-756) specifically targets online predatory behavior. Sex offender registration required upon conviction."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "HRS § 846E-9",
+    "statute_title": "Failure to Comply with Sex Offender Registration Requirements",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was required to register as a sex offender under HRS Chapter 846E",
+      "Defendant knowingly failed to register, verify information, or update registration as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple failures to register",
+      "Absconding from registration jurisdiction"
+    ],
+    "notes": "Sex offender registration in Hawaii is maintained by the Hawaii Criminal Justice Data Center. Registration periods vary based on the tier of the offense."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "HRS § 707-730(1)(b)",
+    "statute_title": "Sexual Assault in the First Degree — Victim Under 14",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant knowingly subjected a person under 14 to an act of sexual penetration",
+      "Regardless of consent"
+    ],
+    "mandatory_minimum": "Extended term of imprisonment may be imposed",
+    "enhancements": [
+      "Defendant in a position of authority",
+      "Age difference greater than 5 years",
+      "Pattern of conduct"
+    ],
+    "notes": "Hawaii's age of consent is 16. Sexual penetration with a victim under 14 is first degree sexual assault (Class A felony). Third degree sexual assault (HRS § 707-732) covers contact offenses with victims under 14."
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "statute_number": "HRS § 707-733",
+    "statute_title": "Sexual Assault in the Fourth Degree",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant knowingly subjected another person to sexual contact",
+      "Without the other person's consent or by compulsion"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Position of authority",
+      "Victim incapacitated"
+    ],
+    "notes": "Fourth degree sexual assault covers non-consensual sexual contact. Hawaii does not use the term 'sexual battery' — this is the functional equivalent."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "HRS § 711-1101",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant, with intent to cause physical inconvenience or alarm",
+      "Engaged in fighting or violent behavior, made unreasonable noise, or created a hazardous condition",
+      "By an act which was not necessary for any lawful purpose"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Disorderly conduct is a petty misdemeanor. Common charge in cases involving public disturbances, loud parties, or fights."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "HRS § 710-1026",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant intentionally prevented a peace officer acting under color of official authority",
+      "From effecting an arrest",
+      "By using or threatening to use physical force against the peace officer or another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing injury to officer",
+      "Fleeing in a vehicle (separate charge under HRS § 710-1026.8/1026.9)"
+    ],
+    "notes": "The arrest does not need to be lawful for the charge to apply. Physical force or threat of force against the officer is required."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "HRS § 710-1029",
+    "statute_title": "Hindering Prosecution",
+    "offense_class": "Class C Felony (hindering prosecution of felony); Misdemeanor (hindering prosecution of misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$10,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant rendered assistance to a person who had committed a crime",
+      "With intent to hinder the detection, apprehension, prosecution, conviction, or punishment of another",
+      "By harboring, concealing, warning, providing means of escape, suppressing evidence, or aiding flight"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "The underlying offense was a felony (elevates to Class C felony)"
+    ],
+    "notes": "Also see tampering with a witness (HRS § 710-1071) and tampering with evidence (HRS § 710-1076)."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "HRS § 710-1077",
+    "statute_title": "Criminal Contempt of Court",
+    "offense_class": "Misdemeanor (intentional); Petty Misdemeanor (reckless or negligent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (intentional); 30 days (petty misdemeanor)",
+    "fine_max": "$2,000 (intentional); $1,000 (petty misdemeanor)",
+    "elements": [
+      "Defendant intentionally or recklessly violated a court order or engaged in disruptive conduct in court",
+      "The order was lawful and the defendant had knowledge of it"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminal contempt is separate from civil contempt, which is used to compel compliance. Criminal contempt is punitive."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "HRS § 709-906; HRS § 712-1270",
+    "statute_title": "Intoxication (Hawaii Approach)",
+    "offense_class": "Not criminalized as a standalone offense",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Hawaii does not criminalize public intoxication as a standalone offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Hawaii does not have a public intoxication statute. Intoxicated individuals creating disturbances may be charged with disorderly conduct (HRS § 711-1101) or taken to a detoxification facility under HRS § 334-1."
+  },
+  {
+    "common_charge_slug": "loitering",
+    "statute_number": "HRS § 281-78(b)(1)(H)",
+    "statute_title": "Loitering (Various County Ordinances)",
+    "offense_class": "Violation/Petty Misdemeanor (county ordinances)",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant remained in a public place without apparent purpose",
+      "Under circumstances that warrant alarm for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Loitering laws in Hawaii are primarily governed by county ordinances rather than state statute. Enforceability has been subject to constitutional challenges."
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "statute_number": "HRS § 711-1101",
+    "statute_title": "Disorderly Conduct (Disturbing the Peace)",
+    "offense_class": "Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant made unreasonable noise or engaged in offensive conduct",
+      "With intent to cause public inconvenience, annoyance, or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Hawaii covers disturbing the peace under its disorderly conduct statute (HRS § 711-1101)."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "HRS § 710-1024",
+    "statute_title": "Bail Jumping",
+    "offense_class": "Class C Felony (if underlying charge is felony); Misdemeanor (if underlying charge is misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 1 year (misdemeanor)",
+    "fine_max": "$10,000 (felony); $2,000 (misdemeanor)",
+    "elements": [
+      "Defendant was released on bail or recognizance",
+      "Defendant intentionally failed to appear in court as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge was a serious felony"
+    ],
+    "notes": "Bail jumping in Hawaii is graded based on the seriousness of the underlying charge."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "HRS § 710-1015",
+    "statute_title": "False Reporting to Law Enforcement Authorities",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,000",
+    "elements": [
+      "Defendant intentionally made a false report to law enforcement",
+      "That a crime had been committed",
+      "Knowing the report was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "False report causes emergency response deployment",
+      "False report targets a specific individual (swatting)"
+    ],
+    "notes": "Also covers false reports regarding emergencies and furnishing false information to law enforcement."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "HRS § 707-716",
+    "statute_title": "Terroristic Threatening in the First Degree",
+    "offense_class": "Class C Felony (first degree); Misdemeanor (second degree, HRS § 707-717)",
+    "penalty_min": null,
+    "penalty_max": "5 years (first degree); 1 year (second degree)",
+    "fine_max": "$10,000 (first degree); $2,000 (second degree)",
+    "elements": [
+      "Defendant threatened, by word or conduct, to cause bodily injury to another person",
+      "OR to cause damage to property of another",
+      "With the intent to terrorize or with reckless disregard that the threat would cause terror",
+      "First degree: threat to cause death, use of a dangerous instrument, or threat causes evacuation of a building"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat to cause death (first degree)",
+      "Use of a dangerous instrument",
+      "Threat causes evacuation"
+    ],
+    "notes": "Hawaii calls this 'terroristic threatening' rather than criminal threat. Two degrees based on severity."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "HRS § 706-625",
+    "statute_title": "Revocation of Probation",
+    "offense_class": "Court may revoke probation and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Original sentence for the underlying offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation for a criminal offense",
+      "Defendant violated a term or condition of probation",
+      "Violation was inexcusable"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense committed while on probation",
+      "Repeated violations"
+    ],
+    "notes": "Court has discretion to modify conditions, extend probation, or revoke probation and impose the original sentence. Graduated sanctions may be imposed."
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "statute_number": "HRS § 706-625",
+    "statute_title": "Technical Violation of Probation",
+    "offense_class": "Court discretion — modification to full revocation",
+    "penalty_min": null,
+    "penalty_max": "Original sentence for underlying offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant violated a technical condition of probation",
+      "Such as missed appointments, failed drug tests, or curfew violations",
+      "Without committing a new criminal offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple technical violations",
+      "Pattern of non-compliance"
+    ],
+    "notes": "Courts may use graduated sanctions for technical violations before revoking probation. Hawaii uses a progressive discipline model."
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "statute_number": "HRS § 706-625",
+    "statute_title": "Substantive Violation of Probation — New Criminal Offense",
+    "offense_class": "Court may revoke probation and impose original sentence; new offense charged separately",
+    "penalty_min": null,
+    "penalty_max": "Original sentence plus sentence for new offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was on probation and committed a new criminal offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Seriousness of new offense",
+      "Violence involved in new offense"
+    ],
+    "notes": "A new criminal offense while on probation typically results in revocation. The new offense is charged separately and may result in consecutive sentences."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "HRS § 706-670",
+    "statute_title": "Parole Revocation",
+    "offense_class": "Administrative/judicial — return to imprisonment for remainder of term",
+    "penalty_min": null,
+    "penalty_max": "Remainder of original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on parole",
+      "Absconding from parole supervision"
+    ],
+    "notes": "Hawaii Paroling Authority sets parole conditions and determines violations. Revocation returns the parolee to serve the remainder of the original sentence."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "HRS § 705-520",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Same class as the target offense (reduced by one level for Class A felonies)",
+    "penalty_min": null,
+    "penalty_max": "Same as target offense (20 years max for Class A)",
+    "fine_max": "Same as target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to engage in or cause conduct constituting a crime",
+      "With intent to promote or facilitate the commission of the crime",
+      "An overt act in pursuance of the conspiracy was committed by defendant or co-conspirator"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Conspiracy to commit murder",
+      "Drug conspiracy",
+      "Organized crime conspiracy"
+    ],
+    "notes": "Conspiracy is graded at the same level as the target offense. An overt act is required. Renunciation is an affirmative defense."
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "statute_number": "HRS § 703-304",
+    "statute_title": "Use of Force in Self-Protection",
+    "offense_class": "Affirmative defense — not a criminal charge",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Defendant believed force was immediately necessary to protect against the use of unlawful force by another",
+      "Force used was proportional to the threat",
+      "Deadly force may be used only when the defendant believed it was necessary to protect against death, serious bodily injury, kidnapping, or sexual assault"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Hawaii imposes a duty to retreat if safely possible before using deadly force. No 'Stand Your Ground' law. Castle Doctrine applies within the home (HRS § 703-304(5)(b))."
+  },
+  {
+    "common_charge_slug": "other",
+    "statute_number": "Various HRS provisions",
+    "statute_title": "Miscellaneous Hawaii Criminal Offenses",
+    "offense_class": "Varies",
+    "penalty_min": null,
+    "penalty_max": "Varies by specific offense",
+    "fine_max": null,
+    "elements": [
+      "Elements specific to each offense as defined under the Hawaii Revised Statutes"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Catch-all for Hawaii offenses not otherwise enumerated. Consult the specific HRS section for elements, penalties, and defenses."
+  }
+]

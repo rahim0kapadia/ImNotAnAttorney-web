@@ -1,0 +1,1679 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Ala. Code § 32-5A-191",
+    "statute_title": "Driving Under the Influence",
+    "offense_class": "Misdemeanor (first/second); Class C Felony (third); Class B Felony (fourth+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first/second); 10 years (third); 20 years (fourth+)",
+    "fine_max": "$2,100 (first); $5,100 (second); $10,100 (third); $10,100 (fourth+)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "On a public highway or street",
+      "While under the influence of alcohol, a controlled substance, or any substance that impairs mental or physical faculties",
+      "Or had a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .15 or higher (enhanced penalties)",
+      "Child under 14 in vehicle (Class C Felony under § 32-5A-191(q))",
+      "Third conviction within 5 years (Class C Felony)",
+      "Fourth or subsequent conviction (Class B Felony)"
+    ],
+    "notes": "Implied consent under § 32-5-192. Admin license suspension 90 days first offense. Ignition interlock may be ordered. Community service required for most offenses."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Ala. Code § 32-5A-191(a)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,100",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of alcohol or controlled substances",
+      "BAC .08 or higher, or impairment of normal faculties",
+      "No prior DUI convictions"
+    ],
+    "mandatory_minimum": "Minimum 1 year license suspension; completion of court-approved substance abuse program",
+    "enhancements": [
+      "BAC .15 or higher (enhanced penalties)",
+      "Child under 14 in vehicle"
+    ],
+    "notes": "Eligible for hardship license after 45 days. Must attend DUI or substance abuse program at defendant's expense."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Ala. Code § 32-5A-191(b)-(h)",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Misdemeanor (second); Class C Felony (third); Class B Felony (fourth+)",
+    "penalty_min": "5 days or 30 days community service (second); 60 days (third); 1 year and 1 day (fourth+)",
+    "penalty_max": "1 year (second); 10 years (third); 20 years (fourth+)",
+    "fine_max": "$5,100 (second); $10,100 (third); $10,100 (fourth+)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of alcohol or controlled substances",
+      "BAC .08 or higher, or impairment of normal faculties",
+      "One or more prior DUI convictions"
+    ],
+    "mandatory_minimum": "5 days imprisonment or 30 days community service (second); 60 days imprisonment (third); 1 year and 1 day imprisonment (fourth+)",
+    "enhancements": [
+      "BAC .15 or higher",
+      "Child under 14 in vehicle",
+      "Refusal to submit to chemical test"
+    ],
+    "notes": "Second offense: 1-year license revocation. Third offense: 3-year revocation. Fourth+: 5-year revocation. Ignition interlock required for repeat offenders."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Ala. Code § 32-5A-191(a)(2)-(5)",
+    "statute_title": "DUI — Controlled Substance",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of a controlled substance",
+      "Or under the combined influence of alcohol and a controlled substance",
+      "To a degree which renders the defendant incapable of safely driving"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs",
+      "Presence of Schedule I substance in blood/urine"
+    ],
+    "notes": "No per se limit for drugs. Prosecution must show actual impairment. Includes prescription medications that impair driving ability."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Ala. Code § 32-5A-190",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant drove a vehicle",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common plea-down from DUI. Adds 6 points to driving record."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Ala. Code § 32-10-1",
+    "statute_title": "Duty to Stop at Scene of Accident — Injury or Death",
+    "offense_class": "Class C Felony (injury/death); Class A Misdemeanor (property damage only under § 32-10-2)",
+    "penalty_min": null,
+    "penalty_max": "10 years (injury/death); 1 year (property damage)",
+    "fine_max": "$5,000 (injury/death); $500 (property damage)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to stop at the scene",
+      "Defendant failed to provide identification and render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim",
+      "Serious bodily injury"
+    ],
+    "notes": "Leaving the scene involving death or serious injury is a Class C Felony. Property damage only is Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Ala. Code § 32-5A-192",
+    "statute_title": "Homicide by Vehicle (DUI)",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of alcohol or controlled substances",
+      "Proximately caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DUI convictions",
+      "Extremely high BAC"
+    ],
+    "notes": "Alabama charges DUI-related deaths under the DUI statute with death-resulting enhancement, or under reckless murder/manslaughter statutes."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Ala. Code § 13A-6-4",
+    "statute_title": "Criminally Negligent Homicide (Vehicular)",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$6,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "By criminal negligence",
+      "While operating a motor vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Alabama does not have a separate vehicular manslaughter statute. Vehicular deaths may be charged as criminally negligent homicide (Class A Misdemeanor) or reckless manslaughter (Class B Felony) depending on culpability."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Ala. Code § 32-6-19",
+    "statute_title": "Driving While License Canceled, Suspended, or Revoked",
+    "offense_class": "Class C Misdemeanor (first); Class A Misdemeanor (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "3 months (first); 1 year (subsequent)",
+    "fine_max": "$500 (first); $3,000 (subsequent)",
+    "elements": [
+      "Defendant drove a motor vehicle on a public road",
+      "Defendant's license was canceled, suspended, or revoked",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense within 5 years"
+    ],
+    "notes": "License suspension for DUI is separate from criminal penalties. Additional 6-month suspension for driving on suspended."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Ala. Code § 13A-10-52",
+    "statute_title": "Attempting to Elude a Police Officer",
+    "offense_class": "Class A Misdemeanor (basic); Class B Felony (if serious injury or death results)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 20 years (felony)",
+    "fine_max": "$6,000 (misdemeanor); $30,000 (felony)",
+    "elements": [
+      "A law enforcement officer signaled the defendant to stop",
+      "Signal was given by hand, voice, siren, or light",
+      "Defendant willfully failed to stop",
+      "Defendant attempted to flee or elude the officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury results (Class B Felony)",
+      "Death results (Class A Felony)",
+      "High-speed chase"
+    ],
+    "notes": "Officer must be in uniform and operating a marked vehicle, or defendant must have reasonable knowledge the person is a law enforcement officer."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Ala. Code § 13A-12-212",
+    "statute_title": "Unlawful Possession of Controlled Substance",
+    "offense_class": "Class C Felony (most controlled substances); Class A Misdemeanor (marijuana second degree)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C Felony)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "Substance is listed in Alabama Uniform Controlled Substances Act schedules",
+      "Possession was without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school (§ 13A-12-250)",
+      "Possession near a public housing project (§ 13A-12-270)"
+    ],
+    "notes": "Alabama classifies simple possession of most Schedule I-V substances as a Class C Felony. Marijuana has separate lesser provisions."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Ala. Code § 13A-12-214",
+    "statute_title": "Unlawful Possession of Marijuana — Second Degree",
+    "offense_class": "Class A Misdemeanor (first, personal use); Class C Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 10 years (second+)",
+    "fine_max": "$6,000 (first); $15,000 (second+)",
+    "elements": [
+      "Defendant possessed marijuana",
+      "For personal use only (not for sale)",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class C Felony)",
+      "Possession near a school",
+      "Possession of more than personal use quantity"
+    ],
+    "notes": "First offense personal use marijuana is Class A Misdemeanor. Second or subsequent becomes Class C Felony. Alabama does not have legal recreational marijuana."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Ala. Code § 13A-12-212(a)(1)",
+    "statute_title": "Unlawful Possession of Cocaine",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant possessed cocaine",
+      "Cocaine is a Schedule II controlled substance in Alabama",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school (enhanced penalty)",
+      "Prior drug convictions"
+    ],
+    "notes": "No quantity threshold needed for possession charge. Larger quantities may support trafficking charges under § 13A-12-231."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Ala. Code § 13A-12-212(a)(1)",
+    "statute_title": "Unlawful Possession of Methamphetamine",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession near a school",
+      "Prior drug convictions",
+      "Presence of manufacturing equipment"
+    ],
+    "notes": "Methamphetamine possession charged under the general controlled substance possession statute. Manufacturing is a separate Class B Felony."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Ala. Code § 13A-12-231",
+    "statute_title": "Drug Trafficking",
+    "offense_class": "Class A Felony",
+    "penalty_min": "3 years (lowest tier)",
+    "penalty_max": "Life without parole (highest quantities)",
+    "fine_max": "$500,000 (varies by substance and quantity)",
+    "elements": [
+      "Defendant knowingly sold, manufactured, delivered, or possessed",
+      "A controlled substance in a quantity meeting trafficking thresholds",
+      "Specific weight thresholds vary by substance"
+    ],
+    "mandatory_minimum": "3 years and $50,000 fine (cannabis 2.2-100 lbs); 5 years and $50,000 fine (cocaine 28g-500g); 3 years and $50,000 fine (meth 28g-500g)",
+    "enhancements": [
+      "Higher quantity tiers carry enhanced mandatory minimums",
+      "Trafficking near a school (§ 13A-12-250)",
+      "Using a minor in trafficking"
+    ],
+    "notes": "Alabama has some of the harshest trafficking penalties in the nation. Mandatory minimums cannot be suspended or probated. Weight thresholds: cannabis 2.2 lbs, cocaine 28g, meth 28g, heroin 4g."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Ala. Code § 13A-12-211",
+    "statute_title": "Unlawful Distribution of Controlled Substance",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant sold, furnished, gave away, delivered, or distributed",
+      "A controlled substance listed in Schedules I-V",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": "2 years (first offense)",
+    "enhancements": [
+      "Distribution to a minor (§ 13A-12-215)",
+      "Distribution near a school (§ 13A-12-250)",
+      "Distribution near a public housing project (§ 13A-12-270)"
+    ],
+    "notes": "Includes sale, gift, and delivery. Distribution to a minor is a Class A Felony."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Ala. Code § 13A-12-217",
+    "statute_title": "Unlawful Manufacturing of Controlled Substance — First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": null,
+    "penalty_max": "Life",
+    "fine_max": "$60,000",
+    "elements": [
+      "Defendant manufactured, produced, or created a controlled substance",
+      "Or possessed precursors with intent to manufacture",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing meth (enhanced under Chemical Endangerment Act § 26-15-3.2)",
+      "Child present during manufacturing",
+      "Manufacturing near a school"
+    ],
+    "notes": "Chemical Endangerment Act (§ 26-15-3.2) provides additional severe penalties when children are exposed to manufacturing environments."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Ala. Code § 13A-12-260",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$6,000",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With knowledge that it was to be used for a controlled substance",
+      "Paraphernalia as defined in § 13A-12-260(a)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery or sale of paraphernalia (Class A Misdemeanor)",
+      "Delivery to a minor (Class B Felony)"
+    ],
+    "notes": "Paraphernalia includes pipes, bongs, syringes (when used for illicit drugs), scales, and baggies. Context determines whether an item is paraphernalia."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Ala. Code § 13A-12-211",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With the intent to sell, deliver, or distribute",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Near a school (§ 13A-12-250)",
+      "Near a public housing project (§ 13A-12-270)",
+      "Prior felony drug conviction"
+    ],
+    "notes": "Intent can be inferred from quantity, packaging, scales, large amounts of cash, and other circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Ala. Code § 13A-6-2(a)(1)",
+    "statute_title": "Murder — Intentional",
+    "offense_class": "Class A Felony (Capital if aggravating factors under § 13A-5-40)",
+    "penalty_min": "Life (non-capital); death or life without parole (capital)",
+    "penalty_max": "Death (capital); life without parole; life with possibility of parole",
+    "fine_max": "$60,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "With the intent to cause the death of that person or another",
+      "Or under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": "Life with or without parole (non-capital)",
+    "enhancements": [
+      "Capital aggravating circumstances (§ 13A-5-49)",
+      "Murder during commission of a felony (felony murder)",
+      "Murder of law enforcement officer",
+      "Murder for hire"
+    ],
+    "notes": "Alabama is a death penalty state. Capital murder requires at least one aggravating circumstance from § 13A-5-40. Judge makes final sentencing decision after jury recommendation."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Ala. Code § 13A-6-2(a)(2)",
+    "statute_title": "Murder — Reckless/Depraved Heart",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "Life",
+    "fine_max": "$60,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "Under circumstances manifesting extreme indifference to human life",
+      "Defendant recklessly engaged in conduct creating grave risk of death"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [],
+    "notes": "Alabama technically has a single murder statute with different theories. What other states call second-degree murder is prosecuted as depraved-heart murder under § 13A-6-2(a)(2)."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Ala. Code § 13A-6-3(a)(2)",
+    "statute_title": "Manslaughter — Heat of Passion",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "The killing was committed under the influence of extreme emotional disturbance",
+      "For which there was a reasonable explanation or excuse"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Alabama does not use the term 'voluntary manslaughter' but the heat-of-passion manslaughter provision serves the same function. Burden on defendant to raise adequate provocation."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Ala. Code § 13A-6-3(a)(1)",
+    "statute_title": "Manslaughter — Reckless",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "By reckless conduct",
+      "Defendant was aware of and consciously disregarded a substantial risk"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers what most states call involuntary manslaughter. Class B Felony — notably harsh compared to other states."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Ala. Code § 13A-6-20",
+    "statute_title": "Assault — First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant caused serious physical injury to another person",
+      "With intent to cause serious physical injury",
+      "Or caused serious physical injury by means of a deadly weapon or dangerous instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Committed against law enforcement officer (§ 13A-6-21.1)",
+      "Use of a firearm"
+    ],
+    "notes": "Alabama's first-degree assault is the equivalent of aggravated assault in most other states. Serious physical injury means substantial risk of death, protracted disfigurement, or protracted impairment."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Ala. Code § 13A-6-22",
+    "statute_title": "Assault — Third Degree",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$6,000",
+    "elements": [
+      "Defendant caused physical injury to another person",
+      "Or with criminal negligence caused physical injury by means of a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Third-degree assault covers simple assault situations. Second-degree assault (§ 13A-6-21, Class C Felony) fills the gap between first and third degree."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "Ala. Code § 13A-6-22",
+    "statute_title": "Assault — Third Degree (Battery equivalent)",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$6,000",
+    "elements": [
+      "Defendant caused physical injury to another person",
+      "Intent to cause physical injury, or reckless conduct, or criminal negligence with a weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Alabama merged assault and battery into a single assault offense. There is no separate battery statute."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Ala. Code § 13A-8-43",
+    "statute_title": "Robbery — Third Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year and 1 day",
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant committed a theft",
+      "Defendant used force or threatened imminent use of force",
+      "Against the person of the owner or another person present"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Alabama has three degrees of robbery. Third degree is the base offense. Second degree (§ 13A-8-42) involves being aided by another person. First degree (§ 13A-8-41) involves serious injury or use of a deadly weapon."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Ala. Code § 13A-8-41",
+    "statute_title": "Robbery — First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "Life",
+    "fine_max": "$60,000",
+    "elements": [
+      "Defendant committed a robbery",
+      "Defendant was armed with a deadly weapon or dangerous instrument",
+      "Or caused serious physical injury to another person"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [
+      "Use of a firearm",
+      "Serious bodily injury to victim"
+    ],
+    "notes": "Class A Felony. Armed with a deadly weapon or causing serious injury elevates robbery to first degree."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Ala. Code § 13A-6-43",
+    "statute_title": "Kidnapping — First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "Life",
+    "fine_max": "$60,000",
+    "elements": [
+      "Defendant abducted another person",
+      "With intent to hold for ransom, use as a shield or hostage, terrorize, or commit a felony",
+      "Or restrained the person under circumstances exposing them to serious physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is under 12 years old",
+      "Ransom demanded",
+      "Victim sexually assaulted"
+    ],
+    "notes": "Second-degree kidnapping (§ 13A-6-44) is a Class B Felony involving abduction with intent to inflict physical injury or violate sexual offenses."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Ala. Code § 13A-7-41",
+    "statute_title": "Arson — First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "Life",
+    "fine_max": "$60,000",
+    "elements": [
+      "Defendant intentionally damaged a building",
+      "By starting or maintaining a fire or causing an explosion",
+      "When another person was present in the building",
+      "Defendant knew or should have known a person might be present"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death or serious injury results",
+      "Property damage exceeding $2,500"
+    ],
+    "notes": "Three degrees of arson. First degree requires a person present. Second degree (§ 13A-7-42, Class B Felony) is damage to a building. Third degree (§ 13A-7-43, Class C Felony) is damage to property."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Ala. Code § 13A-4-2 / § 13A-6-2",
+    "statute_title": "Attempted Murder",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "Life",
+    "fine_max": "$60,000",
+    "elements": [
+      "Defendant intended to cause the death of another person",
+      "Defendant engaged in conduct constituting a substantial step toward the commission of murder",
+      "Conduct was strongly corroborative of the criminal intent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim is a law enforcement officer"
+    ],
+    "notes": "Charged under the general attempt statute (§ 13A-4-2) combined with murder. An attempt to commit a Class A Felony is itself a Class A Felony in Alabama."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Ala. Code § 13A-6-20(a)(1)",
+    "statute_title": "Assault — First Degree with Deadly Weapon",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant caused serious physical injury to another",
+      "By means of a deadly weapon or dangerous instrument",
+      "With intent to cause serious physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim is law enforcement"
+    ],
+    "notes": "Covered under first-degree assault. Deadly weapon defined in § 13A-1-2(7) as any firearm or object that is likely to cause death or serious physical injury."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Ala. Code § 13A-8-3",
+    "statute_title": "Theft of Property — First Degree",
+    "offense_class": "Class B Felony (over $2,500); Class C Felony ($500-$2,500); Class A Misdemeanor (under $500)",
+    "penalty_min": null,
+    "penalty_max": "20 years (first degree); 10 years (second degree); 1 year (third degree)",
+    "fine_max": "$30,000 (first degree); $15,000 (second degree); $6,000 (third degree)",
+    "elements": [
+      "Defendant knowingly obtained or exerted unauthorized control over the property of another",
+      "With intent to deprive the owner of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft of a firearm (automatic first degree regardless of value)",
+      "Prior theft convictions"
+    ],
+    "notes": "Threshold: Over $2,500 = first degree (Class B Felony), $500-$2,500 = second degree (Class C Felony), under $500 = third degree (Class A Misdemeanor). Theft of a firearm is always first degree."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Ala. Code § 13A-8-3",
+    "statute_title": "Theft of Property — First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant knowingly obtained or exerted unauthorized control over property",
+      "Value of property exceeds $2,500",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Property is a firearm",
+      "Property is a motor vehicle",
+      "Prior theft convictions"
+    ],
+    "notes": "Alabama uses the 'theft of property' framework with degree-based thresholds rather than 'grand theft' terminology."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Ala. Code § 13A-8-5",
+    "statute_title": "Theft of Property — Third Degree",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$6,000",
+    "elements": [
+      "Defendant knowingly obtained or exerted unauthorized control over property",
+      "Value of property is less than $500",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft convictions (may elevate degree)"
+    ],
+    "notes": "Under $500 threshold. Fourth or subsequent conviction for theft of property fourth degree can be upgraded."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Ala. Code § 13A-8-11",
+    "statute_title": "Shoplifting",
+    "offense_class": "Class A Misdemeanor (under $500); Class C Felony ($500-$2,500); Class B Felony (over $2,500)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 10 years (Class C Felony); 20 years (Class B Felony)",
+    "fine_max": "Same as theft by degree",
+    "elements": [
+      "Defendant concealed, removed, or altered merchandise",
+      "Of a retail establishment",
+      "With intent to deprive the merchant of value without paying"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized retail theft",
+      "Use of booster bags or devices"
+    ],
+    "notes": "Typically charged under the general theft statutes. Penalties follow the same degree structure as theft of property."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Ala. Code § 13A-7-7",
+    "statute_title": "Burglary — Third Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year and 1 day",
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully",
+      "In a building",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Three degrees. Third degree: entry into a building. Second degree (§ 13A-7-6): entry into a dwelling. First degree (§ 13A-7-5): entry into a dwelling while armed or causing injury."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Ala. Code § 13A-7-6",
+    "statute_title": "Burglary — Second Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully",
+      "In a dwelling",
+      "With intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with a deadly weapon or explosive (elevates to first degree)",
+      "Causes physical injury (elevates to first degree)",
+      "Uses or threatens use of a dangerous instrument"
+    ],
+    "notes": "Dwelling includes any building used for overnight lodging. First-degree burglary (§ 13A-7-5) is a Class A Felony when armed, causing injury, or using explosives."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Ala. Code § 13A-8-3",
+    "statute_title": "Theft of Property — First Degree (Motor Vehicle)",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant knowingly obtained or exerted unauthorized control over a motor vehicle",
+      "With intent to deprive the owner of the vehicle",
+      "Value exceeds $2,500"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "No separate motor vehicle theft statute. Charged as first-degree theft due to value. Joyriding may be charged as unauthorized use of a vehicle under § 13A-8-11."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Ala. Code § 13A-8-16",
+    "statute_title": "Receiving Stolen Property — First Degree",
+    "offense_class": "Class B Felony (over $2,500); Class C Felony ($500-$2,500); Class A Misdemeanor (under $500)",
+    "penalty_min": null,
+    "penalty_max": "20 years (Class B); 10 years (Class C); 1 year (Class A Misdemeanor)",
+    "fine_max": "$30,000 (Class B); $15,000 (Class C); $6,000 (Class A Misdemeanor)",
+    "elements": [
+      "Defendant received, retained, or disposed of stolen property",
+      "Knowing that it was stolen or having reasonable grounds to believe it was stolen",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Degree structure mirrors theft: first degree over $2,500, second degree $500-$2,500, third degree under $500."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Ala. Code § 13A-7-21",
+    "statute_title": "Criminal Mischief — First Degree",
+    "offense_class": "Class C Felony (over $2,500 damage); Class A Misdemeanor (under $2,500)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C Felony); 1 year (Class A Misdemeanor)",
+    "fine_max": "$15,000 (Class C Felony); $6,000 (Class A Misdemeanor)",
+    "elements": [
+      "Defendant intentionally damaged the property of another person",
+      "Without the owner's consent",
+      "Damage exceeds $2,500 (first degree) or involves a dwelling, utility, or explosive"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to church or religious facility (§ 13A-11-12)"
+    ],
+    "notes": "Alabama uses 'criminal mischief' rather than 'vandalism' as the statutory term. Three degrees based on damage amount and circumstances."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Ala. Code § 13A-7-2",
+    "statute_title": "Criminal Trespass — First Degree",
+    "offense_class": "Class A Misdemeanor (first degree); Class C Misdemeanor (third degree)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first degree); 3 months (third degree)",
+    "fine_max": "$6,000 (first degree); $500 (third degree)",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully",
+      "In a dwelling (first degree) or building (second degree) or fenced/enclosed property (third degree)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Three degrees. First degree (dwelling) is Class A Misdemeanor. Second degree (building) is Class B Misdemeanor. Third degree (premises) is Class C Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Ala. Code § 13A-7-21",
+    "statute_title": "Criminal Mischief — First Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant intentionally damaged property of another",
+      "Damage exceeds $2,500 in value",
+      "Without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage by means of explosive",
+      "Damage to utility or communication property"
+    ],
+    "notes": "First degree requires over $2,500 damage or interruption of public service. Second degree (§ 13A-7-22) is $500-$2,500 (Class A Misdemeanor). Third degree (§ 13A-7-23) is under $500 (Class B Misdemeanor)."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Ala. Code § 13A-6-130",
+    "statute_title": "Domestic Violence — Third Degree",
+    "offense_class": "Class A Misdemeanor (third degree); Class B Felony (first degree); Class C Felony (second degree)",
+    "penalty_min": null,
+    "penalty_max": "1 year (third degree); 20 years (first degree); 10 years (second degree)",
+    "fine_max": "$6,000 (third degree); $30,000 (first degree); $15,000 (second degree)",
+    "elements": [
+      "Defendant committed an assault, menacing, reckless endangerment, criminal coercion, harassment, or stalking",
+      "Against a current or former spouse, parent of a common child, household member, or dating partner"
+    ],
+    "mandatory_minimum": "24-hour minimum hold after arrest",
+    "enhancements": [
+      "Use of a deadly weapon (first degree)",
+      "Serious physical injury (first degree)",
+      "Strangulation or suffocation (first degree under § 13A-6-138)",
+      "Violation of protection order"
+    ],
+    "notes": "Alabama's domestic violence statutes (§ 13A-6-130 through 13A-6-139) mirror the three-degree assault structure applied to domestic relationships. Mandatory arrest provisions apply."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Ala. Code § 13A-6-132",
+    "statute_title": "Domestic Violence — First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant caused serious physical injury to a household member or intimate partner",
+      "With intent to cause serious physical injury",
+      "Or caused serious physical injury with a deadly weapon or dangerous instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Strangulation or suffocation (§ 13A-6-138)",
+      "Prior domestic violence convictions"
+    ],
+    "notes": "Alabama merges assault and battery concepts. First-degree domestic violence covers what many states call domestic battery with serious injury."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Ala. Code § 26-15-3.2",
+    "statute_title": "Chemical Endangerment of Exposing a Child to an Environment of Controlled Substance",
+    "offense_class": "Class C Felony (exposure); Class A Felony (serious injury); Class A Felony (death)",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years (exposure); Life (serious injury or death)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant knowingly, recklessly, or intentionally caused or permitted",
+      "A child to be exposed to, ingested, inhaled, or had contact with",
+      "A controlled substance, chemical substance, or drug paraphernalia"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Child suffers serious physical injury (Class A Felony)",
+      "Death of child (Class A Felony)"
+    ],
+    "notes": "Alabama's chemical endangerment statute has been controversially applied to pregnant women who use drugs. Also see general endangering the welfare of a child under § 13A-13-6."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Ala. Code § 26-15-3",
+    "statute_title": "Aggravated Child Abuse",
+    "offense_class": "Class B Felony (abuse); Class A Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "20 years (Class B); Life (Class A)",
+    "fine_max": "$30,000 (Class B); $60,000 (Class A)",
+    "elements": [
+      "Defendant tortured, willfully abused, cruelly beat, or otherwise willfully maltreated",
+      "A child under the age of 18"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious physical injury (aggravated, Class A Felony)",
+      "Pattern of abuse"
+    ],
+    "notes": "Simple child abuse (§ 26-15-3) is a Class B Felony. Aggravated child abuse with serious injury is a Class A Felony."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Ala. Code § 13A-6-142",
+    "statute_title": "Violation of a Domestic Violence Protection Order",
+    "offense_class": "Class A Misdemeanor (first); Class C Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (first); 10 years (second+)",
+    "fine_max": "$6,000 (first); $15,000 (second+)",
+    "elements": [
+      "A valid protection order was in effect",
+      "Defendant had notice of the protection order",
+      "Defendant willfully violated a condition of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent violation (Class C Felony)",
+      "Violation involving physical force or threat"
+    ],
+    "notes": "First violation is a Class A Misdemeanor. Second or subsequent violations become Class C Felonies. Violation with assault may be charged under domestic violence statutes."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Ala. Code § 13A-6-90",
+    "statute_title": "Stalking",
+    "offense_class": "Class B Misdemeanor (first); Class B Felony (second offense or violating protection order)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first misdemeanor); 20 years (Class B Felony)",
+    "fine_max": "$3,000 (first); $30,000 (felony)",
+    "elements": [
+      "Defendant intentionally and repeatedly followed or harassed another person",
+      "Defendant made a credible threat with intent to place that person in reasonable fear",
+      "Of death or serious bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation of protection order while stalking (Class B Felony)",
+      "Prior stalking conviction (Class B Felony)",
+      "Aggravated stalking (§ 13A-6-91, Class B Felony)"
+    ],
+    "notes": "Aggravated stalking (§ 13A-6-91) applies when done in violation of a protection order or after a prior stalking conviction."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Ala. Code § 13A-11-8",
+    "statute_title": "Harassment",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant with intent to harass, annoy, or alarm another person",
+      "Struck, shoved, kicked another person, or subjected them to physical contact",
+      "Or directed abusive or obscene language or made an obscene gesture toward another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Harassment is a relatively minor offense. May be charged alongside or as a lesser-included offense of assault. Separate provisions for electronic harassment."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Ala. Code § 38-9-7",
+    "statute_title": "Abuse, Neglect, or Exploitation of a Protected Person",
+    "offense_class": "Class C Felony (abuse/neglect); Class B Felony (exploitation over $500)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 20 years (Class B)",
+    "fine_max": "$15,000 (Class C); $30,000 (Class B)",
+    "elements": [
+      "Defendant abused, neglected, or exploited a protected person",
+      "Protected person is elderly (60+) or otherwise vulnerable adult",
+      "Defendant was a caregiver or had a duty of care"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exploitation exceeding $500 (Class B Felony)",
+      "Death or serious injury resulting"
+    ],
+    "notes": "Protected persons include those 60+ and incapacitated adults. Exploitation includes financial exploitation. Mandatory reporting requirements under § 38-9-8."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Ala. Code § 13A-11-72",
+    "statute_title": "Certain Persons Forbidden to Possess Firearm",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant was a convicted felon, had been adjudicated mentally defective, or was subject to a domestic violence protection order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violent felony conviction"
+    ],
+    "notes": "Alabama is a permitless carry state as of January 2023. The primary weapons restriction is for prohibited persons. Short-barreled rifles/shotguns and destructive devices are regulated under § 13A-11-63."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Ala. Code § 13A-11-72(a)",
+    "statute_title": "Possession of Firearm by Convicted Felon",
+    "offense_class": "Class C Felony",
+    "penalty_min": "1 year and 1 day",
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant possessed, owned, or had under control a firearm or destructive device",
+      "Defendant had been convicted of a crime of violence as defined in § 13A-11-70"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Crime of violence is defined in § 13A-11-70. Alabama's permitless carry law does not change prohibitions for convicted felons."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Ala. Code § 13A-11-73",
+    "statute_title": "Possession of Firearm by Prohibited Person in Certain Places",
+    "offense_class": "Class C Felony (prohibited person); varies for location violations",
+    "penalty_min": null,
+    "penalty_max": "10 years (prohibited person)",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant carried a concealed weapon or firearm",
+      "In a location where firearms are prohibited (courthouse, school, etc.)",
+      "Or defendant was a prohibited person carrying a firearm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Alabama adopted permitless carry in January 2023. Most concealed carry violations now relate to prohibited persons or prohibited locations rather than lack of a permit."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Ala. Code § 13A-11-61",
+    "statute_title": "Reckless Endangerment — Discharge of Firearm",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$6,000",
+    "elements": [
+      "Defendant discharged a firearm",
+      "In a reckless manner creating a risk of harm",
+      "Into an occupied dwelling, building, or vehicle, or into a public area"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Shooting into an occupied dwelling (§ 13A-11-61, Class B Felony)",
+      "Injury or death results"
+    ],
+    "notes": "Shooting into an occupied dwelling, vehicle, or building is a Class B Felony under § 13A-11-61. Reckless discharge generally falls under reckless endangerment (§ 13A-6-24)."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Ala. Code § 13A-8-192",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class C Felony (first offense); Class B Felony (second offense); Class A Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 20 years (Class B); Life (Class A)",
+    "fine_max": "$15,000 (Class C); $30,000 (Class B); $60,000 (Class A)",
+    "elements": [
+      "Defendant obtained, recorded, or accessed the identifying information of another person",
+      "Without authorization and with fraudulent intent",
+      "Used or attempted to use the information to obtain anything of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly (60+)",
+      "Multiple victims",
+      "Second or subsequent offense (elevated class)"
+    ],
+    "notes": "Alabama escalates identity theft with each subsequent offense. Victim restitution is mandatory."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Ala. Code § 13A-8-2",
+    "statute_title": "Theft of Property — By Embezzlement",
+    "offense_class": "Same as theft by degree (Class B Felony over $2,500; Class C Felony $500-$2,500; Class A Misdemeanor under $500)",
+    "penalty_min": null,
+    "penalty_max": "20 years (Class B); 10 years (Class C); 1 year (Class A Misdemeanor)",
+    "fine_max": "$30,000 (Class B); $15,000 (Class C); $6,000 (Class A Misdemeanor)",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant knowingly converted the property to their own use",
+      "Without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public employee or fiduciary",
+      "Value exceeds $10,000"
+    ],
+    "notes": "Charged under the general theft statute. The manner of taking (embezzlement/conversion by a trusted party) is a theory, not a separate crime."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Ala. Code § 13A-9-2",
+    "statute_title": "Forgery — First Degree",
+    "offense_class": "Class C Felony (first degree); Class A Misdemeanor (second degree)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first degree); 1 year (second degree)",
+    "fine_max": "$15,000 (first degree); $6,000 (second degree)",
+    "elements": [
+      "Defendant falsely made, completed, or altered a written instrument",
+      "With intent to defraud or deceive",
+      "Instrument is or purports to be a government-issued document, deed, will, contract, or financial instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree forgery covers government documents, securities, and financial instruments. Second-degree forgery (§ 13A-9-3) covers other documents."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Ala. Code § 13A-9-6",
+    "statute_title": "Criminal Possession of a Forged Instrument — First Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant possessed a forged instrument",
+      "With knowledge that it was forged",
+      "With intent to defraud, deceive, or injure another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Counterfeiting of currency is primarily a federal offense. State charges typically involve forged documents or instruments."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Ala. Code § 13A-9-13.1",
+    "statute_title": "Negotiating a Worthless Instrument",
+    "offense_class": "Class A Misdemeanor (under $500); Class C Felony ($500-$2,500); Class B Felony (over $2,500)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 10 years (Class C); 20 years (Class B)",
+    "fine_max": "$6,000 (misdemeanor); $15,000 (Class C); $30,000 (Class B)",
+    "elements": [
+      "Defendant issued or passed a check, draft, or order for payment of money",
+      "Knowing there were insufficient funds",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Degree determined by amount. The defendant must receive notice of dishonor and fail to make good within 10 days for criminal prosecution."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Ala. Code § 13A-9-10",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class C Felony (under $500); Class B Felony ($500+)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 20 years (Class B)",
+    "fine_max": "$15,000 (Class C); $30,000 (Class B)",
+    "elements": [
+      "Defendant made a false statement or representation",
+      "In connection with an insurance claim",
+      "With intent to defraud an insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized insurance fraud scheme"
+    ],
+    "notes": "Includes filing false claims, staged accidents, and inflating damages. Mandatory restitution and potential civil penalties."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Ala. Code § 13A-9-14",
+    "statute_title": "Fraudulent Use of a Credit or Debit Card",
+    "offense_class": "Class C Felony (over $500); Class A Misdemeanor (under $500)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Class C); 1 year (Class A Misdemeanor)",
+    "fine_max": "$15,000 (Class C); $6,000 (Class A Misdemeanor)",
+    "elements": [
+      "Defendant used a credit or debit card",
+      "Knowing it was stolen, forged, revoked, or canceled",
+      "With intent to defraud the card issuer or merchant"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple cards used",
+      "Total fraud exceeding $2,500"
+    ],
+    "notes": "Includes using a stolen card, forged card, or card obtained by fraud. Possession of multiple stolen cards is a separate offense."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Ala. Code § 13A-12-233",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$250,000 or twice the value of the property involved",
+    "elements": [
+      "Defendant conducted or attempted to conduct a financial transaction",
+      "Involving proceeds of unlawful activity",
+      "With knowledge that the property involved represents proceeds of some form of unlawful activity",
+      "With intent to promote the carrying on of unlawful activity or to conceal the source"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Alabama's money laundering statute is found within the drug trafficking chapter but applies broadly. Federal charges are also common."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Ala. Code § 13A-8-1",
+    "statute_title": "Theft by Deception",
+    "offense_class": "Same as theft by degree based on value",
+    "penalty_min": null,
+    "penalty_max": "20 years (Class B, over $2,500)",
+    "fine_max": "$30,000 (Class B, over $2,500)",
+    "elements": [
+      "Defendant obtained property of another by deception",
+      "Created or confirmed a false impression of fact or law",
+      "Or failed to correct a false impression previously created"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly",
+      "Fraud against government entity"
+    ],
+    "notes": "General fraud is charged as theft by deception under the theft statutes. Degree follows the standard value thresholds."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Ala. Code § 13A-6-66",
+    "statute_title": "Sexual Abuse — First Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant subjected another person to sexual contact",
+      "By forcible compulsion",
+      "Or the victim was incapable of consent due to physical helplessness or mental incapacity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 12 years of age",
+      "Defendant in position of authority"
+    ],
+    "notes": "Alabama uses 'sexual abuse' rather than 'sexual assault' for non-penetration offenses. First-degree rape (§ 13A-6-61) covers penetration offenses."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Ala. Code § 13A-6-61",
+    "statute_title": "Rape — First Degree",
+    "offense_class": "Class A Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "Life or 99 years",
+    "fine_max": "$60,000",
+    "elements": [
+      "Defendant engaged in sexual intercourse with another person",
+      "By forcible compulsion",
+      "Or the victim was incapable of consent by reason of physical helplessness or mental incapacity",
+      "Or victim was less than 12 years old"
+    ],
+    "mandatory_minimum": "10 years",
+    "enhancements": [
+      "Victim under 12 (life without parole possible)",
+      "Use of a deadly weapon"
+    ],
+    "notes": "First-degree rape is a Class A Felony. Second-degree (§ 13A-6-62) involves victims aged 12-16 when defendant is 16+ and at least 2 years older. SORNA registration required."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Ala. Code § 13A-12-130",
+    "statute_title": "Public Lewdness",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant exposed their private parts in a public place",
+      "Or where the act could be observed by others",
+      "With intent to arouse or gratify sexual desire, or to affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Exposure to a minor (elevated charges possible)"
+    ],
+    "notes": "Alabama uses 'public lewdness' rather than indecent exposure. Exposure to children may result in more serious charges under sexual abuse statutes."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Ala. Code § 13A-12-121",
+    "statute_title": "Soliciting Prostitution",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$6,000",
+    "elements": [
+      "Defendant offered to engage in or agreed to engage in sexual conduct",
+      "In exchange for money or other consideration",
+      "Or solicited another to engage in prostitution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Solicitation of a minor (elevated felony charges)",
+      "Prior convictions"
+    ],
+    "notes": "Both the person offering and the person soliciting can be charged. Promoting prostitution (§ 13A-12-111) is a Class C Felony."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Ala. Code § 13A-12-192",
+    "statute_title": "Possession of Obscene Material Depicting a Minor",
+    "offense_class": "Class C Felony (possession); Class B Felony (distribution); Class A Felony (production)",
+    "penalty_min": null,
+    "penalty_max": "10 years (possession); 20 years (distribution); Life (production)",
+    "fine_max": "$15,000 (possession); $30,000 (distribution); $60,000 (production)",
+    "elements": [
+      "Defendant knowingly possessed material depicting a minor engaged in obscene acts",
+      "Defendant knew or should have known the subject was a minor"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Production involving minors under 12",
+      "Distribution for commercial gain",
+      "Multiple victims"
+    ],
+    "notes": "Federal charges are common in addition to state charges. SORNA registration required upon conviction."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Ala. Code § 13A-11-200",
+    "statute_title": "Failure to Register as Sex Offender",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant was required to register as a sex offender under ACNA",
+      "Defendant failed to register or update registration as required",
+      "Defendant acted knowingly"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent failure to register"
+    ],
+    "notes": "Alabama Community Notification Act (ACNA) requires registration. Must register within 3 business days of establishing residence. Electronic monitoring may be required."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Ala. Code § 13A-6-62",
+    "statute_title": "Rape — Second Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant engaged in sexual intercourse with another person",
+      "Victim was between 12 and 16 years old",
+      "Defendant was 16 years or older and at least 2 years older than the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Age of consent in Alabama is 16. No close-in-age (Romeo and Juliet) exception. SORNA registration required."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Ala. Code § 13A-11-7",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "3 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant with intent to cause public inconvenience, annoyance, or alarm",
+      "Or recklessly creating a risk thereof",
+      "Engaged in fighting, violent, tumultuous, or threatening behavior",
+      "Or made unreasonable noise, or used abusive or obscene language in public"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common add-on charge. Often paired with resisting arrest or public intoxication."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Ala. Code § 13A-10-41",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$3,000",
+    "elements": [
+      "Defendant intentionally prevented or attempted to prevent a law enforcement officer",
+      "From effecting a lawful arrest of the defendant or another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or violence (may upgrade charges)"
+    ],
+    "notes": "Defense may argue the arrest was unlawful. Physical resistance that causes injury may lead to additional assault charges."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Ala. Code § 13A-10-2",
+    "statute_title": "Obstructing Governmental Operations",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$6,000",
+    "elements": [
+      "Defendant intentionally obstructed, impaired, or hindered",
+      "The administration of law or other governmental function",
+      "By means of intimidation, force, violence, or physical interference"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Broader than resisting arrest — covers interference with any governmental function, including court proceedings and investigations."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Ala. Code § 12-1-8",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Varies (civil or criminal; summary or constructive)",
+    "penalty_min": null,
+    "penalty_max": "5 days (summary); 6 months or until compliance (civil)",
+    "fine_max": "$100 (summary)",
+    "elements": [
+      "Defendant willfully disobeyed a lawful order of the court",
+      "Or engaged in disruptive behavior in the courtroom",
+      "Or failed to appear as ordered"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminal contempt is punitive; civil contempt is coercive. Judge has broad discretion. Right to jury trial for serious criminal contempt (over 6 months possible)."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Ala. Code § 13A-11-10",
+    "statute_title": "Public Intoxication",
+    "offense_class": "Violation",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$200",
+    "elements": [
+      "Defendant appeared in a public place",
+      "Under the influence of alcohol, a controlled substance, or any substance",
+      "To the degree that the defendant endangered themselves, others, or property",
+      "Or by boisterous or indecent conduct annoys others in the vicinity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Classified as a violation, not a misdemeanor. However, still results in arrest and can impact other pending cases."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Ala. Code § 13A-10-39",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Class A Misdemeanor (misdemeanor case); Class C Felony (felony case)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor case); 10 years (felony case)",
+    "fine_max": "$6,000 (misdemeanor); $15,000 (felony)",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Required to appear at a specified time and place",
+      "Defendant intentionally failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge is a felony (Class C Felony)"
+    ],
+    "notes": "Bench warrant issued upon failure to appear. Bond forfeiture in addition to criminal charges. Separate from contempt of court."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Ala. Code § 13A-10-9",
+    "statute_title": "Filing a False Report",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$6,000",
+    "elements": [
+      "Defendant reported false information to law enforcement",
+      "Knowing the information to be false",
+      "Regarding a crime or emergency"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes false reports of crimes, emergencies, or incidents. May also implicate filing a false police report under § 13A-10-9."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Ala. Code § 13A-6-23",
+    "statute_title": "Menacing",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$3,000",
+    "elements": [
+      "Defendant by physical action intentionally placed or attempted to place another person",
+      "In fear of imminent serious physical injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Alabama uses 'menacing' rather than 'criminal threat' or 'terroristic threat.' Threats communicated verbally may fall under harassment (§ 13A-11-8) or intimidation statutes."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Ala. Code § 13A-10-101",
+    "statute_title": "Perjury — First Degree",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant made a false sworn statement",
+      "In an official proceeding",
+      "The statement was material to the proceeding",
+      "Defendant did not believe the statement to be true"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree perjury applies in official proceedings. Second-degree (§ 13A-10-102) applies to other sworn statements."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Ala. Code § 13A-10-61",
+    "statute_title": "Bribery of a Public Servant",
+    "offense_class": "Class C Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer a benefit",
+      "Upon a public servant",
+      "With intent to influence the public servant's official action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the giver and receiver can be charged. Receiving a bribe (§ 13A-10-62) is also a Class C Felony."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Ala. Code § 13A-10-31",
+    "statute_title": "Escape — First Degree",
+    "offense_class": "Class B Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant escaped from custody",
+      "While charged with or convicted of a felony",
+      "Using physical force or threat of physical force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a weapon during escape",
+      "Injury to officer or civilian"
+    ],
+    "notes": "Three degrees of escape. First degree involves force while in felony custody. Second degree (§ 13A-10-32) is felony custody without force. Third degree (§ 13A-10-33) is misdemeanor custody."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Ala. Code § 13A-11-14",
+    "statute_title": "Cruelty to Animals — First Degree",
+    "offense_class": "Class C Felony (first degree); Class A Misdemeanor (second degree)",
+    "penalty_min": null,
+    "penalty_max": "10 years (first degree); 1 year (second degree)",
+    "fine_max": "$15,000 (first degree); $6,000 (second degree)",
+    "elements": [
+      "Defendant intentionally tortured, tormented, or mutilated an animal",
+      "Or caused unjustifiable pain or suffering",
+      "Resulting in serious physical injury or death to the animal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Dog fighting (§ 13A-12-4, Class C Felony)"
+    ],
+    "notes": "First-degree cruelty involves intentional serious injury or death. Second-degree (§ 13A-11-14.1) covers general mistreatment. Dog fighting is a separate felony."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Ala. Code § 15-22-50",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining suspended sentence on underlying offense",
+    "fine_max": "Remaining fine on underlying offense",
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation was willful and material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation",
+      "Absconding from supervision"
+    ],
+    "notes": "Judge has discretion to revoke, modify, or continue probation. Defendant entitled to hearing. Standard of proof is preponderance of the evidence."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Ala. Code § 15-22-31",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining sentence on underlying offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New felony while on parole",
+      "Absconding"
+    ],
+    "notes": "Board of Pardons and Paroles makes revocation decisions. Technical violations may result in graduated sanctions rather than full revocation."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Ala. Code § 13A-2-23",
+    "statute_title": "Complicity — Aiding or Abetting",
+    "offense_class": "Same as principal offense",
+    "penalty_min": "Same as principal offense",
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant aided, abetted, counseled, or encouraged another person",
+      "In the commission of a crime",
+      "With the intent to promote or assist in the commission of the offense"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "An accomplice is criminally liable to the same extent as the principal. Alabama's complicity statute eliminates the common-law distinctions between principals and accessories."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Ala. Code § 13A-4-2",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One class below the attempted offense (Class A attempted = Class A attempt; Class B attempted = Class B attempt; etc.)",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of the attempted offense",
+    "fine_max": "Varies by class of the attempted offense",
+    "elements": [
+      "Defendant intended to commit a specific offense",
+      "Defendant engaged in conduct constituting a substantial step toward commission",
+      "The conduct was strongly corroborative of the criminal intent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt to commit a Class A Felony is a Class A Felony. Attempt to commit a Class B Felony is a Class B Felony. Exception: attempt to commit a murder is always a Class A Felony."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Ala. Code § 13A-4-3",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "One class below the target offense",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of target offense",
+    "fine_max": "Varies by class of target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to engage in conduct constituting a crime",
+      "Defendant or a co-conspirator committed an overt act in furtherance of the agreement",
+      "Defendant intended that the crime be committed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy to commit a Class A Felony is a Class B Felony. Requires at least one overt act. Withdrawal is a defense if communicated to co-conspirators before the overt act."
+  }
+]

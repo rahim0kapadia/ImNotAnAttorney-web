@@ -1,0 +1,1672 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "C.R.S. § 42-4-1301",
+    "statute_title": "Driving Under the Influence / Driving While Ability Impaired",
+    "offense_class": "Misdemeanor (first-third DUI); Class 4 Felony (fourth+)",
+    "penalty_min": "5 days (first); 10 days (second); 60 days (third)",
+    "penalty_max": "1 year (first-third); 6 years (fourth+)",
+    "fine_max": "$1,000 (first); $1,500 (second); $1,500 (third); $500,000 (fourth+)",
+    "elements": [
+      "Defendant drove a motor vehicle or vehicle",
+      "While under the influence of alcohol or drugs (DUI) with BAC .08+",
+      "Or while ability impaired (DWAI) with BAC .05-.079",
+      "Or while under the influence of any drug or combination of drug and alcohol"
+    ],
+    "mandatory_minimum": "5 days (first); 10 days (second); 60 days (third); 90 days (fourth+)",
+    "enhancements": [
+      "BAC .15 or higher (Persistent Drunk Driver designation)",
+      "Child under 16 in vehicle (Class 6 Felony child abuse)",
+      "Fourth or subsequent offense (Class 4 Felony)",
+      "Prior vehicular assault or vehicular homicide"
+    ],
+    "notes": "Colorado distinguishes between DUI (.08+ BAC) and DWAI (.05-.079 BAC). Fourth DUI is a Class 4 Felony under § 42-4-1301(1)(a). Express consent law under § 42-4-1301.1. Persistent Drunk Driver designation triggers enhanced requirements."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "C.R.S. § 42-4-1301(1)(a)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "5 days",
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove a motor vehicle",
+      "While under the influence of alcohol, drugs, or both",
+      "BAC .08 or higher, or substantially incapable of safely operating a vehicle",
+      "No prior DUI/DWAI convictions"
+    ],
+    "mandatory_minimum": "5 days imprisonment (may be suspended if completes Level II alcohol education)",
+    "enhancements": [
+      "BAC .15 or higher (Persistent Drunk Driver)",
+      "Refusal of chemical test (license revocation)"
+    ],
+    "notes": "Eligible for deferred judgment on first offense. 9-month license revocation. Community service of 48-96 hours. Level II alcohol education required."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "C.R.S. § 42-4-1301(1)(a)",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Misdemeanor (second/third); Class 4 Felony (fourth+)",
+    "penalty_min": "10 days (second); 60 days (third); 90 days (fourth+)",
+    "penalty_max": "1 year (second/third); 6 years (fourth+)",
+    "fine_max": "$1,500 (second/third); $500,000 (fourth+)",
+    "elements": [
+      "Defendant drove a motor vehicle",
+      "While under the influence of alcohol, drugs, or both",
+      "One or more prior DUI/DWAI convictions"
+    ],
+    "mandatory_minimum": "10 days and 48 hours community service (second); 60 days and 48 hours community service (third); 90 days to 6 years (fourth+)",
+    "enhancements": [
+      "BAC .15 or higher (Persistent Drunk Driver)",
+      "Fourth or subsequent (Class 4 Felony)",
+      "Prior vehicular homicide conviction"
+    ],
+    "notes": "Fourth DUI became a Class 4 Felony in 2015 (HB 15-1043). Two-year license revocation for second offense. Ignition interlock required for repeat offenders."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "C.R.S. § 42-4-1301(1)(a)",
+    "statute_title": "DUI — Drugs (DUID)",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant drove a motor vehicle",
+      "While under the influence of one or more drugs",
+      "Or under the combined influence of alcohol and drugs",
+      "Such that the defendant was substantially incapable of safely operating a vehicle"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "THC blood level 5 ng/mL or higher (permissible inference of impairment)",
+      "Combined influence of alcohol and drugs"
+    ],
+    "notes": "Colorado has a permissible inference of impairment at 5 ng/mL THC in blood. No per se limit — jury may still consider all evidence. Same penalty structure as alcohol DUI."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "C.R.S. § 42-4-1401",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Class 2 Misdemeanor Traffic Offense",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$300",
+    "elements": [
+      "Defendant drove a motor vehicle",
+      "In a manner that indicated a wanton or willful disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common plea-down from DUI. 8 points on driving record. Separate from careless driving (§ 42-4-1402, Class 2 Misdemeanor Traffic Offense)."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "C.R.S. § 42-4-1601",
+    "statute_title": "Duty to Stop at Scene — Accident Involving Death or Injury",
+    "offense_class": "Class 3 Felony (death); Class 4 Felony (serious bodily injury); Class 1 Misdemeanor Traffic Offense (injury); Class 2 Misdemeanor Traffic Offense (property damage under § 42-4-1602)",
+    "penalty_min": null,
+    "penalty_max": "12 years (death); 6 years (serious bodily injury); 1 year (injury); 90 days (property)",
+    "fine_max": "$750,000 (death); $500,000 (serious bodily injury); $1,000 (injury); $300 (property)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to stop at the scene",
+      "Defendant failed to provide identification and render reasonable assistance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (Class 3 Felony)",
+      "Serious bodily injury"
+    ],
+    "notes": "Leaving the scene involving death is a Class 3 Felony. Mandatory revocation of driver's license."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "C.R.S. § 18-3-106",
+    "statute_title": "Vehicular Homicide",
+    "offense_class": "Class 3 Felony (DUI-related); Class 4 Felony (reckless driving-related)",
+    "penalty_min": null,
+    "penalty_max": "12 years (DUI-related); 6 years (reckless)",
+    "fine_max": "$750,000 (DUI-related); $500,000 (reckless)",
+    "elements": [
+      "Defendant operated or drove a motor vehicle",
+      "In a reckless manner or while under the influence of alcohol or drugs",
+      "Proximately caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI-related (Class 3 Felony vs. Class 4)",
+      "Prior DUI convictions"
+    ],
+    "notes": "DUI-related vehicular homicide is a Class 3 Felony. Reckless driving-related is a Class 4 Felony. Mandatory license revocation."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "C.R.S. § 18-3-106(1)(b)",
+    "statute_title": "Vehicular Homicide — Reckless Driving",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "6 years",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant operated or drove a motor vehicle",
+      "In a reckless manner",
+      "Proximately caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Colorado does not use 'vehicular manslaughter' terminology but the reckless driving variant of vehicular homicide serves this function."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "C.R.S. § 42-2-138",
+    "statute_title": "Driving Under Restraint / Revocation",
+    "offense_class": "Class 2 Misdemeanor Traffic Offense (basic); Class 1 Misdemeanor Traffic Offense (alcohol-related restraint)",
+    "penalty_min": null,
+    "penalty_max": "90 days (basic); 1 year (alcohol-related)",
+    "fine_max": "$300 (basic); $1,000 (alcohol-related)",
+    "elements": [
+      "Defendant drove a motor vehicle on a public road",
+      "Defendant's license was under restraint, suspended, or revoked",
+      "Defendant had knowledge of the restraint"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Driving under restraint for alcohol-related offense (Class 1 Misdemeanor Traffic Offense)"
+    ],
+    "notes": "Colorado uses 'driving under restraint' rather than 'driving on suspended.' Alcohol-related restraint carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "C.R.S. § 18-9-116.5",
+    "statute_title": "Vehicular Eluding",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "3 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant while operating a motor vehicle",
+      "Knowingly fled or attempted to elude a peace officer",
+      "After being given a visual or audible signal to stop"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Creating a substantial risk of serious bodily injury or death (Class 4 Felony)",
+      "Death results"
+    ],
+    "notes": "Vehicular eluding is always a felony. If conduct creates a substantial risk of serious bodily injury or death, elevated to Class 4 Felony."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "C.R.S. § 18-18-403.5",
+    "statute_title": "Unlawful Possession of a Controlled Substance",
+    "offense_class": "Level 1 Drug Misdemeanor (4g or less of Schedule I/II); Level 4 Drug Felony (over 4g of Schedule I/II)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Level 1 Drug Misdemeanor); 1 year (Level 4 Drug Felony)",
+    "fine_max": "$1,000 (Level 1 DM); $100,000 (Level 4 DF)",
+    "elements": [
+      "Defendant knowingly possessed a controlled substance",
+      "Substance is listed in Colorado Controlled Substances Act schedules",
+      "Possession was without a valid prescription or lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Over 4g of Schedule I/II (Level 4 Drug Felony)",
+      "Prior drug convictions"
+    ],
+    "notes": "Colorado significantly reformed drug possession laws in 2019 (HB 19-1263). Possession of 4g or less of Schedule I/II is a Level 1 Drug Misdemeanor. Marijuana regulated separately under Amendment 64."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "C.R.S. § 18-18-406",
+    "statute_title": "Unlawful Possession of Marijuana",
+    "offense_class": "Drug Petty Offense (1-2 oz. over limit); Level 2 Drug Misdemeanor (2-6 oz. over limit); Level 1 Drug Misdemeanor (6-12 oz. over limit)",
+    "penalty_min": null,
+    "penalty_max": "No incarceration (petty offense); 120 days (Level 2 DM); 180 days (Level 1 DM)",
+    "fine_max": "$100 (petty offense); $500 (Level 2 DM); $1,000 (Level 1 DM)",
+    "elements": [
+      "Defendant possessed marijuana",
+      "In excess of the legal limit for personal use (over 2 oz.)",
+      "Or was under 21 years of age possessing any amount"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession over 12 oz. (Level 4 Drug Felony)",
+      "Under 21 possessing marijuana"
+    ],
+    "notes": "Colorado legalized recreational marijuana in 2012 (Amendment 64). Adults 21+ may possess up to 2 oz. Possession over the legal limit is still criminal. Medical patients may possess higher amounts."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "C.R.S. § 18-18-403.5(2)(a)(I)",
+    "statute_title": "Unlawful Possession of Cocaine",
+    "offense_class": "Level 1 Drug Misdemeanor (4g or less); Level 4 Drug Felony (over 4g)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Level 1 DM); 1 year (Level 4 DF)",
+    "fine_max": "$1,000 (Level 1 DM); $100,000 (Level 4 DF)",
+    "elements": [
+      "Defendant knowingly possessed cocaine",
+      "Cocaine is a Schedule II controlled substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Over 4g (Level 4 Drug Felony)",
+      "Prior drug convictions"
+    ],
+    "notes": "Under 2019 reform, possession of 4g or less of cocaine is a Level 1 Drug Misdemeanor. Treatment-focused approach emphasized."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "C.R.S. § 18-18-403.5(2)(a)(I)",
+    "statute_title": "Unlawful Possession of Methamphetamine",
+    "offense_class": "Level 1 Drug Misdemeanor (4g or less); Level 4 Drug Felony (over 4g)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Level 1 DM); 1 year (Level 4 DF)",
+    "fine_max": "$1,000 (Level 1 DM); $100,000 (Level 4 DF)",
+    "elements": [
+      "Defendant knowingly possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Possession was without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Over 4g (Level 4 Drug Felony)",
+      "Prior drug convictions",
+      "Presence of manufacturing equipment"
+    ],
+    "notes": "Same 4g threshold as cocaine. Manufacturing meth is a separate Level 1 Drug Felony under § 18-18-405."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "C.R.S. § 18-18-405(2)",
+    "statute_title": "Drug Trafficking — Distribution of Large Quantities",
+    "offense_class": "Level 1 Drug Felony",
+    "penalty_min": "8 years",
+    "penalty_max": "32 years",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant knowingly manufactured, dispensed, sold, or distributed",
+      "Or possessed with intent to manufacture, dispense, sell, or distribute",
+      "A controlled substance in a quantity exceeding trafficking thresholds"
+    ],
+    "mandatory_minimum": "8 years (Level 1 Drug Felony)",
+    "enhancements": [
+      "Higher quantity tiers",
+      "Distribution to a minor",
+      "Distribution near a school"
+    ],
+    "notes": "Level 1 Drug Felony carries 8-32 years. Thresholds vary by substance. Includes large-scale distribution operations."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "C.R.S. § 18-18-405",
+    "statute_title": "Unlawful Distribution, Manufacturing, Dispensing, or Sale",
+    "offense_class": "Level 2 Drug Felony (Schedule I/II); Level 3 Drug Felony (Schedule III/IV); Level 1 Drug Misdemeanor (Schedule V)",
+    "penalty_min": null,
+    "penalty_max": "8 years (Level 2 DF); 4 years (Level 3 DF); 180 days (Level 1 DM)",
+    "fine_max": "$750,000 (Level 2 DF); $500,000 (Level 3 DF); $1,000 (Level 1 DM)",
+    "elements": [
+      "Defendant knowingly distributed, sold, or dispensed a controlled substance",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution to a minor (§ 18-18-407, enhanced one level)",
+      "Distribution near a school (§ 18-18-407(2))"
+    ],
+    "notes": "Colorado uses 'distribution' and 'sale.' Enhancement for distribution to minors or near schools."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "C.R.S. § 18-18-405(2)(a)",
+    "statute_title": "Manufacturing a Controlled Substance",
+    "offense_class": "Level 1 Drug Felony (meth/fentanyl); Level 2 Drug Felony (other Schedule I/II)",
+    "penalty_min": null,
+    "penalty_max": "32 years (Level 1 DF); 8 years (Level 2 DF)",
+    "fine_max": "$1,000,000 (Level 1 DF); $750,000 (Level 2 DF)",
+    "elements": [
+      "Defendant knowingly manufactured, produced, or processed a controlled substance",
+      "Or possessed precursors with intent to manufacture",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing methamphetamine or fentanyl (Level 1 Drug Felony)",
+      "Child present during manufacturing",
+      "Manufacturing near a school"
+    ],
+    "notes": "Manufacturing meth or fentanyl is a Level 1 Drug Felony with 8-32 years. Other manufacturing is Level 2. Colorado has seen a significant fentanyl crisis driving legislative changes."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "C.R.S. § 18-18-428",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Drug Petty Offense",
+    "penalty_min": null,
+    "penalty_max": "No incarceration",
+    "fine_max": "$100",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With intent to use it for a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor (Level 2 Drug Misdemeanor)"
+    ],
+    "notes": "Simple possession of paraphernalia is a petty offense with only a fine. Delivery to a minor is more serious. Marijuana paraphernalia is legal for adults 21+."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "C.R.S. § 18-18-405(1)",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Level 2 Drug Felony (Schedule I/II); Level 3 Drug Felony (Schedule III/IV)",
+    "penalty_min": null,
+    "penalty_max": "8 years (Level 2 DF); 4 years (Level 3 DF)",
+    "fine_max": "$750,000 (Level 2 DF); $500,000 (Level 3 DF)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With intent to manufacture, dispense, sell, or distribute",
+      "Without lawful authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near a school (§ 18-18-407(2))",
+      "Distribution to a minor",
+      "Prior felony drug conviction"
+    ],
+    "notes": "Intent can be inferred from quantity, packaging, scales, cash, and other circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "C.R.S. § 18-3-102",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Class 1 Felony",
+    "penalty_min": "Life without parole",
+    "penalty_max": "Life without parole",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "After deliberation and with the intent to cause the death",
+      "Or caused death during the commission of certain enumerated felonies (felony murder)"
+    ],
+    "mandatory_minimum": "Life imprisonment without the possibility of parole",
+    "enhancements": [
+      "Felony murder (during kidnapping, sexual assault, arson, robbery, burglary, escape)",
+      "Murder of a peace officer or firefighter"
+    ],
+    "notes": "Colorado abolished the death penalty in 2020 (SB 20-100). Maximum sentence is life without parole. Felony murder is first-degree murder."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "C.R.S. § 18-3-103",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "8 years",
+    "penalty_max": "24 years",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant knowingly caused the death of another person",
+      "But without deliberation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Extreme indifference to human life (Class 2 Felony)"
+    ],
+    "notes": "Second-degree murder covers intentional killings without premeditation and depraved-heart killings. Colorado has no separate depraved-heart murder statute."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "C.R.S. § 18-3-104(1)(a)",
+    "statute_title": "Manslaughter",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "6 years",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant recklessly caused the death of another person",
+      "Or the defendant intentionally caused the death under a sudden heat of passion provoked by the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Colorado's manslaughter statute covers both reckless killings and heat-of-passion killings. Heat of passion is an affirmative defense to murder, reducing it to manslaughter."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "C.R.S. § 18-3-105",
+    "statute_title": "Criminally Negligent Homicide",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "3 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant caused the death of another person",
+      "By conduct amounting to criminal negligence",
+      "Defendant failed to perceive a substantial and unjustifiable risk"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Colorado uses 'criminally negligent homicide' rather than 'involuntary manslaughter.' Class 5 Felony. Lower culpability than manslaughter."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "C.R.S. § 18-3-202",
+    "statute_title": "Assault in the First Degree",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "12 years",
+    "fine_max": "$750,000",
+    "elements": [
+      "Defendant with intent to cause serious bodily injury caused serious bodily injury to another person",
+      "By means of a deadly weapon",
+      "Or caused serious bodily injury under circumstances manifesting extreme indifference to the value of human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Crime of violence sentencing (mandatory prison)",
+      "Against a peace officer or firefighter"
+    ],
+    "notes": "First-degree assault is a Class 3 Felony. If classified as a crime of violence, the court must sentence to DOC (no probation). Extraordinary risk crimes add additional time."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "C.R.S. § 18-3-204",
+    "statute_title": "Assault in the Third Degree",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "18 months",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly or recklessly caused bodily injury to another person",
+      "Or with criminal negligence caused bodily injury by means of a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against certain officials (enhanced penalties)"
+    ],
+    "notes": "Third-degree assault is the base assault offense. Class 1 Misdemeanor with up to 18 months (extraordinary risk offense)."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "C.R.S. § 18-3-204",
+    "statute_title": "Assault in the Third Degree (Battery equivalent)",
+    "offense_class": "Class 1 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "18 months",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly or recklessly caused bodily injury to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Colorado merged assault and battery into the assault statutes. There is no separate battery offense."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "C.R.S. § 18-4-301",
+    "statute_title": "Robbery",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "6 years",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant knowingly took anything of value from the person or presence of another",
+      "By the use of force, threats, or intimidation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Base robbery is a Class 4 Felony. Aggravated robbery (§ 18-4-302) involving a deadly weapon or serious bodily injury is a Class 3 Felony with mandatory DOC sentence."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "C.R.S. § 18-4-302",
+    "statute_title": "Aggravated Robbery",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "12 years",
+    "fine_max": "$750,000",
+    "elements": [
+      "Defendant committed a robbery",
+      "While armed with a deadly weapon",
+      "Or while representing by words or conduct to be armed",
+      "Or serious bodily injury was inflicted"
+    ],
+    "mandatory_minimum": "Mandatory DOC sentence (crime of violence)",
+    "enhancements": [
+      "Crime of violence (mandatory imprisonment)",
+      "Serious bodily injury to victim"
+    ],
+    "notes": "Aggravated robbery is a crime of violence — mandatory DOC sentence. One of the most commonly charged violent felonies in Colorado."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "C.R.S. § 18-3-301",
+    "statute_title": "First Degree Kidnapping",
+    "offense_class": "Class 1 Felony (if victim not released alive); Class 2 Felony (otherwise)",
+    "penalty_min": "Life (Class 1); 8 years (Class 2)",
+    "penalty_max": "Life without parole (Class 1); 24 years (Class 2)",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant knowingly seized and carried another person from one place to another",
+      "Or enticed or persuaded another to go from one place to another",
+      "Without consent and without lawful justification",
+      "With intent to hold for ransom, use as a shield or hostage, rob, facilitate a felony, or inflict injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim not released alive (Class 1 Felony)",
+      "Victim sexually assaulted",
+      "Ransom demanded"
+    ],
+    "notes": "First-degree kidnapping where victim is not released alive is a Class 1 Felony (life without parole). Second-degree kidnapping (§ 18-3-302) is a Class 2 Felony."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "C.R.S. § 18-4-102",
+    "statute_title": "First Degree Arson",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "12 years",
+    "fine_max": "$750,000",
+    "elements": [
+      "Defendant knowingly set fire to, burned, or caused to be burned",
+      "Or aided, counseled, or procured the burning of",
+      "Any building or occupied structure"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Person injured or killed",
+      "Firefighter or emergency responder injured"
+    ],
+    "notes": "First-degree arson targets buildings and occupied structures. Second-degree (§ 18-4-103) covers other property. Third-degree (§ 18-4-104) covers lesser property damage. Fourth-degree (§ 18-4-105) is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "C.R.S. § 18-2-101 / § 18-3-102",
+    "statute_title": "Criminal Attempt — Murder in the First Degree",
+    "offense_class": "Class 2 Felony",
+    "penalty_min": "8 years",
+    "penalty_max": "24 years",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant intended to cause the death of another person",
+      "Defendant engaged in conduct constituting a substantial step toward the commission of murder"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Victim is a peace officer"
+    ],
+    "notes": "Attempted murder of the first degree is a Class 2 Felony. Crime of violence sentencing may apply."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "C.R.S. § 18-3-202(1)(a)",
+    "statute_title": "Assault in the First Degree — With Deadly Weapon",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "12 years",
+    "fine_max": "$750,000",
+    "elements": [
+      "Defendant with intent to cause serious bodily injury",
+      "Caused serious bodily injury to another person",
+      "By means of a deadly weapon"
+    ],
+    "mandatory_minimum": "Mandatory DOC sentence (crime of violence)",
+    "enhancements": [
+      "Crime of violence",
+      "Victim is law enforcement"
+    ],
+    "notes": "Crime of violence — mandatory DOC sentence. Deadly weapon includes firearm, knife, or any instrument capable of causing death or serious bodily injury."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "C.R.S. § 18-4-401",
+    "statute_title": "Theft",
+    "offense_class": "Class 2 Felony ($1,000,000+); Class 3 Felony ($100,000-$1,000,000); Class 4 Felony ($20,000-$100,000); Class 5 Felony ($5,000-$20,000); Class 6 Felony ($2,000-$5,000); Class 1 Misdemeanor ($750-$2,000); Class 2 Misdemeanor ($300-$750); Petty Offense (under $300)",
+    "penalty_min": null,
+    "penalty_max": "24 years (Class 2); 12 years (Class 3); 6 years (Class 4); 3 years (Class 5); 18 months (Class 6); 18 months (Class 1 Misd.); 120 days (Class 2 Misd.)",
+    "fine_max": "Varies by class",
+    "elements": [
+      "Defendant knowingly obtained, retained, or exercised control over anything of value of another",
+      "Without authorization or by threat or deception",
+      "With the intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft from an at-risk person (enhanced one class)",
+      "Theft of a firearm"
+    ],
+    "notes": "Colorado has a detailed value-based classification system for theft. Theft from an at-risk adult or juvenile is enhanced by one class."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "C.R.S. § 18-4-401(2)(a)",
+    "statute_title": "Theft — Over $20,000",
+    "offense_class": "Class 4 Felony ($20,000-$100,000)",
+    "penalty_min": "2 years",
+    "penalty_max": "6 years",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant knowingly obtained, retained, or exercised control over property",
+      "Value exceeds $20,000",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft from at-risk person",
+      "Prior theft convictions"
+    ],
+    "notes": "Colorado uses graduated felony classes rather than 'grand theft' terminology. $20,000+ is the common felony threshold for significant theft."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "C.R.S. § 18-4-401(2)(a)",
+    "statute_title": "Theft — Under $300",
+    "offense_class": "Petty Offense",
+    "penalty_min": null,
+    "penalty_max": "No incarceration",
+    "fine_max": "$300",
+    "elements": [
+      "Defendant knowingly obtained, retained, or exercised control over property",
+      "Value is under $300",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft convictions (may elevate class)"
+    ],
+    "notes": "Under $300 is a petty offense with only a fine. $300-$750 is a Class 2 Misdemeanor."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "C.R.S. § 18-4-406",
+    "statute_title": "Theft — Retail Theft",
+    "offense_class": "Same as theft by value tier",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value tier",
+    "fine_max": "Same as theft by value tier",
+    "elements": [
+      "Defendant concealed, removed, or altered merchandise",
+      "Of a retail establishment",
+      "With intent to deprive the merchant of value without paying"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized retail theft (§ 18-4-416, Class 4 Felony)",
+      "Use of booster bags or devices"
+    ],
+    "notes": "Colorado enacted organized retail theft provisions. Penalties follow the standard theft value tiers."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "C.R.S. § 18-4-203",
+    "statute_title": "Burglary in the Third Degree",
+    "offense_class": "Class 2 Misdemeanor (third degree); Class 4 Felony (second degree); Class 3 Felony (first degree)",
+    "penalty_min": null,
+    "penalty_max": "120 days (third); 6 years (second); 12 years (first)",
+    "fine_max": "$750 (third); $500,000 (second); $750,000 (first)",
+    "elements": [
+      "Defendant knowingly broke into or entered an enclosed area or building",
+      "With the intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Third degree covers enclosed areas (vaults, safes, coin machines). Second degree (§ 18-4-202) covers buildings/occupied structures. First degree (§ 18-4-201) covers dwellings."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "C.R.S. § 18-4-201",
+    "statute_title": "Burglary in the First Degree",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": "4 years",
+    "penalty_max": "12 years",
+    "fine_max": "$750,000",
+    "elements": [
+      "Defendant knowingly entered or remained unlawfully",
+      "In a building or occupied structure that was a dwelling",
+      "With the intent to commit a crime therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Menacing or assault during burglary (crime of violence)",
+      "Armed with a deadly weapon"
+    ],
+    "notes": "First-degree burglary is a crime of violence if the defendant assaults or menaces anyone during the burglary. Mandatory DOC sentence in that case."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "C.R.S. § 18-4-409",
+    "statute_title": "Aggravated Motor Vehicle Theft",
+    "offense_class": "Class 5 Felony (first degree); Class 1 Misdemeanor (second degree, under $2,000 value)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 5); 18 months (Class 1 Misdemeanor)",
+    "fine_max": "$100,000 (Class 5); $5,000 (Class 1 Misdemeanor)",
+    "elements": [
+      "Defendant knowingly obtained or exercised control over a motor vehicle of another",
+      "Without authorization",
+      "With intent to permanently deprive the owner or temporarily deprive the owner of possession"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use in commission of another crime",
+      "Prior motor vehicle theft conviction"
+    ],
+    "notes": "Colorado has a specific motor vehicle theft statute. First degree covers most MVT. Second degree covers joyriding or low-value vehicles."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "C.R.S. § 18-4-410",
+    "statute_title": "Theft by Receiving",
+    "offense_class": "Same class structure as theft based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value tier",
+    "fine_max": "Same as theft by value tier",
+    "elements": [
+      "Defendant received, retained, loaned money by pawn or pledge, or otherwise disposed of anything of value",
+      "Knowing or believing it was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Colorado combines receiving stolen property under the general theft statute. Same value-based classification system."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "C.R.S. § 18-4-501",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class 2 Felony ($1,000,000+); down to Petty Offense (under $300) — same tiers as theft",
+    "penalty_min": null,
+    "penalty_max": "Varies by damage amount (same tiers as theft)",
+    "fine_max": "Varies by damage amount",
+    "elements": [
+      "Defendant knowingly damaged the real or personal property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to utility or communication property"
+    ],
+    "notes": "Colorado uses 'criminal mischief.' Same value-tier classification as theft. Under $300 is a petty offense; over $1,000,000 is a Class 2 Felony."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "C.R.S. § 18-4-502",
+    "statute_title": "First Degree Criminal Trespass",
+    "offense_class": "Class 5 Felony (dwelling); Class 2 Misdemeanor (other premises under § 18-4-503); Class 3 Misdemeanor (motor vehicle under § 18-4-504)",
+    "penalty_min": null,
+    "penalty_max": "3 years (dwelling); 120 days (other); 6 months (vehicle)",
+    "fine_max": "$100,000 (dwelling); $750 (other); $750 (vehicle)",
+    "elements": [
+      "Defendant knowingly and unlawfully entered or remained",
+      "In a dwelling of another (first degree)",
+      "Or other premises or enclosed area (second/third degree)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree trespass of a dwelling is a Class 5 Felony. Second-degree (other premises) is a Class 2 Misdemeanor. Third-degree (motor vehicle) is a Class 3 Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "C.R.S. § 18-4-501",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Varies by damage amount (same tiers as theft)",
+    "penalty_min": null,
+    "penalty_max": "Varies by damage amount",
+    "fine_max": "Varies by damage amount",
+    "elements": [
+      "Defendant knowingly damaged the real or personal property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage by means of explosive or fire",
+      "Damage to utility or communication property"
+    ],
+    "notes": "Classification follows the same value thresholds as theft. Damage to a fire station or school may carry enhanced penalties."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "C.R.S. § 18-6-800.3",
+    "statute_title": "Domestic Violence",
+    "offense_class": "Sentence enhancer — not a standalone offense; enhances underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Depends on underlying offense",
+    "fine_max": "Depends on underlying offense",
+    "elements": [
+      "Defendant committed an act of violence or threatened act of violence",
+      "Against a person with whom the defendant is or has been in an intimate relationship",
+      "Intimate relationship includes spouse, former spouse, unmarried couple, or persons who are or have been in a dating relationship"
+    ],
+    "mandatory_minimum": "Mandatory arrest; mandatory 36-week domestic violence treatment program upon conviction",
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Serious bodily injury",
+      "Strangulation (§ 18-3-202(1)(g))",
+      "Prior domestic violence convictions"
+    ],
+    "notes": "Domestic violence is a sentence enhancer in Colorado, not a standalone crime. It attaches to the underlying offense (assault, harassment, menacing, etc.) and triggers mandatory treatment, no deferred judgments, and mandatory protection order."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "C.R.S. § 18-3-204 / § 18-6-800.3",
+    "statute_title": "Third Degree Assault — Domestic Violence",
+    "offense_class": "Class 1 Misdemeanor (extraordinary risk)",
+    "penalty_min": null,
+    "penalty_max": "18 months",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly or recklessly caused bodily injury to an intimate partner",
+      "Or with criminal negligence caused bodily injury by means of a deadly weapon to an intimate partner"
+    ],
+    "mandatory_minimum": "36-week domestic violence treatment program",
+    "enhancements": [
+      "Serious bodily injury (elevated to first-degree assault)",
+      "Prior domestic violence convictions"
+    ],
+    "notes": "Assault 3 with DV enhancer is the most common domestic battery charge. No deferred judgment allowed for domestic violence offenses."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "C.R.S. § 18-6-401",
+    "statute_title": "Child Abuse",
+    "offense_class": "Class 2 Felony (knowingly causing death); Class 3 Felony (knowingly causing serious bodily injury); Class 2 Misdemeanor (negligent treatment creating risk)",
+    "penalty_min": null,
+    "penalty_max": "24 years (Class 2); 12 years (Class 3); 120 days (Class 2 Misdemeanor)",
+    "fine_max": "$1,000,000 (Class 2); $750,000 (Class 3); $750 (Class 2 Misdemeanor)",
+    "elements": [
+      "Defendant caused injury to a child's life or health",
+      "Or placed a child in a situation that posed a threat to the child's life or health",
+      "Knowingly, recklessly, or with criminal negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of child (Class 2 Felony)",
+      "Serious bodily injury (Class 3 Felony)",
+      "Pattern of abuse"
+    ],
+    "notes": "Colorado's child abuse statute is very broad, covering physical abuse, negligent supervision, and exposure to harmful situations. Ranges from misdemeanor to Class 2 Felony."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "C.R.S. § 18-6-401(1)(a)",
+    "statute_title": "Child Abuse — Knowingly or Recklessly",
+    "offense_class": "Class 3 Felony (serious bodily injury); Class 2 Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "12 years (Class 3); 24 years (Class 2)",
+    "fine_max": "$750,000 (Class 3); $1,000,000 (Class 2)",
+    "elements": [
+      "Defendant knowingly or recklessly caused injury to a child's life or health",
+      "Resulted in serious bodily injury or death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of child (Class 2 Felony)",
+      "Pattern of abuse"
+    ],
+    "notes": "Knowing or reckless child abuse resulting in serious injury or death is one of the most seriously punished offenses in Colorado."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "C.R.S. § 18-6-803.5",
+    "statute_title": "Violation of a Protection Order",
+    "offense_class": "Class 1 Misdemeanor (first); Class 5 Felony (second within 7 years); Class 4 Felony (third within 7 years)",
+    "penalty_min": null,
+    "penalty_max": "18 months (first); 3 years (second); 6 years (third)",
+    "fine_max": "$5,000 (first); $100,000 (second); $500,000 (third)",
+    "elements": [
+      "A valid protection order was in effect",
+      "Defendant had notice of the protection order",
+      "Defendant knowingly violated a condition of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second violation within 7 years (Class 5 Felony)",
+      "Third violation within 7 years (Class 4 Felony)"
+    ],
+    "notes": "Escalating penalties. First violation is Class 1 Misdemeanor. Second within 7 years is Class 5 Felony. Third within 7 years is Class 4 Felony."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "C.R.S. § 18-3-602",
+    "statute_title": "Stalking",
+    "offense_class": "Class 5 Felony (first); Class 4 Felony (repeat or in violation of protection order)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 5); 6 years (Class 4)",
+    "fine_max": "$100,000 (Class 5); $500,000 (Class 4)",
+    "elements": [
+      "Defendant knowingly engaged in a course of conduct directed at a specific person",
+      "Would cause a reasonable person to suffer serious emotional distress",
+      "The defendant knew or should have known the conduct would cause the victim to suffer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "In violation of a protection order (Class 4 Felony)",
+      "Prior stalking conviction (Class 4 Felony)",
+      "Credible threat (Class 4 Felony)"
+    ],
+    "notes": "Stalking is always a felony in Colorado. Making a credible threat elevates to Class 4 Felony."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "C.R.S. § 18-9-111",
+    "statute_title": "Harassment",
+    "offense_class": "Class 3 Misdemeanor (basic); Class 1 Misdemeanor (bias-motivated)",
+    "penalty_min": null,
+    "penalty_max": "6 months (basic); 18 months (bias-motivated)",
+    "fine_max": "$750 (basic); $5,000 (bias-motivated)",
+    "elements": [
+      "Defendant with intent to harass, annoy, or alarm another person",
+      "Struck, shoved, kicked, or touched another person",
+      "Or directed obscene language or gestures to another in a public place",
+      "Or followed another in a public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Bias-motivated (Class 1 Misdemeanor)"
+    ],
+    "notes": "Bias-motivated harassment (based on race, color, religion, ancestry, national origin, disability, sexual orientation, or gender identity) is enhanced to Class 1 Misdemeanor."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "C.R.S. § 18-6.5-103",
+    "statute_title": "Crimes Against At-Risk Adults and At-Risk Juveniles",
+    "offense_class": "Enhanced one class above the underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Varies — one class above underlying offense",
+    "fine_max": "Varies — one class above underlying offense",
+    "elements": [
+      "Defendant committed a crime against an at-risk person",
+      "At-risk person includes those 70+ or those unable to protect themselves due to disability",
+      "Or a person in the care of a facility"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Financial exploitation",
+      "Caretaker relationship"
+    ],
+    "notes": "Colorado enhances crimes against at-risk adults and juveniles by one felony/misdemeanor class. At-risk includes adults 70+ and those with disabilities."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "C.R.S. § 18-12-108",
+    "statute_title": "Possession of Weapons by Previous Offenders",
+    "offense_class": "Class 5 Felony (non-violent prior); Class 4 Felony (violent prior)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 5); 6 years (Class 4)",
+    "fine_max": "$100,000 (Class 5); $500,000 (Class 4)",
+    "elements": [
+      "Defendant possessed, used, or carried a firearm",
+      "Defendant had a prior felony conviction or was otherwise prohibited"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior violent felony conviction (Class 4 Felony)"
+    ],
+    "notes": "Colorado prohibits firearm possession by convicted felons, those subject to protection orders, and those adjudicated mentally defective."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "C.R.S. § 18-12-108(1)",
+    "statute_title": "Possession of a Weapon by a Previous Offender",
+    "offense_class": "Class 5 Felony (non-violent prior); Class 4 Felony (violent prior)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 5); 6 years (Class 4)",
+    "fine_max": "$100,000 (Class 5); $500,000 (Class 4)",
+    "elements": [
+      "Defendant knowingly possessed a firearm",
+      "Defendant had been convicted of a felony",
+      "Or defendant had been convicted of a misdemeanor domestic violence offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Applies to all convicted felons and domestic violence misdemeanants. Prior violent felony elevates from Class 5 to Class 4 Felony."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "C.R.S. § 18-12-105",
+    "statute_title": "Unlawfully Carrying a Concealed Weapon",
+    "offense_class": "Class 2 Misdemeanor (first); Class 5 Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "120 days (first); 3 years (second+)",
+    "fine_max": "$750 (first); $100,000 (second+)",
+    "elements": [
+      "Defendant knowingly and unlawfully carried a concealed weapon",
+      "Without a valid concealed handgun permit",
+      "Not on own property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Colorado requires a concealed handgun permit. First offense is a Class 2 Misdemeanor. Subsequent offenses are Class 5 Felonies."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "C.R.S. § 18-12-107.5",
+    "statute_title": "Illegal Discharge of a Firearm",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant knowingly or recklessly discharged a firearm",
+      "Into a dwelling or occupied building",
+      "Or in a manner that created a grave risk of death or serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Injury or death results",
+      "Occupied dwelling targeted"
+    ],
+    "notes": "Also covered by reckless endangerment (§ 18-3-208). Firing into an occupied building carries additional enhancement risk."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "C.R.S. § 18-5-902",
+    "statute_title": "Identity Theft",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "6 years",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant knowingly used the personal identifying information of another",
+      "Without authorization or permission",
+      "To obtain anything of value, credit, or a financial instrument"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is at-risk (enhanced one class)",
+      "Multiple victims",
+      "Financial loss exceeding $20,000"
+    ],
+    "notes": "Class 4 Felony. Enhanced when targeting at-risk adults (70+). Mandatory restitution."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "C.R.S. § 18-4-401",
+    "statute_title": "Theft — By Embezzlement",
+    "offense_class": "Same as theft by degree based on value",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value tier",
+    "fine_max": "Same as theft by value tier",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant knowingly obtained or exercised unauthorized control over the property",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public employee or fiduciary",
+      "Value exceeds $100,000"
+    ],
+    "notes": "Charged under the general theft statute. Embezzlement is a theory of theft, not a separate crime."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "C.R.S. § 18-5-102",
+    "statute_title": "Forgery",
+    "offense_class": "Class 5 Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant with intent to defraud",
+      "Falsely made, completed, altered, or uttered a written instrument",
+      "Which is or purports to be a document of legal significance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Forgery is a Class 5 Felony regardless of the type of document. Covers government documents, financial instruments, deeds, wills, and contracts."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "C.R.S. § 18-5-105",
+    "statute_title": "Criminal Possession of a Forged Instrument",
+    "offense_class": "Class 6 Felony",
+    "penalty_min": null,
+    "penalty_max": "18 months",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant possessed a forged instrument",
+      "With knowledge that it was forged",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Counterfeiting of currency is primarily federal. State charges typically involve forged documents."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "C.R.S. § 18-5-205",
+    "statute_title": "Issuing a Bad Check",
+    "offense_class": "Petty Offense (under $300); Class 2 Misdemeanor ($300-$750); escalates by value tier",
+    "penalty_min": null,
+    "penalty_max": "Same as theft by value tier",
+    "fine_max": "Same as theft by value tier",
+    "elements": [
+      "Defendant issued a check, draft, or order for payment of money",
+      "Knowing there were insufficient funds",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Classified by amount using the same value tiers as theft."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "C.R.S. § 18-5-211",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Class 5 Felony (under $20,000); Class 4 Felony ($20,000+)",
+    "penalty_min": null,
+    "penalty_max": "3 years (Class 5); 6 years (Class 4)",
+    "fine_max": "$100,000 (Class 5); $500,000 (Class 4)",
+    "elements": [
+      "Defendant made a false, incomplete, or misleading statement",
+      "In connection with an insurance claim or application",
+      "With intent to defraud an insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Organized fraud scheme",
+      "Amount exceeds $20,000"
+    ],
+    "notes": "Includes filing false claims, staged accidents, and arson-for-profit. Mandatory restitution."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "C.R.S. § 18-5-702",
+    "statute_title": "Criminal Possession or Use of Financial Transaction Device",
+    "offense_class": "Class 1 Misdemeanor (under $2,000); Class 6 Felony ($2,000+)",
+    "penalty_min": null,
+    "penalty_max": "18 months (Class 1 Misdemeanor); 18 months (Class 6 Felony)",
+    "fine_max": "$5,000 (Class 1 Misd.); $100,000 (Class 6 Felony)",
+    "elements": [
+      "Defendant used a credit card, debit card, or financial transaction device",
+      "Knowing it was stolen, forged, revoked, or canceled",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple cards used",
+      "Total fraud exceeding $5,000"
+    ],
+    "notes": "Colorado uses 'financial transaction device' to cover credit cards, debit cards, and similar instruments."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "C.R.S. § 18-5-309",
+    "statute_title": "Money Laundering",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "12 years",
+    "fine_max": "$750,000",
+    "elements": [
+      "Defendant conducted or attempted to conduct a financial transaction",
+      "Involving proceeds of specified unlawful activity",
+      "With knowledge that the transaction was designed to conceal or disguise the nature or source of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Class 3 Felony. Colorado also has structuring provisions to prevent evasion of reporting requirements."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "C.R.S. § 18-4-401",
+    "statute_title": "Theft by Deception",
+    "offense_class": "Same as theft by degree based on value",
+    "penalty_min": null,
+    "penalty_max": "Varies by value tier",
+    "fine_max": "Varies by value tier",
+    "elements": [
+      "Defendant obtained property by deception",
+      "Created or confirmed a false impression of fact",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is at-risk",
+      "Fraud against government entity"
+    ],
+    "notes": "General fraud charged under the theft statute as theft by deception."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "C.R.S. § 18-3-402",
+    "statute_title": "Sexual Assault",
+    "offense_class": "Class 4 Felony (basic); Class 3 Felony (with force or weapon); Class 2 Felony (involving serious bodily injury)",
+    "penalty_min": null,
+    "penalty_max": "6 years (Class 4); 12 years (Class 3); 24 years (Class 2)",
+    "fine_max": "$500,000 (Class 4); $750,000 (Class 3); $1,000,000 (Class 2)",
+    "elements": [
+      "Defendant knowingly inflicted sexual intrusion or penetration on a victim",
+      "Through the use of force, intimidation, or coercion",
+      "Or the victim was physically helpless or incapable of consent"
+    ],
+    "mandatory_minimum": "Indeterminate sentence to DOC possible under lifetime supervision provisions",
+    "enhancements": [
+      "Use of force or weapon (Class 3 Felony)",
+      "Serious bodily injury (Class 2 Felony)",
+      "Defendant in position of trust"
+    ],
+    "notes": "Colorado uses 'sexual assault' broadly. Indeterminate sentencing may apply. Sex offender registration required. No statute of limitations."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "C.R.S. § 18-3-402(5)",
+    "statute_title": "Sexual Assault — Force/Weapon",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": "4 years to life",
+    "penalty_max": "Life (indeterminate sentence possible)",
+    "fine_max": "$750,000",
+    "elements": [
+      "Defendant knowingly inflicted sexual intrusion or penetration on a victim",
+      "By use of physical force, violence, or physical helplessness",
+      "Without consent"
+    ],
+    "mandatory_minimum": "Indeterminate sentence (sex offender intensive supervision)",
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Serious bodily injury (Class 2 Felony)",
+      "Multiple victims"
+    ],
+    "notes": "Colorado eliminated the term 'rape' from its statutes in 2000. All penetration offenses are 'sexual assault.' Indeterminate sentencing allows for lifetime supervision."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "C.R.S. § 18-7-302",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Class 1 Misdemeanor (first); Class 6 Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "18 months (first); 18 months (second+)",
+    "fine_max": "$5,000 (first); $100,000 (second+)",
+    "elements": [
+      "Defendant knowingly exposed their genitals to the view of any person",
+      "Under circumstances in which the defendant knew the conduct was likely to cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class 6 Felony)",
+      "Exposure to a child (may trigger sex offense charges)"
+    ],
+    "notes": "First offense is Class 1 Misdemeanor. Subsequent offenses become a Class 6 Felony and may require sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "C.R.S. § 18-7-202",
+    "statute_title": "Soliciting for Prostitution",
+    "offense_class": "Class 3 Misdemeanor (first); Class 1 Misdemeanor (second+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 18 months (second+)",
+    "fine_max": "$750 (first); $5,000 (second+)",
+    "elements": [
+      "Defendant offered to perform or performed an act of prostitution",
+      "Or solicited another to patronize a prostitute"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (Class 1 Misdemeanor)",
+      "Solicitation involving a minor (enhanced felony charges)"
+    ],
+    "notes": "Both the person offering and the patron can be charged. Patronizing a prostituted child (§ 18-7-406) is a Class 3 Felony."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "C.R.S. § 18-6-403",
+    "statute_title": "Sexual Exploitation of a Child",
+    "offense_class": "Class 3 Felony (possession of 20+); Class 4 Felony (possession under 20); Class 3 Felony (distribution)",
+    "penalty_min": null,
+    "penalty_max": "12 years (Class 3); 6 years (Class 4)",
+    "fine_max": "$750,000 (Class 3); $500,000 (Class 4)",
+    "elements": [
+      "Defendant knowingly possessed, produced, or distributed material depicting a child engaged in sexually explicit conduct",
+      "Defendant knew or should have known the subject was a child"
+    ],
+    "mandatory_minimum": "Indeterminate sentence possible",
+    "enhancements": [
+      "Production (Class 3 Felony)",
+      "20 or more items (Class 3 Felony)",
+      "Distribution for commercial gain"
+    ],
+    "notes": "Federal charges are common in addition to state charges. Sex offender registration required. Indeterminate sentencing may apply."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "C.R.S. § 18-3-412.5",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Class 6 Felony (first); Class 5 Felony (second+)",
+    "penalty_min": null,
+    "penalty_max": "18 months (Class 6); 3 years (Class 5)",
+    "fine_max": "$100,000 (Class 6); $100,000 (Class 5)",
+    "elements": [
+      "Defendant was required to register under the Colorado Sex Offender Registration Act",
+      "Defendant knowingly failed to register or update registration as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent failure to register (Class 5 Felony)"
+    ],
+    "notes": "Must register within 5 business days. Colorado Sex Offender Registration Act requires registration for varying periods depending on offense."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "C.R.S. § 18-3-402(1)(e)",
+    "statute_title": "Sexual Assault on a Child",
+    "offense_class": "Class 4 Felony (victim 15-16, defendant 10+ years older); Class 3 Felony (victim under 15, under § 18-3-405)",
+    "penalty_min": null,
+    "penalty_max": "6 years (Class 4); 12 years (Class 3)",
+    "fine_max": "$500,000 (Class 4); $750,000 (Class 3)",
+    "elements": [
+      "Defendant engaged in sexual contact or penetration with a child",
+      "Victim was under the age of 17 (age of consent)",
+      "Defendant was 10 or more years older than the victim (for ages 15-16)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Age of consent in Colorado is 17 (15-16 with partner less than 10 years older). Sexual assault on a child (§ 18-3-405) covers victims under 15. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "C.R.S. § 18-9-106",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class 1 Petty Offense (basic); Class 2 Misdemeanor (discharge of firearm)",
+    "penalty_min": null,
+    "penalty_max": "No incarceration (basic); 120 days (firearm discharge)",
+    "fine_max": "$1,000 (basic); $750 (firearm discharge)",
+    "elements": [
+      "Defendant made a coarse and obviously offensive utterance, gesture, or display in a public place",
+      "Or abused or threatened a person in a public place",
+      "Tending to incite an immediate breach of the peace"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Basic disorderly conduct is a petty offense. Disorderly conduct involving discharge of a firearm is a Class 2 Misdemeanor."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "C.R.S. § 18-8-103",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "120 days",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant knowingly prevented or attempted to prevent a peace officer",
+      "Acting under color of official authority",
+      "From effecting an arrest of the defendant or another",
+      "By using or threatening to use physical force or violence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of physical force causing injury (additional assault charges)"
+    ],
+    "notes": "It is not a defense that the arrest was unlawful. Physical resistance causing injury may lead to additional assault charges."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "C.R.S. § 18-8-104",
+    "statute_title": "Obstructing a Peace Officer",
+    "offense_class": "Class 2 Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "120 days",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant knowingly obstructed, impaired, or hindered",
+      "The enforcement of the penal law or the preservation of the peace",
+      "By a peace officer acting under color of official authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Broader than resisting arrest — covers interference with any law enforcement activity."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "C.R.S. § 18-8-707",
+    "statute_title": "Criminal Contempt",
+    "offense_class": "Class 2 Misdemeanor (indirect criminal contempt); varies for direct",
+    "penalty_min": null,
+    "penalty_max": "6 months (summary); varies",
+    "fine_max": "$500 (summary)",
+    "elements": [
+      "Defendant willfully disobeyed a lawful order of the court",
+      "Or engaged in disruptive behavior in the courtroom",
+      "Or failed to appear as ordered"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Criminal contempt is punitive; civil contempt is coercive. Right to jury trial for serious criminal contempt."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "C.R.S. § 25-1-310",
+    "statute_title": "Intoxicated Person — Emergency Commitment",
+    "offense_class": "Not a criminal offense",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Person is found in a public place under the influence of alcohol or drugs",
+      "To the degree that the person is incapacitated"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Colorado decriminalized public intoxication. Intoxicated persons may be taken to a detox facility rather than jail. No criminal penalty applies. Local ordinances may vary."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "C.R.S. § 18-8-212",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Class 6 Felony (felony case); Class 2 Misdemeanor (misdemeanor case)",
+    "penalty_min": null,
+    "penalty_max": "18 months (Class 6); 120 days (Class 2 Misdemeanor)",
+    "fine_max": "$100,000 (Class 6); $750 (Class 2 Misdemeanor)",
+    "elements": [
+      "Defendant was released on bail or personal recognizance",
+      "Required to appear at a specified time and place",
+      "Defendant knowingly failed to appear as required"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge is a felony"
+    ],
+    "notes": "Bench warrant issued upon failure to appear. Bond forfeiture in addition to criminal charges."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "C.R.S. § 18-8-111",
+    "statute_title": "False Reporting to Authorities",
+    "offense_class": "Class 2 Misdemeanor (basic); Class 1 Misdemeanor (false emergency report)",
+    "penalty_min": null,
+    "penalty_max": "120 days (basic); 18 months (false emergency)",
+    "fine_max": "$750 (basic); $5,000 (false emergency)",
+    "elements": [
+      "Defendant reported false information to a law enforcement agency",
+      "Knowing the information to be false",
+      "Regarding a crime or emergency"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "False emergency reports (bomb threats, active shooter, swatting) are Class 1 Misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "C.R.S. § 18-3-206",
+    "statute_title": "Menacing",
+    "offense_class": "Class 3 Misdemeanor (basic); Class 5 Felony (with deadly weapon)",
+    "penalty_min": null,
+    "penalty_max": "6 months (basic); 3 years (with weapon)",
+    "fine_max": "$750 (basic); $100,000 (with weapon)",
+    "elements": [
+      "Defendant by physical action or threat knowingly placed or attempted to place another person",
+      "In fear of imminent serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use or display of a deadly weapon (Class 5 Felony)"
+    ],
+    "notes": "Colorado uses 'menacing' rather than 'criminal threat' or 'terroristic threat.' Menacing with a deadly weapon is a Class 5 Felony."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "C.R.S. § 18-8-502",
+    "statute_title": "Perjury in the First Degree",
+    "offense_class": "Class 4 Felony",
+    "penalty_min": null,
+    "penalty_max": "6 years",
+    "fine_max": "$500,000",
+    "elements": [
+      "Defendant made a materially false statement under oath",
+      "In or in connection with an official proceeding",
+      "Defendant did not believe the statement to be true"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "First-degree perjury in an official proceeding is a Class 4 Felony. Second-degree (§ 18-8-503) covers other sworn statements (Class 1 Misdemeanor)."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "C.R.S. § 18-8-302",
+    "statute_title": "Bribery",
+    "offense_class": "Class 3 Felony",
+    "penalty_min": null,
+    "penalty_max": "12 years",
+    "fine_max": "$750,000",
+    "elements": [
+      "Defendant offered, conferred, or agreed to confer any benefit",
+      "Upon a public servant",
+      "With intent to influence the public servant's official action"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the giver and receiver can be charged. Receiving a bribe (§ 18-8-303) is also a Class 3 Felony."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "C.R.S. § 18-8-208",
+    "statute_title": "Escape",
+    "offense_class": "Class 2 Felony (from custody for Class 1/2/3 Felony); Class 4 Felony (from other felony custody); Class 2 Misdemeanor (from misdemeanor custody)",
+    "penalty_min": null,
+    "penalty_max": "24 years (Class 2); 6 years (Class 4); 120 days (Class 2 Misdemeanor)",
+    "fine_max": "$1,000,000 (Class 2); $500,000 (Class 4); $750 (Class 2 Misdemeanor)",
+    "elements": [
+      "Defendant escaped or attempted to escape from custody or confinement",
+      "Defendant was in lawful custody"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or deadly weapon",
+      "Escape from maximum security"
+    ],
+    "notes": "Severity depends on the underlying offense. Escape from custody for a serious felony is itself a serious felony."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "C.R.S. § 18-9-202",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Class 1 Misdemeanor (basic); Class 6 Felony (aggravated, first); Class 5 Felony (aggravated, second+)",
+    "penalty_min": null,
+    "penalty_max": "18 months (basic); 18 months (Class 6); 3 years (Class 5)",
+    "fine_max": "$5,000 (basic); $100,000 (Class 6); $100,000 (Class 5)",
+    "elements": [
+      "Defendant knowingly, recklessly, or with criminal negligence",
+      "Overdrove, overloaded, overworked, tortured, tormented, or needlessly mutilated an animal",
+      "Or failed to provide adequate food, water, shelter, or protection"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated cruelty (torture, mutilation) — Class 6 Felony",
+      "Second aggravated offense — Class 5 Felony",
+      "Animal fighting (§ 18-9-204, Class 5 Felony)"
+    ],
+    "notes": "Colorado enhanced animal cruelty penalties significantly. Aggravated cruelty to animals involving torture is a Class 6 Felony. Animal fighting is a Class 5 Felony."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "C.R.S. § 18-1.3-204",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Remaining suspended sentence on underlying offense",
+    "fine_max": "Remaining fine on underlying offense",
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation",
+      "Absconding from supervision"
+    ],
+    "notes": "Judge has discretion to revoke, modify, or continue probation. Defendant entitled to a revocation hearing. Graduated sanctions may apply for technical violations."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "C.R.S. § 17-2-103",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Depends on underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Return to DOC for remaining sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole",
+      "Violation was established at a revocation hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New felony while on parole",
+      "Absconding"
+    ],
+    "notes": "Colorado Parole Board makes revocation decisions. Technical violations may result in graduated sanctions. Community return-to-custody facilities may be used."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "C.R.S. § 18-1-603",
+    "statute_title": "Complicity — Accessory",
+    "offense_class": "Same as principal offense",
+    "penalty_min": "Same as principal offense",
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant aided, abetted, advised, or encouraged another person",
+      "In the planning or commission of an offense",
+      "With the intent to promote or facilitate the commission of the offense"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "A complicitor is legally accountable for the behavior of another and is punishable as a principal."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "C.R.S. § 18-2-101",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One class below the attempted offense; attempt of Class 1 Felony is Class 2 Felony",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of the attempted offense",
+    "fine_max": "Varies by class of the attempted offense",
+    "elements": [
+      "Defendant acting with the kind of culpability otherwise required for commission of an offense",
+      "Engaged in conduct constituting a substantial step toward the commission of the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt reduces the offense classification by one level. Attempt of a Class 1 Felony is a Class 2 Felony."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "C.R.S. § 18-2-201",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "One class below the target offense",
+    "penalty_min": null,
+    "penalty_max": "Varies by class of target offense",
+    "fine_max": "Varies by class of target offense",
+    "elements": [
+      "Defendant agreed with one or more persons that they or one of them would engage in conduct which constitutes a crime",
+      "Defendant or a co-conspirator committed an overt act in pursuance of the conspiracy",
+      "With the intent to promote or facilitate the commission of the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy is one level below the target offense. Requires an overt act. Renunciation is an affirmative defense."
+  }
+]

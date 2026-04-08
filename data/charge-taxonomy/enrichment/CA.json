@@ -1,0 +1,1860 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "Field sobriety test results and dashcam/bodycam footage provide powerful visual evidence for juries, and California courts have upheld standardized FSTs as reliable indicators."
+    ],
+    "defense_opportunities": [
+      "Rising blood alcohol defense: BAC may have been below .08% at time of driving but rose during the absorption phase before testing, supported by expert toxicology testimony.",
+      "Mouth alcohol contamination from GERD, dental work, or recent belching can produce falsely elevated breath test results, creating reasonable doubt on BAC readings.",
+      "Challenge the legality of the traffic stop itself — without reasonable suspicion for the initial stop or probable cause for arrest, all subsequent evidence may be suppressed under the Fourth Amendment."
+    ],
+    "common_defenses": [
+      "Involuntary intoxication — defendant unknowingly consumed alcohol (e.g., spiked drink), negating the mens rea element of voluntary impairment."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "Chemical test results carry strong presumptive weight with juries, especially when supported by calibration logs and proper chain of custody documentation.",
+      "Prosecution can present driving pattern evidence (weaving, speed variations) along with officer observations of bloodshot eyes, slurred speech, and alcohol odor.",
+      "California's dual-track system allows simultaneous criminal prosecution and DMV administrative per se hearing, creating pressure for plea deals."
+    ],
+    "defense_opportunities": [
+      "The margin of error in breath testing instruments (typically ±0.01%) can create reasonable doubt when BAC is near the .08% threshold.",
+      "Partition ratio defense — the standard 2100:1 blood-to-breath ratio used by breathalyzers varies significantly among individuals, potentially producing inaccurate results.",
+      "Medical conditions such as diabetes, hypoglycemia, or ketoacidosis can produce acetone that breath machines misidentify as ethanol."
+    ],
+    "common_defenses": [
+      "Rising BAC defense — defendant's BAC was below .08% at the time of actual driving but had risen by the time of testing.",
+      "Lack of probable cause for the traffic stop under the Fourth Amendment, rendering all subsequent observations and test results inadmissible.",
+      "Mouth alcohol defense — residual alcohol in the mouth from recent consumption, burping, or GERD produced a falsely elevated breath reading."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "Mandatory jail time with limited alternatives: 96 hours minimum for second offense, 120 days for third offense, limiting defense leverage in plea negotiations.",
+      "Court must impose IID (ignition interlock device) requirement and extended DUI school (18-30 months), making probation conditions extremely burdensome."
+    ],
+    "defense_opportunities": [
+      "Challenge the validity or constitutionality of prior DUI convictions — if the defendant was not properly advised of rights (Boykin-Tahl waivers), priors may be stricken.",
+      "AB 1950 (2020) limits felony probation to two years and misdemeanor to one year, reducing the surveillance period for repeat offenders."
+    ],
+    "common_defenses": [
+      "Attack the validity of prior convictions through Boykin-Tahl challenges — if the defendant was not properly advised of constitutional rights before pleading guilty, the prior cannot be used for enhancement.",
+      "Fourth Amendment challenges to the traffic stop, detention, and arrest — repeat offender status does not justify a lower standard for probable cause."
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "No per se legal limit for most drugs in California (except cannabis at 0 tolerance for drivers under 21), so prosecution can rely entirely on observable impairment evidence.",
+      "Drug Recognition Expert (DRE) officer testimony on 12-step evaluation protocol is admissible and carries significant weight with California juries.",
+      "Blood test results showing presence of controlled substances, combined with driving pattern evidence, create a strong circumstantial case for impairment."
+    ],
+    "defense_opportunities": [
+      "Unlike alcohol DUI, there is no established per se limit for drugs (except THC for under-21 drivers), making it harder for prosecution to prove actual impairment beyond a reasonable doubt.",
+      "Drug metabolites can remain in the system long after impairment has worn off — presence of metabolites does not prove impairment at the time of driving.",
+      "DRE evaluations are subjective and have been challenged on reliability grounds; the officer's conclusions can be attacked through cross-examination and defense expert testimony.",
+      "Legally prescribed medication defense — the defendant took medication as prescribed and had no reason to believe it would impair driving ability."
+    ],
+    "common_defenses": [
+      "Metabolite presence without active impairment — drug metabolites (especially THC-COOH) can persist for days/weeks after last use and do not prove impairment at time of driving.",
+      "Prescription medication defense — defendant used lawfully prescribed medication in accordance with medical directions and was not warned about driving impairment.",
+      "Challenge the reliability of DRE protocol and officer qualifications — DRE evaluations have significant error rates and are not universally accepted as scientifically reliable.",
+      "Lack of probable cause to request blood testing — without specific articulable facts suggesting drug impairment, the blood draw may violate Fourth Amendment protections."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Constructive possession doctrine allows conviction even when drugs are not found on the defendant's person — proximity plus knowledge and dominion suffices.",
+      "Lab analysis reports confirming the identity and weight of the controlled substance provide strong forensic evidence that is difficult to dispute."
+    ],
+    "defense_opportunities": [
+      "Challenge the search and seizure that produced the drugs — warrantless searches must fall within a recognized exception to the Fourth Amendment warrant requirement.",
+      "Lack of knowledge defense — defendant did not know the substance was present or did not know it was a controlled substance."
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — drugs obtained without a valid warrant or applicable exception (consent, plain view, search incident to arrest) must be suppressed under the exclusionary rule.",
+      "Lack of knowledge or possession — the defendant did not know the drugs were present, did not exercise dominion and control, or was merely present near the contraband.",
+      "Temporary possession for disposal — defendant briefly possessed drugs with the intent to dispose of or turn them in to law enforcement."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Federal law still classifies marijuana as Schedule I, which can complicate immigration consequences and federal employment even for state-legal amounts."
+    ],
+    "defense_opportunities": [
+      "Adult recreational use is legal in California (Prop 64) for persons 21+ possessing up to 28.5g of flower or 8g of concentrate, providing a complete defense for personal quantities.",
+      "Quantity thresholds provide clear bright-line rules — if under 28.5g and defendant is 21+, there is no criminal liability."
+    ],
+    "common_defenses": [
+      "Legal possession under Proposition 64 — adult 21+ with 28.5g or less of marijuana flower or 8g of concentrated cannabis is not committing a crime.",
+      "Lack of knowledge — defendant was unaware marijuana was present in their vehicle, residence, or personal effects."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "Methamphetamine is a Schedule II controlled substance with strong social stigma, making jury sympathy difficult for defendants.",
+      "Even post-Prop 47, the stigma and health concerns associated with meth lead to aggressive prosecution and stricter plea offers.",
+      "Paraphernalia commonly found alongside meth (pipes, scales, baggies) can be used to bolster possession charges or support upgrade to possession with intent.",
+      "Presence of meth in the system via blood/urine testing provides corroborating evidence of recent use alongside physical possession."
+    ],
+    "defense_opportunities": [
+      "Chain of custody challenges — if the substance was not properly collected, stored, and transferred to the lab, results can be challenged.",
+      "Constructive possession challenges where meth was found in a shared space — prosecution must prove defendant's knowledge and dominion over the substance."
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — Fourth Amendment challenge to the search that discovered the methamphetamine, including challenges to consent, vehicle searches, and probation/parole search conditions.",
+      "Lack of knowledge — defendant did not know the substance was methamphetamine or did not know it was present in their belongings or vehicle.",
+      "Entrapment — law enforcement induced the defendant to possess methamphetamine when they would not have otherwise done so (rare but viable in undercover buy situations)."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "Cocaine is a Schedule II substance under both state and federal law, and lab testing readily distinguishes it from other white powders.",
+      "Prosecution can use quantity, packaging, and associated items (scales, large amounts of cash) to argue constructive intent to sell even when charged as simple possession.",
+      "Cocaine metabolites in blood/urine testing corroborate recent use when found in conjunction with physical evidence."
+    ],
+    "defense_opportunities": [
+      "Substance identification challenges — field tests produce false positives; defense can demand confirmatory lab testing and challenge testing methodology.",
+      "The distinction between powder cocaine and crack cocaine has been largely eliminated in California sentencing, removing disparate treatment concerns.",
+      "If cocaine was found during a probation or parole search, the scope of the search may have exceeded what was authorized by the search condition."
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — challenge the constitutionality of the stop, detention, or search that led to discovery of cocaine.",
+      "Lack of possession — defendant did not exercise dominion and control over the cocaine, particularly in shared vehicle or multi-occupant residence situations.",
+      "Challenge the lab analysis — demand the prosecution prove the substance is actually cocaine through proper chain of custody and certified lab results."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "prosecution_strengths": [
+      "The opioid crisis has led to increased prosecutorial focus, with fentanyl cases sometimes charged more aggressively due to overdose death concerns.",
+      "Possession of naloxone (Narcan) alongside opioids can be presented as consciousness of guilt regarding dangerous drug use.",
+      "Lab testing can identify specific opioid compounds and distinguish between prescription and illicit forms, strengthening the prosecution's case."
+    ],
+    "defense_opportunities": [
+      "Post-Prop 47, opioid possession is a misdemeanor with strong diversion eligibility, and California courts increasingly favor treatment over incarceration for opioid addiction.",
+      "Prescription defense — if the opioids were lawfully prescribed to the defendant, possession is legal and charges should be dismissed.",
+      "AB 472 (2021) and ongoing legislative efforts reflect California's shift toward treating opioid addiction as a public health issue rather than criminal conduct."
+    ],
+    "common_defenses": [
+      "Valid prescription defense — defendant possessed opioids pursuant to a valid prescription from a licensed physician.",
+      "Unlawful search and seizure — Fourth Amendment challenge to the search that produced the opioids."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "prosecution_strengths": [
+      "Pharmacy records and prescription monitoring program (CURES) data can demonstrate the defendant had no valid prescription.",
+      "Prescription drugs are readily identifiable by pill markings, making lab analysis straightforward and defense challenges to substance identity difficult.",
+      "Multiple types of prescription drugs found together or in large quantities raise inference of non-personal use."
+    ],
+    "defense_opportunities": [
+      "Valid prescription defense — the defendant had a current prescription from a licensed provider, even if the physical prescription was not on their person at the time.",
+      "Challenge whether the prosecution can prove the defendant knew the substance was a controlled prescription drug (knowledge element).",
+      "Medical records may establish the defendant was prescribed the medication at some point, even if the prescription had technically lapsed."
+    ],
+    "common_defenses": [
+      "Valid prescription defense — defendant possessed the medication pursuant to a valid prescription, which can be verified through pharmacy records and CURES database.",
+      "Lack of knowledge — defendant did not know the pills in their possession were controlled substances (e.g., given by a friend as 'aspirin').",
+      "Unlawful search and seizure — challenge the constitutionality of the search that discovered the prescription drugs."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Circumstantial evidence of intent to sell — quantity beyond personal use, packaging materials, scales, pay-owe sheets, large cash — is well-established and persuasive to juries.",
+      "Expert witness testimony from narcotics officers on indicia of sales (packaging, quantity, location) is routinely admitted in California courts.",
+      "Text messages and social media communications referencing drug transactions are increasingly used as direct evidence of intent to sell."
+    ],
+    "defense_opportunities": [
+      "Challenge the 'intent to sell' element — argue the quantity and packaging are consistent with personal use, not distribution.",
+      "If the search producing the evidence was unlawful, suppression of the drugs and paraphernalia eliminates the prosecution's case entirely.",
+      "No Prop 47 reduction available, but Prop 36 (2000) may provide diversion for some defendants with substance abuse issues if they can demonstrate personal addiction.",
+      "Expert testimony on personal-use quantities and consumption patterns can rebut the prosecution's narcotics expert on indicia of sales."
+    ],
+    "common_defenses": [
+      "Personal use defense — the quantity and circumstances are consistent with personal consumption rather than intent to distribute, rebutting the prosecution's expert testimony.",
+      "Unlawful search and seizure — suppress the drugs, scales, packaging, and other evidence obtained through a Fourth Amendment violation.",
+      "Lack of knowledge — defendant did not know drugs were present in their residence or vehicle, or did not know the substance was a controlled substance.",
+      "Challenge the reliability of narcotics expert testimony on indicia of sales — argue the expert's conclusions are speculative and not supported by the specific facts."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "Undercover buy operations provide direct evidence of distribution through controlled buys with pre-recorded currency and audio/video surveillance.",
+      "Wiretap evidence and cell phone records documenting drug transactions are powerful prosecution tools under California Electronic Communications Privacy Act exceptions."
+    ],
+    "defense_opportunities": [
+      "Entrapment defense — if law enforcement originated the idea of the sale and the defendant was not predisposed, this is a complete defense under California's subjective test.",
+      "Challenge the identification of the defendant as the seller through alibi evidence, unreliable informant testimony, or flawed lineup procedures.",
+      "Prop 36 drug treatment as an alternative to incarceration may be available for some distribution defendants with demonstrated substance abuse issues."
+    ],
+    "common_defenses": [
+      "Entrapment — law enforcement induced the defendant to sell drugs when they were not predisposed to do so, using California's subjective test standard.",
+      "Unlawful search and seizure — challenge the legality of surveillance, wiretaps, or physical searches that produced the distribution evidence.",
+      "Unreliable informant testimony — the prosecution's case relies on a confidential informant with credibility issues (criminal history, incentive to fabricate)."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Physical evidence from clandestine labs (chemical precursors, equipment, cooking apparatus) provides overwhelming circumstantial evidence of manufacturing.",
+      "Conspiracy charges often accompany manufacturing charges, expanding liability to co-defendants who provided materials, location, or assistance."
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant's actions constitute 'manufacturing' versus mere possession of precursors — the statute requires actual chemical extraction or synthesis.",
+      "Mere presence at a manufacturing location is insufficient — prosecution must prove the defendant actively participated in the manufacturing process.",
+      "Fourth Amendment challenges to the search warrant that led to the lab discovery — challenge probable cause, staleness of information, or execution of the warrant.",
+      "If the defendant was coerced or threatened into participating, a duress defense may negate the required criminal intent."
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — challenge the warrant or warrantless entry that led to discovery of the manufacturing operation.",
+      "Lack of knowledge or participation — defendant was merely present at the location and did not know about or participate in manufacturing.",
+      "Duress — defendant was threatened or coerced into participating in the manufacturing operation.",
+      "Challenge the characterization of activities as 'manufacturing' — possession of precursors or equipment alone does not establish that manufacturing actually occurred."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Wiretap evidence, financial records, and cooperating witness testimony build comprehensive conspiracy cases against trafficking organizations."
+    ],
+    "defense_opportunities": [
+      "Challenge quantity calculations — if the weight includes packaging, cutting agents, or unusable residue, the actual weight of pure drug may be below the enhancement threshold.",
+      "Severance from co-defendants to avoid guilt by association in multi-defendant trafficking conspiracies.",
+      "Negotiate for state prosecution over federal to avoid federal mandatory minimums, which are generally harsher."
+    ],
+    "common_defenses": [
+      "Challenge the weight and purity of the drugs — demand independent lab analysis to verify that the quantity meets the statutory threshold for trafficking enhancements.",
+      "Lack of knowledge — defendant transported or stored packages without knowledge of their contents (unwitting courier defense).",
+      "Withdrawal from conspiracy — defendant affirmatively withdrew from the trafficking operation before the charged conduct occurred."
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Paraphernalia with drug residue provides both a paraphernalia charge and circumstantial evidence of drug use/possession.",
+      "Officers routinely identify common paraphernalia (pipes, syringes, spoons) based on training and experience, and courts accept this testimony.",
+      "Paraphernalia charges often accompany drug possession charges, adding leverage in plea negotiations."
+    ],
+    "defense_opportunities": [
+      "Challenge the characterization of the item as paraphernalia — many items (spoons, pipes, rolling papers) have legitimate non-drug-related uses.",
+      "If the paraphernalia was found during an unlawful search, the entire charge fails upon suppression of the evidence."
+    ],
+    "common_defenses": [
+      "Legitimate use defense — the item has a lawful purpose (medical syringes, tobacco pipe, cooking implements) and was not used for drug consumption.",
+      "Unlawful search and seizure — challenge the search that discovered the paraphernalia."
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Victim and witness testimony about threatening gestures or movements is often sufficient to establish the elements of assault.",
+      "The general intent standard means prosecution need only prove the defendant intended to do the act, not that they intended to cause harm.",
+      "Bodycam footage and 911 calls provide contemporaneous evidence that is difficult for defendants to contradict."
+    ],
+    "defense_opportunities": [
+      "Assault is a specific intent crime in the sense that the defendant must have the present ability to commit a violent injury — if they lacked that ability, no assault occurred.",
+      "Mutual combat or consent — if both parties voluntarily engaged in a physical confrontation, this can negate the unlawfulness element.",
+      "Misidentification — especially in chaotic situations involving multiple people, the wrong person may be identified as the aggressor."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant reasonably believed they or another person was in imminent danger of bodily harm and used reasonable force to prevent it.",
+      "Lack of present ability — defendant did not have the actual ability to inflict violent injury (e.g., was too far away, restrained, or had no means).",
+      "Accident or involuntary act — the alleged assault was an accident without criminal intent.",
+      "False accusation — the alleged victim fabricated or exaggerated the incident, often motivated by personal animosity or custody disputes."
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "Even indirect touching (throwing something, spitting) satisfies the contact element of battery.",
+      "Victim testimony about unwanted physical contact, combined with any corroborating evidence, creates a strong prosecution case.",
+      "Battery is a general intent crime — prosecution only needs to prove the defendant willfully touched the victim, not that they intended injury."
+    ],
+    "defense_opportunities": [
+      "Self-defense is the most common and effective battery defense — reasonable force to protect oneself or others against unlawful touching.",
+      "Consent — if the victim consented to the physical contact (sports, mutual horseplay), battery did not occur.",
+      "Accidental contact in a crowded or chaotic environment negates the willfulness requirement.",
+      "Battery convictions can often be reduced to lesser infractions or resolved through informal diversion, especially for first-time offenders."
+    ],
+    "common_defenses": [
+      "Self-defense or defense of others — defendant used reasonable force in response to an imminent threat of unlawful touching or injury.",
+      "Consent — the alleged victim consented to the physical contact, or the contact occurred in a context where touching was expected.",
+      "Accident — the contact was unintentional and did not result from willful or negligent conduct.",
+      "False accusation — the alleged victim fabricated the battery claim, particularly in domestic, workplace, or custody dispute contexts."
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "Medical records documenting the victim's injuries provide powerful evidence of 'force likely to produce great bodily injury.'",
+      "Prosecution can rely on the nature of the force used (stomping, choking, repeated blows) without requiring proof of actual great bodily injury."
+    ],
+    "defense_opportunities": [
+      "Self-defense with proportional force — even significant force may be justified if the defendant reasonably faced serious threat of harm.",
+      "Challenge the 'great bodily injury' finding — the injuries may not meet the legal threshold of significant or substantial physical injury.",
+      "Intoxication may negate specific intent if charged under a theory requiring intent to inflict GBI, though it does not negate general intent."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used reasonable force in response to a genuine threat of serious bodily harm.",
+      "Lack of intent to cause great bodily injury — the force used, while excessive, was not intended to cause serious harm.",
+      "The alleged victim was the initial aggressor, and the defendant's response was proportional to the threat faced."
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "The 'deadly weapon' characterization is determined by the manner of use, not the inherent nature of the object, giving prosecution broad discretion.",
+      "Victim injuries, when present, provide compelling corroboration of the weapon's dangerous nature."
+    ],
+    "defense_opportunities": [
+      "Challenge the characterization of the object as a 'deadly weapon' — argue it was not used in a manner capable of producing death or GBI.",
+      "Self-defense with a weapon may be justified if the defendant reasonably believed they faced imminent threat of death or serious injury.",
+      "Lack of intent — the defendant did not intend to use the object as a weapon (e.g., was holding a tool that accidentally struck someone)."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used a weapon in response to a reasonable belief of imminent serious harm, and the force was proportional.",
+      "The object is not a 'deadly weapon' as used — challenge whether the manner of use made the object capable of causing death or GBI.",
+      "Accident — defendant did not intentionally use the object as a weapon; the contact was accidental.",
+      "Misidentification — the wrong person was identified as the assailant, especially in chaotic multi-person altercations."
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "prosecution_strengths": [
+      "Medical evidence of the victim's serious injuries (broken bones, concussion, internal bleeding) directly establishes the GBI element.",
+      "Prosecution can argue the nature of the injuries speaks for itself — no expert testimony on force level needed when injuries are severe."
+    ],
+    "defense_opportunities": [
+      "Challenge whether injuries rise to 'serious bodily injury' under the legal definition — bruises, scrapes, or minor injuries may not qualify.",
+      "Self-defense — if the victim initiated the confrontation, the defendant's responsive force, even if causing injury, may be legally justified.",
+      "Mutual combat — both parties willingly engaged in physical confrontation, which can reduce culpability."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted in reasonable response to an imminent threat of bodily harm.",
+      "Accident — the contact was unintentional, and the resulting injuries were not foreseeable."
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "Prosecution can proceed even without victim cooperation under the 'evidence-based prosecution' model using 911 calls, bodycam footage, photos, and medical records."
+    ],
+    "defense_opportunities": [
+      "Victim recantation — the alleged victim frequently wishes to retract their statement, and their inconsistent statements can create reasonable doubt.",
+      "Self-defense — the defendant was the actual victim of domestic violence and acted to protect themselves.",
+      "Wobbler reduction to misdemeanor, combined with domestic violence counseling and a batterer's intervention program, as an alternative to incarceration."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was the actual victim responding to the other party's aggression.",
+      "False accusation — allegations made in the context of a contentious divorce, custody battle, or immigration proceedings to gain strategic advantage.",
+      "Injuries were not caused by the defendant — the alleged victim's injuries resulted from an accident, self-harm, or another person."
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "Prosecution can proceed without victim testimony using bodycam, 911 calls, photographs, and excited utterance statements.",
+      "Mandatory 52-week batterer's intervention program upon conviction creates strong incentive for defendants to resolve cases."
+    ],
+    "defense_opportunities": [
+      "No injury required, but the lack of injury weakens the prosecution's case and supports arguments for dismissal or diversion.",
+      "Self-defense — the defendant was responding to the other party's physical aggression.",
+      "City attorney or district attorney diversion programs in many California counties allow first-time domestic battery defendants to complete counseling in lieu of prosecution."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used reasonable force to protect themselves from the other party's aggression.",
+      "False accusation motivated by custody dispute, divorce proceedings, or desire for immigration benefits (VAWA self-petition).",
+      "Lack of willful touching — the contact was accidental, not intentional (e.g., accidentally bumping during an argument)."
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "The threat need not be carried out — it only needs to be communicated in a manner that causes the victim sustained fear, which is a subjective-objective standard.",
+      "Text messages, voicemails, social media posts, and recorded statements provide documentary evidence of threats that is difficult to explain away.",
+      "The victim's testimony about their sustained fear, combined with the context of the relationship and prior interactions, is often sufficient."
+    ],
+    "defense_opportunities": [
+      "The threat must be 'so unequivocal, unconditional, immediate, and specific as to convey a gravity of purpose and immediate prospect of execution' — vague or conditional threats fail this test.",
+      "First Amendment protections — heated rhetoric, expressions of frustration, or constitutionally protected speech do not constitute criminal threats.",
+      "The victim's fear must be 'sustained' — momentary or fleeting fear does not satisfy the statutory requirement per In re Ricky T. (2001) 87 Cal.App.4th 1132."
+    ],
+    "common_defenses": [
+      "Protected speech under the First Amendment — the statement was an expression of anger, frustration, or opinion, not a true threat of violence.",
+      "Victim did not experience 'sustained fear' — the fear was momentary or the victim did not genuinely believe the threat would be carried out.",
+      "The statement was not communicated with the intent to threaten — it was a joke, hyperbole, or emotional outburst not meant to be taken literally."
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [],
+    "defense_opportunities": [
+      "Challenge premeditation and deliberation to reduce to second-degree murder — impulsive acts committed in the heat of passion negate the deliberation element."
+    ],
+    "common_defenses": [
+      "Lack of premeditation and deliberation — the killing was impulsive, spontaneous, or committed in the heat of passion, warranting reduction to second-degree murder or manslaughter.",
+      "Self-defense or defense of others — defendant had a reasonable belief that deadly force was necessary to prevent imminent death or great bodily injury."
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "Second-degree murder carries 15 years to life in state prison, with additional time for prior serious felony convictions or gun use enhancements.",
+      "Implied malice — prosecution need not prove intent to kill, only that defendant acted with conscious disregard for human life (e.g., DUI killing, shooting into a crowd).",
+      "No premeditation required — the prosecution's burden is lower than first-degree murder while still carrying serious life-sentence exposure."
+    ],
+    "defense_opportunities": [
+      "Reduce to voluntary manslaughter through provocation/heat of passion — if the defendant was provoked by the victim's conduct, murder can be reduced to manslaughter.",
+      "Challenge implied malice — argue the defendant did not subjectively appreciate the danger of their actions.",
+      "Imperfect self-defense reduces second-degree murder to voluntary manslaughter when the defendant had an honest but unreasonable belief deadly force was necessary.",
+      "Diminished actuality — evidence of mental disorder or voluntary intoxication may negate the malice aforethought element."
+    ],
+    "common_defenses": [
+      "Imperfect self-defense — honest but unreasonable belief in the need for self-defense reduces murder to voluntary manslaughter.",
+      "Lack of implied malice — defendant did not act with conscious disregard for human life; the death was an unforeseeable accident."
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "The victim does not need to be injured — any direct but ineffectual step toward killing suffices to establish attempt.",
+      "Intent to kill can be inferred from circumstances such as firing a gun at close range, stabbing in a vital area, or targeting the head.",
+      "Kill zone theory allows prosecution to charge attempted murder of multiple victims when defendant fired into a group, even if targeting a specific person."
+    ],
+    "defense_opportunities": [
+      "Specific intent to kill is required — assault with a deadly weapon or GBI does not automatically equal attempted murder if there was no intent to kill.",
+      "Abandonment defense — if the defendant voluntarily and completely abandoned the attempt before completion, this may constitute a defense.",
+      "Reduce to lesser charges (assault with a deadly weapon, ADW with GBI) through evidence that defendant did not intend to kill."
+    ],
+    "common_defenses": [
+      "Lack of specific intent to kill — the defendant intended to injure but not kill, which is insufficient for attempted murder.",
+      "Self-defense — defendant acted to prevent imminent death or great bodily injury from the alleged victim's aggression.",
+      "Voluntary abandonment — defendant voluntarily stopped the attempt before any harm occurred.",
+      "Mistaken identity — the defendant was not the person who committed the act, especially in chaotic multi-person confrontations."
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "Often charged as murder with manslaughter as the fallback — jurors may convict on manslaughter even if they reject the murder theory.",
+      "The 'heat of passion' and 'imperfect self-defense' theories that reduce murder to manslaughter still require proof that defendant unlawfully killed a human being.",
+      "Victim's family testimony about loss provides powerful emotional impact even in reduced-charge scenarios."
+    ],
+    "defense_opportunities": [
+      "Manslaughter is often the defense goal in a murder prosecution — establishing heat of passion or imperfect self-defense to reduce a murder charge.",
+      "Provocation defense — legally adequate provocation that would cause a reasonable person to act rashly reduces murder to manslaughter.",
+      "Imperfect self-defense — honest but unreasonable belief in the need for deadly force is a partial defense reducing murder to voluntary manslaughter.",
+      "Sentence exposure (3-11 years) is dramatically less than murder (15-to-life or 25-to-life), making voluntary manslaughter a significant negotiation target."
+    ],
+    "common_defenses": [
+      "Heat of passion — the killing was committed under extreme emotional disturbance caused by legally adequate provocation from the victim.",
+      "Imperfect self-defense — defendant had an honest but unreasonable belief that deadly force was necessary.",
+      "Self-defense (complete) — defendant reasonably believed deadly force was necessary to prevent imminent death or great bodily injury, warranting full acquittal.",
+      "Accident — the death occurred during a lawful act performed without criminal negligence."
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "Criminal negligence standard is lower than recklessness — the defendant need only have acted in a way a reasonable person would have known created a high risk of death or GBI.",
+      "Expert testimony on the standard of care (e.g., medical malpractice, unsafe working conditions) helps establish the negligence element.",
+      "The death of the victim creates powerful emotional evidence that may sway jurors regardless of the defendant's subjective intent."
+    ],
+    "defense_opportunities": [
+      "Challenge the negligence standard — ordinary negligence (civil) versus criminal negligence (aggravated, reckless) is a higher bar for prosecution.",
+      "Accident defense — the death was a tragic but unforeseeable accident, not the result of criminal negligence or an unlawful act.",
+      "Causation challenge — the defendant's conduct was not the proximate cause of death; an intervening cause (victim's medical condition, third-party action) broke the chain.",
+      "If charged based on an 'unlawful act' theory, challenge the underlying misdemeanor — if the underlying act was not unlawful, manslaughter fails."
+    ],
+    "common_defenses": [
+      "Accident — the death was an unforeseeable accident that occurred despite the defendant's exercise of ordinary care.",
+      "Lack of criminal negligence — the defendant's conduct, while perhaps careless, did not rise to the level of criminal negligence required for involuntary manslaughter.",
+      "Superseding cause — an unforeseeable intervening event or third-party action was the actual cause of death.",
+      "Self-defense — if applicable, the defendant's use of force was justified, and the resulting death was a lawful response to aggression."
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Evidence of distracted driving, excessive speed, or reckless behavior leading to death is readily established through accident reconstruction and witness testimony.",
+      "Gross negligence vehicular manslaughter carries 2-6 years in state prison when charged as a felony.",
+      "Cell phone records, dashcam footage, and toxicology results provide objective evidence of negligent driving."
+    ],
+    "defense_opportunities": [
+      "Accident reconstruction expert testimony can demonstrate the death was unforeseeable or that the defendant's driving did not cause the fatal collision.",
+      "Challenge the 'gross negligence' finding — argue the defendant's conduct was merely negligent, not a departure so extreme it constitutes the 'wanton disregard' required for gross negligence.",
+      "Mechanical failure defense — the vehicle malfunctioned (brake failure, tire blowout) causing the accident despite the defendant's reasonable care."
+    ],
+    "common_defenses": [
+      "Lack of gross negligence — the defendant's driving was negligent but did not rise to the level of 'wanton disregard for human life' required for gross negligence vehicular manslaughter.",
+      "Mechanical failure or road conditions — the accident resulted from a vehicle malfunction or hazardous road condition beyond the defendant's control.",
+      "Sudden emergency doctrine — defendant faced an unexpected emergency that required split-second decision-making under impossible conditions.",
+      "The victim's own negligence (jaywalking, sudden lane change) was the proximate cause of the fatal collision."
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "Combination of DUI and a fatal collision makes this one of the most aggressively prosecuted vehicular offenses in California.",
+      "Prosecution can alternatively charge second-degree 'Watson murder' if the defendant had a prior DUI conviction and was admonished about the danger of DUI.",
+      "Toxicology results proving intoxication combined with accident reconstruction showing the defendant caused the collision create a powerful prosecution case."
+    ],
+    "defense_opportunities": [
+      "Challenge the intoxication element — if BAC was borderline or drug impairment is disputed, the gross vehicular manslaughter while intoxicated charge may not hold.",
+      "Causation defense — the intoxicated driving was not the proximate cause of the death (e.g., the victim ran a red light, another driver caused the collision).",
+      "Negotiate reduction from Watson murder to vehicular manslaughter — the exposure difference is 15-to-life versus 4-10 years.",
+      "Challenge the 'gross negligence' element — even while intoxicated, the specific driving conduct may not have constituted gross negligence."
+    ],
+    "common_defenses": [
+      "The victim or a third party was the proximate cause of the collision — the defendant's intoxication, while unlawful, did not cause the death.",
+      "Challenge the BAC or drug testing results to dispute the intoxication element.",
+      "The defendant's driving conduct, while impaired, did not constitute gross negligence — the accident would have occurred regardless of intoxication.",
+      "Emergency or sudden medical condition — the defendant suffered a medical emergency (seizure, cardiac event) that caused the collision."
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "The 'force or fear' element is broadly construed — even slight force or implied threats during a theft satisfy the robbery standard.",
+      "Victim identification testimony, surveillance footage, and recovery of stolen property provide strong circumstantial evidence."
+    ],
+    "defense_opportunities": [
+      "Challenge the 'force or fear' element — if the taking was accomplished without force or intimidation, the charge should be theft, not robbery.",
+      "Mistaken identity — robbery victims under stress make unreliable identifications, and cross-racial identifications are particularly problematic.",
+      "Claim of right defense — the defendant honestly believed they had a right to the property taken, negating the felonious intent element.",
+      "After-acquired intent — if the intent to steal formed after the use of force (e.g., took wallet after a fight), the elements of robbery are not met."
+    ],
+    "common_defenses": [
+      "Mistaken identification — challenge eyewitness reliability through expert testimony on memory, stress, cross-racial identification, and suggestive lineup procedures.",
+      "Claim of right — defendant had a good faith belief they were entitled to the property, which negates the intent element of robbery.",
+      "Lack of force or fear — the taking was accomplished without force or intimidation, constituting theft rather than robbery.",
+      "Duress — defendant was coerced into participating in the robbery under threat of harm."
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "Strike offense that counts as a serious and violent felony, triggering Three Strikes sentencing for any future felony conviction.",
+      "Surveillance footage showing a weapon, combined with victim testimony, provides overwhelming evidence of the armed component."
+    ],
+    "defense_opportunities": [
+      "Challenge whether the weapon was actually a firearm — replica, BB gun, or toy gun may not satisfy the firearm use enhancement.",
+      "Mistaken identity defense — armed robbery often involves disguises, and eyewitness identification under high stress is unreliable."
+    ],
+    "common_defenses": [
+      "Mistaken identification — the defendant was not the person who committed the robbery, and eyewitness identification under extreme stress is unreliable.",
+      "Duress — the defendant was coerced into participating in the robbery under threat of serious harm."
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "First-degree (residential) burglary is always a felony and a strike offense; second-degree (commercial) is a wobbler.",
+      "Circumstantial evidence of intent (burglary tools, time of entry, defendant's statements) is sufficient to establish the intent element.",
+      "Residential burglary carries 2, 4, or 6 years in state prison and is a violent felony under the Three Strikes law."
+    ],
+    "defense_opportunities": [
+      "Challenge the intent element — entry without intent to commit a felony or theft is not burglary (e.g., trespass, mistaken entry).",
+      "Consent to enter — if the defendant had permission to be in the structure, the unauthorized entry element fails."
+    ],
+    "common_defenses": [
+      "Lack of intent — the defendant entered the structure without intent to commit a felony or theft at the time of entry.",
+      "Consent — the defendant had permission to enter the structure, negating the unauthorized entry element.",
+      "Mistaken identity — the defendant was not the person who entered the structure."
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "Carries 2, 4, or 6 years in state prison, and the strike designation has lifelong consequences for future sentencing.",
+      "DNA evidence, fingerprints, and forensic evidence from the residence provide strong identification evidence.",
+      "Victim impact testimony about the psychological trauma of having their home violated is powerful with juries."
+    ],
+    "defense_opportunities": [
+      "Challenge the 'inhabited dwelling' element — if the structure was not being used as a dwelling at the time, it may not qualify as first-degree burglary.",
+      "Lack of intent at the time of entry — if the defendant entered with innocent purpose and formed criminal intent later, the burglary elements are not met.",
+      "Alibi defense — the defendant was not present at the location when the burglary occurred.",
+      "Challenge forensic evidence — fingerprints or DNA at the scene may have been left during a prior lawful visit."
+    ],
+    "common_defenses": [
+      "Lack of intent to commit felony or theft at the time of entry — the defendant entered for an innocent purpose.",
+      "Alibi — the defendant was elsewhere when the burglary occurred, supported by witness testimony, phone records, or surveillance footage.",
+      "Consent to enter — the defendant had permission to be in the residence (roommate, guest, family member).",
+      "Mistaken identity — forensic evidence is insufficient to prove the defendant was the person who entered and burglarized the residence."
+    ]
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "prosecution_strengths": [
+      "Surveillance camera footage from commercial establishments provides strong identification and conduct evidence.",
+      "The intent element can be inferred from circumstances: entering with concealment tools, removing security tags, or unusual behavior patterns.",
+      "Commercial burglary does not require breaking and entering — mere entry through an open door with felonious intent suffices."
+    ],
+    "defense_opportunities": [
+      "Challenge the felonious intent at time of entry — the defendant may have entered as a customer and formed the intent to steal after entry.",
+      "The value of property involved determines whether Prop 47 shoplifting applies, and prosecution bears the burden of proving value exceeds $950."
+    ],
+    "common_defenses": [
+      "Lack of intent at time of entry — defendant entered as a lawful customer without intent to steal.",
+      "Mistake or confusion — defendant inadvertently left the store with merchandise without intent to steal."
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "Surveillance footage, witness testimony, and recovery of stolen property provide direct evidence in most theft cases.",
+      "Circumstantial evidence such as possession of recently stolen property creates a strong inference of theft."
+    ],
+    "defense_opportunities": [
+      "Prop 47 ensures theft of $950 or less is petty theft (misdemeanor), and diversion programs are widely available for first-time offenders.",
+      "Claim of right — defendant had a good faith belief the property belonged to them.",
+      "Lack of intent to permanently deprive — borrowing without permission is not theft if the defendant intended to return the property.",
+      "Value challenge — if the value is contested, prosecution must prove the property exceeds relevant thresholds."
+    ],
+    "common_defenses": [
+      "Claim of right — the defendant had a good faith belief they were entitled to the property.",
+      "Lack of intent to permanently deprive — the defendant intended to borrow and return the property.",
+      "Consent — the owner gave permission for the defendant to take the property.",
+      "Misidentification — the defendant was not the person who took the property."
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Prop 47 set the grand theft threshold at $950, but values above this amount still carry serious felony consequences.",
+      "Pattern evidence — multiple thefts from the same victim aggregated over time can reach the grand theft threshold."
+    ],
+    "defense_opportunities": [
+      "Value challenge — if the fair market value of the property is $950 or less, the charge must be petty theft under Prop 47.",
+      "Claim of right or consent defense — defendant believed they had a right to the property or had the owner's permission.",
+      "Restitution and negotiated disposition — offering full restitution strengthens arguments for diversion or reduced charges."
+    ],
+    "common_defenses": [
+      "The property value does not exceed $950 — prosecution has failed to prove fair market value sufficient for grand theft, and the charge should be petty theft.",
+      "Claim of right — defendant had a good faith belief they were entitled to the property.",
+      "Lack of intent to permanently deprive — defendant intended to return the property."
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "Surveillance footage from retail stores provides clear video evidence of the shoplifting conduct.",
+      "Loss prevention officers are trained witnesses whose testimony is considered reliable by courts.",
+      "Concealment of merchandise, removal of security tags, and use of booster bags provide strong circumstantial evidence of intent."
+    ],
+    "defense_opportunities": [
+      "Diversion programs are widely available for shoplifting offenses, especially for first-time offenders.",
+      "Absence of concealment — the defendant may have been browsing or carrying merchandise with intent to pay.",
+      "Challenge the value — if the prosecution cannot prove the merchandise value exceeded any relevant threshold, lesser charges apply."
+    ],
+    "common_defenses": [
+      "No intent to steal — defendant intended to pay for the merchandise, was distracted, or forgot they were carrying the item.",
+      "Value below threshold — merchandise value is below the grand theft threshold, ensuring misdemeanor treatment under Prop 47.",
+      "False accusation by loss prevention — biased or mistaken identification, racial profiling, or overzealous LP officers.",
+      "Diversion eligibility — first-time offenders are generally eligible for pre-trial diversion resulting in dismissal."
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "Store surveillance, witness testimony, and recovery of stolen property provide direct evidence.",
+      "Even as a misdemeanor, conviction creates a 'theft' record that can affect employment, housing, and immigration status."
+    ],
+    "defense_opportunities": [
+      "Misdemeanor exposure is limited to 6 months county jail and $1,000 fine — most first-time offenders receive probation only.",
+      "Widespread diversion availability — many counties offer pre-trial diversion, civil compromise, or informal resolution for petty theft."
+    ],
+    "common_defenses": [
+      "No intent to steal — the taking was accidental, the defendant was confused, or they intended to pay.",
+      "Claim of right — defendant believed the property belonged to them.",
+      "Diversion — first-time offenders are eligible for pre-trial diversion resulting in dismissal upon completion of conditions."
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "LoJack and GPS tracking technology helps locate stolen vehicles and identify the driver, providing strong identification evidence.",
+      "Possession of a recently stolen vehicle creates a strong presumption that the possessor was the thief.",
+      "Vehicle theft is a wobbler with felony penalties up to 3 years state prison, and joyriding carries up to one year."
+    ],
+    "defense_opportunities": [
+      "Consent defense — the defendant had the owner's permission to use the vehicle, or reasonably believed they did.",
+      "Challenge the identification of the defendant as the person who took or drove the vehicle.",
+      "Prop 47 reduction argument for vehicles valued at $950 or less (rare, but applicable to very old/damaged vehicles)."
+    ],
+    "common_defenses": [
+      "Consent — the defendant had permission from the owner to use the vehicle, or the vehicle was borrowed from a friend who the defendant believed had authority to lend it.",
+      "Joyriding versus theft — defendant intended to temporarily use the vehicle, not to permanently deprive the owner.",
+      "Mistaken identity — the defendant was not the person who took the vehicle; someone else used the car and abandoned it.",
+      "Claim of right — defendant believed they had a legal right to the vehicle (e.g., ownership dispute, unreturned vehicle after shared use)."
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Possession of recently stolen property creates a presumption of knowledge, shifting the practical burden to the defense.",
+      "The statute covers buying, receiving, concealing, selling, or withholding stolen property — very broad reach.",
+      "Multiple stolen items from different sources can demonstrate a pattern of receiving stolen property."
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge — defendant did not know and had no reason to know the property was stolen (purchased at a swap meet, online marketplace, etc.).",
+      "Prop 47 reduces to misdemeanor when the property value is $950 or less.",
+      "Challenge the 'stolen' status of the property — prosecution must prove the property was actually stolen, not just lost or abandoned.",
+      "The defendant's connection to the property may be too remote to establish knowing receipt."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know the property was stolen and had no reason to suspect it, based on the circumstances of acquisition.",
+      "The property was not actually stolen — prosecution has failed to prove the property was taken by theft.",
+      "Innocent possession — defendant came into possession of the property through lawful means and only later learned it might be stolen.",
+      "Value below $950 — charge should be a misdemeanor under Prop 47."
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Digital evidence (emails, web activity, documents, financial records) provides extensive trail of identity theft activities.",
+      "Victims' financial records and credit reports document the harm caused, providing compelling evidence of unauthorized use."
+    ],
+    "defense_opportunities": [
+      "Authorization defense — defendant had permission from the identity holder to use their information for the specific purpose.",
+      "Lack of willful intent — defendant mistakenly or accidentally used another person's identity information.",
+      "Challenge the digital evidence linking the defendant to the identity theft — IP addresses, email accounts, and online identities can be spoofed."
+    ],
+    "common_defenses": [
+      "Authorization — the defendant had permission from the identity owner to use their personal information.",
+      "Lack of intent — the use of another's identity was accidental, mistaken, or for a lawful purpose.",
+      "Mistaken identity — the defendant's own identity or accounts were compromised, and someone else committed the theft using the defendant's devices.",
+      "Challenge the chain of custody and authenticity of digital evidence linking the defendant to the offense."
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "Documentary evidence (contracts, emails, financial records, victim statements) typically provides a comprehensive paper trail.",
+      "Pattern of fraudulent conduct across multiple victims demonstrates intent and negates any 'mistake' defense.",
+      "Wobbler with felony exposure of 16 months, 2, or 3 years for amounts exceeding $950."
+    ],
+    "defense_opportunities": [
+      "Good faith defense — the defendant genuinely believed their representations were true and had no intent to defraud.",
+      "Puffery versus fraud — exaggerated sales claims and opinions are not actionable misrepresentations of fact.",
+      "Lack of reliance — the alleged victim did not actually rely on the defendant's false representations in parting with their property.",
+      "Civil dispute — the matter is a contract or business dispute, not criminal fraud, and should be resolved through civil remedies."
+    ],
+    "common_defenses": [
+      "Good faith — defendant believed their representations were true and did not intend to defraud anyone.",
+      "Civil dispute — the disagreement is a contract or business matter, not criminal conduct.",
+      "Lack of material misrepresentation — the defendant's statements were opinions, puffery, or immaterial to the victim's decision.",
+      "Statute of limitations — fraud charges must be filed within the applicable limitations period from discovery."
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "Electronic transaction records create an undeniable trail of when, where, and how the card was used.",
+      "Surveillance footage at points of sale can identify the person using the stolen card.",
+      "Aggregation of charges over a 6-month period allows prosecution to reach the felony threshold even with small individual transactions."
+    ],
+    "defense_opportunities": [
+      "Authorization defense — the cardholder gave the defendant permission to use the card.",
+      "Mistaken identity — someone else used the defendant's device, account, or physical presence was elsewhere during the transactions.",
+      "Value challenge — if total fraudulent charges are $950 or less in any 6-month period, the offense is a misdemeanor.",
+      "Challenge the identification of the defendant through surveillance footage quality, timestamp discrepancies, or alibi evidence."
+    ],
+    "common_defenses": [
+      "Authorization — the cardholder gave the defendant permission to use the card for the transactions in question.",
+      "Mistaken identity — the defendant did not make the unauthorized transactions; their identity or device was stolen.",
+      "Lack of knowledge — defendant did not know the card was stolen, canceled, or unauthorized when they used it.",
+      "Value below $950 in any consecutive 6-month period — charge must be a misdemeanor."
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Handwriting analysis and document examination by forensic experts can link the defendant to forged documents.",
+      "The forgery statute covers an extremely broad range of documents: checks, deeds, contracts, prescriptions, money orders, and more.",
+      "Even unsuccessful forgery (caught before any loss) constitutes the completed crime if the document was offered as genuine."
+    ],
+    "defense_opportunities": [
+      "Authorization — the defendant had permission to sign the other person's name or alter the document.",
+      "Lack of intent to defraud — the defendant did not intend to deceive anyone or obtain anything of value through the forged document.",
+      "Challenge the forensic handwriting analysis — this field has been criticized for subjectivity and lack of standardized error rates."
+    ],
+    "common_defenses": [
+      "Authorization to sign — the defendant had express or implied permission to sign the other person's name.",
+      "Lack of intent to defraud — the signature or document was not created with the intent to deceive.",
+      "Challenge the authenticity analysis — the document may not actually be forged, or the handwriting analysis is unreliable."
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Financial records, audit trails, and accounting discrepancies provide compelling documentary evidence.",
+      "Wobbler with felony penalties for amounts exceeding $950, and aggregate embezzlement over time can reach very large totals."
+    ],
+    "defense_opportunities": [
+      "Challenge the trust relationship — if the defendant did not have a fiduciary relationship with the property owner, embezzlement does not apply.",
+      "Claim of right — defendant believed they were entitled to the funds (earned commissions, unpaid wages, reimbursement).",
+      "Accounting errors versus criminal misappropriation — sloppy bookkeeping is not the same as intentional embezzlement.",
+      "Prop 47 reduction for embezzlement of $950 or less, converting a wobbler to a straight misdemeanor."
+    ],
+    "common_defenses": [
+      "Claim of right — defendant believed they were entitled to the money or property (unpaid wages, commissions, expense reimbursement).",
+      "Accounting errors — the discrepancy is the result of poor bookkeeping or accounting mistakes, not intentional misappropriation.",
+      "Lack of intent — defendant did not intend to permanently deprive the owner of the property and planned to return or repay it."
+    ]
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "prosecution_strengths": [
+      "Special Investigation Units (SIUs) employed by insurance companies conduct thorough investigations before referring cases to prosecution.",
+      "Surveillance evidence (video showing the insured performing activities inconsistent with claimed injuries) is devastating to fraud claims.",
+      "Pattern evidence — multiple claims, prior claims history, and insured behavior inconsistent with losses strengthen the prosecution case."
+    ],
+    "defense_opportunities": [
+      "Legitimate claim defense — the insurance claim was genuine and the insured suffered actual losses.",
+      "Mistake or misunderstanding — errors in the claim were due to misunderstanding of the policy, confusion about what to report, or mistake.",
+      "Insufficient evidence of intent to defraud — exaggerating a claim is different from fabricating one entirely.",
+      "Challenge the SIU investigation — investigator bias, selective evidence gathering, or misinterpretation of surveillance footage."
+    ],
+    "common_defenses": [
+      "The claim was legitimate — defendant suffered actual losses and did not misrepresent facts to the insurer.",
+      "Lack of intent to defraud — any inaccuracies in the claim were the result of mistake, confusion, or poor memory, not intentional deception.",
+      "Advice of counsel — defendant filed the claim based on advice from an insurance agent, attorney, or other professional.",
+      "Challenge the surveillance interpretation — surveillance video may be misleading or taken out of context."
+    ]
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "prosecution_strengths": [
+      "Bank records definitively establish insufficient funds at the time the check was written and presented.",
+      "The statute creates a presumption of knowledge of insufficient funds if the check bounces and the maker fails to make good within 30 days of receiving notice.",
+      "Pattern of writing bad checks to multiple recipients demonstrates intent and negates 'mistake' defenses."
+    ],
+    "defense_opportunities": [
+      "Good faith belief in sufficient funds — defendant reasonably believed the account had adequate funds when the check was written.",
+      "The 30-day cure provision — if the defendant makes the check good within 30 days of receiving notice, the presumption of criminal intent is rebutted.",
+      "Lack of notice — if the defendant was not properly notified that the check bounced, the presumption of knowledge does not apply.",
+      "Prop 47 misdemeanor reduction for checks of $950 or less."
+    ],
+    "common_defenses": [
+      "Good faith belief — defendant believed sufficient funds were available when the check was written (deposit in transit, expected payment).",
+      "Payment within 30 days of notice — defendant made the check good upon learning of insufficient funds, rebutting the knowledge presumption.",
+      "The check was postdated — a postdated check cannot form the basis for a bad check prosecution if the payee agreed to hold it."
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "Physical recovery of the weapon during a lawful search or traffic stop provides direct evidence.",
+      "Ballistic testing and serial number tracing can link the weapon to the defendant or prior criminal activity.",
+      "California's strict gun laws mean many common firearm activities legal in other states are crimes in California."
+    ],
+    "defense_opportunities": [
+      "Unlawful search and seizure — if the weapon was discovered during an unconstitutional stop, search, or detention, it must be suppressed.",
+      "Self-defense necessity — in rare circumstances, temporary possession of a weapon for immediate self-protection may be justified.",
+      "Lack of knowledge — defendant did not know the weapon was in their vehicle, bag, or premises."
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — challenge the constitutionality of the stop or search that discovered the firearm.",
+      "Lack of knowledge — defendant did not know the firearm was present (borrowed vehicle, shared residence).",
+      "The weapon was not loaded or was stored in compliance with California transportation requirements (locked container, unloaded).",
+      "Momentary or transitory possession — defendant briefly possessed the weapon for a legitimate purpose (turning it in, moving it for safety)."
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "The two elements — prior felony conviction and current firearm possession — are both easily proven through records and physical evidence.",
+      "Constructive possession applies — the firearm need not be on the defendant's person; proximity plus dominion and control suffices.",
+      "Probation and parole search conditions allow warrantless searches that frequently discover firearms."
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge or possession — the firearm belonged to someone else and the defendant did not know it was present.",
+      "Unlawful search — the search that discovered the firearm violated the Fourth Amendment or exceeded the scope of any search condition."
+    ],
+    "common_defenses": [
+      "Unlawful search and seizure — challenge the constitutionality of the search that discovered the firearm.",
+      "Lack of knowledge — defendant did not know the firearm was present in the residence, vehicle, or area of constructive possession.",
+      "The prior felony conviction has been expunged, reduced to a misdemeanor, or otherwise no longer qualifies as a disabling conviction.",
+      "Momentary/justified possession — defendant temporarily possessed the firearm for self-defense or to prevent harm (very narrow defense)."
+    ]
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "prosecution_strengths": [
+      "Physical recovery of the prohibited weapon is typically dispositive — the prosecution only needs to prove knowing possession.",
+      "Strict liability aspect — no intent to use the weapon as a weapon is required, only knowing possession of the prohibited item.",
+      "As a wobbler, felony charges are available for certain weapon types or when combined with other criminal conduct."
+    ],
+    "defense_opportunities": [
+      "The item is not a 'prohibited weapon' under the specific statutory definitions — each weapon type has detailed statutory requirements.",
+      "Lack of knowledge — the defendant did not know the item was a prohibited weapon or did not know it was in their possession.",
+      "The weapon falls under a statutory exemption (historical collection, martial arts instruction, theatrical/movie production).",
+      "Unlawful search — the search that discovered the weapon was conducted without a warrant or valid exception."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know the item was present or did not know it was classified as a prohibited weapon.",
+      "Statutory exemption — the weapon was possessed for a lawful purpose (collector, martial arts, theatrical production).",
+      "Unlawful search and seizure — the weapon should be suppressed because it was discovered during an unconstitutional search."
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "Ballistic evidence (shell casings, bullet holes, fragments) provides strong physical evidence linking the shooting to the defendant.",
+      "The statute does not require intent to kill or injure anyone — simply shooting at the structure or vehicle is sufficient.",
+      "Firearm discharge draws immediate law enforcement response, often leading to prompt apprehension and forensic evidence collection."
+    ],
+    "defense_opportunities": [
+      "Accidental discharge — the firearm went off unintentionally, negating the willful element of the offense.",
+      "Self-defense — defendant discharged the weapon in response to an imminent threat of death or serious bodily injury.",
+      "Misidentification — the defendant was not the person who fired the weapon, especially when shots were fired from a distance or in darkness."
+    ],
+    "common_defenses": [
+      "Self-defense — defendant fired in response to an imminent lethal threat.",
+      "Accidental discharge — the weapon fired unintentionally, without willful intent to shoot at the structure or vehicle.",
+      "The dwelling was not inhabited or the vehicle was not occupied — essential elements are not met.",
+      "Misidentification — forensic evidence (ballistics, GSR) does not conclusively link the defendant to the discharge."
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "California eliminated the statute of limitations for rape and other serious sexual offenses, allowing prosecution at any time.",
+      "Rape kit evidence (DNA, physical trauma) combined with victim testimony creates a powerful prosecution case.",
+      "CALCRIM jury instruction on sexual assault allows conviction based solely on the victim's testimony if believed beyond a reasonable doubt."
+    ],
+    "defense_opportunities": [
+      "Consent defense — the sexual contact was consensual, and the prosecution cannot prove lack of consent beyond a reasonable doubt.",
+      "False accusation — motivated by revenge, jealousy, custody disputes, or desire for financial gain.",
+      "Challenge the forensic evidence — DNA presence does not prove non-consent; contamination or chain of custody issues may undermine reliability.",
+      "Inconsistencies in the accuser's account — prior statements, communications, and conduct inconsistent with the accusation create reasonable doubt."
+    ],
+    "common_defenses": [
+      "Consent — the sexual contact was consensual, and communications before and after the encounter support this.",
+      "False accusation — the accuser fabricated the allegation for personal reasons (revenge, custody advantage, financial motivation).",
+      "Misidentification — the defendant was not the perpetrator, particularly in stranger assault cases.",
+      "Insufficient evidence — the prosecution's case relies solely on uncorroborated testimony with significant inconsistencies."
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "prosecution_strengths": [
+      "Victim testimony about unwanted sexual touching, combined with any corroboration (witnesses, prior complaints, pattern evidence), is powerful.",
+      "Misdemeanor sexual battery requires only unwanted touching of an intimate part for sexual gratification — a very low threshold."
+    ],
+    "defense_opportunities": [
+      "Consent — the touching was consensual, and the prosecution cannot prove otherwise beyond a reasonable doubt.",
+      "Accidental or incidental contact — the touching was not intentional or was not for the purpose of sexual gratification.",
+      "The touching did not involve an 'intimate part' as defined by the statute.",
+      "Lack of restraint — if charged as felony sexual battery, challenge the 'restraint' element to reduce to misdemeanor."
+    ],
+    "common_defenses": [
+      "Consent — the alleged victim consented to the touching at the time it occurred.",
+      "The contact was accidental — not intentional touching of an intimate part for sexual gratification.",
+      "False accusation motivated by personal animus, workplace disputes, or other ulterior motives.",
+      "Insufficient evidence — the prosecution's case lacks corroboration beyond the accuser's testimony."
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "prosecution_strengths": [
+      "Low evidentiary threshold — victim testimony about unwanted sexual touching is often sufficient for conviction.",
+      "Workplace, school, and institutional settings provide contextual evidence and often additional witnesses or reporting.",
+      "Conviction carries up to 6 months county jail and mandatory sex offender registration in certain circumstances."
+    ],
+    "defense_opportunities": [
+      "Consent defense — the touching was welcomed or invited by the alleged victim.",
+      "The touching was not for the purpose of sexual arousal, gratification, or abuse — it was incidental or innocent.",
+      "Mistaken identity in crowded or chaotic environments where the wrong person may be accused."
+    ],
+    "common_defenses": [
+      "Consent — the alleged victim consented to the contact.",
+      "The contact was accidental or incidental, without sexual motivation.",
+      "False accusation — the allegation is fabricated or exaggerated.",
+      "The body part touched does not constitute an 'intimate part' under the statutory definition."
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "Proof of the victim's age through birth certificate and proof of sexual intercourse is sufficient — no proof of force or non-consent needed.",
+      "The wobbler status (misdemeanor if age difference under 3 years; felony if 3+ years) means significant exposure for older defendants.",
+      "DNA evidence from pregnancy or rape kit can conclusively prove sexual intercourse occurred."
+    ],
+    "defense_opportunities": [
+      "If the age difference is less than 3 years, the offense is a misdemeanor with significantly reduced penalties.",
+      "Challenge whether sexual intercourse actually occurred — lesser sexual contact may constitute a different offense.",
+      "Constitutional challenges to age-of-consent laws have had limited success but remain available for extreme factual scenarios.",
+      "Romeo and Juliet factual scenarios (close-in-age partners) create sympathy with jurors and judges, potentially resulting in lighter sentences."
+    ],
+    "common_defenses": [
+      "No sexual intercourse occurred — the prosecution must prove penetration to establish statutory rape, and lesser contact constitutes different offenses.",
+      "False accusation — the minor fabricated the allegation, or a parent initiated the complaint to control the relationship.",
+      "Constitutional challenge — as applied to this specific factual scenario, the statute produces unjust results."
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "Medical evidence of injuries inconsistent with accidental causes provides strong prosecution evidence through expert pediatric testimony.",
+      "Mandatory reporting laws ensure schools, doctors, and other professionals report suspected abuse, creating extensive documentary records."
+    ],
+    "defense_opportunities": [
+      "Reasonable parental discipline defense — California law permits reasonable corporal punishment by a parent, and the line between discipline and abuse is factual.",
+      "Injuries were accidental — children sustain injuries through normal play, sports, and accidents that may appear abusive but are not.",
+      "Challenge the medical expert testimony on the cause and mechanism of injuries.",
+      "False accusation by the other parent in a custody dispute — forensic interview techniques with children can produce false disclosures."
+    ],
+    "common_defenses": [
+      "Reasonable parental discipline — the punishment did not exceed what is permitted under California law for parental corporal discipline.",
+      "Accidental injuries — the child's injuries resulted from accidental causes, not intentional abuse.",
+      "False accusation — allegations made in the context of a custody dispute, and the child's statements were influenced by the other parent.",
+      "The injuries were caused by a medical condition (brittle bone disease, easy bruising) mistaken for abuse."
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "Felony child endangerment (great bodily harm or death likely) carries 2, 4, or 6 years in state prison.",
+      "Prosecution need not prove actual injury — only that the child was placed in a dangerous situation.",
+      "Common scenarios (leaving child in hot car, DUI with child passenger, drug use around children) are inherently sympathetic for prosecution."
+    ],
+    "defense_opportunities": [
+      "The situation did not actually endanger the child's health or safety — the danger was speculative or exaggerated.",
+      "The defendant took reasonable precautions and the situation was not as dangerous as alleged.",
+      "Momentary lapse — a brief, isolated incident does not constitute the ongoing pattern of endangerment that the statute contemplates.",
+      "Wobbler reduction to misdemeanor based on lack of actual harm and mitigating circumstances."
+    ],
+    "common_defenses": [
+      "No actual danger — the child was not placed in a situation where their health or safety was endangered.",
+      "Reasonable parenting — the defendant's conduct was within the range of normal parenting decisions and did not constitute criminal endangerment.",
+      "The endangerment was caused by another person, not the defendant.",
+      "Lack of criminal negligence — the defendant's conduct was merely negligent, not criminally so."
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "Digital forensic evidence (hard drives, cloud storage, internet history) provides comprehensive evidence of possession and distribution.",
+      "NCMEC CyberTipline reports and ISP records identify defendants through IP addresses and account information.",
+      "Sentencing enhancements for large collections (hundreds or thousands of images) and particularly exploitative material."
+    ],
+    "defense_opportunities": [
+      "Unauthorized access to the defendant's computer or account — someone else downloaded the material using the defendant's device or network.",
+      "Lack of knowledge — the defendant did not know the material depicted minors or did not know the material was on their device.",
+      "Fourth Amendment challenges to the search warrant — challenge probable cause, overbreadth, or execution of the warrant.",
+      "Challenge the age determination of individuals depicted in the images — prosecution must prove the subjects were minors."
+    ],
+    "common_defenses": [
+      "Unauthorized access — someone else used the defendant's computer, network, or accounts to access the material.",
+      "Lack of knowledge — defendant did not know the material was present on their device (automatic downloads, malware, shared computer).",
+      "Unlawful search and seizure — challenge the warrant or warrantless search of the defendant's electronic devices.",
+      "The individuals depicted are not minors — prosecution bears the burden of proving the subjects are under 18."
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "The movement element has been relaxed — any movement that increases the risk of harm beyond that inherent in the underlying crime suffices.",
+      "Victim testimony about being forcibly moved against their will is powerful and often corroborated by surveillance or witness accounts."
+    ],
+    "defense_opportunities": [
+      "Consent — the alleged victim consented to the movement (custodial disputes, voluntary travel).",
+      "Lack of force or fear — the movement was voluntary, not compelled by force, fear, or fraud.",
+      "Insufficient movement — brief, incidental movement during commission of another crime may not satisfy the kidnapping standard."
+    ],
+    "common_defenses": [
+      "Insufficient asportation — the movement was not substantial enough to increase the risk of harm beyond the underlying offense.",
+      "Consent — the alleged victim voluntarily accompanied the defendant.",
+      "Parental right — in custodial kidnapping cases, the defendant exercised their lawful parental rights.",
+      "Lack of intent — the defendant did not intend to move the victim by force, fear, or fraud."
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Fire investigation experts can determine the origin, cause, and use of accelerants through forensic analysis.",
+      "Insurance records showing motive (financial distress, recent policy increases) provide circumstantial evidence of intent.",
+      "Arson is a strike offense under the Three Strikes law when committed against an inhabited structure."
+    ],
+    "defense_opportunities": [
+      "Accidental fire — the fire started from an accidental cause (electrical malfunction, cooking accident) without criminal intent.",
+      "Challenge the fire investigation methodology — arson investigation science has evolved significantly, and older methodologies have been discredited.",
+      "Lack of motive — absence of financial motive, personal grudge, or other reason to commit arson creates reasonable doubt.",
+      "Misidentification — the defendant was not the person who set the fire."
+    ],
+    "common_defenses": [
+      "Accidental cause — the fire was caused by an electrical fault, equipment malfunction, or other accidental source, not arson.",
+      "Challenge the fire investigation — the origin and cause determination was flawed, and the fire may not have been intentionally set.",
+      "Lack of identity — insufficient evidence that the defendant was the person who started the fire.",
+      "Lack of intent — even if the defendant started the fire, it was not willful and malicious (e.g., a controlled burn that spread accidentally)."
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "Surveillance footage, witness testimony, and physical evidence (paint, tools) provide strong identification evidence.",
+      "The statute covers defacing, damaging, or destroying another's property — very broad application.",
+      "Restitution is mandatory and can be substantial, especially for graffiti cleanup and property repair costs."
+    ],
+    "defense_opportunities": [
+      "Value challenge — if damage is less than $400, the offense is a misdemeanor with lower penalties.",
+      "Lack of intent — the damage was accidental, not willful.",
+      "Consent of the property owner — the defendant had permission to alter the property (art, renovations).",
+      "First-time offenders may be eligible for diversion or community service in lieu of criminal prosecution."
+    ],
+    "common_defenses": [
+      "Damage was accidental — defendant did not willfully and maliciously damage the property.",
+      "The damage amount is below $400, warranting misdemeanor treatment.",
+      "Consent — the property owner authorized the defendant's actions.",
+      "Misidentification — the defendant was not the person who caused the damage."
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "Even minor property damage can result in criminal prosecution and mandatory restitution.",
+      "Physical evidence connecting the defendant to the damage (paint on hands, tools, proximity) is probative.",
+      "Community impact of property damage, especially repeat offenses, leads to aggressive prosecution."
+    ],
+    "defense_opportunities": [
+      "Damage under $400 is a misdemeanor with maximum 1 year county jail and $1,000 fine.",
+      "Accidental damage negates the willfulness element — many mischief charges arise from accidents or misunderstandings.",
+      "First-time offender diversion programs available in most California counties."
+    ],
+    "common_defenses": [
+      "Accidental damage — the property damage was not willful or malicious.",
+      "The defendant did not cause the damage — misidentification or third-party responsibility.",
+      "Consent — the defendant had permission to interact with the property."
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Officer testimony about the defendant's conduct during the arrest is given significant weight by juries.",
+      "Bodycam footage showing physical resistance, fleeing, or obstruction provides strong prosecution evidence.",
+      "The charge is frequently added to other offenses, providing additional plea negotiation leverage."
+    ],
+    "defense_opportunities": [
+      "The officer was not performing a lawful duty — if the underlying arrest or detention was unlawful, resisting an unlawful arrest is not a crime.",
+      "The defendant's conduct did not actually delay, obstruct, or resist the officer — mere verbal disagreement or passive non-compliance may not suffice.",
+      "Excessive force by the officer — if the officer used unreasonable force, the defendant's resistance may be justified self-defense.",
+      "Free speech defense — verbal protests, criticism, or filming of police are constitutionally protected activities."
+    ],
+    "common_defenses": [
+      "Unlawful arrest or detention — the officer was not performing a lawful duty, so resistance was not criminal.",
+      "Self-defense against excessive force — the officer used unreasonable force, and the defendant's response was proportional.",
+      "No actual obstruction — the defendant's conduct did not delay, resist, or obstruct the officer in any meaningful way.",
+      "False allegation — the officer added the resisting charge to justify use of force or bolster a weak case."
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "Providing false information to officers, destroying evidence, or warning suspects of police presence all constitute obstruction.",
+      "Officer testimony about the defendant's obstructive conduct is considered credible by courts.",
+      "Obstruction charges can be stacked with the underlying offense the defendant was trying to obstruct."
+    ],
+    "defense_opportunities": [
+      "Constitutional right to remain silent — refusing to answer questions or provide identification (in non-detention contexts) is not obstruction.",
+      "The defendant's conduct did not actually obstruct justice — it must be shown that the conduct had a real obstructive effect.",
+      "The officer was not engaged in a lawful duty at the time — obstruction only applies when the officer is lawfully performing their duties.",
+      "First Amendment protection — recording police, criticizing officers, or refusing to move from a public area may be protected speech/conduct."
+    ],
+    "common_defenses": [
+      "Exercise of constitutional rights — the defendant exercised their right to remain silent, refuse consent to search, or record police activity.",
+      "The officer was not performing a lawful duty — the underlying police action was unlawful.",
+      "No actual obstruction — the defendant's conduct did not meaningfully interfere with law enforcement.",
+      "The charge was retaliatory — added because the defendant asserted their rights or challenged the officer's authority."
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Officer observations and testimony are typically the primary evidence, and courts generally credit officer testimony.",
+      "Disorderly conduct charges serve as a catchall for behavior that disturbs public order but does not fit other specific statutes.",
+      "Multiple incidents of disorderly conduct can support a pattern that leads to enhanced charges or probation revocation."
+    ],
+    "defense_opportunities": [
+      "Constitutional protections — some forms of 'disorderly' behavior may be protected expression under the First Amendment.",
+      "The defendant's conduct was not in a public place or did not actually disturb public order.",
+      "Diversion and infraction reduction are widely available for disorderly conduct cases."
+    ],
+    "common_defenses": [
+      "First Amendment protection — the defendant was engaged in protected speech or expressive activity.",
+      "Not in a public place — the conduct occurred on private property with permission.",
+      "The defendant was not interfering with anyone — the charge is based on officer annoyance rather than actual public disorder."
+    ]
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "prosecution_strengths": [
+      "Officer observations of stumbling, slurred speech, inability to stand, and odor of alcohol provide sufficient evidence.",
+      "The offense does not require a breathalyzer or blood test — the officer's trained observations are enough.",
+      "Repeat public intoxication offenses can lead to mandatory treatment orders or enhanced sentencing."
+    ],
+    "defense_opportunities": [
+      "The defendant was not in a 'public place' — front porch, hotel room, or private property visible from public may not qualify.",
+      "The defendant was not unable to care for themselves — they were functional, coherent, and not blocking any public way.",
+      "Medical condition defense — the defendant's behavior was caused by a medical condition (diabetes, stroke, medication reaction) not intoxication."
+    ],
+    "common_defenses": [
+      "Not in a public place — the defendant was on private property or in a location that does not qualify as 'public.'",
+      "Not unable to care for self — the defendant was intoxicated but still functional and not endangering themselves or others.",
+      "Medical condition — symptoms mimicking intoxication were caused by a medical issue (diabetic shock, medication, neurological condition)."
+    ]
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "prosecution_strengths": [
+      "Witness testimony and officer observations of the disturbance provide primary evidence.",
+      "The statute is intentionally broad, giving prosecution discretion to charge disruptive public behavior.",
+      "Often used as a reduction from more serious charges (assault, threats), carrying significant leverage in plea negotiations."
+    ],
+    "defense_opportunities": [
+      "Disturbing the peace can be charged as an infraction rather than a misdemeanor, significantly reducing consequences.",
+      "First Amendment protection — speech, even offensive or provocative speech, may be constitutionally protected.",
+      "'Fighting words' must be directed at a specific person and likely to provoke an immediate violent reaction — general offensive speech does not qualify.",
+      "Diversion and informal resolution widely available for disturbing the peace charges."
+    ],
+    "common_defenses": [
+      "Protected speech — the defendant's words, while offensive, were constitutionally protected under the First Amendment.",
+      "The noise was not unreasonable under the circumstances (construction, celebrations, legitimate activities).",
+      "Self-defense — any physical confrontation was in response to the other party's aggression."
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "Evidence of 'No Trespassing' signs, locked gates, or verbal warnings establishes notice requirement.",
+      "Property owner testimony about lack of consent is typically sufficient for conviction.",
+      "Repeat trespassing at the same location can lead to enhanced charges and restraining orders."
+    ],
+    "defense_opportunities": [
+      "Right to be present — the defendant had a legal right or permission to be on the property.",
+      "Lack of notice — the defendant was not adequately notified that they were not welcome (no signs, no verbal warning).",
+      "First Amendment protections for peaceful protest, labor picketing, or other expressive activity on quasi-public property.",
+      "Trespassing is a misdemeanor with maximum 6 months county jail — diversion and community service are common resolutions."
+    ],
+    "common_defenses": [
+      "Consent or right to be present — defendant had permission to be on the property or a legal right to enter.",
+      "Lack of notice — defendant was not told to leave and no signage indicated the property was restricted.",
+      "Mistake — defendant reasonably believed they had permission or were on the wrong property accidentally.",
+      "Necessity — defendant entered the property to avoid a greater harm (emergency, immediate danger)."
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "Pattern of conduct — the prosecution builds the case through a documented series of contacts, showing the course of conduct over time.",
+      "Digital evidence (texts, emails, social media activity, GPS tracking) provides extensive documentation of stalking behavior.",
+      "Victim testimony about the fear and impact of the stalking is powerful and sympathetic to juries."
+    ],
+    "defense_opportunities": [
+      "Constitutional activity — the defendant's contact was constitutionally protected (political speech, legitimate communication, First Amendment activity).",
+      "No credible threat — the defendant's conduct did not constitute a credible threat that would cause a reasonable person to fear for their safety.",
+      "The contact was consensual — the alleged victim participated in mutual communications that do not constitute stalking.",
+      "Lack of intent — the defendant did not intend to cause the victim fear; the conduct was misinterpreted."
+    ],
+    "common_defenses": [
+      "Constitutionally protected activity — the contact was protected speech, political activity, or legitimate communication.",
+      "Lack of intent — defendant did not intend to place the victim in reasonable fear for their safety.",
+      "Mutual engagement — the alleged victim participated in the communications, negating the unilateral pattern required for stalking."
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "Electronic evidence (call logs, text messages, emails, voicemails) provides comprehensive documentation of the harassment.",
+      "Repeated contacts after being told to stop demonstrates willfulness and a pattern of harassment.",
+      "Relatively low evidentiary threshold — the prosecution need only show repeated annoying communications."
+    ],
+    "defense_opportunities": [
+      "First Amendment protection — the content of communications may be protected speech even if the recipient finds them annoying.",
+      "Lack of intent to harass — the communications served a legitimate purpose (debt collection, business dispute, custody coordination).",
+      "The communications were not obscene, threatening, or repeated with the intent to annoy — single or infrequent contacts may not qualify.",
+      "Misdemeanor with maximum 6 months — diversion and informal resolution widely available."
+    ],
+    "common_defenses": [
+      "Legitimate purpose — the communications were for a lawful purpose (business, legal matter, co-parenting) and not intended to harass.",
+      "Protected speech — the content of the communications is protected under the First Amendment.",
+      "Lack of intent to annoy, harass, or threaten — the defendant's communications were misinterpreted.",
+      "No pattern — isolated communications do not constitute the repeated contact required for harassment."
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "The protective order itself and proof of service establish the first element, and any contact or proximity proves violation.",
+      "GPS monitoring, phone records, and witness testimony provide easy-to-establish evidence of violations.",
+      "Repeat violations are wobblers with enhanced penalties, including mandatory jail time."
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge of the order — if the defendant was not properly served with the protective order, they cannot knowingly violate it.",
+      "The contact was initiated by the protected person — if the protected party invited or initiated contact, this may negate the willful violation element.",
+      "Accidental or unintentional violation — the defendant did not know they were within the prohibited distance or at a prohibited location.",
+      "The protective order has expired, been modified, or was issued without proper due process."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant was not properly served with the protective order and did not know it existed.",
+      "The protected person initiated the contact — the alleged victim invited the defendant's presence or communication.",
+      "Accidental proximity — the encounter was coincidental and the defendant immediately withdrew upon realizing they were near the protected person.",
+      "The order was invalid — issued without proper notice, hearing, or due process."
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "The judge who issued the order is often the same judge who adjudicates the contempt, creating a prosecution-favorable environment.",
+      "Court records and transcripts provide documentary proof of the order and the violation.",
+      "Contempt proceedings can be summary (immediate punishment) in the judge's presence."
+    ],
+    "defense_opportunities": [
+      "Inability to comply — the defendant was unable to comply with the court order despite good faith efforts (financial impossibility, logistical barriers).",
+      "Vague or ambiguous order — if the court order was unclear, the defendant may not have understood what was required.",
+      "The underlying order was invalid or unconstitutional — challenging the order itself is a defense to contempt.",
+      "Due process — summary contempt procedures may have violated the defendant's right to notice and an opportunity to be heard."
+    ],
+    "common_defenses": [
+      "Inability to comply — defendant made good faith efforts to comply but was unable due to circumstances beyond their control.",
+      "Ambiguous order — the court order was unclear, and the defendant's conduct did not violate the order as reasonably interpreted.",
+      "Lack of willfulness — the violation was unintentional or the result of a good faith misunderstanding.",
+      "The underlying order was invalid — the court lacked jurisdiction or the order was constitutionally infirm."
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "Dashcam, surveillance, and bodycam footage provide objective evidence of dangerous driving behavior.",
+      "Witness testimony from other drivers, passengers, and officers about the defendant's driving conduct.",
+      "Accident reconstruction evidence can demonstrate the extreme nature of the defendant's driving."
+    ],
+    "defense_opportunities": [
+      "Challenge the characterization of the driving as 'willful disregard' — momentary inattention or poor judgment is not reckless driving.",
+      "Emergency defense — the defendant was driving urgently due to a medical emergency or other exigent circumstances.",
+      "Mechanical failure — the vehicle malfunctioned, causing the erratic driving behavior."
+    ],
+    "common_defenses": [
+      "The driving was not reckless — it was merely careless or negligent, not rising to willful disregard for safety.",
+      "Emergency circumstances — defendant was responding to a medical emergency or other urgent situation.",
+      "Vehicle malfunction — mechanical failure caused the driving pattern, not willful reckless conduct.",
+      "Misidentification — the defendant was not the driver of the vehicle."
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "DMV records conclusively establish the suspension status, and proof of notice of suspension satisfies the knowledge element.",
+      "Officers routinely discover suspended licenses during traffic stops through license plate readers and dispatch queries."
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge — the defendant did not actually know their license was suspended, and DMV notice was not properly delivered.",
+      "Necessity defense — the defendant drove out of necessity (medical emergency, safety of a child) with no alternative transportation.",
+      "License was actually valid — DMV records contain errors, and the suspension may have been lifted or never properly imposed.",
+      "Restricted license — the defendant had a restricted license that authorized the driving at the time and location."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not receive notice of the suspension and did not know their license was suspended.",
+      "The license was not actually suspended — DMV records are incorrect or the suspension had been lifted.",
+      "Necessity — defendant drove due to an emergency with no alternative transportation available.",
+      "The defendant had a valid restricted license that covered the driving at issue."
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Surveillance footage, license plate readers, and physical evidence (paint transfer, debris) help identify the fleeing driver.",
+      "Consciousness of guilt — fleeing the scene is powerful circumstantial evidence that the driver knew they caused the accident.",
+      "Injury hit-and-run is a wobbler carrying up to 4 years state prison."
+    ],
+    "defense_opportunities": [
+      "The defendant was unaware an accident occurred — if the impact was minor, the driver may not have realized they hit something.",
+      "The defendant stopped and provided information, but the victim was not present or the defendant left after waiting a reasonable time.",
+      "Misidentification of the vehicle or driver — physical evidence may be inconclusive.",
+      "The defendant later reported the accident — voluntarily coming forward mitigates culpability."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know an accident occurred due to the minor nature of the impact.",
+      "The defendant did stop or returned to the scene within a reasonable time.",
+      "Misidentification — the defendant was not the driver involved in the accident.",
+      "The defendant later reported the incident and cooperated with law enforcement, demonstrating lack of intent to flee."
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Police pursuit dashcam and helicopter footage provide compelling visual evidence of the pursuit.",
+      "The extended nature of a pursuit demonstrates willful intent to evade — the longer the chase, the stronger the prosecution case."
+    ],
+    "defense_opportunities": [
+      "The defendant did not willfully flee — they may not have heard the siren, seen the lights, or understood they were being pursued.",
+      "The officer's vehicle was not distinctively marked as required by the statute, or the officer was not in uniform.",
+      "The pursuit itself was dangerous and the defendant stopped as soon as it was safe to do so.",
+      "Duress or necessity — the defendant was fleeing from a threat unrelated to the police pursuit."
+    ],
+    "common_defenses": [
+      "Defendant did not know they were being pursued — the emergency lights and siren were not visible or audible.",
+      "The defendant stopped as soon as they could safely do so.",
+      "Necessity — the defendant was driving to escape an imminent threat to their safety unrelated to police."
+    ]
+  },
+  {
+    "common_charge_slug": "open-container",
+    "prosecution_strengths": [
+      "Physical evidence of the open container in the vehicle is typically dispositive.",
+      "Often discovered during DUI investigations, providing additional evidence of impaired driving.",
+      "No intent element required — mere presence of an open container in the passenger area suffices."
+    ],
+    "defense_opportunities": [
+      "As an infraction, the maximum penalty is a $250 fine — no jail time and minimal record impact.",
+      "The container was in the trunk or other area not accessible to the driver or passengers.",
+      "The container was sealed — an open but resealed container may not constitute an 'open container.'",
+      "The defendant was a passenger, not the driver — the statute applies to all occupants, but arguments about who the container belonged to may affect prosecution strategy."
+    ],
+    "common_defenses": [
+      "The container was stored in the trunk or other area not accessible to occupants.",
+      "The container was sealed or unopened.",
+      "The defendant did not know the container was present in the vehicle.",
+      "The vehicle was parked and not being operated at the time."
+    ]
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "prosecution_strengths": [
+      "Refusal results in automatic license suspension (1 year first refusal, 2 years second, 3 years third) through DMV administrative action.",
+      "Refusal can be used as consciousness of guilt evidence at the DUI trial."
+    ],
+    "defense_opportunities": [
+      "The arrest was not lawful — refusal consequences only apply when the underlying DUI arrest is supported by probable cause.",
+      "The defendant did not actually refuse — delayed compliance, asking questions, or ambiguous responses may not constitute a refusal.",
+      "Physical inability to perform the test (medical condition, breathing problems) is not a refusal."
+    ],
+    "common_defenses": [
+      "Unlawful arrest — the DUI arrest lacked probable cause, making the implied consent obligation inapplicable.",
+      "Improper admonishment — the officer failed to properly advise the defendant of the consequences of refusing.",
+      "No actual refusal — the defendant expressed willingness to test but was confused, asked questions, or did not clearly refuse.",
+      "Physical inability — a medical condition prevented the defendant from completing the breath test."
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "The court can revoke probation and impose the full suspended sentence for any violation of probation terms.",
+      "Technical violations (missed appointments, failed drug tests, curfew violations) are objectively provable through probation records.",
+      "New criminal conduct while on probation is the most serious violation and typically results in revocation."
+    ],
+    "defense_opportunities": [
+      "AB 1950 (2020) limits felony probation to 2 years and misdemeanor to 1 year, potentially mooting the violation if the probation term has effectively expired.",
+      "Good cause for non-compliance — employment conflicts, medical issues, transportation barriers, or other reasonable explanations for technical violations.",
+      "Challenge the underlying facts of the alleged violation — the probation officer may have incorrect or incomplete information.",
+      "Graduated sanctions — argue for alternatives to revocation (community service, additional treatment, modified conditions) rather than incarceration."
+    ],
+    "common_defenses": [
+      "Good cause for non-compliance — the defendant had a legitimate reason for the violation (medical emergency, job conflict, housing instability).",
+      "The violation did not occur — challenge the accuracy of the probation officer's report or testing results.",
+      "The probation condition is unconstitutional or unreasonable as applied to the defendant.",
+      "Request graduated sanctions rather than revocation — argue that revocation is disproportionate to the violation."
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "prosecution_strengths": [
+      "Technical violations (missed check-ins, failed drug tests, leaving jurisdiction) are objectively documented in probation records.",
+      "Preponderance of evidence standard makes it easier for prosecution to prove technical violations.",
+      "Pattern of technical violations demonstrates a persistent unwillingness to comply with court-ordered conditions.",
+      "Probation officers' reports and testimony carry significant weight with the court."
+    ],
+    "defense_opportunities": [
+      "AB 1950 probation term limits may have already expired the probation before the alleged violation.",
+      "Good cause — employment scheduling, transportation issues, medical problems, or housing instability prevented compliance.",
+      "The defendant has otherwise been compliant and this is an isolated incident warranting a modified condition, not revocation."
+    ],
+    "common_defenses": [
+      "Good cause for the violation — legitimate circumstances prevented compliance (medical emergency, job requirements, family crisis).",
+      "Substantial compliance — the defendant has been largely compliant with probation conditions, and the violation is minor and isolated.",
+      "The probation condition that was violated is unreasonable or impractical as applied to the defendant's circumstances.",
+      "The probation term has expired under AB 1950 limitations."
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "prosecution_strengths": [
+      "New criminal conduct while on probation is considered the most serious type of violation, and courts typically revoke probation.",
+      "The new arrest or criminal case provides the underlying facts for the probation violation — even if the new case is dismissed, the conduct can still support revocation.",
+      "Preponderance of evidence standard means the new criminal conduct need only be more likely than not — lower than the beyond-reasonable-doubt standard for the new case.",
+      "The court can impose the full suspended sentence from the original case upon revocation."
+    ],
+    "defense_opportunities": [
+      "Challenge the underlying criminal conduct — if the new case is weak, argue the conduct was not proven even by a preponderance.",
+      "The new arrest was based on mistaken identity or false accusations, and the underlying conduct did not occur.",
+      "Argue for reinstatement with modified conditions rather than revocation — particularly if the new offense is minor.",
+      "Due process challenges — the defendant must receive adequate notice and hearing before revocation."
+    ],
+    "common_defenses": [
+      "The new criminal conduct did not occur — challenge the underlying facts and evidence.",
+      "The new case has been dismissed or resulted in acquittal, undermining the factual basis for the violation.",
+      "Request reinstatement with modified conditions rather than revocation — the new offense is minor and does not warrant full revocation.",
+      "Mitigating circumstances — substance abuse issues, mental health crises, or other factors that explain the conduct and can be addressed through treatment."
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "GPS monitoring, regular check-ins, and parole agent surveillance make violations easy to detect and document.",
+      "New criminal conduct while on parole is treated extremely seriously and frequently results in parole revocation.",
+      "Return to prison for the remainder of the parole period is the standard consequence for serious violations."
+    ],
+    "defense_opportunities": [
+      "Prop 57 (2016) and related reforms have expanded parole eligibility and limited revocation consequences for technical violations.",
+      "Good cause for non-compliance — housing instability, employment issues, or transportation barriers that are common for recently released parolees.",
+      "Challenge the accuracy of GPS monitoring data or parole agent reports."
+    ],
+    "common_defenses": [
+      "Good cause for non-compliance — legitimate circumstances prevented the defendant from meeting parole conditions.",
+      "The violation is technical in nature and does not warrant full revocation — request graduated sanctions.",
+      "The parole condition is unreasonable or was impossible to comply with given the defendant's circumstances.",
+      "The new criminal allegation is unfounded — challenge the underlying facts of the alleged violation."
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "Court records document the scheduled appearance and the defendant's absence, providing irrefutable evidence.",
+      "The bench warrant issued upon FTA leads to arrest, and the defendant now faces both the original charge and FTA.",
+      "Bail forfeiture and increased bail for the new FTA charge create additional financial pressure on the defendant."
+    ],
+    "defense_opportunities": [
+      "Good cause for absence — medical emergency, natural disaster, car accident, or other circumstances beyond the defendant's control.",
+      "Lack of notice — the defendant was not properly notified of the court date.",
+      "The defendant voluntarily appeared within a reasonable time after discovering the missed date.",
+      "The FTA was due to confusion about the date, courtroom, or location, not willful disregard."
+    ],
+    "common_defenses": [
+      "Good cause — the defendant missed court due to a legitimate emergency (medical, family, transportation) beyond their control.",
+      "Lack of notice — the defendant was not properly notified of the court date and did not know about the scheduled appearance.",
+      "Voluntary surrender — the defendant voluntarily appeared as soon as they learned of the missed date, demonstrating good faith.",
+      "Mistake — the defendant was confused about the date, time, or courtroom, not willfully avoiding court."
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "Evidence that the reported crime did not occur (surveillance footage, witness statements, alibis of accused) proves the falsity.",
+      "The defendant's statements to police, often recorded, provide direct evidence of the false report.",
+      "Text messages, emails, or social media posts revealing the motive to file a false report (revenge, insurance claim, attention) strengthen the case."
+    ],
+    "defense_opportunities": [
+      "Good faith belief — the defendant honestly believed the events they reported occurred, even if they were mistaken.",
+      "The report was substantially true — minor inaccuracies or exaggerations do not make the entire report 'false.'",
+      "Recantation — the defendant corrected the report before any harm was done.",
+      "The investigation was triggered by a misunderstanding, and the defendant did not intend to make a false report."
+    ],
+    "common_defenses": [
+      "Good faith belief — defendant honestly believed the reported events occurred and did not knowingly make a false statement.",
+      "Substantially true — the report contained minor inaccuracies but was not materially false.",
+      "Lack of intent — the defendant did not intend to file a false report; the inaccuracies resulted from confusion or poor memory.",
+      "Recantation — the defendant corrected the report promptly, before law enforcement took significant action."
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "Text messages, online ads, and communications arranging the encounter provide documentary evidence of solicitation.",
+      "Prosecution strategies increasingly focus on buyers (johns) rather than sellers in human trafficking contexts."
+    ],
+    "defense_opportunities": [
+      "Entrapment — undercover officers initiated the solicitation and the defendant was not predisposed to engage in prostitution.",
+      "No agreement — the defendant did not actually agree to exchange money for sexual acts; the conversation was ambiguous.",
+      "First offense diversion — many California counties offer pre-trial diversion for first-time solicitation defendants.",
+      "CASE Act (2012) protections — if the defendant was a trafficking victim, they may be eligible for vacatur of the conviction."
+    ],
+    "common_defenses": [
+      "Entrapment — law enforcement initiated the idea of prostitution and the defendant was not predisposed to solicit.",
+      "No agreement — the defendant's communications did not constitute a clear agreement to exchange money for sexual services.",
+      "Diversion eligibility — first-time offenders may qualify for pre-trial diversion resulting in dismissal.",
+      "Trafficking victim defense — the defendant was coerced into prostitution and is a victim rather than a perpetrator."
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "Witness testimony from those who observed the exposure provides direct evidence.",
+      "Second or subsequent conviction is a wobbler with felony penalties, and conviction requires sex offender registration.",
+      "Surveillance camera footage in public areas may capture the exposure."
+    ],
+    "defense_opportunities": [
+      "Lack of intent — the exposure was accidental (wardrobe malfunction, changing clothes, medical necessity).",
+      "The defendant was not in a public place or a place where others were likely to be offended.",
+      "Urination defense — public urination, while potentially illegal, does not constitute indecent exposure without intent to draw attention.",
+      "Mental health defense — the defendant was experiencing a mental health crisis at the time of the incident."
+    ],
+    "common_defenses": [
+      "Accidental exposure — the exposure was unintentional and not done with the intent to draw attention to private parts.",
+      "Not a public place — the exposure occurred in a location where it was not expected to be observed by others.",
+      "Urination — the defendant was urinating, not exposing themselves for sexual gratification or to offend.",
+      "Mental health crisis — the defendant was experiencing a psychiatric emergency at the time."
+    ]
+  },
+  {
+    "common_charge_slug": "loitering",
+    "prosecution_strengths": [
+      "Officer observations of suspicious behavior (peering into windows, trying door handles, lurking in shadows) provide the basis for arrest.",
+      "The charge often accompanies more serious offenses (attempted burglary, stalking) and is used as lesser included or additional count.",
+      "Prior criminal history, particularly for property crimes, strengthens the prosecution's case."
+    ],
+    "defense_opportunities": [
+      "Lawful purpose — the defendant was on the property for a legitimate reason (visiting a friend, looking for an address, waiting for a ride).",
+      "Vagueness challenge — loitering statutes must be narrowly construed to avoid criminalizing innocent behavior.",
+      "First Amendment activity — the defendant was engaged in protected expression, observation, or photography in a public or semi-public area.",
+      "Misdemeanor with minor penalties — diversion and informal resolution are common."
+    ],
+    "common_defenses": [
+      "Lawful purpose — the defendant had a legitimate reason for being in the location.",
+      "The defendant was in a public place where they had a right to be.",
+      "Constitutional challenge — the loitering statute is unconstitutionally vague as applied to the defendant's conduct.",
+      "Misidentification — the defendant was not the person observed loitering."
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Co-conspirator statements are admissible against all members of the conspiracy under the co-conspirator exception to the hearsay rule.",
+      "Wiretap evidence, text messages, and electronic communications documenting the agreement are powerful proof.",
+      "Each conspirator is liable for all reasonably foreseeable crimes committed by co-conspirators in furtherance of the conspiracy."
+    ],
+    "defense_opportunities": [
+      "Withdrawal — the defendant withdrew from the conspiracy before any overt act was committed and communicated this withdrawal to co-conspirators.",
+      "No agreement — the defendant did not agree to commit a crime; mere presence, knowledge, or association is insufficient.",
+      "No overt act — even if an agreement existed, no overt act in furtherance of the conspiracy was committed.",
+      "Wharton's Rule — if the crime inherently requires two participants (conspiracy to commit prostitution), conspiracy may not be separately charged."
+    ],
+    "common_defenses": [
+      "No agreement — the defendant never agreed to participate in the criminal plan.",
+      "Withdrawal — the defendant withdrew from the conspiracy before any overt act and communicated this to the co-conspirators.",
+      "No overt act — the prosecution cannot prove any overt act was committed in furtherance of the alleged conspiracy.",
+      "Mere presence or association — being present or acquainted with conspirators does not establish membership in the conspiracy."
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Bank records, wire transfers, and financial transaction analysis provide comprehensive documentary evidence.",
+      "Cooperation between financial institutions (Suspicious Activity Reports) and law enforcement identifies laundering patterns."
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge — the defendant did not know the funds were derived from criminal activity.",
+      "Legitimate source of funds — the money had a lawful origin, and the transactions were for legitimate business purposes.",
+      "Challenge the predicate offense — if there was no underlying criminal activity generating the funds, there is nothing to launder.",
+      "Structuring defense — deposits under $10,000 may be legitimate business practice, not intentional structuring to avoid reporting."
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know the funds were proceeds of criminal activity.",
+      "Legitimate funds — the money came from lawful sources and the transactions had a legitimate business purpose.",
+      "No intent to conceal — the transactions were not structured to conceal the source or nature of the funds.",
+      "Challenge the predicate offense — if the underlying criminal activity is not proven, money laundering fails."
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "Adult Protective Services investigations generate detailed reports and evidence before criminal referral.",
+      "Juries are highly sympathetic to elderly victims, making defense at trial challenging."
+    ],
+    "defense_opportunities": [
+      "The alleged abuse was accidental — caring for elderly individuals sometimes results in unintentional injuries.",
+      "Financial transactions were authorized — the elder consented to the financial arrangements or the defendant had power of attorney.",
+      "Caregiver burnout and lack of resources — while not a legal defense, it provides context for sentencing mitigation.",
+      "The elder's mental capacity is at issue — their recollection of events may be unreliable due to dementia or cognitive decline."
+    ],
+    "common_defenses": [
+      "Accidental injury — the injuries were not the result of intentional abuse but occurred during legitimate caregiving.",
+      "Authorization — the financial transactions were authorized by the elder or conducted under a valid power of attorney.",
+      "False accusation — the allegation was made by a family member with ulterior motives (inheritance dispute, family conflict).",
+      "The alleged victim's account is unreliable due to cognitive impairment, confusion, or undue influence by other family members."
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "prosecution_strengths": [
+      "Digital evidence (posts, messages, platform records) provides clear documentation of the distribution.",
+      "Platform cooperation — social media companies increasingly cooperate with law enforcement in these cases."
+    ],
+    "defense_opportunities": [
+      "Consent — the alleged victim consented to the distribution or knew the images would be shared.",
+      "First Amendment defense — in limited circumstances, the distribution may involve matters of public concern.",
+      "The defendant did not distribute the images — their account was hacked or someone else distributed them.",
+      "The images do not depict the alleged victim's intimate parts in a manner covered by the statute."
+    ],
+    "common_defenses": [
+      "Consent — the depicted person consented to the distribution of the images.",
+      "The defendant did not distribute the images — unauthorized access to the defendant's account or device.",
+      "First Amendment protection — the images were shared in the context of a matter of legitimate public concern.",
+      "The images do not fall within the statutory definition of intimate or sexually explicit material."
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "Registration requirements are strictly enforced — even a brief delay in updating registration triggers criminal liability.",
+      "DMV and law enforcement databases track registrant compliance, making violations easy to detect.",
+      "Juries have little sympathy for convicted sex offenders who fail to comply with registration requirements."
+    ],
+    "defense_opportunities": [
+      "Lack of willfulness — the defendant attempted to register but was unable to due to bureaucratic obstacles, homelessness, or confusion about requirements.",
+      "The defendant was not properly informed of their registration obligations — inadequate notification by law enforcement or the court.",
+      "Transient status — the defendant was homeless and attempted to comply with transient registration requirements."
+    ],
+    "common_defenses": [
+      "Lack of willfulness — defendant attempted to register or was unaware of the specific requirements due to inadequate notification.",
+      "The defendant was homeless and made good faith efforts to comply with transient registration requirements.",
+      "The underlying conviction was expunged or no longer triggers a registration requirement."
+    ]
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "prosecution_strengths": [
+      "CURES (Controlled Substance Utilization Review and Evaluation System) database tracks all controlled substance prescriptions, easily identifying doctor shopping patterns.",
+      "Pharmacy records provide comprehensive documentation of prescription fills across multiple pharmacies.",
+      "The statute covers forging prescriptions, using false identification, and doctor shopping — all provable through documentary evidence."
+    ],
+    "defense_opportunities": [
+      "Legitimate medical need — the defendant suffered from a genuine medical condition and sought treatment from multiple providers for relief.",
+      "Lack of intent to defraud — the defendant was confused about prescription management and did not intentionally deceive providers.",
+      "Drug addiction as mitigating factor — the defendant's conduct was driven by opioid addiction, and diversion/treatment is more appropriate than prosecution.",
+      "Challenge the prosecution's interpretation of the CURES data — overlapping prescriptions may have legitimate explanations."
+    ],
+    "common_defenses": [
+      "Legitimate medical need — defendant was seeking treatment for a genuine medical condition and was not engaging in fraud.",
+      "Lack of intent — defendant did not intentionally deceive healthcare providers; the overlapping prescriptions were the result of confusion or poor communication.",
+      "CURES data misinterpretation — the prescription patterns have legitimate medical explanations."
+    ]
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "prosecution_strengths": [
+      "Federal resources — FBI, postal inspectors, and federal prosecutors have extensive investigative capabilities.",
+      "The 'wire' element is easily satisfied — any use of telephone, internet, email, or electronic communication in furtherance of the fraud scheme.",
+      "Federal sentencing guidelines for fraud are based on the loss amount, often resulting in significant prison time."
+    ],
+    "defense_opportunities": [
+      "No intent to defraud — the defendant engaged in a legitimate business transaction and did not intend to deceive anyone.",
+      "No material misrepresentation — the communications did not contain false statements of material fact.",
+      "Good faith reliance on professional advice — the defendant acted on advice of accountants, lawyers, or other professionals.",
+      "The communications at issue did not cross state lines or use interstate wires, potentially defeating federal jurisdiction."
+    ],
+    "common_defenses": [
+      "Good faith — the defendant believed their representations were true and did not intend to defraud.",
+      "No material misrepresentation — the communications did not contain false statements or the statements were not material to the alleged scheme.",
+      "Advice of counsel — the defendant relied on legal or professional advice in conducting the transactions.",
+      "Statute of limitations — wire fraud has a 5-year statute of limitations (10 years for financial institutions), and the charges may be time-barred."
+    ]
+  },
+  {
+    "common_charge_slug": "securities-fraud",
+    "prosecution_strengths": [
+      "SEC and Department of Financial Protection and Innovation investigations generate extensive documentary evidence.",
+      "Investor complaints, financial records, and audit trails provide comprehensive proof of fraudulent securities activities."
+    ],
+    "defense_opportunities": [
+      "No material misrepresentation or omission — the information provided to investors was accurate and complete.",
+      "Reliance on professional advice — the defendant relied on legal, accounting, or financial advisors in structuring the transactions.",
+      "Lack of scienter — the defendant did not knowingly or recklessly make false or misleading statements.",
+      "The investment losses were due to market conditions, not fraud — poor investment performance is not securities fraud."
+    ],
+    "common_defenses": [
+      "No material misrepresentation — all disclosures were accurate and investors were provided with truthful information.",
+      "Lack of intent (scienter) — defendant did not knowingly make false statements to investors.",
+      "Market conditions — investment losses were caused by market downturns, not fraudulent conduct.",
+      "Reliance on professionals — defendant relied on accountants, lawyers, and financial advisors in making disclosures."
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "No statute of limitations for rape in California — prosecution can occur at any time after the offense.",
+      "Rape kit evidence (DNA, physical trauma documentation) provides strong forensic corroboration of the victim's account.",
+      "California jury instructions allow conviction based solely on the victim's testimony if the jury finds it credible beyond reasonable doubt."
+    ],
+    "defense_opportunities": [
+      "Consent — the sexual act was consensual, and evidence of prior and subsequent communications between the parties supports this.",
+      "False allegation — motivated by revenge, custody disputes, financial gain, or other ulterior motives.",
+      "Challenge forensic evidence — DNA proves sexual contact occurred but does not prove lack of consent.",
+      "Inconsistencies in the accuser's statements — prior inconsistent statements, delayed reporting, and post-incident behavior inconsistent with the allegations."
+    ],
+    "common_defenses": [
+      "Consent — the sexual act was consensual, supported by communications, witness testimony, and the parties' behavior before and after.",
+      "False accusation — the allegation is fabricated for personal reasons.",
+      "Misidentification — the defendant was not the perpetrator, particularly in stranger sexual assault cases.",
+      "Insufficient evidence — the prosecution cannot prove lack of consent beyond a reasonable doubt."
+    ]
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "prosecution_strengths": [
+      "Prosecution can challenge the reasonableness of the defendant's belief that force was necessary.",
+      "Evidence of pre-existing conflict, threats made by the defendant, or disproportionate force can undermine the self-defense claim.",
+      "Duty to retreat in certain circumstances (outside the home) limits the availability of self-defense."
+    ],
+    "defense_opportunities": [
+      "No duty to retreat — California law does not require retreat before using force in self-defense, including in public places.",
+      "Imperfect self-defense — even an unreasonable belief in the need for force reduces murder to voluntary manslaughter.",
+      "Defense of others — force used to protect a third party from imminent harm is justified under the same standards as self-defense."
+    ],
+    "common_defenses": [
+      "Reasonable belief of imminent harm — defendant reasonably believed that force was necessary to prevent imminent death or great bodily injury.",
+      "No duty to retreat — California does not require retreat before using reasonable force in self-defense.",
+      "Defense of others — defendant used force to protect a third party from imminent unlawful harm."
+    ]
+  },
+  {
+    "common_charge_slug": "supervised-release-violation",
+    "prosecution_strengths": [
+      "PRCS supervisors document compliance through regular check-ins, drug testing, and GPS monitoring.",
+      "Violations can result in flash incarceration (up to 10 days) or revocation and custody (up to 180 days).",
+      "New criminal conduct while on PRCS is treated as a serious violation warranting custodial sanctions."
+    ],
+    "defense_opportunities": [
+      "Prop 47 and Prop 57 reforms have limited the consequences for PRCS violations, capping custodial sanctions at 180 days.",
+      "Good cause for non-compliance — housing instability, employment conflicts, and reentry challenges are common mitigating factors.",
+      "Flash incarceration caps (10 days) for minor technical violations provide a proportional response.",
+      "Challenge the facts of the alleged violation — PRCS officer reports may contain errors or incomplete information."
+    ],
+    "common_defenses": [
+      "Good cause for non-compliance — legitimate reentry challenges (housing, employment, transportation) prevented the defendant from meeting PRCS conditions.",
+      "The violation is technical and minor — request flash incarceration rather than full revocation.",
+      "Challenge the accuracy of the PRCS officer's report and the factual basis for the alleged violation.",
+      "The PRCS conditions are unreasonable as applied to the defendant's specific circumstances."
+    ]
+  },
+  {
+    "common_charge_slug": "other",
+    "prosecution_strengths": [
+      "California's Penal Code contains hundreds of criminal statutes covering a wide range of conduct not captured by specific charge categories.",
+      "Specialized statutes often carry their own unique elements, penalties, and enhancement provisions.",
+      "Prosecution can select from multiple applicable statutes to charge the same conduct, choosing the one with the strongest elements.",
+      "California's wobbler system gives prosecutors discretion to charge many offenses as felonies or misdemeanors based on circumstances."
+    ],
+    "defense_opportunities": [
+      "Each specific offense has unique elements that must be proven beyond a reasonable doubt — identify the weakest element and focus the defense there.",
+      "Prop 47 and Prop 36 reforms have reclassified and provided diversion for numerous California offenses.",
+      "Constitutional challenges — vagueness, overbreadth, First Amendment, due process — may apply depending on the specific statute."
+    ],
+    "common_defenses": [
+      "Challenge the weakest element of the specific offense — every statute has unique requirements that the prosecution must prove beyond reasonable doubt.",
+      "Constitutional challenge — the statute may be unconstitutionally vague, overbroad, or violate specific constitutional protections.",
+      "Diversion eligibility under various California diversion programs depending on the offense type."
+    ]
+  }
+]

@@ -1,0 +1,1585 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "D.C. Code § 50-2206.11",
+    "statute_title": "Driving Under the Influence of Alcohol or a Drug (DUI)",
+    "offense_class": "Misdemeanor (all offenses; enhanced penalties for repeat)",
+    "penalty_min": null,
+    "penalty_max": "180 days (first); 1 year (second); 1 year (third+)",
+    "fine_max": "$1,000 (first); $2,500 (second); $10,000 (third+)",
+    "elements": [
+      "Defendant operated or was in physical control of a vehicle",
+      "In the District of Columbia",
+      "While under the influence of intoxicating liquor or any drug or combination",
+      "Or with a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .20 or higher (mandatory minimum 10 days first; 15 days second; 20 days third+)",
+      "BAC .25 or higher (mandatory minimum 15 days first; 20 days second; 25 days third+)",
+      "BAC .30 or higher (mandatory minimum 20 days first; 25 days second; 30 days third+)",
+      "Child under 18 in vehicle (additional penalties under § 50-2206.18)",
+      "Second offense within 15 years (5 days mandatory minimum)",
+      "Third+ offense within 15 years (10 days mandatory minimum)"
+    ],
+    "notes": "DC uses a tiered BAC system with escalating mandatory minimums. OWI (Operating While Impaired, § 50-2206.14) is a lesser offense. Implied consent under § 50-1904.02."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "D.C. Code § 50-2206.13(a)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant operated or was in physical control of a vehicle",
+      "While under the influence of alcohol or drugs",
+      "BAC .08 or higher, or actual impairment",
+      "No prior DUI convictions within 15 years"
+    ],
+    "mandatory_minimum": "No mandatory minimum unless BAC .20+ (10 days); .25+ (15 days); .30+ (20 days)",
+    "enhancements": [
+      "BAC .20 or higher (mandatory minimum jail)",
+      "Child under 18 in vehicle"
+    ],
+    "notes": "First offense without aggravating factors has no mandatory minimum. Diversion and treatment programs available. License revocation 6 months-1 year."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "D.C. Code § 50-2206.13(b)-(c)",
+    "statute_title": "DUI — Repeat Offense",
+    "offense_class": "Misdemeanor (enhanced)",
+    "penalty_min": "5 days (second); 10 days (third+)",
+    "penalty_max": "1 year (second); 1 year (third+)",
+    "fine_max": "$2,500 (second); $10,000 (third+)",
+    "elements": [
+      "Defendant operated or was in physical control of a vehicle",
+      "While under the influence of alcohol or drugs",
+      "BAC .08 or higher, or actual impairment",
+      "One or more prior DUI/OWI convictions within 15 years"
+    ],
+    "mandatory_minimum": "5 days (second); 10 days (third+); increased with high BAC",
+    "enhancements": [
+      "BAC .20+ (enhanced mandatory minimums)",
+      "Child under 18 in vehicle",
+      "Prior vehicular homicide conviction"
+    ],
+    "notes": "DC uses a 15-year lookback period. Third offense mandatory minimum is 10 days. License revocation 2+ years for repeat offenders."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "D.C. Code § 50-2206.11(b)",
+    "statute_title": "DUI — Drug or Combined Influence",
+    "offense_class": "Same as alcohol DUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DUI by offense count",
+    "fine_max": "Same as alcohol DUI by offense count",
+    "elements": [
+      "Defendant operated or was in physical control of a vehicle",
+      "While under the influence of any drug or combination of alcohol and a drug",
+      "To a degree which renders the defendant incapable of safely operating the vehicle"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs"
+    ],
+    "notes": "No per se drug limit in DC. Prosecution must prove actual impairment. DC decriminalized marijuana possession but DUI-drugs still applies."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "D.C. Code § 50-2201.04(b)",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days (first); 1 year (second+)",
+    "fine_max": "$500 (first); $1,000 (second+)",
+    "elements": [
+      "Defendant drove any vehicle in the District",
+      "In a manner that endangered the safety of persons or property",
+      "With willful disregard for safety"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense"
+    ],
+    "notes": "Common plea-down from DUI. DC also has aggressive driving (§ 50-2201.04(b-1)) as a separate offense."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "D.C. Code § 50-2201.05c",
+    "statute_title": "Leaving After Colliding — Serious Bodily Injury or Death",
+    "offense_class": "Felony (serious injury/death); Misdemeanor (property damage or minor injury)",
+    "penalty_min": null,
+    "penalty_max": "5 years (serious injury); 15 years (death); 180 days (property damage)",
+    "fine_max": "$12,500 (serious injury); $25,000 (death); $1,000 (property damage)",
+    "elements": [
+      "Defendant was the operator of a vehicle involved in a collision",
+      "Collision resulted in injury, death, or property damage",
+      "Defendant knowingly failed to stop and provide identification and assistance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (up to 15 years)",
+      "Serious bodily injury (up to 5 years)"
+    ],
+    "notes": "Leaving after colliding involving death carries up to 15 years. Property damage only is a misdemeanor under § 50-2201.05c(a)."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "D.C. Code § 50-2206.51",
+    "statute_title": "Aggravated Reckless Driving Resulting in Death",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant operated a vehicle in the District",
+      "In a manner demonstrating extreme disregard for human life",
+      "Defendant's operation caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI at time of death",
+      "Multiple victims"
+    ],
+    "notes": "DC does not have a specific vehicular homicide statute. Deaths caused by DUI may be charged under homicide statutes or aggravated reckless driving."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "D.C. Code § 22-2105",
+    "statute_title": "Manslaughter (Vehicular Context)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through criminal negligence or recklessness while operating a vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC does not have a separate vehicular manslaughter statute. Vehicular deaths are prosecuted under general manslaughter provisions."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "D.C. Code § 50-1403.01",
+    "statute_title": "Operating After Suspension or Revocation of License",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While defendant's license was suspended or revoked",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DUI-related suspension",
+      "Subsequent offense"
+    ],
+    "notes": "Driving on a DUI-related suspension carries additional penalties. Insurance-related suspension driving has lower penalties."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "D.C. Code § 50-2201.05b",
+    "statute_title": "Fleeing from a Law Enforcement Officer in a Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$12,500",
+    "elements": [
+      "A law enforcement officer gave a visual or audible signal to stop",
+      "Defendant was operating a motor vehicle",
+      "Defendant knowingly failed to stop",
+      "Defendant attempted to flee or elude the officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing injury or death during flight",
+      "Reckless driving during pursuit"
+    ],
+    "notes": "Vehicular fleeing is always a felony in DC. Fleeing on foot from law enforcement is a separate misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "D.C. Code § 48-904.01(d)",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "Without a valid prescription",
+      "Substance is listed in Schedules I through V"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "PCP possession (felony — up to 3 years and $12,500 under § 48-904.01(d)(2))"
+    ],
+    "notes": "Simple possession is a misdemeanor except for PCP (which is a felony). First offenders eligible for conditional release — charges dismissed upon completion of probation. DC decriminalized marijuana possession under 2 oz in 2014."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "D.C. Code § 48-904.01(a); Initiative 71",
+    "statute_title": "Possession of Marijuana",
+    "offense_class": "Decriminalized (under 2 oz); Misdemeanor (2+ oz)",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": "$25 civil fine (1-2 oz); criminal for 2+ oz",
+    "elements": [
+      "Defendant possessed marijuana",
+      "Amount over 2 ounces for criminal charges",
+      "Under 2 ounces: civil fine only"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession over 2 oz (misdemeanor)",
+      "Possession with intent to distribute"
+    ],
+    "notes": "Initiative 71 (2015) legalized possession of up to 2 oz of marijuana for personal use by adults 21+. Growing up to 6 plants (3 mature) is legal. Sale remains illegal. Federal law still applies on federal property in DC."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "D.C. Code § 48-904.01(d)(1)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed cocaine",
+      "Cocaine is a Schedule II controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Simple cocaine possession is a misdemeanor. First offense eligible for conditional release. Possession with intent to distribute is a felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "D.C. Code § 48-904.01(d)(1)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Simple meth possession is a misdemeanor. Manufacturing methamphetamine is a felony under § 48-904.01(a)."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "D.C. Code § 48-904.01(a)(1)",
+    "statute_title": "Manufacture or Distribution of Controlled Substance — Schedule I or II",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": "$500,000 or 4x street value",
+    "elements": [
+      "Defendant manufactured, distributed, or possessed with intent to distribute",
+      "A controlled substance classified in Schedule I or II",
+      "Including heroin, cocaine, fentanyl, PCP, or methamphetamine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (twice the maximum — up to 60 years)",
+      "Third offense (three times maximum or life)",
+      "Distribution to a minor (additional penalties under § 48-904.06)",
+      "Within 1,000 feet of a school, park, or public housing (§ 48-904.07a)"
+    ],
+    "notes": "DC drug penalties are among the most severe in the country. Second offense doubles the maximum. Distribution near schools carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "D.C. Code § 48-904.01(a)(2)-(4)",
+    "statute_title": "Distribution of Controlled Substance — Schedule III-V",
+    "offense_class": "Felony (Schedule III-IV); Misdemeanor (Schedule V)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Schedule III); 3 years (Schedule IV); 1 year (Schedule V)",
+    "fine_max": "$50,000 (Schedule III); $25,000 (Schedule IV); $10,000 (Schedule V)",
+    "elements": [
+      "Defendant distributed or possessed with intent to distribute",
+      "A controlled substance from Schedule III through V"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (doubled penalties)",
+      "Distribution to a minor"
+    ],
+    "notes": "Schedule III includes anabolic steroids, ketamine. Schedule IV includes benzodiazepines. Schedule V includes codeine preparations."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "D.C. Code § 48-904.01(a)(1)",
+    "statute_title": "Manufacturing a Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (Schedule I-II); 5 years (Schedule III); 3 years (Schedule IV)",
+    "fine_max": "$500,000 (Schedule I-II)",
+    "elements": [
+      "Defendant manufactured a controlled substance",
+      "Through chemical synthesis or processing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (doubled penalties)",
+      "Near schools or residential areas"
+    ],
+    "notes": "Manufacturing is prosecuted under the same statute as distribution. Clandestine lab operations carry additional cleanup and restitution costs."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "D.C. Code § 48-1103",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "30 days",
+    "fine_max": "$100",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "Knowing or intending it to be used for manufacturing, testing, or consuming a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor"
+    ],
+    "notes": "DC has relatively light penalties for paraphernalia possession. Marijuana paraphernalia for personal use by adults 21+ is legal under Initiative 71."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "D.C. Code § 48-904.01(a)(1)",
+    "statute_title": "Possession with Intent to Distribute",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years (Schedule I-II); 5 years (Schedule III); 3 years (Schedule IV)",
+    "fine_max": "$500,000 (Schedule I-II); $50,000 (Schedule III); $25,000 (Schedule IV)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With intent to distribute",
+      "Intent inferred from quantity, packaging, scales, cash, or communications"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school, park, or public housing (§ 48-904.07a)",
+      "Second or subsequent offense",
+      "Large quantities"
+    ],
+    "notes": "PWID carries the same penalties as distribution. Intent may be proven through circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "D.C. Code § 22-2101",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "30 years",
+    "penalty_max": "Life imprisonment without possibility of release",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "With premeditation and deliberate intent to kill",
+      "Or by means of poison or lying in wait",
+      "Or during the commission of certain enumerated felonies (felony murder)"
+    ],
+    "mandatory_minimum": "30 years imprisonment (60 years if killing involved certain aggravating circumstances)",
+    "enhancements": [
+      "Killing while lying in wait or by poison",
+      "Felony murder during enumerated crimes"
+    ],
+    "notes": "DC does not have the death penalty (abolished 1981). Minimum sentence is 30 years. Life without release is the maximum. Felony murder applies to killings during arson, robbery, sexual abuse, kidnapping, and burglary."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "D.C. Code § 22-2103",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "With malice aforethought",
+      "Without premeditation or deliberation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second degree murder includes depraved heart murder — extreme recklessness demonstrating a depraved indifference to human life."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "D.C. Code § 22-2105",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "Without malice",
+      "In the heat of passion upon adequate provocation",
+      "Or under circumstances that would reduce murder to manslaughter"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Voluntary manslaughter is an intentional killing mitigated by adequate provocation or heat of passion."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "D.C. Code § 22-2105",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of another person",
+      "Through criminal negligence or during commission of an unlawful act"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC uses a single manslaughter statute covering both voluntary and involuntary. Sentencing depends on the circumstances."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "D.C. Code § 22-404.01",
+    "statute_title": "Aggravated Assault",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant knowingly or purposely caused serious bodily injury to another person",
+      "Or assaulted another with a dangerous weapon",
+      "Or under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm (additional consecutive enhancement)",
+      "Against law enforcement officer, public official, or transit operator"
+    ],
+    "notes": "Aggravated assault is DC's most serious non-homicide assault. 'Serious bodily injury' includes risk of death, protracted loss of function, or serious disfigurement."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "D.C. Code § 22-404(a)(1)",
+    "statute_title": "Simple Assault",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant unlawfully assaulted or threatened another person",
+      "In a menacing manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against certain protected persons (enhanced)"
+    ],
+    "notes": "Simple assault is the base-level assault in DC. Covers both attempted battery and threatening behavior."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "D.C. Code § 22-404(a)(2)",
+    "statute_title": "Assault with Significant Bodily Injury (Felony Assault)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$12,500",
+    "elements": [
+      "Defendant unlawfully assaulted another person",
+      "And intentionally, knowingly, or recklessly caused significant bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a dangerous weapon"
+    ],
+    "notes": "'Significant bodily injury' includes injuries requiring hospitalization or medical treatment beyond what a layperson can administer, and lacerations requiring stitches."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "D.C. Code § 22-2801",
+    "statute_title": "Robbery",
+    "offense_class": "Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant took property from the person or in the immediate presence of another",
+      "By force or violence or by putting the person in fear"
+    ],
+    "mandatory_minimum": "2 years",
+    "enhancements": [
+      "Against a senior citizen (additional 5 years under § 22-3601)",
+      "Use of a dangerous weapon"
+    ],
+    "notes": "Basic robbery carries a 2-year mandatory minimum. Armed robbery is separately charged under § 22-4502."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "D.C. Code § 22-4502; § 22-2801",
+    "statute_title": "Robbery While Armed",
+    "offense_class": "Felony",
+    "penalty_min": "5 years (mandatory additional for weapon)",
+    "penalty_max": "15 years (robbery) + 30 years (armed enhancement)",
+    "fine_max": null,
+    "elements": [
+      "Defendant committed robbery",
+      "While armed with or having readily available a pistol or other dangerous weapon"
+    ],
+    "mandatory_minimum": "5 years additional consecutive sentence for armed enhancement",
+    "enhancements": [
+      "Use of a firearm (additional 5 years mandatory consecutive under § 22-4502)",
+      "Against a senior citizen (additional 5 years)"
+    ],
+    "notes": "DC's armed offense enhancement (§ 22-4502) adds a mandatory minimum 5-year consecutive sentence. Applies to robbery, assault, and other violent crimes committed while armed."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "D.C. Code § 22-2001",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant seized, confined, or detained another person",
+      "Against that person's will",
+      "And held for ransom, reward, or used as a hostage"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is a child",
+      "Ransom demanded",
+      "Physical injury to victim"
+    ],
+    "notes": "Kidnapping carries up to 30 years. If not released within a reasonable time, the sentence may be enhanced."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "D.C. Code § 22-301",
+    "statute_title": "Arson",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (basic); 15 years (dwelling)",
+    "fine_max": null,
+    "elements": [
+      "Defendant maliciously burned or attempted to burn a dwelling, building, or other property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Occupied structure",
+      "Death or serious injury results",
+      "Arson for insurance fraud"
+    ],
+    "notes": "Burning a dwelling carries up to 15 years. Burning other property carries up to 10 years. Attempted arson carries up to 5 years."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "D.C. Code § 22-2101; § 22-1803",
+    "statute_title": "Attempted First Degree Murder",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment (if target is first degree murder)",
+    "fine_max": null,
+    "elements": [
+      "Defendant had specific intent to kill another person",
+      "Defendant performed an overt act toward committing murder",
+      "The murder was not completed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "While armed (additional 5 years)",
+      "Against law enforcement officer"
+    ],
+    "notes": "DC does not reduce attempt penalties by one grade for serious offenses. Attempted murder may carry up to life imprisonment."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "D.C. Code § 22-402",
+    "statute_title": "Assault with a Dangerous Weapon (ADW)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant assaulted another person",
+      "With a dangerous weapon",
+      "Including a firearm, knife, or any instrument capable of causing serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "While armed with firearm (additional 5 years consecutive under § 22-4502)",
+      "Against law enforcement officer"
+    ],
+    "notes": "ADW is one of the most commonly charged felonies in DC. The 'while armed' enhancement adds a mandatory 5-year consecutive sentence."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "D.C. Code § 22-3212",
+    "statute_title": "Theft — First Degree ($1,000+)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant obtained or used the property of another",
+      "With intent to deprive the owner",
+      "Value of property $1,000 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "From a senior citizen (additional 5 years under § 22-3601)"
+    ],
+    "notes": "First degree theft threshold is $1,000. Second degree (under $1,000) is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "D.C. Code § 22-3212(a)",
+    "statute_title": "Theft — First Degree ($1,000+)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant obtained or used the property of another",
+      "With intent to deprive the owner of the right to or benefit of the property",
+      "Value of property $1,000 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC's felony theft threshold is $1,000."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "D.C. Code § 22-3212(b)",
+    "statute_title": "Theft — Second Degree (Under $1,000)",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant obtained or used the property of another",
+      "With intent to deprive the owner",
+      "Value of property less than $1,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Second degree theft is a misdemeanor for property under $1,000."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "D.C. Code § 22-3213",
+    "statute_title": "Shoplifting",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "180 days (misdemeanor); 10 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Defendant willfully concealed or took possession of merchandise of a store",
+      "Without paying full purchase price",
+      "With intent to appropriate without payment"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $1,000+ (first degree theft — felony)",
+      "Use of device to defeat security"
+    ],
+    "notes": "DC has a specific shoplifting statute. Retailers may also pursue civil recovery."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "D.C. Code § 22-801",
+    "statute_title": "Burglary — Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered or attempted to enter a building or dwelling",
+      "With intent to commit any criminal offense therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "While armed (additional 5 years under § 22-4502)"
+    ],
+    "notes": "First degree burglary (§ 22-801(a)) is committed at night or while armed, or involves a dwelling — up to 30 years. Second degree is other burglary — up to 15 years."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "D.C. Code § 22-801(a)",
+    "statute_title": "Burglary — First Degree (Dwelling)",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "30 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant entered or attempted to enter a dwelling",
+      "With intent to commit any criminal offense therein",
+      "Nighttime entry or while armed"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "While armed (additional 5 years consecutive)",
+      "Person present in dwelling"
+    ],
+    "notes": "First degree burglary applies to dwellings, nighttime entries, or entries while armed. Mandatory minimum 5 years."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "D.C. Code § 22-3215",
+    "statute_title": "Unauthorized Use of a Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$12,500",
+    "elements": [
+      "Defendant took, used, or operated a motor vehicle",
+      "Without the consent of the owner",
+      "Or aided in such taking"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC uses 'unauthorized use of a vehicle' rather than motor vehicle theft. Always a felony regardless of vehicle value."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "D.C. Code § 22-3232",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "7 years (felony); 180 days (misdemeanor)",
+    "fine_max": "$25,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing or having reason to believe the property was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Penalty tiers mirror theft: $1,000 threshold divides felony from misdemeanor."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "D.C. Code § 22-303",
+    "statute_title": "Malicious Destruction of Property",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 180 days (misdemeanor)",
+    "fine_max": "$25,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant maliciously injured or destroyed property of another",
+      "Or defaced property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Graffiti and defacement (specific provisions)"
+    ],
+    "notes": "Felony threshold is $1,000 in damages. DC takes graffiti and defacement of public property seriously."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "D.C. Code § 22-3302",
+    "statute_title": "Unlawful Entry on Property",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant entered or attempted to enter property of another",
+      "Against the will of the owner or lawful occupant",
+      "Or remained after being asked to leave"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC uses 'unlawful entry' rather than 'trespass.' Includes entering posted property and refusing to leave when asked."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "D.C. Code § 22-303",
+    "statute_title": "Destruction of Property",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "180 days (misdemeanor); 10 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Defendant maliciously injured, broke, or destroyed property of another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC uses 'destruction of property' rather than 'criminal mischief.' Same statute covers vandalism and reckless property damage."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "D.C. Code § 16-1001; § 22-404",
+    "statute_title": "Intrafamily Offense — Assault",
+    "offense_class": "Misdemeanor (simple assault); Felony (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "180 days (simple); 10 years (aggravated)",
+    "fine_max": "$1,000 (simple); $25,000 (aggravated)",
+    "elements": [
+      "Defendant committed an intrafamily offense — assault against a family member, household member, or intimate partner",
+      "Family/household member includes spouse, former spouse, persons with child in common, roommates, or persons in a romantic relationship"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated assault (felony — 10 years under § 22-404.01)",
+      "Strangulation (separate felony under § 22-404.02)",
+      "Violation of civil protection order"
+    ],
+    "notes": "DC has an intrafamily offense designation that applies to any crime committed against a family/household member. Mandatory arrest policy. Civil protection orders under § 16-1005."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "D.C. Code § 22-404(a)(2); § 16-1001",
+    "statute_title": "Intrafamily Offense — Assault with Significant Bodily Injury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$12,500",
+    "elements": [
+      "Defendant assaulted a family or household member",
+      "And caused significant bodily injury",
+      "Intentionally, knowingly, or recklessly"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated assault (§ 22-404.01 — up to 10 years)",
+      "Strangulation (§ 22-404.02)"
+    ],
+    "notes": "Felony domestic battery (significant bodily injury) carries up to 3 years. Aggravated assault enhancement available. Federal firearms prohibition applies."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "D.C. Code § 22-1101",
+    "statute_title": "Cruelty to Children — Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant was a person responsible for a child's welfare",
+      "Defendant intentionally, knowingly, or negligently engaged in conduct",
+      "Creating a grave risk of bodily injury to the child"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "First degree cruelty to children (intentional — up to 15 years under § 22-1101(a))"
+    ],
+    "notes": "First degree cruelty requires intentional, malicious conduct — up to 15 years. Second degree covers reckless or negligent endangerment."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "D.C. Code § 22-1101(a)",
+    "statute_title": "Cruelty to Children — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$37,500",
+    "elements": [
+      "Defendant was a person responsible for a child's welfare",
+      "Defendant intentionally and maliciously tortured, beat, or otherwise maltreated a child",
+      "Under circumstances indicating an intent to cause serious harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of child (charged as homicide)"
+    ],
+    "notes": "First degree cruelty to children is the most serious child abuse charge. Covers intentional and malicious conduct."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "D.C. Code § 16-1005(g)",
+    "statute_title": "Violation of a Civil Protection Order",
+    "offense_class": "Misdemeanor (first); may be held in contempt",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "A valid civil protection order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant knowingly violated the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Assault during violation (separate charge)",
+      "Repeated violations"
+    ],
+    "notes": "Violation of a CPO can be prosecuted criminally or held in contempt. Civil protection orders in DC cover domestic violence, stalking, and sexual abuse."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "D.C. Code § 22-3133",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor (first); Felony (with threat of serious bodily injury, or prior conviction)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$2,500 (misdemeanor); $12,500 (felony)",
+    "elements": [
+      "Defendant purposefully engaged in a course of conduct directed at a specific individual",
+      "With intent to cause that individual to fear for safety or suffer emotional distress",
+      "Or should have known the conduct would cause reasonable fear or distress"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat of bodily injury (felony)",
+      "Prior stalking conviction (felony)",
+      "In violation of a court order (felony)"
+    ],
+    "notes": "Misdemeanor stalking with a threat of serious bodily injury is elevated to felony. Course of conduct requires two or more acts."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "D.C. Code § 22-3133(a)",
+    "statute_title": "Harassment / Misdemeanor Stalking",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$2,500",
+    "elements": [
+      "Defendant engaged in a course of conduct directed at another person",
+      "That would cause a reasonable person to feel frightened, intimidated, or emotionally distressed",
+      "And defendant should have known the conduct would cause such effects"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC's stalking statute covers general harassment as misdemeanor stalking. Includes electronic and telephone harassment."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "D.C. Code § 22-933",
+    "statute_title": "Abuse of a Vulnerable Adult",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant caused physical injury to a vulnerable adult",
+      "Through an intentional or knowing act",
+      "Defendant was a caretaker or in a position of trust"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Financial exploitation (§ 22-933.01 — up to 10 years)",
+      "Neglect causing injury (§ 22-934)"
+    ],
+    "notes": "DC has specific statutes for vulnerable adult abuse, exploitation, and neglect. Financial exploitation of a vulnerable adult carries up to 10 years."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "D.C. Code § 22-4504",
+    "statute_title": "Carrying a Pistol Without a License",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$12,500",
+    "elements": [
+      "Defendant carried a pistol, machine gun, or sawed-off shotgun",
+      "Without a valid registration and license to carry",
+      "In the District of Columbia"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Carrying during commission of a crime of violence (additional 5 years consecutive under § 22-4502)"
+    ],
+    "notes": "DC has extremely strict gun laws. All firearms must be registered. Concealed carry licenses available but difficult to obtain. Federal buildings add federal jurisdiction."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "D.C. Code § 22-4503",
+    "statute_title": "Possession of a Firearm by a Convicted Felon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant had previously been convicted of a felony",
+      "Or convicted of a crime of violence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession during commission of a violent crime"
+    ],
+    "notes": "DC prohibits firearm possession by anyone convicted of a felony or crime of violence. Also prohibits possession by persons committed for mental health treatment."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "D.C. Code § 22-4504(a)",
+    "statute_title": "Carrying a Pistol Without a License",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$12,500",
+    "elements": [
+      "Defendant carried a pistol or other prohibited weapon",
+      "Without a valid DC concealed carry license",
+      "Openly or concealed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC concealed carry license issued by MPD. Very restrictive — 'good reason' requirement was struck down but process remains strict. All firearms must be registered."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "D.C. Code § 22-4503.01",
+    "statute_title": "Unlawful Discharge of a Firearm",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant discharged a firearm in the District of Columbia",
+      "In a manner that endangered the safety of any person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Injury results",
+      "Near a school or playground"
+    ],
+    "notes": "Unlawful discharge is always a felony in DC. Separate from assault with a dangerous weapon charges."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "D.C. Code § 22-3227.02",
+    "statute_title": "Identity Theft — First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant knowingly used personal identifying information of another",
+      "To obtain property or anything of value exceeding $1,000",
+      "Or affected 10 or more individual victims"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly or vulnerable",
+      "Multiple victims"
+    ],
+    "notes": "Second degree identity theft (under $1,000 or fewer victims) is a misdemeanor — 180 days and $1,000 fine."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "D.C. Code § 22-3211; § 22-3212",
+    "statute_title": "Theft by Embezzlement",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 180 days (misdemeanor)",
+    "fine_max": "$25,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant wrongfully obtained or used the property",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public employee embezzlement (enhanced scrutiny)",
+      "Vulnerable adult victim"
+    ],
+    "notes": "DC does not have a separate embezzlement statute. Embezzlement is prosecuted as theft — wrongfully obtaining or using property of another."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "D.C. Code § 22-3241",
+    "statute_title": "Forgery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant falsely made, completed, or altered a written instrument",
+      "With intent to defraud or deceive another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Written instruments include checks, deeds, contracts, public records, prescriptions. Uttering a forged instrument is included."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "D.C. Code § 22-3221",
+    "statute_title": "Fraud — First Degree ($1,000+)",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 180 days (misdemeanor)",
+    "fine_max": "$25,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant engaged in a scheme or systematic course of conduct",
+      "With intent to defraud or obtain property of another through false pretenses"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against elderly or vulnerable persons",
+      "Organized fraud scheme"
+    ],
+    "notes": "DC fraud statute covers theft by deception, false pretenses, and scheme-based fraud."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "D.C. Code § 22-3223",
+    "statute_title": "Credit Card Fraud",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 180 days (misdemeanor)",
+    "fine_max": "$25,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant used a credit or debit card",
+      "Knowing it was stolen, forged, revoked, or canceled",
+      "Or used without the cardholder's authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Multiple transactions aggregated for threshold purposes. Includes use of stolen card numbers for online purchases."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "D.C. Code § 22-1901; federal statutes often apply",
+    "statute_title": "Money Laundering",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (DC); 20 years (federal 18 U.S.C. § 1956)",
+    "fine_max": "$25,000 (DC); $500,000 or twice value (federal)",
+    "elements": [
+      "Defendant conducted a financial transaction involving criminally derived property",
+      "With knowledge that the property was proceeds of criminal activity",
+      "With intent to promote or conceal the criminal activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Connection to drug trafficking",
+      "Structuring transactions"
+    ],
+    "notes": "Money laundering in DC is often prosecuted federally due to the unique federal jurisdiction in the District. Federal penalties are significantly higher."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "D.C. Code § 22-3023",
+    "statute_title": "Second Degree Sexual Abuse",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in a sexual act with another person",
+      "By using threats that would place a reasonable person in fear of harm",
+      "Or when defendant knew or should have known the person was incapable of consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 16 (child sexual abuse charges)",
+      "While armed"
+    ],
+    "notes": "DC uses 'sexual abuse' rather than 'sexual assault' or 'rape.' First degree (§ 22-3002) applies when force or threats of death are used — up to life. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "D.C. Code § 22-3002",
+    "statute_title": "First Degree Sexual Abuse",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in a sexual act with another person",
+      "By using force or threat of death, serious bodily injury, or kidnapping",
+      "Or by rendering the victim unconscious",
+      "Or by administering a drug without consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "While armed (additional 5 years consecutive)",
+      "Against a minor"
+    ],
+    "notes": "DC uses 'sexual abuse' rather than 'rape.' First degree sexual abuse is the most serious — carries up to life imprisonment. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "D.C. Code § 22-1312",
+    "statute_title": "Lewd, Indecent, or Obscene Acts",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant made an obscene or indecent exposure of person",
+      "In a public place or in view of the public"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "In the presence of a minor",
+      "Second or subsequent offense"
+    ],
+    "notes": "Repeat offenses or exposure involving minors may trigger sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "D.C. Code § 22-2701",
+    "statute_title": "Engaging in Prostitution / Soliciting for Prostitution",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days (first); 180 days (second); 2 years (third+)",
+    "fine_max": "$500 (first); $1,000 (second); $4,000 (third+)",
+    "elements": [
+      "Defendant offered or agreed to engage in sexual activity",
+      "For a fee or thing of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense (up to 2 years)",
+      "Soliciting a minor (felony)"
+    ],
+    "notes": "DC decriminalized consensual sex work for the seller in some contexts but buyers and traffickers still face prosecution. Promoting prostitution (§ 22-2710) is a felony."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "D.C. Code § 22-3102",
+    "statute_title": "Sexual Performance Using Minors",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant employed, used, or permitted a minor to engage in a sexual performance",
+      "Knowing the character and content of the performance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Distribution of material",
+      "Victim under 12"
+    ],
+    "notes": "Possession of child pornography (§ 22-3102) is also a felony. Distribution carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "D.C. Code § 22-4015",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$12,500",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant knowingly failed to register or update registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Registration requirements under the Sex Offender Registration Act of 1999. Must register within 3 days of release or relocation to DC."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "D.C. Code § 22-3008; § 22-3009",
+    "statute_title": "First/Second Degree Child Sexual Abuse",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "Life (first degree — under 12); 20 years (second degree — 12-15)",
+    "fine_max": null,
+    "elements": [
+      "Defendant engaged in a sexual act or sexual contact with a child",
+      "First degree: victim under 12",
+      "Second degree: victim 12-15, defendant 4+ years older"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 12 (first degree — up to life)"
+    ],
+    "notes": "DC's age of consent is 16. Child sexual abuse covers sexual acts with persons under 16. First degree (under 12) carries up to life."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "D.C. Code § 22-1321",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant engaged in loud, threatening, or tumultuous behavior",
+      "In a public place",
+      "With intent to provoke a breach of the peace or under circumstances creating a risk thereof"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "General catch-all for public disturbances. First Amendment protections limit application to speech and protests."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "D.C. Code § 22-405.01",
+    "statute_title": "Resisting Arrest",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "A law enforcement officer was making a lawful arrest",
+      "Defendant knowingly resisted, opposed, or interfered with the arrest",
+      "By means of force or violence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing injury to officer (separate assault charge)"
+    ],
+    "notes": "Resisting arrest requires physical resistance. Verbal protests alone are not sufficient. Separate from obstruction."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "D.C. Code § 22-722",
+    "statute_title": "Obstruction of Justice",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$12,500",
+    "elements": [
+      "Defendant knowingly obstructed, impeded, or attempted to obstruct",
+      "A pending or anticipated official proceeding",
+      "By means of bribery, misrepresentation, intimidation, force, or threats"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Witness tampering (separate felony)",
+      "Destroying evidence"
+    ],
+    "notes": "Obstruction of justice in DC is always a felony. Includes witness tampering, evidence destruction, and interference with official proceedings."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "D.C. Code § 11-944",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Criminal contempt (punitive); Civil contempt (remedial)",
+    "penalty_min": null,
+    "penalty_max": "180 days or $1,000 per occurrence",
+    "fine_max": "$1,000 per occurrence",
+    "elements": [
+      "Defendant willfully disobeyed a lawful court order",
+      "Or engaged in disruptive conduct in court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC Superior Court and US District Court both have contempt authority. Federal contempt power applies on federal property."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "D.C. Code § 24-604",
+    "statute_title": "Public Intoxication — Voluntary Admission/Protective Custody",
+    "offense_class": "Not a criminal offense in DC",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Person is intoxicated in a public place",
+      "And is a danger to self or others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC decriminalized public intoxication. Intoxicated persons are taken to a sobering station or treatment facility, not jail. Disorderly conduct may be charged if behavior is disruptive."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "D.C. Code § 23-1327",
+    "statute_title": "Failure to Appear — Bail Jumping",
+    "offense_class": "Felony (if underlying is felony); Misdemeanor (if underlying is misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "5 years (felony); 180 days (misdemeanor)",
+    "fine_max": "$12,500 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant was released pending trial or pending appeal",
+      "Defendant willfully failed to appear as required by the court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Bail jumping severity matches the underlying charge. DC Pretrial Services Agency supervises released defendants."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "D.C. Code § 5-117.05",
+    "statute_title": "Filing a False Police Report",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly made a false statement",
+      "To a law enforcement officer",
+      "Regarding the commission of a crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Filing a false report of a crime is a misdemeanor. False bomb threats or emergency reports carry enhanced penalties."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "D.C. Code § 22-407",
+    "statute_title": "Threats to Do Bodily Harm",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant knowingly and purposely made a threat to injure another person",
+      "Or threatened to damage property of another",
+      "Under circumstances creating a reasonable fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat to a public official or law enforcement officer (enhanced)"
+    ],
+    "notes": "Threats to kidnap or injure persons are misdemeanors. Threats involving weapons may be charged as assault with a dangerous weapon."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "D.C. Code § 22-2402",
+    "statute_title": "Perjury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant made a false material statement",
+      "Under oath in a judicial or official proceeding",
+      "Knowing the statement was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Subornation of perjury carries the same penalties. False statements to federal agencies may be prosecuted under 18 U.S.C. § 1001."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "D.C. Code § 22-704",
+    "statute_title": "Bribery of a Public Official",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant offered, gave, or promised something of value",
+      "To a public official or public employee",
+      "With intent to influence the official's action or decision"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Federal bribery statutes (18 U.S.C. § 201) may also apply given DC's unique federal jurisdiction. Receiving a bribe carries the same penalties."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "D.C. Code § 22-2601",
+    "statute_title": "Escape from Custody or Institution",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant was lawfully in custody or confined",
+      "Defendant escaped from custody or a correctional institution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or violence during escape"
+    ],
+    "notes": "Escape sentence runs consecutive to original sentence. DC inmates are held in BOP facilities — federal escape charges may also apply."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "D.C. Code § 22-1001",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Misdemeanor (basic); Felony (aggravated under § 22-1001(a)(2))",
+    "penalty_min": null,
+    "penalty_max": "180 days (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $25,000 (felony)",
+    "elements": [
+      "Defendant knowingly and intentionally tortured, beat, or cruelly treated an animal",
+      "Or caused unnecessary suffering"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated cruelty — torture or killing (felony — up to 5 years)",
+      "Animal fighting (felony)"
+    ],
+    "notes": "DC has strong animal cruelty laws. Aggravated cruelty involving torture or killing is a felony. Animal fighting is a separate felony."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "D.C. Code § 16-710",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Varies — court may revoke probation and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation by DC Superior Court",
+      "Defendant violated a condition of probation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Court has discretion to modify, extend, or revoke probation. Court Services and Offender Supervision Agency (CSOSA) supervises DC probationers."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "D.C. Code § 24-404; 18 U.S.C. § 4214",
+    "statute_title": "Violation of Parole / Supervised Release",
+    "offense_class": "Varies — return to prison for remaining term",
+    "penalty_min": null,
+    "penalty_max": "Remaining original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole or supervised release",
+      "Defendant violated a condition of release"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC parole is supervised by the US Parole Commission. DC inmates serve sentences in BOP facilities. Supervised release violations are heard by US Parole Commission."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "D.C. Code § 22-1805",
+    "statute_title": "Aiding and Abetting",
+    "offense_class": "Same as principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant aided, abetted, counseled, or encouraged another person",
+      "In the commission of a crime",
+      "With knowledge of the criminal plan and intent to facilitate it"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "All parties to a crime are equally liable. Mere presence is not sufficient — must show intentional participation."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "D.C. Code § 22-1803",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "Same as the completed offense (DC does not automatically reduce for attempts)",
+    "penalty_min": null,
+    "penalty_max": "Same as completed offense",
+    "fine_max": "Same as completed offense",
+    "elements": [
+      "Defendant had intent to commit a specific crime",
+      "Defendant took a substantial step toward its commission",
+      "The crime was not completed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "DC does not statutorily reduce penalties for attempts — the court has discretion. Attempt to commit a crime carries the same maximum as the completed offense."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "D.C. Code § 22-1805a",
+    "statute_title": "Conspiracy",
+    "offense_class": "Same as target offense (maximum same as object offense)",
+    "penalty_min": null,
+    "penalty_max": "Same as target offense",
+    "fine_max": "Same as target offense",
+    "elements": [
+      "Two or more persons agreed to commit a crime",
+      "An overt act was performed in furtherance of the conspiracy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy penalties mirror the target offense. Co-conspirators liable for all reasonably foreseeable acts in furtherance of the conspiracy."
+  }
+]

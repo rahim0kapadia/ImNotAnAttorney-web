@@ -1,0 +1,1374 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "NRS § 484C.110",
+    "statute_title": "Driving Under the Influence of Intoxicating Liquor or a Prohibited Substance",
+    "offense_class": "Misdemeanor (1st/2nd within 7 years); Category B Felony (3rd within 7 years)",
+    "penalty_min": null,
+    "penalty_max": "6 months (1st); 6 months (2nd); 6 years (3rd)",
+    "fine_max": "$1,000 (1st); $1,000 (2nd); $5,000 (3rd)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of intoxicating liquor, a controlled substance, or a combination",
+      "Defendant's BAC was .08 or higher, OR driving was impaired by substance"
+    ],
+    "mandatory_minimum": "2 days or 48 hours community service (1st); 10 days residential confinement (2nd); 1 year imprisonment (3rd)",
+    "enhancements": [
+      "BAC of .18 or higher (aggravated DUI)",
+      "Third offense within 7 years (Category B felony)",
+      "DUI causing death or substantial bodily harm (NRS § 484C.430)",
+      "Prior felony DUI conviction (Category B felony under NRS § 484C.410)"
+    ],
+    "notes": "Nevada uses a 7-year lookback period for DUI priors. Implied consent law under NRS § 484C.160. Ignition interlock device required for all DUI convictions. Fourth+ offense or DUI after prior felony DUI is a Category B felony under NRS § 484C.410."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "NRS § 484C.400(1)",
+    "statute_title": "DUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "2 days imprisonment or 48 hours community service",
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of intoxicating liquor or a prohibited substance",
+      "BAC of .08 or higher OR impairment demonstrated",
+      "No prior DUI conviction within 7 years"
+    ],
+    "mandatory_minimum": "Not less than 2 days imprisonment or 48 hours community service",
+    "enhancements": [
+      "BAC .18 or higher (aggravated DUI penalties)",
+      "Minor passenger under 15"
+    ],
+    "notes": "License revoked for 185 days. DUI school and victim impact panel required. Ignition interlock device for 3-6 months."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "NRS § 484C.400(2)",
+    "statute_title": "DUI — Second Offense Within 7 Years",
+    "offense_class": "Misdemeanor",
+    "penalty_min": "10 days residential confinement",
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of intoxicating liquor or a prohibited substance",
+      "BAC of .08 or higher OR impairment demonstrated",
+      "One prior DUI conviction within 7 years"
+    ],
+    "mandatory_minimum": "10 days residential confinement or equivalent community service",
+    "enhancements": [
+      "BAC .18 or higher",
+      "Refusal of chemical test"
+    ],
+    "notes": "License revoked for 1 year. Ignition interlock device required for 12-36 months. Alcohol/drug dependency evaluation required."
+  },
+  {
+    "common_charge_slug": "dui-felony-injury",
+    "statute_number": "NRS § 484C.400(3)",
+    "statute_title": "DUI — Third Offense Within 7 Years (Felony)",
+    "offense_class": "Category B Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of intoxicating liquor or a prohibited substance",
+      "Two or more prior DUI convictions within 7 years"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Prior felony DUI (NRS § 484C.410 applies)",
+      "DUI causing death (Category A felony)"
+    ],
+    "notes": "License revoked for 3 years. State prison sentence mandatory. Eligible for residential confinement program under certain conditions."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "NRS § 484C.430",
+    "statute_title": "DUI Causing Death or Substantial Bodily Harm",
+    "offense_class": "Category B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "20 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of intoxicating liquor or a prohibited substance",
+      "Defendant's driving caused death or substantial bodily harm to another person"
+    ],
+    "mandatory_minimum": "2 years imprisonment",
+    "enhancements": [
+      "Multiple victims",
+      "Prior DUI convictions"
+    ],
+    "notes": "This is separate from vehicular homicide charges. License revoked for 3 years. Consecutive sentences possible for multiple victims."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "NRS § 484C.110(1)(b)",
+    "statute_title": "Driving Under the Influence of a Controlled Substance (DUID)",
+    "offense_class": "Misdemeanor (1st/2nd); Category B Felony (3rd+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (1st/2nd); 6 years (3rd+)",
+    "fine_max": "$1,000 (1st/2nd); $5,000 (3rd+)",
+    "elements": [
+      "Defendant drove or was in actual physical control of a vehicle",
+      "While under the influence of a controlled substance or prohibited substance",
+      "Substance impaired defendant's ability to safely operate the vehicle"
+    ],
+    "mandatory_minimum": "Same as alcohol DUI by offense level",
+    "enhancements": [
+      "Combination of alcohol and drugs",
+      "Per se limits for specific substances (marijuana, amphetamine, cocaine, etc.)"
+    ],
+    "notes": "NRS § 484C.110(4) sets per se blood/urine limits for prohibited substances including marijuana (2 ng/ml blood), cocaine (50 ng/ml urine), heroin (50 ng/ml urine), and methamphetamine (500 ng/ml urine). Same penalty escalation as alcohol DUI."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "NRS § 200.030",
+    "statute_title": "Murder of the First Degree",
+    "offense_class": "Category A Felony",
+    "penalty_min": "20 years (with parole eligibility)",
+    "penalty_max": "Life without parole; or death",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully killed a human being",
+      "With premeditation and deliberation, OR",
+      "By means of poison, lying in wait, torture, or willful/deliberate/premeditated killing, OR",
+      "During the commission of or attempt to commit specified felonies (felony murder)"
+    ],
+    "mandatory_minimum": "Life with possibility of parole after 20 years; or 50 years with parole after 20 years",
+    "enhancements": [
+      "Aggravating circumstances (death penalty eligible)",
+      "Multiple victims",
+      "Victim was a peace officer, child under 14, or elderly person"
+    ],
+    "notes": "Nevada retains the death penalty. Felony murder doctrine applies when killing occurs during robbery, kidnapping, sexual assault, arson, burglary, or certain other felonies."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "NRS § 200.030(2)",
+    "statute_title": "Murder of the Second Degree",
+    "offense_class": "Category A Felony",
+    "penalty_min": "10 years (with parole eligibility)",
+    "penalty_max": "Life with parole; or 25 years with parole after 10 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully killed a human being",
+      "With malice aforethought, express or implied",
+      "Without premeditation or deliberation"
+    ],
+    "mandatory_minimum": "Life with parole after 10 years; or 25 years with parole after 10 years",
+    "enhancements": [
+      "Use of deadly weapon"
+    ],
+    "notes": "All murder which is not first degree murder is second degree murder under NRS § 200.030."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "NRS § 200.050",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Category B Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully killed a human being",
+      "Without malice, express or implied",
+      "Upon a sudden heat of passion caused by sufficient provocation"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Use of deadly weapon (additional 1-6 years)"
+    ],
+    "notes": "Provocation must be such as would cause a reasonable person to act rashly. Cooling off period negates heat of passion defense."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "NRS § 200.070",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Category D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant caused the death of another human being",
+      "Without intent to kill",
+      "During the commission of an unlawful act not amounting to a felony, OR",
+      "During the commission of a lawful act without due caution or circumspection"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Involuntary manslaughter is the unintentional killing of another person during the commission of an unlawful act not amounting to a felony or during the negligent performance of a lawful act."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "NRS § 200.471",
+    "statute_title": "Assault",
+    "offense_class": "Misdemeanor; Category B Felony (with deadly weapon); Category D Felony (on protected person)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 6 years (deadly weapon); 4 years (protected person)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (deadly weapon/protected person)",
+    "elements": [
+      "Defendant unlawfully attempted to use physical force against another person, OR",
+      "Defendant intentionally placed another person in reasonable apprehension of immediate bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon (Category B felony, 1-6 years)",
+      "Victim is a protected person (officer, firefighter, health care provider — Category D felony)"
+    ],
+    "notes": "Simple assault is a misdemeanor. Assault with a deadly weapon is always a Category B felony regardless of injury."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "NRS § 200.481",
+    "statute_title": "Battery",
+    "offense_class": "Misdemeanor; Category B-D Felony depending on circumstances",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 1-6 years (Category B with deadly weapon); 1-4 years (Category D on protected person)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant willfully and unlawfully used force or violence upon another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon (Category B felony)",
+      "Resulting in substantial bodily harm (Category C felony, 1-5 years)",
+      "On a protected person (Category D felony)",
+      "Strangulation (Category C felony)"
+    ],
+    "notes": "Battery is the unlawful touching of another person. No injury required for simple battery. Battery with substantial bodily harm is a Category C felony."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "NRS § 200.471(2)(b)",
+    "statute_title": "Assault with a Deadly Weapon",
+    "offense_class": "Category B Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant unlawfully attempted to use physical force against another person OR placed them in reasonable apprehension of immediate bodily harm",
+      "Defendant used a deadly weapon in the commission of the assault"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Victim is a protected person (additional penalties)"
+    ],
+    "notes": "A deadly weapon includes any instrument used or threatened to be used in a manner likely to cause death or substantial bodily harm."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "NRS § 200.485",
+    "statute_title": "Battery Constituting Domestic Violence",
+    "offense_class": "Misdemeanor (1st/2nd); Category C Felony (3rd+)",
+    "penalty_min": "2 days community service (1st)",
+    "penalty_max": "6 months (1st); 6 months (2nd); 5 years (3rd+)",
+    "fine_max": "$1,000 (1st); $1,000 (2nd); $10,000 (3rd+)",
+    "elements": [
+      "Defendant committed a battery",
+      "Against a spouse, former spouse, person with whom defendant has/had dating relationship, person related by blood or marriage, co-parent, or custodian/guardian"
+    ],
+    "mandatory_minimum": "Not less than 2 days community service (1st); 20 days (2nd); 1 year (3rd+, felony)",
+    "enhancements": [
+      "Use of deadly weapon",
+      "Strangulation (Category C felony on first offense)",
+      "Resulting in substantial bodily harm",
+      "Third or subsequent offense within 7 years (Category C felony)"
+    ],
+    "notes": "Firearm prohibition upon conviction under NRS § 202.360. No probation for felony domestic violence. Court must order surrender of firearms. Counseling program required."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "NRS § 200.310",
+    "statute_title": "Kidnapping — First Degree",
+    "offense_class": "Category A Felony",
+    "penalty_min": "5 years (without substantial bodily harm)",
+    "penalty_max": "Life without parole (with substantial bodily harm)",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully seized, confined, inveigled, enticed, decoyed, abducted, concealed, kidnapped, or carried away a person",
+      "By any means including force, fraud, or persuasion",
+      "With intent to hold for ransom, rob, commit sexual assault, or inflict bodily harm"
+    ],
+    "mandatory_minimum": "Life with parole after 5 years (no substantial harm); Life with parole after 15 years (with substantial harm)",
+    "enhancements": [
+      "Victim is under 18",
+      "Substantial bodily harm to victim",
+      "Sexual assault during kidnapping",
+      "Use of deadly weapon"
+    ],
+    "notes": "First degree kidnapping where victim sustains substantial bodily harm carries life without parole or life with parole after 15 years. Second degree kidnapping (NRS § 200.320) is a Category B felony with 2-15 years."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "NRS § 200.366",
+    "statute_title": "Sexual Assault",
+    "offense_class": "Category A Felony",
+    "penalty_min": "Life with parole after 10 years (victim 16+)",
+    "penalty_max": "Life without parole (victim under 14 with substantial bodily harm)",
+    "fine_max": null,
+    "elements": [
+      "Defendant subjected another person to sexual penetration",
+      "Against the will of the victim, OR",
+      "Under conditions where the perpetrator knows or should know the victim is mentally or physically incapable of resisting or understanding"
+    ],
+    "mandatory_minimum": "Life with parole after 10 years (victim 16+); Life with parole after 25 years (victim 14-15); Life with parole after 35 years (victim under 14)",
+    "enhancements": [
+      "Victim suffered substantial bodily harm (parole eligibility extended)",
+      "Victim under 14 with substantial bodily harm (life without parole)",
+      "Use of deadly weapon"
+    ],
+    "notes": "Sexual penetration defined in NRS § 200.364. Includes cunnilingus, fellatio, and any intrusion of any body part or object into genital or anal openings. Sex offender registration required."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "NRS § 200.368",
+    "statute_title": "Statutory Sexual Seduction",
+    "offense_class": "Category C Felony (21+); Gross Misdemeanor (under 21)",
+    "penalty_min": null,
+    "penalty_max": "5 years (Category C); 1 year (gross misdemeanor)",
+    "fine_max": "$10,000 (Category C); $2,000 (gross misdemeanor)",
+    "elements": [
+      "Defendant is 18 years or older",
+      "Defendant had sexual intercourse with a person 14 or 15 years old",
+      "Victim consented (but unable to legally consent due to age)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Defendant 21 or older (Category C felony)",
+      "Position of trust or authority"
+    ],
+    "notes": "Age of consent in Nevada is 16. If defendant is under 21 and victim is 14-15, it is a gross misdemeanor. If defendant is 21 or older, it is a Category C felony."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "NRS § 201.230",
+    "statute_title": "Lewdness with a Child Under 14",
+    "offense_class": "Category A Felony",
+    "penalty_min": "Life with parole after 10 years",
+    "penalty_max": "Life without parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant willfully and lewdly committed any lewd or lascivious act",
+      "Upon or with the body of a child under 14 years of age",
+      "With the intent of arousing, appealing to, or gratifying the lust, passions, or sexual desires of the defendant or the child"
+    ],
+    "mandatory_minimum": "Life with parole after 10 years",
+    "enhancements": [
+      "Use of force or threat (life without parole)",
+      "Substantial bodily harm"
+    ],
+    "notes": "Sex offender registration required. No statute of limitations for this offense."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "NRS § 201.354",
+    "statute_title": "Solicitation of Prostitution",
+    "offense_class": "Misdemeanor (1st); Gross Misdemeanor (2nd+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (1st); 1 year (2nd+)",
+    "fine_max": "$1,000 (1st); $2,000 (2nd+)",
+    "elements": [
+      "Defendant solicited another person to engage in prostitution",
+      "In a county where prostitution is not licensed or outside a licensed house of prostitution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Involving a minor (felony)",
+      "Subsequent offenses (gross misdemeanor)"
+    ],
+    "notes": "Prostitution is legal in certain rural Nevada counties with licensed brothels. Solicitation outside licensed establishments is criminal statewide."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "NRS § 200.380",
+    "statute_title": "Robbery",
+    "offense_class": "Category B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully took personal property from the person of another, or in their presence",
+      "Against the will of the victim",
+      "By means of force or violence or fear of injury, immediate or future"
+    ],
+    "mandatory_minimum": "2 years imprisonment",
+    "enhancements": [
+      "Use of a deadly weapon (may double sentence)",
+      "Victim is 60 or older",
+      "Victim sustained substantial bodily harm"
+    ],
+    "notes": "Robbery is always a felony in Nevada. Armed robbery with a deadly weapon can carry 2-15 years for the robbery plus additional 1-20 years for the weapon enhancement."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "NRS § 205.060",
+    "statute_title": "Burglary",
+    "offense_class": "Category B Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years; 15 years (with deadly weapon)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant entered any house, room, apartment, tenement, shop, warehouse, store, mill, barn, stable, outhouse, or other building, tent, vessel, vehicle, vehicle trailer, semitrailer, or house trailer, or airplane",
+      "With the intent to commit grand or petit larceny, assault, battery, or any felony"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Possession of a deadly weapon during burglary (2-15 years)",
+      "Dwelling house (aggravating factor at sentencing)"
+    ],
+    "notes": "Entering with intent is sufficient — no need to complete the intended crime. Burglary while in possession of a deadly weapon enhances the penalty range."
+  },
+  {
+    "common_charge_slug": "home-invasion",
+    "statute_number": "NRS § 205.067",
+    "statute_title": "Invasion of the Home",
+    "offense_class": "Category B Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years; 15 years (with deadly weapon)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant forcibly entered an inhabited dwelling",
+      "Without permission of the owner or occupant",
+      "With the use of a deadly weapon OR after the use of force upon a person"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Use of a deadly weapon (2-15 years)",
+      "Battery committed during invasion"
+    ],
+    "notes": "Home invasion is a separate offense from burglary, specifically targeting forcible entry into inhabited dwellings."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "NRS § 205.220",
+    "statute_title": "Grand Larceny",
+    "offense_class": "Category C Felony ($1,200-$5,000); Category B Felony ($5,000-$25,000); Category B Felony ($25,000+)",
+    "penalty_min": "1 year",
+    "penalty_max": "5 years ($1,200-$5,000); 10 years ($5,000-$25,000); 20 years ($25,000+)",
+    "fine_max": "$10,000 (Cat C); $10,000 (Cat B); $15,000 (Cat B high value)",
+    "elements": [
+      "Defendant intentionally stole, took, and carried away",
+      "Personal property of another person",
+      "Property valued at $1,200 or more",
+      "Without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $5,000 (Category B felony)",
+      "Value over $25,000 (enhanced Category B felony)",
+      "Theft of a motor vehicle",
+      "Theft from a person (pickpocketing)"
+    ],
+    "notes": "Grand larceny threshold was raised to $1,200 in 2019. Previously it was $650. Restitution to victim is mandatory in addition to any sentence."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "NRS § 205.240",
+    "statute_title": "Petit Larceny",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant intentionally stole, took, and carried away",
+      "Personal property of another person",
+      "Property valued at less than $1,200",
+      "Without consent of the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft convictions (may elevate to felony)"
+    ],
+    "notes": "Petit larceny is a misdemeanor with the $1,200 threshold. Shoplifting under $1,200 is charged as petit larceny. Restitution required."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "NRS § 205.0832",
+    "statute_title": "Theft — Shoplifting",
+    "offense_class": "Misdemeanor (under $1,200); Category C-B Felony ($1,200+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 5-20 years (felony depending on value)",
+    "fine_max": "$1,000 (misdemeanor); $10,000-$15,000 (felony)",
+    "elements": [
+      "Defendant knowingly and intentionally took merchandise from a retail establishment",
+      "With the intent to permanently deprive the merchant of the merchandise",
+      "Without paying the purchase price"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,200 (felony)",
+      "Use of device to defeat anti-theft measures",
+      "Organized retail theft"
+    ],
+    "notes": "Charged under the general theft statute NRS § 205.0832. Civil liability to merchant in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "NRS § 205.461",
+    "statute_title": "Obtaining and Using Personal Identifying Information of Another Person",
+    "offense_class": "Category B Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years",
+    "fine_max": "$100,000",
+    "elements": [
+      "Defendant obtained, possessed, or used personal identifying information of another person",
+      "Without the authorization of the person",
+      "To obtain or attempt to obtain credit, goods, services, or any other thing of value in the name of the other person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Five or more victims (additional penalties)",
+      "Elderly victim (65+)",
+      "Obtaining $3,000+ in value"
+    ],
+    "notes": "Personal identifying information includes SSN, driver's license number, account numbers, passwords, and biometric data. Restitution mandatory."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "NRS § 205.090",
+    "statute_title": "Forgery",
+    "offense_class": "Category D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant falsely made, altered, forged, or counterfeited",
+      "Any check, draft, will, deed, bond, or other instrument in writing",
+      "With the intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Uttering forged instrument (NRS § 205.095)",
+      "Amount exceeds $650"
+    ],
+    "notes": "Uttering (passing a forged instrument) is a separate offense under NRS § 205.095. Both forgery and uttering carry the same penalty."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "NRS § 205.760",
+    "statute_title": "Fraudulent Use of a Credit or Debit Card",
+    "offense_class": "Category D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant used a credit card or debit card",
+      "Knowing it to be forged, expired, cancelled, revoked, or belonging to another",
+      "To obtain money, goods, services, or anything of value",
+      "With the intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeds $650 in a 90-day period",
+      "Multiple victims"
+    ],
+    "notes": "Includes use of credit card numbers without the physical card. Multiple fraudulent transactions may be aggregated."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "NRS § 453.336",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Category E Felony (1st/2nd); Category D Felony (3rd+)",
+    "penalty_min": null,
+    "penalty_max": "4 years (Category E); 4 years (Category D)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "Without a valid prescription",
+      "Listed in Schedule I, II, III, IV, or V"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense (Category D felony)",
+      "Possession near school or playground",
+      "Involving a minor"
+    ],
+    "notes": "First and second offenses are Category E felonies with probation/suspended sentence possible. NRS § 453.3363 allows diversion for first-time possession. Marijuana possession up to 1 oz was legalized in 2017 for adults 21+."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "NRS § 453.336(4)",
+    "statute_title": "Possession of Marijuana — Over Legal Limit",
+    "offense_class": "Misdemeanor (over 1 oz to 50 lbs); Category E Felony (over 50 lbs)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 4 years (felony)",
+    "fine_max": "$600 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant possessed marijuana in excess of 1 ounce (28.35 grams)",
+      "Without authorization under NRS Chapter 453D"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Quantity over 50 lbs (trafficking statute applies)",
+      "Near school zone"
+    ],
+    "notes": "Adults 21+ may possess up to 1 oz of marijuana legally. Possession of 1-50 lbs is a misdemeanor for first offense. Home cultivation limited to 6 plants per person."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "NRS § 453.337",
+    "statute_title": "Possession of Controlled Substance for Sale",
+    "offense_class": "Category D Felony (Schedule III-V); Category C Felony (Schedule I-II)",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years (Cat D); 5 years (Cat C)",
+    "fine_max": "$5,000 (Cat D); $10,000 (Cat C)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With the intent to sell, manufacture, or distribute"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Near a school zone (additional penalties)",
+      "Involving a minor",
+      "Large quantities"
+    ],
+    "notes": "Intent to sell may be inferred from quantity, packaging, scales, large amounts of cash, or other circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "NRS § 453.321",
+    "statute_title": "Sale of a Controlled Substance",
+    "offense_class": "Category B Felony (Schedule I-II); Category C Felony (Schedule III-V)",
+    "penalty_min": "1 year",
+    "penalty_max": "20 years (Schedule I-II); 5 years (Schedule III-V)",
+    "fine_max": "$20,000 (Schedule I-II); $10,000 (Schedule III-V)",
+    "elements": [
+      "Defendant sold, manufactured, delivered, or brought into the state a controlled substance",
+      "Without legal authorization"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Sale to a minor (additional 1-20 years)",
+      "Within 1,000 feet of a school (additional penalties)",
+      "Prior drug felony conviction"
+    ],
+    "notes": "Sale of Schedule I or II narcotics carries the heaviest penalties. Manufacturing methamphetamine has enhanced penalties."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "NRS § 453.3385",
+    "statute_title": "Trafficking in Controlled Substances",
+    "offense_class": "Category B Felony (low quantity); Category A Felony (high quantity)",
+    "penalty_min": "2 years (low); 25 years (high)",
+    "penalty_max": "20 years (low); Life (high)",
+    "fine_max": "$100,000 (low); $500,000 (high)",
+    "elements": [
+      "Defendant knowingly sold, manufactured, delivered, or brought into the state",
+      "A controlled substance in specified quantities",
+      "100+ grams of Schedule I/II substance (low); 400+ grams (high)"
+    ],
+    "mandatory_minimum": "2 years and $50,000 fine (100-400g); 25 years (400g+)",
+    "enhancements": [
+      "Quantity of 400 grams or more (Category A felony, 25 years to life, up to $500,000 fine)",
+      "Prior trafficking conviction"
+    ],
+    "notes": "Trafficking thresholds: 100g-400g Schedule I/II is Category B (2-20 years, $100,000); 400g+ is Category A (25 years to life, $500,000). Separate thresholds for marijuana under NRS § 453.339."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "NRS § 202.360",
+    "statute_title": "Possession of Firearm by Prohibited Person",
+    "offense_class": "Category B Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant was a person prohibited from possessing firearms (convicted felon, fugitive, unlawful user of controlled substance, adjudicated mentally ill, subject to domestic violence restraining order)"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Use of firearm during commission of a crime",
+      "Domestic violence conviction history"
+    ],
+    "notes": "Felons may not possess firearms unless pardoned and the pardon does not restrict the right to bear arms. Domestic violence misdemeanor conviction also triggers federal firearms prohibition."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "NRS § 202.350",
+    "statute_title": "Carrying Concealed Weapon Without Permit",
+    "offense_class": "Category C Felony (firearm); Gross Misdemeanor (other weapon)",
+    "penalty_min": null,
+    "penalty_max": "5 years (firearm); 1 year (other)",
+    "fine_max": "$10,000 (firearm); $2,000 (other)",
+    "elements": [
+      "Defendant carried concealed upon their person a weapon",
+      "Without a valid CCW permit",
+      "Weapon includes firearm, knife with blade over 3 inches, machete, or other dangerous or deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Firearm (Category C felony)",
+      "Prior weapons conviction"
+    ],
+    "notes": "Nevada is a shall-issue CCW state. Open carry is legal without a permit. Concealed carry without a permit for a firearm is a Category C felony."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "NRS § 202.287",
+    "statute_title": "Discharging Firearm at or into Occupied Structure or Vehicle",
+    "offense_class": "Category B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "15 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully and maliciously discharged a firearm",
+      "At or into any occupied structure, vehicle, aircraft, or watercraft"
+    ],
+    "mandatory_minimum": "2 years imprisonment",
+    "enhancements": [
+      "Resulting in death (murder charges apply)",
+      "Resulting in substantial bodily harm",
+      "Multiple victims"
+    ],
+    "notes": "Structure must be occupied at the time of the shooting. Reckless discharge without targeting an occupied structure may be charged under NRS § 202.285."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "NRS § 205.010",
+    "statute_title": "Arson — First Degree",
+    "offense_class": "Category B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "15 years",
+    "fine_max": "$15,000",
+    "elements": [
+      "Defendant willfully and maliciously set fire to, or caused to be burned",
+      "Any dwelling house, structure, or personal property",
+      "Whether owned by the defendant or another"
+    ],
+    "mandatory_minimum": "2 years imprisonment",
+    "enhancements": [
+      "Resulting in death (Category A felony)",
+      "Resulting in substantial bodily harm",
+      "Occupied structure at time of fire"
+    ],
+    "notes": "First degree arson involves occupied dwellings or structures. Second degree arson (NRS § 205.015) involves unoccupied structures and is a Category B felony with 1-10 years. Third degree arson (NRS § 205.020) involves personal property and is a Category D felony."
+  },
+  {
+    "common_charge_slug": "carjacking",
+    "statute_number": "NRS § 200.380",
+    "statute_title": "Robbery — Carjacking",
+    "offense_class": "Category B Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "15 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant took a motor vehicle from the person or presence of another",
+      "By means of force, violence, or fear of injury",
+      "Against the will of the victim"
+    ],
+    "mandatory_minimum": "2 years imprisonment",
+    "enhancements": [
+      "Use of a deadly weapon (additional 1-20 years)",
+      "Causing bodily harm"
+    ],
+    "notes": "Carjacking is charged under the general robbery statute in Nevada. The use of a deadly weapon adds a consecutive sentence enhancement."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "NRS § 200.575",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor (1st); Gross Misdemeanor (with threat); Category B Felony (with restraining order or prior conviction)",
+    "penalty_min": null,
+    "penalty_max": "6 months (1st); 1 year (gross misd.); 6 years (felony)",
+    "fine_max": "$1,000 (1st); $2,000 (gross misd.); $5,000 (felony)",
+    "elements": [
+      "Defendant willfully engaged in a course of conduct directed at a specific person",
+      "Which would cause a reasonable person to feel terrorized, frightened, intimidated, or harassed",
+      "Defendant actually intended to cause those feelings in the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threats of death or substantial bodily harm (gross misdemeanor)",
+      "Violation of protective order (Category B felony, 2-15 years)",
+      "Prior stalking conviction"
+    ],
+    "notes": "Cyberstalking is included under this statute. Second or subsequent offense is a gross misdemeanor. Stalking in violation of a restraining order is a Category B felony."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "NRS § 200.508",
+    "statute_title": "Child Abuse, Neglect, or Endangerment",
+    "offense_class": "Category B Felony (substantial harm/sexual abuse); Gross Misdemeanor (non-substantial harm)",
+    "penalty_min": "1 year (felony)",
+    "penalty_max": "6 years (non-sexual); 20 years (sexual abuse); Life (death of child)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully caused a child under 18 to suffer unjustifiable physical pain or mental suffering, OR",
+      "Placed the child in a situation where the child might suffer physical pain, mental suffering, OR",
+      "Physically injured the child in a manner that constituted abuse or neglect"
+    ],
+    "mandatory_minimum": "1 year (Category B felony)",
+    "enhancements": [
+      "Substantial bodily or mental harm",
+      "Sexual abuse of child",
+      "Death of child (Category A felony)"
+    ],
+    "notes": "Mandatory reporting requirement for professionals. Gross misdemeanor applies when no substantial bodily harm or mental harm occurs."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "NRS § 199.280",
+    "statute_title": "Resisting Public Officer",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant willfully resisted, delayed, or obstructed a public officer",
+      "In discharging or attempting to discharge any legal duty of the officer's office"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing bodily harm to the officer",
+      "Use of a deadly weapon (separate assault charges)"
+    ],
+    "notes": "Does not require physical resistance — verbal obstruction or providing false information can constitute this offense. Flight alone may or may not constitute resistance depending on circumstances."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "NRS § 484B.550",
+    "statute_title": "Eluding a Police Officer",
+    "offense_class": "Category D Felony; Category B Felony (causing death or substantial bodily harm)",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years (Cat D); 6 years (death/harm, Cat B)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "After being given a signal to stop by a peace officer in uniform driving a marked patrol car",
+      "Defendant willfully failed or refused to stop"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Causing death or substantial bodily harm to another (Category B felony, 2-20 years)",
+      "Endangering others during pursuit"
+    ],
+    "notes": "The officer must be in a marked vehicle and in uniform. Reckless driving during evasion adds additional charges."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "NRS § 33.100",
+    "statute_title": "Violation of Extended Protection Order",
+    "offense_class": "Misdemeanor (1st); Gross Misdemeanor (2nd within 2 years); Category D Felony (3rd+ within 2 years)",
+    "penalty_min": null,
+    "penalty_max": "6 months (1st); 1 year (2nd); 4 years (3rd+)",
+    "fine_max": "$1,000 (1st); $2,000 (2nd); $5,000 (3rd+)",
+    "elements": [
+      "A valid extended protection order was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant intentionally violated the terms of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense within 2 years (gross misdemeanor)",
+      "Third or subsequent within 2 years (Category D felony)",
+      "Violation involving assault or battery (separate charges)"
+    ],
+    "notes": "Applies to both temporary and extended protection orders for domestic violence, harassment, stalking, and sexual assault."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "NRS § 200.571",
+    "statute_title": "Harassment — Threatening Communication",
+    "offense_class": "Misdemeanor (1st); Gross Misdemeanor (2nd/subsequent)",
+    "penalty_min": null,
+    "penalty_max": "6 months (1st); 1 year (2nd+)",
+    "fine_max": "$1,000 (1st); $2,000 (2nd+)",
+    "elements": [
+      "Defendant knowingly threatened to cause bodily injury to another person",
+      "Or to cause physical damage to the property of another",
+      "In a manner that would cause a reasonable person to believe the threat was credible"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior harassment conviction",
+      "Threat with a deadly weapon (assault charges apply separately)"
+    ],
+    "notes": "Threats can be made verbally, in writing, or electronically. Distinct from stalking which requires a course of conduct."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "NRS § 484B.653",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove a vehicle on a highway",
+      "In willful or wanton disregard of the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing death or injury (felony charges possible)",
+      "Prior reckless driving conviction"
+    ],
+    "notes": "Reckless driving is often used as a plea bargain reduction from DUI charges. Points assessed on driving record."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "NRS § 484E.010",
+    "statute_title": "Failure to Stop at Scene of Accident — Hit and Run",
+    "offense_class": "Category B Felony (death/injury); Misdemeanor (property only)",
+    "penalty_min": null,
+    "penalty_max": "6 months (property); 20 years (death); 6 years (injury)",
+    "fine_max": "$1,000 (property); $5,000 (felony)",
+    "elements": [
+      "Defendant was involved in a motor vehicle accident",
+      "Defendant failed to immediately stop at the scene",
+      "Defendant failed to provide required information or render aid"
+    ],
+    "mandatory_minimum": "2 years (death resulting)",
+    "enhancements": [
+      "Death of another person (Category B felony, 2-20 years)",
+      "Injury to another person (Category B felony, 1-6 years)"
+    ],
+    "notes": "Hit and run resulting in death carries 2-20 years imprisonment. If driver was under the influence, DUI charges are added separately."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "NRS § 205.130",
+    "statute_title": "Drawing or Passing a Check Without Sufficient Funds",
+    "offense_class": "Misdemeanor (under $650); Category D Felony ($650+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 4 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant willfully drew or passed a check",
+      "On a bank or depository",
+      "Knowing there were insufficient funds to pay the check",
+      "With the intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount over $650 (Category D felony)",
+      "Multiple bad checks aggregated"
+    ],
+    "notes": "The drawer has 5 days after notification to make the check good. Failure to do so creates a prima facie case of intent to defraud."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "NRS § 205.300",
+    "statute_title": "Embezzlement",
+    "offense_class": "Category B Felony (based on value)",
+    "penalty_min": "1 year",
+    "penalty_max": "10 years ($1,200-$25,000); 20 years ($25,000+)",
+    "fine_max": "$10,000 ($1,200-$25,000); $15,000 ($25,000+)",
+    "elements": [
+      "Defendant was entrusted with money or property belonging to another",
+      "Defendant fraudulently appropriated the money or property to their own use",
+      "With the intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public officer embezzlement",
+      "Amount exceeds $25,000",
+      "Victim is elderly or vulnerable person"
+    ],
+    "notes": "Penalties follow the same value thresholds as grand larceny. Public officer embezzlement carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "NRS § 686A.2815",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Category D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly presented or caused to be presented a false or fraudulent claim",
+      "For payment or benefit pursuant to an insurance policy",
+      "With the intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Claim exceeds $650",
+      "Pattern of fraudulent claims",
+      "Organized fraud scheme"
+    ],
+    "notes": "Includes staging accidents, inflating claims, arson for insurance, and falsifying medical records. Restitution mandatory."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "NRS § 453.566",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$600",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With the intent to use it to plant, propagate, cultivate, grow, harvest, manufacture, compound, convert, produce, process, prepare, test, analyze, pack, repack, store, contain, conceal, inject, ingest, inhale, or otherwise introduce into the human body a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sale of paraphernalia to a minor (Category E felony)"
+    ],
+    "notes": "Marijuana paraphernalia for personal use by adults 21+ is not a crime. Delivery or sale of paraphernalia to a minor is a Category E felony."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "NRS § 458.260",
+    "statute_title": "Public Intoxication",
+    "offense_class": "Not a crime (civil protective custody)",
+    "penalty_min": null,
+    "penalty_max": null,
+    "fine_max": null,
+    "elements": [
+      "Person is found in a public place",
+      "Under the influence of alcohol or a controlled substance",
+      "In a condition that creates a danger to self or others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Nevada decriminalized public intoxication under NRS § 458.260. Intoxicated persons are taken to treatment facilities, not arrested. However, disorderly conduct while intoxicated may be charged separately."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "NRS § 203.010",
+    "statute_title": "Breach of Peace — Disorderly Conduct",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant engaged in conduct that disturbed the public peace",
+      "Including fighting, violent or tumultuous behavior, or unreasonable noise"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Broad statute covering various types of public disturbance. Often used as a lesser included offense or plea reduction."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "NRS § 207.200",
+    "statute_title": "Trespassing",
+    "offense_class": "Misdemeanor; Gross Misdemeanor (aggravated)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 1 year (gross misdemeanor)",
+    "fine_max": "$1,000 (misdemeanor); $2,000 (gross misdemeanor)",
+    "elements": [
+      "Defendant went upon the land or into any building of another",
+      "After having been warned by the owner or occupant not to trespass, OR",
+      "Willfully went or remained on property after being told to leave"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated trespass (gross misdemeanor)",
+      "Trespass with firearm"
+    ],
+    "notes": "Casino trespass is commonly charged when a person is issued a trespass notice from a gaming property and returns."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "NRS § 22.010",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Misdemeanor (criminal contempt); Varies (civil contempt)",
+    "penalty_min": null,
+    "penalty_max": "25 days (direct contempt); 6 months (indirect criminal contempt)",
+    "fine_max": "$500 (direct); $1,000 (indirect)",
+    "elements": [
+      "Defendant willfully disobeyed a lawful order of the court, OR",
+      "Engaged in disorderly, contemptuous, or insolent behavior in the presence of the court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Repeat violations"
+    ],
+    "notes": "Direct contempt may be punished summarily. Indirect contempt requires notice and hearing. Civil contempt is coercive and defendant may purge by compliance."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "NRS § 176A.630",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Varies (up to original sentence maximum)",
+    "penalty_min": null,
+    "penalty_max": "Maximum sentence for original offense",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation for a criminal offense",
+      "Defendant violated a condition of probation",
+      "Violation was willful and substantial"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "New criminal offense while on probation",
+      "Absconding from supervision",
+      "Failed drug tests"
+    ],
+    "notes": "Court may revoke probation and impose any sentence originally available. Graduated sanctions may be imposed for technical violations before full revocation."
+  },
+  {
+    "common_charge_slug": "unlawful-imprisonment",
+    "statute_number": "NRS § 200.460",
+    "statute_title": "False Imprisonment",
+    "offense_class": "Category B Felony (with deadly weapon); Category D Felony (without)",
+    "penalty_min": "1 year",
+    "penalty_max": "15 years (with weapon); 4 years (without)",
+    "fine_max": "$10,000 (with weapon); $5,000 (without)",
+    "elements": [
+      "Defendant restrained the personal liberty of another person",
+      "Without sufficient legal authority"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Use of a deadly weapon (Category B felony, 1-15 years)",
+      "Victim is a minor"
+    ],
+    "notes": "False imprisonment without a deadly weapon is a Category D felony. Distinguished from kidnapping by the absence of movement or specific criminal intent."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "NRS § 199.120",
+    "statute_title": "Perjury",
+    "offense_class": "Category D Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was under oath or affirmation",
+      "Defendant willfully and knowingly made a false statement",
+      "Regarding a material matter"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subornation of perjury (same penalties)"
+    ],
+    "notes": "Perjury in a capital case or case involving life imprisonment may carry enhanced penalties. Inconsistent statements under oath can establish perjury without proving which statement was false."
+  },
+  {
+    "common_charge_slug": "witness-tampering",
+    "statute_number": "NRS § 199.230",
+    "statute_title": "Preventing or Dissuading a Witness or Victim",
+    "offense_class": "Category D Felony; Category B Felony (with force/threat)",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years (Cat D); 6 years (Cat B with force)",
+    "fine_max": "$5,000 (Cat D); $5,000 (Cat B)",
+    "elements": [
+      "Defendant knowingly and maliciously prevented or dissuaded any witness or victim",
+      "From attending or giving testimony at any trial, proceeding, or inquiry",
+      "Or from reporting a crime to law enforcement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or threat (Category B felony)",
+      "Conspiracy to tamper with witness"
+    ],
+    "notes": "Includes attempting to prevent a victim from reporting a crime or cooperating with prosecution."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "NRS § 484B.657",
+    "statute_title": "Reckless Driving — Causing Death",
+    "offense_class": "Category B Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "In willful or wanton disregard of the safety of persons or property",
+      "Causing the death of another person"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Under the influence of alcohol/drugs (DUI manslaughter charges)",
+      "Multiple deaths"
+    ],
+    "notes": "If DUI is involved, the more serious DUI causing death statute (NRS § 484C.430) applies instead. Reckless driving causing death is distinct from involuntary manslaughter."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "NRS § 200.5099",
+    "statute_title": "Abuse, Neglect, Exploitation, or Isolation of an Older or Vulnerable Person",
+    "offense_class": "Gross Misdemeanor (no substantial harm); Category B Felony (substantial harm)",
+    "penalty_min": null,
+    "penalty_max": "1 year (gross misd.); 6 years (Cat B); 20 years (Cat B — death result)",
+    "fine_max": "$2,000 (gross misd.); $5,000 (Cat B)",
+    "elements": [
+      "Defendant knowingly, willfully, or negligently abused, neglected, exploited, or isolated",
+      "An older person (60+) or vulnerable person",
+      "Abuse includes physical abuse, financial exploitation, or abandonment"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Substantial bodily or mental harm (Category B felony)",
+      "Death of victim (2-20 years, Category B)",
+      "Financial exploitation over $650"
+    ],
+    "notes": "Mandatory reporting requirements for certain professionals. Financial exploitation of elders is prosecuted aggressively under this statute."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "NRS § 178.508",
+    "statute_title": "Failure to Appear — Bail Jumping",
+    "offense_class": "Gross Misdemeanor (underlying misdemeanor); Category D Felony (underlying felony)",
+    "penalty_min": null,
+    "penalty_max": "1 year (gross misd.); 4 years (Cat D felony)",
+    "fine_max": "$2,000 (gross misd.); $5,000 (Cat D)",
+    "elements": [
+      "Defendant was released on bail or own recognizance",
+      "Defendant willfully failed to appear as required",
+      "At a scheduled court hearing or trial"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying charge is a felony (Category D felony)"
+    ],
+    "notes": "Bail jumping is charged in addition to the underlying offense. Court will issue a bench warrant upon failure to appear."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "NRS § 199.480",
+    "statute_title": "Conspiracy",
+    "offense_class": "Varies (same class as target offense; Category B felony for murder/manslaughter/robbery/sexual assault conspiracy)",
+    "penalty_min": null,
+    "penalty_max": "Same as target offense; 6 years (specific violent felonies)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Two or more persons agreed to commit a crime",
+      "At least one person performed an overt act in furtherance of the agreement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Target offense is a violent felony"
+    ],
+    "notes": "Conspiracy to commit murder, robbery, kidnapping, or sexual assault is a Category B felony (1-6 years). Conspiracy to commit other crimes is punished at the same level as the target offense."
+  },
+  {
+    "common_charge_slug": "assault-police-officer",
+    "statute_number": "NRS § 200.481(2)(e)",
+    "statute_title": "Battery on a Protected Person (Officer, Firefighter, etc.)",
+    "offense_class": "Category D Felony; Category B Felony (with substantial bodily harm)",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years (Cat D); 6 years (Cat B with substantial harm)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant willfully and unlawfully used force or violence",
+      "Upon a peace officer, firefighter, school employee, health care provider, or other protected person",
+      "While the protected person was performing their duties"
+    ],
+    "mandatory_minimum": "1 year imprisonment",
+    "enhancements": [
+      "Substantial bodily harm (Category B felony, 2-10 years)",
+      "Use of a deadly weapon"
+    ],
+    "notes": "Protected persons include officers, firefighters, judges, providers of health care, school employees, and child protective services workers. Separate from general battery statute."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "NRS § 201.210",
+    "statute_title": "Open or Gross Lewdness",
+    "offense_class": "Gross Misdemeanor (1st); Category D Felony (subsequent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (1st); 4 years (subsequent)",
+    "fine_max": "$2,000 (1st); $5,000 (subsequent)",
+    "elements": [
+      "Defendant committed any act of open or gross lewdness",
+      "In a public place or where others could observe"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction (Category D felony)",
+      "In presence of a minor"
+    ],
+    "notes": "Includes indecent exposure and public sexual acts. First offense is a gross misdemeanor; subsequent offenses are Category D felonies. Sex offender registration may be required."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "NRS § 206.310",
+    "statute_title": "Malicious Destruction of Property",
+    "offense_class": "Misdemeanor (under $5,000); Category D Felony ($5,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 4 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant willfully and maliciously destroyed or damaged property",
+      "Belonging to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage exceeds $5,000 (Category D felony)",
+      "Graffiti enhancement"
+    ],
+    "notes": "Restitution for repair or replacement of damaged property is mandatory in addition to any sentence."
+  },
+  {
+    "common_charge_slug": "extortion",
+    "statute_number": "NRS § 207.190",
+    "statute_title": "Coercion",
+    "offense_class": "Category B Felony (with force/threat of force); Category D Felony (without force)",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years (with force); 4 years (without force)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant compelled another person to do or abstain from doing an act",
+      "By means of force, threat of force, or intimidation",
+      "Which the person had a right to do or abstain from doing"
+    ],
+    "mandatory_minimum": "1 year (with force)",
+    "enhancements": [
+      "Use of force or threat of force (Category B felony)",
+      "Gang-related coercion"
+    ],
+    "notes": "Coercion with force or threat of force is a Category B felony (1-6 years). Without force, it is a Category D felony (1-4 years). Commonly charged in domestic violence contexts."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "NRS § 205.275",
+    "statute_title": "Possession of Stolen Property",
+    "offense_class": "Misdemeanor (under $1,200); Category C-B Felony ($1,200+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misd.); 5 years (Cat C); 10-20 years (Cat B)",
+    "fine_max": "$1,000 (misd.); $10,000-$15,000 (felony)",
+    "elements": [
+      "Defendant bought, received, possessed, or withheld property",
+      "Knowing the property was stolen",
+      "With the intent to deprive the owner of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $1,200 (Category C felony)",
+      "Value over $5,000 (Category B felony)",
+      "Stolen motor vehicle"
+    ],
+    "notes": "Value thresholds match grand larceny thresholds. Knowledge that property was stolen may be inferred from circumstances."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "NRS § 179D.550",
+    "statute_title": "Failure to Register as Sex Offender",
+    "offense_class": "Category D Felony (1st); Category C Felony (subsequent)",
+    "penalty_min": "1 year",
+    "penalty_max": "4 years (1st); 5 years (subsequent)",
+    "fine_max": "$5,000 (1st); $10,000 (subsequent)",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant failed to register or update registration as required",
+      "Failure was willful"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent violation (Category C felony)"
+    ],
+    "notes": "Registration is lifetime for Tier III offenders. Must register within 48 hours of establishing residence or changing address."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "NRS § 193.330",
+    "statute_title": "Attempt to Commit a Crime",
+    "offense_class": "Varies (one category lower than completed offense)",
+    "penalty_min": null,
+    "penalty_max": "Varies by target offense category",
+    "fine_max": "Varies",
+    "elements": [
+      "Defendant had the specific intent to commit a crime",
+      "Defendant performed a direct but ineffectual act toward the commission of the crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is generally punished one category below the completed offense (e.g., attempt of a Category B is Category C). Exception: attempted murder is a Category B felony (2-20 years)."
+  }
+]

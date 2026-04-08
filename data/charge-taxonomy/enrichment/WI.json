@@ -1,0 +1,1558 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "Lifetime lookback for prior OWI offenses means decades-old convictions elevate current charges to felony level",
+      "Per se BAC threshold of .08 eliminates the need to prove actual impairment when chemical test results are available"
+    ],
+    "defense_opportunities": [
+      "Challenge the calibration records and maintenance logs of the Intoxilyzer device, as Wisconsin courts have suppressed results from improperly maintained instruments",
+      "Contest the legality of the traffic stop under the Fourth Amendment — Wisconsin requires reasonable suspicion, and field sobriety test administration errors can undermine probable cause",
+      "For drug OWI, challenge whether the restricted controlled substance was pharmacologically active at the time of driving, since THC metabolites persist in blood long after impairment ends"
+    ],
+    "common_defenses": [
+      "Improper stop — officer lacked reasonable suspicion for initial traffic stop",
+      "Rising blood alcohol defense — BAC was below .08 at time of driving but rose between the stop and the chemical test",
+      "Involuntary intoxication — medication interaction or unknowing consumption of alcohol",
+      "Challenge to field sobriety testing — non-standardized administration or medical conditions affecting performance"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "Chemical test refusal under implied consent triggers automatic 12-month license revocation and may be used as evidence of consciousness of guilt",
+      "Even as a civil forfeiture, conviction triggers mandatory 6-9 month license revocation and alcohol assessment"
+    ],
+    "defense_opportunities": [
+      "Non-criminal civil forfeiture status means no jail time, no criminal record, and lower standard of proof arguments available",
+      "Challenge the 20-minute observation period required before breath testing — failure to observe is grounds for suppression",
+      "Negotiate for reduced charges such as inattentive driving or absolute sobriety violation to avoid OWI-related license consequences"
+    ],
+    "common_defenses": [
+      "Mouth alcohol contamination — recent use of mouthwash, GERD, or dental work affecting breath test accuracy",
+      "Improper observation period before chemical testing",
+      "Medical condition mimicking impairment (diabetes, neurological conditions)",
+      "Rising BAC — defendant was below .08 while actually operating the vehicle"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "Wisconsin's lifetime lookback means any prior OWI from any state, at any time, counts toward the repeat offense level",
+      "Mandatory minimum incarceration increases sharply: 5 days (2nd), 45 days (3rd), 60 days (4th), 18 months (5th/6th)",
+      "Fourth offense is automatically a Class H Felony regardless of when prior offenses occurred"
+    ],
+    "defense_opportunities": [
+      "Challenge the validity of prior OWI convictions — if a prior was obtained without proper counsel or constitutional protections, it may not count for enhancement",
+      "Seek placement in the drug court or OWI treatment court program as an alternative to mandatory incarceration",
+      "Negotiate for extended supervision or electronic monitoring in lieu of a portion of mandatory jail time where statutes allow judicial discretion",
+      "Contest the accuracy of the prior offense record, particularly out-of-state convictions with incomplete documentation"
+    ],
+    "common_defenses": [
+      "Invalid prior convictions — prior plea taken without counsel or without understanding of rights",
+      "Constitutional challenge to the traffic stop or arrest procedure",
+      "Chemical test reliability — challenge instrument calibration, operator certification, or chain of custody",
+      "Necessity defense — driving was required to prevent greater harm"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "Blood tests for restricted substances are highly sensitive and can detect presence well below pharmacologically active levels",
+      "Prosecution can rely on Drug Recognition Expert (DRE) protocol testimony to establish impairment beyond chemical test results"
+    ],
+    "defense_opportunities": [
+      "Challenge whether a detected substance was at a pharmacologically active level at the time of driving versus mere residual presence",
+      "Contest the DRE evaluation protocol — DRE conclusions are subjective and the 12-step protocol has documented error rates",
+      "For prescription medications, argue lawful use under valid prescription and that the substance was taken as directed",
+      "Challenge the blood draw procedure — improper venipuncture, contamination of sample, or lack of proper preservative in blood vial"
+    ],
+    "common_defenses": [
+      "Lawful prescription use — medication taken as directed by physician",
+      "No actual impairment — chemical presence alone does not prove impairment for non-per-se substances",
+      "Blood sample contamination or improper storage affecting test reliability",
+      "Involuntary intoxication — unknowing ingestion of controlled substance"
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "Broad statutory language ('endangered the safety of any person or property') gives prosecution wide latitude in charging",
+      "Dashcam, body cam, and surveillance footage frequently provide compelling evidence of driving behavior",
+      "Often paired with other charges (OWI, fleeing) creating cumulative sentencing exposure"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the driving behavior actually rose to 'wanton disregard for safety' versus mere negligence or carelessness",
+      "Negotiate reckless driving as a plea reduction from OWI to avoid OWI-specific consequences (license revocation, ignition interlock, insurance surcharges)",
+      "Present evidence of road conditions, mechanical failure, or emergency circumstances that explain the driving behavior"
+    ],
+    "common_defenses": [
+      "Emergency circumstances — defendant was responding to a genuine emergency",
+      "Mechanical failure — vehicle malfunction caused the erratic driving",
+      "Insufficient evidence — driving behavior did not rise to statutory 'wanton disregard' standard",
+      "Misidentification of the driver"
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Surveillance camera networks and modern vehicle identification technology make identification of the vehicle highly likely",
+      "Consciousness of guilt inference from fleeing the scene is powerful before a jury",
+      "Hit-and-run involving death is a Class D Felony (up to 25 years), creating significant sentencing exposure"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant had actual knowledge that an accident occurred — noise, road conditions, or vehicle size may prevent awareness",
+      "Present evidence that the defendant left the scene due to fear for personal safety and reported the accident shortly after"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant was unaware a collision occurred",
+      "Fear of harm — defendant left due to reasonable fear of violence at the scene and promptly reported the accident",
+      "Misidentification of the vehicle or driver",
+      "Duress — defendant fled under threat from passengers or others"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "OWI homicide only requires proof that defendant was intoxicated and caused the death — no need to prove recklessness beyond the intoxication itself",
+      "Chemical test results establishing BAC above .08 combined with the fatal collision create a straightforward prosecution theory",
+      "Juries are typically sympathetic to victims in fatality cases, creating strong emotional weight"
+    ],
+    "defense_opportunities": [
+      "Challenge the causal link between intoxication and the fatal collision — argue that an independent intervening cause (other driver, road defect, mechanical failure) caused the death",
+      "Contest the BAC test results through chain of custody challenges, instrument reliability, or timing between accident and blood draw",
+      "Argue that the victim's own conduct (failure to wear seatbelt, their own impairment, traffic violations) was the proximate cause of death"
+    ],
+    "common_defenses": [
+      "Intervening cause — another driver's negligence or external factor caused the fatal collision",
+      "Challenge to causation — intoxication was not the proximate cause of death",
+      "Chemical test unreliability — blood draw timing, contamination, or instrument error",
+      "Victim's contributory conduct as proximate cause of the fatal injury"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Physical evidence at the crash scene (skid marks, vehicle data recorders, speed calculations) often establishes negligence clearly",
+      "Does not require proof of intoxication, making this easier to prove than OWI homicide"
+    ],
+    "defense_opportunities": [
+      "Distinguish between ordinary negligence (civil liability) and criminal negligence (criminal liability) — the conduct must be a gross deviation from the standard of care",
+      "Present evidence of sudden mechanical failure, unforeseeable road conditions, or medical emergency to negate criminal negligence",
+      "Negotiate from OWI homicide down to negligent homicide to avoid the 5-year mandatory minimum"
+    ],
+    "common_defenses": [
+      "Ordinary negligence versus criminal negligence — conduct did not rise to the criminal standard",
+      "Sudden emergency doctrine — unforeseeable circumstance caused the accident",
+      "Mechanical failure — vehicle defect was the actual cause",
+      "Victim's conduct contributed to or caused the fatal outcome"
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "DMV records provide straightforward documentary proof of suspension status",
+      "Notice of suspension sent by certified mail creates a presumption of knowledge under Wisconsin law",
+      "OWI-related suspensions carry enhanced penalties, creating additional sentencing leverage"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant had actual knowledge of the suspension — mail delivery failures, address changes, or administrative errors in notification",
+      "Seek occupational license reinstatement as part of a resolution to reduce ongoing exposure",
+      "Argue that the underlying suspension was improperly imposed, which may invalidate the driving-on-suspended charge"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant never received notice of suspension",
+      "Invalid underlying suspension — administrative error in the suspension process",
+      "Necessity — driving was required for an emergency situation",
+      "Occupational license covered the driving at issue"
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Fleeing is always a felony in Wisconsin (minimum Class I), creating serious exposure even for basic flight",
+      "Police dashcam and body cam footage typically provides clear evidence of the pursuit",
+      "If death results during the pursuit, the charge escalates to a Class F Felony (up to 12.5 years)",
+      "Prosecution can charge fleeing alongside the underlying offense, creating cumulative sentencing"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the officer's signal to stop was clearly visible or audible to the defendant — tinted windows, road noise, music may prevent perception",
+      "Argue the defendant was attempting to reach a safe, well-lit location before stopping rather than attempting to evade",
+      "Contest the 'knowingly' element — if defendant did not realize police were signaling them specifically"
+    ],
+    "common_defenses": [
+      "Lack of awareness — defendant did not see or hear the officer's signal to stop",
+      "Seeking a safe location — defendant was driving to a well-lit, populated area before stopping",
+      "Mistaken identity — officer pursued the wrong vehicle",
+      "Duress — defendant fled due to threats from passengers"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Physical possession or constructive possession (drugs found in defendant's vehicle, home, or personal effects) is often supported by strong physical evidence"
+    ],
+    "defense_opportunities": [
+      "First-offense simple possession is a misdemeanor — drug court and deferred prosecution programs may result in dismissal upon completion",
+      "Challenge constructive possession — proximity to contraband alone does not establish knowing possession, especially in shared spaces",
+      "Contest the legality of the search that produced the drugs — Fourth Amendment violations require suppression of evidence"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — drugs obtained through warrantless search without valid exception",
+      "Lack of knowledge — defendant did not know the substance was present or was a controlled substance",
+      "Lack of possession — drugs belonged to another person in a shared space",
+      "Entrapment — law enforcement induced the defendant to possess drugs they would not otherwise have possessed"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Wisconsin has not legalized recreational or medical marijuana, so any amount is criminal",
+      "Second THC possession offense is automatically a Class I Felony (up to 3.5 years)",
+      "Field testing kits provide rapid presumptive identification, giving officers probable cause for arrest"
+    ],
+    "defense_opportunities": [
+      "First-offense THC possession is a misdemeanor with a maximum of 6 months — diversion and deferred prosecution are commonly available",
+      "Some Wisconsin municipalities (Milwaukee, Madison) have local ordinances with lesser penalties for small amounts, potentially providing alternative charging",
+      "Challenge the substance identification — field test kits produce false positives, and lab confirmation may show a different substance or hemp (legal CBD)"
+    ],
+    "common_defenses": [
+      "Legal hemp — substance was CBD/hemp product with THC below the legal threshold",
+      "Illegal search and seizure — odor of marijuana alone may be insufficient for a warrantless vehicle search in evolving case law",
+      "Lack of knowledge — defendant did not know the substance contained THC",
+      "Misidentification of the substance by field test"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "Cocaine as a Schedule II substance carries higher baseline penalties than marijuana possession",
+      "Laboratory confirmation of cocaine is highly reliable and difficult to challenge on scientific grounds",
+      "Second offense automatically becomes a Class I Felony"
+    ],
+    "defense_opportunities": [
+      "Challenge the search that produced the cocaine — consent searches, vehicle searches, and stop-and-frisk encounters each have constitutional requirements",
+      "Contest constructive possession when cocaine was found in a shared vehicle or residence",
+      "First-offense possession is still a misdemeanor — seek deferred prosecution or drug court diversion"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — the search violated the Fourth Amendment",
+      "Lack of knowledge — defendant did not know cocaine was present",
+      "Constructive possession challenge — insufficient nexus between defendant and the contraband",
+      "Entrapment by law enforcement"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "Methamphetamine is a Schedule II substance carrying significant penalties even for simple possession",
+      "Presence of meth paraphernalia (pipes, residue) provides corroborating evidence of knowing possession",
+      "Second offense is automatically a Class I Felony"
+    ],
+    "defense_opportunities": [
+      "Challenge the search and seizure — meth cases frequently arise from traffic stops with contested probable cause",
+      "First-offense possession remains a misdemeanor — drug treatment court may be available as an alternative to conviction",
+      "Contest the weight of the substance — trace or residual amounts may support a lesser charge or paraphernalia offense instead"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — warrantless search without valid exception",
+      "Lack of knowledge — defendant did not know the substance was methamphetamine",
+      "Constructive possession — insufficient evidence linking defendant to the substance in a shared space",
+      "Unwitting possession — substance was planted or left by another person"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Wisconsin's weight-based penalty tiers create escalating felony exposure: Class F (1-5g), Class E (5-15g), Class D (15-40g), Class C (40g+) for cocaine/heroin/meth",
+      "Mandatory minimums of 3-10 years apply at higher weight thresholds, limiting judicial discretion",
+      "Wiretap and surveillance evidence in trafficking investigations is typically extensive and difficult to challenge"
+    ],
+    "defense_opportunities": [
+      "Challenge the drug weight calculations — prosecution must prove the actual weight of the controlled substance, not the total mixture weight, for certain penalty thresholds",
+      "Contest the school zone measurement — the 1,000-foot zone must be measured correctly, and errors in measurement can eliminate the enhancement",
+      "Argue the defendant's role was minimal (courier, user-dealer) to seek lower sentencing within the guideline range",
+      "Challenge the reliability of confidential informant testimony — informants often have motives to exaggerate or fabricate"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — suppression of evidence obtained through constitutional violations",
+      "Entrapment — government agent induced the defendant to engage in trafficking they would not otherwise have pursued",
+      "Insufficient evidence of intent to deliver — possession was for personal use, not distribution",
+      "Challenge to confidential informant reliability and credibility"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "Delivery of non-narcotic Schedule I-IV substances is a Class H Felony (up to 6 years), still carrying significant prison time",
+      "Controlled buys with audio/video recording provide strong direct evidence of delivery",
+      "THC (marijuana) delivery over 10,000g is a Class F Felony with substantial sentencing exposure"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'delivery' element — sharing or joint possession may not constitute delivery under Wisconsin law",
+      "Contest the identification of the substance — field tests are presumptive only, and lab analysis may show a different substance or concentration",
+      "Negotiate reduction from delivery to simple possession where the evidence of distribution is circumstantial"
+    ],
+    "common_defenses": [
+      "Accommodation — defendant shared drugs with a friend rather than commercially distributing",
+      "Entrapment — law enforcement induced the delivery",
+      "Illegal search and seizure — evidence should be suppressed",
+      "Misidentification of the substance"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Physical evidence from a clandestine lab (chemicals, equipment, residue) is typically overwhelming",
+      "Additional charges for child endangerment, environmental contamination, and cleanup costs compound exposure"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant's activity constituted 'manufacturing' versus mere possession of precursor chemicals",
+      "Contest the defendant's knowledge of and participation in the manufacturing operation, especially in shared residences",
+      "Argue that the lab was not operational or that the defendant was merely present, not actively manufacturing"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know manufacturing was occurring on the premises",
+      "Mere presence — being present at a lab location does not establish participation in manufacturing",
+      "Illegal search and seizure — entry into the premises violated the Fourth Amendment",
+      "Insufficient evidence that the defendant performed any manufacturing act"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Paraphernalia is broadly defined and includes common household items when accompanied by drug residue or context",
+      "Often charged alongside possession of the underlying controlled substance to create cumulative penalties"
+    ],
+    "defense_opportunities": [
+      "Paraphernalia possession is a misdemeanor with only 30 days maximum — often the lowest-priority charge in a drug case",
+      "Challenge the 'knowing' element — argue the item had a legitimate, non-drug-related purpose",
+      "Negotiate dismissal of paraphernalia charge as part of a plea resolution on more serious co-charged offenses"
+    ],
+    "common_defenses": [
+      "Legitimate purpose — the item is a common household object with lawful uses",
+      "Lack of knowledge — defendant did not know the item contained drug residue or was associated with drug use",
+      "Illegal search — the paraphernalia was found through an unconstitutional search",
+      "The item does not meet the statutory definition of drug paraphernalia"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Intent to deliver is proven through circumstantial evidence: quantity, packaging, scales, large cash, multiple phones, and distribution paraphernalia",
+      "Penalties mirror delivery statutes, so possession with intent carries the same serious exposure as actual distribution",
+      "School zone enhancement doubles the sentence and applies broadly in Wisconsin"
+    ],
+    "defense_opportunities": [
+      "Challenge the inference of intent — argue the quantity, cash, or packaging is consistent with personal use rather than distribution",
+      "Contest the school zone measurement or applicability of the enhancement",
+      "Negotiate a reduction to simple possession if the evidence of intent is primarily circumstantial"
+    ],
+    "common_defenses": [
+      "Personal use — the quantity and packaging are consistent with personal consumption, not distribution",
+      "Illegal search and seizure — suppression of the evidence underlying the intent inference",
+      "Insufficient evidence of intent — cash and packaging have innocent explanations",
+      "Constructive possession — defendant did not have dominion and control over the drugs"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "First-degree intentional homicide is Wisconsin's only Class A Felony — mandatory life sentence with minimum 20 years before extended supervision eligibility",
+      "Prosecution only needs to prove intent to kill plus causation — no requirement to prove motive",
+      "Wisconsin does not have the death penalty, which may make juries less hesitant to convict than in capital jurisdictions",
+      "Court can deny extended supervision eligibility entirely, imposing life without parole"
+    ],
+    "defense_opportunities": [
+      "Challenge the intent element — reckless conduct may support reckless homicide charges rather than intentional homicide",
+      "Contest forensic evidence (DNA, ballistics, blood spatter) through expert testimony"
+    ],
+    "common_defenses": [
+      "Self-defense — reasonable belief that deadly force was necessary to prevent imminent death or great bodily harm",
+      "Defense of others — protecting a third person from imminent harm",
+      "Adequate provocation — heat of passion reducing the charge to a Class B Felony",
+      "Insanity or mental disease/defect — defendant lacked the capacity to form intent to kill",
+      "Misidentification — defendant was not the person who committed the killing"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "The 'utter disregard for human life' standard, while higher than ordinary recklessness, is still a conduct-based standard rather than intent-based",
+      "Prosecution can present the reckless homicide theory as an alternative to intentional homicide, giving the jury multiple conviction options"
+    ],
+    "defense_opportunities": [
+      "Distinguish between ordinary recklessness (second-degree reckless homicide, Class D Felony, max 25 years) and 'utter disregard' (first-degree, Class B Felony, max 60 years)",
+      "Contest whether the defendant's conduct actually demonstrated 'utter disregard for human life' versus ordinary recklessness"
+    ],
+    "common_defenses": [
+      "Ordinary recklessness — conduct did not rise to 'utter disregard for human life,' supporting a lesser charge",
+      "Self-defense — defendant's reckless conduct was in response to an imminent threat",
+      "Accident — the death resulted from an unforeseeable accident, not criminal recklessness",
+      "Misidentification of the defendant"
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "Even mitigated to Class B Felony, the maximum penalty is 60 years imprisonment",
+      "Prosecution can argue provocation was not 'adequate' under the law, keeping the charge at first-degree intentional homicide",
+      "The prosecution can challenge the cooling-off period — if sufficient time passed for passion to subside, provocation fails"
+    ],
+    "defense_opportunities": [
+      "Adequate provocation mitigates from Class A Felony (life) to Class B Felony (60 years), providing a massive sentencing reduction",
+      "Present evidence of the provocative conduct and the defendant's emotional state to support the heat-of-passion element",
+      "Wisconsin's provocation framework is an affirmative defense that the defense raises, allowing strategic presentation to the jury"
+    ],
+    "common_defenses": [
+      "Heat of passion — killing occurred in the heat of passion after adequate provocation",
+      "Self-defense — partial self-defense may support a manslaughter verdict",
+      "Imperfect self-defense — defendant honestly but unreasonably believed deadly force was necessary",
+      "Mental health evidence supporting diminished capacity"
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "Criminal recklessness standard is lower than 'utter disregard' — ordinary recklessness is sufficient",
+      "Dangerous weapon enhancer adds 5 additional years"
+    ],
+    "defense_opportunities": [
+      "Distinguish between criminal recklessness and ordinary negligence — negligent conduct does not support a criminal conviction",
+      "Present evidence of unforeseeable circumstances that contributed to the death beyond the defendant's control"
+    ],
+    "common_defenses": [
+      "Ordinary negligence — defendant's conduct was careless but not criminally reckless",
+      "Accident — the death resulted from an unforeseeable event",
+      "Intervening cause — an independent event or the victim's own conduct caused the death",
+      "Lawful activity — defendant was engaged in a lawful activity that unexpectedly resulted in death"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "Medical records documenting 'great bodily harm' (fractures, risk of death, permanent disfigurement) provide objective evidence",
+      "The intent element can be inferred from the severity of the attack"
+    ],
+    "defense_opportunities": [
+      "Challenge the classification of the injury as 'great bodily harm' versus 'substantial bodily harm' (Class I Felony, max 3.5 years) or 'bodily harm' (Class A Misdemeanor)",
+      "Contest the intent element — argue the harm was accidental or unintended during a mutual altercation"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used reasonable force in response to an attack",
+      "Defense of others — defendant was protecting a third person",
+      "Lack of intent — the injury was accidental, not intentional",
+      "Mutual combat — both parties were willing participants in a physical altercation",
+      "Misidentification of the assailant"
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Class A Misdemeanor is the most serious misdemeanor in Wisconsin, carrying up to 9 months and $10,000 fine",
+      "'Bodily harm' is broadly defined as physical pain or injury, illness, or impairment of physical condition — even minor pain qualifies",
+      "Victim testimony alone may be sufficient to establish the elements"
+    ],
+    "defense_opportunities": [
+      "Negotiate for a lesser charge such as disorderly conduct (Class B Misdemeanor, max 90 days) which avoids assault-specific collateral consequences",
+      "Challenge the victim's credibility, particularly in cases arising from interpersonal disputes",
+      "Argue that the contact was de minimis and did not actually cause bodily harm"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted to protect themselves from an aggressor",
+      "Consent — the physical contact occurred during a consensual activity",
+      "No bodily harm — the contact did not cause pain, injury, or impairment",
+      "Misidentification of the assailant"
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "Medical records objectively document the level of injury",
+      "Dangerous weapon enhancer adds 5 additional years"
+    ],
+    "defense_opportunities": [
+      "Challenge the injury classification — argue the injury does not meet the 'substantial bodily harm' threshold and should be charged as simple battery (misdemeanor)",
+      "Present self-defense arguments where the defendant was provoked or attacked first",
+      "Negotiate a plea to simple battery (Class A Misdemeanor) to avoid a felony conviction"
+    ],
+    "common_defenses": [
+      "Self-defense — reasonable response to an attack",
+      "Consent — contact occurred during a consensual activity (sports, mutual combat)",
+      "Accident — the injury was unintentional",
+      "Injury does not meet the substantial bodily harm threshold"
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Class E Felony carrying up to 15 years, even without a weapon",
+      "Force or threat of force is a low threshold — snatching property forcibly from a person's hand qualifies",
+      "Victim identification testimony combined with physical evidence (surveillance, recovered property) is often compelling"
+    ],
+    "defense_opportunities": [
+      "Distinguish between robbery (force against person) and theft (no force) — if the taking did not involve force or threat, the robbery charge fails",
+      "Challenge the identification of the defendant through alibi evidence or witness reliability issues",
+      "Negotiate a reduction to theft charges where the force element is weak"
+    ],
+    "common_defenses": [
+      "No force or threat — the taking was a theft, not a robbery",
+      "Misidentification — defendant was not the person who committed the robbery",
+      "Alibi — defendant was elsewhere when the robbery occurred",
+      "Claim of right — defendant believed they had a legal right to the property"
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "Class C Felony carrying up to 40 years imprisonment — one of the most serious property crimes",
+      "Any article used or fashioned as a weapon qualifies, including replicas or simulated weapons"
+    ],
+    "defense_opportunities": [
+      "Challenge the identification of the defendant — armed robbery cases often involve disguised perpetrators",
+      "Contest whether the object was actually a 'dangerous weapon' under Wisconsin law",
+      "If the weapon was a replica or simulated, argue for a reduction to unarmed robbery (Class E Felony)"
+    ],
+    "common_defenses": [
+      "Misidentification — defendant was not the perpetrator",
+      "No weapon — object did not qualify as a dangerous weapon under the statute",
+      "Duress — defendant was forced to participate under threat of harm",
+      "Alibi — defendant was elsewhere at the time"
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "Class C Felony (40 years) for basic kidnapping; Class B Felony (60 years) if bodily harm or ransom involved",
+      "Broad statutory language covers any carrying away by force or threat of force without consent",
+      "Additional charges for sexual assault, robbery, or other crimes committed during the kidnapping compound exposure"
+    ],
+    "defense_opportunities": [
+      "Argue the movement was incidental to another offense (robbery, assault) and does not constitute a separate kidnapping under Wisconsin law",
+      "Challenge the 'without consent' element in domestic or custodial situations",
+      "Contest the use of force or threat — voluntary accompaniment is not kidnapping"
+    ],
+    "common_defenses": [
+      "Consent — the alleged victim went voluntarily",
+      "Incidental movement — the movement was inherent to another offense and does not support separate kidnapping charges",
+      "Parental rights — in custody disputes, the parent had lawful authority",
+      "Misidentification of the defendant"
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Arson of a building is a Class C Felony (up to 40 years), regardless of whether it is a dwelling",
+      "Fire investigation evidence (accelerant detection, origin and cause analysis) is highly technical and often persuasive",
+      "Insurance fraud motive can be established through financial records, providing powerful circumstantial evidence"
+    ],
+    "defense_opportunities": [
+      "Challenge the fire investigation methodology — the National Fire Protection Association (NFPA 921) standards are complex and investigators sometimes misapply them",
+      "Contest the origin and cause determination — accidental fire causes (electrical, mechanical) are common and may explain the fire",
+      "If the defendant owned the property and no one was endangered, negotiate for lesser property damage charges"
+    ],
+    "common_defenses": [
+      "Accidental cause — the fire started from an accidental source, not intentional act",
+      "Lack of intent — defendant did not intend to damage the building by fire",
+      "Faulty fire investigation — methodology did not follow NFPA 921 standards",
+      "Misidentification — defendant was not the person who set the fire"
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "Class B Felony carrying up to 60 years — the same class as first-degree reckless homicide",
+      "Intent to kill can be inferred from the nature and severity of the attack (weapon used, location of injuries, statements)",
+      "Dangerous weapon enhancer adds 5 additional years"
+    ],
+    "defense_opportunities": [
+      "Challenge the specific intent to kill — argue the defendant intended to harm but not to kill, which may support a lesser assault charge",
+      "Self-defense — the defendant's actions were a reasonable response to an imminent threat",
+      "Argue voluntary abandonment — defendant ceased the attack before completion, which may mitigate the attempt charge"
+    ],
+    "common_defenses": [
+      "Lack of intent to kill — defendant did not have specific intent to cause death",
+      "Self-defense — defendant acted to prevent imminent death or great bodily harm",
+      "Voluntary abandonment — defendant voluntarily stopped the attack",
+      "Insufficient evidence — prosecution cannot prove acts 'demonstrating unequivocal intent to kill'"
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "Battery with a dangerous weapon enhancer adds 5 years to the underlying battery charge",
+      "Physical evidence of the weapon combined with injury evidence creates a strong prosecution case"
+    ],
+    "defense_opportunities": [
+      "Wisconsin does not have a standalone 'assault with a deadly weapon' statute — challenge whether the charges are properly structured",
+      "Self-defense — the weapon was used defensively in response to an attack"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used the weapon to defend against an attacker",
+      "Accidental discharge or use — the weapon was not used intentionally",
+      "Not a dangerous weapon — the object does not meet the statutory definition",
+      "Misidentification of the assailant"
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "Wisconsin's tiered theft system creates felony exposure starting at $2,500, with escalating penalties up to Class F Felony for $100,000+",
+      "Theft from the person is always a Class G Felony regardless of value",
+      "Surveillance footage, transaction records, and recovered property provide strong evidence"
+    ],
+    "defense_opportunities": [
+      "Challenge the valuation of the property — the felony threshold ($2,500) determination can be contested with evidence of fair market value rather than replacement cost",
+      "Argue lack of intent to permanently deprive — temporary use or borrowing is not theft",
+      "Negotiate restitution and diversion for first-time offenders to avoid a conviction"
+    ],
+    "common_defenses": [
+      "Claim of right — defendant had a good-faith belief they had a right to the property",
+      "Lack of intent to permanently deprive — defendant intended to return the property",
+      "Misidentification — defendant was not the person who took the property",
+      "Consent — the owner authorized the taking"
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Felony theft thresholds escalate: Class I ($2,500-$5,000), Class H ($5,000-$10,000), Class G ($10,000-$100,000), Class F ($100,000+)",
+      "Financial records, inventory systems, and forensic accounting provide clear evidence of loss amounts",
+      "Restitution is typically mandatory and can be a substantial financial burden"
+    ],
+    "defense_opportunities": [
+      "Contest the value calculation — push the amount below a felony threshold boundary to reduce the charge class",
+      "Challenge the evidence linking the defendant to the theft in cases involving multiple potential suspects",
+      "Negotiate a plea to a lower theft tier or deferred prosecution with full restitution"
+    ],
+    "common_defenses": [
+      "Valuation dispute — the property's fair market value is below the charged felony threshold",
+      "Claim of right — good-faith belief in ownership or entitlement",
+      "Insufficient evidence — cannot prove defendant took the property",
+      "Consent — defendant had permission from someone with apparent authority"
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "Class A Misdemeanor carrying up to 9 months and $10,000 fine",
+      "Surveillance evidence from retail establishments and public spaces is often clear",
+      "Repeat offenders face enhanced prosecution scrutiny"
+    ],
+    "defense_opportunities": [
+      "Misdemeanor status allows for deferred prosecution, diversion programs, and community service alternatives",
+      "Negotiate for a lesser charge (disorderly conduct) or municipal ordinance violation to avoid theft-specific consequences",
+      "First-time offenders often qualify for dismissal upon completion of a pretrial program"
+    ],
+    "common_defenses": [
+      "Lack of intent — defendant forgot to pay or made an honest mistake",
+      "Claim of right — defendant believed the property was theirs",
+      "De minimis — the value is trivial and prosecution is disproportionate",
+      "Misidentification"
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "Loss prevention officers and surveillance systems provide strong identification evidence",
+      "Civil recovery available to retailers creates additional financial pressure on defendants"
+    ],
+    "defense_opportunities": [
+      "Challenge the value of merchandise — push below the $500 felony threshold to keep charges at Class A Misdemeanor",
+      "Argue that the defendant did not pass the last point of sale, which may undermine proof of intent",
+      "Negotiate for a deferred prosecution or municipal citation for first-time offenders"
+    ],
+    "common_defenses": [
+      "Lack of intent — absent-mindedness, distraction, or confusion about payment",
+      "No concealment — defendant had merchandise in plain view and intended to pay",
+      "Misidentification — loss prevention identified the wrong person",
+      "Item was already purchased or belonged to the defendant"
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "Class F Felony (up to 12.5 years) for basic burglary — no requirement of nighttime entry or dwelling",
+      "Armed burglary or burglary with battery elevates to Class E Felony (up to 15 years)",
+      "Physical evidence (tool marks, fingerprints, DNA, surveillance) frequently links defendants to the entry"
+    ],
+    "defense_opportunities": [
+      "Challenge the intent element — entry without intent to commit a felony inside is criminal trespass, not burglary",
+      "Contest the 'without consent' element if the defendant had permission or believed they had permission to enter",
+      "Negotiate for criminal trespass (Class A Misdemeanor) or criminal damage to property where intent to commit an interior felony is not clearly established"
+    ],
+    "common_defenses": [
+      "No intent to commit a felony — defendant entered without criminal purpose",
+      "Consent or authority to enter — defendant had permission to be in the building",
+      "Misidentification — defendant was not the person who entered the building",
+      "Alibi — defendant was elsewhere at the time of the entry"
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "Same statute as commercial burglary but sentencing is typically more severe for dwelling entries",
+      "Armed or battery enhancement elevates to Class E Felony (15 years)",
+      "Victim impact from home invasion creates strong jury sympathy"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the structure qualifies as a 'dwelling' under the statute",
+      "Argue the defendant had authority or invitation to enter, negating the 'without consent' element"
+    ],
+    "common_defenses": [
+      "Authority to enter — defendant had a key, invitation, or other authorization",
+      "No intent to commit felony inside — entry was for a lawful purpose",
+      "Misidentification — wrong suspect identified",
+      "Voluntary abandonment — defendant left before committing any interior offense"
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "Operating vehicle without owner's consent is a Class H Felony (up to 6 years) for the driver",
+      "Even passengers who know the vehicle is stolen face Class I Felony charges (up to 3.5 years)",
+      "GPS tracking, license plate readers, and surveillance cameras frequently identify the vehicle quickly"
+    ],
+    "defense_opportunities": [
+      "If the vehicle was abandoned undamaged, the charge may be reduced to a Class A Misdemeanor",
+      "Argue the defendant had a good-faith belief they had consent to use the vehicle from the owner or someone with apparent authority",
+      "Contest the 'without consent' element in cases involving shared vehicles, family members, or employer vehicles"
+    ],
+    "common_defenses": [
+      "Consent — defendant believed they had permission to use the vehicle",
+      "Claim of right — defendant had a good-faith ownership claim",
+      "Lack of knowledge — defendant did not know the vehicle was stolen (passenger charges)",
+      "Misidentification of the driver"
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Penalties mirror theft value tiers, so receiving high-value stolen property carries felony exposure",
+      "Knowledge that property was stolen can be inferred from circumstances: below-market price, no receipt, seller's reputation, altered serial numbers",
+      "Physical possession of stolen property shifts the evidentiary burden as a practical matter"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'knowing' element — defendant must have actually known the property was stolen, not merely been negligent",
+      "Contest the value of the property to push below felony thresholds",
+      "Argue the defendant acquired the property in good faith through a legitimate transaction"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know or have reason to believe the property was stolen",
+      "Good faith purchase — defendant bought the property at a reasonable price through a normal transaction",
+      "Claim of right — defendant believed the property was theirs",
+      "Property was not actually stolen"
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "Felony threshold is $2,500 in damages, covering significant property damage",
+      "Damage to religious or educational property is automatically a Class I Felony regardless of the amount",
+      "Restitution is mandatory and frequently substantial"
+    ],
+    "defense_opportunities": [
+      "Contest the damage valuation — push below the $2,500 felony threshold by challenging repair estimates",
+      "Argue the damage was accidental rather than intentional",
+      "Negotiate restitution and community service in exchange for reduced charges or deferred prosecution"
+    ],
+    "common_defenses": [
+      "Accident — the damage was not intentional",
+      "Consent — the property owner authorized the action",
+      "Misidentification — defendant was not the person who caused the damage",
+      "Valuation dispute — the actual damage is below the felony threshold"
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "Posted signs or fencing create constructive notice, eliminating the need to prove actual verbal warning",
+      "Repeat trespass on the same property after prior warning strengthens the prosecution case"
+    ],
+    "defense_opportunities": [
+      "Basic trespass to land is a civil forfeiture (not criminal) — far less serious than criminal charges",
+      "Challenge whether adequate notice was given — signs must be reasonably visible and warnings must be clear",
+      "Argue the defendant had a good-faith belief they had permission to be on the property"
+    ],
+    "common_defenses": [
+      "Lack of notice — no signs, fencing, or verbal warning",
+      "Permission — defendant believed they had authorization to be on the property",
+      "Necessity — defendant entered the property due to an emergency",
+      "Public access — the area was commonly used by the public"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "Evidence of intentional damage is often captured on surveillance or supported by witness testimony",
+      "Restitution for repair costs is mandatory"
+    ],
+    "defense_opportunities": [
+      "Contest the amount of damage to stay below the felony threshold",
+      "Argue the damage was accidental or the result of negligence rather than intentional conduct",
+      "Seek a civil compromise with the property owner as a basis for dismissal"
+    ],
+    "common_defenses": [
+      "Accident — the damage was not intentional",
+      "Consent of the property owner",
+      "Misidentification of the defendant",
+      "De minimis damage — the amount does not justify prosecution"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "72-hour no-contact period is automatic and violation creates additional charges"
+    ],
+    "defense_opportunities": [
+      "Present evidence of mutual combat or self-defense to contest the one-sided arrest decision",
+      "Seek deferred prosecution agreements for first-time offenders with no prior domestic history"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was defending themselves against the other party's aggression",
+      "Mutual combat — both parties were willing participants",
+      "False allegation — accusation made for strategic advantage in custody or divorce proceedings",
+      "Lack of bodily harm — the contact did not cause physical pain or injury"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "Substantial battery with domestic abuse modifier is a Class I Felony plus 2 additional years (up to 5.5 years total)",
+      "Medical records documenting the injuries provide objective corroboration of the victim's account"
+    ],
+    "defense_opportunities": [
+      "Challenge the injury level — argue injuries do not meet 'substantial bodily harm' threshold, reducing to simple battery (misdemeanor)",
+      "Negotiate to remove the domestic abuse modifier where possible, reducing felony exposure",
+      "Present evidence of the victim's own aggressive conduct leading to the altercation"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used reasonable force to defend against the other party",
+      "Injury does not meet substantial bodily harm threshold — should be simple battery",
+      "False allegation — motivated by custody dispute, divorce, or revenge",
+      "Accident — the injury was unintentional during a mutual struggle"
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "If death results, the charge escalates to Class F Felony (up to 12.5 years); bodily harm to Class H Felony (up to 6 years)",
+      "Child protective services involvement provides additional investigative resources and expert testimony",
+      "Jury sympathy strongly favors the child victim"
+    ],
+    "defense_opportunities": [
+      "Basic child endangerment without injury is a Class A Misdemeanor — argue the child was not actually placed in danger",
+      "Challenge the definition of 'ordinary care' — parenting decisions that seem risky in hindsight may have been reasonable at the time",
+      "Present evidence that the child was not actually at risk of harm given the specific circumstances"
+    ],
+    "common_defenses": [
+      "Reasonable parenting — the conduct falls within normal parenting judgment",
+      "No actual danger — the child was not placed in risk of harm under the circumstances",
+      "Lack of responsibility — defendant was not the person responsible for the child's welfare",
+      "Accident — unforeseeable event created the dangerous situation"
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "Intentional great bodily harm to a child is a Class F Felony (up to 12.5 years); reckless great bodily harm is a Class H Felony (up to 6 years)",
+      "Medical evidence of patterned injuries (bruising in multiple stages of healing, spiral fractures) is powerful forensic evidence",
+      "Mandatory reporters (doctors, teachers, social workers) ensure early detection and documentation"
+    ],
+    "defense_opportunities": [
+      "Challenge the medical conclusions — some injuries attributed to abuse have alternative medical explanations (brittle bone disease, bleeding disorders)",
+      "Contest the identification of the perpetrator in cases where multiple caregivers had access to the child",
+      "Distinguish between reasonable discipline and criminal abuse under Wisconsin law"
+    ],
+    "common_defenses": [
+      "Accidental injury — the child's injury resulted from a fall, play, or other non-abusive cause",
+      "Medical condition — underlying condition explains the injuries",
+      "Misidentification of the abuser — another caregiver caused the injuries",
+      "Reasonable discipline — the conduct was within lawful parental discipline bounds"
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "The protective order itself is a court document with clear, specific terms that establish what conduct is prohibited",
+      "Violations are often documented through phone records, GPS data, text messages, or surveillance"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant had actual knowledge of the specific terms of the order",
+      "Argue the contact was incidental or unavoidable (same workplace, shared children's events) rather than willful violation",
+      "Contest the validity of the underlying protective order if it was issued without proper notice or hearing"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of the order or its specific terms",
+      "Incidental contact — not a willful violation",
+      "Consent — the protected person initiated or invited the contact",
+      "Invalid underlying order — order was issued improperly"
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "Pattern evidence from multiple incidents creates a compelling narrative of persistent conduct",
+      "Electronic communications (texts, emails, social media) provide documentary evidence of the course of conduct"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the conduct constitutes a 'course of conduct' requiring two or more acts under the statute",
+      "Contest the victim's claimed fear — the standard requires that a reasonable person would suffer serious emotional distress or fear",
+      "Argue the conduct had a legitimate purpose (exercise of constitutional rights, shared parenting responsibilities)"
+    ],
+    "common_defenses": [
+      "Constitutionally protected activity — free speech, picketing, or protest",
+      "No course of conduct — isolated incident does not meet the statutory pattern requirement",
+      "Legitimate purpose — the contact was for lawful business, family, or legal reasons",
+      "Unreasonable fear — a reasonable person would not have felt threatened"
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "Electronic harassment evidence (texts, calls, emails) is easily preserved and documented",
+      "Restraining order violations compound the harassment charges"
+    ],
+    "defense_opportunities": [
+      "Misdemeanor status allows for diversion programs and deferred prosecution",
+      "Challenge whether the conduct meets the statutory definition of harassment versus protected speech or lawful activity",
+      "Argue that the communications had a legitimate purpose and were not intended to harass"
+    ],
+    "common_defenses": [
+      "First Amendment protected speech — the communications were lawful expression",
+      "Legitimate purpose — the contact was for lawful business or personal reasons",
+      "Consent — the other party was a willing participant in the communications",
+      "Misunderstanding — defendant did not intend to harass"
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "Mandatory reporter requirements ensure early detection"
+    ],
+    "defense_opportunities": [
+      "Challenge the caretaker relationship — the statute requires the defendant be responsible for the elder's welfare",
+      "Contest the elder's competency to report accurately, particularly in cases involving dementia or cognitive impairment",
+      "Argue the financial transactions were authorized by the elder or by a valid power of attorney"
+    ],
+    "common_defenses": [
+      "No caretaker relationship — defendant was not responsible for the elder's care",
+      "Consent — the elder authorized the conduct or financial transaction",
+      "Accident — the injury was not the result of intentional or negligent conduct",
+      "False allegation — family conflict motivated the report"
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "Physical evidence of the weapon provides direct proof of possession"
+    ],
+    "defense_opportunities": [
+      "Challenge constructive possession — proximity to a firearm in a shared space does not prove knowing possession",
+      "Contest the legality of the search that discovered the weapon",
+      "For non-felon defendants, argue the possession was lawful under Wisconsin's open carry and concealed carry laws"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — weapon discovered through unconstitutional search",
+      "Lack of knowledge — defendant did not know the weapon was present",
+      "Constructive possession insufficient — weapon was in a shared or common area",
+      "Lawful possession — defendant was not a prohibited person and possession was legal"
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "Prior felony conviction is a matter of public record and easily proven",
+      "Constructive possession doctrine means the firearm need not be on the defendant's person — dominion and control over the area where it was found is sufficient"
+    ],
+    "defense_opportunities": [
+      "Challenge constructive possession — argue the defendant did not have knowledge of or dominion over the firearm in a shared residence or vehicle",
+      "Contest whether the defendant's prior conviction qualifies as a 'felony' under Wisconsin law (some out-of-state convictions may not qualify)"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know the firearm was present",
+      "Constructive possession insufficient — firearm belonged to another person in a shared space",
+      "Prior conviction does not qualify — out-of-state conviction is not equivalent to a Wisconsin felony",
+      "Illegal search and seizure — the search that discovered the firearm violated the Fourth Amendment"
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "Carrying in prohibited locations (schools, government buildings, bars) is separately penalized even with a valid CCW license",
+      "The concealment element is broadly construed — partially covered weapons may qualify"
+    ],
+    "defense_opportunities": [
+      "Wisconsin is an open-carry state — if the weapon was not concealed, the charge fails",
+      "Challenge whether the weapon was actually 'concealed' under the statutory definition",
+      "Argue the defendant had a valid CCW license or was exempt (business owner on own premises, law enforcement)"
+    ],
+    "common_defenses": [
+      "Not concealed — the weapon was visible and openly carried",
+      "Valid CCW license — defendant had a current concealed carry license",
+      "Exempt person — defendant falls under a statutory exemption",
+      "On own property — weapon was on defendant's own premises"
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "Ballistic evidence and bullet trajectory analysis can trace the discharge to a specific location and weapon",
+      "Discharge in populated areas creates strong evidence of reckless endangerment"
+    ],
+    "defense_opportunities": [
+      "Argue the discharge was accidental rather than reckless",
+      "Challenge whether anyone was actually endangered by the discharge based on the direction and location of the shot",
+      "Self-defense — the discharge was in response to an imminent threat"
+    ],
+    "common_defenses": [
+      "Accidental discharge — the weapon discharged unintentionally",
+      "Self-defense — defendant fired in response to an imminent threat of death or great bodily harm",
+      "No endangerment — the discharge was in a safe direction with no persons at risk",
+      "Lawful use — defendant was on their own property and the discharge was lawful (hunting, target practice)"
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Digital evidence (computer records, online account access, email logs) is extensively preserved and difficult to dispute",
+      "Financial institution records document the unauthorized transactions comprehensively"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant 'intentionally used' the personal identifying information — accidental or authorized use is not identity theft",
+      "Contest the evidence linking the defendant to the unauthorized use, particularly in cases involving compromised digital accounts",
+      "Argue the defendant had authorization from the identity holder to use the information"
+    ],
+    "common_defenses": [
+      "Authorization — the identity holder gave permission to use the information",
+      "Mistaken identity — defendant's own accounts or identity were compromised",
+      "Lack of intent — use was accidental or the result of a misunderstanding",
+      "Insufficient evidence linking defendant to the unauthorized transactions"
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Forensic accounting and financial records create a detailed paper trail of the diverted funds",
+      "Position of trust makes the conduct appear more egregious to juries"
+    ],
+    "defense_opportunities": [
+      "Challenge the intent to permanently deprive — argue the defendant intended to repay the funds (though intent to return is generally not a defense to theft)",
+      "Contest the amount attributable to the defendant versus accounting errors, other employees, or business expenses",
+      "Negotiate restitution and diversion where the amounts are below felony thresholds"
+    ],
+    "common_defenses": [
+      "Authorization — defendant had permission to make the expenditures",
+      "Accounting error — discrepancies are due to mistakes, not theft",
+      "Claim of right — defendant was owed the funds as compensation, reimbursement, or bonus",
+      "Insufficient evidence — financial trail does not conclusively connect defendant to the missing funds"
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Document examination and handwriting analysis provide expert forensic evidence",
+      "Financial institution records corroborate the passage of forged instruments"
+    ],
+    "defense_opportunities": [
+      "Challenge the handwriting analysis — forensic document examination is not infallible and the methodology can be contested",
+      "Argue the defendant had authorization to sign or create the document on behalf of another person",
+      "Contest the 'intent to defraud' element — signing another's name without fraudulent intent is not forgery"
+    ],
+    "common_defenses": [
+      "Authorization — defendant had permission to sign the document",
+      "Lack of intent to defraud — no fraudulent purpose behind the signing",
+      "Misidentification — defendant did not create the forged document",
+      "Legitimate document — the document was genuine, not forged"
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "Documentary evidence (contracts, emails, financial records) establishes the scheme comprehensively",
+      "Victim testimony about reliance on false representations is compelling"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'false representation' element — opinions, puffery, and predictions are not actionable misrepresentations",
+      "Contest the victim's reliance — argue the victim knew the truth or should have investigated further",
+      "Argue good-faith intent — the defendant believed the representations were true when made"
+    ],
+    "common_defenses": [
+      "No false representation — statements were opinions, predictions, or puffery",
+      "Good faith — defendant genuinely believed the statements were true",
+      "No reliance — the victim did not actually rely on the representations",
+      "Insufficient evidence of fraudulent intent"
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "Transaction records, surveillance footage at points of sale, and digital forensics provide clear evidence",
+      "Financial institutions actively investigate and preserve evidence in fraud cases"
+    ],
+    "defense_opportunities": [
+      "Challenge the defendant's knowledge that the card was unauthorized — argue the defendant believed they had permission to use it",
+      "Contest the identification of the person who used the card at each transaction",
+      "Dispute the total amount to reduce the charge tier"
+    ],
+    "common_defenses": [
+      "Authorization — defendant had permission from the cardholder to use the card",
+      "Misidentification — defendant was not the person who used the card",
+      "Lack of knowledge — defendant did not know the card was stolen or unauthorized",
+      "Identity theft — defendant's own identity was used by the actual perpetrator"
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Financial forensics and banking records create a detailed trail of the laundered funds",
+      "Federal authorities frequently partner with state prosecutors in complex laundering cases"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'knowledge' element — the defendant must have known the funds were proceeds of criminal activity",
+      "Contest the connection between the financial transactions and the alleged underlying criminal activity",
+      "Argue the financial transactions were legitimate business activities unrelated to criminal proceeds"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know the funds were criminal proceeds",
+      "Legitimate business — the transactions were ordinary commercial activity",
+      "No underlying criminal activity — the source of funds was legal",
+      "Insufficient evidence connecting the defendant to the laundering scheme"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "DNA evidence is highly reliable and frequently available in sexual assault cases",
+      "Victim testimony combined with medical forensic examination provides strong corroboration",
+      "Wisconsin's sexual assault statute does not require proof of physical resistance"
+    ],
+    "defense_opportunities": [
+      "Challenge the consent element — present evidence that the contact was consensual",
+      "Contest the reliability of identification where the assailant was unknown to the victim",
+      "Challenge the forensic evidence collection, preservation, or analysis procedures"
+    ],
+    "common_defenses": [
+      "Consent — the sexual contact was consensual",
+      "Misidentification — defendant was not the perpetrator",
+      "Fabrication — the allegation is false, motivated by revenge or other personal reasons",
+      "Insufficient evidence — physical evidence does not corroborate the allegation"
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "SANE (Sexual Assault Nurse Examiner) evidence collection provides forensic corroboration",
+      "No statute of limitations for first-degree sexual assault in Wisconsin"
+    ],
+    "defense_opportunities": [
+      "Challenge the timing and circumstances of the forensic evidence collection",
+      "Present evidence of consent through communications, prior relationship context, and witness testimony",
+      "Contest the reliability of delayed disclosures and inconsistencies in the complainant's account"
+    ],
+    "common_defenses": [
+      "Consent — the sexual contact was consensual between adults",
+      "Misidentification — defendant was not the assailant",
+      "False allegation — the accusation is fabricated",
+      "Alibi — defendant was elsewhere at the time of the alleged assault"
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "Witness testimony from multiple observers is often available for public exposure incidents",
+      "Surveillance cameras in public areas frequently capture the conduct"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'lewd and lascivious' intent — accidental or inadvertent exposure is not criminal",
+      "Argue the exposure was not public or was not visible to others",
+      "Contest whether the conduct meets the statutory definition of 'publicly' indecent"
+    ],
+    "common_defenses": [
+      "Accidental exposure — wardrobe malfunction or inadvertent exposure",
+      "Not public — the exposure occurred in a private setting",
+      "Lack of lewd intent — the exposure was not sexually motivated",
+      "Misidentification of the defendant"
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "Undercover sting operations produce direct evidence of solicitation through recorded communications",
+      "Online solicitation creates a digital evidence trail"
+    ],
+    "defense_opportunities": [
+      "Challenge entrapment — argue that law enforcement induced the defendant to solicit when they would not have done so otherwise",
+      "Contest the 'agreement' element — mere conversation without a specific agreement to exchange sex for money is insufficient",
+      "Argue the communications were ambiguous and did not constitute a clear solicitation"
+    ],
+    "common_defenses": [
+      "Entrapment — law enforcement initiated and induced the solicitation",
+      "No agreement — conversations did not result in a specific agreement for sex for money",
+      "Misunderstanding — the communication was ambiguous and misinterpreted",
+      "Freedom of speech — the conversation was protected expression without intent to act"
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "Digital forensics can recover deleted files, metadata, and browsing history from electronic devices"
+    ],
+    "defense_opportunities": [
+      "Challenge the search warrant that authorized the seizure of electronic devices — Fourth Amendment violations require suppression",
+      "Contest the defendant's knowledge of the material's presence on their devices (malware, shared devices, unsolicited downloads)",
+      "Argue the depicted individuals are not minors — age determination is an element the prosecution must prove"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — the warrant was deficient or the search exceeded its scope",
+      "Lack of knowledge — defendant did not know the material was on the device (malware, pop-ups, shared computer)",
+      "Not a minor — the depicted individual is an adult",
+      "Unsolicited material — the files were received without the defendant's request or knowledge"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "Registration requirements are clearly documented and compliance is easily verified through the registry database",
+      "The defendant's registration obligation is a matter of court records and prior conviction history"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant received proper notice of the registration requirements and deadlines",
+      "Argue that the failure to register was due to circumstances beyond the defendant's control (homelessness, incarceration, hospitalization)",
+      "Contest whether the underlying conviction actually triggers registration requirements in Wisconsin"
+    ],
+    "common_defenses": [
+      "Lack of notice — defendant was not properly informed of registration requirements",
+      "Impossibility — circumstances prevented compliance (homelessness, incapacitation)",
+      "Good-faith effort to comply — defendant attempted to register but encountered administrative obstacles",
+      "Underlying conviction does not trigger registration in Wisconsin"
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "First-degree sexual assault of a child under 13 is a Class B Felony (up to 60 years)",
+      "Second-degree sexual assault of a child 13-15 by someone 18+ is a Class C Felony (up to 40 years)"
+    ],
+    "defense_opportunities": [
+      "Challenge the defendant's knowledge of the victim's age if the victim misrepresented their age (though this defense is limited in Wisconsin)",
+      "Contest the nature and extent of the contact to argue for lesser-included offenses",
+      "Argue the defendant and victim were close in age, which may affect sentencing discretion"
+    ],
+    "common_defenses": [
+      "Mistake of age — defendant reasonably believed the victim was of legal age based on misrepresentation (limited defense in WI)",
+      "No sexual contact occurred — the allegation is false",
+      "Misidentification — defendant was not the person involved",
+      "Romeo and Juliet — close age between defendant and victim (mitigating, not a complete defense in WI)"
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Officer testimony about observing the conduct is typically sufficient",
+      "Often charged alongside other offenses to increase plea leverage"
+    ],
+    "defense_opportunities": [
+      "First Amendment challenge — protected speech and peaceful protest cannot be prosecuted as disorderly conduct",
+      "Class B Misdemeanor (max 90 days) — negotiation to a municipal ordinance violation or outright dismissal is common",
+      "Challenge the 'public disturbance' element — private conduct that does not disturb others is not disorderly"
+    ],
+    "common_defenses": [
+      "Protected speech — the conduct was constitutionally protected expression",
+      "No public disturbance — the conduct did not actually tend to cause a disturbance",
+      "Self-defense — the defendant's conduct was a response to an attack",
+      "De minimis — the conduct was trivial and does not warrant prosecution"
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Body camera and dashcam footage provides objective evidence of the defendant's conduct during arrest",
+      "Even passive resistance (going limp, pulling away) may be charged under the statute"
+    ],
+    "defense_opportunities": [
+      "Challenge the lawfulness of the underlying arrest — if the arrest was unlawful, the resistance may be excusable",
+      "Argue the defendant's conduct was instinctive or involuntary rather than intentional resistance",
+      "Contest whether the officer identified themselves or communicated the arrest clearly"
+    ],
+    "common_defenses": [
+      "Unlawful arrest — the underlying arrest lacked probable cause",
+      "No intent to resist — defendant's movements were involuntary or instinctive",
+      "Self-defense against excessive force by the officer",
+      "Misidentification — defendant was not the person who resisted"
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "Providing false information to law enforcement is easily provable when contradicted by physical evidence or other witnesses",
+      "Destruction of evidence or witness tampering creates additional charges"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'knowing' element — defendant may have genuinely believed the information provided was accurate",
+      "Argue the defendant was exercising their Fifth Amendment right to remain silent, not obstructing",
+      "Contest whether the officer was acting in an official capacity when the obstruction occurred"
+    ],
+    "common_defenses": [
+      "Fifth Amendment — defendant was exercising their right to remain silent",
+      "No false information — defendant's statements were truthful",
+      "Lack of knowledge — defendant did not know the information was false",
+      "Officer was not acting in official capacity"
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "The court order violation is typically clear-cut and documented",
+      "Judges have broad discretion in contempt proceedings"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the court order was clear and unambiguous — vague orders may not support a contempt finding",
+      "Argue inability to comply — if compliance was impossible, contempt is not appropriate",
+      "Present evidence of good-faith efforts to comply with the order"
+    ],
+    "common_defenses": [
+      "Ambiguous order — the order was unclear about what was required",
+      "Inability to comply — defendant could not comply despite good-faith efforts",
+      "No willful violation — noncompliance was unintentional",
+      "Invalid order — the underlying order was issued improperly"
+    ]
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "prosecution_strengths": [
+      "Wisconsin does not criminalize public intoxication as a standalone offense — it is primarily handled as a civil matter or local ordinance violation",
+      "Intoxication may support other charges (disorderly conduct, OWI) as an aggravating factor",
+      "Local municipal ordinances in some Wisconsin cities (Milwaukee, Madison) impose civil forfeitures for related conduct such as drinking in public"
+    ],
+    "defense_opportunities": [
+      "Wisconsin's approach favors treatment over punishment for public intoxication",
+      "Challenge whether the defendant's behavior actually rose to the level of a chargeable offense under any applicable ordinance",
+      "Argue for diversion to detox or treatment programs"
+    ],
+    "common_defenses": [
+      "Not a crime in Wisconsin — public intoxication is not a criminal offense at the state level",
+      "Medical condition — the behavior was caused by a medical condition, not intoxication",
+      "Not in a public place — defendant was on private property",
+      "Involuntary intoxication"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "Court records establish the scheduled appearance and the defendant's absence",
+      "Bond conditions are clearly documented and the defendant's acknowledgment is on record"
+    ],
+    "defense_opportunities": [
+      "Argue the failure to appear was not intentional — medical emergency, confusion about the date, or lack of notice",
+      "Present evidence of good-faith efforts to contact the court about the missed appearance",
+      "Challenge whether the defendant received adequate notice of the court date"
+    ],
+    "common_defenses": [
+      "Lack of notice — defendant did not receive notice of the court date",
+      "Emergency — medical or family emergency prevented appearance",
+      "Good-faith mistake — defendant confused the date or location",
+      "Impossibility — defendant was incarcerated, hospitalized, or otherwise unable to appear"
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "Inconsistencies between the report and physical evidence or surveillance footage expose the false statement",
+      "Digital evidence (phone records, GPS data) frequently contradicts the false report"
+    ],
+    "defense_opportunities": [
+      "Argue the defendant genuinely believed the report was accurate at the time it was made",
+      "Challenge the evidence that the report was false — the prosecution must prove the falsity beyond reasonable doubt",
+      "Contest the 'knowingly' element — mistake or confusion is not a false report"
+    ],
+    "common_defenses": [
+      "Good-faith belief — defendant genuinely believed the report was true",
+      "Mistake — defendant was confused or mistaken, not deliberately false",
+      "Report was actually true — prosecution has not proven falsity",
+      "Coercion — defendant was pressured into making the report"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "Text messages, social media posts, voicemails, and emails provide direct documentary evidence",
+      "Victim's reasonable fear is assessed by an objective standard, not the subjective fear of the specific victim"
+    ],
+    "defense_opportunities": [
+      "First Amendment challenge — true threats are unprotected but hyperbole, venting, and artistic expression are constitutionally protected",
+      "Challenge the credibility of the alleged victim's fear — the context may show the statement was not intended or received as a genuine threat",
+      "Argue the statement was conditional, vague, or made in the heat of an argument"
+    ],
+    "common_defenses": [
+      "Protected speech — statement was hyperbole, political speech, or artistic expression",
+      "Not a true threat — statement was made in jest, during an argument, or was clearly conditional",
+      "Lack of intent to threaten — defendant did not intend the recipient to feel threatened",
+      "Context — the full context shows the statement was not a genuine threat"
+    ]
+  },
+  {
+    "common_charge_slug": "perjury",
+    "prosecution_strengths": [
+      "Court transcripts and sworn documents provide the exact false statement",
+      "Contradictory evidence (physical evidence, other witnesses, recordings) disproves the false statement"
+    ],
+    "defense_opportunities": [
+      "Challenge the materiality of the false statement — immaterial falsehoods are not perjury",
+      "Argue the statement was literally true even if misleading (technical truth defense)",
+      "Contest the 'knowingly false' element — honest mistake or faulty memory is not perjury"
+    ],
+    "common_defenses": [
+      "Honest mistake — defendant genuinely believed the statement was true",
+      "Immaterial — the false statement was not material to the proceeding",
+      "Literally true — the statement, while misleading, was technically accurate",
+      "Faulty memory — defendant's recollection was honestly mistaken"
+    ]
+  },
+  {
+    "common_charge_slug": "bribery",
+    "prosecution_strengths": [
+      "Financial records, communications, and witness testimony document the quid pro quo",
+      "Both the briber and the recipient can be prosecuted"
+    ],
+    "defense_opportunities": [
+      "Challenge whether there was a clear quid pro quo agreement versus a campaign contribution or gift with no specific exchange",
+      "Argue the payment was for legitimate services or was a lawful campaign contribution",
+      "Contest the 'intent to influence' element — social courtesies and business relationships are not bribery"
+    ],
+    "common_defenses": [
+      "No quid pro quo — there was no agreement to exchange payment for official action",
+      "Legitimate payment — the payment was for lawful services rendered",
+      "Lawful campaign contribution — the payment was a permissible political donation",
+      "Lack of corrupt intent — the payment was not made to influence official conduct"
+    ]
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "prosecution_strengths": [
+      "The fact of custody and the departure from it is typically undisputed",
+      "Surveillance and tracking technology make recapture likely"
+    ],
+    "defense_opportunities": [
+      "Argue the custody itself was unlawful — escape from an unlawful detention may negate the charge",
+      "Present evidence of duress or coercion — threats from other inmates or officers may provide a defense",
+      "Contest whether the defendant's conduct constituted an 'escape' versus an administrative failure (missed curfew, late return)"
+    ],
+    "common_defenses": [
+      "Unlawful custody — the original detention was without legal authority",
+      "Duress — defendant was under threat of serious bodily harm if they remained in custody",
+      "No escape — defendant's absence was due to confusion, mistake, or administrative error",
+      "Voluntary return — defendant promptly returned, mitigating the offense"
+    ]
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "prosecution_strengths": [
+      "Veterinary evidence and photographs document the animal's condition objectively",
+      "Public sympathy strongly favors prosecution in animal cruelty cases"
+    ],
+    "defense_opportunities": [
+      "Challenge the intent element — argue the condition was due to financial hardship or ignorance rather than intentional mistreatment",
+      "Distinguish between legally permitted activities (hunting, farming, veterinary practice) and criminal cruelty",
+      "Present evidence that the animal's condition was caused by factors beyond the defendant's control (illness, another person's neglect)"
+    ],
+    "common_defenses": [
+      "No intent to mistreat — the animal's condition was due to financial inability, not intentional cruelty",
+      "Lawful activity — the conduct was part of legal farming, hunting, or veterinary treatment",
+      "Not the responsible party — another person was responsible for the animal's care",
+      "Animal's condition was due to illness or injury, not neglect"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "Revocation hearings use a preponderance of the evidence standard, far lower than beyond reasonable doubt",
+      "Probation conditions are documented in writing and the violation is typically straightforward to prove",
+      "The original sentencing court can impose the full suspended sentence upon revocation"
+    ],
+    "defense_opportunities": [
+      "Challenge the alleged violation — present evidence that the condition was not actually violated",
+      "Argue technical violation rather than substantive violation — courts have more discretion to continue probation for minor infractions",
+      "Present evidence of substantial compliance with all other conditions and mitigating circumstances for the violation"
+    ],
+    "common_defenses": [
+      "No violation occurred — the condition was not actually broken",
+      "Substantial compliance — defendant complied with the vast majority of conditions",
+      "Good cause — the violation was due to circumstances beyond the defendant's control",
+      "Condition was unreasonable or impossible to comply with"
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "Revocation proceedings use a lower burden of proof (preponderance) and do not require a jury",
+      "Parole agents document violations through drug tests, GPS monitoring, and compliance checks",
+      "The full remaining sentence can be reimposed upon revocation"
+    ],
+    "defense_opportunities": [
+      "Challenge the evidence of the violation at the revocation hearing",
+      "Present evidence of mitigating circumstances that explain the violation",
+      "Argue for alternatives to revocation — continued supervision with additional conditions"
+    ],
+    "common_defenses": [
+      "No violation — the condition was not breached",
+      "Good cause — circumstances beyond the defendant's control caused the violation",
+      "Technical violation — minor infraction that does not warrant revocation",
+      "Substantial compliance — defendant has been compliant overall"
+    ]
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "prosecution_strengths": [
+      "Prosecution only needs to prove the defendant aided, abetted, or was a party to the commission of the crime",
+      "Circumstantial evidence of involvement (presence, getaway driving, lookout duties) is sufficient"
+    ],
+    "defense_opportunities": [
+      "Challenge the 'intentionally aided' element — mere presence at the scene does not establish aiding and abetting",
+      "Argue the defendant withdrew from the criminal activity before the offense was completed",
+      "Contest the defendant's knowledge of the principal's criminal intent"
+    ],
+    "common_defenses": [
+      "Mere presence — defendant was at the scene but did not assist or encourage the crime",
+      "Withdrawal — defendant withdrew from participation before the crime was completed",
+      "Lack of knowledge — defendant did not know the principal intended to commit a crime",
+      "No assistance provided — defendant's actions did not actually aid the commission of the offense"
+    ]
+  },
+  {
+    "common_charge_slug": "attempt",
+    "prosecution_strengths": [
+      "Acts demonstrating 'unequivocal intent' to commit the crime are sufficient, even if the crime was not completed",
+      "Impossibility is generally not a defense to attempt in Wisconsin"
+    ],
+    "defense_opportunities": [
+      "Challenge whether the defendant's acts demonstrated 'unequivocal intent' to commit the crime versus mere preparation",
+      "Argue voluntary abandonment — the defendant freely chose to abandon the criminal plan before completing the offense",
+      "Contest the specific intent required — the defendant may not have formed the intent to commit the underlying offense"
+    ],
+    "common_defenses": [
+      "Mere preparation — defendant's actions did not go beyond preparation to constitute an attempt",
+      "Voluntary abandonment — defendant freely abandoned the criminal plan",
+      "Lack of specific intent — defendant did not intend to commit the underlying offense",
+      "Legal impossibility — the completed act would not have been a crime"
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Co-conspirators' statements are admissible against all members of the conspiracy under the co-conspirator hearsay exception",
+      "Each conspirator is liable for the foreseeable acts of other conspirators in furtherance of the conspiracy"
+    ],
+    "defense_opportunities": [
+      "Challenge the existence of an agreement — mere association or parallel conduct is not conspiracy",
+      "Argue withdrawal — defendant withdrew from the conspiracy and took affirmative steps to disassociate",
+      "Contest the defendant's knowledge of the conspiracy's scope and objectives"
+    ],
+    "common_defenses": [
+      "No agreement — there was no agreement to commit a crime, only parallel independent action",
+      "Withdrawal — defendant withdrew from the conspiracy before any overt act",
+      "Lack of knowledge — defendant did not know the scope or criminal nature of the conspiracy",
+      "No overt act — no member of the alleged conspiracy took an overt act in furtherance"
+    ]
+  }
+]

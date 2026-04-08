@@ -1,0 +1,1691 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Ind. Code § 9-30-5-1 through 9-30-5-5",
+    "statute_title": "Operating a Vehicle While Intoxicated (OWI)",
+    "offense_class": "Class C Misdemeanor (first); Class A Misdemeanor (BAC .15+); Level 6 Felony (prior within 7 years or minor passenger); Level 5 Felony (serious injury); Level 4 Felony (death)",
+    "penalty_min": null,
+    "penalty_max": "60 days (Class C Misd); 1 year (Class A Misd); 2.5 years (Level 6); 6 years (Level 5); 12 years (Level 4)",
+    "fine_max": "$500 (Class C); $5,000 (Class A); $10,000 (Level 6+)",
+    "elements": [
+      "Defendant operated a vehicle",
+      "While intoxicated — BAC of .08 or higher, or with a controlled substance in blood",
+      "Or while impaired to the point that there is an endangered person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .15 or higher (Class A Misdemeanor minimum)",
+      "Prior OWI within 7 years (Level 6 Felony)",
+      "Passenger under 18 (Level 6 Felony)",
+      "Causing serious bodily injury (Level 5 Felony under § 9-30-5-4)",
+      "Causing death (Level 4 Felony under § 9-30-5-5)"
+    ],
+    "notes": "Indiana uses 'OWI' (Operating While Intoxicated) rather than DUI/DWI. Implied consent under § 9-30-6-1. Refusal results in 1-year license suspension. Specialized driving privileges may be available."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Ind. Code § 9-30-5-1(a)",
+    "statute_title": "OWI — First Offense",
+    "offense_class": "Class C Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "60 days",
+    "fine_max": "$500",
+    "elements": [
+      "Defendant operated a vehicle",
+      "While intoxicated with BAC of .08 or higher",
+      "No prior OWI convictions within 7 years"
+    ],
+    "mandatory_minimum": "Minimum 90-day license suspension; substance abuse evaluation",
+    "enhancements": [
+      "BAC .15 or higher (elevated to Class A Misdemeanor)",
+      "Endangerment (elevated to Class A Misdemeanor)"
+    ],
+    "notes": "First offense with BAC under .15 and no endangerment is a Class C Misdemeanor. Probation common. Court may order ignition interlock device."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Ind. Code § 9-30-5-3",
+    "statute_title": "OWI — Prior Conviction Within 7 Years",
+    "offense_class": "Level 6 Felony",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a vehicle while intoxicated",
+      "Defendant has a prior OWI conviction within 7 years"
+    ],
+    "mandatory_minimum": "5 days imprisonment or 240 hours community service",
+    "enhancements": [
+      "BAC .15 or higher",
+      "Child passenger under 18",
+      "Causing injury or death"
+    ],
+    "notes": "Prior conviction must be within 7 years. Habitual vehicular substance offender status possible under § 9-30-15.5. License suspension 1-2 years."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Ind. Code § 9-30-5-1(b)",
+    "statute_title": "OWI — Controlled Substance",
+    "offense_class": "Class C Misdemeanor; elevated same as alcohol OWI",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol OWI by offense count",
+    "fine_max": "Same as alcohol OWI by offense count",
+    "elements": [
+      "Defendant operated a vehicle",
+      "With a Schedule I or II controlled substance or its metabolite in the defendant's blood"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior OWI conviction within 7 years",
+      "Causing serious bodily injury",
+      "Causing death"
+    ],
+    "notes": "Per se violation — any detectable amount of Schedule I or II substance in blood is sufficient. No impairment proof required. Includes marijuana metabolites."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Ind. Code § 9-21-8-52",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (if resulting in damage to person or property)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Class B); 1 year (Class A)",
+    "fine_max": "$1,000 (Class B); $5,000 (Class A)",
+    "elements": [
+      "Defendant operated a vehicle",
+      "In a reckless manner",
+      "That created a substantial risk of bodily injury to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in bodily injury or property damage (Class A Misdemeanor)"
+    ],
+    "notes": "Common reduction from OWI charges. Adds points to driving record."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Ind. Code § 9-26-1-1.1",
+    "statute_title": "Leaving the Scene of an Accident",
+    "offense_class": "Class B Misdemeanor (property); Level 6 Felony (injury); Level 5 Felony (serious injury/death)",
+    "penalty_min": null,
+    "penalty_max": "180 days (property); 2.5 years (injury); 6 years (serious injury/death)",
+    "fine_max": "$1,000 (property); $10,000 (injury/death)",
+    "elements": [
+      "Defendant was the operator of a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant failed to stop and provide information or render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in serious bodily injury (Level 5 Felony)",
+      "Resulting in death (Level 5 Felony)"
+    ],
+    "notes": "Duty to stop and provide information under § 9-26-1-1.1. Must give name, address, and vehicle registration. Must render reasonable assistance to injured persons."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Ind. Code § 9-30-5-5",
+    "statute_title": "OWI Causing Death",
+    "offense_class": "Level 4 Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "12 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a vehicle while intoxicated",
+      "The operation caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior OWI conviction",
+      "BAC .15 or higher"
+    ],
+    "notes": "Indiana does not have a separate vehicular homicide statute — OWI causing death is charged under § 9-30-5-5. Non-OWI vehicular deaths may be charged as reckless homicide under § 35-42-1-5."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Ind. Code § 35-42-1-5",
+    "statute_title": "Reckless Homicide",
+    "offense_class": "Level 5 Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant recklessly killed another human being"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Committed while operating a vehicle (may also face OWI charges)"
+    ],
+    "notes": "Used for non-OWI vehicular deaths involving reckless conduct. Indiana does not use the term 'vehicular manslaughter' — the charge is reckless homicide."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Ind. Code § 9-24-19-1",
+    "statute_title": "Operating a Vehicle While Suspended",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony (if prior conviction within 10 years or if suspension was OWI-related)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "While driving privileges were suspended or revoked",
+      "Defendant had knowledge of the suspension"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction within 10 years (Level 6 Felony)",
+      "Suspension was OWI-related (Level 6 Felony)"
+    ],
+    "notes": "Knowledge of suspension is an element. BMV mailing of suspension notice creates rebuttable presumption of knowledge."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Ind. Code § 35-44.1-3-1",
+    "statute_title": "Resisting Law Enforcement (Vehicle Flight)",
+    "offense_class": "Level 6 Felony; Level 5 Felony (vehicle used as weapon or causes injury)",
+    "penalty_min": "6 months (Level 6); 1 year (Level 5)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally fled from law enforcement",
+      "After being ordered to stop",
+      "Using a vehicle"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Vehicle used to commit forcible felony (Level 5 Felony)",
+      "Resulting in bodily injury (Level 5 Felony)",
+      "Resulting in death (Level 3 Felony)"
+    ],
+    "notes": "Vehicular flight from police is under the resisting law enforcement statute, not a separate traffic statute. Foot pursuit is Class A Misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Ind. Code § 35-48-4-7",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony (prior conviction or amount enhancement)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "Pure or adulterated",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction (Level 6 Felony)",
+      "Possession in or near school, park, or family housing complex (Level 6 Felony)",
+      "Enhancing circumstances (Level 5 Felony)"
+    ],
+    "notes": "Indiana consolidated many possession offenses under § 35-48-4-7. Schedule and amount determine base level. Diversion programs available for first-time offenders."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Ind. Code § 35-48-4-11",
+    "statute_title": "Possession of Marijuana, Hash Oil, Hashish, or Salvia",
+    "offense_class": "Class B Misdemeanor (under 30g); Class A Misdemeanor (30g+ or prior); Level 6 Felony (prior + amount)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Class B); 1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$1,000 (Class B); $5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed marijuana, hash oil, hashish, or salvia",
+      "Without a valid prescription or legal authorization"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount over 30 grams (Class A Misdemeanor)",
+      "Prior drug conviction (increases class)",
+      "Near school or park (Level 6 Felony)"
+    ],
+    "notes": "Indiana has not legalized recreational marijuana. Possession of any amount remains criminal. Hash oil is treated more seriously under § 35-48-4-11(b)."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Ind. Code § 35-48-4-6",
+    "statute_title": "Possession of Cocaine or a Narcotic Drug",
+    "offense_class": "Level 6 Felony; Level 5 Felony (5g+); Level 4 Felony (10g+); Level 3 Felony (28g+)",
+    "penalty_min": "6 months (Level 6); 1 year (Level 5); 2 years (Level 4); 3 years (Level 3)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5); 12 years (Level 4); 16 years (Level 3)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed cocaine or a narcotic drug",
+      "Pure or adulterated"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "5 grams or more (Level 5 Felony)",
+      "10 grams or more (Level 4 Felony)",
+      "28 grams or more (Level 3 Felony)",
+      "Near school, park, or family housing complex"
+    ],
+    "notes": "Cocaine is classified as a Schedule II narcotic under Indiana law. Weight thresholds include the full mixture weight, not just pure cocaine."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Ind. Code § 35-48-4-6.1",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Level 6 Felony; Level 5 Felony (5g+); Level 4 Felony (10g+); Level 3 Felony (28g+)",
+    "penalty_min": "6 months (Level 6); 1 year (Level 5); 2 years (Level 4); 3 years (Level 3)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5); 12 years (Level 4); 16 years (Level 3)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed methamphetamine",
+      "Pure or adulterated"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "5 grams or more (Level 5 Felony)",
+      "10 grams or more (Level 4 Felony)",
+      "28 grams or more (Level 3 Felony)",
+      "Near school, park, or family housing complex"
+    ],
+    "notes": "Separate statute from general narcotic possession. Same weight thresholds as cocaine. Indiana has enhanced penalties for meth due to manufacturing prevalence."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Ind. Code § 35-48-4-1",
+    "statute_title": "Dealing in Cocaine or a Narcotic Drug",
+    "offense_class": "Level 5 Felony; Level 4 Felony (5g+); Level 3 Felony (10g+); Level 2 Felony (28g+ or death results)",
+    "penalty_min": "1 year (Level 5); 2 years (Level 4); 3 years (Level 3); 10 years (Level 2)",
+    "penalty_max": "6 years (Level 5); 12 years (Level 4); 16 years (Level 3); 30 years (Level 2)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally manufactured, delivered, or financed the delivery of cocaine or a narcotic drug",
+      "Or possessed with intent to manufacture, deliver, or finance the delivery"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "5 grams or more (Level 4 Felony)",
+      "10 grams or more (Level 3 Felony)",
+      "28 grams or more (Level 2 Felony)",
+      "Delivery resulting in death (Level 2 Felony)",
+      "Near school, park, or family housing complex"
+    ],
+    "notes": "Indiana uses 'dealing' rather than 'trafficking.' Separate statutes exist for different drug types (§ 35-48-4-1 through 35-48-4-4.6)."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Ind. Code § 35-48-4-2",
+    "statute_title": "Dealing in a Schedule I, II, or III Controlled Substance",
+    "offense_class": "Level 6 Felony; enhanced by amount and circumstances",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years (Level 6); up to 30 years with enhancements",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally manufactured, delivered, or financed the delivery of a Schedule I, II, or III substance",
+      "Or possessed with intent to deliver"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount thresholds increase felony level",
+      "Near school, park, or family housing complex",
+      "Delivery to a minor",
+      "Resulting in death"
+    ],
+    "notes": "Covers dealing in controlled substances not specifically addressed by cocaine/meth/marijuana dealing statutes."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Ind. Code § 35-48-4-1.1",
+    "statute_title": "Manufacturing Methamphetamine",
+    "offense_class": "Level 4 Felony; Level 3 Felony (prior or near children); Level 2 Felony (causing death/serious injury)",
+    "penalty_min": "2 years (Level 4); 3 years (Level 3); 10 years (Level 2)",
+    "penalty_max": "12 years (Level 4); 16 years (Level 3); 30 years (Level 2)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally manufactured or attempted to manufacture methamphetamine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Manufacturing in presence of child (Level 3 Felony)",
+      "Prior conviction (Level 3 Felony)",
+      "Causing serious bodily injury (Level 2 Felony)",
+      "Causing death (Level 2 Felony)"
+    ],
+    "notes": "Indiana has specific meth manufacturing statute due to prevalence. Other drug manufacturing falls under general dealing statutes. Environmental cleanup costs may be assessed."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Ind. Code § 35-48-4-8.3",
+    "statute_title": "Possession of Paraphernalia",
+    "offense_class": "Class C Misdemeanor; Class A Misdemeanor (prior or syringe)",
+    "penalty_min": null,
+    "penalty_max": "60 days (Class C); 1 year (Class A)",
+    "fine_max": "$500 (Class C); $5,000 (Class A)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed an instrument, device, or object",
+      "Used or intended to be used to introduce a controlled substance into the body",
+      "Or to test the strength, analyze, or facilitate the use of a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Syringe possession (Class A Misdemeanor under § 35-48-4-8.5, with exceptions for needle exchange)"
+    ],
+    "notes": "Indiana has a separate syringe possession statute. Needle exchange program participants are exempt under certain conditions."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Ind. Code § 35-48-4-6(b)",
+    "statute_title": "Possession of Cocaine/Narcotic with Intent to Deliver",
+    "offense_class": "Level 5 Felony; enhanced by weight",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years (Level 5); up to 30 years with weight enhancements",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed cocaine or a narcotic drug",
+      "With intent to manufacture, deliver, or finance the delivery"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Weight thresholds (same as dealing statutes)",
+      "Near school, park, or family housing complex",
+      "Delivery to a minor"
+    ],
+    "notes": "Intent to deliver is often inferred from quantity, packaging, scales, large amounts of cash, and other circumstantial evidence."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Ind. Code § 35-42-1-1",
+    "statute_title": "Murder",
+    "offense_class": "Murder (45-65 years); possible LWOP or death sentence",
+    "penalty_min": "45 years",
+    "penalty_max": "65 years; life without parole; death",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally killed another human being"
+    ],
+    "mandatory_minimum": "45 years",
+    "enhancements": [
+      "Death sentence eligibility under § 35-50-2-9 (aggravating circumstances)",
+      "Life without parole"
+    ],
+    "notes": "Indiana does not use 'degrees' for murder. There is one murder statute. The sentencing range is 45-65 years, with LWOP or death for aggravated cases. Indiana retains the death penalty."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Ind. Code § 35-42-1-1(2)",
+    "statute_title": "Murder — Felony Murder / Killing While Committing a Felony",
+    "offense_class": "Murder (45-65 years)",
+    "penalty_min": "45 years",
+    "penalty_max": "65 years; life without parole",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant killed another human being",
+      "While committing or attempting to commit arson, burglary, child molesting, criminal deviate conduct, kidnapping, rape, robbery, carjacking, criminal gang activity, or dealing in a controlled substance"
+    ],
+    "mandatory_minimum": "45 years",
+    "enhancements": [
+      "Life without parole where aggravating circumstances exist"
+    ],
+    "notes": "Indiana's felony murder rule. Same penalty range as intentional murder. No separate 'second degree murder' — this is the felony murder provision within the single murder statute."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Ind. Code § 35-42-1-3",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Level 2 Felony",
+    "penalty_min": "10 years",
+    "penalty_max": "30 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally killed another human being",
+      "While acting under sudden heat"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "'Sudden heat' is a mitigating factor that reduces murder to voluntary manslaughter. The defendant bears the burden of proving sudden heat. It is not a defense, but a sentencing reduction."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Ind. Code § 35-42-1-4",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Level 5 Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant killed another human being",
+      "While committing or attempting to commit a Class A misdemeanor or Level 6 felony that is inherently dangerous",
+      "Or while committing a Class A misdemeanor involving operation of a vehicle with at least one prior OWI"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Involuntary manslaughter in Indiana requires a predicate offense. Simple negligence causing death is not sufficient without an underlying misdemeanor or felony."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Ind. Code § 35-42-2-1.5",
+    "statute_title": "Aggravated Battery",
+    "offense_class": "Level 3 Felony; Level 1 Felony (if victim under 14 or involving deadly weapon causing serious injury)",
+    "penalty_min": "3 years (Level 3)",
+    "penalty_max": "16 years (Level 3); 40 years (Level 1)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally inflicted injury on another person",
+      "That created a substantial risk of death",
+      "Or caused serious permanent disfigurement",
+      "Or caused the loss or impairment of a bodily organ or function"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 14 (Level 1 Felony)",
+      "Use of a deadly weapon causing serious injury (Level 1 Felony)"
+    ],
+    "notes": "Indiana uses 'battery' rather than 'assault' for physical contact offenses. This is the equivalent of aggravated assault in other states."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Ind. Code § 35-42-2-1",
+    "statute_title": "Battery",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (resulting in bodily injury); Level 6 Felony (moderate injury or victim is public safety official)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Class B); 1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$1,000 (Class B); $5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally touched another person",
+      "In a rude, insolent, or angry manner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in bodily injury (Class A Misdemeanor)",
+      "Resulting in moderate bodily injury (Level 6 Felony)",
+      "Against a public safety official (Level 6 Felony)",
+      "Using a deadly weapon (Level 5 Felony)"
+    ],
+    "notes": "Indiana's battery statute covers what most states call 'simple assault.' Touching in a rude manner is sufficient — no injury required for the base offense."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "Ind. Code § 35-42-2-1(c)",
+    "statute_title": "Battery Resulting in Bodily Injury",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly or intentionally touched another person in a rude, insolent, or angry manner",
+      "The touching resulted in bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Moderate bodily injury (Level 6 Felony)",
+      "Serious bodily injury (Level 5 Felony)",
+      "Against public safety official (Level 6 Felony)",
+      "Deadly weapon used (Level 5 Felony)"
+    ],
+    "notes": "Battery resulting in bodily injury is the most commonly charged battery offense. 'Bodily injury' means any impairment of physical condition, including physical pain."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Ind. Code § 35-42-5-1",
+    "statute_title": "Robbery",
+    "offense_class": "Level 5 Felony; Level 3 Felony (resulting in bodily injury); Level 2 Felony (serious bodily injury)",
+    "penalty_min": "1 year (Level 5); 3 years (Level 3); 10 years (Level 2)",
+    "penalty_max": "6 years (Level 5); 16 years (Level 3); 30 years (Level 2)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally took property from another person",
+      "By using or threatening the use of force",
+      "Or by putting the victim in fear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in bodily injury (Level 3 Felony)",
+      "Resulting in serious bodily injury (Level 2 Felony)",
+      "Armed with a deadly weapon (Level 3 Felony)"
+    ],
+    "notes": "Robbery requires force or threat of force. Taking property without force is theft, not robbery."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Ind. Code § 35-42-5-1(b)",
+    "statute_title": "Robbery — Armed with Deadly Weapon",
+    "offense_class": "Level 3 Felony; Level 2 Felony (serious injury)",
+    "penalty_min": "3 years (Level 3); 10 years (Level 2)",
+    "penalty_max": "16 years (Level 3); 30 years (Level 2)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally took property from another person",
+      "By using or threatening the use of force",
+      "While armed with a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in serious bodily injury (Level 2 Felony)"
+    ],
+    "notes": "Armed robbery is an enhancement within the robbery statute, not a separate offense. 'Deadly weapon' includes firearms, knives, and any object used in a manner that could cause death or serious injury."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Ind. Code § 35-42-3-2",
+    "statute_title": "Kidnapping",
+    "offense_class": "Level 6 Felony; Level 5 Felony (victim under 14 or disabled); Level 3 Felony (weapon, injury, or ransom); Level 2 Felony (serious injury); Level 1 Felony (victim is under 14 and not a parent)",
+    "penalty_min": "6 months (Level 6)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5); 16 years (Level 3); 30 years (Level 2); 40 years (Level 1)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally removed another person by fraud, enticement, force, or threat of force",
+      "From one place to another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon (Level 3 Felony)",
+      "Resulting in bodily injury (Level 3 Felony)",
+      "For ransom (Level 3 Felony)",
+      "Victim under 14 (Level 1 Felony if offender is not parent)",
+      "Resulting in serious bodily injury (Level 2 Felony)"
+    ],
+    "notes": "Confinement (§ 35-42-3-3) is a lesser included offense. Criminal confinement does not require movement, while kidnapping does."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Ind. Code § 35-43-1-1",
+    "statute_title": "Arson",
+    "offense_class": "Level 4 Felony; Level 3 Felony (dwelling or risk to human life); Level 2 Felony (serious injury); Level 1 Felony (death)",
+    "penalty_min": "2 years (Level 4)",
+    "penalty_max": "12 years (Level 4); 16 years (Level 3); 30 years (Level 2); 40 years (Level 1)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally set fire to or burned property",
+      "By means of fire or explosive",
+      "With intent to damage or destroy"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Dwelling or property with persons inside (Level 3 Felony)",
+      "Resulting in serious bodily injury (Level 2 Felony)",
+      "Resulting in death (Level 1 Felony)"
+    ],
+    "notes": "Arson of a dwelling is automatically Level 3 regardless of whether anyone is home. Insurance fraud arson carries additional charges."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Ind. Code § 35-42-1-1; § 35-41-5-1",
+    "statute_title": "Attempted Murder",
+    "offense_class": "Level 1 Felony",
+    "penalty_min": "20 years",
+    "penalty_max": "40 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, acting with the culpability required for murder",
+      "Engaged in conduct that constituted a substantial step toward the commission of murder"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm (additional fixed term under § 35-50-2-11)"
+    ],
+    "notes": "Attempted murder is one level below the base murder charge. Penalty range is the advisory range for a Level 1 Felony."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Ind. Code § 35-42-2-1(e)",
+    "statute_title": "Battery with a Deadly Weapon",
+    "offense_class": "Level 5 Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally touched another person",
+      "In a rude, insolent, or angry manner",
+      "With a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in serious bodily injury (Level 3 Felony or higher)"
+    ],
+    "notes": "Indiana charges this as battery with a deadly weapon, not 'assault with a deadly weapon.' A deadly weapon includes firearms, knives, and anything used in a manner that could cause death."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Ind. Code § 35-43-4-2",
+    "statute_title": "Theft",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony ($750+); Level 5 Felony ($50,000+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6+)",
+    "elements": [
+      "Defendant knowingly or intentionally exerted unauthorized control over property of another person",
+      "With intent to deprive the other person of any part of the property's value or use"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $750 or more (Level 6 Felony)",
+      "Value $50,000 or more (Level 5 Felony)",
+      "Prior theft conviction (Level 6 Felony regardless of amount)",
+      "Theft of a firearm (Level 6 Felony)"
+    ],
+    "notes": "Indiana's unified theft statute covers larceny, embezzlement, and theft of services. The $750 felony threshold is relatively low compared to many states."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Ind. Code § 35-43-4-2(a)(1)",
+    "statute_title": "Theft — Value $750 or More",
+    "offense_class": "Level 6 Felony ($750-$49,999); Level 5 Felony ($50,000+)",
+    "penalty_min": "6 months (Level 6); 1 year (Level 5)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally exerted unauthorized control over property",
+      "With intent to deprive the owner of value or use",
+      "Value of property is $750 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $50,000 or more (Level 5 Felony)"
+    ],
+    "notes": "Indiana does not use the term 'grand theft.' This is felony-level theft based on the $750 threshold."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Ind. Code § 35-43-4-2(a)",
+    "statute_title": "Theft — Value Under $750",
+    "offense_class": "Class A Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly or intentionally exerted unauthorized control over property",
+      "With intent to deprive the owner of value or use",
+      "Value of property is under $750"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior theft conviction (Level 6 Felony regardless of amount)"
+    ],
+    "notes": "Misdemeanor theft. Prior theft conviction elevates any theft to Level 6 Felony regardless of value. Diversion programs may be available."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Ind. Code § 35-43-4-2(a)",
+    "statute_title": "Theft — Shoplifting / Retail Theft",
+    "offense_class": "Class A Misdemeanor (under $750); Level 6 Felony ($750+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally exerted unauthorized control over property of a retail establishment",
+      "With intent to deprive the retailer of value"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $750 or more (Level 6 Felony)",
+      "Prior theft conviction (Level 6 Felony)",
+      "Organized retail theft (Level 5 Felony under § 35-43-4-2(b)(4))"
+    ],
+    "notes": "Shoplifting is charged under the general theft statute. Retailers may also pursue civil recovery under § 34-24-3-1 (up to $150 plus actual damages)."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Ind. Code § 35-43-2-1",
+    "statute_title": "Burglary",
+    "offense_class": "Level 5 Felony; Level 4 Felony (dwelling); Level 3 Felony (armed or injury); Level 2 Felony (dwelling + armed or injury); Level 1 Felony (serious injury)",
+    "penalty_min": "1 year (Level 5); 2 years (Level 4); 3 years (Level 3)",
+    "penalty_max": "6 years (Level 5); 12 years (Level 4); 16 years (Level 3); 30 years (Level 2); 40 years (Level 1)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant broke and entered the building or structure of another person",
+      "With intent to commit a felony or theft therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Dwelling (Level 4 Felony)",
+      "Armed with a deadly weapon (Level 3 Felony)",
+      "Resulting in bodily injury (Level 3 Felony)",
+      "Dwelling + armed or injury (Level 2 Felony)",
+      "Resulting in serious bodily injury (Level 1 Felony)"
+    ],
+    "notes": "Indiana requires 'breaking and entering' — mere entry through an open door may not qualify. Intent to commit a felony must exist at the time of entry."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Ind. Code § 35-43-2-1(2)",
+    "statute_title": "Burglary of a Dwelling",
+    "offense_class": "Level 4 Felony; Level 2 Felony (armed or injury)",
+    "penalty_min": "2 years (Level 4); 10 years (Level 2)",
+    "penalty_max": "12 years (Level 4); 30 years (Level 2)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant broke and entered the dwelling of another person",
+      "With intent to commit a felony or theft therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Armed with a deadly weapon (Level 2 Felony)",
+      "Resulting in bodily injury (Level 2 Felony)",
+      "Resulting in serious bodily injury (Level 1 Felony)"
+    ],
+    "notes": "Dwelling burglary is automatically elevated to Level 4. A 'dwelling' is a building or structure used for lodging."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Ind. Code § 35-43-4-2.5",
+    "statute_title": "Auto Theft",
+    "offense_class": "Level 6 Felony",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally exerted unauthorized control over a motor vehicle of another person",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $50,000 or more (Level 5 Felony under general theft statute)"
+    ],
+    "notes": "Indiana has a specific auto theft statute. Carjacking (taking by force) is charged as robbery, not auto theft."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Ind. Code § 35-43-4-2(b)",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Class A Misdemeanor (under $750); Level 6 Felony ($750+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally received, retained, or disposed of property of another person",
+      "That had been the subject of theft",
+      "Knowing or having reason to believe the property was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $750 or more (Level 6 Felony)"
+    ],
+    "notes": "Receiving stolen property is included within Indiana's consolidated theft statute. The 'reason to believe' standard is objective."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Ind. Code § 35-43-1-2",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor ($750+); Level 6 Felony ($5,000+ or substantial risk)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Class B); 1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$1,000 (Class B); $5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant recklessly, knowingly, or intentionally damaged or defaced property of another person",
+      "Without the other person's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage $750+ (Class A Misdemeanor)",
+      "Damage $5,000+ or substantial risk to human life (Level 6 Felony)"
+    ],
+    "notes": "Indiana uses 'criminal mischief' for property destruction/vandalism. Graffiti falls under this statute."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Ind. Code § 35-43-2-2",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony (dwelling, prior, or with weapon)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally entered the property of another person",
+      "After having been denied entry",
+      "Or refused to leave after being asked"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass of a dwelling (Level 6 Felony)",
+      "While armed (Level 6 Felony)",
+      "Prior trespass conviction (Level 6 Felony)"
+    ],
+    "notes": "Criminal trespass requires notice — posting of signs, verbal warning, or fencing. Trespass on agricultural land has specific provisions."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Ind. Code § 35-43-1-2",
+    "statute_title": "Criminal Mischief",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor ($750+); Level 6 Felony ($5,000+)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Class B); 1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$1,000 (Class B); $5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant recklessly, knowingly, or intentionally damaged or defaced property of another person",
+      "Without the other person's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Pecuniary loss $750+ (Class A Misdemeanor)",
+      "Pecuniary loss $5,000+ (Level 6 Felony)",
+      "Pecuniary loss $50,000+ (Level 5 Felony)"
+    ],
+    "notes": "Criminal mischief is Indiana's primary property damage/vandalism statute. Restitution is typically ordered in addition to criminal penalties."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Ind. Code § 35-42-2-1.3",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony (prior or in presence of child under 16); Level 5 Felony (serious injury or deadly weapon)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6+)",
+    "elements": [
+      "Defendant knowingly or intentionally touched a family or household member",
+      "In a rude, insolent, or angry manner",
+      "Resulting in bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior domestic battery conviction (Level 6 Felony)",
+      "Committed in the presence of a child under 16 (Level 6 Felony)",
+      "Resulting in serious bodily injury (Level 5 Felony)",
+      "Committed with a deadly weapon (Level 5 Felony)"
+    ],
+    "notes": "Indiana has a specific domestic battery statute separate from general battery. 'Family or household member' includes spouses, former spouses, co-parents, and cohabitants. Mandatory arrest policy for officers responding to domestic calls."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Ind. Code § 35-42-2-1.3",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony (prior or child present)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally touched a family or household member",
+      "In a rude, insolent, or angry manner",
+      "Resulting in bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction (Level 6 Felony)",
+      "Child under 16 present (Level 6 Felony)",
+      "Moderate bodily injury (Level 6 Felony)",
+      "Serious bodily injury (Level 5 Felony)"
+    ],
+    "notes": "Same statute as domestic violence entry. Federal firearms prohibition applies upon conviction (18 U.S.C. § 922(g)(9))."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Ind. Code § 35-46-1-4",
+    "statute_title": "Neglect of a Dependent",
+    "offense_class": "Level 6 Felony; Level 5 Felony (bodily injury); Level 3 Felony (serious injury); Level 1 Felony (death)",
+    "penalty_min": "6 months (Level 6)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5); 16 years (Level 3); 40 years (Level 1)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant had the care of a dependent (child under 14, endangered adult)",
+      "Defendant knowingly or intentionally placed the dependent in a situation that endangered their life or health"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in bodily injury (Level 5 Felony)",
+      "Resulting in serious bodily injury (Level 3 Felony)",
+      "Resulting in death (Level 1 Felony)"
+    ],
+    "notes": "Indiana uses 'neglect of a dependent' rather than 'child endangerment.' Covers both children and dependent adults. Includes leaving a child in a hot car, exposure to drug manufacturing, etc."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Ind. Code § 35-42-2-1(b)(3)",
+    "statute_title": "Battery Against a Child Under 14",
+    "offense_class": "Level 5 Felony; Level 3 Felony (serious injury); Level 1 Felony (aggravated battery against child under 14)",
+    "penalty_min": "1 year (Level 5)",
+    "penalty_max": "6 years (Level 5); 16 years (Level 3); 40 years (Level 1)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally touched a person under 14",
+      "In a rude, insolent, or angry manner",
+      "Resulting in bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (Level 3 Felony)",
+      "Aggravated battery against child under 14 (Level 1 Felony under § 35-42-2-1.5)"
+    ],
+    "notes": "Battery against a child under 14 resulting in injury is automatically a Level 5 Felony. DCS investigation typically accompanies criminal charges."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Ind. Code § 35-46-1-15.1",
+    "statute_title": "Invasion of Privacy (Violation of Protective Order)",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony (prior or with threat/weapon)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "A protective order was issued against the defendant",
+      "Defendant knowingly or intentionally violated the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction for invasion of privacy (Level 6 Felony)",
+      "Committed with a deadly weapon or threat of deadly force (Level 6 Felony)"
+    ],
+    "notes": "Indiana calls protective order violations 'invasion of privacy.' The protective order must be properly served. Contact through third parties can constitute a violation."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Ind. Code § 35-45-10-5",
+    "statute_title": "Stalking",
+    "offense_class": "Level 6 Felony; Level 5 Felony (threat of violence, prior, or protective order in effect); Level 4 Felony (weapon or victim under 16)",
+    "penalty_min": "6 months (Level 6)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5); 12 years (Level 4)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally engaged in a course of conduct",
+      "Directed at a specific person",
+      "That would cause a reasonable person to feel terrorized, frightened, intimidated, or threatened",
+      "The victim was actually terrorized, frightened, intimidated, or threatened"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Implicit or explicit threat of violence (Level 5 Felony)",
+      "Prior stalking conviction (Level 5 Felony)",
+      "Protective order in effect (Level 5 Felony)",
+      "Using a weapon (Level 4 Felony)"
+    ],
+    "notes": "Stalking requires a 'course of conduct' — a pattern of repeated acts. A single incident is generally insufficient. Cyberstalking is included."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Ind. Code § 35-45-2-2",
+    "statute_title": "Harassment",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (threat of violence)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Class B); 1 year (Class A)",
+    "fine_max": "$1,000 (Class B); $5,000 (Class A)",
+    "elements": [
+      "Defendant, with intent to harass, annoy, or alarm another person",
+      "Made a telephone call, sent electronic communication, or engaged in conduct",
+      "With no purpose of legitimate communication"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat of violence (Class A Misdemeanor)"
+    ],
+    "notes": "Harassment requires specific intent — accidental or incidental contact is not sufficient. Includes repeated unwanted phone calls, texts, and social media messages."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Ind. Code § 35-46-1-12",
+    "statute_title": "Exploitation of a Dependent or Endangered Adult",
+    "offense_class": "Level 6 Felony; Level 5 Felony ($50,000+)",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally exploited an endangered adult or dependent",
+      "By improperly using or managing the finances, property, or resources of the person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value of exploitation $50,000 or more (Level 5 Felony)"
+    ],
+    "notes": "Physical abuse of an elder is charged under battery or neglect of a dependent statutes. This statute specifically covers financial exploitation. 'Endangered adult' is defined in § 12-10-3-2."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Ind. Code § 35-47-2-1",
+    "statute_title": "Carrying a Handgun Without a License",
+    "offense_class": "Class A Misdemeanor; Level 5 Felony (prior conviction for violent offense)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 6 years (Level 5)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 5)",
+    "elements": [
+      "Defendant carried a handgun",
+      "Without a valid license to carry"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction for a violent offense (Level 5 Felony)"
+    ],
+    "notes": "Indiana passed a permitless carry law (HEA 1296) effective July 1, 2022, eliminating the license requirement for most adults. This statute still applies to persons disqualified from carrying (felons, certain misdemeanor convicts, minors, etc.)."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Ind. Code § 35-47-4-5",
+    "statute_title": "Serious Violent Felon in Possession of a Firearm",
+    "offense_class": "Level 4 Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "12 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a firearm",
+      "Defendant is a serious violent felon as defined by § 35-47-4-5"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "'Serious violent felon' includes prior convictions for murder, battery with a deadly weapon, robbery, and other specified offenses. Less serious felons who possess firearms may be charged under § 35-47-4-6 (Level 5 Felony)."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Ind. Code § 35-47-2-1",
+    "statute_title": "Carrying a Handgun — Prohibited Person",
+    "offense_class": "Class A Misdemeanor; Level 5 Felony (if prohibited person)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 6 years (Level 5)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 5)",
+    "elements": [
+      "Defendant carried a handgun",
+      "Defendant is a person prohibited from carrying under § 35-47-2-3 (domestic battery conviction, certain drug offenses, adjudicated mentally incompetent)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "With Indiana's 2022 permitless carry law, this primarily applies to prohibited persons. Prohibited categories include those convicted of domestic battery within last 7 years, certain drug offenses, and persons under 18."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Ind. Code § 35-47-2.5-1",
+    "statute_title": "Criminal Recklessness with a Deadly Weapon",
+    "offense_class": "Level 6 Felony; Level 5 Felony (at inhabited dwelling or occupied vehicle)",
+    "penalty_min": "6 months (Level 6); 1 year (Level 5)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant recklessly, knowingly, or intentionally performed an act",
+      "That created a substantial risk of bodily injury to another person",
+      "While armed with a deadly weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Shooting at an inhabited dwelling or occupied vehicle (Level 5 Felony)"
+    ],
+    "notes": "Indiana does not have a specific 'illegal discharge' statute. Reckless discharge of a firearm is charged as criminal recklessness under § 35-42-2-2."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Ind. Code § 35-43-5-3.5",
+    "statute_title": "Identity Deception",
+    "offense_class": "Level 6 Felony; Level 5 Felony ($50,000+ loss or victim is vulnerable adult)",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally obtained, possessed, transferred, or used the identifying information of another person",
+      "Without the other person's consent",
+      "With intent to harm or defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Harm exceeding $50,000 (Level 5 Felony)",
+      "Victim is an endangered adult or dependent (Level 5 Felony)"
+    ],
+    "notes": "Indiana uses 'identity deception' rather than 'identity theft.' Synthetic identity fraud (creating a new identity from parts of real identities) is also covered."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Ind. Code § 35-43-4-2",
+    "statute_title": "Theft — Embezzlement (Conversion of Entrusted Property)",
+    "offense_class": "Same as theft: Class A Misdemeanor to Level 5 Felony based on value",
+    "penalty_min": null,
+    "penalty_max": "1 year (under $750); 2.5 years ($750+); 6 years ($50,000+)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6+)",
+    "elements": [
+      "Defendant had lawful possession of property belonging to another",
+      "Defendant knowingly or intentionally exerted unauthorized control over the property",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $750+ (Level 6 Felony)",
+      "Value $50,000+ (Level 5 Felony)"
+    ],
+    "notes": "Embezzlement is not a separate statute in Indiana — it falls under the unified theft statute. The key distinguishing element is that the defendant had lawful initial possession."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Ind. Code § 35-43-5-2",
+    "statute_title": "Forgery",
+    "offense_class": "Level 6 Felony",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, with intent to defraud, made, uttered, or possessed a written instrument",
+      "Knowing the instrument was falsely made, altered, or that the making was unauthorized"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Forgery of a financial instrument (Level 6 Felony)"
+    ],
+    "notes": "Forgery covers checks, deeds, wills, contracts, and other legal documents. Uttering (presenting a forged document) is included within the forgery statute."
+  },
+  {
+    "common_charge_slug": "counterfeiting",
+    "statute_number": "Ind. Code § 35-43-5-2(b)",
+    "statute_title": "Counterfeiting — Forgery of Currency or Government Instrument",
+    "offense_class": "Level 6 Felony",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant made, uttered, or possessed counterfeit currency or government instrument",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Counterfeiting is primarily a federal offense (18 U.S.C. § 471). State charges under Indiana's forgery statute are less common but do occur for possession of counterfeit bills."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Ind. Code § 35-43-5-5",
+    "statute_title": "Check Fraud",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony ($750+ or multiple incidents)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally made or delivered a check, draft, or money order",
+      "Knowing there were insufficient funds or no account to cover it",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $750+ (Level 6 Felony)",
+      "Multiple incidents"
+    ],
+    "notes": "The payee must have accepted the check in exchange for property or services. Post-dated checks with the payee's knowledge are not covered."
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "statute_number": "Ind. Code § 35-43-5-4.5",
+    "statute_title": "Insurance Fraud",
+    "offense_class": "Level 6 Felony",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally presented or caused to be presented",
+      "A false or misleading statement or claim for insurance benefits",
+      "With intent to defraud an insurer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Covers auto insurance, health insurance, and property insurance fraud. Indiana Insurance Fraud Unit investigates. Restitution is typically ordered."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Ind. Code § 35-43-5-4",
+    "statute_title": "Fraud on a Financial Institution (Credit Card Fraud)",
+    "offense_class": "Level 6 Felony; Level 5 Felony ($50,000+)",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally executed or attempted to execute a scheme to defraud a financial institution",
+      "Or obtained money, funds, or credit through false or fraudulent representations"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeding $50,000 (Level 5 Felony)"
+    ],
+    "notes": "Credit card fraud may also be charged as identity deception (§ 35-43-5-3.5) or theft (§ 35-43-4-2) depending on the circumstances."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Ind. Code § 35-45-15-5",
+    "statute_title": "Money Laundering",
+    "offense_class": "Level 6 Felony; Level 5 Felony ($50,000+)",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally conducted a financial transaction involving proceeds of criminal activity",
+      "With intent to conceal or disguise the nature, location, source, ownership, or control of the proceeds"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount $50,000+ (Level 5 Felony)"
+    ],
+    "notes": "Indiana's money laundering statute applies to proceeds from any criminal activity. Structuring transactions to avoid reporting requirements is also covered."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Ind. Code § 35-43-5-4(b)",
+    "statute_title": "Fraud",
+    "offense_class": "Level 6 Felony; Level 5 Felony ($50,000+)",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally made a false or misleading statement",
+      "To obtain property, money, or employment",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Amount exceeding $50,000 (Level 5 Felony)"
+    ],
+    "notes": "General fraud catch-all provision. Specific fraud types (insurance, welfare, identity) have dedicated statutes with potentially different penalty structures."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Ind. Code § 35-42-4-8",
+    "statute_title": "Sexual Battery",
+    "offense_class": "Level 6 Felony",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, with intent to arouse or satisfy sexual desires",
+      "Touched another person",
+      "When that person was compelled to submit by force or imminent threat of force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of deadly force or threat (Level 4 Felony)"
+    ],
+    "notes": "Sexual battery is Indiana's equivalent of sexual assault in other states. More serious sexual contact offenses are charged as rape under § 35-42-4-1."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Ind. Code § 35-42-4-1",
+    "statute_title": "Rape",
+    "offense_class": "Level 3 Felony; Level 1 Felony (deadly weapon, serious injury, drugs, or victim is disabled/under 14)",
+    "penalty_min": "3 years (Level 3); 20 years (Level 1)",
+    "penalty_max": "16 years (Level 3); 40 years (Level 1)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally had sexual intercourse with another person",
+      "By using or threatening the use of deadly force",
+      "Or when the victim was unaware or lacked mental capacity to consent",
+      "Or when the victim was compelled by force or imminent threat of force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of deadly force or weapon (Level 1 Felony)",
+      "Resulting in serious bodily injury (Level 1 Felony)",
+      "Administration of drugs without consent (Level 1 Felony)",
+      "Victim under 14 (Level 1 Felony)"
+    ],
+    "notes": "Indiana's rape statute is gender-neutral. Sex offender registration required upon conviction. Civil commitment as sexually violent predator possible under § 35-38-1-7.5."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Ind. Code § 35-45-4-1",
+    "statute_title": "Public Indecency",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony (prior or child present)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally appeared in a public place",
+      "In a state of nudity with intent to be seen",
+      "Or engaged in sexual intercourse or other sexual conduct in a public place"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction (Level 6 Felony)",
+      "Child under 16 present (Level 6 Felony)"
+    ],
+    "notes": "Indiana uses 'public indecency' rather than 'indecent exposure.' Repeat offenses or exposure to children triggers sex offender registration requirements."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Ind. Code § 35-45-4-3",
+    "statute_title": "Promoting Prostitution / Solicitation",
+    "offense_class": "Class A Misdemeanor (patronizing); Level 5 Felony (promoting); Level 4 Felony (victim under 18)",
+    "penalty_min": null,
+    "penalty_max": "1 year (patronizing); 6 years (promoting); 12 years (victim under 18)",
+    "fine_max": "$5,000 (Class A); $10,000 (felony)",
+    "elements": [
+      "Defendant knowingly or intentionally paid or offered to pay for sexual conduct",
+      "Or promoted or profited from prostitution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Promoting prostitution (Level 5 Felony)",
+      "Victim under 18 (Level 4 Felony)",
+      "Human trafficking nexus (Level 3 Felony under § 35-42-3.5-1)"
+    ],
+    "notes": "Patronizing a prostitute is a Class A Misdemeanor. Promoting prostitution (pimping) is a felony. Human trafficking charges apply when force, fraud, or coercion is involved."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Ind. Code § 35-42-4-4",
+    "statute_title": "Child Exploitation (Possession of Child Pornography)",
+    "offense_class": "Level 5 Felony (possession); Level 4 Felony (dissemination)",
+    "penalty_min": "1 year (Level 5); 2 years (Level 4)",
+    "penalty_max": "6 years (Level 5); 12 years (Level 4)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a depiction of a child engaged in sexual conduct",
+      "Or disseminated such material"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Dissemination or distribution (Level 4 Felony)",
+      "Production or creation (Level 4 Felony)",
+      "Victim under 12 (enhanced penalties)"
+    ],
+    "notes": "Each image or video may be charged as a separate count. Sex offender registration required. Federal charges often accompany state charges (18 U.S.C. § 2252)."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Ind. Code § 11-8-8-17",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Level 6 Felony; Level 5 Felony (sexually violent predator)",
+    "penalty_min": "6 months (Level 6); 1 year (Level 5)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant is required to register as a sex offender",
+      "Defendant knowingly or intentionally failed to register or update registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Sexually violent predator (Level 5 Felony)"
+    ],
+    "notes": "Must register within 72 hours of release or change of address. Lifetime registration required for certain offenses. Failure to register is a separate offense from the underlying sex crime."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Ind. Code § 35-42-4-9",
+    "statute_title": "Sexual Misconduct with a Minor",
+    "offense_class": "Level 5 Felony (victim 14-15); Level 4 Felony (victim under 14); Level 1 Felony (compulsion, weapon, or serious injury)",
+    "penalty_min": "1 year (Level 5); 2 years (Level 4); 20 years (Level 1)",
+    "penalty_max": "6 years (Level 5); 12 years (Level 4); 40 years (Level 1)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, being at least 18 years old, engaged in sexual intercourse or other sexual conduct",
+      "With a person under 16"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 14 (Level 4 Felony — charged as child molesting under § 35-42-4-3)",
+      "Use of force or weapon (Level 1 Felony)"
+    ],
+    "notes": "Indiana's age of consent is 16. 'Romeo and Juliet' provisions may apply when the age difference is small. Offenses against children under 14 are charged as child molesting, a more serious offense."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Ind. Code § 35-45-1-3",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant recklessly, knowingly, or intentionally engaged in fighting, tumultuous conduct, or unreasonable noise",
+      "That disturbed or tended to disturb a lawful assembly of persons"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common charge for bar fights, loud disturbances, and public altercations. Often used as a reduced charge in plea negotiations."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Ind. Code § 35-44.1-3-1(a)",
+    "statute_title": "Resisting Law Enforcement",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony (vehicle or force); Level 5 Felony (vehicle causing injury)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6+)",
+    "elements": [
+      "Defendant knowingly or intentionally resisted, obstructed, or interfered with a law enforcement officer",
+      "While the officer was lawfully engaged in the officer's duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Using a vehicle (Level 6 Felony)",
+      "Inflicting bodily injury (Level 6 Felony)",
+      "Using a vehicle and causing injury (Level 5 Felony)",
+      "Resulting in death (Level 3 Felony)"
+    ],
+    "notes": "Passive resistance (going limp) can be charged. The officer must be acting lawfully — unlawful arrest may be a defense. This is the same statute used for fleeing/eluding."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Ind. Code § 35-44.1-2-2",
+    "statute_title": "Obstruction of Justice",
+    "offense_class": "Level 6 Felony",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally induced, by threat, coercion, or deception",
+      "A witness or informant to withhold testimony, avoid legal process, or provide false information",
+      "Or altered, destroyed, or concealed evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Obstruction includes tampering with witnesses, destroying evidence, and providing false information to investigators. Separate from resisting law enforcement."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Ind. Code § 34-47-2-1",
+    "statute_title": "Indirect Contempt of Court",
+    "offense_class": "Court-imposed sanctions; may include imprisonment",
+    "penalty_min": null,
+    "penalty_max": "Discretion of the court — typically up to 180 days for civil contempt; criminal contempt may carry longer terms",
+    "fine_max": "Discretion of the court",
+    "elements": [
+      "A court order existed and was served on the defendant",
+      "Defendant had knowledge of the order",
+      "Defendant willfully disobeyed the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Contempt in Indiana is governed by civil procedure rules as well as criminal statutes. Direct contempt (in the judge's presence) can be punished summarily. Indirect contempt requires notice and hearing."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Ind. Code § 7.1-5-1-3",
+    "statute_title": "Public Intoxication",
+    "offense_class": "Class B Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "180 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant was in a public place",
+      "In a state of intoxication",
+      "That was a danger to the defendant or others, or was breaching the peace"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Indiana requires the person be a danger to self or others, or breaching the peace — mere public intoxication without additional conduct may be insufficient."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Ind. Code § 35-44.1-2-9",
+    "statute_title": "Failure to Appear",
+    "offense_class": "Class A Misdemeanor (misdemeanor case); Level 6 Felony (felony case)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant was released on bond or recognizance",
+      "Defendant was required to appear at a specified time and place",
+      "Defendant knowingly or intentionally failed to appear"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Underlying case is a felony (Level 6 Felony)"
+    ],
+    "notes": "Failure to appear results in a bench warrant. Bond may be forfeited. The FTA charge is in addition to the underlying case."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Ind. Code § 35-44.1-2-3",
+    "statute_title": "False Reporting",
+    "offense_class": "Class B Misdemeanor; Class A Misdemeanor (false report of emergency)",
+    "penalty_min": null,
+    "penalty_max": "180 days (Class B); 1 year (Class A)",
+    "fine_max": "$1,000 (Class B); $5,000 (Class A)",
+    "elements": [
+      "Defendant gave a false report of the commission of a crime",
+      "Or false alarm of fire or other emergency",
+      "Knowing the report to be false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "False report of emergency or bomb threat (Class A Misdemeanor or Level 6 Felony)"
+    ],
+    "notes": "Filing a false police report is the most common charge. False emergency calls (swatting) may be charged as a felony."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Ind. Code § 35-45-2-1",
+    "statute_title": "Intimidation",
+    "offense_class": "Level 6 Felony; Level 5 Felony (with weapon or threat to commit forcible felony)",
+    "penalty_min": "6 months (Level 6); 1 year (Level 5)",
+    "penalty_max": "2.5 years (Level 6); 6 years (Level 5)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant communicated a threat to another person",
+      "With the intent that the other person be placed in fear of retaliation for a prior lawful act",
+      "Or with the intent to cause the other person to engage in or refrain from specific conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon (Level 5 Felony)",
+      "Threat to commit a forcible felony (Level 5 Felony)",
+      "Directed at a public servant, witness, or juror (Level 5 Felony)"
+    ],
+    "notes": "Indiana uses 'intimidation' rather than 'criminal threat.' The threat must be intended to cause fear or compel action — mere angry words without specific intent may be insufficient."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Ind. Code § 35-44.1-2-1",
+    "statute_title": "Perjury",
+    "offense_class": "Level 6 Felony",
+    "penalty_min": "6 months",
+    "penalty_max": "2.5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant made a false, material statement under oath or affirmation",
+      "Knowing the statement to be false",
+      "In or in connection with an official proceeding"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "The statement must be material — false statements on immaterial matters are not perjury. Inconsistent statements under oath may support a perjury charge without proving which statement was false."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Ind. Code § 35-44.1-1-2",
+    "statute_title": "Bribery",
+    "offense_class": "Level 5 Felony",
+    "penalty_min": "1 year",
+    "penalty_max": "6 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant conferred or offered to confer a benefit on a public servant",
+      "With the intent to influence the public servant's performance of official duties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Both the giver and receiver of a bribe can be charged. Covers all public servants including judges, legislators, and law enforcement officers."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Ind. Code § 35-44.1-3-4",
+    "statute_title": "Escape",
+    "offense_class": "Level 5 Felony; Level 4 Felony (using violence)",
+    "penalty_min": "1 year (Level 5); 2 years (Level 4)",
+    "penalty_max": "6 years (Level 5); 12 years (Level 4)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly or intentionally escaped from lawful detention",
+      "Including removal from a penal facility, transport, or community corrections"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of violence (Level 4 Felony)"
+    ],
+    "notes": "Includes walking away from work release, community corrections, or electronic monitoring. Escape from state prison or using violence increases the felony level."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Ind. Code § 35-46-3-12",
+    "statute_title": "Animal Cruelty",
+    "offense_class": "Class A Misdemeanor; Level 6 Felony (prior, torture, or death of animal)",
+    "penalty_min": null,
+    "penalty_max": "1 year (Class A); 2.5 years (Level 6)",
+    "fine_max": "$5,000 (Class A); $10,000 (Level 6)",
+    "elements": [
+      "Defendant knowingly or intentionally tortured, beat, or mutilated a vertebrate animal",
+      "Or abandoned or neglected a vertebrate animal"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Torture resulting in death (Level 6 Felony)",
+      "Prior animal cruelty conviction (Level 6 Felony)",
+      "Domestic violence connection"
+    ],
+    "notes": "Indiana's animal cruelty laws have been strengthened. Cockfighting and dogfighting carry separate charges under § 35-46-3-8 and § 35-46-3-9."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Ind. Code § 35-38-2-3",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Not a new criminal charge — court may impose any sentence available for the original offense",
+    "penalty_min": null,
+    "penalty_max": "Up to the maximum sentence for the original offense",
+    "fine_max": "Up to the maximum fine for the original offense",
+    "elements": [
+      "Defendant was placed on probation for a criminal conviction",
+      "Defendant violated a condition of probation",
+      "The violation must be proved by a preponderance of the evidence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Probation violations use preponderance of evidence standard, not beyond a reasonable doubt. Court has broad discretion — may continue, modify, or revoke probation. Graduated sanctions under § 35-38-2-3(h) may apply."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Ind. Code § 11-13-3-4",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Not a new criminal charge — parole board determines consequences",
+    "penalty_min": null,
+    "penalty_max": "Return to incarceration for remainder of sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Indiana Parole Board handles parole violations. The parolee is entitled to a hearing. Parole may be revoked, modified, or continued. New criminal charges may also apply."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Ind. Code § 35-41-2-4",
+    "statute_title": "Aiding, Inducing, or Causing an Offense",
+    "offense_class": "Same as the underlying offense",
+    "penalty_min": "Same as the underlying offense",
+    "penalty_max": "Same as the underlying offense",
+    "fine_max": "Same as the underlying offense",
+    "elements": [
+      "Defendant knowingly or intentionally aided, induced, or caused another person to commit an offense"
+    ],
+    "mandatory_minimum": "Same as the underlying offense",
+    "enhancements": [],
+    "notes": "An aider is liable to the same extent as the principal. Mere presence at the scene is insufficient — some affirmative act or encouragement is required."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Ind. Code § 35-41-5-1",
+    "statute_title": "Attempt",
+    "offense_class": "One level below the underlying offense (e.g., attempted Level 3 Felony = Level 4 Felony)",
+    "penalty_min": "Varies based on the level of the underlying offense",
+    "penalty_max": "Varies — one level below the underlying offense",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, acting with the culpability required for the underlying offense",
+      "Engaged in conduct that constituted a substantial step toward the commission of the offense"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is graded one level below the completed offense. A 'substantial step' must strongly corroborate the criminal intent — mere preparation is insufficient. Attempted murder is a Level 1 Felony (exception to the general one-level-below rule)."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Ind. Code § 35-41-5-2",
+    "statute_title": "Conspiracy",
+    "offense_class": "Same level as the underlying offense (felony); Class A Misdemeanor (if underlying is misdemeanor)",
+    "penalty_min": "Varies by the level of the underlying offense",
+    "penalty_max": "Same as the underlying offense",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant, with intent to commit a felony, agreed with another person to commit the felony",
+      "Either defendant or co-conspirator performed an overt act in furtherance of the agreement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy requires an agreement and an overt act. A person cannot conspire alone — there must be at least two co-conspirators. Withdrawal is a defense if communicated before the overt act."
+  }
+]

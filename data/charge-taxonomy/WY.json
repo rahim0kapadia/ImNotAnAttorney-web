@@ -1,0 +1,1583 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Wyo. Stat. § 31-5-233",
+    "statute_title": "Driving or Having Control of Vehicle While Under Influence (DWUI)",
+    "offense_class": "Misdemeanor (first-third); Felony (fourth+ within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 6 months (second); 6 months (third); 7 years (fourth+)",
+    "fine_max": "$750 (first); $750 (second); $3,000 (third); $10,000 (fourth+)",
+    "elements": [
+      "Defendant drove or had actual physical control of a vehicle",
+      "Within Wyoming on a public street or highway",
+      "While under the influence of alcohol, a controlled substance, or a combination",
+      "Or had a BAC of .08 or higher"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "BAC .15 or higher (aggravated DWUI — enhanced penalties)",
+      "Passenger under 16 (additional penalties — up to 1 year for first; up to 5 years for second+ with child passenger)",
+      "Fourth conviction within 10 years (felony — up to 7 years)",
+      "Causing serious bodily injury (felony under § 6-2-106)"
+    ],
+    "notes": "Wyoming uses 'DWUI' (Driving While Under the Influence). Implied consent under § 31-6-102. Admin license suspension 90 days first offense. Ignition interlock may be ordered."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Wyo. Stat. § 31-5-233(b)(i)",
+    "statute_title": "DWUI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant drove or had actual physical control of a vehicle",
+      "While under the influence of alcohol or drugs",
+      "BAC .08 or higher, or impairment of driving ability",
+      "No prior DWUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "90-day license suspension; substance abuse assessment",
+    "enhancements": [
+      "BAC .15 or higher (aggravated — mandatory jail and increased suspension)",
+      "Passenger under 16 (up to 1 year jail and $1,000 fine)"
+    ],
+    "notes": "First offense may qualify for deferred prosecution or treatment court. 90-day license suspension. Ignition interlock may be ordered for BAC .15+."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Wyo. Stat. § 31-5-233(b)(ii)-(e)",
+    "statute_title": "DWUI — Repeat Offense",
+    "offense_class": "Misdemeanor (second/third); Felony (fourth+ within 10 years)",
+    "penalty_min": "7 days (second); 30 days (third); 180 days (fourth+)",
+    "penalty_max": "6 months (second); 6 months (third); 7 years (fourth+)",
+    "fine_max": "$750 (second); $3,000 (third); $10,000 (fourth+)",
+    "elements": [
+      "Defendant drove or had actual physical control of a vehicle",
+      "While under the influence of alcohol or drugs",
+      "BAC .08 or higher, or impairment of driving ability",
+      "One or more prior DWUI convictions within 10 years"
+    ],
+    "mandatory_minimum": "7 days (second); 30 days (third); 180 days (fourth+)",
+    "enhancements": [
+      "BAC .15 or higher (aggravated penalties)",
+      "Passenger under 16 (enhanced — up to 5 years for second+ with child)",
+      "Serious bodily injury (felony)"
+    ],
+    "notes": "10-year lookback period for counting prior offenses. Fourth offense within 10 years is a felony. License revocation 1 year (second); 3 years (third+)."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Wyo. Stat. § 31-5-233(a)(ii)-(iv)",
+    "statute_title": "DWUI — Controlled Substance or Drug",
+    "offense_class": "Same as alcohol DWUI by offense count",
+    "penalty_min": null,
+    "penalty_max": "Same as alcohol DWUI by offense count",
+    "fine_max": "Same as alcohol DWUI by offense count",
+    "elements": [
+      "Defendant drove or had actual physical control of a vehicle",
+      "While under the influence of a controlled substance",
+      "Or under the combined influence of alcohol and a controlled substance",
+      "To a degree which renders the defendant incapable of safely driving"
+    ],
+    "mandatory_minimum": "Same as alcohol DWUI by offense count",
+    "enhancements": [
+      "Combined influence of alcohol and drugs",
+      "Presence of Schedule I or II substance"
+    ],
+    "notes": "No per se drug limit in Wyoming. Prosecution must prove actual impairment. Drug Recognition Expert (DRE) testimony commonly used. Includes prescription medications."
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "statute_number": "Wyo. Stat. § 31-5-229",
+    "statute_title": "Reckless Driving",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant drove a vehicle on a highway",
+      "In willful or wanton disregard for the safety of persons or property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Subsequent offense"
+    ],
+    "notes": "Common plea-down from DWUI. License suspension possible. Points added to driving record."
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "statute_number": "Wyo. Stat. § 31-5-1101",
+    "statute_title": "Duty to Stop at Accident — Injury or Death",
+    "offense_class": "Felony (injury/death); Misdemeanor (property damage only)",
+    "penalty_min": null,
+    "penalty_max": "10 years (death); 5 years (injury); 6 months (property damage)",
+    "fine_max": "$10,000 (death); $5,000 (injury); $750 (property damage)",
+    "elements": [
+      "Defendant was the driver of a vehicle involved in an accident",
+      "Accident resulted in injury, death, or property damage",
+      "Defendant knowingly failed to stop at the scene",
+      "Defendant failed to provide identification and render aid"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of victim (up to 10 years)",
+      "Serious bodily injury"
+    ],
+    "notes": "Hit-and-run involving death carries up to 10 years. Property damage only is a misdemeanor under § 31-5-1103. License revocation upon conviction."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Wyo. Stat. § 6-2-106(b)",
+    "statute_title": "Homicide by Vehicle — While Under the Influence",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a vehicle while under the influence of alcohol or drugs",
+      "Defendant's impaired operation caused the death of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior DWUI convictions",
+      "Multiple victims"
+    ],
+    "notes": "Vehicular homicide while under the influence carries up to 20 years. Non-DUI vehicular homicide (criminally negligent) under § 6-2-106(a) carries up to 10 years."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Wyo. Stat. § 6-2-106(a)",
+    "statute_title": "Homicide by Vehicle — Criminally Negligent",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a vehicle in a criminally negligent manner",
+      "Defendant's operation caused the death of another person",
+      "Without intoxication as a factor"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Non-DUI vehicular homicide based on criminal negligence. Less serious than DUI-related vehicular homicide."
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "statute_number": "Wyo. Stat. § 31-7-134",
+    "statute_title": "Driving While License Canceled, Suspended, or Revoked",
+    "offense_class": "Misdemeanor (first); Felony (habitual offender)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first); 5 years (habitual offender under § 31-7-135)",
+    "fine_max": "$750 (first); $5,000 (habitual offender)",
+    "elements": [
+      "Defendant drove a motor vehicle on a public highway",
+      "Defendant's license was suspended, revoked, or canceled",
+      "Defendant had knowledge of the suspension or revocation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "DWUI-related suspension",
+      "Habitual traffic offender (felony — up to 5 years)"
+    ],
+    "notes": "Habitual traffic offender designation requires 3+ convictions for serious offenses within 5 years. Driving on habitual offender status is a felony."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Wyo. Stat. § 31-5-225",
+    "statute_title": "Fleeing or Attempting to Elude a Police Officer",
+    "offense_class": "Misdemeanor (basic); Felony (reckless or injury)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 5 years (felony if injury/reckless)",
+    "fine_max": "$750 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "A law enforcement officer gave a visual or audible signal to stop",
+      "Defendant was operating a motor vehicle",
+      "Defendant willfully failed to stop",
+      "Defendant attempted to flee or elude the officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Reckless driving during pursuit (felony)",
+      "Serious bodily injury results (felony)",
+      "Death results"
+    ],
+    "notes": "Basic fleeing is a misdemeanor. Aggravated fleeing (reckless driving or injury) is a felony. License revocation upon conviction."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Wyo. Stat. § 35-7-1031(c)",
+    "statute_title": "Possession of a Controlled Substance",
+    "offense_class": "Misdemeanor (first/second); Felony (third+ or Schedule I/II amounts exceeding threshold)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony — third+ or large amounts)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed a controlled substance",
+      "Without a valid prescription or legal authority",
+      "Substance is listed in Schedules I through V"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense (felony — up to 5 years)",
+      "Possession near a school (enhanced)",
+      "Larger amounts (may trigger PWID charges)"
+    ],
+    "notes": "First and second possession offenses are misdemeanors. Third offense is a felony. Drug court and diversion programs available for first offenders."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Wyo. Stat. § 35-7-1031(c)(i)(A)",
+    "statute_title": "Possession of Marijuana (3 oz or Less)",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "12 months",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant knowingly or intentionally possessed marijuana",
+      "Amount of 3 ounces or less",
+      "Without legal authority"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "More than 3 oz (felony — possession with intent)",
+      "Subsequent offense"
+    ],
+    "notes": "Wyoming has not legalized recreational or medical marijuana. Possession of 3 oz or less is a misdemeanor. Over 3 oz may trigger possession with intent charges."
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "statute_number": "Wyo. Stat. § 35-7-1031(c)(i)",
+    "statute_title": "Possession of Cocaine",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed cocaine",
+      "Cocaine is a Schedule II controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense (felony)"
+    ],
+    "notes": "Simple possession of cocaine is a misdemeanor for first/second offenses. Third offense is a felony."
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "statute_number": "Wyo. Stat. § 35-7-1031(c)(i)",
+    "statute_title": "Possession of Methamphetamine",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant knowingly or intentionally possessed methamphetamine",
+      "Methamphetamine is a Schedule II controlled substance",
+      "Without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third or subsequent offense (felony)",
+      "Manufacturing charges if precursors present"
+    ],
+    "notes": "Simple meth possession is a misdemeanor for first/second offenses. Manufacturing methamphetamine is a separate felony under § 35-7-1031(a)."
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "statute_number": "Wyo. Stat. § 35-7-1031(a)(i)",
+    "statute_title": "Manufacture or Delivery of Controlled Substance — Schedule I or II Narcotic",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant manufactured, delivered, or possessed with intent to deliver",
+      "A narcotic drug classified in Schedule I or II",
+      "Including heroin, cocaine, fentanyl, or methamphetamine"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second offense (doubled penalties)",
+      "Delivery to a minor (additional penalties)",
+      "Within 500 feet of a school",
+      "Large quantities"
+    ],
+    "notes": "Schedule I/II narcotic delivery carries the highest penalties. Second offense doubles the maximum. School zone enhancement under § 35-7-1036."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Wyo. Stat. § 35-7-1031(a)(ii)-(iv)",
+    "statute_title": "Delivery of Controlled Substance — Non-Narcotic",
+    "offense_class": "Felony (Schedule I-IV); Misdemeanor (Schedule V)",
+    "penalty_min": null,
+    "penalty_max": "10 years (Schedule I-II non-narcotic); 5 years (Schedule III); 2 years (Schedule IV); 1 year (Schedule V)",
+    "fine_max": "$10,000 (Schedule I-II); $5,000 (Schedule III-IV); $1,000 (Schedule V)",
+    "elements": [
+      "Defendant manufactured, delivered, or possessed with intent to deliver",
+      "A non-narcotic controlled substance",
+      "From Schedule I through V"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (doubled penalties)",
+      "Delivery to a minor"
+    ],
+    "notes": "Non-narcotic Schedule I-II (hallucinogens, amphetamines) carry up to 10 years. Schedule V delivery is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Wyo. Stat. § 35-7-1031(a)(i); § 35-7-1059",
+    "statute_title": "Manufacturing a Controlled Substance",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years (Schedule I-II narcotic); 10 years (other)",
+    "fine_max": "$25,000",
+    "elements": [
+      "Defendant manufactured or attempted to manufacture a controlled substance",
+      "Through chemical synthesis, cultivation, or processing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Clandestine methamphetamine lab (additional penalties under § 35-7-1059)",
+      "Child present during manufacturing",
+      "Environmental contamination"
+    ],
+    "notes": "Clandestine lab operations carry additional cleanup and restitution costs. Child endangerment charges added if minors present."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Wyo. Stat. § 35-7-1057",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "Knowing or intending it to be used for manufacturing, testing, or consuming a controlled substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Delivery of paraphernalia to a minor (felony — up to 5 years)"
+    ],
+    "notes": "Delivery of paraphernalia to a minor under 18 is a felony. Personal use paraphernalia is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "statute_number": "Wyo. Stat. § 35-7-1031(a)",
+    "statute_title": "Possession with Intent to Manufacture or Deliver",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years (Schedule I-II narcotic); 10 years (Schedule I-II non-narcotic); 5 years (Schedule III)",
+    "fine_max": "$25,000 (Schedule I-II narcotic); $10,000 (other)",
+    "elements": [
+      "Defendant possessed a controlled substance",
+      "With intent to manufacture or deliver",
+      "Intent inferred from quantity, packaging, scales, cash, or communications"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Near school",
+      "Delivery to a minor",
+      "Second or subsequent offense"
+    ],
+    "notes": "Marijuana over 3 oz may trigger PWID charges. Intent is inferred from circumstantial evidence including quantity and packaging."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Wyo. Stat. § 6-2-101",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "Life imprisonment",
+    "penalty_max": "Death or life imprisonment without parole",
+    "fine_max": null,
+    "elements": [
+      "Defendant purposely and with premeditated malice killed another person",
+      "Or killed another while in perpetration of certain felonies (felony murder)"
+    ],
+    "mandatory_minimum": "Life imprisonment",
+    "enhancements": [
+      "Death penalty eligible (aggravating circumstances under § 6-2-102)",
+      "Multiple victims",
+      "Murder of law enforcement officer"
+    ],
+    "notes": "Wyoming retains the death penalty. Life without parole is an alternative. Felony murder applies to deaths during arson, sexual assault, robbery, burglary, kidnapping, or escape."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Wyo. Stat. § 6-2-104",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": "20 years",
+    "penalty_max": "Life imprisonment",
+    "fine_max": null,
+    "elements": [
+      "Defendant purposely and maliciously killed another person",
+      "Without premeditation"
+    ],
+    "mandatory_minimum": "20 years",
+    "enhancements": [],
+    "notes": "Second degree murder requires malice but not premeditation. Includes depraved heart murder — extreme recklessness showing indifference to human life."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Wyo. Stat. § 6-2-105(a)(i)",
+    "statute_title": "Voluntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully killed another person",
+      "Without malice",
+      "Voluntarily, upon a sudden heat of passion"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Heat of passion must arise from adequate provocation. Cooling-off period negates the defense."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Wyo. Stat. § 6-2-105(a)(ii)",
+    "statute_title": "Involuntary Manslaughter",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully killed another person",
+      "Without malice",
+      "While in the commission of an unlawful act not amounting to a felony",
+      "Or through criminal negligence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Involuntary manslaughter in Wyoming carries the same statutory maximum as voluntary manslaughter. Sentencing depends on circumstances."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Wyo. Stat. § 6-2-502",
+    "statute_title": "Aggravated Assault and Battery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant caused or attempted to cause serious bodily injury to another person",
+      "Or threatened another with a deadly weapon",
+      "Intentionally, knowingly, or recklessly under circumstances manifesting extreme indifference to human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon",
+      "Against a law enforcement officer, firefighter, or emergency personnel (§ 6-5-204)"
+    ],
+    "notes": "Aggravated assault is a felony carrying up to 10 years. Assault on a peace officer is enhanced under § 6-5-204."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Wyo. Stat. § 6-2-501(b)",
+    "statute_title": "Simple Battery",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly caused bodily injury to another person",
+      "Or made physical contact of an insulting or provoking nature"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Against household member (domestic battery under § 6-2-511)"
+    ],
+    "notes": "Simple battery in Wyoming is a misdemeanor. Simple assault (threatening without contact) under § 6-2-501(a) is also a misdemeanor."
+  },
+  {
+    "common_charge_slug": "battery",
+    "statute_number": "Wyo. Stat. § 6-2-501(b)",
+    "statute_title": "Battery",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant intentionally, knowingly, or recklessly caused bodily injury to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing serious bodily injury (aggravated assault — felony)",
+      "Use of deadly weapon (aggravated assault — felony)"
+    ],
+    "notes": "Battery is the base-level physical contact offense. Elevation to aggravated assault occurs with serious bodily injury or deadly weapon."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Wyo. Stat. § 6-2-401",
+    "statute_title": "Robbery",
+    "offense_class": "Felony",
+    "penalty_min": "2 years",
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant took property from the person or presence of another",
+      "By use of force, threats, or intimidation",
+      "Against the will of the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a deadly weapon (aggravated robbery)"
+    ],
+    "notes": "Basic robbery in Wyoming carries 2-10 years. Aggravated robbery with deadly weapon is separately charged."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Wyo. Stat. § 6-2-401(c)(ii)",
+    "statute_title": "Aggravated Robbery — Armed with a Deadly Weapon",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "25 years",
+    "fine_max": "$50,000",
+    "elements": [
+      "Defendant committed robbery",
+      "While armed with a deadly weapon or displaying what appeared to be a deadly weapon",
+      "Or intentionally inflicted or attempted to inflict bodily injury"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Serious bodily injury to victim",
+      "Robbery of financial institution"
+    ],
+    "notes": "Aggravated robbery carries 5-25 years with a mandatory minimum. One of the most seriously punished property crimes in Wyoming."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Wyo. Stat. § 6-2-201",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony",
+    "penalty_min": "20 years (if released unharmed)",
+    "penalty_max": "Life imprisonment (if victim physically injured or not released safely)",
+    "fine_max": null,
+    "elements": [
+      "Defendant unlawfully removed another person from the place where found",
+      "Or unlawfully confined another person",
+      "With intent to hold for ransom, use as a hostage, facilitate a felony, inflict injury, or terrorize"
+    ],
+    "mandatory_minimum": "20 years (if released unharmed); life (if injured or not released)",
+    "enhancements": [
+      "Victim physically injured (life imprisonment)",
+      "Ransom demanded",
+      "Victim is a minor"
+    ],
+    "notes": "Kidnapping carries severe mandatory minimums — 20 years minimum if victim is released unharmed, life if injured."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Wyo. Stat. § 6-3-101",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant intentionally started a fire or caused an explosion",
+      "Damaging a dwelling or occupied structure",
+      "Or when another person was present"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death results",
+      "Serious bodily injury"
+    ],
+    "notes": "Second degree arson (§ 6-3-102) covers non-occupied structures — up to 10 years. Third degree (§ 6-3-103) covers personal property — up to 5 years."
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "statute_number": "Wyo. Stat. § 6-1-301; § 6-2-101",
+    "statute_title": "Attempted First Degree Murder",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years (or one grade below completed offense)",
+    "fine_max": null,
+    "elements": [
+      "Defendant had specific intent to kill another person",
+      "Defendant performed an overt act toward committing murder",
+      "The murder was not completed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Prior violent felony"
+    ],
+    "notes": "Wyoming punishes attempts at maximum one class below the completed offense. Attempted first degree murder is a serious felony."
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "statute_number": "Wyo. Stat. § 6-2-502(a)(iv)",
+    "statute_title": "Aggravated Assault — Deadly Weapon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant threatened another person with a deadly weapon",
+      "Or used a deadly weapon to cause bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury resulting",
+      "Victim is a law enforcement officer"
+    ],
+    "notes": "Assault with a deadly weapon is charged as aggravated assault in Wyoming."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Wyo. Stat. § 6-3-402",
+    "statute_title": "Larceny",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 6 months (misdemeanor)",
+    "fine_max": "$10,000 (felony); $750 (misdemeanor)",
+    "elements": [
+      "Defendant took and carried away the personal property of another",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Livestock theft (felony regardless of value under § 6-3-403)"
+    ],
+    "notes": "Felony larceny threshold is $1,000. Livestock theft is always a felony in Wyoming."
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "statute_number": "Wyo. Stat. § 6-3-402(a)",
+    "statute_title": "Grand Larceny ($1,000+)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant took and carried away the personal property of another",
+      "With intent to permanently deprive the owner",
+      "Value of property $1,000 or more"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wyoming's felony theft threshold is $1,000."
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "statute_number": "Wyo. Stat. § 6-3-402(b)",
+    "statute_title": "Petit Larceny (Under $1,000)",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant took and carried away the personal property of another",
+      "With intent to permanently deprive the owner",
+      "Value of property less than $1,000"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Petit larceny is a misdemeanor in Wyoming."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Wyo. Stat. § 6-3-404",
+    "statute_title": "Shoplifting",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$750 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant concealed unpurchased merchandise of a retail establishment",
+      "Or altered a price tag",
+      "With intent to deprive the merchant of the merchandise"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value $1,000+ (felony)"
+    ],
+    "notes": "Wyoming has a specific shoplifting statute. Civil recovery available to retailers."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Wyo. Stat. § 6-3-301",
+    "statute_title": "Burglary",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant entered or remained in a building, occupied structure, or vehicle",
+      "Without authority",
+      "With intent to commit larceny or a felony therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated burglary — armed or causing injury (§ 6-3-301(c) — up to 25 years)"
+    ],
+    "notes": "Basic burglary is up to 10 years. Aggravated burglary (armed, causing bodily injury, or using a deadly weapon) carries up to 25 years."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Wyo. Stat. § 6-3-301(a)",
+    "statute_title": "Burglary — Dwelling",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (basic); 25 years (aggravated)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant entered or remained in a dwelling",
+      "Without authority",
+      "With intent to commit larceny or a felony therein"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated — armed with deadly weapon or causing injury (up to 25 years)"
+    ],
+    "notes": "Wyoming does not separately classify residential burglary — same statute covers all structures. Sentencing typically higher for dwellings."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Wyo. Stat. § 6-3-402(a); § 31-11-103",
+    "statute_title": "Grand Larceny — Motor Vehicle / Unauthorized Use",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (larceny); 5 years (unauthorized use)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant took a motor vehicle belonging to another",
+      "Without consent of the owner",
+      "With intent to permanently deprive or temporarily use"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Permanent theft of a vehicle is grand larceny. Unauthorized temporary use (joyriding) under § 31-11-103 is a separate felony."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Wyo. Stat. § 6-3-403",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 6 months (misdemeanor)",
+    "fine_max": "$10,000 (felony); $750 (misdemeanor)",
+    "elements": [
+      "Defendant received, retained, or disposed of property of another",
+      "Knowing or having reasonable cause to believe the property was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Penalty mirrors the value thresholds of the underlying theft — $1,000 divides felony from misdemeanor."
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "statute_number": "Wyo. Stat. § 6-3-201",
+    "statute_title": "Destruction of Property",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$750 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant knowingly and intentionally destroyed or damaged property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to government property"
+    ],
+    "notes": "Felony threshold is $1,000 in damages. Restitution typically ordered."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Wyo. Stat. § 6-3-303",
+    "statute_title": "Criminal Trespass",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant entered or remained on property of another",
+      "Without permission or lawful authority",
+      "After being notified to leave or seeing no-trespassing signs"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass to collect data (agricultural/ranch operations — enhanced under § 6-3-414)"
+    ],
+    "notes": "Wyoming has specific ag-gag trespass laws for data collection on agricultural operations. Posted land with signs or paint creates constructive notice."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Wyo. Stat. § 6-3-201",
+    "statute_title": "Criminal Mischief / Destruction of Property",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$750 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant intentionally or recklessly damaged property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wyoming uses 'destruction of property' rather than 'criminal mischief.' Value of damage determines penalty tier."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Wyo. Stat. § 6-2-511",
+    "statute_title": "Domestic Battery",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first/second); 5 years (third+)",
+    "fine_max": "$750 (first/second); $5,000 (third+)",
+    "elements": [
+      "Defendant caused bodily injury to a household member",
+      "Household member includes spouse, former spouse, person with child in common, cohabitant, or dating partner",
+      "By intentional, knowing, or reckless conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third offense (felony — up to 5 years)",
+      "Strangulation (aggravated assault — felony)",
+      "Violation of protective order"
+    ],
+    "notes": "First and second domestic battery are misdemeanors. Third within Wyoming is a felony. No mandatory arrest but officers encouraged to arrest. Protective orders under § 35-21-104."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Wyo. Stat. § 6-2-511(a)-(b)",
+    "statute_title": "Domestic Battery — Repeat Offense",
+    "offense_class": "Misdemeanor (first/second); Felony (third+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (first/second); 5 years (third+)",
+    "fine_max": "$750 (first/second); $5,000 (third+)",
+    "elements": [
+      "Defendant caused bodily injury to a household member",
+      "By intentional, knowing, or reckless conduct",
+      "One or more prior domestic battery convictions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Third offense (felony)",
+      "Serious bodily injury (aggravated assault)"
+    ],
+    "notes": "Third domestic battery in Wyoming is a felony. Federal firearms prohibition applies to DV misdemeanor convictions under 18 U.S.C. § 922(g)(9)."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Wyo. Stat. § 6-2-503(b)",
+    "statute_title": "Reckless Endangering — Child",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant recklessly engaged in conduct",
+      "That placed a child in danger of death or serious bodily injury"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in bodily injury (aggravated assault charges possible)",
+      "DUI with child in vehicle"
+    ],
+    "notes": "Child endangerment is often charged alongside DUI when a child is present. Also applies to leaving children in dangerous environments."
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "statute_number": "Wyo. Stat. § 6-2-503(a)",
+    "statute_title": "Child Abuse — Physical Injury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (bodily injury); 25 years (serious bodily injury)",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally or recklessly caused physical injury to a child under 16",
+      "Or subjected a child to cruel or unreasonable punishment"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury (up to 25 years)",
+      "Death of child (charged as homicide)"
+    ],
+    "notes": "Child abuse resulting in serious bodily injury carries up to 25 years. Death of a child through abuse is charged as homicide."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Wyo. Stat. § 6-4-404",
+    "statute_title": "Violation of an Order of Protection",
+    "offense_class": "Misdemeanor (first); Felony (second+ within 5 years)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 5 years (felony)",
+    "fine_max": "$750 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "A valid order of protection was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant knowingly violated the terms of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent violation within 5 years (felony)"
+    ],
+    "notes": "First violation is a misdemeanor. Repeat violations within 5 years elevate to felony."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Wyo. Stat. § 6-2-506",
+    "statute_title": "Stalking",
+    "offense_class": "Misdemeanor (first); Felony (second+ or violation of protective order)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$750 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant engaged in a course of conduct directed at a specific person",
+      "That would cause a reasonable person to fear for safety or suffer emotional distress",
+      "Defendant intended to harass, frighten, or intimidate"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Second or subsequent offense (felony — up to 10 years)",
+      "In violation of a protective order (felony)",
+      "Aggravated stalking — credible threat of violence (felony)"
+    ],
+    "notes": "Aggravated stalking involving credible threats of death or serious bodily harm is a felony. Course of conduct requires 2+ acts."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Wyo. Stat. § 6-2-506(b)",
+    "statute_title": "Harassment",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant engaged in a pattern of conduct with intent to harass another person",
+      "Conduct served no legitimate purpose",
+      "And would cause a reasonable person to feel harassed"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Harassment is a lesser offense than stalking. Includes telephone harassment and electronic communications."
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "statute_number": "Wyo. Stat. § 6-2-507",
+    "statute_title": "Abuse, Neglect, or Exploitation of a Vulnerable Adult",
+    "offense_class": "Felony (abuse causing injury); Misdemeanor (neglect)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony abuse); 1 year (misdemeanor neglect)",
+    "fine_max": "$10,000 (felony); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant was a caretaker for a vulnerable adult",
+      "Defendant intentionally or recklessly abused, neglected, or exploited the vulnerable adult"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Serious bodily injury",
+      "Financial exploitation"
+    ],
+    "notes": "Financial exploitation of a vulnerable adult is a separate offense. Adult Protective Services involvement required."
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "statute_number": "Wyo. Stat. § 6-8-102",
+    "statute_title": "Possession of a Firearm by a Prohibited Person",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant was prohibited from possessing firearms (convicted violent felon, involuntarily committed, fugitive)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wyoming is a constitutional carry state — no permit needed for concealed carry by lawful citizens. Prohibitions apply to violent felons and certain other persons."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Wyo. Stat. § 6-8-102",
+    "statute_title": "Possession of Firearm by Convicted Violent Felon",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant possessed a firearm",
+      "Defendant had previously been convicted of a violent felony",
+      "Or attempted violent felony"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wyoming only prohibits firearm possession for violent felons, not all felons. Non-violent felons may possess firearms. Federal law (18 U.S.C. § 922(g)) still applies to all felons."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Wyo. Stat. § 6-8-104",
+    "statute_title": "Carrying a Concealed Weapon — Prohibited Persons",
+    "offense_class": "Misdemeanor (general); Felony (prohibited person)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 3 years (felony — prohibited person)",
+    "fine_max": "$750 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant carried a concealed deadly weapon",
+      "Defendant was a prohibited person or under disqualification"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Wyoming enacted constitutional carry — no permit needed for lawful gun owners. Only prohibited persons (violent felons, etc.) face concealed carry charges."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Wyo. Stat. § 6-3-203",
+    "statute_title": "Reckless Endangering with a Firearm",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant discharged a firearm",
+      "In a reckless manner endangering the safety of another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Injury results (aggravated assault charges)"
+    ],
+    "notes": "Reckless discharge is a misdemeanor unless injury occurs, at which point aggravated assault charges may apply."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Wyo. Stat. § 6-3-901",
+    "statute_title": "Unauthorized Use of Personal Identifying Information",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant used personal identifying information of another person",
+      "Without the authorization or consent of that person",
+      "With intent to obtain anything of value or cause harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim is elderly or vulnerable",
+      "Multiple victims"
+    ],
+    "notes": "Includes Social Security numbers, financial account information, and biometric data. Restitution to victims required."
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "statute_number": "Wyo. Stat. § 6-3-402; § 6-3-405",
+    "statute_title": "Embezzlement",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 6 months (misdemeanor)",
+    "fine_max": "$10,000 (felony); $750 (misdemeanor)",
+    "elements": [
+      "Defendant was entrusted with property of another",
+      "Defendant fraudulently converted the property to own use",
+      "With intent to deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Public officer embezzlement (enhanced penalties under § 6-5-110)"
+    ],
+    "notes": "Embezzlement by public officers carries enhanced penalties. General embezzlement follows larceny value thresholds."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Wyo. Stat. § 6-3-602",
+    "statute_title": "Forgery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant falsely made, completed, or altered a written instrument",
+      "With intent to defraud or deceive another",
+      "Instrument includes checks, deeds, contracts, wills, public records"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Uttering (passing) a forged instrument (§ 6-3-603) carries the same penalties."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Wyo. Stat. § 6-3-407",
+    "statute_title": "Obtaining Property by False Pretenses",
+    "offense_class": "Felony ($1,000+); Misdemeanor (under $1,000)",
+    "penalty_min": null,
+    "penalty_max": "10 years (felony); 6 months (misdemeanor)",
+    "fine_max": "$10,000 (felony); $750 (misdemeanor)",
+    "elements": [
+      "Defendant obtained property of another by false pretenses",
+      "Through misrepresentation or deception",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeds $1,000 (felony)"
+    ],
+    "notes": "General fraud statute covers false pretenses, confidence games, and scheme-based fraud."
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "statute_number": "Wyo. Stat. § 6-3-802",
+    "statute_title": "Fraudulent Use of a Credit Card",
+    "offense_class": "Misdemeanor (under $1,000); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$750 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant used a credit or debit card",
+      "Knowing it was stolen, forged, revoked, or expired",
+      "With intent to obtain money, goods, or services"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value exceeds $1,000 (felony)"
+    ],
+    "notes": "Includes possession of a stolen or forged card and unauthorized use. Multiple transactions may be aggregated."
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "statute_number": "Wyo. Stat. § 6-3-501",
+    "statute_title": "Money Laundering",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000 or twice the value of the property",
+    "elements": [
+      "Defendant conducted a financial transaction",
+      "Involving proceeds known to be derived from criminal activity",
+      "With intent to promote or conceal the criminal activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Includes structuring transactions to avoid reporting requirements. Forfeiture of laundered property authorized."
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "statute_number": "Wyo. Stat. § 6-2-302",
+    "statute_title": "Sexual Assault in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "50 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant subjected another person to sexual intrusion",
+      "Through forcible compulsion",
+      "And caused submission by threat of death, serious bodily injury, or kidnapping"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Victim under 16 (enhanced)",
+      "Use of a deadly weapon"
+    ],
+    "notes": "First degree sexual assault is the most serious sexual offense. Second degree (§ 6-2-303) carries up to 20 years for sexual intrusion through forcible compulsion."
+  },
+  {
+    "common_charge_slug": "rape",
+    "statute_number": "Wyo. Stat. § 6-2-302",
+    "statute_title": "Sexual Assault in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "50 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant subjected another person to sexual intrusion",
+      "Through forcible compulsion",
+      "Causing submission by threat or use of physical force"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Victim is physically helpless",
+      "Use of a weapon"
+    ],
+    "notes": "Wyoming uses 'sexual assault' rather than 'rape.' Sex offender registration required under § 7-19-302."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Wyo. Stat. § 6-4-201",
+    "statute_title": "Public Indecency",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant exposed private parts in a public place",
+      "Under circumstances likely to cause affront or alarm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "In the presence of a minor",
+      "Second or subsequent offense"
+    ],
+    "notes": "Repeat offenses or exposure involving minors may trigger sex offender registration."
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "statute_number": "Wyo. Stat. § 6-4-102",
+    "statute_title": "Soliciting a Prostitute — Patronizing",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant offered or agreed to pay a fee",
+      "For the purpose of engaging in sexual conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Soliciting a minor (felony)"
+    ],
+    "notes": "Promoting prostitution is a felony. Soliciting a minor triggers human trafficking charges."
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "statute_number": "Wyo. Stat. § 6-4-303",
+    "statute_title": "Sexual Exploitation of Children",
+    "offense_class": "Felony",
+    "penalty_min": "5 years",
+    "penalty_max": "12 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant knowingly caused, induced, or permitted a child to engage in sexually explicit conduct",
+      "For the purpose of producing a visual depiction"
+    ],
+    "mandatory_minimum": "5 years",
+    "enhancements": [
+      "Victim under 12",
+      "Distribution of material"
+    ],
+    "notes": "Possession of child pornography (§ 6-4-303(d)) is also a felony. Distribution carries enhanced penalties."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Wyo. Stat. § 7-19-307",
+    "statute_title": "Failure to Register as a Sex Offender",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was required to register as a sex offender",
+      "Defendant knowingly failed to register or update registration"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Registration requirements under § 7-19-302. Must register within 3 business days of release or relocation."
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "statute_number": "Wyo. Stat. § 6-2-304",
+    "statute_title": "Sexual Assault in the Third Degree (Statutory)",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant, aged 18 or older, subjected another person to sexual intrusion or contact",
+      "Victim was under age of consent (16 years)",
+      "Defendant was at least 4 years older than the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 13 (first degree — up to 50 years)"
+    ],
+    "notes": "Wyoming's age of consent is 16. Close-in-age exception (4-year gap). Sexual assault of a child under 13 is first-degree sexual assault."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Wyo. Stat. § 6-6-102",
+    "statute_title": "Breach of Peace / Disorderly Conduct",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant disturbed the peace by violent, profane, indecent, or boisterous conduct",
+      "Or unreasonable noise",
+      "In a public place or affecting the public"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "General catch-all for public disturbances. Common plea-down from more serious charges."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Wyo. Stat. § 6-5-204(a)",
+    "statute_title": "Interference with a Peace Officer",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$1,000",
+    "elements": [
+      "A peace officer was performing official duties",
+      "Defendant knowingly interfered with, obstructed, or resisted the officer"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing bodily injury to officer (aggravated assault charges)"
+    ],
+    "notes": "Wyoming uses 'interference with a peace officer' rather than 'resisting arrest.' Assault on a peace officer may be charged as aggravated assault."
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "statute_number": "Wyo. Stat. § 6-5-204; § 6-5-305",
+    "statute_title": "Obstruction of Justice / Compounding a Crime",
+    "offense_class": "Misdemeanor (obstruction); Felony (tampering with evidence/witnesses)",
+    "penalty_min": null,
+    "penalty_max": "1 year (misdemeanor); 10 years (felony witness tampering under § 6-5-305)",
+    "fine_max": "$1,000 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant knowingly gave false information to an officer",
+      "Or concealed, destroyed, or altered evidence",
+      "With intent to hinder an investigation or prosecution"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Witness tampering or intimidation (felony)"
+    ],
+    "notes": "Witness tampering and evidence destruction are felonies. Providing false information to an officer is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "statute_number": "Wyo. Stat. § 1-21-701 et seq.",
+    "statute_title": "Contempt of Court",
+    "offense_class": "Criminal contempt (punitive); Civil contempt (remedial)",
+    "penalty_min": null,
+    "penalty_max": "6 months or $500 per occurrence",
+    "fine_max": "$500 per occurrence",
+    "elements": [
+      "Defendant willfully disobeyed a lawful court order",
+      "Or engaged in disorderly conduct in the presence of the court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Direct contempt (in court's presence) may be punished summarily. Constructive contempt requires notice and hearing."
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "statute_number": "Wyo. Stat. § 6-6-102(a)",
+    "statute_title": "Public Intoxication / Breach of Peace",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant was intoxicated in a public place",
+      "And was causing a disturbance or endangering self or others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Public intoxication alone may not be criminal — typically requires accompanying disorderly conduct or danger to self/others."
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "statute_number": "Wyo. Stat. § 7-10-106",
+    "statute_title": "Failure to Appear — Bail Jumping",
+    "offense_class": "Misdemeanor (if underlying is misdemeanor); Felony (if underlying is felony)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 10 years (felony)",
+    "fine_max": "$750 (misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant was released on bail or recognizance",
+      "Defendant willfully failed to appear as required by the court"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Bail jumping severity matches the underlying charge. Bail bond forfeited. Bench warrant issued."
+  },
+  {
+    "common_charge_slug": "false-report",
+    "statute_number": "Wyo. Stat. § 6-5-210",
+    "statute_title": "Making a False Report",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "6 months",
+    "fine_max": "$750",
+    "elements": [
+      "Defendant knowingly made a false report to law enforcement",
+      "Regarding the commission of a crime"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Filing a false police report is a misdemeanor. False bomb threats or emergency reports carry enhanced penalties."
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "statute_number": "Wyo. Stat. § 6-2-505",
+    "statute_title": "Terroristic Threats",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant threatened to commit a violent felony",
+      "With intent to terrorize another person",
+      "Or cause evacuation of a building, place of assembly, or facility of public transportation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Causing evacuation or public panic",
+      "Threat involving WMD or explosive"
+    ],
+    "notes": "Terroristic threats are a felony in Wyoming. Bomb threats and threats causing public panic carry enhanced penalties."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Wyo. Stat. § 6-5-301",
+    "statute_title": "Perjury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant made a materially false statement",
+      "Under oath in an official proceeding",
+      "Knowing the statement was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Subornation of perjury carries the same penalties. False swearing in non-official proceedings is a lesser offense."
+  },
+  {
+    "common_charge_slug": "bribery",
+    "statute_number": "Wyo. Stat. § 6-5-102",
+    "statute_title": "Bribery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant offered, gave, or promised something of value",
+      "To a public servant or official",
+      "With intent to influence the official's actions or decisions"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Accepting a bribe is also a felony. Includes bribery of jurors and witnesses."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Wyo. Stat. § 6-5-206",
+    "statute_title": "Escape",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (basic); 10 years (with force or violence)",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant was lawfully in custody or confined",
+      "Defendant escaped from custody or confinement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or violence during escape (enhanced to 10 years)"
+    ],
+    "notes": "Sentence runs consecutive to original sentence. Failure to return from furlough or work release is also escape."
+  },
+  {
+    "common_charge_slug": "animal-cruelty",
+    "statute_number": "Wyo. Stat. § 6-3-203(b)-(d)",
+    "statute_title": "Cruelty to Animals",
+    "offense_class": "Misdemeanor (basic); Felony (aggravated or subsequent)",
+    "penalty_min": null,
+    "penalty_max": "6 months (misdemeanor); 2 years (felony)",
+    "fine_max": "$750 (misdemeanor); $5,000 (felony)",
+    "elements": [
+      "Defendant intentionally and maliciously tortured, injured, or killed an animal",
+      "Or neglected an animal causing unnecessary suffering"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggravated cruelty — torture or sadistic conduct (felony)",
+      "Subsequent offense (felony)"
+    ],
+    "notes": "Aggravated animal cruelty is a felony. Wyoming also has specific statutes for animal fighting."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Wyo. Stat. § 7-13-407",
+    "statute_title": "Violation of Probation",
+    "offense_class": "Varies — court may revoke probation and impose original sentence",
+    "penalty_min": null,
+    "penalty_max": "Original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was placed on probation",
+      "Defendant violated a condition of probation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Court has discretion to modify conditions, extend probation, or revoke and impose original sentence. New criminal charges typically result in revocation."
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "statute_number": "Wyo. Stat. § 7-13-408",
+    "statute_title": "Violation of Parole",
+    "offense_class": "Varies — return to prison for remaining term",
+    "penalty_min": null,
+    "penalty_max": "Remaining original sentence",
+    "fine_max": null,
+    "elements": [
+      "Defendant was released on parole",
+      "Defendant violated a condition of parole"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Board of Parole conducts revocation hearing. Technical violations may result in graduated sanctions before revocation."
+  },
+  {
+    "common_charge_slug": "aiding-abetting",
+    "statute_number": "Wyo. Stat. § 6-1-201",
+    "statute_title": "Aiding and Abetting",
+    "offense_class": "Same as principal offense",
+    "penalty_min": null,
+    "penalty_max": "Same as principal offense",
+    "fine_max": "Same as principal offense",
+    "elements": [
+      "Defendant aided, abetted, counseled, or procured another person",
+      "To commit a crime",
+      "With intent that the crime be committed"
+    ],
+    "mandatory_minimum": "Same as principal offense",
+    "enhancements": [],
+    "notes": "An accessory before the fact is punished as a principal. Accessory after the fact (§ 6-5-202) faces lesser penalties."
+  },
+  {
+    "common_charge_slug": "attempt",
+    "statute_number": "Wyo. Stat. § 6-1-301",
+    "statute_title": "Criminal Attempt",
+    "offense_class": "One grade below the target offense",
+    "penalty_min": null,
+    "penalty_max": "Maximum for one grade below target offense",
+    "fine_max": "Same reduction",
+    "elements": [
+      "Defendant had intent to commit a specific crime",
+      "Defendant performed an overt act toward commission",
+      "Act went beyond mere preparation"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Attempt is punished at one grade below the completed offense. Voluntary abandonment is an affirmative defense."
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "statute_number": "Wyo. Stat. § 6-1-303",
+    "statute_title": "Criminal Conspiracy",
+    "offense_class": "Same as target offense (felony); Misdemeanor (if target is misdemeanor)",
+    "penalty_min": null,
+    "penalty_max": "Same as target offense",
+    "fine_max": "Same as target offense",
+    "elements": [
+      "Defendant agreed with one or more persons to commit a crime",
+      "An overt act was performed in furtherance of the agreement"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Conspiracy requires an overt act. Conspiracy to commit a felony is a felony."
+  }
+]

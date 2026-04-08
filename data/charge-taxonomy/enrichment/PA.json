@@ -1,0 +1,2339 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "Refusal to submit to chemical testing is treated as Highest BAC tier — refusal is not a defense, it is an enhancement",
+      "Mandatory ignition interlock for one year on all convictions adds collateral pressure",
+      "10-year look-back creates clear sentencing escalation paths"
+    ],
+    "defense_opportunities": [
+      "ARD (Accelerated Rehabilitative Disposition) under Pa.R.Crim.P. 300 is unique to Pennsylvania — first offenders avoid conviction entirely upon completion",
+      "Field sobriety test administration must conform to NHTSA standards",
+      "Tier classification challenges — moving from Highest to High or General BAC dramatically reduces penalties"
+    ],
+    "common_defenses": [
+      "Lack of probable cause for the traffic stop",
+      "Improper administration of standardized field sobriety tests",
+      "Breath/blood test machine calibration and maintenance failures",
+      "Medical conditions (GERD, diabetes) producing false positives",
+      "No actual physical control of vehicle"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "Minimum 72 hours jail (General), 48 hours (High), or 72 hours (Highest) — predictable floor",
+      "12-month license suspension for Highest BAC or drug DUI",
+      "ARD eligibility narrow — disqualifications for prior records, accidents with injury, minor passengers",
+      "Prosecutor controls ARD admission — leverage in plea negotiations"
+    ],
+    "defense_opportunities": [
+      "ARD is the optimal first-offense outcome — eligibility analysis is the threshold defense decision",
+      "Move from Highest to General Impairment tier through BAC challenge dramatically reduces penalty",
+      "Occupational Limited License available after first offense with conditions",
+      "Drug DUI defendants disqualified from ARD in some counties — challenge tier classification",
+      "Pre-ARD waiting period allows time to gather mitigating evidence"
+    ],
+    "common_defenses": [
+      "ARD eligibility and admission",
+      "Improper traffic stop or extension of detention",
+      "BAC tier challenges (move from M1 to summary)",
+      "Medical or physiological causes of test results",
+      "Insufficient impairment evidence at General Impairment level"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "Second offense High/Highest BAC is M1 with 30-day mandatory minimum",
+      "Fourth offense within 10 years is automatic Felony 3 — 7-year exposure",
+      "Second offense triggers 18-month license revocation",
+      "ARD bar eliminates the most common defense exit"
+    ],
+    "defense_opportunities": [
+      "Collaterally attack prior convictions for constitutional infirmity (uncounseled pleas, defective colloquies)",
+      "Verify look-back calculation — runs from prior conviction to current offense date",
+      "ARD does not always count as a conviction for look-back purposes — challenge prior prosecutorial classifications",
+      "Tier reduction from Highest to General Impairment substantially reduces mandatory minimums",
+      "DUI Court diversion programs available in many counties for repeat offenders"
+    ],
+    "common_defenses": [
+      "Collateral attack on prior conviction",
+      "Look-back miscalculation",
+      "ARD does not qualify as prior conviction",
+      "Tier classification challenges",
+      "Same defenses as first offense (stop, testing, impairment)"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "Treated at Highest BAC tier regardless of impairment level",
+      "Metabolites count — THC metabolites detectable for weeks support charges",
+      "Drug Recognition Expert testimony admissible",
+      "Combined alcohol and drug enhancement available"
+    ],
+    "defense_opportunities": [
+      "Active vs. inactive metabolite distinction critical for marijuana cases — Carboxy-THC is inactive",
+      "Challenge zero-tolerance application to medical marijuana patients",
+      "Prescription drug DUI requires actual impairment proof — not mere presence",
+      "DRE protocol compliance — every step documented or testimony impeachable",
+      "Lab chain of custody and quantitation challenges"
+    ],
+    "common_defenses": [
+      "Inactive metabolite (no impairment)",
+      "Lawful prescription use",
+      "Defective DRE evaluation",
+      "Lab error or chain of custody breaks",
+      "Polypharmacy or medical condition"
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "Willful or wanton disregard inferred from speed, conditions, or witness testimony",
+      "Often charged as plea-down from DUI",
+      "Death or serious bodily injury elevates to homicide by vehicle (separate F3)",
+      "Records-based prosecution from speed cameras and traffic enforcement"
+    ],
+    "defense_opportunities": [
+      "Willful and wanton standard requires more than ordinary negligence — challenge sufficiency",
+      "Single-incident conduct rarely meets standard without aggravating facts",
+      "Mechanical failure or sudden emergency defense",
+      "Challenge witness perception of speed and distance"
+    ],
+    "common_defenses": [
+      "Conduct was negligence not willful/wanton",
+      "Mechanical failure or sudden emergency",
+      "Necessity",
+      "Mistaken identity",
+      "Reduce to careless driving (non-criminal)"
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Death of victim elevates to Felony 2 with 10-year max",
+      "Mandatory license revocation",
+      "Knowledge of accident inferred from vehicle damage and impact evidence",
+      "License plate readers and dashcams support identification"
+    ],
+    "defense_opportunities": [
+      "Lack of knowledge of accident is complete defense — nighttime, weather, road conditions support",
+      "Driver-identity defenses in vehicle-only ID cases",
+      "Compliance with reporting duties through alternate means",
+      "Insurance reporting can satisfy duty in some scenarios"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of accident",
+      "Mistaken identification",
+      "Defendant not the driver",
+      "Compliance through alternate reporting",
+      "Necessity (immediate safety threat)"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "Accident reconstruction and EDR data support causation",
+      "Toxicology + reconstruction creates near-irrebuttable case"
+    ],
+    "defense_opportunities": [
+      "Causation defense — would death have occurred regardless of defendant's conduct?",
+      "Challenge BAC timing — consumption after accident is defense",
+      "Reckless disregard requires more than negligence — challenge sufficiency",
+      "Independent accident reconstruction expert essential",
+      "Pre-existing medical conditions in victim may break causation"
+    ],
+    "common_defenses": [
+      "Lack of causation",
+      "Intervening cause",
+      "Conduct was negligent, not reckless",
+      "Toxicology timing",
+      "Sudden medical emergency"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Felony 3 with 7-year max",
+      "DUI-related elevates to Felony 2 with mandatory minimum",
+      "Reckless disregard standard reachable through impairment evidence",
+      "Strong public sympathy in jury trials"
+    ],
+    "defense_opportunities": [
+      "Reckless disregard is higher standard than negligence — challenge mens rea",
+      "Challenge accident reconstruction methodology",
+      "Victim's contributory conduct breaks causation",
+      "Mechanical failure unknown to defendant",
+      "Distinguish from civil negligence"
+    ],
+    "common_defenses": [
+      "Lack of reckless disregard",
+      "Intervening cause",
+      "Mechanical failure",
+      "Sudden emergency",
+      "Contributory negligence as superseding cause"
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "DUI-related driving on suspended carries 90-day mandatory minimum",
+      "PennDOT records create automatic proof of suspension",
+      "Knowledge inferred from certified mail records",
+      "60-day additional suspension upon conviction"
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge — defective notice, returned mail, address change",
+      "Distinguish DUI-related from administrative suspension to avoid M3 enhancement",
+      "Hardship/occupational limited license in effect is complete defense",
+      "Reinstatement timing — if technically reinstated, no offense",
+      "Some suspension types may not trigger criminal exposure"
+    ],
+    "common_defenses": [
+      "Lack of notice of suspension",
+      "Operating under valid OLL or hardship license",
+      "Suspension reinstated prior to driving",
+      "Identity",
+      "Necessity"
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Crossing state line, accident, or injury aggravates to F3",
+      "Visual or audible signal element easily proven by patrol video",
+      "Mandatory license suspension",
+      "High-speed chases attract enhanced charging"
+    ],
+    "defense_opportunities": [
+      "Defendant must have known officer was attempting to stop — challenge awareness",
+      "Brief delay for safety reasons (well-lit area) is not willful flight",
+      "Officer must be in marked vehicle and uniform",
+      "Confusion or panic short of willfulness",
+      "Reduce from F3 to M2 by challenging aggravating factors"
+    ],
+    "common_defenses": [
+      "Lack of awareness of police signal",
+      "Stopping in safe location",
+      "Unmarked vehicle",
+      "Mistaken identity",
+      "Mechanical issue"
+    ]
+  },
+  {
+    "common_charge_slug": "open-container",
+    "prosecution_strengths": [
+      "Strict liability for accessibility in vehicle",
+      "Often companion to DUI charges",
+      "Easy proof through vehicle search",
+      "Limited defenses available"
+    ],
+    "defense_opportunities": [
+      "Challenge accessibility — locked trunk or sealed area is defense",
+      "Passenger possession may be defense for driver",
+      "Identity of person who consumed",
+      "Challenge whether container was actually open",
+      "Vehicle exception for limousines and motorhomes"
+    ],
+    "common_defenses": [
+      "Container not in accessible area",
+      "Passenger consumption",
+      "Limousine/motorhome exception",
+      "Container not actually open",
+      "Search and seizure suppression"
+    ]
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "prosecution_strengths": [
+      "1-year administrative license suspension for first refusal, 18 months for second",
+      "Refusal supports inference of guilt at trial",
+      "Civil/administrative consequence parallel to criminal case",
+      "No right to counsel before deciding"
+    ],
+    "defense_opportunities": [
+      "Officer must provide proper O'Connell warnings — challenge adequacy",
+      "Confusion or inability to refuse due to medical condition",
+      "Challenge whether request was lawful (no probable cause)",
+      "Administrative hearing within 30 days is critical"
+    ],
+    "common_defenses": [
+      "Inadequate O'Connell warnings",
+      "Medical inability to provide sample",
+      "Officer lacked probable cause for arrest",
+      "Confusion or coercion"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "School zone enhancements under (a)(30) elevate to F3",
+      "Constructive possession reaches shared spaces",
+      "Field test plus lab confirmation supports prosecution",
+      "Subsequent offenses escalate to 3-year exposure"
+    ],
+    "defense_opportunities": [
+      "Section 17/18 disposition often available",
+      "Drug court diversion programs in most counties",
+      "Constructive possession challenges in shared dwellings/vehicles",
+      "Lab chain of custody and identification challenges"
+    ],
+    "common_defenses": [
+      "Probation without verdict / Section 17",
+      "No constructive possession",
+      "Search and seizure suppression",
+      "Lab error or substance identity",
+      "Lack of knowledge"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "Pennsylvania has not legalized recreational marijuana",
+      "School zone enhancement to F3",
+      "Possession with intent to deliver elevates to F3",
+      "Local decriminalization ordinances do not bind state prosecution"
+    ],
+    "defense_opportunities": [
+      "Medical marijuana cardholders under Act 16 (2016) have lawful possession",
+      "Section 17 disposition available",
+      "Local decriminalization (Philadelphia, Pittsburgh) may affect charging discretion",
+      "Probation without verdict for first offenders",
+      "Challenge weight at the 30g threshold"
+    ],
+    "common_defenses": [
+      "Medical marijuana authorization",
+      "Section 17 disposition",
+      "Weight below threshold",
+      "Constructive possession",
+      "Search suppression"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "School zone enhances to F3",
+      "Trafficking thresholds elevate to F1",
+      "Constructive possession reaches shared spaces",
+      "Field test reliability supports probable cause"
+    ],
+    "defense_opportunities": [
+      "Probation Without Verdict for first offenders",
+      "Drug court diversion in most counties",
+      "Constructive possession challenges",
+      "Field test false positive rates",
+      "Search and seizure suppression"
+    ],
+    "common_defenses": [
+      "Probation without verdict",
+      "No constructive possession",
+      "Search suppression",
+      "Lab identification challenge",
+      "Lack of knowledge"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "School zone enhancement to F3",
+      "Often co-located with paraphernalia",
+      "Manufacturing precursors support parallel charges",
+      "Confidential informant operations common"
+    ],
+    "defense_opportunities": [
+      "Drug court diversion is the optimal outcome",
+      "Probation Without Verdict eligibility",
+      "Challenge precursor possession theories",
+      "Constructive possession challenges",
+      "Search warrant defects"
+    ],
+    "common_defenses": [
+      "Drug court / Section 17",
+      "No constructive possession",
+      "Search and seizure suppression",
+      "Lab identification",
+      "Lack of knowledge"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "prosecution_strengths": [
+      "Fentanyl prosecution intensified with overdose crisis",
+      "Drug delivery resulting in death prosecuted aggressively",
+      "Patient brokering and prescription fraud overlap"
+    ],
+    "defense_opportunities": [
+      "Drug treatment court is optimal outcome",
+      "Probation Without Verdict eligibility",
+      "Lawful prescription defense for opioids",
+      "Causation challenges in drug delivery resulting in death cases",
+      "Polypharmacy defense to causation"
+    ],
+    "common_defenses": [
+      "Lawful prescription",
+      "Drug court diversion",
+      "Causation challenges (DDRD cases)",
+      "Constructive possession",
+      "Search suppression"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "prosecution_strengths": [
+      "PMP (Prescription Monitoring Program) records create paper trail",
+      "Multiple-pharmacy doctor shopping easily documented",
+      "Forged or altered prescriptions support fraud charges",
+      "Federal coordination available for larger schemes"
+    ],
+    "defense_opportunities": [
+      "Lawful prescription is complete defense",
+      "Borrowing within family is sympathetic and often non-prosecuted",
+      "Challenge knowledge of unlawful possession",
+      "Medical use justification",
+      "Probation without verdict for first offenders"
+    ],
+    "common_defenses": [
+      "Lawful prescription",
+      "Probation without verdict",
+      "Innocent borrowing within family",
+      "Lack of knowledge of unlawful nature",
+      "Search suppression"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "F1 for delivery within 1,000 feet of school or to minor",
+      "Wire intercepts and CIs create extensive evidence",
+      "Asset forfeiture parallel proceedings"
+    ],
+    "defense_opportunities": [
+      "Weight calculations subject to challenge — packaging, moisture, mixtures",
+      "Wire intercept authorization standards",
+      "Confidential informant credibility attacks",
+      "Substantial assistance cooperation reduces exposure significantly"
+    ],
+    "common_defenses": [
+      "Weight below threshold",
+      "Entrapment by CI",
+      "Wire intercept defects",
+      "Search suppression"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "Delivery to minor is F1",
+      "School zone mandatory minimums",
+      "Buy-bust operations create direct evidence",
+      "Co-conspirator cooperation common"
+    ],
+    "defense_opportunities": [
+      "Distinguish between sharing and commercial delivery",
+      "Entrapment defense in CI-initiated sales",
+      "Challenge buy-bust audio/video for gaps",
+      "Substance identity and weight challenges",
+      "Reduction to simple possession through plea"
+    ],
+    "common_defenses": [
+      "Entrapment",
+      "Mere social sharing",
+      "CI credibility",
+      "Buy-bust procedural defects",
+      "Substance identity"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Pseudoephedrine purchase logs support precursor charges",
+      "Environmental cleanup costs create civil pressure",
+      "Booby traps and child presence enhancements"
+    ],
+    "defense_opportunities": [
+      "Mere possession of precursors without intent is insufficient",
+      "Lab equipment can have legitimate uses",
+      "Knowledge of manufacturing in shared space challengeable",
+      "Challenge whether activity met manufacturing definition",
+      "Federal-state coordination may create double jeopardy"
+    ],
+    "common_defenses": [
+      "Lack of intent to manufacture",
+      "Innocent uses for chemicals or equipment",
+      "Search suppression",
+      "Constructive possession",
+      "Federal preemption"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "Misdemeanor exposure",
+      "Co-located with drug evidence supports inference",
+      "Delivery to minor enhances",
+      "Residue testing supports identification"
+    ],
+    "defense_opportunities": [
+      "Item must be specifically intended for drug use — dual-use items defensible",
+      "Tobacco use as alternative purpose",
+      "Probation without verdict eligibility",
+      "Challenge residue testing",
+      "Section 17 disposition"
+    ],
+    "common_defenses": [
+      "Lawful purpose",
+      "Section 17 disposition",
+      "No drug residue",
+      "Lack of knowledge",
+      "Search suppression"
+    ]
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "prosecution_strengths": [
+      "M1 with 3-year exposure",
+      "PMP records create paper trail",
+      "Forged signatures and altered quantities easily proven",
+      "Multiple-pharmacy patterns support charges"
+    ],
+    "defense_opportunities": [
+      "Identity in pharmacy ID cases",
+      "Challenge handwriting analysis",
+      "Innocent receipt of fraudulent prescription",
+      "Section 17 disposition for first offenders",
+      "Mental health or addiction defenses"
+    ],
+    "common_defenses": [
+      "Identity",
+      "Lack of knowledge of forgery",
+      "Section 17 disposition",
+      "Mental health defense",
+      "Innocent receipt"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Intent inferred from quantity, packaging, scales, currency",
+      "School zone enhancement",
+      "Phone records support intent"
+    ],
+    "defense_opportunities": [
+      "Personal use defense for chronic users",
+      "Bulk purchase for cost savings",
+      "Distinguish from commercial distribution",
+      "Reduce to simple possession through plea"
+    ],
+    "common_defenses": [
+      "Personal use",
+      "Bulk purchase",
+      "Search suppression",
+      "Constructive possession"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "Pennsylvania retains death penalty (though not actively executed)",
+      "Mandatory life without parole if death not imposed",
+      "Premeditation forms in moments — supports conviction on minimal planning",
+      "Multiple aggravators expand capital exposure"
+    ],
+    "defense_opportunities": [
+      "Challenge premeditation — heat of passion reduces to voluntary manslaughter",
+      "Diminished capacity (Pennsylvania recognizes for first-degree murder)",
+      "Self-defense or defense of others",
+      "Identity in circumstantial cases",
+      "Insanity defense (M'Naghten standard)"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Heat of passion (reduces to voluntary manslaughter)",
+      "Diminished capacity",
+      "Insanity",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "Mandatory life imprisonment",
+      "No specific intent to kill required",
+      "Reaches non-shooter participants in felony",
+      "Common in robbery-gone-wrong cases"
+    ],
+    "defense_opportunities": [
+      "Attack felony predicate — if predicate fails, felony murder fails",
+      "Challenge accomplice liability for non-shooter co-defendants",
+      "Causation challenges in chain-of-events cases",
+      "Withdrawal from conspiracy before death",
+      "Independent agency exception in narrow scenarios"
+    ],
+    "common_defenses": [
+      "Predicate felony failure",
+      "Withdrawal from felony",
+      "Causation challenges",
+      "Identity",
+      "Independent agency"
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "20-year max",
+      "Heat of passion or imperfect self-defense theories",
+      "Often charged as fallback when intent for murder uncertain",
+      "Supports plea negotiations from murder charges"
+    ],
+    "defense_opportunities": [
+      "Provocation must be objectively adequate — challenge sufficiency",
+      "Cooling-off period analysis",
+      "Imperfect self-defense reduces from murder to voluntary manslaughter",
+      "Diminished capacity may further reduce",
+      "Self-defense complete bar"
+    ],
+    "common_defenses": [
+      "Self-defense (perfect)",
+      "Inadequate provocation",
+      "Cooling off period elapsed",
+      "Causation challenges",
+      "Diminished capacity"
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "Reckless or gross negligence standard",
+      "5-year max provides serious exposure",
+      "Civil-criminal overlap creates additional pressure"
+    ],
+    "defense_opportunities": [
+      "Gross negligence requires more than civil negligence",
+      "Causation defenses",
+      "Intervening or superseding cause",
+      "Lack of foreseeability",
+      "Accidental death without recklessness"
+    ],
+    "common_defenses": [
+      "Lack of gross negligence",
+      "Intervening cause",
+      "Accidental death",
+      "Lack of foreseeability",
+      "Mechanical or medical failure"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "F1 against protected class (police, teacher, transit worker) is automatic",
+      "Recklessness with extreme indifference standard",
+      "20-year max for F1"
+    ],
+    "defense_opportunities": [
+      "Serious bodily injury element narrowly defined — challenge severity",
+      "Castle doctrine in dwelling",
+      "Reduce to simple assault if SBI element fails",
+      "Stand Your Ground if not initial aggressor"
+    ],
+    "common_defenses": [
+      "Self-defense / Stand Your Ground",
+      "Castle doctrine",
+      "No serious bodily injury",
+      "Lack of intent or recklessness",
+      "Mistaken identification"
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "M1 for fight by mutual consent",
+      "Summary for adult striking child under 12",
+      "Negligent injury with deadly weapon supports charge",
+      "Physical menace creates fear-based charging"
+    ],
+    "defense_opportunities": [
+      "Self-defense complete bar",
+      "Mutual combat reduces to M1 (still a defense in some circumstances)",
+      "Challenge bodily injury element — pain alone may suffice but slight contact does not",
+      "Reduce to harassment in slight contact cases",
+      "Stand Your Ground"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "No bodily injury",
+      "Defense of others",
+      "Accident",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "M2 with 2-year max",
+      "Reckless mens rea reach",
+      "DV designation triggers parallel consequences",
+      "Easy proof in injury-documented cases"
+    ],
+    "defense_opportunities": [
+      "Same defenses as Simple Assault — Pennsylvania has no separate battery charge",
+      "Self-defense complete bar",
+      "Castle doctrine",
+      "Stand Your Ground",
+      "Reduce to harassment"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Lack of bodily injury",
+      "Accident",
+      "Defense of others",
+      "Consent in athletic context"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "prosecution_strengths": [
+      "F1 or F2 exposure with 10 to 20-year max",
+      "Extreme indifference standard supports recklessness conviction",
+      "Protected class enhancement"
+    ],
+    "defense_opportunities": [
+      "Self-defense complete bar",
+      "Castle doctrine and Stand Your Ground",
+      "SBI element challenge",
+      "Challenge extreme indifference mens rea",
+      "Identity defenses"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Stand Your Ground",
+      "Lack of SBI",
+      "Lack of mens rea",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Force or threat element established by victim testimony",
+      "Surveillance video commonly available"
+    ],
+    "defense_opportunities": [
+      "Challenge threat — reduce from F1 to F3",
+      "Identity defense in mask cases",
+      "Challenge whether force was used to obtain property (afterthought force is theft only)",
+      "Co-defendant credibility attacks",
+      "Voluntary intoxication may negate specific intent"
+    ],
+    "common_defenses": [
+      "Identity",
+      "Force unrelated to taking",
+      "Lack of intent",
+      "Reduction in grading",
+      "Claim of right"
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "F1 with 20-year max",
+      "Visible firearm during commission supports enhancement",
+      "Surveillance video and victim ID"
+    ],
+    "defense_opportunities": [
+      "Challenge whether firearm was actually visible — simulated weapons reduce charge",
+      "Identity defenses central in masked robbery cases",
+      "Challenge firearm operability if relevant",
+      "Eyewitness identification reliability"
+    ],
+    "common_defenses": [
+      "Identity",
+      "No actual firearm visible",
+      "Voluntary intoxication",
+      "Withdrawal from conspiracy"
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "Substantial distance/period elements broadly construed",
+      "Aggravating intent (ransom, hostage, terrorize) easily inferred",
+      "Enhanced if minor victim",
+      "Common in DV escalation cases"
+    ],
+    "defense_opportunities": [
+      "Movement must be more than incidental to underlying crime",
+      "Consent defense in dispute scenarios",
+      "Challenge intent element",
+      "Brief restraint may not meet substantial period element"
+    ],
+    "common_defenses": [
+      "Movement incidental to other crime",
+      "Consent",
+      "Lack of qualifying intent",
+      "Identity",
+      "Self-defense"
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "Fire investigation expert testimony",
+      "Insurance fraud motive",
+      "20-year max for F1",
+      "Reckless burning as fallback"
+    ],
+    "defense_opportunities": [
+      "Cause and origin investigations subject to scientific challenge — junk science concerns",
+      "NFPA 921 standards govern investigation",
+      "Distinguish from accidental fire",
+      "Challenge intentionality",
+      "Insurance motive cuts both ways"
+    ],
+    "common_defenses": [
+      "Accidental fire",
+      "Cause and origin investigation flaws",
+      "Identity",
+      "Lack of intent",
+      "Mental state defenses"
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "20-year max",
+      "10-year mandatory if firearm discharged",
+      "Specific intent inferred from conduct"
+    ],
+    "defense_opportunities": [
+      "Specific intent to kill is essential — distinguish from intent to injure",
+      "Self-defense",
+      "Reduce to aggravated assault",
+      "Voluntary intoxication negating specific intent (limited)"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Renunciation",
+      "Lack of specific intent to kill",
+      "Identity",
+      "Voluntary intoxication"
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "Deadly weapon broadly defined",
+      "Elevates to F1 against protected class",
+      "Possession during commission supports enhancement"
+    ],
+    "defense_opportunities": [
+      "Challenge whether object qualifies as deadly weapon",
+      "Self-defense complete bar",
+      "Challenge intent element",
+      "Reduce to simple assault if injury element fails",
+      "Castle doctrine in dwelling"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Object not a deadly weapon",
+      "Lack of intent",
+      "Identity",
+      "Castle doctrine"
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "Theft of firearm or motor vehicle is automatic F3",
+      "Aggregation rules permit combining multiple thefts",
+      "Restitution component",
+      "Pennsylvania uses generous aggregation in fraud schemes"
+    ],
+    "defense_opportunities": [
+      "Challenge value calculation — fair market value",
+      "Aggregation must arise from common scheme",
+      "Claim of right defense",
+      "ARD program for first offenders",
+      "Lack of intent to permanently deprive"
+    ],
+    "common_defenses": [
+      "ARD program",
+      "Claim of right",
+      "Lack of intent",
+      "Value below threshold",
+      "Mistake of fact"
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Aggregation rules allow combining",
+      "Documentary proof in financial cases",
+      "Restitution drives plea negotiations",
+      "Civil parallel proceedings"
+    ],
+    "defense_opportunities": [
+      "Challenge value at the $100,000 threshold to avoid F3",
+      "Aggregation must be common scheme",
+      "Claim of right defense",
+      "ARD eligibility",
+      "Asset recovery before charging"
+    ],
+    "common_defenses": [
+      "Value below felony threshold",
+      "Claim of right",
+      "ARD program",
+      "Authorized use",
+      "Mistake"
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "Strict liability beyond intent",
+      "Quick disposition through citation",
+      "Common in retail context",
+      "Repeat offenders escalate"
+    ],
+    "defense_opportunities": [
+      "ARD program for first offenders",
+      "Section 17 / probation without verdict",
+      "Civil compromise possible",
+      "Challenge intent in distracted scenarios",
+      "Diversion programs"
+    ],
+    "common_defenses": [
+      "ARD or diversion",
+      "Lack of intent to deprive",
+      "Civil compromise",
+      "Mistake of fact",
+      "Authorized possession"
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "Concealment creates statutory inference of intent",
+      "Loss prevention testimony powerful",
+      "Repeat-offender escalation aggressive",
+      "Organized retail crime enhancements"
+    ],
+    "defense_opportunities": [
+      "ARD program is optimal first-offense outcome",
+      "Civil compromise with merchant",
+      "Challenge intent in absent-minded scenarios",
+      "Loss prevention misconduct (improper detention, coerced confession)",
+      "Concealment alone insufficient if no movement past point of sale"
+    ],
+    "common_defenses": [
+      "ARD program",
+      "Lack of intent",
+      "Civil compromise",
+      "Loss prevention misconduct",
+      "Did not pass point of sale"
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "20-year max for F1",
+      "Adapted for overnight accommodation includes occupied or unoccupied",
+      "Forensic evidence supports identity"
+    ],
+    "defense_opportunities": [
+      "Challenge whether structure adapted for overnight accommodation",
+      "Intent at entry essential — formed inside is theft only",
+      "Lawful entry defenses",
+      "Reduce to F2 if structure not residential"
+    ],
+    "common_defenses": [
+      "Lawful entry",
+      "No intent at entry",
+      "Identity",
+      "Structure not adapted for overnight accommodation",
+      "Voluntary intoxication"
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "Person-present element supports enhancement",
+      "Forensic evidence and surveillance"
+    ],
+    "defense_opportunities": [
+      "Challenge person-present element",
+      "Intent at entry must be proven",
+      "Permission defenses (former tenant, family member)",
+      "Identity through DNA/print challenges",
+      "Reduce to F2 (commercial)"
+    ],
+    "common_defenses": [
+      "Permission to enter",
+      "No person present",
+      "No intent at entry",
+      "Identity",
+      "Mistake about premises"
+    ]
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "prosecution_strengths": [
+      "Lower than residential but still serious",
+      "Forensic evidence common",
+      "Nighttime entry strengthens intent inference",
+      "Breaking element easily proven"
+    ],
+    "defense_opportunities": [
+      "Lawful entry during business hours",
+      "Challenge intent at entry",
+      "Identity defenses",
+      "Distinguish from criminal trespass (lower charge)",
+      "Voluntary intoxication"
+    ],
+    "common_defenses": [
+      "Lawful entry",
+      "No intent at entry",
+      "Identity",
+      "Voluntary intoxication",
+      "Reduce to trespass"
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "GPS and ALPR networks support apprehension",
+      "Joyriding charges parallel theft",
+      "VIN and forensic identification"
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge of unauthorized use",
+      "Permission defense from owner with disputed scope",
+      "Reduce from theft to unauthorized use through plea",
+      "Identity in chop-shop cases",
+      "Civil compromise in family/friend situations"
+    ],
+    "common_defenses": [
+      "Permission from owner",
+      "Lack of knowledge",
+      "Identity",
+      "Mistaken vehicle"
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Knowledge or belief standard — recklessness reach",
+      "Pawn shop records document transactions",
+      "Possession of recently stolen property creates inference",
+      "Restitution drives resolution"
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge — pawn purchases with documentation",
+      "Bona fide purchase defense",
+      "Innocent gift recipient",
+      "Property identification through serial numbers",
+      "Intent to restore is statutory defense"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of stolen status",
+      "Bona fide purchase",
+      "Intent to restore",
+      "Identity of property",
+      "Mistake of fact"
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "F3 for damage by explosion, flood, or aircraft over $5,000",
+      "Reckless mens rea reach",
+      "Restitution drives plea",
+      "Public infrastructure cases enhanced"
+    ],
+    "defense_opportunities": [
+      "Challenge damage valuation",
+      "ARD program",
+      "Civil compromise",
+      "Accidental damage defense",
+      "Aggregation must be common scheme"
+    ],
+    "common_defenses": [
+      "ARD program",
+      "Accidental damage",
+      "Civil compromise",
+      "Damage value below threshold",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "Pennsylvania trespass graded more seriously than many states",
+      "Notice requirements easily met",
+      "Companion to other charges",
+      "Repeat trespass aggressive prosecution"
+    ],
+    "defense_opportunities": [
+      "Challenge notice element",
+      "Legal right to enter",
+      "Reduce from F3 to M3 by challenging building element",
+      "Implied consent in business open to public",
+      "First Amendment protection"
+    ],
+    "common_defenses": [
+      "No notice of trespass",
+      "Legal right to enter",
+      "Implied consent",
+      "First Amendment",
+      "Mistake about property line"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "Summary to F3 grading",
+      "Reckless mens rea",
+      "Restitution and civil parallel",
+      "Public utility tampering enhanced"
+    ],
+    "defense_opportunities": [
+      "Damage valuation challenges",
+      "ARD program",
+      "Civil compromise",
+      "Challenge intent or recklessness",
+      "Authorized to alter property"
+    ],
+    "common_defenses": [
+      "Accidental damage",
+      "ARD or diversion",
+      "Civil compromise",
+      "Damage value below threshold",
+      "Authorized to alter"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "Federal Lautenberg firearms prohibition triggers",
+      "Charges range from M2 to F1 depending on injury and weapon",
+      "Body camera footage and 911 calls common evidence"
+    ],
+    "defense_opportunities": [
+      "Self-defense complete bar",
+      "Castle doctrine",
+      "Challenge family/household member relationship",
+      "False allegation defense in custody disputes",
+      "Civil compromise unavailable but counseling-based dismissals possible"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Lack of qualifying relationship",
+      "False allegation",
+      "Lack of injury",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "Federal firearms prohibition",
+      "PFA order parallel proceedings",
+      "M2 with 2-year max"
+    ],
+    "defense_opportunities": [
+      "Self-defense complete bar",
+      "Challenge bodily injury element",
+      "Challenge relationship element",
+      "False allegation in custody/separation",
+      "Counseling-based dismissals"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "No bodily injury",
+      "Lack of relationship",
+      "False allegation",
+      "Defense of others"
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "Course of conduct doctrine reaches pattern cases",
+      "Mandatory reporters create evidence pipeline",
+      "Sympathetic victim",
+      "5-year max for M1"
+    ],
+    "defense_opportunities": [
+      "Challenge knowing endangerment",
+      "Reasonable parental judgment",
+      "Single incident vs. course of conduct distinction",
+      "Mandatory reporting bias",
+      "ARD program possible"
+    ],
+    "common_defenses": [
+      "Reasonable parental judgment",
+      "No knowing endangerment",
+      "Single incident not course of conduct",
+      "ARD program",
+      "False allegation"
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "Pediatric experts strengthen prosecution",
+      "Pattern evidence admissible",
+      "20-year max for F1"
+    ],
+    "defense_opportunities": [
+      "Shaken baby syndrome and child abuse pediatrics increasingly subject to scientific challenge",
+      "Differential diagnosis through independent expert",
+      "Identify caregiver present at time of injury",
+      "False allegation in custody contexts",
+      "Reasonable discipline (limited)"
+    ],
+    "common_defenses": [
+      "Accidental injury",
+      "Alternative medical explanation",
+      "Mistaken caregiver identification",
+      "False allegation",
+      "Reasonable discipline (limited)"
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "F3 if weapon involved",
+      "Each violation is separate offense",
+      "Service records prove notice",
+      "Companion DV charges common"
+    ],
+    "defense_opportunities": [
+      "Challenge service of order",
+      "Inadvertent contact",
+      "Order termination prior to violation",
+      "Necessity in true emergencies",
+      "Vague order terms"
+    ],
+    "common_defenses": [
+      "Lack of notice",
+      "Inadvertent contact",
+      "Order terminated",
+      "Necessity",
+      "Vague terms"
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "Course of conduct standard",
+      "Electronic communications included",
+      "Reasonable fear element",
+      "Often charged with PFA violations"
+    ],
+    "defense_opportunities": [
+      "Challenge course of conduct — single incident insufficient",
+      "Challenge intent",
+      "First Amendment protection",
+      "Legitimate purpose (custody, business)",
+      "Identity in anonymous communication"
+    ],
+    "common_defenses": [
+      "No course of conduct",
+      "Legitimate purpose",
+      "First Amendment",
+      "Lack of intent",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "Broad statute covering physical contact and conduct",
+      "Companion to other charges",
+      "Easy to prove",
+      "Includes obscene language"
+    ],
+    "defense_opportunities": [
+      "Challenge intent to harass",
+      "First Amendment protection",
+      "Legitimate purpose",
+      "Single incident insufficient for course of conduct",
+      "Reduce to summary disposition"
+    ],
+    "common_defenses": [
+      "No intent to harass",
+      "First Amendment",
+      "Single incident",
+      "Mutual interaction",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "Older Adults Protective Services Act parallel civil",
+      "Vulnerable victim sympathy",
+      "Pattern of conduct elevates"
+    ],
+    "defense_opportunities": [
+      "Challenge care-dependency element",
+      "Authorized agent defense for financial cases",
+      "Family caregiver vs. abuser distinction",
+      "Capacity at time of consent",
+      "Civil disputes miscast as criminal"
+    ],
+    "common_defenses": [
+      "Authorized financial transaction",
+      "Capacity to consent",
+      "Family dispute",
+      "No care-dependency",
+      "Mistake or accident"
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "License to Carry Firearms (LTCF) requirement broadly enforced",
+      "Section 6105 broader than federal — includes some misdemeanants"
+    ],
+    "defense_opportunities": [
+      "Constructive possession requires knowledge AND control",
+      "Challenge prohibited person status",
+      "Verify LTCF was valid at time of offense",
+      "Open carry generally lawful outside Philadelphia"
+    ],
+    "common_defenses": [
+      "Valid LTCF",
+      "Open carry exception",
+      "No constructive possession",
+      "Not a prohibited person",
+      "Search suppression"
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "F2 with 10-year max",
+      "DV misdemeanor convictions trigger prohibition",
+      "Constructive possession reach"
+    ],
+    "defense_opportunities": [
+      "Challenge predicate offense classification",
+      "Constructive possession defense",
+      "Challenge whether DV misdemeanor qualifies",
+      "Justification (momentary possession to prevent harm)",
+      "Federal-state coordination strategy"
+    ],
+    "common_defenses": [
+      "Predicate offense does not qualify",
+      "No constructive possession",
+      "Justification",
+      "Antique firearm",
+      "Lack of knowledge"
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "7-year max",
+      "Philadelphia has additional restrictions",
+      "Vehicle carry requires LTCF",
+      "Strict liability for license possession"
+    ],
+    "defense_opportunities": [
+      "M1 exception if person had right to possess but lacked LTCF",
+      "Open carry generally legal outside Philadelphia",
+      "Verify LTCF status at time of offense",
+      "Reciprocity analysis with out-of-state permits",
+      "Search and seizure suppression"
+    ],
+    "common_defenses": [
+      "M1 reduction for legal possessor",
+      "Valid LTCF or reciprocity",
+      "Open carry not concealed",
+      "Search suppression",
+      "Antique firearm"
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "10-year max",
+      "Extreme indifference standard",
+      "Occupied structure broadly defined"
+    ],
+    "defense_opportunities": [
+      "Challenge whether structure was occupied",
+      "Self-defense",
+      "Accidental discharge defense",
+      "Lack of extreme indifference",
+      "Identity in shots-fired-only cases"
+    ],
+    "common_defenses": [
+      "Self-defense",
+      "Structure not occupied",
+      "Accidental discharge",
+      "Lack of extreme indifference",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-trafficking",
+    "prosecution_strengths": [
+      "10-year max",
+      "Background check failures support charges",
+      "Straw purchase pattern evidence",
+      "Federal coordination common"
+    ],
+    "defense_opportunities": [
+      "Challenge knowledge of recipient's prohibited status",
+      "Innocent gift/transfer defense",
+      "Procedural-only violations are M2",
+      "Federal preemption issues",
+      "Identity in straw purchase chains"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of prohibited status",
+      "Innocent transfer",
+      "Procedural violation only",
+      "Identity",
+      "Federal coordination"
+    ]
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "prosecution_strengths": [
+      "M1 with 5-year max",
+      "Strict liability for possession",
+      "List of prohibited weapons broad",
+      "NFA registration relevant for federal items"
+    ],
+    "defense_opportunities": [
+      "NFA-registered firearms exception",
+      "Curio and relic exception",
+      "Display in collection or museum",
+      "Challenge whether item meets statutory definition",
+      "Lack of knowledge of prohibition"
+    ],
+    "common_defenses": [
+      "NFA registration",
+      "Curio/relic exception",
+      "Display only",
+      "Item not prohibited",
+      "Lack of knowledge"
+    ]
+  },
+  {
+    "common_charge_slug": "unlawful-carry",
+    "prosecution_strengths": [
+      "Vehicle carry requires LTCF statewide",
+      "Philadelphia first-class city restrictions",
+      "Strict liability for license element",
+      "Common charge alongside other offenses"
+    ],
+    "defense_opportunities": [
+      "M1 reduction for legal possessors",
+      "Open carry exception (outside Philadelphia)",
+      "Verify LTCF status",
+      "Out-of-state reciprocity",
+      "Search and seizure suppression"
+    ],
+    "common_defenses": [
+      "M1 reduction for legal possessor",
+      "Valid LTCF",
+      "Open carry",
+      "Reciprocity",
+      "Search suppression"
+    ]
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "prosecution_strengths": [
+      "Documentary evidence in electronic communications",
+      "Pattern evidence supports charges",
+      "Financial restitution drives resolution"
+    ],
+    "defense_opportunities": [
+      "Federal preemption for true wire fraud cases",
+      "Challenge intent to defraud",
+      "Material misrepresentation requirement",
+      "Civil dispute reframing",
+      "Statute of limitations"
+    ],
+    "common_defenses": [
+      "No intent to defraud",
+      "Civil dispute, not criminal",
+      "Federal preemption",
+      "Statute of limitations",
+      "Lack of materiality"
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "F2 if victim 60+ or amount over $100,000",
+      "Digital evidence routinely available",
+      "Restitution drives plea",
+      "Federal coordination available"
+    ],
+    "defense_opportunities": [
+      "Authorization defense — joint accounts, family permission",
+      "Challenge intent to defraud",
+      "Reduce from F2 by challenging victim age or amount",
+      "Identity in cloud-based or shared device cases",
+      "ARD eligibility for first offenders"
+    ],
+    "common_defenses": [
+      "Authorization to use information",
+      "ARD program",
+      "No intent to defraud",
+      "Identity",
+      "Joint account or family use"
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Same value grading as theft",
+      "Position of trust supports proof",
+      "Documentary evidence extensive",
+      "Restitution drives resolution"
+    ],
+    "defense_opportunities": [
+      "Authorization defense — scope of duties",
+      "Civil compromise in employer-employee disputes",
+      "Forensic accounting challenges",
+      "ARD program for first offenders",
+      "Mistake or accounting error"
+    ],
+    "common_defenses": [
+      "Authorized use",
+      "ARD program",
+      "Civil compromise",
+      "Accounting error",
+      "Disputed scope of authority"
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "Intent to defraud broadly inferred",
+      "Handwriting analysis supports identification",
+      "Digital forgery increasingly prosecuted",
+      "Companion fraud charges common"
+    ],
+    "defense_opportunities": [
+      "Authorization defense",
+      "Challenge intent to defraud",
+      "Reduce from F2 to F3 or M1 by challenging instrument type",
+      "Handwriting analysis subjective",
+      "ARD eligibility"
+    ],
+    "common_defenses": [
+      "Authorization",
+      "ARD program",
+      "No intent to defraud",
+      "Handwriting analysis flawed",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "prosecution_strengths": [
+      "F3 over $75,000",
+      "Knowledge inferred from account balance",
+      "Multiple checks support pattern",
+      "Notice requirement easily met"
+    ],
+    "defense_opportunities": [
+      "Lack of intent — banking error or deposit timing",
+      "Challenge notice and opportunity to cure",
+      "Civil compromise",
+      "Stop payment for legitimate dispute",
+      "ARD program"
+    ],
+    "common_defenses": [
+      "ARD program",
+      "Banking error",
+      "Civil compromise",
+      "Insufficient notice",
+      "Stop payment dispute"
+    ]
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "prosecution_strengths": [
+      "Pennsylvania Insurance Department investigations",
+      "Document trail extensive",
+      "Pattern evidence in serial cases",
+      "Civil parallel proceedings"
+    ],
+    "defense_opportunities": [
+      "Material misrepresentation must be intentional",
+      "Disputed claim valuation is civil",
+      "Statute of limitations",
+      "Cooperation with investigation",
+      "ARD program"
+    ],
+    "common_defenses": [
+      "ARD program",
+      "Lack of intent",
+      "Civil dispute",
+      "Statute of limitations",
+      "Innocent omission"
+    ]
+  },
+  {
+    "common_charge_slug": "credit-card-fraud",
+    "prosecution_strengths": [
+      "F2 over $1,000",
+      "Transaction records create automatic evidence",
+      "Identity theft companion charges",
+      "Federal coordination available"
+    ],
+    "defense_opportunities": [
+      "Authorization defense — joint accounts, family",
+      "Lack of intent — innocent use of card",
+      "Identity in chip/PIN cases",
+      "Reduce from F2 by challenging amount",
+      "ARD program"
+    ],
+    "common_defenses": [
+      "Authorized use",
+      "ARD program",
+      "No intent",
+      "Identity",
+      "Innocent receipt"
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "Often charged with drug trafficking",
+      "Asset forfeiture parallel",
+      "Bank Secrecy Act records support proof",
+      "Federal coordination for larger amounts"
+    ],
+    "defense_opportunities": [
+      "Knowledge that proceeds were unlawful is essential",
+      "Legitimate business comingling defenses",
+      "Challenge intent to conceal",
+      "Asset forfeiture separate burden",
+      "Federal-state double jeopardy"
+    ],
+    "common_defenses": [
+      "Lack of knowledge of unlawful source",
+      "Legitimate comingling",
+      "No intent to conceal",
+      "Innocent owner",
+      "Statute of limitations"
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "Same value grading as theft",
+      "False impression element broad",
+      "Restitution drives plea",
+      "Pattern evidence in serial cases"
+    ],
+    "defense_opportunities": [
+      "Puffery is not deception",
+      "Reliance must be reasonable",
+      "Civil compromise",
+      "Statute of limitations",
+      "ARD program"
+    ],
+    "common_defenses": [
+      "Puffery",
+      "ARD program",
+      "Civil compromise",
+      "Statute of limitations",
+      "No reliance"
+    ]
+  },
+  {
+    "common_charge_slug": "bank-fraud",
+    "prosecution_strengths": [
+      "Documentary evidence extensive",
+      "Wire transfer records support proof",
+      "Asset forfeiture available"
+    ],
+    "defense_opportunities": [
+      "Federal preemption common",
+      "Challenge intent to defraud",
+      "Authorization defenses",
+      "Civil dispute reframing",
+      "Statute of limitations"
+    ],
+    "common_defenses": [
+      "Federal preemption",
+      "Authorization",
+      "No intent to defraud",
+      "Civil dispute",
+      "Statute of limitations"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "10-year max",
+      "Lower force requirement than rape",
+      "SANE testimony powerful",
+      "SORNA registration"
+    ],
+    "defense_opportunities": [
+      "Consent defense central",
+      "Challenge SANE findings through independent expert",
+      "Identity in DNA-only cases",
+      "Capacity issues in incapacitation cases",
+      "False allegation defenses"
+    ],
+    "common_defenses": [
+      "Consent",
+      "Identity",
+      "False allegation",
+      "Capacity to consent",
+      "DNA challenges"
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "Forcible compulsion element",
+      "Drug-facilitated rape included",
+      "Lifetime SORNA registration"
+    ],
+    "defense_opportunities": [
+      "Consent defense in adult cases",
+      "Forcible compulsion requires actual force or threat",
+      "Challenge intoxication/incapacitation evidence",
+      "DNA challenges in identity cases",
+      "False allegation defenses"
+    ],
+    "common_defenses": [
+      "Consent",
+      "Lack of forcible compulsion",
+      "Identity",
+      "False allegation",
+      "Capacity issues"
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "5-year max for M1",
+      "SORNA registration for second offense",
+      "Surveillance video commonly available",
+      "Pattern evidence admissible"
+    ],
+    "defense_opportunities": [
+      "Knowledge that conduct would offend is required",
+      "Identity in surveillance cases",
+      "Mental health treatment resolution",
+      "ARD program possible",
+      "Challenge whether genitals actually exposed"
+    ],
+    "common_defenses": [
+      "ARD program",
+      "Accidental exposure",
+      "No knowledge of audience",
+      "Identity",
+      "Mental health context"
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "F3 for patronizing minor (trafficking provisions)",
+      "Sting operations create video/audio evidence",
+      "Recent Pennsylvania reforms target buyers",
+      "Public listing supports collateral pressure"
+    ],
+    "defense_opportunities": [
+      "Entrapment defense in stings",
+      "Challenge agreement element",
+      "ARD program / john school diversion",
+      "Identity in online sting cases",
+      "Communication ambiguity"
+    ],
+    "common_defenses": [
+      "Entrapment",
+      "No agreement to pay for sex",
+      "John school diversion",
+      "Ambiguous communication",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "prosecution_strengths": [
+      "Internet sting operations common",
+      "SORNA registration",
+      "Digital evidence extensive",
+      "Federal coordination available"
+    ],
+    "defense_opportunities": [
+      "Entrapment defense in stings",
+      "Challenge intent for prohibited activity",
+      "Identity in shared device cases",
+      "Age verification defenses (limited)",
+      "Federal-state coordination strategy"
+    ],
+    "common_defenses": [
+      "Entrapment",
+      "Identity",
+      "No intent for prohibited activity",
+      "Age verification belief",
+      "Constitutional challenges"
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "20-year max for production",
+      "SORNA Tier III lifetime registration for production",
+      "Hash matching forensic tools",
+      "Federal coordination common"
+    ],
+    "defense_opportunities": [
+      "Challenge knowing possession — automatic downloads, viruses, shared devices",
+      "Age of subject in dispute",
+      "Hash matching methodology",
+      "Federal-state coordination",
+      "Constitutional challenges in narrow scenarios"
+    ],
+    "common_defenses": [
+      "Lack of knowing possession",
+      "Shared device",
+      "Age of subject disputed",
+      "Identity in cloud cases",
+      "Inadvertent viewing"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "SORNA Subchapter H or I requirements",
+      "Strict timeline for registration and verification",
+      "Database supports proof",
+      "Mandatory minimums available"
+    ],
+    "defense_opportunities": [
+      "Knowledge of requirement is essential",
+      "Inability to register due to homelessness",
+      "Tier classification challenges",
+      "Statute of limitations"
+    ],
+    "common_defenses": [
+      "SORNA constitutional challenge",
+      "Lack of knowledge",
+      "Inability to register",
+      "Tier dispute",
+      "Statute of limitations"
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "Strict liability — no mistake of age defense",
+      "20-year max for F1",
+      "SORNA registration",
+      "Marriage exclusion narrow"
+    ],
+    "defense_opportunities": [
+      "Age proximity defenses (under 4 years)",
+      "Challenge sexual intercourse element",
+      "Identity through DNA challenges",
+      "False allegation defenses",
+      "Constitutional challenges"
+    ],
+    "common_defenses": [
+      "Age proximity exception",
+      "Identity",
+      "False allegation",
+      "No penetration",
+      "Constitutional challenge"
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "prosecution_strengths": [
+      "20-year max for F1",
+      "SORNA registration",
+      "Penetration however slight",
+      "Lower force requirement than rape"
+    ],
+    "defense_opportunities": [
+      "Consent defense in adult cases",
+      "Challenge penetration element",
+      "Identity defenses",
+      "False allegation",
+      "Capacity issues"
+    ],
+    "common_defenses": [
+      "Consent",
+      "No penetration",
+      "Identity",
+      "False allegation",
+      "Capacity to consent"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "prosecution_strengths": [
+      "M1 for victim under 16",
+      "F3 for victim under 13 or with prior",
+      "Indecent contact broadly defined",
+      "Pattern evidence admissible"
+    ],
+    "defense_opportunities": [
+      "Consent defense",
+      "Challenge intent for sexual gratification",
+      "Identity",
+      "ARD eligibility for first offenders in narrow circumstances",
+      "False allegation"
+    ],
+    "common_defenses": [
+      "Consent",
+      "No sexual intent",
+      "Identity",
+      "False allegation",
+      "Accidental contact"
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "Broad statute covering noise, fighting, obscene gestures",
+      "Often companion to other charges",
+      "Easy proof in public disturbance cases",
+      "Common in protest contexts"
+    ],
+    "defense_opportunities": [
+      "First Amendment protection",
+      "Challenge intent to cause disturbance",
+      "Reduce to summary disposition",
+      "ARD eligibility",
+      "Self-defense in fighting cases"
+    ],
+    "common_defenses": [
+      "First Amendment",
+      "No intent to disturb",
+      "Self-defense",
+      "ARD or summary",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "Substantial risk of bodily injury element",
+      "Body camera footage common",
+      "Companion to underlying charge",
+      "Aggravated assault elevation if officer injured"
+    ],
+    "defense_opportunities": [
+      "Lawful arrest is implicit element",
+      "Passive non-compliance is not resisting",
+      "Substantial risk standard challengeable",
+      "Excessive force defense",
+      "Body cam often supports defense"
+    ],
+    "common_defenses": [
+      "Unlawful arrest",
+      "Passive non-compliance",
+      "No substantial risk",
+      "Excessive force",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "Broad statute",
+      "Easy companion charge"
+    ],
+    "defense_opportunities": [
+      "Mere refusal to cooperate is not obstruction",
+      "First Amendment protection",
+      "Right to silence and refuse search",
+      "Challenge specific intent",
+      "Reduce to lesser through plea"
+    ],
+    "common_defenses": [
+      "Refusal to cooperate not obstruction",
+      "First Amendment",
+      "No specific intent",
+      "Lawful refusal",
+      "Mistake"
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "6 months per count",
+      "Direct contempt summarily handled",
+      "Used for non-payment cases",
+      "Court has broad discretion"
+    ],
+    "defense_opportunities": [
+      "Inability to pay is defense in support cases",
+      "Due process protections",
+      "Jury trial right for serious contempt",
+      "Order must be specific",
+      "Purge clause analysis"
+    ],
+    "common_defenses": [
+      "Inability to comply",
+      "Order vague",
+      "No willful violation",
+      "Due process",
+      "Mistake"
+    ]
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "prosecution_strengths": [
+      "Pennsylvania retains as criminal violation",
+      "$500 first / $1,000 second fine",
+      "Companion charge common",
+      "Strict liability beyond intoxication element"
+    ],
+    "defense_opportunities": [
+      "Challenge endangerment or annoyance element",
+      "Manifest intoxication standard",
+      "Diversion possible",
+      "Reduce to fine-only disposition",
+      "Companion charge defenses"
+    ],
+    "common_defenses": [
+      "No manifest intoxication",
+      "No endangerment",
+      "Diversion eligibility",
+      "Identity",
+      "Medical condition mimicking intoxication"
+    ]
+  },
+  {
+    "common_charge_slug": "loitering",
+    "prosecution_strengths": [
+      "Suspicious circumstances element",
+      "Often used for street-level enforcement",
+      "Companion to other charges",
+      "Easy proof"
+    ],
+    "defense_opportunities": [
+      "Vagueness challenges",
+      "First Amendment protection",
+      "Lawful purpose for presence",
+      "Identity",
+      "Reduce or dismiss"
+    ],
+    "common_defenses": [
+      "Lawful purpose",
+      "First Amendment",
+      "Vagueness",
+      "Identity",
+      "Mistake"
+    ]
+  },
+  {
+    "common_charge_slug": "disturbing-peace",
+    "prosecution_strengths": [
+      "Easy companion charge",
+      "Broad definition of unreasonable noise",
+      "Common in protest contexts",
+      "Quick disposition"
+    ],
+    "defense_opportunities": [
+      "First Amendment protection",
+      "No intent to disturb",
+      "Legitimate purpose",
+      "ARD or summary disposition",
+      "Identity"
+    ],
+    "common_defenses": [
+      "First Amendment",
+      "No intent",
+      "Legitimate purpose",
+      "ARD",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "7-year max for F3",
+      "Knowledge easily proven through court records",
+      "Bench warrant automatic",
+      "Bail forfeiture parallel"
+    ],
+    "defense_opportunities": [
+      "Lack of notice — challenge service",
+      "Medical emergency",
+      "Voluntary surrender mitigates",
+      "Reset of original case may resolve FTA",
+      "Lack of willfulness"
+    ],
+    "common_defenses": [
+      "Lack of notice",
+      "Medical emergency",
+      "Voluntary surrender",
+      "Mistake about date",
+      "Resolved through reset"
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "7-year max for F3",
+      "Recordings common",
+      "Identity through phone records",
+      "Aggressive prosecution post-9/11"
+    ],
+    "defense_opportunities": [
+      "Genuine belief in emergency",
+      "Identity in spoofed calls",
+      "Mental health defenses",
+      "Voluntary correction",
+      "Challenge evacuation causation"
+    ],
+    "common_defenses": [
+      "Genuine belief",
+      "Identity",
+      "Mental health defense",
+      "Voluntary correction",
+      "Lack of evacuation causation"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "5-year max for M1, 7 for F3",
+      "School threats aggressively prosecuted",
+      "Communication includes electronic means",
+      "Threat to terrorize standard"
+    ],
+    "defense_opportunities": [
+      "Threat must be true threat under First Amendment",
+      "Vague or conditional threats insufficient",
+      "Challenge intent to terrorize",
+      "Joke or hyperbole defense",
+      "Identity in social media cases"
+    ],
+    "common_defenses": [
+      "True threat doctrine",
+      "First Amendment",
+      "No intent to terrorize",
+      "Joke or hyperbole",
+      "Identity"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "Preponderance standard",
+      "Court has broad discretion",
+      "Original sentence available"
+    ],
+    "defense_opportunities": [
+      "Act 115 of 2019 graduated sanctions for technical violations",
+      "Inability defenses",
+      "Treatment progress mitigates",
+      "Due process protections",
+      "Substantial compliance argument"
+    ],
+    "common_defenses": [
+      "Substantial compliance",
+      "Inability to comply",
+      "Treatment progress",
+      "Due process",
+      "Graduated sanction appropriate"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "prosecution_strengths": [
+      "Failure to report, pay, complete service, drug test",
+      "Court can revoke for any condition violation",
+      "Pattern of violations supports revocation",
+      "Original sentence exposure"
+    ],
+    "defense_opportunities": [
+      "Act 115 graduated sanctions required for technical violations",
+      "Inability defenses (financial, medical, transportation)",
+      "Substantial compliance overall",
+      "Treatment progress",
+      "Negotiate continuation with modified conditions"
+    ],
+    "common_defenses": [
+      "Act 115 graduated sanctions",
+      "Inability to comply",
+      "Substantial compliance",
+      "Treatment progress",
+      "Continuation with modification"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "prosecution_strengths": [
+      "Strong presumption for revocation",
+      "New conviction not required — preponderance standard",
+      "Original sentence exposure",
+      "Common after new arrest"
+    ],
+    "defense_opportunities": [
+      "Challenge underlying offense first",
+      "Speedy hearing rights",
+      "Due process",
+      "Resolution of new charge may affect VOP",
+      "Mental health or treatment context"
+    ],
+    "common_defenses": [
+      "Underlying charge defenses",
+      "Speedy hearing",
+      "Due process",
+      "Treatment context",
+      "Continuation despite new charge"
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "Pennsylvania Board of Probation and Parole (PBPP) has revocation authority",
+      "Administrative proceeding",
+      "Return to prison for remainder of sentence",
+      "New crime mandatory return plus consecutive sentence"
+    ],
+    "defense_opportunities": [
+      "Hearing rights apply",
+      "Challenge whether condition was clearly imposed",
+      "Substantial compliance",
+      "Inability defenses",
+      "Treatment progress"
+    ],
+    "common_defenses": [
+      "Substantial compliance",
+      "Inability to comply",
+      "Due process",
+      "Condition unclear",
+      "Treatment progress"
+    ]
+  },
+  {
+    "common_charge_slug": "supervised-release-violation",
+    "prosecution_strengths": [
+      "PBPP administrative proceeding",
+      "Return to PDOC for balance of sentence",
+      "Federal supervised release distinct from state parole",
+      "Strict compliance expected"
+    ],
+    "defense_opportunities": [
+      "Pennsylvania uses 'parole' not 'supervised release'",
+      "PBPP hearing rights",
+      "Substantial compliance",
+      "Treatment progress",
+      "Inability defenses"
+    ],
+    "common_defenses": [
+      "Substantial compliance",
+      "Inability to comply",
+      "Due process",
+      "Treatment context",
+      "Modification request"
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "Pennsylvania conspiracy is NOT one degree lower like Illinois",
+      "Overt act required only for M1 or lower",
+      "Co-conspirator statements admissible",
+      "Vicarious liability for foreseeable acts"
+    ],
+    "defense_opportunities": [
+      "Challenge agreement element",
+      "Renunciation must thwart commission",
+      "Withdrawal terminates future liability",
+      "Co-conspirator hearsay rules",
+      "Mere knowledge without agreement"
+    ],
+    "common_defenses": [
+      "No agreement",
+      "Renunciation thwarting commission",
+      "Withdrawal",
+      "Mere knowledge",
+      "Wharton's Rule"
+    ]
+  },
+  {
+    "common_charge_slug": "rico",
+    "prosecution_strengths": [
+      "Pattern of racketeering activity standard",
+      "Civil forfeiture parallel",
+      "Federal RICO often charged in parallel",
+      "Triple gain fines available"
+    ],
+    "defense_opportunities": [
+      "Challenge enterprise element",
+      "Pattern requires multiple predicate acts",
+      "Federal-state double jeopardy",
+      "Predicate act defenses",
+      "Withdrawal from enterprise"
+    ],
+    "common_defenses": [
+      "No qualifying enterprise",
+      "Insufficient pattern",
+      "Predicate act defenses",
+      "Federal preemption",
+      "Withdrawal"
+    ]
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "prosecution_strengths": [
+      "Burden on defendant to raise, then on Commonwealth to disprove beyond reasonable doubt",
+      "Initial aggressor doctrine limits availability",
+      "Excessive force defeats defense",
+      "Subjective belief must be reasonable"
+    ],
+    "defense_opportunities": [
+      "Stand Your Ground — no duty to retreat if not initial aggressor",
+      "Apparent danger sufficient — actual danger not required",
+      "Defense of others reaches third parties",
+      "Imperfect self-defense reduces murder to voluntary manslaughter"
+    ],
+    "common_defenses": [
+      "Castle Doctrine",
+      "Stand Your Ground",
+      "Apparent danger",
+      "Defense of others",
+      "Imperfect self-defense (reduces charge)"
+    ]
+  },
+  {
+    "common_charge_slug": "other",
+    "prosecution_strengths": [
+      "Drug Device and Cosmetic Act (35 P.S.) for drug crimes",
+      "Specialized statutes for particular conduct",
+      "Federal coordination available"
+    ],
+    "defense_opportunities": [
+      "Statute-specific defenses based on charge",
+      "ARD program available for many offenses",
+      "Constitutional challenges to vague statutes",
+      "Statute of limitations",
+      "Search and seizure defenses"
+    ],
+    "common_defenses": [
+      "Statute-specific defenses",
+      "ARD program",
+      "Constitutional challenges",
+      "Statute of limitations",
+      "Search and seizure"
+    ]
+  }
+]

@@ -1,0 +1,1858 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "prosecution_strengths": [
+      "Per se BAC threshold of 0.08% eliminates the need to prove actual impairment when chemical test results are available",
+      "Checkpoint stops are broadly permitted under NC law, providing a steady pipeline of DWI arrests without individualized suspicion",
+      "Grossly aggravating factors (prior DWI within 7 years, child passenger, serious injury, driving on revoked license) each independently escalate sentencing"
+    ],
+    "defense_opportunities": [
+      "The tiered sentencing system also works for the defense: mitigating factors (safe driving record, legal BAC at time of driving, impairment from lawful medication) can push the level down",
+      "Checkpoint compliance with constitutional requirements (written plan, supervisor authorization, neutral criteria) is frequently litigated and can result in suppression",
+      "NC courts require the State to prove the Intoxilyzer 5000 or other breath device was in proper working order and tested per DHHS regulations — maintenance records are discoverable",
+      "The retrograde extrapolation science required to prove BAC at time of driving (vs. at time of test) is often challengeable"
+    ],
+    "common_defenses": [
+      "Improper stop — no reasonable suspicion for the initial traffic stop or checkpoint did not meet constitutional requirements",
+      "Rising BAC defense — defendant's BAC was below 0.08% at time of driving but rose between driving and testing",
+      "Instrument malfunction — Intoxilyzer not properly calibrated or maintained per DHHS preventive maintenance schedule",
+      "Insufficient evidence of impairment — physical observations (bloodshot eyes, slurred speech) attributable to non-alcohol causes"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "prosecution_strengths": [
+      "Even first offenses carry a mandatory 24-hour minimum jail sentence at Level V, providing leverage for plea negotiations",
+      "Ignition interlock is required on license restoration, adding long-term consequences that motivate pleas",
+      "BAC of 0.15% or higher triggers mandatory continuous alcohol monitoring (CAM), increasing the stakes",
+      "If any grossly aggravating factor exists (child passenger, prior within 7 years), even a first offense jumps to Level I or Aggravated Level 1"
+    ],
+    "defense_opportunities": [
+      "First offenders may qualify for diversion or deferred sentencing programs in North Carolina",
+      "First offenders without aggravating factors typically receive Level IV or V, where community service and limited driving privileges are available",
+      "Deferred prosecution programs may be available in some NC counties for true first offenders"
+    ],
+    "common_defenses": [
+      "Improper stop — challenging the officer's reasonable suspicion for the initial stop",
+      "Rising BAC — BAC was below legal limit at the time of driving",
+      "Field sobriety test invalidity — officer did not administer standardized tests per NHTSA protocol",
+      "Medical conditions — diabetes, GERD, or other conditions producing false positives on breath tests",
+      "Violation of implied consent rights — officer failed to follow the statutory notification procedures"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "prosecution_strengths": [
+      "Prior DWI within 7 years is a grossly aggravating factor automatically pushing sentencing to Level I with 30-day mandatory active jail",
+      "Permanent license revocation is possible after a Habitual DWI conviction, providing strong plea pressure",
+      "Vehicle forfeiture provisions apply to Habitual DWI cases"
+    ],
+    "defense_opportunities": [
+      "The 7-year and 10-year look-back periods are strictly calculated — prior convictions outside the window cannot be used for enhancement",
+      "Constitutional challenges to the quality of prior convictions (uncounseled pleas, inadequate colloquies) can eliminate priors from the calculation",
+      "Even at Level I, the structured sentencing system allows for mitigating factors to influence the sentence within the level",
+      "For Habitual DWI, the State must prove each prior conviction beyond a reasonable doubt, requiring certified records"
+    ],
+    "common_defenses": [
+      "Invalid prior convictions — prior pleas were uncounseled or involuntary, making them unusable for enhancement",
+      "Improper stop or arrest — same Fourth Amendment challenges apply regardless of prior record",
+      "Chemical test suppression — procedural violations in testing are independent of defendant's history",
+      "Look-back period calculation — prior conviction falls outside the statutory 7-year or 10-year window"
+    ]
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "prosecution_strengths": [
+      "Marijuana metabolites are detectable for weeks, so the per se rule captures users long after impairment has ended, expanding prosecution reach",
+      "Drug Recognition Expert (DRE) testimony is admissible in NC and provides structured evidence of drug impairment",
+      "Prescription drugs are explicitly covered — even lawful use can support a charge if it causes impairment"
+    ],
+    "defense_opportunities": [
+      "For non-Schedule I substances, the State must prove actual impairment — not just the presence of the substance",
+      "DRE protocols have known reliability issues and are subject to cross-examination on scientific validity",
+      "Blood and urine collection procedures must comply with strict chain-of-custody requirements under NC administrative regulations",
+      "The lag between driving and blood draw allows defense to argue the substance was consumed after driving or its effects had dissipated"
+    ],
+    "common_defenses": [
+      "No impairment — substance was present but did not actually impair driving ability (required for non-Schedule I drugs)",
+      "Invalid chemical testing — blood draw procedures or lab analysis did not comply with NC DHHS regulations",
+      "Lawful prescription use — defendant was using medication as prescribed and was not impaired",
+      "Insufficient DRE evaluation — Drug Recognition Expert deviated from the standardized 12-step protocol",
+      "Involuntary intoxication — defendant was unknowingly drugged or had an unexpected reaction to a lawful substance"
+    ]
+  },
+  {
+    "common_charge_slug": "reckless-driving",
+    "prosecution_strengths": [
+      "Reckless driving charges in North Carolina carry insurance and license consequences in addition to criminal penalties",
+      "Dashcam and bodycam footage increasingly document driving behavior, reducing reliance on officer testimony alone"
+    ],
+    "defense_opportunities": [
+      "The distinction between careless and reckless driving is subjective, providing room for defense argument",
+      "No mandatory minimum allows for creative sentencing alternatives including driving school or community service",
+      "Commonly used as a plea-down from DWI, giving prosecutors incentive to negotiate"
+    ],
+    "common_defenses": [
+      "Emergency circumstances — defendant was driving to avoid a greater harm or responding to an emergency",
+      "Mechanical failure — vehicle malfunction caused the erratic driving, not willful disregard",
+      "Insufficient evidence of willfulness — prosecution cannot prove the driving rose above mere negligence to wanton disregard"
+    ]
+  },
+  {
+    "common_charge_slug": "hit-and-run",
+    "prosecution_strengths": [
+      "Surveillance and traffic cameras frequently capture both the accident and the vehicle leaving the scene",
+      "Felony charges (Class F or H) attach when injury or death results, creating severe consequences",
+      "Even when impairment is suspected, the act of leaving compounds the legal exposure"
+    ],
+    "defense_opportunities": [
+      "The defendant must have knowledge of the accident — if they genuinely did not know a collision occurred, the mental state element is absent",
+      "The duty to render aid is limited to 'reasonable assistance' — defendant may argue they summoned help even if they left the scene",
+      "Property-damage-only hit-and-run is only a Class 1 misdemeanor, a significant reduction from felony charges"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant was genuinely unaware an accident occurred (minor contact, loud music, road conditions)",
+      "Duress or fear — defendant fled due to fear for personal safety at the scene",
+      "Misidentification — prosecution has the wrong vehicle or driver",
+      "Subsequent reporting — defendant left the scene but promptly reported the accident to law enforcement"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "prosecution_strengths": [
+      "North Carolina courts treat vehicular homicide as among the most serious driving offenses",
+      "Proximate cause standard is broader than actual cause — the DWI need only be a contributing factor in the death",
+      "Multiple deaths can result in consecutive sentences"
+    ],
+    "defense_opportunities": [
+      "Proximate cause is litigable — if another driver's negligence or an intervening event was the primary cause, the causal chain breaks",
+      "The underlying DWI charge must independently be proven — all DWI defenses remain available",
+      "The distinction between Class D (DWI predicate), Class E (reckless), and Class F (other violation) matters significantly for sentencing"
+    ],
+    "common_defenses": [
+      "Lack of proximate cause — the death was caused by intervening factors unrelated to the defendant's driving or impairment",
+      "Invalid underlying DWI — if the impaired driving charge fails, the felony death by vehicle charge collapses",
+      "Accident reconstruction — expert testimony challenging the prosecution's theory of how the collision occurred",
+      "Contributory negligence of the victim — while not a complete defense, it undermines the causal connection"
+    ]
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "prosecution_strengths": [
+      "Only requires a moving traffic violation as the predicate — a much lower bar than DWI-based felony death by vehicle",
+      "The causal link between the traffic violation and the death is often straightforward (running a red light, speeding)",
+      "Class 1 misdemeanor carries up to 120 days, but the conviction itself has severe collateral consequences"
+    ],
+    "defense_opportunities": [
+      "Underlying traffic violation must be independently proven for vehicular manslaughter to stand",
+      "The predicate moving violation must be independently proven — if the traffic offense fails, so does the charge",
+      "Causation arguments are available — the traffic violation may not have been the proximate cause of death"
+    ],
+    "common_defenses": [
+      "No underlying traffic violation — defendant was driving lawfully at the time of the accident",
+      "Intervening cause — the victim's or a third party's actions were the proximate cause of death",
+      "Accident not foreseeable — the traffic violation did not create the type of risk that resulted in the death"
+    ]
+  },
+  {
+    "common_charge_slug": "driving-on-suspended",
+    "prosecution_strengths": [
+      "North Carolina DMV/DPS records make suspension status easy to prove",
+      "NC's DMV records provide clear documentary proof of suspension status",
+      "Knowledge element is presumed from mailed notice to the defendant's last known address"
+    ],
+    "defense_opportunities": [
+      "The knowledge element requires proof the defendant knew their license was suspended — if notice was never received, the element fails",
+      "Administrative errors in DMV records (incorrect suspension dates, failure to credit reinstatement fees) are not uncommon",
+      "For basic driving while revoked (non-DWI), it is only a Class 3 misdemeanor with minimal penalties"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant was not properly notified of the suspension or revocation",
+      "Administrative error — DMV records were incorrect or the suspension had been satisfied",
+      "Necessity — defendant drove due to a genuine emergency requiring immediate transportation"
+    ]
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "prosecution_strengths": [
+      "Dashcam and helicopter footage from pursuing officers provides compelling visual evidence",
+      "Additional charges from conduct during the pursuit (reckless driving, property damage, injuries) compound exposure",
+      "Two or more aggravating factors (high speed, endangerment, reckless driving) elevate to Class E felony"
+    ],
+    "defense_opportunities": [
+      "The officer's signal to stop must have been visible or audible to the defendant — if conditions prevented perception, the element fails",
+      "The officer must have been in an identifiable law enforcement vehicle or uniform",
+      "Distinguishing between failure to immediately stop (which has innocent explanations) and willful flight is fact-intensive"
+    ],
+    "common_defenses": [
+      "Did not perceive signal — defendant did not see or hear the officer's signal due to road conditions, music, or vehicle noise",
+      "Not a marked vehicle — officer was not in an identifiable police vehicle and defendant feared for safety",
+      "Duress — defendant fled due to fear of harm from pursuing individuals they did not know were police",
+      "Brief delay in stopping — defendant was looking for a safe place to pull over, not attempting to elude"
+    ]
+  },
+  {
+    "common_charge_slug": "open-container",
+    "prosecution_strengths": [
+      "North Carolina open container laws apply broadly to passenger areas of motor vehicles",
+      "Applies to both drivers and passengers, broadening enforcement",
+      "Often discovered during DWI stops, providing additional evidence of impairment"
+    ],
+    "defense_opportunities": [
+      "The container must be in the 'passenger area' — trunk, locked glove box, or areas behind the last upright seat may be excluded",
+      "Exceptions exist for vehicles-for-hire and recreational vehicles",
+      "Class 3 misdemeanor with maximum 20-day sentence and $200 fine — the lowest misdemeanor level in NC"
+    ],
+    "common_defenses": [
+      "Container was not 'open' — seal was intact or container was empty",
+      "Container was not in the passenger area — it was in the trunk or another excluded area",
+      "Vehicle exception — defendant was in a vehicle-for-hire or qualifying recreational vehicle"
+    ]
+  },
+  {
+    "common_charge_slug": "refusing-breath-test",
+    "prosecution_strengths": [
+      "The refusal itself is admissible at trial as evidence of consciousness of guilt",
+      "Escalating revocation periods (4 years for second refusal, permanent for third+) create enormous pressure",
+      "The prosecution can still pursue the DWI charge based on other evidence of impairment"
+    ],
+    "defense_opportunities": [
+      "NC requires a 'willful' refusal — medical inability, confusion, or language barriers can negate willfulness",
+      "The officer must properly inform the defendant of implied consent rights; failure to do so invalidates the refusal",
+      "The refusal hearing before DMV is separate from the criminal case and can sometimes result in restoration of privileges",
+      "Without a BAC number, the prosecution's impairment case relies entirely on behavioral evidence"
+    ],
+    "common_defenses": [
+      "Not a willful refusal — defendant was physically unable to provide a sample due to medical conditions",
+      "Inadequate implied consent warning — officer did not properly inform defendant of rights and consequences",
+      "No probable cause for arrest — the underlying arrest was invalid, making the implied consent demand improper",
+      "Confusion or language barrier — defendant did not understand what was being requested"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "prosecution_strengths": [
+      "Constructive possession doctrine extends liability to drugs in shared spaces under North Carolina law",
+      "Constructive possession doctrine allows conviction even when drugs are not found on the defendant's person",
+      "NC has no recreational marijuana law and no broad decriminalization, maintaining full criminal liability for all controlled substances"
+    ],
+    "defense_opportunities": [
+      "Constructive possession requires proof of both knowledge and ability to exercise control — proximity alone is insufficient",
+      "Fourth Amendment challenges to the search that produced the evidence (vehicle search, home search, stop-and-frisk) are frequently viable",
+      "Schedule III-VI possession in small amounts is only a Class 1 misdemeanor, significantly less severe"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — drugs were discovered through a warrantless search without a valid exception",
+      "Lack of knowledge — defendant did not know the controlled substance was present",
+      "Constructive possession failure — drugs were in a shared space and cannot be attributed to the defendant"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "prosecution_strengths": [
+      "NC maintains full criminal prohibition on marijuana — no recreational or medical program exists",
+      "Amounts over 1.5 oz are a Class I felony, and over 10 lbs triggers mandatory trafficking minimums",
+      "Even small amounts (0.5 oz to 1.5 oz) are a Class 1 misdemeanor with up to 120 days"
+    ],
+    "defense_opportunities": [
+      "Constitutional challenges to marijuana-based vehicle searches are increasingly viable",
+      "Possession of 0.5 oz or less is only a Class 3 misdemeanor — maximum 20 days and $200 fine, the lowest criminal level",
+      "Fourth Amendment suppression motions are particularly common in marijuana cases discovered during traffic stops"
+    ],
+    "common_defenses": [
+      "Illegal search — marijuana was discovered through an unlawful search of the vehicle or person",
+      "Quantity dispute — the actual amount is below the threshold for the charged offense level",
+      "Constructive possession — marijuana was in a shared vehicle or residence and cannot be attributed solely to defendant"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-cocaine",
+    "prosecution_strengths": [
+      "Cocaine is classified as Schedule II under North Carolina controlled substance law",
+      "Any amount of cocaine is a Class I felony as a Schedule II substance",
+      "Cocaine is easily identifiable through field and lab testing, reducing identification disputes"
+    ],
+    "defense_opportunities": [
+      "Quantity disputes can reduce trafficking charges to simple possession in North Carolina",
+      "The gap between simple possession (Class I) and trafficking (Class G with 35-month mandatory) is enormous — accurate weight determination is critical",
+      "Chain of custody for small amounts is particularly important and subject to challenge"
+    ],
+    "common_defenses": [
+      "Illegal search and seizure — the search that recovered the cocaine violated the Fourth Amendment",
+      "Constructive possession — cocaine was found in a shared space without proof of defendant's knowledge or control",
+      "Weight challenge — the quantity does not meet the trafficking threshold when adulterants or packaging are excluded",
+      "Identification error — substance field-tested positive but lab analysis showed a different compound"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-meth",
+    "prosecution_strengths": [
+      "Methamphetamine is classified as Schedule II under North Carolina controlled substance law",
+      "Any amount is a Class I felony as a Schedule II substance",
+      "Meth-related offenses receive heightened law enforcement attention in NC, with dedicated task forces"
+    ],
+    "defense_opportunities": [
+      "Drug court diversion may be available for first-time meth possession offenders in North Carolina",
+      "The severe mandatory minimums at trafficking levels make accurate weight determination a high-stakes issue — defense can challenge gross vs. net weight",
+      "Manufacturing-related charges require proof beyond mere proximity to meth-related materials"
+    ],
+    "common_defenses": [
+      "Illegal search — meth was discovered during an unconstitutional search",
+      "Weight challenge — gross weight includes packaging, cutting agents, or moisture that should not count toward trafficking thresholds",
+      "Lack of knowledge — defendant did not know the substance was methamphetamine",
+      "Constructive possession — drugs were in a shared space without proof of defendant's dominion and control"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-opioids",
+    "prosecution_strengths": [
+      "Fentanyl's extreme potency means tiny quantities can support trafficking charges when weight includes mixture",
+      "Schedule I classification means no valid prescription defense for heroin",
+      "Distribution causing death can support second-degree murder charges"
+    ],
+    "defense_opportunities": [
+      "North Carolina's Good Samaritan provisions may provide limited immunity in overdose situations",
+      "Prescription opioid possession with a valid prescription is a complete defense — the State must prove the prescription was invalid or exceeded",
+      "The 4g heroin trafficking threshold makes precise lab analysis and weight determination critical defense issues"
+    ],
+    "common_defenses": [
+      "Valid prescription — defendant possessed the opioids pursuant to a valid medical prescription",
+      "Weight challenge — 4g trafficking threshold requires precise measurement excluding adulterants and packaging",
+      "Illegal search — opioids were discovered through an unconstitutional search"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-prescription",
+    "prosecution_strengths": [
+      "NC's Controlled Substance Reporting System (CSRS) provides a comprehensive database of prescription records",
+      "Schedule II-III possession without a prescription is a Class I felony",
+      "Doctor shopping patterns are easily documented through CSRS records",
+      "Expired prescriptions eliminate the valid-prescription defense"
+    ],
+    "defense_opportunities": [
+      "Schedule IV-VI substances are only Class 1 misdemeanors, significantly reducing exposure",
+      "A valid, current prescription is a complete defense — the State bears the burden of proving it was lacking",
+      "CSRS records may contain errors or fail to account for out-of-state prescriptions",
+      "Medical necessity and legitimate treatment can complicate the prosecution's narrative"
+    ],
+    "common_defenses": [
+      "Valid prescription — defendant had a current, valid prescription from a licensed practitioner",
+      "CSRS error — prescription database records were incomplete or inaccurate",
+      "Lack of knowledge — defendant believed their prescription was still valid or covered the substance",
+      "Medical necessity — defendant possessed the substance in the course of legitimate medical treatment"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-trafficking",
+    "prosecution_strengths": [
+      "Trafficking is triggered by weight alone — no intent to distribute required, just possession of the threshold quantity",
+      "Conspiracy to traffic carries the same penalties as completed trafficking",
+      "The mandatory minimums escalate sharply: cocaine goes from 35 months (28g) to 175 months (400g+)"
+    ],
+    "defense_opportunities": [
+      "North Carolina trafficking thresholds are quantity-based — accurate weight determination is critical",
+      "Weight challenges are critical — gross vs. net weight, mixture vs. pure substance, and packaging exclusions can mean the difference between trafficking and simple possession",
+      "Every constitutional challenge to the search and seizure remains available — if the drugs are suppressed, the trafficking charge collapses"
+    ],
+    "common_defenses": [
+      "Weight below trafficking threshold — when adulterants, moisture, or packaging are excluded, the net weight falls below the statutory threshold",
+      "Illegal search and seizure — the evidence was obtained through an unconstitutional search",
+      "Entrapment — law enforcement induced the defendant to possess trafficking quantities they would not otherwise have possessed",
+      "Substantial assistance — cooperation with law enforcement to reduce the mandatory minimum"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "prosecution_strengths": [
+      "Schedule I-II delivery is a Class G felony (up to 47 months) without trafficking quantities",
+      "Undercover buys and controlled purchases provide strong evidence of delivery",
+      "Sale to a minor or pregnant woman triggers enhanced penalties"
+    ],
+    "defense_opportunities": [
+      "The State must prove actual delivery or sale — mere possession without transfer is not distribution",
+      "School zone measurements must be precise (1,000 feet from school property, not the building), and can be challenged",
+      "Informant credibility is frequently an issue in controlled purchase cases"
+    ],
+    "common_defenses": [
+      "No delivery occurred — defendant possessed but did not transfer or sell the substance",
+      "Entrapment — government agent induced the sale that would not have occurred otherwise",
+      "Unreliable informant — the cooperating witness is not credible and fabricated the transaction",
+      "School zone measurement error — the distance calculation is inaccurate or improperly measured"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "prosecution_strengths": [
+      "Children present during meth manufacturing triggers separate child endangerment charges",
+      "Physical evidence of manufacturing operations (labs, chemicals, equipment) is difficult to explain away",
+      "Environmental contamination evidence adds a sympathetic element for juries"
+    ],
+    "defense_opportunities": [
+      "Manufacturing requires proof of an affirmative act of production — mere possession of precursors is not manufacturing",
+      "Class H felony for most non-meth manufacturing is significantly less severe than the Class D meth enhancement",
+      "The distinction between manufacturing and possession with intent depends on the stage of production"
+    ],
+    "common_defenses": [
+      "No manufacturing activity — defendant possessed materials but was not engaged in active production",
+      "Lack of knowledge — defendant was present at a location where manufacturing occurred but did not participate",
+      "Illegal search — the evidence of manufacturing was discovered through an unconstitutional search",
+      "Mere presence — defendant was in the vicinity but did not aid, abet, or participate in manufacturing"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "prosecution_strengths": [
+      "North Carolina drug paraphernalia statutes broadly capture items used with controlled substances",
+      "Paraphernalia found alongside drugs strengthens both the paraphernalia and the underlying drug charges",
+      "Drug residue on items provides scientific evidence of intended use"
+    ],
+    "defense_opportunities": [
+      "Intent element is critical — the item must be intended for drug use, which is contestable for multi-purpose items",
+      "Class 1 misdemeanor with maximum 120 days is relatively minor as a standalone charge",
+      "Without accompanying drugs or residue, proving the item was drug paraphernalia is difficult"
+    ],
+    "common_defenses": [
+      "Legitimate purpose — the item has a lawful, non-drug-related use and was intended for that purpose",
+      "Lack of intent — no evidence connecting the item to controlled substance use",
+      "No residue or drug nexus — the item was clean and not associated with any drug evidence"
+    ]
+  },
+  {
+    "common_charge_slug": "prescription-fraud",
+    "prosecution_strengths": [
+      "NC's CSRS database provides a comprehensive trail of prescription patterns, making doctor shopping easily provable",
+      "Forged prescriptions can be traced through pharmacy records and surveillance",
+      "Multiple fraudulent prescriptions can be charged separately, stacking exposure",
+      "Healthcare providers found committing fraud face both criminal charges and license revocation"
+    ],
+    "defense_opportunities": [
+      "Class I felony (up to 24 months) is the baseline — lower than trafficking charges for the same substances",
+      "Legitimate confusion about prescription validity or doctor instructions can negate the fraud intent element",
+      "CSRS reporting delays or errors may provide an innocent explanation for overlapping prescriptions"
+    ],
+    "common_defenses": [
+      "Lack of fraudulent intent — defendant believed they had a valid prescription",
+      "CSRS data error — the database inaccurately reflected the defendant's prescription history",
+      "Medical necessity — defendant was seeking legitimate treatment and miscommunicated with providers",
+      "Authorized agent — defendant was picking up a prescription for another person who had a valid prescription"
+    ]
+  },
+  {
+    "common_charge_slug": "drug-possession-with-intent",
+    "prosecution_strengths": [
+      "Intent can be inferred from circumstantial evidence: quantity, packaging, scales, cash, and communications",
+      "Same penalty as actual delivery (Class G for Schedule I-II), creating strong plea pressure",
+      "School zone enhancement elevates the offense by two felony classes",
+      "Text messages and social media evidence increasingly support intent allegations"
+    ],
+    "defense_opportunities": [
+      "Intent is an inference — the defense can present alternative explanations for quantity and packaging",
+      "The line between personal use and distribution intent is fact-specific and subject to challenge",
+      "Without evidence of actual sales or transfer, the case rests entirely on circumstantial evidence"
+    ],
+    "common_defenses": [
+      "Personal use — the quantity and packaging are consistent with personal consumption, not distribution",
+      "Illegal search — the evidence supporting intent was obtained unconstitutionally",
+      "Insufficient circumstantial evidence — scales, cash, and packaging have innocent explanations",
+      "Constructive possession — defendant did not possess the drugs or the distribution materials"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "prosecution_strengths": [
+      "NC has the death penalty, creating maximum pressure in first-degree murder cases",
+      "Felony murder doctrine covers killings during arson, rape, robbery, kidnapping, burglary, and other enumerated felonies — no specific intent to kill required",
+      "Class A felony carries mandatory life without parole if death penalty is not sought",
+      "Aggravating circumstances (law enforcement victim, especially heinous/atrocious/cruel) can push toward death sentence"
+    ],
+    "defense_opportunities": [
+      "Premeditation and deliberation must be proven beyond a reasonable doubt — a key battleground in non-felony-murder cases",
+      "The distinction between first degree (premeditation) and second degree (malice only) is often the central issue at trial",
+      "For felony murder, if the underlying felony fails, the murder theory collapses",
+      "Mitigating circumstances are extensively litigated in capital cases under NC's capital sentencing statute"
+    ],
+    "common_defenses": [
+      "Lack of premeditation — the killing was impulsive, not deliberate, supporting reduction to second-degree murder or manslaughter",
+      "Diminished capacity — defendant's mental state prevented the formation of specific intent",
+      "Alibi — defendant was not present at the time and place of the killing",
+      "Felony murder challenge — the underlying felony was not committed or defendant was not a participant"
+    ]
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "prosecution_strengths": [
+      "Class B1 felony carries up to 484+ months, among the most severe non-capital sentences in NC",
+      "Malice can be implied from the inherent dangerousness of the act, lowering the State's burden compared to first-degree",
+      "Drug distribution causing death can be prosecuted as second-degree murder",
+      "The Class B2 alternative (inherently dangerous act with wanton disregard) provides a fallback theory"
+    ],
+    "defense_opportunities": [
+      "The absence of premeditation is the key distinction from first-degree murder — every fact supporting impulsiveness helps the defense",
+      "Voluntary manslaughter (heat of passion) is a lesser-included offense that dramatically reduces exposure",
+      "For implied malice theories, the defense can argue the conduct was reckless but not malicious"
+    ],
+    "common_defenses": [
+      "Heat of passion — adequate provocation reduced the killing to voluntary manslaughter",
+      "Self-defense — defendant reasonably believed deadly force was necessary",
+      "Lack of malice — the killing resulted from recklessness, not malice, supporting an involuntary manslaughter verdict",
+      "Accident — the death was unintentional and not the result of malicious conduct"
+    ]
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "prosecution_strengths": [
+      "Class D felony (up to 204 months) — still a very serious offense despite being less than murder",
+      "The prosecution can argue that the provocation was insufficient or that the defendant had time to cool off",
+      "Often charged as a lesser-included of murder, meaning the jury has already heard the full murder evidence"
+    ],
+    "defense_opportunities": [
+      "Voluntary manslaughter is itself a defense theory — it represents a successful reduction from murder",
+      "Adequate provocation and heat of passion are factual questions for the jury",
+      "Imperfect self-defense (genuine but unreasonable belief in the need for deadly force) can also result in voluntary manslaughter"
+    ],
+    "common_defenses": [
+      "Heat of passion — defendant killed under the influence of sudden passion caused by adequate provocation",
+      "Imperfect self-defense — defendant genuinely but unreasonably believed deadly force was necessary",
+      "No cooling-off period — the provocation and killing were sufficiently close in time"
+    ]
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "prosecution_strengths": [
+      "North Carolina involuntary manslaughter requires only criminal negligence, a lower mental state than recklessness",
+      "Class F felony (up to 41 months) requires only culpable negligence — no intent to kill needed",
+      "Culpable negligence is a lower standard than malice, making the charge easier to prove than murder"
+    ],
+    "defense_opportunities": [
+      "Culpable negligence must be more than ordinary negligence — the defense can argue the conduct did not rise to that level",
+      "The lawful-act theory (culpably negligent during a lawful act) requires the State to prove a gross deviation from reasonable care",
+      "No mandatory minimum and relatively lower exposure compared to murder charges"
+    ],
+    "common_defenses": [
+      "Ordinary negligence — defendant's conduct was negligent but did not rise to culpable negligence",
+      "Accident — the death was an unforeseeable accident without criminal negligence",
+      "No proximate cause — the defendant's negligence was not the proximate cause of death"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "prosecution_strengths": [
+      "North Carolina prosecutors can charge under multiple assault statutes for the same underlying conduct",
+      "NC has multiple assault statutes covering different combinations of deadly weapon, intent to kill, and serious injury — prosecutors choose the best fit",
+      "Medical records documenting the severity of injuries provide strong evidence of the 'serious injury' element"
+    ],
+    "defense_opportunities": [
+      "Self-defense applies as a complete defense even when serious injuries result",
+      "The distinction between serious injury and non-serious injury dramatically changes the offense class (Class E or C felony vs. misdemeanor)",
+      "Intent to kill is a specific-intent element that must be proven beyond a reasonable doubt — it is not presumed from the use of a weapon"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used force to protect themselves from a perceived threat of death or serious harm",
+      "Defense of others — defendant acted to protect a third party from imminent harm",
+      "Lack of intent to kill — defendant did not intend to kill, reducing the charge to a lower classification",
+      "Injury not serious — the victim's injuries do not meet the statutory definition of serious injury or serious bodily injury"
+    ]
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "prosecution_strengths": [
+      "Simple assault is broadly applied in North Carolina for both fights and threatening conduct",
+      "Multiple victim categories (children under 12, officers, teachers, healthcare workers) also trigger automatic Class A1 elevation",
+      "Domestic relationship context triggers additional conditions and protections for the victim"
+    ],
+    "defense_opportunities": [
+      "Basic simple assault is a Class 2 misdemeanor with only 60 days maximum — among NC's lower-level offenses",
+      "The threat-based assault theory (apprehension of harm without contact) requires the victim to have been aware of the threat",
+      "Mutual combat or consensual altercation can negate the 'without consent' element"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted to protect themselves from the victim's aggression",
+      "Consent — the physical contact occurred in a consensual context (mutual fight)",
+      "Accident — the contact was unintentional and not the result of an assault",
+      "Insufficient evidence — the victim's account is uncorroborated and contradicted by other evidence"
+    ]
+  },
+  {
+    "common_charge_slug": "battery",
+    "prosecution_strengths": [
+      "North Carolina battery law captures both intentional contact and offensive touching",
+      "Physical evidence of injury (photographs, medical records) corroborates the battery allegation",
+      "Victim testimony alone can be sufficient for conviction in many cases"
+    ],
+    "defense_opportunities": [
+      "Same defense opportunities as simple assault — Class 2 misdemeanor baseline with 60-day maximum",
+      "The contact must have been intentional and offensive — accidental contact is not battery",
+      "Self-defense remains fully available"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was defending themselves from the victim's physical aggression",
+      "Accident — the physical contact was unintentional",
+      "Consent — the contact occurred in a context where it was expected or agreed to",
+      "De minimis contact — the touching was so trivial it does not constitute a criminal offense"
+    ]
+  },
+  {
+    "common_charge_slug": "aggravated-battery",
+    "prosecution_strengths": [
+      "Aggravated battery in North Carolina requires proof of serious bodily injury or use of a deadly weapon",
+      "The definition of serious bodily injury is broad: substantial risk of death, permanent disfigurement, or protracted loss of function",
+      "Medical evidence of serious injuries is typically compelling to juries"
+    ],
+    "defense_opportunities": [
+      "The 'serious bodily injury' threshold is higher than simple physical harm — injuries that heal completely may not qualify",
+      "The distinction between serious injury (Class E) and non-serious injury (misdemeanor) is fact-intensive and litigable",
+      "Self-defense applies — even serious injuries inflicted in legitimate self-defense are not criminal"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant acted in lawful self-defense proportionate to the threat",
+      "Injury not serious — the victim's injuries do not meet the statutory definition of serious bodily injury",
+      "Lack of intent — the injury was accidental or the result of mutual combat, not an intentional assault",
+      "Defense of others — defendant was protecting another person from imminent harm"
+    ]
+  },
+  {
+    "common_charge_slug": "robbery",
+    "prosecution_strengths": [
+      "Common law robbery is a Class G felony (up to 47 months) with a clear statutory framework",
+      "The force or intimidation element is broadly interpreted — snatching property from someone can qualify",
+      "Victim identification evidence and surveillance footage are frequently available in robbery cases"
+    ],
+    "defense_opportunities": [
+      "The distinction between robbery (force/intimidation) and larceny from the person (no force) is significant — larceny from the person is Class H, one level lower",
+      "Identification challenges are common in robbery cases, particularly when the perpetrator was masked or the encounter was brief",
+      "Intent to permanently deprive must be proven — taking property with intent to return it is not robbery"
+    ],
+    "common_defenses": [
+      "Misidentification — the victim or witnesses incorrectly identified the defendant as the perpetrator",
+      "No force or intimidation — the taking was by stealth rather than force, reducing the charge to larceny",
+      "Alibi — defendant was elsewhere when the robbery occurred",
+      "Claim of right — defendant believed they had a legal right to the property"
+    ]
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "prosecution_strengths": [
+      "Class D felony (up to 204 months) with presumptive active sentence — one of NC's most serious property crimes",
+      "The weapon need not be used — mere display or threatened use of a firearm, knife, or other dangerous weapon is sufficient",
+      "Any object capable of threatening life qualifies as a dangerous weapon under the statute",
+      "Multiple victims or incidents can result in consecutive sentences"
+    ],
+    "defense_opportunities": [
+      "If the weapon element is removed, the charge drops to common law robbery (Class G), a dramatic reduction",
+      "The definition of 'dangerous weapon' is litigable — not every object qualifies despite the broad language",
+      "Identification and alibi defenses apply with full force"
+    ],
+    "common_defenses": [
+      "Misidentification — defendant was not the person who committed the robbery",
+      "No weapon — the object was not actually a dangerous weapon capable of threatening life",
+      "Alibi — defendant has evidence of being elsewhere at the time",
+      "Duress — defendant was coerced into participating by threats of harm"
+    ]
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "prosecution_strengths": [
+      "First-degree kidnapping is a Class C felony (up to 231 months) when the victim is not released in a safe place or is sexually assaulted or seriously injured",
+      "The statute covers multiple theories: ransom, facilitating felony, terrorizing, or serious harm",
+      "Children under 16 can be kidnapped by deception alone, without force or threat"
+    ],
+    "defense_opportunities": [
+      "Second-degree kidnapping (Class E, 88 months max) applies when the victim is released in a safe place without serious injury — a critical distinction",
+      "Kidnapping charges are often challenged when they are incidental to another crime (robbery, assault) — the restraint or movement must be separate from and exceed what is inherent in the other crime",
+      "The consent of the victim (or parent/guardian for minors) negates the charge"
+    ],
+    "common_defenses": [
+      "Consent — the victim voluntarily went with the defendant",
+      "Incidental to another offense — the movement or confinement was inherent in the commission of the underlying crime, not separate kidnapping",
+      "Release in safe place — victim was released unharmed, reducing to second-degree",
+      "Parental right — parent moved their own child without criminal purpose"
+    ]
+  },
+  {
+    "common_charge_slug": "arson",
+    "prosecution_strengths": [
+      "First-degree arson (occupied dwelling) is a Class D felony carrying up to 204 months",
+      "Physical and forensic evidence of fire origin and cause is typically strong when an accelerant is used",
+      "Insurance fraud motive provides a comprehensible theory for juries",
+      "Occupied structure at the time of the fire creates a threat-to-life narrative"
+    ],
+    "defense_opportunities": [
+      "Second-degree arson (unoccupied/non-dwelling) is a Class G felony (47 months max), a substantial reduction from first degree",
+      "Fire origin and cause determination is a specialized forensic field subject to expert challenge",
+      "Accidental fire is a complete defense — the State must prove willful and malicious intent",
+      "Circumstantial evidence cases are common in arson and subject to alternative explanation"
+    ],
+    "common_defenses": [
+      "Accidental fire — the fire was not intentionally set (electrical, cooking, natural causes)",
+      "Misidentification — defendant was not the person who set the fire",
+      "Faulty fire investigation — the origin-and-cause analysis relied on outdated methodology or reached unsupported conclusions",
+      "Structure not occupied — the building was unoccupied at the time, reducing the charge from first to second degree"
+    ]
+  },
+  {
+    "common_charge_slug": "attempted-murder",
+    "prosecution_strengths": [
+      "Attempted first-degree murder is a Class B1 felony (same as second-degree murder) carrying 484+ months",
+      "Specific intent to kill can be inferred from the defendant's actions (e.g., shooting at close range, stabbing vital areas)",
+      "The victim does not need to be injured — a substantial step toward killing with intent is sufficient"
+    ],
+    "defense_opportunities": [
+      "Specific intent to kill is required and must be proven beyond a reasonable doubt — this is a higher bar than malice",
+      "Attempted second-degree murder (Class C, 231 months max) is a significantly lesser alternative",
+      "The 'substantial step' requirement means mere preparation is insufficient — the defense can argue the conduct did not go far enough"
+    ],
+    "common_defenses": [
+      "No intent to kill — defendant intended to injure, frighten, or threaten, not kill",
+      "Self-defense — defendant's actions were in response to an imminent threat of deadly force",
+      "Abandonment — defendant voluntarily abandoned the attempt before any substantial step was completed",
+      "Insufficient evidence — the prosecution's evidence does not prove the act was a substantial step beyond preparation"
+    ]
+  },
+  {
+    "common_charge_slug": "assault-with-deadly-weapon",
+    "prosecution_strengths": [
+      "With serious injury, this is a Class E felony (88 months max); with intent to kill and serious injury, it escalates to Class C (231 months)",
+      "The 'deadly weapon' definition is broad — virtually any object used in a manner capable of causing death qualifies",
+      "Medical records documenting injuries provide objective evidence of the weapon's effect"
+    ],
+    "defense_opportunities": [
+      "Without serious injury, assault with a deadly weapon is only a Class A1 misdemeanor (150 days max) — a dramatic difference",
+      "The definition of 'deadly weapon' is fact-dependent and subject to challenge for items not inherently dangerous",
+      "Intent to kill is an additional element that must be separately proven for Class C classification"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant used the weapon to protect themselves from imminent harm",
+      "Object not a deadly weapon — the item used does not qualify as a deadly weapon under the circumstances",
+      "No serious injury — the victim's injuries were minor, reducing the charge to a misdemeanor",
+      "Accident — the use of the object was unintentional"
+    ]
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "prosecution_strengths": [
+      "NC's felony threshold of $1,000 captures a broad range of thefts as Class I felonies",
+      "Surveillance footage is increasingly available from both commercial and residential security systems",
+      "Larceny from the person is automatically Class H felony regardless of value"
+    ],
+    "defense_opportunities": [
+      "Under $1,000 is only a Class 1 misdemeanor (120 days max), making value determination critical",
+      "Intent to permanently deprive is required — borrowing with intent to return is not larceny",
+      "Claim of right (good-faith belief the property belongs to the defendant) negates the theft element"
+    ],
+    "common_defenses": [
+      "Claim of right — defendant genuinely believed they owned or were entitled to the property",
+      "No intent to permanently deprive — defendant intended to borrow and return the property",
+      "Misidentification — defendant was not the person who committed the theft",
+      "Value dispute — the property is worth less than $1,000, reducing the charge to a misdemeanor"
+    ]
+  },
+  {
+    "common_charge_slug": "grand-theft",
+    "prosecution_strengths": [
+      "Felony larceny at $1,000+ is a Class I felony; larceny from the person or of a firearm is Class H regardless of value",
+      "Value over $100,000 escalates to Class C felony with exposure up to 231 months",
+      "NC allows aggregation of thefts in a scheme to reach felony thresholds"
+    ],
+    "defense_opportunities": [
+      "Value of the property is the critical threshold issue — defense appraisals and depreciation can reduce the assessed value below $1,000",
+      "Class I felony (max 24 months) is at the lower end of NC's felony range",
+      "Restitution and first-time offender provisions can mitigate the outcome"
+    ],
+    "common_defenses": [
+      "Value dispute — the property is worth less than the felony threshold when properly valued",
+      "Claim of right — defendant believed they had a legal claim to the property",
+      "Lack of intent — defendant did not intend to permanently deprive the owner",
+      "Misidentification — someone else committed the theft"
+    ]
+  },
+  {
+    "common_charge_slug": "petty-theft",
+    "prosecution_strengths": [
+      "North Carolina retail theft prosecutions are supported by store loss prevention testimony and surveillance",
+      "Class 1 misdemeanor (120 days max) is straightforward to prosecute with evidence of the taking",
+      "Surveillance and store loss prevention evidence are commonly available"
+    ],
+    "defense_opportunities": [
+      "First-offense misdemeanor larceny carries relatively low penalties and is often suitable for diversion or plea alternatives",
+      "Deferred prosecution or conditional discharge programs are available in many NC counties",
+      "Value disputes can sometimes reduce the charge to an infraction or result in dismissal"
+    ],
+    "common_defenses": [
+      "Lack of intent — defendant did not intend to take the property (accidental placement in bag, forgot to pay)",
+      "Claim of right — defendant believed the property was theirs",
+      "De minimis value — the property had negligible value",
+      "First-offender diversion — eligible for conditional discharge or deferred prosecution"
+    ]
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "prosecution_strengths": [
+      "North Carolina merchant detention laws support concealment-based prosecutions",
+      "Store surveillance systems provide strong evidence of concealment",
+      "Value over $2,000 is automatically a Class I felony regardless of prior record"
+    ],
+    "defense_opportunities": [
+      "First-offense concealment is only a Class 3 misdemeanor (20 days max, $200 fine) — NC's lowest criminal classification",
+      "The concealment must be proven — simply carrying merchandise in an unusual manner is not necessarily concealment",
+      "Organized retail theft (Class H felony) requires proof of coordination with others"
+    ],
+    "common_defenses": [
+      "No intent to steal — defendant intended to pay for the merchandise but had not yet reached checkout",
+      "Absent-mindedness — defendant forgot they were carrying the item",
+      "Merchant error — price tag or inventory errors caused a misunderstanding"
+    ]
+  },
+  {
+    "common_charge_slug": "burglary",
+    "prosecution_strengths": [
+      "First-degree burglary is a Class D felony (204 months max) requiring occupied dwelling and nighttime entry",
+      "The breaking-and-entering element is interpreted broadly — pushing open an unlocked door qualifies",
+      "Physical evidence (tool marks, DNA, fingerprints) and surveillance footage connect defendants to the scene"
+    ],
+    "defense_opportunities": [
+      "The distinction between first degree (Class D, occupied, nighttime) and second degree (Class G, 47 months max) is enormous",
+      "Daytime entry into an unoccupied dwelling is second-degree burglary — a major reduction",
+      "Intent to commit a felony or larceny therein must be proven — entry for other purposes is not burglary"
+    ],
+    "common_defenses": [
+      "No intent to commit crime — defendant entered the dwelling for an innocent purpose",
+      "Consent or authorization — defendant had permission to enter the premises",
+      "Dwelling not occupied — no one was present, reducing to second-degree",
+      "Misidentification — defendant was not the person who entered the dwelling"
+    ]
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "prosecution_strengths": [
+      "Class D felony for first-degree (occupied nighttime) carries up to 204 months",
+      "Uninvited entry through an open door still constitutes 'breaking' under NC common law",
+      "Victim testimony about the trauma of home invasion resonates strongly with juries"
+    ],
+    "defense_opportunities": [
+      "Second-degree residential burglary (Class G, 47 months max) is available when the dwelling was unoccupied or it was daytime",
+      "Consent to enter eliminates the breaking-and-entering element entirely",
+      "The intent element must have existed at the time of entry, not after"
+    ],
+    "common_defenses": [
+      "Consent — defendant had permission or an invitation to enter the residence",
+      "No criminal intent at time of entry — defendant entered with innocent purpose; any criminal act was an afterthought",
+      "Misidentification — physical or forensic evidence does not conclusively link defendant to the entry",
+      "Dwelling was not occupied — reducing the charge from first to second degree"
+    ]
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "prosecution_strengths": [
+      "North Carolina burglary law extends beyond residential structures to commercial buildings",
+      "Broader than common law burglary — covers any building, daytime, and does not require both breaking and entering",
+      "Surveillance systems in commercial buildings frequently capture the crime"
+    ],
+    "defense_opportunities": [
+      "Without felonious intent, breaking or entering is only a Class 1 misdemeanor (120 days max)",
+      "The intent to commit a felony or larceny must exist at the time of entry",
+      "Lesser penalties than residential burglary reflect the lower societal concern for unoccupied commercial spaces"
+    ],
+    "common_defenses": [
+      "No felonious intent — defendant entered the building for an innocent or non-criminal purpose",
+      "Authorized entry — defendant had permission or a legitimate reason to enter the building",
+      "Misidentification — defendant was not the person who broke into the building",
+      "Open premises — the building was open to the public and the defendant did not 'break' in"
+    ]
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "prosecution_strengths": [
+      "Modern vehicle tracking technology aids North Carolina prosecutors in linking suspects to stolen vehicles",
+      "Modern vehicle tracking technology (GPS, LoJack, OnStar) aids in locating stolen vehicles and connecting them to suspects",
+      "VIN databases and title records establish ownership and theft status"
+    ],
+    "defense_opportunities": [
+      "Knowledge that the vehicle was stolen must be proven — innocent purchasers or borrowers may not have known",
+      "Class I felony (24 months max) is at the lower end of NC's felony sentencing",
+      "Title and registration disputes can create genuine ambiguity about ownership"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant did not know the vehicle was stolen",
+      "Authorized use — defendant had permission from the owner to use the vehicle",
+      "Claim of right — defendant believed they had a legal interest in the vehicle",
+      "Misidentification — defendant was not the person who stole or possessed the vehicle"
+    ]
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "prosecution_strengths": [
+      "Same felony threshold as larceny ($1,000) — Class I felony for higher-value property",
+      "The 'reasonable grounds to believe' standard is objective — circumstantial evidence of knowledge is sufficient",
+      "Often charged alongside larceny, providing the prosecution with alternative theories"
+    ],
+    "defense_opportunities": [
+      "Knowledge or reasonable grounds to believe the property was stolen must be proven — this is the key defense battleground",
+      "Under $1,000 is only a Class 1 misdemeanor (120 days max)",
+      "Good-faith purchase from a seemingly legitimate seller negates the knowledge element"
+    ],
+    "common_defenses": [
+      "No knowledge — defendant genuinely did not know or have reason to know the property was stolen",
+      "Good-faith purchaser — defendant bought the property in a legitimate transaction at fair value",
+      "Claim of right — defendant believed the property was lawfully in their possession",
+      "Value dispute — the property's value is below the felony threshold"
+    ]
+  },
+  {
+    "common_charge_slug": "vandalism",
+    "prosecution_strengths": [
+      "North Carolina vandalism law applies to both real and personal property damage",
+      "Damage value typically determines whether the offense is a felony or misdemeanor",
+      "Physical evidence of damage is objective and provable through photographs, repair estimates, and expert testimony"
+    ],
+    "defense_opportunities": [
+      "Under $200 is only a Class 1 misdemeanor (120 days max)",
+      "Intent must be willful and wanton — accidental damage is not vandalism",
+      "The value of damage is often disputed and subject to competing estimates"
+    ],
+    "common_defenses": [
+      "Accident — the damage was not intentionally inflicted",
+      "Misidentification — defendant was not the person who damaged the property",
+      "Consent — the property owner authorized the action that caused the damage",
+      "Value dispute — the cost of damage is below the felony threshold"
+    ]
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "prosecution_strengths": [
+      "North Carolina trespass law applies after notice is given by signs, fencing, or verbal warning",
+      "First-degree trespass (Class 2 misdemeanor) requires only entry after notice or with intent to damage",
+      "Notice can be given by posting signs, fencing, or personal communication — all easily proven"
+    ],
+    "defense_opportunities": [
+      "Second-degree trespass is only a Class 3 misdemeanor (20 days max, $200 fine)",
+      "The notice requirement for first-degree trespass must be specific and proven by the prosecution",
+      "Public easements, rights-of-way, and implied invitations can negate the trespass element"
+    ],
+    "common_defenses": [
+      "No notice — defendant was not informed that entry was prohibited",
+      "Authorization — defendant had permission or a right to be on the property",
+      "Mistake of fact — defendant genuinely believed they were on public property or had the right to be there",
+      "Necessity — defendant entered the property due to an emergency"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "prosecution_strengths": [
+      "North Carolina criminal mischief charges are commonly resolved through restitution agreements",
+      "Damage over $200 to real property is a Class I felony, creating felony exposure for relatively modest damage",
+      "Intent requirement is willful — not merely negligent — which can be proven from the circumstances"
+    ],
+    "defense_opportunities": [
+      "Under $200 damage to personal property is only a Class 2 misdemeanor (60 days max)",
+      "The distinction between willful damage and accidental damage is often the central issue",
+      "Restitution as part of a plea agreement can resolve many cases short of conviction"
+    ],
+    "common_defenses": [
+      "Accident — the property damage was unintentional",
+      "Misidentification — defendant did not cause the damage",
+      "Consent — the property owner authorized the action",
+      "Value dispute — the damage is less than alleged"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "prosecution_strengths": [
+      "Victim statements to 911 and responding officers are often admissible as excited utterances even if the victim later recants",
+      "Photographs of injuries taken at the scene provide independent evidence",
+      "Mandatory conditions of release and no-contact orders add pressure to the defendant"
+    ],
+    "defense_opportunities": [
+      "Victim recantation is common in DV cases and weakens the prosecution's case significantly",
+      "The domestic relationship must be established — the charge enhancements require a specific qualifying relationship",
+      "Self-defense applies — the defendant may have been defending themselves from the alleged victim's aggression"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was defending themselves from the alleged victim's physical attack",
+      "False accusation — the alleged victim fabricated the allegation for custody leverage, revenge, or protective order advantage",
+      "Mutual combat — both parties were engaged in consensual physical conflict",
+      "Insufficient evidence — the prosecution cannot prove the assault beyond a reasonable doubt without the victim's cooperation"
+    ]
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "prosecution_strengths": [
+      "NC treats battery within a domestic relationship as at least a Class A1 misdemeanor (150 days)",
+      "Physical evidence of injury and 911 call recordings provide independent corroboration",
+      "No-contact orders and mandatory conditions of pretrial release create ongoing compliance burdens"
+    ],
+    "defense_opportunities": [
+      "Same defenses as simple assault and battery apply in the domestic context",
+      "Victim cooperation is often necessary for successful prosecution — lack of cooperation weakens the case",
+      "Mutual combat or self-defense scenarios are common in domestic situations"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant was protecting themselves from the alleged victim's violence",
+      "False allegation — the charge was fabricated as a tactic in a domestic dispute or custody proceeding",
+      "Accident — the physical contact was unintentional",
+      "Insufficient evidence — the prosecution's case relies solely on the alleged victim's testimony, which is unreliable"
+    ]
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "prosecution_strengths": [
+      "NC law protects children broadly — DUI with a child passenger is a grossly aggravating factor that elevates the DWI sentencing level",
+      "Drug exposure, inadequate supervision, and dangerous living conditions all qualify",
+      "Medical evidence of injury or neglect provides objective proof",
+      "Child Protective Services investigations often generate parallel evidence"
+    ],
+    "defense_opportunities": [
+      "The line between imperfect parenting and criminal endangerment is subject to cultural and contextual arguments",
+      "The State must prove the defendant's conduct created a substantial risk — speculative risk is insufficient",
+      "Many child endangerment cases are resolved through social services rather than criminal prosecution"
+    ],
+    "common_defenses": [
+      "No substantial risk — the defendant's conduct did not create a genuine risk of harm to the child",
+      "Reasonable parenting — the situation was within the range of acceptable parenting decisions",
+      "Lack of knowledge — defendant was unaware of the dangerous condition",
+      "Medical care provided — defendant sought appropriate medical attention for the child"
+    ]
+  },
+  {
+    "common_charge_slug": "child-abuse",
+    "prosecution_strengths": [
+      "NC prosecutors can charge under multiple statutes depending on severity (assault, child abuse, murder if death results)",
+      "Medical evidence of non-accidental injuries (pattern bruising, fractures at different stages of healing) is highly persuasive",
+      "Mandatory reporting laws ensure that suspected abuse reaches law enforcement",
+      "Child forensic interviews conducted by trained professionals provide documented disclosures"
+    ],
+    "defense_opportunities": [
+      "Medical conditions that mimic abuse (brittle bone disease, bleeding disorders) are recognized defenses",
+      "The identity of the abuser in multi-caretaker households is often uncertain",
+      "Reasonable corporal discipline is not criminal abuse in NC — the line between discipline and abuse is litigable"
+    ],
+    "common_defenses": [
+      "Accidental injury — the child's injuries were the result of an accident, not intentional abuse",
+      "Alternative perpetrator — someone other than the defendant caused the injuries",
+      "Medical condition — the child has a medical condition that produced symptoms mimicking abuse",
+      "Reasonable discipline — the defendant was exercising lawful parental discipline within reasonable bounds"
+    ]
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "prosecution_strengths": [
+      "The protective order is a court order — any knowing violation is per se criminal",
+      "Electronic evidence (texts, calls, social media contact, GPS data) makes violations easily provable",
+      "Repeat violations can escalate to felony charges"
+    ],
+    "defense_opportunities": [
+      "The defendant must have had knowledge of the order — if they were not properly served, the knowledge element fails",
+      "The violation must be willful — accidental contact or presence may not qualify",
+      "Many alleged violations involve ambiguous situations (incidental public encounters, third-party contact)"
+    ],
+    "common_defenses": [
+      "No knowledge of the order — defendant was not properly served and did not know the order existed",
+      "Unintentional contact — the encounter was coincidental and not a willful violation",
+      "Invited contact — the protected party initiated the contact or invited the defendant",
+      "Order expired or modified — the protective order had lapsed or been modified to allow the contact"
+    ]
+  },
+  {
+    "common_charge_slug": "stalking",
+    "prosecution_strengths": [
+      "NC's stalking statute covers physical following, surveillance, and electronic monitoring/communication",
+      "Pattern of conduct requirement is met with just two or more related acts",
+      "Digital evidence (GPS tracking, social media, email) provides documented proof of pattern",
+      "Enhanced to Class F felony if the defendant violated a court order during the stalking conduct"
+    ],
+    "defense_opportunities": [
+      "First-offense stalking is a Class A1 misdemeanor (150 days max) without a court-order violation",
+      "The conduct must cause a reasonable person to feel frightened — subjective fear alone is insufficient",
+      "Constitutionally protected speech and lawful activities (public observation, legitimate business contacts) are not stalking"
+    ],
+    "common_defenses": [
+      "Constitutionally protected activity — the defendant's conduct was lawful speech, protest, or journalism",
+      "No pattern of conduct — isolated incidents do not constitute the required course of conduct",
+      "Reasonable person standard not met — the alleged victim's fear was subjective and not objectively reasonable",
+      "Legitimate purpose — defendant's actions had a lawful basis (coparenting communication, business dealings)"
+    ]
+  },
+  {
+    "common_charge_slug": "harassment",
+    "prosecution_strengths": [
+      "Broad statutory language covers telephone, electronic, and mail communications",
+      "Digital communications create a permanent record of harassing conduct",
+      "Pattern of unwanted contact is typically well-documented through call logs, messages, and emails"
+    ],
+    "defense_opportunities": [
+      "Misdemeanor classification provides relatively lower exposure",
+      "First Amendment protections apply to constitutionally protected speech",
+      "The intent to frighten, intimidate, or harass must be proven — legitimate communications are protected"
+    ],
+    "common_defenses": [
+      "Legitimate purpose — defendant's communications had a lawful, non-harassing purpose",
+      "Free speech — the communications are constitutionally protected expression",
+      "Lack of intent — defendant did not intend to frighten, intimidate, or harass",
+      "Consensual communication — the alleged victim was participating in the conversation willingly"
+    ]
+  },
+  {
+    "common_charge_slug": "elder-abuse",
+    "prosecution_strengths": [
+      "NC law specifically protects disabled adults and elderly from abuse, neglect, and exploitation",
+      "Financial exploitation of vulnerable adults is increasingly prosecuted and documented through financial records",
+      "Medical evidence of neglect (malnutrition, untreated medical conditions) provides objective proof",
+      "Mandatory reporting requirements for healthcare and social services workers ensure cases reach law enforcement"
+    ],
+    "defense_opportunities": [
+      "The definition of 'vulnerable adult' and the defendant's relationship to the victim are litigable elements",
+      "Neglect charges require proof that the defendant had a duty of care — not all individuals owe such a duty",
+      "Financial transactions between family members often have legitimate explanations"
+    ],
+    "common_defenses": [
+      "No duty of care — defendant was not a caretaker or in a position of trust relative to the victim",
+      "Consent — the victim authorized the financial transactions or care decisions at issue",
+      "No harm — the victim was not actually harmed, neglected, or exploited",
+      "Good-faith care — defendant was providing care to the best of their ability under the circumstances"
+    ]
+  },
+  {
+    "common_charge_slug": "weapons-possession",
+    "prosecution_strengths": [
+      "North Carolina weapons laws prohibit specific categories of weapons regardless of permit status",
+      "Possession is a strict-liability element — once the prohibited weapon is found in the defendant's possession, the offense is established",
+      "School zone weapons violations carry enhanced penalties"
+    ],
+    "defense_opportunities": [
+      "Many weapons that are legal under federal law may also be legal under NC law with proper NFA compliance",
+      "The weapon must actually be 'prohibited' under the specific NC statute — classification is a legal question",
+      "Temporary or innocent possession (finding a weapon, turning it in) may negate criminal intent"
+    ],
+    "common_defenses": [
+      "Lawful possession — the weapon is legally possessed under state and federal law",
+      "Lack of knowledge — defendant did not know the weapon was present or that it was prohibited",
+      "Illegal search — the weapon was discovered during an unconstitutional search",
+      "Temporary possession — defendant was in the process of turning the weapon in to law enforcement"
+    ]
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "prosecution_strengths": [
+      "North Carolina bars felons from possessing firearms with both state and federal exposure",
+      "The prior felony is provable through certified court records",
+      "Firearms found in the defendant's home or vehicle trigger constructive possession"
+    ],
+    "defense_opportunities": [
+      "The prior conviction must be a qualifying felony — not all felonies trigger the prohibition",
+      "Constructive possession in shared spaces requires proof of the defendant's knowledge and control over the specific firearm",
+      "Some felony convictions can be expunged under NC law, potentially restoring firearms rights"
+    ],
+    "common_defenses": [
+      "No possession — the firearm belongs to another person and defendant did not possess or control it",
+      "Rights restored — defendant's firearm rights were restored through expungement or pardon",
+      "Illegal search — the firearm was discovered through an unconstitutional search",
+      "Shared premises — the firearm was in a shared location and cannot be attributed to defendant"
+    ]
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "prosecution_strengths": [
+      "NC requires a concealed handgun permit for concealed carry — carrying without one is a Class 2 misdemeanor",
+      "Prohibited locations (courthouses, schools, government buildings) apply even to permit holders",
+      "Carrying a concealed weapon during commission of a felony adds a separate charge"
+    ],
+    "defense_opportunities": [
+      "NC is a shall-issue state — defendants who could have obtained a permit but neglected to do so have strong plea positions",
+      "Open carry is generally legal in NC without a permit, creating a concealment-based defense",
+      "Class 2 misdemeanor (60 days max) is a relatively minor offense for a first-time violation"
+    ],
+    "common_defenses": [
+      "Not concealed — the weapon was openly carried, which is legal in NC without a permit",
+      "Valid permit — defendant had a valid concealed handgun permit at the time",
+      "On own premises — NC law allows concealed carry on one's own property without a permit",
+      "Illegal search — the concealed weapon was discovered during an unconstitutional search"
+    ]
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "prosecution_strengths": [
+      "North Carolina prohibits reckless or negligent discharge of firearms in populated areas",
+      "Physical evidence (bullet holes, projectiles, casings) provides strong forensic proof",
+      "Potential for injury or death creates a compelling narrative for juries"
+    ],
+    "defense_opportunities": [
+      "The building or vehicle must be occupied for the most serious charges — unoccupied structures carry lesser penalties",
+      "Accidental discharge is a defense to the willfulness element",
+      "Self-defense situations can justify the discharge"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant discharged the weapon to protect themselves from imminent harm",
+      "Accidental discharge — the weapon fired unintentionally due to mechanical malfunction or accidental trigger pull",
+      "Structure not occupied — no person was present in the building or vehicle at the time",
+      "Misidentification — defendant was not the person who fired the weapon"
+    ]
+  },
+  {
+    "common_charge_slug": "possession-prohibited-weapon",
+    "prosecution_strengths": [
+      "NC prohibits specific categories of weapons (sawed-off shotguns, machine guns, certain knives) under various statutes",
+      "Possession is the primary element — once the weapon is identified and linked to the defendant, the case is largely made",
+      "These charges are often layered onto other offenses"
+    ],
+    "defense_opportunities": [
+      "Weapon classification is a legal and factual question — not every item that appears prohibited actually meets the statutory definition",
+      "Federal NFA compliance may legalize weapons that appear prohibited under state law",
+      "Temporary or unknowing possession can negate the criminal element"
+    ],
+    "common_defenses": [
+      "Not a prohibited weapon — the item does not meet the statutory definition of a prohibited weapon",
+      "Lawful under federal law — the weapon is registered and compliant with NFA requirements",
+      "Lack of knowledge — defendant did not know the weapon was in their possession or that it was prohibited",
+      "Illegal search — the weapon was discovered through an unconstitutional search"
+    ]
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "prosecution_strengths": [
+      "Digital evidence (account records, IP addresses, email trails) creates a documented chain",
+      "Multiple victims can result in stacked charges",
+      "Financial institution cooperation in providing records strengthens prosecution"
+    ],
+    "defense_opportunities": [
+      "The defendant must have acted 'knowingly' and with intent to commit fraud — mere possession of another's information is insufficient",
+      "Identity confusion cases (similar names, shared addresses) can create reasonable doubt",
+      "Authorization from the identity owner is a complete defense"
+    ],
+    "common_defenses": [
+      "Authorization — the person whose identity was used gave consent",
+      "Lack of fraudulent intent — defendant did not intend to commit fraud or obtain unauthorized benefits",
+      "Mistaken identity — defendant's information was confused with that of the actual perpetrator",
+      "No knowledge — defendant did not know the identifying information belonged to another person"
+    ]
+  },
+  {
+    "common_charge_slug": "embezzlement",
+    "prosecution_strengths": [
+      "Financial records and audit trails commonly establish embezzlement in North Carolina cases",
+      "Financial records, audit trails, and accounting evidence provide objective proof of the diversion",
+      "The position of trust element is typically easy to establish through employment records"
+    ],
+    "defense_opportunities": [
+      "The defendant must have had lawful possession initially — taking property without initial authorization is larceny, not embezzlement",
+      "Intent to convert must be proven — temporary use with intent to repay is a mitigating factor",
+      "Accounting errors and bookkeeping mistakes can create reasonable doubt about intentional conversion"
+    ],
+    "common_defenses": [
+      "Authorization — defendant was authorized to use the funds or property for the purpose at issue",
+      "Accounting error — the alleged shortfall is the result of bookkeeping mistakes, not intentional conversion",
+      "Lack of intent — defendant intended to repay or restore the property",
+      "No position of trust — defendant was not in a fiduciary relationship entitling them to possession"
+    ]
+  },
+  {
+    "common_charge_slug": "forgery",
+    "prosecution_strengths": [
+      "The forged document itself is physical evidence of the crime",
+      "Handwriting analysis and digital forensics can link the defendant to the forgery",
+      "Often charged alongside related offenses (identity theft, larceny, fraud), compounding exposure"
+    ],
+    "defense_opportunities": [
+      "Authorization to sign on behalf of another person is a complete defense",
+      "Lack of intent to defraud negates the essential element — signing another's name for a non-fraudulent purpose is not forgery",
+      "The State must prove the defendant knew the document was forged if charged with uttering"
+    ],
+    "common_defenses": [
+      "Authorization — defendant was authorized to sign the document on behalf of the purported signer",
+      "No intent to defraud — defendant did not intend to deceive anyone with the document",
+      "Lack of knowledge — defendant did not know the document was forged (uttering charge)",
+      "Not a writing — the item does not qualify as a 'writing' under the forgery statute"
+    ]
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "prosecution_strengths": [
+      "North Carolina bad check statutes create a presumption of fraud upon dishonor and failure to pay after notice",
+      "Bank records provide objective proof of insufficient funds or closed accounts",
+      "The 10-day notice provision shifts the burden to the defendant to make good"
+    ],
+    "defense_opportunities": [
+      "The defendant must have known the check would be dishonored — honest mistake about account balance is a defense",
+      "Payment within 10 days of notice eliminates the presumption of fraud",
+      "Many counties have worthless check programs that allow restitution without criminal conviction"
+    ],
+    "common_defenses": [
+      "Honest mistake — defendant genuinely believed funds were available when the check was written",
+      "Payment within notice period — defendant paid the amount within 10 days of receiving written notice",
+      "Bank error — the dishonor resulted from a bank error, not insufficient funds",
+      "No intent to defraud — defendant intended to cover the check before it was presented"
+    ]
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "prosecution_strengths": [
+      "North Carolina fraud statutes capture a broad range of false-pretense conduct",
+      "Financial records and communications provide documentary evidence of the fraudulent scheme",
+      "Victim testimony about reliance on the false representations is compelling"
+    ],
+    "defense_opportunities": [
+      "The false representation must be of a material fact, not a future promise or opinion",
+      "The victim must have actually relied on the false representation — if they conducted independent verification, reliance may be negated",
+      "Puffery and sales talk are not actionable fraud"
+    ],
+    "common_defenses": [
+      "No false representation — defendant's statements were true or constituted opinion/puffery",
+      "No reliance — the alleged victim did not rely on the defendant's representations",
+      "Lack of intent — defendant believed their statements were true at the time",
+      "No material fact — the misrepresentation was about a future event or opinion, not a material fact"
+    ]
+  },
+  {
+    "common_charge_slug": "wire-fraud",
+    "prosecution_strengths": [
+      "Wire communications are broadly defined to include phone calls, emails, texts, and internet transactions",
+      "Federal jurisdiction attaches whenever wire communications cross state lines, adding federal exposure",
+      "Electronic records create a comprehensive evidence trail"
+    ],
+    "defense_opportunities": [
+      "Wire fraud is primarily federal — state prosecution under wire fraud theories is less common",
+      "The wire communication must be in furtherance of the fraud scheme — incidental use of wires is insufficient",
+      "Good-faith belief in the legitimacy of the business or transaction negates the intent element"
+    ],
+    "common_defenses": [
+      "Good faith — defendant genuinely believed the transaction or business was legitimate",
+      "No scheme to defraud — the conduct did not involve material misrepresentations",
+      "Wire communication not in furtherance — the use of wires was incidental to the alleged scheme",
+      "Lack of intent — defendant did not intend to defraud anyone"
+    ]
+  },
+  {
+    "common_charge_slug": "insurance-fraud",
+    "prosecution_strengths": [
+      "North Carolina insurance fraud bureaus generate detailed evidence packages for prosecutors",
+      "Insurance company special investigations units (SIU) provide detailed evidence packages",
+      "Financial records, surveillance, and expert testimony document the fraudulent scheme"
+    ],
+    "defense_opportunities": [
+      "The claim must be knowingly false — honest disagreements about claim value are not fraud",
+      "Insurance company denials are not proof of fraud — many legitimate claims are initially denied",
+      "The complexity of insurance claims creates room for genuine misunderstandings"
+    ],
+    "common_defenses": [
+      "Good-faith claim — defendant genuinely believed the claim was accurate and valid",
+      "Valuation dispute — the claim amount was based on the defendant's honest assessment of the loss",
+      "No intent to defraud — any inaccuracy in the claim was inadvertent, not intentional",
+      "Insurance company error — the insurer's investigation is flawed or biased"
+    ]
+  },
+  {
+    "common_charge_slug": "money-laundering",
+    "prosecution_strengths": [
+      "North Carolina money laundering statutes carry asset forfeiture provisions",
+      "Federal parallel charges commonly add exposure to state money laundering prosecutions",
+      "Financial records and bank transaction patterns (structuring, layering) provide documentary evidence"
+    ],
+    "defense_opportunities": [
+      "The underlying criminal activity generating the funds must be proven — without a predicate offense, money laundering collapses",
+      "Knowledge that the funds were from criminal activity is required — innocent handling of funds is not laundering",
+      "Legitimate business transactions can appear suspicious without being criminal"
+    ],
+    "common_defenses": [
+      "Legitimate funds — the money involved was from lawful sources",
+      "No knowledge — defendant did not know the funds were derived from criminal activity",
+      "Legitimate transaction — the financial activity had a lawful business purpose",
+      "No underlying crime — the prosecution cannot prove the predicate criminal activity that generated the funds"
+    ]
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "prosecution_strengths": [
+      "NC's disorderly conduct statutes cover a wide range of public behavior including fighting, abusive language, and blocking traffic",
+      "Officer testimony is typically the primary evidence and is given significant weight",
+      "Low-level misdemeanor with minimal penalties encourages quick pleas"
+    ],
+    "defense_opportunities": [
+      "First Amendment protections limit prosecutions based on speech alone",
+      "Vagueness challenges to disorderly conduct statutes have been successful in some contexts",
+      "Minor penalties (Class 2 or 3 misdemeanor) make trial risk manageable"
+    ],
+    "common_defenses": [
+      "Free speech — defendant's conduct was constitutionally protected expression",
+      "No public disturbance — the conduct did not actually cause a public disturbance or breach of the peace",
+      "Self-defense or provocation — defendant was responding to another's threatening behavior",
+      "Selective enforcement — defendant was targeted for arrest while others engaged in similar conduct were not"
+    ]
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "prosecution_strengths": [
+      "North Carolina bodycam footage increasingly documents the encounter and supports prosecution",
+      "Bodycam footage increasingly documents the defendant's conduct during the arrest",
+      "The charge is frequently added to underlying offenses, increasing the defendant's total exposure"
+    ],
+    "defense_opportunities": [
+      "The arrest must be lawful — resistance to an unlawful arrest may be a defense",
+      "The statute requires the defendant to have known the person was an officer acting in their official capacity",
+      "The degree of resistance must exceed passive non-compliance to constitute criminal conduct"
+    ],
+    "common_defenses": [
+      "Unlawful arrest — the underlying arrest lacked probable cause, justifying the defendant's resistance",
+      "No resistance — the defendant's conduct did not amount to resisting, delaying, or obstructing",
+      "Excessive force — the officer used excessive force, and the defendant's actions were a natural response",
+      "Medical condition — defendant's physical or mental condition prevented compliance with officer commands"
+    ]
+  },
+  {
+    "common_charge_slug": "obstruction-justice",
+    "prosecution_strengths": [
+      "North Carolina obstruction statutes are broadly applied and frequently charged alongside other offenses",
+      "Providing false information, destroying evidence, and hiding suspects all qualify",
+      "The charge can be proven through testimony and circumstantial evidence"
+    ],
+    "defense_opportunities": [
+      "The defendant must have acted knowingly — inadvertent interference is not obstruction",
+      "Fifth Amendment privilege protects the defendant's right to remain silent — silence cannot be charged as obstruction",
+      "The official must have been performing a lawful duty at the time"
+    ],
+    "common_defenses": [
+      "No intent to obstruct — defendant's actions were inadvertent or had an innocent explanation",
+      "Constitutional rights — defendant was exercising their right to remain silent or consult an attorney",
+      "No lawful duty — the officer was not performing an authorized official function at the time",
+      "No actual obstruction — the defendant's actions did not actually hinder the official's duties"
+    ]
+  },
+  {
+    "common_charge_slug": "contempt-of-court",
+    "prosecution_strengths": [
+      "Courts have broad inherent authority to enforce their orders through contempt proceedings",
+      "Direct contempt (in-court behavior) can be punished summarily without a separate proceeding",
+      "Indirect contempt (violating court orders outside court) is provable through documentary evidence"
+    ],
+    "defense_opportunities": [
+      "The court order must be clear and unambiguous — if the defendant reasonably interpreted it differently, contempt fails",
+      "Inability to comply is a defense to civil contempt — the defendant must actually be able to do what was ordered",
+      "Due process protections apply to criminal contempt proceedings"
+    ],
+    "common_defenses": [
+      "Inability to comply — defendant was unable to fulfill the court's order despite good-faith efforts",
+      "Ambiguous order — the court order was unclear and defendant's conduct was a reasonable interpretation",
+      "No willful violation — the failure to comply was inadvertent, not intentional",
+      "Due process violation — the contempt proceeding did not afford the defendant adequate notice and opportunity to be heard"
+    ]
+  },
+  {
+    "common_charge_slug": "public-intoxication",
+    "prosecution_strengths": [
+      "NC's public intoxication laws cover being intoxicated and disruptive in public places",
+      "Officer observations of impairment, behavior, and odor provide primary evidence",
+      "Low-level misdemeanor with quick resolution encourages rapid pleas"
+    ],
+    "defense_opportunities": [
+      "Many NC jurisdictions use public intoxication as a protective detention rather than a criminal charge",
+      "The defendant must be disruptive in addition to intoxicated — merely being drunk in public is insufficient in many contexts",
+      "Very low penalties make the charge relatively inconsequential as a standalone offense"
+    ],
+    "common_defenses": [
+      "Not in public — defendant was on private property or in a private area",
+      "Not disruptive — defendant was intoxicated but not causing a disturbance",
+      "Medical condition — defendant's behavior was caused by a medical condition, not intoxication",
+      "Involuntary intoxication — defendant was unknowingly drugged"
+    ]
+  },
+  {
+    "common_charge_slug": "loitering",
+    "prosecution_strengths": [
+      "NC's loitering statutes target specific behaviors (loitering for drug activity, prostitution, near schools)",
+      "Law enforcement observations and surveillance establish the defendant's presence and behavior",
+      "Often charged as a predicate for search and investigation of more serious crimes"
+    ],
+    "defense_opportunities": [
+      "Constitutional challenges to loitering statutes have succeeded when the law is too vague or restricts lawful activity",
+      "The defendant's right to be in public spaces limits prosecution",
+      "Minor penalties reduce the stakes significantly"
+    ],
+    "common_defenses": [
+      "Lawful presence — defendant had a right to be in the location and was engaged in lawful activity",
+      "Vagueness — the loitering statute is unconstitutionally vague as applied",
+      "No prohibited purpose — defendant was not loitering for any of the prohibited purposes",
+      "First Amendment — defendant was engaged in protected speech or assembly"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-appear",
+    "prosecution_strengths": [
+      "North Carolina court records provide objective documentation of scheduled appearances and absences",
+      "Court records document the scheduled appearance and the defendant's absence",
+      "The offense is Class I felony if the underlying charge was a felony"
+    ],
+    "defense_opportunities": [
+      "The defendant must have willfully failed to appear — inability to attend due to illness, incarceration, or other circumstances is a defense",
+      "Misdemeanor FTA for misdemeanor charges carries lower penalties",
+      "Prompt voluntary surrender after missing a court date demonstrates lack of willful intent"
+    ],
+    "common_defenses": [
+      "No notice — defendant did not receive notice of the court date",
+      "Excusable reason — illness, accident, or emergency prevented attendance",
+      "Prompt surrender — defendant turned themselves in as soon as they learned of the missed date",
+      "No willful intent — failure to appear was due to confusion, scheduling error, or miscommunication"
+    ]
+  },
+  {
+    "common_charge_slug": "false-report",
+    "prosecution_strengths": [
+      "False police reports waste law enforcement resources, creating a sympathetic prosecution narrative",
+      "The original report is documented evidence of the false statement",
+      "Physical evidence and witness statements often contradict the false report"
+    ],
+    "defense_opportunities": [
+      "Misdemeanor classification (typically Class 2) provides lower exposure",
+      "The report must be knowingly false — a mistaken but honest report is not criminal",
+      "Recantation before significant resources are expended may mitigate consequences"
+    ],
+    "common_defenses": [
+      "Honest mistake — defendant believed the report was accurate at the time it was made",
+      "No intent to deceive — the inaccuracy was unintentional",
+      "Recantation — defendant corrected the false information before it caused harm",
+      "Not a false statement of material fact — the alleged falsehood was about an immaterial detail"
+    ]
+  },
+  {
+    "common_charge_slug": "criminal-threat",
+    "prosecution_strengths": [
+      "North Carolina threat statutes apply to electronic communications including texts and social media",
+      "Text messages, voicemails, and social media posts provide documented evidence of the threat",
+      "The threat need not be carried out — communication alone completes the offense"
+    ],
+    "defense_opportunities": [
+      "The threat must be a 'true threat' — hyperbolic, conditional, or political speech is constitutionally protected",
+      "The victim must have been placed in reasonable fear — vague or ambiguous statements may not qualify",
+      "Class 1 misdemeanor (120 days max) provides relatively moderate exposure"
+    ],
+    "common_defenses": [
+      "Not a true threat — the statement was hyperbolic, conditional, or protected speech",
+      "No intent to threaten — the statement was misinterpreted and not intended as a threat",
+      "First Amendment — the communication was constitutionally protected expression",
+      "Context — the statement was made in a context (humor, argument, fiction) where a reasonable person would not perceive a genuine threat"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "prosecution_strengths": [
+      "The standard of proof for probation violation is only preponderance of the evidence, much lower than beyond a reasonable doubt",
+      "Probation officers have broad authority to report violations and recommend revocation",
+      "Technical and substantive violations can both result in activation of the suspended sentence"
+    ],
+    "defense_opportunities": [
+      "The judge has discretion to continue probation with modified conditions rather than revoke",
+      "Good-faith efforts to comply and mitigating circumstances are relevant to the court's decision",
+      "NC's Justice Reinvestment Act limits incarceration for technical violations to 90-day 'quick dips'"
+    ],
+    "common_defenses": [
+      "Good-faith compliance — defendant made genuine efforts to comply with all probation conditions",
+      "Inability to comply — defendant was unable to meet the condition despite reasonable efforts (e.g., unable to pay fines due to poverty)",
+      "Technical violation — the violation was minor and technical, not substantive",
+      "Mitigating circumstances — changed circumstances or emergency situations caused the violation"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-technical",
+    "prosecution_strengths": [
+      "Technical violations (missed check-ins, failed drug tests, late fees) are objectively documented",
+      "Probation officer reports provide detailed records of non-compliance",
+      "Cumulative technical violations demonstrate a pattern of disregard"
+    ],
+    "defense_opportunities": [
+      "NC's Justice Reinvestment Act limits jail time for technical violations to 90-day 'quick dips' — full revocation is restricted",
+      "First technical violation rarely results in revocation under NC's graduated response system",
+      "Good-faith efforts and substantial compliance weigh heavily in the judge's discretion"
+    ],
+    "common_defenses": [
+      "Substantial compliance — defendant was in compliance with the majority of conditions",
+      "Excusable circumstances — illness, transportation issues, or employment conflicts caused the violation",
+      "Completed requirements — defendant has since fulfilled the missed condition",
+      "Graduated response — the violation warrants a lesser sanction than revocation under NC's structured framework"
+    ]
+  },
+  {
+    "common_charge_slug": "probation-violation-substantive",
+    "prosecution_strengths": [
+      "A new criminal offense while on probation is a substantive violation that strongly supports revocation",
+      "The conviction or even the arrest for a new offense can trigger revocation proceedings",
+      "The lower standard of proof (preponderance) means the new charge need not result in conviction to support a violation finding"
+    ],
+    "defense_opportunities": [
+      "The new charge may ultimately be dismissed or result in acquittal, undermining the violation allegation",
+      "The judge retains discretion to modify conditions rather than revoke even after a substantive violation",
+      "Timing and circumstances of the new offense are relevant factors"
+    ],
+    "common_defenses": [
+      "Innocence of the new charge — defendant was wrongly accused of the underlying offense",
+      "Mitigating circumstances — the new offense occurred under extreme or unusual circumstances",
+      "Continued compliance — defendant was otherwise fully compliant with all other conditions",
+      "Modified conditions preferable — revocation is disproportionate given the nature of the new offense"
+    ]
+  },
+  {
+    "common_charge_slug": "parole-violation",
+    "prosecution_strengths": [
+      "Parole conditions are detailed and specific, making violations objectively documentable",
+      "The parole commission has broad authority to revoke parole based on any condition violation",
+      "Standard of proof is lower than criminal trial"
+    ],
+    "defense_opportunities": [
+      "The parolee has a right to a revocation hearing with procedural protections",
+      "Good behavior during the parole period and strong community ties weigh against revocation",
+      "Technical violations may be addressed through modified conditions rather than re-incarceration"
+    ],
+    "common_defenses": [
+      "Good-faith compliance — parolee was making genuine efforts to comply with all conditions",
+      "Inability to comply — circumstances beyond the parolee's control prevented compliance",
+      "Technical nature — the violation was minor and technical, not reflecting a return to criminal behavior",
+      "Community integration — parolee has strong employment, family, and community ties supporting continued parole"
+    ]
+  },
+  {
+    "common_charge_slug": "conspiracy",
+    "prosecution_strengths": [
+      "NC's conspiracy law requires only an agreement and an overt act — the underlying crime need not be completed",
+      "Co-conspirator statements are admissible against all members of the conspiracy under the hearsay exception",
+      "Each conspirator is liable for the acts of all other conspirators in furtherance of the conspiracy",
+      "Phone records, text messages, and surveillance evidence frequently document the agreement"
+    ],
+    "defense_opportunities": [
+      "The agreement itself must be proven — mere association, presence, or knowledge is insufficient",
+      "Withdrawal from the conspiracy before the commission of the target offense is a defense",
+      "Each defendant's individual role and knowledge must be separately established"
+    ],
+    "common_defenses": [
+      "No agreement — defendant did not agree to commit the crime and was merely present or associated with the conspirators",
+      "Withdrawal — defendant withdrew from the conspiracy and took affirmative steps to prevent the crime",
+      "Lack of knowledge — defendant did not know about the criminal objective of the alleged conspiracy",
+      "Mere association — defendant's relationship with alleged conspirators does not prove participation in a criminal agreement"
+    ]
+  },
+  {
+    "common_charge_slug": "rape",
+    "prosecution_strengths": [
+      "DNA evidence from sexual assault kits provides strong identification evidence",
+      "Victim testimony combined with medical examination findings establishes the elements",
+      "Child victim cases carry the most severe penalties — first-degree rape of a child under 13 is Class B1 felony"
+    ],
+    "defense_opportunities": [
+      "Consent is a complete defense to force-based rape charges — the key factual dispute in many cases",
+      "DNA evidence can be challenged on contamination, lab error, or alternative explanations for presence",
+      "The credibility of the complaining witness is central and subject to cross-examination",
+      "Mental incapacity theories require proof of substantial impairment, which is a factual question"
+    ],
+    "common_defenses": [
+      "Consent — the sexual activity was consensual",
+      "Misidentification — the defendant was not the person who committed the offense",
+      "Alibi — defendant was elsewhere at the time of the alleged offense",
+      "False accusation — the allegation is fabricated due to personal animosity, relationship disputes, or other motives"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-assault",
+    "prosecution_strengths": [
+      "NC's sexual offense statutes cover a range of non-consensual sexual acts beyond intercourse",
+      "Medical evidence from forensic examinations documents injuries consistent with sexual assault",
+      "Child advocacy center interviews and forensic interviews provide documented disclosures",
+      "Sex offender registration requirements add lifetime consequences"
+    ],
+    "defense_opportunities": [
+      "The distinction between various degrees of sexual offense significantly affects sentencing",
+      "Consent and credibility are central factual issues for the jury",
+      "Expert testimony on memory, suggestibility, and forensic interview techniques can challenge prosecution witnesses"
+    ],
+    "common_defenses": [
+      "Consent — the sexual contact was consensual between competent adults",
+      "Misidentification — defendant was not the perpetrator",
+      "False allegation — the accusation is fabricated",
+      "Insufficient evidence — the prosecution cannot prove the elements beyond a reasonable doubt"
+    ]
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "prosecution_strengths": [
+      "North Carolina indecent exposure law covers willful exposure in public places",
+      "Witness testimony and any photographic or video evidence establish the offense",
+      "Exposure in the presence of a child under 16 is a Class H felony"
+    ],
+    "defense_opportunities": [
+      "Basic indecent exposure is a Class 2 misdemeanor (60 days max) — relatively minor",
+      "The exposure must be willful — accidental exposure (wardrobe malfunction, medical condition) is not criminal",
+      "Not in a 'public place' is a defense if the exposure occurred in a private setting"
+    ],
+    "common_defenses": [
+      "Accidental exposure — the exposure was unintentional",
+      "Private location — the exposure did not occur in a public place or where it could be observed",
+      "Misidentification — defendant was not the person who exposed themselves",
+      "Medical condition — a medical condition caused involuntary exposure"
+    ]
+  },
+  {
+    "common_charge_slug": "statutory-rape",
+    "prosecution_strengths": [
+      "North Carolina age of consent laws are strictly enforced regardless of victim's apparent maturity",
+      "Age differential matters: defendant 6+ years older than a 13-15 year old victim triggers Class B1 felony",
+      "Birth certificates and school records objectively establish the victim's age"
+    ],
+    "defense_opportunities": [
+      "For victims aged 13-15, the age difference between defendant and victim determines the offense class — smaller gaps reduce severity",
+      "Mistake of age may be available in limited circumstances for older teenagers",
+      "The Romeo-and-Juliet provisions in NC reduce penalties when both parties are teenagers close in age"
+    ],
+    "common_defenses": [
+      "Age proximity — defendant and victim are close in age, reducing the offense classification",
+      "Reasonable mistake of age — defendant reasonably believed the other person was of legal age (limited applicability)",
+      "No sexual act — the alleged sexual conduct did not occur",
+      "False allegation — the accusation is fabricated"
+    ]
+  },
+  {
+    "common_charge_slug": "child-exploitation",
+    "prosecution_strengths": [
+      "NC's exploitation statutes cover production, distribution, and possession of child sexual abuse material (CSAM)",
+      "Digital forensics can recover deleted files, trace distribution networks, and identify devices",
+      "Hash-matching technology links specific files to known CSAM databases"
+    ],
+    "defense_opportunities": [
+      "Unauthorized access to the defendant's device or account by a third party is a recognized defense",
+      "The defendant must have knowingly possessed or distributed the material — inadvertent downloads or pop-ups may negate knowledge",
+      "Chain of custody for digital evidence is subject to rigorous challenge"
+    ],
+    "common_defenses": [
+      "No knowledge — defendant did not know the material was on their device (malware, unauthorized access)",
+      "Not CSAM — the material does not depict an actual minor or does not constitute sexually explicit conduct",
+      "Illegal search — the device was searched without a valid warrant or consent",
+      "Third-party access — someone else used the defendant's device or account to access the material"
+    ]
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "prosecution_strengths": [
+      "North Carolina sex offender registry compliance is strictly monitored",
+      "Registration records provide clear evidence of whether the defendant complied with requirements",
+      "Failure to register is a Class F felony (up to 41 months) — a serious standalone offense"
+    ],
+    "defense_opportunities": [
+      "The registration requirement must be based on a qualifying offense — not all convictions trigger the obligation",
+      "Homelessness and lack of a fixed address create compliance challenges that courts must consider",
+      "The defendant must have known about the registration requirement — failure to notify may negate knowledge"
+    ],
+    "common_defenses": [
+      "Lack of knowledge — defendant was not informed of the registration requirement",
+      "Good-faith compliance — defendant attempted to register but was prevented by circumstances beyond their control",
+      "No qualifying offense — the underlying conviction does not trigger the registration requirement",
+      "Address instability — defendant was homeless and unable to maintain a registered address despite good-faith efforts"
+    ]
+  },
+  {
+    "common_charge_slug": "solicitation-prostitution",
+    "prosecution_strengths": [
+      "Undercover operations targeting both solicitation and patronizing are well-established law enforcement practices",
+      "Text messages and recorded conversations from sting operations provide strong evidence",
+      "NC's prostitution statutes cover both the offer and agreement to engage in sexual activity for money"
+    ],
+    "defense_opportunities": [
+      "Class 1 misdemeanor (120 days max) for basic solicitation is relatively minor",
+      "Entrapment is a viable defense when the undercover officer initiated and pushed the transaction",
+      "The agreement must be for sexual activity in exchange for money — ambiguous conversations may not meet the standard"
+    ],
+    "common_defenses": [
+      "Entrapment — law enforcement induced the defendant to commit an offense they would not otherwise have committed",
+      "No agreement — the conversation did not amount to a clear agreement for sexual activity in exchange for money",
+      "Misunderstanding — defendant's statements were misinterpreted as solicitation",
+      "No intent — defendant was joking, curious, or testing and had no actual intent to engage in prostitution"
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "prosecution_strengths": [
+      "North Carolina prosecutors use digital forensics to recover communications and identify devices in online sex offense cases",
+      "Digital forensics recover chat logs, images, and communications even after deletion",
+      "Undercover operations posing as minors provide direct evidence of the defendant's intent and actions"
+    ],
+    "defense_opportunities": [
+      "The defendant must have believed the person was a minor — if they reasonably believed the person was an adult, intent may be negated",
+      "Fantasy-based conversations without a plan to meet may not constitute a substantial step toward a crime",
+      "Entrapment defenses are available when law enforcement initiated and drove the conversation"
+    ],
+    "common_defenses": [
+      "No belief of minority — defendant believed the person was an adult",
+      "Entrapment — law enforcement initiated and escalated the inappropriate conversation",
+      "Fantasy — conversations were role-playing with no intent to meet or act",
+      "No substantial step — defendant's online conduct did not amount to a substantial step toward meeting a minor"
+    ]
+  },
+  {
+    "common_charge_slug": "sexual-battery",
+    "prosecution_strengths": [
+      "North Carolina sexual battery captures non-consensual sexual contact short of penetration",
+      "Medical evidence and victim testimony establish the contact occurred",
+      "Even without penetration, the conviction triggers sex offender registration"
+    ],
+    "defense_opportunities": [
+      "The sexual purpose must be proven — incidental or accidental contact is not sexual battery",
+      "Consent is a defense — the contact was consensual",
+      "Class A1 misdemeanor (150 days max) is significantly less severe than felony sex offenses"
+    ],
+    "common_defenses": [
+      "Consent — the contact was consensual",
+      "Accidental contact — the touching was unintentional and not for sexual arousal",
+      "Misidentification — defendant was not the person who committed the offense",
+      "Not for sexual arousal — the contact did not have a sexual purpose"
+    ]
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "prosecution_strengths": [
+      "Child forensic interviews and disclosures provide the primary evidence",
+      "The statute does not require force — taking liberties with a child under 16 for sexual purposes is sufficient",
+      "Class F felony (up to 41 months) with mandatory sex offender registration"
+    ],
+    "defense_opportunities": [
+      "The defendant's purpose must be sexual — non-sexual contact (bathing, medical care) is not criminal",
+      "Credibility of the child witness is central and subject to challenge through expert testimony on suggestibility",
+      "Delayed disclosure and inconsistent statements can raise reasonable doubt"
+    ],
+    "common_defenses": [
+      "No sexual purpose — the contact was for a legitimate, non-sexual reason",
+      "False allegation — the child's account is unreliable or was influenced by a third party",
+      "Misidentification — the child identified the wrong person",
+      "Suggestive interviewing — the child's disclosure was the product of leading or suggestive questioning"
+    ]
+  },
+  {
+    "common_charge_slug": "self-defense",
+    "prosecution_strengths": [
+      "North Carolina prosecutors must overcome self-defense presumptions in cases involving home invasions and certain other circumstances",
+      "The prosecution can argue the defendant's use of force was disproportionate to the threat",
+      "Evidence of the defendant as the initial aggressor eliminates self-defense under NC law"
+    ],
+    "defense_opportunities": [
+      "North Carolina's Castle Doctrine protections apply to occupants of dwellings against intruders",
+      "North Carolina's Stand Your Ground provisions remove the duty to retreat in many situations",
+      "The Castle Doctrine creates a presumption of reasonable fear of imminent death or serious harm when an intruder enters the home",
+      "NC law presumes the force was justified when the intruder was unlawfully entering or had entered the home, vehicle, or workplace"
+    ],
+    "common_defenses": [
+      "Self-defense — defendant reasonably believed force was necessary to prevent imminent death or serious harm",
+      "Castle Doctrine — defendant was in their home and an intruder unlawfully entered, creating a presumption of reasonable fear",
+      "Stand Your Ground — defendant had no duty to retreat and used proportionate force against an imminent threat",
+      "Defense of others — defendant used force to protect another person from imminent harm"
+    ]
+  },
+  {
+    "common_charge_slug": "other",
+    "prosecution_strengths": [
+      "NC's criminal code covers a comprehensive range of offenses beyond the commonly charged categories",
+      "Specialized statutes address emerging crimes including cybercrime, environmental offenses, and financial crimes",
+      "Prosecutorial discretion allows charging under the most specific applicable statute"
+    ],
+    "defense_opportunities": [
+      "Less-frequently-charged offenses may have fewer interpretive precedents, creating ambiguity that benefits the defense",
+      "Specialized offenses may have unique elements or defenses not commonly encountered",
+      "Proportionality arguments are available when the charged offense seems disproportionate to the conduct"
+    ],
+    "common_defenses": [
+      "Lack of element — prosecution cannot prove each element of the specific offense beyond a reasonable doubt",
+      "Constitutional challenge — the statute is void for vagueness or overbroad as applied",
+      "Mistake of fact — defendant's conduct was based on a reasonable but incorrect understanding of the circumstances",
+      "De minimis violation — the conduct was so trivial as to not warrant criminal prosecution"
+    ]
+  }
+]

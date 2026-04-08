@@ -1,0 +1,1173 @@
+[
+  {
+    "common_charge_slug": "dui-dwi",
+    "statute_number": "Minn. Stat. § 169A.20",
+    "statute_title": "Driving While Impaired",
+    "offense_class": "Misdemeanor (1st–2nd offense); Gross Misdemeanor (3rd offense within 10 years or aggravated); Felony (4th offense or more within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "90 days (misdemeanor); 1 year (gross misdemeanor); 7 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $3,000 (gross misdemeanor); $14,000 (felony)",
+    "elements": [
+      "Defendant drove, operated, or was in physical control of a motor vehicle",
+      "While under the influence of alcohol, a controlled substance, an intoxicating substance, or any combination",
+      "Defendant's ability to drive was impaired OR had an alcohol concentration of 0.08 or more"
+    ],
+    "mandatory_minimum": "None for first offense; 30 days (or 48 hours if aggravating factor) for second offense; 90 days for third; 180 days for felony DWI",
+    "enhancements": [
+      "Alcohol concentration of 0.16 or more (aggravating factor)",
+      "Prior qualified impaired driving incident within 10 years",
+      "Child under age 16 in vehicle",
+      "Refusal to submit to chemical test (gross misdemeanor or felony)"
+    ],
+    "notes": "Minnesota uses a 'look-back' period of 10 years for prior qualifying offenses. Implied consent law at § 169A.51. License plate impoundment and vehicle forfeiture possible."
+  },
+  {
+    "common_charge_slug": "dui-first-offense",
+    "statute_number": "Minn. Stat. § 169A.20, subd. 1",
+    "statute_title": "Fourth-Degree DWI — First Offense",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant drove, operated, or was in physical control of a motor vehicle",
+      "While under the influence of alcohol or a controlled substance",
+      "Ability impaired OR alcohol concentration of 0.08 or more",
+      "No prior qualified impaired driving incidents within 10 years"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Alcohol concentration 0.16+ elevates to third-degree (gross misdemeanor)"
+    ],
+    "notes": "Fourth-degree DWI per § 169A.27. Driver's license revocation for 90 days minimum."
+  },
+  {
+    "common_charge_slug": "dui-repeat-offense",
+    "statute_number": "Minn. Stat. § 169A.25",
+    "statute_title": "Second-Degree DWI — Repeat Offense",
+    "offense_class": "Gross Misdemeanor",
+    "penalty_min": "30 days",
+    "penalty_max": "1 year",
+    "fine_max": "$3,000",
+    "elements": [
+      "Defendant drove, operated, or was in physical control of a motor vehicle",
+      "While under the influence of alcohol or controlled substance",
+      "Two or more aggravating factors present within 10 years"
+    ],
+    "mandatory_minimum": "30 days (or electronic alcohol monitoring)",
+    "enhancements": [
+      "Prior qualified impaired driving incidents",
+      "Alcohol concentration 0.16 or more",
+      "Child under 16 in vehicle"
+    ],
+    "notes": "Aggravating factors defined at § 169A.03, subd. 3. Two or more factors elevate from third to second degree."
+  },
+  {
+    "common_charge_slug": "dui-felony-injury",
+    "statute_number": "Minn. Stat. § 169A.24",
+    "statute_title": "First-Degree DWI — Felony",
+    "offense_class": "Felony",
+    "penalty_min": "180 days",
+    "penalty_max": "7 years",
+    "fine_max": "$14,000",
+    "elements": [
+      "Defendant drove, operated, or was in physical control of a motor vehicle",
+      "While impaired by alcohol or controlled substance",
+      "Defendant has three or more qualified prior impaired driving incidents within 10 years, OR has a prior felony DWI conviction"
+    ],
+    "mandatory_minimum": "180 days (may serve on electronic monitoring after 60 days)",
+    "enhancements": [
+      "Prior felony-level DWI conviction",
+      "Criminal vehicular operation conviction history"
+    ],
+    "notes": "Lifetime lookback for prior felony DWI convictions. Vehicle forfeiture mandatory."
+  },
+  {
+    "common_charge_slug": "dui-drugs",
+    "statute_number": "Minn. Stat. § 169A.20, subd. 1(2)",
+    "statute_title": "DWI — Controlled Substance",
+    "offense_class": "Misdemeanor (first); escalates same as alcohol DWI",
+    "penalty_min": null,
+    "penalty_max": "90 days (first); up to 7 years (felony)",
+    "fine_max": "$1,000 (first); $14,000 (felony)",
+    "elements": [
+      "Defendant drove, operated, or was in physical control of a motor vehicle",
+      "While under the influence of a controlled substance as defined in Chapter 152",
+      "Defendant's ability to drive was impaired by the substance"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Same aggravating factor framework as alcohol DWI",
+      "Combination of alcohol and controlled substances"
+    ],
+    "notes": "Includes Schedule I through V substances. Drug recognition evaluator (DRE) testimony commonly used. No per se limit for drugs — impairment must be proven."
+  },
+  {
+    "common_charge_slug": "vehicular-manslaughter",
+    "statute_number": "Minn. Stat. § 609.21",
+    "statute_title": "Criminal Vehicular Homicide and Injury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years (death); 5 years (great bodily harm); 3 years (substantial bodily harm)",
+    "fine_max": "$20,000 (death); $10,000 (great bodily harm); $6,000 (substantial bodily harm)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "In a grossly negligent manner, while under the influence of alcohol or controlled substance, or in a negligent manner while impaired",
+      "Operation resulted in the death of or great bodily harm to another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims",
+      "Unborn child as victim",
+      "Hit-and-run component",
+      "Prior DWI convictions"
+    ],
+    "notes": "Separate offense from DWI — may be charged concurrently. Includes operation with any amount of Schedule I or II substance (except marijuana)."
+  },
+  {
+    "common_charge_slug": "drug-possession",
+    "statute_number": "Minn. Stat. § 152.025",
+    "statute_title": "Controlled Substance Crime in the Fifth Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant unlawfully possessed one or more mixtures containing a controlled substance classified in Schedule I, II, III, or IV",
+      "Possession was without a valid prescription"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior controlled substance conviction",
+      "Possession in a school zone, park, or public housing zone"
+    ],
+    "notes": "Lowest felony-level drug possession. First-time offenders often eligible for stay of adjudication or diversion. Minnesota has five degrees of controlled substance crimes."
+  },
+  {
+    "common_charge_slug": "drug-possession-marijuana",
+    "statute_number": "Minn. Stat. § 152.027, subd. 4",
+    "statute_title": "Possession of a Small Amount of Marijuana",
+    "offense_class": "Petty Misdemeanor (42.5g or less); Misdemeanor (over 42.5g)",
+    "penalty_min": null,
+    "penalty_max": "Fine only (petty misdemeanor); 90 days (misdemeanor)",
+    "fine_max": "$300 (petty misdemeanor); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant possessed a small amount of marijuana",
+      "Marijuana was not in a motor vehicle (motor vehicle elevates penalty)"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Possession in a motor vehicle (misdemeanor)",
+      "Sale of a small amount without remuneration"
+    ],
+    "notes": "Minnesota legalized adult-use cannabis effective 2023. Possession limits for adults 21+: up to 2 oz in public, 2 lbs at home. This statute applies to amounts exceeding legal limits or by persons under 21."
+  },
+  {
+    "common_charge_slug": "drug-distribution",
+    "statute_number": "Minn. Stat. § 152.021",
+    "statute_title": "Controlled Substance Crime in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant unlawfully sold one or more mixtures of a total weight of 10 grams or more containing cocaine, heroin, or methamphetamine",
+      "OR possessed 25 grams or more of cocaine, heroin, or methamphetamine"
+    ],
+    "mandatory_minimum": "Presumptive committed sentence per sentencing guidelines",
+    "enhancements": [
+      "Aggravating factors increase presumptive sentence",
+      "Sale to a minor",
+      "Sale in a school zone, park, or public housing"
+    ],
+    "notes": "First-degree is the most serious drug offense. Weight thresholds vary by substance. Sentencing guidelines grid determines presumptive sentence based on severity level and criminal history."
+  },
+  {
+    "common_charge_slug": "drug-paraphernalia",
+    "statute_number": "Minn. Stat. § 152.092",
+    "statute_title": "Possession of Drug Paraphernalia",
+    "offense_class": "Petty Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "Fine only",
+    "fine_max": "$300",
+    "elements": [
+      "Defendant possessed drug paraphernalia",
+      "With knowledge that the paraphernalia was to be used to introduce a controlled substance into the body"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Petty misdemeanor — no jail time. Sale or delivery of paraphernalia is a misdemeanor under § 152.093."
+  },
+  {
+    "common_charge_slug": "simple-assault",
+    "statute_number": "Minn. Stat. § 609.224",
+    "statute_title": "Assault in the Fifth Degree",
+    "offense_class": "Misdemeanor; Gross Misdemeanor (if prior conviction or motivated by bias)",
+    "penalty_min": null,
+    "penalty_max": "90 days (misdemeanor); 1 year (gross misdemeanor)",
+    "fine_max": "$1,000 (misdemeanor); $3,000 (gross misdemeanor)",
+    "elements": [
+      "Defendant committed an act with intent to cause fear in another of immediate bodily harm or death",
+      "OR intentionally inflicted or attempted to inflict bodily harm upon another"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior conviction within two years (gross misdemeanor)",
+      "Bias-motivated crime",
+      "Victim is a vulnerable adult"
+    ],
+    "notes": "Fifth-degree assault is the lowest-level assault offense in Minnesota. Does not require actual injury."
+  },
+  {
+    "common_charge_slug": "aggravated-assault",
+    "statute_number": "Minn. Stat. § 609.222",
+    "statute_title": "Assault in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "7 years",
+    "fine_max": "$14,000",
+    "elements": [
+      "Defendant assaulted another with a dangerous weapon",
+      "The weapon was capable of causing great bodily harm or death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Peace officer or other protected victim (10 years)",
+      "Use of a firearm",
+      "Substantial or great bodily harm inflicted"
+    ],
+    "notes": "Dangerous weapon includes firearms, knives, and other instruments. First-degree assault (§ 609.221) covers great bodily harm — up to 20 years."
+  },
+  {
+    "common_charge_slug": "domestic-violence",
+    "statute_number": "Minn. Stat. § 609.2242",
+    "statute_title": "Domestic Assault",
+    "offense_class": "Misdemeanor (1st offense); Gross Misdemeanor (prior domestic conviction within 10 years); Felony (two or more prior domestic convictions within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "90 days (misdemeanor); 1 year (gross misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $3,000 (gross misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant committed an assault as defined in § 609.02, subd. 10",
+      "Against a family or household member as defined in § 518B.01, subd. 2"
+    ],
+    "mandatory_minimum": "Minimum fine of 30% of maximum fine authorized",
+    "enhancements": [
+      "Prior qualified domestic violence-related offense within 10 years (gross misdemeanor)",
+      "Two or more prior qualified domestic violence offenses within 10 years (felony)",
+      "Strangulation (felony under § 609.2247)"
+    ],
+    "notes": "Qualified domestic violence-related offenses include violations from other states. Court must impose fine of not less than 30% of maximum. Domestic abuse no contact order (DANCO) routinely issued."
+  },
+  {
+    "common_charge_slug": "domestic-battery",
+    "statute_number": "Minn. Stat. § 609.2247",
+    "statute_title": "Domestic Assault by Strangulation",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant assaulted a family or household member by strangulation",
+      "Strangulation means intentionally impeding normal breathing or circulation of the blood by applying pressure on the throat or neck or by blocking the nose or mouth"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior domestic violence conviction"
+    ],
+    "notes": "Standalone felony regardless of prior domestic assault convictions. Enacted to address lethality risk — strangulation is the strongest predictor of domestic homicide."
+  },
+  {
+    "common_charge_slug": "murder-first-degree",
+    "statute_number": "Minn. Stat. § 609.185",
+    "statute_title": "Murder in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "Life with possibility of release after 30 years",
+    "penalty_max": "Life without possibility of release",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of a human being",
+      "With premeditation and intent to kill, OR during the commission of certain felonies (criminal sexual conduct, arson, robbery, kidnapping, burglary, drive-by shooting, escape, etc.)"
+    ],
+    "mandatory_minimum": "Life imprisonment",
+    "enhancements": [
+      "Heinous element (life without release)",
+      "Witness tampering",
+      "Domestic violence context"
+    ],
+    "notes": "Minnesota does not have the death penalty. First-degree murder carries mandatory life sentence. Possibility of supervised release after 30 years in most cases."
+  },
+  {
+    "common_charge_slug": "murder-second-degree",
+    "statute_number": "Minn. Stat. § 609.19",
+    "statute_title": "Murder in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "40 years",
+    "fine_max": null,
+    "elements": [
+      "Defendant caused the death of a human being with intent to kill but without premeditation",
+      "OR caused the death while committing a felony not listed in first-degree statute"
+    ],
+    "mandatory_minimum": "Presumptive sentence per guidelines",
+    "enhancements": [
+      "Committed while committing a felony (felony murder)",
+      "Drive-by shooting"
+    ],
+    "notes": "Includes intentional murder without premeditation and unintentional felony murder. Sentencing guidelines severity level 10 (intentional) or 11 (drive-by)."
+  },
+  {
+    "common_charge_slug": "voluntary-manslaughter",
+    "statute_number": "Minn. Stat. § 609.20",
+    "statute_title": "Manslaughter in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant intentionally caused the death of another in the heat of passion provoked by such words or acts of another as would provoke a person of ordinary self-control",
+      "OR violated a restraining order and caused the death"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Heat of passion killing — adequate provocation reduces murder to manslaughter."
+  },
+  {
+    "common_charge_slug": "involuntary-manslaughter",
+    "statute_number": "Minn. Stat. § 609.205",
+    "statute_title": "Manslaughter in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant caused the death of another by culpable negligence creating an unreasonable risk, and consciously took chances of causing death or great bodily harm"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Culpable negligence standard — more than ordinary negligence but less than intent to harm. Commonly charged in negligent gun handling and reckless driving deaths."
+  },
+  {
+    "common_charge_slug": "robbery",
+    "statute_number": "Minn. Stat. § 609.24",
+    "statute_title": "Simple Robbery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant took personal property from the person or in the presence of another",
+      "By using or threatening the imminent use of force against any person to overcome resistance or compel acquiescence"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Simple robbery — no weapon required, just force or threat of force."
+  },
+  {
+    "common_charge_slug": "armed-robbery",
+    "statute_number": "Minn. Stat. § 609.245",
+    "statute_title": "Aggravated Robbery",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$35,000",
+    "elements": [
+      "Defendant committed a robbery while armed with a dangerous weapon or article used or fashioned to lead the victim to believe it is a dangerous weapon",
+      "OR inflicted bodily harm upon another during the robbery"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "First-degree aggravated robbery (armed with firearm or other dangerous weapon)"
+    ],
+    "notes": "First-degree (§ 609.245, subd. 1) involves a dangerous weapon — up to 20 years. Second-degree (subd. 2) involves implied weapon — up to 15 years."
+  },
+  {
+    "common_charge_slug": "residential-burglary",
+    "statute_number": "Minn. Stat. § 609.582, subd. 1",
+    "statute_title": "Burglary in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$35,000",
+    "elements": [
+      "Defendant entered a building without consent",
+      "With intent to commit a crime therein",
+      "When another person, not an accomplice, was present in the building",
+      "AND defendant possessed a weapon or dangerous article, assaulted a person, or used or threatened use of force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Assault during burglary",
+      "Possession of an explosive"
+    ],
+    "notes": "First-degree requires occupied dwelling plus additional aggravating factor. Most serious burglary offense."
+  },
+  {
+    "common_charge_slug": "burglary",
+    "statute_number": "Minn. Stat. § 609.582, subd. 2",
+    "statute_title": "Burglary in the Second Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant entered a dwelling without consent and with intent to commit a crime therein",
+      "OR entered a building without consent with a tool, explosive, or weapon"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Dwelling burglary without the aggravating factors of first degree."
+  },
+  {
+    "common_charge_slug": "commercial-burglary",
+    "statute_number": "Minn. Stat. § 609.582, subd. 3",
+    "statute_title": "Burglary in the Third Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant entered a building without consent",
+      "With intent to commit a crime therein, or committed a crime while in the building"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Non-dwelling, non-aggravated burglary. Includes commercial buildings."
+  },
+  {
+    "common_charge_slug": "theft-larceny",
+    "statute_number": "Minn. Stat. § 609.52",
+    "statute_title": "Theft",
+    "offense_class": "Misdemeanor (under $500); Gross Misdemeanor ($500–$999); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "90 days (misdemeanor); 1 year (gross misdemeanor); 5 years ($1,000–$4,999); 10 years ($5,000–$34,999); 20 years ($35,000+)",
+    "fine_max": "$1,000 (misdemeanor); $3,000 (gross misdemeanor); $10,000 ($1,000+); $20,000 ($5,000+); $100,000 ($35,000+)",
+    "elements": [
+      "Defendant intentionally and without claim of right took, used, transferred, concealed, or retained possession of movable property of another",
+      "Without the owner's consent and with intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Theft from a person (felony regardless of amount)",
+      "Theft of a firearm (felony)",
+      "Prior theft convictions (penalty escalation)"
+    ],
+    "notes": "Aggregation of multiple thefts from same victim within 6 months allowed for charging purposes. Includes theft by swindle, embezzlement, and theft of services."
+  },
+  {
+    "common_charge_slug": "identity-theft",
+    "statute_number": "Minn. Stat. § 609.527",
+    "statute_title": "Identity Theft",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (1 victim); 10 years (2 victims); 15 years (3+ victims); 20 years ($35,000+ loss)",
+    "fine_max": "$10,000; $20,000 (2+ victims); $100,000 ($35,000+ loss)",
+    "elements": [
+      "Defendant used or possessed another person's identity information without consent",
+      "With intent to commit, aid, or abet any unlawful activity"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Multiple victims",
+      "Aggregate loss exceeds $35,000",
+      "Victim is a minor"
+    ],
+    "notes": "Identity information includes name, SSN, date of birth, driver's license number, and financial account numbers."
+  },
+  {
+    "common_charge_slug": "fraud-general",
+    "statute_number": "Minn. Stat. § 609.52, subd. 2(4)",
+    "statute_title": "Theft by Swindle (Fraud)",
+    "offense_class": "Felony (if $1,000+); Gross Misdemeanor ($500–$999); Misdemeanor (under $500)",
+    "penalty_min": null,
+    "penalty_max": "20 years ($35,000+); 10 years ($5,000–$34,999); 5 years ($1,000–$4,999)",
+    "fine_max": "$100,000 ($35,000+)",
+    "elements": [
+      "Defendant obtained property or services by intentional false representation",
+      "Which was calculated to deceive and did deceive the victim",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Targeting vulnerable adults (enhanced penalties)",
+      "Multiple victims",
+      "Aggregation over 6-month period"
+    ],
+    "notes": "Theft by swindle is Minnesota's primary fraud statute. Encompasses financial fraud, investment fraud, and consumer fraud."
+  },
+  {
+    "common_charge_slug": "bad-checks",
+    "statute_number": "Minn. Stat. § 609.631",
+    "statute_title": "Check Forgery — Offering a Forged Check",
+    "offense_class": "Felony ($250+); Gross Misdemeanor ($250 or less with 2+ checks); Misdemeanor (single check under $250)",
+    "penalty_min": null,
+    "penalty_max": "10 years ($2,500+); 5 years ($250–$2,499); 1 year (gross misdemeanor)",
+    "fine_max": "$20,000 ($2,500+); $10,000 ($250+); $3,000 (gross misdemeanor)",
+    "elements": [
+      "Defendant offered, issued, or delivered a forged check",
+      "Knowing the check was forged",
+      "With intent to defraud"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggregate amount over 6 months",
+      "Multiple victims"
+    ],
+    "notes": "Includes counterfeited and altered checks. Separate from general forgery statute."
+  },
+  {
+    "common_charge_slug": "forgery",
+    "statute_number": "Minn. Stat. § 609.63",
+    "statute_title": "Forgery",
+    "offense_class": "Felony (3 years max); Gross Misdemeanor (certain documents)",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant falsely made or altered a writing or object with intent to defraud",
+      "OR uttered a forged writing or object knowing it to be forged"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "General forgery statute. Check forgery has separate, more detailed statute at § 609.631."
+  },
+  {
+    "common_charge_slug": "csc-first-degree",
+    "statute_number": "Minn. Stat. § 609.342",
+    "statute_title": "Criminal Sexual Conduct in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": "144 months",
+    "penalty_max": "30 years",
+    "fine_max": "$40,000",
+    "elements": [
+      "Defendant engaged in sexual penetration with another person",
+      "Under one of the following circumstances: victim was under 13, force or coercion was used, victim was mentally impaired, defendant was in a position of authority, or multiple actors were involved"
+    ],
+    "mandatory_minimum": "144 months (12 years) for offenses involving a victim under 13 or force",
+    "enhancements": [
+      "Victim under 13 (mandatory minimum 144 months)",
+      "Dangerous weapons used",
+      "Repeat sex offender (mandatory life sentence possible under § 609.3455)"
+    ],
+    "notes": "Most serious sexual offense. Predatory offender registration required. Mandatory minimum fine of 30% of maximum. Sentencing under sex offender grid."
+  },
+  {
+    "common_charge_slug": "csc-third-degree",
+    "statute_number": "Minn. Stat. § 609.344",
+    "statute_title": "Criminal Sexual Conduct in the Third Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "15 years",
+    "fine_max": "$30,000",
+    "elements": [
+      "Defendant engaged in sexual penetration with another person",
+      "Under circumstances such as: victim was 13–15 and defendant was more than 24 months older, force or coercion used, victim was mentally impaired or physically helpless"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior sex offense convictions",
+      "Pattern of predatory conduct"
+    ],
+    "notes": "Involves penetration without the aggravating factors of first degree. Predatory offender registration required."
+  },
+  {
+    "common_charge_slug": "sex-offense-contact",
+    "statute_number": "Minn. Stat. § 609.3451",
+    "statute_title": "Criminal Sexual Conduct in the Fifth Degree",
+    "offense_class": "Gross Misdemeanor (first offense); Felony (second or subsequent)",
+    "penalty_min": null,
+    "penalty_max": "1 year (gross misdemeanor); 5 years (felony)",
+    "fine_max": "$3,000 (gross misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant engaged in nonconsensual sexual contact",
+      "OR engaged in masturbation or lewd exhibition in the presence of a minor"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior sex offense conviction (felony)"
+    ],
+    "notes": "Lowest-level criminal sexual conduct charge involving sexual contact, not penetration."
+  },
+  {
+    "common_charge_slug": "felon-in-possession",
+    "statute_number": "Minn. Stat. § 624.713",
+    "statute_title": "Certain Persons Not to Possess Firearms",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years (general); 15 years (crime of violence)",
+    "fine_max": "$10,000 (general); $30,000 (crime of violence)",
+    "elements": [
+      "Defendant possessed a firearm or ammunition",
+      "Defendant is a prohibited person: convicted of a crime of violence, convicted of certain drug offenses, subject to a domestic abuse order for protection, or adjudicated mentally ill"
+    ],
+    "mandatory_minimum": "5 years if convicted of a crime of violence and possessing a firearm",
+    "enhancements": [
+      "Prior crime of violence conviction (15 years max)",
+      "Possession during commission of another crime"
+    ],
+    "notes": "Crime of violence defined at § 624.712, subd. 5. Includes drive-by shooting, murder, robbery, kidnapping, sexual assault, and more."
+  },
+  {
+    "common_charge_slug": "concealed-carry-violation",
+    "statute_number": "Minn. Stat. § 624.714",
+    "statute_title": "Carrying a Pistol Without a Permit",
+    "offense_class": "Gross Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$3,000",
+    "elements": [
+      "Defendant carried a pistol in a public place",
+      "Without a valid permit to carry"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior firearms violation (felony possible)"
+    ],
+    "notes": "Minnesota is a shall-issue permit state. Permit required for concealed or open carry of a pistol."
+  },
+  {
+    "common_charge_slug": "illegal-discharge",
+    "statute_number": "Minn. Stat. § 609.66, subd. 1e",
+    "statute_title": "Drive-By Shooting",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant discharged a firearm from a motor vehicle",
+      "In a public place, recklessly and without regard for human life"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in death (murder in the second degree)",
+      "Resulting in bodily harm (first-degree assault)"
+    ],
+    "notes": "Mandatory consecutive sentence if committed during another felony."
+  },
+  {
+    "common_charge_slug": "kidnapping",
+    "statute_number": "Minn. Stat. § 609.25",
+    "statute_title": "Kidnapping",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years (general); 40 years (to facilitate felony, sexual assault, or ransom)",
+    "fine_max": "$35,000 (general); $50,000 (aggravated)",
+    "elements": [
+      "Defendant confined or removed another from one place to another without consent",
+      "For the purpose of holding victim for ransom, facilitating a felony, committing bodily harm, or terrorizing the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Victim under 16",
+      "Committed to facilitate another felony"
+    ],
+    "notes": "Aggravated kidnapping extends maximum to 40 years if purpose was to hold for ransom, facilitate a felony, or cause great bodily harm."
+  },
+  {
+    "common_charge_slug": "arson",
+    "statute_number": "Minn. Stat. § 609.561",
+    "statute_title": "Arson in the First Degree",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant intentionally set fire to or burned, or aided in burning, any building, structure, or property",
+      "Where another person was present at the time",
+      "OR the fire resulted in bodily harm to any person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Most serious arson offense — requires occupied building or bodily harm. Treated as crime against the person for sentencing guidelines purposes."
+  },
+  {
+    "common_charge_slug": "disorderly-conduct",
+    "statute_number": "Minn. Stat. § 609.72",
+    "statute_title": "Disorderly Conduct",
+    "offense_class": "Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "90 days",
+    "fine_max": "$1,000",
+    "elements": [
+      "Defendant engaged in brawling or fighting, disturbed a lawful assembly, or engaged in offensive, obscene, or abusive language or boisterous and noisy conduct",
+      "Tending reasonably to arouse alarm, anger, or resentment in others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Common public order offense. Often charged alongside other offenses."
+  },
+  {
+    "common_charge_slug": "trespassing",
+    "statute_number": "Minn. Stat. § 609.605",
+    "statute_title": "Trespass",
+    "offense_class": "Misdemeanor; Gross Misdemeanor (certain locations or circumstances)",
+    "penalty_min": null,
+    "penalty_max": "90 days (misdemeanor); 1 year (gross misdemeanor)",
+    "fine_max": "$1,000 (misdemeanor); $3,000 (gross misdemeanor)",
+    "elements": [
+      "Defendant intentionally entered or remained on property of another without consent",
+      "After being told to leave or after reasonable notice that entry was prohibited"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Trespass on school property (gross misdemeanor)",
+      "Trespass during emergency (gross misdemeanor)"
+    ],
+    "notes": "Includes constructive trespass through failure to depart after notice."
+  },
+  {
+    "common_charge_slug": "fleeing-eluding",
+    "statute_number": "Minn. Stat. § 609.487",
+    "statute_title": "Fleeing a Peace Officer in a Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years (general); 7 years (death); 5 years (substantial bodily harm)",
+    "fine_max": "$5,000 (general); $14,000 (death); $10,000 (substantial bodily harm)",
+    "elements": [
+      "Defendant operated a motor vehicle",
+      "Fled or attempted to flee a peace officer by means of speed or other evasive action",
+      "After the officer had signaled the defendant to stop by activating lights or siren"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Death of another person resulting (7 years)",
+      "Substantial bodily harm to another (5 years)"
+    ],
+    "notes": "Peace officer must have been acting in lawful discharge of duties. Fleeing on foot is a misdemeanor."
+  },
+  {
+    "common_charge_slug": "criminal-mischief",
+    "statute_number": "Minn. Stat. § 609.595",
+    "statute_title": "Criminal Damage to Property",
+    "offense_class": "Felony ($1,000+ damage); Gross Misdemeanor ($500–$999); Misdemeanor (under $500)",
+    "penalty_min": null,
+    "penalty_max": "5 years ($1,000+); 1 year (gross misdemeanor); 90 days (misdemeanor)",
+    "fine_max": "$10,000 ($1,000+); $3,000 (gross misdemeanor); $1,000 (misdemeanor)",
+    "elements": [
+      "Defendant intentionally caused damage to the physical property of another",
+      "Without the owner's consent"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Damage to critical infrastructure",
+      "Motivated by bias"
+    ],
+    "notes": "Damage amount determines severity level. Restitution to victim commonly ordered."
+  },
+  {
+    "common_charge_slug": "stalking",
+    "statute_number": "Minn. Stat. § 609.749",
+    "statute_title": "Stalking — Harassment",
+    "offense_class": "Gross Misdemeanor (first offense); Felony (repeat offense or aggravated)",
+    "penalty_min": null,
+    "penalty_max": "1 year (gross misdemeanor); 5 years (felony); 10 years (aggravated)",
+    "fine_max": "$3,000 (gross misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant engaged in a pattern of harassing conduct",
+      "The conduct would cause a reasonable person under the circumstances to feel frightened, threatened, oppressed, persecuted, or intimidated",
+      "AND did cause this reaction in the victim"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior stalking or harassment conviction (felony)",
+      "Possession of a dangerous weapon (felony)",
+      "Targeting a minor under 18 (felony)"
+    ],
+    "notes": "Pattern means two or more acts within a five-year period. Includes electronic communication and social media harassment."
+  },
+  {
+    "common_charge_slug": "violation-protective-order",
+    "statute_number": "Minn. Stat. § 518B.01, subd. 14",
+    "statute_title": "Violation of an Order for Protection",
+    "offense_class": "Misdemeanor (first within 10 years); Gross Misdemeanor (second within 10 years); Felony (third or subsequent within 10 years)",
+    "penalty_min": null,
+    "penalty_max": "90 days (misdemeanor); 1 year (gross misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $3,000 (gross misdemeanor); $10,000 (felony)",
+    "elements": [
+      "A valid order for protection was in effect",
+      "Defendant had knowledge of the order",
+      "Defendant knowingly violated a provision of the order"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Prior violations within 10 years escalate classification",
+      "Violation involving assault"
+    ],
+    "notes": "Includes domestic abuse no contact orders (DANCO). Violation of DANCO under § 629.75 carries same penalty structure."
+  },
+  {
+    "common_charge_slug": "terroristic-threats",
+    "statute_number": "Minn. Stat. § 609.713",
+    "statute_title": "Terroristic Threats",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant threatened, directly or indirectly, to commit any crime of violence",
+      "With purpose to terrorize another or to cause evacuation of a building, public place, or mode of transportation",
+      "OR in reckless disregard of the risk of causing such terror"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Threat involving a dangerous weapon",
+      "Threat involving an explosive or incendiary device"
+    ],
+    "notes": "Does not require ability to carry out the threat. Includes threats communicated via electronic means."
+  },
+  {
+    "common_charge_slug": "resisting-arrest",
+    "statute_number": "Minn. Stat. § 609.50",
+    "statute_title": "Obstructing Legal Process, Arrest, or Firefighting",
+    "offense_class": "Gross Misdemeanor",
+    "penalty_min": null,
+    "penalty_max": "1 year",
+    "fine_max": "$3,000",
+    "elements": [
+      "Defendant intentionally obstructed, hindered, or prevented a peace officer, firefighter, or other authorized person",
+      "In the lawful execution of their duties",
+      "By force or threat of force"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Passive resistance (going limp) is generally not sufficient. Requires active physical resistance or interference."
+  },
+  {
+    "common_charge_slug": "probation-violation",
+    "statute_number": "Minn. Stat. § 609.14",
+    "statute_title": "Violation of Conditions of Release — Probation Violation",
+    "offense_class": "Determined by underlying offense",
+    "penalty_min": null,
+    "penalty_max": "Execution of stayed sentence up to the statutory maximum for the underlying offense",
+    "fine_max": "As set by underlying offense",
+    "elements": [
+      "Defendant was placed on probation or conditional release",
+      "Defendant violated one or more conditions of that release",
+      "Violation was proven by clear and convincing evidence at a hearing"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Court may revoke probation and execute the stayed sentence, continue probation with modified conditions, or extend probation. Defendant has right to a Morrissey hearing."
+  },
+  {
+    "common_charge_slug": "child-endangerment",
+    "statute_number": "Minn. Stat. § 609.378",
+    "statute_title": "Neglect or Endangerment of a Child",
+    "offense_class": "Gross Misdemeanor (general); Felony (substantial harm or pattern)",
+    "penalty_min": null,
+    "penalty_max": "1 year (gross misdemeanor); 5 years (felony)",
+    "fine_max": "$3,000 (gross misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant was a parent, legal guardian, or caretaker of a child",
+      "Defendant intentionally or negligently caused or permitted the child to be placed in a situation likely to substantially harm the child's physical, mental, or emotional health"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Resulting in substantial bodily harm (felony)",
+      "Pattern of neglect or abuse (felony)"
+    ],
+    "notes": "Commonly charged alongside DWI when child is in vehicle, or in cases of environmental neglect."
+  },
+  {
+    "common_charge_slug": "prostitution",
+    "statute_number": "Minn. Stat. § 609.324",
+    "statute_title": "Engaging in Prostitution — Patron",
+    "offense_class": "Misdemeanor (first); Gross Misdemeanor (second); Felony (third or subsequent)",
+    "penalty_min": null,
+    "penalty_max": "90 days (misdemeanor); 1 year (gross misdemeanor); 5 years (felony)",
+    "fine_max": "$1,500 (first); $3,000 (second); $10,000 (felony)",
+    "elements": [
+      "Defendant hired or offered to hire a person for sexual penetration or sexual contact"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Patron engaging with minor (felony — up to 20 years)",
+      "In a school zone or park"
+    ],
+    "notes": "Minnesota law targets buyers (patrons) more heavily than sellers. Victims of sex trafficking may assert affirmative defense under § 609.325."
+  },
+  {
+    "common_charge_slug": "witness-tampering",
+    "statute_number": "Minn. Stat. § 609.498",
+    "statute_title": "Tampering with a Witness",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years",
+    "fine_max": "$20,000",
+    "elements": [
+      "Defendant intentionally used force, threat of force, intimidation, or deception",
+      "To attempt to influence a witness to testify falsely, withhold testimony, or absent themselves from a proceeding"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of force or threats of violence"
+    ],
+    "notes": "Includes attempting to influence a witness not to report a crime or cooperate with investigation."
+  },
+  {
+    "common_charge_slug": "sex-offense-digital",
+    "statute_number": "Minn. Stat. § 609.352",
+    "statute_title": "Solicitation of Children to Engage in Sexual Conduct",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant solicited a child under 16 to engage in sexual conduct",
+      "OR communicated with a child under 16 with intent to engage in sexual conduct"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of electronic communication or internet",
+      "Prior sex offense conviction"
+    ],
+    "notes": "Includes online enticement. Predatory offender registration required upon conviction."
+  },
+  {
+    "common_charge_slug": "vehicular-homicide",
+    "statute_number": "Minn. Stat. § 609.2113",
+    "statute_title": "Criminal Vehicular Operation — Substantial Bodily Harm",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant operated a motor vehicle in a grossly negligent manner",
+      "While under the influence of alcohol or controlled substance",
+      "Resulting in substantial bodily harm to another person"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Great bodily harm (up to 5 years under § 609.2112)",
+      "Death (up to 10 years under § 609.2111)"
+    ],
+    "notes": "Separate from DWI — focuses on harm caused. Charged in addition to DWI when injuries result."
+  },
+  {
+    "common_charge_slug": "receiving-stolen-property",
+    "statute_number": "Minn. Stat. § 609.53",
+    "statute_title": "Receiving Stolen Property",
+    "offense_class": "Same as theft based on value of property",
+    "penalty_min": null,
+    "penalty_max": "20 years ($35,000+); 10 years ($5,000+); 5 years ($1,000+); 1 year (gross misdemeanor); 90 days (misdemeanor)",
+    "fine_max": "$100,000 ($35,000+); $20,000 ($5,000+); $10,000 ($1,000+)",
+    "elements": [
+      "Defendant received, possessed, transferred, bought, or concealed stolen property",
+      "Knowing or having reason to know the property was stolen"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Property is a firearm (felony regardless of value)"
+    ],
+    "notes": "Same penalty thresholds as theft statute. Knowledge or reason to know property was stolen must be proven."
+  },
+  {
+    "common_charge_slug": "harassment",
+    "statute_number": "Minn. Stat. § 609.749, subd. 2",
+    "statute_title": "Harassment — Restraining Order Violation",
+    "offense_class": "Gross Misdemeanor; Felony (if aggravated or repeat)",
+    "penalty_min": null,
+    "penalty_max": "1 year (gross misdemeanor); 5 years (felony)",
+    "fine_max": "$3,000 (gross misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant engaged in repeated incidents of intrusive or unwanted acts, words, or gestures",
+      "Intended to affect the safety, security, or privacy of another",
+      "Regardless of the relationship between the parties"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Violation of a restraining order (felony)",
+      "Prior harassment or stalking conviction"
+    ],
+    "notes": "Harassment and stalking are addressed in the same statute. Two incidents constitute a pattern."
+  },
+  {
+    "common_charge_slug": "failure-to-register",
+    "statute_number": "Minn. Stat. § 243.166, subd. 5",
+    "statute_title": "Failure to Register as Predatory Offender",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was required to register as a predatory offender",
+      "Defendant knowingly failed to register, verify information, or provide notice of address change"
+    ],
+    "mandatory_minimum": "1 year",
+    "enhancements": [
+      "Subsequent violations"
+    ],
+    "notes": "Mandatory 1-year prison sentence, not subject to early release. Registration required for life or 10 years depending on offense risk level."
+  },
+  {
+    "common_charge_slug": "escape-custody",
+    "statute_number": "Minn. Stat. § 609.485",
+    "statute_title": "Escape from Custody",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant was lawfully held in custody or confinement",
+      "Defendant escaped or attempted to escape from custody"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Escape from a correctional facility (enhanced penalty)",
+      "Use of force or weapon during escape"
+    ],
+    "notes": "Includes escape from lawful arrest, jail, prison, or court-ordered custody. Sentence runs consecutive to underlying sentence."
+  },
+  {
+    "common_charge_slug": "unlawful-imprisonment",
+    "statute_number": "Minn. Stat. § 609.255",
+    "statute_title": "False Imprisonment",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "3 years",
+    "fine_max": "$5,000",
+    "elements": [
+      "Defendant knowingly confined or restrained another person without the person's consent",
+      "OR confined or restrained another to facilitate the commission of a felony or to flee after commission"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Lesser included offense of kidnapping. Does not require movement of the victim from one place to another."
+  },
+  {
+    "common_charge_slug": "indecent-exposure",
+    "statute_number": "Minn. Stat. § 617.23",
+    "statute_title": "Indecent Exposure",
+    "offense_class": "Misdemeanor (first); Gross Misdemeanor (second); Felony (third or subsequent, or if victim under 16)",
+    "penalty_min": null,
+    "penalty_max": "90 days (misdemeanor); 1 year (gross misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $3,000 (gross misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant willfully and lewdly exposed their body or private parts",
+      "In a public place or in the presence of another",
+      "In a manner that would be offensive to others"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Presence of a minor (felony)",
+      "Prior indecent exposure convictions"
+    ],
+    "notes": "Third or subsequent conviction or exposure to a minor under 16 is a felony. May require sex offender registration."
+  },
+  {
+    "common_charge_slug": "motor-vehicle-theft",
+    "statute_number": "Minn. Stat. § 609.52, subd. 2(17)",
+    "statute_title": "Theft of a Motor Vehicle",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant intentionally and without claim of right took or drove a motor vehicle without the owner's consent",
+      "With intent to permanently deprive the owner"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Value over $5,000 (up to 10 years)",
+      "Prior theft convictions"
+    ],
+    "notes": "Motor vehicle theft is a felony regardless of the vehicle's value. Joyriding (temporary use) may be charged as unauthorized use of a motor vehicle."
+  },
+  {
+    "common_charge_slug": "shoplifting",
+    "statute_number": "Minn. Stat. § 609.52, subd. 2(1)",
+    "statute_title": "Theft — Shoplifting",
+    "offense_class": "Misdemeanor (under $500); Gross Misdemeanor ($500–$999); Felony ($1,000+)",
+    "penalty_min": null,
+    "penalty_max": "90 days (misdemeanor); 1 year (gross misdemeanor); 5 years (felony)",
+    "fine_max": "$1,000 (misdemeanor); $3,000 (gross misdemeanor); $10,000 (felony)",
+    "elements": [
+      "Defendant intentionally took merchandise from a retail store",
+      "Without paying for the merchandise",
+      "With intent to permanently deprive the store of the property"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of theft-detection shielding device",
+      "Organized retail theft ring"
+    ],
+    "notes": "Charged under the general theft statute. Civil liability to the retailer is separate from criminal penalties."
+  },
+  {
+    "common_charge_slug": "financial-exploitation-elder",
+    "statute_number": "Minn. Stat. § 609.2335",
+    "statute_title": "Financial Exploitation of a Vulnerable Adult",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "10 years ($5,000+); 5 years ($1,000–$4,999); 1 year (under $1,000, gross misdemeanor)",
+    "fine_max": "$20,000 ($5,000+); $10,000 ($1,000+); $3,000 (gross misdemeanor)",
+    "elements": [
+      "Defendant, in a position of trust or with a fiduciary duty to a vulnerable adult",
+      "Knowingly obtained or used the vulnerable adult's money, assets, or property",
+      "Through undue influence, deception, coercion, harassment, or similar means"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Aggregate amounts over time",
+      "Targeting multiple vulnerable adults"
+    ],
+    "notes": "Vulnerable adult includes elderly, disabled, and dependent persons. Often charged alongside theft by swindle."
+  },
+  {
+    "common_charge_slug": "carjacking",
+    "statute_number": "Minn. Stat. § 609.245, subd. 1",
+    "statute_title": "Aggravated Robbery — Carjacking",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "20 years",
+    "fine_max": "$35,000",
+    "elements": [
+      "Defendant took a motor vehicle from the person or presence of the owner",
+      "By use of force or threat of force",
+      "Armed with a dangerous weapon or implying possession of one"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [
+      "Use of a firearm",
+      "Bodily harm inflicted during the robbery"
+    ],
+    "notes": "Charged under the aggravated robbery statute. Minnesota enacted enhanced carjacking penalties in response to rising incidents."
+  },
+  {
+    "common_charge_slug": "drug-manufacturing",
+    "statute_number": "Minn. Stat. § 152.021, subd. 2a",
+    "statute_title": "Manufacture of Methamphetamine",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "30 years",
+    "fine_max": "$1,000,000",
+    "elements": [
+      "Defendant manufactured or attempted to manufacture methamphetamine",
+      "OR possessed precursor chemicals with intent to manufacture methamphetamine"
+    ],
+    "mandatory_minimum": "Presumptive commitment to prison per sentencing guidelines",
+    "enhancements": [
+      "Manufacturing in presence of a child (additional felony)",
+      "Resulting in bodily harm to another",
+      "Manufacturing in a residential area"
+    ],
+    "notes": "Child endangered during meth manufacturing is a separate felony under § 152.137. Environmental cleanup costs may be part of restitution."
+  },
+  {
+    "common_charge_slug": "perjury",
+    "statute_number": "Minn. Stat. § 609.48",
+    "statute_title": "Perjury",
+    "offense_class": "Felony",
+    "penalty_min": null,
+    "penalty_max": "5 years",
+    "fine_max": "$10,000",
+    "elements": [
+      "Defendant made a false material statement",
+      "Under oath or affirmation",
+      "In a proceeding before a court, grand jury, or governmental agency",
+      "Knowing the statement was false"
+    ],
+    "mandatory_minimum": null,
+    "enhancements": [],
+    "notes": "Materiality of the false statement is an element the state must prove."
+  }
+]
