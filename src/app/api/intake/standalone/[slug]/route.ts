@@ -36,6 +36,26 @@ const VALID_STATES = new Set([
   "DC",
 ]);
 
+// Wave 1 court case port — case stage allowlist for motion-opportunity-scan
+const VALID_CASE_STAGES = new Set([
+  "pre-arraignment",
+  "post-arraignment",
+  "post-discovery",
+  "pre-trial",
+  "trial",
+  "post-trial",
+]);
+
+// Fields that may be optional (not strictly required) on a per-product basis.
+// Validation still sanitizes them when present, but does not 400 on absence.
+const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
+  "judge-profile": new Set(["caseNumber"]),
+  "motion-opportunity-scan": new Set(["judgeName"]),
+};
+
+// Long-form text fields get a higher length cap than the default 200 chars.
+const LONG_TEXT_FIELDS = new Set(["knownFacts"]);
+
 /** (C6) Sanitize free-text fields: strip control chars, limit length. */
 function sanitizeText(value: unknown, maxLength = 200): string {
   if (typeof value !== "string") return "";
@@ -107,10 +127,16 @@ export async function POST(
 
   // (C6, W13) Validate + sanitize each intake field
   const sanitized: Record<string, unknown> = {};
+  const optionalFields = OPTIONAL_FIELDS_BY_SLUG[slug] || new Set<string>();
   for (const field of product.intakeFields) {
     const raw = intakeData[field];
+    const isOptional = optionalFields.has(field);
 
     if (raw === undefined || raw === null || raw === "") {
+      if (isOptional) {
+        sanitized[field] = "";
+        continue;
+      }
       return NextResponse.json(
         { error: `Missing required field: ${field}` },
         { status: 400 }
@@ -133,6 +159,12 @@ export async function POST(
         { status: 400 }
       );
     }
+    if (field === "caseStage" && !VALID_CASE_STAGES.has(String(raw))) {
+      return NextResponse.json(
+        { error: "Invalid case stage" },
+        { status: 400 }
+      );
+    }
 
     // Boolean fields
     if (["industryRegulated", "hasClearance", "hasLicense"].includes(field)) {
@@ -140,7 +172,13 @@ export async function POST(
       continue;
     }
 
-    // Free-text fields: sanitize
+    // Long-form text fields get a higher cap (knownFacts up to 800 chars)
+    if (LONG_TEXT_FIELDS.has(field)) {
+      sanitized[field] = sanitizeText(raw, 800);
+      continue;
+    }
+
+    // Free-text fields: sanitize with default 200-char cap
     sanitized[field] = sanitizeText(raw);
   }
 

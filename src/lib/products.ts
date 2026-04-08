@@ -258,6 +258,60 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: false,
   },
 
+  // ─── COURT CASE PORT — WAVE 1 (isActive=false until operator review) ─────
+  // Both ship with isActive=false. Landing page returns 404 until flipped.
+  // Plans: docs/plans/2026-04-06-court-case-port/05-judge-intelligence.md
+  //        docs/plans/2026-04-06-court-case-port/01-strategy-motion-architecture.md
+  "judge-profile": {
+    name: "Judge Profile",
+    category: "research",
+    price: 49700, // $497
+    priceDisplay: "$497",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your judge profile is generated within 60 seconds of submitting your details.",
+    description:
+      "Judicial philosophy, ruling style, and persuasion patterns for the judge assigned to your case.",
+    intakeFields: [
+      "judgeName",
+      "state",
+      "county",
+      "caseNumber",
+      "chargeType",
+    ],
+    stripePriceId: "price_judge_profile_live",
+    upsellTier: "x-ray",
+    upsellText:
+      "The Judge Profile is one piece of the picture. The X-Ray combines judge intelligence with full discovery analysis.",
+    dripSequenceKey: "research_judge_profile",
+    isActive: false,
+  },
+  "motion-opportunity-scan": {
+    name: "Motion Opportunity Scan",
+    category: "research",
+    price: 49700, // $497
+    priceDisplay: "$497",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your motion opportunity scan is generated within 60 seconds of submitting your details.",
+    description:
+      "10-20 motion opportunities filtered by your charge, jurisdiction, and case stage — with grant/deny/partial reasoning for each.",
+    intakeFields: [
+      "chargeType",
+      "state",
+      "county",
+      "caseStage",
+      "judgeName",
+      "knownFacts",
+    ],
+    stripePriceId: "price_motion_opportunity_scan_live",
+    upsellTier: "case-decoder",
+    upsellText:
+      "Knowing which motions apply is the first step. The Case Decoder maps the full defense landscape including evidentiary support.",
+    dripSequenceKey: "research_motion_opportunity",
+    isActive: false,
+  },
+
   // ─── CONTENT GUIDES ($0 — free, SEO-driven lead magnets) ─────
   "first-court-appearance": {
     name: "First Court Appearance Preparation Guide",
@@ -290,7 +344,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Help your family member understand their case with the Case Decoder.",
     dripSequenceKey: null,
-    isActive: false,
+    isActive: true,
   },
   "arraignment-protocol": {
     name: "Arraignment Courtroom Protocol Guide",

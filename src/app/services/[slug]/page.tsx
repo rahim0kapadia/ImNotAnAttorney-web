@@ -36,6 +36,40 @@ const PRODUCT_COPY: Record<
     sampleInsight:
       "In Florida, employers cannot ask about arrests that did not lead to conviction on initial applications (Ban-the-Box, effective 2024). But background check timing matters — your charge appears differently at different stages.",
   },
+  "judge-profile": {
+    headline: "Know your judge before your first hearing.",
+    stakes:
+      "Most defendants walk into court knowing nothing about the person who will decide their fate. Meanwhile, the prosecutors who appear before this judge have spent years learning what works in their courtroom and what backfires. The $497 cost of leveling that information gap is invisible against the years of consequences a single ruling can carry.",
+    includes: [
+      "Background and judicial appointment history where documented",
+      "Judicial philosophy and observed approach to criminal cases",
+      "Ruling style — bench rulings vs. written orders, speed, thoroughness",
+      "Patterns observed in suppression and pretrial motion rulings",
+      "Procedural irritants and behaviors to discuss with your attorney",
+      "Persuasion considerations — what type of legal reasoning tends to land",
+      "Typical sentencing patterns for your charge type in this court",
+      "10 judge-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "Judges with backgrounds as former prosecutors often weigh officer credibility differently than judges with defense backgrounds. This is observable in their published opinions on suppression motions, and it can change which arguments your attorney may want to lead with.",
+  },
+  "motion-opportunity-scan": {
+    headline: "Know which motions apply before you pay for discovery analysis.",
+    stakes:
+      "Most defendants find out what motions could have been filed only after the deadline passes. By then the issues are waived, the evidence is locked in, and the leverage is gone. A 60-second scan of motion opportunities filtered by your charge, jurisdiction, and case stage costs $497. Missing a motion deadline costs years.",
+    includes: [
+      "10-20 motion opportunities filtered by your charge and jurisdiction",
+      "Case-stage filter showing only motions timely for your current stage",
+      "Plain-English explanation of what each motion does",
+      "Grant, deny, and partial outcome scenarios for each motion",
+      "Why a denied motion can still be useful for the trial record",
+      "Procedural considerations including filing deadlines",
+      "Motions not yet ripe but coming as your case progresses",
+      "10 motion-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "A motion to compel discovery is the most commonly missed motion in early-stage cases — not because it isn't viable, but because defendants don't know it exists. In many jurisdictions the prosecution's discovery obligation kicks in within days of arraignment.",
+  },
 };
 
 interface Props {

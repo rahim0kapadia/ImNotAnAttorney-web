@@ -228,9 +228,14 @@ async function sendEmail(params: {
 // Maps standalone_product_slug to display names and prompt builders.
 // ============================================================
 
-/** Human-readable product names keyed by slug. */
-const PRODUCT_NAMES: Record<string, string> = {
-  "employment-impact": "Employment Impact Assessment",
+/** Product metadata keyed by slug — name + price for system prompt. */
+const PRODUCT_META: Record<string, { name: string; price: string }> = {
+  "employment-impact": { name: "Employment Impact Assessment", price: "$197" },
+  "collateral-consequences": { name: "Collateral Consequences Research", price: "$147" },
+  "license-risk": { name: "Professional License Risk Research", price: "$297" },
+  "custody-impact": { name: "Custody Impact During Prosecution", price: "$197" },
+  "judge-profile": { name: "Judge Profile", price: "$497" },
+  "motion-opportunity-scan": { name: "Motion Opportunity Scan", price: "$497" },
 };
 
 // ============================================================
@@ -241,8 +246,8 @@ const PRODUCT_NAMES: Record<string, string> = {
  * System prompt for standalone report generation.
  * UPL-safe, anti-hallucination rules, HTML output format.
  */
-function buildSystemPrompt(productName: string): string {
-  return `You are generating a ${productName} for a criminal defendant. This is a PAID PRODUCT ($197) that must deliver standalone value.
+function buildSystemPrompt(productName: string, priceDisplay: string): string {
+  return `You are generating a ${productName} for a criminal defendant. This is a PAID PRODUCT (${priceDisplay}) that must deliver standalone value.
 
 CRITICAL UPL RULES:
 - You provide legal INFORMATION, not legal ADVICE
@@ -276,6 +281,78 @@ interface EmploymentImpactIntake {
   hasClearance: boolean;
 }
 
+interface CollateralConsequencesIntake {
+  state: string;
+  chargeType: string;
+  occupation: string;
+  hasLicense: boolean;
+  hasSecurityClearance: boolean;
+  immigrationStatus: string;
+  hasChildren: boolean;
+}
+
+interface LicenseRiskIntake {
+  state: string;
+  chargeType: string;
+  licenseType: string;
+  licensingBoard: string;
+  priorDiscipline: boolean;
+}
+
+interface CustodyImpactIntake {
+  state: string;
+  chargeType: string;
+  custodyStatus: string;
+  pendingFamilyCase: boolean;
+  childrenAges: string;
+  otherParentAwareness: string;
+}
+
+/**
+ * Intake data shape for the judge-profile product ($497).
+ *
+ * NOTE on data limitations: structured judge intelligence (magic words,
+ * forbidden words, ruling patterns, grant rates) lives in the
+ * `judge_profiles` table populated by the `judge-research` +
+ * `judge-intelligence` workers in ImNotAnAttorney-engine. Those workers
+ * are NOT yet ported to INAA at the time of Step 6 (Wave 1, court case
+ * port). Until they ship, this Edge Function generates the report from
+ * Claude's training-data knowledge of the judge plus general criminal
+ * defense research patterns. The prompt explicitly tells Claude to mark
+ * any field it cannot verify as "limited public information available"
+ * — never fabricate data. The product ships with isActive=false in
+ * products.ts. Operator review gates flipping to true.
+ */
+interface JudgeProfileIntake {
+  judgeName: string;
+  state: string;
+  county: string;
+  caseNumber: string;
+  chargeType: string;
+}
+
+/**
+ * Intake data shape for the motion-opportunity-scan product ($497).
+ *
+ * NOTE on data limitations: the `strategic_motion_library`,
+ * `prosecution_arguments`, and `trap_escapes` tables that the Tier 1
+ * port will eventually populate are NOT yet ported. Until they ship,
+ * this Edge Function relies on Claude's training-data knowledge of
+ * motion practice patterns by charge type and jurisdiction. The prompt
+ * scopes output to common, well-established motion types and tells
+ * Claude to be honest about jurisdictional limitations. The product
+ * ships with isActive=false in products.ts. Operator review gates
+ * flipping to true.
+ */
+interface MotionOpportunityScanIntake {
+  chargeType: string;
+  state: string;
+  county: string;
+  caseStage: string;
+  judgeName: string;
+  knownFacts: string;
+}
+
 /**
  * Builds the user prompt for a given standalone product slug.
  * Returns null for unknown slugs — the caller handles the error.
@@ -304,6 +381,142 @@ Produce a comprehensive HTML report covering:
 5. Financial Impact Estimate (income loss scenarios)
 6. Protective Strategies (framed as questions to explore with attorney — NOT advice)
 7. 10 Questions for Your Defense Attorney (charge-type and occupation-specific)`;
+    }
+
+    case "collateral-consequences": {
+      const data = intake as unknown as CollateralConsequencesIntake;
+      return `Generate a Collateral Consequences Research report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Occupation: """${data.occupation}"""
+- Licensed Professional: ${data.hasLicense ? "Yes" : "No"}
+- Security Clearance: ${data.hasSecurityClearance ? "Yes" : "No"}
+- Immigration Status: ${data.immigrationStatus}
+- Has Children: ${data.hasChildren ? "Yes" : "No"}
+
+Produce a comprehensive HTML report covering:
+1. Consequences Summary — total number of identified consequences for this charge type in this state, categorized by severity (CRITICAL / SIGNIFICANT / MODERATE)
+2. Employment Impact — background check impact, industry restrictions, licensing implications (summary level — note that deeper analysis is available)
+3. Housing — public housing disqualification rules, private landlord screening, Section 8 eligibility for this charge type
+4. Civil Rights — voting rights (state-specific restoration rules), jury service, gun rights (state + federal), running for office
+5. Government Benefits — SNAP/TANF restrictions (drug conviction specific), Social Security, VA benefits, Medicaid implications
+6. Education — FAFSA eligibility impacts, campus housing, professional school admissions
+7. Immigration — if non-citizen, CIMT classification and deportation risk summary (note deeper analysis available)
+8. Custody & Family — if has children, how this charge type affects custody proceedings (note deeper analysis available)
+
+Each section must include state-specific information and "questions to explore with your attorney." Frame everything as INFORMATION, not advice.`;
+    }
+
+    case "license-risk": {
+      const data = intake as unknown as LicenseRiskIntake;
+      return `Generate a Professional License Risk Research report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- License Type: ${data.licenseType}
+- Licensing Board: """${data.licensingBoard || "Not specified"}"""
+- Prior Disciplinary Action: ${data.priorDiscipline ? "Yes" : "No"}
+
+Produce a comprehensive HTML report covering:
+1. Risk Level — CRITICAL / HIGH / MODERATE / LOW for this specific license type + charge combination in this state
+2. Board Reporting Requirements — does this state require self-reporting of arrests/charges/convictions for this license type? Reporting deadline. Consequences of NOT reporting. Include statute/regulation citation if known.
+3. Board Action Triggers — which charges trigger automatic review, hearing, suspension, or revocation for this license type. Distinction between arrest, charge, conviction, and plea.
+4. Historical Board Outcomes — typical outcomes for similar charge types: reprimand, probation, suspension, revocation. Mitigating factors boards consider.
+5. Dual-Track Timeline — criminal case timeline vs. licensing board timeline running in PARALLEL. Board may act before criminal case resolves. Evidence standard differences.
+6. License-Preserving Defense Strategies — framed as QUESTIONS to explore: plea options that avoid mandatory board action, coordinating criminal and licensing defense, mitigating evidence for the board
+7. Profession-Specific Considerations — continuing education during suspension, reinstatement procedures, practice restrictions during investigation, malpractice insurance implications
+8. 10 Questions for Your Attorneys — split between criminal defense attorney (5) and licensing board attorney (5)
+
+If prior disciplinary action exists, emphasize how it compounds the risk. Frame everything as INFORMATION, not advice.`;
+    }
+
+    case "custody-impact": {
+      const data = intake as unknown as CustodyImpactIntake;
+      return `Generate a Custody Impact During Prosecution report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Current Custody Arrangement: ${data.custodyStatus}
+- Pending Family Court Case: ${data.pendingFamilyCase ? "Yes" : "No"}
+- Children Ages: """${data.childrenAges}"""
+- Other Parent Aware of Charges: ${data.otherParentAwareness}
+
+Produce a comprehensive HTML report covering:
+1. Impact Assessment — CRITICAL / HIGH / MODERATE / LOW for custody implications based on this charge type and custody arrangement
+2. How Criminal Courts and Family Courts Interact — these are SEPARATE courts with different standards and timelines. Criminal charges do not automatically affect custody. "Best interest of the child" standard explained. Burden of proof differences.
+3. Charge-Specific Custody Impact — how this specific charge type affects custody: DV charges trigger mandatory considerations in most states, substance charges may trigger drug testing and supervised visitation, child-related charges may trigger emergency custody modifications
+4. Protective Order Implications — if applicable to the charge type: how protective orders affect custody/visitation, modification procedures, violation consequences
+5. What the Other Parent Can Do — emergency custody motions, temporary restraining orders, modification petitions, and what courts consider when evaluating these
+6. Dual-Track Strategy Questions — questions for the criminal defense attorney about custody implications AND questions for a family law attorney about protecting custody during criminal proceedings
+7. Immediate Considerations — framed as "factors to discuss with your attorney": documentation of parental involvement, character references, compliance with all court orders, treatment enrollment if applicable
+
+This is a HIGH UPL-risk product. Be EXTREMELY careful: use "family courts typically consider" not "you will lose custody." No recommendations about what to do in family court. Frame everything as INFORMATION for discussion with their attorneys (both criminal defense and family law).`;
+    }
+
+    case "judge-profile": {
+      const data = intake as unknown as JudgeProfileIntake;
+      return `Generate a Judge Profile report for:
+- Judge Name: """${data.judgeName}"""
+- State: ${data.state}
+- County: """${data.county}"""
+- Case Number: """${data.caseNumber || "Not provided"}"""
+- Charge Type: ${data.chargeType}
+
+DATA AVAILABILITY RULES (NON-NEGOTIABLE):
+- This judge may or may not have substantial public records. Most state-level judges have LIMITED documented history.
+- If you have NO reliable training-data information about this specific judge, say so explicitly in the Executive Summary: "Public information about this judge is limited. The general patterns below describe how judges with similar profiles typically rule in this jurisdiction — not this specific judge's documented history."
+- NEVER fabricate magic words, forbidden words, ruling rates, or persuasion preferences for a judge you do not have documented information about.
+- If you DO have documented information about the judge (federal judges, judges with notable published opinions, judges named in major news coverage), you may cite specific patterns — but ground every claim in what you actually know, not what would be plausible.
+- Grant rates are ESTIMATES, not statistics. Frame as "based on available published opinions, this judge appears to rule X way in Y type of case" never "X% grant rate."
+- Use phrases like "patterns observed in this judge's published opinions" or "general tendencies for judges in this jurisdiction" — never "this judge always" or "this judge will."
+
+Produce a comprehensive HTML report covering:
+1. Executive Summary — what we found vs. what's limited. Be honest about data depth. Under 200 words.
+2. Background — appointment history, education, prior career (only if documented). State "limited public information" if unknown.
+3. Judicial Philosophy — observed approach to criminal cases. Conservative/liberal lean if discernible from rulings. Textualist vs. purposivist tendencies. State "limited information available" if undocumented.
+4. Ruling Style — bench rulings vs. written orders. Speed of decisions. Thoroughness. Patience with arguments. Only if documented.
+5. Patterns in Suppression Motions — what kinds of arguments have historically moved this judge or judges with similar profiles. Frame as "factors the defense bar in this jurisdiction has reported as effective" — not "magic words this judge responds to."
+6. Things to Avoid — procedural irritants and behaviors that have provoked unfavorable responses, IF documented. Otherwise: "Limited public information about specific irritants."
+7. Persuasion Considerations — what type of legal reasoning tends to land with this judge or jurisdictional peers (precedent-heavy vs. policy-heavy, brief vs. extended argument). Frame as patterns to discuss with attorney, not commands.
+8. Your Charge Type in This Court — typical sentencing ranges and dispositions for the charge type in this county/state. State "ranges vary" — never give exact numbers.
+9. 10 Questions to Bring to Your Attorney — judge-specific and charge-specific. Things only your attorney can answer about local practice.
+10. What This Profile Cannot Tell You — explicit limitations section. What your attorney knows that public records don't. Why personal observation by counsel still matters most.
+
+Frame everything as INFORMATION to bring to your attorney's attention — never as advice about what to file or argue. Use "you might explore", "factors to consider", "questions worth asking" — never "we recommend" or "you should".`;
+    }
+
+    case "motion-opportunity-scan": {
+      const data = intake as unknown as MotionOpportunityScanIntake;
+      return `Generate a Motion Opportunity Scan report for:
+- Charge Type: ${data.chargeType}
+- State: ${data.state}
+- County: """${data.county}"""
+- Case Stage: ${data.caseStage}
+- Judge Name: """${data.judgeName || "Not provided"}"""
+- Known Facts: """${data.knownFacts}"""
+
+DATA AVAILABILITY RULES (NON-NEGOTIABLE):
+- Output 10-20 motion opportunities ONLY from the universe of well-established criminal defense motions for this charge type and case stage. No fabricated motion types.
+- Filter by case stage: pre-arraignment motions are different from post-discovery motions. Do not list a motion that does not apply to the customer's current stage.
+- The customer's "known facts" may be incomplete. Treat them as one input — never the only input. If facts suggest a motion type, note it. If facts are too thin to support a recommendation, omit the motion rather than guess.
+- For each motion, the grant/deny/partial reasoning is general (how this motion type typically plays out) not specific to this case. Frame as "in cases like this, courts often" — never "your judge will."
+- Never fabricate case citations. If you reference a doctrine (Fourth Amendment, Brady, Daubert, etc.), describe the doctrine, not specific cases.
+
+Produce a comprehensive HTML report covering:
+1. Executive Summary — how many motion opportunities were identified, the most promising 3 by relevance to the known facts, and the case-stage filter applied. Under 200 words.
+2. Motion Opportunity Inventory — table or structured list of 10-20 motions. For each motion, include:
+   - Motion name (the standard name used by criminal defense attorneys)
+   - One-line explanation of what the motion does
+   - Why it may apply (tied to charge type, case stage, or known facts)
+   - "If granted" — what changes for the case
+   - "If denied" — how denial can still be useful (preserved record, locked-in state position, cross-exam ammunition)
+   - "If partially granted" — common partial outcomes
+   - Procedural considerations (filing deadline, supporting evidence typically needed)
+3. Motions Specific to Your Case Stage — explicit subsection breaking out which of the listed motions are timely for the customer's current stage.
+4. Motions That Are NOT Yet Ripe — motions the customer should be aware of but cannot file yet (post-discovery suppression motions when discovery hasn't been received, etc.). This shows the customer the trajectory of the case.
+5. The "Why Denial Still Matters" Concept — one short section explaining how denied motions preserve issues for appeal and lock the prosecution into positions they have to defend. This is the single most valuable concept for a layperson to understand.
+6. Questions to Bring to Your Attorney — 10 motion-specific questions tied to the inventory above. Things like "Is a motion to challenge the [evidence type] viable in our county based on what we know about the [aspect]?" — not "should we file motion X."
+7. What This Scan Cannot Tell You — explicit limitations: this scan does not analyze your discovery, does not interview witnesses, and cannot replace an attorney's case-specific judgment. The scan identifies opportunities; your attorney evaluates which to pursue.
+
+Frame everything as INFORMATION to bring to your attorney's attention. Use "you might explore", "factors worth discussing", "motions that may apply" — never "we recommend", "you should file", or "your best option is".`;
     }
 
     default:
@@ -462,8 +675,8 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const productName = PRODUCT_NAMES[slug];
-    if (!productName) {
+    const meta = PRODUCT_META[slug];
+    if (!meta) {
       return new Response(
         JSON.stringify({ error: `Unsupported product slug: ${slug}` }),
         { status: 400, headers }
@@ -471,7 +684,8 @@ Deno.serve(async (req: Request) => {
     }
 
     // --- 4. Build prompts ---
-    const systemPrompt = buildSystemPrompt(productName);
+    const productName = meta.name;
+    const systemPrompt = buildSystemPrompt(productName, meta.price);
     const userPrompt = buildUserPrompt(slug, intake);
 
     if (!userPrompt) {
