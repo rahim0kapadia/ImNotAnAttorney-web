@@ -18,7 +18,7 @@
  *
  * 4. **Post-purchase sequences** (POST_PURCHASE_EMAILS) — tier-specific emails
  *    triggered after a purchase. Each tier has its own sequence:
- *      - Case Decoder: intake reminder → delivery → meeting prep → story harvest → upsell → referral
+ *      - Case Decoder: intake reminder → delivery → meeting prep → story harvest → humanization followup → upsell → referral
  *      - Intelligence Brief: phase2 reminder → delivery → meeting prep → story harvest → upsell → referral
  *      - X-Ray: intake reminder → delivery → upload reminder → meeting prep → story harvest → upsell → referral → status update
  *      - War Room: intake reminder → delivery → meeting prep → story harvest → status update → referral
@@ -946,6 +946,24 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         <strong style="color: white;">Need to find your report?</strong> <a href="{{REPORT_URL}}" style="color: #F59E0B; text-decoration: underline;">View your Case Decoder report here</a>
       </p>
+    `,
+  },
+  {
+    key: "post_case_decoder_humanization_followup_7d",
+    delayDays: 7,
+    tier: "case-decoder",
+    relativeToDelivery: true,
+    subject: "One question about your case",
+    html: `
+      <h1 style="color: #F59E0B; font-size: 22px;">Checking In</h1>
+      <p style="color: #D4D4D8;">It's been a week since you received your Case Decoder report. By now, you've had time to review it and start thinking about your next steps.</p>
+      <p style="color: #D4D4D8;">We know every case is personal — yours involves real stakes for your life and your future. That's why we put real analysis into every report, not generic templates.</p>
+      <div style="background: #1C1917; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #F59E0B;">
+        <p style="color: white; font-weight: bold; margin: 0 0 8px;">One question:</p>
+        <p style="color: #D4D4D8; margin: 0; font-style: italic;">How has preparing for your case changed how you think about your situation?</p>
+      </div>
+      <p style="color: #D4D4D8;">Hit reply and tell us — even a sentence or two. Your perspective helps us understand what matters most to defendants going through this.</p>
+      <p style="color: #A1A1AA; font-size: 14px;">No pressure. No sales pitch. Just genuinely want to hear from you.</p>
     `,
   },
   {
@@ -2078,6 +2096,20 @@ export function personalizeEmailHtml(
         `);
       }
       return html;
+
+    case "post_case_decoder_humanization_followup_7d": {
+      let personalNote = "";
+      if (isFamilyBuyer) {
+        personalNote = calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">We noticed someone close to ${name} submitted this report on their behalf. That kind of support can make a real difference in how this plays out.</p>
+        `);
+      } else if (industry) {
+        personalNote = calloutBox(`
+          <p style="color: #D4D4D8; margin: 0;">Cases like yours can have real consequences for your career in ${escapeHtml(industry)}. Understanding those stakes is part of what makes preparation so important.</p>
+        `);
+      }
+      return html + personalNote;
+    }
 
     case "post_case_decoder_referral":
       if (isFamilyBuyer) {

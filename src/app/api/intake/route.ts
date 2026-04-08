@@ -43,6 +43,8 @@ import { TIER_CORE } from "@/lib/tiers";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { ALLOWED_CHARGE_TYPES } from "@/lib/charge-types";
 import { getClientIp } from "@/lib/request";
+import { seedDefendantProfile } from "@/lib/defendant-profile";
+import type { IntakeData } from "@/lib/defendant-profile";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
@@ -292,6 +294,35 @@ export async function POST(req: NextRequest) {
           });
         }
       }
+
+      // ── SEED DEFENDANT PROFILES (Tier 8A: defendant humanization) ──
+      // For each linked case, seed a defendant_profiles row from intake data.
+      // Runs in after() to avoid blocking the response.
+      after(async () => {
+        try {
+          const profileIntake: IntakeData = {
+            id: latestIntake.id,
+            first_name: sanitizedFirstName,
+            criminal_history: body.criminalHistory || null,
+            employment_status: body.employmentStatus || null,
+            employment_industry: body.employmentIndustry || null,
+            case_stage: body.caseStage || null,
+            filled_out_by: body.filledOutBy || null,
+            mental_health_relevant: body.mentalHealthRelevant || null,
+            charge_type: chargeType || null,
+            has_attorney: body.hasAttorney || null,
+            co_defendants: body.coDefendants || null,
+            arrest_circumstances: body.arrestCircumstances || null,
+            situation: body.situation || null,
+            time_since_arrest: body.timeSinceArrest || null,
+          };
+          for (const pc of pendingCases!) {
+            await seedDefendantProfile(supabase, pc.id, profileIntake);
+          }
+        } catch (err) {
+          console.error("[Intake] Defendant profile seeding failed:", err);
+        }
+      });
     }
 
     // ──────────────────────────────────────────────────────────────
