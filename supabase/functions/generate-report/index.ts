@@ -289,7 +289,13 @@ ANTI-HALLUCINATION RULES (MANDATORY — violations invalidate entire output):
 5. COURT PROCEDURES: Only describe procedures you are certain apply in the specified jurisdiction. If uncertain: "Verify this procedure with your attorney."
 6. CONFIDENCE MARKING: For any factual claim below 90% confidence, prefix with [VERIFY].
 
-All citations are automatically verified against CourtListener's legal database. Fabricated citations will be caught and flagged.`;
+CRITICAL: There is NO automated post-generation citation verification at runtime.
+You are the only safety check. If you cite a fabricated case, it will reach the
+defendant. Cite ONLY cases you are certain exist. If unsure: describe the legal
+principle without a case name. Use [VERIFY] for any claim below 90% confidence.
+The downstream pipeline only filters cases that have been independently verified
+in our database (statute_case_law.is_good_law=true) — your output is consumed
+verbatim except for that filter.`;
 
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
@@ -1823,6 +1829,27 @@ async function getChargeContext(
         let result = `\nCHARGE-SPECIFIC CONTEXT — ${commonCharge.label} (${jur}):\n`;
         result += `CHARGE CONTEXT:\n${chargeLines.join("\n")}\n`;
 
+        // Strategic enrichment from jurisdiction_statutes (added 2026-04-07)
+        // These come from the enrichment pipeline (generate-case-law-enrichment.ts)
+        // and are jurisdiction-specific strategic analysis — NOT case citations.
+        if (statute) {
+          if (Array.isArray(statute.prosecution_strengths) && statute.prosecution_strengths.length > 0) {
+            result += `\nPROSECUTION STRENGTHS (what the State has going for them on this charge in ${jurisdictionCode}):\n`;
+            result += statute.prosecution_strengths.map((s: string, i: number) => `${i + 1}. ${s}`).join("\n");
+            result += "\n";
+          }
+          if (Array.isArray(statute.defense_opportunities) && statute.defense_opportunities.length > 0) {
+            result += `\nDEFENSE OPPORTUNITIES (strategic angles specific to ${jurisdictionCode} law):\n`;
+            result += statute.defense_opportunities.map((s: string, i: number) => `${i + 1}. ${s}`).join("\n");
+            result += "\n";
+          }
+          if (Array.isArray(statute.common_defenses) && statute.common_defenses.length > 0) {
+            result += `\nCOMMON DEFENSES (named defense categories for this charge):\n`;
+            result += statute.common_defenses.map((s: string, i: number) => `${i + 1}. ${s}`).join("\n");
+            result += "\n";
+          }
+        }
+
         if (experts.length > 0) {
           const expertLines = experts.map((e, i) =>
             `${i + 1}. ${e.name} — ${e.why_elite}. Methodology: ${e.key_framework}.`
@@ -2169,8 +2196,10 @@ async function fetchLegalResearchData(
 
   // 2. Pre-researched case law (from legal-research worker, limit 10)
   try {
+    // SAFETY: is_good_law=eq.true filter prevents citing overruled cases.
+    // See SAFETY note below at the statute_case_law fallback query.
     const rows = await supabaseSelect(url, key, "case_law_references",
-      `case_id=eq.${caseId}&research_source=eq.pre_research&select=case_name,citation,court,year,holding,application&limit=10`);
+      `case_id=eq.${caseId}&research_source=eq.pre_research&is_good_law=eq.true&select=case_name,citation,court,year,holding,application&limit=10`);
     // deno-lint-ignore no-explicit-any
     if (rows.length > 0) result.preResearchedCases = rows as any[];
   } catch (err) {
@@ -2192,8 +2221,13 @@ async function fetchLegalResearchData(
       if (jsRows.length > 0) {
         // deno-lint-ignore no-explicit-any
         const jsId = (jsRows as any[])[0].id;
+        // SAFETY: is_good_law=eq.true filter ensures we NEVER cite cases that
+        // have been overruled, abrogated, or superseded. NULL (unverified) is
+        // also excluded — only cases verified by the negative-treatment pipeline
+        // (classify-case-law.mjs → checkNegativeTreatment) make it through.
+        // Per CASE-LAW-VALIDATION-PERSONA: bad law cited = judge loses trust = motion dies.
         const clRows = await supabaseSelect(url, key, "statute_case_law",
-          `jurisdiction_statute_id=eq.${jsId}&select=case_name,citation,court,year,holding,relevance&order=confidence_score.desc&limit=10`);
+          `jurisdiction_statute_id=eq.${jsId}&is_good_law=eq.true&select=case_name,citation,court,year,holding,relevance&order=confidence_score.desc&limit=10`);
         // deno-lint-ignore no-explicit-any
         if (clRows.length > 0) {
           result.preResearchedCases = (clRows as any[]).filter(
@@ -2329,6 +2363,176 @@ ${parts.join("\n\n")}
 --- END VERIFIED LEGAL RESEARCH DATA ---\n`;
 }
 
+// ============================================================
+// TIER 8A — Defendant humanization + case intelligence loaders
+// ============================================================
+// These helpers load defendant_profiles + case_intelligence rows and
+// format them as structured XML blocks for prompt injection. Both are
+// graceful: missing rows return empty strings, prompts are unchanged
+// from before this feature when no data exists. The deterministic
+// mapping in src/lib/defendant-profile.ts is the safety contract —
+// humanization_facts are derived from intake, never Claude-generated.
+// ============================================================
+
+/**
+ * Loads defendant_profiles row for a case and formats humanization_facts +
+ * vulnerability_flags as a `<defendant_profile>` XML block. Returns empty
+ * string when no row exists (older cases pre-Tier-8A) or on read error.
+ * The Letter to You and What's Working sections fall back to the existing
+ * intake-string path in that case.
+ */
+async function fetchDefendantProfileBlock(
+  caseId: string,
+  supabaseUrl: string,
+  supabaseKey: string,
+): Promise<string> {
+  try {
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "defendant_profiles",
+      `case_id=eq.${caseId}&select=humanization_facts,vulnerability_flags,community_ties,family_status,employment_history,military_service,mental_health_notes&limit=1`,
+    );
+    // deno-lint-ignore no-explicit-any
+    const row = (rows as any[])[0];
+    if (!row) return "";
+
+    const lines: string[] = [];
+
+    // Humanization facts — structured array of {fact, category, harvest_consent_status}
+    const facts = Array.isArray(row.humanization_facts) ? row.humanization_facts : [];
+    if (facts.length > 0) {
+      lines.push("<humanization_facts>");
+      for (const f of facts) {
+        if (!f || typeof f !== "object") continue;
+        const fact = String(f.fact || "").trim();
+        if (!fact) continue;
+        const category = String(f.category || "other").trim();
+        lines.push(`  <fact category="${category}">${fact}</fact>`);
+      }
+      lines.push("</humanization_facts>");
+    }
+
+    // Vulnerability flags — array of strings (e.g., 'miranda_at_risk', 'competency_question')
+    const flags = Array.isArray(row.vulnerability_flags) ? row.vulnerability_flags : [];
+    if (flags.length > 0) {
+      const flagList = flags
+        .filter((f: unknown) => typeof f === "string" && f)
+        .map((f: string) => `  <flag>${f}</flag>`)
+        .join("\n");
+      if (flagList) {
+        lines.push("<vulnerability_flags>");
+        lines.push(flagList);
+        lines.push("</vulnerability_flags>");
+      }
+    }
+
+    // Operator-augmented narrative fields (only if present)
+    const narrative: string[] = [];
+    if (row.community_ties) narrative.push(`  <community_ties>${row.community_ties}</community_ties>`);
+    if (row.family_status) narrative.push(`  <family_status>${row.family_status}</family_status>`);
+    if (row.employment_history) narrative.push(`  <employment_history>${row.employment_history}</employment_history>`);
+    if (row.military_service) narrative.push(`  <military_service>${row.military_service}</military_service>`);
+    if (row.mental_health_notes) narrative.push(`  <mental_health_notes>${row.mental_health_notes}</mental_health_notes>`);
+    if (narrative.length > 0) {
+      lines.push("<narrative_context>");
+      lines.push(narrative.join("\n"));
+      lines.push("</narrative_context>");
+    }
+
+    if (lines.length === 0) return "";
+
+    return `\n\n<defendant_profile>
+USE THESE FACTS to make the Letter to You and What's Working sections feel
+written TO THIS PERSON, not generated. Reference at least one humanization
+fact in the Letter (career, family, community, or service) — anchor it as
+something they shared, not something you assumed. Vulnerability flags
+trigger specific questions for the attorney (Miranda, competency, language
+access) — weave them in as questions to explore, never as conclusions.
+
+${lines.join("\n")}
+</defendant_profile>\n`;
+  } catch (err) {
+    console.error("[fetchDefendantProfileBlock] Error loading defendant_profiles:", err);
+    return "";
+  }
+}
+
+/**
+ * Loads case_intelligence rows for a case (filtered by disclosure_restriction='none'
+ * AND verification_status != 'unverified' — unverified rows MUST NOT appear in
+ * customer reports per the Tier 8A safety contract). Returns formatted XML block
+ * with verification-language qualifying instructions for the LLM.
+ *
+ * Verification language mapping (renders as customer-facing copy):
+ *   confirmed → "This is documented in [source]."
+ *   supported → "This is supported by [source]."
+ *   theory    → "This is one possible reading of the record."
+ *   unverified → EXCLUDED (filtered at the query layer)
+ */
+async function fetchCaseIntelligenceBlock(
+  caseId: string,
+  supabaseUrl: string,
+  supabaseKey: string,
+): Promise<string> {
+  try {
+    // Filter at query layer: only disclosure_restriction='none' AND non-unverified rows
+    // can ever surface in customer-facing reports.
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "case_intelligence",
+      `case_id=eq.${caseId}&disclosure_restriction=eq.none&verification_status=in.(confirmed,supported,theory)&select=fact_summary,fact_detail,source_type,source_reference,verification_status,verification_source,intel_category,legal_significance&order=verification_status.asc`,
+    );
+    // deno-lint-ignore no-explicit-any
+    const intelRows = rows as any[];
+    if (!intelRows || intelRows.length === 0) return "";
+
+    const itemLines: string[] = [];
+    for (const r of intelRows) {
+      const summary = String(r.fact_summary || "").trim();
+      if (!summary) continue;
+      const status = String(r.verification_status || "").trim();
+      const sourceRef = String(r.verification_source || r.source_reference || "").trim();
+      const detail = String(r.fact_detail || "").trim();
+      const category = String(r.intel_category || "").trim();
+      const significance = String(r.legal_significance || "").trim();
+
+      const attrs: string[] = [`verification="${status}"`];
+      if (category) attrs.push(`category="${category}"`);
+      if (significance) attrs.push(`significance="${significance}"`);
+      if (sourceRef) attrs.push(`source="${sourceRef.replace(/"/g, "&quot;")}"`);
+
+      itemLines.push(`  <intel_item ${attrs.join(" ")}>`);
+      itemLines.push(`    <summary>${summary}</summary>`);
+      if (detail) itemLines.push(`    <detail>${detail}</detail>`);
+      itemLines.push(`  </intel_item>`);
+    }
+
+    if (itemLines.length === 0) return "";
+
+    return `\n\n<case_intelligence>
+These are facts about the case that came from sources beyond the
+discovery file — codefendant outcomes, court records, prosecution theory
+analysis, witness contradictions. Each item carries a verification level
+that DICTATES how you must phrase it in the customer-facing report:
+
+VERIFICATION LANGUAGE MAPPING (NON-NEGOTIABLE):
+- verification="confirmed" → Phrase as: "This is documented in [source]."
+- verification="supported" → Phrase as: "This is supported by [source]."
+- verification="theory" → Phrase as: "This is one possible reading of the record." (NEVER state as fact — frame as one interpretation among others)
+
+ABSOLUTE RULES:
+- Do NOT phrase any item as a definitive claim without using the qualifying language above.
+- Do NOT use the words "we recommend" or "we advise" anywhere — use "you might explore" or "one option to discuss with your attorney is".
+- Do NOT use the phrase "Barry Scheck verification levels" or any methodology name in customer copy.
+- If an item has no clear source or the source attribute is empty, drop the source reference but keep the verification phrasing.
+- These items supplement (not replace) the analysis. Weave them in as informational context for the relevant section, not as a separate "intelligence dump."
+
+${itemLines.join("\n")}
+</case_intelligence>\n`;
+  } catch (err) {
+    console.error("[fetchCaseIntelligenceBlock] Error loading case_intelligence:", err);
+    return "";
+  }
+}
+
 /**
  * Assembles the full user prompt from intake data for the Claude API call.
  * Uses XML section boundaries with per-section word budgets and exact counts.
@@ -2359,6 +2563,16 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
   const legalDataBlock = formatLegalDataBlock(legalResearchData, false);
   if (legalDataBlock) {
     console.log(`[generate-report] Legal research data injected: jurisdiction=${!!legalResearchData.jurisdictionProfile}, cases=${legalResearchData.preResearchedCases.length}, wex=${!!legalResearchData.wexDefinitions}`);
+  }
+
+  // ── Tier 8A: defendant_profiles injection ──────────────────
+  // Loads humanization_facts + vulnerability_flags from defendant_profiles
+  // (seeded by src/lib/defendant-profile.ts at intake save time). Falls back
+  // to empty string if no row exists — older cases continue to work via the
+  // existing intake-string path.
+  const defendantProfileBlock = await fetchDefendantProfileBlock(caseId, supabaseUrl, supabaseKey);
+  if (defendantProfileBlock) {
+    console.log(`[generate-report] Defendant profile injected for case ${caseId}`);
   }
 
   const comm = intake.communication_frequency;
@@ -2613,7 +2827,7 @@ support persons.`);
 - Mental Health Relevant: ${intake.mental_health_relevant || "Not provided"}
 - Primary Frustration (their words): ${intake.situation || "Not provided"}
 - Specific Question (their words): ${intake.specific_question || "Not provided"}
-${chargeBlock}${commInstruction}${evidenceBlock}${legalDataBlock}
+${chargeBlock}${commInstruction}${evidenceBlock}${legalDataBlock}${defendantProfileBlock}
 ${conditionalInstructions.join("")}${systemTruthSection}
 
 **GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
@@ -3943,8 +4157,20 @@ async function handleIBPhaseA(
     console.log(`[IB-Phase-A] Legal research data injected: jurisdiction=${!!ibLegalData.jurisdictionProfile}, cases=${ibLegalData.preResearchedCases.length}, wex=${!!ibLegalData.wexDefinitions}, judge=${!!ibLegalData.judgeProfile}`);
   }
 
+  // ── Tier 8A: defendant_profiles + case_intelligence injection ──
+  // defendantProfileBlock feeds the "letter-to-you" + "whats-working" sections.
+  // caseIntelligenceBlock feeds the "case-intelligence" section in Phase B,
+  // but we load it here too because Phase A's "whats-working" can reference
+  // intel items as supplementary context. Both filter at the query layer:
+  // case_intelligence excludes verification_status='unverified' and any
+  // disclosure_restriction != 'none' rows.
+  const ibDefendantProfileBlock = await fetchDefendantProfileBlock(caseId, supabaseUrl, supabaseKey);
+  const ibCaseIntelligenceBlock = await fetchCaseIntelligenceBlock(caseId, supabaseUrl, supabaseKey);
+  if (ibDefendantProfileBlock) console.log(`[IB-Phase-A] Defendant profile injected for case ${caseId}`);
+  if (ibCaseIntelligenceBlock) console.log(`[IB-Phase-A] Case intelligence injected for case ${caseId}`);
+
   // Build variables
-  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, "", null, ibLegalDataBlock);
+  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, "", null, ibLegalDataBlock, ibDefendantProfileBlock, ibCaseIntelligenceBlock);
 
   // Phase A sections (parallel)
   const phaseASections = [
@@ -4074,8 +4300,17 @@ async function handleIBPhaseB(
     console.log(`[IB-Phase-B] Legal research data injected: jurisdiction=${!!ibBLegalData.jurisdictionProfile}, cases=${ibBLegalData.preResearchedCases.length}, wex=${!!ibBLegalData.wexDefinitions}, judge=${!!ibBLegalData.judgeProfile}`);
   }
 
+  // ── Tier 8A: defendant_profiles + case_intelligence injection ──
+  // Phase B is where the case-intelligence section is generated, so the
+  // case_intelligence block is the load-bearing one here. defendantProfileBlock
+  // feeds the letter-to-you section. Both are graceful: empty when no data.
+  const ibBDefendantProfileBlock = await fetchDefendantProfileBlock(caseId, supabaseUrl, supabaseKey);
+  const ibBCaseIntelligenceBlock = await fetchCaseIntelligenceBlock(caseId, supabaseUrl, supabaseKey);
+  if (ibBDefendantProfileBlock) console.log(`[IB-Phase-B] Defendant profile injected for case ${caseId}`);
+  if (ibBCaseIntelligenceBlock) console.log(`[IB-Phase-B] Case intelligence injected for case ${caseId}`);
+
   // Build variables with Phase A outputs included
-  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, phaseAOutputs, ibBLegalDataBlock);
+  const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, phaseAOutputs, ibBLegalDataBlock, ibBDefendantProfileBlock, ibBCaseIntelligenceBlock);
 
   // Phase B sections (sequential — each may depend on prior outputs)
   const phaseBSections = [
@@ -4093,7 +4328,7 @@ async function handleIBPhaseB(
     try {
       // For later sections, rebuild variables with latest outputs
       if (section.key === "your-plan" || section.key === "questions" || section.key === "48hr-priorities") {
-        const updatedV = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, allOutputs, ibBLegalDataBlock);
+        const updatedV = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, allOutputs, ibBLegalDataBlock, ibBDefendantProfileBlock, ibBCaseIntelligenceBlock);
         const prompt = buildIBPrompt(section.key, updatedV);
         section.system = prompt.system;
         section.user = prompt.user;
@@ -4196,7 +4431,7 @@ async function handleIBPhaseB(
 // and prompts.ts because the Edge Function can't import Next.js modules.
 
 // deno-lint-ignore no-explicit-any
-function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, chargeContext: string, judgeResearch: string, sectionOutputs: Record<string, string> | null, legalDataBlock?: string): Record<string, string> {
+function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, chargeContext: string, judgeResearch: string, sectionOutputs: Record<string, string> | null, legalDataBlock?: string, defendantProfileBlock?: string, caseIntelligenceBlock?: string): Record<string, string> {
   const p2 = phase2 || {};
   const so = sectionOutputs || {};
 
@@ -4293,6 +4528,10 @@ function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, 
 
     // Legal research data (Wave 5.2) — injected into prompts if available
     legal_research_data: legalDataBlock || "",
+
+    // Tier 8A — defendant humanization + case intelligence (injected if data present)
+    defendant_profile_block: defendantProfileBlock || "",
+    case_intelligence_block: caseIntelligenceBlock || "",
   };
 }
 
@@ -4452,7 +4691,7 @@ RULES:
 TONE: Direct warmth. Like someone who's been through the system talking to someone going through it now.
 
 SEQUENCE: (1) Insider vulnerability (1-2 sentences) (2) Specific acknowledgment of THEIR situation (2-3 sentences) (3) What this report gives them (1-2 sentences) (4) Overwhelm permission (1 sentence) (5) Forward momentum close (1 sentence)${NO_DISCLAIMER}`,
-      user: `Write the personal letter.\n\n<intake>\nFirst name: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Attorney: ${v.attorney_type} — ${v.attorney_name} | Last communication: ${v.last_communication} | Frustration: ${v.frustration_level} | Biggest concern: ${v.biggest_concern} | Employment: ${v.employment_detail} | Plea status: ${v.plea_status} | Filled out by: ${v.filled_out_by} | Family buyer: ${v.is_family_buyer} | Mental health: ${v.mental_health_relevant} | Case stage: ${v.case_stage_raw}\n</intake>\n\nRemember: NO heading. Start with "${v.first_name}," — just the name and comma.`,
+      user: `Write the personal letter.\n\n<intake>\nFirst name: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Attorney: ${v.attorney_type} — ${v.attorney_name} | Last communication: ${v.last_communication} | Frustration: ${v.frustration_level} | Biggest concern: ${v.biggest_concern} | Employment: ${v.employment_detail} | Plea status: ${v.plea_status} | Filled out by: ${v.filled_out_by} | Family buyer: ${v.is_family_buyer} | Mental health: ${v.mental_health_relevant} | Case stage: ${v.case_stage_raw}\n</intake>${v.defendant_profile_block}\n\nRemember: NO heading. Start with "${v.first_name}," — just the name and comma.`,
     },
     "case-roadmap": {
       system: `You are an elite criminal defense research analyst generating Section 1: Your Case Roadmap for a Case Intelligence Brief.
@@ -4513,7 +4752,7 @@ Output: ## Section 2
 ### 2c. What Needs Attention (CLARIFY items, ~500w)
 ### Bottom Line (~50w)
 Word budget: ~1,550.`,
-      user: `Generate Section 2.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_type} ${v.attorney_name} | Last contact: ${v.last_communication} | Discovery: ${v.discovery_status} | Plea: ${v.plea_status} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Frustration: ${v.frustration} | Attorney said: ${v.attorney_statements} | Case #: ${v.case_number} | Dates: ${v.key_dates}\n| Filled out by: ${v.filled_out_by}\n</intake>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 2.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Attorney: ${v.attorney_type} ${v.attorney_name} | Last contact: ${v.last_communication} | Discovery: ${v.discovery_status} | Plea: ${v.plea_status} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Frustration: ${v.frustration} | Attorney said: ${v.attorney_statements} | Case #: ${v.case_number} | Dates: ${v.key_dates}\n| Filled out by: ${v.filled_out_by}\n</intake>${v.defendant_profile_block}\n${v.prior_section_outputs_xml}`,
     },
     "legal-options": {
       system: `You are an elite criminal defense research analyst generating Section 4: Legal Options & Deadlines.
@@ -4659,7 +4898,7 @@ Output: ## Section 3
 ### 3e. Jurisdiction Profile (~200w)
 ### Bottom Line (~50w)
 Word budget: ~2,250.`,
-      user: `Generate Section 3.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Priors: ${v.prior_convictions_summary} | Probation: ${v.on_probation_parole} | Plea: ${v.plea_status} | Discovery: ${v.discovery_status} | Criminal history: ${v.criminal_history_label}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<judge_research>\n${v.judge_research_data}\n</judge_research>\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 3.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Priors: ${v.prior_convictions_summary} | Probation: ${v.on_probation_parole} | Plea: ${v.plea_status} | Discovery: ${v.discovery_status} | Criminal history: ${v.criminal_history_label}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<judge_research>\n${v.judge_research_data}\n</judge_research>${v.case_intelligence_block}\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
     },
     "your-plan": {
       system: `You are an elite criminal defense research analyst generating Section 6: Your Plan.

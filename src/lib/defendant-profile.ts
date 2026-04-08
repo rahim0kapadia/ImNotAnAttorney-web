@@ -52,6 +52,17 @@ interface CriminalHistoryFact {
 // Mapping helpers (private)
 // ---------------------------------------------------------------------------
 
+// Intake form sends: "employed-full-time" | "employed-part-time" | "self-employed"
+// | "unemployed" | "student" | "retired" | "disabled". The mapper must match
+// the actual emitted values, not bare "employed". A bug in the original mapper
+// (matched only "employed") meant 30/30 backfilled profiles had empty
+// humanization_facts and the Edge Function injection had nothing to inject.
+const EMPLOYED_VARIANTS = new Set([
+  "employed-full-time",
+  "employed-part-time",
+  "self-employed",
+]);
+
 function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
   const facts: HumanizationFact[] = [];
 
@@ -63,15 +74,23 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
     });
   }
 
-  if (intake.employment_status === "employed" && intake.employment_industry) {
+  const empStatus = intake.employment_status || "";
+  if (EMPLOYED_VARIANTS.has(empStatus) && intake.employment_industry) {
     facts.push({
       fact: `Has a career in ${intake.employment_industry} that this case puts at risk`,
       category: "work",
       harvest_consent_status: "pending",
     });
+  } else if (EMPLOYED_VARIANTS.has(empStatus)) {
+    // Employed but no industry given — still a work-category fact worth noting.
+    facts.push({
+      fact: `Holds steady employment that depends on the outcome of this case`,
+      category: "work",
+      harvest_consent_status: "pending",
+    });
   }
 
-  if (intake.employment_status === "student") {
+  if (empStatus === "student") {
     facts.push({
       fact: "Currently a student — education continuity at stake",
       category: "work",
@@ -79,7 +98,7 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
     });
   }
 
-  if (intake.employment_status === "retired") {
+  if (empStatus === "retired") {
     facts.push({
       fact: "Retired — years of established community presence",
       category: "community",
@@ -87,7 +106,7 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
     });
   }
 
-  if (intake.employment_status === "disabled") {
+  if (empStatus === "disabled") {
     facts.push({
       fact: "Lives with a disability — system interactions carry additional vulnerability",
       category: "health",
@@ -106,9 +125,19 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
   return facts;
 }
 
+// Two intake schemas have shipped — older test data uses bare "none"/"misdemeanor"/
+// "felony" and the current intake form uses "first-offense"/"prior-misdemeanor"/
+// "prior-felony"/"unknown". Support both so backfill works on historical rows
+// AND new intakes hit the right facts. "unknown" maps to no fact (no signal).
 const CRIMINAL_HISTORY_MAP: Record<string, CriminalHistoryFact> = {
+  // Current intake form values
+  "first-offense": { type: "no_prior_record", weight: "mitigating", source: "intake" },
+  "prior-misdemeanor": { type: "prior_misdemeanor", weight: "neutral", source: "intake" },
+  "prior-felony": { type: "prior_felony", weight: "aggravating", source: "intake" },
+  // Legacy intake values (older test data)
   none: { type: "no_prior_record", weight: "mitigating", source: "intake" },
   misdemeanor: { type: "prior_misdemeanor", weight: "neutral", source: "intake" },
+  "misdemeanor-only": { type: "prior_misdemeanor", weight: "neutral", source: "intake" },
   felony: { type: "prior_felony", weight: "aggravating", source: "intake" },
   "multiple-felonies": { type: "multiple_prior_felonies", weight: "aggravating", source: "intake" },
 };
@@ -163,15 +192,20 @@ export function deriveAutoFindings(intake: IntakeData): string[] {
     findings.push("miranda_waiver_validity");
   }
 
-  if (intake.has_attorney === "public-defender") {
+  // Public defender variants — intake form has shipped multiple values for
+  // public defenders over time. Match all of them.
+  const att = (intake.has_attorney || "").toLowerCase();
+  if (att === "public-defender" || att === "public" || att === "yes-public-defender") {
     findings.push("ineffective_assistance");
   }
 
-  if (intake.criminal_history === "none") {
+  // First-offense (current form) and "none" (legacy data) both signal first-offender.
+  if (intake.criminal_history === "first-offense" || intake.criminal_history === "none") {
     findings.push("first_offender_programs");
   }
 
-  if (intake.employment_status === "employed") {
+  // Match the actual intake employment_status values, not bare "employed".
+  if (EMPLOYED_VARIANTS.has(intake.employment_status || "")) {
     findings.push("career_collateral_consequences");
   }
 

@@ -37,12 +37,26 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
 });
 
 const DRY_RUN = process.argv.includes("--dry-run");
+// --force re-upserts ALL cases with intake_id, even those that already have a
+// defendant_profiles row. Use this to repopulate after a mapper fix.
+const FORCE = process.argv.includes("--force");
 const BATCH_SIZE = 50;
 const BATCH_DELAY_MS = 100;
 
 // ---------------------------------------------------------------------------
 // Mapping helpers (replicated from src/lib/defendant-profile.ts)
 // ---------------------------------------------------------------------------
+
+// Intake form value variants — see src/lib/defendant-profile.ts for the
+// canonical mapper. Both files MUST stay in sync. The bug fixed here
+// (matching only "employed" instead of the actual "employed-full-time" /
+// "employed-part-time" / "self-employed" values) caused the original
+// backfill to produce 30/30 empty profiles.
+const EMPLOYED_VARIANTS = new Set([
+  "employed-full-time",
+  "employed-part-time",
+  "self-employed",
+]);
 
 function buildHumanizationFacts(intake) {
   const facts = [];
@@ -55,15 +69,22 @@ function buildHumanizationFacts(intake) {
     });
   }
 
-  if (intake.employment_status === "employed" && intake.employment_industry) {
+  const empStatus = intake.employment_status || "";
+  if (EMPLOYED_VARIANTS.has(empStatus) && intake.employment_industry) {
     facts.push({
       fact: `Has a career in ${intake.employment_industry} that this case puts at risk`,
       category: "work",
       harvest_consent_status: "pending",
     });
+  } else if (EMPLOYED_VARIANTS.has(empStatus)) {
+    facts.push({
+      fact: `Holds steady employment that depends on the outcome of this case`,
+      category: "work",
+      harvest_consent_status: "pending",
+    });
   }
 
-  if (intake.employment_status === "student") {
+  if (empStatus === "student") {
     facts.push({
       fact: "Currently a student — education continuity at stake",
       category: "work",
@@ -71,7 +92,7 @@ function buildHumanizationFacts(intake) {
     });
   }
 
-  if (intake.employment_status === "retired") {
+  if (empStatus === "retired") {
     facts.push({
       fact: "Retired — years of established community presence",
       category: "community",
@@ -79,7 +100,7 @@ function buildHumanizationFacts(intake) {
     });
   }
 
-  if (intake.employment_status === "disabled") {
+  if (empStatus === "disabled") {
     facts.push({
       fact: "Lives with a disability — system interactions carry additional vulnerability",
       category: "health",
@@ -99,8 +120,14 @@ function buildHumanizationFacts(intake) {
 }
 
 const CRIMINAL_HISTORY_MAP = {
+  // Current intake form values
+  "first-offense": { type: "no_prior_record", weight: "mitigating", source: "intake" },
+  "prior-misdemeanor": { type: "prior_misdemeanor", weight: "neutral", source: "intake" },
+  "prior-felony": { type: "prior_felony", weight: "aggravating", source: "intake" },
+  // Legacy intake values
   none: { type: "no_prior_record", weight: "mitigating", source: "intake" },
   misdemeanor: { type: "prior_misdemeanor", weight: "neutral", source: "intake" },
+  "misdemeanor-only": { type: "prior_misdemeanor", weight: "neutral", source: "intake" },
   felony: { type: "prior_felony", weight: "aggravating", source: "intake" },
   "multiple-felonies": { type: "multiple_prior_felonies", weight: "aggravating", source: "intake" },
 };
@@ -146,15 +173,16 @@ function deriveAutoFindings(intake) {
     findings.push("miranda_waiver_validity");
   }
 
-  if (intake.has_attorney === "public-defender") {
+  const att = (intake.has_attorney || "").toLowerCase();
+  if (att === "public-defender" || att === "public" || att === "yes-public-defender") {
     findings.push("ineffective_assistance");
   }
 
-  if (intake.criminal_history === "none") {
+  if (intake.criminal_history === "first-offense" || intake.criminal_history === "none") {
     findings.push("first_offender_programs");
   }
 
-  if (intake.employment_status === "employed") {
+  if (EMPLOYED_VARIANTS.has(intake.employment_status || "")) {
     findings.push("career_collateral_consequences");
   }
 
@@ -252,21 +280,30 @@ async function main() {
 
   const existingCaseIds = new Set((existingProfiles || []).map((p) => p.case_id));
 
-  // 3. Separate into needs-profile vs already-has-profile
-  const needsProfile = cases.filter((c) => !existingCaseIds.has(c.id));
+  // 3. Separate into needs-profile vs already-has-profile.
+  // --force re-processes existing rows (used after a mapper fix to refresh
+  // empty/stale rows). Default behavior skips cases that already have a row.
+  const needsProfile = FORCE
+    ? cases
+    : cases.filter((c) => !existingCaseIds.has(c.id));
   const alreadyHasProfile = cases.filter((c) => existingCaseIds.has(c.id));
+  const skippedCount = FORCE ? 0 : alreadyHasProfile.length;
 
-  for (const c of alreadyHasProfile) {
-    console.log(`[Backfill] Skipped case ${c.id} — profile already exists`);
+  if (FORCE && alreadyHasProfile.length > 0) {
+    console.log(`[Backfill] --force enabled: re-processing ${alreadyHasProfile.length} existing rows`);
+  } else {
+    for (const c of alreadyHasProfile) {
+      console.log(`[Backfill] Skipped case ${c.id} — profile already exists`);
+    }
   }
 
   if (needsProfile.length === 0) {
     console.log("[Backfill] All cases already have profiles. Nothing to do.");
-    console.log(`[Backfill] Done: 0 seeded, ${alreadyHasProfile.length} skipped, 0 errors`);
+    console.log(`[Backfill] Done: 0 seeded, ${skippedCount} skipped, 0 errors`);
     return;
   }
 
-  console.log(`[Backfill] ${needsProfile.length} cases need profiles, ${alreadyHasProfile.length} already have profiles.`);
+  console.log(`[Backfill] ${needsProfile.length} cases to process${FORCE ? " (force mode)" : ""}, ${skippedCount} skipped.`);
 
   // 4. Fetch all needed intakes in one query
   const intakeIds = [...new Set(needsProfile.map((c) => c.intake_id))];
@@ -288,7 +325,7 @@ async function main() {
 
   // 5. Build profile rows and upsert in batches
   let seeded = 0;
-  let skipped = alreadyHasProfile.length;
+  let skipped = skippedCount;
   let errors = 0;
 
   // Process in batches of BATCH_SIZE
