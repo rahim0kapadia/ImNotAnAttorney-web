@@ -1537,6 +1537,217 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
         "What specific issue are you having with probation?",
     },
   ],
+
+  // ─── COURT CASE PORT — WAVE 2+3 (ship dark via products.ts isActive=false) ──
+  // trial-prep-package $1,997 — Tier 2 Cross-Exam Library, requires War Room
+  // case-law-intelligence $297 — Tier 6 Case Law Enrichment
+  // expert-witness-challenge $297 — Tier 7 Witness Research, Daubert-focused
+  // discovery-demand-letter $97 — Tier 8B Misc High-Value, pre-discovery SKU
+
+  "trial-prep-package": [
+    {
+      kind: "select",
+      name: "chargeType",
+      label: "Charge type",
+      required: true,
+      options: CHARGE_TYPE_OPTIONS,
+      placeholder: "Select charge type",
+    },
+    {
+      kind: "select",
+      name: "state",
+      label: "State where your case is pending",
+      required: true,
+      options: US_STATES,
+      placeholder: "Select state",
+    },
+    {
+      kind: "text",
+      name: "county",
+      label: "County (or judicial district / federal district)",
+      required: true,
+      maxLength: 200,
+      placeholder: "e.g., Hillsborough County, Middle District of Florida",
+    },
+    {
+      kind: "text",
+      name: "trialDate",
+      label: "Trial date",
+      required: false,
+      maxLength: 100,
+      placeholder: "Optional, e.g., June 17, 2026",
+      helpText:
+        "Optional. If your trial date is set, include it so the package is sequenced for your timeline.",
+    },
+    {
+      kind: "text",
+      name: "caseTheme",
+      label: "Case theme",
+      required: false,
+      maxLength: 200,
+      placeholder: "Optional one-line case theme if you already have one",
+      helpText:
+        "Optional. The theme your defense is building around (e.g., \"the wrong place at the wrong time\"). Leave blank if you do not have one yet.",
+    },
+    {
+      kind: "textarea",
+      name: "knownFacts",
+      label: "Known facts about your case",
+      required: true,
+      maxLength: 800,
+      rows: 6,
+      helpText:
+        "Charge details, what the prosecution claims, and any contested facts. Up to 800 characters.",
+    },
+  ],
+  "case-law-intelligence": [
+    {
+      kind: "select",
+      name: "chargeType",
+      label: "Charge type",
+      required: true,
+      options: CHARGE_TYPE_OPTIONS,
+      placeholder: "Select charge type",
+    },
+    {
+      kind: "select",
+      name: "state",
+      label: "State where your case is pending",
+      required: true,
+      options: US_STATES,
+      placeholder: "Select state",
+    },
+    {
+      kind: "text",
+      name: "county",
+      label: "County (or judicial district / federal district)",
+      required: true,
+      maxLength: 200,
+      placeholder: "e.g., Hillsborough County, Middle District of Florida",
+    },
+    {
+      kind: "select",
+      name: "caseStage",
+      label: "Current case stage",
+      required: true,
+      options: CASE_STAGES,
+      placeholder: "Select case stage",
+    },
+    {
+      kind: "text",
+      name: "motionFocus",
+      label: "Motion focus",
+      required: false,
+      maxLength: 200,
+      placeholder: "Optional, e.g., suppression, dismissal, JOA",
+      helpText:
+        "Optional. If you want the case law analysis to focus on a specific motion type, name it here.",
+    },
+    {
+      kind: "textarea",
+      name: "knownFacts",
+      label: "Known facts about your case",
+      required: true,
+      maxLength: 800,
+      rows: 6,
+      helpText:
+        "Charge details, contested facts, and any case law your attorney has already mentioned. Up to 800 characters.",
+    },
+  ],
+  "expert-witness-challenge": [
+    {
+      kind: "text",
+      name: "expertName",
+      label: "Expert witness name",
+      required: true,
+      maxLength: 200,
+      placeholder: "e.g., Dr. Jane Smith",
+      helpText:
+        "Full name of the expert witness the prosecution has named or is expected to call.",
+    },
+    {
+      kind: "select",
+      name: "state",
+      label: "State where your case is pending",
+      required: true,
+      options: US_STATES,
+      placeholder: "Select state",
+    },
+    {
+      kind: "select",
+      name: "chargeType",
+      label: "Charge type",
+      required: true,
+      options: CHARGE_TYPE_OPTIONS,
+      placeholder: "Select charge type",
+    },
+    {
+      kind: "text",
+      name: "expertField",
+      label: "Expert's field",
+      required: false,
+      maxLength: 200,
+      placeholder: "Optional, e.g., toxicology, forensic accounting, DNA",
+      helpText:
+        "Optional. The discipline or specialty the expert is being called to testify about.",
+    },
+    {
+      kind: "textarea",
+      name: "knownFacts",
+      label: "What the expert is being called to testify about",
+      required: true,
+      maxLength: 800,
+      rows: 6,
+      helpText:
+        "Brief description of the expert's expected testimony and what part of the prosecution case it supports.",
+    },
+  ],
+  "discovery-demand-letter": [
+    {
+      kind: "select",
+      name: "chargeType",
+      label: "Charge type",
+      required: true,
+      options: CHARGE_TYPE_OPTIONS,
+      placeholder: "Select charge type",
+    },
+    {
+      kind: "select",
+      name: "state",
+      label: "State where your case is pending",
+      required: true,
+      options: US_STATES,
+      placeholder: "Select state",
+    },
+    {
+      kind: "text",
+      name: "county",
+      label: "County (or judicial district / federal district)",
+      required: true,
+      maxLength: 200,
+      placeholder: "e.g., Hillsborough County, Middle District of Florida",
+    },
+    {
+      kind: "text",
+      name: "arrestDate",
+      label: "Arrest date",
+      required: false,
+      maxLength: 50,
+      placeholder: "Optional, e.g., March 12, 2026",
+      helpText:
+        "Optional. Helps frame the demand letter relative to your timeline.",
+    },
+    {
+      kind: "textarea",
+      name: "discoveryReceivedSoFar",
+      label: "Discovery received so far",
+      required: false,
+      maxLength: 800,
+      rows: 5,
+      helpText:
+        "Optional. List anything your attorney has already received (police reports, lab results, dashcam, witness statements). Leave blank if you have not received anything yet.",
+    },
+  ],
 };
 
 interface Props {

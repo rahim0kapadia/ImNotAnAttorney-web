@@ -427,6 +427,77 @@ const PRODUCT_COPY: Record<
     sampleInsight:
       "Standard probation conditions (reporting, travel restrictions) are set by the court, not your probation officer. If your PO adds requirements not in your court order, that is a question worth raising with your attorney — the authority to impose conditions belongs to the judge, not the officer.",
   },
+
+  // -- Court Case Port -- Wave 2+3 (ship dark via products.ts isActive=false) --
+
+  "trial-prep-package": {
+    headline: "Walk into trial with the materials your defense needs.",
+    stakes:
+      "Trial is the moment everything before it was building toward. Most defendants get there with a binder of notes and hope. The ones who walk in with a coherent theme, voir dire questions tailored to their charge, opening and closing frameworks built on the same patterns elite trial lawyers use, and a Judgment of Acquittal package ready to file at the close of the State's case — those are the ones who give their attorney the materials to work with. $1,997 against a trial outcome that decides the rest of your life is invisible.",
+    includes: [
+      "Case theme architecture — one phrase the jury can hold onto",
+      "Voir dire intelligence with juror screening considerations for your charge type",
+      "Opening statement framework grounded in elite trial methodology",
+      "Closing argument framework tied back to your case theme",
+      "Cross-examination question scaffolds keyed to the prosecution witness types",
+      "Judgment of Acquittal package prepared for the close of the State's case",
+      "Motion in limine considerations for evidence you may want excluded",
+      "10 trial-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "The single most overlooked moment in a criminal trial is the close of the State's case. Most defendants do not know that this is when a Judgment of Acquittal motion can be filed — and even when it is denied, the legal record it creates becomes appellate ammunition. A trial that goes to the jury without a JOA motion having been argued is a trial that surrendered one of its strongest moments without a fight.",
+  },
+  "case-law-intelligence": {
+    headline:
+      "Know which cases matter to your defense — and which ones the prosecution will cite.",
+    stakes:
+      "Case law is the language judges actually speak. The prosecution comes to court with a list of cases they will cite. Defense attorneys who walk in without their own ranked, distinguished, verified counter-list are arguing on the prosecution's terms. $297 for a strategic case law map your attorney can confirm in minutes is invisible against years of consequences riding on which cases get cited first.",
+    includes: [
+      "Strategic classification — Judgment of Acquittal opportunities, danger cases, and defense-favorable holdings for your charge",
+      "Per-motion applicability matrix (STRONG / MODERATE / WEAK / REVIEW) so you know which cases support which motions",
+      "Prosecution citation anticipation — the cases the State is likely to lead with, with distinguishing arguments for each",
+      "Ranked verification URLs from CourtListener and official state sources your attorney can confirm in ten minutes",
+      "Tactical timing guide — pretrial, trial, sentencing, appeal — for when each citation is most useful",
+      "Plain-English summary of the holdings so you can follow the conversation with your attorney",
+      "10 case-law-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "Most criminal defense motions cite three to five cases. The strongest motions cite the prosecution's likely counter-cases first — and distinguish them — before introducing the defense's own cases. This pre-empts the State's strongest arguments and forces the judge to engage with the distinction in writing. The cases your attorney does not cite first are sometimes more important than the ones they do.",
+  },
+  "expert-witness-challenge": {
+    headline:
+      "Daubert-test the expert before they testify against you.",
+    stakes:
+      "Expert witnesses carry weight with juries that lay witnesses do not. When the prosecution puts an expert on the stand, the defense has one shot at undermining the credibility — and it starts long before the trial, with a Daubert challenge to the methodology. Most defendants never know whether their attorney filed one. $297 for a documented Daubert analysis your attorney can build a motion from is invisible against the testimony that may convict you.",
+    includes: [
+      "Daubert factor analysis — testability, peer review, error rate, general acceptance — applied to the expert's discipline",
+      "Qualification gap research — the credentials the expert claims and the gaps in them",
+      "Methodology challenge angles for the technique the expert will use",
+      "Prior testimony research — what this expert has said in other cases that may contradict their position here",
+      "Defense brief outline your attorney can use as the skeleton of a Daubert motion",
+      "Cross-examination question scaffolds for the expert's specific field",
+      "10 expert-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "The Daubert standard requires the methodology — not just the conclusion — to be reliable. A forensic expert whose technique has never been peer-reviewed, whose error rate has never been published, and whose discipline has no real general acceptance outside law enforcement laboratories is precisely the kind of expert a Daubert motion can exclude. The motion does not need to win to be useful — even a denied Daubert motion creates an appellate record.",
+  },
+  "discovery-demand-letter": {
+    headline:
+      "Demand the discovery your attorney did not know to ask for.",
+    stakes:
+      "Discovery is what the prosecution must turn over. Most defendants assume their attorney has demanded everything. Most attorneys demand the standard list. The items prosecutors regularly withhold — body cam footage from the secondary officer, calibration logs for the breathalyzer for the prior 90 days, the CI's prior reliability history, the lab analyst's bench notes — are precisely the items a charge-specific demand letter targets. $97 for a letter your attorney can file as-is is the cheapest leverage in your case.",
+    includes: [
+      "Charge-specific demand letter listing the items prosecutors regularly withhold for your offense type",
+      "Jurisdiction-specific procedural framing so the letter cites the right rule",
+      "Brady, Giglio, and discovery rule citations your attorney can verify",
+      "What to do if the prosecution refuses or partially complies",
+      "How the demand letter sets up a future motion to compel",
+      "Plain-English explanation of why each item matters",
+      "10 discovery-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "In most jurisdictions, the standard discovery request misses three to five items that are routinely available but rarely demanded — body cam from non-arresting officers, dispatch audio, the booking officer's report, calibration logs for any device used to gather evidence, and the CI history file when an informant is involved. A demand letter that names these items by category forces the prosecution to either produce them or refuse on the record, which sets up the motion to compel.",
+  },
 };
 
 interface Props {

@@ -233,6 +233,8 @@ const PRODUCT_META: Record<string, { name: string; price: string }> = {
   "employment-impact": { name: "Employment Impact Assessment", price: "$197" },
   "collateral-consequences": { name: "Collateral Consequences Research", price: "$147" },
   "license-risk": { name: "Professional License Risk Research", price: "$297" },
+  "immigration-impact": { name: "Immigration Impact Research", price: "$297" },
+  "security-clearance": { name: "Security Clearance Impact Analysis", price: "$147" },
   "custody-impact": { name: "Custody Impact During Prosecution", price: "$197" },
   "judge-profile": { name: "Judge Profile", price: "$497" },
   "motion-opportunity-scan": { name: "Motion Opportunity Scan", price: "$497" },
@@ -257,6 +259,11 @@ const PRODUCT_META: Record<string, { name: string; price: string }> = {
   "constructive-possession": { name: "Constructive Possession Analysis", price: "$97" },
   "self-surrender-prep": { name: "Self-Surrender Preparation", price: "$97" },
   "probation-rights": { name: "Probation Rights Research", price: "$97" },
+  // ─── Court Case Port — Wave 2+3 (ship dark via products.ts isActive=false) ─
+  "trial-prep-package": { name: "Trial Prep Package", price: "$1,997" },
+  "case-law-intelligence": { name: "Case Law Intelligence Pack", price: "$297" },
+  "expert-witness-challenge": { name: "Expert Witness Challenge Report", price: "$297" },
+  "discovery-demand-letter": { name: "Discovery Demand Letter", price: "$97" },
 };
 
 // ============================================================
@@ -305,6 +312,7 @@ interface EmploymentImpactIntake {
 interface CollateralConsequencesIntake {
   state: string;
   chargeType: string;
+  offenseClass: string;
   occupation: string;
   hasLicense: boolean;
   hasSecurityClearance: boolean;
@@ -318,6 +326,27 @@ interface LicenseRiskIntake {
   licenseType: string;
   licensingBoard: string;
   priorDiscipline: boolean;
+  boardNotified: boolean;
+  chargeInvolves: string;
+}
+
+interface ImmigrationImpactIntake {
+  state: string;
+  chargeType: string;
+  immigrationStatus: string;
+  yearsInUS: string;
+  priorImmigrationViolations: boolean;
+  pendingPetition: boolean;
+}
+
+interface SecurityClearanceIntake {
+  state: string;
+  chargeType: string;
+  clearanceLevel: string;
+  agency: string;
+  lastInvestigation: string;
+  selfReported: string;
+  chargeInvolves: string;
 }
 
 interface CustodyImpactIntake {
@@ -327,6 +356,7 @@ interface CustodyImpactIntake {
   pendingFamilyCase: boolean;
   childrenAges: string;
   otherParentAwareness: string;
+  chargeInvolves: string;
 }
 
 /**
@@ -531,6 +561,100 @@ interface ProbationRightsIntake {
   chargeType: string;
   probationConditions: string;
   probationOfficerIssue: string;
+}
+
+// ─── Court Case Port — Wave 2+3 (ship dark) ────────────────
+
+/**
+ * Intake data shape for the trial-prep-package product ($1,997).
+ *
+ * NOTE on data limitations: the Tier 2 cross-exam library port (attack
+ * patterns, voir dire library, legal weapons, trial themes, trial
+ * narrative skeleton) lives in tables that have NOT yet been fully
+ * ported to INAA. Until the Wave 2 Tier 2 plan executes, this Edge
+ * Function generates the trial prep package from Claude's training-data
+ * knowledge of trial practice patterns plus general criminal defense
+ * methodology. The prompt explicitly tells Claude to ground every
+ * recommendation in well-established trial practice — no fabricated
+ * voir dire questions, no fabricated case-specific theme content. The
+ * product ships with isActive=false in products.ts. Operator review
+ * gates flipping to true.
+ */
+interface TrialPrepPackageIntake {
+  chargeType: string;
+  state: string;
+  county: string;
+  trialDate: string;
+  caseTheme: string;
+  knownFacts: string;
+}
+
+/**
+ * Intake data shape for the case-law-intelligence product ($297).
+ *
+ * NOTE on data limitations: the Tier 6 case law enrichment port
+ * (case_law_urls multi-source ranking, case_law_applicability per-motion
+ * scoring, defense_favorable classification, fetched_holding similarity)
+ * lives in workers + tables that have NOT yet been ported to INAA.
+ * Until those workers ship, this Edge Function relies on Claude's
+ * training-data knowledge of case law plus general criminal defense
+ * research patterns. The prompt is explicit: never fabricate case
+ * names or citations, frame every cited case as "your attorney can
+ * verify on CourtListener." The product ships with isActive=false in
+ * products.ts. Operator review + UPL audit gates flipping to true.
+ */
+interface CaseLawIntelligenceIntake {
+  chargeType: string;
+  state: string;
+  county: string;
+  caseStage: string;
+  motionFocus: string;
+  knownFacts: string;
+}
+
+/**
+ * Intake data shape for the expert-witness-challenge product ($297).
+ *
+ * NOTE on data limitations: the Tier 7 witness research pipeline port
+ * (Gemini deep research with grounding, witness_source_urls ledger,
+ * witness_research_results extractions) is NOT yet ported to INAA's
+ * standalone product flow. Until it ships, this Edge Function relies on
+ * Claude's training-data knowledge of Daubert factors and the named
+ * expert's discipline. The prompt is explicit: do not fabricate the
+ * expert's prior testimony, prior cases, or specific qualifications.
+ * If training data is thin on the expert, say so explicitly. The
+ * product ships with isActive=false in products.ts. Operator review
+ * gates flipping to true.
+ */
+interface ExpertWitnessChallengeIntake {
+  expertName: string;
+  state: string;
+  chargeType: string;
+  expertField: string;
+  knownFacts: string;
+}
+
+/**
+ * Intake data shape for the discovery-demand-letter product ($97).
+ *
+ * NOTE on data limitations: the Tier 8B discovery demands library
+ * (414 charge-type-specific demand items from the Court Case port) is
+ * NOT yet ported to INAA. Until that library ships, this Edge Function
+ * generates the demand letter from Claude's training-data knowledge of
+ * standard discovery practice plus the well-established items
+ * prosecutors regularly hold back. The prompt is explicit: ground every
+ * demanded item in standard criminal procedure (Brady, Giglio, Rule 16,
+ * state discovery rules), never invent rule numbers, and frame the
+ * letter as "your attorney can review and file" — never as legal advice.
+ * The product ships with isActive=false in products.ts. Operator
+ * review + UPL audit gate flipping to true.
+ */
+interface DiscoveryDemandLetterIntake {
+  chargeType: string;
+  state: string;
+  county: string;
+  arrestDate: string;
+  discoveryReceivedSoFar: string;
 }
 
 /**
@@ -1105,6 +1229,143 @@ Produce a comprehensive HTML report covering:
 5. Questions for Your Attorney — 10 questions specific to the reported PO issue and probation conditions, including documentation strategies and when to escalate.
 
 Frame everything as INFORMATION for discussion with their attorney. Use "factors to consider", "questions worth exploring" — never "you should", "we recommend".`;
+    }
+
+    // ─── Court Case Port — Wave 2+3 (ship dark) ──────────────
+
+    case "trial-prep-package": {
+      const data = intake as unknown as TrialPrepPackageIntake;
+      return `Generate a Trial Prep Package for a War Room client heading to trial:
+- Charge Type: ${data.chargeType}
+- State: ${data.state}
+- County: """${data.county}"""
+- Trial Date: """${data.trialDate || "Not provided"}"""
+- Case Theme (if any): """${data.caseTheme || "Not provided"}"""
+- Known Facts: """${data.knownFacts}"""
+
+DATA AVAILABILITY RULES (NON-NEGOTIABLE):
+- Ground every recommendation in well-established criminal trial practice and elite defense methodology. No fabricated voir dire questions, no fabricated case-specific themes pretending to be standard, no invented jury research statistics.
+- If the customer did not provide a case theme, propose 2-3 candidate themes drawn from the known facts — clearly labeled as "candidate themes for discussion with your attorney."
+- Voir dire questions must be content-neutral and tied to the charge type. Never include questions that probe protected categories or that violate Batson considerations.
+- The Judgment of Acquittal package is a framework, not a filed motion. Frame as "what your attorney would assemble at the close of the State's case."
+
+Produce a comprehensive HTML report covering:
+1. Case Theme Architecture — 1 anchor theme (or 2-3 candidates if none provided), one phrase the jury can hold onto, plus how the theme threads from opening through closing.
+2. Voir Dire Intelligence — juror screening considerations specific to this charge type, what attitudes correlate with conviction-prone vs. acquittal-prone jurors, and 8-12 voir dire question scaffolds the attorney can adapt.
+3. Opening Statement Framework — structure (promise → preview → invitation), the opening's role in establishing the theme, and what NOT to say in opening to avoid promising what the evidence cannot deliver.
+4. Cross-Examination Question Scaffolds — 5-8 cross categories tied to the prosecution witness types likely in this charge (officer, lay witness, expert, custodian) — with question scaffolds your attorney can adapt to specific witnesses.
+5. Closing Argument Framework — structure (theme callback → evidence map → reasonable doubt anchors), how the closing ties back to the opening promise, and the final ask.
+6. Judgment of Acquittal Package — what a JOA motion is, when it is filed (close of the State's case), what elements it must address for this charge, and a checklist your attorney can run through.
+7. Motion in Limine Considerations — 3-5 categories of evidence the defense may want excluded before trial, framed as questions to bring to your attorney.
+8. 10 Trial-Specific Questions to Bring to Your Attorney — covering theme alignment, witness preparation, exhibits, and jury communication.
+
+Frame everything as INFORMATION your attorney can use as raw material — never as advice about what to do at trial. Use "patterns elite trial attorneys rely on", "frameworks to discuss with your attorney", "questions worth exploring" — never "we recommend" or "you should".`;
+    }
+
+    case "case-law-intelligence": {
+      const data = intake as unknown as CaseLawIntelligenceIntake;
+      return `Generate a Case Law Intelligence Pack for:
+- Charge Type: ${data.chargeType}
+- State: ${data.state}
+- County: """${data.county}"""
+- Case Stage: ${data.caseStage}
+- Motion Focus (if any): """${data.motionFocus || "Not specified — produce a balanced classification across motion types"}"""
+- Known Facts: """${data.knownFacts}"""
+
+DATA AVAILABILITY RULES (NON-NEGOTIABLE):
+- NEVER fabricate case names, citations, court names, or case years. Every cited case must be one you actually have reliable training-data knowledge of for this jurisdiction.
+- For every cited case, include a "verify on CourtListener" framing — never present a case as already verified. If you are uncertain whether a case is still good law, say so.
+- Holdings are paraphrased — frame as "the holding is generally understood to mean" rather than direct quotation.
+- If you do not have reliable training-data knowledge of strong cases for a particular motion type in this jurisdiction, say so explicitly: "Reliable training-data coverage is limited for this jurisdiction's recent rulings on this motion type — your attorney should run a fresh CourtListener search."
+- For state-specific holdings, name the state and year if known. Never invent docket numbers.
+- Per-motion applicability scores (STRONG / MODERATE / WEAK / REVIEW) are estimates of fit, not statistical claims.
+
+Produce a comprehensive HTML report covering:
+1. Strategic Classification — for the cases you cite, classify each as Defense-Favorable, Judgment of Acquittal Opportunity, Danger (likely prosecution citation), or Neutral.
+2. Per-Motion Applicability Matrix — for each motion type relevant to this case stage and charge (suppression, dismiss, in limine, JOA, sentencing), score the strongest known cases as STRONG / MODERATE / WEAK / REVIEW with one-line rationale.
+3. Prosecution Citation Anticipation — the 3-5 cases the State is most likely to lead with for this charge type, with a distinguishing argument for each ("our case differs because...").
+4. Verification URLs — for every cited case, provide a CourtListener search URL the attorney can use to confirm the holding and check current Shepard treatment. Frame as "verify before citing."
+5. Tactical Timing Guide — for each cited case, when in the case timeline the citation is most useful (pretrial motion, trial, sentencing, appeal).
+6. Plain-English Summary — one-paragraph plain-language explanation of each cited case so the defendant can follow the conversation with their attorney.
+7. 10 Case-Law-Specific Questions to Bring to Your Attorney — including "have you searched CourtListener for cases on point in our circuit since [year]?"
+
+Frame everything as INFORMATION your attorney can verify and use — never as legal advice. Use "factors to consider", "questions worth exploring", "case law your attorney may want to verify" — never "we recommend" or "you should cite."`;
+    }
+
+    case "expert-witness-challenge": {
+      const data = intake as unknown as ExpertWitnessChallengeIntake;
+      return `Generate an Expert Witness Challenge Report for:
+- Expert Witness Name: """${data.expertName}"""
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Expert's Field: """${data.expertField || "Not specified"}"""
+- Expected Testimony Subject: """${data.knownFacts}"""
+
+DATA AVAILABILITY RULES (NON-NEGOTIABLE):
+- This expert may or may not have substantial public records. Most state-level forensic experts have LIMITED documented history.
+- If you have NO reliable training-data information about this specific expert, say so explicitly in the Executive Summary: "Public information about this specific expert is limited. The challenge framework below applies to the expert's stated discipline — not this expert's documented history."
+- NEVER fabricate the expert's prior testimony, prior cases, prior sanctions, or specific qualifications. If you do not know it, say so.
+- The Daubert factor analysis applies to the DISCIPLINE the expert practices, not to the individual expert. You can analyze the discipline (testability, peer review, error rate, general acceptance) without making claims about the individual's record.
+- Never invent case names where the expert testified. If you reference a case by name, you must have reliable training-data knowledge of it.
+
+Produce a comprehensive HTML report covering:
+1. Executive Summary — what is known about the expert's discipline and what is limited about the individual. Be honest about data depth. Under 200 words.
+2. Daubert Factor Analysis — for the expert's discipline:
+   (a) Testability — can the technique be tested?
+   (b) Peer Review — has the technique been published in peer-reviewed literature?
+   (c) Error Rate — what is the known or published error rate for the technique?
+   (d) General Acceptance — is the technique generally accepted outside law enforcement laboratories?
+3. Methodology Challenge Angles — the technique-specific weaknesses your attorney can probe (chain of custody, sample preparation, instrument calibration, contamination control, analyst training).
+4. Qualification Gap Research — credentials the expert may claim and the gaps that may exist (board certification vs. self-attestation, peer-reviewed publications vs. conference presentations, courtroom testimony experience vs. casework experience). Frame as questions to verify.
+5. Prior Testimony Considerations — IF you have reliable training-data knowledge of prior testimony patterns in this discipline (NOT specific to this expert), describe them. Otherwise: "Prior testimony research requires Westlaw/Lexis or specialized databases your attorney can access."
+6. Defense Brief Outline — the skeleton of a Daubert motion your attorney can build on, with section headers for each factor and the technique-specific challenge points.
+7. Cross-Examination Question Scaffolds — 8-12 questions adapted to the discipline that probe the Daubert factors, qualification gaps, and methodology weaknesses.
+8. 10 Expert-Specific Questions to Bring to Your Attorney — including "have you filed a Daubert motion?" and "have you obtained the expert's CV and prior testimony?"
+
+Frame everything as INFORMATION your attorney can use to build a Daubert motion — never as legal advice. Use "factors a Daubert challenge typically addresses", "questions worth exploring", "areas your attorney may want to probe" — never "we recommend" or "you should challenge."`;
+    }
+
+    case "discovery-demand-letter": {
+      const data = intake as unknown as DiscoveryDemandLetterIntake;
+      return `Generate a Discovery Demand Letter for:
+- Charge Type: ${data.chargeType}
+- State: ${data.state}
+- County: """${data.county}"""
+- Arrest Date: """${data.arrestDate || "Not provided"}"""
+- Discovery Already Received: """${data.discoveryReceivedSoFar || "None reported"}"""
+
+DATA AVAILABILITY RULES (NON-NEGOTIABLE):
+- Ground every demanded item in well-established criminal procedure (Brady v. Maryland, Giglio v. United States, federal Rule 16, state discovery rules). Do NOT invent rule numbers or statute citations. If you reference a rule, name the rule by its standard short form ("Rule 16", "Brady", "Giglio") rather than fabricating section numbers.
+- Charge-specific demands must align to evidence types that genuinely exist for this charge type (e.g., for DUI: breathalyzer calibration logs and operator certification — not invented items).
+- The letter must be addressed to "[Prosecutor Name]" as a placeholder, framed for the defendant's attorney to review, customize, and file. Never frame the letter as if the defendant is filing it directly.
+- Include the standard methodology disclaimer at the end.
+- Charge-specific items should number 12-25. Do not pad with generic items that have no relevance to this charge type.
+
+Produce a comprehensive HTML report containing TWO sections:
+
+SECTION 1 — THE DEMAND LETTER (HTML <pre> block with letter formatting)
+Format as a real legal demand letter with:
+- Letter header (To: [Prosecutor Name], From: [Defense Attorney], Re: [Case Reference])
+- Standard introduction citing the relevant discovery rules (Brady, Giglio, Rule 16, state equivalents)
+- Numbered demand items, grouped by category:
+  (a) Standard items every criminal case includes
+  (b) Charge-specific items for this offense type
+  (c) Items relevant to the items already received (gap-fill demands based on what was disclosed so far)
+  (d) Brady/Giglio impeachment material specific to the prosecution witnesses likely in this case
+  (e) Lab/forensic chain of custody if applicable
+  (f) Officer history demands if applicable
+- Closing paragraph requesting written response within a reasonable time
+- Signature block placeholder
+
+SECTION 2 — EXPLANATORY NOTES FOR THE DEFENDANT
+Plain-English explanation covering:
+1. What the demand letter is and why it matters
+2. Why each category of items is being demanded — what it can reveal
+3. What happens if the prosecution refuses or partially complies (motion to compel)
+4. How this letter sets up the next phase of defense
+5. 10 discovery-specific questions to bring to your attorney about the items in the letter
+
+The letter is a TEMPLATE for the defendant's attorney to review, edit for the specific case, sign, and file. It is NOT legal advice to the defendant. The Section 2 notes must explicitly state: "This letter is a template your attorney can review and adapt. Your attorney remains the final authority on what to file and when." Use "factors to consider", "items typically demanded for this charge type" — never "you should file this" or "we recommend you send this."`;
     }
 
     default:

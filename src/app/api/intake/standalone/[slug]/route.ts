@@ -106,6 +106,11 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   "license-risk": new Set(["licensingBoard"]),
   "sentence-reduction": new Set(["sentencingDate"]),
   "appeal-viability": new Set(["trialIssues"]),
+  // Court case port — Wave 2+3 SKUs (ship dark)
+  "trial-prep-package": new Set(["trialDate", "caseTheme"]),
+  "case-law-intelligence": new Set(["motionFocus"]),
+  "expert-witness-challenge": new Set(["expertField"]),
+  "discovery-demand-letter": new Set(["arrestDate", "discoveryReceivedSoFar"]),
 };
 
 // Long-form text fields get a higher length cap than the default 200 chars.
@@ -116,6 +121,8 @@ const LONG_TEXT_FIELDS = new Set([
   "communityTies", "flightRiskFactors", "reportDetails",
   "probationConditions", "probationOfficerIssue", "discoveryContents",
   "locationDescription",
+  // Court case port — Wave 2+3 SKUs
+  "discoveryReceivedSoFar",
 ]);
 
 /** (C6) Sanitize free-text fields: strip control chars, triple-quotes, limit length. */
@@ -271,7 +278,7 @@ export async function POST(
     if ([
       "industryRegulated", "hasClearance", "hasLicense",
       "hasSecurityClearance", "hasChildren", "priorDiscipline",
-      "pendingFamilyCase", "hasGreenCard", "pendingPetition",
+      "pendingFamilyCase", "priorImmigrationViolations", "pendingPetition",
       "confirmatoryTest", "resultsDocs", "officerDemonstrated",
       "choiceOfTest", "sentenceCompleted", "probationCompleted",
       "boardNotified",

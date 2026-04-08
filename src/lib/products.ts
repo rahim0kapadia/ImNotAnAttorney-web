@@ -762,6 +762,120 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
+  // ─── COURT CASE PORT — WAVE 2+3 (isActive=false until operator review) ──
+  // Wave 2 (Tier 2 Cross-Exam Library): trial-prep-package $1,997 — requires War Room
+  // Wave 2 (Tier 6 Case Law Enrichment): case-law-intelligence $297 — IB-tier add-on
+  // Wave 3 (Tier 7 Witness Research): expert-witness-challenge $297 — Daubert-focused
+  // Wave 3 (Tier 8B Misc High-Value): discovery-demand-letter $97 — pre-discovery SKU
+  // All ship dark. Three-layer gate: landing 404 + checkout 400 + operator review.
+  // Plans:
+  //   docs/plans/2026-04-06-court-case-port/02-cross-exam-library.md
+  //   docs/plans/2026-04-06-court-case-port/06-case-law-enrichment.md
+  //   docs/plans/2026-04-06-court-case-port/07-witness-research-pipeline.md
+  //   docs/plans/2026-04-06-court-case-port/08-misc-high-value.md (§8B)
+  "trial-prep-package": {
+    name: "Trial Prep Package",
+    category: "research",
+    price: 199700, // $1,997
+    priceDisplay: "$1,997",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your trial preparation package is generated within 60 seconds of submitting your details. Designed for War Room clients heading to trial — the legal research team assembles themes, voir dire intelligence, opening and closing frameworks, and a Judgment of Acquittal package.",
+    description:
+      "Trial preparation package for War Room clients heading to trial — themes, voir dire, opening and closing frameworks, and a JOA package built on elite trial methodology.",
+    intakeFields: [
+      "chargeType",
+      "state",
+      "county",
+      "trialDate",
+      "caseTheme",
+      "knownFacts",
+    ],
+    stripePriceId: "price_trial_prep_package_live",
+    // TODO: Create Stripe product in dashboard, price $1,997, add STRIPE_PRICE_TRIAL_PREP_PACKAGE_LIVE to env
+    upsellTier: "situation-room",
+    upsellText:
+      "Trial Prep Package gives you the materials. The Situation Room layers in trial-week intelligence and priority response.",
+    dripSequenceKey: "research_trial_prep",
+    isActive: false,
+  },
+  "case-law-intelligence": {
+    name: "Case Law Intelligence Pack",
+    category: "research",
+    price: 29700, // $297
+    priceDisplay: "$297",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your case law intelligence pack is generated within 60 seconds of submitting your details — strategic classification, per-motion applicability, and ranked verification URLs.",
+    description:
+      "Strategic case law analysis for your charge and jurisdiction — Judgment of Acquittal opportunities, prosecution citation anticipation, per-motion applicability matrix, and ranked verification URLs your attorney can confirm in minutes.",
+    intakeFields: [
+      "chargeType",
+      "state",
+      "county",
+      "caseStage",
+      "motionFocus",
+      "knownFacts",
+    ],
+    stripePriceId: "price_case_law_intelligence_live",
+    // TODO: Create Stripe product in dashboard, price $297, add STRIPE_PRICE_CASE_LAW_INTELLIGENCE_LIVE to env
+    upsellTier: "x-ray",
+    upsellText:
+      "The Case Law Intelligence Pack focuses on case law alone. The X-Ray layers it onto a full discovery analysis.",
+    dripSequenceKey: "research_case_law_intelligence",
+    isActive: false,
+  },
+  "expert-witness-challenge": {
+    name: "Expert Witness Challenge Report",
+    category: "research",
+    price: 29700, // $297
+    priceDisplay: "$297",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your expert witness challenge report is generated within 60 seconds of submitting your details — Daubert factors, qualification gap analysis, and a defense brief outline.",
+    description:
+      "Daubert-focused challenge analysis for the prosecution's expert witness — testability, peer review, error rate, and qualification gaps assembled into a defense brief outline. No discovery upload required.",
+    intakeFields: [
+      "expertName",
+      "state",
+      "chargeType",
+      "expertField",
+      "knownFacts",
+    ],
+    stripePriceId: "price_expert_witness_challenge_live",
+    // TODO: Create Stripe product in dashboard, price $297, add STRIPE_PRICE_EXPERT_WITNESS_CHALLENGE_LIVE to env
+    upsellTier: "war-room",
+    upsellText:
+      "Challenging one expert is the start. The War Room covers every prosecution witness with full discipline records and prior testimony research.",
+    dripSequenceKey: "research_expert_witness_challenge",
+    isActive: false,
+  },
+  "discovery-demand-letter": {
+    name: "Discovery Demand Letter",
+    category: "research",
+    price: 9700, // $97
+    priceDisplay: "$97",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your discovery demand letter is generated within 60 seconds of submitting your details — a charge-specific letter your attorney can review, adapt, or file as-is.",
+    description:
+      "A custom discovery demand letter your attorney can file — listing the items prosecutors regularly withhold for your charge type and jurisdiction. No discovery required to order.",
+    intakeFields: [
+      "chargeType",
+      "state",
+      "county",
+      "arrestDate",
+      "discoveryReceivedSoFar",
+    ],
+    stripePriceId: "price_discovery_demand_letter_live",
+    // TODO: Create Stripe product in dashboard, price $97, add STRIPE_PRICE_DISCOVERY_DEMAND_LETTER_LIVE to env
+    upsellTier: "case-decoder",
+    upsellText:
+      "Knowing what to demand is step one. The Case Decoder helps you read the discovery once it arrives.",
+    dripSequenceKey: "research_discovery_demand_letter",
+    isActive: false,
+  },
+
   // ─── CONTENT GUIDES ($0 — free, SEO-driven lead magnets) ─────
   "first-court-appearance": {
     name: "First Court Appearance Preparation Guide",
