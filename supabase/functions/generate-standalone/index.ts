@@ -692,23 +692,31 @@ Produce a comprehensive HTML report covering:
       return `Generate a Collateral Consequences Research report for:
 - State: ${data.state}
 - Charge Type: ${data.chargeType}
+- Offense Class: ${data.offenseClass}
 - Occupation: """${data.occupation}"""
 - Licensed Professional: ${data.hasLicense ? "Yes" : "No"}
 - Security Clearance: ${data.hasSecurityClearance ? "Yes" : "No"}
 - Immigration Status: ${data.immigrationStatus}
 - Has Children: ${data.hasChildren ? "Yes" : "No"}
 
-Produce a comprehensive HTML report covering:
-1. Consequences Summary — total number of identified consequences for this charge type in this state, categorized by severity (CRITICAL / SIGNIFICANT / MODERATE)
-2. Employment Impact — background check impact, industry restrictions, licensing implications (summary level — note that deeper analysis is available)
-3. Housing — public housing disqualification rules, private landlord screening, Section 8 eligibility for this charge type
-4. Civil Rights — voting rights (state-specific restoration rules), jury service, gun rights (state + federal), running for office
-5. Government Benefits — SNAP/TANF restrictions (drug conviction specific), Social Security, VA benefits, Medicaid implications
-6. Education — FAFSA eligibility impacts, campus housing, professional school admissions
-7. Immigration — if non-citizen, CIMT classification and deportation risk summary (note deeper analysis available)
-8. Custody & Family — if has children, how this charge type affects custody proceedings (note deeper analysis available)
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- Do NOT state specific consequence counts (e.g., "247 collateral consequences" or "Texas imposes 312 restrictions"). State-level per-charge counts require the NICCC database, which is not available in this report.
+- You may reference that the NICCC (National Inventory of the Collateral Consequences of Conviction) documents 45,000+ consequences nationally as context — but do NOT claim a specific state or charge-specific count.
+- FAFSA Question 23 about drug convictions was REMOVED starting with the 2023-24 FAFSA form. Drug convictions NO LONGER affect federal student aid eligibility. Do NOT include FAFSA drug-conviction ineligibility as a consequence anywhere in the report.
+- Do NOT cite specific statute numbers, case names, or regulation citations unless you are certain of them. "State statute often imposes" is better than a fabricated § reference.
+- Frame everything as the consequence LANDSCAPE — categories and severity — not a count or a prediction.
 
-Each section must include state-specific information and "questions to explore with your attorney." Frame everything as INFORMATION, not advice.`;
+Produce a comprehensive HTML report covering:
+1. Consequences Landscape — describe the CATEGORIES of collateral consequences that apply to this charge type + offense class in this state (employment, housing, civil rights, benefits, education, immigration, family). For each category, indicate severity level (CRITICAL / SIGNIFICANT / MODERATE / LIMITED) and whether it is automatic or discretionary. NO counts.
+2. Employment Impact — background check visibility, industry restrictions, occupational licensing implications for their stated occupation (summary level — note that the Employment Impact Research product provides deeper occupation-specific analysis).
+3. Housing — public housing disqualification rules, private landlord screening realities, Section 8 eligibility impact for this charge type and offense class in this state.
+4. Civil Rights — voting rights (state-specific restoration rules), jury service, gun rights (state + federal — note the federal firearms ban for felony convictions), running for public office.
+5. Government Benefits — SNAP/TANF restrictions (drug-conviction specific rules vary by state opt-out status), Social Security implications, VA benefits, Medicaid eligibility impacts.
+6. Education — campus housing restrictions at public institutions, professional school admissions character-and-fitness reviews, state-level tuition/aid programs. DO NOT mention FAFSA drug-conviction ineligibility — that rule was repealed effective 2023-24.
+7. Immigration — if non-citizen, CIMT classification considerations and deportation risk landscape (note that the Immigration Impact Research product provides deeper analysis).
+8. Custody & Family — if has children, how this charge type typically factors into family court proceedings in this state (note that the Custody Impact product provides deeper analysis).
+
+Each section must include state-specific information where the law is well-established, and "questions to explore with your attorney" framed as questions. Frame everything as INFORMATION, not advice. Use "may", "often", "in most states" — never "you will" or "you are disqualified."`;
     }
 
     case "license-risk": {
@@ -719,18 +727,31 @@ Each section must include state-specific information and "questions to explore w
 - License Type: ${data.licenseType}
 - Licensing Board: """${data.licensingBoard || "Not specified"}"""
 - Prior Disciplinary Action: ${data.priorDiscipline ? "Yes" : "No"}
+- Board Already Notified: ${data.boardNotified ? "Yes" : "No"}
+- Charge Involves: ${data.chargeInvolves}
+
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- If Licensing Board is "Not specified", do NOT guess or name a specific board. Use this framing instead: "The relevant licensing board for ${data.licenseType} in ${data.state} — verify the exact board name with your attorney or your state's professional licensing department." Then continue with general state-level reporting requirements instead of board-specific ones. NEVER fabricate a board name.
+- Do NOT claim specific outcome statistics (e.g., "42% of similar cases result in suspension"). Board disciplinary records exist but are not available at that granularity in this report.
+- Do NOT cite specific disciplinary case names unless you are certain of them. General patterns are fine; specific prior cases must be verifiable.
+- Do NOT cite specific statute or regulation numbers unless you are certain. "Most states impose a reporting deadline of 30-60 days" is better than a fabricated § reference.
+- If Board Already Notified is "Yes", acknowledge this in the Board Reporting Requirements section and focus on the post-notification process. If "No", emphasize the self-reporting deadline and consequences of failure-to-report.
+- If Charge Involves substances/violence/financial/sexual, tailor the Adjudicative considerations to that category — these categories typically trigger heightened scrutiny under most board rules.
 
 Produce a comprehensive HTML report covering:
-1. Risk Level — CRITICAL / HIGH / MODERATE / LOW for this specific license type + charge combination in this state
-2. Board Reporting Requirements — does this state require self-reporting of arrests/charges/convictions for this license type? Reporting deadline. Consequences of NOT reporting. Include statute/regulation citation if known.
-3. Board Action Triggers — which charges trigger automatic review, hearing, suspension, or revocation for this license type. Distinction between arrest, charge, conviction, and plea.
-4. Historical Board Outcomes — typical outcomes for similar charge types: reprimand, probation, suspension, revocation. Mitigating factors boards consider.
-5. Dual-Track Timeline — criminal case timeline vs. licensing board timeline running in PARALLEL. Board may act before criminal case resolves. Evidence standard differences.
-6. License-Preserving Defense Strategies — framed as QUESTIONS to explore: plea options that avoid mandatory board action, coordinating criminal and licensing defense, mitigating evidence for the board
-7. Profession-Specific Considerations — continuing education during suspension, reinstatement procedures, practice restrictions during investigation, malpractice insurance implications
-8. 10 Questions for Your Attorneys — split between criminal defense attorney (5) and licensing board attorney (5)
+1. Risk Level — CRITICAL / HIGH / MODERATE / LOW for this specific license type + charge combination in this state. Base the rating on the nature of the charge (charge involves: ${data.chargeInvolves}) and whether prior discipline exists.
+2. Board Reporting Requirements — does this state typically require self-reporting of arrests/charges/convictions for this license type? Typical reporting deadlines by license type. Consequences of NOT reporting (often more severe than the underlying charge). If the board name is "Not specified", use general state-level framing per the rules above.
+3. Board Action Triggers — which charge categories typically trigger automatic review, hearing, suspension, or revocation for this license type. Distinction between arrest, charge, conviction, and plea outcomes.
+4. Factors Boards Commonly Consider — general patterns boards weigh when making disciplinary decisions:
+   • Mitigating factors: voluntary self-reporting, proactive treatment/rehab, strong practice history, community letters, insight and remorse, time elapsed since the incident, unrelated-to-practice nature of the charge
+   • Aggravating factors: failure to report, prior discipline, charge involves patients/clients/protected populations, pattern of similar conduct, dishonesty during investigation, lack of insight
+   • The disciplinary ladder typically progresses: private reprimand → public reprimand → probation with conditions → suspension → revocation. Most first-time non-practice-related charges do NOT result in revocation. Do NOT claim specific outcome statistics.
+5. Dual-Track Timeline — the criminal case timeline and the licensing board timeline run in PARALLEL and independently. The board may act before the criminal case resolves. Board hearings use a lower evidence standard (preponderance of the evidence) than criminal court (beyond a reasonable doubt).
+6. License-Preserving Defense Strategies — framed as QUESTIONS to explore with counsel: plea options that may avoid mandatory board action, how criminal defense counsel can coordinate with a licensing defense attorney, what mitigating evidence is typically persuasive to boards.
+7. Profession-Specific Considerations — continuing education obligations during any suspension, reinstatement procedures, practice restrictions during board investigation, malpractice/liability insurance implications.
+8. 10 Questions for Your Attorneys — split between criminal defense attorney (5) and licensing board attorney (5).
 
-If prior disciplinary action exists, emphasize how it compounds the risk. Frame everything as INFORMATION, not advice.`;
+If prior disciplinary action exists, emphasize how it compounds the risk. Frame everything as INFORMATION, not advice. Use "boards typically consider" and "in most cases" — never "the board will" or "you will lose your license."`;
     }
 
     case "custody-impact": {
@@ -738,6 +759,7 @@ If prior disciplinary action exists, emphasize how it compounds the risk. Frame 
       return `Generate a Custody Impact During Prosecution report for:
 - State: ${data.state}
 - Charge Type: ${data.chargeType}
+- Charge Involves: ${data.chargeInvolves}
 - Current Custody Arrangement: ${data.custodyStatus}
 - Pending Family Court Case: ${data.pendingFamilyCase ? "Yes" : "No"}
 - Children Ages: """${data.childrenAges}"""
@@ -753,6 +775,77 @@ Produce a comprehensive HTML report covering:
 7. Immediate Considerations — framed as "factors to discuss with your attorney": documentation of parental involvement, character references, compliance with all court orders, treatment enrollment if applicable
 
 This is a HIGH UPL-risk product. Be EXTREMELY careful: use "family courts typically consider" not "you will lose custody." No recommendations about what to do in family court. Frame everything as INFORMATION for discussion with their attorneys (both criminal defense and family law).`;
+    }
+
+    case "immigration-impact": {
+      const data = intake as unknown as ImmigrationImpactIntake;
+      return `Generate an Immigration Impact Research report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Immigration Status: ${data.immigrationStatus}
+- Years in US: """${data.yearsInUS}"""
+- Pending Immigration Petition: ${data.pendingPetition ? "Yes" : "No"}
+- Prior Immigration Violations: ${data.priorImmigrationViolations ? "Yes" : "No"}
+
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- Immigration law is federal and highly technical. The consequences of a criminal conviction for a non-citizen depend on (a) CIMT classification, (b) aggravated-felony classification under INA § 101(a)(43), and (c) the non-citizen's specific status. Both CIMT and aggravated-felony analysis require comparing the state statute to the federal generic definition — this is known as the "categorical approach" under Taylor v. United States and Mathis v. United States.
+- You may reference well-established federal statutes: INA § 101(a)(43) (aggravated felony list), INA § 212(a)(2) (CIMT inadmissibility grounds), INA § 237(a)(2) (deportability grounds), 8 U.S.C. § 1227. These are the FEDERAL CODE and are appropriate to cite.
+- Do NOT fabricate BIA (Board of Immigration Appeals) case citations. "Matter of X" citations must be real. If you are not certain of a specific BIA decision name, describe the general rule without a citation. NEVER invent case names.
+- Do NOT fabricate Supreme Court immigration cases. Padilla v. Kentucky (2010), Moncrieffe v. Holder (2013), Descamps v. United States (2013), Mellouli v. Lynch (2015), Sessions v. Dimaya (2018), Borden v. United States (2021) are real and well-documented — you may cite them if directly relevant. Do NOT invent others.
+- Do NOT say "you will be deported" or "you will be inadmissible." Use "historically classified as", "may trigger", "has been held to be", "risk of detainer varies."
+- The "petty offense exception" under INA § 212(a)(2)(A)(ii)(II) is a real rule. You may describe it accurately.
+- Prior immigration violations (${data.priorImmigrationViolations ? "YES — present" : "no"}) materially change the analysis. If YES, note that prior violations compound risk, may eliminate eligibility for cancellation of removal, and may trigger reinstatement of removal.
+- If the customer has a Pending Immigration Petition (${data.pendingPetition ? "YES" : "no"}), emphasize that ANY criminal disposition may affect that pending petition and the timing is critical.
+- This report is for a NON-CITIZEN with EXISTENTIAL stakes. Every framing must preserve the customer's ability to act on this information WITH an immigration attorney — never replace that consultation.
+
+Produce a comprehensive HTML report covering:
+1. Deportation Risk Assessment — CRITICAL / HIGH / MODERATE / LOW based on CIMT classification, aggravated-felony analysis, and the customer's immigration status. Be explicit about the reasoning: why this charge type carries this level of risk for someone in this status category.
+2. CIMT (Crime Involving Moral Turpitude) Analysis — how courts and the BIA have historically classified this type of offense for CIMT purposes. The categorical approach framework. The single-offense vs. multiple-offense rules under INA § 212(a)(2). The petty offense exception (maximum sentence ≤1 year AND actual sentence imposed ≤6 months). Cite INA § 212(a)(2) as the statutory basis. Do NOT invent specific BIA case names.
+3. Aggravated Felony Analysis — the INA § 101(a)(43) categorical list contains 21 subcategories of aggravated felonies (including crimes of violence, drug trafficking, theft offenses, fraud offenses over $10,000, and many others). State misdemeanors CAN be aggravated felonies for immigration purposes. Describe which subcategory this charge might implicate and why. Consequences of aggravated-felony classification: mandatory deportation, no cancellation of removal, permanent inadmissibility, no asylum eligibility, ineligibility for most waivers.
+4. Status-Specific Impact — tailored to "${data.immigrationStatus}" with ${data.yearsInUS} years in the US. How this charge affects: green card renewal and naturalization (INA § 316 good-moral-character requirement during the 5-year statutory period), visa renewal, DACA eligibility and renewal, TPS eligibility, pending petitions. ${data.priorImmigrationViolations ? "IMPORTANT: prior immigration violations are on file — note that they compound this analysis and may eliminate eligibility for cancellation of removal under INA § 240A." : ""}
+5. Plea Consequences Matrix — a table with columns: Plea Outcome | Criminal Effect | Immigration Effect | Risk Level. Rows should cover: dismissal, deferred adjudication / pre-trial diversion, nolo contendere, guilty to a lesser non-CIMT charge, guilty to original charge. IMPORTANT: some plea outcomes that are "good" in criminal court (like deferred adjudication) can still count as convictions under INA § 101(a)(48)(A). Make this explicit. Frame each row as "historically classified as" not "will be."
+6. ICE Detainer Risk — general patterns based on charge type, ${data.state} jurisdiction, and the customer's status. Whether ${data.state} is a sanctuary state/jurisdiction (well-established sanctuary jurisdictions: California, Illinois, New Jersey, Oregon, Washington, New York City, San Francisco — describe only jurisdictions whose policies are public record). 287(g) program participation varies by county. Frame as risk landscape, not prediction.
+7. Questions for Your Criminal Defense Attorney — 5 specific questions including: "Is my criminal defense attorney coordinating with an immigration attorney as Padilla v. Kentucky requires?" "Which plea options avoid CIMT or aggravated-felony classification?" "Can the charge be modified to a non-deportable offense?" "What is the exact sentence language that would avoid triggering the one-year sentence threshold?" "Is a post-conviction motion available if I have already been convicted?"
+8. Questions for Your Immigration Attorney — 5 specific questions including: "What is the immigration consequence of each plea option in the matrix above?" "Am I eligible for any form of relief if removal proceedings begin?" "Should I preserve any rights (like the right to a full trial) to maintain appellate options?" "What is the timeline for my pending petition given this charge?" "Is there a post-conviction relief strategy if the underlying criminal disposition cannot be avoided?"
+
+Frame everything as INFORMATION based on published federal immigration law and generally-available categorical analysis. Never predict outcomes. The customer MUST work with both a criminal defense attorney AND an immigration attorney — this report is intended to make that coordination productive, not to replace it. This is a HIGH UPL-risk and HIGH stakes product — be rigorous about hedging language and citation accuracy.`;
+    }
+
+    case "security-clearance": {
+      const data = intake as unknown as SecurityClearanceIntake;
+      return `Generate a Security Clearance Impact Analysis report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Clearance Level: ${data.clearanceLevel}
+- Granting Agency: """${data.agency || "Not specified"}"""
+- Date of Last Investigation: """${data.lastInvestigation || "Not specified"}"""
+- Self-Reported Status: ${data.selfReported}
+- Charge Involves: ${data.chargeInvolves}
+
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- The foundational authorities are REAL and may be cited accurately:
+  • Security Executive Agent Directive 3 (SEAD 3) — establishes reporting requirements for cleared personnel
+  • Executive Order 12968 — access to classified information
+  • Executive Order 13467 — reforming processes for clearance adjudication
+  • Security Executive Agent Directive 4 (SEAD 4) — the 13 National Adjudicative Guidelines (Guideline A through Guideline M)
+  • 32 CFR Part 147 (legacy adjudicative guidelines, still referenced)
+- The 13 National Adjudicative Guidelines are: A-Allegiance to the United States, B-Foreign Influence, C-Foreign Preference, D-Sexual Behavior, E-Personal Conduct, F-Financial Considerations, G-Alcohol Consumption, H-Drug Involvement, I-Psychological Conditions, J-Criminal Conduct, K-Handling Protected Information, L-Outside Activities, M-Use of Information Technology Systems. These are REAL — you may reference them by letter and name.
+- The DOHA (Defense Office of Hearings and Appeals) publishes redacted administrative judge decisions at ogc.osd.mil/doha/industrial. You may describe GENERAL patterns from published DOHA decisions — but do NOT cite specific case numbers or fabricate outcome percentages (e.g., "DOHA grants 42% of cases involving Guideline J" is NOT a verifiable statistic).
+- The Statement of Reasons (SOR) process is REAL and well-documented: SOR → written response (20 days) → hearing option → administrative judge decision → appeal to PSAB (Personnel Security Appeals Board). You may describe this process accurately.
+- Do NOT say "your clearance will be revoked" or "you will lose your clearance." Use "historically, Guideline J cases involving similar conduct have resulted in..." and "adjudicative factors commonly considered include..."
+- Self-reporting timelines: SEAD 3 generally requires reporting of arrests, charges, and specific conduct "in a timely manner" — the FSO/SSO or security manager is the reporting channel. Failure to self-report is OFTEN considered more serious by adjudicators than the underlying conduct. This is well-documented and can be stated.
+- If Self-Reported Status is "No" or "Not yet", emphasize that reporting is typically more urgent than the criminal case itself, and that failure to report is weighed heavily under Guideline E (Personal Conduct).
+- If Charge Involves substances (alcohol/drugs), emphasize Guidelines G and H. If foreign contacts, Guideline B/C. If financial, Guideline F. If violence, Guideline J.
+
+Produce a comprehensive HTML report covering:
+1. Clearance Risk Level — CRITICAL / HIGH / MODERATE / LOW for this ${data.clearanceLevel} clearance + charge combination. Base the rating on (a) which Adjudicative Guidelines are triggered, (b) the Self-Reported status, and (c) prior discipline patterns typical for the charge category.
+2. Self-Reporting Obligations — SEAD 3 and EO 12968 requirements for cleared personnel. Timing expectations (generally "promptly" or "without undue delay" — specific deadlines depend on agency policy). Who to report to (FSO, SSO, security manager depending on clearance type and agency). The consequences of failure to report: under Guideline E (Personal Conduct), adjudicators historically treat non-reporting as a separate disqualifying issue, often MORE serious than the underlying conduct. ${data.selfReported === "No" || data.selfReported === "Not yet" ? "IMPORTANT: the customer indicated they have not reported. This section should treat self-reporting as the #1 priority action to discuss with counsel — before addressing the criminal case." : ""}
+3. Adjudicative Guidelines Analysis — which of the 13 National Adjudicative Guidelines this charge most likely triggers, based on Charge Involves: ${data.chargeInvolves}. For each triggered guideline, describe: the concern it addresses, the disqualifying conditions typically applied, and the mitigating conditions that commonly offset it. Focus on Guidelines J (Criminal Conduct) and E (Personal Conduct) at minimum — these apply to nearly all criminal matters. Reference 32 CFR Part 147 and SEAD 4 as the authority.
+4. Historical Outcomes — describe GENERAL patterns from published DOHA administrative judge decisions for similar charge categories. Typical outcome buckets: clearance maintained with conditions, suspended pending resolution of the criminal matter, revoked. Describe what factors commonly drive each outcome (mitigating evidence, time since conduct, candor during investigation, pattern vs. isolated incident). DO NOT fabricate percentages, case numbers, or specific outcomes. Frame as "in DOHA decisions involving similar facts, outcomes have included..."
+5. Timeline — the adjudication process: interim clearance status during investigation, issuance of a Statement of Reasons (SOR), 20-day written response requirement, hearing option before an administrative judge, decision, appeal to PSAB. Parallel: the criminal case timeline runs independently. Your cleared status may be suspended BEFORE the criminal case resolves.
+6. Questions for Your Attorney — 6-8 specific questions including: "Has the FSO/SSO been notified in writing, with a dated copy retained?" "Can the criminal resolution be framed to satisfy Guideline mitigating conditions (e.g., voluntary treatment under G/H, full candor under E)?" "Should I retain a security clearance attorney separately from my criminal defense attorney?" "What language in a plea agreement would satisfy adjudicative mitigating factors without admitting disqualifying conduct?" "What documentation should I begin gathering now for a future SOR response?" "Is there a risk of interim suspension, and if so, what are my options?"
+
+Frame everything as INFORMATION based on published adjudicative guidelines and general DOHA patterns. Never predict clearance outcomes. The customer MUST work with both a criminal defense attorney AND (for anything beyond basic clearance questions) a security clearance attorney — this report is intended to make those conversations productive. This is a MEDIUM UPL-risk product but HIGH stakes: $100K-$300K career implications — be rigorous about hedging language and never fabricate DOHA statistics or case citations.`;
     }
 
     case "judge-profile": {

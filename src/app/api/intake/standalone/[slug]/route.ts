@@ -106,6 +106,8 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   "license-risk": new Set(["licensingBoard"]),
   "sentence-reduction": new Set(["sentencingDate"]),
   "appeal-viability": new Set(["trialIssues"]),
+  "immigration-impact": new Set(["yearsInUS"]),
+  "security-clearance": new Set(["agency", "lastInvestigation"]),
   // Court case port — Wave 2+3 SKUs (ship dark)
   "trial-prep-package": new Set(["trialDate", "caseTheme"]),
   "case-law-intelligence": new Set(["motionFocus"]),

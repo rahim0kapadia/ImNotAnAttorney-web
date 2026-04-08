@@ -181,7 +181,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Immigration consequences are just one dimension. The Case Decoder covers your complete defense landscape.",
     dripSequenceKey: "research_immigration",
-    isActive: false,
+    isActive: true,
   },
   "collateral-consequences": {
     name: "Collateral Consequences Research",
