@@ -47,6 +47,7 @@
 | batch_id | text | Anthropic Batch API request ID for async generation |
 | generated_at | timestamptz | When report was generated |
 | delivered_at | timestamptz | When report was delivered |
+| completed_at | timestamptz | When War Room / Situation Room monitoring engagement was closed (added 2026-04-09) |
 | reviewed_by | text | Who approved delivery |
 | reviewed_at | timestamptz | When approved |
 | deliverable_url | text | Full report URL |

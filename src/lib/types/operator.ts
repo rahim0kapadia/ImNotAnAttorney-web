@@ -237,10 +237,10 @@ interface PortalCaseView {
  *
  * CD/IB pipeline:    awaiting-intake → intake → generating → delivered
  * X-Ray pipeline:    awaiting-intake → intake → pending → processing → intelligence → strategy → packaging → delivered
- * War Room pipeline: (same as X-Ray) → monitoring  (ongoing weekly updates after delivery)
+ * War Room pipeline: (same as X-Ray) → monitoring → completed (after monitoring window)
  * Situation Room:    (same as War Room, priority flag set on case record)
  *
- * Terminal statuses: delivered, refunded, cancelled
+ * Terminal statuses: delivered, completed, refunded, cancelled
  */
 type CaseStatus =
   // Pre-intake
@@ -263,6 +263,7 @@ type CaseStatus =
   // War Room ongoing updates
   | "monitoring"
   // Terminal
+  | "completed"
   | "refunded"
   | "cancelled";
 
@@ -296,4 +297,6 @@ export const ALLOWED_TRANSITIONS: Record<string, string[]> = {
   review: ["delivered", "processing"], // back to processing if more work needed
   // War Room post-delivery monitoring
   delivered: ["monitoring"],
+  // Monitoring engagement ends cleanly
+  monitoring: ["completed"],
 };

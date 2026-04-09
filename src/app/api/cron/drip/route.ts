@@ -39,7 +39,7 @@ import {
 import { reconcileStripePayments, detectOrphanOrders } from "@/lib/cron/reconciliation";
 import { sendReportExpiryWarnings, sendAbandonedCheckoutEmails } from "@/lib/cron/customer-lifecycle";
 import { retriggerMissedEvaluations, detectStuckJobs, checkPipelineCompletion } from "@/lib/cron/pipeline";
-import { detectSLABreaches, sendWeeklyProgressEmails, checkEngineHeartbeat, escalateGuarantees } from "@/lib/cron/monitoring";
+import { detectSLABreaches, sendWeeklyProgressEmails, checkEngineHeartbeat, escalateGuarantees, closeStaleMonitoring } from "@/lib/cron/monitoring";
 
 /** Task registry — each entry runs sequentially with isolated error handling. */
 const TASKS: { name: string; fn: (ctx: CronContext) => Promise<CronResult> }[] = [
@@ -79,6 +79,8 @@ const TASKS: { name: string; fn: (ctx: CronContext) => Promise<CronResult> }[] =
   { name: "engine-heartbeat", fn: checkEngineHeartbeat },
   // Guarantee escalation (Part 20)
   { name: "guarantee-escalation", fn: escalateGuarantees },
+  // Monitoring closure (Part 21)
+  { name: "close-stale-monitoring", fn: closeStaleMonitoring },
 ];
 
 export async function GET(req: NextRequest) {

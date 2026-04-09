@@ -183,7 +183,7 @@ For tables with no user-level access (operator-only like `processing_jobs`): no 
                            │ operator approves
                            ▼
                       ┌──────────┐
-                      │ delivered │──► monitoring (War Room post-delivery)
+                      │ delivered │──► monitoring (War Room post-delivery) ──► completed
                       └──────────┘
 
     IB-specific statuses:
@@ -197,6 +197,8 @@ For tables with no user-level access (operator-only like `processing_jobs`): no 
       (refund webhook) → refunded
       (cron Part 4, 2h) → intake-stalled (from intake, CD only)
       (cron Part 5, 30m) → generation-failed (from generating)
+      (cron Part 21, 365d) → completed (from monitoring, safety cap from delivered_at)
+      (operator action) → completed (from monitoring, manual closure)
 ```
 
 ### Status Definitions
@@ -219,7 +221,8 @@ For tables with no user-level access (operator-only like `processing_jobs`): no 
 | `packaging` | Engine pipeline — final report packaging | X-Ray+ | → review or back to strategy |
 | `review` | Report generated, awaiting operator approval | CD, IB, discovery | Operator reviews + delivers |
 | `delivered` | Report sent to customer | All | Drip sequence begins; War Room advances to `monitoring` |
-| `monitoring` | War Room post-delivery continuous updates | War Room, Situation Room | Weekly progress emails via cron Part 18 |
+| `monitoring` | War Room post-delivery continuous updates | War Room, Situation Room | Engine docket_monitor worker sends weekly updates; transitions to `completed` on closure |
+| `completed` | Monitoring engagement ended cleanly | War Room, Situation Room | Terminal. Set by cron Part 21 at 365-day safety cap, or by operator manual action |
 | `intake-stalled` | Stuck in `intake` for 2+ hours | case-decoder | Operator investigates |
 | `refunded` | Full refund processed | All | Report access revoked |
 | `cancelled` | Order cancelled pre-delivery | All | Terminal |
@@ -248,10 +251,12 @@ export const ALLOWED_TRANSITIONS: Record<string, string[]> = {
   review: ["delivered", "processing"], // back to processing if more work needed
   // War Room post-delivery monitoring
   delivered: ["monitoring"],
+  // Monitoring engagement ends cleanly
+  monitoring: ["completed"],
 };
 ```
 
-The 4 engine pipeline phases (`intelligence`, `strategy`, `packaging`, `monitoring`) were added when the X-Ray pipeline moved in-house in v4. `refunded` and `cancelled` are not in the manual transitions map — they are set only by the Stripe webhook and the admin order-cancel flow respectively.
+The 4 engine pipeline phases (`intelligence`, `strategy`, `packaging`, `monitoring`) were added when the X-Ray pipeline moved in-house in v4. The terminal `completed` status was added in 2026-04-09 to give War Room and Situation Room engagements a clean exit from `monitoring` (manually by operator, or automatically by cron Part 21 after 365 days from `delivered_at`). `refunded` and `cancelled` are not in the manual transitions map — they are set only by the Stripe webhook and the admin order-cancel flow respectively.
 
 ## Data Flow
 

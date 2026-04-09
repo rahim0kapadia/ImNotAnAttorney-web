@@ -1,10 +1,11 @@
 /**
- * @file Parts 17, 18, 19, 20 — Monitoring and reporting
+ * @file Parts 17, 18, 19, 20, 21 — Monitoring and reporting
  *
  * Part 17: SLA breach detection (delivery_due_at passed)
  * Part 18: Weekly progress emails (War Room + Situation Room)
  * Part 19: Engine heartbeat (stale queued jobs -> operator alert)
  * Part 20: Guarantee escalation (tier-specific thresholds + guarantee_invocations)
+ * Part 21: Auto-close stale monitoring cases (War Room + Situation Room, 365-day safety cap)
  */
 
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
@@ -606,6 +607,221 @@ export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> 
     dbOps.push(ctx.supabase.from("operator_tasks").insert(taskRows));
   }
   await Promise.all([...dbOps, ...emailPromises]);
+
+  return result;
+}
+
+// ============================================================
+// PART 21: AUTO-CLOSE STALE MONITORING CASES
+// ============================================================
+//
+// War Room and Situation Room cases enter `monitoring` after initial delivery
+// via the engine delivery webhook. Before this cron task, there was no
+// outbound transition from `monitoring` and cases would sit there indefinitely.
+//
+// This task closes any monitoring case whose delivered_at is older than the
+// MONITORING_MAX_DAYS safety cap. 365 days was chosen to match the 12-month
+// report_token_expires_at window — past that point the customer loses portal
+// access anyway, so continuing to tag the case as "monitoring" in our internal
+// metrics is incoherent.
+//
+// This is a safety cap, not a product promise. Operators can also trigger
+// monitoring → completed manually via the dashboard (ALLOWED_TRANSITIONS in
+// src/lib/types/operator.ts).
+
+const MONITORING_MAX_DAYS = 365;
+
+export async function closeStaleMonitoring(ctx: CronContext): Promise<CronResult> {
+  const result = emptyResult();
+
+  const cutoff = new Date(ctx.now);
+  cutoff.setDate(cutoff.getDate() - MONITORING_MAX_DAYS);
+
+  // ── Query 1: Fetch stale monitoring cases ──
+  const { data: staleCases } = await ctx.supabase
+    .from("cases")
+    .select("id, order_id, email, tier, delivered_at, report_token, report_token_expires_at, document_count, finding_count, witness_count")
+    .eq("status", "monitoring")
+    .not("delivered_at", "is", null)
+    .lt("delivered_at", cutoff.toISOString())
+    .limit(200);
+
+  if (!staleCases || staleCases.length === 0) return result;
+  if (staleCases.length === 200) {
+    console.warn("[Drip Cron] Part 21: hit 200-case limit — some closures deferred to next run");
+  }
+
+  // ── Queries 2+3: Batch-fetch subscribers + dedup records ──
+  const staleEmails = staleCases.map((c) => c.email.toLowerCase());
+  const { data: staleSubs } = await ctx.supabase
+    .from("subscribers")
+    .select("id, email, unsubscribed_at")
+    .in("email", staleEmails);
+  const subByEmail = new Map(
+    (staleSubs ?? []).map((s: { id: string; email: string; unsubscribed_at: string | null }) => [s.email.toLowerCase(), s])
+  );
+
+  const dedupKeys = staleCases.map((c) => `monitoring-closed-${c.id}`);
+  const staleSubIds = (staleSubs ?? []).map((s: { id: string }) => s.id);
+  const { data: existingDedups } = staleSubIds.length > 0
+    ? await ctx.supabase
+        .from("drip_emails")
+        .select("subscriber_id, email_key")
+        .in("subscriber_id", staleSubIds)
+        .in("email_key", dedupKeys)
+    : { data: [] };
+  const dedupSet = new Set(
+    (existingDedups ?? []).map((r: { subscriber_id: string; email_key: string }) => `${r.subscriber_id}:${r.email_key}`)
+  );
+
+  // ── Query 4: Batch-fetch existing operator_tasks dedup ──
+  const staleCaseIds = staleCases.map((c) => c.id);
+  const { data: existingTasks } = await ctx.supabase
+    .from("operator_tasks")
+    .select("case_id")
+    .in("case_id", staleCaseIds)
+    .eq("task_type", "monitoring_auto_closed");
+  const tasksCaseIdSet = new Set(
+    (existingTasks ?? []).map((t: { case_id: string }) => t.case_id)
+  );
+
+  // ── Per-case: atomic update, email send, operator task ──
+  const operatorTaskRows: Record<string, unknown>[] = [];
+
+  for (const sCase of staleCases) {
+    // Atomic status update with race guard
+    const { data: updateGuard } = await ctx.supabase
+      .from("cases")
+      .update({
+        status: "completed",
+        updated_at: ctx.now.toISOString(),
+      })
+      .eq("id", sCase.id)
+      .eq("status", "monitoring")
+      .select("id")
+      .single();
+
+    if (!updateGuard) {
+      // Another instance grabbed it first, or status changed underneath us
+      result.skipped++;
+      continue;
+    }
+
+    // Mirror status on the order row (best-effort)
+    if (sCase.order_id) {
+      await ctx.supabase
+        .from("orders")
+        .update({ status: "completed", updated_at: ctx.now.toISOString() })
+        .eq("id", sCase.order_id)
+        .eq("status", "monitoring");
+    }
+
+    // Operator task dedup
+    if (!tasksCaseIdSet.has(sCase.id)) {
+      operatorTaskRows.push({
+        case_id: sCase.id,
+        task_type: "monitoring_auto_closed",
+        title: `Monitoring auto-closed: ${tierDisplayName(sCase.tier)} — ${sCase.email}`,
+        description: `Case ${sCase.id} (${tierDisplayName(sCase.tier)}, ${sCase.email}) was auto-closed by the 365-day monitoring safety cap. Delivered: ${sCase.delivered_at}. Review if this closure was premature.`,
+        priority: "NORMAL",
+        priority_rank: 3,
+      });
+    }
+
+    // Customer closure email (dedup check, then send)
+    const sSub = subByEmail.get(sCase.email.toLowerCase());
+    const dedupKey = `monitoring-closed-${sCase.id}`;
+
+    // Skip unsubscribed customers
+    if (sSub?.unsubscribed_at) {
+      result.skipped++;
+      continue;
+    }
+
+    // Skip already-sent
+    if (sSub?.id && dedupSet.has(`${sSub.id}:${dedupKey}`)) {
+      result.skipped++;
+      continue;
+    }
+
+    const tierLabel = tierDisplayName(sCase.tier);
+    const deliveredDate = sCase.delivered_at
+      ? new Date(sCase.delivered_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+      : "earlier";
+    const closureDate = ctx.now.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+
+    const portalStillValid =
+      sCase.report_token &&
+      sCase.report_token_expires_at &&
+      new Date(sCase.report_token_expires_at) > ctx.now;
+
+    const portalBlock = portalStillValid
+      ? `<p style="margin: 16px 0; color: #D4D4D8;">Your portal remains accessible for as long as your report token is valid. You can log back in any time to re-read your report and intelligence findings.</p>
+         <p style="margin: 16px 0;"><a href="${ctx.siteUrl}/my-case/${sCase.report_token}" style="display: inline-block; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Open Your Portal</a></p>`
+      : `<p style="margin: 16px 0; color: #D4D4D8;">Your 12-month report access window has ended. If you need a copy of your delivered report for your records, reply to this email and we will re-send it.</p>`;
+
+    const summaryBlock = `
+      <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
+        <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Engagement started:</strong> ${escapeHtml(deliveredDate)}</p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Engagement closed:</strong> ${escapeHtml(closureDate)}</p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Documents analyzed:</strong> ${sCase.document_count ?? 0}</p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Findings identified:</strong> ${sCase.finding_count ?? 0}</p>
+        <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Witnesses identified:</strong> ${sCase.witness_count ?? 0}</p>
+      </div>
+    `;
+
+    const sendResult = await sendEmailWithRetry({
+      to: sCase.email,
+      subject: `Your ${tierLabel} engagement is complete`,
+      unsubscribeEmail: sCase.email,
+      html: `
+        <h1 style="color: #F59E0B;">Your ${escapeHtml(tierLabel)} Engagement Is Complete</h1>
+        <p style="color: #D4D4D8;">Your ongoing ${escapeHtml(tierLabel)} engagement has reached its natural conclusion. Here is a summary of what was delivered during the engagement.</p>
+        ${summaryBlock}
+        ${portalBlock}
+        <p style="margin: 24px 0 0; color: #A1A1AA; font-size: 13px;">Thank you for trusting us with the information side of your case. We hope what we delivered helped you close the gap that every defendant faces — being the only stranger in a courtroom where everyone else already knows each other.</p>
+      `,
+      threadingHeaders: {
+        references: caseThreadId(sCase.id),
+      },
+    }, { category: "monitoring-closed", case_id: sCase.id, metadata: { tier: sCase.tier } });
+
+    if (sendResult.success) {
+      // Record the send for dedup
+      if (sSub?.id) {
+        await ctx.supabase.from("drip_emails").insert({
+          subscriber_id: sSub.id,
+          email_key: dedupKey,
+        });
+      } else {
+        // Create subscriber for tracking
+        const { data: newSub } = await ctx.supabase
+          .from("subscribers")
+          .upsert(
+            { email: sCase.email.toLowerCase(), source: `purchase-${sCase.tier}` },
+            { onConflict: "email" }
+          )
+          .select("id")
+          .single();
+        if (newSub?.id) {
+          await ctx.supabase.from("drip_emails").insert({
+            subscriber_id: newSub.id,
+            email_key: dedupKey,
+          });
+        }
+      }
+      result.sent++;
+    } else {
+      result.errors++;
+    }
+  }
+
+  // ── Batch insert operator tasks ──
+  if (operatorTaskRows.length > 0) {
+    await ctx.supabase.from("operator_tasks").insert(operatorTaskRows);
+  }
+
+  console.log(`[Drip Cron] Part 21: Auto-closed ${result.sent} monitoring case(s) past ${MONITORING_MAX_DAYS}-day cap`);
 
   return result;
 }
