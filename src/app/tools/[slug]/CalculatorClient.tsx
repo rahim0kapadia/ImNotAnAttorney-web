@@ -574,21 +574,22 @@ function DiversionResults({ result }: { result: DiversionClientResult }) {
         </section>
       )}
 
-      {/* Disqualifiers Identified */}
+      {/* Factors That May Affect Eligibility */}
       {result.disqualifiersIdentified.length > 0 && (
         <section className="mb-8">
           <h3 className="text-lg font-semibold text-zinc-50 mb-2">
-            Disqualifiers Identified
+            Factors That May Affect Eligibility
           </h3>
           <p className="text-sm text-zinc-400 mb-3">
-            These factors, based on the information you provided, may affect your
-            eligibility for certain programs:
+            Based on the information you provided, these factors may affect
+            eligibility for certain programs. Your attorney may identify
+            exceptions or alternative paths:
           </p>
           <ul className="space-y-2">
             {result.disqualifiersIdentified.map((dq, i) => (
               <li
                 key={i}
-                className="text-sm text-red-300 bg-red-900/20 border border-red-800/40 rounded-lg px-4 py-3"
+                className="text-sm text-amber-300 bg-amber-900/20 border border-amber-800/40 rounded-lg px-4 py-3"
               >
                 {dq}
               </li>
@@ -717,8 +718,10 @@ function VeteransCourtResults({
           </p>
           {!result.serviceConnectionMet && (
             <p className="text-xs text-amber-400 mt-2">
-              The service connection requirement may not be met based on your
-              answers. Ask your attorney about documentation options.
+              Many veterans qualify through conditions they may not have
+              formally documented yet. Your attorney can help identify
+              documentation options and whether your situation meets the
+              court&rsquo;s service connection standard.
             </p>
           )}
         </div>

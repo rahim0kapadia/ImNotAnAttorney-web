@@ -1,6 +1,27 @@
 export default function CourtroomBehaviorContent() {
   return (
     <div className="space-y-10 text-base leading-relaxed text-zinc-200">
+      <section aria-labelledby="why-this-matters">
+        <h2
+          id="why-this-matters"
+          className="font-display text-2xl font-bold text-zinc-50"
+        >
+          Courtroom Behavior Is Something You Control
+        </h2>
+        <p className="mt-4">
+          Walking into a courtroom is intimidating. The formality, the
+          uniforms, the judge elevated above everyone else — it is designed
+          to feel serious. That feeling is normal, and everyone who has been
+          through the system knows it.
+        </p>
+        <p className="mt-3">
+          Here is what matters: courtroom behavior is one of the few things
+          in this process you fully control. You cannot control the charges,
+          the prosecutor, or the judge. But how you present yourself is
+          entirely your decision — and judges notice.
+        </p>
+      </section>
+
       <section aria-labelledby="physical-behavior">
         <h2
           id="physical-behavior"

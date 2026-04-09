@@ -123,7 +123,7 @@ export default function JailVisitationContent() {
         </p>
         <ul className="mt-3 space-y-3 pl-5 list-disc marker:text-amber-400">
           <li>It is normal to feel overwhelmed, angry, sad, or numb. All of those are valid.</li>
-          <li>Your loved one needs you to be steady. That does not mean pretending everything is fine — it means showing up.</li>
+          <li>Your loved one needs you to be steady. That does not mean pretending everything is fine — it means showing up. Consistent family presence affects the defendant&rsquo;s mental state during the most important decisions of their case.</li>
           <li>
             NAMI (National Alliance on Mental Illness) offers free support
             groups and a helpline at 1-800-950-6264 for families dealing with

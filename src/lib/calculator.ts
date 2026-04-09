@@ -176,7 +176,7 @@ export function calculateGoodTime(input: GoodTimeInput): GoodTimeResult {
     );
   } else {
     observations.push(
-      `This jurisdiction provides little or no good time credit for the applicable rule — plan around serving the full term.`,
+      `This jurisdiction provides little or no good time credit for the applicable rule. Understanding this early helps you and your attorney focus on other strategies — sentence modification, alternative programs, or other paths that may be available for your situation.`,
     );
   }
   observations.push(
@@ -803,7 +803,7 @@ export function calculateDiversion(input: DiversionInput): DiversionResult {
   const disqualifiersIdentified = collectDisqualifiers(input);
   const questions = generateDiversionQuestions(programs);
 
-  const countyNote = `Diversion program eligibility varies significantly by county and State Attorney's office in ${stateData.state_name}. The information above is based on published state eligibility criteria. ${input.county} County may have additional programs or stricter requirements not reflected here. Always confirm availability and specific eligibility with your attorney or the local State Attorney's office.`;
+  const countyNote = `This gives you a starting point for an informed conversation with your attorney about diversion options in ${input.county} County. Program availability varies by county and State Attorney's office in ${stateData.state_name} — your county may have additional programs or different requirements beyond the published state criteria above.`;
 
   return {
     supported: true,

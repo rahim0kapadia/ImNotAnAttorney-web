@@ -1,6 +1,27 @@
 export default function CharacterReferenceLetterContent() {
   return (
     <div className="space-y-10 text-base leading-relaxed text-zinc-200">
+      <section aria-labelledby="why-letters-matter">
+        <h2
+          id="why-letters-matter"
+          className="font-display text-2xl font-bold text-zinc-50"
+        >
+          Why Character Letters Matter
+        </h2>
+        <p className="mt-4">
+          If someone has asked you to write a character reference letter,
+          that request itself is a sign of trust. It can feel daunting —
+          most people have never written something for a court. That is
+          completely normal.
+        </p>
+        <p className="mt-3">
+          Judges take these letters seriously. A well-written character
+          reference can meaningfully influence how a judge perceives the
+          defendant as a person — separate from the charge. What you write
+          matters.
+        </p>
+      </section>
+
       <section aria-labelledby="what-judges-look-for">
         <h2
           id="what-judges-look-for"

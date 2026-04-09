@@ -1,6 +1,27 @@
 export default function AttorneyCommunicationContent() {
   return (
     <div className="space-y-10 text-base leading-relaxed text-zinc-200">
+      <section aria-labelledby="why-templates">
+        <h2
+          id="why-templates"
+          className="font-display text-2xl font-bold text-zinc-50"
+        >
+          Not Hearing From Your Attorney Is the Most Common Complaint
+        </h2>
+        <p className="mt-4">
+          If you feel like your attorney is not communicating enough, you
+          are not alone. Poor communication is the number one complaint
+          defendants have about their legal representation. It does not
+          necessarily mean your attorney is not working — but it does mean
+          you deserve better information flow.
+        </p>
+        <p className="mt-3">
+          These templates put you in control of that flow. Clear, written
+          communication creates a record, gets you answers faster, and
+          changes the dynamic from waiting to asking.
+        </p>
+      </section>
+
       <section aria-labelledby="status-update">
         <h2
           id="status-update"

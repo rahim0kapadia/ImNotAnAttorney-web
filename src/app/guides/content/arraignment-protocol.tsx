@@ -105,7 +105,7 @@ export default function ArraignmentProtocolContent() {
               Plea negotiation window
             </span>
             {" "}&mdash; Most cases are resolved through negotiation, not trial.
-            This period is when those conversations happen.
+            This is where the most favorable outcomes are typically built.
           </li>
           <li>
             <span className="font-semibold text-zinc-50">Continuances</span>
