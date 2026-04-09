@@ -39,14 +39,14 @@ const OPERATOR_EMAIL =
  * Finalizes a discovery document upload by transitioning the case to "submitted"
  * status and sending notification emails to both the operator and the customer.
  *
- * @param req - JSON body with: caseId (required), email (optional, for ownership verification)
+ * @param req - JSON body with: caseId (required), email (required, for ownership verification)
  * @returns JSON with { success: true } on success, or { success: true, message: "Already submitted" } if idempotent
  */
 export async function POST(req: NextRequest) {
   try {
-    const supabaseRL = createAdminClient();
+    const supabase = createAdminClient();
     const ip = getClientIp(req);
-    const { limited } = await checkRateLimit(supabaseRL, `finalize:${ip}`, 10, 300);
+    const { limited } = await checkRateLimit(supabase, `finalize:${ip}`, 10, 300);
     if (limited) return NextResponse.json({ error: "Too many requests" }, { status: 429 });
 
     let body;
@@ -79,8 +79,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const supabase = createAdminClient();
-
     // =========================================================================
     // 1. CASE VALIDATION
     // Verify the case exists and load its current state. We need file_urls to
@@ -101,10 +99,9 @@ export async function POST(req: NextRequest) {
 
     // =========================================================================
     // 2. OWNERSHIP CHECK
-    // If an email is provided, it must match the case's email. This prevents
-    // someone from finalizing another customer's case. The email param is
-    // optional here (unlike the upload endpoint) because the finalize button
-    // may be called from a context where email is already verified client-side.
+    // The email in the request must match the email on the case record. This
+    // prevents someone from finalizing another customer's case. Email is
+    // required (validated above) and verified case-insensitively.
     // =========================================================================
     if (caseRecord.email.toLowerCase() !== email.toLowerCase().trim()) {
       return NextResponse.json(
