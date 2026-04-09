@@ -106,6 +106,33 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
+  "veterans-court": {
+    name: "Veterans Court Eligibility Checker",
+    category: "calculator",
+    price: 0,
+    priceDisplay: "Free",
+    delivery: "Instant",
+    deliveryDetail:
+      "Results based on verified veterans treatment court data for your state and county.",
+    description:
+      "Check if a veterans treatment court is available in your county and whether you may meet published eligibility criteria.",
+    intakeFields: [
+      "state",
+      "county",
+      "branchOfService",
+      "dischargeType",
+      "serviceCondition",
+      "chargeType",
+      "priorConvictions",
+    ],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Veterans court is one path. The Case Decoder maps your full range of defense options.",
+    dripSequenceKey: "calculator_veterans_court",
+    isActive: true,
+  },
+
   // ─── RESEARCH PRODUCTS ($97-$297 — instant generated reports) ─
   "employment-impact": {
     name: "Employment Impact Assessment",

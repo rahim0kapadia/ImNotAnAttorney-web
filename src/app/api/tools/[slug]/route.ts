@@ -1,9 +1,10 @@
 /**
  * @fileoverview Dynamic Calculator API — serves all calculator tools.
  *
- * POST /api/tools/good-time   → Good Time Credit Calculator
- * POST /api/tools/sol          → Statute of Limitations Calculator (future)
- * POST /api/tools/diversion-eligibility → Diversion Eligibility Checker
+ * POST /api/tools/good-time              → Good Time Credit Calculator
+ * POST /api/tools/sol                     → Statute of Limitations Calculator (future)
+ * POST /api/tools/diversion-eligibility   → Diversion Eligibility Checker
+ * POST /api/tools/veterans-court          → Veterans Treatment Court Eligibility
  *
  * Pattern: Same as /api/score — validate input, compute, return result,
  * fire anonymous analytics. No PII stored at computation time.
@@ -22,6 +23,9 @@ import {
   calculateDiversion,
   validateDiversionInput,
   type DiversionInput,
+  calculateVeteransCourt,
+  validateVeteransCourtInput,
+  type VeteransCourtInput,
 } from "@/lib/calculator";
 
 /**
@@ -44,6 +48,10 @@ const CALCULATOR_REGISTRY: Record<
   "diversion-eligibility": {
     validate: (input) => validateDiversionInput(input as DiversionInput),
     calculate: (input) => calculateDiversion(input as DiversionInput),
+  },
+  "veterans-court": {
+    validate: (input) => validateVeteransCourtInput(input as VeteransCourtInput),
+    calculate: (input) => calculateVeteransCourt(input as VeteransCourtInput),
   },
   // "sol": { validate: validateSOLInput, calculate: calculateSOL },
 };

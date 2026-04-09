@@ -13,6 +13,7 @@
 
 import goodTimeRules from "@/../system-data/good-time-rules.json";
 import diversionRules from "@/../system-data/diversion-programs.json";
+import veteransCourtData from "@/../system-data/veterans-courts.json";
 
 // ─── Types ──────────────────────────────────────────────────────
 
@@ -812,6 +813,263 @@ export function calculateDiversion(input: DiversionInput): DiversionResult {
     disqualifiersIdentified,
     questions,
     countyNote,
+  };
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Veterans Court Eligibility Checker
+// ═══════════════════════════════════════════════════════════════════
+
+export interface VeteransCourtInput {
+  state: string;
+  county: string;
+  branchOfService: string;
+  dischargeType: string;
+  serviceCondition: string;
+  chargeType: string;
+  priorConvictions: string;
+}
+
+export interface VeteransCourtResult {
+  supported: boolean;
+  stateName: string;
+  county: string;
+  courtAvailable: boolean;
+  courtAvailableDetail: string;
+  statute: string | null;
+  dischargeEligibility: string;
+  serviceConnectionMet: boolean;
+  serviceConnectionDetail: string;
+  chargeExclusions: string[];
+  chargeExcluded: boolean;
+  programDetails: {
+    typicalDuration: string | null;
+    completionResult: string | null;
+    conditions: string[];
+  } | null;
+  questions: string[];
+  fallbackMessage?: string;
+}
+
+// ─── Veterans Court — data types ─────────────────────────────
+
+interface VCDischargeTypes {
+  honorable?: string;
+  general_under_honorable?: string;
+  other_than_honorable?: string;
+  bad_conduct?: string;
+  dishonorable?: string;
+}
+
+interface VCEligibility {
+  discharge_types: VCDischargeTypes;
+  service_connection_required: boolean;
+  service_connection_detail?: string;
+  charge_exclusions: string[];
+  charge_exclusions_note?: string;
+  prior_convictions_policy?: string;
+}
+
+interface VCProgramDetails {
+  typical_duration: string;
+  completion_result?: string;
+  completion_result_pretrial?: string;
+  completion_result_postconviction?: string;
+  tracks?: Record<string, string>;
+  conditions: string[];
+}
+
+interface VCStateData {
+  state_name: string;
+  statute: string;
+  statewide_program: boolean;
+  statewide_note?: string;
+  counties_with_courts: string[] | Record<string, string[]>;
+  eligibility: VCEligibility;
+  program_details: VCProgramDetails;
+  legislative_update?: string;
+}
+
+type VCFile = {
+  _metadata: unknown;
+} & Record<string, VCStateData | unknown>;
+
+const VC_RULES = veteransCourtData as unknown as VCFile;
+
+const VC_SUPPORTED_STATES = new Set(
+  Object.keys(VC_RULES).filter((k) => k !== "_metadata"),
+);
+
+// ─── Veterans Court — validation ─────────────────────────────
+
+export function validateVeteransCourtInput(
+  input: VeteransCourtInput,
+): ValidationResult {
+  const errors: string[] = [];
+  if (!input.state) errors.push("State is required");
+  else if (!VC_SUPPORTED_STATES.has(input.state.toUpperCase()))
+    errors.push(`Veterans court data for ${input.state} is not yet available`);
+  if (!input.county) errors.push("County is required");
+  if (!input.dischargeType) errors.push("Discharge type is required");
+  if (!input.serviceCondition) errors.push("Service condition is required");
+  if (!input.chargeType) errors.push("Charge type is required");
+  return { valid: errors.length === 0, errors };
+}
+
+// ─── Veterans Court — county lookup ──────────────────────────
+
+function countyHasCourt(
+  counties: string[] | Record<string, string[]>,
+  county: string,
+): { available: boolean; circuit?: string } {
+  const normalized = county.toLowerCase();
+  if (Array.isArray(counties)) {
+    const found = counties.some((c) => c.toLowerCase() === normalized);
+    return { available: found };
+  }
+  // FL-style: keyed by circuit
+  for (const [circuit, list] of Object.entries(counties)) {
+    if (list.some((c) => c.toLowerCase() === normalized)) {
+      return { available: true, circuit };
+    }
+  }
+  return { available: false };
+}
+
+// ─── Veterans Court — discharge eligibility ──────────────────
+
+const DISCHARGE_MAP: Record<string, keyof VCDischargeTypes> = {
+  honorable: "honorable",
+  "general-under-honorable": "general_under_honorable",
+  "other-than-honorable": "other_than_honorable",
+  "bad-conduct": "bad_conduct",
+  dishonorable: "dishonorable",
+};
+
+function evaluateDischarge(
+  dischargeType: string,
+  types: VCDischargeTypes,
+): string {
+  const key = DISCHARGE_MAP[dischargeType];
+  if (!key || !types[key]) {
+    return "Discharge type eligibility information not available for this category. Contact the local veterans court for specific requirements.";
+  }
+  return types[key]!;
+}
+
+// ─── Veterans Court — main calculation ───────────────────────
+
+const VC_UNSUPPORTED = (stateCode: string): string =>
+  `Veterans treatment court data for ${stateCode} is not yet in our database. Veterans treatment court availability varies by state and county — contact your local VA Veterans Justice Outreach specialist for current program details.`;
+
+export function calculateVeteransCourt(
+  input: VeteransCourtInput,
+): VeteransCourtResult {
+  const stateCode = (input.state || "").toUpperCase();
+  const stateData = VC_RULES[stateCode] as VCStateData | undefined;
+
+  if (!stateData) {
+    return {
+      supported: false,
+      stateName: stateCode,
+      county: input.county,
+      courtAvailable: false,
+      courtAvailableDetail: "",
+      statute: null,
+      dischargeEligibility: "",
+      serviceConnectionMet: false,
+      serviceConnectionDetail: "",
+      chargeExclusions: [],
+      chargeExcluded: false,
+      programDetails: null,
+      questions: [],
+      fallbackMessage: VC_UNSUPPORTED(stateCode || "your state"),
+    };
+  }
+
+  // County availability
+  const countyResult = countyHasCourt(
+    stateData.counties_with_courts,
+    input.county,
+  );
+  let courtAvailableDetail: string;
+  if (countyResult.available) {
+    courtAvailableDetail = countyResult.circuit
+      ? `A veterans treatment court is available in ${input.county} County (${countyResult.circuit.replace(/_/g, " ")}).`
+      : `A veterans treatment court is available in ${input.county} County.`;
+  } else {
+    courtAvailableDetail = `No veterans treatment court was found in ${input.county} County based on our data. ${stateData.statewide_program ? "However, " + stateData.state_name + " mandates statewide availability — contact your local court." : "Check with the county court or your local VA Veterans Justice Outreach specialist for current availability."}`;
+  }
+
+  // Discharge eligibility
+  const dischargeEligibility = evaluateDischarge(
+    input.dischargeType,
+    stateData.eligibility.discharge_types,
+  );
+
+  // Service connection
+  const serviceConditionProvided =
+    input.serviceCondition !== "none" &&
+    input.serviceCondition !== "prefer-not-to-say";
+  const serviceConnectionMet =
+    !stateData.eligibility.service_connection_required ||
+    serviceConditionProvided;
+  const serviceConnectionDetail = stateData.eligibility
+    .service_connection_required
+    ? serviceConditionProvided
+      ? `${stateData.state_name} requires a service-connected condition. Your reported condition may satisfy this requirement — specific documentation standards vary by court.`
+      : `${stateData.state_name} requires a service-connected condition (PTSD, TBI, substance abuse, mental health, or MST). Without a documented service connection, eligibility may be limited.`
+    : `${stateData.state_name} does not require service connection at the statute level, though individual courts may consider it.`;
+
+  // Charge exclusions
+  const chargeExclusions = stateData.eligibility.charge_exclusions;
+  const chargeExcluded =
+    input.chargeType === "sex-offense" &&
+    chargeExclusions.some(
+      (ex) =>
+        ex.toLowerCase().includes("sex") ||
+        ex.toLowerCase().includes("290") ||
+        ex.toLowerCase().includes("indecency"),
+    );
+
+  // Program details
+  const pd = stateData.program_details;
+  const completionResult =
+    pd.completion_result ||
+    (pd.tracks
+      ? Object.values(pd.tracks).join("; ")
+      : pd.completion_result_pretrial || "Varies by court");
+
+  // Questions
+  const questions: string[] = [
+    `Is the veterans treatment court in ${input.county} County currently accepting new participants?`,
+    "What documentation of military service and service-connected condition is required for admission?",
+    `How does a ${input.dischargeType.replace(/-/g, " ")} discharge affect eligibility at this specific court?`,
+    "What is the typical timeline from application to admission?",
+    "Is there a Veterans Justice Outreach (VJO) specialist assigned to this court?",
+    "What treatment providers does the court work with, and are VA services accepted?",
+    "What happens if I do not complete the program — is the original charge reinstated?",
+    "Can my criminal defense attorney coordinate with the VTC team during the application process?",
+  ];
+
+  return {
+    supported: true,
+    stateName: stateData.state_name,
+    county: input.county,
+    courtAvailable: countyResult.available,
+    courtAvailableDetail,
+    statute: stateData.statute,
+    dischargeEligibility,
+    serviceConnectionMet,
+    serviceConnectionDetail,
+    chargeExclusions,
+    chargeExcluded,
+    programDetails: {
+      typicalDuration: pd.typical_duration,
+      completionResult: completionResult,
+      conditions: pd.conditions,
+    },
+    questions,
   };
 }
 

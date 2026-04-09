@@ -1,0 +1,423 @@
+{
+  "_metadata": {
+    "description": "Verified veterans treatment court data by state. Top 10 states by veteran population. Claude references this instead of generating VTC data from memory.",
+    "sources": [
+      "https://courts.ca.gov/programs-initiatives/collaborative-justice-courts/adult-courts/veterans-treatment-courts",
+      "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=1170.9.",
+      "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.124.htm",
+      "https://texvet.org/vetcourts-tx",
+      "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0394/Sections/0394.47891.html",
+      "https://www.flcourts.gov/Services/Problem-Solving-Courts/problem-solving-court-types/veterans-courts",
+      "https://www.pacourts.us/judicial-administration/court-programs/veterans-courts",
+      "https://www.legis.state.pa.us/WU01/LI/LI/CT/HTM/42/00.009.016.000..HTM",
+      "https://ww2.nycourts.gov/courts/problem_solving/vet/index.shtml",
+      "https://www.nysenate.gov/legislation/laws/CPL/170.15",
+      "https://www.supremecourt.ohio.gov/courts/services-to-courts/specialized-docket-section/certification-procedures/",
+      "https://codes.ohio.gov/ohio-revised-code/section-2951.041",
+      "https://www.nccourts.gov/courts/recovery-courts/veterans-treatment-court",
+      "https://ncleg.net/EnactedLegislation/Statutes/HTML/ByArticle/Chapter_7A/Article_62.html",
+      "https://www.vacourts.gov/courtadmin/aoc/djs/programs/sds/programs/vtd/home",
+      "https://www.vacourts.gov/courtadmin/aoc/djs/programs/sds/programs/vtd/advisory/vtd_directory.pdf",
+      "https://law.justia.com/codes/georgia/title-15/chapter-1/section-15-1-17/",
+      "https://cacj.georgia.gov/veterans-treatment-courts",
+      "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=3231&ChapterID=55",
+      "https://www.illinoiscourts.gov/probation-programs/problem-solving-courts-map/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC11658118/",
+      "https://justiceforvets.org/"
+    ],
+    "last_verified": "2026-04-09",
+    "anti_hallucination": "If a county or eligibility detail is not in this file, the calculator MUST say: 'Veterans treatment court availability and eligibility vary by county. Contact your local court or VA Veterans Justice Outreach specialist for current program details.'"
+  },
+  "CA": {
+    "state_name": "California",
+    "statute": "Cal. Penal Code 1170.9 (post-conviction sentencing); Cal. Penal Code 1001.80 (pretrial military diversion, expanded by SB 1025 eff. Jan 1, 2025)",
+    "statewide_program": false,
+    "statewide_note": "PC 1170.9 applies statewide as a sentencing provision any court must consider. Dedicated VTC courtrooms are optional per county.",
+    "counties_with_courts": [
+      "Alameda", "Butte", "Calaveras", "Contra Costa", "Del Norte",
+      "El Dorado", "Fresno", "Kings", "Lake", "Los Angeles",
+      "Madera", "Merced", "Monterey", "Orange", "Placer",
+      "Riverside", "Sacramento", "San Bernardino", "San Diego",
+      "San Francisco", "San Joaquin", "San Luis Obispo", "San Mateo",
+      "Santa Barbara", "Santa Clara", "Santa Cruz", "Solano",
+      "Sonoma", "Stanislaus", "Tulare", "Ventura"
+    ],
+    "counties_source": "https://courts.ca.gov/programs-initiatives/collaborative-justice-courts/adult-courts/veterans-treatment-courts",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible",
+        "other_than_honorable": "eligible -- may need VA waiver for benefits but court eligibility not barred",
+        "bad_conduct": "eligible -- same VA waiver process as OTH",
+        "dishonorable": "generally ineligible -- very difficult to receive VA waiver but can apply"
+      },
+      "discharge_source": "https://www.greghillassociates.com/sentencing-alternatives-for-military-veterans-pc-1170-9.html",
+      "service_connection_required": true,
+      "service_connection_detail": "Must allege suffering from PTSD, TBI, MST, substance abuse, or other mental health condition as a result of military service. For PC 1001.80, condition must have been a significant factor in the offense.",
+      "charge_exclusions": [
+        "Murder (PC 1001.80 pretrial diversion)",
+        "Voluntary manslaughter (PC 1001.80)",
+        "Offenses requiring PC 290 sex offender registration (except PC 314 indecent exposure)",
+        "PC 220 -- Assault with intent to commit specified sex offenses",
+        "PC 264.1 -- Rape or sexual penetration in concert",
+        "PC 288.5 -- Continuous sexual abuse of a child",
+        "PC 11418(b)(c) -- Weapons of mass destruction"
+      ],
+      "charge_exclusions_note": "Exclusions above apply to PC 1001.80 pretrial diversion. PC 1170.9 post-conviction sentencing has fewer categorical exclusions.",
+      "charge_exclusions_source": "https://codes.findlaw.com/ca/penal-code/pen-sect-1001-80/",
+      "prior_convictions_policy": "Prior convictions do not automatically disqualify under PC 1170.9. Military diversion under PC 1001.80 is generally available only once."
+    },
+    "program_details": {
+      "typical_duration": "12-24 months (most 15-18 months)",
+      "completion_result_pretrial": "All criminal charges dismissed; arrest deemed never to have occurred",
+      "completion_result_postconviction": "Early termination of probation, felony reduction to misdemeanor (PC 17), dismissal under PC 1203.4 (expungement)",
+      "conditions": ["Regular court appearances", "VA or community-based treatment", "Mental health medication management", "Veteran peer mentors", "Judicial supervision with rewards/sanctions", "Drug/alcohol testing"]
+    }
+  },
+  "TX": {
+    "state_name": "Texas",
+    "statute": "Tex. Gov't Code Ch. 124 (124.001-124.007); Tex. Gov't Code 411.0727 (nondisclosure after completion)",
+    "statute_source": "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.124.htm",
+    "statewide_program": false,
+    "statewide_note": "Optional per county. Approximately 39 counties have programs. Counties may jointly establish regional programs (124.004).",
+    "counties_with_courts": [
+      "Bell", "Bexar", "Brazoria", "Collin", "Comal", "Cooke", "Dallas", "Denton", "El Paso",
+      "Fannin", "Fort Bend", "Galveston", "Grayson", "Guadalupe", "Harris", "Hays", "Hidalgo",
+      "Hunt", "Kaufman", "Liberty", "McLennan", "Montgomery", "Nueces", "Rockwall", "Smith",
+      "Tarrant", "Travis", "Webb", "Williamson"
+    ],
+    "counties_source": "https://texvet.org/vetcourts-tx",
+    "counties_note": "29 of approximately 39 counties verified. North Texas Regional Court serves Collin, Cooke, Fannin, Grayson, Hunt, Kaufman, Rockwall.",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible at most courts",
+        "other_than_honorable": "varies by county -- Bexar accepts all; Dallas excludes",
+        "bad_conduct": "varies by county -- Bexar accepts; most others exclude",
+        "dishonorable": "varies by county -- Bexar accepts all discharge types; Dallas and most others exclude"
+      },
+      "discharge_note": "State statute does NOT specify discharge requirements. Each county sets its own policy.",
+      "discharge_source": "https://www.bexar.org/1085/Veterans-Treatment-Court",
+      "service_connection_required": true,
+      "service_connection_detail": "124.002(a): must suffer from brain injury, mental illness, or mental disorder (including PTSD) or be a victim of MST, AND condition must have occurred during/resulted from military service AND affected the criminal conduct.",
+      "charge_exclusions": ["Murder", "Sexual assault / aggravated sexual assault", "Indecency with a child", "Aggravated kidnapping", "Robbery / aggravated robbery", "Injury to a child, elderly, or disabled person", "Online solicitation of a minor", "Child pornography offenses", "Offenses with deadly weapon finding"],
+      "charge_exclusions_note": "Statute allows any misdemeanor or felony. Above exclusions are common across counties, aligned with Art. 42A.054(a).",
+      "charge_exclusions_source": "https://texas.public.law/statutes/tex._code_of_crim._proc._article_42a.054",
+      "prior_convictions_policy": "Varies by county. Dallas: no prior felony convictions. Fort Bend: no prior sex/drug delivery/3g convictions. Statute considers criminal history but imposes no categorical bar."
+    },
+    "program_details": {
+      "typical_duration": "12-24 months (statutory minimum 6 months per 124.003)",
+      "tracks": {
+        "pretrial_diversion": "Charges dismissed upon completion; potential expunction (124.001(b))",
+        "deferred_adjudication": "Nondisclosure order eligible 2 years after completion (411.0727)"
+      },
+      "conditions": ["Court-ordered individualized treatment plan", "Regular court appearances", "Drug/alcohol testing", "Treatment compliance", "Veteran mentor assignment", "VA coordination for medical/housing/vocational services", "Legal counsel required"]
+    }
+  },
+  "FL": {
+    "state_name": "Florida",
+    "statute": "F.S. 394.47891 (Veterans Treatment Court Programs); F.S. 948.08(7) (felony pretrial veteran intervention); F.S. 948.16(2) (misdemeanor pretrial veteran intervention)",
+    "statute_source": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0394/Sections/0394.47891.html",
+    "statewide_program": false,
+    "statewide_note": "Optional per circuit. Legislature encourages a VTC in each judicial circuit. 34 veterans courts statewide as of FY 2024-25.",
+    "legislative_update": "HB 199 (effective July 1, 2026): shifts admission from state attorney sole authority to court with multidisciplinary team; creates post-adjudicatory VTC track for nonviolent felonies.",
+    "legislative_update_source": "https://www.flsenate.gov/Session/Bill/2026/199",
+    "counties_with_courts": {
+      "1st_circuit": ["Escambia", "Okaloosa", "Santa Rosa", "Walton"],
+      "2nd_circuit": ["Leon"],
+      "4th_circuit": ["Duval", "Clay", "Nassau"],
+      "5th_circuit": ["Marion", "Lake", "Hernando", "Citrus", "Sumter"],
+      "6th_circuit": ["Pinellas", "Pasco"],
+      "7th_circuit": ["Flagler", "Putnam", "St. Johns", "Volusia"],
+      "8th_circuit": ["Alachua", "Baker", "Bradford", "Gilchrist", "Levy", "Union"],
+      "9th_circuit": ["Orange", "Osceola"],
+      "10th_circuit": ["Polk", "Highlands", "Hardee"],
+      "11th_circuit": ["Miami-Dade"],
+      "12th_circuit": ["Manatee", "Sarasota"],
+      "13th_circuit": ["Hillsborough"],
+      "14th_circuit": ["Bay", "Calhoun", "Gulf", "Holmes", "Jackson", "Washington"],
+      "15th_circuit": ["Palm Beach"],
+      "17th_circuit": ["Broward"],
+      "18th_circuit": ["Brevard", "Seminole"],
+      "20th_circuit": ["Lee", "Charlotte", "Collier"]
+    },
+    "counties_source": "https://www.flcourts.gov/Services/Problem-Solving-Courts/problem-solving-court-types/veterans-courts",
+    "counties_note": "17 circuits verified. 34 total VTC programs across approximately 20 circuits.",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible -- explicitly included in F.S. 948.08(7)",
+        "other_than_honorable": "varies by circuit -- statute silent; circuits decide",
+        "bad_conduct": "varies by circuit -- generally excluded where specified",
+        "dishonorable": "generally ineligible -- chief judge and state attorney have exclusive authority to allow per 394.47891(3)(d)"
+      },
+      "discharge_source": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0394/Sections/0394.47891.html",
+      "service_connection_required": true,
+      "service_connection_detail": "394.47891(8)(a)(1): must have service-related mental health condition, TBI, substance use disorder, psychological problem, or military sexual trauma.",
+      "charge_exclusions": ["Kidnapping or attempted kidnapping", "Murder, attempted murder, manslaughter", "Aggravated battery or attempted", "Sexual battery or attempted", "Lewd or lascivious offenses involving minors", "Robbery, carjacking, home invasion robbery", "Burglary (first or second degree)", "Arson or attempted arson", "Aggravated assault", "Aggravated stalking", "Aircraft piracy", "Treason"],
+      "charge_exclusions_note": "Per F.S. 948.06(8)(c). Additional circuit-level exclusions common (felony DUI, drug distribution).",
+      "charge_exclusions_source": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0900-0999/0948/Sections/0948.06.html",
+      "prior_convictions_policy": "No categorical statutory bar. State attorney considers criminal history and prior VTC participation."
+    },
+    "program_details": {
+      "typical_duration": "12-24 months",
+      "tracks": {
+        "pretrial_diversion": "Charges dismissed (nolle prosequi); expungement eligible under F.S. 943.0585",
+        "post_plea": "Adjudication withheld and/or reduced probation",
+        "post_adjudicatory": "NEW effective July 1, 2026 (HB 199) -- sentencing courts may divert for nonviolent felonies"
+      },
+      "conditions": ["Substance abuse and mental health treatment", "Frequent/random drug and alcohol testing", "Regular court appearances", "Veteran peer mentoring", "VA healthcare and benefits assistance", "Housing, employment, education assistance", "Restitution to victims"]
+    }
+  },
+  "PA": {
+    "state_name": "Pennsylvania",
+    "statute": "42 Pa.C.S. 916 (Problem-solving courts, including veterans courts)",
+    "statute_source": "https://www.legis.state.pa.us/WU01/LI/LI/CT/HTM/42/00.009.016.000..HTM",
+    "statewide_program": false,
+    "statewide_note": "Optional per county. 26 county VTC programs as of 2025, covering 31 of 67 counties. First VTC: Lackawanna County, November 2009. Courts may accept defendants from other counties (916(d)).",
+    "counties_with_courts": ["Allegheny", "Butler", "Carbon", "Chester", "Clinton", "Delaware", "Lackawanna", "Lancaster", "Luzerne", "Montgomery", "Northampton", "Washington"],
+    "counties_source": "https://www.pacourts.us/judicial-administration/court-programs/veterans-courts",
+    "counties_note": "12 counties verified. DMVA reports 26 county programs. Regional courts expanding coverage.",
+    "data_gaps": "PA publishes limited eligibility details at the state level. Each county sets its own criteria via local rules.",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible at most courts",
+        "other_than_honorable": "varies by county -- no statewide standard",
+        "dishonorable": "varies by county -- no statewide standard"
+      },
+      "discharge_note": "42 Pa.C.S. 916 does not specify discharge requirements.",
+      "service_connection_required": true,
+      "service_connection_detail": "Programs target veterans struggling with addiction, mental illness, or co-occurring disorders, often caused by PTSD. Specifics vary by county.",
+      "charge_exclusions": ["Varies by county -- no statewide statutory exclusions in 916", "Generally nonviolent offenders per problem-solving court model"],
+      "prior_convictions_policy": "Not addressed at state level. Each county determines per local rules."
+    },
+    "program_details": {
+      "typical_duration": "12-24 months (Chester County: 1-2 years pretrial, 2-3 years post-conviction)",
+      "graduation_rate": "75% (2024: 146 veterans graduated statewide)",
+      "graduation_rate_source": "https://www.pacourts.us/news-and-statistics/news/news-detail/1254/pennsylvanias-veterans-treatment-courts-make-a-difference-for-veterans",
+      "conditions": ["Regular court appearances", "Veteran mentor support", "Specialized probation officer supervision", "VA treatment", "Drug/alcohol testing", "Counseling and therapy"]
+    }
+  },
+  "NY": {
+    "state_name": "New York",
+    "statute": "Judiciary Law 212(bb); CPL 170.15(5), 180.20(4), 230.11, 230.21 (case removal); CPL 390.30 (sentencing deferral)",
+    "statute_source": "https://www.nysenate.gov/legislation/laws/CPL/170.15",
+    "statewide_program": false,
+    "statewide_note": "Optional per county. 38 VTCs in 29 of 62 counties. Adjoining-county transfers allowed.",
+    "counties_with_courts": [
+      "Albany", "Bronx", "Broome", "Cattaraugus", "Cayuga", "Chautauqua", "Chemung", "Columbia",
+      "Dutchess", "Erie", "Essex", "Genesee", "Kings", "Monroe", "Nassau", "New York", "Niagara",
+      "Onondaga", "Ontario", "Orange", "Putnam", "Queens", "Rensselaer", "Richmond", "Suffolk",
+      "Sullivan", "Tompkins", "Ulster", "Westchester"
+    ],
+    "counties_source": "https://ww2.nycourts.gov/courts/problem_solving/vet/courts.shtml",
+    "counties_note": "29 counties hosting 38 VTCs. Some counties have multiple courts.",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible",
+        "other_than_honorable": "eligible -- NY accepts all discharge statuses",
+        "bad_conduct": "eligible -- all characters of discharge accepted",
+        "dishonorable": "eligible -- nycourts.gov states all discharge statuses accepted"
+      },
+      "discharge_source": "https://ww2.nycourts.gov/courts/problem_solving/vet/index.shtml",
+      "discharge_note": "NY is notably inclusive. Restoration of Honor Act (2019) can restore state benefits for OTH+ discharges.",
+      "service_connection_required": true,
+      "service_connection_detail": "Nexus between military service and criminal behavior expected. Clinical determination by treatment team.",
+      "charge_exclusions": ["Class A violent felonies (murder, arson, kidnapping)", "All sex offenses", "Family offenses (CPL 530.11) -- cannot transfer to VTC in adjoining county"],
+      "charge_exclusions_note": "No statewide eligibility statute. Individual VTCs have discretion. DUI is 44.2% of all cases.",
+      "charge_exclusions_source": "https://www.nysenate.gov/legislation/bills/2015/2015-s3914a",
+      "prior_convictions_policy": "Not statutorily defined. Treatment team evaluates case-by-case."
+    },
+    "program_details": {
+      "typical_duration": "14-18 months",
+      "completion_result": "Charges reduced or dismissed; withdrawal of guilty plea possible; non-criminal disposition",
+      "statewide_outcomes": {"period": "2013-2023", "participants": 1318, "completion_rate": "74.5%", "recidivism": "14.0% vs 46.0% for incarcerated civilians"},
+      "outcomes_source": "https://nyhealthfoundation.org/resource/veterans-treatment-courts-new-york-state-past-and-future/",
+      "conditions": ["Judicially supervised treatment plan", "Veteran peer mentorship", "Mental health counseling", "Substance abuse treatment", "Job training and placement", "Housing support", "Regular court appearances", "VA benefits connections"]
+    }
+  },
+  "OH": {
+    "state_name": "Ohio",
+    "statute": "No dedicated VTC statute. Authority: Ohio Supreme Court Rules of Superintendence Sup.R. 36.20-36.29. Related: ORC 2951.041 (Intervention in Lieu of Conviction)",
+    "statute_source": "https://www.supremecourt.ohio.gov/courts/services-to-courts/specialized-docket-section/certification-procedures/",
+    "statewide_program": false,
+    "statewide_note": "Optional per county. 28-29 certified VTCs as of late 2025. Certification renewed every 3 years.",
+    "counties_with_courts": [
+      "Athens", "Butler", "Cuyahoga", "Delaware", "Fairfield", "Franklin", "Greene", "Hamilton",
+      "Lake", "Lorain", "Lucas", "Mahoning", "Marion", "Medina", "Montgomery", "Ottawa",
+      "Richland", "Stark", "Summit", "Warren"
+    ],
+    "counties_source": "https://www.ohamvets.org/veterans-courts",
+    "counties_note": "20 counties verified (~24 dockets). Chief Justice confirmed 28 certified VTCs.",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible",
+        "other_than_honorable": "varies -- Cuyahoga accepts all; Greene/Montgomery require honorable/general",
+        "dishonorable": "varies -- Cuyahoga accepts all; most others exclude"
+      },
+      "discharge_source": "https://cp.cuyahogacounty.gov/court-resources/specialty-courtsprograms/veterans-treatment-court/",
+      "service_connection_required": true,
+      "service_connection_detail": "Most courts require condition to be a significant factor in the offense. Combat experience NOT required.",
+      "charge_exclusions": ["F1 and F2 felonies (Hamilton County)", "Violent offenses (Summit/Akron)", "Sex offenses", "Offenses involving weapons", "NGRI / Incompetent to Stand Trial"],
+      "charge_exclusions_note": "Varies by county. ILC track (ORC 2951.041): F1-F3, violence, felony sex offenses, drug trafficking excluded.",
+      "charge_exclusions_source": "https://codes.ohio.gov/ohio-revised-code/section-2951.041",
+      "prior_convictions_policy": "ILC track: no prior felony offense of violence. County VTCs: violent felonies generally disqualify; non-violent evaluated case-by-case."
+    },
+    "program_details": {
+      "typical_duration": "12-18 months",
+      "tracks": {
+        "diversion_ILC": "Charges dismissed under ORC 2951.041. Record sealing eligible immediately.",
+        "non_diversion": "Post-conviction. Completion may result in early termination."
+      },
+      "conditions": ["Regular court appearances", "Substance abuse and mental health treatment", "Frequent random drug testing", "VA services coordination", "Veteran volunteer mentoring", "Employment/education assistance", "Housing support", "Graduated sanctions and incentives"]
+    }
+  },
+  "NC": {
+    "state_name": "North Carolina",
+    "statute": "N.C. Gen. Stat. Ch. 7A, Art. 62 (7A-790 through 7A-801) -- Judicially Managed Accountability and Recovery Court Act of 2021",
+    "statute_source": "https://ncleg.net/EnactedLegislation/Statutes/HTML/ByArticle/Chapter_7A/Article_62.html",
+    "statewide_program": false,
+    "statewide_note": "Optional per judicial district. AOC administered. Cases can be referred across counties.",
+    "counties_with_courts": ["Buncombe", "Catawba", "Cumberland", "Forsyth", "Gaston", "Harnett", "Iredell", "Moore", "New Hanover", "Onslow", "Pitt", "Randolph", "Rockingham", "Rowan"],
+    "counties_source": "https://www.nccourts.gov/courts/recovery-courts/veterans-treatment-court",
+    "counties_note": "14 counties on nccourts.gov. Harnett was first NC VTC (2013). Rockingham opened May 2025.",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible",
+        "other_than_honorable": "eligible -- NC more inclusive than federal standards",
+        "dishonorable": "not verified -- statute silent; likely excluded per federal norms"
+      },
+      "discharge_note": "UNC School of Government: only requirement is prior military service. NC courts NOT limited to federal veteran definition.",
+      "discharge_source": "https://nccriminallaw.sog.unc.edu/veterans-treatment-court/",
+      "service_connection_required": false,
+      "service_connection_detail": "No formal service-connection requirement. Only prior military service required.",
+      "charge_exclusions": ["Varies by court -- no statewide statutory exclusions", "Randolph County: Class H/I felony or lower (nonviolent)", "General pattern: Class A-G felonies excluded"],
+      "charge_exclusions_note": "NC statute contains NO eligibility criteria. Entirely deferred to court discretion.",
+      "charge_exclusions_source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11658118/",
+      "prior_convictions_policy": "No statewide policy. Prior convictions alone not automatic disqualifier."
+    },
+    "program_details": {
+      "typical_duration": "13-24 months",
+      "phases": "5 phases typical",
+      "completion_result": "Charges reduced or dismissed via deferred prosecution or conditional discharge.",
+      "conditions": ["Intensive outpatient substance use treatment", "Mental health treatment", "Weekly recovery groups", "Frequent drug/alcohol screening", "Court supervision with graduated sanctions/rewards", "Veteran mentor (battle buddy)", "Vocational training, education, housing assistance", "VA benefits enrollment", "Employment support"]
+    }
+  },
+  "VA_STATE": {
+    "state_name": "Virginia",
+    "statute": "No standalone statute. Authority: Supreme Court of Virginia Rule 1:25 (Specialty Dockets). Va. Code 18.2-254.2 designates VTDs for federal grants.",
+    "statute_source": "https://law.lis.virginia.gov/vacode/title18.2/chapter7/section18.2-254.2/",
+    "statewide_program": false,
+    "statewide_note": "Optional per locality. 10 dockets as of March 2026 (4 Circuit, 5 GDC, 1 JDR).",
+    "localities_with_courts": [
+      "Chesterfield County (Circuit)", "Fairfax County (Circuit, GDC, JDR)", "Norfolk (Circuit)",
+      "Spotsylvania / Rappahannock Regional (Circuit)", "Greater Prince William / Manassas (GDC)",
+      "Henrico (GDC)", "Loudoun County (GDC)", "Pulaski (GDC)"
+    ],
+    "counties_source": "https://www.vacourts.gov/courtadmin/aoc/djs/programs/sds/programs/vtd/advisory/vtd_directory.pdf",
+    "counties_note": "10 dockets across 8 localities. Directory updated March 27, 2026.",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible at most dockets",
+        "other_than_honorable": "varies -- half of dockets excluded non-honorable as of 2019; Fairfax appears inclusive",
+        "dishonorable": "universally excluded"
+      },
+      "discharge_source": "https://www.vacourts.gov/static/courtadmin/aoc/djs/programs/sds/programs/vtd/resources/vtd_strategic_plan.pdf",
+      "service_connection_required": true,
+      "service_connection_detail": "Diagnosed mental health and/or substance use disorder required (DSM-5). Formal VA rating NOT required.",
+      "charge_exclusions": ["Sex offenses (serious/repetitive)", "Violent criminal history (case-by-case)", "Offenses involving weapons", "Incompetence to stand trial"],
+      "charge_exclusions_note": "No statewide statutory exclusions. Many dockets incorrectly mirror drug court exclusions which do NOT apply to VTDs.",
+      "prior_convictions_policy": "Varies. Many historically excluded prior violent felony within 10 years. Strategic plan recommended removing restriction."
+    },
+    "program_details": {
+      "model": "Post-plea only (all Virginia VTDs).",
+      "typical_duration": "12-24 months (Chesterfield: ~14 months)",
+      "phases": "5 phases typical",
+      "completion_result": "Non-violent felonies may be dismissed; charges reduced; alternatives to incarceration.",
+      "conditions": ["Frequent court appearances", "Individualized treatment plan", "Drug/alcohol screening", "Weekly probation meetings", "Veteran peer mentor", "Counseling", "Wraparound services (housing, employment, VA benefits)"]
+    }
+  },
+  "GA": {
+    "state_name": "Georgia",
+    "statute": "O.C.G.A. 15-1-17 (Veterans Court Divisions)",
+    "statute_source": "https://law.justia.com/codes/georgia/title-15/chapter-1/section-15-1-17/",
+    "statewide_program": false,
+    "statewide_note": "Optional per county/circuit. Certified by Council of Accountability Court Judges (CACJ). State funding conditioned on certification.",
+    "counties_with_courts": [
+      "Fannin", "Gilmer", "Pickens", "Liberty", "Richmond", "Burke", "Muscogee", "Cherokee",
+      "Clayton", "Cobb", "Coweta", "Carroll", "Meriwether", "Troup", "Heard", "DeKalb", "Douglas",
+      "Johnson", "Laurens", "Treutlen", "Twiggs", "Fayette", "Fulton", "Gwinnett", "Hall",
+      "Henry", "Newton", "Chatham", "Clarke", "Oconee"
+    ],
+    "counties_source": "https://cacj.georgia.gov/veterans-treatment-courts",
+    "counties_note": "20 courts verified across 30+ counties.",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible at most courts",
+        "other_than_honorable": "varies -- Cobb and Atlantic accept all; Coweta requires honorable",
+        "dishonorable": "varies -- Cobb and Atlantic explicitly accept; statute has no bar"
+      },
+      "discharge_note": "Statute defines veteran as former member of armed forces with NO discharge requirement.",
+      "discharge_source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11658118/",
+      "service_connection_required": false,
+      "service_connection_detail": "Statute does NOT require service connection. In practice, most courts target veterans with substance dependency and/or mental illness.",
+      "charge_exclusions": ["Murder", "Armed robbery", "Rape", "Aggravated sodomy", "Aggravated sexual battery", "Aggravated child molestation", "Child molestation"],
+      "charge_exclusions_note": "Statutory exclusions. Exception: reentry programs for incarcerated veterans may accept excluded charges.",
+      "charge_exclusions_source": "https://law.justia.com/codes/georgia/title-15/chapter-1/section-15-1-17/",
+      "prior_convictions_policy": "Not addressed in statute. Courts set locally. Violent offense history generally disqualifies."
+    },
+    "program_details": {
+      "typical_duration": "18-24 months (Cobb: 18; Appalachian: 24; Gwinnett State: 12)",
+      "phases": "3-5 phases typical",
+      "completion_result": "Charges dismissed or sentences reduced.",
+      "conditions": ["Random drug screening 1-2x/week", "Weekly court hearings (tapering)", "Substance abuse treatment", "Mental health treatment", "Community service", "Employment or school enrollment", "Veteran peer mentor", "VA healthcare coordination", "No firearms/weapons"]
+    }
+  },
+  "IL": {
+    "state_name": "Illinois",
+    "statute": "730 ILCS 167/ (Veterans and Servicemembers Court Treatment Act)",
+    "statute_source": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=3231&ChapterID=55",
+    "statewide_program": true,
+    "statewide_note": "MANDATORY statewide since January 1, 2018 (P.A. 99-807). Each of 24 judicial circuits required to implement.",
+    "counties_with_courts": [
+      "Cook", "DuPage", "Kane", "Kendall", "Will", "Kankakee", "Lake", "Winnebago", "Peoria",
+      "Livingston", "McLean", "Ford", "Logan", "Vermilion", "Sangamon", "Macon", "Effingham",
+      "Jasper", "Clay", "Madison", "St. Clair", "Williamson", "Lee"
+    ],
+    "counties_source": "https://www.illinoiscourts.gov/probation-programs/problem-solving-courts-map/",
+    "counties_note": "23 counties verified. 11th Circuit is Illinois's only circuitwide problem-solving court.",
+    "eligibility": {
+      "discharge_types": {
+        "honorable": "eligible",
+        "general_under_honorable": "eligible",
+        "other_than_honorable": "eligible -- statute only excludes dishonorable",
+        "bad_conduct": "likely eligible -- technically distinct from dishonorable",
+        "dishonorable": "excluded -- only discharge type barred by statute"
+      },
+      "discharge_note": "730 ILCS 167/10: discharged under conditions other than dishonorable. Active servicemembers also eligible.",
+      "discharge_source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/073001670K10.htm",
+      "service_connection_required": false,
+      "service_connection_detail": "No mandatory nexus requirement. Illinois does NOT require connection between charges and military conditions.",
+      "charge_exclusions": ["First degree murder", "Second degree murder", "Predatory criminal sexual assault of a child", "Aggravated criminal sexual assault", "Criminal sexual assault", "Armed robbery", "Aggravated arson / arson", "Aggravated kidnapping / kidnapping", "Aggravated battery (great bodily harm)", "Stalking / aggravated stalking", "Offense involving discharge of a firearm", "Home invasion", "Vehicular hijacking", "Aggravated DUI causing death"],
+      "charge_exclusions_note": "Per 730 ILCS 167/20. Also excluded if crime of violence within past 5 years. Must be probation-eligible.",
+      "charge_exclusions_source": "https://law.onecle.com/illinois/730ilcs167/20.html",
+      "prior_convictions_policy": "Crime of violence within 5 years: excluded. Non-violent felonies: not automatic bar. Cook County: prior VTC within 3 years excluded."
+    },
+    "program_details": {
+      "typical_duration": "12-24 months",
+      "tracks": {
+        "pre_adjudicatory": "Charges dismissed upon completion",
+        "post_adjudicatory": "Sentence terminated upon completion"
+      },
+      "completion_result": "Dismissal or sentence termination. May vacate convictions for sealing/expungement.",
+      "completion_source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/073001670K35.htm",
+      "conditions": ["Court appearances every 30-45 days", "Probation officer meetings", "VA case manager reporting", "Mental health counseling", "Substance use treatment (MAT cannot be prohibited)", "Random drug/alcohol testing", "Individual/group therapy", "Educational/vocational counseling", "Community service", "No weapons possession", "Restitution", "Veteran peer mentor"]
+    }
+  }
+}

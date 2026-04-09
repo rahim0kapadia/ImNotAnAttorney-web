@@ -119,6 +119,130 @@ const FL_COUNTIES: StepOption[] = [
   "Walton", "Washington",
 ].map((name) => ({ value: name, label: name }));
 
+// --- Veterans court county lists (10 states) -------------------------
+
+const VETERANS_COURT_COUNTIES: Record<string, StepOption[]> = {
+  FL: FL_COUNTIES,
+  CA: ["Alameda","Butte","Calaveras","Contra Costa","Del Norte","El Dorado","Fresno","Kings","Lake","Los Angeles","Madera","Merced","Monterey","Orange","Placer","Riverside","Sacramento","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Solano","Sonoma","Stanislaus","Tulare","Ventura"].map((n) => ({ value: n, label: n })),
+  TX: ["Bell","Bexar","Brazoria","Collin","Comal","Cooke","Dallas","Denton","El Paso","Fannin","Fort Bend","Galveston","Grayson","Guadalupe","Harris","Hays","Hidalgo","Hunt","Kaufman","Liberty","McLennan","Montgomery","Nueces","Rockwall","Smith","Tarrant","Travis","Webb","Williamson"].map((n) => ({ value: n, label: n })),
+  PA: ["Allegheny","Berks","Bucks","Centre","Chester","Cumberland","Dauphin","Delaware","Erie","Lackawanna","Lancaster","Lehigh","Monroe","Montgomery","Northampton","Philadelphia","York"].map((n) => ({ value: n, label: n })),
+  NY: ["Albany","Bronx","Brooklyn (Kings)","Buffalo (Erie)","Cayuga","Chautauqua","Chemung","Clinton","Dutchess","Erie","Genesee","Herkimer","Jefferson","Manhattan (New York)","Monroe","Nassau","Niagara","Oneida","Onondaga","Ontario","Orange","Orleans","Oswego","Putnam","Queens","Rensselaer","Richmond (Staten Island)","Rockland","Saratoga","Schenectady","Steuben","Suffolk","Sullivan","Tompkins","Ulster","Wayne","Westchester","Yates"].map((n) => ({ value: n, label: n })),
+  OH: ["Allen","Butler","Clark","Clermont","Cuyahoga","Delaware","Erie","Franklin","Greene","Hamilton","Lake","Licking","Lorain","Lucas","Mahoning","Medina","Montgomery","Portage","Stark","Summit"].map((n) => ({ value: n, label: n })),
+  NC: ["Buncombe","Cabarrus","Cumberland","Durham","Forsyth","Gaston","Guilford","Mecklenburg","New Hanover","Onslow","Orange","Pitt","Rowan","Wake"].map((n) => ({ value: n, label: n })),
+  VA: ["Arlington","Chesapeake","Fairfax","Henrico","Norfolk","Prince William","Richmond","Virginia Beach"].map((n) => ({ value: n, label: n })),
+  GA: ["Baldwin","Barrow","Bibb","Carroll","Chatham","Cherokee","Clarke","Clayton","Cobb","Coffee","Columbia","Coweta","DeKalb","Dougherty","Douglas","Floyd","Forsyth","Fulton","Glynn","Gwinnett","Hall","Henry","Houston","Lowndes","Muscogee","Newton","Paulding","Richmond","Troup","Whitfield"].map((n) => ({ value: n, label: n })),
+  IL: ["Adams","Champaign","Cook","DuPage","Kane","Kankakee","Knox","Lake","LaSalle","Lee","Macon","Madison","McHenry","McLean","Peoria","Rock Island","St. Clair","Sangamon","Tazewell","Vermilion","Will","Williamson","Winnebago"].map((n) => ({ value: n, label: n })),
+};
+
+// --- Veterans court wizard steps (7 steps) ---------------------------
+
+const VETERANS_COURT_STATE_OPTIONS: StepOption[] = [
+  { value: "CA", label: "California" },
+  { value: "TX", label: "Texas" },
+  { value: "FL", label: "Florida" },
+  { value: "PA", label: "Pennsylvania" },
+  { value: "NY", label: "New York" },
+  { value: "OH", label: "Ohio" },
+  { value: "NC", label: "North Carolina" },
+  { value: "VA", label: "Virginia" },
+  { value: "GA", label: "Georgia" },
+  { value: "IL", label: "Illinois" },
+];
+
+const VETERANS_COURT_STEPS: Step[] = [
+  {
+    id: "state",
+    label: "What state is your case in?",
+    type: "dropdown",
+    options: VETERANS_COURT_STATE_OPTIONS,
+    helpText:
+      "We cover the 10 states with the most veterans. More coming soon.",
+  },
+  {
+    id: "county",
+    label: "What county is your case in?",
+    type: "dropdown",
+    dynamicOptions: (answers) => {
+      const st = answers.state as string | undefined;
+      if (st && VETERANS_COURT_COUNTIES[st]) return VETERANS_COURT_COUNTIES[st];
+      return [];
+    },
+  },
+  {
+    id: "branchOfService",
+    label: "Branch of service",
+    type: "select",
+    options: [
+      { value: "army", label: "Army" },
+      { value: "navy", label: "Navy" },
+      { value: "air-force", label: "Air Force" },
+      { value: "marines", label: "Marines" },
+      { value: "coast-guard", label: "Coast Guard" },
+      { value: "space-force", label: "Space Force" },
+    ],
+  },
+  {
+    id: "dischargeType",
+    label: "Discharge type",
+    type: "select",
+    options: [
+      { value: "honorable", label: "Honorable" },
+      { value: "general-under-honorable", label: "General (Under Honorable)" },
+      { value: "other-than-honorable", label: "Other Than Honorable" },
+      { value: "bad-conduct", label: "Bad Conduct" },
+      { value: "dishonorable", label: "Dishonorable" },
+      { value: "unknown", label: "Unknown / Not Sure" },
+    ],
+  },
+  {
+    id: "serviceCondition",
+    label: "Service-connected condition",
+    type: "select",
+    options: [
+      { value: "ptsd", label: "PTSD" },
+      { value: "tbi", label: "Traumatic Brain Injury (TBI)" },
+      { value: "substance-abuse", label: "Substance Abuse" },
+      { value: "mental-health", label: "Other Mental Health Condition" },
+      { value: "mst", label: "Military Sexual Trauma (MST)" },
+      { value: "multiple", label: "Multiple Conditions" },
+      { value: "none", label: "None" },
+      { value: "prefer-not-to-say", label: "Prefer Not to Say" },
+    ],
+    helpText:
+      "This determines if the service connection requirement is met.",
+  },
+  {
+    id: "chargeType",
+    label: "What type of charge?",
+    type: "select",
+    options: [
+      { value: "drug-possession", label: "Drug Possession" },
+      { value: "drug-trafficking", label: "Drug Trafficking" },
+      { value: "dui", label: "DUI / DWI" },
+      { value: "assault", label: "Assault" },
+      { value: "theft-property", label: "Theft / Property Crime" },
+      { value: "domestic-violence", label: "Domestic Violence" },
+      { value: "white-collar", label: "White Collar / Fraud" },
+      { value: "sex-offense", label: "Sex Offense" },
+      { value: "other-felony", label: "Other Felony" },
+      { value: "other-misdemeanor", label: "Other Misdemeanor" },
+    ],
+  },
+  {
+    id: "priorConvictions",
+    label: "Prior convictions",
+    type: "select",
+    options: [
+      { value: "none", label: "No prior convictions" },
+      { value: "misdemeanor", label: "Prior misdemeanor(s)" },
+      { value: "felony", label: "Prior felony" },
+      { value: "multiple", label: "Multiple prior convictions" },
+    ],
+  },
+];
+
+// --- Diversion eligibility wizard steps ------------------------------
+
 const DIVERSION_STEPS: Step[] = [
   {
     id: "state",
@@ -227,6 +351,7 @@ const DIVERSION_STEPS: Step[] = [
 const STEP_MAP: Record<string, Step[]> = {
   "good-time": GOOD_TIME_STEPS,
   "diversion-eligibility": DIVERSION_STEPS,
+  "veterans-court": VETERANS_COURT_STEPS,
 };
 
 const DEFAULT_PRISON_TYPE: Record<string, string> = {
@@ -271,7 +396,31 @@ interface DiversionClientResult {
   fallbackMessage?: string;
 }
 
-type CalculatorResult = GoodTimeResult | DiversionClientResult;
+interface VeteransCourtClientResult {
+  supported: boolean;
+  stateName: string;
+  county: string;
+  courtAvailable: boolean;
+  courtAvailableDetail: string;
+  statute: string | null;
+  dischargeEligibility: string;
+  serviceConnectionMet: boolean;
+  serviceConnectionDetail: string;
+  chargeExclusions: string[];
+  chargeExcluded: boolean;
+  programDetails: {
+    typicalDuration: string | null;
+    completionResult: string | null;
+    conditions: string[];
+  } | null;
+  questions: string[];
+  fallbackMessage?: string;
+}
+
+type CalculatorResult =
+  | GoodTimeResult
+  | DiversionClientResult
+  | VeteransCourtClientResult;
 
 interface Props {
   slug: string;
@@ -476,6 +625,200 @@ function DiversionResults({ result }: { result: DiversionClientResult }) {
   );
 }
 
+// --- Veterans court type guard + renderer -----------------------------
+
+function isVeteransCourtResult(
+  slug: string,
+  _r: CalculatorResult,
+): _r is VeteransCourtClientResult {
+  return slug === "veterans-court";
+}
+
+function VeteransCourtResults({
+  result,
+}: {
+  result: VeteransCourtClientResult;
+}) {
+  if (!result.supported) {
+    return (
+      <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6">
+        <p className="text-zinc-200">
+          {result.fallbackMessage ??
+            "We couldn\u2019t compute a result for this combination."}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* Court Availability — primary result */}
+      <section className="mb-8">
+        <div
+          className={`rounded-lg p-5 border ${
+            result.courtAvailable
+              ? "bg-amber-500/10 border-amber-500/40"
+              : "bg-zinc-900 border-zinc-700"
+          }`}
+        >
+          <div className="flex flex-wrap items-center gap-3 mb-2">
+            <h3 className="text-lg font-semibold text-zinc-50">
+              Veterans Treatment Court
+            </h3>
+            <span
+              className={`text-xs font-medium px-2.5 py-1 rounded-full border ${
+                result.courtAvailable
+                  ? "bg-amber-500/20 text-amber-400 border-amber-500/40"
+                  : "bg-zinc-500/20 text-zinc-300 border-zinc-500/40"
+              }`}
+            >
+              {result.courtAvailable ? "Available" : "Not Confirmed"}
+            </span>
+          </div>
+          <p className="text-sm text-zinc-300">
+            {result.courtAvailableDetail}
+          </p>
+          {result.statute && (
+            <p className="text-xs text-zinc-400 mt-2">{result.statute}</p>
+          )}
+        </div>
+      </section>
+
+      {/* Discharge Eligibility */}
+      <section className="mb-8">
+        <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+          Discharge Eligibility
+        </h3>
+        <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-4">
+          <p className="text-sm text-zinc-300">
+            {result.dischargeEligibility}
+          </p>
+          <p className="text-xs text-zinc-500 italic mt-2">
+            Based on published eligibility criteria. This is not a
+            determination of eligibility.
+          </p>
+        </div>
+      </section>
+
+      {/* Service Connection */}
+      <section className="mb-8">
+        <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+          Service Connection
+        </h3>
+        <div
+          className={`rounded-lg p-4 border ${
+            result.serviceConnectionMet
+              ? "bg-zinc-900 border-zinc-700"
+              : "bg-amber-900/20 border-amber-800/40"
+          }`}
+        >
+          <p className="text-sm text-zinc-300">
+            {result.serviceConnectionDetail}
+          </p>
+          {!result.serviceConnectionMet && (
+            <p className="text-xs text-amber-400 mt-2">
+              The service connection requirement may not be met based on your
+              answers. Ask your attorney about documentation options.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* Charge Considerations */}
+      <section className="mb-8">
+        <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+          Charge Considerations
+        </h3>
+        {result.chargeExcluded && (
+          <div className="bg-red-900/20 border border-red-800/40 rounded-lg p-4 mb-3">
+            <p className="text-sm text-red-300">
+              Based on published eligibility criteria, your charge type may be
+              excluded from veterans treatment court in this jurisdiction.
+            </p>
+          </div>
+        )}
+        {result.chargeExclusions.length > 0 && (
+          <>
+            <p className="text-sm text-zinc-400 mb-2">
+              Common exclusions in this jurisdiction:
+            </p>
+            <ul className="space-y-1">
+              {result.chargeExclusions.map((excl, i) => (
+                <li
+                  key={i}
+                  className="text-sm text-zinc-300 pl-4 relative before:content-['\2022'] before:absolute before:left-0 before:text-zinc-500"
+                >
+                  {excl}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </section>
+
+      {/* Program Details */}
+      {result.programDetails && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+            Program Details
+          </h3>
+          <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-5">
+            {result.programDetails.typicalDuration && (
+              <p className="text-sm text-zinc-400 mb-1">
+                <span className="text-zinc-500">Typical duration:</span>{" "}
+                {result.programDetails.typicalDuration}
+              </p>
+            )}
+            {result.programDetails.completionResult && (
+              <p className="text-sm text-zinc-400 mb-3">
+                <span className="text-zinc-500">On completion:</span>{" "}
+                {result.programDetails.completionResult}
+              </p>
+            )}
+            {result.programDetails.conditions.length > 0 && (
+              <>
+                <p className="text-sm text-zinc-400 mb-2">
+                  Typical program conditions:
+                </p>
+                <ul className="space-y-1">
+                  {result.programDetails.conditions.map((cond, i) => (
+                    <li
+                      key={i}
+                      className="text-sm text-zinc-300 pl-4 relative before:content-['\2022'] before:absolute before:left-0 before:text-zinc-500"
+                    >
+                      {cond}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            <p className="text-xs text-zinc-500 italic mt-3">
+              Based on published program criteria. Actual terms are set by the
+              court.
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* Questions for Your Attorney */}
+      {result.questions.length > 0 && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+            Questions for Your Attorney
+          </h3>
+          <ol className="space-y-2 list-decimal list-inside">
+            {result.questions.map((q, i) => (
+              <li key={i} className="text-sm text-zinc-200 leading-relaxed">
+                {q}
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+    </>
+  );
+}
+
 // --- Main component ------------------------------------------------
 
 export default function CalculatorClient({ slug, product }: Props) {
@@ -623,6 +966,8 @@ export default function CalculatorClient({ slug, product }: Props) {
 
         {isDiversionResult(slug, result) ? (
           <DiversionResults result={result} />
+        ) : isVeteransCourtResult(slug, result) ? (
+          <VeteransCourtResults result={result} />
         ) : (
           <>
             {(result as GoodTimeResult).supported === false ||
