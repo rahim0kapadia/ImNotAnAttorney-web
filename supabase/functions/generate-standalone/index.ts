@@ -1748,7 +1748,11 @@ Deno.serve(async (req: Request) => {
       const tokenHash = await hashTokenDeno(plaintextToken);
 
       // --- 8. Upload HTML to Supabase Storage ---
+      // storagePath: full path for raw REST upload (includes bucket prefix).
+      // storageFileName: just the filename, stored in DB for the JS client
+      // which scopes via .from("standalone-reports").download(fileName).
       const storagePath = `standalone-reports/${orderId}.html`;
+      const storageFileName = `${orderId}.html`;
       const uploadRes = await fetch(
         `${supabaseUrl}/storage/v1/object/${storagePath}`,
         {
@@ -1775,7 +1779,7 @@ Deno.serve(async (req: Request) => {
 
       await supabaseUpdate(supabaseUrl, supabaseKey, "orders", `id=eq.${orderId}`, {
         standalone_report_token_hash: tokenHash,
-        standalone_report_storage_path: storagePath,
+        standalone_report_storage_path: storageFileName,
         standalone_report_token_expires_at: expiresAt.toISOString(),
         status: "delivered",
         updated_at: new Date().toISOString(),
