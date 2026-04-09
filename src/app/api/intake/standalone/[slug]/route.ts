@@ -118,6 +118,20 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   "case-law-intelligence": new Set(["motionFocus"]),
   "expert-witness-challenge": new Set(["expertField"]),
   "discovery-demand-letter": new Set(["arrestDate", "discoveryReceivedSoFar"]),
+  // Bundles — product-specific fields are optional since users may not have all data
+  "first-72-hours": new Set(["flightRiskFactors", "currentBailAmount"]),
+  "defense-preparation": new Set([
+    "medicalConditions", "timeBetweenStopAndTest", "weather", "footwear",
+    "bacReading", "breathalyzerType", "choiceOfTest",
+    "testsAdministered", "surfaceConditions", "physicalConditions", "officerDemonstrated",
+    "testType", "substanceIdentified", "confirmatoryTest", "resultsDocs",
+    "reportDetails",
+  ]),
+  "pre-plea-package": new Set([
+    "occupation", "immigrationStatus", "sentencingRange",
+    "hasSecurityClearance", "hasChildren", "convictionMethod",
+    "mitigatingFactors",
+  ]),
 };
 
 // Long-form text fields get a higher length cap than the default 200 chars.
@@ -153,7 +167,7 @@ export async function POST(
 ) {
   const { slug } = await params;
   const product = getProduct(slug);
-  if (!product || product.category !== "research") {
+  if (!product || (product.category !== "research" && product.category !== "bundle")) {
     return NextResponse.json({ error: "Invalid product" }, { status: 400 });
   }
 

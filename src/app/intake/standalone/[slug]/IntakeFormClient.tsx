@@ -1750,6 +1750,40 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
   ],
 };
 
+// ─── Bundle FIELD_SETS — computed from included products ──────
+// Deduplicates by field name (first occurrence wins), preserving order.
+function mergeFieldSets(...slugs: string[]): FieldConfig[] {
+  const seen = new Set<string>();
+  const merged: FieldConfig[] = [];
+  for (const s of slugs) {
+    const fields = FIELD_SETS[s];
+    if (!fields) continue;
+    for (const field of fields) {
+      if (!seen.has(field.name)) {
+        seen.add(field.name);
+        merged.push(field);
+      }
+    }
+  }
+  return merged;
+}
+
+FIELD_SETS["first-72-hours"] = mergeFieldSets(
+  "arrest-report-review",
+  "bail-hearing-prep",
+);
+FIELD_SETS["defense-preparation"] = mergeFieldSets(
+  "breathalyzer-challenge",
+  "fst-review",
+  "drug-test-reliability",
+  "arrest-report-review",
+);
+FIELD_SETS["pre-plea-package"] = mergeFieldSets(
+  "plea-consequences",
+  "collateral-consequences",
+  "sentencing-prep",
+);
+
 interface Props {
   slug: string;
   productName: string;

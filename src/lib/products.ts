@@ -13,7 +13,7 @@
  * read from this catalog — no code changes needed per product.
  */
 
-export type ProductCategory = "calculator" | "research" | "content";
+export type ProductCategory = "calculator" | "research" | "content" | "bundle";
 
 export interface StandaloneProduct {
   name: string;
@@ -1010,6 +1010,104 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Communicate effectively. The Case Decoder gives your attorney the research they need.",
     dripSequenceKey: null,
+    isActive: true,
+  },
+
+  // ─── BUNDLES ($97-$197 — combined reports at a discount) ────
+  "first-72-hours": {
+    name: "First 72 Hours Bundle",
+    category: "bundle",
+    price: 9700, // $97
+    priceDisplay: "$97",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your combined report is generated within 60 seconds of submitting your details.",
+    description:
+      "Everything you need in the critical first 72 hours after arrest — arrest report review, bail hearing prep, and two free guides.",
+    intakeFields: [
+      "state",
+      "chargeType",
+      "reportDetails",
+      "priorConvictions",
+      "communityTies",
+      "flightRiskFactors",
+      "currentBailAmount",
+    ],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "The first 72 hours are covered. The Case Decoder maps the full defense ahead.",
+    dripSequenceKey: "bundle_first_72",
+    isActive: true,
+  },
+  "defense-preparation": {
+    name: "Defense Preparation Bundle",
+    category: "bundle",
+    price: 19700, // $197
+    priceDisplay: "$197",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your combined report is generated within 60 seconds of submitting your details.",
+    description:
+      "Challenge every piece of evidence — breathalyzer, field sobriety, drug test, and arrest report in one combined analysis.",
+    intakeFields: [
+      "state",
+      "chargeType",
+      "bacReading",
+      "breathalyzerType",
+      "timeBetweenStopAndTest",
+      "choiceOfTest",
+      "medicalConditions",
+      "testsAdministered",
+      "surfaceConditions",
+      "weather",
+      "footwear",
+      "physicalConditions",
+      "officerDemonstrated",
+      "testType",
+      "substanceIdentified",
+      "confirmatoryTest",
+      "resultsDocs",
+      "reportDetails",
+    ],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Evidence challenges are one angle. The Case Decoder maps the full DUI defense.",
+    dripSequenceKey: "bundle_defense_prep",
+    isActive: true,
+  },
+  "pre-plea-package": {
+    name: "Pre-Plea Package",
+    category: "bundle",
+    price: 19700, // $197
+    priceDisplay: "$197",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your combined report is generated within 60 seconds of submitting your details.",
+    description:
+      "Understand every consequence before you decide — plea terms, collateral impact, and sentencing landscape.",
+    intakeFields: [
+      "state",
+      "chargeType",
+      "pleaOfferCharge",
+      "pleaOfferTerms",
+      "occupation",
+      "immigrationStatus",
+      "hasLicense",
+      "offenseClass",
+      "hasSecurityClearance",
+      "hasChildren",
+      "convictionMethod",
+      "sentencingRange",
+      "priorConvictions",
+      "mitigatingFactors",
+    ],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Know the full picture before you decide. The Case Decoder covers every angle.",
+    dripSequenceKey: "bundle_pre_plea",
     isActive: true,
   },
 } as const satisfies Record<string, StandaloneProduct>;

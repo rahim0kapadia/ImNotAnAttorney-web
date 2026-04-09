@@ -1461,6 +1461,88 @@ Plain-English explanation covering:
 The letter is a TEMPLATE for the defendant's attorney to review, edit for the specific case, sign, and file. It is NOT legal advice to the defendant. The Section 2 notes must explicitly state: "This letter is a template your attorney can review and adapt. Your attorney remains the final authority on what to file and when." Use "factors to consider", "items typically demanded for this charge type" — never "you should file this" or "we recommend you send this."`;
     }
 
+    // ─── BUNDLES — combined reports ──────────────────────────────
+
+    case "first-72-hours": {
+      const sub1 = buildUserPrompt("arrest-report-review", intake);
+      const sub2 = buildUserPrompt("bail-hearing-prep", intake);
+      return `Generate a COMBINED report called "First 72 Hours Bundle" covering two analysis areas in ONE cohesive HTML document. Use clear <h2> section dividers between the two analyses.
+
+Do not fabricate statute citations, case names, or case numbers.
+
+=== PART 1: ARREST REPORT REVIEW ===
+${sub1}
+
+=== PART 2: BAIL HEARING PREPARATION ===
+${sub2}
+
+=== PART 3: CROSS-REFERENCE SUMMARY ===
+After both analyses, add a final section titled "Cross-Reference Summary" noting connections between findings — for example, arrest report issues that strengthen bail arguments, or bail conditions that relate to arrest circumstances.
+
+Include links to two free guides the customer also receives:
+- First Court Appearance Guide: /guides/first-court-appearance
+- Post-Arrest Family Action Plan: /guides/family-action-plan
+
+Frame everything as INFORMATION for discussion with their attorney.`;
+    }
+
+    case "defense-preparation": {
+      const sub1 = buildUserPrompt("breathalyzer-challenge", intake);
+      const sub2 = buildUserPrompt("fst-review", intake);
+      const sub3 = buildUserPrompt("drug-test-reliability", intake);
+      const sub4 = buildUserPrompt("arrest-report-review", intake);
+      return `Generate a COMBINED report called "Defense Preparation Bundle" covering four evidence challenge areas in ONE cohesive HTML document. Use clear <h2> section dividers between each analysis.
+
+Do not fabricate statute citations, case names, or case numbers. Some sections may have limited intake data — if a field is empty or "Not specified", note that the analysis is limited for that area and focus on general challenge patterns.
+
+=== PART 1: BREATHALYZER CALIBRATION CHALLENGES ===
+${sub1}
+
+=== PART 2: FIELD SOBRIETY TEST REVIEW ===
+${sub2}
+
+=== PART 3: DRUG TEST RELIABILITY ===
+${sub3}
+
+=== PART 4: ARREST REPORT REVIEW ===
+${sub4}
+
+=== PART 5: UNIFIED EVIDENCE CHALLENGE STRATEGY ===
+After all four analyses, add a final section titled "Unified Evidence Challenge Strategy" that:
+1. Ranks the evidence challenge areas by strength (STRONGEST to WEAKEST based on the data provided)
+2. Notes how challenges in one area reinforce challenges in another (e.g., arrest report timeline gaps that support rising BAC defense)
+3. Provides a consolidated "Top 10 Questions for Your Attorney" drawing from the most impactful findings across all four analyses
+
+Frame everything as INFORMATION for discussion with their attorney.`;
+    }
+
+    case "pre-plea-package": {
+      const sub1 = buildUserPrompt("plea-consequences", intake);
+      const sub2 = buildUserPrompt("collateral-consequences", intake);
+      const sub3 = buildUserPrompt("sentencing-prep", intake);
+      return `Generate a COMBINED report called "Pre-Plea Package" covering three analysis areas in ONE cohesive HTML document. Use clear <h2> section dividers between each analysis.
+
+Do not fabricate statute citations, case names, or case numbers. Some sections may have limited intake data — if a field is empty or "Not specified", note that the analysis is limited for that area and focus on general patterns.
+
+=== PART 1: PLEA DEAL HIDDEN CONSEQUENCES ===
+${sub1}
+
+=== PART 2: COLLATERAL CONSEQUENCES ===
+${sub2}
+
+=== PART 3: SENTENCING LANDSCAPE ===
+${sub3}
+
+=== PART 4: DECISION FRAMEWORK ===
+After all three analyses, add a final section titled "Decision Framework" that:
+1. Summarizes the total impact picture — direct criminal consequences + collateral consequences + sentencing exposure
+2. Identifies the single highest-risk consequence for the defendant's specific situation
+3. Notes which consequences are reversible vs. permanent
+4. Provides a consolidated "Top 10 Questions for Your Attorney Before You Decide" drawing from the most critical findings across all three analyses
+
+Frame everything as INFORMATION for discussion with their attorney. The defendant must make their own decision — this report provides the information to make it an INFORMED decision.`;
+    }
+
     default:
       return null;
   }
