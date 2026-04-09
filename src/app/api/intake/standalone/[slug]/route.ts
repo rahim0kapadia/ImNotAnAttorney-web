@@ -94,8 +94,28 @@ const VALID_BREATHALYZER_TYPES = new Set([
   "intoxilyzer", "datamaster", "draeger", "unknown",
 ]);
 
-// appealGrounds and issuesIdentified are free-text fields (textarea),
-// not enum selects — no allowlist needed. Validated via sanitizeText.
+const VALID_CONVICTION_OR_DISMISSAL = new Set(["conviction", "dismissal"]);
+
+const VALID_APPEAL_DEADLINE_STATUS = new Set([
+  "within-deadline", "approaching", "expired", "dont-know",
+]);
+
+const VALID_CASE_OUTCOMES = new Set([
+  "convicted-trial", "pled-guilty", "charges-not-dismissed",
+]);
+
+const VALID_COMMUNICATION_FREQUENCY = new Set([
+  "weekly", "biweekly", "monthly", "rarely", "none",
+]);
+
+const VALID_VIOLATION_TYPES = new Set([
+  "missed-appointment", "failed-drug-test", "new-arrest",
+  "travel-violation", "curfew-violation", "failed-to-pay", "other",
+]);
+
+// appealGrounds, issuesIdentified, relationshipToDefendant,
+// proximityToContraband, ownershipOfLocation are free-text fields —
+// no allowlist needed. Validated via sanitizeText.
 
 // Fields that may be optional (not strictly required) on a per-product basis.
 // Validation still sanitizes them when present, but does not 400 on absence.
@@ -295,6 +315,24 @@ export async function POST(
       return NextResponse.json({ error: "Invalid conviction method" }, { status: 400 });
     }
     if (field === "priorConvictions" && !VALID_PRIOR_CONVICTIONS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "convictionOrDismissal" && !VALID_CONVICTION_OR_DISMISSAL.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "appealDeadlineStatus" && !VALID_APPEAL_DEADLINE_STATUS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "caseOutcome" && !VALID_CASE_OUTCOMES.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "communicationFrequency" && !VALID_COMMUNICATION_FREQUENCY.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "violationType" && !VALID_VIOLATION_TYPES.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    if (field === "discoveryReceived" && !VALID_YES_NO_DONTKNOW.has(String(raw))) {
       return NextResponse.json({ error: "Invalid value" }, { status: 400 });
     }
     if (field === "offenseClass" && !VALID_OFFENSE_CLASS.has(String(raw))) {
