@@ -249,15 +249,21 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
     }
   }
 
-  // Stuck compiling (Phase B timeout — >30min, synchronous so no Batch API latency)
-  const thirtyMinAgo = new Date(ctx.now);
-  thirtyMinAgo.setMinutes(thirtyMinAgo.getMinutes() - 30);
+  // Stuck compiling (Phase B timeout — >15min, synchronous so no Batch API latency)
+  // Phase B is a single Edge Function invocation that typically completes in
+  // 60-180s. A 15-min threshold is generous but catches truly-stuck cases
+  // faster than the old 30-min window. Combined with the hourly cron cadence,
+  // worst-case customer wait drops from ~90min to ~75min before operator alert.
+  // The inline retry in batch-poller.ts (invokeEdgeFunctionWithRetry) now
+  // catches most transient failures before they reach this detector at all.
+  const fifteenMinAgo = new Date(ctx.now);
+  fifteenMinAgo.setMinutes(fifteenMinAgo.getMinutes() - 15);
 
   const { data: stuckCompiling } = await ctx.supabase
     .from("cases")
     .select("id, email, charge_type, tier, batch_id, updated_at")
     .eq("status", "compiling")
-    .lt("updated_at", thirtyMinAgo.toISOString());
+    .lt("updated_at", fifteenMinAgo.toISOString());
 
   if (stuckCompiling && stuckCompiling.length > 0) {
     for (const stuck of stuckCompiling) {

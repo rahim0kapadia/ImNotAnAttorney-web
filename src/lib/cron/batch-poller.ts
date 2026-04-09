@@ -18,6 +18,58 @@ import { renderReportHtml } from "@/lib/report-renderer";
 import { sendEmail, sendCustomerFailureNotification } from "@/lib/email";
 import { hashToken, signOperatorToken } from "@/lib/site";
 
+/**
+ * Invoke a Supabase Edge Function with one inline retry on network/4xx/5xx
+ * failure. Previously this was a pure fire-and-forget .catch() which silently
+ * dropped transient errors and left cases stuck until the 30-min stuck
+ * detection cron picked them up (worst case: 90 min of customer waiting).
+ *
+ * This is still "best-effort" from the cron loop's perspective (we do not
+ * throw on total failure — the stuck detection in operator-alerts.ts is the
+ * final safety net), but a single retry with a 1-second delay eliminates
+ * the vast majority of transient network failures without blocking the
+ * cron loop meaningfully.
+ *
+ * @param functionSlug - Edge Function name (e.g., "generate-report")
+ * @param body - JSON body to POST
+ * @param label - Log label for error messages (e.g., "IB Phase B trigger")
+ */
+async function invokeEdgeFunctionWithRetry(
+  functionSlug: string,
+  body: unknown,
+  label: string
+): Promise<void> {
+  const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/${functionSlug}`;
+  const headers = {
+    Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+    "Content-Type": "application/json",
+  };
+  const payload = JSON.stringify(body);
+
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const res = await fetch(url, { method: "POST", headers, body: payload });
+      if (res.ok || res.status === 202) {
+        if (attempt > 1) {
+          console.log(`[batch-poller] ${label} succeeded on retry ${attempt}`);
+        }
+        return;
+      }
+      console.error(
+        `[batch-poller] ${label} attempt ${attempt} returned ${res.status}`
+      );
+    } catch (e: unknown) {
+      console.error(`[batch-poller] ${label} attempt ${attempt} threw:`, e);
+    }
+    if (attempt === 1) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+  console.error(
+    `[batch-poller] ${label} failed after 2 attempts — stuck detection will catch this`
+  );
+}
+
 export async function pollBatchResults(
   ctx: CronContext
 ): Promise<CronResult> {
@@ -219,16 +271,11 @@ async function processCDResult(
     })
     .eq("id", row.id);
 
-  // Fire-and-forget: trigger evaluation
-  fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/evaluate-report`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ caseId: row.id }),
-  }).catch((e: unknown) =>
-    console.error("[batch-poller] Eval trigger failed:", e)
+  // Trigger evaluation with inline retry (was fire-and-forget)
+  await invokeEdgeFunctionWithRetry(
+    "evaluate-report",
+    { caseId: row.id },
+    `CD eval trigger for ${row.id}`
   );
 
   // Operator notification
@@ -309,20 +356,11 @@ async function processIBPhaseAResult(
     })
     .eq("id", row.id);
 
-  // Fire-and-forget: trigger Phase B via Edge Function
-  fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/generate-report`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      caseId: row.id,
-      tier: "intelligence-brief",
-      phase: "B",
-    }),
-  }).catch((e: unknown) =>
-    console.error("[batch-poller] Phase B trigger failed:", e)
+  // Trigger Phase B via Edge Function with inline retry (was fire-and-forget)
+  await invokeEdgeFunctionWithRetry(
+    "generate-report",
+    { caseId: row.id, tier: "intelligence-brief", phase: "B" },
+    `IB Phase B trigger for ${row.id}`
   );
 }
 
