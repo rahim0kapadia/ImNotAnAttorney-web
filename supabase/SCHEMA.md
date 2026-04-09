@@ -43,6 +43,8 @@
 | charge_type | text | From intake |
 | report_html | text | Generated HTML report |
 | report_token | uuid | URL-safe token for report access |
+| report_token_hash | text | SHA-256 hex hash of report_token for indexed lookups |
+| batch_id | text | Anthropic Batch API request ID for async generation |
 | generated_at | timestamptz | When report was generated |
 | delivered_at | timestamptz | When report was delivered |
 | reviewed_by | text | Who approved delivery |
@@ -373,6 +375,7 @@ Background job queue for discovery pipeline.
 | started_at | timestamptz | Processing start |
 | completed_at | timestamptz | Processing end |
 | error | text | Error if failed |
+| batch_id | uuid | Groups related jobs in a single pipeline run |
 
 #### `operator_tasks` (Migration 007)
 

@@ -512,13 +512,16 @@ export async function POST(req: NextRequest) {
   if (caseData.tier === "intelligence-brief") {
     instructionsHtml = `
       <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
-        <p style="margin: 0; color: white; font-weight: bold;">How to use your Intelligence Brief:</p>
+        <p style="margin: 0; color: white; font-weight: bold; font-size: 16px;">How to use your Intelligence Brief:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the 48-Hour Priority List</strong> — three actions ranked by urgency</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Read the Case Progress Score</strong> in Section 2 — understand where communication stands</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Review the 10-15 questions in Appendix D</strong> — pick your top 5 for your next attorney meeting</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Use the Meeting Ready Sheet</strong> in Section 6 — bring it to your next appointment</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Start with the 48-Hour Priority List</strong> — three actions ranked by urgency, each linked to a specific section in your brief</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Read Section 3: Case Intelligence</strong> — jurisdiction-specific outcome patterns, defense theories that apply to your charge, and prosecution strategy preview for your county</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Review Section 4: Legal Options &amp; Deadlines</strong> — every motion that could apply, with filing deadlines specific to your jurisdiction</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Check Section 5: Protecting Your Case and Life</strong> — how your charge may affect employment, housing, licensing, and other areas, with protective steps for each</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Bring the Meeting Ready Sheet</strong> (Section 6) to your next attorney appointment — 5 priority questions pre-filled from your case details</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Follow Your 14-Day Plan</strong> (Section 6) — one action per day, sequenced so each builds on the last</li>
         </ol>
+        <p style="margin: 16px 0 0; color: #A1A1AA; font-size: 13px;">Your brief is 25-30 pages. You don't have to read it all at once — start with the 48-Hour Priority List and the rest will be there when you're ready.</p>
       </div>`;
     upgradeHtml = `
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">

@@ -50,10 +50,9 @@
  *   ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT,
  *   READING ARC) before generating, producing stance-calibrated reports.
  *
- *   Parameters: max_tokens=32000 (thinking + output), thinking={type:"enabled",
- *   budget_tokens:16000}. Temperature is NOT set (incompatible with thinking).
- *   Note: "adaptive" thinking was tested but removed — it caused 600s+ generation
- *   times (vs 60-120s with 16K budget) without meaningful quality improvement.
+ *   Parameters: max_tokens=32000, thinking={type:"adaptive"}, output_config=
+ *   {effort:"high"}. Temperature is NOT set (incompatible with thinking).
+ *   Adaptive thinking lets the model allocate its own thinking budget per section.
  *   Cost: ~$0.40-0.60/report, still negligible vs $197 price.
  *   Timing: 60-294s. Supabase Free tier has 150s hard kill — Opus sometimes
  *   exceeds this (250-294s for complex cases). This Edge Function is the PRIMARY
