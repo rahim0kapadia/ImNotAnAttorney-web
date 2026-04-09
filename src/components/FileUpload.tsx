@@ -40,11 +40,16 @@ interface FileUploadProps {
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 const ACCEPTED_TYPES = [
   "application/pdf",
-  "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-excel",
   "image/jpeg",
   "image/png",
+  "image/gif",
+  "image/webp",
   "image/tiff",
+  "text/plain",
+  "text/csv",
   "audio/mpeg",
   "audio/wav",
   "video/mp4",
@@ -154,7 +159,7 @@ export function FileUpload({ caseId, email, onUploadComplete }: FileUploadProps)
           <input
             type="file"
             multiple
-            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.tiff,.mp3,.wav,.mp4"
+            accept=".pdf,.docx,.xlsx,.xls,.jpg,.jpeg,.png,.gif,.webp,.tiff,.txt,.csv,.mp3,.wav,.mp4"
             className="hidden"
             onChange={(e) => {
               if (e.target.files && e.target.files.length > 0) {

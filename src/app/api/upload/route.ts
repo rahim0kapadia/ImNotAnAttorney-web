@@ -54,11 +54,14 @@ const ACCEPTED_MIME_TYPES = new Set([
   "image/webp",
   "image/tiff",
   "text/plain",
-  "application/msword",
+  "text/csv",
+  // application/msword removed — mammoth cannot parse .doc (OLE2). Only .docx supported.
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "audio/mpeg",
   "audio/wav",
   "video/mp4",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-excel",
 ]);
 
 /**
@@ -73,16 +76,19 @@ const MAGIC_BYTES: { mime: string; bytes: number[] }[] = [
   { mime: "image/gif", bytes: [0x47, 0x49, 0x46, 0x38] },                 // GIF8
   { mime: "image/webp", bytes: [0x52, 0x49, 0x46, 0x46] },                // RIFF (WebP)
   { mime: "image/tiff", bytes: [0x49, 0x49, 0x2A, 0x00] },                // Little-endian TIFF (II)
-  { mime: "application/msword", bytes: [0xD0, 0xCF, 0x11, 0xE0] },        // OLE2
+  { mime: "image/tiff", bytes: [0x4D, 0x4D, 0x00, 0x2A] },                // Big-endian TIFF (MM)
+  // application/msword magic bytes removed — .doc not supported
   { mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", bytes: [0x50, 0x4B, 0x03, 0x04] }, // PK (ZIP/OOXML)
   { mime: "audio/mpeg", bytes: [0xFF, 0xFB] },                             // MP3 frame sync
   { mime: "audio/wav", bytes: [0x52, 0x49, 0x46, 0x46] },                 // RIFF (WAV — same header as WebP)
   { mime: "video/mp4", bytes: [0x00, 0x00, 0x00] },                       // ftyp box (variable 4th byte)
+  { mime: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", bytes: [0x50, 0x4B, 0x03, 0x04] }, // PK (ZIP/OOXML)
+  { mime: "application/vnd.ms-excel", bytes: [0xD0, 0xCF, 0x11, 0xE0] },  // OLE2
 ];
 
 function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
   // text/plain: verify no null bytes in first 8KB (binary indicator)
-  if (claimedMime === "text/plain") {
+  if (claimedMime === "text/plain" || claimedMime === "text/csv") {
     const check = buffer.subarray(0, Math.min(8192, buffer.length));
     return !check.includes(0x00);
   }
@@ -95,11 +101,15 @@ function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
     return isFrameSync || isID3;
   }
 
-  const sig = MAGIC_BYTES.find((s) => s.mime === claimedMime);
-  if (!sig) return false;
+  const sigs = MAGIC_BYTES.filter((s) => s.mime === claimedMime);
+  if (sigs.length === 0) return false;
 
-  if (buffer.length < sig.bytes.length) return false;
-  if (!sig.bytes.every((byte, i) => buffer[i] === byte)) return false;
+  // Try all matching signatures (e.g., little-endian + big-endian TIFF)
+  const matchedSig = sigs.find((sig) => {
+    if (buffer.length < sig.bytes.length) return false;
+    return sig.bytes.every((byte, i) => buffer[i] === byte);
+  });
+  if (!matchedSig) return false;
 
   // Sub-format validation for shared magic byte signatures
   if (claimedMime === "image/webp" && buffer.length >= 12) {
@@ -122,6 +132,13 @@ function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
     // Check for [Content_Types].xml or word/ directory in the ZIP central directory
     const header = buffer.subarray(0, Math.min(200, buffer.length)).toString("ascii");
     return header.includes("[Content_Types]") || header.includes("word/");
+  }
+
+  // XLSX: ZIP with xl/ directory (distinguishes from DOCX which has word/)
+  // W4 FIX: Scan first 2048 bytes (xl/ entry may be past byte 200 in valid XLSX)
+  if (claimedMime === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && buffer.length >= 30) {
+    const header = buffer.subarray(0, Math.min(2048, buffer.length)).toString("ascii");
+    return header.includes("xl/") || header.includes("[Content_Types]");
   }
 
   return true;

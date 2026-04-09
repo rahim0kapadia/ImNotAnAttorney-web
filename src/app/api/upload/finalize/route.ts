@@ -198,14 +198,22 @@ export async function POST(req: NextRequest) {
         jpg: "image/jpeg",
         jpeg: "image/jpeg",
         png: "image/png",
+        gif: "image/gif",
+        webp: "image/webp",
         tiff: "image/tiff",
         tif: "image/tiff",
-        doc: "application/msword",
         docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        xls: "application/vnd.ms-excel",
         txt: "text/plain",
+        csv: "text/csv",
+        mp3: "audio/mpeg",
+        wav: "audio/wav",
+        mp4: "video/mp4",
+        mov: "video/quicktime",
       };
       const mimeType = mimeMap[ext] || "application/octet-stream";
-      const fileType = ext === "pdf" ? "pdf" : ["jpg", "jpeg", "png", "tiff", "tif"].includes(ext) ? "image" : "document";
+      const fileType = ext === "pdf" ? "pdf" : ["jpg", "jpeg", "png", "gif", "webp", "tiff", "tif"].includes(ext) ? "image" : ["mp3", "wav"].includes(ext) ? "audio" : ["mp4", "mov"].includes(ext) ? "video" : "document";
 
       docRows.push({
         case_id: caseId,

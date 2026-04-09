@@ -104,9 +104,9 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We read every page of your discovery and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each one shows what a good answer looks like — and what a red flag looks like.",
+        desc: "We analyze every page of your text-based discovery — police reports, lab results, court filings, and spreadsheets — and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each one shows what a good answer looks like — and what a red flag looks like.",
         capabilities: [
-          "Judge research — how this judge has ruled on motions like yours",
+          "Judge research — how this judge has ruled on motions like yours, when public court records are available",
           "A prioritized list of motions your attorney could file, with filing deadlines",
           "Discovery Strength Rating + Prosecution Weakness Analysis",
         ],
@@ -131,7 +131,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "During trial, you get nightly analysis of each day's testimony and a morning prep brief with cross-examination angles. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
+        desc: "Everything in War Room, plus priority operator access and an extended 28-day engagement window. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Nightly testimony analysis and morning prep briefs coming Q2 2026. Requires War Room.",
         capabilities: [
           "Everything in War Room, plus:",
           "Background research on every prosecution witness with source URLs your attorney can verify",
@@ -161,7 +161,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "How judges in your area handle DUI cases. What diversion programs exist near you. What outcomes are realistic — all researched from public records.",
+        desc: "How judges in your area handle DUI cases. Jurisdiction-specific procedural rules and deadlines that affect your case. What outcomes are realistic — all researched from public records.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -169,9 +169,9 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We read every page of your discovery and flag what doesn't add up. Breathalyzer calibration logs. Field sobriety test compliance. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
+        desc: "We analyze every page of your text-based discovery — police reports, lab results, and court filings — and flag what doesn't add up. Breathalyzer calibration logs. Field sobriety test compliance. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
         capabilities: [
-          "Judge research — how this judge has ruled on motions like yours",
+          "Judge research — how this judge has ruled on motions like yours, when public court records are available",
           "A prioritized list of motions your attorney could file, with filing deadlines",
           "Discovery Strength Rating + Prosecution Weakness Analysis",
         ],
@@ -196,7 +196,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "During trial, you get nightly analysis of each day's testimony and a morning prep brief with cross-examination angles. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
+        desc: "Everything in War Room, plus priority operator access and an extended 28-day engagement window. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Nightly testimony analysis and morning prep briefs coming Q2 2026. Requires War Room.",
         capabilities: [
           "Everything in War Room, plus:",
           "Background research on the arresting officer and every prosecution witness with source URLs your attorney can verify",
@@ -234,9 +234,9 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We read every page of your discovery and flag what doesn't add up. Missing exhibits. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
+        desc: "We analyze every page of your text-based discovery — financial records, court filings, and spreadsheets — and flag what doesn't add up. Missing exhibits. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
         capabilities: [
-          "Judge research — how this judge has ruled on motions like yours",
+          "Judge research — how this judge has ruled on motions like yours, when public court records are available",
           "A prioritized list of motions your attorney could file, with filing deadlines",
           "Discovery Strength Rating + Prosecution Weakness Analysis",
         ],
@@ -261,7 +261,7 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "During trial, you get nightly analysis of each day's testimony and a morning prep brief with cross-examination angles. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Requires War Room.",
+        desc: "Everything in War Room, plus priority operator access and an extended 28-day engagement window. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Nightly testimony analysis and morning prep briefs coming Q2 2026. Requires War Room.",
         capabilities: [
           "Everything in War Room, plus:",
           "Background research on every prosecution witness and cooperator with source URLs your attorney can verify",
@@ -374,7 +374,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["situation-room"].name,
-        description: "Trial Intelligence Operations — evening debrief, morning prep, priority response, background research on every prosecution witness with source URLs your attorney can verify",
+        description: "Trial Intelligence Operations — priority operator access, extended engagement window, background research on every prosecution witness with source URLs your attorney can verify",
         price: (TIER_CORE["situation-room"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -931,7 +931,7 @@ export default function ServicesPage() {
                 <span className="font-semibold text-white">
                   {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay}):
                 </span>{" "}
-                Full trial intelligence cycle — nightly testimony analysis, morning prep brief, witness impeachment research — every trial day. Priority 24-48hr turnaround.
+                Full trial intelligence cycle — priority operator access, witness impeachment research, extended 28-day engagement. Nightly testimony analysis and morning prep briefs coming Q2 2026. Priority 24-48hr turnaround.
               </p>
             </div>
           </div>
