@@ -4,7 +4,7 @@
 
 ## Blog — content/blog/
 
-35+ MDX files. Rendered at `/blog/[slug]` via `next-mdx-remote`. Parsed by `src/lib/blog.ts`.
+48+ MDX files. Rendered at `/blog/[slug]` via `next-mdx-remote`. Parsed by `src/lib/blog.ts`.
 
 ### Frontmatter Schema
 

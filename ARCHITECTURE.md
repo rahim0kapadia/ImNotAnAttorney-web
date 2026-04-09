@@ -1,12 +1,12 @@
 # Architecture — ImNotAnAttorney-web
 
-> Living document. Updated: 2026-04-07. Read this before making any change.
+> Living document. Updated: 2026-04-09. Read this before making any change.
 > Subsystem details live in `CONTEXT.md` files next to the code. This file is the system map.
 > For column-level DB schema: `supabase/SCHEMA.md`. For state machines: `supabase/CONTEXT.md`. For email sequences: `src/lib/CONTEXT.md`.
 
 ## System Overview
 
-Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (35+ MDX blog posts, free ungated resources) with e-commerce (8 playbooks at $97, 5 service tiers at $197–$9,997) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
+Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (48+ MDX blog posts, free ungated resources) with e-commerce (8 playbooks at $97, 5 service tiers at $197–$9,997, 38 standalone products across 4 categories) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
 
 One of three repos in the INAA ecosystem: `ImNotAnAttorney` (business docs/templates), `ImNotAnAttorney-web` (this, customer-facing), `ImNotAnAttorney-engine` (background job workers). All three share the same Supabase database.
 
@@ -38,10 +38,10 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 |-----------|-------------|---------|
 | **Pages & Routes** | 55 pages + 70 API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
 | **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
-| **Standalone Products** | Calculators, content guides, research reports (3 delivery systems) | `src/lib/products.ts` (source of truth) |
+| **Standalone Products** | 38 active: 3 calculators, 8 content guides, 24 research reports, 3 bundles (4 delivery systems) | `src/lib/products.ts` + `src/lib/bundles.ts` |
 | **UI Components** | 45+ components (layout, sales, intake, motion) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
 | **Database** | 50+ tables, 41 migrations, 3 Edge Functions, 3 storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
-| **Content** | 35+ MDX blog posts + social content queue | [`content/CONTEXT.md`](content/CONTEXT.md) |
+| **Content** | 48+ MDX blog posts + social content queue | [`content/CONTEXT.md`](content/CONTEXT.md) |
 | **Scripts** | 24 utilities: cron setup, legal research, E2E tests | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
 | **Design System** | Brand tokens: Amber + Navy on black, Playfair + Lato | [`design-system/brand.md`](design-system/brand.md) |
@@ -60,11 +60,14 @@ Blog/SEO → Free resources (ungated) → Score Quiz (/score, email captured aft
            → Intake form (token-gated) → generate-standalone Edge Function
            → Report uploaded to Storage → Delivery email → /report/standalone/[token]
 
-STANDALONE PRODUCT SYSTEMS (src/lib/products.ts is source of truth):
-  1. Calculators (free) — /tools/[slug] wizard → instant result (Good Time Credit live)
-  2. Content Guides (free) — /guides/[slug] static pages (First Court Appearance live)
-  3. Instant Research ($197+) — /services/[slug] → checkout → intake → Claude → Storage
-     → /report/standalone/[token] (Employment Impact Assessment live)
+STANDALONE PRODUCT SYSTEMS (src/lib/products.ts + bundles.ts):
+  1. Calculators (free, 3 active) — /tools/[slug] wizard → instant result
+     (Good Time Credit, Diversion Eligibility, Veterans Court)
+  2. Content Guides (free, 8 active) — /guides/[slug] static React components
+  3. Instant Research ($97-$297, 24 active) — /services/[slug] → checkout → intake
+     → generate-standalone Edge Function → Storage → /report/standalone/[token]
+  4. Bundles ($97-$197, 3 active) — same flow as research, combined intake form
+     (mergeFieldSets), combined report prompt (delegates to included product prompts)
 ```
 
 ## Life of a Case

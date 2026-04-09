@@ -16,13 +16,14 @@
 |------|---------|
 | `stripe.ts` | Stripe SDK init + dual-mode selector (test vs live per `TIER_CORE[slug].live`) |
 | `tiers.ts` | **SINGLE SOURCE OF TRUTH (tiered products)** — all pricing, Stripe price IDs, tier slugs, live flags |
-| `products.ts` | **SINGLE SOURCE OF TRUTH (standalone products)** — 32 products across 3 categories (3 calculators, 3 content guides, 26 research reports). 21 active / 11 inactive as of 2026-04-08. Parallels tiers.ts. Prices in cents. Checkout uses inline `price_data` (no Stripe Price IDs). Research products stamped across Waves 1-4: Wave 1 = 8 Reddit-validated $97 products (breathalyzer-challenge, fst-review, plea-consequences, drug-test-reliability, bail-hearing-prep, sentencing-prep, family-case-research, arrest-report-review), Wave 2 = 5 life-impact ($127-$297; collateral-consequences, license-risk, security-clearance active — custody-impact and immigration-impact pending UPL audit), Wave 3 = 4 post-conviction (HIGH UPL, all inactive pending prompt hardening), Wave 4 = 6 net-new from Reddit research (attorney-performance-review, probation-violation-response, discovery-decoder, constructive-possession, self-surrender-prep, probation-rights). |
+| `products.ts` | **SINGLE SOURCE OF TRUTH (standalone products)** — 44 products across 4 categories (3 calculators, 8 content guides, 24 research reports, 3 bundles + 6 inactive dark SKUs). 38 active / 6 inactive as of 2026-04-09. Parallels tiers.ts. Prices in cents. Checkout uses inline `price_data` (no Stripe Price IDs). |
+| `bundles.ts` | Bundle definitions — maps bundle slugs to included product slugs. 3 bundles: first-72-hours ($97), defense-preparation ($197), pre-plea-package ($197). Bundles piggyback on standalone product flow (same checkout, webhook, intake). |
 
 ### Standalone Product Support
 | File | Purpose |
 |------|---------|
 | `sanitize.ts` | `sanitizeReportHtml()` — allowlist-based HTML sanitizer for Claude-generated reports (used by standalone report viewer). Allows semantic tags + ARIA attributes, strips scripts/iframes/event handlers. |
-| `calculator.ts` | Calculator computation logic (good-time credit, SOL, diversion eligibility). Reads state rules from JSON data files. |
+| `calculator.ts` | Calculator computation logic (good-time credit, diversion eligibility, veterans court). Reads state rules from JSON data files at `system-data/`. 3 calculators: `calculateGoodTime`, `calculateDiversion` (6 FL program evaluators), `calculateVeteransCourt` (10 states, 250+ courts). |
 
 ### Email
 | File | Purpose |
