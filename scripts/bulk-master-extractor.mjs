@@ -503,6 +503,15 @@ function matchJudge(authorField) {
   return null;
 }
 
+// Strict exact-name lookup — used for pairings and bench/jury divergence where
+// substring collisions would corrupt judge-specific aggregates (findings #5/#6).
+function exactJudge(authorField) {
+  if (!authorField) return null;
+  const key = authorField.toLowerCase().trim();
+  if (!key) return null;
+  return judgeMap.get(key) || null;
+}
+
 // ── 1. Judge Quotes ────────────────────────────────────────────────────────
 
 const quoteResults = [];    // flat array of {judge_id, quote, topic, case_cited, source_url, cluster_id}
@@ -769,7 +778,9 @@ function extractOfficerReliability(clusterId, lower, text) {
 
 // ── 4. Judge-Prosecutor Pairing ────────────────────────────────────────────
 
-// Map<"judge_id|prosecutor_name|motion_type", {grant_count, deny_count, clusters: Set}>
+// Nested composite Map to avoid pipe-delimiter collisions in prosecutor names
+// or motion types (finding #8):
+//   Map<judge_id, Map<prosecutor_name, Map<motion_type, {grant_count, deny_count, clusters: Set}>>>
 const pairingAccum = new Map();
 let pairingExtracted = 0;
 
@@ -835,14 +846,19 @@ function extractJudgeProsecutorPairing(clusterId, lower, text, judge, dumpRow, r
   const outcomes = extractMotionOutcomes(lower);
   if (Object.keys(outcomes).length === 0) return;
 
+  if (!pairingAccum.has(judgeId)) pairingAccum.set(judgeId, new Map());
+  const byProsecutor = pairingAccum.get(judgeId);
+
   for (const prosecutor of prosecutors) {
+    if (!byProsecutor.has(prosecutor)) byProsecutor.set(prosecutor, new Map());
+    const byMotion = byProsecutor.get(prosecutor);
+
     for (const motionType of Object.keys(outcomes)) {
       const outcome = outcomes[motionType];
-      const key = judgeId + "|" + prosecutor + "|" + motionType;
-      if (!pairingAccum.has(key)) {
-        pairingAccum.set(key, { grant_count: 0, deny_count: 0, clusters: new Set() });
+      if (!byMotion.has(motionType)) {
+        byMotion.set(motionType, { grant_count: 0, deny_count: 0, clusters: new Set() });
       }
-      const p = pairingAccum.get(key);
+      const p = byMotion.get(motionType);
       if (outcome.granted) p.grant_count++;
       if (outcome.denied) p.deny_count++;
       p.clusters.add(clusterId);
@@ -1301,12 +1317,13 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
 
       const dumpRow = clusterToDumpRow.get(clusterId);
       const judge = matchJudge(record.author);
+      const strictJudge = exactJudge(record.author);
 
       if (e1 && haveShort) extractJudgeQuotes(clusterId, lower, text, judge, dumpRow, record);
       if (e2 && haveLong) extractSentencing(clusterId, lower, judge, dumpRow, record);
       if (e3 && haveLong) extractOfficerReliability(clusterId, lower, text);
-      if (e4 && haveLong) extractJudgeProsecutorPairing(clusterId, lower, text, judge, dumpRow, record);
-      if (e5 && haveLong) extractBenchJuryDivergence(clusterId, lower, judge, dumpRow);
+      if (e4 && haveLong) extractJudgeProsecutorPairing(clusterId, lower, text, strictJudge, dumpRow, record);
+      if (e5 && haveLong) extractBenchJuryDivergence(clusterId, lower, strictJudge, dumpRow);
       if (e6 && haveLong) extractCoDefendantDivergence(clusterId, lower);
       if (e7 && haveMid) extractPleaDiscount(clusterId, lower, dumpRow);
 
@@ -1412,24 +1429,24 @@ function generateAllSQL() {
   // ── 4. Judge-Prosecutor Pairings (inserts) ───────────────────────────────
   if (enabledTables.has("judge_prosecutor_pairings")) {
     const stmts = [];
-    for (const [key, data] of pairingAccum) {
-      const sampleSize = data.grant_count + data.deny_count;
-      if (sampleSize < 2) continue;
-      const parts = key.split("|");
-      const judgeId = parts[0];
-      const prosecutor = parts[1];
-      const motionType = parts.slice(2).join("|");
-      const grantRate = data.grant_count / sampleSize;
-      const urls = Array.from(data.clusters).map(function (cid) {
-        return "https://www.courtlistener.com/opinion/" + cid + "/";
-      });
+    for (const [judgeId, byProsecutor] of pairingAccum) {
+      for (const [prosecutor, byMotion] of byProsecutor) {
+        for (const [motionType, data] of byMotion) {
+          const sampleSize = data.grant_count + data.deny_count;
+          if (sampleSize < 2) continue;
+          const grantRate = data.grant_count / sampleSize;
+          const urls = Array.from(data.clusters).map(function (cid) {
+            return "https://www.courtlistener.com/opinion/" + cid + "/";
+          });
 
-      stmts.push(
-        "INSERT INTO judge_prosecutor_pairings (judge_id, prosecutor_name, motion_type, grant_rate, sample_size, source_urls) VALUES (" +
-        esc(judgeId) + ", " + esc(prosecutor) + ", " + esc(motionType) + ", " +
-        grantRate + ", " + sampleSize + ", " + escArrayLiteral(urls) +
-        ") ON CONFLICT DO NOTHING;"
-      );
+          stmts.push(
+            "INSERT INTO judge_prosecutor_pairings (judge_id, prosecutor_name, motion_type, grant_rate, sample_size, source_urls) VALUES (" +
+            esc(judgeId) + ", " + esc(prosecutor) + ", " + esc(motionType) + ", " +
+            grantRate + ", " + sampleSize + ", " + escArrayLiteral(urls) +
+            ") ON CONFLICT DO NOTHING;"
+          );
+        }
+      }
     }
     allStmts.judge_prosecutor_pairings = stmts;
     console.log("  judge_prosecutor_pairings: " + stmts.length + " INSERTs (sample >= 2)");
@@ -1797,7 +1814,13 @@ async function main() {
   console.log("  judge_quotes:              " + quotesExtracted + " quotes");
   console.log("  sentencing_distributions:  " + sentencingExtracted + " opinions with sentence data (" + sentencingAccum.size + " groups)");
   console.log("  officer_reliability:       " + officerExtracted + " opinions with officer data (" + officerAccum.size + " officers)");
-  console.log("  judge_prosecutor_pairings: " + pairingExtracted + " opinions with pairings (" + pairingAccum.size + " unique pairings)");
+  let pairingUniqueCount = 0;
+  for (const byProsecutor of pairingAccum.values()) {
+    for (const byMotion of byProsecutor.values()) {
+      pairingUniqueCount += byMotion.size;
+    }
+  }
+  console.log("  judge_prosecutor_pairings: " + pairingExtracted + " opinions with pairings (" + pairingUniqueCount + " unique pairings)");
   console.log("  bench_jury_divergence:     " + benchJuryExtracted + " classified (" + benchJuryAccum.size + " judge-charge groups)");
   console.log("  co_defendant_analysis:     " + coDefExtracted + " divergences found");
   console.log("  plea_discount_curves:      " + pleaExtracted + " opinions classified (" + pleaAccum.size + " groups)");
