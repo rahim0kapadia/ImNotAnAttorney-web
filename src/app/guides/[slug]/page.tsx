@@ -159,7 +159,7 @@ export default async function GuidePage({ params }: Props) {
           </h2>
           <p className="mt-2 text-zinc-300">{product.upsellText}</p>
           <Link
-            href={`/playbook/${product.upsellTier}`}
+            href={`/checkout?tier=${product.upsellTier}`}
             className="mt-4 inline-block text-amber-400 underline hover:text-amber-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
           >
             See the Defense Playbook

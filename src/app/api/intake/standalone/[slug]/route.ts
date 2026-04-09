@@ -284,9 +284,7 @@ export async function POST(
     if (field === "immigrationStatus" && !VALID_IMMIGRATION_STATUS.has(String(raw))) {
       return NextResponse.json({ error: "Invalid immigration status" }, { status: 400 });
     }
-    if (field === "otherParentAwareness" && !VALID_YES_NO_DONTKNOW.has(String(raw))) {
-      return NextResponse.json({ error: "Invalid value" }, { status: 400 });
-    }
+    // otherParentAwareness is now a boolean field (line 323) — no string validation needed
     if (field === "clearanceLevel" && !VALID_CLEARANCE_LEVELS.has(String(raw))) {
       return NextResponse.json({ error: "Invalid clearance level" }, { status: 400 });
     }
@@ -319,7 +317,8 @@ export async function POST(
       "pendingFamilyCase", "priorImmigrationViolations", "pendingPetition",
       "confirmatoryTest", "resultsDocs", "officerDemonstrated",
       "choiceOfTest", "sentenceCompleted", "probationCompleted",
-      "boardNotified",
+      "boardNotified", "hasAttorney", "defendantInCustody",
+      "defendantHasAttorney", "otherParentAwareness",
     ].includes(field)) {
       sanitized[field] = raw === true || raw === "true";
       continue;

@@ -264,6 +264,10 @@ const PRODUCT_META: Record<string, { name: string; price: string }> = {
   "case-law-intelligence": { name: "Case Law Intelligence Pack", price: "$297" },
   "expert-witness-challenge": { name: "Expert Witness Challenge Report", price: "$297" },
   "discovery-demand-letter": { name: "Discovery Demand Letter", price: "$97" },
+  // ─── Bundles ───────────────────────────────────────────────
+  "first-72-hours": { name: "First 72 Hours Bundle", price: "$97" },
+  "defense-preparation": { name: "Defense Preparation Bundle", price: "$197" },
+  "pre-plea-package": { name: "Pre-Plea Package", price: "$197" },
 };
 
 // ============================================================
