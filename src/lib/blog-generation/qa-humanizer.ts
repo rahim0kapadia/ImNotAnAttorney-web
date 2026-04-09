@@ -34,6 +34,28 @@ const FILLER_PHRASES = [
   "in today's",
 ];
 
+// ── UPL-banned phrases (brand voice + UPL compliance) ──
+// These phrases imply a human verification step the reader may never get
+// (their attorney may not call back, they may not have one). They are banned
+// across the entire site — see .claude/rules/no-hallucinated-legal-data.md
+// and content/voice-profiles/*.md banned lists. The previous commit cf4f4d2
+// had to manually strip these from 7 pre-existing blog footers after they
+// leaked through the pipeline. This detector is intentionally hard — any
+// single occurrence adds 50 points, which fails the <45 composite threshold.
+const UPL_BANNED_PHRASES = [
+  "consult a licensed attorney",
+  "consult a licensed criminal defense attorney",
+  "consult a licensed criminal-defense attorney",
+  "consult with a licensed attorney",
+  "consult your attorney",
+  "consult with your attorney",
+  "consult an attorney",
+  "verify with your attorney",
+  "verify with a licensed attorney",
+  "your attorney can confirm",
+  "ask your attorney to verify",
+];
+
 // ── Sycophancy markers ──
 const SYCOPHANCY_MARKERS = [
   "great question",
@@ -57,6 +79,72 @@ const COPULA_SIMPLE = [" is ", " are ", " was ", " were "];
 
 // ── Hedging words ──
 const HEDGING_WORDS = ["could", "might", "possibly", "potentially", "perhaps", "arguably"];
+
+// ── Emotional inflation phrases (Detector 12) ──
+// AI prose habitually inflates stakes instead of being specific.
+const EMOTIONAL_INFLATION_PHRASES = [
+  "devastating consequences",
+  "life-shattering",
+  "life shattering",
+  "absolutely critical",
+  "cannot stress enough",
+  "cannot overstate",
+  "the stakes couldn't be higher",
+  "the stakes could not be higher",
+  "unimaginable",
+  "catastrophic",
+  "utterly devastating",
+  "profoundly impactful",
+  "truly remarkable",
+  "incredibly important",
+];
+
+// ── Vague authority phrases (Detector 13) ──
+// "Experts say" / "studies show" without a named source within the same
+// sentence is an AI hallmark. Flag each instance where the containing
+// sentence has no parenthetical citation.
+const VAGUE_AUTHORITY_PHRASES = [
+  "experts say",
+  "experts agree",
+  "studies show",
+  "studies have shown",
+  "research shows",
+  "research indicates",
+  "research suggests",
+  "according to experts",
+  "according to studies",
+  "professionals recommend",
+  "specialists recommend",
+  "many experts believe",
+  "some experts argue",
+  "it is widely believed",
+  "it is well known",
+];
+
+// ── Opener pattern classes (Detector 11) ──
+// Used to classify the first sentence of each H2 section. If 3+ H2 sections
+// share the same class, the writing is formulaic.
+const OPENER_QUESTION_WORDS = [
+  "what", "when", "how", "why", "is", "are", "do", "does",
+  "can", "should", "will", "would", "could", "who", "where", "which",
+];
+const OPENER_GENERIC_TRANSITIONS = [
+  "when it comes to",
+  "it's important to",
+  "it is important to",
+  "let's explore",
+  "let's dive into",
+  "picture this",
+  "imagine this",
+  "imagine that",
+  "first things first",
+  "at its core",
+  "in essence",
+  "simply put",
+  "to put it simply",
+  "the truth is",
+  "the reality is",
+];
 
 // ── Sentence-ending characters ──
 const SENTENCE_ENDERS = new Set([".", "!", "?"]);
@@ -452,6 +540,32 @@ export function runHumanizerCheck(mdxContent: string): {
     }
   }
 
+  // ── Detector 9b: UPL-banned phrases (hard fail) ──────────────────────────────
+  // Any single occurrence adds 50 points — well above the <45 composite pass
+  // threshold — so one hit fails the post. See commit cf4f4d2 for the prior
+  // incident where 7 blog footers leaked these phrases through the pipeline.
+  {
+    let uplPts = 0;
+    const matches: string[] = [];
+    for (const phrase of UPL_BANNED_PHRASES) {
+      const hits = countOccurrences(bodyLower, phrase);
+      if (hits > 0) {
+        uplPts += hits * 50;
+        matches.push(`"${phrase}" (x${hits})`);
+      }
+    }
+    if (uplPts > 0) {
+      totalPatternPoints += uplPts;
+      flaggedPatterns.push({
+        detector: "upl_banned_phrases",
+        severity: "upl",
+        count: matches.length,
+        matches,
+        points_added: uplPts,
+      });
+    }
+  }
+
   // ── Detector 10: Rule of three ───────────────────────────────────────────────
   // Detect 3+ consecutive list items of similar word length (within 3 words).
   // Uses isMarkdownListItem + stripListPrefix — no regex on content.
@@ -489,6 +603,165 @@ export function runHumanizerCheck(mdxContent: string): {
         count: ruleOfThreeInstances,
         matches: [`${ruleOfThreeInstances} uniform list runs`],
         points_added: 5,
+      });
+    }
+  }
+
+  // ── Detector 11: Formulaic openers ───────────────────────────────────────────
+  // Extract H2 section openers. Classify each by opener pattern class. If any
+  // class appears 3+ times, flag the post as formulaic. No regex on content.
+  {
+    const lines = body.split("\n");
+    const openerClasses: string[] = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      const trimmed = lines[i].trim();
+      // H2 check: starts with "## " but not "### " (H3+)
+      if (!trimmed.startsWith("## ")) continue;
+      if (trimmed.startsWith("### ")) continue;
+
+      // Find the next non-empty, non-heading line as the opener of this section
+      let openerLine = "";
+      for (let j = i + 1; j < lines.length; j++) {
+        const cand = lines[j].trim();
+        if (cand.length === 0) continue;
+        if (cand.startsWith("#")) break; // hit another heading before any prose
+        if (cand.startsWith(">")) continue; // skip blockquote lines
+        openerLine = cand;
+        break;
+      }
+
+      if (openerLine.length === 0) continue;
+
+      // Take the first sentence of this opener (or the whole line if short)
+      const sentences = splitSentences(openerLine);
+      const firstSentence = sentences.length > 0 ? sentences[0] : openerLine;
+      const lower = firstSentence.toLowerCase();
+
+      // Classify
+      let openerClass = "";
+
+      // 1. Question opener — ends with "?" OR starts with a question word
+      const firstWord = splitWords(firstSentence)[0] ?? "";
+      if (firstSentence.endsWith("?")) {
+        openerClass = "question";
+      } else if (OPENER_QUESTION_WORDS.indexOf(firstWord) !== -1) {
+        openerClass = "question";
+      }
+
+      // 2. Generic transition phrases
+      if (openerClass === "") {
+        for (const phrase of OPENER_GENERIC_TRANSITIONS) {
+          if (lower.startsWith(phrase)) {
+            openerClass = "generic_transition";
+            break;
+          }
+        }
+      }
+
+      // 3. Definition opener — "X is/means/refers..." (short noun + is/means)
+      if (openerClass === "") {
+        const words = splitWords(firstSentence);
+        if (
+          words.length >= 2 &&
+          (words[1] === "is" ||
+            words[1] === "means" ||
+            words[1] === "refers" ||
+            words[1] === "involves")
+        ) {
+          openerClass = "definition";
+        }
+      }
+
+      if (openerClass !== "") {
+        openerClasses.push(openerClass);
+      }
+    }
+
+    // Count occurrences of each class
+    const classCounts: Record<string, number> = {};
+    for (const c of openerClasses) {
+      classCounts[c] = (classCounts[c] ?? 0) + 1;
+    }
+
+    const formulaicClasses: string[] = [];
+    for (const c of Object.keys(classCounts)) {
+      if ((classCounts[c] as number) >= 3) formulaicClasses.push(c);
+    }
+
+    if (formulaicClasses.length > 0) {
+      const pts = formulaicClasses.length * 10;
+      totalPatternPoints += pts;
+      const matches = formulaicClasses.map(
+        (c) => `${c} opener (x${classCounts[c]})`
+      );
+      flaggedPatterns.push({
+        detector: "formulaic_openers",
+        severity: "style",
+        count: formulaicClasses.length,
+        matches,
+        points_added: pts,
+      });
+    }
+  }
+
+  // ── Detector 12: Emotional inflation ─────────────────────────────────────────
+  // Count emotional inflation phrases. Flag if density > 2 per 1000 words.
+  {
+    let inflationCount = 0;
+    const matches: string[] = [];
+    for (const phrase of EMOTIONAL_INFLATION_PHRASES) {
+      const hits = countOccurrences(bodyLower, phrase);
+      if (hits > 0) {
+        inflationCount += hits;
+        matches.push(`"${phrase}" (x${hits})`);
+      }
+    }
+    const density = inflationCount / per1000;
+    if (density > 2) {
+      const pts = 15;
+      totalPatternPoints += pts;
+      flaggedPatterns.push({
+        detector: "emotional_inflation",
+        severity: "style",
+        count: inflationCount,
+        matches,
+        points_added: pts,
+      });
+    }
+  }
+
+  // ── Detector 13: Vague authority ─────────────────────────────────────────────
+  // For each vague authority phrase, find the containing sentence. If that
+  // sentence has no parenthetical citation, flag it.
+  {
+    let vagueCount = 0;
+    const matches: string[] = [];
+
+    for (const sentence of sentences) {
+      const sLower = sentence.toLowerCase();
+      for (const phrase of VAGUE_AUTHORITY_PHRASES) {
+        if (sLower.indexOf(phrase) === -1) continue;
+        // Check for a parenthetical citation in the same sentence
+        if (sentence.indexOf("(") !== -1 && sentence.indexOf(")") !== -1) {
+          // Assume the paren contains the source; don't flag
+          continue;
+        }
+        vagueCount++;
+        if (matches.length < 5) matches.push(`"${phrase}" (unsourced)`);
+        break; // one flag per sentence is enough
+      }
+    }
+
+    if (vagueCount > 0) {
+      const pts = vagueCount * 10;
+      totalPatternPoints += pts;
+      flaggedPatterns.push({
+        detector: "vague_authority",
+        severity: "style",
+        count: vagueCount,
+        matches,
+        points_added: pts,
       });
     }
   }

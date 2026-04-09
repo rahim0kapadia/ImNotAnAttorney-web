@@ -42,7 +42,7 @@ export interface BlogFrontmatter {
 
 export interface HumanizerFlag {
   detector: string;
-  severity: 'tier1' | 'tier2' | 'style' | 'filler' | 'sycophancy';
+  severity: 'tier1' | 'tier2' | 'style' | 'filler' | 'sycophancy' | 'upl';
   count: number;
   matches: string[];
   points_added: number;
@@ -80,6 +80,31 @@ export interface UPLDetails {
   results: Array<UPLCriterionResult>;
 }
 
+export interface AntiHallucinationCheckResult {
+  check: string;
+  result: QAResult;
+  evidence: string;
+}
+
+export interface AntiHallucinationDetails {
+  checks_passed: number;
+  checks_total: number;
+  results: Array<AntiHallucinationCheckResult>;
+}
+
+export interface DNACheckResult {
+  check: string;
+  result: QAResult;
+  evidence: string;
+}
+
+export interface DNADetails {
+  checks_passed: number;
+  checks_total: number;
+  needs_work_count: number;
+  results: Array<DNACheckResult>;
+}
+
 // ============================================================
 // BLOG DRAFT
 // ============================================================
@@ -100,6 +125,10 @@ export interface BlogDraft {
   a1_details: A1Details | null;
   upl_result: QAResult | null;
   upl_details: UPLDetails | null;
+  anti_hallucination_result: QAResult | null;
+  anti_hallucination_details: AntiHallucinationDetails | null;
+  dna_result: QAResult | null;
+  dna_details: DNADetails | null;
   qa_attempts: number;
   qa_passed_at: string | null;
   published_at: string | null;
