@@ -247,13 +247,27 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
       }
 
       // ── GUARD: IB Phase 2 reminder only sends if Phase 2 intake hasn't been submitted ──
-      if (nextEmail.key === "post_intelligence_brief_phase2_reminder") {
+      // Applies to standalone IB orders AND the bundled IB deliverable inside
+      // X-Ray / War Room / Situation Room. All four share the same IB case
+      // lookup — the bundled tiers create a sibling IB case with the same
+      // customer email when the webhook fans out the included deliverables.
+      const phase2ReminderKeys = new Set([
+        "post_intelligence_brief_phase2_reminder",
+        "post_xray_ib_phase2_reminder",
+        "post_war_room_ib_phase2_reminder",
+        "post_situation_room_ib_phase2_reminder",
+      ]);
+      if (phase2ReminderKeys.has(nextEmail.key)) {
         const ibCases = casesByEmailTier.get(
           `${order.email.toLowerCase()}:intelligence-brief`
         ) ?? [];
         const ibCase = ibCases[0] ?? null;
 
-        if (!ibCase || ibCase.status !== "intake") {
+        // Skip if no IB case exists, or if Phase 2 intake already submitted.
+        // "intake" = Phase 2 form pending submission
+        // "awaiting-intake" = CD not delivered yet, Phase 2 form not surfaced
+        // Any other status = customer has moved past Phase 2 (submitted, generating, review, delivered)
+        if (!ibCase || (ibCase.status !== "intake" && ibCase.status !== "awaiting-intake")) {
           result.skipped++;
           continue;
         }

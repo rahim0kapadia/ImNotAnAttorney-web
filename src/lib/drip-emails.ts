@@ -1095,6 +1095,59 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       </p>
     `,
   },
+  // --- X-Ray / War Room / Situation Room IB Phase 2 Reminders ---
+  // These higher tiers INCLUDE an Intelligence Brief as a bundled deliverable.
+  // The Phase 2 intake email is sent once from /api/deliver when the CD delivers,
+  // but if the customer ignores it, the IB case sits in "intake"/"awaiting-intake"
+  // forever — meaning the X-Ray/WR/SR analysis runs without judge/attorney/jurisdiction
+  // context. These reminders fire 5 days after purchase for each higher tier.
+  // Cron guard in drip-post-purchase.ts: only fires if sibling IB case status is
+  // still "intake" or "awaiting-intake" (Phase 2 not submitted yet).
+  {
+    key: "post_xray_ib_phase2_reminder",
+    delayDays: 5,
+    tier: "x-ray",
+    subject: "Your X-Ray analysis needs one more thing — 5 minutes of Phase 2 details",
+    html: `
+      <h1 style="color: #F59E0B;">Your X-Ray Is Waiting on One Step</h1>
+      <p>Your X-Ray Discovery Analysis includes a full Intelligence Brief — jurisdiction intelligence, judge patterns, prosecution strategy, and 10-15 targeted questions — all built into your $2,497 package at no extra charge.</p>
+      <p>To generate it, we need a few more details about your judge, your attorney, your jurisdiction, and your case stage. <strong style="color: white;">It takes about 5 minutes.</strong></p>
+      ${cta("Complete Phase 2 Intake →", "/intake/intelligence-brief")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Why this matters:</strong> Without Phase 2, your X-Ray analysis can still process your discovery documents — but it will be missing the jurisdiction intelligence, judge patterns, and attorney coordination framework that make the X-Ray worth $2,497. Your report lands flatter than it should. Five minutes now, a much sharper analysis on the other side.
+      </p>
+    `,
+  },
+  {
+    key: "post_war_room_ib_phase2_reminder",
+    delayDays: 5,
+    tier: "war-room",
+    subject: "Your War Room needs one more thing — 5 minutes of Phase 2 details",
+    html: `
+      <h1 style="color: #F59E0B;">Your War Room Is Waiting on One Step</h1>
+      <p>Your War Room includes a full Intelligence Brief — jurisdiction intelligence, judge patterns, prosecution strategy, and 10-15 targeted questions — bundled into your $4,997 package at no extra charge.</p>
+      <p>To generate it, we need a few more details about your judge, your attorney, your jurisdiction, and your case stage. <strong style="color: white;">It takes about 5 minutes.</strong></p>
+      ${cta("Complete Phase 2 Intake →", "/intake/intelligence-brief")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Why this matters:</strong> Without Phase 2, your War Room can still process discovery documents and witness intelligence — but it will be missing the jurisdiction and judge patterns that sharpen every downstream recommendation. Your weekly updates will feel more generic than they should. Five minutes now, a dramatically sharper ongoing operation.
+      </p>
+    `,
+  },
+  {
+    key: "post_situation_room_ib_phase2_reminder",
+    delayDays: 5,
+    tier: "situation-room",
+    subject: "Your Situation Room needs one more thing — 5 minutes of Phase 2 details",
+    html: `
+      <h1 style="color: #F59E0B;">Your Situation Room Is Waiting on One Step</h1>
+      <p>Your Situation Room includes a full Intelligence Brief — jurisdiction intelligence, judge patterns, prosecution strategy, and 10-15 targeted questions — bundled into your $9,997 package at no extra charge.</p>
+      <p>To generate it, we need a few more details about your judge, your attorney, your jurisdiction, and your case stage. <strong style="color: white;">It takes about 5 minutes.</strong></p>
+      ${cta("Complete Phase 2 Intake →", "/intake/intelligence-brief")}
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">Why this matters:</strong> Without Phase 2, your Situation Room trial preparation will be missing the jurisdiction and judge intelligence that makes the difference at verdict time. Daily Trial Intelligence updates work best when they're anchored to your specific courthouse and judge. Five minutes now, sharper intelligence throughout trial.
+      </p>
+    `,
+  },
   // --- IB Meeting Prep (3 days after IB delivery) ---
   // Guides IB customers on how to use their 9-section report in an attorney meeting.
   {
