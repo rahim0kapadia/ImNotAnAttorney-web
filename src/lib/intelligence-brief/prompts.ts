@@ -446,6 +446,8 @@ Word budget: ~1,750 total.`,
 - Mental health: ${v.mental_health_relevant}
 - Criminal history: ${v.criminal_history_label}
 - Family buyer: ${v.is_family_buyer}
+- Arrest date: ${v.arrest_date}
+- Months since arrest: ${v.months_since_arrest}
 - Charge-specific context: ${v.charge_specific_data}
 </intake_data>
 
