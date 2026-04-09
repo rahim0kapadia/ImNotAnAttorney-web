@@ -260,7 +260,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Custody is intertwined with your criminal case. The Case Decoder maps all the intersections.",
     dripSequenceKey: "research_custody",
-    isActive: false,
+    isActive: true,
   },
 
   // ─── COURT CASE PORT — WAVE 1 (isActive=false until operator review) ─────
@@ -545,7 +545,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Expungement eligibility is the starting point. The Case Decoder maps the full path to clearing your record.",
     dripSequenceKey: "research_expungement",
-    isActive: false,
+    isActive: true,
   },
   "sentence-reduction": {
     name: "Sentence Reduction Petition Research",
@@ -569,7 +569,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Sentence reduction research is step one. The Case Decoder covers the full post-conviction landscape.",
     dripSequenceKey: "research_sentence_reduction",
-    isActive: false,
+    isActive: true,
   },
   "appeal-viability": {
     name: "Appeal Viability Assessment",
@@ -593,7 +593,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: null,
     upsellText: null,
     dripSequenceKey: "research_appeal",
-    isActive: false,
+    isActive: true,
   },
   "ineffective-counsel": {
     name: "Ineffective Counsel Documentation",
@@ -615,7 +615,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: null,
     upsellText: null,
     dripSequenceKey: "research_ineffective_counsel",
-    isActive: false,
+    isActive: true,
   },
 
   // ─── WAVE 4 — Net-new from Reddit research ───────────────────
