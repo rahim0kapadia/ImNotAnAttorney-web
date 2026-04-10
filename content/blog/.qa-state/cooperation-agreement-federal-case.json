@@ -1,0 +1,57 @@
+{
+  "slug": "cooperation-agreement-federal-case",
+  "last_checked": "2026-04-10T00:07:57.316Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 25.5,
+      "details": {
+        "composite_score": 25.5,
+        "pattern_score": 15,
+        "uniformity_score": 50,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 13,
+            "matches": [
+              "13 em dashes in 4184 words"
+            ],
+            "points_added": 10
+          },
+          {
+            "detector": "rule_of_three",
+            "severity": "style",
+            "count": 3,
+            "matches": [
+              "3 uniform list runs"
+            ],
+            "points_added": 5
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+    },
+    "slop": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+    },
+    "upl": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+    },
+    "dna": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+    }
+  }
+}

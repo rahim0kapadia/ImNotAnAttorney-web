@@ -1,0 +1,305 @@
+{
+  "slug": "breathalyzer-calibration-records",
+  "last_checked": "2026-04-09T23:59:11.969Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 22,
+      "details": {
+        "composite_score": 22,
+        "pattern_score": 10,
+        "uniformity_score": 50,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 30,
+            "matches": [
+              "30 em dashes in 3195 words"
+            ],
+            "points_added": 10
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 3,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — post uses general language like 'depending on the model and jurisdiction' and 'varies by jurisdiction' with no statute numbers"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "FAIL",
+            "evidence": "Names individual attorneys: 'Barry Scheck, co-founder of the Innocence Project' and 'Lawrence Taylor, author of Drunk Driving Defense'"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "Unsourced statistics including '375+ DNA exonerations', partition ratio '2100:1 in most jurisdictions' and 'range from 1100:1 to 3500:1', and the margin of error '±0.005 to ±0.02 BAC' in body text has no inline source"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Procedural claims are jurisdiction-qualified: 'every 30, 60, or 90 days depending on the model and jurisdiction' and '15 to 20 minutes (varies by jurisdiction)'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "FAIL",
+            "evidence": "References a specific legal case: 'the attorney who dismantled the forensic evidence in the O.J. Simpson case'"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — post does not discuss collateral consequences like licensing, housing, firearms, voting, or immigration"
+          }
+        ]
+      }
+    },
+    "slop": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 14,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter to verify against; body contains multiple attorney-directed questions consistent with the post's purpose."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Key claims sourced to NHTSA Conforming Products List, Forensic Science International, Barry Scheck/Innocence Project, and Lawrence Taylor's Drunk Driving Defense."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language with terms like calibration and certification defined in context; no undefined jargon in instructions."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "No instances of the flagged cliche phrases appear anywhere in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Uses second person 'you/your' consistently throughout; brief third-person references to 'the officer' are subject references, not voice shifts."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Active voice dominates; passive constructions like 'is supposed to be observed' are well under 30% of sentences."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "Terms like calibration, partition ratio, RFI, observation period, and discovery are explained on first use in plain language."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Logical flow: hook -> machine history -> four numbered challenge points -> discovery checklist -> framing close -> CTA."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple actionable CTAs including specific attorney questions, Case Progress Score link, and DUI Defense Playbook link."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct ('Ask your attorney', 'Write down', 'Send your attorney'); hedging appears only in informational claims."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs are well under 300 words and action paragraphs stay under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Word count is distributed across eight roughly comparable sections; no single section approaches 50%."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Each threat (overdue calibration, expired certification, skipped observation, margin of error) is paired with a specific attorney action within 1-2 sentences."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong hook ('not a fact, an opinion from a machine'), evidence-rich middle with four challenge points, and empowering close with concrete five-minute actions."
+          }
+        ]
+      }
+    },
+    "upl": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "criteria_passed": 13,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Directives consistently target the reader-to-attorney action ('Ask your attorney whether...', 'Send your attorney this numbered list') rather than instructing the reader to take legal action independently."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each challenge-point section closes with an attorney redirect (e.g., 'Ask your attorney whether they've confirmed the operator's certification was current')."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Statements about reader's situation are qualified ('could actually be anywhere from .06 to .10', 'may be one of them') rather than rendering specific case judgments."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Post recommends specific procedural steps: 'Your attorney should be using these gaps to file suppression motions' and 'that's a challenge your attorney needs to file — today, not next month.'"
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, so the immigration-attorney redirect requirement does not apply."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Post does not assert collateral consequences (license loss, housing, firearms, voting, etc.), so attribution requirement does not apply."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Named entities are device models (Intoxilyzer 8000, Alco-Sensor FST, Draeger 9510) and forensic experts (Scheck, Taylor) — no bail bond companies, firms, or legal service providers recommended."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "First-person plural appears only in service description ('We analyze DUI cases and identify...'), never in 'we recommend/advise' phrasing about legal actions."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Multiple second-person hypothetical scenes ('You're standing in a police station...', 'You're looking at the prosecution's evidence sheet... It says \".08 BAC\"') are presented as narrative without 'Hypothetical' or 'Example scenario' labels."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Framing consistently empowers reader to ask better questions of their attorney ('give you the questions to bring to your attorney'), not to handle the matter alone."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Legal rules are qualified throughout with 'typically', 'varies by jurisdiction', 'in most jurisdictions', and 'depending on the model and jurisdiction'."
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Outcome language is qualified ('not necessarily wrong', 'could change the trajectory', 'challengeable') rather than guaranteeing dismissal or reduction."
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Strategies are attributed to named sources: Barry Scheck/Innocence Project methodology, Lawrence Taylor's Drunk Driving Defense, NHTSA Conforming Products List, Forensic Science International."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims appear; calibration cycles, margin of error ranges, and observation period durations are stated consistently."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Products framed as research tools: 'identify exactly which records your attorney should be pulling' and '12-point evidence red flag checklist' — never as substitutes for representation."
+          }
+        ]
+      }
+    },
+    "dna": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 7,
+        "checks_total": 12,
+        "needs_work_count": 5,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening names the fear ('Your BAC result feels like a verdict') but H2s like 'The Machine Has a History', 'Challenge Point 1: Calibration Records', and 'The \"It's Just a Number\" Problem' are topical rather than action-oriented ('How to Challenge...')"
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Legal/technical terms defined inline (partition ratio, RFI, observation period all explained on first use); paragraphs stay at 2-4 sentences; 8th-grade action language throughout"
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "NEEDS_WORK",
+            "evidence": "TLDRBox 'Your Next Step' provides a concrete question to ask attorney before first H2, but it's embedded in the TLDR rather than formatted as a distinct immediate-action block"
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each challenge point leads with a default recommendation (e.g., 'Ask your attorney whether they've confirmed the operator's certification was current') rather than presenting unranked options"
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "NEEDS_WORK",
+            "evidence": "The 'What Your Attorney Should Be Requesting' section has 7 unranked numbered items without 'start with these' priority markers"
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "system-decoder-post — decodes the breathalyzer evidence system into four challenge points with records/procedures to audit"
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every scary fact (drift, expired certifications, ±0.02 margin, missed observation periods) is paired within 2 sentences with a specific action (request records, check bodycam timestamps, write down the range)"
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language toward the reader; all critique directed at machines, procedures, prosecution, and non-working attorneys — never the defendant"
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening validates fear, middle reduces unknown to known, closing gives agency ('Five minutes of preparation unlocks months of defense') — but the actual final section 'What We Do' ends on a product CTA rather than an agency statement"
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "Only H2 headings used, no tables, key actions bolded, sections stay within ~300-500 word range"
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Every H2 section contains a bolded standalone sentence under 27 words (e.g., 'A .08 reading with a ±0.02 margin of error means you could be at .06 — below the legal limit — and the machine would still say .08.')"
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "All three FAQ answers lead with the direct answer and use natural voice, but the third answer about records to request runs 4 sentences of dense enumeration that reads slightly institutional rather than peer-to-peer"
+          }
+        ]
+      }
+    }
+  }
+}

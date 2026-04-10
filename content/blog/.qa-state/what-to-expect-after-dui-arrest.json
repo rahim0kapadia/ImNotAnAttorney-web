@@ -1,0 +1,66 @@
+{
+  "slug": "what-to-expect-after-dui-arrest",
+  "last_checked": "2026-04-09T21:47:44.266Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 34.1,
+      "details": {
+        "composite_score": 34.1,
+        "pattern_score": 30,
+        "uniformity_score": 43.6,
+        "flagged_patterns": [
+          {
+            "detector": "tier1_vocabulary",
+            "severity": "tier1",
+            "count": 1,
+            "matches": [
+              "leverage (x1)"
+            ],
+            "points_added": 15
+          },
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 50,
+            "matches": [
+              "50 em dashes in 2683 words"
+            ],
+            "points_added": 10
+          },
+          {
+            "detector": "rule_of_three",
+            "severity": "style",
+            "count": 7,
+            "matches": [
+              "7 uniform list runs"
+            ],
+            "points_added": 5
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    },
+    "slop": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    },
+    "upl": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    },
+    "dna": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    }
+  }
+}

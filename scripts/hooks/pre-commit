@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+#
+# pre-commit — Blog QA hard gate.
+#
+# For every staged content/blog/*.mdx file, runs scripts/qa-existing-post.mjs
+# to refresh its .qa-state/<slug>.json sidecar and blocks the commit if any
+# gate fails. Auto-stages the refreshed sidecar JSON so the commit always
+# includes the updated state.
+#
+# Mirrors Katie's KDP pipeline — gates in the path, not next to it. You
+# cannot ship an .mdx change without passing every audit that can run.
+#
+# Escape hatches:
+#   BLOG_QA_SKIP_HOOK=1     Skip this hook entirely (emergencies only)
+#
+# Enable once per clone:
+#   git config core.hooksPath scripts/hooks
+#
+# This script is committed to the repo at scripts/hooks/pre-commit.
+
+set -e
+
+if [ "${BLOG_QA_SKIP_HOOK:-0}" = "1" ]; then
+  echo "[blog-qa] BLOG_QA_SKIP_HOOK=1 — skipping pre-commit gate."
+  exit 0
+fi
+
+# Collect staged .mdx files under content/blog/ (added or modified, not
+# deleted). If none, the hook is a no-op and exits 0.
+staged_mdx=$(git diff --cached --name-only --diff-filter=AM | grep -E '^content/blog/[^/]+\.mdx$' || true)
+
+if [ -z "$staged_mdx" ]; then
+  exit 0
+fi
+
+echo "[blog-qa] Running QA gates on staged .mdx files..."
+
+fail=0
+updated_sidecars=""
+
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
+  slug=$(basename "$file" .mdx)
+  echo "[blog-qa]   → $slug"
+
+  if node scripts/qa-existing-post.mjs "$file"; then
+    sidecar="content/blog/.qa-state/${slug}.json"
+    if [ -f "$sidecar" ]; then
+      updated_sidecars="$updated_sidecars $sidecar"
+    fi
+  else
+    fail=1
+    sidecar="content/blog/.qa-state/${slug}.json"
+    if [ -f "$sidecar" ]; then
+      updated_sidecars="$updated_sidecars $sidecar"
+    fi
+  fi
+done <<< "$staged_mdx"
+
+# Auto-stage any sidecars we touched so the commit reflects current state.
+if [ -n "$updated_sidecars" ]; then
+  # shellcheck disable=SC2086
+  git add $updated_sidecars
+fi
+
+if [ "$fail" = "1" ]; then
+  echo ""
+  echo "[blog-qa] BLOCKED: one or more staged .mdx files failed QA gates."
+  echo "[blog-qa] Fix the issues above, re-run:"
+  echo "[blog-qa]   node scripts/qa-existing-post.mjs <file>"
+  echo "[blog-qa] ...and try the commit again."
+  echo ""
+  echo "[blog-qa] Emergency bypass: BLOG_QA_SKIP_HOOK=1 git commit ..."
+  exit 1
+fi
+
+echo "[blog-qa] All staged .mdx files passed their gates."
+exit 0

@@ -1,0 +1,11 @@
+=== BULK EXTRACT MOTION TYPES + LEGAL ISSUES (csv-parse) ===
+
+Target clusters (all with cluster_id): 6718
+Streaming opinions CSV through bzcat + csv-parse (escape: \\)...
+Using: C:\Program Files\Git\usr\bin\bzcat.exe
+
+  0.5M rows, 149 matched, 117 extracted (942s)
+  1.0M rows, 538 matched, 463 extracted (2038s)
+  500 extractions...
+  1000 extractions...
+  1.5M rows, 1193 matched, 1008 extracted (2852s)

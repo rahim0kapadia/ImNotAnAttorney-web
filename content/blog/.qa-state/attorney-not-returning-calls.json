@@ -1,0 +1,314 @@
+{
+  "slug": "attorney-not-returning-calls",
+  "last_checked": "2026-04-09T23:57:56.890Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 25.5,
+      "details": {
+        "composite_score": 25.5,
+        "pattern_score": 15,
+        "uniformity_score": 50,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 108,
+            "matches": [
+              "108 em dashes in 5204 words"
+            ],
+            "points_added": 10
+          },
+          {
+            "detector": "rule_of_three",
+            "severity": "style",
+            "count": 6,
+            "matches": [
+              "6 uniform list runs"
+            ],
+            "points_added": 5
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Post references 'Model Rules of Professional Conduct (Rule 1.4)' which is a well-known universal professional conduct rule, not a fabricated statute; no other statute numbers appear"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'Public defenders in some jurisdictions carry 200+ active cases simultaneously' states a specific numeric claim without a named source, and 'Communication failures are the single most common complaint filed against attorneys with state bar associations' makes a #1-ranking factual claim without attribution"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Procedural claims use qualifiers like 'in some jurisdictions', 'typically', and 'the court must approve the substitution' — no bare universal procedural deadlines stated"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
+    },
+    "slop": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 13,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter; body contains 3 direct attorney questions ('What is the current status of discovery?', 'Have any motions been filed?', 'Has the prosecution made any plea offers?') consistent with the post's framing."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "NEEDS_WORK",
+            "reason": "Most claims are framed as general observations, but 'Public defenders in some jurisdictions carry 200+ active cases' and 'the single most common complaint filed against attorneys with state bar associations' lack inline sources; Model Rules 1.4 is cited which helps."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('Document every contact attempt', 'Send a formal written request'), and legal terms like 'motion for substitution of counsel' are contextualized immediately."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "No flagged cliches from the list appear; 'nuclear option' is used once but is not on the banned list."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Second person ('you', 'your') is maintained throughout; brief third-person references to 'the attorney' or 'defendants' do not exceed 2 consecutive sentences."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Passive constructions ('can be terminated', 'has been filed') appear occasionally but well under 30% of sentences; active voice dominates."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "Terms like 'discovery', 'motion for substitution of counsel', 'suppression hearing', 'arraignment', and 'Model Rules 1.4' are either common or contextualized on first use."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Sections follow a logical problem → context → solution → action arc: why attorneys go silent, documentation, formal letter, stage-based expectations, slow vs abandonment, rights, switching, bar complaint, closing CTA."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple clear CTAs including Case Decoder checkout links, Case Progress Score, specific attorney questions, and internal blog links to related guides."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are mostly direct imperatives ('Start documenting', 'Send this', 'Line up new representation'); hedging words appear in informational contexts, not directives."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words, and action-oriented paragraphs stay well under 100 words; longest explanatory paragraphs remain within limits."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Content is distributed across ~10 major sections with no single section dominating more than roughly 15-20% of total word count."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat (missed deadlines, malpractice territory, evaporating rights, abandonment) is immediately paired with a concrete action (document, send letter, check reviews, request file, consider switching)."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with a visceral 11 PM scenario hook, builds through stages/red flags with evidence and templates, and closes with empowering CTA and specific next actions."
+          }
+        ]
+      }
+    },
+    "upl": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "criteria_passed": 5,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Post contains multiple directives like 'Send it via email first (for speed) and certified mail second', 'Line up new representation before terminating the old one', 'Request your complete case file', and numbered command lists telling readers exactly what to do."
+          },
+          {
+            "criterion": "U2",
+            "result": "FAIL",
+            "evidence": "Sections on filing bar complaints, switching attorneys, and motions for substitution of counsel do not include proximate attorney redirects — the only disclaimer is a footer note 'We are not attorneys.'"
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post speaks in general patterns ('attorneys who go silent', 'red flags') without evaluating the reader's specific case strength or likely outcome."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Post recommends 'filing a motion for substitution of counsel' and references filing bar complaints as action steps the reader should take."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, deportation, visa status, or green card issues."
+          },
+          {
+            "criterion": "U6",
+            "result": "FAIL",
+            "evidence": "Claims 'Failure to communicate is explicitly covered in the Model Rules of Professional Conduct (Rule 1.4)' but makes many other assertions about client rights, case file ownership, and public defender substitution standards without sourcing to specific statutes or rules."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Post only references generic categories like 'a private attorney', 'public defender', 'office manager' — no specific firms or companies named."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "Post uses second-person 'you' framing throughout and does not use 'we recommend' or 'we advise' in a legal-action context; the 'we built' phrase refers to the product, not legal strategy."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Opening scenarios like 'It is 11 PM on a Tuesday. You are staring at your phone...' and 'You are sitting across from an empty desk' are presented as immersive narrative without hypothetical labels."
+          },
+          {
+            "criterion": "U10",
+            "result": "FAIL",
+            "evidence": "Post repeatedly frames the reader as able to handle accountability themselves with phrases like 'questions that force a response and hold them accountable' and 'turns your frustration into evidence a bar association can act on' — implying self-management rather than attorney guidance."
+          },
+          {
+            "criterion": "U11",
+            "result": "FAIL",
+            "evidence": "Legal rules are stated as certainties: 'You have the legal right to your complete case file', 'Private counsel can be terminated at any time', 'the court must approve the substitution' — without 'in general', 'typically', or jurisdictional qualifiers."
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "Post implies specific outcomes from following the advice: 'A certified letter with a specific deadline is the turning point where most silent attorneys suddenly find time to respond' and 'changes the dynamic permanently.'"
+          },
+          {
+            "criterion": "U13",
+            "result": "FAIL",
+            "evidence": "Strategies like the formal written request template, the 48-hour deadline tactic, and the 'lead with documented facts' call approach are presented as the blog's own guidance without attribution to named attorneys, scholars, or cases."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No internally contradictory legal claims detected — statements about rights, timelines, and procedures are consistent throughout."
+          },
+          {
+            "criterion": "U15",
+            "result": "FAIL",
+            "evidence": "Case Decoder is framed as a tool to 'hold your attorney accountable' and 'turns that effort into results' rather than explicitly as a research/preparation tool supplementing attorney representation — no language positioning it as a supplement to legal counsel."
+          }
+        ]
+      }
+    },
+    "dna": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 10,
+        "checks_total": 12,
+        "needs_work_count": 2,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening hook names the fear well ('staring at your phone...six outgoing calls...Zero incoming'), but several H2s are topical rather than action-oriented: 'Why Attorneys Go Silent', 'Know Your Rights as a Client', 'The Bigger Picture: Communication Problems Are Symptom Problems'."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Prose is conversational and 8th-grade level; legal terms like 'motion for substitution of counsel', 'suppression hearing', and 'Model Rules of Professional Conduct (Rule 1.4)' are defined or contextualized inline; no paragraph exceeds 4 sentences."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "PASS",
+            "evidence": "Before the first H2, reader is told: 'open a note on your phone and type today's date and the last time you called. That takes 30 seconds and starts your log.' — concrete, under 5 minutes, no attorney needed."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Decision points consistently lead with a default: 'Line up new representation before terminating the old one', 'Send it via email first (for speed) and certified mail second (for proof of delivery)', and the slow-vs-abandonment section names variables rather than saying 'it depends'."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "NEEDS_WORK",
+            "evidence": "The opening numbered list has 7 unranked steps, and 'Consider switching if:' presents 6 unranked bullets — neither is broken into 'start with these' priority groupings."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "This post uses the system-decoder-post pattern — it decodes how attorney communication is supposed to work by case stage and contrasts normal vs. red-flag behavior."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Threats are consistently paired with actions: 'potential malpractice territory' is followed by the switching-attorneys section; 'Every day of inaction...is a day where deadlines may be passing' is paired with 'immediate action is worth considering' and the bar complaint path."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language — the post consistently frames the attorney as the problem ('that's not your problem', 'a failure of professional duty') and never implies the reader caused the situation."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "PASS",
+            "evidence": "Opens by validating fear ('staring at your phone...gone ghost'), middle explains mechanisms and case stages, closes with agency: 'You've done the hard part — you showed up, you documented, you educated yourself'; though final line is a CTA, the preceding agency statement is clear."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "The communication log table has 6 columns which is borderline, but only H2 and H3 used, key actions bolded, and sections are reasonably sized; the 6-column table is the one concern but acceptable as a template example."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Every H2 section contains exactly one bolded standalone screenshot-worthy sentence under 27 words, e.g. 'A certified letter with a specific deadline is the turning point where most silent attorneys suddenly find time to respond.' and 'Attorneys who are doing good work on your case have things to report — attorneys who are doing nothing have nothing to say.'"
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All 3 FAQ answers lead with the direct answer, are 3 sentences each, and read as experienced peer advice ('Yes. A private attorney can be terminated at any time...') rather than institutional voice."
+          }
+        ]
+      }
+    }
+  }
+}

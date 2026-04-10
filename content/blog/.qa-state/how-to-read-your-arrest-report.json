@@ -1,0 +1,48 @@
+{
+  "slug": "how-to-read-your-arrest-report",
+  "last_checked": "2026-04-10T00:15:26.244Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 22,
+      "details": {
+        "composite_score": 22,
+        "pattern_score": 10,
+        "uniformity_score": 50,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 29,
+            "matches": [
+              "29 em dashes in 3064 words"
+            ],
+            "points_added": 10
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+    },
+    "slop": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+    },
+    "upl": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+    },
+    "dna": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+    }
+  }
+}

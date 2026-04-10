@@ -1,0 +1,48 @@
+{
+  "slug": "professional-license-risk-criminal-charge",
+  "last_checked": "2026-04-09T21:47:42.124Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 20.3,
+      "details": {
+        "composite_score": 20.3,
+        "pattern_score": 10,
+        "uniformity_score": 44.2,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 38,
+            "matches": [
+              "38 em dashes in 2458 words"
+            ],
+            "points_added": 10
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    },
+    "slop": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    },
+    "upl": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    },
+    "dna": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    }
+  }
+}

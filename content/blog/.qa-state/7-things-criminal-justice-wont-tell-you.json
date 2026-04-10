@@ -1,0 +1,314 @@
+{
+  "slug": "7-things-criminal-justice-wont-tell-you",
+  "last_checked": "2026-04-09T23:55:31.278Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 32.5,
+      "details": {
+        "composite_score": 32.5,
+        "pattern_score": 25,
+        "uniformity_score": 50,
+        "flagged_patterns": [
+          {
+            "detector": "tier1_vocabulary",
+            "severity": "tier1",
+            "count": 1,
+            "matches": [
+              "leverage (x1)"
+            ],
+            "points_added": 15
+          },
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 65,
+            "matches": [
+              "65 em dashes in 3735 words"
+            ],
+            "points_added": 10
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "No statute numbers, § symbols, or penal code references appear; only general 'Sixth Amendment' constitutional language is used"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "Only organizations cited (NACDL, Bureau of Justice Statistics, ABA, National Legal Aid and Defender Association); no individual attorneys or legal scholars named"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "Body claim 'sentences three to six times longer than defendants who accepted a plea' has no inline source in that sentence or the preceding one ('The numbers are stark.'); also 'public defenders carry 200-500+ cases' (FAQ) and 'Public defenders carry 300-500+ cases' (TLDR) appear without named sources"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "All procedural claims are jurisdiction-qualified ('In every state', 'in most states', 'under their jurisdiction's rules', 'virtually any stage'); no bare universal deadlines stated"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "FAIL",
+            "evidence": "The post cites '*Strickland v. Washington*' as the source of the ineffective-assistance-of-counsel standard — this is a specific case citation, not Brady-as-terminology"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "Collateral impacts mentioned ('lose income, relationships, and stability', 'Employment uncertainty') are phrased generally with no universal licensing/voting/firearm/immigration claims"
+          }
+        ]
+      }
+    },
+    "slop": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 14,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "Frontmatter has no question_count field to mismatch; body contains approximately 7 distinct attorney-directed question prompts plus a consolidated list, consistent with the post's structure."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Major factual claims are sourced inline (NACDL Trial Penalty report, Bureau of Justice Statistics, ABA/NLADA caseload standards, Strickland v. Washington); fewer than 2 claims lack attribution."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain, direct language ('Ask this question today. Write the number down.') with no undefined jargon in instructions."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the banned cliches (at the end of the day, tip of the iceberg, slippery slope, double-edged sword, game changer, wake-up call) appear in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Post uses second person consistently; brief third-person references to 'defendants' never run more than 1-2 sentences before returning to 'you/your'."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Sentences are predominantly active voice; passive constructions appear occasionally but well under the 30% threshold."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "Key terms (trial penalty, Brady material, discovery, continuance, bar complaint) are defined or contextualized on first use; Strickland is explained as the ineffective-assistance standard."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Clear logical flow: intro framing -> 7 numbered structural realities (each problem -> context -> question -> action) -> consolidated question list -> CTA."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Post offers multiple actionable next steps: 7 specific attorney questions, free Case Progress Score link, and Case Decoder checkout link."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct imperatives ('Ask this', 'Write the number down', 'Bookmark it'); hedging words appear mainly in information/analysis statements where allowed."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words; action-oriented paragraphs are short (1-4 sentences) and stay under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "The seven numbered sections are roughly comparable in length; no single section approaches 50% of total word count."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat (trial penalty years, caseload neglect, lost time to continuances, missing discovery, adverse judges, bad plea offers, attorney failure) is followed within 1-2 sentences by a specific question to ask or action to take."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with a strong scenario hook ('no instruction manual'), middle builds with documented evidence (NACDL, BJS, Strickland), closes by empowering with a consolidated question list and concrete CTAs."
+          }
+        ]
+      }
+    },
+    "upl": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "criteria_passed": 11,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Post frames actions as questions to ask the attorney (e.g., 'Question to ask your attorney') rather than directives to follow without attorney guidance."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each of the 7 sections ends with a specific 'Question to ask your attorney' proximate to the decision-action content."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post explicitly states 'that depends on your specific facts' and avoids evaluating the reader's specific case strength or likely outcome."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Post states 'Defense attorneys can file motions to compel more complete disclosure' and asks 'Have you filed a Brady demand?' — recommending specific procedural steps/motions rather than just explaining them."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, deportation, visa status, DACA, or green cards, so the immigration-specific redirect requirement does not apply."
+          },
+          {
+            "criterion": "U6",
+            "result": "FAIL",
+            "evidence": "Claims like 'three to six times longer' sentences and ABA/NLADA caseload standards are attributed generally to NACDL/BJS but specific collateral claims (e.g., Strickland examples of sleeping/intoxicated attorneys) lack direct statute/regulation/official citations with URLs."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Post references general categories like 'public defender offices' and 'defense attorneys' without naming specific firms or companies as recommendations."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "Post avoids 'we recommend/advise/suggest' phrasing; the only first-person plural use is 'We provide research, analysis, and questions' in the disclaimer."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Opening vignettes like 'The prosecutor slides a piece of paper across the table. Two years probation' and 'You're sitting in a holding area...eleven minutes before their next client' are narrative scenarios not labeled as hypothetical or example."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Disclaimer states 'We provide research, analysis, and questions to help you work more effectively with your attorney' framing as empowerment to ask questions, not self-representation."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Post uses qualifiers like 'typically,' 'in some jurisdictions,' 'often,' and 'in most states' throughout when discussing legal rules."
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "Statements like 'Defense attorneys with a reputation for going to trial...extract better plea deals' and 'Attorneys who hear this question tend to communicate more consistently' imply specific outcomes without jurisdictional qualifier."
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Trial penalty attributed to NACDL 2018 report, ineffective assistance standard attributed to Strickland v. Washington, caseload standards attributed to ABA and NLADA."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "TLDR states public defenders carry '300-500+ cases' and FAQ states '200-500+' — a minor numerical range variance but not a contradictory legal claim; no contradictory statements about law appear."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Case Decoder framed as 'a clear analysis of your specific case...which questions apply' and disclaimer explicitly states 'We are not attorneys and do not provide legal representation.'"
+          }
+        ]
+      }
+    },
+    "dna": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 8,
+        "checks_total": 12,
+        "needs_work_count": 3,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening names the fear (no instruction manual, attorney may not have time) but H2s mix action and topical — #1 'The Trial Penalty Is Real' and #7 'Bar Complaints Are Real' are topical/declarative rather than action-oriented."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Legal terms defined inline (trial penalty, Brady material, Strickland v. Washington contextualized), paragraphs stay at 1-4 sentences, action sections read conversationally."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No immediate-action block before the first H2 — the intro goes straight from framing into section 1; first concrete action ('Ask this question today. Write the number down') is buried at the end of section 1."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each section leads with a default recommendation (ask this specific question, write the number down, set a 5-day calendar reminder) rather than presenting unranked options."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "PASS",
+            "evidence": "Bulleted lists stay at 3-4 items (bar complaint rights list has 4, discovery questions has 2, final question roundup is grouped by topic headers not unranked)."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "system-decoder-post — seven structural realities of the system paired with accountability questions."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every scary stat (3-6x trial penalty, 97% pleas, 300-500 caseloads, Strickland low bar) is followed within 1-2 sentences by a paired question or concrete action."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "No blame language — the system is framed as the source of the problem, defendant is never told 'you should have' or implied to have caused the situation."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Arc is present (fear named, system explained, questions given) but final sentence before the CTA is a generic product pitch ('Want a clear analysis...Case Decoder') rather than a standalone agency statement."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "No tables, only H2 headings used, key actions bolded, sections stay within 400-550 words each, no H4+."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Every H2 section has exactly one bolded standalone sentence under 27 words ('Your constitutional right to a trial comes with an unofficial price tag measured in years of freedom.', 'Discovery isn't a delivery — it's a negotiation...', etc.) — all shareable insights, not instructions."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "Both FAQ answers start with the direct answer and avoid preamble, but the first answer is 5 sentences packed with institutional-feeling list recitation ('Most defendants never learn that...that...that...') rather than a natural support-group reply."
+          }
+        ]
+      }
+    }
+  }
+}

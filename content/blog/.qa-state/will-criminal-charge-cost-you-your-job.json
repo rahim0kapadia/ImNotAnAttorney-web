@@ -1,0 +1,48 @@
+{
+  "slug": "will-criminal-charge-cost-you-your-job",
+  "last_checked": "2026-04-09T21:47:44.739Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 18.5,
+      "details": {
+        "composite_score": 18.5,
+        "pattern_score": 5,
+        "uniformity_score": 50,
+        "flagged_patterns": [
+          {
+            "detector": "rule_of_three",
+            "severity": "style",
+            "count": 4,
+            "matches": [
+              "4 uniform list runs"
+            ],
+            "points_added": 5
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    },
+    "slop": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    },
+    "upl": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    },
+    "dna": {
+      "passed": false,
+      "status": "unchecked",
+      "reason": "credits_depleted"
+    }
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "slug": "10-day-dmv-deadline",
+  "last_checked": "2026-04-09T23:51:36.076Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 24.9,
+      "details": {
+        "composite_score": 24.9,
+        "pattern_score": 15,
+        "uniformity_score": 48.2,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 29,
+            "matches": [
+              "29 em dashes in 2793 words"
+            ],
+            "points_added": 10
+          },
+          {
+            "detector": "rule_of_three",
+            "severity": "style",
+            "count": 3,
+            "matches": [
+              "3 uniform list runs"
+            ],
+            "points_added": 5
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 3,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "FAIL",
+            "evidence": "TLDR cites 'CA Vehicle Code § 13558, FL Statute § 322.2615, TX Transportation Code § 724.041' — three specific statute numbers that violate the no-statute-citation rule for blog content"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "FAIL",
+            "evidence": "Names 'Lawrence Taylor, author of Drunk Driving Defense' and 'F. Lee Bailey, author of Excellence in Cross-Examination' as individual legal experts — both prohibited under the no-named-attorney rule"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "State-specific suspension lengths ('California: 4-month suspension... 1-year for refusal', 'Florida: 6 months or 12 months', 'Texas: 90-day... 180-day') are stated as factual claims with no parenthetical source citation"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "All procedural claims are jurisdiction-qualified — 'most states give you a narrow window', explicit state names (California, Florida, Texas, New York), and 'In most states, you get a temporary permit'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "License suspension consequences are tied to explicit state jurisdictions (California, Florida, Texas, New York) rather than stated as universal facts"
+          }
+        ]
+      }
+    },
+    "slop": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 13,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter to validate against; body contains multiple reader-to-attorney questions as designed."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Statutes cited (CA Vehicle Code § 13558, FL § 322.2615, TX Transportation Code § 724.041), Lawrence Taylor and F. Lee Bailey named with book titles, NHTSA referenced for FST protocols."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('call your attorney', 'write that date on your phone', 'file it yourself'); legal terms like ALR and FST appear with context."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the banned phrases ('end of the day', 'tip of iceberg', 'slippery slope', 'double-edged sword', 'game changer', 'wake-up call') appear."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Consistent second person 'you/your' throughout; brief third-person references to 'the officer' and 'defendants' are subjects of discussion, not voice shifts."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Active voice dominates; passive constructions ('was arrested', 'is preserved') appear occasionally but well below 30%."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "'Arraignment', 'preponderance', and 'retainer' appear without explicit definition on first use, though context helps."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Logical flow: hook -> two-system problem -> miss-deadline consequences -> why it matters -> three actions -> question list -> big picture -> CTA."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple clear CTAs: five attorney questions, DUI Defense Playbook ($97), Case Decoder ($197), free Case Progress Score, and file-it-yourself instructions."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct imperatives ('call', 'write', 'file', 'ask', 'bookmark'); hedges like 'may' appear only on informational claims."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words; action-oriented paragraphs stay under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Word count is distributed across 7+ sections; the 'Three Things' section is longest but below 50% of total."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat (automatic suspension, missed deadline, lost discovery) is paired with a specific action within 2 sentences (file the form, set a reminder, ask the attorney)."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong hook ('Your license is about to disappear'), evidence-rich middle with state-by-state data and expert citations, empowering close with five questions and file-it-yourself instruction."
+          }
+        ]
+      }
+    },
+    "upl": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "criteria_passed": 10,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Contains direct commands like 'call your attorney right now', 'Write that date on your phone's calendar', 'file it yourself', and 'Set a recurring daily alarm on your phone' — phrased as instructions to follow without attorney guidance."
+          },
+          {
+            "criterion": "U2",
+            "result": "FAIL",
+            "evidence": "Sections like 'What Happens If You Miss the Deadline' instruct the reader to 'file it yourself' without a proximate redirect to consult an attorney about whether self-filing is appropriate for their situation."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post discusses DMV hearings generally and asks reader to pose questions to their attorney; does not render judgment like 'your case is strong' about the reader's specific circumstances."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Recommends the reader take a specific procedural step: 'If your attorney hasn't filed by day 7, file it yourself' and 'you can file it yourself' regarding the DMV administrative hearing request."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, deportation, visa status, DACA, or green card issues, so immigration redirect is not applicable."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Suspension periods and deadlines are sourced to 'CA Vehicle Code § 13558, FL Statute § 322.2615, TX Transportation Code § 724.041' in the TLDRBox."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Only names Lawrence Taylor and F. Lee Bailey as authors of legal texts, not as recommended service providers; no bail bond companies or law firms are named with a recommendation."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "Post does not use 'we recommend,' 'we advise,' or 'we suggest' in legal-action contexts; 'we' only appears in 'read our walkthrough' and 'What We Do' product section."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Multiple unlabeled scenarios appear as vivid second-person narratives: 'You walk out of the police station at 4 AM...', 'You stare at the calendar and realize it's day 11', and 'The hearing officer calls your case number' — none marked as hypothetical."
+          },
+          {
+            "criterion": "U10",
+            "result": "FAIL",
+            "evidence": "Frames self-action as empowering without attorney: 'you can file it yourself — and that five-minute action may be the most important thing you do for your defense' implies the reader can handle the DMV filing independently."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Uses qualifiers like 'most states give you roughly 10 days,' 'The specifics vary by state,' and 'in most states, you get a temporary permit' when discussing legal rules."
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Outcome language is hedged: 'testimony that could win your criminal trial,' 'may be the most important thing you do,' and state-by-state variation is explicitly noted in the disclaimer."
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Strategies are attributed to Lawrence Taylor ('Drunk Driving Defense') and F. Lee Bailey ('Excellence in Cross-Examination'), with statutes cited; not presented as the blog's original legal opinions."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "State deadline variations (CA 10 days, FL 10 days, TX 15 days, NY no separate hearing) are presented as jurisdictional differences, not contradictions; post consistently frames DMV and criminal as separate proceedings."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "DUI Defense Playbook is framed as '26 questions for your attorney' and 'cheat sheet for your next attorney meeting'; Case Decoder 'generates 15 questions calibrated to your specific case' — both positioned as attorney-prep research tools."
+          }
+        ]
+      }
+    },
+    "dna": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 10,
+        "checks_total": 12,
+        "needs_work_count": 2,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "PASS",
+            "evidence": "Opens with 'Your license is about to disappear and nobody told you' naming the fear; H2s like 'What Happens If You Miss the Deadline' and 'Three Things Your Attorney Should Do With the DMV Hearing' are action/outcome-oriented."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Legal terms are defined inline (e.g., 'preponderance vs. beyond reasonable doubt', 'free deposition', 'ALR hearing' shown with state context); paragraphs stay under 4 sentences throughout."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "NEEDS_WORK",
+            "evidence": "A concrete action ('call your attorney right now and ask: Have you filed the DMV administrative hearing request?') appears in the TLDRBox before the first H2, but it isn't formatted as a distinct immediate-action block separate from the summary."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Every decision point leads with a default — e.g., 'File the Request on Day One' and 'If your attorney hasn't filed by day 7, file it yourself' provide clear leading recommendations."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "NEEDS_WORK",
+            "evidence": "'The questions to ask your DUI attorney this week' section lists 5 unranked items without a 'start with these' priority marker."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "system-decoder-post — decodes the two-track DUI system (criminal vs DMV) and explains the strategic mechanics of the DMV hearing."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every suspension stat (CA 4-month, FL 6-month, TX 90-day) is followed within 2 sentences by an action like 'Search your state's DMV website right now for administrative hearing request form'."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "No blame language — the post consistently frames the attorney or the system as the failure point, never the defendant ('nobody told you', 'your attorney was busy')."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "PASS",
+            "evidence": "Opens validating fear ('Your license is about to disappear'), middle decodes the two-system mechanics, and closes on agency ('Set a recurring daily alarm... Do not turn it off until you have written confirmation')."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "Only H2/H3 heading levels used, key actions are bolded, no tables, and H2 sections stay within roughly 300-500 words each."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Every H2 section contains one standalone bolded sentence under 27 words — e.g., 'The DMV hearing is the only time in the entire DUI process where the officer testifies under oath with no prosecutor guiding the questions.'"
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All three FAQ answers start with the direct answer, stay 3-4 sentences, and read naturally as peer replies ('Your license gets automatically suspended...', 'The DMV hearing forces the arresting officer to testify under oath...')."
+          }
+        ]
+      }
+    }
+  }
+}

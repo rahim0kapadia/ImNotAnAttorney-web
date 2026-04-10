@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-04-08T19:41:18.856Z",
+  "total": 1,
+  "success": 0,
+  "failed": 1,
+  "results": [
+    {
+      "label": "expungement-research-0-CA-misdemeanor-dismissed",
+      "slug": "expungement-research",
+      "scenario": "CA-misdemeanor-dismissed",
+      "status": "error",
+      "error": "Edge Function → 500: {\"error\":\"Report generation failed\"}"
+    }
+  ]
+}
