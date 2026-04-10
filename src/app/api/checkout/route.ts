@@ -60,6 +60,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
     }
     const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType, promoCode, paymentPlan, standaloneProduct } = body;
+    const ref = typeof body.ref === "string" && body.ref.length <= 200 ? body.ref : null;
 
     // =========================================================================
     // 1a. STANDALONE PRODUCT CHECKOUT
@@ -204,10 +205,26 @@ export async function POST(req: NextRequest) {
     // email flows. Errors are logged but non-blocking (checkout should proceed).
     // =========================================================================
     if (normalizedEmail) {
-      const { error: subError } = await supabase.from("subscribers").upsert(
-        { email: normalizedEmail, source: "checkout" },
-        { onConflict: "email" }
-      );
+      const { data: existingSub } = await supabase
+        .from("subscribers")
+        .select("id, original_source")
+        .eq("email", normalizedEmail)
+        .maybeSingle();
+
+      const subUpsert: Record<string, unknown> = {
+        email: normalizedEmail,
+        source: "checkout",
+      };
+      if (!existingSub) {
+        subUpsert.original_source = "checkout";
+      }
+      if (ref) {
+        subUpsert.referral_url = ref;
+      }
+
+      const { error: subError } = await supabase
+        .from("subscribers")
+        .upsert(subUpsert, { onConflict: "email" });
       if (subError) {
         console.error("[Checkout] Subscriber upsert error:", subError);
       }
@@ -747,6 +764,7 @@ export async function POST(req: NextRequest) {
         ...(tierConfig.includesTiers.length > 0 && {
           includes_tiers: tierConfig.includesTiers.join(","),
         }),
+        referral_url: ref || "",
       },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
       cancel_url: `${origin}/checkout?tier=${tier}`,
