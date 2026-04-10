@@ -320,7 +320,8 @@ function scoreDimension(
 async function computeContentGaps(
   scores: DemandScoreRow[],
   contentPosts: ContentPost[],
-  painPointCategories: PainPointCategory[]
+  painPointCategories: PainPointCategory[],
+  feedbackByCharge: Record<string, number>
 ): Promise<ContentGapRow[]> {
   // Map pain_point_id → category (charge type inference)
   const ppIdToCategory: Record<number, string> = {};
@@ -367,7 +368,8 @@ async function computeContentGaps(
     }
     score.has_blog_coverage = blogCount > 0;
     score.blog_post_count = blogCount;
-    score.content_gap_score = Math.max(1, 10 - blogCount * 2);
+    const multiplier = feedbackByCharge[score.dimension_slug] ?? 1.0;
+    score.content_gap_score = Math.max(1, Math.round((10 - blogCount * 2) * multiplier * 100) / 100);
   }
 
   // Generate content_gaps for GOLD_MINE / RISKY_BET with high gap scores
@@ -529,6 +531,15 @@ export async function scoreDemand(supabase: SupabaseClient): Promise<ScoreResult
   const contentPosts = await loadContentPosts(supabase);
   const ppCategories = await loadPainPointCategories(supabase);
 
+  // Load feedback multipliers for performance-weighted gap scoring
+  const { data: feedbackRows } = await supabase
+    .from("demand_feedback")
+    .select("charge_type_slug, performance_multiplier");
+  const feedbackByCharge: Record<string, number> = {};
+  for (const row of feedbackRows || []) {
+    feedbackByCharge[row.charge_type_slug] = row.performance_multiplier;
+  }
+
   console.log(
     `[score-demand] Loaded: ${chargeTypes.length} charge types, ` +
     `${painPoints.length} pain points, ${contentPosts.length} content posts`
@@ -597,7 +608,7 @@ export async function scoreDemand(supabase: SupabaseClient): Promise<ScoreResult
   }
 
   // Compute content gaps (mutates allScores to fill blog coverage fields)
-  const gaps = await computeContentGaps(allScores, contentPosts, ppCategories);
+  const gaps = await computeContentGaps(allScores, contentPosts, ppCategories, feedbackByCharge);
   console.log(`[score-demand] Content gaps identified: ${gaps.length}`);
 
   // Detect emerging topics
