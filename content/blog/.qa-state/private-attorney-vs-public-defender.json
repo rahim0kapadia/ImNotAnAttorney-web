@@ -1,6 +1,6 @@
 {
   "slug": "private-attorney-vs-public-defender",
-  "last_checked": "2026-04-10T10:06:39.764Z",
+  "last_checked": "2026-04-10T18:06:00.138Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers, section references, or code citations appear anywhere in the post — all legal rules described using general language."
+            "evidence": "No statute numbers, section references, or penal code citations appear anywhere in the post — all legal rules described using general language"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal-scholar names appear; only institutional sources (NLADA, ABA, Bureau of Justice Assistance) which are permitted agencies."
+            "evidence": "No individual attorney or legal-scholar names appear; only source agencies (NLADA, ABA, Bureau of Justice Assistance) which are permitted"
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "FAQ answer quotes \"$50,000-$100,000+ for complex cases or trials\" without a named source, and this figure does not appear with attribution anywhere in the post body."
+            "result": "PASS",
+            "evidence": "All statistics have named sources: caseloads '(NLADA/ABA studies)', costs '(industry survey data)', caseload exceedances attributed to 'Bureau of Justice Assistance', table entries sourced inline"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "No procedural claims about deadlines, filing windows, or hearing timelines appear — advice is limited to suggested questions and general rights statements."
+            "evidence": "No specific procedural deadlines, filing windows, or hearing timelines stated — all procedural references are general suggestions ('schedule a dedicated case review', 'request a full copy of discovery')"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only excepted terminology appears: \"Daubert challenge\" and \"Brady demand\" — both listed as permitted legal-concept shorthand."
+            "evidence": "Only 'Daubert challenge' and 'Brady demand' appear, both on the permitted exceptions list as universally known legal terminology"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear anywhere in the post."
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration) appear in the post — discussion limited to quality-of-representation factors"
           }
         ]
       }

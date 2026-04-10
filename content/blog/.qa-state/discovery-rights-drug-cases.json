@@ -1,6 +1,6 @@
 {
   "slug": "discovery-rights-drug-cases",
-  "last_checked": "2026-04-10T09:47:33.716Z",
+  "last_checked": "2026-04-10T11:35:45.243Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,41 +25,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No specific statute numbers appear anywhere in the post; legal rules are described with general language like 'constitutional right' and 'The Fourth Amendment.'"
+            "evidence": "No specific statute numbers appear; post references 'Fourth Amendment' (universally known constitutional provision) and uses general language like 'constitutional right' and 'disclosure requirements' throughout."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal-scholar names appear; sourcing is limited to 'INAA case review, 2026' and 'ImNotAnAttorney Team.'"
+            "evidence": "No individual attorney or legal scholar names appear; author is 'ImNotAnAttorney Team' (site's own brand, not a named legal expert)."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The only factual statistic — '73% weight discrepancy' — has a named source in the same sentence: '(INAA case review, 2026).'"
+            "evidence": "Only statistic found — '73% weight discrepancy between field test and lab results' — has a named source: '(INAA case review, 2026)' in the same sentence."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Procedural references are framed as practical advice ('your attorney should be filing') or questions to ask, not as bare universal legal deadlines; 'in some circumstances' qualifies CI disclosure."
+            "evidence": "Procedural references are either universal federal constitutional principles (Brady disclosure, Fourth Amendment warrant requirements) or qualified ('in some circumstances, your attorney can compel disclosure'); no bare jurisdiction-specific deadlines stated as universal."
           },
           {
             "check": "CASE_NAME_CHECK",
-            "result": "FAIL",
-            "evidence": "'Franks hearing' appears twice (bullet header and body text) — a case-derived term from Franks v. Delaware that is not in the enumerated exceptions list alongside Daubert/Brady/Miranda/Frye."
+            "result": "PASS",
+            "evidence": "Only case references are 'Brady v. Maryland' and 'Franks hearing' — both explicitly listed as permitted exceptions functioning as legal terminology."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims (licensing, housing, firearm rights, voting, immigration, employment) appear; the post focuses on discovery rights, not sentencing or post-conviction impact."
+            "evidence": "No collateral-consequence claims found; post focuses entirely on discovery rights and attorney accountability, with no mentions of licensing loss, voting rights, housing, firearms, or other post-conviction consequences."
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "slug": "wire-fraud-defense-questions",
-  "last_checked": "2026-04-10T10:29:58.085Z",
+  "last_checked": "2026-04-10T18:16:22.884Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "18 U.S.C. § 1343 and U.S. Sentencing Guidelines Manual §2B1.1 are real, correctly cited federal references; no fabricated or jurisdiction-misapplied statute numbers found."
+            "evidence": "Post cites 18 U.S.C. § 1343 (real federal wire fraud statute) and U.S. Sentencing Guidelines Manual §2B1.1 loss table (real guidelines reference) — both are verifiable federal references used correctly."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear; only source agencies and legal concepts are referenced."
+            "evidence": "No individual attorney or legal scholar names appear anywhere in the post — techniques and strategies are described without attribution to named experts."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "Loss-table level enhancements ($250K → 12 levels, $9.5M → 22 levels) are sourced to 'U.S. Sentencing Guidelines Manual, §2B1.1 loss table'; penalty figures are tied to the cited statute; no unsourced statistics found."
+            "evidence": "All numerical claims are statutory penalties attributed to 18 U.S.C. § 1343 (20 years, 30 years per count) or sourced to '(U.S. Sentencing Guidelines Manual, §2B1.1 loss table)' for the $250K/12-level and $9.5M/22-level sentencing enhancements."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims (loss calculation at sentencing, Brady disclosure, allocution, restitution) occur within the explicitly established federal wire fraud context under 18 U.S.C. § 1343."
+            "evidence": "All procedural claims operate within the clearly established federal context (federal wire fraud, Federal Sentencing Guidelines, federal prison, federal plea) — Brady obligations are attributed to Brady v. Maryland, allocution is scoped to federal pleas, and guidelines are identified as 'Federal Sentencing Guidelines.'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only 'Brady v. Maryland' appears, which is in the permitted exceptions list as universally known legal terminology."
+            "evidence": "Only 'Brady v. Maryland' appears, which is an explicitly allowed exception functioning as universally known legal terminology."
           },
           {
             "check": "CONSEQUENCE_CHECK",
-            "result": "FAIL",
-            "evidence": "Bold callout states 'A wire fraud conviction triggers professional license revocations, civil suits, and regulatory proceedings' as automatic universal fact without 'may', 'can', or jurisdictional qualifier; license revocations depend on specific licensing boards and jurisdictions."
+            "result": "PASS",
+            "evidence": "All collateral consequences use qualifying language: 'you may lose professional licenses,' 'potential civil suits,' 'possible SEC or regulatory proceedings,' 'can trigger professional license revocations' — no consequence is stated as universal fact."
           }
         ]
       }

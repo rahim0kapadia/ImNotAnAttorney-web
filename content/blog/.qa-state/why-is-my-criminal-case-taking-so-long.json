@@ -1,6 +1,6 @@
 {
   "slug": "why-is-my-criminal-case-taking-so-long",
-  "last_checked": "2026-04-10T10:27:53.526Z",
+  "last_checked": "2026-04-10T18:14:22.945Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post uses general language throughout — 'the Sixth Amendment and state speedy trial statutes,' 'constitutional right to a speedy trial' — no bare statute numbers appear anywhere."
+            "evidence": "Post references only 'the Sixth Amendment' (real, well-known) and 'state speedy trial statutes' (general language) — no specific statute numbers appear anywhere."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No real attorney or legal-scholar names cited. 'Dr. Smith' appears only as a fictional placeholder in a hypothetical dialogue example, not as a real expert attribution."
+            "evidence": "No individual attorneys or legal scholars are named; 'Dr. Smith' appears only as a hypothetical dialogue example, not as a cited expert authority. Sources are agencies (Bureau of Justice Statistics, National Center for State Courts)."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'Cases that would have resolved in 6 months now take 12-18 months' (court backlog section) makes a specific numerical claim about post-COVID backlog impact with no named source."
+            "result": "PASS",
+            "evidence": "All timeline statistics (1-4 months, 3-6 months, 6-18 months, 12-24+ months, 18-36 months) are attributed to '(Bureau of Justice Statistics court processing data)' and '(Bureau of Justice Statistics — State Court Processing Statistics)' in the TLDR; court backlog claim is sourced to '(National Center for State Courts, court backlog data)'. No unsourced statistical claims found."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are jurisdiction-qualified: 'In most jurisdictions, you have a constitutional right to a speedy trial,' 'The specific timelines vary by state,' 'In many cases, your attorney has waived speedy trial rights.'"
+            "evidence": "Speedy trial rights are qualified with 'In most jurisdictions' and 'The specific timelines vary by state and whether you're in state or federal court'; waiver discussion uses 'In many cases'; court record lookup uses 'Many jurisdictions'. No bare universal procedural claims."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear anywhere in the post."
+            "evidence": "No case citations (e.g. 'Smith v. Jones' format) appear anywhere in the post. No Brady, Daubert, Miranda, or other legal terminology references either."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims made. Emotional/practical impacts of pending cases ('can't plan a vacation,' 'can't take that job') describe uncertainty of limbo, not legal consequences of conviction."
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration) appear. References to inability to plan, take jobs, or sign leases describe the defendant's own psychological uncertainty from a pending case, not legal restrictions."
           }
         ]
       }

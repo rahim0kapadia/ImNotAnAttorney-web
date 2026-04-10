@@ -1,6 +1,6 @@
 {
   "slug": "how-criminal-cases-actually-work",
-  "last_checked": "2026-04-10T09:57:42.366Z",
+  "last_checked": "2026-04-10T18:20:19.083Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers or section references appear anywhere in the post; all legal rules described using general language ('legally required', 'constitutional right', 'unlawful stop')"
+            "evidence": "No statute numbers (§, U.S.C., Penal Code, etc.) appear anywhere in the post; all legal rules are described in general language."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear; only agency source 'Bureau of Justice Statistics' is cited, which is allowed"
+            "evidence": "No individual attorney or legal scholar names appear; the only named source is Bureau of Justice Statistics, which is an agency."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'3-10%' trial rate appears in TLDR, FAQs, Stage 7 heading, and body with no named source attribution; '90-97%' plea resolution rate in TLDR also unsourced"
+            "result": "PASS",
+            "evidence": "All major statistics (97% federal guilty pleas, 90-97% plea resolution, 3-10% trial rate) cite Bureau of Justice Statistics; timeline ranges use 'typical/typically' qualifiers; 73% weight discrepancy is first-party case finding ('we found')."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural timelines use soft qualifiers — 'usually within 24-72 hours', 'typically complete within 12-24 hours', 'typically occurs 30-90 days' — no bare universal deadlines or filing requirements stated"
+            "evidence": "Key procedural claims are jurisdiction-qualified: 'In most jurisdictions, within 24-72 hours', 'in most cases, a presentence investigation report', 'depending on the jurisdiction'; remaining claims describe universal constitutional rights."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only 'Brady motion/material', 'Daubert/Frye motion', and 'Miranda rights' appear — all listed exceptions functioning as legal terminology"
+            "evidence": "Only exception-listed terminology appears: Brady motion, Brady material, Daubert/Frye motion, Miranda rights — no non-exempt case citations found."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Collateral consequences (immigration, employment, licensing, housing) appear only as questions to ask an attorney, not as universal factual claims"
+            "evidence": "All collateral consequences (immigration, employment, licensing, housing) are framed as questions to ask an attorney, not as universal factual claims."
           }
         ]
       }

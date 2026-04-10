@@ -1,6 +1,6 @@
 {
   "slug": "questions-to-ask-public-defender",
-  "last_checked": "2026-04-10T10:10:39.300Z",
+  "last_checked": "2026-04-10T18:07:00.080Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers appear anywhere in the post; all legal rules described using general language like 'many states have a 10-day DMV hearing deadline' and 'the standard is typically showing'."
+            "evidence": "No statute numbers or section references appear anywhere in the post; all legal rules described using general language like 'many states have a 10-day DMV hearing deadline'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal-scholar names appear; only source agencies cited (Bureau of Justice Statistics, American Bar Association)."
+            "evidence": "No individual attorney or legal scholar names appear; only source agencies cited (Bureau of Justice Statistics, American Bar Association)"
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "The claim '200–400+ cases per attorney' appears four times (TLDR, body, FAQ twice) without a named source — only the 150-felony ABA maximum and the 80% BJS figure are sourced. Additionally, 'one receptionist for 30 attorneys' is unsourced."
+            "result": "PASS",
+            "evidence": "Key statistics sourced: '80% of felony defendants' (Bureau of Justice Statistics with URL), '150 felony cases' (ABA), '200 to 400+ active cases' (Bureau of Justice Statistics in FAQ); remaining numbers are narrative scenarios or qualified with 'may be'"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are jurisdiction-qualified: 'some states give you 10 days', 'many states have a 10-day DMV hearing deadline', 'the standard is typically'."
+            "evidence": "DMV hearing deadline qualified with 'some states give you 10 days' and 'many states have a 10-day DMV hearing deadline'; substitution of counsel standard qualified with 'typically'; no bare universal procedural claims found"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear anywhere in the post."
+            "evidence": "No case citations appear anywhere in the post"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, etc.) appear in the post; outcome references are general ('potential prison time', 'realistic range of outcomes')."
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, employment) appear; post focuses on case strategy and attorney communication rather than sentencing consequences"
           }
         ]
       }

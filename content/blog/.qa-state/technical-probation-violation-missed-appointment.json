@@ -1,6 +1,6 @@
 {
   "slug": "technical-probation-violation-missed-appointment",
-  "last_checked": "2026-04-10T10:19:28.489Z",
+  "last_checked": "2026-04-10T18:09:29.701Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,41 +25,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No specific statute numbers (§, U.S.C., Penal Code, etc.) appear anywhere in the post; all legal rules are described with general language like 'most jurisdictions,' 'within state statutes,' and 'state statutes or departmental policies.'"
+            "evidence": "Post uses general language throughout — 'state statutes,' 'most jurisdictions,' 'probation statutes or departmental policies' — no specific statute numbers appear anywhere."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal-scholar names appear; the only named source is 'Bureau of Justice Statistics,' which is a government agency, not an individual expert."
+            "evidence": "No individual attorney or legal scholar names appear. Only source agency cited is Bureau of Justice Statistics, which is permitted."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "The first occurrence of 'approximately a third of state prison admissions annually are for probation or parole violations' in the 'Bigger Picture' opening paragraph lacks a named source; the Bureau of Justice Statistics attribution does not appear until the following paragraph."
+            "result": "PASS",
+            "evidence": "The one statistic — 'approximately a third of state prison admissions annually are for probation or parole violations' — is attributed to Bureau of Justice Statistics in both instances where it appears."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Procedural claims use jurisdiction qualifiers ('in most jurisdictions,' 'most states,' 'some jurisdictions') or are attributed to 'Supreme Court precedent' for universally applicable constitutional rights (right to counsel, right to cross-examine, preponderance standard); no bare universal deadlines or filing windows appear."
+            "evidence": "All procedural claims are jurisdiction-qualified: 'most jurisdictions,' 'most states,' 'some jurisdictions,' 'not every state,' or grounded in universal constitutional rights (right to counsel, preponderance standard per Supreme Court precedent)."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations (X v. Y format) appear anywhere in the post; 'Supreme Court precedent' is referenced generically without naming a specific case."
+            "evidence": "No case citations appear. References to 'Supreme Court precedent' are generic and do not name a specific case."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration) appear; all discussed consequences are direct sentencing outcomes (revocation, added conditions, short jail stays) within the revocation hearing context."
+            "evidence": "Post discusses only direct sentencing consequences (warnings, added conditions, jail stays, revocation) within the probation proceeding — no collateral-consequence claims about licensing, housing, firearms, voting, or employment appear."
           }
         ]
       }

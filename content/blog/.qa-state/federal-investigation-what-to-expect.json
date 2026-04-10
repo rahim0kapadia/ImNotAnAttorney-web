@@ -1,6 +1,6 @@
 {
   "slug": "federal-investigation-what-to-expect",
-  "last_checked": "2026-04-10T09:52:30.711Z",
+  "last_checked": "2026-04-10T11:38:05.649Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post cites 18 U.S.C. § 1001 (false statements) and 18 U.S.C. § 1519 (obstruction/evidence destruction) — both are real, well-known federal statutes correctly described."
+            "evidence": "All statute references (18 U.S.C. § 1001, § 1519, § 3282, § 3293) are real, verifiable federal statutes cited correctly with accurate penalty ranges and limitation periods."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal expert names appear; 'Bureau of Justice Statistics' is a source agency, not a named expert."
+            "evidence": "No individual attorney or legal expert names appear. Only institutional references (FBI, IRS Criminal Investigation, Postal Inspection Service, Bureau of Justice Statistics, DOJ)."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'The statute of limitations for most federal offenses is five years. For financial institution fraud, it's ten.' — specific time-window claims stated as fact without a named source in parentheses."
+            "result": "PASS",
+            "evidence": "The key statistic 'around 90%' of federal cases ending in guilty pleas is sourced to '(Bureau of Justice Statistics)' in the same sentence. Statutory penalties are attributed to specific U.S. Code sections. Timeline ranges (6-18 months, 1-5 years, 60-90 days) are general estimates, not precise factual claims."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims (grand jury attendance, Fifth Amendment invocation, arraignment timing, sentencing timeline) are framed within explicit federal context established by the post's scope."
+            "evidence": "All procedural claims (arraignment timing, discovery phase, sentencing window, statute of limitations, grand jury subpoena obligations) are set within the explicitly established federal investigation context from the title onward, with federal code references where applicable."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations (X v. Y format) appear anywhere in the post."
+            "evidence": "No case citations appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Consequences mentioned (felony for lying to agents, obstruction charges, fleeing as separate crime) are direct criminal consequences attributed to specific federal statutes, not unsourced collateral consequences."
+            "evidence": "All consequence claims are attributed to specific federal statutes — obstruction penalty attributed to 18 U.S.C. § 1519, false statements to § 1001, fleeing qualified as 'a separate federal crime.' No unqualified collateral-consequence claims about licensing, housing, voting, or employment."
           }
         ]
       }

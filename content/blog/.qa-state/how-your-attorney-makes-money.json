@@ -1,6 +1,6 @@
 {
   "slug": "how-your-attorney-makes-money",
-  "last_checked": "2026-04-10T10:03:13.456Z",
+  "last_checked": "2026-04-10T18:30:27.508Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers, section references, or statutory citations appear anywhere in the post. All legal rules are described in general terms."
+            "evidence": "No statute numbers, section references, or code citations appear anywhere in the post; all legal rules are described in general terms"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear. Sources are limited to organizations: ABA, Bureau of Justice Statistics, state bar associations."
+            "evidence": "No individual attorney or legal scholar names appear; sources are organizations only (ABA, Bureau of Justice Statistics)"
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "\"Two-thirds of lawyers admit billing irregularities occur at their firms\" — specific statistic with no named source, publication, or year in parentheses."
+            "result": "PASS",
+            "evidence": "Key statistics (150 felony case max, 7.5 minutes per week) are attributed to ABA Ten Principles of a Public Defense Delivery System; remaining numbers (400 cases, $15,000, $750) are hypothetical illustrations, not factual claims"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "No filing deadlines, appeal windows, or legal procedural requirements stated as universal rules. The \"two business days\" reference is practical advice about communication expectations, not a legal procedural claim."
+            "evidence": "No filing deadlines, notice windows, hearing timelines, or appeal periods are stated; 'two business days' is a communication-quality suggestion, not a legal procedural claim"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations (X v. Y format) appear anywhere in the post."
+            "evidence": "No case citations (e.g. 'X v. Y') appear anywhere in the post"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "The post does not make collateral-consequence claims about licensing, housing, firearms, voting, or immigration. Discussion is limited to attorney billing incentives and communication patterns."
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear; post focuses exclusively on attorney billing incentives"
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "slug": "what-to-expect-after-dui-arrest",
-  "last_checked": "2026-04-10T10:26:03.616Z",
+  "last_checked": "2026-04-10T18:13:13.507Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,41 +43,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post uses general language ('in most states', 'varies by state') throughout — no bare statute numbers or specific code references appear anywhere in the content"
+            "evidence": "Post uses general language throughout ('in most states', 'varies by state') — no bare statute numbers or specific code references appear anywhere in the text."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear; only agency sources cited (Bureau of Justice Statistics, American Automobile Association)"
+            "evidence": "No individual attorney or legal-scholar names appear. Sources are agencies only: Bureau of Justice Statistics, American Automobile Association."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "Both statistics are sourced: '90% plea agreements' (Bureau of Justice Statistics) and 'tens of thousands of dollars' (American Automobile Association DUI cost study); all other numbers are general ranges or product descriptions"
+            "evidence": "Two specific statistics found — '90% of DUI cases resolved through plea agreements' sourced to Bureau of Justice Statistics, and cost figure sourced to 'American Automobile Association DUI cost study'. All other numbers use general language ('thousands to tens of thousands', 'several hundred')."
           },
           {
             "check": "PROCEDURE_CHECK",
-            "result": "FAIL",
-            "evidence": "FAQ answer states 'Within the first 7-15 days you need to request a DMV hearing to fight license suspension — miss that deadline and the suspension is automatic' as a bare universal rule without 'in most states' or any jurisdiction qualifier"
+            "result": "PASS",
+            "evidence": "DMV hearing deadline qualified with 'In most states, you have 7-15 days'; case timeline qualified with 'Most first-offense DUIs'; probation qualified with 'usually 6-12 months'. No bare universal procedural claims found."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only case-related term is 'Miranda warnings' which is on the approved exceptions list; no other v.-style case citations appear"
+            "evidence": "No case citations appear. 'Miranda warnings' appears once and is on the approved exceptions list as universally known legal terminology."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "All consequence claims are qualified: 'Possible license restriction', 'States can suspend', 'insurance impact' listed as things to ask about rather than stated as universal facts"
+            "evidence": "Consequences listed as 'Possible license restriction or ignition interlock', 'Increased insurance rates for years' — all qualified with soft language. Post ends with 'DUI laws vary significantly by state' disclaimer. No universal collateral-consequence claims found."
           }
         ]
       }

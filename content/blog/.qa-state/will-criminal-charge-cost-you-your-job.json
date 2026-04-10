@@ -1,6 +1,6 @@
 {
   "slug": "will-criminal-charge-cost-you-your-job",
-  "last_checked": "2026-04-10T10:28:58.763Z",
+  "last_checked": "2026-04-10T18:15:17.495Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,41 +25,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post references federal laws by name only (Title VII, FCRA, Federal Deposit Insurance Act, FMCSA regulations, SEAD 3/4) — no bare § numbers or fabricable statute references"
+            "evidence": "Post references Title VII, Federal Motor Carrier Safety Regulations, Federal Deposit Insurance Act, SEAD 3/4, and FINRA Form U4 by general name only — no bare § numbers or fabricated statute references."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal expert names appear; only agencies and organizations (EEOC, NELP, FINRA, FMCSA, FBI, POST boards)"
+            "evidence": "No individual attorney or legal scholar names appear. All sources are agencies or organizations: EEOC, National Employment Law Project, FINRA, FMCSA, FDIC."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'Over 37 states and 150 cities have Ban-the-Box or fair chance laws' appears in FAQ #1 and FAQ #4 without a named source in the same or immediately preceding sentence (sourced only in the body text, not in the FAQs)"
+            "result": "PASS",
+            "evidence": "Every statistic is sourced: '37 states and 150 cities' and '70 million Americans' cite National Employment Law Project; '1-year CDL disqualification' and 'lifetime disqualification' are attributed to federal FMCSA regulations; '13 factors' cites SEAD 4."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are jurisdiction-qualified ('in most at-will states,' 'Many boards,' 'Often 30 days, sometimes less') or scoped to specific federal regulations (FMCSA, FINRA, SEAD 3)"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'in most at-will states,' 'many boards,' 'depending on your profession and state,' 'many states require teachers to report,' or attributed to specific federal regulations (FMCSA, FINRA, SEAD 3)."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear anywhere in the post — no 'v.' patterns, no Brady/Miranda/Daubert references"
+            "evidence": "No case citations appear anywhere in the post — no 'v.' constructions or case names."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "All collateral consequences use qualifiers: 'can result in,' 'typically means,' 'can end,' 'may constitute,' or are scoped to specific federal regulatory bodies"
+            "evidence": "All collateral consequences use qualifiers: 'can result in CDL disqualification,' 'typically means,' 'can be worse,' 'can end a law enforcement career,' or are attributed to specific federal regulations (FMCSA, FDIC Act, SEAD 3)."
           }
         ]
       }

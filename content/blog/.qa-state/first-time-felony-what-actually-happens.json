@@ -1,6 +1,6 @@
 {
   "slug": "first-time-felony-what-actually-happens",
-  "last_checked": "2026-04-10T09:56:22.308Z",
+  "last_checked": "2026-04-10T11:39:30.729Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 4,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers, section references, or code citations appear anywhere in the post; all legal rules described using general language"
+            "evidence": "No statute numbers or section references appear anywhere in the post; all legal rules described using general language like 'in most jurisdictions' and 'in some states'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear; 'elite defense attorneys' and 'your attorney' are generic references"
+            "evidence": "No individual attorney or legal scholar names appear; the excerpt references 'elite defense attorneys' generically and the only named source is Bureau of Justice Statistics (an agency, not an individual)"
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "TLDR box states 'Roughly 33% of first-time felony defendants are not convicted' without a named source; FAQ answer repeats 'About 33%' also unsourced — attribution only appears in the main body"
+            "result": "PASS",
+            "evidence": "The sole repeated statistic — '33% of felony defendants in state courts are not convicted' — is attributed to Bureau of Justice Statistics in every instance (TLDR, body, FAQ); all other numbers are procedural ranges, not factual claims"
           },
           {
             "check": "PROCEDURE_CHECK",
-            "result": "FAIL",
-            "evidence": "'brought before a judge within 24-48 hours for your arraignment' stated as universal fact with no jurisdiction qualifier such as 'in most states'"
+            "result": "PASS",
+            "evidence": "Every procedural claim carries a jurisdiction qualifier: 'in most jurisdictions brought before a judge within 24-48 hours,' 'exist in most jurisdictions,' 'In some states'; the timeline table is labeled 'Typical Timeline' (descriptive ranges, not bare universal rules)"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear in the post"
+            "evidence": "No case citations (e.g. 'Smith v. Jones') appear anywhere in the post"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No unqualified collateral-consequence claims; withhold of adjudication properly qualified with 'In some states'"
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear; the post discusses only direct case outcomes (dismissal, diversion, probation, conviction) which are qualified with 'in most jurisdictions' or 'in some states'"
           }
         ]
       }

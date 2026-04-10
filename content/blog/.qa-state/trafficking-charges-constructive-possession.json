@@ -1,6 +1,6 @@
 {
   "slug": "trafficking-charges-constructive-possession",
-  "last_checked": "2026-04-10T10:20:18.190Z",
+  "last_checked": "2026-04-10T18:10:12.216Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,41 +25,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post uses general language throughout — 'in most states', 'in many jurisdictions', 'the law in your jurisdiction', 'the statute' — no specific statute numbers appear"
+            "evidence": "Post uses general language throughout — 'in most states', 'in many jurisdictions', 'the law in your jurisdiction' — no specific statute numbers appear."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal expert names appear; author is listed as 'ImNotAnAttorney Team'"
+            "evidence": "No individual attorney or legal-scholar names appear; author is 'ImNotAnAttorney Team'."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'73% weight discrepancy', '93.9g', '25.59g', '68.3 grams missing', and '21 fingerprints were collected and zero matched' are stated as facts from real cases without a named source in parentheses"
+            "result": "PASS",
+            "evidence": "All statistics (73% discrepancy, 93.9g/25.59g weights, 68.3g gap, 21 fingerprints) are attributed to 'INAA case discovery analysis' in parentheses within the same sentence."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are jurisdiction-qualified: 'in most states', 'in most jurisdictions', 'in many cases', 'Some jurisdictions have safety valve provisions', 'Some states allow judges to sentence below the minimum'"
+            "evidence": "All procedural claims are jurisdiction-qualified — 'in most jurisdictions', 'in many cases', 'Some states', 'your jurisdiction may require'; the 'at least three years' line is a narrative hypothetical illustrating mandatory minimums, not a universal procedural claim."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only case-adjacent term is 'Daubert motion' in question 7, which is an allowed exception; no other case citations appear"
+            "evidence": "Only case-like reference is 'Daubert motion' in question 7, which is on the allowed-terminology exception list."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Post discusses direct sentencing consequences (mandatory minimums, prison vs. probation) but makes no collateral-consequence claims about licensing, housing, firearms, voting, or employment"
+            "evidence": "Post discusses direct sentencing consequences (mandatory minimums, prison vs. probation) but makes no collateral-consequence claims about licensing, housing, firearms, voting, or employment."
           }
         ]
       }

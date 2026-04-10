@@ -1,6 +1,6 @@
 {
   "slug": "what-happens-if-you-violate-probation",
-  "last_checked": "2026-04-10T10:24:30.583Z",
+  "last_checked": "2026-04-10T18:24:30.172Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,41 +43,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
-            "result": "FAIL",
-            "evidence": "'Georgia caps it at 2 years for felony probation technical violations under SB 105' — specific bill number cited without verification URL; could be fabricated (Georgia's probation reform bill was SB 174, not SB 105)."
+            "result": "PASS",
+            "evidence": "No bare statute numbers appear. Georgia reference uses 'under recent probation reform legislation' without a specific section number. Federal reference cites 'U.S. Sentencing Guidelines Chapter 7' with a verifiable URL."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal-scholar names appear; only institutional references (Supreme Court, Bureau of Justice Statistics)."
+            "evidence": "No individual attorney or legal scholar names appear. 'Bureau of Justice Statistics' and 'Supreme Court' are institutional sources, not individual experts."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The only statistic — 'approximately 350,000 people are incarcerated annually' — is attributed to 'Bureau of Justice Statistics' in the same sentence."
+            "evidence": "The sole factual statistic — 'approximately 350,000 people are incarcerated annually' — is sourced to 'Bureau of Justice Statistics' in the same sentence. Other numbers ('15 out of 16 drug tests', '18 months') are hypothetical examples, not factual claims."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Procedural claims are either jurisdiction-qualified ('some states have mandatory revocation', 'some states cap', 'some states require') or grounded in constitutional authority ('The Supreme Court has ruled')."
+            "evidence": "All procedural claims are jurisdiction-qualified: 'some states have mandatory revocation', 'some states cap how much prison time', 'Georgia, for example', 'Federal probation violations follow', and due process rights attributed to 'The Supreme Court has ruled'."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear; Supreme Court holdings are referenced by institution without naming specific cases."
+            "evidence": "No case citations appear. Supreme Court holdings are referenced by institution ('The Supreme Court has ruled') without naming specific cases."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "All consequence claims use qualifying language ('can be arrested', 'can result in a fugitive warrant', 'can impose any sentence') — no universal collateral-consequence statements."
+            "evidence": "All consequences discussed are direct probation outcomes (revocation, extended probation, jail sanctions) rather than collateral consequences. 'Can result in a fugitive warrant' is properly qualified with 'can'."
           }
         ]
       }

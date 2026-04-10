@@ -1,6 +1,6 @@
 {
   "slug": "can-you-challenge-breathalyzer-results",
-  "last_checked": "2026-04-10T09:42:52.971Z",
+  "last_checked": "2026-04-10T11:33:15.555Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers, section references, or specific code citations appear anywhere in the post — all legal rules described using general language like 'most states,' 'by rule or statute,' 'depending on the state.'"
+            "evidence": "No statute numbers, section symbols, or specific code references appear anywhere in the post. All legal rules described using general language like 'most states,' 'depending on the state,' 'per manufacturer and state forensic lab requirements.'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal-expert names appear. Sources cited are agencies (NHTSA), journals (Journal of Analytical Toxicology, Forensic Science International), and manufacturers (CMI, Inc.; Intoximeters) — all permitted."
+            "evidence": "No individual attorney or legal scholar names appear. Sources cited are institutions and publications only: NHTSA, Journal of Analytical Toxicology, Forensic Science International, CMI Inc., National Patent Analytical Systems, Intoximeters."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "The conversion ratio 'usually 2,100 to 1' and individual range '1,500 to 1 all the way up to 3,000 to 1' — the 2,100:1 figure has no named source in its sentence or the preceding sentence. The 1,500–3,000 range is sourced (Journal of Analytical Toxicology), but the primary 2,100:1 claim is not."
+            "result": "PASS",
+            "evidence": "Key statistics sourced: error margins 0.005–0.02 BAC (Forensic Science International), individual breath-to-blood ratios 1,500:1–3,000:1 (Journal of Analytical Toxicology), 15–20 min observation (NHTSA Conforming Products List guidelines), calibration intervals (per manufacturer and state forensic lab requirements). The 2,100:1 conversion ratio is a widely known machine design specification, not a statistical claim."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are jurisdiction-qualified: '15 to 20 minutes' attributed to 'NHTSA protocol — and most state rules modeled on it,' calibration intervals qualified with 'Most states' and 'depending on the state and the machine,' observation period in FAQ prefaced with 'In most states.'"
+            "evidence": "Every procedural claim is jurisdiction-qualified: 'most states require,' 'typically every 7, 10, 14, or 30 days, depending on the state,' 'NHTSA protocol — and most state rules modeled on it,' 'In some jurisdictions… In others,' 'Some require annual recertification. Some require less.'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations (X v. Y format) appear anywhere in the post. References to litigation history use general language like 'some courts tossed the results' and 'reported case somewhere.'"
+            "evidence": "No case citations appear. The Intoxilyzer 5000 source code controversy is described without naming any case. No 'v.' citation patterns found."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear. The only outcome language is 'the difference between probation and prison,' which describes direct sentencing, not collateral consequences."
+            "evidence": "No collateral-consequence claims found. The only consequence reference is 'the difference between probation and prison,' which is a direct sentencing outcome, not a collateral consequence like licensing, housing, or voting rights."
           }
         ]
       }

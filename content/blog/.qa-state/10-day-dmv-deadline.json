@@ -1,6 +1,6 @@
 {
   "slug": "10-day-dmv-deadline",
-  "last_checked": "2026-04-10T10:36:59.742Z",
+  "last_checked": "2026-04-10T11:31:24.151Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,9 +34,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: Credit balance is too low"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "No specific statute numbers (§, U.S.C., Penal Code, etc.) appear anywhere in the post; all legal rules are described with general language and state agency attributions."
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney or legal expert names appear; sources are agencies only (California DMV, Florida DHSMV, Texas DPS, New York DMV, NHTSA)."
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "All numeric claims (4-month/1-year CA suspension, 6-month/12-month FL suspension, 90-day/180-day TX suspension) are attributed to their respective state DMV agencies in parentheses."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Procedural deadlines are qualified with 'most states give you roughly 10 days,' 'in most states,' or name a specific state (California, Florida, Texas, New York) for every jurisdiction-specific claim."
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations (e.g. 'v.') appear anywhere in the post; no Brady, Daubert, Miranda, or Franks references either."
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "License suspension consequences are stated per-state with sources (California DMV, Florida DHSMV, Texas DPS); no universal collateral-consequence claims appear."
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

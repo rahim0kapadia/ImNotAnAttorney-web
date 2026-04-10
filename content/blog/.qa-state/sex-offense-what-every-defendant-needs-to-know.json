@@ -1,6 +1,6 @@
 {
   "slug": "sex-offense-what-every-defendant-needs-to-know",
-  "last_checked": "2026-04-10T10:15:45.658Z",
+  "last_checked": "2026-04-10T18:28:30.989Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 2,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
-            "result": "FAIL",
-            "evidence": "\"Washington state's HB 1028 (effective July 2025)\" is a specific bill number with a quoted effective date and paraphrased requirements — not a well-known statute and could be fabricated. California Penal Code 261.5 is real but HB 1028 is unverifiable without a source URL."
+            "result": "PASS",
+            "evidence": "Only statute reference is California Penal Code 261.5, which is a real, verifiable statute correctly attributed to California — no fabricated or unqualified statute numbers found"
           },
           {
             "check": "EXPERT_CHECK",
-            "result": "FAIL",
-            "evidence": "\"Decades of peer-reviewed research — led by psychologist Elizabeth Loftus\" names an individual expert by name, violating the pre-purchase content rule against naming specific legal/forensic experts (Lanham Act risk)."
+            "result": "PASS",
+            "evidence": "No individual attorney or legal scholar names appear — all sources are agencies or organizations (NBC News, RAINN, Innocence Project, Urban Institute, FBI Laboratory, Bureau of Justice Statistics, European Association of Psychology and Law)"
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "\"sex offense cases go to trial at roughly four times the rate of other federal crimes\" has no named source; \"45 states and the District of Columbia have some form of close-in-age exemption\" has no named source; \"commonly costs $50,000 or more\" attributed only to vague \"Defense attorneys report\"; \"20% of research subjects accepted entirely false memories\" sourced only as \"peer-reviewed memory science research\" which is a category, not a named source."
+            "result": "PASS",
+            "evidence": "All statistics carry named sources: 4% conviction rate (NBC News/DOJ), 1,000/50/28/25 funnel (RAINN), 91% exonerations (Innocence Project), 11.6% wrongful conviction rate (Urban Institute/VA DFS), 25% FBI exclusion (FBI Laboratory), 90%+ digital evidence (Bureau of Justice Statistics)"
           },
           {
             "check": "PROCEDURE_CHECK",
-            "result": "FAIL",
-            "evidence": "\"Courts are not legally required to inform you of collateral consequences before you accept a plea deal (except deportation risk for noncitizens)\" is stated as a universal rule without a jurisdiction qualifier like \"in most states\" — some states have enacted statutes requiring additional advisements beyond the federal constitutional baseline."
+            "result": "PASS",
+            "evidence": "Procedural claims are jurisdiction-qualified throughout: GPS monitoring qualified with 'in some states, like Tennessee,' bail conditions qualified with 'depending on jurisdiction,' diversion programs qualified with 'some states,' close-in-age exemptions qualified with 'The majority of states,' travel notification attributed to International Megan's Law (federal)"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations found; Miranda references (\"Miranda rights,\" \"Miranda rights were violated\") are listed exceptions that function as legal terminology."
+            "evidence": "No case citations appear — post references 'Supreme Court precedent' and 'Miranda rights' (listed exception) without naming specific cases"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Collateral consequences are qualified throughout — \"generally prohibited\" for housing, \"Most jurisdictions\" for residency restrictions, \"Many professions\" for employment, \"Many countries\" for travel denial, and passport/travel notification attributed to International Megan's Law."
+            "evidence": "Collateral consequences are qualified or attributed: registration attributed to all-50-states SORNA framework with 'qualifying offenses' qualifier, housing uses 'generally prohibited' and 'Most jurisdictions,' employment uses 'Many professions,' travel attributed to International Megan's Law (2016), court disclosure uses 'in most jurisdictions'"
           }
         ]
       }

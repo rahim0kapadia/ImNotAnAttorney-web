@@ -1,6 +1,6 @@
 {
   "slug": "field-test-vs-lab-test-drug-cases",
-  "last_checked": "2026-04-10T09:54:49.370Z",
+  "last_checked": "2026-04-10T11:38:46.537Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,41 +25,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 4,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers or specific statutory references appear anywhere in the post; all legal rules described using general language like 'most jurisdictions' and 'your state's rules'"
+            "evidence": "Post uses general language throughout — 'most jurisdictions', 'your state's rules', 'federal standard', 'used in some states' — no specific statute numbers appear"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear; only organizations cited (Innocence Project, ProPublica, Bureau of Justice Statistics)"
+            "evidence": "Post cites organizations only (ProPublica, Innocence Project, Bureau of Justice Statistics) — no individual attorney or legal scholar names appear"
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "Body text states 'At least 100,000 people per year are arrested based on field test results that are never confirmed by a lab' as a standalone bold claim with no parenthetical source in that sentence or the preceding sentence; sourced only in the TLDRBox, not inline"
+            "result": "PASS",
+            "evidence": "All statistics are sourced: '100,000 people per year' attributed to '(ProPublica, \"Busted\" investigation)'; '375+ DNA exonerations' attributed to '(Innocence Project)'; Houston plea stat appears in same context as ProPublica attribution"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are jurisdiction-qualified: 'most jurisdictions,' 'generally needs,' 'You may have the right,' 'your state's rules'"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'most jurisdictions don't allow them as conclusive evidence', 'federal standard', 'used in some states', 'generally needs a lab confirmation', 'You may have the right'"
           },
           {
             "check": "CASE_NAME_CHECK",
-            "result": "FAIL",
-            "evidence": "Full case citation 'Daubert v. Merrell Dow' appears in the defense strategy section; the exceptions list covers 'Daubert motion/challenge/hearing' but not the full 'v. Merrell Dow' citation form"
+            "result": "PASS",
+            "evidence": "Only excepted terminology appears: 'Daubert v. Merrell Dow (federal standard)', 'Frye standard', 'Daubert or Frye challenge' — no non-excepted case citations found"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No formal collateral-consequence claims (licensing, voting, housing, firearms); references to 'losing jobs' and 'missing rent' describe situational effects of pretrial detention, not legal consequences of conviction"
+            "evidence": "No collateral consequences stated as universal fact — references to 'losing jobs' and 'missing rent' describe pretrial detention effects in a narrative scenario, not post-conviction collateral consequences"
           }
         ]
       }

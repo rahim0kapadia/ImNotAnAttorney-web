@@ -1,6 +1,6 @@
 {
   "slug": "what-happens-if-attorney-misses-deadline",
-  "last_checked": "2026-04-10T10:23:30.437Z",
+  "last_checked": "2026-04-10T18:10:59.423Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Only statute-like reference is 'FRAP 4(b)' (Federal Rules of Appellate Procedure Rule 4(b)), which is a real federal rule correctly cited for the 14-day criminal appeal deadline. 'Fourth Amendment' is a constitutional reference. No fabricated statute numbers."
+            "evidence": "Only legal rule reference is 'FRAP 4(b)' (Federal Rules of Appellate Procedure Rule 4(b)), which is a real federal rule correctly cited for 14-day criminal appeal notice; no fabricated statute numbers appear"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear. The only named source is 'ABA Standing Committee on Lawyers' Professional Liability,' which is an institutional source, not an individual expert."
+            "evidence": "No individual attorney or legal scholar names appear; only source cited is 'ABA Standing Committee on Lawyers' Professional Liability,' which is an organizational source, not an individual expert"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The only statistic — '18-20% of all malpractice complaints against attorneys' — is sourced to '(ABA Standing Committee on Lawyers' Professional Liability)' in the same sentence. All other numbers are procedural timelines or product prices."
+            "evidence": "The sole statistic — '18-20% of all malpractice complaints' — is sourced to 'ABA Standing Committee on Lawyers' Professional Liability' in the same sentence; all other numbers are procedural timelines, not statistical claims"
           },
           {
             "check": "PROCEDURE_CHECK",
-            "result": "FAIL",
-            "evidence": "Severity section states 'Missed appellate notice (30 days from sentencing) — you generally cannot appeal' without a jurisdiction qualifier on the 30-day figure. Compare to the FAQ and TLDR which correctly use 'typically 30 days.' This instance presents 30 days as a bare universal deadline."
+            "result": "PASS",
+            "evidence": "All procedural claims carry jurisdiction qualifiers: 'Often 30-45 days' with 'exact deadlines depend on your jurisdiction,' appellate notices 'vary by jurisdiction — as short as 10 days in some states, 14 days in federal court (FRAP 4(b)),' DMV '7-15 days in most states'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear anywhere in the post. 'Fourth Amendment' is a constitutional reference, not a case citation."
+            "evidence": "No case citations appear anywhere in the post; 'Fourth Amendment' is a constitutional amendment reference, not a case citation"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Post addresses only procedural consequences (losing motion rights, appeal rights, evidence admissibility). No collateral-consequence claims about licensing, housing, firearms, voting, or employment appear."
+            "evidence": "Post discusses only direct case consequences (losing motions, losing appeal rights, evidence admissibility) — no collateral-consequence claims about licensing, housing, firearms, voting, or employment appear"
           }
         ]
       }

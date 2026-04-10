@@ -1,6 +1,6 @@
 {
   "slug": "drug-defense-complete-guide",
-  "last_checked": "2026-04-10T09:48:19.778Z",
+  "last_checked": "2026-04-10T11:36:55.699Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Only statute reference is 21 U.S.C. § 841 linked to Cornell LII — a real federal statute with a verified source URL. All other legal rules use general language like 'most jurisdictions' and 'many jurisdictions'."
+            "evidence": "Only statute reference is '21 U.S.C. § 841' — a real federal statute linked to Cornell LII (https://www.law.cornell.edu/uscode/text/21/841). All other legal rules use general language ('most jurisdictions', 'under federal law')."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear. Only source agencies referenced: National Institute of Justice."
+            "evidence": "No individual attorney or legal scholar names appear. 'National Institute of Justice' and 'Bureau of Justice Statistics' are source agencies, not individual experts."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'Federal plea rates exceed 97%' appears in the Federal vs. State section with no named source attribution (e.g., Bureau of Justice Statistics)."
+            "result": "PASS",
+            "evidence": "The only factual statistic — 'Federal plea rates exceed 97%' — is attributed to Bureau of Justice Statistics in the same sentence. Other numbers (100 grams, 10%, 50 grams) are hypothetical illustrations of weight calculations, not factual claims."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims include jurisdiction qualifiers — 'most jurisdictions,' 'many jurisdictions,' 'some states,' 'in your jurisdiction' — no bare universal procedural rules."
+            "evidence": "All procedural claims are jurisdiction-qualified: 'most jurisdictions weigh the total substance', 'some jurisdictions include packaging', 'many jurisdictions offer drug court', and federal claims reference 21 U.S.C. § 841 directly."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear anywhere in the post."
+            "evidence": "No case citations appear anywhere in the post — no 'v.' constructions or named cases."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral consequence claims (licensing, housing, voting, firearms) appear. Sentencing references use qualified language like 'can carry' and 'often.'"
+            "evidence": "No collateral-consequence claims (licensing, housing, voting, firearms) appear. Sentencing references use qualified language ('can carry mandatory minimum sentences') describing direct criminal penalties, not collateral consequences."
           }
         ]
       }

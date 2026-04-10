@@ -80,9 +80,15 @@ function spawnClaudeOnce(prompt, timeoutMs) {
   return new Promise((resolve, reject) => {
     const startMs = Date.now();
 
+    // Strip ANTHROPIC_API_KEY so claude -p uses CLI subscription auth,
+    // not the (possibly depleted) API key injected from .env.local.
+    const cleanEnv = { ...process.env };
+    delete cleanEnv.ANTHROPIC_API_KEY;
+
     const proc = spawn("claude", ["-p"], {
       stdio: ["pipe", "pipe", "pipe"],
       shell: process.platform === "win32",
+      env: cleanEnv,
     });
 
     let stdout = "";

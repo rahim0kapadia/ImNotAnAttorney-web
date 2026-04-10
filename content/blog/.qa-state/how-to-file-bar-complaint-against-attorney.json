@@ -1,6 +1,6 @@
 {
   "slug": "how-to-file-bar-complaint-against-attorney",
-  "last_checked": "2026-04-10T10:00:03.138Z",
+  "last_checked": "2026-04-10T18:03:55.716Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post references only the Sixth Amendment (well-known constitutional provision) and uses general language throughout — no bare statute numbers or fabricated § references."
+            "evidence": "Only legal reference is 'the Sixth Amendment' — a well-known constitutional provision cited correctly in the IAC section. No specific statute numbers appear anywhere in the post."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal-scholar names appear; only the American Bar Association is cited, which is an organization, not an individual."
+            "evidence": "No individual attorney or legal scholar names appear. The only named source is 'American Bar Association' — an organization, not an individual expert."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "FAQ answer states 'expect 6 to 12 months for resolution' without a named source in the same or immediately preceding sentence; the howToSteps version is sourced but the FAQ instance is not."
+            "result": "PASS",
+            "evidence": "The '6-12 months' timeline is sourced to 'American Bar Association disciplinary data' in howToSteps. All other numbers ('16 messages', '23 calls', '10+ communications', '30+ days') are narrative scenario details or thresholds, not factual statistical claims."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Post uses general language ('every state has a disciplinary body', 'search your state bar's website') and qualifies IAC under the Sixth Amendment — no bare universal deadlines or filing requirements."
+            "evidence": "Bar complaint steps are described as general process common to all states, with 'every state' qualifiers and a closing disclaimer: 'Bar complaint processes vary by state — check your state bar's website for specific procedures.' IAC standard is correctly attributed to the Sixth Amendment (federal/constitutional)."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations (X v. Y) appear anywhere in the post; IAC is discussed as a legal concept without citing specific cases."
+            "evidence": "No case citations appear anywhere in the post. The 'ineffective assistance of counsel' reference is a legal concept, not a case citation."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Consequence claims (suspension, disbarment, reprimand) describe disciplinary outcomes for the attorney, not collateral consequences to the defendant — no unqualified claims about defendant licensing, housing, or rights."
+            "evidence": "All consequence claims (reprimand, suspension, disbarment) describe attorney discipline outcomes, not defendant collateral consequences. Each is listed under what the bar 'CAN do' — accurately framed as possible outcomes, not guaranteed results."
           }
         ]
       }
