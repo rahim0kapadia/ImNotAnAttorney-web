@@ -1772,7 +1772,7 @@ async function main() {
         const judges = await new Promise(function (resolve, reject) {
           const req = https.request({
             hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
-            path: "/rest/v1/judge_profiles?select=id,name&limit=50000",
+            path: "/rest/v1/judge_profiles?select=id,full_name&limit=50000",
             method: "GET",
             headers: {
               apikey: serviceKey,
@@ -1791,9 +1791,9 @@ async function main() {
         });
 
         for (const j of judges) {
-          if (j.id && j.name) {
-            judgeMap.set(j.name.toLowerCase(), { id: j.id, name: j.name });
-            judgeById.set(String(j.id), { id: j.id, name: j.name });
+          if (j.id && j.full_name) {
+            judgeMap.set(j.full_name.toLowerCase(), { id: j.id, name: j.full_name });
+            judgeById.set(String(j.id), { id: j.id, name: j.full_name });
           }
         }
         console.log("Loaded " + judgeMap.size + " judges\n");
