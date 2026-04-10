@@ -51,6 +51,7 @@ const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
 const BATCH_SIZE = 500;
 
 const OPINIONS_BZ2 = path.join(PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "opinions-2026-03-31.csv.bz2");
+const OPINIONS_FILTERED = path.join(PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "opinions-filtered.csv");
 const CITATION_MAP_BZ2 = path.join(PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "citation-map-2026-03-31.csv.bz2");
 const DUMP_FILE = path.join(PROJECT_ROOT, "data", "bulk-verify", "statute-case-law-dump.json");
 const OUTPUT_DIR = path.join(PROJECT_ROOT, "data", "bulk-verify", "master-extractor-updates");
@@ -1246,14 +1247,24 @@ async function runPhase0() {
 // ════════════════════════════════════════════════════════════════════════════
 
 async function runPhase1(targetClusters, clusterToDumpRow) {
-  const bzcatPath = findBzcat();
-  console.log("  Streaming opinions CSV through bzcat + csv-parse (escape: \\\\)...");
-  console.log("  Using: " + bzcatPath + "\n");
+  // Auto-detect pre-filtered CSV (seconds) vs full bz2 stream (hours).
+  // Pre-filter created by: node scripts/prefilter-opinions-csv.mjs
+  let csvStream;
+  if (fs.existsSync(OPINIONS_FILTERED)) {
+    const sizeMB = (fs.statSync(OPINIONS_FILTERED).size / 1024 / 1024).toFixed(1);
+    console.log("  Using pre-filtered CSV: " + OPINIONS_FILTERED);
+    console.log("  (" + sizeMB + " MB — will complete in seconds)\n");
+    csvStream = fs.createReadStream(OPINIONS_FILTERED);
+  } else {
+    const bzcatPath = findBzcat();
+    console.log("  Streaming opinions CSV through bzcat + csv-parse (escape: \\\\)...");
+    console.log("  Using: " + bzcatPath + "\n");
+    const bzcat = spawn(bzcatPath, [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
+    bzcat.stderr.on("data", function () {});
+    csvStream = bzcat.stdout;
+  }
 
-  const bzcat = spawn(bzcatPath, [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
-  bzcat.stderr.on("data", function () {});
-
-  const parser = bzcat.stdout.pipe(parse({
+  const parser = csvStream.pipe(parse({
     columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
   }));
 

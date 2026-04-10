@@ -42,6 +42,7 @@ const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
 const BATCH_SIZE = 500;
 
 const OPINIONS_BZ2 = path.join(PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "opinions-2026-03-31.csv.bz2");
+const OPINIONS_FILTERED = path.join(PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "opinions-filtered.csv");
 const DUMP_FILE = path.join(PROJECT_ROOT, "data", "bulk-verify", "statute-case-law-dump.json");
 
 const args = process.argv.slice(2);
@@ -207,8 +208,18 @@ function findBzcat() {
 
 // ── Main ────────────────────────────────────────────────────────────────────
 
+function logMem(label) {
+  const m = process.memoryUsage();
+  const mb = (b) => (b / 1024 / 1024).toFixed(0);
+  process.stderr.write(`  [mem ${label}] rss=${mb(m.rss)}MB heap=${mb(m.heapUsed)}/${mb(m.heapTotal)}MB external=${mb(m.external)}MB\n`);
+}
+
 async function main() {
   console.log("=== BULK EXTRACT MOTION TYPES + LEGAL ISSUES (csv-parse) ===\n");
+
+  // Crash diagnostics — catch silent deaths
+  process.on("uncaughtException", (e) => { console.error(`UNCAUGHT: ${e.stack || e.message}`); process.exit(2); });
+  process.on("unhandledRejection", (e) => { console.error(`UNHANDLED: ${e?.stack || e}`); process.exit(3); });
 
   if (!fs.existsSync(OPINIONS_BZ2)) { console.error(`ERROR: opinions CSV not found: ${OPINIONS_BZ2}`); process.exit(1); }
   if (!fs.existsSync(DUMP_FILE)) { console.error(`ERROR: dump not found: ${DUMP_FILE}`); process.exit(1); }
@@ -220,21 +231,41 @@ async function main() {
       targetClusters.add(String(r.courtlistener_cluster_id));
     }
   }
+  // Free the dump array — only the Set is needed
+  dump.length = 0;
+
   console.log(`Target clusters (all with cluster_id): ${targetClusters.size}`);
+  logMem("post-dump");
 
-  const bzcatPath = findBzcat();
-  console.log(`Streaming opinions CSV through bzcat + csv-parse (escape: \\\\)...`);
-  console.log(`Using: ${bzcatPath}\n`);
+  // Auto-detect pre-filtered CSV (seconds) vs full bz2 stream (hours).
+  // Pre-filter created by: node scripts/prefilter-opinions-csv.mjs
+  let csvStream;
+  const filteredSize = fs.existsSync(OPINIONS_FILTERED) ? fs.statSync(OPINIONS_FILTERED).size : 0;
+  if (filteredSize > 10000) {
+    console.log(`Using pre-filtered CSV: ${OPINIONS_FILTERED}`);
+    console.log(`  (${(fs.statSync(OPINIONS_FILTERED).size / 1024 / 1024).toFixed(1)} MB — will complete in seconds)\n`);
+    csvStream = fs.createReadStream(OPINIONS_FILTERED);
+  } else {
+    const bzcatPath = findBzcat();
+    console.log(`Streaming opinions CSV through bzcat + csv-parse (escape: \\\\)...`);
+    console.log(`Using: ${bzcatPath}\n`);
+    const bzcat = spawn(bzcatPath, [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
+    let bzcatStderr = "";
+    bzcat.stderr.on("data", (d) => { bzcatStderr += d.toString().slice(0, 2000); });
+    bzcat.on("error", (e) => console.error(`bzcat error: ${e.message}`));
+    bzcat.on("exit", (code, signal) => {
+      if (code !== 0 && code !== null) console.error(`bzcat exited: code=${code} signal=${signal} stderr=${bzcatStderr.slice(0, 500)}`);
+    });
+    csvStream = bzcat.stdout;
+  }
 
-  const bzcat = spawn(bzcatPath, [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
-  bzcat.stderr.on("data", () => {});
-
-  const parser = bzcat.stdout.pipe(parse({
+  const parser = csvStream.pipe(parse({
     columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
   }));
+  let rowCount = 0;
+  parser.on("error", (e) => console.error(`csv-parse error at row ~${rowCount}: ${e.message}`));
 
   const results = new Map();
-  let rowCount = 0;
   let matchCount = 0;
   let withDataCount = 0;
   const startTime = Date.now();
@@ -244,6 +275,7 @@ async function main() {
     if (rowCount % 500000 === 0) {
       const elapsed = (Date.now() - startTime) / 1000;
       process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${withDataCount} extracted (${elapsed.toFixed(0)}s)\n`);
+      logMem(`${(rowCount / 1000000).toFixed(1)}M`);
     }
 
     const clusterId = record.cluster_id;
@@ -286,6 +318,17 @@ async function main() {
   console.log(`\n--- Legal issues found ---`);
   for (const [i, c] of [...issueCounts.entries()].sort((a, b) => b[1] - a[1])) {
     console.log(`  ${i.padEnd(30)} ${c}`);
+  }
+
+  // Always save extraction results as JSON cache (enables PostgREST apply without re-streaming)
+  if (results.size > 0) {
+    const cachePath = path.join(PROJECT_ROOT, "data", "bulk-verify", "motion-extraction-results.json");
+    const cacheDir = path.dirname(cachePath);
+    if (!fs.existsSync(cacheDir)) fs.mkdirSync(cacheDir, { recursive: true });
+    const cacheObj = {};
+    for (const [k, v] of results) cacheObj[k] = v;
+    fs.writeFileSync(cachePath, JSON.stringify(cacheObj));
+    console.log(`\nCached ${results.size} extractions → ${cachePath}`);
   }
 
   if (dryRun) { console.log(`\nDry run complete.`); return; }
