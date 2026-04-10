@@ -339,7 +339,7 @@ function getLoadingSteps(chargeType: string): string[] {
  *   Origin story → Tribe identity → Single CD CTA → Email capture →
  *   Playbook step-down → Trust line → Reset
  */
-function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust, onReset, stats }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void; onReset: () => void; stats: { totalCompletions: number; insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null } } | null }) {
+function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust, onReset, stats, blogRef }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void; onReset: () => void; stats: { totalCompletions: number; insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null } } | null; blogRef: string | null }) {
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [copiedTemplate, setCopiedTemplate] = useState(false);
@@ -347,6 +347,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [shareLoading, setShareLoading] = useState(false);
   const [shareError, setShareError] = useState<string | null>(null);
+  const appendRef = (url: string) => {
+    if (!blogRef) return url;
+    return url.includes("?") ? `${url}&ref=${blogRef}` : `${url}?ref=${blogRef}`;
+  };
 
   const isCrisis = result.score <= 50;
   const timeIndex = getTimeIndex(answers.timeSinceArrest);
@@ -648,10 +652,6 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         const playbookKey = CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE | undefined;
         const playbookTier = playbookKey ? TIER_CORE[playbookKey] : null;
         const hasLivePlaybook = playbookTier?.live === true;
-        const appendRef = (url: string) => {
-          if (!blogRef) return url;
-          return url.includes("?") ? `${url}&ref=${blogRef}` : `${url}?ref=${blogRef}`;
-        };
 
         if (hasLivePlaybook && playbookTier && playbookKey) {
           // PLAYBOOK IS LIVE — make it the primary CTA (e.g. DUI Playbook $97)
@@ -1113,7 +1113,7 @@ export default function ScoreClient() {
 
         {result ? (
           <>
-            <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => { setResult(null); setCurrentStep(0); }} onReset={() => { setResult(null); setAnswers({}); setEmailSent(false); setCurrentStep(0); try { sessionStorage.removeItem("inna-score"); } catch {} }} stats={stats} />
+            <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => { setResult(null); setCurrentStep(0); }} onReset={() => { setResult(null); setAnswers({}); setEmailSent(false); setCurrentStep(0); try { sessionStorage.removeItem("inna-score"); } catch {} }} stats={stats} blogRef={blogRef} />
 
             {/* Post-quiz testimonial — social proof near CTAs */}
             <div className="mt-8">
