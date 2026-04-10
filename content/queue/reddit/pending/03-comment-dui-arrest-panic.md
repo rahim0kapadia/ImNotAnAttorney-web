@@ -28,11 +28,11 @@ Third, when you talk to an attorney, ask these specific questions:
 - Were the field sobriety tests administered correctly per NHTSA standards?
 - What's the margin of error on my BAC reading?
 
-On that last point -- breathalyzers have an accepted margin of error of about 0.005 to 0.02. If you blew .08 or .09, the margin of error alone could put you under the limit. That's not a technicality. That's the science the prosecution doesn't mention.
+On that last point -- breathalyzers have an accepted margin of error (Forensic Science International has published on this extensively). If you blew .08 or .09, the margin of error alone could put you under the limit. That's not a technicality. That's the science the prosecution doesn't mention.
 
 Best realistic outcomes for a first offense DUI with no accident: reduced to reckless driving (no DUI on record), deferred prosecution or diversion program, or DUI conviction with minimal probation and no jail. Almost nobody goes to prison for a first offense with no accident.
 
-Total real cost you should budget for: $10,000-$25,000 over several years when you add up attorney fees, fines, DUI school, and insurance increases. That's the number nobody puts on their website.
+Total real cost is typically tens of thousands of dollars over several years when you add up attorney fees, fines, DUI school, and insurance increases. That's the number nobody puts on their website.
 
 You'll get through this. A lot of people have been exactly where you are right now.
 
