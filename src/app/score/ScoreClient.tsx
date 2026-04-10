@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import { TIER_CORE } from "@/lib/tiers";
 import { SITE_URL } from "@/lib/site";
 import { getChargeLabel } from "@/lib/score";
@@ -338,7 +339,7 @@ function getLoadingSteps(chargeType: string): string[] {
  *   Origin story → Tribe identity → Single CD CTA → Email capture →
  *   Playbook step-down → Trust line → Reset
  */
-function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust, onReset, stats }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void; onReset: () => void; stats: { totalCompletions: number; insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null } } | null }) {
+function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust, onReset, stats, blogRef }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void; onReset: () => void; stats: { totalCompletions: number; insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null } } | null; blogRef: string | null }) {
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [copiedTemplate, setCopiedTemplate] = useState(false);
@@ -346,6 +347,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [shareLoading, setShareLoading] = useState(false);
   const [shareError, setShareError] = useState<string | null>(null);
+  const appendRef = (url: string) => {
+    if (!blogRef) return url;
+    return url.includes("?") ? `${url}&ref=${blogRef}` : `${url}?ref=${blogRef}`;
+  };
 
   const isCrisis = result.score <= 50;
   const timeIndex = getTimeIndex(answers.timeSinceArrest);
@@ -609,7 +614,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               const res = await fetch("/api/subscribe", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: emailInput, source: "score-page", scoreBand: result.band, scoreValue: result.score, chargeType: answers.chargeType }),
+                body: JSON.stringify({ email: emailInput, source: "score-page", scoreBand: result.band, scoreValue: result.score, chargeType: answers.chargeType, ...(blogRef ? { referralUrl: blogRef } : {}) }),
               });
               if (res.ok) {
                 setEmailSent(true);
@@ -674,7 +679,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 </p>
                 <div className="mt-4">
                   <Link
-                    href={`/checkout?tier=${playbookKey}&charge=${answers.chargeType}&band=${result.band}`}
+                    href={appendRef(`/checkout?tier=${playbookKey}&charge=${answers.chargeType}&band=${result.band}`)}
                     className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-base font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
                   >
                     Get Your {playbookTier.name} — {playbookTier.priceDisplay} →
@@ -691,7 +696,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                   The Case Decoder ({TIER_CORE["case-decoder"].priceDisplay}) analyzes YOUR discovery, YOUR specific charges, YOUR case stage — 15 calibrated questions built from your exact charge type and case stage. Every playbook dollar applies as credit.
                 </p>
                 <Link
-                  href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
+                  href={appendRef(`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`)}
                   className="mt-2 inline-block text-base text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
                 >
                   Learn about the Case Decoder →
@@ -715,7 +720,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               </p>
               <div className="mt-4">
                 <Link
-                  href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
+                  href={appendRef(`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`)}
                   className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-base font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
                 >
                   {bandCTAButton[result.band] || "Start My Case Analysis"} — {TIER_CORE["case-decoder"].priceDisplay} →
@@ -732,7 +737,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                   The Intelligence Brief ({TIER_CORE["intelligence-brief"].priceDisplay}) adds prosecution pattern analysis, jurisdiction intelligence, and defense theories specific to your jurisdiction.
                 </p>
                 <Link
-                  href={`/checkout?tier=intelligence-brief&charge=${answers.chargeType}&band=${result.band}`}
+                  href={appendRef(`/checkout?tier=intelligence-brief&charge=${answers.chargeType}&band=${result.band}`)}
                   className="mt-2 inline-block text-base text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
                 >
                   See what the Intelligence Brief includes →
@@ -757,7 +762,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             </p>
             <div className="mt-4">
               <Link
-                href={`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`}
+                href={appendRef(`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`)}
                 className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-base font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
               >
                 {bandCTAButton[result.band] || "See What My Score Misses"} — {TIER_CORE["case-decoder"].priceDisplay} →
@@ -770,7 +775,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                   The Intelligence Brief ({TIER_CORE["intelligence-brief"].priceDisplay}) adds prosecution pattern analysis, jurisdiction intelligence, and defense theories specific to your jurisdiction.
                 </p>
                 <Link
-                  href={`/checkout?tier=intelligence-brief&charge=${answers.chargeType}&band=${result.band}`}
+                  href={appendRef(`/checkout?tier=intelligence-brief&charge=${answers.chargeType}&band=${result.band}`)}
                   className="mt-2 inline-block text-base text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
                 >
                   See what the Intelligence Brief includes →
@@ -800,7 +805,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             )}
           </p>
           <Link
-            href={`/checkout?tier=${CHARGE_PLAYBOOK[answers.chargeType]}`}
+            href={appendRef(`/checkout?tier=${CHARGE_PLAYBOOK[answers.chargeType]}`)}
             className="mt-3 w-full rounded-lg border border-amber-500/50 px-6 py-4 text-center text-base font-semibold text-amber-400 transition-colors hover:border-amber-500 sm:w-auto sm:inline-block block"
           >
             Start with the Playbook — {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].priceDisplay} →
@@ -905,6 +910,8 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
  * and the transition from questionnaire to score display.
  */
 export default function ScoreClient() {
+  const searchParams = useSearchParams();
+  const blogRef = searchParams.get("ref");
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<ScoreResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -1106,7 +1113,7 @@ export default function ScoreClient() {
 
         {result ? (
           <>
-            <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => { setResult(null); setCurrentStep(0); }} onReset={() => { setResult(null); setAnswers({}); setEmailSent(false); setCurrentStep(0); try { sessionStorage.removeItem("inna-score"); } catch {} }} stats={stats} />
+            <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => { setResult(null); setCurrentStep(0); }} onReset={() => { setResult(null); setAnswers({}); setEmailSent(false); setCurrentStep(0); try { sessionStorage.removeItem("inna-score"); } catch {} }} stats={stats} blogRef={blogRef} />
 
             {/* Post-quiz testimonial — social proof near CTAs */}
             <div className="mt-8">

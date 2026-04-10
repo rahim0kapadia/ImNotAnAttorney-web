@@ -9,7 +9,13 @@
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
 
-export function PlaybookCTA() {
+export function PlaybookCTA({ slug }: { slug?: string }) {
+  const refParam = slug ? `ref=blog-${slug}` : "";
+  const appendRef = (url: string) => {
+    if (!refParam) return url;
+    return url.includes("?") ? `${url}&${refParam}` : `${url}?${refParam}`;
+  };
+
   return (
     <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
       <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
@@ -25,13 +31,13 @@ export function PlaybookCTA() {
       </p>
       <div className="mt-4 flex flex-col gap-3 sm:flex-row">
         <Link
-          href="/playbook/dui-first-offense"
+          href={appendRef("/playbook/dui-first-offense")}
           className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400"
         >
           Get the DUI Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} →
         </Link>
         <Link
-          href="/checkout?tier=case-decoder"
+          href={appendRef("/checkout?tier=case-decoder")}
           className="rounded-lg border border-zinc-700 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
         >
           Or upgrade to {TIER_CORE["case-decoder"].name} — {TIER_CORE["case-decoder"].priceDisplay}

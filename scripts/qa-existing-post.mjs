@@ -41,6 +41,27 @@ import { runUPLCheck } from "./lib/blog-gen/qa-upl.mjs";
 import { runDNACheck } from "./lib/blog-gen/qa-dna.mjs";
 import { runAntiHallucinationCheck } from "./lib/blog-gen/qa-anti-hallucination.mjs";
 import { callClaude } from "./lib/blog-gen/claude-client.mjs";
+import { createClient } from "@supabase/supabase-js";
+import * as dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+
+async function loadAdaptiveThreshold() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return 45;
+
+  try {
+    const supabase = createClient(url, key);
+    const { data } = await supabase
+      .from("demand_feedback")
+      .select("qa_humanizer_threshold")
+      .eq("charge_type_slug", "_global")
+      .maybeSingle();
+    return data?.qa_humanizer_threshold ?? 45;
+  } catch {
+    return 45;
+  }
+}
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const BLOG_DIR = path.join(REPO_ROOT, "content", "blog");
@@ -93,7 +114,8 @@ async function runAllGates(mdxContent, { gateFilter, skipLlm, parallel, slug }) 
 
   // ── 1. Humanizer (pure JS, always runs) ──
   if (!gateFilter || gateFilter === "humanizer") {
-    const h = runHumanizerCheck(mdxContent);
+    const adaptiveThreshold = await loadAdaptiveThreshold();
+    const h = runHumanizerCheck(mdxContent, { threshold: adaptiveThreshold });
     gates.humanizer = {
       passed: h.passed,
       status: "checked",

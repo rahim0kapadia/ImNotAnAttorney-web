@@ -265,7 +265,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         </MDXErrorBoundary>
 
         {/* Mid-article lead capture — category-specific checklist */}
-        <BlogInlineCapture category={post.category || "general-defense"} />
+        <BlogInlineCapture category={post.category || "general-defense"} slug={slug} />
 
         {/* Share — growth loop */}
         <ShareButtons url={`/blog/${slug}`} title={post.title} />
@@ -273,13 +273,13 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Playbook CTA — shown above BlogCTA for DUI posts */}
         {post.category === "dui" && (
           <div className="mt-12">
-            <PlaybookCTA />
+            <PlaybookCTA slug={slug} />
           </div>
         )}
 
         {/* Service CTA */}
         <div className="mt-12">
-          <BlogCTA category={post.category} />
+          <BlogCTA category={post.category} slug={slug} />
         </div>
 
         {/* Score CTA — Free defense quiz */}
@@ -291,7 +291,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             10 questions. 60 seconds. Free — no email required to start.
           </p>
           <Link
-            href="/score"
+            href={`/score?ref=blog-${slug}`}
             className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
             Take the Defense Milestone Score — Free

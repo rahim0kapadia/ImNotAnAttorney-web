@@ -58,6 +58,7 @@ export async function POST(req: NextRequest) {
     const scoreBand = typeof body.scoreBand === "string" && VALID_BANDS.includes(body.scoreBand) ? body.scoreBand : null;
     const scoreValue = typeof body.scoreValue === "number" && body.scoreValue >= 0 && body.scoreValue <= 100 ? body.scoreValue : null;
     const chargeType = typeof body.chargeType === "string" && VALID_CHARGES.includes(body.chargeType) ? body.chargeType : null;
+    const referralUrl = typeof body.referralUrl === "string" && body.referralUrl.length <= 200 ? body.referralUrl : null;
 
     // =========================================================================
     // 1. EMAIL VALIDATION
@@ -85,17 +86,31 @@ export async function POST(req: NextRequest) {
     // subscription source wins. This is intentional -- it tracks the latest
     // touchpoint that re-engaged the subscriber.
     // =========================================================================
-    const upsertData: Record<string, unknown> = { email: normalizedEmail, source, unsubscribed_at: null };
+    // Check if subscriber already exists (for original_source preservation)
+    const { data: existing } = await supabase
+      .from("subscribers")
+      .select("id, original_source")
+      .eq("email", normalizedEmail)
+      .maybeSingle();
+
+    const upsertData: Record<string, unknown> = {
+      email: normalizedEmail,
+      source,
+      unsubscribed_at: null,
+    };
     if (scoreBand) upsertData.score_band = scoreBand;
     if (scoreValue !== null) upsertData.score_value = scoreValue;
     if (chargeType) upsertData.charge_type = chargeType;
+    if (referralUrl) upsertData.referral_url = referralUrl;
+
+    // Preserve original_source: set on first subscription, never overwrite
+    if (!existing) {
+      upsertData.original_source = source;
+    }
 
     const { error } = await supabase
       .from("subscribers")
-      .upsert(
-        upsertData,
-        { onConflict: "email" }
-      );
+      .upsert(upsertData, { onConflict: "email" });
 
     if (error) {
       console.error("[Subscribe] Supabase error:", error);

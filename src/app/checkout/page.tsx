@@ -48,6 +48,8 @@ import { useSearchParams } from "next/navigation";
 import { useState, useRef, Suspense } from "react";
 import Link from "next/link";
 import { TrustBadges } from "@/components/TrustBadges";
+import { TierBundleValue } from "@/components/TierBundleValue";
+import { getScholarshipCount } from "@/lib/product-matrix";
 
 /**
  * Standalone product checkout — minimal card rendered when ?standaloneProduct=<slug>
@@ -985,6 +987,14 @@ function CheckoutContent() {
               ))}
             </ul>
           </div>
+
+          <TierBundleValue tierSlug={tier} compact className="mt-4" />
+          {getScholarshipCount(tier) > 0 && (
+            <p className="mt-3 text-sm text-zinc-400">
+              Your purchase funds {getScholarshipCount(tier)} scholarship{getScholarshipCount(tier) > 1 ? 's' : ''} for
+              defendants who cannot afford defense research.
+            </p>
+          )}
 
           {/* Preview link */}
           <Link

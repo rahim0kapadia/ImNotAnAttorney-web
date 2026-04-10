@@ -42,6 +42,7 @@ import Link from "next/link";
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { getProduct } from "@/lib/products";
+import { getScholarshipCount } from "@/lib/product-matrix";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { TrustBadges } from "@/components/TrustBadges";
 
@@ -456,6 +457,17 @@ function SuccessContent() {
                 </Link>
                 <p className="mt-3 text-xs text-zinc-400">
                   We also sent upload instructions to your email.
+                </p>
+              </div>
+            )}
+
+            {tier && getScholarshipCount(tier) > 0 && (
+              <div className="mt-6 rounded-lg border border-amber-500/20 bg-amber-950/20 p-4 text-center">
+                <p className="text-amber-400 font-medium">
+                  Your purchase just funded {getScholarshipCount(tier)} scholarship{getScholarshipCount(tier) > 1 ? 's' : ''}
+                </p>
+                <p className="mt-1 text-sm text-zinc-400">
+                  A defendant who cannot afford defense research will receive the same analysis you did — because of you.
                 </p>
               </div>
             )}

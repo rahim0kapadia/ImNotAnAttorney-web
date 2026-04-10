@@ -284,7 +284,7 @@ function stripListPrefix(line) {
  * Run the humanizer detection suite on the body text of an MDX blog post.
  * Returns { passed, score, details }.
  */
-export function runHumanizerCheck(mdxContent) {
+export function runHumanizerCheck(mdxContent, options = {}) {
   const body = stripFrontmatter(mdxContent);
   const bodyLower = body.toLowerCase();
   const words = splitWords(body);
@@ -714,7 +714,7 @@ export function runHumanizerCheck(mdxContent) {
   };
 
   return {
-    passed: compositeScore < 45,
+    passed: compositeScore < (options.threshold ?? 45),
     score: details.composite_score,
     details,
   };

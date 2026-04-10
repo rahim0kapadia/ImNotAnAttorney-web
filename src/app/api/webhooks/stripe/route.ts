@@ -40,6 +40,7 @@ import { NextRequest, NextResponse, after } from "next/server";
 import { stripe, TIERS, isValidTier, stripeForTier } from "@/lib/stripe";
 import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { getProduct } from "@/lib/products";
+import { getScholarshipCount, isPlaybookPurchase, PLAYBOOK_HALF_CREDITS } from "@/lib/product-matrix";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, sendEmailWithOperatorAlert, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
@@ -332,6 +333,47 @@ export async function POST(req: NextRequest) {
       }, { category: "operator-alert", metadata: { reason: "order-insert-failed", tier, amount } });
       // Return 500 so Stripe retries — transient DB failures can recover on retry
       return NextResponse.json({ error: "Order insert failed" }, { status: 500 });
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // SCHOLARSHIP COUNTER INCREMENT
+    // ──────────────────────────────────────────────────────────────
+    // Non-blocking — counter failures must never crash the webhook.
+    // Tier purchases: add whole scholarship count immediately.
+    // Playbook purchases: accumulate half-credits; every 2 halves = 1 scholarship.
+    if (orderData) {
+      try {
+        const scholarshipCount = getScholarshipCount(tier);
+        const currentMonth = new Date().toISOString().slice(0, 7);
+        const monthKey = `scholarships_${currentMonth}`;
+
+        if (scholarshipCount > 0) {
+          // Service tier purchase: increment by whole scholarship count
+          await supabase.rpc("increment_counter", { counter_key: "scholarships_total", amount: scholarshipCount });
+          await supabase.rpc("increment_counter", { counter_key: monthKey, amount: scholarshipCount });
+        } else if (isPlaybookPurchase(tier)) {
+          // Playbook purchase: add half-credit, roll over if >= 2
+          await supabase.rpc("increment_counter", { counter_key: "scholarship_half_credits", amount: PLAYBOOK_HALF_CREDITS });
+
+          // Check if half-credits reached 2 (= 1 full scholarship)
+          const { data: halfRow } = await supabase
+            .from("counters")
+            .select("value")
+            .eq("key", "scholarship_half_credits")
+            .single();
+
+          const halves = Number(halfRow?.value ?? 0);
+          if (halves >= 2) {
+            // Roll over: subtract 2 half-credits, add 1 scholarship
+            await supabase.rpc("increment_counter", { counter_key: "scholarship_half_credits", amount: -2 });
+            await supabase.rpc("increment_counter", { counter_key: "scholarships_total", amount: 1 });
+            await supabase.rpc("increment_counter", { counter_key: monthKey, amount: 1 });
+          }
+        }
+      } catch (scholarshipErr) {
+        // Log but do not bubble — a counter failure must not block order processing
+        console.error("[Webhook] Scholarship counter increment failed:", scholarshipErr);
+      }
     }
 
     // ──────────────────────────────────────────────────────────────

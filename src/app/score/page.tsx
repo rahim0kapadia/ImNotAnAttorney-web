@@ -44,6 +44,7 @@
  * Privacy: "Your answers are not stored" — important for trust.
  */
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { SITE_URL } from "@/lib/site";
 import ScoreClient from "./ScoreClient";
 
@@ -64,5 +65,9 @@ export const metadata: Metadata = {
 };
 
 export default function ScorePage() {
-  return <ScoreClient />;
+  return (
+    <Suspense fallback={null}>
+      <ScoreClient />
+    </Suspense>
+  );
 }

@@ -79,7 +79,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Want to know if a motion to dismiss is viable? The Case Decoder analyzes your full case.",
     dripSequenceKey: "calculator_sol",
-    isActive: false,
+    isActive: true,
   },
   "diversion-eligibility": {
     name: "Diversion Program Eligibility Checker",
@@ -316,7 +316,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "The Judge Profile is one piece of the picture. The X-Ray combines judge intelligence with full discovery analysis.",
     dripSequenceKey: "research_judge_profile",
-    isActive: false,
+    isActive: true,
   },
   "motion-opportunity-scan": {
     name: "Motion Opportunity Scan",
@@ -341,7 +341,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "Knowing which motions apply is the first step. The Case Decoder maps the full defense landscape including evidentiary support.",
     dripSequenceKey: "research_motion_opportunity",
-    isActive: false,
+    isActive: true,
   },
 
   // ─── WAVE 1 — $97 Reddit-validated research products ─────────

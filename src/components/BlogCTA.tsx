@@ -54,7 +54,13 @@ const STANDALONE_CATEGORY_CTA: Record<
   },
 };
 
-export function BlogCTA({ category }: { category?: string }) {
+export function BlogCTA({ category, slug }: { category?: string; slug?: string }) {
+  const refParam = slug ? `ref=blog-${slug}` : "";
+  const appendRef = (url: string) => {
+    if (!refParam) return url;
+    return url.includes("?") ? `${url}&${refParam}` : `${url}?${refParam}`;
+  };
+
   // Standalone product branch — employment and any future standalone categories
   const standalone = category ? STANDALONE_CATEGORY_CTA[category] : undefined;
   if (standalone) {
@@ -68,13 +74,13 @@ export function BlogCTA({ category }: { category?: string }) {
           <p className="mt-2 text-sm text-zinc-400">{standalone.subhead}</p>
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
             <Link
-              href={`/checkout?standaloneProduct=${standalone.slug}`}
+              href={appendRef(`/checkout?standaloneProduct=${standalone.slug}`)}
               className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
             >
               {standalone.primaryLabel} &rarr;
             </Link>
             <Link
-              href="/score"
+              href={appendRef("/score")}
               className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:border-amber-500"
             >
               {standalone.secondaryLabel}
@@ -108,13 +114,13 @@ export function BlogCTA({ category }: { category?: string }) {
             </p>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/start"
+                href={appendRef("/start")}
                 className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
                 Get Started &mdash; {tier.priceDisplay}+ &rarr;
               </Link>
               <Link
-                href={`/checkout?tier=${playbookSlug}`}
+                href={appendRef(`/checkout?tier=${playbookSlug}`)}
                 className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:border-amber-500"
               >
                 {tier.name} &mdash; {tier.priceDisplay}
@@ -133,13 +139,13 @@ export function BlogCTA({ category }: { category?: string }) {
             </p>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/score"
+                href={appendRef("/score")}
                 className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
                 Take the Defense Milestone Score — Free &rarr;
               </Link>
               <Link
-                href="/checkout?tier=dui-first-offense"
+                href={appendRef("/checkout?tier=dui-first-offense")}
                 className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:border-amber-500"
               >
                 DUI Playbook — {TIER_CORE["dui-first-offense"].priceDisplay}
