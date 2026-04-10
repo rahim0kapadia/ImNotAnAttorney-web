@@ -29,9 +29,10 @@ const CHECKLIST_BY_CATEGORY: Record<string, { title: string; hook: string }> = {
 
 interface BlogInlineCaptureProps {
   category?: string;
+  slug?: string;
 }
 
-export function BlogInlineCapture({ category = "general-defense" }: BlogInlineCaptureProps) {
+export function BlogInlineCapture({ category = "general-defense", slug }: BlogInlineCaptureProps) {
   const checklist = CHECKLIST_BY_CATEGORY[category] || CHECKLIST_BY_CATEGORY["general-defense"];
 
   return (
@@ -40,7 +41,7 @@ export function BlogInlineCapture({ category = "general-defense" }: BlogInlineCa
       <p className="mt-1 text-xs text-zinc-400">{checklist.hook}</p>
       <div className="mt-3">
         <Link
-          href="/score"
+          href={slug ? `/score?ref=blog-${slug}` : "/score"}
           className="inline-block rounded-md bg-amber-500 px-4 py-2 text-xs font-semibold text-black transition-all hover:scale-[1.01] focus-visible:scale-[1.01] hover:bg-amber-400"
         >
           Take the Defense Milestone Score — Free

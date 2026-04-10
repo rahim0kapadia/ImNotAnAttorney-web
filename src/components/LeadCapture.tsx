@@ -50,6 +50,8 @@ interface LeadCaptureProps {
   successUpsellDescription?: string;
   /** When true, skips the email gate and shows the download directly with a /score CTA. */
   ungated?: boolean;
+  /** Blog slug for attribution tracking. */
+  referralUrl?: string;
 }
 
 export function LeadCapture({
@@ -65,6 +67,7 @@ export function LeadCapture({
   successUpsellLabel,
   successUpsellDescription,
   ungated,
+  referralUrl,
 }: LeadCaptureProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -76,7 +79,7 @@ export function LeadCapture({
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({ email, source, ...(referralUrl ? { referralUrl } : {}) }),
       });
       if (res.ok) {
         setStatus("success");
@@ -108,7 +111,7 @@ export function LeadCapture({
           </a>
           <div className="mt-4">
             <a
-              href="/score"
+              href={referralUrl ? `/score?ref=${referralUrl}` : "/score"}
               className="text-sm text-zinc-400 hover:text-amber-400 transition-colors"
             >
               Check your Defense Milestone Score — free, no email required
