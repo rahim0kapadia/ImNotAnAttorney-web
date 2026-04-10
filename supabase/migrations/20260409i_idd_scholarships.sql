@@ -42,9 +42,9 @@ CREATE OR REPLACE FUNCTION increment_counter(counter_key text, amount bigint DEF
 RETURNS void
 LANGUAGE sql
 AS $$
-  INSERT INTO counters (key, value)
+  INSERT INTO counters (id, value)
   VALUES (counter_key, amount)
-  ON CONFLICT (key) DO UPDATE
+  ON CONFLICT (id) DO UPDATE
   SET value = counters.value + EXCLUDED.value;
 $$;
 
@@ -52,6 +52,6 @@ $$;
 -- scholarships_total: whole scholarships EARNED by tier purchases (spec sub-task 6)
 -- scholarships_fulfilled: scholarships DELIVERED (operator approved + intake started)
 -- The delta (total - fulfilled) is the transparent waitlist (spec sub-task 7)
-INSERT INTO counters (key, value) VALUES ('scholarships_total', 0) ON CONFLICT (key) DO NOTHING;
-INSERT INTO counters (key, value) VALUES ('scholarships_fulfilled', 0) ON CONFLICT (key) DO NOTHING;
-INSERT INTO counters (key, value) VALUES ('scholarship_half_credits', 0) ON CONFLICT (key) DO NOTHING;
+INSERT INTO counters (id, value) VALUES ('scholarships_total', 0) ON CONFLICT (id) DO NOTHING;
+INSERT INTO counters (id, value) VALUES ('scholarships_fulfilled', 0) ON CONFLICT (id) DO NOTHING;
+INSERT INTO counters (id, value) VALUES ('scholarship_half_credits', 0) ON CONFLICT (id) DO NOTHING;
