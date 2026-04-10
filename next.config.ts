@@ -32,6 +32,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Bundle reddit template files with the serverless function so fs.readFileSync works at runtime
+  outputFileTracingIncludes: {
+    '/api/cron/reddit-monitor': ['./content/queue/reddit/pending/*.md'],
+  },
   async headers() {
     return [
       {
