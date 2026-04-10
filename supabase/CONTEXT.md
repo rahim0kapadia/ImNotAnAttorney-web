@@ -43,6 +43,28 @@
 | `demand_scores` | Aggregated demand score per charge type, timestamped |
 | `blog_pipeline_jobs` | Tracked blog generation runs (topic, status, output path) |
 
+### Tier 9 Intelligence Tables (web-owned, populated by bulk scripts)
+
+Added 2026-04-09 via migration `20260409h_tier9_data_driven_intelligence.sql`. All 9 tables have RLS enabled with a permissive `service_all` policy (service role only — no user-facing reads). Populated by `scripts/bulk-master-extractor.mjs` (single-pass 50GB CSV extractor), `scripts/bulk-appeal-outcome-correlator.mjs`, and `scripts/bulk-similar-case-matcher.mjs`.
+
+| Table | Purpose | Queried by tiers | Source script |
+|-------|---------|-----------------|---------------|
+| `judge_quotes` | Attributable judicial quotations with topic classification + CourtListener source URLs | IB, X-Ray, WR, SR, Judge Report Card | bulk-master-extractor |
+| `sentencing_distributions` | Per-judge sentencing p25/median/p75 per charge slug | X-Ray, WR, SR, Judge Report Card | bulk-master-extractor |
+| `officer_reliability` | Cross-case officer credibility: testimony count, discredited count, Brady history | X-Ray, WR, SR, Officer Background Check | bulk-master-extractor |
+| `judge_prosecutor_pairings` | Motion grant rates per judge × prosecutor × motion type | WR, SR | bulk-master-extractor |
+| `bench_jury_divergence` | Judge acquittal rates: bench trial vs jury trial per charge | WR, SR, Judge Report Card | bulk-master-extractor |
+| `appellate_trends` | Circuit-level argument reversal/affirmance rates by year | IB, X-Ray, WR, SR | bulk-appeal-outcome-correlator |
+| `case_feature_vectors` | k-NN feature vectors (jurisdiction, charge, motion types, legal issues) for similar-case lookup. PK is `cluster_id` (text), not uuid. | X-Ray, WR, SR, Similar Cases Analyzer | bulk-similar-case-matcher |
+| `co_defendant_analysis` | Outcome divergence between co-defendants in multi-party cases | SR | bulk-master-extractor |
+| `plea_discount_curves` | Plea discount by jurisdiction × charge: base sentence, plea sentence, cooperation bonus | SR | bulk-master-extractor |
+
+`judge_profiles` extensions (same migration): `sentencing_distributions` (jsonb), `judicial_quotes` (jsonb), `bench_acquittal_rate` (numeric), `jury_acquittal_rate` (numeric). Written as aggregate rollups by bulk-master-extractor.
+
+**Tier inclusion rule (additive):** Each tier extends the tier below. IB gets judge quotes + appellate trends. X-Ray adds sentencing outliers + officer reliability. WR adds pairing matrix + bench/jury divergence + similar cases. SR adds co-defendant divergence + plea curves.
+
+**Standalone SKUs (Tier 9):** Judge Report Card ($197), Officer Background Check ($97), Similar Cases Analyzer ($297). These query Tier 9 tables directly — no prerequisite tier purchase needed. Defined in `src/lib/tiers.ts`, test mode (`live: false`).
+
 ### Key Schema Notes
 - `cases.status` is the primary state machine. Valid transitions enforced at app layer, not DB. Full diagram + 19-status definitions + `ALLOWED_TRANSITIONS` below in the "Case Status State Machine" section.
 - `processing_jobs.case_id` links engine jobs back to `cases`. Engine never writes to `cases` directly — it writes job results; web cron reads them.
@@ -58,7 +80,7 @@ supabase/migrations/
   00032_partner_portal.sql
 ```
 
-- 32 migrations, numbered sequentially
+- 62 migrations (mix of sequential numbering + date-prefixed from 2026-04-09)
 - Forward-only: never modify existing migrations
 - Each migration is idempotent (`IF NOT EXISTS`, `IF NOT EXISTS` for RLS policies)
 - Run locally: `npx supabase db push` (dev) or `npx supabase db push --db-url $PROD_URL` (prod)
@@ -294,7 +316,7 @@ GET /api/cron/batch-poller ──────→ (inline)
 | Supabase project ref | `jxjbjmgdukwkoclydqdr` | deploy commands, scripts |
 | Download token TTL | 72 hours | code reference |
 | Stale lock recovery | 5 minutes | `migrations/*028*/cron-executions.sql` |
-| Total migrations | 32 sequential | `migrations/` directory |
+| Total migrations | 62 (sequential + date-prefixed) | `migrations/` directory |
 
 ## Integration Points
 
