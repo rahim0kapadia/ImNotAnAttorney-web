@@ -1,6 +1,6 @@
 {
   "slug": "were-your-field-sobriety-tests-correct",
-  "last_checked": "2026-04-09T21:47:43.531Z",
+  "last_checked": "2026-04-10T02:28:06.094Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,9 +25,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "Only NHTSA (source agency) is cited; no individual attorneys or legal scholars named"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "All accuracy figures (77%, 68%, 65%, 91%) are attributed to NHTSA with manual reference NHTSA HS 178 R2/06"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "No procedural deadlines or filing windows claimed; post discusses test administration protocols, not legal procedure"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

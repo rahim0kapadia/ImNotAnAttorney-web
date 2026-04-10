@@ -1,6 +1,6 @@
 {
   "slug": "field-test-vs-lab-test-drug-cases",
-  "last_checked": "2026-04-10T00:12:06.577Z",
+  "last_checked": "2026-04-10T02:48:55.165Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 21.2,
         "pattern_score": 10,
-        "uniformity_score": 47.2,
+        "uniformity_score": 47.4,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 49,
             "matches": [
-              "49 em dashes in 2492 words"
+              "49 em dashes in 2489 words"
             ],
             "points_added": 10
           }
@@ -26,23 +26,280 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'Hundreds of defendants in Houston alone pleaded guilty to charges later disproven by lab results' appears in the FAQ without a named source in the sentence or the preceding sentence, and the bolded body callout '**At least 100,000 people per year are arrested based on field test results that are never confirmed by a lab.**' has no inline source in or adjacent to that sentence"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "FAIL",
+            "evidence": "The post explicitly cites 'under *Daubert v. Merrell Dow* (federal standard) or the *Frye* standard' — a case citation used to state a specific legal holding/standard, which is not covered by the Brady terminology exception"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 13,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter; body contains 7 numbered questions directed at the attorney in the dedicated section, consistent with the explicit 'seven questions' framing."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Key claims are sourced — ProPublica 'Busted' investigation, Innocence Project, GC-MS methodology, Daubert v. Merrell Dow, and Frye standard are all named inline."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('Write these seven questions on paper', 'Ask your attorney one question this week') and legal terms like Daubert/Frye are contextualized immediately."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the listed cliches appear in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "NEEDS_WORK",
+            "reason": "Post is dominantly second person but drifts to third person ('A woman is sitting in a jail cell', 'defendants are sitting in jail') for more than 2 consecutive sentences in scene-setting vignettes."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Passive constructions appear occasionally ('was identified', 'are designed') but well under 30% of sentences."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "Field test, presumptive positive, GC-MS, Daubert, Frye, and chain of custody are each explained on first use in plain language."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Flows logically: what field tests are → false positive problem → what lab tests are → why it matters for defense → attorney questions → closing CTA."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple clear CTAs — seven attorney questions, Case Decoder link, free Case Progress Score, and specific 'ask this week' prompts."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct ('Write these seven questions', 'Copy these questions into your phone', 'Ask your attorney'); hedging is confined to information statements about uncertainty."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs are well under 300 words and action-oriented paragraphs stay under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Word count is distributed across six roughly comparable sections; no single section approaches 50% of the total."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Threats (arrest, jail, pressured pleas, trafficking charges) are consistently followed within 1-2 sentences by specific actions — ask the attorney, file Daubert/Frye, check lab status, request independent testing."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with a vivid roadside scenario hook, builds evidence through ProPublica stats and the amphetamine/MDMA case, and closes with empowering, specific attorney questions and CTAs."
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 11,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Directive commands appear throughout: 'Look up your state's rules on field test admissibility', 'write that fact down', 'Copy these questions into your phone right now', and 'Write down every answer' are instructions to the reader rather than framed as questions for an attorney."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each substantive section includes attorney redirects proximately, e.g., 'Ask your attorney one question this week', 'Ask your attorney whether a Daubert or Frye challenge has been considered', and the full 'Questions to Ask Your Attorney' section."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "The post discusses field tests generally and never evaluates the reader's specific case strength or likelihood of conviction; it consistently redirects specific evaluation to the attorney."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "The post recommends specific motions: 'Your attorney can challenge the reliability of field test evidence under Daubert v. Merrell Dow... or the Frye standard' and 'Can we file a Daubert or Frye challenge to the field test evidence?' frame these as procedural steps the reader should pursue."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "The post does not discuss immigration consequences, so the immigration-specific redirect requirement is not triggered."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Collateral consequences (loss of license, housing, firearms, voting, student loans) are not mentioned in this post, so sourcing requirement is not triggered."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "No specific bail bond companies, law firms, or legal service providers are named; only general references to 'your attorney' and 'public defender' appear."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "No instances of 'we recommend,' 'we advise,' or 'we suggest' appear in legal-action contexts; the post uses second-person framing and questions to the attorney instead."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "The Houston aspirin scenario ('A woman is sitting in a jail cell in Houston... The substance was aspirin.') and the 2 AM highway scenario are presented as narrative vignettes without 'Hypothetical' or 'Example scenario' labels, and could be mistaken for real cases."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Framing consistently empowers readers to ask better questions ('Questions to Ask Your Attorney', 'the answers will tell you whether your defense is built on evidence or assumptions') rather than handle matters alone."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Qualifiers like 'in most jurisdictions,' 'generally,' and 'typically' appear throughout legal rule discussions, e.g., 'most jurisdictions don't accept field tests as conclusive evidence at trial.'"
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "The post states 'If a field test is the only identification evidence the prosecution has, this challenge could be devastating to their case' — an outcome prediction without a clear jurisdictional/circumstantial variability qualifier."
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Legal strategies are attributed to named sources: 'Daubert v. Merrell Dow,' 'the Frye standard,' the Innocence Project, and ProPublica's 'Busted' investigation."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory factual claims about the law appear; the post consistently characterizes field tests as presumptive/probable-cause tools and lab tests as confirmatory."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "The Case Decoder is framed as a research tool that 'analyzes your charges, identifies gaps... gives you the specific questions to bring to your attorney. No legal advice.'"
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 9,
+        "checks_total": 12,
+        "needs_work_count": 2,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "PASS",
+            "evidence": "Opening hook names the fear in first 2 sentences ('you're in handcuffs... calling your family in a panic'), and all H2s are action/insight-oriented ('What Is a Field Test?', 'The False Positive Problem', 'Why This Matters for Your Defense', 'Questions to Ask Your Attorney', 'Don't Plead to a Color Change')."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Legal terms defined inline ('field test — sometimes called a presumptive test', 'gas chromatography-mass spectrometry (GC-MS)', 'Daubert v. Merrell Dow (federal standard) or the Frye standard'); paragraphs stay under 4 sentences."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "NEEDS_WORK",
+            "evidence": "TLDRBox has a 'Your Next Step' action before the first H2 but it's not formatted as a distinct immediate-action block — it's a bullet inside the TLDR wrapper."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each decision point leads with a clear default ('No one should plead guilty to a substance that hasn't been confirmed by a lab', 'the question defense attorneys typically start with is...')."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "FAIL",
+            "evidence": "'Questions to Ask Your Attorney' section presents 7 unranked action items without 'start with these' priority markers, and the false-positive bullet list has 5 items without grouping."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "This post uses the myth-buster-post pattern (debunking field test reliability) combined with question-arsenal-post elements (7 attorney questions)."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every scary stat pairs with action: '100,000 people per year...' followed by 'Ask your attorney one question this week'; Houston plea stat paired with 'Know what the lab says before making any decisions'."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language — person consistently separated from situation, no 'you should have' patterns, system is framed as the adversary not the reader's choices."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening validates fear and middle explains the science well, but the final sentences before the CTA section pivot into promotional copy ('Our Case Decoder analyzes your charges') rather than ending on an agency statement."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "No tables, only H2 headings used (no H3/H4+), key actions bolded ('A field test is a color change in a plastic bag...'), sections stay within 300-500 word range."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Every H2 section has one bolded standalone screenshot-worthy sentence under 27 words ('A field test is a color change in a plastic bag — it's probable cause for an arrest, not proof of a crime', 'A field test can put you in handcuffs, but it cannot prove what a substance is — only a lab can do that')."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All 3 FAQ answers start with direct answers ('No.', 'Yes, and it happens constantly', 'That's the single most common mistake'), stay 3-4 sentences, and read as peer-to-peer voice rather than institutional."
+          }
+        ]
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "slug": "dui-first-72-hours-what-to-do",
-  "last_checked": "2026-04-10T00:09:39.952Z",
+  "last_checked": "2026-04-10T02:28:28.580Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,23 +35,280 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'Dashcam footage from the patrol car may be overwritten on a 30 or 60-day cycle' states a specific time window as fact with no named source in the sentence or preceding sentence"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "DMV hearing window is consistently qualified with 'In most states' and '7 to 15 days... varies by state'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "Miranda appears only as 'Miranda rights' terminology, no case citations present"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "Professional reporting consequences qualified with 'Some professions' and 'commonly applies to'"
+          }
+        ]
+      }
     },
     "slop": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 13,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter; body contains roughly 5-6 attorney-directed questions in the attorney vetting section, which is internally consistent."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "NEEDS_WORK",
+            "reason": "TLDRBox cites NHTSA and state DMV statutes generally, but specific claims like '30 or 60-day cycle' for dashcam overwrite and '#1 most commonly missed deadline' lack inline sources."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('Write it down tonight,' 'Back up your phone,' 'Find the deadline') with legal terms defined inline."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "No instances of the flagged cliche phrases appear in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Second person 'you/your' is used consistently throughout; brief third-person references to 'defendants' stay under the 2-sentence threshold."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Passive constructions appear but well under 30%; most sentences are active imperatives directed at the reader."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "Terms like 'administrative license suspension,' 'arraignment,' 'discovery,' and 'suppression motions' are defined or contextualized on first use."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Clear logical flow: 6 hours → 24 hours → 48-72 hours → what NOT to do → timeline → CTA, with each section connected to the next."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Explicit CTA at end links to DUI Defense Playbook ($127) and free Defense Milestone Score, plus multiple in-body action checklists."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct and imperative ('Write it down,' 'Find the deadline'); hedges like 'may' appear only in information statements about timelines and outcomes."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs stay well under 300 words; action paragraphs are short and under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Content is distributed across 6+ major sections with the largest (First 24 Hours) holding roughly 20-25% of total word count."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat (license suspension, subpoena risk, social media evidence, guilty plea waiver) is immediately followed by a specific action within 1-2 sentences."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong hook ('You were arrested for DUI'), evidence-building middle with concrete deadlines and scenarios, and empowering close ('You are going to get through this. Start with the DMV deadline.')."
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 8,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Post contains direct commands like 'Do not post on social media', 'Do not plead guilty at your first court appearance', and 'enter a plea of not guilty' — directives rather than information framing"
+          },
+          {
+            "criterion": "U2",
+            "result": "FAIL",
+            "evidence": "Sections like 'Write everything down', 'Preserve everything on your phone', and 'Do NOT post on social media' involve legal-action decisions but contain no proximate attorney redirect"
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post avoids evaluating reader's specific case strength — uses generalized language like 'for a first-offense DUI' without judging individual circumstances"
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Recommends specific procedural steps: 'Request a DMV administrative hearing', 'enter a plea of not guilty', 'write NOT GUILTY on a piece of paper' as actions the reader should take"
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences (deportation, visa, DACA, green card), so immigration redirect requirement is not triggered"
+          },
+          {
+            "criterion": "U6",
+            "result": "FAIL",
+            "evidence": "Lists collateral consequences affecting 'CDL holders, Nurses, doctors... Teachers... Government employees with security clearances' without citing any specific statute or regulation"
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Uses only generic categories like 'a DUI-focused attorney' and 'a bail bondsman' — no specific law firms or companies named or recommended"
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "Post does not use 'we recommend', 'we advise', or similar first-person plural recommendation phrasing anywhere in the legal-action sections"
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Opens sections with scene-setting hypotheticals like 'You are sitting on the couch in last night's clothes' and 'You are at a family dinner and your uncle leans over' without labeling them as hypothetical or example scenarios"
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Explicitly includes 'Do not try to represent yourself' and frames information as preparation for attorney consultation with questions to ask"
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Uses qualifiers throughout: 'In most states', 'usually 7 to 15 days', 'This is general — your state and county will have its own pace'"
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "Makes outcome claims like 'Defense attorneys have used defendant-written accounts to identify procedural violations that led to case dismissals' and 'Protects evidence that could take months off a sentence' without jurisdictional variance qualification"
+          },
+          {
+            "criterion": "U13",
+            "result": "FAIL",
+            "evidence": "Legal strategies like challenging field sobriety tests, breathalyzer calibration records, and suppression motions are presented as the blog's own positions without attribution to named cases, statutes, scholars, or attorneys"
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims found — the post consistently distinguishes criminal case from DMV administrative case and maintains internal consistency"
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "DUI Defense Playbook is framed as 'the 26 questions your attorney should be answering... the meeting template you can hand to them at your first consultation' — positioned as attorney-preparation tool, not a substitute"
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 12,
+        "needs_work_count": 4,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening names fear in first 2 sentences ('staring at the ceiling since, cycling between this can't be happening') but all H2s are purely topical time blocks ('The First 6 Hours After Release', 'The First 24 Hours', 'The First 48-72 Hours', 'The Timeline Ahead') rather than action-oriented promises."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "NEEDS_WORK",
+            "evidence": "'Administrative license suspension', 'arraignment', and 'discovery' are defined inline, but 'suppression motions' and 'constitutional challenges' appear without inline definitions in the 'Do not try to represent yourself' bullet."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "PASS",
+            "evidence": "TLDRBox before the first H2 contains 'Your Next Step: Check the paperwork you received when you were released. Find the DMV hearing deadline' — concrete, under 5 minutes, no attorney/computer required, formatted as an immediate-action block."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Closing gives one clear default ('Start with the DMV deadline. Everything else follows from there') and decision points consistently lead with a recommended action rather than presenting unranked options."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "FAIL",
+            "evidence": "The 'Write everything down' section contains an 11-item unranked bulleted list (where you were, what you consumed, route, officer's words, reason for stop, every field sobriety test, demonstration, station events, Miranda, badge numbers, anything unusual) with no 'start with these' priority marker."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "timeline-post — chronological structure with deadlines organized by 6 hours, 24 hours, 48-72 hours, and timeline ahead."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every threat is paired with action within 2 sentences — e.g., 'your license is automatically suspended. No exceptions' is followed by 'Find the deadline. Mark it on your calendar', and no section closes on fear without a paired action."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language — no 'you should have' or 'if you had' patterns; person is consistently separated from situation ('You are going to get through this')."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Arc is present (validation → explanation → 'You are going to get through this. Start with the DMV deadline'), but the final content in the post is a generic CTA block ('Ready to See What's In Your Case?') rather than ending on the agency statement."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "FAIL",
+            "evidence": "The H2 'The First 6 Hours After Release' section runs well over 900 words across three H3 subsections before the next H2, exceeding the 600-word ceiling; 'The First 24 Hours' and 'The First 48-72 Hours' sections similarly exceed 600 words."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "NEEDS_WORK",
+            "evidence": "Each H2 contains multiple bolded screenshot-worthy sentences rather than exactly one — e.g., 'The First 6 Hours' has three ('Write it down tonight...', 'Back up your phone...', 'One social media post can undo...'); sentences are high quality and shareable, but the count exceeds one per H2."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All five FAQ answers start with the direct answer (no preamble), run 3-5 sentences, and read in peer-support voice ('Write down everything you remember', 'Most states give you 7 to 15 days', 'Check your employment contract and company handbook first')."
+          }
+        ]
+      }
     }
   }
 }

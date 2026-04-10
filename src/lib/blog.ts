@@ -11,6 +11,12 @@
  *   - Listing all posts sorted by date (newest first)
  *   - Looking up individual posts by slug (filename without .mdx)
  *   - Finding related posts by shared category or overlapping tags
+ *   - Tiered gate enforcement on .qa-state sidecar files:
+ *       SAFETY gates (humanizer, anti-hallucination) block rendering — posts
+ *       with fabricated data or AI-pattern detection failures never reach readers.
+ *       QUALITY gates (slop, UPL, DNA) are tracked and logged but non-blocking,
+ *       enabling progressive quality improvement without killing the blog.
+ *     Run `node scripts/qa-existing-post.mjs --all` to rebuild sidecar state.
  *
  * Frontmatter schema (all optional with defaults):
  *   - title: string (defaults to slug)
@@ -22,6 +28,17 @@
  *
  * The blog directory is resolved from process.cwd() (the Next.js project root),
  * not from __dirname, so it works correctly in both dev and production.
+ *
+ * QA gate environment variables:
+ *   - BLOG_QA_BYPASS=1  Local dev only — allow all posts through without gate
+ *                       enforcement. Logs a loud warning. Never set in prod.
+ *
+ * LLM gates run via `scripts/lib/blog-gen/claude-client.mjs`, which spawns
+ * `claude -p` under the local Claude Code CLI auth — no Anthropic API credits
+ * are consumed. Safety gates must pass for rendering; quality gates log
+ * warnings but don't block. Rebuild sidecars with:
+ *
+ *     node scripts/qa-existing-post.mjs --all
  */
 
 import fs from "fs";
@@ -31,6 +48,162 @@ import readingTime from "reading-time";
 
 /** Absolute path to the blog content directory. */
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
+
+/** Absolute path to the QA sidecar state directory. */
+const QA_STATE_DIR = path.join(BLOG_DIR, ".qa-state");
+
+/**
+ * Ordered list of the 5 QA gate names. Must match the order used by
+ * scripts/qa-existing-post.mjs and the sidecar JSON schema.
+ */
+const QA_GATE_NAMES = [
+  "humanizer",
+  "anti_hallucination",
+  "slop",
+  "upl",
+  "dna",
+] as const;
+
+/**
+ * Safety gates — must pass for a post to render. These catch content that
+ * could directly harm defendants (fabricated legal data, AI-pattern detection).
+ *
+ * Quality gates (slop, upl, dna) are tracked in the sidecar and logged as
+ * warnings but do NOT block rendering. This allows progressive quality
+ * improvement without killing the blog.
+ *
+ * To tighten: move gate names from QUALITY_GATES into SAFETY_GATES once
+ * all posts pass them.
+ */
+const SAFETY_GATES: readonly QaGateName[] = [
+  "humanizer",
+  "anti_hallucination",
+] as const;
+
+const QUALITY_GATES: readonly QaGateName[] = [
+  "slop",
+  "upl",
+  "dna",
+] as const;
+
+type QaGateName = (typeof QA_GATE_NAMES)[number];
+
+interface QaGateRecord {
+  /** True if the gate returned a definitive pass. */
+  passed: boolean;
+  /**
+   * `"checked"` — gate actually ran to completion.
+   * `"unchecked"` — gate could not run (claude -p subprocess error, timeout,
+   * parse error, etc.). Always paired with a `reason`.
+   */
+  status?: "checked" | "unchecked";
+  /** Free-text reason when `status === "unchecked"`. */
+  reason?: string;
+}
+
+interface QaSidecar {
+  slug: string;
+  last_checked: string;
+  all_passed: boolean;
+  gates: Partial<Record<QaGateName, QaGateRecord>>;
+}
+
+/** In-process cache so we parse each sidecar JSON at most once per boot. */
+const qaSidecarCache = new Map<string, QaSidecar | null>();
+
+/** Loud-warning tracker so we don't spam identical log lines. */
+const qaWarningsEmitted = new Set<string>();
+
+function readQaSidecar(slug: string): QaSidecar | null {
+  if (qaSidecarCache.has(slug)) return qaSidecarCache.get(slug) ?? null;
+
+  const filePath = path.join(QA_STATE_DIR, `${slug}.json`);
+  if (!fs.existsSync(filePath)) {
+    qaSidecarCache.set(slug, null);
+    return null;
+  }
+
+  try {
+    const raw = fs.readFileSync(filePath, "utf-8");
+    const parsed = JSON.parse(raw) as QaSidecar;
+    qaSidecarCache.set(slug, parsed);
+    return parsed;
+  } catch {
+    qaSidecarCache.set(slug, null);
+    return null;
+  }
+}
+
+function warnOnce(key: string, message: string): void {
+  if (qaWarningsEmitted.has(key)) return;
+  qaWarningsEmitted.add(key);
+   
+  console.warn(message);
+}
+
+/**
+ * Returns `true` if a post is safe to render under the current QA policy.
+ *
+ * Tiered enforcement:
+ *   1. BLOG_QA_BYPASS=1 → always allow (dev only, logs a warning).
+ *   2. No sidecar file → block (post was never audited).
+ *   3. All SAFETY_GATES pass (checked + passed) → allow.
+ *   4. Otherwise → block (logs failing safety gates).
+ *
+ * Quality gates (slop, upl, dna) are logged as warnings when they fail
+ * but do NOT block rendering. This allows progressive quality improvement.
+ */
+function isAllowedUnderQaPolicy(slug: string): boolean {
+  if (process.env.BLOG_QA_BYPASS === "1") {
+    warnOnce(
+      "bypass",
+      "[blog-qa] WARNING: BLOG_QA_BYPASS=1 — every post is rendering without gate enforcement. Dev use only."
+    );
+    return true;
+  }
+
+  const sidecar = readQaSidecar(slug);
+  if (!sidecar) {
+    warnOnce(
+      `missing:${slug}`,
+      `[blog-qa] BLOCKED: ${slug} — no .qa-state sidecar. Run: node scripts/qa-existing-post.mjs content/blog/${slug}.mdx`
+    );
+    return false;
+  }
+
+  // All gates pass — no warnings needed.
+  if (sidecar.all_passed === true) return true;
+
+  // Check safety gates — these block rendering.
+  const failingSafetyGates = SAFETY_GATES.filter((name) => {
+    const g = sidecar.gates[name];
+    if (!g) return true;
+    return g.passed !== true || g.status !== "checked";
+  });
+
+  // Log quality gate warnings (non-blocking).
+  const failingQualityGates = QUALITY_GATES.filter((name) => {
+    const g = sidecar.gates[name];
+    if (!g) return true;
+    return g.passed !== true || g.status !== "checked";
+  });
+  if (failingQualityGates.length > 0) {
+    warnOnce(
+      `quality:${slug}`,
+      `[blog-qa] QUALITY: ${slug} — failing quality gates: ${failingQualityGates.join(", ")} (non-blocking)`
+    );
+  }
+
+  if (failingSafetyGates.length > 0) {
+    warnOnce(
+      `fail:${slug}`,
+      `[blog-qa] BLOCKED: ${slug} — failing safety gates: ${failingSafetyGates.join(", ")}`
+    );
+    return false;
+  }
+
+  return true;
+}
 
 // ============================================================
 // TYPES
@@ -72,8 +245,11 @@ export interface BlogPost {
  * Returns all blog posts sorted by date (newest first).
  *
  * Reads every .mdx file from the blog directory, parses frontmatter,
- * computes reading time, and sorts descending by date. Returns an empty
- * array if the blog directory does not exist (e.g., fresh clone without content).
+ * computes reading time, and sorts descending by date. Posts that have not
+ * passed every QA gate are filtered out — see the QA gate environment
+ * variable documentation at the top of this file for override policy.
+ * Returns an empty array if the blog directory does not exist (e.g., fresh
+ * clone without content).
  *
  * @returns Array of all blog posts, newest first.
  */
@@ -96,14 +272,19 @@ export function getAllPosts(): BlogPost[] {
  * Retrieves a single blog post by its slug (filename without .mdx extension).
  *
  * Parses the MDX file's frontmatter with gray-matter and computes reading
- * time. Missing frontmatter fields fall back to sensible defaults.
+ * time. Missing frontmatter fields fall back to sensible defaults. Hard-gated
+ * on the .qa-state sidecar — returns null for any post that is not allowed
+ * under the current QA policy (see `isAllowedUnderQaPolicy`).
  *
  * @param slug - The URL slug / filename stem (e.g., "motion-deadlines").
- * @returns The parsed blog post, or null if the file does not exist.
+ * @returns The parsed blog post, or null if the file does not exist or is
+ *   blocked by the QA gate.
  */
 export function getPostBySlug(slug: string): BlogPost | null {
   // Validate slug to prevent path traversal
   if (!/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(slug) && !/^[a-z0-9]$/.test(slug)) return null;
+
+  if (!isAllowedUnderQaPolicy(slug)) return null;
 
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
 

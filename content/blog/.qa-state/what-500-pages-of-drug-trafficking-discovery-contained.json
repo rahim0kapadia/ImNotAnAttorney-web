@@ -1,6 +1,6 @@
 {
   "slug": "what-500-pages-of-drug-trafficking-discovery-contained",
-  "last_checked": "2026-04-09T21:47:43.739Z",
+  "last_checked": "2026-04-10T02:29:01.001Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,9 +34,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "All numbers (93.9g, 25.59g, 68.3g, 73%, 21 fingerprints, 500 pages) are case-specific narrative facts internal to the documented case, not population-level statistical claims requiring external sourcing"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "The only sentencing claim 'Mandatory minimum: 3 years in state prison' is explicitly qualified with 'in Florida' in the preceding sentence"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

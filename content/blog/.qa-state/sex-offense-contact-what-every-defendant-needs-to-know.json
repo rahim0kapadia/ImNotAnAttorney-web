@@ -1,6 +1,6 @@
 {
   "slug": "sex-offense-contact-what-every-defendant-needs-to-know",
-  "last_checked": "2026-04-09T21:47:42.556Z",
+  "last_checked": "2026-04-10T02:24:24.616Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,8 +35,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 2,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "FAIL",
+            "evidence": "Post cites '18 U.S.C. § 2244' for abusive sexual contact and 'Federal Rule of Evidence 412' for rape shield — specific federal statute/rule numbers that were not verified in-session."
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "Unsourced numeric claims including 'ages of consent 16 to 18', 'Tier I 15 years', 'Tier II 25 years', 'up to 1 year in county jail', '2 to 15 years', '5 to 25 years', '10 years to life', and '$50,000 or more in legal fees' appear without named sources."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "FAIL",
+            "evidence": "'Your defense attorney must file a written motion and argue the issue in a hearing outside the jury's presence before any such evidence can be introduced' is stated as a bare universal procedural rule without a jurisdiction qualifier."
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "Only 'Miranda warnings' appears, which is on the allowed terminology list; no other case citations."
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "FAIL",
+            "evidence": "SORNA registration periods are stated as universal facts ('Tier I ... 15 years', 'Tier II ... 25 years', 'Tier III ... Lifetime registration') without qualification that state implementations vary."
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

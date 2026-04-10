@@ -1,6 +1,6 @@
 {
   "slug": "field-sobriety-test-standards",
-  "last_checked": "2026-04-10T00:11:42.121Z",
+  "last_checked": "2026-04-10T02:46:12.603Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -15,9 +15,9 @@
           {
             "detector": "em_dash_density",
             "severity": "style",
-            "count": 33,
+            "count": 32,
             "matches": [
-              "33 em dashes in 3335 words"
+              "32 em dashes in 3298 words"
             ],
             "points_added": 10
           }
@@ -25,24 +25,283 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "All statistics (77%, 68%, 65%, 82%, 18%, 38 medical conditions) are attributed to NHTSA HS 178 R2/06 or NHTSA generally"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Refusal claim qualified with 'In most states' and 'in many jurisdictions'; NHTSA standards are federal agency protocols, not jurisdiction-specific procedural deadlines"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 11,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "QUESTION_COUNT"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "FAIL",
+            "reason": "Frontmatter has no question_count field, but body contains ~9 attorney-directed questions (2 inline 'ask your attorney' prompts plus 7 numbered questions) that should be declared."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "All accuracy stats and factual claims cite NHTSA HS 178 R2/06 inline; 38-medical-conditions claim is sourced; no unsourced factual claims detected."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('write down', 'copy these questions', 'ask your attorney'); technical terms like HGN and nystagmus are defined on first use."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the flagged cliches ('tip of the iceberg', 'game changer', 'wake-up call', etc.) appear in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Second person 'you/your' is used consistently; brief third-person references to 'people over 65' or 'the subject' describe general populations, not the reader, and never exceed 2 consecutive sentences."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Active voice dominates throughout; passive constructions appear in procedural descriptions but well under the 30% threshold."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "'Probable cause' and 'suppression motion' are used multiple times in the final sections without inline definition, though suppression motion is linked to another post."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Logical flow: problem (accuracy failure) -> context (three tests + deviations) -> evidence (dashcam) -> stakes (case impact) -> action (CTAs and questions); no orphaned paragraphs."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple clear CTAs: 7 numbered attorney questions, Case Progress Score link, DUI Defense Playbook link, and specific recall exercises throughout."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct imperatives ('Write down', 'Copy these', 'Ask your attorney'); hedging language appears in informational claims about accuracy, which is appropriate."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words; action paragraphs stay well under 100 words; bullet lists break up longer explanatory sections."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "NEEDS_WORK",
+            "reason": "'The Three Standardized Tests' section (HGN, Walk-and-Turn, One-Leg Stand combined) likely approaches or exceeds 50% of total word count, though H3 subsections provide visual balance."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat (failed tests, arrest cascade, BAC admission) is immediately paired with a specific action — ask attorney about dashcam, write down conditions, copy the 7 questions."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong hook (77% stat + highway scenario), evidence-heavy middle (3 tests + dashcam contradictions), empowering close (suppression cascade + specific CTAs)."
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 9,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Directives appear repeatedly: 'Write down any medications you take...', 'Copy these seven questions into a text message to yourself right now', 'Write down three things you remember about how your field sobriety tests were administered'"
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each major section includes an attorney redirect, e.g., 'Ask your attorney whether they've compared the dashcam...' and 'Give this list to your attorney'"
+          },
+          {
+            "criterion": "U3",
+            "result": "FAIL",
+            "evidence": "Post evaluates reader's specific situation: 'If any of the three deviate from what NHTSA requires, you have a question your attorney needs to answer. Five minutes of recall could be the foundation of your defense.'"
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Post recommends suppression motions as a path: 'A suppression motion based on FST administration errors doesn't just challenge the test results' and frames it as the cascade that unravels the case"
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, so immigration-specific redirect is not required"
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Accuracy statistics and NHTSA standards are attributed to 'NHTSA HS 178 R2/06' and the DWI Detection and Standardized Field Sobriety Testing Manual"
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "No specific bail bond companies, law firms, or legal service providers are named with recommendations; only generic 'licensed DUI attorney'"
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "No instances of 'we recommend,' 'we advise,' or 'we suggest' appear in legal-action contexts; 'What We Do' section describes service without first-person recommendations"
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Vivid hypothetical scenarios are presented without hypothetical labels: 'You're standing on the shoulder of a highway. It's 11:47 PM...' and 'At thirty-two seconds the officer writes put foot down on the clipboard' read as real facts"
+          },
+          {
+            "criterion": "U10",
+            "result": "FAIL",
+            "evidence": "Closing line frames reader recall as defense foundation: 'Five minutes of recall could be the foundation of your defense' implies the reader's own work can drive the case"
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Qualifiers appear throughout: 'In most states,' 'Consequences vary by state,' 'admissibility rules vary by state,' and 'in many jurisdictions'"
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "Outcome cascade stated without variation qualifier: 'No valid FSTs means no probable cause for arrest. No probable cause means no lawful basis for the breath test. The BAC result gets excluded too.'"
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Strategies attributed to NHTSA manual (HS 178 R2/06), 'experienced DUI defense attorneys,' and 'elite DUI defenders' rather than presented as the blog's own legal opinion"
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims; accuracy statistics (77%, 68%, 65%, 82%) are consistent and reconcile with the 18% false positive framing"
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Products framed as research tools: 'We review DUI arrest reports... to identify exactly where officers deviated' and 'give you the specific questions and evidence points to bring to your attorney'"
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 12,
+        "needs_work_count": 4,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening names the fear ('The officer says you failed... You're unsteady') but H2s 'The 77% Problem', 'The Three Standardized Tests', and 'Why This Matters for Your Case' are topical rather than action-oriented."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Legal terms like HGN, nystagmus, and suppression motion are defined inline on first use; paragraphs stay within 4 sentences."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No immediate-action block appears before the first H2 'The 77% Problem' — the opening is narrative/statistical with the first concrete action buried inside the HGN subsection."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each decision point leads with a default: 'Ask your attorney one question...', 'the next thing that needs to happen in your case — today', and the cascade framing names a clear lead action."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "FAIL",
+            "evidence": "The 'Questions to ask your attorney' list contains 7 unranked items, and the 'What officers get wrong' bullet lists under HGN, Walk-and-Turn, and One-Leg Stand each have 5 unranked items."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "system-decoder-post — decodes the NHTSA FST system by explaining what officers are supposed to do vs. what they actually do."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every scary statistic is paired with action within 2 sentences (e.g., 18% false positive rate is followed by 'Ask your attorney one question...'); sections close on actions, not threats."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "No blame language — the post consistently frames the reader as someone the system failed, with lines like 'not from alcohol, but because an armed stranger is watching you' separating person from situation."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening validates fear and middle reduces unknown to known, but the final sentence before 'What We Do' is an agency statement, while the actual closing is a CTA block ('Not sure where your DUI case stands?')."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "NEEDS_WORK",
+            "evidence": "Only H2/H3 used and no wide tables, but the 'Test 1: Horizontal Gaze Nystagmus' section runs long with dense bullet lists that likely exceed 500 words before the next H3."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Each H2 section contains a bolded standalone sentence under 27 words (e.g., 'The dashcam doesn't have a quota, doesn't need to justify the arrest, and doesn't write its report from memory three hours later — it just shows what happened.')."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "FAQ answers lead with direct answers and avoid preamble, but the first and third answers run 4-5 sentences and edge toward institutional explanation rather than support-group voice."
+          }
+        ]
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "slug": "professional-license-risk-criminal-charge",
-  "last_checked": "2026-04-09T21:47:42.124Z",
+  "last_checked": "2026-04-10T02:21:40.437Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,9 +25,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — post contains no statute numbers, USC references, or § symbols; only organizational references (FINRA, NPDB, NASDTEC) which are databases/bodies, not statutes"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — no individual attorneys or legal scholars named anywhere in the post"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — post contains no percentages, counts, or rates; time windows are procedural and handled under PROCEDURE_CHECK"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "all procedural deadlines are qualified: 'Nursing boards typically require... within 30 days', 'Most states require', 'Some teaching boards require 48 hours', 'often within 30 days', and FINRA/Form U4 explicitly labeled 'a federal requirement'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — no 'v.' citations or case names appear in the post"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "collateral consequences are qualified with 'may trigger mandatory license suspension', 'can have catastrophic consequences', 'An arrest alone can trigger', 'depends on the board's specific rules' — no universal fact claims"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

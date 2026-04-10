@@ -1,6 +1,6 @@
 {
   "slug": "how-to-prepare-for-bail-hearing",
-  "last_checked": "2026-04-10T00:14:35.558Z",
+  "last_checked": "2026-04-10T01:53:35.633Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,9 +25,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Only statute referenced is the 'Bail Reform Act of 1984' — a real, well-known federal statute correctly described. No bare § numbers or fabricated statute references appear anywhere in the post."
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney, legal scholar, or named legal expert appears anywhere in the post. All references are to roles ('public defender', 'prosecutor', 'judge') not named individuals."
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "All numbers in the post are narrative/illustrative ('six minutes', '$50,000 vs $10,000', 'forty-one names', 'seventeen hours') or product pricing ('$97') — none are factual statistical claims requiring sourced attribution."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Every procedural claim is jurisdiction-qualified: 'within 24 to 48 hours of arrest in most jurisdictions', 'each state writes its own rules', 'depending on jurisdiction', 'in this county'. Federal references correctly scoped to the Bail Reform Act."
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear anywhere in the post. The Bail Reform Act is a statute reference, not a case citation."
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "Post discusses only direct bail outcomes (detention vs. release, bail amounts, conditions of release) — no collateral-consequence claims about licensing, voting, housing, firearms, or employment appear."
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

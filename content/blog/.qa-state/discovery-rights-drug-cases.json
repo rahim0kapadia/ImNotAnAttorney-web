@@ -1,14 +1,14 @@
 {
   "slug": "discovery-rights-drug-cases",
-  "last_checked": "2026-04-10T00:08:21.603Z",
+  "last_checked": "2026-04-10T02:32:00.488Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
       "passed": true,
       "status": "checked",
-      "score": 20.6,
+      "score": 20.7,
       "details": {
-        "composite_score": 20.6,
+        "composite_score": 20.7,
         "pattern_score": 10,
         "uniformity_score": 45.5,
         "flagged_patterns": [
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 39,
             "matches": [
-              "39 em dashes in 2234 words"
+              "39 em dashes in 2235 words"
             ],
             "points_added": 10
           }
@@ -25,24 +25,283 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "The only statistic '73% weight discrepancy' is sourced as '(INAA case review, 2026)'; other quantifiers use general language like 'huge percentage' and 'one of the most common'"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "Only 'Brady v. Maryland' appears, which is explicitly listed in the allowed terminology exceptions; 'Franks hearing' is used as a procedural term of art, not in v.-form citation format"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 11,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "QUESTION_COUNT"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "FAIL",
+            "reason": "Frontmatter has no question_count field to match against; body contains roughly 7 attorney-directed questions so the field is missing entirely"
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "NEEDS_WORK",
+            "reason": "Brady v. Maryland is cited but claims like 'Brady violations are one of the most common reasons cases get overturned,' 'field tests produce false positives for doughnut glaze to vitamins,' and 'CIs used in a huge percentage of drug cases' lack inline sources"
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('Ask directly,' 'Write down,' 'Open the notes app') and legal terms like Franks hearing are defined immediately in plain English"
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "Only one flagged cliche ('double-edged sword') appears in roughly 100+ sentences, well under the 2% threshold"
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Second person 'you/your' is used consistently throughout with no drift to 'the defendant' or 'one should'"
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Active voice dominates; passive constructions appear in evidence-handling descriptions but stay well under 30% of sentences"
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "'Motion to Compel,' 'probable cause,' and 'exculpatory evidence' are used without explicit first-use definitions, though Franks hearing and CI are defined inline"
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Sections flow logically from problem (what discovery is) to context (what should be in it) to solution (red flags) to action (what you can do)"
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Post has multiple clear CTAs including Case Decoder checkout link, Case Progress Score link, and a specific four-question framework to ask the attorney"
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct imperatives ('Ask directly,' 'Text your attorney'); hedging with 'can' appears only on informational statements about attorney capabilities"
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs appear under 300 words and action-oriented paragraphs stay under 100 words"
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "'What You Should Be Asking For' is the largest section at roughly 45% of total word count, just under the 50% dominance threshold"
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Threats like 'lock you up,' 'run out the clock,' and 'severe consequences' are each followed within 2 sentences by specific actions (text the attorney, ask the four questions, file motion to compel)"
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with a 1 AM scenario hook, builds the case with Brady plus five discovery categories plus lab weight example, and closes with an empowering four-step framework"
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 5,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Contains directives like 'Right now, text or email your attorney one sentence' and 'Open the notes app on your phone. Write the five discovery categories below' framed as commands to the reader."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each decision-action section directs the reader to their attorney (e.g., 'Ask your attorney this week', 'your attorney can request a Franks hearing')."
+          },
+          {
+            "criterion": "U3",
+            "result": "FAIL",
+            "evidence": "States 'If your attorney can do all four, you're probably in good hands' — a judgment about the reader's specific situation."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Recommends specific procedural steps: 'your attorney should be filing a Motion to Compel' and 'your attorney can request a Franks hearing' presented as actions that should be taken."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, so no immigration redirect is required."
+          },
+          {
+            "criterion": "U6",
+            "result": "FAIL",
+            "evidence": "Mentions 'mandatory minimum' tied to trafficking weight and Fourth Amendment protections without attributing to specific statutes or official sources."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Only cites Brady v. Maryland (a Supreme Court case) and uses general categories like 'your attorney' — no specific law firms or companies recommended."
+          },
+          {
+            "criterion": "U8",
+            "result": "FAIL",
+            "evidence": "Uses 'We research your case and hand you the exact questions' and 'we think you should too' in a legal-action context at the end of the post."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Uses second-person narrative scenarios like 'You're lying awake at 1 AM, replaying the arrest' and 'Your attorney is sitting across from you at a table' without labeling them as hypothetical."
+          },
+          {
+            "criterion": "U10",
+            "result": "FAIL",
+            "evidence": "Framing like 'the willingness to ask questions nobody expects you to ask' and 'You don't need a law degree' pushes reader self-action rather than attorney-mediated handling."
+          },
+          {
+            "criterion": "U11",
+            "result": "FAIL",
+            "evidence": "States legal rules as certainties without qualifiers, e.g., 'The Fourth Amendment protects you from unreasonable searches and seizures' and 'This isn't optional. It's a constitutional right' without 'in general' or 'typically' qualifiers."
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "Claims 'In one documented case, a 73% weight discrepancy between field test and lab results changed the entire defense strategy' implying outcome without jurisdiction/circumstance qualification."
+          },
+          {
+            "criterion": "U13",
+            "result": "FAIL",
+            "evidence": "Strategies like challenging chain of custody, Franks hearings, and CI identity disclosure are described without attribution to named cases, statutes, or scholars beyond Brady v. Maryland."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims appear within the post."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Product CTA frames Case Decoder as 'We research your case and hand you the exact questions' — research/preparation tool, not attorney substitute, and closes with 'We're not your lawyers.'"
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 8,
+        "checks_total": 12,
+        "needs_work_count": 3,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening 'Let's talk about discovery' starts with a topical framing rather than naming the reader's fear; H2s 'What Is Discovery?' and 'What You Should Be Asking For' are topical rather than action-oriented."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Legal terms defined inline (Brady v. Maryland, CI, Franks hearing); paragraphs stay within 4 sentences and language is accessible."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No immediate-action block appears before the first H2 'What Is Discovery?' — the first concrete action ('text or email your attorney one sentence') is buried inside the first section."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each decision point leads with a default recommendation (e.g., 'Ask your attorney this week: What discovery have you received' and the 4-step framework starting with 'Ask what discovery has been received')."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "NEEDS_WORK",
+            "evidence": "Red Flags section has 5 unranked warning signs without 'start with these' priority markers; other lists stay within 4 items."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "system-decoder-post — decodes the discovery process and what should be in the file, with red flags for when the system is failing."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Each threat is paired with action: 'Brady violations are one of the most common reasons cases get overturned...someone has to catch it first. That someone should be your attorney.'"
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "No blame language; reader is consistently separated from situation, no 'you should have' patterns, and entrapment framing is neutral ('Did the CI initiate the transaction, or did you?')."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening is topical rather than emotionally validating; middle/closing deliver agency well but final line 'We're not your lawyers. But we know what questions to ask, and we think you should too.' works as agency though preceded by generic CTAs."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "Only H2/H3 used, no tables, key insights bolded; sections stay within length budget with H3 subsections breaking up 'What You Should Be Asking For'."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Each H2 has a bolded standalone screenshot line under 27 words (e.g., 'Discovery isn't a courtesy from the prosecution — it's a constitutional right, and exercising it is the first real move in your defense.' and 'You have the right to see every piece of evidence being used to prosecute you — exercising that right is not being difficult, it's being smart.')"
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All three FAQ answers lead with direct answers ('Yes', 'Discovery is', 'Ask directly'), stay within 2-4 sentences, and read as peer voice not institutional."
+          }
+        ]
+      }
     }
   }
 }

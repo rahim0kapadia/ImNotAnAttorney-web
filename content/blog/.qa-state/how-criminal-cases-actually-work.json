@@ -1,6 +1,6 @@
 {
   "slug": "how-criminal-cases-actually-work",
-  "last_checked": "2026-04-10T00:12:56.528Z",
+  "last_checked": "2026-04-10T02:37:09.135Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,8 +35,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'In state systems, the number is between 90-95%' and 'trial (for the 3-10% that get there)' appear without named sources; only the 97% federal figure is attributed to Bureau of Justice Statistics"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "FAIL",
+            "evidence": "'Usually within 24-72 hours of arrest, you appear before a judge' and 'Sentencing typically occurs 30-90 days after conviction' are stated as bare universal timelines without 'in most states' or a specific jurisdiction qualifier"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

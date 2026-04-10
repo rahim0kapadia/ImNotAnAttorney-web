@@ -1,6 +1,6 @@
 {
   "slug": "what-to-expect-at-sentencing-hearing",
-  "last_checked": "2026-04-09T21:47:44.409Z",
+  "last_checked": "2026-04-10T02:43:16.988Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,9 +25,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Procedural claims are qualified with 'in most jurisdictions', 'in the federal system', 'State systems vary widely', and similar jurisdiction qualifiers"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "Collateral consequences listed as questions ('registration, immigration, professional licensing, voting rights, firearms, housing') without stating any as universal fact"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

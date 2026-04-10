@@ -1,6 +1,6 @@
 {
   "slug": "feels-like-lawyer-working-against-me",
-  "last_checked": "2026-04-10T00:11:17.330Z",
+  "last_checked": "2026-04-10T02:46:45.701Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,23 +26,284 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'An attorney with 80-100 active cases spends an average of 2-3 hours per case per month' is stated as a factual claim with no named source"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "FAIL",
+            "evidence": "'You have the legal right to a copy of your complete case file — discovery, correspondence, notes, everything' is stated as a bare universal rule without a jurisdiction qualifier"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 11,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "QUESTION_COUNT",
+          "CITATION_SOURCING",
+          "JARGON_DEFINITION"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "FAIL",
+            "reason": "Frontmatter has no question_count field at all, so it cannot match the ~7 attorney-directed questions in the body."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "FAIL",
+            "reason": "Key statistics ('80-100 active cases', '2-3 hours per case per month', 'reviewing hundreds of cases') are presented as facts with no inline source, study, or expert attribution."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain imperative language ('Send your attorney an email', 'Search your court's online portal') without unexplained jargon."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the flagged cliches ('tip of the iceberg', 'slippery slope', 'game changer', etc.) appear in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Post stays in second person throughout; the one third-person reference ('defendants who ask hard questions') is a single sentence, not a sustained voice shift."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Overwhelming majority of sentences use active voice; passive constructions are well under 30%."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "FAIL",
+            "reason": "Motion, discovery, continuance, and plea are used repeatedly as load-bearing terms without ever being defined on first use."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Flow moves logically from 'Why It Happens' to 'Warning Signs' to 'What to Do About It' to emotional closing, with no orphaned paragraphs."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Closing links to the free /score Case Progress Score plus multiple concrete next-step actions (email questions, check docket, request file)."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct imperatives; hedging is confined to information statements where it belongs."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs are well under 300 words, and action-oriented paragraphs stay under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Word count is distributed across Why It Happens, Warning Signs, What to Do, and The Hardest Part — no single section approaches 50%."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Each threat (overloaded attorney, manufactured urgency, unauthorized agreements, empty docket) is immediately followed by a specific reader action within 1-2 sentences."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with a vivid courthouse-hallway hook, builds evidence through reasons and warning signs, and closes by empowering the reader with a five-minute action."
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 5,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Post contains multiple directives like 'Send your attorney an email right now stating...', 'Search your attorney's name on the court's online docket', and 'Pick one action from this article and do it today' — commands to follow without attorney guidance."
+          },
+          {
+            "criterion": "U2",
+            "result": "FAIL",
+            "evidence": "Sections like 'What to Do About It' and 'The Warning Signs' discuss legal decision-actions (firing attorney, requesting file, bar complaint) without proximate attorney redirects — only a footer disclaimer appears."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post discusses warning signs generally without evaluating the reader's specific case merits or predicting outcomes for their situation."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Post recommends specific procedural actions: 'Send a written request for your complete case file via email today' and 'Email these four questions to your attorney right now' — procedural steps recommended as reader actions."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, so the immigration-specific redirect requirement does not trigger."
+          },
+          {
+            "criterion": "U6",
+            "result": "FAIL",
+            "evidence": "Claims like 'You have the legal right to a copy of your complete case file' and 'Every agreement your attorney makes on your behalf must be authorized by you first' are stated as legal rights without citing any bar rule, statute, or official source."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Post uses only general categories ('your attorney', 'the prosecutor', 'a criminal defense attorney') and names no specific firms or companies."
+          },
+          {
+            "criterion": "U8",
+            "result": "FAIL",
+            "evidence": "Post uses first-person plural in legal context: 'This is exactly why we exist. We review your case, analyze what's been done, and tell you — honestly — whether your attorney is performing.'"
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Vivid scenarios like 'You're sitting in the hallway outside the courtroom and your attorney just told you to take the deal' and 'The clerk calls your case number. You stand up.' are presented without hypothetical labels."
+          },
+          {
+            "criterion": "U10",
+            "result": "FAIL",
+            "evidence": "The 'What to Do About It' section gives a 5-step action plan framing the reader as self-managing accountability tasks (email questions, request file, check docket) rather than empowering better attorney collaboration."
+          },
+          {
+            "criterion": "U11",
+            "result": "FAIL",
+            "evidence": "Legal rules stated as certainties without qualification: 'You have the legal right to a copy of your complete case file' and 'Every agreement your attorney makes must be authorized by you first' — no 'in general' or 'in most jurisdictions' qualifiers."
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "Post states 'the defendants who ask hard questions early get better outcomes than the ones who stay quiet' and 'engaged clients get better representation. Every time' — outcome guarantees without jurisdictional qualification."
+          },
+          {
+            "criterion": "U13",
+            "result": "FAIL",
+            "evidence": "Claims like the 80-100 caseload statistic, '2-3 hours per case per month' average, and legal right to case file are presented as the blog's own assertions without attribution to any named source, study, or bar rule."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims are made within the post — descriptions of attorney duties, caseload impacts, and client rights are internally consistent."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Case Progress Score is framed as research tool ('5 minutes to see what's been done, what's missing') and footer states 'We provide research, analysis, and questions to help you work more effectively with your attorney' — not as a substitute for representation."
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 9,
+        "checks_total": 12,
+        "needs_work_count": 2,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening names the fear ('Whose side are you on?') but H2s 'Why It Happens' and 'The Warning Signs' are topical rather than action-oriented."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Short paragraphs throughout, legal concepts like 'continuance' and 'motions' used in context, no paragraph exceeds 4 sentences."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No immediate-action block before the first H2 'Why It Happens' — opening goes straight into narrative and reasons."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each decision point leads with a default ('Start by asking direct questions', 'Ask one question: What specifically changes...')."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "NEEDS_WORK",
+            "evidence": "Step 1 lists 4 unranked direct questions to ask the attorney without a 'start with these' priority marker."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "system-decoder-post — decodes the signs/warning patterns of attorney misconduct into diagnosable categories."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "The 80-100 caseload stat is paired with 'Search your attorney's name on the court's online docket' action within 2 sentences."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "No blame language — reader is consistently separated from the situation; focus is on attorney behavior, not defendant judgment."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "PASS",
+            "evidence": "Opens validating the fear ('Whose side are you on?'), middle decodes causes, closes on agency: 'The uncertainty shrinks the moment you start gathering facts.'"
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "Only H2/H3 heading levels used, no tables, key actions bolded, sections roughly within 300-500 word range."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Every H2 section contains bolded standalone sentences under 27 words (e.g., 'An attorney who never files motions isn't respected by the court — they're convenient for the court.')."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All 3 FAQ answers start with direct answers, are 3-4 sentences, and read naturally as peer support replies, not institutional voice."
+          }
+        ]
+      }
     }
   }
 }

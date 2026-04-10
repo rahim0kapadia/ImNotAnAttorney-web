@@ -1,6 +1,6 @@
 {
   "slug": "how-to-prepare-for-sentencing",
-  "last_checked": "2026-04-10T00:15:00.541Z",
+  "last_checked": "2026-04-10T02:39:21.158Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,9 +34,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Only cites 18 U.S.C. § 3553(a), a real federal sentencing statute, with a Cornell LII verification link"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorneys or legal scholars named; only references U.S. Sentencing Commission (agency, allowed) and generic 'experienced federal judges'"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "The one concrete statistic 'approximately 50% of federal cases' is sourced to the U.S. Sentencing Commission annual sourcebook with a link; other numbers are recommendations (5-10 letters, 3-4 weeks) not factual claims"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Procedural claims are jurisdiction-qualified: 'In most jurisdictions, you have the right to address the judge,' 'In federal cases and many state cases, a probation officer writes a presentence report,' and 'most state equivalents mandate'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

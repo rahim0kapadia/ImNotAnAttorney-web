@@ -1,6 +1,6 @@
 {
   "slug": "questions-to-ask-public-defender",
-  "last_checked": "2026-04-09T21:47:42.345Z",
+  "last_checked": "2026-04-10T02:22:54.898Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,8 +35,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "No statute numbers appear; references use general language like 'some states give you 10 days'"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorneys or legal scholars named; only source agencies (Bureau of Justice Statistics, American Bar Association)"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'200–400+ cases per attorney' and '300 cases' and '350' caseload numbers appear without a named source in the same or preceding sentence"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "DMV hearing deadline is qualified with 'some states give you 10 days' and 'many states have a 10-day DMV hearing deadline'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear in the post"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "No collateral consequences (licensing, housing, firearms, voting, immigration) are claimed"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

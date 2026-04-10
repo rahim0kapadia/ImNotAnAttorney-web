@@ -1,6 +1,6 @@
 {
   "slug": "questions-to-ask-before-hiring-criminal-defense-attorney",
-  "last_checked": "2026-04-09T21:47:42.254Z",
+  "last_checked": "2026-04-10T02:22:21.873Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -44,8 +44,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "Excerpt claims '$5,000-$25,000 to defend your freedom' as a specific dollar range without a named source in the same or preceding sentence; 'Communication breakdowns are the number one source of attorney-client conflict in criminal cases' is also an unsourced ranking claim."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

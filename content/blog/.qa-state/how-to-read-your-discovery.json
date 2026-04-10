@@ -1,6 +1,6 @@
 {
   "slug": "how-to-read-your-discovery",
-  "last_checked": "2026-04-10T00:15:50.960Z",
+  "last_checked": "2026-04-10T01:55:56.526Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,9 +34,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "No statute numbers, § references, or specific code citations appear anywhere in the post. All legal rules are described in general language."
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney or legal scholar names appear. Only the Innocence Project (an organization) is cited, which is permitted."
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "Two statistics appear — '52% of wrongful convictions' and '375+ DNA exonerations' — both attributed to 'Innocence Project' in the same sentence or immediate context."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "No bare procedural deadlines or filing windows stated as universal rules. Discovery rights described generally; suppression language uses 'may be'; CI disclosure uses 'may not... initially.'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear. 'Miranda rights,' 'Mirandized,' and 'Miranda requirements' are listed exceptions functioning as standard legal terminology."
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "No collateral-consequence claims appear. Post focuses entirely on reading discovery documents, with no mentions of licensing, housing, voting, firearms, or immigration consequences."
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

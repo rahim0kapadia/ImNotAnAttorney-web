@@ -1,6 +1,6 @@
 {
   "slug": "is-your-attorney-actually-working-your-case",
-  "last_checked": "2026-04-10T00:16:40.508Z",
+  "last_checked": "2026-04-10T02:40:50.259Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,8 +35,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Only reference is 'ABA Model Rules of Professional Conduct — Rule 1.3 (Diligence) and Rule 1.4 (Communication)' which are real, publicly verifiable professional conduct rules, not fabricated statute numbers"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney or legal scholar names appear; only 'ABA Standing Committee on Professional Discipline' which is an agency/committee, not an individual expert"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "Timeline Reality Check table states specific case-duration ranges ('Misdemeanor 2-6 months', 'Felony (state) 6-18 months', 'Felony (federal) 12-24 months', 'DUI 3-6 months') and retainer range ('probably somewhere between $5,000 and $25,000') without any named source"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "No bare universal procedural deadlines or filing windows are asserted; the 2-week/1-month timelines describe attorney best practices, not jurisdiction-specific court procedures"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear; only 'Miranda rights' which is on the allowed terminology exception list"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "Post focuses on attorney accountability and contains no collateral-consequence claims about licensing, housing, firearms, voting, immigration, or employment"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

@@ -1,6 +1,6 @@
 {
   "slug": "what-to-expect-after-dui-arrest",
-  "last_checked": "2026-04-09T21:47:44.266Z",
+  "last_checked": "2026-04-10T02:42:50.770Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -44,8 +44,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'Most first-offense DUI cases take 3-6 months from arrest to resolution' and 'Some form of probation (usually 6-12 months)' are time-window statistics stated without any named source"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "FAIL",
+            "evidence": "FAQ answer states 'Within the first 7-15 days you need to request a DMV hearing to fight license suspension — miss that deadline and the suspension is automatic' as a universal rule with no 'in most states' or jurisdiction qualifier"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

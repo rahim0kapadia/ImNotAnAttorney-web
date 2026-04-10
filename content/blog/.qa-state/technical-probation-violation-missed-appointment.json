@@ -1,6 +1,6 @@
 {
   "slug": "technical-probation-violation-missed-appointment",
-  "last_checked": "2026-04-09T21:47:43.018Z",
+  "last_checked": "2026-04-10T02:27:04.773Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,8 +26,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'Approximately a third of state prison admissions annually are for probation or parole violations' appears unsourced in 'The Bigger Picture' opening sentence before the later BJS-sourced restatement"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "FAIL",
+            "evidence": "Post cites 'Morrissey v. Brewer and Gagnon v. Scarpelli' in the TLDR and 'Gagnon v. Scarpelli, 1973' in Step 4 — neither is in the allowed terminology exceptions"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

@@ -1,6 +1,6 @@
 {
   "slug": "how-to-read-your-arrest-report",
-  "last_checked": "2026-04-10T00:15:26.244Z",
+  "last_checked": "2026-04-10T01:55:21.068Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,9 +25,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "No statute numbers, section references, or code citations appear anywhere in the post. All legal concepts (probable cause, Miranda, consent, chain of custody) are referenced as general legal terminology without specific statute numbers."
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney or legal scholar names appear. Author is 'ImNotAnAttorney Team.' All techniques are described generically without attribution to named individuals."
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "No factual statistical claims appear. All numbers are either hypothetical scenario details (10:47 PM, 11:34 PM, 47 minutes, 'two beers,' 'three days'), product pricing ($97), or instructional thresholds ('5-minute action,' '24 hours') — none make factual claims requiring sourcing."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Procedural statements are qualified throughout: 'some jurisdictions restrict access while a case is pending,' 'statements...may be suppressed,' 'Gaps in the chain of custody may be challenged.' No bare universal deadlines or filing requirements appear."
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear. 'Miranda' is used only in the excepted forms ('Miranda warnings,' 'Miranda given,' 'Miranda matters') which function as standard legal terminology per the exceptions list."
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "No collateral-consequence claims appear. The post is limited to arrest report analysis — it makes no claims about licensing, housing, firearms, voting, immigration, or employment consequences."
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

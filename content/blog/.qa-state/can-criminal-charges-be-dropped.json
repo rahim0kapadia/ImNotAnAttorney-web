@@ -1,6 +1,6 @@
 {
   "slug": "can-criminal-charges-be-dropped",
-  "last_checked": "2026-04-10T00:00:13.689Z",
+  "last_checked": "2026-04-10T02:02:00.907Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers, section symbols, or specific code references appear anywhere in the post — all legal rules described using general language like 'prosecutorial discretion,' 'speedy trial deadline,' and 'constitutional violations.'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear — the only named source is 'Bureau of Justice Statistics' which is a government agency, not an individual expert."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The only statistic '25-30% of felony arrests do not result in conviction' is sourced to Bureau of Justice Statistics — State Court Processing Statistics in the same sentence"
+            "evidence": "The sole statistic — 'approximately 25-30% of felony arrests do not result in conviction' — is sourced inline to 'Bureau of Justice Statistics — State Court Processing Statistics' and again in the TLDR source line as 'Bureau of Justice Statistics — Felony Defendants in Large Urban Counties, bjs.gov.'"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Procedural claims are qualified with 'many jurisdictions', 'in some jurisdictions', and 'speedy trial deadline' framed generally rather than as bare universal rules"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'many jurisdictions offer diversion programs,' 'in some jurisdictions, defense attorneys can present evidence to the grand jury,' 'some prosecutors offer pre-trial intervention' — no bare universal deadlines or filing requirements appear."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only 'Brady violation' appears, used as accepted legal terminology, not a case citation"
+            "evidence": "No case citations in 'X v. Y' format appear; 'Brady violation' is used as legal terminology (explicitly excepted) and 'Miranda violation' is used as a standard legal term, not a case citation."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear — the post focuses on dismissal mechanics, not conviction consequences."
           }
         ]
       }
@@ -80,78 +80,79 @@
         "checks_passed": 12,
         "checks_total": 14,
         "hard_gate_failures": [
-          "QUESTION_COUNT"
+          "QUESTION_COUNT",
+          "JARGON_DEFINITION"
         ],
         "results": [
           {
             "check": "QUESTION_COUNT",
             "result": "FAIL",
-            "reason": "Frontmatter has no question_count field at all, so it cannot match the ~11 attorney-directed questions in the body"
+            "reason": "Frontmatter has no question_count field; body contains approximately 11 attorney-directed questions with no declared count to validate against."
           },
           {
             "check": "CITATION_SOURCING",
             "result": "PASS",
-            "reason": "Key stat cites BJS State Court Processing Statistics; other claims are general legal principles (prosecutorial discretion, Brady, nolle prosequi) that are self-sourcing"
+            "reason": "The primary statistic (25-30% of felony arrests) is sourced to Bureau of Justice Statistics; remaining content is process description and strategic analysis, not unsourced factual claims."
           },
           {
             "check": "READABILITY",
             "result": "PASS",
-            "reason": "Action items use plain language like 'look up your case', 'write down', 'ask your attorney' with no undefined jargon in directives"
+            "reason": "Action items use plain language ('Email these five questions to your attorney today,' 'Look up your case on your court's online portal right now') well within 10th grade level."
           },
           {
             "check": "CLICHE_DENSITY",
             "result": "PASS",
-            "reason": "None of the flagged cliches appear in the post"
+            "reason": "Zero instances of the flagged cliches (at the end of the day, tip of the iceberg, slippery slope, double-edged sword, game changer, wake-up call) found in the post."
           },
           {
             "check": "VOICE_CONSISTENCY",
             "result": "PASS",
-            "reason": "Consistently uses second person 'you/your' throughout with no drift into 'the defendant' or 'one should'"
+            "reason": "Post maintains second person ('you,' 'your') consistently throughout; third-person references ('the prosecutor,' 'the victim') refer to other parties, not the reader."
           },
           {
             "check": "PASSIVE_VOICE_RATIO",
             "result": "PASS",
-            "reason": "Active voice dominates; occasional passive constructions ('are dismissed', 'was obtained') stay well under 30%"
+            "reason": "Approximately 12-15% of sentences use passive voice ('can be dropped,' 'may be suppressed,' 'can be dismissed'), well under the 30% threshold."
           },
           {
             "check": "JARGON_DEFINITION",
-            "result": "NEEDS_WORK",
-            "reason": "'Arraignment' appears in the timeline table without definition, and 'grand jury indictment' is referenced before its section explains it"
+            "result": "FAIL",
+            "reason": "At least 6 legal terms used without definition on first use: arraignment, Miranda violation, directed verdict, mistrial, discovery, probable cause, continuance, restitution."
           },
           {
             "check": "STRUCTURAL_INTEGRITY",
             "result": "PASS",
-            "reason": "Flows logically from question -> who has power -> reasons -> what doesn't work -> timeline -> action -> bottom line"
+            "reason": "Follows clear problem (intro) → context (who has power) → solution (7 reasons charges drop) → clarification (what doesn't work) → action (what you can do) → CTA (bottom line)."
           },
           {
             "check": "CTA_CLARITY",
             "result": "PASS",
-            "reason": "Multiple clear CTAs: Case Progress Score link, five specific attorney questions to email, and a concrete docket-check action"
+            "reason": "Multiple actionable CTAs: 11 attorney questions, link to Case Progress Score, 'email these five questions today,' links to related posts, and concrete do/don't checklists."
           },
           {
             "check": "HEDGING_DENSITY",
             "result": "PASS",
-            "reason": "Action statements are direct ('ask', 'look up', 'write down', 'delete'); hedging appears mostly on information statements where it belongs"
+            "reason": "Action statements are direct and unhedged ('Ask your attorney,' 'Email these five questions,' 'Delete any social media posts'); hedging appears only in informational context."
           },
           {
             "check": "PARAGRAPH_LENGTH",
             "result": "PASS",
-            "reason": "All paragraphs are short; action paragraphs stay well under 100 words and no paragraph approaches 300"
+            "reason": "No paragraph exceeds 300 words; action-oriented paragraphs are concise, typically 1-3 sentences under 100 words."
           },
           {
             "check": "SECTION_BALANCE",
             "result": "PASS",
-            "reason": "The 'Reasons Charges Get Dropped' section is longest but stays under 50% of total word count given substantial intro, what-doesn't-work, timeline, and action sections"
+            "reason": "Largest section (Reasons Charges Get Dropped) is approximately 39% of total word count, under the 50% threshold."
           },
           {
             "check": "FEAR_ACTION_PAIRING",
             "result": "PASS",
-            "reason": "Every threat (insufficient evidence slipping by, Brady violations, social media mistakes, apology as evidence) is followed within 2 sentences by a specific action"
+            "reason": "Every threat is paired with action within 2 sentences — e.g., 'apologies can be used as evidence of guilt' immediately followed by 'Don't apologize to anyone except your attorney.'"
           },
           {
             "check": "ENGAGEMENT_ARC",
             "result": "PASS",
-            "reason": "Opens with a hook question and scenario, builds with seven evidence-backed reasons, closes with three specific empowering actions"
+            "reason": "Opens with relatable question hook, builds with 7 evidence-based dismissal grounds, closes with 3 concrete action steps and a free tool CTA — strong arc throughout."
           }
         ]
       }
@@ -160,83 +161,83 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "criteria_passed": 10,
+        "criteria_passed": 9,
         "criteria_total": 15,
         "results": [
           {
             "criterion": "U1",
             "result": "FAIL",
-            "evidence": "Multiple direct commands to the reader: 'Do not apologize to anyone about your case except your attorney. Do not post about it online. Do not contact the alleged victim.' and 'Delete any social media posts about your case right now. Set your accounts to private.'"
+            "evidence": "Post issues direct commands without attorney guidance: 'Delete any social media posts about your case right now. Set your accounts to private.' and 'Do not apologize to anyone about your case except your attorney. Do not post about it online. Do not contact the alleged victim.'"
           },
           {
             "criterion": "U2",
-            "result": "PASS",
-            "evidence": "Nearly every section directs the reader to ask their attorney specific questions (e.g., 'Ask your attorney: What specific weaknesses have you identified...')"
+            "result": "FAIL",
+            "evidence": "The 'What Does NOT Get Charges Dropped' section discusses sentencing impact and diversion eligibility without a proximate attorney redirect, and the 'Timeline' table section has no attorney redirect despite covering legal decision stages."
           },
           {
             "criterion": "U3",
             "result": "PASS",
-            "evidence": "Post speaks in general terms about how charges get dropped without evaluating any specific reader's case strength or likely outcome."
+            "evidence": "Post uses general framing throughout ('charges get dropped for specific legal reasons') and never renders judgment about the reader's specific case strength or likely outcome."
           },
           {
             "criterion": "U4",
-            "result": "FAIL",
-            "evidence": "Post recommends specific procedural steps the attorney should take, including 'Filing a motion to suppress' and 'Filing motions to suppress and dismiss' as actions the reader should ensure happen."
+            "result": "PASS",
+            "evidence": "All motion references are framed as what the attorney should be doing ('What your attorney should be doing: Filing a motion to suppress'), not as actions the reader should take directly."
           },
           {
             "criterion": "U5",
             "result": "PASS",
-            "evidence": "Post does not discuss immigration consequences, deportation, visa status, or related topics."
+            "evidence": "The post does not discuss immigration consequences, deportation, visa status, DACA, or green card implications, so no immigration-specific attorney redirect is required."
           },
           {
             "criterion": "U6",
             "result": "PASS",
-            "evidence": "Post does not assert collateral consequences like loss of professional license, housing, firearm, or voting rights."
+            "evidence": "The post does not assert specific collateral consequences such as license loss, housing restrictions, firearm rights, or voting rights — it focuses exclusively on dismissal grounds."
           },
           {
             "criterion": "U7",
             "result": "PASS",
-            "evidence": "No specific bail bond companies, law firms, or legal service providers are named or recommended."
+            "evidence": "No specific bail bond companies, law firms, public defenders, or legal service providers are named; all references use general categories like 'your attorney' and 'the prosecutor.'"
           },
           {
             "criterion": "U8",
             "result": "PASS",
-            "evidence": "Post does not use 'we recommend,' 'we advise,' or similar first-person plural recommendation phrasing in legal contexts."
+            "evidence": "The post avoids first-person plural recommendations; the closest is the disclaimer ('We are not attorneys and do not provide legal representation'), which is a disclosure, not a legal-action recommendation."
           },
           {
             "criterion": "U9",
             "result": "FAIL",
-            "evidence": "Hypothetical scenarios appear without 'Hypothetical:' or 'Example scenario:' labels, e.g., 'You're sitting in your attorney's office and they say, The evidence isn't as strong as they think.' is presented as narrative without a hypothetical header."
+            "evidence": "Multiple narrative vignettes are not labeled as hypothetical: 'You're standing in a hallway outside the courtroom,' 'You're sitting in your attorney's office and they say,' 'Your phone screen glows at 1 AM,' and 'You tell your attorney you're a good person' — all could be mistaken for describing the reader's actual situation."
           },
           {
             "criterion": "U10",
             "result": "PASS",
-            "evidence": "Post consistently frames knowledge as enabling the reader to ask better questions of their attorney, not handle the matter alone (e.g., 'Ask your attorney...' throughout)."
+            "evidence": "Post consistently frames knowledge as empowering attorney communication — 'Ask your attorney,' 'your attorney's job is to make that math work in your favor,' 'give that timeline to your attorney' — never implying the reader can handle the matter alone."
           },
           {
             "criterion": "U11",
-            "result": "PASS",
-            "evidence": "Uses general qualifiers like 'Many jurisdictions offer diversion programs,' 'In some jurisdictions,' and 'depends entirely on the specific facts of your case and your jurisdiction.'"
+            "result": "FAIL",
+            "evidence": "Legal rules stated as universal certainties without jurisdiction qualifiers: 'Apologies are not a legal defense,' 'the victim doesn't press charges or drop charges,' and 'Being a first-time offender does not automatically lead to dismissal' — none include 'in most jurisdictions' or similar hedging within their sections."
           },
           {
             "criterion": "U12",
             "result": "FAIL",
-            "evidence": "Outcome language without sufficient qualification: 'A single constitutional violation can make the prosecution's key evidence inadmissible — and without it, they often drop the case entirely' and 'Diversion programs can result in charges being dropped entirely.'"
+            "evidence": "'If you successfully complete the program... the charges are dropped or the case is dismissed' states a guaranteed outcome without qualifying that results vary by jurisdiction; similarly 'A grand jury that refuses to indict effectively kills the case' implies a certain outcome."
           },
           {
             "criterion": "U13",
             "result": "FAIL",
-            "evidence": "Legal strategies and tactics (motion to suppress, Brady violations, witness credibility investigation, grand jury presentation) are presented as the blog's positions without attribution to a named case, statute, or scholar — only a vague 'principle consistent across elite defense methodology' attribution."
+            "evidence": "Legal strategies including motion to suppress, Brady violation challenges, witness credibility investigation, and prosecutorial discretion pressure are presented as general defense methodology without attribution to any named case, statute, legal scholar, or attorney."
           },
           {
             "criterion": "U14",
             "result": "PASS",
-            "evidence": "No internally contradictory legal claims; statements about prosecutor power, judge dismissal authority, and victim role are consistent throughout."
+            "evidence": "All legal statements are internally consistent — the post maintains a coherent position on who holds charging power, what grounds support dismissal, and the distinction between charging and sentencing factors throughout."
           },
           {
             "criterion": "U15",
             "result": "PASS",
-            "evidence": "Case Progress Score is framed as a tool to 'see what's been done, what's missing, and what questions to ask next' — research/preparation framing, not a substitute for representation."
+            "evidence": "The Case Progress Score is framed as a research and question-generating tool: '5 minutes to see what's been done, what's missing, and what questions to ask next' — not as a substitute for legal representation."
           }
         ]
       }
@@ -245,69 +246,69 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 7,
+        "checks_passed": 5,
         "checks_total": 12,
         "needs_work_count": 4,
         "results": [
           {
             "check": "D1_3AM_PANIC",
             "result": "NEEDS_WORK",
-            "evidence": "Opening names the fear ('Can my charges be dropped?') but H2s 'Who Has the Power to Drop Charges?', 'Reasons Charges Actually Get Dropped', 'What Does NOT Get Charges Dropped', and 'The Timeline' are topical rather than action-oriented."
+            "evidence": "Opening hook is strong ('It's the first question every defendant asks'), but 4+ H2s are topical rather than action-oriented: 'Who Has the Power to Drop Charges?', 'Reasons Charges Actually Get Dropped', 'What Does NOT Get Charges Dropped', 'The Timeline' — none frame what the reader GETS."
           },
           {
             "check": "D2_READING_LEVEL",
-            "result": "PASS",
-            "evidence": "Legal terms defined inline ('nolle prosequi or nol pros', 'Brady violation — where the prosecution withholds favorable evidence', 'prosecutorial discretion'); paragraphs stay within 4 sentences."
+            "result": "NEEDS_WORK",
+            "evidence": "Most legal terms defined inline (nolle prosequi, Brady violation, PTI), but 'motion to suppress' first appears without inline definition and 'directed verdict' in the timeline table is unexplained — 2 terms missing."
           },
           {
             "check": "D3_DO_THIS_NOW",
             "result": "FAIL",
-            "evidence": "No immediate-action block before the first H2 — opening goes straight from the hook into 'Who Has the Power to Drop Charges?' with no concrete sub-5-minute action."
+            "evidence": "No concrete immediate-action block before the first H2. The TLDRBox 'Your Next Step' requires an attorney ('Ask your attorney…'). The opening paragraphs are pure setup with no 'do this right now' action a defendant can complete alone in under 5 minutes."
           },
           {
             "check": "D4_ONE_CLEAR_PATH",
             "result": "PASS",
-            "evidence": "Each section leads with a clear default ('Filing a motion to suppress', 'Investigating witness credibility', 'Negotiating PTI eligibility') rather than presenting unranked options."
+            "evidence": "Every section leads with a default: push your attorney to file motions, check docket filings, explore diversion eligibility. No section presents 3+ options without a recommendation. 'The earlier the better' is stated as the clear default."
           },
           {
             "check": "D5_3_ITEM_RULE",
-            "result": "NEEDS_WORK",
-            "evidence": "'Make sure your attorney is fighting' lists 5 unranked bullets and 'Ask the right questions' lists 5 unranked questions without 'start with these' priority markers."
+            "result": "FAIL",
+            "evidence": "'Ask the right questions' presents 5 unranked questions and 'Don't make it worse' presents 5 unranked don'ts — both hit the 5+ unranked threshold with no 'start with these' priority markers."
           },
           {
             "check": "D6_CATALOG_VARIETY",
             "result": "PASS",
-            "evidence": "system-decoder-post — explains who has power, what triggers action, and how the dismissal system actually works."
+            "evidence": "Single-post audit — structural pattern is system-decoder-post (explains who holds power, what mechanisms exist, how the process works)."
           },
           {
             "check": "D7_THREAT_EFFICACY",
             "result": "PASS",
-            "evidence": "The 25-30% stat is paired with the 'Your Next Step' action in TLDR; threats like 'passive attorneys get passive outcomes' and 'close to zero' chances are immediately followed by paired actions."
+            "evidence": "Every threat is paired with action within 2 sentences: '25-30% don't result in conviction' pairs with 'ask your attorney about dismissal grounds'; 'apology can be used as evidence of guilt' pairs with 'don't apologize to anyone except your attorney.'"
           },
           {
             "check": "D8_IDENTITY_PROTECTION",
             "result": "PASS",
-            "evidence": "No blame language — separates person from situation throughout ('Charges don't get dropped because you're a good person' frames the system, not the reader's failure)."
+            "evidence": "Zero blame language throughout. Person is consistently separated from situation — 'charges don't get dropped because you're a good person' frames the system's logic, not the reader's character. No 'you should have' or 'you failed to' patterns anywhere."
           },
           {
             "check": "D9_FEAR_CLARITY_AGENCY",
             "result": "NEEDS_WORK",
-            "evidence": "Arc is mostly present (fear named, system explained, actions given) but final sentence is a disclaimer ('This is legal information, not legal advice...') rather than an agency statement."
+            "evidence": "Opening acknowledges the universal question but doesn't deeply name the fear. Closing paragraph ends with 'your chances of dismissal are close to zero' (threat) followed by a CTA ('Take the free Case Progress Score') — not an agency statement. Arc is mostly present but final beat is fear+CTA instead of competence."
           },
           {
             "check": "D10_PHONE_FIRST",
-            "result": "PASS",
-            "evidence": "Timeline table has 3 columns but each cell is short; only H2/H3 used; key actions are bolded; sections stay within ~500 words."
+            "result": "FAIL",
+            "evidence": "Timeline table has 3 columns (Stage / Can Charges Be Dropped? / How?). 'Reasons Charges Actually Get Dropped' section spans 7 H3 subsections totaling well over 600 words before the next H2."
           },
           {
             "check": "D11_SCREENSHOT_SENTENCE",
             "result": "NEEDS_WORK",
-            "evidence": "Most H2 sections contain a screenshot-worthy bolded sentence, but 'The Timeline: When Can Charges Be Dropped?' and 'The Bottom Line' lack a standalone bolded screenshot sentence."
+            "evidence": "'The Timeline' and 'The Bottom Line' H2 sections have no bolded screenshot sentence at all. Additionally, some bolded sentences exceed 27 words (e.g., the court docket sentence runs ~30 words)."
           },
           {
             "check": "D12_SHAREABLE_FAQ",
             "result": "PASS",
-            "evidence": "All three FAQ answers start with the direct answer ('Yes.', 'The prosecutor has...', 'Neither will...'), stay within 2-4 sentences, and read as peer explanation rather than institutional voice."
+            "evidence": "All 3 FAQ answers start with direct answers ('Yes', 'The prosecutor has almost exclusive power', 'Neither will get charges dropped on its own'), run 3-4 sentences each, and read naturally as standalone support-group replies."
           }
         ]
       }

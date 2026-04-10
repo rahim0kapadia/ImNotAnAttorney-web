@@ -1,6 +1,6 @@
 {
   "slug": "complete-dui-defense-guide",
-  "last_checked": "2026-04-10T00:06:00.833Z",
+  "last_checked": "2026-04-10T02:20:53.940Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 136,
             "matches": [
-              "136 em dashes in 6751 words"
+              "136 em dashes in 6766 words"
             ],
             "points_added": 10
           },
@@ -46,7 +46,7 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 3,
+        "checks_passed": 5,
         "checks_total": 6,
         "results": [
           {
@@ -56,18 +56,18 @@
           },
           {
             "check": "EXPERT_CHECK",
-            "result": "FAIL",
-            "evidence": "Names two individual attorneys/legal experts: 'Barry Scheck, co-founder of the Innocence Project' and 'Lawrence Taylor, the attorney who wrote Drunk Driving Defense'"
+            "result": "PASS",
+            "evidence": "no issues found"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "Multiple unsourced statistics including '2100:1' ratio, '1100:1 to 3500:1' ratio, 'plus or minus .005 to .02 BAC' margin of error, '30-90 minutes to fully absorb', '$10,000-$25,000 over several years', '3-5 years' insurance impact, and the '77% Problem' heading — none have named sources in parentheses"
+            "evidence": "State-specific DMV suspension lengths stated without sources (e.g. 'California: 10 days... automatic 4-month suspension (first offense) or 1-year (refusal)'; 'Florida: ... 6-month... 12-month'; 'Texas: ... 90-day... 180-day'), plus unsourced cost/probation stats ('Fines and court costs ($500-$2,000+)', 'Total real cost: $10,000-$25,000', 'Increased insurance premiums for 3-5 years', 'Probation (typically 6-12 months for a first offense)')"
           },
           {
             "check": "PROCEDURE_CHECK",
-            "result": "FAIL",
-            "evidence": "States 'you have approximately 10 days after arrest to request a DMV administrative hearing, or your license gets suspended automatically' as a bare rule — 'approximately' is not a jurisdiction qualifier like 'in most states'"
+            "result": "PASS",
+            "evidence": "DMV deadline claims qualified with 'in most states, you have roughly 10 days' and state-specific deadlines explicitly name California, Florida, and Texas"
           },
           {
             "check": "CASE_NAME_CHECK",
@@ -83,238 +83,82 @@
       }
     },
     "slop": {
-      "passed": true,
-      "status": "checked",
-      "details": {
-        "checks_passed": 13,
-        "checks_total": 14,
-        "hard_gate_failures": [],
-        "results": [
-          {
-            "check": "QUESTION_COUNT",
-            "result": "PASS",
-            "reason": "No question_count field in frontmatter to verify against; body contains multiple clear attorney-directed question sets (4 DMV questions, 5 discovery questions, 4 plea questions) consistent with guide format."
-          },
-          {
-            "check": "CITATION_SOURCING",
-            "result": "PASS",
-            "reason": "Factual claims are sourced: NHTSA for FST validation rates, Lawrence Taylor for DMV hearing quote, Barry Scheck for process auditing principle, and specific state statutes for DMV deadlines."
-          },
-          {
-            "check": "READABILITY",
-            "result": "PASS",
-            "reason": "Action items use plain language ('Write everything down', 'Count the days', 'Email these five questions'); legal terms like 'reasonable suspicion' and 'probable cause' are defined on first use."
-          },
-          {
-            "check": "CLICHE_DENSITY",
-            "result": "PASS",
-            "reason": "No instances of the flagged cliches ('end of the day', 'tip of the iceberg', 'game changer', etc.) found in the post."
-          },
-          {
-            "check": "VOICE_CONSISTENCY",
-            "result": "PASS",
-            "reason": "Consistently uses second person 'you/your' throughout; the few third-person references ('defendants who', 'the officer') are subjects of description, not voice switches."
-          },
-          {
-            "check": "PASSIVE_VOICE_RATIO",
-            "result": "PASS",
-            "reason": "Active voice dominates; passive constructions appear occasionally but well below the 30% threshold, mostly in procedural descriptions where passive is natural."
-          },
-          {
-            "check": "JARGON_DEFINITION",
-            "result": "PASS",
-            "reason": "Key terms are defined on first use: reasonable suspicion, SFSTs/NHTSA tests (all three named and explained), arraignment, discovery, motion to suppress, motion in limine, rising blood alcohol, wet reckless."
-          },
-          {
-            "check": "STRUCTURAL_INTEGRITY",
-            "result": "PASS",
-            "reason": "Logical chronological structure: arrest -> DMV deadline -> arraignment -> discovery -> motions -> plea/trial -> resolution -> accountability -> CTA, with each section building on the prior."
-          },
-          {
-            "check": "CTA_CLARITY",
-            "result": "PASS",
-            "reason": "Multiple clear CTAs: DUI Playbook ($97), Case Decoder checkout link, free score assessment, plus dozens of embedded attorney questions and five-minute actions at each stage."
-          },
-          {
-            "check": "HEDGING_DENSITY",
-            "result": "NEEDS_WORK",
-            "reason": "Some action statements hedge with 'may/might/could' (e.g., 'may hinge on', 'may not hold up', 'could put you under') but stays under the 15% threshold for action statements overall."
-          },
-          {
-            "check": "PARAGRAPH_LENGTH",
-            "result": "PASS",
-            "reason": "No paragraphs exceed 300 words; action-oriented paragraphs (five-minute actions, checklists) stay well under 100 words each."
-          },
-          {
-            "check": "SECTION_BALANCE",
-            "result": "PASS",
-            "reason": "Word count distributed across 7 stages plus summary/accountability/CTA sections; Stage 1 is largest but does not exceed 50% of total."
-          },
-          {
-            "check": "FEAR_ACTION_PAIRING",
-            "result": "PASS",
-            "reason": "Threats are consistently paired with actions: license suspension -> request DMV hearing; plea consequences -> four questions to ask; evidence loss -> write everything down now; calibration issues -> request records."
-          },
-          {
-            "check": "ENGAGEMENT_ARC",
-            "result": "PASS",
-            "reason": "Strong hook (2 AM scenario, blue lights), evidence-rich middle (NHTSA stats, Taylor/Scheck citations, state deadlines, motion types), empowering close (accountability checklist plus product CTAs)."
-          }
-        ]
-      }
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
     },
     "upl": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "criteria_passed": 6,
-        "criteria_total": 15,
-        "results": [
-          {
-            "criterion": "U1",
-            "result": "FAIL",
-            "evidence": "Contains directives like 'Never plead guilty at arraignment', 'Say nothing on social media. Nothing.', 'Don't talk about the case', and 'Never accept a plea offer until your attorney has completed every step on this checklist.'"
-          },
-          {
-            "criterion": "U2",
-            "result": "PASS",
-            "evidence": "Each stage section includes attorney-focused language like 'Your attorney's job:', 'Questions to ask your attorney', and 'ask your attorney' proximate to legal decision points."
-          },
-          {
-            "criterion": "U3",
-            "result": "PASS",
-            "evidence": "Post discusses defenses in general terms ('if the traffic stop was illegal', 'if the machine was overdue') without evaluating the specific reader's case strength."
-          },
-          {
-            "criterion": "U4",
-            "result": "FAIL",
-            "evidence": "Post recommends specific motions the reader's attorney should file: 'Motion to Suppress', 'Motion to Exclude BAC Results', and frames them as things that 'should be filed' rather than neutrally explaining what they are."
-          },
-          {
-            "criterion": "U5",
-            "result": "FAIL",
-            "evidence": "Immigration consequences are listed in the plea checklist ('immigration consequences') without any immigration-specific attorney redirect."
-          },
-          {
-            "criterion": "U6",
-            "result": "FAIL",
-            "evidence": "Collateral consequences like 'license suspension', 'ignition interlock', 'fines $500-$2,000+', and 'Total real cost: $10,000-$25,000' are stated without attribution to specific statutes or official government sources."
-          },
-          {
-            "criterion": "U7",
-            "result": "PASS",
-            "evidence": "Only generic categories used ('a DUI attorney', 'the prosecution') and references to NHTSA and the Innocence Project, with no specific bail bond companies or law firms recommended."
-          },
-          {
-            "criterion": "U8",
-            "result": "PASS",
-            "evidence": "Post avoids 'we recommend' phrasing in legal-action contexts; uses 'We give you the information. You bring the questions. Your attorney does the work.'"
-          },
-          {
-            "criterion": "U9",
-            "result": "FAIL",
-            "evidence": "Opening narrative scenarios ('The officer's flashlight sweeps across your face', 'You walk through the metal detector at the courthouse', 'Your attorney calls. The prosecution is offering 12 months probation') are presented without hypothetical labels and could be mistaken for the reader's actual facts."
-          },
-          {
-            "criterion": "U10",
-            "result": "FAIL",
-            "evidence": "Despite 'We don't replace your attorney' framing, the guide positions itself as 'the guide your DUI attorney should have given you' and teaches readers to evaluate legal strategy, motion viability, and plea decisions themselves."
-          },
-          {
-            "criterion": "U11",
-            "result": "FAIL",
-            "evidence": "Legal rules stated as certainties: 'you have approximately 10 days after arrest', 'California: 10 days... automatic 4-month suspension', without 'in general' or 'your attorney will advise about your specific situation' qualifiers in the rule sections."
-          },
-          {
-            "criterion": "U12",
-            "result": "FAIL",
-            "evidence": "Outcome language appears without jurisdiction/circumstance qualification: 'It all gets suppressed. Game over for the prosecution', 'the right motions can gut the prosecution's case', 'wins more DUI cases than most people realize.'"
-          },
-          {
-            "criterion": "U13",
-            "result": "PASS",
-            "evidence": "Strategies attributed to named sources: NHTSA protocols, Barry Scheck and the Innocence Project, and Lawrence Taylor's 'Drunk Driving Defense' textbook."
-          },
-          {
-            "criterion": "U14",
-            "result": "PASS",
-            "evidence": "No internally contradictory legal claims detected; the post consistently describes DUI as carrying license suspension, fines, and potential jail without contradiction."
-          },
-          {
-            "criterion": "U15",
-            "result": "FAIL",
-            "evidence": "Products framed with 'Your case. Your money. Your freedom. Know what you're paying for' and the Case Decoder described as giving 'a detailed breakdown of every defense angle, every question to ask, and every motion that should be on the table' — implying case-specific legal analysis rather than pure research tool framing."
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: Failed to authenticate. API Error: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"OAuth authentication is currently not supported.\"},\"request_id\":\"req_011CZuGvPJf2yehNFzfp6Nhb\"}"
     },
     "dna": {
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 8,
+        "checks_passed": 6,
         "checks_total": 12,
-        "needs_work_count": 3,
+        "needs_work_count": 4,
         "results": [
           {
             "check": "D1_3AM_PANIC",
-            "result": "PASS",
-            "evidence": "Opens with 'The blue lights hit your mirror and your stomach dropped' naming the fear; H2s like 'How to Use This Guide', 'Stage 1: The DUI Arrest', 'Holding Your Attorney Accountable' are action/stage-oriented."
+            "result": "NEEDS_WORK",
+            "evidence": "Opening hook names the fear well ('blue lights hit your mirror and your stomach dropped'), but several H2s are topical rather than action-oriented ('Stage 3: Arraignment — Your First Court Date', 'Stage 4: Discovery — The Evidence Arrives', 'Stage 7: Resolution — How DUI Cases End', 'The 7 Common DUI Defenses — Summary Table')."
           },
           {
             "check": "D2_READING_LEVEL",
             "result": "PASS",
-            "evidence": "Legal terms defined inline: 'Standardized Field Sobriety Tests (SFSTs)', 'NHTSA — the National Highway Traffic Safety Administration', 'reasonable suspicion' explained; paragraphs stay under 4 sentences in action sections."
+            "evidence": "Legal terms are defined inline on first use ('Reasonable suspicion based on specific, articulable facts', 'Standardized Field Sobriety Tests (SFSTs)', 'NHTSA — the National Highway Traffic Safety Administration'), and paragraphs stay within 4 sentences."
           },
           {
             "check": "D3_DO_THIS_NOW",
-            "result": "NEEDS_WORK",
-            "evidence": "'Bookmark this page' appears before the first H2 but is a single line rather than a formatted immediate-action block; the concrete 5-minute action (open notes app) is buried in Stage 1."
+            "result": "FAIL",
+            "evidence": "Before the first H2 ('How to Use This Guide'), there is no concrete immediate-action block — only framing text ('Bookmark this page. You're going to need it.'), which is vague rather than a specific under-5-minute action."
           },
           {
             "check": "D4_ONE_CLEAR_PATH",
             "result": "PASS",
-            "evidence": "Decision points lead with defaults like 'You will almost certainly plead not guilty' and 'Never accept a plea offer until your attorney has completed every step on this checklist.'"
+            "evidence": "Decision points lead with defaults ('You will almost certainly plead not guilty', 'Never accept a plea offer until your attorney has completed every step on this checklist', 'Never plead guilty at arraignment')."
           },
           {
             "check": "D5_3_ITEM_RULE",
             "result": "FAIL",
-            "evidence": "Multiple sections exceed 5 unranked items: 'What Your Attorney Should Tell You After Arraignment' has 5 items, Discovery section lists 7 evidence types, plea checklist has 7 steps, accountability checklist has 8 items — none grouped or ranked."
+            "evidence": "Multiple sections exceed 5 unranked items without grouping — the discovery list has 7 bullets ('The police report', 'Dashcam and bodycam footage'...'911 calls or anonymous tips'), the attorney accountability checklist has 8 unranked bullets, and the 'Before You Consider Any Plea Deal' list has 7 unranked items."
           },
           {
             "check": "D6_CATALOG_VARIETY",
             "result": "PASS",
-            "evidence": "timeline-post — chronological stage-by-stage structure (Stage 1 Arrest through Stage 7 Resolution) with deadlines at each phase."
+            "evidence": "This post uses the timeline-post pattern (chronological stages from arrest through resolution with deadlines at each stage)."
           },
           {
             "check": "D7_THREAT_EFFICACY",
             "result": "PASS",
-            "evidence": "Scary stats paired with actions: '77% Problem' followed by NHTSA deviation audit action; '10-day deadline' paired with 'call them today'; 'Total real cost: $10,000-$25,000' followed by agency-affirming 'You'll get through this.'"
+            "evidence": "Scary statistics are paired with actions within 2 sentences — the 18% NHTSA error rate is paired with 'Every deviation from the NHTSA standard is a crack in the prosecution's case', and the 10-day DMV deadline is paired with 'call them today — not tomorrow, today'."
           },
           {
             "check": "D8_IDENTITY_PROTECTION",
             "result": "PASS",
-            "evidence": "No blame language — frames reader as someone processed by a system ('the system counts on your confusion'), never 'you should have' or 'if you had'; even acknowledges 'If you were a mess, the footage confirms it' without moralizing."
+            "evidence": "No blame language — the post consistently separates the person from the situation ('The less you understand, the easier you are to process through the system', 'You'll get through this') with no 'you should have' or lecturing patterns."
           },
           {
             "check": "D9_FEAR_CLARITY_AGENCY",
-            "result": "PASS",
-            "evidence": "Opens validating fear ('your stomach dropped'), middle reduces unknown to known via stage breakdown, closes with 'Your case. Your money. Your freedom. Know what you're paying for.' — an agency statement."
+            "result": "NEEDS_WORK",
+            "evidence": "Opening validates fear well and middle reduces unknown to known, but the post closes with a CTA stack ('Get the DUI Defense Playbook — $97', 'Get your DUI Case Decoder report', 'Take our free case score assessment') and the final sentence 'Know what you're paying for' functions more as a sales close than a pure agency statement."
           },
           {
             "check": "D10_PHONE_FIRST",
             "result": "NEEDS_WORK",
-            "evidence": "7-column defense table exceeds 2-column limit severely; only H2/H3 used; several stage sections (Stage 1, Stage 5) appear to exceed 500-600 words before next H2."
+            "evidence": "The 7 Defenses summary table has 4 columns (#, Defense, What It Challenges, Success Indicators) which exceeds the 2-column mobile limit; otherwise headings stay at H2/H3 and sections are reasonably sized."
           },
           {
             "check": "D11_SCREENSHOT_SENTENCE",
-            "result": "PASS",
-            "evidence": "Nearly every H2 has a standalone bolded sentence under 27 words: 'A breathalyzer number is not a verdict...', 'The DMV hearing is a free deposition of the arresting officer that most attorneys throw away', 'An attorney who negotiates your plea without watching every second of dashcam footage is negotiating blind.'"
+            "result": "NEEDS_WORK",
+            "evidence": "Most H2 sections have strong bolded screenshot sentences ('A breathalyzer number is not a verdict...', 'The DMV hearing is a free deposition...', 'An attorney who negotiates your plea without watching every second of dashcam footage is negotiating blind'), but Stage 1, Stage 7, and the Defenses Summary Table section lack a single standalone bolded shareable insight."
           },
           {
             "check": "D12_SHAREABLE_FAQ",
-            "result": "NEEDS_WORK",
-            "evidence": "FAQs start with direct answers and avoid preamble, but 'What are the most common ways a DUI case gets dismissed?' answer runs 5 sentences and 'Do I need a lawyer for a DUI?' reads slightly institutional rather than peer-to-peer."
+            "result": "PASS",
+            "evidence": "All four FAQ answers start with direct answers (no preamble), stay within 2-5 sentences, and read naturally ('Not at arraignment, and not before every piece of evidence has been examined', 'Most first-offense DUI cases resolve in 3 to 6 months')."
           }
         ]
       }

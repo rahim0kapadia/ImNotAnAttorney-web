@@ -1,6 +1,6 @@
 {
   "slug": "private-attorney-vs-public-defender",
-  "last_checked": "2026-04-10T00:17:31.606Z",
+  "last_checked": "2026-04-10T02:42:01.125Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,8 +35,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'$5,000 to $25,000 for a standard felony, and $50,000 to $100,000 or more for complex cases' in body prose cites only 'industry survey data' without a named source, and '15 minutes to review your file' and '6.6 hours per case' appear unsourced"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "Only 'Daubert challenge' and 'Brady demand' appear, both on the allowed terminology list"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

@@ -1,6 +1,6 @@
 {
   "slug": "what-motions-should-your-attorney-be-filing",
-  "last_checked": "2026-04-09T21:47:44.165Z",
+  "last_checked": "2026-04-10T02:48:40.335Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,9 +34,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — post references only the Fourth Amendment (constitutional) with no statute numbers or § citations"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — no individual attorneys or legal scholars named"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — no unsourced percentages, counts, or rates; numeric references like '30-45 days' are procedural deadlines handled under PROCEDURE_CHECK"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — all deadline claims are qualified with 'often', 'sometimes', 'generally', 'varies by jurisdiction', or 'in many jurisdictions' (e.g., 'suppression motions often must be filed within 30-45 days of arraignment')"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — only 'Brady v. Maryland', 'Brady motion/material', 'Daubert/Frye motion', and 'Miranda warnings' appear, all of which are on the allowed terminology list"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — post covers motion types and defense strategy with no collateral-consequence claims about licensing, housing, firearms, voting, immigration, or employment"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

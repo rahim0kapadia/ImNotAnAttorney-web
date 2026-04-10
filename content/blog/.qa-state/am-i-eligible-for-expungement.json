@@ -1,6 +1,6 @@
 {
   "slug": "am-i-eligible-for-expungement",
-  "last_checked": "2026-04-09T23:57:04.390Z",
+  "last_checked": "2026-04-10T02:46:08.167Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,7 +43,7 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post uses general language like 'your state's statute' and 'federal prohibitions' without citing specific statute numbers"
+            "evidence": "Post uses general language like 'your state's statute' and 'state legislature websites' without citing specific statute numbers"
           },
           {
             "check": "EXPERT_CHECK",
@@ -53,12 +53,12 @@
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "Numeric ranges like '1 to 5 years' and '3 to 10 years' are presented as general ranges, not sourced factual claims; phrases like 'a significant percentage' are used instead of specific unsourced statistics"
+            "evidence": "Numeric ranges like '1-5 years' and '3-10 years' are presented as general ranges, and the post avoids sourced percentage claims — 'a significant percentage' is used instead"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Procedural claims are consistently qualified with 'in many states', 'most states', 'some states', or 'your state requires'"
+            "evidence": "All procedural claims are qualified with 'in many states', 'most states', 'some states', or 'your state's statute'"
           },
           {
             "check": "CASE_NAME_CHECK",
@@ -68,7 +68,7 @@
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Collateral consequences like gun rights restoration and background check visibility are qualified with 'in many states', 'may not apply', and 'depends on separate statutes'"
+            "evidence": "Collateral consequence claims about gun rights, job applications, and background checks are qualified with 'in many states', 'may', and 'depends on separate statutes'"
           }
         ]
       }
@@ -80,78 +80,79 @@
         "checks_passed": 11,
         "checks_total": 14,
         "hard_gate_failures": [
-          "QUESTION_COUNT"
+          "QUESTION_COUNT",
+          "JARGON_DEFINITION"
         ],
         "results": [
           {
             "check": "QUESTION_COUNT",
             "result": "FAIL",
-            "reason": "Frontmatter has no question_count field; body contains 10 numbered questions in 'The Questions That Actually Matter' section so the field cannot be validated"
+            "reason": "No question_count field exists in frontmatter; body has 10 eligibility questions but none are framed as 'ask your attorney this' — they are general research questions directed at the reader."
           },
           {
             "check": "CITATION_SOURCING",
-            "result": "NEEDS_WORK",
-            "reason": "Claims like 'Most denied petitions were eligible' and 'accounts for a significant percentage of denials' lack sourcing, and exclusion lists are presented without statute citations"
+            "result": "PASS",
+            "reason": "Most factual claims are qualified with 'in many states' or 'generally'; two borderline unsourced claims ('millions of people have expunged convictions' and 'significant percentage of denials') sit right at the threshold but the post deliberately avoids specific statistics per the no-hallucination rule."
           },
           {
             "check": "READABILITY",
             "result": "PASS",
-            "reason": "Action items use plain language and direct instructions; no undefined legal jargon in the 5-minute action callouts"
+            "reason": "All five '5-minute action' items are plain-language and concrete; explanatory sections use accessible framing and define concepts inline."
           },
           {
             "check": "CLICHE_DENSITY",
             "result": "PASS",
-            "reason": "None of the flagged cliches appear in the post"
+            "reason": "Zero instances of the flagged cliche list; 'dirty truth' is informal but not on the prohibited list."
           },
           {
             "check": "VOICE_CONSISTENCY",
             "result": "PASS",
-            "reason": "Uses second person 'you/your' consistently; brief 'most people' references never exceed two consecutive sentences"
+            "reason": "Consistent second-person throughout; isolated third-person references ('most people,' 'they assume') are single sentences, never exceeding 2 consecutive."
           },
           {
             "check": "PASSIVE_VOICE_RATIO",
             "result": "PASS",
-            "reason": "Passive constructions appear occasionally ('was convicted', 'is determined') but well under 30% of sentences"
+            "reason": "Roughly 15-18% passive voice ('was dismissed,' 'were filed,' 'is required'); well under the 30% threshold."
           },
           {
             "check": "JARGON_DEFINITION",
-            "result": "NEEDS_WORK",
-            "reason": "'Deferred adjudication', 'adjudication withheld', and 'disposition' are used without explicit first-use definitions"
+            "result": "FAIL",
+            "reason": "Three legal terms used without definition on first use: 'diversion program,' 'deferred adjudication,' and 'adjudication withheld' — all appear in the Case Outcome section without explaining what they mean."
           },
           {
             "check": "STRUCTURAL_INTEGRITY",
             "result": "PASS",
-            "reason": "Flows cleanly from problem (record persists) to context (what expungement does) to 4 factors to worked example to questions to CTA"
+            "reason": "Clean logical flow: problem scenario → what expungement changes → four-factor framework → worked example → action questions → CTA with no orphaned paragraphs."
           },
           {
             "check": "CTA_CLARITY",
             "result": "PASS",
-            "reason": "Includes Expungement Eligibility Research product link, 5-minute actions per factor, 10 attorney-style questions, and Defense Milestone Score link"
+            "reason": "Multiple clear CTAs: Expungement Eligibility Research product link ($97), Defense Milestone Score (free), and five concrete '5-minute action' items throughout."
           },
           {
             "check": "HEDGING_DENSITY",
             "result": "PASS",
-            "reason": "Hedging language ('may', 'might') is appropriately confined to legal information statements; action items are direct"
+            "reason": "All five action directives ('Google your name,' 'Search your state's statute,' 'Find the exclusion list,' 'Pull your case disposition,' 'Write down the date') are direct imperatives with zero hedging."
           },
           {
             "check": "PARAGRAPH_LENGTH",
             "result": "PASS",
-            "reason": "All paragraphs are under 300 words and action-oriented paragraphs stay well under 100 words"
+            "reason": "No paragraph exceeds 300 words; action-oriented paragraphs (5-minute actions) are under 50 words each."
           },
           {
             "check": "SECTION_BALANCE",
             "result": "PASS",
-            "reason": "The four-factors section is largest but is split into four roughly equal subsections; no section exceeds 50% of total word count"
+            "reason": "Largest section ('The Four Factors') is approximately 48% of total word count — under the 50% threshold, with the remaining 52% distributed across five other sections."
           },
           {
             "check": "FEAR_ACTION_PAIRING",
-            "result": "PASS",
-            "reason": "Threats (denied petition, background check exposure, miscounted waiting period) are each followed within two sentences by specific actions or 5-minute action callouts"
+            "result": "NEEDS_WORK",
+            "reason": "Internal threat-action pairs are tight (charge exclusion fear → 'find the exclusion list'), but the opening background-check threat takes 3+ paragraphs before reaching the first specific action; needs an earlier '5-minute action' or directive after the HR screening scenario."
           },
           {
             "check": "ENGAGEMENT_ARC",
             "result": "PASS",
-            "reason": "Opens with concrete scenario hook, builds through 4-factor framework with worked example, closes with empowering specific actions and CTA"
+            "reason": "Strong scenario hook (background check rejection), evidence-rich middle (four-factor framework with worked example), and empowering close (10 questions + product CTA + free score tool)."
           }
         ]
       }
@@ -165,78 +166,78 @@
         "results": [
           {
             "criterion": "U1",
-            "result": "FAIL",
-            "evidence": "Post contains multiple directives like 'Search \"[your state] expungement statute\" right now', 'Find the exclusion list in your state's expungement statute', and 'Write down the date you completed your last sentence obligation' framed as commands to the reader."
+            "result": "PASS",
+            "evidence": "All imperative language consists of research actions ('Google your own name,' 'Search your state's expungement statute,' 'Pull your case disposition') — none are legal directives like 'file this motion' or 'plead this way.'"
           },
           {
             "criterion": "U2",
             "result": "FAIL",
-            "evidence": "Sections discussing legal decisions (eligibility analysis, filing timing, charge exclusions) contain no proximate attorney redirect — only a general disclaimer footer saying 'not legal advice' without directing readers to consult an attorney."
+            "evidence": "No section discussing legal decisions (the four eligibility factors, the questions list, the practice scenario) includes a proximate attorney-consultation redirect; the only disclaimer is a generic footer and the redirect goes to a product, not an attorney."
           },
           {
             "criterion": "U3",
             "result": "PASS",
-            "evidence": "Post uses general framing like 'the published criteria say you may be eligible' and hypothetical examples rather than evaluating any specific reader's case strength."
+            "evidence": "The post explicitly disclaims specific evaluation: 'Here's what it can't do: tell you whether YOUR charge, in YOUR state, with YOUR case outcome and YOUR timeline, meets the published criteria.' All eligibility language uses 'may be eligible.'"
           },
           {
             "criterion": "U4",
             "result": "PASS",
-            "evidence": "Post describes what expungement petitions are but does not recommend filing specific motions; it describes the process generally rather than instructing the reader to file particular procedural documents."
+            "evidence": "The post explains what expungement is and how eligibility criteria work but never recommends filing a specific motion or petition; the 5-minute actions are all information-gathering steps, not procedural legal actions."
           },
           {
             "criterion": "U5",
             "result": "PASS",
-            "evidence": "Post does not discuss immigration consequences (deportation, visa, DACA, green card) at all, so the immigration-specific redirect requirement does not trigger."
+            "evidence": "The post does not discuss immigration consequences (deportation, visa status, DACA, green card) at any point, so no immigration-specific attorney redirect is required."
           },
           {
             "criterion": "U6",
             "result": "FAIL",
-            "evidence": "Collateral consequences like firearm rights ('it does not restore gun rights in every state') and employment background checks are mentioned without citation to any specific statute, regulation, or official government source."
+            "evidence": "The post states 'it does not restore gun rights in every state — that depends on separate statutes' and references healthcare licensing board limitations without citing any specific statute, regulation, or government source for either collateral consequence."
           },
           {
             "criterion": "U7",
             "result": "PASS",
-            "evidence": "Post references general categories like 'the clerk's office' and 'private background check companies' without naming any specific bail bond company, law firm, or legal service provider."
+            "evidence": "No specific bail bond companies, law firms, public defender offices, or legal service providers are named anywhere in the post; all references use general categories like 'the clerk's office.'"
           },
           {
             "criterion": "U8",
             "result": "PASS",
-            "evidence": "Post does not use 'we recommend', 'we advise', or 'we suggest' phrasing in any legal-action context; it uses second-person 'you' framing throughout."
+            "evidence": "The post does not use 'we recommend,' 'we advise,' 'we suggest,' or any first-person plural phrasing in the context of legal actions or strategies."
           },
           {
             "criterion": "U9",
-            "result": "PASS",
-            "evidence": "The hypothetical example is clearly labeled with 'Say you were arrested in 2019 for a nonviolent felony drug possession charge' making its hypothetical nature explicit."
+            "result": "FAIL",
+            "evidence": "Four factor subsections open with unlabeled second-person scenarios stated as fact ('You moved from Ohio to Texas last year,' 'Your case was dismissed after you completed a diversion program,' 'You completed probation in 2023') without hypothetical markers like 'Imagine' or 'For example.'"
           },
           {
             "criterion": "U10",
             "result": "FAIL",
-            "evidence": "Post frames the reader as able to handle eligibility analysis themselves with statements like 'You do not need a law degree to read whether your charge type is on the eligible list' and implies readers can determine eligibility without an attorney."
+            "evidence": "The post frames eligibility determination as something the reader can resolve themselves ('Neither of those has to be you,' calculated filing dates, 'Find the exclusion list') and redirects to a product rather than attorney consultation as the next step."
           },
           {
             "criterion": "U11",
             "result": "PASS",
-            "evidence": "Post uses qualifying phrases like 'in many states', 'most states', 'generally', and 'typically' throughout when discussing legal rules rather than stating them as certainties."
+            "evidence": "Legal rules are consistently qualified with 'in many states,' 'generally,' 'in most jurisdictions,' 'may be eligible,' and the footer states 'This article provides general information about expungement eligibility criteria, not legal advice.'"
           },
           {
             "criterion": "U12",
             "result": "PASS",
-            "evidence": "Post qualifies outcomes with phrases like 'may be eligible', 'the published criteria say you may', and notes results depend on state statutes and specific circumstances rather than guaranteeing outcomes."
+            "evidence": "The post uses 'may be eligible,' 'the published criteria say you may be eligible,' and conditional framing throughout; no statement guarantees that following the information leads to a specific legal outcome."
           },
           {
             "criterion": "U13",
             "result": "FAIL",
-            "evidence": "Legal claims about waiting periods, exclusion categories, and statutory mechanics are presented as the blog's own assertions without attribution to any named case, statute, scholar, or attorney source."
+            "evidence": "The four-factor eligibility framework, the claim that waiting periods universally start from sentence completion, and the excluded-offense categories are all presented as the blog's own analysis without attribution to any named legal scholar, case, or specific statute."
           },
           {
             "criterion": "U14",
             "result": "PASS",
-            "evidence": "Post consistently distinguishes between dismissed charges, convictions, and deferred adjudication without making contradictory claims about their legal treatment."
+            "evidence": "All legal statements are internally consistent — waiting period rules, state variation claims, and charge-type distinctions do not contradict each other across sections."
           },
           {
             "criterion": "U15",
             "result": "PASS",
-            "evidence": "The Expungement Eligibility Research product is framed as a research tool that 'maps your specific details ... against your state's actual published criteria' and 'tells you whether those filing fees are worth paying' — positioned as research/preparation, not as replacing attorney advice."
+            "evidence": "The Expungement Eligibility Research product is described as mapping 'your specific situation against your state's published criteria' and identifying 'the questions that matter most before you file anything' — framed as research and question preparation, not legal representation."
           }
         ]
       }
@@ -245,69 +246,69 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 4,
         "checks_total": 12,
-        "needs_work_count": 5,
+        "needs_work_count": 4,
         "results": [
           {
             "check": "D1_3AM_PANIC",
             "result": "NEEDS_WORK",
-            "evidence": "Opening hook names the fear (record following you after case ends) within first sentences, but H2s 'What Expungement Actually Changes', 'What This Looks Like in Practice', and 'What a Blog Post Can't Do' are topical rather than action-oriented."
+            "evidence": "Opening hook names the background-check fear effectively, but H2s 'What This Looks Like in Practice' and 'What a Blog Post Can't Do' are purely topical with no implied action for the reader."
           },
           {
             "check": "D2_READING_LEVEL",
             "result": "NEEDS_WORK",
-            "evidence": "'Deferred adjudication', 'adjudication withheld', and 'restitution' are used without inline definitions, though paragraphs stay short and most other terms (expungement, acquittal, diversion) are defined contextually."
+            "evidence": "'Restitution' and 'adjudication withheld' are used without inline definition, and the 'what it doesn't do' paragraph runs to 5 sentences."
           },
           {
             "check": "D3_DO_THIS_NOW",
             "result": "FAIL",
-            "evidence": "No immediate-action block exists before the first H2 'What Expungement Actually Changes'; the first '5-minute action' (Google your name) appears buried at the end of section 1, not before it."
+            "evidence": "No concrete immediate action appears before the first H2; the TLDRBox links to a paid service and the first 5-minute action block is inside the 'What Expungement Actually Changes' section."
           },
           {
             "check": "D4_ONE_CLEAR_PATH",
             "result": "PASS",
-            "evidence": "Each of the four factors leads with a clear default action ('Search [your state] expungement statute', 'Find the exclusion list', 'Pull your case disposition', 'Write down the date you completed your last sentence obligation')."
+            "evidence": "Every decision point names the variables (state, charge type, outcome, waiting period) and leads with a default — dismissed charges are framed as easiest, waiting-period miscounting is identified as the top killer."
           },
           {
             "check": "D5_3_ITEM_RULE",
-            "result": "NEEDS_WORK",
-            "evidence": "'The Questions That Actually Matter' presents 10 unranked questions; while it later flags 'Number one alone', they are not formally labeled 'start with these'."
+            "result": "FAIL",
+            "evidence": "'The Questions That Actually Matter' section presents 10 numbered items with no 'start with these 3' grouping, and the charge-type exclusion list has 5 unranked bullet items."
           },
           {
             "check": "D6_CATALOG_VARIETY",
             "result": "PASS",
-            "evidence": "This is a framework-post — Hormozi-style variable map built around four eligibility factors (state, charge type, case outcome, waiting period)."
+            "evidence": "System-decoder-post — deconstructs the expungement eligibility system into a four-variable framework with worked examples."
           },
           {
             "check": "D7_THREAT_EFFICACY",
             "result": "PASS",
-            "evidence": "Statistics about denials are paired with actions ('miscounting the waiting period... Write down the date you completed your last sentence obligation') and no section closes on a standalone threat."
+            "evidence": "Every threat is action-paired: the HR background-check fear leads to the four-factor framework, the miscounted waiting period is paired with a 5-minute date-calculation action, and denied-petition statistics are paired with the specific filing-date calculation."
           },
           {
             "check": "D8_IDENTITY_PROTECTION",
             "result": "PASS",
-            "evidence": "No 'you should have' or blame patterns; mistakes are framed as miscounting or missing published criteria, and 'They did qualify. They just miscounted' separates person from situation."
+            "evidence": "Zero blame language throughout; 'People file early, get denied, and assume they don't qualify — they did qualify, they just miscounted' separates person from mistake sympathetically."
           },
           {
             "check": "D9_FEAR_CLARITY_AGENCY",
             "result": "NEEDS_WORK",
-            "evidence": "Opening validates fear and middle explains the four-factor logic, but the final sentence is a generic CTA to the Defense Milestone Score rather than an agency statement about the reader's competence."
+            "evidence": "Opening validates the background-check fear and middle delivers the four-factor clarity framework, but the post closes with a product CTA ('It's $97') rather than an agency statement about the reader's competence."
           },
           {
             "check": "D10_PHONE_FIRST",
-            "result": "PASS",
-            "evidence": "No tables, only H2/H3 levels used, key actions are bolded ('5-minute action'), and sections stay under 500 words each (the four-factor H2 is broken into H3 subsections)."
+            "result": "FAIL",
+            "evidence": "'The Four Factors That Decide Your Eligibility' H2 section spans roughly 900+ words before the next H2, far exceeding the 600-word mobile threshold despite H3 subdivision."
           },
           {
             "check": "D11_SCREENSHOT_SENTENCE",
             "result": "FAIL",
-            "evidence": "H2 sections 'What This Looks Like in Practice', 'The Questions That Actually Matter', and 'What a Blog Post Can't Do' contain no bolded screenshot-worthy sentence — three sections missing exceeds the 2-section threshold."
+            "evidence": "Three H2 sections — 'What This Looks Like in Practice,' 'The Questions That Actually Matter,' and 'What a Blog Post Can't Do' — contain no bolded screenshot-worthy sentence."
           },
           {
             "check": "D12_SHAREABLE_FAQ",
             "result": "NEEDS_WORK",
-            "evidence": "All four FAQs start with the direct answer in natural voice, but the expungement-vs-sealing and waiting-period answers run 5 sentences each, slightly long for shareable group-reply tone."
+            "evidence": "FAQ 2 (waiting period) runs to 6 sentences exceeding the 4-sentence target, and FAQ 1 (expungement vs sealing) hits 5 sentences; voice is authentic support-group tone throughout."
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "slug": "why-is-my-criminal-case-taking-so-long",
-  "last_checked": "2026-04-09T21:47:44.530Z",
+  "last_checked": "2026-04-10T02:44:13.678Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,8 +35,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "The timeline table ('Simple misdemeanor 1-4 months... Complex multi-defendant 18-36 months') and the FAQ answers containing '1-4 months, DUIs in 3-6, state felonies in 6-18, federal felonies in 12-24+' present numeric benchmarks without a source cited in the same or immediately preceding sentence, even though the TLDRBox earlier cites BJS."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

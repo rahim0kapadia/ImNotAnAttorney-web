@@ -1,6 +1,6 @@
 {
   "slug": "trafficking-charges-constructive-possession",
-  "last_checked": "2026-04-09T21:47:43.120Z",
+  "last_checked": "2026-04-10T02:27:39.259Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,8 +26,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "Specific statistics like '73% weight discrepancy', '93.9g', '25.59g', '68.3 grams missing', and '21 fingerprints were collected and zero matched' are attributed only to 'in one real case' with no named source (case name, court, or citation)."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "Only 'Daubert motion' appears, which is on the allowed terminology exception list."
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

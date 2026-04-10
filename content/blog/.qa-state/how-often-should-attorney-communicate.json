@@ -1,6 +1,6 @@
 {
   "slug": "how-often-should-attorney-communicate",
-  "last_checked": "2026-04-10T00:13:46.547Z",
+  "last_checked": "2026-04-10T02:38:07.238Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,9 +34,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Post references ABA Model Rule 1.4 (ethics rule, not statute) — no fabricated statute numbers"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "Only organizations cited (ABA, NLADA) — no individual attorney or legal scholar names"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "25-30% bar complaint figure attributed to ABA Standing Committee on Professional Discipline; caseload figures attributed to ABA/NLADA caseload studies"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Procedural claims reference ABA Model Rule 1.4 (national ethics framework) and state bar client assistance programs — no bare jurisdiction-specific deadlines stated as universal"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear in the post"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "No collateral consequence claims (licensing, housing, firearms, voting, immigration) appear in the post"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

@@ -1,6 +1,6 @@
 {
   "slug": "what-happens-if-attorney-misses-deadline",
-  "last_checked": "2026-04-09T21:47:43.971Z",
+  "last_checked": "2026-04-10T02:30:09.942Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,8 +35,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "The 18-20% malpractice claim is sourced inline to 'ABA Standing Committee on Lawyers' Professional Liability'"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "FAIL",
+            "evidence": "'Appellate notices: 30 days from sentencing (this one is absolute)' is stated as a universal procedural rule with no jurisdiction qualifier, and the parenthetical 'this one is absolute' contradicts the trailing disclaimer"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

@@ -1,6 +1,6 @@
 {
   "slug": "case-keeps-getting-continued",
-  "last_checked": "2026-04-10T00:04:31.496Z",
+  "last_checked": "2026-04-10T02:19:51.813Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -52,272 +52,50 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Only cites well-known federal Speedy Trial Act (18 U.S.C. § 3161) with valid Cornell LII link; all other legal rules use general language"
+            "evidence": "Only statute cited is 18 U.S.C. § 3161 (Speedy Trial Act), a well-known federal statute correctly referenced with a verification link"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorneys or legal scholars named; only Bureau of Justice Statistics referenced as a source agency"
+            "evidence": "no issues found — only Bureau of Justice Statistics is cited, which is an agency, not an individual expert"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The 6-month median is attributed to Bureau of Justice Statistics; 70-day federal limit is sourced to the Speedy Trial Act; state timelines use 'Some states' qualifier"
+            "evidence": "The only specific statistic ('median time from arrest to disposition... approximately 6 months, but complex cases routinely take 12–18 months') is attributed to the Bureau of Justice Statistics in the same sentence"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Federal 70-day rule is tied to 18 U.S.C. § 3161; state timelines qualified with 'Some states require' and 'Others have no specific statutory deadline'"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'Federal cases' for the 70-day rule, 'Some states require... 90 days... 180 days', and 'State cases: Vary widely'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "no issues found — no case citations appear in the post"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "no issues found — post contains no collateral consequence claims (licensing, housing, firearms, voting, immigration, etc.)"
           }
         ]
       }
     },
     "slop": {
-      "passed": true,
-      "status": "checked",
-      "details": {
-        "checks_passed": 12,
-        "checks_total": 14,
-        "hard_gate_failures": [],
-        "results": [
-          {
-            "check": "QUESTION_COUNT",
-            "result": "NEEDS_WORK",
-            "reason": "Frontmatter has no question_count field to compare against; body contains approximately 6 attorney-directed questions"
-          },
-          {
-            "check": "CITATION_SOURCING",
-            "result": "PASS",
-            "reason": "Claims sourced to BJS, Sixth Amendment, and 18 U.S.C. § 3161 with Cornell LII link"
-          },
-          {
-            "check": "READABILITY",
-            "result": "PASS",
-            "reason": "Action items use plain language with no undefined jargon in instructions"
-          },
-          {
-            "check": "CLICHE_DENSITY",
-            "result": "PASS",
-            "reason": "None of the flagged cliches appear in the post"
-          },
-          {
-            "check": "VOICE_CONSISTENCY",
-            "result": "PASS",
-            "reason": "Uses second person you/your consistently throughout with no sustained third-person drift"
-          },
-          {
-            "check": "PASSIVE_VOICE_RATIO",
-            "result": "PASS",
-            "reason": "Passive constructions appear occasionally but remain well under 30% of sentences"
-          },
-          {
-            "check": "JARGON_DEFINITION",
-            "result": "NEEDS_WORK",
-            "reason": "Terms like interlocutory appeals and suppression motion are used without explicit first-use definitions"
-          },
-          {
-            "check": "STRUCTURAL_INTEGRITY",
-            "result": "PASS",
-            "reason": "Flows logically from problem to legitimate reasons to illegitimate reasons to rights to actions"
-          },
-          {
-            "check": "CTA_CLARITY",
-            "result": "PASS",
-            "reason": "Multiple CTAs including Case Progress Score link and specific attorney questions to ask"
-          },
-          {
-            "check": "HEDGING_DENSITY",
-            "result": "PASS",
-            "reason": "Action directives are stated imperatively; hedging confined to legal information statements"
-          },
-          {
-            "check": "PARAGRAPH_LENGTH",
-            "result": "PASS",
-            "reason": "No paragraph exceeds 300 words and action-oriented paragraphs stay under 100 words"
-          },
-          {
-            "check": "SECTION_BALANCE",
-            "result": "PASS",
-            "reason": "Word count distributed across Legitimate, Illegitimate, Speedy Trial, Frustration, and Help sections with none dominating"
-          },
-          {
-            "check": "FEAR_ACTION_PAIRING",
-            "result": "PASS",
-            "reason": "Every threat (plea pressure, grinding down, waived rights) is followed by a 5-minute action or specific next step"
-          },
-          {
-            "check": "ENGAGEMENT_ARC",
-            "result": "PASS",
-            "reason": "Opens with courtroom hallway scenario, builds evidence through six reason categories, closes with three-step action plan and score CTA"
-          }
-        ]
-      }
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
     },
     "upl": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "criteria_passed": 14,
-        "criteria_total": 15,
-        "results": [
-          {
-            "criterion": "U1",
-            "result": "PASS",
-            "evidence": "Post uses 'Ask your attorney...' framing throughout and 5-minute actions are self-help steps (logging, asking questions), not directives to take legal action independently"
-          },
-          {
-            "criterion": "U2",
-            "result": "PASS",
-            "evidence": "Each decision section includes attorney redirects like 'discuss your speedy trial rights with your attorney' and 'Ask your attorney directly' within the section itself"
-          },
-          {
-            "criterion": "U3",
-            "result": "PASS",
-            "evidence": "Post discusses patterns generally ('three continuances requested by your attorney with no motions filed between them is a pattern') without evaluating the reader's specific case merits or likely outcome"
-          },
-          {
-            "criterion": "U4",
-            "result": "PASS",
-            "evidence": "Mentions suppression motions and speedy trial demands as concepts ('In some jurisdictions, a speedy trial demand forces the prosecution to proceed or dismiss') but redirects action to 'discuss your speedy trial rights with your attorney'"
-          },
-          {
-            "criterion": "U5",
-            "result": "PASS",
-            "evidence": "Post contains no immigration-related content, so immigration attorney redirect requirement does not apply"
-          },
-          {
-            "criterion": "U6",
-            "result": "PASS",
-            "evidence": "Post does not discuss collateral consequences like housing, licensing, or firearm rights; only cites Speedy Trial Act 18 U.S.C. § 3161 with Cornell LII link for the legal rule it does discuss"
-          },
-          {
-            "criterion": "U7",
-            "result": "PASS",
-            "evidence": "No specific law firms, bail bond companies, or legal service providers are named; only generic references to 'your attorney' and 'the prosecution'"
-          },
-          {
-            "criterion": "U8",
-            "result": "PASS",
-            "evidence": "No instances of 'we recommend,' 'we advise,' or 'we suggest' appear; the post uses 'Ask your attorney' and second-person framing instead"
-          },
-          {
-            "criterion": "U9",
-            "result": "FAIL",
-            "evidence": "The opening scenario ('You are standing in a courtroom hallway...') and the dated example ('Your court date was January 15th. Then it got pushed to February 20th') are not labeled as hypothetical or example scenarios"
-          },
-          {
-            "criterion": "U10",
-            "result": "PASS",
-            "evidence": "Content frames knowledge as empowering better questions ('ask your attorney three questions,' 'A log turns a feeling into a fact') rather than enabling self-representation"
-          },
-          {
-            "criterion": "U11",
-            "result": "PASS",
-            "evidence": "Uses qualifiers throughout like 'Most states,' 'generally,' 'State cases: Vary widely,' 'In some jurisdictions,' and 'approximately 6 months'"
-          },
-          {
-            "criterion": "U12",
-            "result": "PASS",
-            "evidence": "The speedy trial demand statement is qualified with 'In some jurisdictions,' and plea negotiation statements describe general dynamics without guaranteeing outcomes"
-          },
-          {
-            "criterion": "U13",
-            "result": "PASS",
-            "evidence": "Cites Bureau of Justice Statistics for timing data, Sixth Amendment and Speedy Trial Act (18 U.S.C. § 3161) with Cornell LII link for legal framework"
-          },
-          {
-            "criterion": "U14",
-            "result": "PASS",
-            "evidence": "No contradictory legal claims appear; federal vs. state speedy trial timelines are clearly distinguished and caveated"
-          },
-          {
-            "criterion": "U15",
-            "result": "PASS",
-            "evidence": "Case Progress Score is framed as a diagnostic tool — '5 minutes to see what's been done, what's missing, and what to push on next' — not as a substitute for representation, and disclaimer states 'This is legal information, not legal advice'"
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
     },
     "dna": {
-      "passed": true,
-      "status": "checked",
-      "details": {
-        "checks_passed": 11,
-        "checks_total": 12,
-        "needs_work_count": 1,
-        "results": [
-          {
-            "check": "D1_3AM_PANIC",
-            "result": "PASS",
-            "evidence": "Opens with 'standing in a courtroom hallway...for the third time' naming the frustration/fear; H2s are action-oriented ('Legitimate Reasons for Continuances', 'Your Speedy Trial Rights', 'What to Do When You're Frustrated', 'When Delays Actually Help You')"
-          },
-          {
-            "check": "D2_READING_LEVEL",
-            "result": "PASS",
-            "evidence": "Legal terms defined inline (discovery context given, 'excludable' defined, suppression motion explained); paragraphs stay under 4 sentences; action sections read plainly"
-          },
-          {
-            "check": "D3_DO_THIS_NOW",
-            "result": "PASS",
-            "evidence": "'5-minute action: Before you leave the courthouse, ask your attorney one question...' appears before the first H2, bolded, completable immediately with no attorney or computer"
-          },
-          {
-            "check": "D4_ONE_CLEAR_PATH",
-            "result": "PASS",
-            "evidence": "Each section presents a default lead ('The key question: is your attorney using the delay strategically...'); decision points name the variables (who requested, what work done) rather than hedging with 'it depends'"
-          },
-          {
-            "check": "D5_3_ITEM_RULE",
-            "result": "PASS",
-            "evidence": "'What to Do When You're Frustrated' is structured as Step 1/2/3 with three questions; 'When Delays Actually Help You' has 5 bullets but they are grouped/categorized strategic-delay examples not action items"
-          },
-          {
-            "check": "D6_CATALOG_VARIETY",
-            "result": "PASS",
-            "evidence": "system-decoder-post — decodes the continuance process by separating legitimate vs illegitimate reasons and giving diagnostic questions"
-          },
-          {
-            "check": "D7_THREAT_EFFICACY",
-            "result": "PASS",
-            "evidence": "Every threat is paired with action — 'another month of pressure to accept a plea' followed immediately by 'Ask yourself honestly...recognize that feeling'; BJS 6-month stat paired with the central diagnostic question"
-          },
-          {
-            "check": "D8_IDENTITY_PROTECTION",
-            "result": "PASS",
-            "evidence": "No blame language — reader is positioned as someone the system is happening TO ('the system grinds you down', 'delay is happening to you'), never lectured for their situation"
-          },
-          {
-            "check": "D9_FEAR_CLARITY_AGENCY",
-            "result": "PASS",
-            "evidence": "Opens validating frustration ('standing in a courtroom hallway...for the third time'), middle decodes legitimate vs illegitimate reasons, closes on agency with 'A strategic attorney will have an answer immediately'; final line before CTA is an agency statement about naming a specific advantage"
-          },
-          {
-            "check": "D10_PHONE_FIRST",
-            "result": "NEEDS_WORK",
-            "evidence": "Only H2/H3 used and key actions bolded, but the log table has 5 columns (Date, Hearing Type, What Happened, Who Asked, New Date) exceeding the 2-column phone-first limit"
-          },
-          {
-            "check": "D11_SCREENSHOT_SENTENCE",
-            "result": "PASS",
-            "evidence": "Every H2 contains a standalone bolded screenshot sentence under 27 words (e.g., 'The continuance itself is not the problem — the silence about what happens between continuances is the problem.', 'Strategic delay with a named purpose is a weapon — delay without a purpose is a wound.')"
-          },
-          {
-            "check": "D12_SHAREABLE_FAQ",
-            "result": "PASS",
-            "evidence": "All 4 FAQ answers start with direct answers ('Most continuances come from...', 'Yes, and the Sixth Amendment is why', 'There is no fixed cap...', 'It depends entirely on whether someone is using the time'), stay 3-5 sentences, read as peer voice not institutional"
-          }
-        ]
-      }
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
     }
   }
 }

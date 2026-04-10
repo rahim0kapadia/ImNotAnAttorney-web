@@ -1,6 +1,6 @@
 {
   "slug": "wire-fraud-defense-questions",
-  "last_checked": "2026-04-09T21:47:44.881Z",
+  "last_checked": "2026-04-10T02:15:20.028Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,8 +35,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Only cites 18 U.S.C. § 1343, which is the real federal wire fraud statute — correctly identified"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'A $250,000 loss adds 12 levels to your base offense level. A $9.5 million loss adds 22 levels.' — specific sentencing guideline numbers with no named source in the same or preceding sentence"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "Only 'Brady v. Maryland' appears, used as terminology for disclosure obligations — permitted exception"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "FAIL",
+            "evidence": "'Restitution survives bankruptcy and follows you for life' and 'A wire fraud conviction triggers professional license revocations, civil suits, and regulatory proceedings' — both stated as universal facts without attribution to a statute or jurisdictional qualifier"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

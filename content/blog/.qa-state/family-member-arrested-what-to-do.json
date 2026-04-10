@@ -1,6 +1,6 @@
 {
   "slug": "family-member-arrested-what-to-do",
-  "last_checked": "2026-04-10T00:10:28.270Z",
+  "last_checked": "2026-04-10T02:36:44.249Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,24 +34,283 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 13,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "JARGON_DEFINITION"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "Frontmatter lacks explicit question_count field; body contains roughly 15 attorney-directed questions across two lists, consistent with post's stated focus"
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Post makes procedural/common-knowledge claims (jail calls recorded, social media subpoenaed) rather than specific stats or case citations requiring inline sourcing"
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('open your phone's notes app', 'scan your social media', 'start the folder') well within 10th grade level"
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the flagged cliches (end of the day, tip of iceberg, slippery slope, double-edged sword, game changer, wake-up call) appear in the post"
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Consistently uses 'you' and 'your loved one' throughout; brief third-person phrasings never run 2+ consecutive sentences"
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Predominantly active construction; passive usage ('is recorded', 'is being filed') stays well under 30% threshold"
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "FAIL",
+            "reason": "Arraignment, indigent, diversion program, and subpoena are used without inline definitions (3+ undefined legal terms)"
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Logical problem→context→solution→action flow: role definition, jail call rules, finding a lawyer, mistakes to avoid, first meeting prep, CTA close"
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple actionable CTAs: Family Member Case Research product link, Defense Milestone Score, 'Right now' action items in every section"
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct imperatives ('Stop', 'Write the answers down', 'Print the charging documents'); hedging reserved for information claims"
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words; action-oriented 'Right now' paragraphs stay under 100 words each"
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Six main sections share word count roughly evenly; no section approaches 50% of total"
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat (jail call evidence, witness tampering, social media subpoena, burnout) is paired with a specific action within 1-2 sentences per Witte EPPM"
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with 3AM kitchen scenario hook, middle builds case with concrete rules and examples, closes empowering reader with folder-prep action and product CTA"
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 14,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Post contains direct legal-action directives phrased as commands: 'Do not talk to the victim to work it out,' 'Do not talk to the cops to explain,' 'Do not post on social media,' and 'take it down' for existing posts."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Decision/action sections consistently redirect to attorneys — jail call section uses 'We'll talk about that with the lawyer. Not now.'; mistakes section includes 'I'd like to speak with an attorney'; first-meeting section is entirely attorney-focused."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post speaks to a general family-member role and never evaluates the reader's specific case strength or likely outcome."
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "No specific motions, suppression requests, continuances, or subpoenas are recommended as reader actions."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences (no mention of deportation, visa, DACA, or green card), so the immigration-specific redirect requirement does not trigger."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Post does not mention specific collateral consequences (firearm rights, voting rights, housing, professional licensing, student loans), so no sourcing gap exists."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Only general categories are used ('a public defender,' 'a private attorney,' 'State Bar Referral Service') — no specific firm, bail bond company, or provider is named with a recommendation."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "No instances of 'we recommend,' 'we advise,' or 'we suggest' in a legal-action context appear in the post."
+          },
+          {
+            "criterion": "U9",
+            "result": "PASS",
+            "evidence": "Rhetorical scene-setting like 'You are standing in the kitchen at 6 AM' is emotional framing, not a legal-facts hypothetical that could be confused with a real case."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post explicitly frames the reader's role as support: 'Your job is to gather, research, and protect. Not to play lawyer,' and lists 'Trying to play lawyer' as a top mistake."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Qualifiers are used throughout — FAQ uses 'Generally no' and 'Not always'; PD section uses 'Some PD offices are excellent and some are crushed'; diversion described as 'may be considered.'"
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Outcome language is qualified — 'sometimes waiting 24-48 hours... reduces the amount' uses 'sometimes,' and attorney selection advice says to avoid anyone who 'promises an outcome.'"
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Post describes general defensive behaviors and procedural categories (PD vs private vs referral) rather than presenting novel legal strategies requiring attribution."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No internally contradictory legal claims appear — charge categories, call-recording rules, and representation options are each described consistently."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Family Member Case Research is framed as a 'briefing' with 'questions to bring to the attorney meeting,' and the Score tool is called 'a starting point for the conversation you're about to have with an attorney' — both positioned as preparation, not substitution."
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 12,
+        "needs_work_count": 4,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "PASS",
+            "evidence": "Opening names the fear in first 2 sentences ('Your brother got arrested last night...You're the one who can't eat') and H2s like 'Finding a Lawyer Without Getting Ripped Off' and 'What To Bring To The First Attorney Meeting' are action-oriented."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "FAIL",
+            "evidence": "Multiple legal terms used without inline definition: 'indigent', 'witness tampering', 'power of attorney', 'diversion program', 'arraignments', and 'pretrial resolution' all appear without dash/parenthetical definitions."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No immediate-action block exists before the first H2 — the pre-H2 content is narrative framing and the TLDR's 'Your Next Step' points to the paid product, not a 5-minute free action."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "NEEDS_WORK",
+            "evidence": "The 'Finding a Lawyer' section presents three representation options (PD, private, referral service) without naming a default path; the filter sentence about 'answers clearly' comes later and doesn't resolve which of the three to pursue first."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "FAIL",
+            "evidence": "Multiple sections exceed 3 unranked items: the 'what you CAN do' list has 6 bullets, 'Questions to ask any lawyer' has 8 unranked items, and the folder contents list has 7 items — none marked with 'start with these' priority."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "This post uses the system-decoder-post pattern — decoding the unspoken role of 'family case manager' into rules, mistakes, and a meeting-prep system."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Threats are consistently paired with actions: the recorded-calls threat pairs with the 'We'll talk about that with the lawyer. Not now.' rule, and the witness-tampering warning pairs with 'I'd like to speak with an attorney before I answer any questions.'"
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language — the 'Biggest Mistakes' section explicitly reframes with 'Not because you are careless, but because nobody told you the rules,' separating person from situation."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening validates fear and middle reduces unknown to known, but the final sentence is a generic CTA ('Take the free Defense Milestone Score on their behalf — 10 questions, instant results') rather than an agency statement to the reader."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "No tables, only H2 headings used, key actions are bolded, and each H2 section appears to fit within the 300-500 word target without H4+ nesting."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "NEEDS_WORK",
+            "evidence": "Four H2 sections have strong screenshot sentences (e.g., 'The most common way families hurt a case is by trying to help without knowing the rules'), but 'What To Bring To The First Attorney Meeting' and 'What This Post Can't Do' lack a bolded shareable sentence."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "Q1 runs 5 sentences (borderline long) and Q4 ('Public defenders are licensed criminal defense attorneys appointed when the defendant qualifies as indigent') opens in institutional-explainer voice rather than support-group peer voice."
+          }
+        ]
+      }
     }
   }
 }

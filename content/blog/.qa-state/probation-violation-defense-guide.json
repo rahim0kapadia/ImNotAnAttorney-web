@@ -1,6 +1,6 @@
 {
   "slug": "probation-violation-defense-guide",
-  "last_checked": "2026-04-10T00:17:59.671Z",
+  "last_checked": "2026-04-10T02:48:06.022Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -44,8 +44,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — only Bureau of Justice Statistics is referenced, which is an allowed source agency"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "The only statistical claim — 'approximately a third of state prison admissions annually are for probation or parole violations' — is attributed to the Bureau of Justice Statistics in the same sentence"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Timing claims use qualifiers like 'typically runs days to months' and 'within days to weeks'; rules-of-evidence claim is qualified with 'in many jurisdictions' and 'sometimes'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "FAIL",
+            "evidence": "Post repeatedly cites 'Gagnon v. Scarpelli (1973)' and 'Morrissey v. Brewer (1972)' — neither is on the allowed terminology exception list (Brady/Daubert/Frye/Miranda)"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

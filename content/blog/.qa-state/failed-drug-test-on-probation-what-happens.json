@@ -1,6 +1,6 @@
 {
   "slug": "failed-drug-test-on-probation-what-happens",
-  "last_checked": "2026-04-10T00:10:03.899Z",
+  "last_checked": "2026-04-10T02:33:54.003Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 19.3,
         "pattern_score": 10,
-        "uniformity_score": 40.9,
+        "uniformity_score": 41,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 40,
             "matches": [
-              "40 em dashes in 2333 words"
+              "40 em dashes in 2331 words"
             ],
             "points_added": 10
           }
@@ -25,24 +25,283 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Procedural claims are qualified with 'in most jurisdictions', 'many jurisdictions', 'depending on jurisdiction'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 10,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "CITATION_SOURCING"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "NEEDS_WORK",
+            "reason": "Frontmatter has no question_count field to compare against the 10 attorney questions in the body"
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "FAIL",
+            "reason": "Cross-reactivity claims reference 'published forensic toxicology research' and 'medical literature' generically without specific studies, statutes, or named sources for 5+ factual assertions"
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language and technical terms like immunoassay and GC-MS are defined immediately on first use"
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the flagged cliches appear in the post"
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "NEEDS_WORK",
+            "reason": "Second person dominates but shifts to 'the defendant' / 'defendants' for 2-3 consecutive sentences in the judge-factors and treatment-engagement sections"
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Passive constructions appear but well under the 30% threshold; most sentences are active"
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "'UA' and 'chain of custody' are used without definition; preponderance of evidence only defined in FAQ not body"
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Flows logically from scenario to judge questions to testing science to factors to pre-hearing actions to attorney questions to context"
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Includes 10 attorney questions, multiple 'Right now:' action prompts, and a clear 'Start with treatment' closer"
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements like 'enroll immediately' and 'document everything' are direct; hedging is confined to outcome predictions where appropriate"
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words and action-oriented paragraphs stay under 100 words"
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Word count is distributed across six sections with no section exceeding roughly 25-30% of total"
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat (revocation, two-year sentence, jail) is followed within 1-2 sentences by a concrete action like self-report, enroll in IOP, or document compliance"
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with visceral scenario, builds evidence through testing science and judge factors, closes empowering reader with specific documented actions"
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 12,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Post gives directive legal instruction: 'If your jurisdiction allows it, request confirmatory testing on the original sample' — phrased as a command to take procedural action."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Every decision-action section includes proximate attorney redirects ('your attorney will need this,' 'Worth exploring with your attorney,' dedicated 'Questions Worth Exploring With Your Attorney' section)."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post describes general patterns ('Eight months of clean tests followed by one positive is a very different pattern') without rendering judgment about the specific reader's case strength or likely outcome."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Post recommends specific procedural step: 'If your jurisdiction allows it, request confirmatory testing on the original sample' — recommending a procedural action rather than explaining what confirmatory testing is."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not touch immigration consequences (deportation, visa, DACA, green card) at all, so immigration-specific redirect is not triggered."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Post does not assert any collateral consequences (firearms, voting, housing, licensing) that would require statutory attribution."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Only general categories mentioned (NA, AA, SMART Recovery, Refuge Recovery are support-group categories, not recommended legal service providers or firms)."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "No first-person plural recommendations appear; the post consistently uses 'your attorney' rather than 'we recommend' or 'we advise.'"
+          },
+          {
+            "criterion": "U9",
+            "result": "PASS",
+            "evidence": "Second-person scene-setting ('You are sitting in the probation office') is direct reader framing, not a hypothetical presented as a real case that could be confused with actual facts."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post consistently frames knowledge as enabling the reader to work with an attorney ('Questions Worth Exploring With Your Attorney,' 'Your attorney will need this'), not as replacing representation."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Post uses general qualifiers throughout: 'Most jurisdictions,' 'typically,' 'varies by state and by the probation office policy,' 'often results in.'"
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Outcome language is hedged with 'often' and 'typically' ('often results in increased treatment intensity,' 'that argument often works'); no guarantees of specific legal outcomes."
+          },
+          {
+            "criterion": "U13",
+            "result": "FAIL",
+            "evidence": "Legal strategies like cross-reactivity defense and challenging immunoassay reliability are presented without attribution to any named case, statute, scholar, or attorney — sources referenced only vaguely as 'published forensic toxicology research.'"
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims appear within the post; statements about graduated sanctions, standards of proof, and judicial discretion are internally consistent."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "No ImNotAnAttorney.com products (Case Decoder, Intelligence Brief, etc.) are mentioned in the post."
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 12,
+        "needs_work_count": 3,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "FAIL",
+            "evidence": "Opening names fear well ('You relapsed. You failed a UA.'), but 4 of 6 H2s are topical: 'Immunoassay vs. Confirmatory Testing — The Science', 'What Judges Actually Consider at a Drug Test Violation Hearing', 'Questions Worth Exploring With Your Attorney', and 'The Bigger Picture' — none tell the reader what they GET."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "NEEDS_WORK",
+            "evidence": "GC-MS, IOP, and immunoassay are defined inline, but 'revocation' and 'chain of custody' are used repeatedly without inline definitions; paragraphs stay under 4 sentences."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "Before the first H2 the only pre-section content is 'Stop. Breathe. One failed test is not the end' — reassurance, not a concrete 5-minute action block; the first real 'right now' action is buried inside the second H2 section."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Every decision point leads with a default: 'Enrolling in treatment before the hearing — not after — is the single strongest move you can make' and 'If you relapsed — enroll in treatment immediately. Not after the hearing. Now.'"
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "FAIL",
+            "evidence": "'Questions Worth Exploring With Your Attorney' presents 10 unranked numbered items, and 'What You Can Do Before the Hearing' contains 7 unranked bolded action items with no 'start with these' priority grouping."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "This post uses the system-decoder-post pattern — decoding how drug testing science and judicial discretion actually work behind the violation process."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Scary framings are consistently paired with action, e.g. the 'revocation becomes likely' for continued-use category is immediately followed by treatment enrollment guidance, and no section closes on fear without a paired move."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language detected — 'You relapsed' is descriptive not moralizing, and throughout the post the person is separated from the situation with no 'you should have' or 'if you had' patterns."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "PASS",
+            "evidence": "Opens by validating fear ('your brain is now doing the math'), middle reduces unknowns (immunoassay science, judge factors), closes on agency: 'You are going to get through this. Start with treatment. Everything else follows from there.'"
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "NEEDS_WORK",
+            "evidence": "No tables, only H2 headings used, key actions are bolded — but 'What Judges Actually Consider' and 'What You Can Do Before the Hearing' both run 500-600+ words before the next H2."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "NEEDS_WORK",
+            "evidence": "Four H2 sections have strong shareable bolded sentences (e.g. 'An immunoassay tells you something looks like a drug — a GC-MS tells you what it actually is.'), but 'Questions Worth Exploring With Your Attorney' and 'The Bigger Picture' lack any bolded screenshot-worthy sentence."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All 5 FAQ answers start with the direct answer (no hedging preamble), stay within 2-4 sentences, and read in peer-support voice rather than institutional — e.g. 'Self-reporting almost always helps. Judges distinguish between defendants who come forward and those who get caught.'"
+          }
+        ]
+      }
     }
   }
 }

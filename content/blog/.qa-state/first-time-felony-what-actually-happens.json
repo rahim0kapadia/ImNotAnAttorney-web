@@ -1,6 +1,6 @@
 {
   "slug": "first-time-felony-what-actually-happens",
-  "last_checked": "2026-04-10T00:12:32.728Z",
+  "last_checked": "2026-04-10T02:51:39.705Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 23.3,
         "pattern_score": 15,
-        "uniformity_score": 42.6,
+        "uniformity_score": 42.7,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 20,
             "matches": [
-              "20 em dashes in 2245 words"
+              "20 em dashes in 2249 words"
             ],
             "points_added": 10
           },
@@ -34,24 +34,284 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "The 33% figure is sourced to Bureau of Justice Statistics in both the TLDR context and body; timeline ranges are general estimates not factual statistics"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Arraignment '24-48 hours' is a general timeline estimate; diversion/deferred adjudication claims are qualified with 'in most jurisdictions' and 'in some states'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "Collateral consequences are qualified ('can keep a felony off your permanent record', 'in some states') rather than stated as universal fact"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 11,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "QUESTION_COUNT",
+          "CITATION_SOURCING"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "FAIL",
+            "reason": "Frontmatter has no question_count field to compare against the ~14 attorney-directed questions in the body"
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "FAIL",
+            "reason": "Four unsourced factual claims: 'Most cases don't reach trial,' 'prosecutors routinely reduce felonies to misdemeanors,' 'juries are often sympathetic,' and 'Continuances are extremely common'"
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain direct language and legal terms are introduced with everyday explanations"
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the flagged cliches appear in the post"
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Second person dominates throughout; occasional 'first-time defendants' never runs for 2+ consecutive sentences"
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Passive constructions appear occasionally but well under 30% of sentences"
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "'Probable cause affidavit' and 'chain of custody' are used without inline definitions"
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Logical arc: reassurance stat, 5 procedural stages in order, common mistakes, timeline, CTA"
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Case Decoder link, Case Progress Score link, and multiple attorney question lists provide clear next steps"
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are mostly imperative ('DO NOT talk,' 'Delete social media,' 'Ask your attorney') with minimal hedging"
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words and action paragraphs stay under 100 words"
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "The five stages plus mistakes/timeline sections are roughly balanced with no section over 50%"
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Each scary scenario (3 AM Googling, booking, anxiety) is immediately followed by a concrete action like 'Close the search tabs' or 'Delete social media apps tonight'"
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with a visceral scenario hook, builds evidence through 5 stages with a BJS statistic, and closes with empowering CTAs"
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 11,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Multiple imperative directives appear as standalone commands: 'Delete social media apps from your phone tonight,' 'Close the search tabs. Write down 33% not convicted,' 'Request a copy of your discovery from your attorney this week,' and 'Tonight, search [your state] first offender diversion program'."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Every stage section ends with an 'Ask your attorney:' block containing proximate redirects to counsel (e.g., Stages 1-4 each close with attorney-question lists)."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "The post speaks in general terms about first-time offender outcomes and does not render judgments about the specific reader's case strength or likely result."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "Stage 3 effectively prescribes motion practice: 'Ask your attorney this week: What motions are we filing, and what is the deadline for each?' combined with 'A single successful suppression motion can collapse the prosecution's entire case' frames filing motions as a recommended action."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "The post contains no discussion of immigration, deportation, visas, DACA, or green card consequences, so the immigration-specific redirect requirement is not triggered."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "The only empirical claim ('approximately 33% of felony defendants in state courts are not convicted') is attributed to the Bureau of Justice Statistics; no unsourced collateral consequences (licenses, firearms, voting, housing) are asserted."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "No specific bail bond companies, law firms, public defender offices, or legal service providers are named anywhere in the post."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "The only first-person plural usage is 'We research. You ask. Your attorney answers' and 'We research your case,' which describe the product's research role, not legal-action recommendations."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Several narrative scenarios ('You are 23 years old and just got arrested for the first time,' 'You are sitting at the defense table. The jury is being seated,' 'You are reading the probable cause affidavit and something does not add up') are presented without hypothetical/example labels."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Framing consistently positions the reader as a partner to counsel: 'Your attorney works for you. Be a partner, not a passenger' and 'We research. You ask. Your attorney answers' — knowledge is framed as enabling better questions, not self-representation."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Legal rules are qualified with general-information language such as 'Diversion, deferred adjudication, and charge reduction exist in most jurisdictions,' 'typically 6-12+ months total,' and 'In some states, you're found guilty but the conviction doesn't go on your record'."
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "Outcome-guarantee language appears without jurisdictional qualification: 'Diversion Programs. Complete a program... and your charges are dismissed. Record stays clean' and 'A single successful suppression motion can collapse the prosecution's entire case'."
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "The empirical claim is attributed to the Bureau of Justice Statistics, and the procedural concepts discussed (suppression, diversion, deferred adjudication) are general legal categories rather than proprietary strategies presented as the blog's own positions."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims appear; charge classification, timelines, and outcome categories are internally consistent across the post."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Product mentions frame the offering as research support alongside counsel: 'We research your case and hand you the exact questions that make your defense real' and 'We research. You ask. Your attorney answers'."
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 8,
+        "checks_total": 12,
+        "needs_work_count": 4,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening names the fear well ('staring at the word FELONY'), but H2s like 'Stage 1: The Arrest', 'Stage 2: Discovery', and 'The Timeline' are topical/descriptive rather than action-oriented."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Legal terms like 'discovery', 'arraignment', 'deferred adjudication', and 'withhold of adjudication' are defined inline on first use; paragraphs stay under 4 sentences."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "NEEDS_WORK",
+            "evidence": "Before the first H2, the reader is told to 'Take a breath' but there's no formatted immediate-action block — the first concrete action ('Close the search tabs. Write down 33% not convicted') appears inside Stage 1."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each stage names a clear default action ('say nothing to police without an attorney', 'Request a copy of your discovery this week', 'Ask your attorney: Am I eligible for diversion')."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "NEEDS_WORK",
+            "evidence": "'The Common Mistakes' section lists 5 unranked items without 'start with these' priority markers, and Stage 1 'rules that matter' has 5 bullets."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "This post uses the timeline-post structural pattern (chronological stages with deadlines from arrest through trial)."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "The 33% statistic is paired with 'Close the search tabs. Write down 33%...'; the 'biggest threat is your own impulse to talk' is paired with 'Delete social media apps from your phone tonight.'"
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Opening explicitly separates person from situation ('something went terribly wrong one night', 'made a mistake') with zero 'you should have' lecturing language."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening validates fear, middle explains the process, but the final sentence is a generic CTA/score offer ('Take the free Case Progress Score') rather than a standalone agency statement."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "Timeline table has 2 columns, only H2 headings used, key actions are bolded, and sections stay within the 300-500 word range."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Every H2 section contains a standalone bolded sentence under 27 words (e.g., 'A single successful suppression motion can collapse the prosecution's entire case', 'The burden is on the prosecution to prove every element beyond a reasonable doubt')."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All three FAQ answers start with direct answers ('Arrest, booking...', 'Not necessarily', 'Yes'), stay within 2-4 sentences, and read as peer voice rather than institutional."
+          }
+        ]
+      }
     }
   }
 }

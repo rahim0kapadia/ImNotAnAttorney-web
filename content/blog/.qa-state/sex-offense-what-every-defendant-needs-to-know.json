@@ -1,6 +1,6 @@
 {
   "slug": "sex-offense-what-every-defendant-needs-to-know",
-  "last_checked": "2026-04-09T21:47:42.656Z",
+  "last_checked": "2026-04-10T02:25:42.453Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,8 +35,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 3,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "FAIL",
+            "evidence": "Specific state statute cited: 'any sexual contact with someone under 18 is statutory rape under Penal Code 261.5' — state statute citation without verification URL violates the no-hallucinated-legal-data rule"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "FAIL",
+            "evidence": "Names individual legal expert: 'Decades of peer-reviewed research — led by psychologist Elizabeth Loftus' and 'Dr. Elizabeth Loftus, memory science research' — Loftus is a named legal/expert-witness figure in criminal defense"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "Multiple statistics lack named sources, including 'sex offense cases go to trial at roughly four times the rate of other federal crimes', 'Research has found that documented false allegations contribute to 45% of sexual assault wrongful convictions', 'bail typically ranges from $50,000 to over $500,000', and 'Post-conviction DNA testing in Virginia found a wrongful conviction rate of 11.6%'"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — procedural claims are jurisdiction-qualified (Tennessee, Washington HB 1028, federal International Megan's Law, 'depending on jurisdiction', '45 states and DC')"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — only 'Miranda rights' and 'Miranda' appear, which are on the allowed terminology exception list"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found — collateral consequences are qualified with 'generally', 'most jurisdictions', 'depending on the offense and jurisdiction', or attributed to specific laws like International Megan's Law"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

@@ -1,6 +1,6 @@
 {
   "slug": "security-clearance-criminal-charge",
-  "last_checked": "2026-04-09T21:47:42.458Z",
+  "last_checked": "2026-04-10T02:24:02.191Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,9 +25,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Post references SEAD 3 and SEAD 4 (federal directives, not statutes) with no § numbers or code citations"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "'13 National Adjudicative Guidelines (SEAD 4)' is sourced; other numbers ($160K, 18 months, three weeks, six years) are narrative/hypothetical scenarios not factual stat claims"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "SEAD 3 reporting requirement qualified with 'Most agencies interpret that as a few business days'; 20-day SOR response window is cited within explicit federal DOHA context"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "Clearance consequences qualified throughout with 'triggers a review, not a pink slip,' 'does not automatically,' and 'can'; federal marijuana treatment attributed to 'federal clearance adjudication'"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

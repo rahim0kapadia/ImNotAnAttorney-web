@@ -1,6 +1,6 @@
 {
   "slug": "federal-investigation-what-to-expect",
-  "last_checked": "2026-04-10T00:10:53.082Z",
+  "last_checked": "2026-04-10T02:41:06.128Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,7 +26,7 @@
             "severity": "style",
             "count": 53,
             "matches": [
-              "53 em dashes in 3645 words"
+              "53 em dashes in 3649 words"
             ],
             "points_added": 10
           }
@@ -35,23 +35,280 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Only cites 18 U.S.C. 1001 (false statements) and 18 U.S.C. § 1519 (obstruction) — both real, well-known federal statutes correctly characterized"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "Multiple unsourced statistics: 'six to eighteen months' investigation length, '20 years' obstruction penalty, 'five years' and 'ten' year statutes of limitations, '6-12 months' discovery, '1-4 weeks' trial, '60-90 days' sentencing, '1 to 5 years' case timeline — only the 90% plea rate is sourced to Bureau of Justice Statistics"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Entire post is framed as federal investigations and procedural claims (arraignment timing, sentencing timing, statute of limitations) are qualified with 'usually' and explicitly scoped to 'federal offenses' / 'financial institution fraud'"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          }
+        ]
+      }
     },
     "slop": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 12,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "NEEDS_WORK",
+            "reason": "Frontmatter has no question_count field to verify against; body contains ~5 attorney-directed questions in the 'Ask every prospective attorney' list"
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Key claims cite 18 U.S.C. § 1001, 18 U.S.C. § 1519, and Bureau of Justice Statistics; fewer than 2 unsourced factual claims remain"
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain direct language ('Say nothing', 'Hire a federal criminal defense attorney') without undefined jargon"
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the flagged cliches ('at the end of the day', 'tip of the iceberg', etc.) appear in the post"
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Post maintains second person 'you/your' throughout all sections without drifting to third person"
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Active voice dominates; passive constructions appear only in legal context ('were subpoenaed', 'are charged') well below 30%"
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "Target/subject/witness, arraignment, discovery, indictment, and proffer are all defined, but AUSA is used without definition on first appearance"
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Clean problem→context→48-hour playbook→don'ts→proffer→timeline→bottom line progression with no orphaned paragraphs"
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple actionable CTAs: Case Decoder link, Case Progress Score link, internal guides, and the 'five words' script"
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are firm and imperative ('Do not delete', 'Hire', 'Say nothing'); hedging appears only in information sections about exposure"
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs are tightly scoped; action paragraphs stay well under 100 words and no explanatory paragraph approaches 300"
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "The 48-hour playbook is the largest section but remains under 50% of total word count; other sections carry meaningful weight"
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat (20 years for obstruction, § 1001 felony, fleeing consequences, 1-5 year timeline) is immediately paired with a specific action"
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong scenario hook (FBI at door), evidence-rich middle (target letter, subpoena, proffer mechanics), empowering close ('The next 48 hours are yours')"
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 12,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Post contains numerous directives framed as commands: 'say five words', 'Do not: Delete emails...Shred documents...Wipe your computer', 'Don't flee', 'Hire a Federal Criminal Defense Attorney' — presented as actions the reader must take, not questions to ask an attorney."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Every action section directs reader to an attorney within the same section ('call a federal criminal defense attorney', 'Let them advise you on preservation obligations', 'Your attorney should be advising you on this extensively')."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post describes general patterns ('Federal investigations are slow', 'Most federal cases end in guilty pleas') without rendering judgments about the specific reader's case strength or likely outcome."
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "Motions are described as attorney functions ('Your attorney files motions to suppress evidence, dismiss charges') rather than recommended as reader actions."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences (deportation, visa, DACA, green card) so the immigration-specific redirect is not triggered."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Statutory consequences cited are attributed to specific statutes: '18 U.S.C. § 1001' for false statements, '18 U.S.C. § 1519' for obstruction (up to 20 years)."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Only government agencies (FBI, IRS CI, DOJ, Postal Inspection Service, Bureau of Justice Statistics) are named; no specific law firms, bail bond companies, or legal service providers are recommended."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "No instances of 'we recommend,' 'we advise,' or 'we suggest' in legal-action contexts; recommendations are attributed to 'your attorney' or presented in second person."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Second-person narrative scenarios ('Two men in dark suits are standing at your office reception desk', 'You open your mailbox and there is a letter', 'You are sitting in a conference room with your attorney') are not labeled as hypothetical or example and could be mistaken for the reader's actual situation."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post repeatedly emphasizes hiring a federal criminal defense attorney within 48 hours and consulting counsel before any decision, framing knowledge as preparation for attorney engagement, not self-representation."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Post uses qualifying language throughout: 'typically investigate for 6-18 months', 'usually within days', 'around 90%', 'in most cases', and describes legal rules generally rather than as certainties applying to the reader."
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "Outcome guarantees appear without qualification: 'the defendants who get the best outcomes in federal cases are the ones who did the right things in the first 48 hours' and 'The defendants who survive federal investigations — who get favorable outcomes or avoid charges entirely — are the ones who took it seriously from hour one.'"
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Legal rules are attributed to statutes (18 U.S.C. § 1001, § 1519), DOJ policy, Federal Sentencing Guidelines, and Bureau of Justice Statistics rather than presented as the blog's original legal positions."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory factual claims about law appear within the post; statute-of-limitations figures, timeline ranges, and classification definitions are internally consistent."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Case Decoder is explicitly framed as a research tool: 'gives you the specific questions to bring to your attorney. No legal advice — just the information and leverage you need to fight smart.'"
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 12,
+        "needs_work_count": 5,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "FAIL",
+            "evidence": "Opening narrative names the fear well, but 5+ H2s are purely topical ('First: Understand What a Federal Investigation Actually Is', 'The Target Letter', 'The Grand Jury Subpoena', 'The Proffer: What It Is and Why It Matters', 'The Timeline Nobody Tells You About') with no implied action."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "NEEDS_WORK",
+            "evidence": "Most legal terms defined inline (target letter, subject, proffer, 18 U.S.C. § 1001), but 'AUSA', 'Federal Sentencing Guidelines', 'derivative use', and 'indictment' appear without inline definitions on first use."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "PASS",
+            "evidence": "TLDRBox before the first H2 provides four numbered concrete actions formatted as an immediate-action block, including 'invoke your right to counsel' with the exact words to say."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "NEEDS_WORK",
+            "evidence": "Most decision points lead clearly ('A federal criminal defense attorney — not a state-level one'), but the subpoena section closes with 'do you comply, invoke the Fifth, or negotiate?' and the proffer section punts to 'strategic tool that can help or hurt' without naming a default."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "FAIL",
+            "evidence": "The 'Do not:' list under Hour 12-24 contains 7 unranked bullet items (delete emails, shred, wipe, move money, ask someone else, post social, clean up) with no priority markers, and 'What NOT to Do' section has 5 unranked Don't items."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "Structural pattern: timeline-post — uses chronological 'Hour 0-4 / 4-12 / 12-24 / 24-48' playbook structure plus a multi-year case timeline."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every threat is paired with action within 2 sentences: 'up to 20 years in federal prison' → 'Tell your attorney what documents exist'; '90% end in guilty pleas' → 'read how to evaluate a plea deal'; '18 U.S.C. 1001 ... separate felony' → 'safest number of words is zero'."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language — no 'you should have' or 'if you had' patterns; closing 'Don't be the person who talked when they should have listened' is framed as future action, not past blame."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "PASS",
+            "evidence": "Opening validates fear ('hands are shaking, mind racing'), middle reduces unknown to known (timeline/classifications/proffer), closing ends on agency: 'The clock started when you found out. The next 48 hours are yours. Use them.'"
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "NEEDS_WORK",
+            "evidence": "No tables and only H2/H3 levels used, but 'What NOT to Do During a Federal Investigation' section runs long (~500+ words with 7-item Do-not list plus 5 Don't paragraphs) and 'First: Understand What a Federal Investigation Actually Is' also pushes the 500-word threshold."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "NEEDS_WORK",
+            "evidence": "7 of 8 H2 sections have strong bolded screenshot-worthy sentences (e.g. 'The safest number of words to say to a federal agent without a lawyer present is zero'), but 'The Bottom Line' H2 contains no bolded standalone sentence."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "First FAQ is direct and well-sized, but the second FAQ runs 6 sentences ('No. Say five words... Then stop. Federal agents are trained... Under 18 U.S.C. 1001... The safest number...'), slightly exceeding the 2-4 sentence target."
+          }
+        ]
+      }
     }
   }
 }

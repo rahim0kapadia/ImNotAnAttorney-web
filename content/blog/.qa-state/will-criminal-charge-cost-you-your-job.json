@@ -1,6 +1,6 @@
 {
   "slug": "will-criminal-charge-cost-you-your-job",
-  "last_checked": "2026-04-09T21:47:44.739Z",
+  "last_checked": "2026-04-10T02:44:35.087Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,8 +26,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Post references federal frameworks generally (FMCSA, FCRA, Title VII, SEAD 3, Federal Deposit Insurance Act) without fabricated section numbers"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorneys or legal scholars named; only agencies like EEOC, FINRA, NELP, FMCSA"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'Over 70 million Americans have a criminal record' appears in the TLDR Key Stat without a named source in the same or preceding sentence, and '37 states and 150 cities' appears in the FAQ and TLDR without an inline source"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "FAIL",
+            "evidence": "'A first DUI offense typically means a 1-year CDL disqualification. A second means lifetime disqualification' is stated as a bare universal rule without 'in most states' qualifier in that sentence, and 'Often 30 days, sometimes less' for licensing board self-reporting lacks a jurisdiction qualifier"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear in the post"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "Collateral consequences are consistently qualified with 'can', 'may', 'many states', 'depends on', or attributed to specific regulatory frameworks like FMCSA, FINRA, SEAD 3"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

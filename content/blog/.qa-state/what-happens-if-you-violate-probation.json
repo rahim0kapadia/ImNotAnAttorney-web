@@ -1,6 +1,6 @@
 {
   "slug": "what-happens-if-you-violate-probation",
-  "last_checked": "2026-04-09T21:47:44.069Z",
+  "last_checked": "2026-04-10T02:30:57.847Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -44,8 +44,43 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Only statute references are 'Georgia SB 105' (jurisdiction-qualified) and 'U.S. Sentencing Guidelines Chapter 7' (real federal reference with link)"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorneys or legal scholars named; only source agencies (Bureau of Justice Statistics, U.S. Sentencing Commission)"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'some jurisdictions allow \"shock\" jail time (typically 30-180 days)' — unsourced time-window statistic with no named source"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "State-specific procedural claims are qualified with 'some states' / 'most judges'; federal claims cite U.S. Sentencing Guidelines Chapter 7"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "FAIL",
+            "evidence": "Cites 'Morrissey v. Brewer (1972)' and 'Gagnon v. Scarpelli (1973)' in both FAQ and body — case citations not on the allowed exceptions list"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "No collateral consequence claims (licensing, voting, firearms, housing, immigration) appear in the post"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,

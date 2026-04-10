@@ -1,6 +1,6 @@
 {
   "slug": "should-you-fire-your-lawyer",
-  "last_checked": "2026-04-09T21:47:42.826Z",
+  "last_checked": "2026-04-10T02:25:59.914Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,9 +34,44 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "credits_depleted"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "Dollar amounts ($10,000, $7,500) are hypothetical examples, not factual statistics; no unsourced data claims"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Refund claim qualified with 'In most jurisdictions'; file-request right stated generally without jurisdiction-specific deadline claims"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "no issues found"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "Plea consequences listed generally ('immigration, employment, civil rights') without universal factual claims"
+          }
+        ]
+      }
     },
     "slop": {
       "passed": false,
