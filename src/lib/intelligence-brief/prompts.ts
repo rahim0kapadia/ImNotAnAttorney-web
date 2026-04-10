@@ -162,7 +162,13 @@ SELF-VERIFICATION before output:
 - [ ] Jurisdiction-specific resolution timeline
 - [ ] Next milestone from actual court date
 - [ ] Bottom Line with 1 sentence + 1 action
-- [ ] Zero banned phrases`,
+- [ ] Zero banned phrases
+
+${v.bench_jury_divergence_summary ? `<tier9_data context="War Room+ only — bench vs jury divergence for roadmap timing">
+BENCH VS JURY DIVERGENCE DATA (verified, with source URLs):
+${v.bench_jury_divergence_summary}
+INSTRUCTION: Incorporate into Section 1c (The Two Paths) — use this data to inform the bench vs jury election discussion. Present the divergence as verified data, cite source URLs. Do NOT recommend bench or jury — present the data and generate an attorney question.
+</tier9_data>` : ""}`,
   };
 }
 
@@ -249,7 +255,13 @@ SELF-VERIFICATION:
 - [ ] Case Progress Score with 6 dimensions
 - [ ] Gaps framed as "CLARIFY", never "failure"
 - [ ] Communication options guide present
-- [ ] Zero banned phrases`,
+- [ ] Zero banned phrases
+
+${v.similar_case_matches ? `<tier9_data context="War Room+ only — similar case matches for outcome grounding">
+SIMILAR CASE MATCHES (k-NN verified, with source URLs):
+${v.similar_case_matches}
+INSTRUCTION: Weave into Section 2a — "Cases like yours that resulted in acquittal/dismissal" as grounding data. Present as verified case matches with source URLs. Frame as hope-grounding: "Among cases with similar facts, here's what happened." Do NOT present as predictions.
+</tier9_data>` : ""}`,
   };
 }
 
@@ -355,7 +367,13 @@ SELF-VERIFICATION:
 - [ ] TIME-SENSITIVE markers on deadlines within 30 days
 - [ ] Plea framework matches plea status
 - [ ] Zero specific percentages from training data
-- [ ] Zero banned phrases`,
+- [ ] Zero banned phrases
+
+${v.pairing_matrix_summary ? `<tier9_data context="War Room+ only — judge×prosecutor motion grant rates">
+JUDGE-PROSECUTOR PAIRING DATA (verified, with source URLs):
+${v.pairing_matrix_summary}
+INSTRUCTION: Integrate into Section 4a (Motion Landscape) — for each motion category, note this judge's grant rate on this prosecutor's motions. This is verified court data, not training data. Cite source URLs. Frame as intelligence for the attorney meeting: "Ask your attorney how this pairing data changes the motion strategy."
+</tier9_data>` : ""}`,
   };
 }
 
@@ -460,7 +478,13 @@ SELF-VERIFICATION:
 - [ ] Every domain row: impact + what you can do + attorney question
 - [ ] Immigration: if non-citizen, CRITICAL flagged with Padilla reference
 - [ ] Family & Custody: ALWAYS present
-- [ ] Zero banned phrases`,
+- [ ] Zero banned phrases
+
+${v.sentencing_outlier_flags ? `<tier9_data context="X-Ray+ only — sentencing outlier flags for risk assessment">
+SENTENCING OUTLIER DATA (verified, with source URLs):
+${v.sentencing_outlier_flags}
+INSTRUCTION: Integrate into Section 5b (Life Impact Map) — in the sentencing/penalty domain, present this judge's sentencing deviation as verified data. Frame as: "Based on verified court records, this judge sentences [above/below] median for this charge type." Always pair with protective action and attorney question. Cite source URLs.
+</tier9_data>` : ""}`,
   };
 }
 
@@ -709,7 +733,19 @@ SELF-VERIFICATION:
 - [ ] Jurisdiction Profile county-specific
 - [ ] Upgrade Callout: blockquote at end with X-Ray pricing ($2,497), credit language, soft close
 - [ ] Zero specific percentages from training data
-- [ ] Zero banned phrases (including standalone "should" in directives)`,
+- [ ] Zero banned phrases (including standalone "should" in directives)
+
+${v.judge_quote_library ? `<tier9_data context="IB+ — judge quote library for Section 3e">
+JUDGE QUOTE LIBRARY (verified court records, with source URLs):
+${v.judge_quote_library}
+INSTRUCTION: Integrate into Section 3e (Jurisdiction Intelligence Summary). Present 3-5 direct quotes from this judge on topics matching the defendant's charge. Each quote must include source URL. Frame as: "In [case name], Judge [name] stated: '...'" This is verified court record data. Never paraphrase — use exact quotes.
+</tier9_data>` : ""}
+
+${v.appellate_trends_summary ? `<tier9_data context="IB+ — appellate trends for prosecution overreach signal">
+APPELLATE TRENDS (verified, with source URLs):
+${v.appellate_trends_summary}
+INSTRUCTION: Integrate into Section 3e — present the reversal/overreach rate as verified data. Frame as intelligence: "In this circuit, [charge] convictions are reversed at [X]% — [above/below] the baseline." Always cite source URLs. Pair with attorney question about appeal preservation.
+</tier9_data>` : ""}`,
   };
 }
 
@@ -1027,6 +1063,109 @@ SELF-VERIFICATION:
 }
 
 // ============================================================
+// TIER 9 — FORENSIC DATA APPENDIX
+// ============================================================
+
+/**
+ * Appendix F: Tier 9 Forensic Data Sheet.
+ *
+ * Renders ALL Tier 9 data the buyer's tier unlocks as structured tables
+ * with source URLs. Low temperature — factual output only, no narrative.
+ * Tier-gated: only sections with populated data are rendered.
+ */
+export function buildTier9DataAppendix(v: IBVariables): PromptConfig {
+  // Collect which Tier 9 data blocks are available
+  const blocks: string[] = [];
+
+  if (v.judge_quote_library) {
+    blocks.push(`<judge_quotes>\n${v.judge_quote_library}\n</judge_quotes>`);
+  }
+  if (v.appellate_trends_summary) {
+    blocks.push(`<appellate_trends>\n${v.appellate_trends_summary}\n</appellate_trends>`);
+  }
+  if (v.sentencing_outlier_flags) {
+    blocks.push(`<sentencing_outliers>\n${v.sentencing_outlier_flags}\n</sentencing_outliers>`);
+  }
+  if (v.officer_reliability_crosscase) {
+    blocks.push(`<officer_reliability>\n${v.officer_reliability_crosscase}\n</officer_reliability>`);
+  }
+  if (v.pairing_matrix_summary) {
+    blocks.push(`<judge_prosecutor_pairing>\n${v.pairing_matrix_summary}\n</judge_prosecutor_pairing>`);
+  }
+  if (v.bench_jury_divergence_summary) {
+    blocks.push(`<bench_jury_divergence>\n${v.bench_jury_divergence_summary}\n</bench_jury_divergence>`);
+  }
+  if (v.similar_case_matches) {
+    blocks.push(`<similar_cases>\n${v.similar_case_matches}\n</similar_cases>`);
+  }
+  if (v.codefendant_divergence_summary) {
+    blocks.push(`<codefendant_divergence>\n${v.codefendant_divergence_summary}\n</codefendant_divergence>`);
+  }
+  if (v.plea_discount_curve_summary) {
+    blocks.push(`<plea_discount_curve>\n${v.plea_discount_curve_summary}\n</plea_discount_curve>`);
+  }
+
+  // If no Tier 9 data at all, return empty section
+  if (blocks.length === 0) {
+    return {
+      sectionKey: "tier9-data-appendix",
+      model: "claude-sonnet-4-6",
+      temperature: 0.1,
+      maxTokens: 100,
+      systemPrompt: "Return an empty string. No Tier 9 data available for this report.",
+      userPrompt: "No Tier 9 data. Return empty string.",
+    };
+  }
+
+  return {
+    sectionKey: "tier9-data-appendix",
+    model: "claude-sonnet-4-6",
+    temperature: 0.1,
+    maxTokens: 4000,
+    systemPrompt: `You are a forensic data formatter. Generate Appendix F: Data-Driven Defense Intelligence for a Case Intelligence Brief.
+
+YOUR ROLE: Present ALL provided Tier 9 data as structured tables with source URLs. NO narrative, NO analysis, NO recommendations. Pure verified data presentation.
+
+RULES:
+1. Every data point must include its source URL (CourtListener, court records, etc.)
+2. Use markdown tables with clear headers
+3. Each data category gets its own subsection (### heading)
+4. Include a count of verified data points at the top
+5. NO opinion, NO interpretation, NO "this means" language
+6. NO banned phrases — this is data, not advice
+7. Sort by relevance to defendant's charge type
+8. Empty XML tags = skip that category entirely
+
+FORMAT for each category:
+### [Category Name]
+| Column headers... |
+|---|---|
+| Data rows with source_url column... |
+
+This appendix satisfies the "turn art into science" principle: every claim in the narrative sections traces back to a row in this appendix.`,
+    userPrompt: `Generate Appendix F: Data-Driven Defense Intelligence.
+
+Defendant: ${v.first_name}
+Charges: ${v.charges}
+Judge: ${v.judge_name}
+Jurisdiction: ${v.state_county}
+
+<tier9_verified_data>
+${blocks.join("\n\n")}
+</tier9_verified_data>
+
+OUTPUT:
+## Appendix F: Data-Driven Defense Intelligence
+
+Start with: "**${blocks.length} verified data categories** compiled from court records."
+
+Then render each non-empty category as a structured table. Every row must include a source URL column. Skip any empty categories.
+
+End with: "Every data point in this appendix is sourced from public court records. Click any source URL to verify independently."`,
+  };
+}
+
+// ============================================================
 // PROMPT REGISTRY
 // ============================================================
 
@@ -1046,6 +1185,7 @@ export const PHASE_B_BUILDERS = [
   buildYourPlan,
   buildQuestions,
   build48HrPriorities,
+  buildTier9DataAppendix,
 ] as const;
 
 /** All prompt builders indexed by section key */
@@ -1060,4 +1200,5 @@ export const PROMPT_BUILDERS: Record<string, (v: IBVariables) => PromptConfig> =
   "your-plan": buildYourPlan,
   "questions": buildQuestions,
   "48hr-priorities": build48HrPriorities,
+  "tier9-data-appendix": buildTier9DataAppendix,
 };

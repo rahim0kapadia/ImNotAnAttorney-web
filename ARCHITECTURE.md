@@ -36,13 +36,13 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 | Subsystem | What It Does | Details |
 |-----------|-------------|---------|
-| **Pages & Routes** | 55 pages + 70 API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
+| **Pages & Routes** | 58 pages + 70 API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
 | **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
 | **Standalone Products** | 38 active: 3 calculators, 8 content guides, 24 research reports, 3 bundles (4 delivery systems) | `src/lib/products.ts` + `src/lib/bundles.ts` |
 | **UI Components** | 45+ components (layout, sales, intake, motion) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
 | **Database** | 50+ tables, 41 migrations, 3 Edge Functions, 3 storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
 | **Content** | 48+ MDX blog posts + social content queue | [`content/CONTEXT.md`](content/CONTEXT.md) |
-| **Scripts** | 24 utilities: cron setup, legal research, E2E tests | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
+| **Scripts** | 33 utilities: cron setup, legal research, E2E tests, Tier 9 bulk extraction | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
 | **Design System** | Brand tokens: Amber + Navy on black, Playfair + Lato | [`design-system/brand.md`](design-system/brand.md) |
 
@@ -111,6 +111,57 @@ Upper-tier purchases create multiple `cases` rows — one primary plus one inclu
 
 - `court_case_number` + `court_state` on the `cases` table (required intake field)
 - Checkout page "Returning customer?" section for IB+ tiers
+
+## Tier 9: Data-Driven Defense Intelligence Layer
+
+A purely statistical intelligence layer computed from CourtListener's 10M+ opinion corpus. No AI credits required — all keyword matching and graph analysis. Produces insights no attorney tool offers at any price.
+
+**9 Statistical Angles:**
+
+1. Judge × Prosecutor pairing matrix (`judge_prosecutor_pairings`) — motion grant rates per judge-prosecutor pair
+2. k-NN similar-case matching (`case_feature_vectors`) — feature vectors + nearest neighbors from DB data
+3. Sentencing outlier detection (`sentencing_distributions`) — sentence length extraction + percentile computation
+4. Bench vs jury divergence per judge (`bench_jury_divergence`) — bench vs jury outcome classification
+5. Judge quote library (`judge_quotes`) — extracted judicial holding quotes from opinions
+6. Officer reliability cross-case patterns (`officer_reliability`) — cross-case officer credibility tracking
+7. Appeal outcome correlation (`appellate_trends`) — appellate reversal/affirmance rates via citation-map
+8. Co-defendant divergence analysis (`co_defendant_analysis`) — co-defendant outcome comparison
+9. Plea discount modeling (`plea_discount_curves`) — plea vs trial sentence distributions
+
+**Bulk Extraction Scripts** (all in `scripts/`):
+
+- `bulk-judge-quote-extractor.mjs` — extracts judicial holding quotes from opinions CSV
+- `bulk-sentencing-outlier-detector.mjs` — sentence length extraction + percentile computation
+- `bulk-officer-reliability-aggregator.mjs` — cross-case officer credibility tracking
+- `bulk-judge-prosecutor-pairing.mjs` — motion grant rates by judge-prosecutor pair
+- `bulk-bench-jury-divergence.mjs` — bench vs jury outcome classification
+- `bulk-appeal-outcome-correlator.mjs` — appellate reversal/affirmance rates via citation-map
+- `bulk-similar-case-matcher.mjs` — feature vectors + k-NN from DB data
+- `bulk-co-defendant-divergence-analyzer.mjs` — co-defendant outcome comparison
+- `bulk-plea-discount-modeler.mjs` — plea vs trial sentence distributions
+
+**Tier Positioning** (additive to existing tier benefits):
+
+- **X-Ray** ($2,497) adds: sentencing outliers, officer reliability
+- **War Room** ($4,997) adds: judge-prosecutor pairing, bench/jury divergence, similar-case matching
+- **Situation Room** ($9,997) adds: co-defendant divergence, plea discount modeling
+- **Baseline upgrades** (all tiers): judge quotes, appeal correlations
+
+**Standalone SKU Pages** (3 landing pages, server components):
+
+- `/judge-report-card` — $197, instant delivery. Sentencing patterns, prosecutor pairing, bench/jury divergence, quote library.
+- `/officer-background-check` — $97, instant delivery. Cross-case officer reliability, discreditation history.
+- `/similar-cases-analyzer` — $297, instant delivery. k-NN case matching with outcome distribution.
+
+All 3 are in `tiers.ts` (test mode), link to `/checkout?tier={slug}`, and use Product + BreadcrumbList + FAQPage JSON-LD. No Edge Function needed — on-demand reads from Tier 9 tables.
+
+**IB Prompt Integration** (tasks 15-16):
+
+- `variables.ts` — 9 optional Tier 9 fields on `IBVariables` (tier-gated by caller)
+- `prompts.ts` — 5 existing section builders receive `<tier9_data>` blocks when populated; new `buildTier9DataAppendix` (Appendix F) registered in `PHASE_B_BUILDERS`
+- `render.ts` — `tier9DataCount`/`tier9SourceUrlCount` in report header metadata; Appendix F slot after Appendix E in section ordering
+
+**CSV Parsing Pattern:** All opinions CSV scripts use `csv-parse` with `escape: "\\"` for CourtListener's backslash-escaped quotes. No hand-rolled parsers.
 
 ## Cross-Cutting Concerns
 

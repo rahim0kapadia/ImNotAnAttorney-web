@@ -154,6 +154,23 @@ export interface IBVariables {
   protection_output: string;
   your_plan_output: string;
 
+  // Tier 9 — Judge Intel (IB and above)
+  judge_quote_library?: string;
+  appellate_trends_summary?: string;
+
+  // Tier 9 — X-Ray and above
+  sentencing_outlier_flags?: string;
+  officer_reliability_crosscase?: string;
+
+  // Tier 9 — War Room and above
+  pairing_matrix_summary?: string;
+  bench_jury_divergence_summary?: string;
+  similar_case_matches?: string;
+
+  // Tier 9 — Situation Room
+  codefendant_divergence_summary?: string;
+  plea_discount_curve_summary?: string;
+
   // Expansion fields (from 6 new intake fields)
   criminal_history: string;
   criminal_history_label: string;

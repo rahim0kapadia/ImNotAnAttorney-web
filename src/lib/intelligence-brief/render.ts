@@ -290,6 +290,10 @@ export interface IBReportMeta {
   xrayUpgradeCost?: string;
   /** Comma-separated expert names for methodology note. */
   expertNames?: string;
+  /** Count of verified Tier 9 data points (e.g., "Based on 347 verified data points"). */
+  tier9DataCount?: number;
+  /** Count of unique source URLs backing Tier 9 data. */
+  tier9SourceUrlCount?: number;
 }
 
 /**
@@ -333,6 +337,8 @@ export function renderIntelligenceBriefHtml(
     sectionOutputs["questions"] || "",
     // Appendix E: Your Rights (static)
     buildYourRights(meta.stateCounty.split(",")[0]?.trim() || "your state"),
+    // Appendix F: Tier 9 Data-Driven Defense Intelligence (generated, tier-gated)
+    sectionOutputs["tier9-data-appendix"] || "",
   ];
 
   const bodyHtml = sections
@@ -364,6 +370,7 @@ export function renderIntelligenceBriefHtml(
       ${meta.monthsSinceArrest !== "Unknown" ? `<p class="meta-field"><strong class="meta-label">Months Since Arrest:</strong> ${escapeHtml(meta.monthsSinceArrest)}</p>` : ""}
       <p class="meta-field"><strong class="meta-label">Report Date:</strong> ${escapeHtml(meta.reportDate)}</p>
       <p class="meta-field"><strong class="meta-label">Report ID:</strong> ${escapeHtml(meta.reportId)}</p>
+      ${meta.tier9DataCount ? `<p class="meta-field"><strong class="meta-label">Verified Data Points:</strong> ${meta.tier9DataCount.toLocaleString()} across ${meta.tier9SourceUrlCount?.toLocaleString() || "0"} court record sources</p>` : ""}
     </div>
   </div>
   ${meta.expertNames ? `<blockquote class="blockquote" style="margin: 20px 0; padding: 12px 16px;">
@@ -409,7 +416,8 @@ function buildTableOfContents(): string {
 - **Appendix B: Next Court Date Prep** — What to expect, wear, bring, and do
 - **Appendix C: Attorney Script Pack** — 5 ready-to-use communication scripts
 - **Appendix D: Questions for Your Attorney** — 10-15 targeted, gap-based questions
-- **Appendix E: Your Rights** — Key rights during criminal proceedings`;
+- **Appendix E: Your Rights** — Key rights during criminal proceedings
+- **Appendix F: Data-Driven Defense Intelligence** — Verified court data with source URLs`;
 }
 
 function buildBradyGiglioChecklist(): string {
