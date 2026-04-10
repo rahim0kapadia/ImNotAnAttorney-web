@@ -1,6 +1,6 @@
 {
   "slug": "private-attorney-vs-public-defender",
-  "last_checked": "2026-04-10T02:42:01.125Z",
+  "last_checked": "2026-04-10T10:06:39.764Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,7 +26,7 @@
             "severity": "style",
             "count": 68,
             "matches": [
-              "68 em dashes in 3118 words"
+              "68 em dashes in 3139 words"
             ],
             "points_added": 10
           }
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers, section references, or code citations appear anywhere in the post — all legal rules described using general language."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal-scholar names appear; only institutional sources (NLADA, ABA, Bureau of Justice Assistance) which are permitted agencies."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "'$5,000 to $25,000 for a standard felony, and $50,000 to $100,000 or more for complex cases' in body prose cites only 'industry survey data' without a named source, and '15 minutes to review your file' and '6.6 hours per case' appear unsourced"
+            "evidence": "FAQ answer quotes \"$50,000-$100,000+ for complex cases or trials\" without a named source, and this figure does not appear with attribution anywhere in the post body."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No procedural claims about deadlines, filing windows, or hearing timelines appear — advice is limited to suggested questions and general rights statements."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only 'Daubert challenge' and 'Brady demand' appear, both on the allowed terminology list"
+            "evidence": "Only excepted terminology appears: \"Daubert challenge\" and \"Brady demand\" — both listed as permitted legal-concept shorthand."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear anywhere in the post."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

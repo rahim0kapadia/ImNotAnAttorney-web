@@ -1,6 +1,6 @@
 {
   "slug": "can-criminal-charges-be-dropped",
-  "last_checked": "2026-04-10T02:02:00.907Z",
+  "last_checked": "2026-04-10T09:40:57.482Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers, section symbols, or specific code references appear anywhere in the post — all legal rules described using general language like 'prosecutorial discretion,' 'speedy trial deadline,' and 'constitutional violations.'"
+            "evidence": "No statute numbers appear anywhere in the post. All legal rules described using general language ('constitutional violations,' 'speedy trial deadline,' 'diversion programs')."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear — the only named source is 'Bureau of Justice Statistics' which is a government agency, not an individual expert."
+            "evidence": "No individual attorney or legal-scholar names appear. The TLDR quote is attributed to 'a principle consistent across elite defense methodology,' not a named person. Bureau of Justice Statistics is a source agency, not an expert."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The sole statistic — 'approximately 25-30% of felony arrests do not result in conviction' — is sourced inline to 'Bureau of Justice Statistics — State Court Processing Statistics' and again in the TLDR source line as 'Bureau of Justice Statistics — Felony Defendants in Large Urban Counties, bjs.gov.'"
+            "evidence": "One statistic found: '25-30% of felony arrests do not result in conviction' — sourced in-line as '(Bureau of Justice Statistics — State Court Processing Statistics)' with bjs.gov reference. No unsourced statistics."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are jurisdiction-qualified: 'many jurisdictions offer diversion programs,' 'in some jurisdictions, defense attorneys can present evidence to the grand jury,' 'some prosecutors offer pre-trial intervention' — no bare universal deadlines or filing requirements appear."
+            "evidence": "All procedural references use general language ('the speedy trial deadline,' 'many jurisdictions offer diversion programs,' 'in some jurisdictions, defense attorneys can present evidence to the grand jury'). No bare universal deadlines or filing requirements."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations in 'X v. Y' format appear; 'Brady violation' is used as legal terminology (explicitly excepted) and 'Miranda violation' is used as a standard legal term, not a case citation."
+            "evidence": "Only excepted terminology appears: 'Brady violation' (×2) and 'Miranda violation' (×1). No other case citations in 'X v. Y' format found."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear — the post focuses on dismissal mechanics, not conviction consequences."
+            "evidence": "No collateral-consequence claims found. Post discusses case outcomes (dismissal, conviction, sentencing) but never claims specific licensing, housing, firearm, voting, or employment consequences."
           }
         ]
       }

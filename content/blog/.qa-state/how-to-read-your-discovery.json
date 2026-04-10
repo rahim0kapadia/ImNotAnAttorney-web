@@ -1,6 +1,6 @@
 {
   "slug": "how-to-read-your-discovery",
-  "last_checked": "2026-04-10T01:55:56.526Z",
+  "last_checked": "2026-04-10T10:02:39.829Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 44,
             "matches": [
-              "44 em dashes in 3603 words"
+              "44 em dashes in 3602 words"
             ],
             "points_added": 10
           },
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers, § references, or specific code citations appear anywhere in the post. All legal rules are described in general language."
+            "evidence": "No statute numbers or section references appear anywhere in the post; all legal rules described using general language like 'legality of the initial contact' and 'probable cause'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear. Only the Innocence Project (an organization) is cited, which is permitted."
+            "evidence": "No individual attorney or legal scholar names appear; only the Innocence Project (an organization) is cited as a source"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "Two statistics appear — '52% of wrongful convictions' and '375+ DNA exonerations' — both attributed to 'Innocence Project' in the same sentence or immediate context."
+            "evidence": "Two statistics appear — '52% of wrongful convictions' and '375+ DNA exonerations' — both attributed to 'Innocence Project' with source URL innocenceproject.org"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "No bare procedural deadlines or filing windows stated as universal rules. Discovery rights described generally; suppression language uses 'may be'; CI disclosure uses 'may not... initially.'"
+            "evidence": "No specific deadlines, filing windows, or hearing timelines stated as universal rules; procedural guidance is general ('ask your attorney,' 'file a motion to compel') with no bare jurisdiction-specific claims"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear. 'Miranda rights,' 'Mirandized,' and 'Miranda requirements' are listed exceptions functioning as standard legal terminology."
+            "evidence": "Only 'Miranda rights,' 'Mirandized,' and 'Miranda requirements' appear, all of which are listed as excepted terminology; no other case citations found"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims appear. Post focuses entirely on reading discovery documents, with no mentions of licensing, housing, voting, firearms, or immigration consequences."
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration) appear; post focuses exclusively on how to review discovery documents"
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

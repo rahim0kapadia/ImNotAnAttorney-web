@@ -1,6 +1,6 @@
 {
   "slug": "sex-offense-what-every-defendant-needs-to-know",
-  "last_checked": "2026-04-10T02:25:42.453Z",
+  "last_checked": "2026-04-10T10:15:45.658Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 27.9,
         "pattern_score": 20,
-        "uniformity_score": 46.3,
+        "uniformity_score": 46.4,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 81,
             "matches": [
-              "81 em dashes in 4258 words"
+              "81 em dashes in 4260 words"
             ],
             "points_added": 10
           },
@@ -37,38 +37,38 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 3,
+        "checks_passed": 2,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "FAIL",
-            "evidence": "Specific state statute cited: 'any sexual contact with someone under 18 is statutory rape under Penal Code 261.5' — state statute citation without verification URL violates the no-hallucinated-legal-data rule"
+            "evidence": "\"Washington state's HB 1028 (effective July 2025)\" is a specific bill number with a quoted effective date and paraphrased requirements — not a well-known statute and could be fabricated. California Penal Code 261.5 is real but HB 1028 is unverifiable without a source URL."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "FAIL",
-            "evidence": "Names individual legal expert: 'Decades of peer-reviewed research — led by psychologist Elizabeth Loftus' and 'Dr. Elizabeth Loftus, memory science research' — Loftus is a named legal/expert-witness figure in criminal defense"
+            "evidence": "\"Decades of peer-reviewed research — led by psychologist Elizabeth Loftus\" names an individual expert by name, violating the pre-purchase content rule against naming specific legal/forensic experts (Lanham Act risk)."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "Multiple statistics lack named sources, including 'sex offense cases go to trial at roughly four times the rate of other federal crimes', 'Research has found that documented false allegations contribute to 45% of sexual assault wrongful convictions', 'bail typically ranges from $50,000 to over $500,000', and 'Post-conviction DNA testing in Virginia found a wrongful conviction rate of 11.6%'"
+            "evidence": "\"sex offense cases go to trial at roughly four times the rate of other federal crimes\" has no named source; \"45 states and the District of Columbia have some form of close-in-age exemption\" has no named source; \"commonly costs $50,000 or more\" attributed only to vague \"Defense attorneys report\"; \"20% of research subjects accepted entirely false memories\" sourced only as \"peer-reviewed memory science research\" which is a category, not a named source."
           },
           {
             "check": "PROCEDURE_CHECK",
-            "result": "PASS",
-            "evidence": "no issues found — procedural claims are jurisdiction-qualified (Tennessee, Washington HB 1028, federal International Megan's Law, 'depending on jurisdiction', '45 states and DC')"
+            "result": "FAIL",
+            "evidence": "\"Courts are not legally required to inform you of collateral consequences before you accept a plea deal (except deportation risk for noncitizens)\" is stated as a universal rule without a jurisdiction qualifier like \"in most states\" — some states have enacted statutes requiring additional advisements beyond the federal constitutional baseline."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — only 'Miranda rights' and 'Miranda' appear, which are on the allowed terminology exception list"
+            "evidence": "No case citations found; Miranda references (\"Miranda rights,\" \"Miranda rights were violated\") are listed exceptions that function as legal terminology."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — collateral consequences are qualified with 'generally', 'most jurisdictions', 'depending on the offense and jurisdiction', or attributed to specific laws like International Megan's Law"
+            "evidence": "Collateral consequences are qualified throughout — \"generally prohibited\" for housing, \"Most jurisdictions\" for residency restrictions, \"Many professions\" for employment, \"Many countries\" for travel denial, and passport/travel notification attributed to International Megan's Law."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

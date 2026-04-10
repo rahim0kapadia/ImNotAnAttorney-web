@@ -1,6 +1,6 @@
 {
   "slug": "cooperation-agreement-federal-case",
-  "last_checked": "2026-04-10T02:31:13.439Z",
+  "last_checked": "2026-04-10T09:46:16.807Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 13,
             "matches": [
-              "13 em dashes in 4184 words"
+              "13 em dashes in 4214 words"
             ],
             "points_added": 10
           },
@@ -43,272 +43,50 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post cites only well-known federal statutes correctly: 18 U.S.C. § 3553(f) safety valve, 18 U.S.C. § 1001 false statements, and §5K1.1 Federal Sentencing Guidelines"
+            "evidence": "All statute references (18 U.S.C. § 1001, 18 U.S.C. § 3553(f), §5K1.1) are real, verifiable federal statutes and sentencing guidelines; no fabricated or jurisdiction-misattributed statute numbers found."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorneys or legal scholars named; only the U.S. Sentencing Commission (agency, allowed) and the First Step Act (legislation) appear"
+            "evidence": "No individual attorney or legal scholar names appear; only source agencies (U.S. Sentencing Commission, FBI) are referenced."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The only factual statistical claim — 'Some judges routinely grant 40-50% reductions for substantial cooperation' — is sourced to 'U.S. Sentencing Commission data on §5K1.1 departures'; other numbers are clearly labeled hypothetical scenarios ('for example', narrative scenes)"
+            "evidence": "The only factual statistic — '40-50% reductions for substantial cooperation' — is sourced to '(U.S. Sentencing Commission data on §5K1.1 departures)'; all other numbers (60 months, 18 months, 70%, 15%, 10 years, 46-57 months) are clearly framed as hypothetical illustrations or example ranges."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are either federal rules with explicit federal code references (18 U.S.C. § 3553(f), § 1001, §5K1.1) or qualified with hedges like 'typical', 'usually', 'can take', 'often'"
+            "evidence": "All procedural claims are explicitly scoped to federal cases throughout the post; safety valve criteria reference the specific federal statute 18 U.S.C. § 3553(f), and timeline estimates use qualified language ('can take anywhere from months to multiple years')."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (X v. Y format) appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Consequence claims are qualified ('may be usable', 'many proffer agreements', 'possibly', 'can') or attributed to specific statutes (18 U.S.C. § 1001 for lying-to-federal-agents exposure)"
+            "evidence": "Collateral consequence claims use qualified language — 'Your proffer statements may be usable in all of those contexts' and 'The social and professional consequences' — with no unqualified universal claims."
           }
         ]
       }
     },
     "slop": {
-      "passed": true,
-      "status": "checked",
-      "details": {
-        "checks_passed": 14,
-        "checks_total": 14,
-        "hard_gate_failures": [],
-        "results": [
-          {
-            "check": "QUESTION_COUNT",
-            "result": "PASS",
-            "reason": "No question_count field in frontmatter to validate against; 12 numbered attorney questions present in dedicated section"
-          },
-          {
-            "check": "CITATION_SOURCING",
-            "result": "PASS",
-            "reason": "Key legal claims cite specific statutes (18 U.S.C. § 1001, § 3553(f), 5K1.1) and First Step Act; no more than 2 unsourced factual claims"
-          },
-          {
-            "check": "READABILITY",
-            "result": "PASS",
-            "reason": "Action items use plain language ('write down', 'ask your attorney', 'copy these questions') with legal terms defined immediately on first use"
-          },
-          {
-            "check": "CLICHE_DENSITY",
-            "result": "PASS",
-            "reason": "No instances of the flagged cliches ('tip of the iceberg', 'game changer', 'wake-up call', etc.) found in the post"
-          },
-          {
-            "check": "VOICE_CONSISTENCY",
-            "result": "PASS",
-            "reason": "Maintains second person ('you', 'your') throughout; brief third-person references ('a defendant', 'defendants who') stay under the 2-sentence threshold"
-          },
-          {
-            "check": "PASSIVE_VOICE_RATIO",
-            "result": "PASS",
-            "reason": "Active voice dominates; passive constructions appear in legal definitions but remain well under 30% of total sentences"
-          },
-          {
-            "check": "JARGON_DEFINITION",
-            "result": "PASS",
-            "reason": "Key terms (proffer, 5K1.1 motion, safety valve, derivative use, impeachment, substantial assistance) are defined on first use"
-          },
-          {
-            "check": "STRUCTURAL_INTEGRITY",
-            "result": "PASS",
-            "reason": "Logical flow: proffer → cooperation agreement → 5K1.1 motion → safety valve → questions → timeline → bottom line; each section builds on the prior"
-          },
-          {
-            "check": "CTA_CLARITY",
-            "result": "PASS",
-            "reason": "Clear CTAs present: Case Decoder link, Case Progress Score link, and a 12-question checklist to bring to the attorney"
-          },
-          {
-            "check": "HEDGING_DENSITY",
-            "result": "PASS",
-            "reason": "Action statements are direct imperatives ('write down', 'ask', 'copy'); hedging appears mostly in informational context about sentencing variability"
-          },
-          {
-            "check": "PARAGRAPH_LENGTH",
-            "result": "PASS",
-            "reason": "All paragraphs scanned stay under 300 words; action-oriented '5-minute action' paragraphs are concise and under 100 words"
-          },
-          {
-            "check": "SECTION_BALANCE",
-            "result": "PASS",
-            "reason": "Word count is distributed across 7 major sections; no single section approaches 50% of total"
-          },
-          {
-            "check": "FEAR_ACTION_PAIRING",
-            "result": "PASS",
-            "reason": "Each threat (lying voids agreement, § 1001 charge, full guideline sentence, mandatory minimums) is paired with a specific action within 2 sentences ('5-minute action', ask attorney, push for specificity)"
-          },
-          {
-            "check": "ENGAGEMENT_ARC",
-            "result": "PASS",
-            "reason": "Opens with AUSA scenario hook, builds the case through 4 mechanism breakdowns with evidence and statutes, closes with empowering 12-question checklist and decision framework"
-          }
-        ]
-      }
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "criteria_passed": 12,
-        "criteria_total": 15,
-        "results": [
-          {
-            "criterion": "U1",
-            "result": "PASS",
-            "evidence": "Post uses question-framing and 'ask your attorney' throughout; directives like 'if you go in, you go in all the way' are educational principles, not commands to take legal action without counsel."
-          },
-          {
-            "criterion": "U2",
-            "result": "PASS",
-            "evidence": "Each section has proximate attorney redirects: 'ask your attorney to show you the exact clause', 'ask your attorney to calculate your criminal history points', 'These questions should be directed at your attorney'."
-          },
-          {
-            "criterion": "U3",
-            "result": "PASS",
-            "evidence": "Post explains concepts generally without evaluating the reader's specific case; says 'It depends on the judge, the jurisdiction, the nature of the crime' rather than assessing reader's odds."
-          },
-          {
-            "criterion": "U4",
-            "result": "PASS",
-            "evidence": "Post explains what proffers, cooperation agreements, 5K1.1 motions, and safety valves are, but does not tell the reader to file any specific motion — it directs them to discuss with their attorney."
-          },
-          {
-            "criterion": "U5",
-            "result": "PASS",
-            "evidence": "Post does not discuss immigration consequences (deportation, visa, DACA, green card), so the immigration-attorney redirect requirement does not apply."
-          },
-          {
-            "criterion": "U6",
-            "result": "FAIL",
-            "evidence": "Post cites 18 U.S.C. § 3553(f) for safety valve and 18 U.S.C. § 1001 for false statements but references 'Federal Sentencing Guidelines' and '5K1.1' without linking to official sources or statutory citations for the guideline provisions."
-          },
-          {
-            "criterion": "U7",
-            "result": "PASS",
-            "evidence": "Post references 'the AUSA', 'federal prosecutors', 'your attorney' generically; no specific law firms, bail bond companies, or named providers are recommended."
-          },
-          {
-            "criterion": "U8",
-            "result": "PASS",
-            "evidence": "No instances of 'we recommend,' 'we advise,' or 'we suggest' appear in legal-action contexts; the disclaimer says 'We are not attorneys and do not provide legal representation.'"
-          },
-          {
-            "criterion": "U9",
-            "result": "FAIL",
-            "evidence": "Scenes like 'The AUSA leans back in their chair and says the magic words', 'You and your attorney walk into a windowless conference room', and 'You are sitting in a courtroom gallery watching another defendant's sentencing' are presented as narrative scenarios without explicit 'Hypothetical:' or 'Example scenario:' labels."
-          },
-          {
-            "criterion": "U10",
-            "result": "PASS",
-            "evidence": "Post frames knowledge as enabling better questions: 'The questions you ask before the proffer matter more than the answers you give during it' and repeatedly directs reader back to attorney consultation."
-          },
-          {
-            "criterion": "U11",
-            "result": "PASS",
-            "evidence": "Post uses qualifiers like 'typically,' 'generally,' 'usually,' 'in some cases,' 'Some judges routinely grant', and 'It depends on the judge, the jurisdiction'."
-          },
-          {
-            "criterion": "U12",
-            "result": "PASS",
-            "evidence": "Post explicitly says 'there's no formula. A 5K1.1 motion doesn't guarantee a specific sentence reduction' and 'In some cases... In other cases, the reduction is modest', avoiding outcome guarantees."
-          },
-          {
-            "criterion": "U13",
-            "result": "FAIL",
-            "evidence": "Strategic points like 'The golden rule of proffers: if you go in, you go in all the way', 'A half-truth in a proffer is not a strategy', and the 12-question framework are presented as the blog's own positions without attribution to named sources, cases, scholars, or attorneys."
-          },
-          {
-            "criterion": "U14",
-            "result": "PASS",
-            "evidence": "No contradictory legal claims appear; the post consistently distinguishes proffer, cooperation agreement, 5K1.1 motion, and safety valve as separate mechanisms."
-          },
-          {
-            "criterion": "U15",
-            "result": "PASS",
-            "evidence": "Case Decoder is framed as research/preparation: 'maps out your charges, sentencing exposure, and the specific questions you should be asking your attorney... No legal advice — just the clarity you need to make informed decisions.'"
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "checks_passed": 7,
-        "checks_total": 12,
-        "needs_work_count": 2,
-        "results": [
-          {
-            "check": "D1_3AM_PANIC",
-            "result": "FAIL",
-            "evidence": "H2 headers are predominantly topical labels ('The Proffer Session: Queen for a Day', 'The Cooperation Agreement', 'Substantial Assistance: The 5K1.1 Motion', 'The Safety Valve: A Different Path', 'The Cooperation Timeline') rather than action-oriented promises of what the reader gets."
-          },
-          {
-            "check": "D2_READING_LEVEL",
-            "result": "PASS",
-            "evidence": "Legal terms like 'proffer session', 'derivative use', 'impeachment', 'safety valve', and '5K1.1 motion' are defined inline on first use, paragraphs stay at 3-4 sentences, and action sections read conversationally."
-          },
-          {
-            "check": "D3_DO_THIS_NOW",
-            "result": "FAIL",
-            "evidence": "Before the first H2 there is no concrete 5-minute action — only the definitional blockquote about proffer sessions and general framing ('Before you agree to anything, you need to understand...'); the first '5-minute action' is buried inside section 1."
-          },
-          {
-            "check": "D4_ONE_CLEAR_PATH",
-            "result": "PASS",
-            "evidence": "Decision points provide clear defaults — 'if you go in, you go in all the way', 'For white collar defendants specifically, the safety valve is generally not applicable', and 'A half-truth in a proffer is not a strategy' each name the lead path instead of leaving options open."
-          },
-          {
-            "check": "D5_3_ITEM_RULE",
-            "result": "FAIL",
-            "evidence": "The 'cooperation agreement requires you to' list has 6 unranked items, 'factors the court considers' has 5 unranked items, and the 'Questions to Ask Before You Cooperate' section contains 12 numbered items with category groupings but no 'start with these' priority markers inside each category."
-          },
-          {
-            "check": "D6_CATALOG_VARIETY",
-            "result": "PASS",
-            "evidence": "This is a system-decoder-post — it breaks a complex legal mechanism (federal cooperation) into its component parts (proffer, cooperation agreement, 5K1.1, safety valve) and decodes what each one actually does."
-          },
-          {
-            "check": "D7_THREAT_EFFICACY",
-            "result": "PASS",
-            "evidence": "Scary consequences are paired with actions — 'lied to federal prosecutors...under 18 U.S.C. § 1001' is followed by 'The golden rule of proffers: if you go in, you go in all the way', and the asymmetry threat is followed by 'Your 5-minute action: ask your attorney to show you the exact clause...'"
-          },
-          {
-            "check": "D8_IDENTITY_PROTECTION",
-            "result": "PASS",
-            "evidence": "No 'you should have' or 'if you had' blame patterns — the scenario descriptions ('You're nervous. You try to be helpful but also try to minimize your own role') describe human behavior without moralizing, and directives are framed around the situation not the reader's character."
-          },
-          {
-            "check": "D9_FEAR_CLARITY_AGENCY",
-            "result": "NEEDS_WORK",
-            "evidence": "Arc is present — opening validates the AUSA pitch scenario, middle explains mechanics, closing lands on 'Understand the mechanics. Ask the hard questions. Then decide' (agency) — but the actual final sentences are marketing CTAs to Case Decoder and Case Progress Score rather than a clean agency statement."
-          },
-          {
-            "check": "D10_PHONE_FIRST",
-            "result": "PASS",
-            "evidence": "No markdown tables present, only H2/H3 heading levels used, key actions are bolded, and sections are broken up by H3 subsections keeping individual chunks scannable on mobile."
-          },
-          {
-            "check": "D11_SCREENSHOT_SENTENCE",
-            "result": "NEEDS_WORK",
-            "evidence": "Most H2 sections have strong screenshot lines (e.g. 'You give up everything upfront. The government decides later whether it was enough.' and 'The safety valve requires truthfulness about your own conduct. But unlike cooperation, the judge decides if you qualify, not the prosecutor.'), but 'The Bottom Line: Cooperation Is a Tool, Not a Surrender' contains no bolded standalone screenshot-worthy sentence."
-          },
-          {
-            "check": "D12_SHAREABLE_FAQ",
-            "result": "PASS",
-            "evidence": "Both FAQ answers start with the direct answer (no 'Great question' or 'That depends' preamble), stay within 3 sentences, and read as informative peer explanations rather than institutional policy statements."
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

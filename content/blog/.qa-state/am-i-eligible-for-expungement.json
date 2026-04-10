@@ -1,6 +1,6 @@
 {
   "slug": "am-i-eligible-for-expungement",
-  "last_checked": "2026-04-10T02:46:08.167Z",
+  "last_checked": "2026-04-10T09:38:55.469Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post uses general language like 'your state's statute' and 'state legislature websites' without citing specific statute numbers"
+            "evidence": "Post uses general language throughout — 'your state's statute,' 'your state's expungement statute,' 'separate statutes' — no specific § numbers or statute citations appear anywhere."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorneys or legal scholars are named anywhere in the post; author is listed as 'ImNotAnAttorney Team.'"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "Numeric ranges like '1-5 years' and '3-10 years' are presented as general ranges, and the post avoids sourced percentage claims — 'a significant percentage' is used instead"
+            "evidence": "All numbers are either hypothetical examples ('convicted in 2020,' 'served 6 months'), product pricing ('$97'), or general ranges qualified with 'in many states' — no unsourced factual statistics appear."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are qualified with 'in many states', 'most states', 'some states', or 'your state's statute'"
+            "evidence": "Procedural claims are qualified — 'In many states,' 'Many states allow,' 'Some states provide,' 'your state requires,' and common ranges presented as variable ('1 to 5 years,' '3 to 10 years') rather than universal deadlines."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (e.g., 'X v. Y') appear anywhere in the post, including FAQs and SOCIAL_SPINE comment block."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Collateral consequence claims about gun rights, job applications, and background checks are qualified with 'in many states', 'may', and 'depends on separate statutes'"
+            "evidence": "Collateral consequences are qualified — 'in many states, you may legally answer no,' 'may not apply to federal agency background checks,' 'does not restore gun rights in every state — that depends on separate statutes.'"
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "slug": "how-family-members-can-help-criminal-case",
-  "last_checked": "2026-04-10T02:37:48.689Z",
+  "last_checked": "2026-04-10T09:58:31.191Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,7 +10,7 @@
       "details": {
         "composite_score": 30.8,
         "pattern_score": 25,
-        "uniformity_score": 44.4,
+        "uniformity_score": 44.3,
         "flagged_patterns": [
           {
             "detector": "tier1_vocabulary",
@@ -26,7 +26,7 @@
             "severity": "style",
             "count": 48,
             "matches": [
-              "48 em dashes in 2713 words"
+              "48 em dashes in 2722 words"
             ],
             "points_added": 10
           }
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers, section references, or penal code citations appear anywhere in the post; all legal rules described using general language like 'in most jurisdictions' and 'state insurance regulations'."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear; the only named source is 'Bureau of Justice Statistics,' which is an agency, not an individual expert."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "The 10% bail bondsman fee is sourced as '(industry standard per state insurance regulations)'; the BJS claim in the TLDR is attributed to 'Bureau of Justice Statistics'; dollar amounts ($5,000/$1,000) are hypothetical examples, not factual statistics."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'in most jurisdictions' (public defender assignment), 'Some jurisdictions' (bail reform), 'In some cases' (bail reduction at arraignment), 'typically' (bondsman fee), 'can result' (bail revocation)."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (X v. Y format) or legal case names appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "All consequence claims are qualified: 'can be charged as witness tampering' (not 'will be'), 'can result in bail revocation' (not 'results in'), 'can result in additional criminal charges' (not 'will result')."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

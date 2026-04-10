@@ -1,6 +1,6 @@
 {
   "slug": "should-you-fire-your-lawyer",
-  "last_checked": "2026-04-10T02:25:59.914Z",
+  "last_checked": "2026-04-10T10:16:59.774Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers, section references, or penal code citations appear anywhere in the post — all legal rules described using general language like 'in most jurisdictions' and 'your jurisdiction's suppression motion deadline'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorneys, legal scholars, or named legal experts appear — post references only generic roles ('your attorney', 'new attorney', 'the judge')"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "Dollar amounts ($10,000, $7,500) are hypothetical examples, not factual statistics; no unsourced data claims"
+            "evidence": "All numbers are illustrative scenario details (14 calls, $10,000 retainer, 48 business hours, 90 days, four months) used in hypothetical narratives, not factual statistical claims requiring sourced attribution"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Refund claim qualified with 'In most jurisdictions'; file-request right stated generally without jurisdiction-specific deadline claims"
+            "evidence": "Procedural guidance is jurisdiction-qualified ('In most jurisdictions, an attorney must refund the unearned portion') or directs the reader to check their own jurisdiction ('Look up your jurisdiction's suppression motion deadline') — no bare universal deadlines or filing requirements"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (no 'v.' references) appear anywhere in the post — legal concepts discussed without case law references"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Plea consequences listed generally ('immigration, employment, civil rights') without universal factual claims"
+            "evidence": "Collateral consequences mentioned only as topics an attorney should discuss ('Not explaining the consequences of the plea — immigration, employment, civil rights') rather than stated as universal facts — framed as omissions by the attorney, not outcome claims"
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

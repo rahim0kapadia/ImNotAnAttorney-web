@@ -1,6 +1,6 @@
 {
   "slug": "professional-license-risk-criminal-charge",
-  "last_checked": "2026-04-10T02:21:40.437Z",
+  "last_checked": "2026-04-10T10:08:59.982Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,32 +34,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — post contains no statute numbers, USC references, or § symbols; only organizational references (FINRA, NPDB, NASDTEC) which are databases/bodies, not statutes"
+            "evidence": "Post contains zero statute numbers or section references — uses general language throughout ('Federal reporting requirements,' 'your board's rules,' 'published board rules')"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — no individual attorneys or legal scholars named anywhere in the post"
+            "evidence": "No individual attorney or legal scholar names appear — only organizations (FINRA, NPDB, NASDTEC) which are allowed source agencies"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — post contains no percentages, counts, or rates; time windows are procedural and handled under PROCEDURE_CHECK"
+            "evidence": "Post contains no population-level statistics (percentages, rates, counts) — all numbers are procedural deadlines (30 days, 48 hours, 3-5 years) or narrative details (12-hour shift, 22 days ago)"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "all procedural deadlines are qualified: 'Nursing boards typically require... within 30 days', 'Most states require', 'Some teaching boards require 48 hours', 'often within 30 days', and FINRA/Form U4 explicitly labeled 'a federal requirement'"
+            "evidence": "Procedural claims are jurisdiction-qualified throughout: 'Most states require reporting within 30 days,' 'Some states mandate reporting within 48 hours,' 'This is a federal requirement,' 'State boards have varying timelines'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — no 'v.' citations or case names appear in the post"
+            "evidence": "No case citations appear anywhere in the post — no 'v.' constructions or case name references"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "collateral consequences are qualified with 'may trigger mandatory license suspension', 'can have catastrophic consequences', 'An arrest alone can trigger', 'depends on the board's specific rules' — no universal fact claims"
+            "evidence": "Consequence claims are consistently qualified: 'can trigger a board investigation,' 'Your licensing board may still count it,' 'Some states allow reapplication...Some do not,' 'The outcome depends on the board's specific rules'"
           }
         ]
       }
@@ -67,17 +67,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

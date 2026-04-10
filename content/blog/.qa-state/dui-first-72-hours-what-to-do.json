@@ -1,6 +1,6 @@
 {
   "slug": "dui-first-72-hours-what-to-do",
-  "last_checked": "2026-04-10T02:28:28.580Z",
+  "last_checked": "2026-04-10T09:49:49.656Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post uses general language throughout — 'in most states,' 'your state's DMV,' 'under federal rules' — no bare statute numbers or specific statute citations appear anywhere."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear. The only named source is NHTSA (National Highway Traffic Safety Administration), which is a government agency, not an individual expert."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'Dashcam footage from the patrol car may be overwritten on a 30 or 60-day cycle' states a specific time window as fact with no named source in the sentence or preceding sentence"
+            "result": "PASS",
+            "evidence": "Post avoids hard statistics entirely — uses qualified ranges ('7-15 days,' 'usually') and general phrasing ('most defendants,' 'many cycle footage in weeks') rather than specific numerical claims requiring sourcing."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "DMV hearing window is consistently qualified with 'In most states' and '7 to 15 days... varies by state'"
+            "evidence": "Every procedural claim is jurisdiction-qualified: 'In most states, your arrest triggers an administrative license suspension,' 'usually 7 to 15 days,' 'retention policies vary by department,' 'This is general — your state and county will have its own pace.'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Miranda appears only as 'Miranda rights' terminology, no case citations present"
+            "evidence": "Only case-adjacent term found is 'Miranda rights' ('Whether you were read your Miranda rights and when'), which is on the approved exceptions list as universally known legal terminology."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Professional reporting consequences qualified with 'Some professions' and 'commonly applies to'"
+            "evidence": "All collateral consequences are qualified: 'Some regulated professions,' 'commonly applies to,' 'can carry consequences worse than the DUI itself,' 'you likely have no obligation' — no universal absolute claims."
           }
         ]
       }

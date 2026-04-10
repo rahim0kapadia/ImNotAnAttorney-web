@@ -1,6 +1,6 @@
 {
   "slug": "drug-defense-complete-guide",
-  "last_checked": "2026-04-10T02:32:49.858Z",
+  "last_checked": "2026-04-10T09:48:19.778Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,272 +43,50 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Only cites 21 U.S.C. § 841 (a real federal drug statute) with a correct Cornell LII link; all other legal rules use qualifiers like 'most jurisdictions' and 'some jurisdictions'"
+            "evidence": "Only statute reference is 21 U.S.C. § 841 linked to Cornell LII — a real federal statute with a verified source URL. All other legal rules use general language like 'most jurisdictions' and 'many jurisdictions'."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — only source agency 'National Institute of Justice' is cited, no individual attorneys or legal scholars named"
+            "evidence": "No individual attorney or legal scholar names appear. Only source agencies referenced: National Institute of Justice."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "'Federal plea rates exceed 97% — the system is designed to pressure pleas' appears with no named source in the same or preceding sentence"
+            "evidence": "'Federal plea rates exceed 97%' appears in the Federal vs. State section with no named source attribution (e.g., Bureau of Justice Statistics)."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural/weight-rule claims are jurisdiction-qualified ('most jurisdictions weigh the total substance', 'some jurisdictions include packaging', 'many jurisdictions offer drug court')"
+            "evidence": "All procedural claims include jurisdiction qualifiers — 'most jurisdictions,' 'many jurisdictions,' 'some states,' 'in your jurisdiction' — no bare universal procedural rules."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — no case citations appear in the post"
+            "evidence": "No case citations appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — post focuses on defense strategy and does not make bare collateral-consequence claims about licensing, housing, firearms, or voting rights"
+            "evidence": "No collateral consequence claims (licensing, housing, voting, firearms) appear. Sentencing references use qualified language like 'can carry' and 'often.'"
           }
         ]
       }
     },
     "slop": {
-      "passed": true,
-      "status": "checked",
-      "details": {
-        "checks_passed": 14,
-        "checks_total": 14,
-        "hard_gate_failures": [],
-        "results": [
-          {
-            "check": "QUESTION_COUNT",
-            "result": "PASS",
-            "reason": "No question_count field in frontmatter to compare against; body contains 4 explicit 'ask your attorney' directives plus 8-item attorney checklist, internally consistent"
-          },
-          {
-            "check": "CITATION_SOURCING",
-            "result": "PASS",
-            "reason": "NIJ cited for field test false positives and 21 U.S.C. § 841 linked for federal minimums; the 97% federal plea rate is the only borderline unsourced stat, within tolerance"
-          },
-          {
-            "check": "READABILITY",
-            "result": "PASS",
-            "reason": "Action items use plain language ('Write down', 'Ask your attorney', 'List every person') with legal terms immediately contextualized"
-          },
-          {
-            "check": "CLICHE_DENSITY",
-            "result": "PASS",
-            "reason": "None of the flagged cliches ('tip of the iceberg', 'game changer', etc.) appear in the post"
-          },
-          {
-            "check": "VOICE_CONSISTENCY",
-            "result": "PASS",
-            "reason": "Second person 'you/your' used throughout; brief third-person scenarios ('Three people are sitting in a car') pivot back to 'you' within one sentence"
-          },
-          {
-            "check": "PASSIVE_VOICE_RATIO",
-            "result": "PASS",
-            "reason": "Passive constructions ('was seized', 'were found', 'is charged') appear but stay well under 30% of sentences; active voice dominates action guidance"
-          },
-          {
-            "check": "JARGON_DEFINITION",
-            "result": "PASS",
-            "reason": "Constructive possession, chain of custody, presumptive test, entrapment, and suppression motion are all defined or contextualized on first use"
-          },
-          {
-            "check": "STRUCTURAL_INTEGRITY",
-            "result": "PASS",
-            "reason": "Logical flow: hook → 7 numbered defenses (search → possession → field test → chain → weight → CI → entrapment) → attorney checklist → federal/state → CTA"
-          },
-          {
-            "check": "CTA_CLARITY",
-            "result": "PASS",
-            "reason": "Case Progress Score linked twice, explicit attorney questions provided, and 8-item attorney accountability checklist serves as actionable next step"
-          },
-          {
-            "check": "HEDGING_DENSITY",
-            "result": "PASS",
-            "reason": "Action directives are direct ('File a motion', 'Demand the complete weight documentation', 'Ask your attorney'); hedging is confined to outcome statements where uncertainty is legitimate"
-          },
-          {
-            "check": "PARAGRAPH_LENGTH",
-            "result": "PASS",
-            "reason": "No paragraph exceeds 300 words; action-oriented paragraphs stay under 100 words each"
-          },
-          {
-            "check": "SECTION_BALANCE",
-            "result": "PASS",
-            "reason": "Word count distributed across 7 defense sections plus attorney checklist and federal/state section; no section exceeds ~20% of total"
-          },
-          {
-            "check": "FEAR_ACTION_PAIRING",
-            "result": "PASS",
-            "reason": "Each threat (mandatory minimums, trafficking thresholds, illegal search consequences) is paired with a concrete action (suppression motion, weight challenge, discovery review) within the same section"
-          },
-          {
-            "check": "ENGAGEMENT_ARC",
-            "result": "PASS",
-            "reason": "Opens with vivid arrest scenarios, builds through 7 evidence-based defenses with specific challenge points, and closes by empowering reader with attorney checklist and Case Progress Score CTA"
-          }
-        ]
-      }
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "criteria_passed": 9,
-        "criteria_total": 15,
-        "results": [
-          {
-            "criterion": "U1",
-            "result": "FAIL",
-            "evidence": "Right now action directives like 'Write down everything you remember about the encounter' and 'List every person who had access to the space' function as direct commands to the reader."
-          },
-          {
-            "criterion": "U2",
-            "result": "PASS",
-            "evidence": "Each defense section includes proximate attorney redirects like 'give it to your attorney' and 'Ask your attorney whether...'"
-          },
-          {
-            "criterion": "U3",
-            "result": "PASS",
-            "evidence": "Post discusses defenses generally without evaluating the reader's specific case strength."
-          },
-          {
-            "criterion": "U4",
-            "result": "FAIL",
-            "evidence": "Post states 'What your attorney should do: File a motion to suppress all physical evidence obtained through the search' — recommending a specific motion."
-          },
-          {
-            "criterion": "U5",
-            "result": "PASS",
-            "evidence": "Post does not discuss immigration consequences at all, so no immigration redirect is required."
-          },
-          {
-            "criterion": "U6",
-            "result": "FAIL",
-            "evidence": "Mandatory minimums of '5, 10, or 20+ years' and claim that 'Federal plea rates exceed 97%' are stated without sourcing to specific statutes or official data."
-          },
-          {
-            "criterion": "U7",
-            "result": "PASS",
-            "evidence": "Post references only general categories like 'defense attorney' and 'lab analyst' with no specific firm or company names."
-          },
-          {
-            "criterion": "U8",
-            "result": "PASS",
-            "evidence": "Post does not use 'we recommend' or similar first-person plural recommendation phrasing in legal-action contexts."
-          },
-          {
-            "criterion": "U9",
-            "result": "FAIL",
-            "evidence": "Opening scenarios like 'Three people are sitting in a car when officers find drugs under the back seat' and 'A stranger approached you three times over two weeks' are presented without hypothetical labels."
-          },
-          {
-            "criterion": "U10",
-            "result": "PASS",
-            "evidence": "Post frames content around 'what your attorney should be investigating' and 'every question you should be asking' rather than self-handling."
-          },
-          {
-            "criterion": "U11",
-            "result": "PASS",
-            "evidence": "Post uses qualifiers like 'Most jurisdictions,' 'usually,' and 'Some jurisdictions' when discussing legal rules."
-          },
-          {
-            "criterion": "U12",
-            "result": "FAIL",
-            "evidence": "Statement 'If the search is ruled illegal, everything found gets excluded — and without the drugs, there's usually no case' implies a specific outcome from following the strategy."
-          },
-          {
-            "criterion": "U13",
-            "result": "FAIL",
-            "evidence": "Defense strategies like constructive possession challenges, chain of custody attacks, and weight calculation challenges are presented as the blog's own analysis without attribution to named cases, scholars, or attorneys; only NIJ and 21 U.S.C. § 841 are cited."
-          },
-          {
-            "criterion": "U14",
-            "result": "PASS",
-            "evidence": "No contradictory legal claims appear; the gross-vs-net weight distinction is explained consistently throughout."
-          },
-          {
-            "criterion": "U15",
-            "result": "PASS",
-            "evidence": "Only the Case Progress Score is mentioned, framed as a free assessment tool to 'see what's been done, what's missing' rather than replacing an attorney."
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "checks_passed": 8,
-        "checks_total": 12,
-        "needs_work_count": 4,
-        "results": [
-          {
-            "check": "D1_3AM_PANIC",
-            "result": "PASS",
-            "evidence": "Opening names three concrete fear scenarios (traffic stop, warrant, shared space) and all H2s are action-oriented ('The Search Was Illegal', 'Constructive Possession', 'Weight Calculations')."
-          },
-          {
-            "check": "D2_READING_LEVEL",
-            "result": "PASS",
-            "evidence": "Legal terms defined inline (constructive possession — 'knew about the drugs AND had control', Fourth Amendment context given), paragraphs stay within 4 sentences."
-          },
-          {
-            "check": "D3_DO_THIS_NOW",
-            "result": "PASS",
-            "evidence": "'Right now action: Write down everything you remember about the encounter... and give it to your attorney, no one else.' appears before the first H2, completable in under 5 minutes."
-          },
-          {
-            "check": "D4_ONE_CLEAR_PATH",
-            "result": "PASS",
-            "evidence": "Each defense section leads with a clear default ('What your attorney should do: File a motion to suppress...', 'demanding and reviewing the full chain of custody log is one of the highest-value actions')."
-          },
-          {
-            "check": "D5_3_ITEM_RULE",
-            "result": "NEEDS_WORK",
-            "evidence": "'What Your Attorney Should Be Doing' section lists 8 unranked items without 'start with these' priority markers, and warrantless searches section lists 5 exception types."
-          },
-          {
-            "check": "D6_CATALOG_VARIETY",
-            "result": "PASS",
-            "evidence": "system-decoder-post — decodes the drug prosecution evidence chain into 7 numbered defense challenge points."
-          },
-          {
-            "check": "D7_THREAT_EFFICACY",
-            "result": "PASS",
-            "evidence": "Federal mandatory minimums stat is followed by 'Make sure your attorney is experienced in the system you're in'; false positive rates paired with 'your attorney should challenge that evidence aggressively'."
-          },
-          {
-            "check": "D8_IDENTITY_PROTECTION",
-            "result": "PASS",
-            "evidence": "Person separated from situation throughout ('someone else's drugs were found', 'the charges are in YOUR name'), no 'you should have' patterns anywhere."
-          },
-          {
-            "check": "D9_FEAR_CLARITY_AGENCY",
-            "result": "NEEDS_WORK",
-            "evidence": "Opening validates fear and middle reduces unknown to known, but the final sentence is a generic CTA ('Take the free Case Progress Score — 5 minutes to see what's been done') rather than a pure agency statement."
-          },
-          {
-            "check": "D10_PHONE_FIRST",
-            "result": "NEEDS_WORK",
-            "evidence": "Only H2/H3 used and key actions are bolded, but Defense 1 section runs long (~550+ words) with the combined warrant-based and warrantless search subsections before the next H2."
-          },
-          {
-            "check": "D11_SCREENSHOT_SENTENCE",
-            "result": "PASS",
-            "evidence": "Every H2 has exactly one bolded screenshot sentence under 27 words (e.g., 'A gap in the chain of custody does not prove tampering — but it introduces doubt, and doubt is the entire framework of criminal defense.')."
-          },
-          {
-            "check": "D12_SHAREABLE_FAQ",
-            "result": "NEEDS_WORK",
-            "evidence": "FAQ answers start with direct answers and avoid preamble, but the first FAQ answer runs 3 sentences with a somewhat institutional tone ('Each one attacks a different link in the prosecution's chain'), and the discovery FAQ lists 7 items in one sentence."
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

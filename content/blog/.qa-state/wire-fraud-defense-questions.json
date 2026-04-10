@@ -1,6 +1,6 @@
 {
   "slug": "wire-fraud-defense-questions",
-  "last_checked": "2026-04-10T02:15:20.028Z",
+  "last_checked": "2026-04-10T10:29:58.085Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -37,38 +37,38 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 4,
+        "checks_passed": 5,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Only cites 18 U.S.C. § 1343, which is the real federal wire fraud statute — correctly identified"
+            "evidence": "18 U.S.C. § 1343 and U.S. Sentencing Guidelines Manual §2B1.1 are real, correctly cited federal references; no fabricated or jurisdiction-misapplied statute numbers found."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear; only source agencies and legal concepts are referenced."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'A $250,000 loss adds 12 levels to your base offense level. A $9.5 million loss adds 22 levels.' — specific sentencing guideline numbers with no named source in the same or preceding sentence"
+            "result": "PASS",
+            "evidence": "Loss-table level enhancements ($250K → 12 levels, $9.5M → 22 levels) are sourced to 'U.S. Sentencing Guidelines Manual, §2B1.1 loss table'; penalty figures are tied to the cited statute; no unsourced statistics found."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "All procedural claims (loss calculation at sentencing, Brady disclosure, allocution, restitution) occur within the explicitly established federal wire fraud context under 18 U.S.C. § 1343."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only 'Brady v. Maryland' appears, used as terminology for disclosure obligations — permitted exception"
+            "evidence": "Only 'Brady v. Maryland' appears, which is in the permitted exceptions list as universally known legal terminology."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "FAIL",
-            "evidence": "'Restitution survives bankruptcy and follows you for life' and 'A wire fraud conviction triggers professional license revocations, civil suits, and regulatory proceedings' — both stated as universal facts without attribution to a statute or jurisdictional qualifier"
+            "evidence": "Bold callout states 'A wire fraud conviction triggers professional license revocations, civil suits, and regulatory proceedings' as automatic universal fact without 'may', 'can', or jurisdictional qualifier; license revocations depend on specific licensing boards and jurisdictions."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

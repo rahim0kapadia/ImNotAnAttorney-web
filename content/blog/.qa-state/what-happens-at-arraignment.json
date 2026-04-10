@@ -1,6 +1,6 @@
 {
   "slug": "what-happens-at-arraignment",
-  "last_checked": "2026-04-10T02:29:25.827Z",
+  "last_checked": "2026-04-10T10:22:30.471Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -44,32 +44,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers, section references, or legal code citations appear anywhere in the post. All legal rules described using general language."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear. Author is 'ImNotAnAttorney Team' (brand name, not an individual)."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statistical claims found. All numbers are practical estimates ('5-15 minutes', '30 minutes early', '48 hours') or product pricing ('$197'), none making sourced factual claims."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Procedural descriptions are general and qualified — 'usually a sign-in sheet', 'some motions have early deadlines', plus footer disclaimer: 'Court procedures vary by state and jurisdiction.'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims found. Post covers arraignment procedure only — no mentions of licensing, housing, firearm rights, voting, or employment impact."
           }
         ]
       }
@@ -77,17 +77,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

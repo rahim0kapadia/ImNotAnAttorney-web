@@ -1,23 +1,23 @@
 {
   "slug": "how-to-file-bar-complaint-against-attorney",
-  "last_checked": "2026-04-10T02:38:52.735Z",
+  "last_checked": "2026-04-10T10:00:03.138Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
       "passed": true,
       "status": "checked",
-      "score": 24.6,
+      "score": 24.5,
       "details": {
-        "composite_score": 24.6,
+        "composite_score": 24.5,
         "pattern_score": 15,
-        "uniformity_score": 46.9,
+        "uniformity_score": 46.8,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 41,
             "matches": [
-              "41 em dashes in 2580 words"
+              "41 em dashes in 2579 words"
             ],
             "points_added": 10
           },
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post references only the Sixth Amendment (well-known constitutional provision) and uses general language throughout — no bare statute numbers or fabricated § references."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal-scholar names appear; only the American Bar Association is cited, which is an organization, not an individual."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "FAQ answer states 'expect 6 to 12 months for resolution' without a named source in the same or preceding sentence, and 'the bar staff reviewing your complaint are reading hundreds per week' is an unsourced numeric claim"
+            "evidence": "FAQ answer states 'expect 6 to 12 months for resolution' without a named source in the same or immediately preceding sentence; the howToSteps version is sourced but the FAQ instance is not."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post uses general language ('every state has a disciplinary body', 'search your state bar's website') and qualifies IAC under the Sixth Amendment — no bare universal deadlines or filing requirements."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (X v. Y) appear anywhere in the post; IAC is discussed as a legal concept without citing specific cases."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Consequence claims (suspension, disbarment, reprimand) describe disciplinary outcomes for the attorney, not collateral consequences to the defendant — no unqualified claims about defendant licensing, housing, or rights."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

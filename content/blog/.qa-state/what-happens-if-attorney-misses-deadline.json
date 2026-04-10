@@ -1,6 +1,6 @@
 {
   "slug": "what-happens-if-attorney-misses-deadline",
-  "last_checked": "2026-04-10T02:30:09.942Z",
+  "last_checked": "2026-04-10T10:23:30.437Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Only statute-like reference is 'FRAP 4(b)' (Federal Rules of Appellate Procedure Rule 4(b)), which is a real federal rule correctly cited for the 14-day criminal appeal deadline. 'Fourth Amendment' is a constitutional reference. No fabricated statute numbers."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear. The only named source is 'ABA Standing Committee on Lawyers' Professional Liability,' which is an institutional source, not an individual expert."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The 18-20% malpractice claim is sourced inline to 'ABA Standing Committee on Lawyers' Professional Liability'"
+            "evidence": "The only statistic — '18-20% of all malpractice complaints against attorneys' — is sourced to '(ABA Standing Committee on Lawyers' Professional Liability)' in the same sentence. All other numbers are procedural timelines or product prices."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "FAIL",
-            "evidence": "'Appellate notices: 30 days from sentencing (this one is absolute)' is stated as a universal procedural rule with no jurisdiction qualifier, and the parenthetical 'this one is absolute' contradicts the trailing disclaimer"
+            "evidence": "Severity section states 'Missed appellate notice (30 days from sentencing) — you generally cannot appeal' without a jurisdiction qualifier on the 30-day figure. Compare to the FAQ and TLDR which correctly use 'typically 30 days.' This instance presents 30 days as a bare universal deadline."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations appear anywhere in the post. 'Fourth Amendment' is a constitutional reference, not a case citation."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post addresses only procedural consequences (losing motion rights, appeal rights, evidence admissibility). No collateral-consequence claims about licensing, housing, firearms, voting, or employment appear."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

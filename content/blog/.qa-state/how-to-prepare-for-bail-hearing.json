@@ -1,6 +1,6 @@
 {
   "slug": "how-to-prepare-for-bail-hearing",
-  "last_checked": "2026-04-10T01:53:35.633Z",
+  "last_checked": "2026-04-10T10:00:42.512Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,50 +34,272 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Only statute referenced is the 'Bail Reform Act of 1984' — a real, well-known federal statute correctly described. No bare § numbers or fabricated statute references appear anywhere in the post."
+            "evidence": "Only statute reference is 'Bail Reform Act of 1984' (a well-known federal act cited by name, not section number); all other legal rules use general language like 'your state's bail statute' and 'each state writes its own rules'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney, legal scholar, or named legal expert appears anywhere in the post. All references are to roles ('public defender', 'prosecutor', 'judge') not named individuals."
+            "evidence": "No individual attorney or legal expert names appear; no named individuals cited anywhere in the post"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "All numbers in the post are narrative/illustrative ('six minutes', '$50,000 vs $10,000', 'forty-one names', 'seventeen hours') or product pricing ('$97') — none are factual statistical claims requiring sourced attribution."
+            "evidence": "All numbers are illustrative/narrative ('about six minutes', '$50,000 bail and $10,000 bail', 'forty-one names', '24 to 48 hours') — no factual statistical claims requiring sourcing"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Every procedural claim is jurisdiction-qualified: 'within 24 to 48 hours of arrest in most jurisdictions', 'each state writes its own rules', 'depending on jurisdiction', 'in this county'. Federal references correctly scoped to the Bail Reform Act."
+            "evidence": "All procedural claims are jurisdiction-qualified: 'within 24 to 48 hours of arrest in most jurisdictions', 'state statutes, which vary widely', 'depending on jurisdiction', federal procedures tied to the Bail Reform Act by name"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear anywhere in the post. The Bail Reform Act is a statute reference, not a case citation."
+            "evidence": "No case citations appear in the post; 'Bail Reform Act' is a statute name, not a case citation"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Post discusses only direct bail outcomes (detention vs. release, bail amounts, conditions of release) — no collateral-consequence claims about licensing, voting, housing, firearms, or employment appear."
+            "evidence": "No collateral-consequence claims appear; the post addresses bail hearing preparation exclusively, not conviction consequences"
           }
         ]
       }
     },
     "slop": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 13,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "NEEDS_WORK",
+            "reason": "Frontmatter has no question_count field; body contains 10 numbered case questions but cannot verify match without the field"
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Bail Reform Act of 1984 is named; statutory factor list is general legal framework not requiring per-item citation; unsourced claims stay within tolerance"
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('write two columns', 'search your state bail statute', 'pull the lease') with no undefined jargon"
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the flagged cliches appear in the post"
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Consistent second person throughout; references to 'the judge' and 'the person who was arrested' are object references, not voice shifts"
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Passive constructions like 'was arrested' and 'is set' appear occasionally but well under 30% of sentences"
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "ROR defined inline, first appearance/formal motion/modification each explained on first use, third-party custodian contextually clear"
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Logical flow: scenario hook -> what judge decides -> factors -> hearing types -> documents -> questions -> CTA"
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Clear $97 Bail Hearing Preparation product link plus Defense Milestone Score link plus embedded action steps"
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Hedging ('may be considered', 'might be used') confined to information statements; action items are direct imperatives"
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words; action paragraphs stay under 100 words"
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Word count distributed across six sections with no single section dominating beyond 50%"
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Threats (detention by default, $50K bail, two months in jail) are each followed within two sentences by a specific action step or 'Right now' directive"
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong 2:14 AM hook, middle builds with statutory factors and document evidence, closes with concrete actions and product path"
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 10,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "'Right now:' prompts direct preparation actions (list community ties, search state statute, gather documents) — not legal directives like file/plead/sign."
+          },
+          {
+            "criterion": "U2",
+            "result": "FAIL",
+            "evidence": "Decision-action sections ('What the Judge Is Actually Deciding,' 'Factors Courts Weigh,' 'Questions That Matter') contain no proximate 'consult an attorney' redirect — only the footer disclaimer mentions it."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post describes general factors and frameworks without judging the reader's specific case strength or likely outcome."
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "Bail modification motions are described as procedures the attorney 'may be able to' pursue, not recommended as reader-initiated filings."
+          },
+          {
+            "criterion": "U5",
+            "result": "FAIL",
+            "evidence": "'Immigration documentation — if relevant, to address flight-risk concerns head-on' raises immigration consequences without directing the reader to consult an immigration attorney specifically."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "No collateral consequences (licenses, housing, firearms, voting, student loans) are asserted in the post."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Only generic categories referenced ('public defender,' 'the prosecutor,' 'employer,' 'pastors') — no specific firms, bail bond companies, or legal providers named."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "No 'we recommend,' 'we advise,' 'we suggest,' or 'our recommendation' phrasing appears in legal-action contexts."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "The 2:14 AM phone-call narrative ('It's your husband. Or your son. Or your brother...') is presented as direct second-person scene without an explicit 'Example scenario:' or 'Hypothetical:' label."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Explicitly frames reader as supporting the attorney: 'It won't get them out for you. It will make sure the person who is fighting to get them out is not walking in empty-handed.'"
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Uses qualifiers throughout: 'depending on jurisdiction,' 'in most jurisdictions,' 'varies by state,' 'may be considered,' and 'Each state writes its own rules.'"
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "'The ones who walk in with a paystub, a lease, a letter from an employer, and three family references already have the hearing half-won' implies an outcome without jurisdictional/circumstances qualification."
+          },
+          {
+            "criterion": "U13",
+            "result": "FAIL",
+            "evidence": "The documentation-as-leverage strategy, the 'two questions' framing, and the three-types-of-hearings model are presented as the blog's original framework ('Here's the system for...') without attribution to a named case, statute, scholar, or attorney beyond a passing Bail Reform Act reference."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "Federal vs. state distinctions are reconciled explicitly; no contradictory legal claims appear within the post."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Product framed as research for the attorney: 'a ready-to-use argument framework your loved one's attorney can actually put in front of the judge' and 'It won't get them out for you.'"
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 7,
+        "checks_total": 12,
+        "needs_work_count": 2,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening 'The phone rings at 2:14 AM' powerfully names the fear, but H2s 'The Factors Courts Actually Weigh,' 'The Three Types of Bail Hearings,' and 'What a Blog Post Can't Do' are topical rather than action-oriented."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Legal terms defined inline ('release on recognizance (ROR)', 'third-party custodian' contextualized), paragraphs stay under 4 sentences, action sections read conversationally."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "Before the first H2 'What the Judge Is Actually Deciding' there is no immediate-action block — the first 'Right now:' instruction appears inside that section, not before it."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Every decision point presents a clear default — 'The manila folder gets walked to the courthouse and handed to the public defender before the hearing starts. That's the play.'"
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "FAIL",
+            "evidence": "Factors list has 8 unranked bullets, document list has 8 unranked bullets, and 'Questions That Matter' section has 10 numbered items without 'start with these' priority markers."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "'If nobody is handing them a sheet weighted toward release, detention is what they're going to pick by default' is immediately followed by the manila folder action; no threats stand alone."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language — the post consistently frames the family as capable responders ('You are not going to be that family') rather than lecturing about past choices."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Arc works (2:14 AM fear → factors explained → documents gathered → agency) but final sentence 'Take the free Defense Milestone Score — 10 questions, instant results' is a generic CTA, not an agency statement."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "No tables used, only H2/H3 heading levels, key insights are bolded, and sections stay within the 300-500 word phone-scannable range."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "FAIL",
+            "evidence": "Three H2 sections lack a bolded screenshot-worthy sentence: 'The Three Types of Bail Hearings' only bolds labels ('**First appearance**'), 'The Questions That Matter' has no bold, and 'What a Blog Post Can't Do' has no bold."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "System-decoder-post pattern — decodes the bail hearing system into factors, hearing types, documents, and questions."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All four FAQ answers start with the direct answer ('Two questions drive everything', 'First appearance happens within 24-48 hours', 'No.', 'Often yes'), stay 2-4 sentences, and read as natural support-group replies."
+          }
+        ]
+      }
     }
   }
 }

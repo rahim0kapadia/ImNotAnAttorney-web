@@ -1,6 +1,6 @@
 {
   "slug": "security-clearance-criminal-charge",
-  "last_checked": "2026-04-10T02:24:02.191Z",
+  "last_checked": "2026-04-10T10:11:31.242Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,32 +34,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Post references SEAD 3 and SEAD 4 (federal directives, not statutes) with no § numbers or code citations"
+            "evidence": "Post references SEAD 3 and SEAD 4 by name (real Security Executive Agent Directives) and uses lettered Adjudicative Guidelines (J, E, G, H, D, F) — no bare statute numbers or § references appear anywhere."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear. All references are to agencies and bodies (DOHA, PSAB, FSO, SSO)."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "'13 National Adjudicative Guidelines (SEAD 4)' is sourced; other numbers ($160K, 18 months, three weeks, six years) are narrative/hypothetical scenarios not factual stat claims"
+            "evidence": "No population-level statistics appear. Numbers like '$160K salary', '18 months', 'three weeks', and 'six years' are narrative/illustrative details in hypothetical scenarios, not factual claims. '13 total' guidelines is sourced to SEAD 4 in the same sentence."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "SEAD 3 reporting requirement qualified with 'Most agencies interpret that as a few business days'; 20-day SOR response window is cited within explicit federal DOHA context"
+            "evidence": "All procedural claims are qualified: reporting requirement attributed to 'SEAD 3' specifically, timeline qualified with 'most agencies interpret', 20-day response window scoped to 'current DOHA procedures', appeal path scoped to 'For DoD clearances' with 'Other agencies have their own appeal paths.'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (Name v. Name) appear anywhere. The post references 'published DOHA decisions' generally without citing specific cases."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Clearance consequences qualified throughout with 'triggers a review, not a pink slip,' 'does not automatically,' and 'can'; federal marijuana treatment attributed to 'federal clearance adjudication'"
+            "evidence": "All consequence claims are qualified within the clearance adjudication framework — clearance 'could be revoked', 'does not automatically end it', 'does not guarantee clearance retention'. Marijuana note is scoped to 'federal clearance adjudication' specifically."
           }
         ]
       }
@@ -67,17 +67,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

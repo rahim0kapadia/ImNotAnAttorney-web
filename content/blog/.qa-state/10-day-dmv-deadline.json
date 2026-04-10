@@ -1,6 +1,6 @@
 {
   "slug": "10-day-dmv-deadline",
-  "last_checked": "2026-04-10T02:45:22.647Z",
+  "last_checked": "2026-04-10T10:36:59.742Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -35,43 +35,8 @@
     },
     "anti_hallucination": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "checks_passed": 5,
-        "checks_total": 6,
-        "results": [
-          {
-            "check": "STATUTE_CHECK",
-            "result": "PASS",
-            "evidence": "no issues found"
-          },
-          {
-            "check": "EXPERT_CHECK",
-            "result": "PASS",
-            "evidence": "no issues found"
-          },
-          {
-            "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "Specific time-window claims like 'California: 10 days... 4-month suspension (first offense) or 1-year suspension (refusal)' and 'Florida: 10 days... 6-month... 12-month' and 'Texas: 15 days... 90-day... 180-day' appear without any named source in parentheses."
-          },
-          {
-            "check": "PROCEDURE_CHECK",
-            "result": "PASS",
-            "evidence": "All procedural claims are jurisdiction-qualified — 'most states give you roughly 10 days', plus explicit state names (California, Florida, Texas, New York) on every specific deadline."
-          },
-          {
-            "check": "CASE_NAME_CHECK",
-            "result": "PASS",
-            "evidence": "no issues found"
-          },
-          {
-            "check": "CONSEQUENCE_CHECK",
-            "result": "PASS",
-            "evidence": "License suspension consequences are all state-qualified (California/Florida/Texas/New York named explicitly) rather than stated as universal facts."
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: Credit balance is too low"
     },
     "slop": {
       "passed": false,

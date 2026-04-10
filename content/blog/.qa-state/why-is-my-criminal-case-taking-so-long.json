@@ -1,6 +1,6 @@
 {
   "slug": "why-is-my-criminal-case-taking-so-long",
-  "last_checked": "2026-04-10T02:44:13.678Z",
+  "last_checked": "2026-04-10T10:27:53.526Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,7 +26,7 @@
             "severity": "style",
             "count": 67,
             "matches": [
-              "67 em dashes in 2765 words"
+              "67 em dashes in 2771 words"
             ],
             "points_added": 10
           }
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post uses general language throughout — 'the Sixth Amendment and state speedy trial statutes,' 'constitutional right to a speedy trial' — no bare statute numbers appear anywhere."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No real attorney or legal-scholar names cited. 'Dr. Smith' appears only as a fictional placeholder in a hypothetical dialogue example, not as a real expert attribution."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "The timeline table ('Simple misdemeanor 1-4 months... Complex multi-defendant 18-36 months') and the FAQ answers containing '1-4 months, DUIs in 3-6, state felonies in 6-18, federal felonies in 12-24+' present numeric benchmarks without a source cited in the same or immediately preceding sentence, even though the TLDRBox earlier cites BJS."
+            "evidence": "'Cases that would have resolved in 6 months now take 12-18 months' (court backlog section) makes a specific numerical claim about post-COVID backlog impact with no named source."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'In most jurisdictions, you have a constitutional right to a speedy trial,' 'The specific timelines vary by state,' 'In many cases, your attorney has waived speedy trial rights.'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims made. Emotional/practical impacts of pending cases ('can't plan a vacation,' 'can't take that job') describe uncertainty of limbo, not legal consequences of conviction."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

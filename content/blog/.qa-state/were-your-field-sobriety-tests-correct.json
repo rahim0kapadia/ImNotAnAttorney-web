@@ -1,6 +1,6 @@
 {
   "slug": "were-your-field-sobriety-tests-correct",
-  "last_checked": "2026-04-10T02:28:06.094Z",
+  "last_checked": "2026-04-10T10:20:54.489Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 35,
             "matches": [
-              "35 em dashes in 2519 words"
+              "35 em dashes in 2536 words"
             ],
             "points_added": 10
           }
@@ -34,32 +34,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers appear anywhere in the post; all legal rules are described with general language like 'blood alcohol content above legal limits' and references to the NHTSA manual by document ID (HS 178 R2/06), not statute citations."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "Only NHTSA (source agency) is cited; no individual attorneys or legal scholars named"
+            "evidence": "No individual attorney or legal scholar names appear; the only named entity is NHTSA, a federal agency, which is permitted."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "All accuracy figures (77%, 68%, 65%, 91%) are attributed to NHTSA with manual reference NHTSA HS 178 R2/06"
+            "evidence": "All statistics are sourced: 77%, 68%, 65% each cite '(NHTSA HS 178 R2/06)', the 35/100 and 91% figures cite '(NHTSA)', and remaining numbers (age 65, 50+ pounds, two-inch heels, 45 degrees, nine steps) are NHTSA manual protocol details, not independent factual claims."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "No procedural deadlines or filing windows claimed; post discusses test administration protocols, not legal procedure"
+            "evidence": "The post contains no court procedural claims (no deadlines, filing requirements, or hearing timelines); all protocol discussion is attributed to 'NHTSA's own manual' or 'NHTSA training materials' and describes test administration standards, not legal procedures."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations appear anywhere in the post — no 'v.' patterns, no Brady/Daubert/Miranda references."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "The post makes no collateral-consequence claims (no mention of licensing, housing, firearms, voting, immigration, or employment impacts); it is scoped entirely to FST accuracy and protocol validity."
           }
         ]
       }
@@ -67,17 +67,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

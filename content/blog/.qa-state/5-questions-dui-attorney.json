@@ -1,6 +1,6 @@
 {
   "slug": "5-questions-dui-attorney",
-  "last_checked": "2026-04-10T02:49:41.668Z",
+  "last_checked": "2026-04-10T09:36:53.893Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,23 +10,23 @@
       "details": {
         "composite_score": 31.8,
         "pattern_score": 25,
-        "uniformity_score": 47.6,
+        "uniformity_score": 47.5,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 11,
             "matches": [
-              "11 em dashes in 2586 words"
+              "11 em dashes in 2601 words"
             ],
             "points_added": 10
           },
           {
             "detector": "rule_of_three",
             "severity": "style",
-            "count": 4,
+            "count": 3,
             "matches": [
-              "4 uniform list runs"
+              "3 uniform list runs"
             ],
             "points_added": 5
           },
@@ -52,32 +52,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — post references NHTSA HS 178 R2/06 (a training manual) and NHTSA Conforming Products List, no statute numbers or § citations appear"
+            "evidence": "No statute numbers or section references appear anywhere in the post; legal rules described using general language like 'most jurisdictions require regular calibration' and 'officers need reasonable suspicion'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — only NHTSA (an agency) is cited, no individual attorneys or legal scholars named"
+            "evidence": "No individual attorney or legal-scholar names appear; only NHTSA (a federal agency) is referenced as a source"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "the only factual stat '18% of the time' is sourced inline to 'NHTSA's own validation studies' and 'NHTSA HS 178 R2/06'; other numbers ($7,000, 47 days, three months) are narrative hypotheticals"
+            "evidence": "The one statistic — 'misidentify sober people as impaired 18% of the time' — is sourced to 'NHTSA HS 178 R2/06' in the same sentence; all other numbers (.08, .06, $7,000, 47 days) are hypothetical examples, not factual claims"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "the 15-minute observation period claim is qualified with 'In most states'; calibration interval claim is qualified with 'Most jurisdictions require'"
+            "evidence": "Procedural claims are jurisdiction-qualified: 'Most jurisdictions require regular calibration on manufacturer-specified intervals' and 'In most states, a required 15-minute observation period'; no bare universal deadlines or filing requirements"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — no case citations appear in the post"
+            "evidence": "No case citations appear; 'fruit of the poisonous tree' is a legal doctrine reference, not a case citation"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — references to 'license, job, record' are general and not stated as universal collateral-consequence rules"
+            "evidence": "Consequence language is narrative and general — 'your freedom, your license, and your record' — with no specific collateral-consequence claims stated as universal fact"
           }
         ]
       }
@@ -86,81 +86,81 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 12,
+        "checks_passed": 13,
         "checks_total": 14,
         "hard_gate_failures": [
-          "QUESTION_COUNT"
+          "CITATION_SOURCING"
         ],
         "results": [
           {
             "check": "QUESTION_COUNT",
-            "result": "FAIL",
-            "reason": "Frontmatter has no question_count field; the body contains 5 main attorney questions plus 6 specific follow-up questions, but the field is missing entirely."
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter; title promises 5 questions and body delivers 5 numbered attorney questions plus follow-ups, consistent with headline."
           },
           {
             "check": "CITATION_SOURCING",
-            "result": "PASS",
-            "reason": "NHTSA HS 178 R2/06 cited for the 18% misidentification stat; 2 borderline unsourced claims (calibration frequency '30-90 days', BAC margin of error) within the 2-claim tolerance."
+            "result": "FAIL",
+            "reason": "Multiple unsourced factual claims: 'most attorneys never request calibration records,' 'breathalyzer machines drift over time,' '15-minute observation period' in most states, and 'calibrated 47 days late' example lack inline sources beyond the single NHTSA HS 178 R2/06 citation."
           },
           {
             "check": "READABILITY",
             "result": "PASS",
-            "reason": "All action items ('Ask your attorney today,' 'Call your attorney's office right now,' 'Email your attorney today') are plain-language directives at roughly 8th-9th grade level."
+            "reason": "Action items use plain language ('Ask your attorney today,' 'Email your attorney today') and legal terms like motion to suppress are immediately defined in-line."
           },
           {
             "check": "CLICHE_DENSITY",
             "result": "PASS",
-            "reason": "Zero instances of flagged cliches found; no occurrences of 'at the end of the day,' 'tip of the iceberg,' 'slippery slope,' 'double-edged sword,' 'game changer,' or 'wake-up call.'"
+            "reason": "None of the banned cliches ('end of the day,' 'tip of the iceberg,' 'slippery slope,' 'double-edged sword,' 'game changer,' 'wake-up call') appear in the post."
           },
           {
             "check": "VOICE_CONSISTENCY",
             "result": "PASS",
-            "reason": "Consistent second-person address throughout; references to 'most defendants' and 'most attorneys' describe third parties, not the reader."
+            "reason": "Post maintains second-person 'you/your' throughout with no drift to 'the defendant' or third person for consecutive sentences."
           },
           {
             "check": "PASSIVE_VOICE_RATIO",
             "result": "PASS",
-            "reason": "Estimated 15-18% passive voice ('Was the traffic stop legal,' 'were administered,' 'was calibrated'), well under the 30% threshold."
+            "reason": "Passive constructions ('was calibrated,' 'were administered') appear but remain well under 30% of sentences; most sentences are active voice."
           },
           {
             "check": "JARGON_DEFINITION",
-            "result": "NEEDS_WORK",
-            "reason": "BAC used twice without spelling out 'blood alcohol concentration' and 'due process' used once without definition; 2 undefined terms."
+            "result": "PASS",
+            "reason": "Legal terms like motion to suppress, motion to compel discovery, motion in limine, and fruit of the poisonous tree are each defined on first use within bullet explanations or inline context."
           },
           {
             "check": "STRUCTURAL_INTEGRITY",
             "result": "PASS",
-            "reason": "Logical flow: problem intro → 5 numbered sections each following scenario → question → evidence → action → summary → CTAs."
+            "reason": "Logical flow: scenario hook -> 5 numbered questions each following problem/context/action pattern -> 'Why These Questions Matter' synthesis -> CTAs."
           },
           {
             "check": "CTA_CLARITY",
             "result": "PASS",
-            "reason": "Multiple actionable CTAs: per-section attorney questions with exact phrasing, Case Progress Score link, DUI Defense Playbook link, and internal blog cross-links."
+            "reason": "Multiple clear CTAs present: Case Progress Score link, DUI Defense Playbook link, and specific attorney questions with exact scripts to use today."
           },
           {
             "check": "HEDGING_DENSITY",
             "result": "PASS",
-            "reason": "Action statements are unhedged directives ('Ask your attorney today,' 'Call right now,' 'Email today'); hedging ('might,' 'could') appears only in informational context."
+            "reason": "Action statements are direct imperatives ('Ask your attorney today,' 'Call your attorney's office right now,' 'Email your attorney today') with hedging reserved for informational claims."
           },
           {
             "check": "PARAGRAPH_LENGTH",
             "result": "PASS",
-            "reason": "No paragraph exceeds 300 words; action-oriented closing paragraphs in each section stay under 100 words."
+            "reason": "No paragraph exceeds 300 words; action-oriented paragraphs stay concise, typically 2-4 sentences each."
           },
           {
             "check": "SECTION_BALANCE",
             "result": "PASS",
-            "reason": "Five main sections each comprise roughly 16-19% of total word count; no section exceeds 25%."
+            "reason": "The five numbered question sections are roughly proportional in length with no single section approaching 50% of total word count."
           },
           {
             "check": "FEAR_ACTION_PAIRING",
             "result": "PASS",
-            "reason": "Every threat ('your license, your job, your record'; 'fruit of the poisonous tree'; '$7,000 paid with no plan') is paired with a specific action within 1-2 sentences."
+            "reason": "Threats (license/job/record loss, DUI charge, 'controls your life') are consistently followed within 1-2 sentences by specific actions like calling the attorney or requesting calibration records."
           },
           {
             "check": "ENGAGEMENT_ARC",
             "result": "PASS",
-            "reason": "Opens with visceral scenario hook ('You got pulled over. You blew a number.'), builds with 5 evidence-rich sections, closes with empowering tools (Score, Playbook)."
+            "reason": "Strong opening scenario hook ('You got pulled over. You blew a number.'), middle builds with evidence and specific attorney behaviors, closing empowers with exact scripts and product CTAs."
           }
         ]
       }
@@ -169,83 +169,83 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "criteria_passed": 11,
+        "criteria_passed": 9,
         "criteria_total": 15,
         "results": [
           {
             "criterion": "U1",
-            "result": "PASS",
-            "evidence": "All directives point the reader toward their attorney: 'Ask your attorney today,' 'Call your attorney's office right now and ask,' 'Email your attorney today' — no directive instructs the reader to take independent legal action."
+            "result": "FAIL",
+            "evidence": "Post contains direct directives like 'Call your attorney's office right now and ask one question', 'Email your attorney today with this exact sentence', and 'Write down the date they give you' — commands the reader should follow."
           },
           {
             "criterion": "U2",
             "result": "PASS",
-            "evidence": "Every section ends with a specific attorney-directed action: Section 1 ('Ask your attorney today'), Section 2 ('Call your attorney's office'), Section 3 ('Ask your attorney to list the motions'), Section 4 ('Email your attorney today'), Section 5 ('Ask your attorney to describe their defense strategy'), and the closing ('What happens next is between you and your attorney')."
+            "evidence": "Each section directs the reader back to their attorney with specific questions to ask, keeping attorney consultation proximate throughout."
           },
           {
             "criterion": "U3",
             "result": "PASS",
-            "evidence": "The post never evaluates the reader's specific case — statements like 'If the stop was illegal' and 'A .08 reading has a margin of error' describe general principles, not the reader's circumstances. No passage says 'your case is strong' or 'you likely have a defense.'"
+            "evidence": "Post discusses legal concepts generally without evaluating the reader's specific case strength or likelihood of conviction."
           },
           {
             "criterion": "U4",
-            "result": "PASS",
-            "evidence": "Motions are framed as things the attorney should consider ('Common DUI motions your attorney should at least consider') and questions to ask ('Ask your attorney to list the motions they've considered'), never as actions the reader should file themselves."
+            "result": "FAIL",
+            "evidence": "Post recommends specific motions the attorney should file: 'Motion to suppress. Motion to dismiss. Motion to compel discovery' and 'your attorney should be filing a motion to address it' regarding missing footage."
           },
           {
             "criterion": "U5",
             "result": "PASS",
-            "evidence": "The post does not discuss immigration consequences, deportation, visa status, DACA, or green card implications — criterion is not triggered."
+            "evidence": "Post does not discuss immigration consequences, so the immigration redirect requirement does not apply."
           },
           {
             "criterion": "U6",
             "result": "PASS",
-            "evidence": "The post mentions 'your license, your job, your record' only as contextual stakes, not as detailed collateral consequences with specific legal mechanisms — no unsourced collateral consequence assertions are made."
+            "evidence": "Post does not mention collateral consequences like professional licenses, housing, firearms, or voting rights."
           },
           {
             "criterion": "U7",
             "result": "PASS",
-            "evidence": "No bail bond companies, law firms, public defender offices, or legal service providers are named anywhere in the post."
+            "evidence": "Post references only general categories like 'your attorney' and 'a flat-fee attorney' without naming specific firms or companies."
           },
           {
             "criterion": "U8",
             "result": "PASS",
-            "evidence": "The only first-person plural usage is 'We're not telling you what to do' and 'We break down exactly what records to request in our guide' — neither constitutes a legal action recommendation."
+            "evidence": "Post does not use 'we recommend' phrasing; explicitly states 'We're not telling you what to do. We're giving you the questions to ask.'"
           },
           {
             "criterion": "U9",
             "result": "FAIL",
-            "evidence": "Multiple hypothetical scenarios are presented without being labeled as hypothetical: 'You're driving home. Headlights appear in your rearview mirror' (Section 1), 'The officer points to the screen. .08.' (Section 2), 'You're three months into your case. You've paid $7,000' (Section 5) — all use second person and could be mistaken for the reader's actual facts."
+            "evidence": "Hypothetical strategy example ('I've reviewed the dashcam footage and the stop appears pretextual — the officer cited a broken taillight...') is not labeled as hypothetical and could be mistaken for a real case."
           },
           {
             "criterion": "U10",
             "result": "PASS",
-            "evidence": "The post explicitly frames its purpose as empowering attorney engagement: 'We're giving you the questions to ask,' 'These five questions are designed to tell you whether your attorney is actually working your case,' 'Good attorneys welcome these questions because informed clients help build stronger defenses.'"
+            "evidence": "Post explicitly frames content as questions to ask the attorney, stating 'These five questions aren't designed to be adversarial. They're designed to tell you whether your attorney is actually working your case.'"
           },
           {
             "criterion": "U11",
             "result": "FAIL",
-            "evidence": "Several legal rules are stated as universal certainties without jurisdiction qualifiers: 'Officers need reasonable suspicion to pull you over' (no 'generally' or 'in most jurisdictions'), 'You have a right to see the evidence against you' (discovery rights vary by jurisdiction), 'everything that follows is fruit of the poisonous tree' (stated as absolute, ignoring exceptions like inevitable discovery)."
+            "evidence": "Post makes absolute claims like 'If the stop was illegal, everything that follows is fruit of the poisonous tree' and 'Officers need reasonable suspicion to pull you over' without qualifiers like 'in general' or 'typically' or jurisdiction variation notes."
           },
           {
             "criterion": "U12",
             "result": "FAIL",
-            "evidence": "'If the stop was illegal, everything that follows is fruit of the poisonous tree. The field sobriety tests, the breathalyzer, the arrest itself. It all gets suppressed' implies a guaranteed suppression outcome without noting exceptions to the exclusionary rule or jurisdictional variation."
+            "evidence": "Post implies outcomes: 'If the stop was illegal, every piece of evidence that followed it can be thrown out' and 'A surprising number of DUI cases are won or lost on this single issue' without qualification that results vary."
           },
           {
             "criterion": "U13",
             "result": "FAIL",
-            "evidence": "Legal strategies — challenging stop legality via reasonable suspicion, breathalyzer calibration challenges, the fruit of the poisonous tree doctrine, and motion-as-leverage tactics — are presented as general wisdom without attribution to any case (e.g., Terry v. Ohio, Wong Sun v. United States), statute, or legal scholar. Only NHTSA is cited, and only for field sobriety test error rates."
+            "evidence": "Legal strategies like fruit of the poisonous tree doctrine, motion to suppress applications, and pretextual stop challenges are presented as the blog's own positions without attribution to specific cases, statutes, or named legal authorities."
           },
           {
             "criterion": "U14",
             "result": "PASS",
-            "evidence": "No contradictory legal claims appear — the post consistently treats stop legality, calibration, and motions as defense avenues without stating opposing legal positions."
+            "evidence": "No contradictory legal claims appear within the post."
           },
           {
             "criterion": "U15",
             "result": "PASS",
-            "evidence": "Case Progress Score is framed as telling you 'what's been done, what's missing, and what to ask next,' and the DUI Defense Playbook is framed as giving you 'questions, a case stage roadmap, and a checklist — everything you need to hold your attorney accountable' — both positioned as attorney-engagement tools, not legal advice substitutes."
+            "evidence": "Products framed as research/preparation tools: 'Case Progress Score' tells you 'what to ask next' and the Playbook gives 'everything you need to hold your attorney accountable' — not as attorney replacement."
           }
         ]
       }
@@ -256,67 +256,67 @@
       "details": {
         "checks_passed": 7,
         "checks_total": 12,
-        "needs_work_count": 4,
+        "needs_work_count": 5,
         "results": [
           {
             "check": "D1_3AM_PANIC",
             "result": "NEEDS_WORK",
-            "evidence": "Opening hook is strong ('staring at a DUI charge and a lawyer who keeps saying we'll handle it'), H2s 1-5 are action-oriented questions, but final H2 'Why These Questions Matter' is purely topical with no implied action."
+            "evidence": "Opening names the fear ('lawyer who keeps saying we'll handle it') and H2s 1-5 are action-oriented questions the reader asks, but the final H2 'Why These Questions Matter' is purely topical with no implied action"
           },
           {
             "check": "D2_READING_LEVEL",
-            "result": "FAIL",
-            "evidence": "Section 1 opening narrative paragraph ('You're driving home...standing on the side of the road doing a sobriety test') runs 7 sentences, and 'BAC', 'NHTSA' (in body text), and 'due process' are used without inline definition."
+            "result": "NEEDS_WORK",
+            "evidence": "Most legal terms are defined inline (reasonable suspicion, motion to suppress, motion in limine), but 'fruit of the poisonous tree' is bolded and used without inline definition"
           },
           {
             "check": "D3_DO_THIS_NOW",
             "result": "PASS",
-            "evidence": "TLDRBox contains a concrete 'Your Next Step' before the first H2: ask your attorney about breathalyzer calibration records by serial number for the 12 months before arrest — specific, under 5 minutes, formatted as an action block."
+            "evidence": "TLDRBox before the first H2 contains a 'Your Next Step' action block: 'Ask your attorney whether they've requested the breathalyzer calibration records for the specific device used in your test. By serial number, for the 12 months before your arrest'"
           },
           {
             "check": "D4_ONE_CLEAR_PATH",
             "result": "PASS",
-            "evidence": "Each section presents a single clear default action (the specific question to ask and how to follow up) with no multi-option decision points or 'it depends' hedging."
+            "evidence": "Each section ends with a single default action ('Ask your attorney today...', 'Call your attorney's office right now...', 'Email your attorney today with this exact sentence...') — one lead per decision point"
           },
           {
             "check": "D5_3_ITEM_RULE",
             "result": "NEEDS_WORK",
-            "evidence": "Sections 1, 2, and 3 each present 4-item bulleted lists without 'start with these' priority markers, and section 4's 'Footage that helps YOU' list runs to 5 observation items without grouping."
+            "evidence": "Multiple sections present 4 unranked bullets (section 1 has 4 attorney actions, section 2 has 4 calibration record items, section 3 has 4 motion types) without 'start with these' priority labels"
           },
           {
             "check": "D6_CATALOG_VARIETY",
             "result": "PASS",
-            "evidence": "Question-arsenal-post structural pattern — five numbered questions the reader can deploy immediately with their attorney."
+            "evidence": "question-arsenal-post — structured around 5 specific questions the defendant asks their attorney, each with indicators of good vs bad answers"
           },
           {
             "check": "D7_THREAT_EFFICACY",
             "result": "PASS",
-            "evidence": "Every threat is paired with a specific action within 2 sentences — e.g., '.08 reading has a margin of error' is immediately followed by 'But nobody checks unless your attorney requests the records' and a concrete call-your-attorney step."
+            "evidence": "The 18% NHTSA misidentification stat in TLDR is paired with the calibration-records action, and the '.08 margin of error' threat is immediately followed by 'Call your attorney's office right now and ask...'"
           },
           {
             "check": "D8_IDENTITY_PROTECTION",
             "result": "PASS",
-            "evidence": "Zero blame language throughout; 'You got pulled over. You blew a number.' is neutral and factual, and the reader is consistently positioned as someone navigating a system, never as someone who caused their situation."
+            "evidence": "No blame language anywhere — 'You got pulled over. You blew a number' is factual, never 'you should have' or 'if you had,' and the tone separates the reader from the situation throughout"
           },
           {
             "check": "D9_FEAR_CLARITY_AGENCY",
             "result": "NEEDS_WORK",
-            "evidence": "Arc is strong — opening validates fear ('Handle what, exactly?'), middle reduces unknowns to knowns, and 'Your case. Your money. Your freedom. Ask the questions.' is a solid agency close, but the actual final content the reader sees is CTA blocks for the score tool and playbook."
+            "evidence": "Opening names fear and middle explains motions/calibration/footage, but the literal final sentence is a generic CTA to the DUI Defense Playbook rather than a standalone agency statement — the agency line 'Your case. Your money. Your freedom. Ask the questions' is buried above two CTA blocks"
           },
           {
             "check": "D10_PHONE_FIRST",
             "result": "PASS",
-            "evidence": "No tables used (evidence lists use bold headers + bullets), key actions are bold and in their own paragraphs, only H2 heading levels used, and all sections estimate within 300-500 words."
+            "evidence": "No tables, only H2 headings used (no H3/H4), key actions are bolded throughout, and each numbered section stays in the 350-500 word range"
           },
           {
             "check": "D11_SCREENSHOT_SENTENCE",
             "result": "NEEDS_WORK",
-            "evidence": "Sections 1-5 each have strong screenshot sentences under 27 words (e.g., 'An attorney who files no motions is showing up to a negotiation with nothing to negotiate with'), but the 'Why These Questions Matter' H2 section lacks a bolded screenshot-worthy sentence entirely."
+            "evidence": "Sections 1-5 each have a bolded screenshot-worthy idea under 27 words (e.g. 'An attorney who files no motions is showing up to a negotiation with nothing to negotiate with'), but the final H2 'Why These Questions Matter' has no bolded screenshot sentence — only a single-word bold on 'want'"
           },
           {
             "check": "D12_SHAREABLE_FAQ",
             "result": "PASS",
-            "evidence": "All 3 FAQs start with the direct answer ('Ask whether...', 'A good DUI attorney can...', 'Motions to suppress...'), run 2-3 sentences each, and read naturally as support-group replies from someone who's been through it."
+            "evidence": "All 3 FAQ answers start with the direct answer, run 2-3 sentences, and read as insider peer advice ('An attorney who can't answer these has not started working your case') rather than institutional explanation"
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "slug": "what-happens-if-you-violate-probation",
-  "last_checked": "2026-04-10T02:30:57.847Z",
+  "last_checked": "2026-04-10T10:24:30.583Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -46,38 +46,38 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 4,
+        "checks_passed": 5,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
-            "result": "PASS",
-            "evidence": "Only statute references are 'Georgia SB 105' (jurisdiction-qualified) and 'U.S. Sentencing Guidelines Chapter 7' (real federal reference with link)"
+            "result": "FAIL",
+            "evidence": "'Georgia caps it at 2 years for felony probation technical violations under SB 105' — specific bill number cited without verification URL; could be fabricated (Georgia's probation reform bill was SB 174, not SB 105)."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorneys or legal scholars named; only source agencies (Bureau of Justice Statistics, U.S. Sentencing Commission)"
+            "evidence": "No individual attorney or legal-scholar names appear; only institutional references (Supreme Court, Bureau of Justice Statistics)."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'some jurisdictions allow \"shock\" jail time (typically 30-180 days)' — unsourced time-window statistic with no named source"
+            "result": "PASS",
+            "evidence": "The only statistic — 'approximately 350,000 people are incarcerated annually' — is attributed to 'Bureau of Justice Statistics' in the same sentence."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "State-specific procedural claims are qualified with 'some states' / 'most judges'; federal claims cite U.S. Sentencing Guidelines Chapter 7"
+            "evidence": "Procedural claims are either jurisdiction-qualified ('some states have mandatory revocation', 'some states cap', 'some states require') or grounded in constitutional authority ('The Supreme Court has ruled')."
           },
           {
             "check": "CASE_NAME_CHECK",
-            "result": "FAIL",
-            "evidence": "Cites 'Morrissey v. Brewer (1972)' and 'Gagnon v. Scarpelli (1973)' in both FAQ and body — case citations not on the allowed exceptions list"
+            "result": "PASS",
+            "evidence": "No case citations appear; Supreme Court holdings are referenced by institution without naming specific cases."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral consequence claims (licensing, voting, firearms, housing, immigration) appear in the post"
+            "evidence": "All consequence claims use qualifying language ('can be arrested', 'can result in a fugitive warrant', 'can impose any sentence') — no universal collateral-consequence statements."
           }
         ]
       }
@@ -85,17 +85,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

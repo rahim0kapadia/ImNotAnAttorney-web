@@ -1,6 +1,6 @@
 {
   "slug": "can-you-challenge-breathalyzer-results",
-  "last_checked": "2026-04-10T02:19:10.274Z",
+  "last_checked": "2026-04-10T09:42:52.971Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,50 +43,272 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers, section references, or specific code citations appear anywhere in the post — all legal rules described using general language like 'most states,' 'by rule or statute,' 'depending on the state.'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal-expert names appear. Sources cited are agencies (NHTSA), journals (Journal of Analytical Toxicology, Forensic Science International), and manufacturers (CMI, Inc.; Intoximeters) — all permitted."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "'individual ratios ranging from roughly 1,500 to 1 all the way up to 3,000 to 1' cites 'Journal of Analytical Toxicology' but the 2,100:1 conversion ratio and '15 to 20 minutes' and '7, 10, 14, or 30 days' calibration intervals lack specific sourced citations within the same sentence"
+            "evidence": "The conversion ratio 'usually 2,100 to 1' and individual range '1,500 to 1 all the way up to 3,000 to 1' — the 2,100:1 figure has no named source in its sentence or the preceding sentence. The 1,500–3,000 range is sourced (Journal of Analytical Toxicology), but the primary 2,100:1 claim is not."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Calibration cycles and observation period are qualified with 'Most states' and 'in most states'"
+            "evidence": "All procedural claims are jurisdiction-qualified: '15 to 20 minutes' attributed to 'NHTSA protocol — and most state rules modeled on it,' calibration intervals qualified with 'Most states' and 'depending on the state and the machine,' observation period in FAQ prefaced with 'In most states.'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (X v. Y format) appear anywhere in the post. References to litigation history use general language like 'some courts tossed the results' and 'reported case somewhere.'"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear. The only outcome language is 'the difference between probation and prison,' which describes direct sentencing, not collateral consequences."
           }
         ]
       }
     },
     "slop": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 13,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter and post uses 5-minute actions instead of attorney questions, so no mismatch to flag."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Factual claims cite Journal of Analytical Toxicology, NHTSA Conforming Products List, Forensic Science International, and name specific machine models/manufacturers."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('write down', 'find the machine model') and jargon like RFI and GERD is defined inline on first use."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "No instances of the flagged cliche phrases appear anywhere in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Post maintains second person 'you/your' throughout; brief references to 'the officer' or 'the subject' are object references, not voice shifts."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Passive constructions exist ('was validated', 'are certified') but stay well under 30% of total sentences."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "Technical terms (RFI, GERD, ketoacidosis, per se limit, hematocrit, discovery) are defined or contextualized on first use."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Logical flow from hook to how machine works, calibration, observation period, medical factors, operator error, margin of error, questions, and CTA."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple clear CTAs: Breathalyzer Calibration Challenges report link, Defense Milestone Score, and 12 specific questions to raise."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "NEEDS_WORK",
+            "reason": "Several action/claim statements use 'can,' 'may,' 'could' ('records may be discoverable', 'could affect the reading', 'may matter') approaching the 15% threshold."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs stay under 300 words and action paragraphs stay under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Word count is distributed across 8+ sections with no single section exceeding roughly 20% of total."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Each threat paragraph (calibration failure, mouth alcohol, medical conditions, operator error, margin of error) is followed by a specific 5-minute action or question."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong scenario hook ('You blew a number'), evidence-heavy middle with specific machines and studies, and empowering close with 12 questions and specific actions."
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 14,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Action items direct reader to document facts and 'hand that note to your defense team' rather than issuing legal commands; describes what 'can' happen rather than what reader 'must' do"
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each action section proximately redirects to 'your defense team' (e.g., 'Give that list to your defense team', 'Hand that note to your defense team')"
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post speaks generally ('A reading of 0.08 could legally represent...') without evaluating reader's specific case strength or predicting their outcome"
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "Describes that calibration records 'can be requested through discovery' and frames record requests as something handed to the defense team, not a motion the reader should file themselves"
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post contains no discussion of immigration, deportation, visa, or related consequences, so the immigration-attorney redirect requirement does not trigger"
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "No collateral consequences (license loss, housing, firearm rights, voting, student loans) are mentioned in this breathalyzer-focused post"
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Named entities (CMI Inc., National Patent Analytical Systems, Intoximeters) are breathalyzer manufacturers cited in technical context; no bail bond companies, law firms, or legal service providers are recommended"
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "Post avoids first-person plural legal recommendations; uses neutral framings like 'The records exist' and 'That's what the report does' rather than 'we recommend'"
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "The '2 AM... raining... officer on shift for nine hours' passage and the opening 'You blew a number. Maybe .08' scene are illustrative scenarios that are not labeled as hypothetical or example"
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post consistently routes findings to 'your defense team' and closes with 'What a Blog Post Can't Do' explicitly disclaiming that the reader can handle this themselves"
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Uses qualifying language throughout: 'typically', 'in most states', 'depending on the state and the machine', 'In some jurisdictions... In others'"
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Outcome language is qualified: 'can crack', 'In some jurisdictions, it breaks entirely. In others, it shifts the burden', 'may be discoverable', and the closing disclaimer notes results depend on state rules and specific facts"
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Attributes technical claims to named sources: 'Journal of Analytical Toxicology', 'Forensic Science International', 'NHTSA Conforming Products List guidelines', and manufacturer names for each machine"
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No internally contradictory legal claims; calibration intervals are given as a range (7-30 days) with explanation that it varies by jurisdiction, which is a qualification rather than a contradiction"
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "The Breathalyzer Calibration Challenges report is framed as mapping facts against failure points and giving 'the questions that matter before your next court date', and the 'What a Blog Post Can't Do' section explicitly positions it as a research tool"
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 12,
+        "needs_work_count": 4,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening names the fear ('That number feels like a conviction') but several H2s are topical rather than action-oriented ('What a Breathalyzer Actually Measures', 'Medical Conditions the Machine Does Not Know About', 'The Margin of Error That Prosecutors Don't Talk About')."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "NEEDS_WORK",
+            "evidence": "Most terms are defined inline (BAC, RFI, GERD) but 'hematocrit levels' and 'diabetic ketoacidosis' appear without inline definitions, and the spectroscopy/firmware references lean technical."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "The first concrete action ('find the machine model listed on your arrest paperwork') appears at the end of section 1, after the first H2, not before it — no immediate-action block precedes the first H2."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each decision point leads with a clear default ('Requesting the calibration and maintenance records... is not a stunt. It's due process') and the 12-question list is presented as the path, not as optional branches."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "FAIL",
+            "evidence": "'The Questions That Actually Matter' section presents 12 unranked questions without priority markers, and 'Common operator issues' lists 6 items without grouping or 'start with these' labeling."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "system-decoder-post — decodes how the breathalyzer machine works, its failure modes, and the evidentiary system around it."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every scary stat is paired with action — the 0.02 error margin is followed by 'Calculate the difference... that single fact shapes the entire defense strategy,' and calibration scandals are paired with records-request guidance."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "No blame language — the post consistently separates the reader from the situation ('the officer has already decided is drunk,' 'the machine assumes you are average') with zero 'you should have' patterns."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening validates fear well and middle reduces unknown to known, but the final sentence is a generic CTA to the Defense Milestone Score rather than an agency statement."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "Only H2/H3 levels used, no tables, key actions are bolded, and sections stay within the 300-500 word target with bulleted machine list and operator issues properly chunked."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Every H2 section contains exactly one bolded screenshot-worthy sentence under 27 words (e.g., 'A missed calibration cycle does not mean the machine was wrong — it means nobody can prove it was right')."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "All four FAQs lead with direct answers in natural voice, but the 15-minute observation answer runs 5 sentences and the medical conditions answer edges toward 5, slightly exceeding the 2-4 sentence target."
+          }
+        ]
+      }
     }
   }
 }

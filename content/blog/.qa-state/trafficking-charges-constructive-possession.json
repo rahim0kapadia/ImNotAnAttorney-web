@@ -1,6 +1,6 @@
 {
   "slug": "trafficking-charges-constructive-possession",
-  "last_checked": "2026-04-10T02:27:39.259Z",
+  "last_checked": "2026-04-10T10:20:18.190Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,32 +34,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post uses general language throughout — 'in most states', 'in many jurisdictions', 'the law in your jurisdiction', 'the statute' — no specific statute numbers appear"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal expert names appear; author is listed as 'ImNotAnAttorney Team'"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "Specific statistics like '73% weight discrepancy', '93.9g', '25.59g', '68.3 grams missing', and '21 fingerprints were collected and zero matched' are attributed only to 'in one real case' with no named source (case name, court, or citation)."
+            "evidence": "'73% weight discrepancy', '93.9g', '25.59g', '68.3 grams missing', and '21 fingerprints were collected and zero matched' are stated as facts from real cases without a named source in parentheses"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'in most states', 'in most jurisdictions', 'in many cases', 'Some jurisdictions have safety valve provisions', 'Some states allow judges to sentence below the minimum'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only 'Daubert motion' appears, which is on the allowed terminology exception list."
+            "evidence": "Only case-adjacent term is 'Daubert motion' in question 7, which is an allowed exception; no other case citations appear"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post discusses direct sentencing consequences (mandatory minimums, prison vs. probation) but makes no collateral-consequence claims about licensing, housing, firearms, voting, or employment"
           }
         ]
       }
@@ -67,17 +67,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

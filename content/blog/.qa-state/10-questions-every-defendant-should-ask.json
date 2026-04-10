@@ -1,6 +1,6 @@
 {
   "slug": "10-questions-every-defendant-should-ask",
-  "last_checked": "2026-04-10T02:45:39.779Z",
+  "last_checked": "2026-04-10T09:36:11.592Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 46,
             "matches": [
-              "46 em dashes in 3348 words"
+              "46 em dashes in 3350 words"
             ],
             "points_added": 10
           },
@@ -43,115 +43,113 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers appear anywhere in the post. Legal concepts (drug possession elements, motions to suppress) are described in general language without citing specific statute sections."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear. The only named source is Bureau of Justice Statistics (a government agency, which is allowed). The Expert Insight box attributes the quote to 'a principle documented across elite defense methodology,' not a named individual."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "97% of federal criminal cases and 94% of state cases are resolved through plea agreements (Bureau of Justice Statistics)"
+            "evidence": "Two statistics appear — '97% of federal criminal cases' and '94% of state cases' — both sourced inline to '(Bureau of Justice Statistics)' in the same sentence. All other numbers (47 pages, 80 cases, 10:15 PM, 18 months) are hypothetical narrative details, not factual claims."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No procedural deadlines, filing windows, or timeline requirements are stated as bare universal rules. Procedural concepts (motions, discovery, plea negotiation) are discussed as general defense strategy without specific jurisdiction-bound deadlines."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only 'Brady Motion' appears, which is on the allowed terminology list"
+            "evidence": "One case-adjacent term appears — 'Brady Motion' — which is explicitly listed as an allowed exception. No other case citations (v. format or otherwise) appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims appear. The post focuses on case strategy, attorney accountability, and courtroom procedure — it does not discuss licensing, housing, voting, firearms, immigration, or employment consequences."
           }
         ]
       }
     },
     "slop": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 12,
+        "checks_passed": 14,
         "checks_total": 14,
-        "hard_gate_failures": [
-          "QUESTION_COUNT"
-        ],
+        "hard_gate_failures": [],
         "results": [
           {
             "check": "QUESTION_COUNT",
-            "result": "FAIL",
-            "reason": "No question_count field exists in the frontmatter; the post contains 10 primary attorney-directed questions plus ~20 follow-up sub-questions, but the field is entirely missing."
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter to validate against; post contains 10 clearly numbered questions directed at the attorney as advertised in the title."
           },
           {
             "check": "CITATION_SOURCING",
             "result": "PASS",
-            "reason": "The key statistical claim (97% federal/94% state plea rates) is sourced to Bureau of Justice Statistics; remaining content is strategic advice and definitions, with only one borderline unsourced claim about attorneys who never go to trial."
+            "reason": "The key statistic (97%/94% plea rate) is sourced to Bureau of Justice Statistics; remaining claims are procedural/strategic rather than factual assertions requiring citation."
           },
           {
             "check": "READABILITY",
             "result": "PASS",
-            "reason": "All action items ('open your phone's notes app,' 'send your attorney an email today,' 'write down the six motion types') use plain, direct language at or below 10th grade level, and legal terms are defined inline."
+            "reason": "Action items use plain language (write down, send an email, bring a notebook) and legal terms like motions and discovery are defined on first use."
           },
           {
             "check": "CLICHE_DENSITY",
             "result": "PASS",
-            "reason": "Zero instances of the flagged cliche phrases found anywhere in the post; the writing uses original metaphors like 'negotiating with an empty holster' and 'five-alarm fire' instead."
+            "reason": "Only one borderline cliche ('five-alarm fire'); none of the banned phrases appear, well under the 2% threshold."
           },
           {
             "check": "VOICE_CONSISTENCY",
             "result": "PASS",
-            "reason": "The post maintains second person throughout; the brief 'most people... they wait, they trust' in the intro is a rhetorical device that transitions back to 'you' within two sentences and does not use 'the defendant' or 'one should.'"
+            "reason": "Second person 'you/your' is used consistently throughout; shifts to 'defendants' are single-sentence general framing, never 2+ consecutive sentences."
           },
           {
             "check": "PASSIVE_VOICE_RATIO",
             "result": "PASS",
-            "reason": "Estimated passive voice at under 10% — the writing is overwhelmingly active and direct ('ask your attorney,' 'send an email,' 'write down the answers'), with passive constructions appearing only in necessary legal descriptions."
+            "reason": "Post is dominated by active voice imperatives and second-person constructions; passive sentences are well under 30%."
           },
           {
             "check": "JARGON_DEFINITION",
-            "result": "NEEDS_WORK",
-            "reason": "'Diversion' and 'deferred adjudication' in Question 5 are dropped without definition; all other legal terms (discovery, motions, elements, theory of defense, Brady, Daubert/Frye, in limine) are defined on first use."
+            "result": "PASS",
+            "reason": "Discovery, motion to suppress, Brady motion, motion in limine, and elements are all defined or explained on first use."
           },
           {
             "check": "STRUCTURAL_INTEGRITY",
             "result": "PASS",
-            "reason": "Each of the 10 sections follows a consistent pattern (vivid scenario → explanation → 'what nobody mentions' → bolded takeaway → specific action item), and the post flows logically from intro → questions → how-to-ask → what-if → CTA."
+            "reason": "Logical flow: hook, 10 numbered questions each with problem/context/action, then how-to-ask and what-if-answers-fail closers."
           },
           {
             "check": "CTA_CLARITY",
             "result": "PASS",
-            "reason": "Multiple actionable CTAs: per-question action items (email, notes app, Google Maps), internal links to related guides, and a closing CTA to the free Case Progress Score tool."
+            "reason": "Multiple CTAs: free Case Progress Score link, email-the-attorney script, and per-question action items."
           },
           {
             "check": "HEDGING_DENSITY",
             "result": "PASS",
-            "reason": "Action statements are consistently direct and unhedged ('send your attorney an email today,' 'ask this question at your next meeting'); hedging appears only in appropriate informational contexts ('your case might hinge on that element')."
+            "reason": "Action statements are direct imperatives ('Ask', 'Send', 'Write down'); hedging words appear mostly in information statements about outcomes."
           },
           {
             "check": "PARAGRAPH_LENGTH",
             "result": "PASS",
-            "reason": "No paragraph exceeds 300 words; action-oriented paragraphs are consistently under 100 words, and the longest paragraphs are the bullet-point definition lists which are scannable by design."
+            "reason": "All paragraphs are short and scannable; no paragraph approaches the 300-word or 100-word action thresholds."
           },
           {
             "check": "SECTION_BALANCE",
             "result": "PASS",
-            "reason": "Content is distributed across 13 sections (intro, 10 questions, how-to-ask, what-if), with no section exceeding roughly 10% of total word count — well under the 50% threshold."
+            "reason": "The 10 questions plus closing sections are roughly evenly distributed; no single section exceeds 50% of total word count."
           },
           {
             "check": "FEAR_ACTION_PAIRING",
             "result": "PASS",
-            "reason": "Every threat is paired with a specific action within 1-2 sentences: 'processing you' → open notes app; 'five-alarm fire' → send email today; 'empty holster' → ask five questions at next meeting; all 10 questions follow this pattern."
+            "reason": "Each threat (missed deadlines, bad plea offers, unreviewed discovery, worst-case sentences) is followed within 1-2 sentences by a specific reader action."
           },
           {
             "check": "ENGAGEMENT_ARC",
             "result": "PASS",
-            "reason": "Strong hook ('the quality of your questions determines the quality of your defense'), evidence-building middle with vivid courtroom scenarios and expert methodology, and empowering close with Case Progress Score CTA and reaffirmation of reader agency."
+            "reason": "Strong hook ('quality of your questions determines the quality of your defense'), middle builds evidence through 10 concrete questions, and closing empowers with a specific email script and Case Progress Score CTA."
           }
         ]
       }
@@ -160,83 +158,83 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "criteria_passed": 13,
+        "criteria_passed": 8,
         "criteria_total": 15,
         "results": [
           {
             "criterion": "U1",
-            "result": "PASS",
-            "evidence": "All directives are about asking attorney questions and preparing for meetings ('Send your attorney an email today,' 'Write down the six motion types,' 'Bring that list to your attorney'), never commanding specific legal actions like filing motions or entering pleas."
+            "result": "FAIL",
+            "evidence": "Post contains directives like 'Ask them early. Ask them often. Write down the answers' and 'Read your police report tonight. Write down every timestamp. Do the math on whether the timeline makes sense' — commands to follow without attorney guidance."
           },
           {
             "criterion": "U2",
             "result": "PASS",
-            "evidence": "Every section redirects to the attorney within the section itself — Q1 says 'that is the first question for your next meeting,' Q3 says 'ask them to explain why,' Q4 says 'Ask your attorney to walk you through each element,' and all 10 questions are explicitly framed as things to ask your attorney."
+            "evidence": "Every section frames the reader's action as asking/consulting their attorney, and the footer disclaimer reinforces 'We are not attorneys'."
           },
           {
             "criterion": "U3",
             "result": "PASS",
-            "evidence": "The post never evaluates the reader's specific situation; it uses general framing like 'your whole case might hinge on that one element' within a hypothetical drug example, and consistently directs readers to ask their attorney about their specific facts."
+            "evidence": "Post discusses elements and weaknesses generically ('Every case has weaknesses') without judging the specific reader's case strength or likely outcome."
           },
           {
             "criterion": "U4",
-            "result": "PASS",
-            "evidence": "Motion types are explained educationally ('argues evidence was obtained illegally') and framed as things the attorney should be considering — 'Common motions your attorney should at least be considering' — not as steps the reader should take independently."
+            "result": "FAIL",
+            "evidence": "Post lists specific motions (Motion to Suppress, Motion to Compel Discovery, Brady Motion, Motion to Dismiss, Motion in Limine) and tells reader to 'ask which ones apply to your case' — though framed as asking the attorney, it recommends specific procedural steps for the reader to push."
           },
           {
             "criterion": "U5",
             "result": "PASS",
-            "evidence": "The post does not mention immigration consequences, deportation, visa status, DACA, or green cards anywhere, so no immigration-specific attorney redirect is required."
+            "evidence": "Post does not discuss immigration consequences, deportation, visa status, or similar topics."
           },
           {
             "criterion": "U6",
             "result": "PASS",
-            "evidence": "The post does not mention collateral consequences such as professional license loss, housing restrictions, firearm rights, voting rights, or student loan eligibility, so no sourcing obligation is triggered."
+            "evidence": "Post does not mention collateral consequences like professional licenses, housing, firearms, voting, or student loans."
           },
           {
             "criterion": "U7",
             "result": "PASS",
-            "evidence": "No specific bail bond companies, law firms, or legal service providers are named anywhere in the post; all references use general categories like 'your attorney' and 'the prosecutor.'"
+            "evidence": "Post references general categories like 'criminal defense attorney' and 'prosecutor' without naming any specific firm or company."
           },
           {
             "criterion": "U8",
-            "result": "PASS",
-            "evidence": "The only first-person plural usage near legal context is 'We're not attorneys. We don't give legal advice. But we research your case' — which explicitly disclaims legal authority rather than recommending legal actions."
+            "result": "FAIL",
+            "evidence": "Post uses 'we' in a legal-service context: 'We're not attorneys. We don't give legal advice. But we research your case like our freedom depends on it' — and lists 'we research, analysis, and questions' in footer."
           },
           {
             "criterion": "U9",
-            "result": "PASS",
-            "evidence": "The drug possession hypothetical in Q4 uses 'For example, a drug possession charge might require proof that...' and the narrative vignettes are clearly second-person literary devices ('You're sitting across from...') that cannot be mistaken for actual case facts."
+            "result": "FAIL",
+            "evidence": "Post opens multiple sections with unlabeled narrative scenarios ('You drive past the intersection where you were arrested', 'It's 3 AM. You're staring at the ceiling', 'The prosecutor slides a plea offer across the table') without 'Hypothetical' or 'Example scenario' labels."
           },
           {
             "criterion": "U10",
             "result": "PASS",
-            "evidence": "The post consistently frames knowledge as preparation for attorney meetings — 'help you work more effectively with your attorney,' '5 minutes to see what's been done, what's missing, and what to ask next' — never implying the reader can handle their case alone."
+            "evidence": "Post frames information as helping reader ask better questions of their attorney ('questions that'll remind them'), and footer states 'We provide research, analysis, and questions to help you work more effectively with your attorney.'"
           },
           {
             "criterion": "U11",
             "result": "FAIL",
-            "evidence": "'You have the right to see every document the prosecution plans to use against you' is stated as absolute certainty without jurisdictional qualification; 'Discovery is every piece of evidence the prosecution has' and 'every criminal charge has elements' lack 'typically,' 'in most jurisdictions,' or similar hedging language."
+            "evidence": "Post states rules as certainties without qualifiers: 'every criminal charge has elements — specific things the prosecution must prove beyond a reasonable doubt' and 'You have the right to see every document the prosecution plans to use against you' without 'in general' or 'typically' framing."
           },
           {
             "criterion": "U12",
-            "result": "PASS",
-            "evidence": "Outcome language is qualified throughout — 'might change the outcome of your case,' 'more likely to get favorable plea terms' (attributed to BJS statistics), 'your whole case might hinge on that one element' — using probabilistic language rather than guarantees."
+            "result": "FAIL",
+            "evidence": "Post implies outcomes: 'Defendants who ask informed questions are more likely to get favorable plea terms' and 'informed clients get better outcomes because they force accountability' without qualification that results vary."
           },
           {
             "criterion": "U13",
             "result": "FAIL",
-            "evidence": "Legal strategies like 'the weakest element is where your defense lives,' 'check calibration records of breathalyzer equipment,' and all six motion-type descriptions are presented as the blog's own analysis without attribution to any named legal scholar, case law, attorney, or published framework."
+            "evidence": "Legal strategies (theory of defense, motion types, element analysis, trial strategy) are presented as the blog's own positions with only a vague attribution to 'elite defense methodology' — no named cases, statutes, scholars, or attorneys cited for the strategies."
           },
           {
             "criterion": "U14",
             "result": "PASS",
-            "evidence": "The post is internally consistent throughout — all legal statements about discovery rights, elements of proof, motion types, and plea dynamics are presented coherently without contradictory claims."
+            "evidence": "No contradictory legal claims appear; the post is consistent about roles of discovery, motions, and plea negotiations throughout."
           },
           {
             "criterion": "U15",
             "result": "PASS",
-            "evidence": "Products are explicitly framed as research tools — 'We provide research, analysis, and questions to help you work more effectively with your attorney' and Case Progress Score is described as showing 'what's been done, what's missing, and what to ask next,' not as replacing legal counsel."
+            "evidence": "Case Progress Score is framed as a research tool: 'We provide research, analysis, and questions to help you work more effectively with your attorney' and '5 minutes to see what's been done, what's missing, and what to ask next.'"
           }
         ]
       }
@@ -252,62 +250,62 @@
           {
             "check": "D1_3AM_PANIC",
             "result": "NEEDS_WORK",
-            "evidence": "Opening leads with insight ('the quality of your questions determines the quality of your defense') rather than naming a specific fear; the fear scenario (deadlines passed, motions not filed, options narrowed) arrives in paragraph 3, not the first 2 sentences. H2s are action-oriented question prompts — fine."
+            "evidence": "Opening hook names the fear ('they wait, they trust') but several H2s are topical questions rather than action-oriented ('What is your theory of defense?', 'Have you reviewed all of the discovery?') — they're the questions themselves, not what the reader gets."
           },
           {
             "check": "D2_READING_LEVEL",
-            "result": "NEEDS_WORK",
-            "evidence": "Most legal terms defined inline (discovery, theory of defense, elements, all 6 motion types), but 'reasonable suspicion,' 'chain of custody,' and 'Miranda violation' are used in Q1/Q3 without inline definitions — 3 terms at the border of FAIL."
+            "result": "PASS",
+            "evidence": "Legal terms like 'discovery', 'motion to suppress', 'Brady motion', and 'elements' are all defined inline on first use; paragraphs stay within 4 sentences throughout."
           },
           {
             "check": "D3_DO_THIS_NOW",
-            "result": "PASS",
-            "evidence": "TLDRBox 'Your Next Step' provides a concrete under-5-minute action before any H2: 'write down the top 3 questions from this list that apply to your case. Bring a notebook. Write down the answers.'"
+            "result": "NEEDS_WORK",
+            "evidence": "TLDRBox contains a 'Your Next Step' block before the first H2 ('write down the top 3 questions...bring a notebook'), but it's inside the TLDR rather than formatted as a standalone immediate-action block."
           },
           {
             "check": "D4_ONE_CLEAR_PATH",
             "result": "PASS",
-            "evidence": "Every section is prescriptive — ask THIS question, do THIS action, send THIS email. No decision points are left without a default recommendation; the post's structure IS the recommended path."
+            "evidence": "Each question section presents a clear lead ('If your attorney cannot articulate a theory of defense, they do not have one'; 'A five-minute hallway conversation is not a negotiation')."
           },
           {
             "check": "D5_3_ITEM_RULE",
             "result": "FAIL",
-            "evidence": "Five sections present 5+ unranked items without priority markers: Q3 (6 motion types), Q7 (6 investigation actions), Q8 (6 weakness areas), Q9 (5 trial questions), Q10 (6 defendant actions). None label 'start with these.'"
+            "evidence": "Question 3 lists 6 unranked motion types ('Motion to Suppress, Motion to Compel, Brady, Motion to Dismiss, Motion to Exclude, Motion in Limine') and Question 8 has 6 unranked bullet points about weaknesses."
           },
           {
             "check": "D6_CATALOG_VARIETY",
             "result": "PASS",
-            "evidence": "question-arsenal-post — 10 structured questions defendants should ask their attorney, each with scenario framing and a specific action step."
+            "evidence": "question-arsenal-post — structured as 10 numbered questions with follow-ups and action items."
           },
           {
             "check": "D7_THREAT_EFFICACY",
             "result": "PASS",
-            "evidence": "Every threatening scenario is paired with a specific action within the same section; all 10 question sections close with a concrete next step (e.g., 'Send your attorney an email today,' 'Search Google Maps for the location')."
+            "evidence": "The 97%/94% plea stat in TLDR is paired with 'defendants who ask informed questions get favorable plea terms'; threat lines like 'empty holster' and 'processed through the system' are each followed by concrete actions."
           },
           {
             "check": "D8_IDENTITY_PROTECTION",
             "result": "PASS",
-            "evidence": "Zero blame language throughout; 'Most people go quiet' frames silence as universal and structural, not a personal failing; tone consistently separates the reader from their situation."
+            "evidence": "No blame language throughout — the post consistently frames the attorney (not the reader) as the accountability target and never uses 'you should have' patterns."
           },
           {
             "check": "D9_FEAR_CLARITY_AGENCY",
             "result": "NEEDS_WORK",
-            "evidence": "Fear-clarity-agency arc is strong through the body, but the closing ends with a product CTA ('Take the free Case Progress Score') rather than an agency statement — the reader's last emotional note is a pitch, not competence."
+            "evidence": "Opening validates fear, middle gives clarity, closing gives agency — but the final sentence is a CTA ('Take the free Case Progress Score — 5 minutes...') rather than a pure agency statement."
           },
           {
             "check": "D10_PHONE_FIRST",
-            "result": "NEEDS_WORK",
-            "evidence": "No tables or H4+ headings, but end-of-section action items (the most critical takeaways) are plain text rather than bold, making them easy to miss while thumb-scrolling on mobile at 3AM."
+            "result": "PASS",
+            "evidence": "Only H2 headings used, no tables, key insights bolded and not buried, and each question section runs roughly 250-450 words."
           },
           {
             "check": "D11_SCREENSHOT_SENTENCE",
             "result": "PASS",
-            "evidence": "Every H2 question section contains exactly one bolded standalone sentence under 27 words (e.g., 'An attorney without a trial plan is negotiating with an empty holster, and the prosecution knows it') that a defendant would screenshot and text to family."
+            "evidence": "Every H2 section contains a bolded standalone line under 27 words (e.g., 'An attorney without a trial plan is negotiating with an empty holster, and the prosecution knows it.')."
           },
           {
             "check": "D12_SHAREABLE_FAQ",
-            "result": "PASS",
-            "evidence": "Both FAQ answers start with direct answers ('Ask about their experience...' and 'Yes.'), run 2-4 sentences, and read naturally as standalone support-group replies without hedging or institutional voice."
+            "result": "NEEDS_WORK",
+            "evidence": "Both FAQ answers start with the direct answer and avoid preamble, but the first answer runs slightly institutional ('These five areas separate attorneys who are actively defending you from attorneys who are processing you through the system') rather than peer-to-peer voice."
           }
         ]
       }

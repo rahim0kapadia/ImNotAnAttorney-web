@@ -1,6 +1,6 @@
 {
   "slug": "can-dui-be-dismissed",
-  "last_checked": "2026-04-10T02:18:42.779Z",
+  "last_checked": "2026-04-10T09:41:35.031Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,50 +43,272 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post uses general language ('The Fourth Amendment requires,' 'most states require') throughout — no specific statute numbers (§, U.S.C., Penal Code) appear anywhere."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear. Named sources (NHTSA, National Institute on Alcohol Abuse and Alcoholism, Forensic Science International) are agencies/publications, not individuals."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "All statistics are sourced: 'wrong up to a third of the time' attributed to NHTSA research; '.005-.02' margin sourced to Forensic Science International; '30-90 minutes' sourced to National Institute on Alcohol Abuse and Alcoholism."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'Most states require a 15-20 minute observation period,' 'in some states you have the right to consult with an attorney,' 'in most states, you also have a roughly 10-day DMV deadline.'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Only 'Miranda' appears, used as 'Miranda warnings,' 'Miranda violations,' and 'Miranda not required' — all listed exceptions functioning as legal terminology, not case citations."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims appear. Post focuses exclusively on defense strategies and dismissal grounds, not on penalties, licensing, housing, or other collateral consequences."
           }
         ]
       }
     },
     "slop": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 13,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter to mismatch; body contains ~11 attorney-directed questions across defenses"
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "NHTSA, Fourth Amendment, National Institute on Alcohol Abuse and Alcoholism, and Forensic Science International are cited inline for factual claims"
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain direct commands; legal terms like reasonable suspicion and NHTSA are defined immediately on first use"
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "None of the flagged phrases (tip of the iceberg, slippery slope, game changer, wake-up call, double-edged sword, at the end of the day) appear"
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Second person (you/your) is maintained throughout with no sustained drift to third person"
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Passive constructions appear but active voice dominates action items and instructions, well under 30%"
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "Miranda and suppression motions are used without explicit first-use definitions though context hints at meaning"
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Logical flow from hook to 7 numbered defenses to minimum-standard checklist to CTAs with no orphaned paragraphs"
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple clear CTAs: Case Progress Score link, DUI Defense Playbook link, screenshot-the-checklist action, and specific attorney questions"
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Hedges like may/could appear on information statements about legal outcomes; direct action items (ask, write down, screenshot, review) are unhedged"
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs appear well under 300 words and action paragraphs stay under 100 words"
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Seven defense sections plus intro and checklist are roughly balanced with no section exceeding 50% of total word count"
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Each threat (suppression risk, false BAC, arrest without probable cause, rising BAC) is followed within 2 sentences by a concrete action like requesting records or writing down timestamps"
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with a visceral scenario hook, builds evidence through 7 defenses with NHTSA and forensic data, closes with empowering 9-point checklist and screenshot action"
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 8,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Post uses question-framing like 'Ask your attorney whether...' and 'Questions to ask' rather than directives; action items focus on gathering info for attorney meetings."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each defense section includes 'What your attorney should be doing' and 'Questions to ask' redirects proximate to the legal content."
+          },
+          {
+            "criterion": "U3",
+            "result": "FAIL",
+            "evidence": "Statement 'If you blew a .08 or .09, the margin of error alone could put you under the limit' evaluates the reader's specific BAC circumstances."
+          },
+          {
+            "criterion": "U4",
+            "result": "FAIL",
+            "evidence": "The nine-point checklist includes 'File suppression motions for any violations found' — recommending a specific procedural step as the minimum standard."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, deportation, visa status, or related topics."
+          },
+          {
+            "criterion": "U6",
+            "result": "FAIL",
+            "evidence": "Claims like 'Most states require a 15-20 minute observation period' and 'Alcohol takes 30-90 minutes to fully absorb' cite NHTSA and NIAAA generally but without specific statute or regulation URLs; 'Forensic Science International standards' margin of error is unsourced."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "No specific bail bond companies, law firms, or legal service providers are named."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "No first-person plural recommendations like 'we recommend' or 'we advise' appear in legal-action contexts; 'we are not attorneys' appears only in disclaimer."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Scenarios like 'You left the restaurant 20 minutes ago. You had your last glass of wine at 9:40 PM' and 'The phlebotomist snaps on latex gloves' are presented as narrative without 'Hypothetical' or 'Example scenario' labels."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post repeatedly frames knowledge as empowering reader to ask attorney better questions ('Ask your attorney these three questions at your next meeting')."
+          },
+          {
+            "criterion": "U11",
+            "result": "FAIL",
+            "evidence": "Statements like 'The Fourth Amendment requires police to have reasonable suspicion' and 'the officer needs probable cause to arrest you' are stated as certainties without 'in general' or 'in most jurisdictions' qualifiers in those specific passages."
+          },
+          {
+            "criterion": "U12",
+            "result": "FAIL",
+            "evidence": "'If the dashcam doesn't match the police report, the entire case can unravel from the first frame' and 'everything that followed...can be suppressed' imply specific outcomes without adequate qualification."
+          },
+          {
+            "criterion": "U13",
+            "result": "FAIL",
+            "evidence": "Defense strategies like 'rising blood alcohol defense' and challenge points are presented without attribution to named cases, attorneys, or scholars — presented as the blog's positions."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No internally contradictory legal claims identified within the post."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Case Progress Score framed as diagnostic tool ('tells you what's been done, what's missing') and Playbook as 'defense roadmap' covering questions for the attorney, not replacing representation."
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 1am (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 12,
+        "needs_work_count": 4,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening names the fear ('your attorney wants to talk about plea deals') but H2s like 'Defense 1: The Traffic Stop Was Illegal' and 'Defense 3: Breathalyzer Results Are Unreliable' are topical claims, not action-oriented ('How to Challenge...')."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Legal terms defined inline: 'reasonable suspicion' explained, 'NHTSA — the federal agency that sets the rules', 'rising blood alcohol defense' defined; paragraphs stay under 4 sentences."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "Before the first H2, there is no concrete immediate-action block — only narrative and a bold claim 'DUI cases get dismissed all the time'; the first action ('Read your police report tonight') appears at the end of Defense 1, not before the first H2."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each defense section leads with the question defense attorneys typically investigate (e.g., 'What your attorney should be doing:' with a specific default action like subpoenaing calibration records)."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "FAIL",
+            "evidence": "'Common breathalyzer issues' lists 7 unranked bullets (calibration, operator certification, observation period, RFI, mouth alcohol, temperature, margin of error); the numbered grounds list has 7 items and the attorney checklist has 9 unranked items."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "framework-post — structured as a 7-defense arsenal with a 9-point attorney checklist, functioning as a question-arsenal/framework hybrid."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Scary stats are paired with actions — 'NHTSA's own data says field sobriety tests are wrong up to a third of the time' is followed by 'Ask your attorney whether the officer's SFST certification is current'; no section closes on fear without action."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "No blame language — person is separated from situation throughout; 'You blew over the limit. Or you think you did' is framed as fact, not judgment, and no 'you should have' patterns appear."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening validates fear and middle explains clearly, but the final sentences are CTAs to Case Progress Score and DUI Playbook rather than an agency statement — ends on product pitch, not competence."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "Only H2 headings used, no tables, key actions bolded (screenshot-worthy sentences), sections stay within 300-500 word range."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "NEEDS_WORK",
+            "evidence": "Most H2s have a standalone bolded sentence (e.g., 'The smell of alcohol is not probable cause for arrest'), but 'Can a DUI Charge Be Dismissed?' has 'A DUI defense that nobody investigates is a defense that never exists' (14 words, shareable) — however Defense 5 and Defense 6 sections are strong; section 'What Your Attorney Should Be Doing' has a solid screenshot line, passing most sections with only minor weakness in the intro Q&A framing."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "First FAQ starts with direct 'Yes' and reads naturally, but the second FAQ answer runs 4 sentences with institutional tone ('The most common grounds are...') rather than a support-group voice."
+          }
+        ]
+      }
     }
   }
 }

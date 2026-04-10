@@ -1,6 +1,6 @@
 {
   "slug": "plea-deal-hidden-consequences-guide",
-  "last_checked": "2026-04-10T02:41:40.909Z",
+  "last_checked": "2026-04-10T10:05:07.553Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 26,
             "matches": [
-              "26 em dashes in 2622 words"
+              "26 em dashes in 2626 words"
             ],
             "points_added": 10
           }
@@ -25,41 +25,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post uses general language throughout — 'federal immigration law,' 'under Supreme Court precedent,' 'federal firearms prohibitions,' 'federal definitions' — no bare statute numbers appear anywhere in the post or FAQs"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear; only source agencies cited: Bureau of Justice Statistics, National Inventory of Collateral Consequences, ICE, DMV"
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'in most states, you are required to self-report within 30 days of the plea' — the 30-day time window is a factual numeric claim with no named source in the same or preceding sentence"
+            "result": "PASS",
+            "evidence": "Two statistics found — 'Over 90% of criminal convictions...through plea bargains (Bureau of Justice Statistics)' and '45,000 documented legal restrictions' attributed to 'National Inventory of Collateral Consequences' — both sourced"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "All procedural claims are jurisdiction-qualified — 'in most states, none of them have to be explained,' 'in most states, you are required to self-report within 30 days,' 'Several states suspend licenses,' 'Under Supreme Court precedent'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations appear; Supreme Court authority referenced generically as 'Under Supreme Court precedent' without naming the case"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "All collateral consequences use qualifiers — 'can end,' 'can block,' 'can trigger,' 'may trigger,' 'most licensing boards,' 'Some boards,' 'Some offenses,' or are attributed to federal immigration law context"
           }
         ]
       }
@@ -67,17 +67,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "slug": "sex-offense-contact-what-every-defendant-needs-to-know",
-  "last_checked": "2026-04-10T02:24:24.616Z",
+  "last_checked": "2026-04-10T10:12:50.595Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,41 +34,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 2,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
-            "result": "FAIL",
-            "evidence": "Post cites '18 U.S.C. § 2244' for abusive sexual contact and 'Federal Rule of Evidence 412' for rape shield — specific federal statute/rule numbers that were not verified in-session."
+            "result": "PASS",
+            "evidence": "Two statute references appear: 18 U.S.C. § 2244 (real federal abusive sexual contact statute, correctly scoped to federal jurisdiction) and Federal Rule of Evidence 412 (real rape shield rule). All other legal descriptions use general language with jurisdiction qualifiers."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear. The post refers only to generic roles ('defense attorneys', 'your attorney', 'SANE nurses', 'independent forensic expert')."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "Unsourced numeric claims including 'ages of consent 16 to 18', 'Tier I 15 years', 'Tier II 25 years', 'up to 1 year in county jail', '2 to 15 years', '5 to 25 years', '10 years to life', and '$50,000 or more in legal fees' appear without named sources."
+            "result": "PASS",
+            "evidence": "No specific percentages, counts, or rates appear without sources. Factual claims use general phrasing throughout: 'similar rates', 'only a minority', 'the overwhelming majority', 'commonly cost tens of thousands' with a qualifying parenthetical."
           },
           {
             "check": "PROCEDURE_CHECK",
-            "result": "FAIL",
-            "evidence": "'Your defense attorney must file a written motion and argue the issue in a hearing outside the jury's presence before any such evidence can be introduced' is stated as a bare universal procedural rule without a jurisdiction qualifier."
+            "result": "PASS",
+            "evidence": "Procedural claims are jurisdiction-qualified ('in most jurisdictions', 'depending on the state', 'many states allow') or describe genuinely universal requirements (rape shield motions require pretrial filing in all U.S. jurisdictions, burden of proof is beyond a reasonable doubt in all criminal cases)."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only 'Miranda warnings' appears, which is on the allowed terminology list; no other case citations."
+            "evidence": "Only 'Miranda warnings' appears, which is on the approved exceptions list as universally known legal terminology functioning as a legal concept rather than a case citation."
           },
           {
             "check": "CONSEQUENCE_CHECK",
-            "result": "FAIL",
-            "evidence": "SORNA registration periods are stated as universal facts ('Tier I ... 15 years', 'Tier II ... 25 years', 'Tier III ... Lifetime registration') without qualification that state implementations vary."
+            "result": "PASS",
+            "evidence": "Registration consequences are attributed to SORNA with specific tier descriptions. Other collateral consequences are qualified: 'Arrest records are generally public in most jurisdictions', 'many states allow expungement', penalties stated with 'depending on the jurisdiction and degree'."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }
