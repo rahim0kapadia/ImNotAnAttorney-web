@@ -1,6 +1,6 @@
 {
   "slug": "probation-violation-defense-guide",
-  "last_checked": "2026-04-10T02:48:06.022Z",
+  "last_checked": "2026-04-10T10:07:26.287Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,41 +43,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post uses general language throughout ('most states', 'many jurisdictions', 'your state') — no specific statute numbers or § references appear anywhere in the text."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — only Bureau of Justice Statistics is referenced, which is an allowed source agency"
+            "evidence": "No individual attorney or legal scholar names appear. 'Bureau of Justice Statistics' and 'Supreme Court' are institutional sources, not individual experts."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The only statistical claim — 'approximately a third of state prison admissions annually are for probation or parole violations' — is attributed to the Bureau of Justice Statistics in the same sentence"
+            "evidence": "The one factual statistic — 'approximately a third of state prison admissions annually are for probation or parole violations' — is sourced to 'Bureau of Justice Statistics' in the same sentence. All other numbers (48-72 hours, 10-30 days, 5 years) are hypothetical examples within framework descriptions, not factual claims."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Timing claims use qualifiers like 'typically runs days to months' and 'within days to weeks'; rules-of-evidence claim is qualified with 'in many jurisdictions' and 'sometimes'"
+            "evidence": "All procedural claims are jurisdiction-qualified ('most states', 'many jurisdictions', 'most courts') or attributed to constitutional precedent ('established by the Supreme Court as a constitutional due process requirement'). No bare universal deadlines or filing requirements."
           },
           {
             "check": "CASE_NAME_CHECK",
-            "result": "FAIL",
-            "evidence": "Post repeatedly cites 'Gagnon v. Scarpelli (1973)' and 'Morrissey v. Brewer (1972)' — neither is on the allowed terminology exception list (Brady/Daubert/Frye/Miranda)"
+            "result": "PASS",
+            "evidence": "No case citations appear anywhere in the post. Constitutional rights are attributed to 'the Supreme Court' generally without citing specific case names."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post references employment, housing, and family stability only as things to 'preserve' during the process — no universal collateral-consequence claims like license loss or voting rights appear."
           }
         ]
       }
@@ -85,17 +85,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: SessionEnd hook [C:/Users/email/.claude/hooks/hidden-runner.exe node \"${CLAUDE_PLUGIN_ROOT}/scripts/session-lifecycle-hook.mjs\" SessionEnd] failed: Hook cancelled"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

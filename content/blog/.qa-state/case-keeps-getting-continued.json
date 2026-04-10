@@ -1,6 +1,6 @@
 {
   "slug": "case-keeps-getting-continued",
-  "last_checked": "2026-04-10T02:19:51.813Z",
+  "last_checked": "2026-04-10T09:43:28.471Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -52,32 +52,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Only statute cited is 18 U.S.C. § 3161 (Speedy Trial Act), a well-known federal statute correctly referenced with a verification link"
+            "evidence": "Only statute cited is 18 U.S.C. § 3161 (Speedy Trial Act) with a Cornell LII verification link; all state-level references use general language ('Some states require trial within 90 days')"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — only Bureau of Justice Statistics is cited, which is an agency, not an individual expert"
+            "evidence": "No individual attorney or legal-scholar names appear; only source agency 'Bureau of Justice Statistics' is referenced"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The only specific statistic ('median time from arrest to disposition... approximately 6 months, but complex cases routinely take 12–18 months') is attributed to the Bureau of Justice Statistics in the same sentence"
+            "evidence": "The median-time-to-disposition claim is sourced inline to 'Bureau of Justice Statistics' in the TLDR; all other numbers (70 days, 90 days, 180 days) are statutory requirements attributed to specific laws or qualified with 'some states'"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are jurisdiction-qualified: 'Federal cases' for the 70-day rule, 'Some states require... 90 days... 180 days', and 'State cases: Vary widely'"
+            "evidence": "Federal 70-day rule is attributed to 18 U.S.C. § 3161; state deadlines qualified with 'Some states'; speedy trial demand qualified with 'In some jurisdictions'; no bare universal procedural claims found"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — no case citations appear in the post"
+            "evidence": "No case citations appear anywhere in the post; legal references are limited to the Sixth Amendment and the Speedy Trial Act statute"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — post contains no collateral consequence claims (licensing, housing, firearms, voting, immigration, etc.)"
+            "evidence": "No collateral-consequence claims (licensing, housing, voting, firearms) appear; the post discusses only direct case-process impacts like continued custody and plea pressure"
           }
         ]
       }

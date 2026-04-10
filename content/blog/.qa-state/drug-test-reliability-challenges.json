@@ -1,6 +1,6 @@
 {
   "slug": "drug-test-reliability-challenges",
-  "last_checked": "2026-04-10T02:33:37.680Z",
+  "last_checked": "2026-04-10T09:49:01.758Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,281 +25,59 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers, section references, or penal code citations appear anywhere in the post — all legal rules described using general language like 'SAMHSA federal workplace testing standards'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear — sources are all organizations: ProPublica, Marijuana Policy Project, Society of Hair Testing, Society of Forensic Toxicologists, SAMHSA"
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "FAQ answer states 'THC metabolites can remain detectable in urine for 30 or more days after last use' without a named source in parentheses (the body version is sourced to SAMHSA, but the FAQ instance is unsourced)"
+            "result": "PASS",
+            "evidence": "All numerical claims are sourced: '90 days or more' (Society of Hair Testing standards), '30 days or more' and '60 to 90 days' (SAMHSA drug testing guidelines); remaining numbers are product prices or instructions, not factual claims"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No bare procedural deadlines, filing requirements, or appeal windows stated — post discusses discovery requests and chain-of-custody challenges in general terms without jurisdiction-specific procedural rules"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations in 'v.' format appear anywhere in the post"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "The only consequence reference ('loses a job') appears in a narrative scenario describing what can happen in practice, not as a universal legal rule — no claims about licensing, housing, firearm rights, voting, or immigration consequences"
           }
         ]
       }
     },
     "slop": {
-      "passed": true,
-      "status": "checked",
-      "details": {
-        "checks_passed": 13,
-        "checks_total": 14,
-        "hard_gate_failures": [],
-        "results": [
-          {
-            "check": "QUESTION_COUNT",
-            "result": "PASS",
-            "reason": "No question_count field in frontmatter to validate against; body contains a list of 10 forensic questions directed at the lab/defense team which functions as the attorney-question set."
-          },
-          {
-            "check": "CITATION_SOURCING",
-            "result": "PASS",
-            "reason": "Factual claims are sourced to named authorities (ProPublica, Marijuana Policy Project, SAMHSA, Society of Hair Testing, Society of Forensic Toxicologists, forensic toxicology literature) with only minor unsourced generalizations."
-          },
-          {
-            "check": "READABILITY",
-            "result": "PASS",
-            "reason": "Action items use plain language with terms like immunoassay and GC-MS defined immediately on first use; '5-minute action' blocks are simple imperatives."
-          },
-          {
-            "check": "CLICHE_DENSITY",
-            "result": "PASS",
-            "reason": "No instances of the flagged cliche list appear in the post."
-          },
-          {
-            "check": "VOICE_CONSISTENCY",
-            "result": "NEEDS_WORK",
-            "reason": "Mostly second person, but slips to 'the defendant'/'a defendant' in the field kit and chain-of-custody sections for more than 2 consecutive sentences."
-          },
-          {
-            "check": "PASSIVE_VOICE_RATIO",
-            "result": "PASS",
-            "reason": "Passive constructions appear but remain well under 30% of sentences; most sentences are active voice."
-          },
-          {
-            "check": "JARGON_DEFINITION",
-            "result": "PASS",
-            "reason": "Immunoassay, GC-MS, chain of custody, cutoff levels, cross-reactants, and metabolites are all defined inline on first use."
-          },
-          {
-            "check": "STRUCTURAL_INTEGRITY",
-            "result": "PASS",
-            "reason": "Logical flow from two-test system to field kits to cross-reactants to hair tests to chain of custody to cutoffs to questions to CTA; no orphaned paragraphs."
-          },
-          {
-            "check": "CTA_CLARITY",
-            "result": "PASS",
-            "reason": "Multiple clear CTAs: Drug Test Reliability Research product link, 10 forensic questions, per-section 5-minute actions, and Defense Milestone Score link."
-          },
-          {
-            "check": "HEDGING_DENSITY",
-            "result": "PASS",
-            "reason": "Hedging ('may be challenged', 'can trigger') stays within information statements; action statements are direct imperatives without could/might/possibly."
-          },
-          {
-            "check": "PARAGRAPH_LENGTH",
-            "result": "PASS",
-            "reason": "All paragraphs are under 300 words and action-oriented 5-minute action blocks stay under 100 words."
-          },
-          {
-            "check": "SECTION_BALANCE",
-            "result": "PASS",
-            "reason": "Word count is distributed across seven substantive sections; no single section exceeds roughly 20% of total."
-          },
-          {
-            "check": "FEAR_ACTION_PAIRING",
-            "result": "PASS",
-            "reason": "Each threat paragraph (arrest, bail, plea pressure, jail, false positive, racial bias) is followed within two sentences by a concrete action or question to raise."
-          },
-          {
-            "check": "ENGAGEMENT_ARC",
-            "result": "PASS",
-            "reason": "Opens with a scenario hook (Tuesday afternoon call), builds evidence through documented failure modes, and closes with empowering forensic question list plus CTA."
-          }
-        ]
-      }
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "criteria_passed": 10,
-        "criteria_total": 15,
-        "results": [
-          {
-            "criterion": "U1",
-            "result": "PASS",
-            "evidence": "Post frames actions as questions to raise with defense team rather than directives; '5-minute action' items involve writing notes to share with defense, not taking legal action unilaterally."
-          },
-          {
-            "criterion": "U2",
-            "result": "FAIL",
-            "evidence": "Sections on chain of custody, cross-reactants, and field tests discuss legal challenge grounds but redirect to 'defense team' informally; no proximate 'consult an attorney' statement in most decision-action sections — only a footer disclaimer."
-          },
-          {
-            "criterion": "U3",
-            "result": "PASS",
-            "evidence": "Post speaks generally about failure modes ('may be challenged', 'can be') without evaluating the reader's specific case strength or predicting outcomes."
-          },
-          {
-            "criterion": "U4",
-            "result": "FAIL",
-            "evidence": "Post recommends specific procedural steps: 'Request full chain-of-custody documentation for sample [your case number]' and 'that question needs to be asked in discovery' — these are procedural recommendations framed as reader actions."
-          },
-          {
-            "criterion": "U5",
-            "result": "PASS",
-            "evidence": "Post does not discuss immigration consequences, so the immigration-specific redirect requirement is not triggered."
-          },
-          {
-            "criterion": "U6",
-            "result": "PASS",
-            "evidence": "Collateral consequences are not discussed (no licensing, housing, firearm, voting claims); scientific claims are attributed to SAMHSA, Society of Hair Testing, ProPublica, and forensic toxicology literature."
-          },
-          {
-            "criterion": "U7",
-            "result": "PASS",
-            "evidence": "No specific law firms, bail bond companies, or public defenders are named; ProPublica and Marijuana Policy Project are cited as research sources, not recommended service providers."
-          },
-          {
-            "criterion": "U8",
-            "result": "PASS",
-            "evidence": "Post avoids first-person plural 'we recommend' phrasing entirely; uses second-person framing and passive constructions throughout."
-          },
-          {
-            "criterion": "U9",
-            "result": "FAIL",
-            "evidence": "Opening scenario 'The call came on a Tuesday afternoon. Your probation officer's voice was flat' and the field test scene 'The officer pulls a small plastic pouch from his kit' are not labeled as hypothetical or example scenarios."
-          },
-          {
-            "criterion": "U10",
-            "result": "FAIL",
-            "evidence": "Final section 'What a Blog Post Can't Do' appropriately notes limits, but repeated '5-minute action' items and 'The documents exist — someone just has to ask' framing implies reader self-efficacy in managing evidence challenges."
-          },
-          {
-            "criterion": "U11",
-            "result": "PASS",
-            "evidence": "Uses qualifiers like 'in practice,' 'typically,' 'can be,' 'may be challenged,' and footer states outcomes depend on 'jurisdiction, procedure, and case-specific facts.'"
-          },
-          {
-            "criterion": "U12",
-            "result": "FAIL",
-            "evidence": "Statements like 'any one of these is a grounds to challenge admissibility' and 'those gaps are where the evidence gets challenged' imply procedural outcomes without clearly qualifying that results vary by jurisdiction and circumstances at the point of claim."
-          },
-          {
-            "criterion": "U13",
-            "result": "PASS",
-            "evidence": "Strategies and facts are attributed to SAMHSA, Society of Hair Testing, Society of Forensic Toxicologists, ProPublica, Marijuana Policy Project, and peer-reviewed forensic toxicology literature."
-          },
-          {
-            "criterion": "U14",
-            "result": "PASS",
-            "evidence": "No contradictory legal claims appear; the two-test system (immunoassay vs GC-MS) is consistently described throughout."
-          },
-          {
-            "criterion": "U15",
-            "result": "PASS",
-            "evidence": "Drug Test Reliability Research product is framed as giving 'the actual questions that apply to the actual evidence' — a research/preparation tool, not a substitute for representation."
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "checks_passed": 5,
-        "checks_total": 12,
-        "needs_work_count": 4,
-        "results": [
-          {
-            "check": "D1_3AM_PANIC",
-            "result": "FAIL",
-            "evidence": "Opening hook is strong ('The call came on a Tuesday afternoon... The test came back positive'), but nearly every H2 is purely topical ('The Two-Test System You Were Never Told About', 'Field Test Kits: The Roadside Problem', 'Cross-Reactants: The Pharmacy Aisle Problem', 'Hair Follicle Tests: The Documented Racial Bias Problem', 'Chain of Custody: The Paper Trail That Decides Everything', 'Cutoff Levels and the Marijuana Time Problem') with no action framing like 'How to Challenge...'"
-          },
-          {
-            "check": "D2_READING_LEVEL",
-            "result": "PASS",
-            "evidence": "All legal/technical terms defined inline on first use — 'Immunoassay' ('uses antibodies to react with suspected drug compounds'), 'GC-MS' ('gas chromatography-mass spectrometry... breaks a sample into its molecular components'), 'chain of custody' ('the documented record of every person who touched the sample'), 'cutoff levels' ('a minimum concentration below which the test is reported as negative'); paragraphs stay under 4 sentences."
-          },
-          {
-            "check": "D3_DO_THIS_NOW",
-            "result": "FAIL",
-            "evidence": "Before the first H2 'The Two-Test System You Were Never Told About', there is only narrative framing and a thesis statement; the first concrete 'Your 5-minute action' block ('find out which test was run... Look at the lab report') does not appear until after the first H2."
-          },
-          {
-            "check": "D4_ONE_CLEAR_PATH",
-            "result": "PASS",
-            "evidence": "Each section provides a clear lead action: 'the first question is: was it confirmed by GC-MS'; 'the question is whether anyone checks'; 'Request full chain-of-custody documentation'; 'the metabolite detection window — not impairment — is what the test is measuring' — no section leaves the reader with 3+ options and no default."
-          },
-          {
-            "check": "D5_3_ITEM_RULE",
-            "result": "FAIL",
-            "evidence": "The cross-reactants bulleted list contains 7 unranked items (pseudoephedrine, ibuprofen, poppy seeds, sertraline, diphenhydramine, dextromethorphan, quinolone antibiotics), the chain-of-custody break list contains 7 unranked bullets, and 'The Questions That Actually Matter' presents 10 unranked/ungrouped numbered questions."
-          },
-          {
-            "check": "D6_CATALOG_VARIETY",
-            "result": "PASS",
-            "evidence": "Structural pattern is system-decoder-post — the post decodes an opaque forensic system (two-test methodology, cross-reactants, hair bias chemistry, chain of custody, cutoff levels) to reduce unknown to known."
-          },
-          {
-            "check": "D7_THREAT_EFFICACY",
-            "result": "PASS",
-            "evidence": "Every scary consequence is paired with an immediate action within 2 sentences — e.g., 'bail gets set... plea offers get made... weeks or months later, the lab confirmation comes back negative' is followed by 'the product name, manufacturer, lot number... are all findable information' and a '5-minute action' block; no section closes on fear alone."
-          },
-          {
-            "check": "D8_IDENTITY_PROTECTION",
-            "result": "PASS",
-            "evidence": "Zero blame language — reader is consistently separated from the situation ('You know you didn't use', 'the lab is wrong more often than you'd think'); no 'you should have' or 'if you had' patterns; tone treats defendant as someone the system failed, not as someone who failed."
-          },
-          {
-            "check": "D9_FEAR_CLARITY_AGENCY",
-            "result": "NEEDS_WORK",
-            "evidence": "Opening validates fear ('You know you didn't use. You say so. The voice on the other end does not care.'), middle explains the science, but the final sentence is a generic CTA ('Not sure where your case stands? Take the free Defense Milestone Score — 10 questions, instant results, no email required') rather than an agency statement about the reader's competence."
-          },
-          {
-            "check": "D10_PHONE_FIRST",
-            "result": "NEEDS_WORK",
-            "evidence": "No tables, only H2 headings, key actions bolded — but 'The Two-Test System You Were Never Told About' section and 'Cross-Reactants: The Pharmacy Aisle Problem' section both appear to run in the 500-600 word range before the next H2, pushing the upper phone-readable limit."
-          },
-          {
-            "check": "D11_SCREENSHOT_SENTENCE",
-            "result": "NEEDS_WORK",
-            "evidence": "Most H2 sections have a good standalone bolded sentence under 27 words, but the 'Cutoff Levels and the Marijuana Time Problem' bolded sentence is 32 words ('A positive marijuana test proves that THC was in your system at some point in the last several weeks — not that you were impaired at the time of any specific event'), and 'The Questions That Actually Matter' and 'What a Blog Post Can't Do' sections contain no bolded screenshot sentence at all."
-          },
-          {
-            "check": "D12_SHAREABLE_FAQ",
-            "result": "NEEDS_WORK",
-            "evidence": "All four FAQ answers start with direct answers in natural voice, but Q1 ('What is the difference between a field test and a lab test?') and Q2 ('Can over-the-counter medications cause a false positive?') each run 5 sentences, slightly over the 2-4 sentence target."
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

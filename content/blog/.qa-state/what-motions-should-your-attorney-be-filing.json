@@ -1,6 +1,6 @@
 {
   "slug": "what-motions-should-your-attorney-be-filing",
-  "last_checked": "2026-04-10T02:48:40.335Z",
+  "last_checked": "2026-04-10T10:25:12.168Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — post references only the Fourth Amendment (constitutional) with no statute numbers or § citations"
+            "evidence": "Post references only 'The Fourth Amendment' (universally known constitutional provision) and uses general language like 'the wrong statute' — no specific statute numbers appear anywhere in the post"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — no individual attorneys or legal scholars named"
+            "evidence": "No individual attorney or legal scholar names appear — post attributes authorship to 'ImNotAnAttorney Team' and references techniques without naming individuals"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — no unsourced percentages, counts, or rates; numeric references like '30-45 days' are procedural deadlines handled under PROCEDURE_CHECK"
+            "evidence": "No statistics making factual claims appear — numerical references like '30-45 days', '200 miles', and '38 days' are procedural timeframes or hypothetical scenario details, not sourced factual claims"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — all deadline claims are qualified with 'often', 'sometimes', 'generally', 'varies by jurisdiction', or 'in many jurisdictions' (e.g., 'suppression motions often must be filed within 30-45 days of arraignment')"
+            "evidence": "All procedural deadline claims are jurisdiction-qualified: 'often 30-45 days' , 'This varies by jurisdiction, but generally', 'sometimes 30-45 days after arraignment', 'In many jurisdictions'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — only 'Brady v. Maryland', 'Brady motion/material', 'Daubert/Frye motion', and 'Miranda warnings' appear, all of which are on the allowed terminology list"
+            "evidence": "Only excepted terminology appears: 'Brady v. Maryland (1963)', 'Brady motion', 'Brady material', 'Brady violation', 'Daubert/Frye Motion', 'Daubert motion', 'Miranda warnings' — all on the approved exceptions list"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found — post covers motion types and defense strategy with no collateral-consequence claims about licensing, housing, firearms, voting, immigration, or employment"
+            "evidence": "No collateral-consequence claims appear — consequences discussed are procedural (losing the right to file a motion, evidence staying in, waiver of issues) rather than collateral impacts like licensing, housing, or voting"
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

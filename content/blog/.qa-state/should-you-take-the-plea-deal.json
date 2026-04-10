@@ -1,6 +1,6 @@
 {
   "slug": "should-you-take-the-plea-deal",
-  "last_checked": "2026-04-10T02:26:25.898Z",
+  "last_checked": "2026-04-10T10:18:25.127Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 25.2,
         "pattern_score": 15,
-        "uniformity_score": 49,
+        "uniformity_score": 48.9,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 41,
             "matches": [
-              "41 em dashes in 2386 words"
+              "41 em dashes in 2390 words"
             ],
             "points_added": 10
           },
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers, section references, or code citations appear anywhere in the post. All legal rules are described in general language ('motions,' 'discovery,' 'suppression motion,' 'sentencing guidelines')."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorneys or legal scholars are named. The post refers generically to 'the best defense attorneys in America' and 'your attorney' throughout."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "97% federal and 94% state plea statistics attributed to Bureau of Justice Statistics in the same sentence"
+            "evidence": "The two factual statistics — 97% federal and 94% state plea rates — are sourced to '(Bureau of Justice Statistics)' in the body paragraph. All other numbers (30 years, 3 years probation, 18 months, nine minutes) are hypothetical narrative examples, not factual claims."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No bare procedural deadlines or filing requirements are stated. 'Decide by Friday' and 'the offer expires Friday' are hypothetical narrative scenarios. 'Diversion program' and 'deferred adjudication' are framed as questions to ask an attorney, not procedural claims."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (no 'v.' patterns) appear anywhere in the post. No references to Brady, Daubert, Miranda, or Frye."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Collateral consequences phrased as 'can affect employment, housing, voting rights...' — qualified rather than stated as universal"
+            "evidence": "Collateral consequences are qualified throughout: introduced with 'like' (illustrative examples), followed by 'A felony conviction can affect employment, housing, voting rights...' using 'can affect.' The hypothetical scenario ('Six months later, you apply for a job...') uses narrative framing, not universal claims."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

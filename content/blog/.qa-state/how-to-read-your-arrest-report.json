@@ -1,6 +1,6 @@
 {
   "slug": "how-to-read-your-arrest-report",
-  "last_checked": "2026-04-10T01:55:21.068Z",
+  "last_checked": "2026-04-10T10:01:58.815Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -34,50 +34,272 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers, section references, or code citations appear anywhere in the post. All legal concepts (probable cause, Miranda, consent, chain of custody) are referenced as general legal terminology without specific statute numbers."
+            "evidence": "No statute numbers, section symbols, or code references appear anywhere in the post — all legal rules are described in general language (e.g., 'probable cause,' 'Miranda warnings,' 'consent')."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal scholar names appear. Author is 'ImNotAnAttorney Team.' All techniques are described generically without attribution to named individuals."
+            "evidence": "No individual attorneys, legal scholars, or named legal experts appear — the post refers only to generic roles ('your defense attorney,' 'your defense team,' 'good defense attorneys')."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "No factual statistical claims appear. All numbers are either hypothetical scenario details (10:47 PM, 11:34 PM, 47 minutes, 'two beers,' 'three days'), product pricing ($97), or instructional thresholds ('5-minute action,' '24 hours') — none make factual claims requiring sourcing."
+            "evidence": "No external factual statistics appear — all numbers are either hypothetical scenario details (10:47 PM, 11:34 PM, 47 minutes), advice thresholds ('gap longer than 5 minutes'), or the product's own price ($97)."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Procedural statements are qualified throughout: 'some jurisdictions restrict access while a case is pending,' 'statements...may be suppressed,' 'Gaps in the chain of custody may be challenged.' No bare universal deadlines or filing requirements appear."
+            "evidence": "Procedural claims are consistently qualified: 'may be suppressed,' 'some jurisdictions restrict access,' 'may be challenged,' 'depending on the facts of your case and the rules in your jurisdiction' (closing disclaimer)."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear. 'Miranda' is used only in the excepted forms ('Miranda warnings,' 'Miranda given,' 'Miranda matters') which function as standard legal terminology per the exceptions list."
+            "evidence": "No case citations appear — 'Miranda' references ('Miranda warnings,' 'Miranda given') fall within the listed exceptions as universally known legal terminology."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims appear. The post is limited to arrest report analysis — it makes no claims about licensing, housing, firearms, voting, immigration, or employment consequences."
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear — all discussed consequences are case-specific procedural outcomes like motions to suppress and cross-examination angles."
           }
         ]
       }
     },
     "slop": {
-      "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 13,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter and post is framed around reader actions not attorney questions, so count is consistent."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Post makes procedural/structural claims about arrest reports without citing statistics or case law, and the one framework reference (Witte EPPM) is outside the post scope; no unsourced factual claims beyond acceptable tolerance."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('circle every phrase', 'write down every timestamp') and legal terms like probable cause and Miranda are explained in-line."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "No flagged cliches from the list appear; 'dirty truth' and 'thread to pull' are not on the banned list."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Second person is used consistently throughout; 'the defendant' only appears inside quoted report language, not as narrative voice."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Narrative is dominated by active constructions ('you read', 'officers reuse', 'the bodycam wins'); passive sentences are well under 30%."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "Probable cause, Miranda, chain of custody, and discovery are each defined or explained in context on first use."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Flow is problem -> context (report is not neutral) -> line-by-line method -> payoff -> CTA; sections connect logically."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "TLDR, mid-post, and closing all point to the Arrest Report Review product plus the free Defense Milestone Score, with concrete reader actions in every section."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "NEEDS_WORK",
+            "reason": "Several action-adjacent statements use 'may be challenged' and 'may be suppressed' in close succession, pushing hedging on action statements near the threshold."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs are well under 300 words and action-oriented '5-minute action' paragraphs stay under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Word count is distributed across ten line-by-line subsections plus framing and CTA; no single section approaches 50% of the total."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Each threat (wrong facts, vague PC, missing Miranda, bad consent, paraphrased statements) is immediately paired with a specific 5-minute action or defense-team handoff."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with a 3AM scenario hook, builds evidence through ten concrete categories with examples, and closes by empowering the reader with a product and free score CTA."
+          }
+        ]
+      }
     },
     "upl": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "criteria_passed": 14,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Post frames actions as things to flag for the defense team ('Give that list to your defense team', 'write down... Give it only to your defense team'), not legal directives the reader should execute alone."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each substantive section redirects to the defense team/attorney ('That someone has to be your defense team', 'questions your attorney should investigate', 'your defense team may need to reach them')."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post describes general categories of weakness in reports without evaluating the reader's specific case strength or likely outcome."
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "Post references motions generically ('a motion to suppress, a line of cross-examination') as things defense attorneys may pursue, never instructing the reader to file any specific motion."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not touch immigration consequences at all, so the immigration-specific redirect requirement is not triggered."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Post does not mention collateral consequences (licenses, housing, firearms, voting, student loans), so sourcing requirement is not triggered."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Post uses only generic categories ('defense attorney', 'defense team', 'prosecutor') and names no specific firms, bail bond companies, or legal service providers."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "Post uses second person ('Your job is to...', 'Your 5-minute action') and avoids 'we recommend/advise/suggest' phrasing in legal-action contexts."
+          },
+          {
+            "criterion": "U9",
+            "result": "PASS",
+            "evidence": "Hypothetical examples are clearly framed as illustrations ('Examples of the kind of conflict that matters:', 'If you said \"I had two beers\"...') and cannot be mistaken for real case facts."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post explicitly frames the reader's role as giving defense team raw material: 'Reading the arrest report this way does not win your case. It gives your defense team raw material.'"
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Post uses qualifiers like 'Most reports', 'often', 'usually not directly', 'may be suppressed', 'may be challenged' and frames information as general educational content."
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Outcome language is qualified ('may be challenged', 'potential thread', 'potential angle') and the post explicitly states 'Reading the arrest report this way does not win your case.'"
+          },
+          {
+            "criterion": "U13",
+            "result": "FAIL",
+            "evidence": "Legal strategies (observation vs. conclusion analysis, Miranda documentation gaps, consent context challenges, chain-of-custody attacks) are presented as the blog's framework without attribution to any named case, statute, scholar, or attorney."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims appear; statements about Miranda, hearsay, probable cause, and consent are internally consistent."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Arrest Report Review is framed as producing 'a list of inconsistencies and procedural gaps your attorney should investigate' — explicitly a research/preparation tool for the attorney, not a substitute."
+          }
+        ]
+      }
     },
     "dna": {
       "passed": false,
-      "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "status": "checked",
+      "details": {
+        "checks_passed": 7,
+        "checks_total": 12,
+        "needs_work_count": 4,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening hook names the fear in first 2 sentences ('Three things in it are just... wrong'), but H2 'The Report Is Not Neutral' and 'What This Gets You' are topical rather than action-oriented."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "Probable cause, Miranda, and chain of custody are each defined inline on first use; paragraphs stay at 2-4 sentences throughout."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No concrete immediate-action block appears before the first H2 'The Report Is Not Neutral'; the first 'Your 5-minute action' is buried inside that section."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Each section gives a single recommended 5-minute action and leads with a default framing rather than presenting competing options."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "PASS",
+            "evidence": "The longest list ('Examples of the kind of conflict') has 3 items; witness section has exactly 3 numbered questions; no unranked 4+ lists."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "Pattern: system-decoder-post — walks through a document (arrest report) category by category, decoding each component for the defendant."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every weakness identified (47-minute gap, vague probable cause, 'Miranda given' checkbox, consent language) is paired with a specific 5-minute action within the same section."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language — the framing consistently separates the reader from the situation and treats the report, not the defendant's judgment, as the object of scrutiny."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening validates fear and middle reduces unknown to known, but the final sentence is a generic CTA to the Defense Milestone Score rather than an agency statement."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "NEEDS_WORK",
+            "evidence": "No tables, only H2/H3 used, and H3 subsections stay 300-500 words, but the 'What to Look For, Line by Line' H2 container runs well over 500 words before the next H2."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "NEEDS_WORK",
+            "evidence": "Each H3 and the first H2 have strong bold screenshot sentences, but H2 sections 'What This Gets You' and 'What a Blog Post Can't Do' lack a bolded shareable line."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All four FAQ answers open with the direct answer, stay at 3-4 sentences, and read as natural insider voice ('They overlap but they're not the same document')."
+          }
+        ]
+      }
     }
   }
 }

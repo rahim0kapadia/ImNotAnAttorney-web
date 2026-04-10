@@ -1,6 +1,6 @@
 {
   "slug": "how-to-prepare-for-sentencing",
-  "last_checked": "2026-04-10T02:39:21.158Z",
+  "last_checked": "2026-04-10T10:01:13.413Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 25.4,
         "pattern_score": 15,
-        "uniformity_score": 49.5,
+        "uniformity_score": 49.6,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 68,
             "matches": [
-              "68 em dashes in 3359 words"
+              "68 em dashes in 3355 words"
             ],
             "points_added": 10
           },
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Only cites 18 U.S.C. § 3553(a), a real federal sentencing statute, with a Cornell LII verification link"
+            "evidence": "Only statute reference is 18 U.S.C. § 3553(a), a real federal sentencing statute linked to Cornell LII — no fabricated or jurisdiction-ambiguous statute numbers found."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorneys or legal scholars named; only references U.S. Sentencing Commission (agency, allowed) and generic 'experienced federal judges'"
+            "evidence": "No individual attorney or legal scholar names appear; only the U.S. Sentencing Commission (a government agency) is cited."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "The one concrete statistic 'approximately 50% of federal cases' is sourced to the U.S. Sentencing Commission annual sourcebook with a link; other numbers are recommendations (5-10 letters, 3-4 weeks) not factual claims"
+            "evidence": "The one factual statistic — 'approximately 50% of federal cases' receive below-guideline sentences — is attributed to the U.S. Sentencing Commission's annual sourcebook with a direct link."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Procedural claims are jurisdiction-qualified: 'In most jurisdictions, you have the right to address the judge,' 'In federal cases and many state cases, a probation officer writes a presentence report,' and 'most state equivalents mandate'"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'In most jurisdictions' (allocution), 'In federal cases and many state cases' (PSR), 'Federal law (18 U.S.C. 3553(a))' — no bare universal procedural claims found."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration) appear; the post is limited to sentencing preparation and mitigation."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

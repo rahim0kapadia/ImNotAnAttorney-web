@@ -1,6 +1,6 @@
 {
   "slug": "questions-to-ask-before-hiring-criminal-defense-attorney",
-  "last_checked": "2026-04-10T02:22:21.873Z",
+  "last_checked": "2026-04-10T10:09:46.168Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,41 +43,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 5,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Only legal rule reference is 'ABA Model Rule 7.1' in the TLDR box — a real, verifiable professional conduct rule. No bare statute numbers appear anywhere in the post."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear. Only source cited is ABA (an organization), which is allowed."
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "Excerpt claims '$5,000-$25,000 to defend your freedom' as a specific dollar range without a named source in the same or preceding sentence; 'Communication breakdowns are the number one source of attorney-client conflict in criminal cases' is also an unsourced ranking claim."
+            "result": "PASS",
+            "evidence": "Cost references use general language ('thousands to tens of thousands,' 'can double or triple') with hedging and a parenthetical attribution. No precise statistical claims appear without sourcing."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No legal procedural claims (filing deadlines, appeal windows, hearing timelines) appear. References to '24 business hours' and '48 hours' are advice about attorney communication, not legal procedural rules."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations appear anywhere in the post — no 'v.' legal case patterns, no Brady/Daubert/Miranda/Frye references."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment). References to 'freedom' and 'jail time' are direct criminal consequences, not collateral ones."
           }
         ]
       }
@@ -85,17 +85,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

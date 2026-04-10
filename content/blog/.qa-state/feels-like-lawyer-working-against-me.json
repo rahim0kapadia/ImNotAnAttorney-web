@@ -1,6 +1,6 @@
 {
   "slug": "feels-like-lawyer-working-against-me",
-  "last_checked": "2026-04-10T02:46:45.701Z",
+  "last_checked": "2026-04-10T09:53:03.837Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -25,41 +25,41 @@
       }
     },
     "anti_hallucination": {
-      "passed": false,
+      "passed": true,
       "status": "checked",
       "details": {
-        "checks_passed": 4,
+        "checks_passed": 6,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers or section references appear anywhere in the post — all legal rules are described with general language like 'under most state rules of criminal procedure'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear — the post refers only to 'your attorney' generically and names no experts"
           },
           {
             "check": "STATISTICS_CHECK",
-            "result": "FAIL",
-            "evidence": "'An attorney with 80-100 active cases spends an average of 2-3 hours per case per month' is stated as a factual claim with no named source"
+            "result": "PASS",
+            "evidence": "No sourced-statistic claims found — numerical references ('dozens of active cases,' 'over 30,' 'hundreds of cases') are general descriptors or action thresholds, not factual statistical claims requiring citation"
           },
           {
             "check": "PROCEDURE_CHECK",
-            "result": "FAIL",
-            "evidence": "'You have the legal right to a copy of your complete case file — discovery, correspondence, notes, everything' is stated as a bare universal rule without a jurisdiction qualifier"
+            "result": "PASS",
+            "evidence": "All procedural claims are jurisdiction-qualified: 'In most jurisdictions, you have the right to a copy of your case file,' 'many jurisdictions have online access,' 'Under most state rules of criminal procedure'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations appear anywhere in the post — no 'v.' references or case names"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims appear — the post addresses attorney performance and communication, not conviction consequences like licensing, housing, or voting"
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "slug": "complete-white-collar-defense-guide",
-  "last_checked": "2026-04-10T02:30:20.227Z",
+  "last_checked": "2026-04-10T09:45:27.069Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 10,
             "matches": [
-              "10 em dashes in 2947 words"
+              "10 em dashes in 2964 words"
             ],
             "points_added": 10
           },
@@ -43,272 +43,50 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "Only well-known federal citations appear (18 U.S.C. § 1001, USSG §5K1.1, U.S. Sentencing Guidelines Manual §2B1.1, Rule 16 Fed. R. Crim. P., Bail Reform Act) — all real and correctly attributed to federal law"
+            "evidence": "All statute references (18 U.S.C. § 1001, USSG §2B1.1, §5K1.1, Federal Rules of Criminal Procedure Rule 16, Bail Reform Act) are well-known federal provisions cited correctly in explicit federal context."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorney or legal-scholar names appear; only agencies (FBI, IRS Criminal Investigation, SEC, Bureau of Justice Statistics, U.S. Sentencing Commission) which are allowed"
+            "evidence": "No individual attorney or legal scholar names appear. Sources cited are agencies: Bureau of Justice Statistics, U.S. Sentencing Commission, FBI, IRS Criminal Investigation, SEC."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "Every statistic is sourced: '90% conviction rate (Bureau of Justice Statistics)', 'trial rate of roughly 2-3% (Bureau of Justice Statistics)', '50% or more below guidelines, per U.S. Sentencing Commission data on §5K1.1', and loss-level thresholds attributed to U.S. Sentencing Guidelines Manual §2B1.1"
+            "evidence": "All statistics are sourced: '90%+ conviction rate (Bureau of Justice Statistics)', 'trial rate of roughly 2-3% (Bureau of Justice Statistics)', '50% or more below guidelines, per U.S. Sentencing Commission data'. Loss-table thresholds reference the published USSG manual directly."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "All procedural claims are explicitly federal and attributed to federal rules (Rule 16, Bail Reform Act, 18 U.S.C. § 1001, federal grand jury, USSG) — no bare universal state procedures"
+            "evidence": "All procedural claims are explicitly situated in federal context ('Federal bail is governed by the Bail Reform Act', 'Federal discovery is governed by Rule 16', 'federal agent', 'federal investigation'). No bare universal procedural claims without jurisdiction qualification."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "Only 'Brady material' and 'Brady obligations' appear, which are on the allowed exceptions list as universally known legal terminology"
+            "evidence": "Only excepted terminology appears: 'Brady material', 'Brady obligations'. No other case citations (no 'v.' patterns) found in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral-consequence claims (licensing, housing, voting, firearms, immigration) appear; post discusses only sentencing exposure within the federal framework, which is attributed to USSG"
+            "evidence": "No collateral-consequence claims (licensing, voting, housing, firearms, immigration). Bail conditions (passport surrender, travel restrictions, bond) are procedural, not collateral consequences of conviction."
           }
         ]
       }
     },
     "slop": {
-      "passed": true,
-      "status": "checked",
-      "details": {
-        "checks_passed": 13,
-        "checks_total": 14,
-        "hard_gate_failures": [],
-        "results": [
-          {
-            "check": "QUESTION_COUNT",
-            "result": "PASS",
-            "reason": "Frontmatter has no question_count field to validate; body contains 34 attorney questions organized by stage with clear 'Questions to ask your attorney' sections."
-          },
-          {
-            "check": "CITATION_SOURCING",
-            "result": "PASS",
-            "reason": "Factual claims are sourced: Bureau of Justice Statistics for conviction/trial rates, 18 U.S.C. § 1001 for false statements, USSG 5K1.1 for cooperation, Rule 16 for discovery, Bail Reform Act, and specific guideline level numbers."
-          },
-          {
-            "check": "READABILITY",
-            "result": "PASS",
-            "reason": "Action items use plain language ('Save a federal defense attorney's phone number', 'Ask your attorney') and jargon like 'proffer' and 'AUSA' are defined inline on first use."
-          },
-          {
-            "check": "CLICHE_DENSITY",
-            "result": "PASS",
-            "reason": "No instances of the flagged cliches ('end of the day', 'tip of the iceberg', 'slippery slope', 'double-edged sword', 'game changer', 'wake-up call') appear in the post."
-          },
-          {
-            "check": "VOICE_CONSISTENCY",
-            "result": "PASS",
-            "reason": "Second person ('you', 'your') is maintained throughout; occasional 'most people' references don't exceed 2 consecutive sentences of drift."
-          },
-          {
-            "check": "PASSIVE_VOICE_RATIO",
-            "result": "PASS",
-            "reason": "Passive constructions ('are governed by', 'is established', 'was caused') appear but remain well under 30% of total sentences; active voice dominates action statements."
-          },
-          {
-            "check": "JARGON_DEFINITION",
-            "result": "NEEDS_WORK",
-            "reason": "Most terms are defined (target letter, subject letter, proffer, 5K1.1, Brady material) but 'arraignment' and 'indictment' are used without explicit first-use definitions, and 'AUSA' is only parenthetically expanded."
-          },
-          {
-            "check": "STRUCTURAL_INTEGRITY",
-            "result": "PASS",
-            "reason": "Sections follow a logical chronological arc through 7 stages (investigation to plea/trial) with each stage building on the prior, no orphaned paragraphs."
-          },
-          {
-            "check": "CTA_CLARITY",
-            "result": "PASS",
-            "reason": "Post includes multiple CTAs: free Case Progress Score link, specific 5-minute actions at each stage, and dozens of attorney questions organized by case phase."
-          },
-          {
-            "check": "HEDGING_DENSITY",
-            "result": "PASS",
-            "reason": "Action statements are direct and imperative ('Ask your attorney', 'Save a phone number', 'Get this in writing'); hedging appears mostly in informational context about uncertain outcomes, which is appropriate."
-          },
-          {
-            "check": "PARAGRAPH_LENGTH",
-            "result": "PASS",
-            "reason": "All paragraphs stay under 300 words; action-oriented '5-minute action' paragraphs are brief and under 100 words."
-          },
-          {
-            "check": "SECTION_BALANCE",
-            "result": "PASS",
-            "reason": "Content is distributed across 7 roughly balanced stages plus intro/outro; no single section dominates more than 50% of total word count."
-          },
-          {
-            "check": "FEAR_ACTION_PAIRING",
-            "result": "PASS",
-            "reason": "Every threat paragraph (false statement charge, 14-level loss enhancement, trial penalty, voided cooperation agreement) is immediately followed by a specific action or question to ask the attorney."
-          },
-          {
-            "check": "ENGAGEMENT_ARC",
-            "result": "PASS",
-            "reason": "Strong opening hook (federal agents showing up), evidence-heavy middle with specific guidelines numbers and scenarios, and empowering close with concrete questions and the Case Progress Score CTA."
-          }
-        ]
-      }
+      "passed": false,
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "criteria_passed": 13,
-        "criteria_total": 15,
-        "results": [
-          {
-            "criterion": "U1",
-            "result": "FAIL",
-            "evidence": "FAQ contains directives 'Never discuss cooperation without a proffer agreement already in place. Never speak to federal agents without an attorney present.' phrased as commands."
-          },
-          {
-            "criterion": "U2",
-            "result": "PASS",
-            "evidence": "Every stage section (1-7) includes a 'Questions to ask your attorney' block proximate to the decision content."
-          },
-          {
-            "criterion": "U3",
-            "result": "PASS",
-            "evidence": "Post describes general defense concepts without evaluating the reader's specific case strength or likelihood of conviction."
-          },
-          {
-            "criterion": "U4",
-            "result": "PASS",
-            "evidence": "Motions are explained and framed as questions ('do we need to file motions?') rather than recommended procedural steps."
-          },
-          {
-            "criterion": "U5",
-            "result": "PASS",
-            "evidence": "Post does not discuss immigration consequences, so the immigration-specific redirect requirement does not apply."
-          },
-          {
-            "criterion": "U6",
-            "result": "PASS",
-            "evidence": "Post discusses sentencing exposure rather than collateral consequences like licensing, housing, or firearm rights, so the sourcing requirement does not trigger."
-          },
-          {
-            "criterion": "U7",
-            "result": "PASS",
-            "evidence": "Only generic categories like 'federal defense attorney' and 'AUSA' are used; no specific firms or bail bond companies are named or recommended."
-          },
-          {
-            "criterion": "U8",
-            "result": "PASS",
-            "evidence": "Post uses 'our guide' and 'our detailed analysis' only to reference content, never 'we recommend' in a legal-action context."
-          },
-          {
-            "criterion": "U9",
-            "result": "FAIL",
-            "evidence": "Multiple scene-setting hypotheticals like 'You are at your desk on a Tuesday afternoon when your assistant tells you two people from the FBI are in the lobby' are presented without hypothetical/example labels."
-          },
-          {
-            "criterion": "U10",
-            "result": "PASS",
-            "evidence": "Framing consistently empowers questioning the attorney ('the questions your attorney should be answering at each step') rather than self-handling the case."
-          },
-          {
-            "criterion": "U11",
-            "result": "PASS",
-            "evidence": "Uses general qualifiers like 'typically 7 for fraud offenses,' 'usually well advanced,' and 'for most white collar cases' when stating legal rules."
-          },
-          {
-            "criterion": "U12",
-            "result": "PASS",
-            "evidence": "Outcome language is qualified ('Cooperation can cut your sentence in half') and the post notes 'No guarantee of the outcome' in the cooperation section."
-          },
-          {
-            "criterion": "U13",
-            "result": "PASS",
-            "evidence": "Strategies are attributed to specific authorities: '18 U.S.C. § 1001,' 'USSG 5K1.1,' 'Rule 16 of the Federal Rules of Criminal Procedure,' 'Brady,' and 'Bureau of Justice Statistics.'"
-          },
-          {
-            "criterion": "U14",
-            "result": "PASS",
-            "evidence": "No contradictory legal statements appear; sentencing level math, trial rates, and cooperation mechanics are internally consistent."
-          },
-          {
-            "criterion": "U15",
-            "result": "PASS",
-            "evidence": "Case Progress Score is framed as a research/question tool: '5 minutes to see what's been done, what's missing, and what to ask next.'"
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
-      "status": "checked",
-      "details": {
-        "checks_passed": 6,
-        "checks_total": 12,
-        "needs_work_count": 4,
-        "results": [
-          {
-            "check": "D1_3AM_PANIC",
-            "result": "NEEDS_WORK",
-            "evidence": "Opening names the fear well ('You got a call from a federal agent. Or a target letter showed up.'), but several H2s are topical rather than action-oriented: 'Stage 1: The Investigation', 'Stage 3: Indictment and Arraignment', 'Stage 4: Discovery in Federal Cases'."
-          },
-          {
-            "check": "D2_READING_LEVEL",
-            "result": "NEEDS_WORK",
-            "evidence": "Most terms defined inline (target letter, subject letter, proffer), but 'Rule 16', 'Brady obligations', 'USSG 5K1.1', and 'arraigned' appear without inline definition on first use; paragraphs stay under 4 sentences."
-          },
-          {
-            "check": "D3_DO_THIS_NOW",
-            "result": "FAIL",
-            "evidence": "No immediate-action block appears before the first H2 ('Stage 1: The Investigation'); the first 5-minute action ('Save a federal defense attorney's phone number') is buried inside Stage 1 after several subsections."
-          },
-          {
-            "check": "D4_ONE_CLEAR_PATH",
-            "result": "PASS",
-            "evidence": "Decision points give clear leads — 'Silence is your right. Use it.', 'the only words out of your mouth are: I'd like to speak with my attorney', and the cooperation section frames the default as 'do the math first'."
-          },
-          {
-            "check": "D5_3_ITEM_RULE",
-            "result": "FAIL",
-            "evidence": "'How You'll Find Out' lists 5 unranked items, 'What Your Attorney Should Be Doing' has 4 unranked items, and the loss amount enhancement list runs 8 unranked tiers without 'start with these' markers."
-          },
-          {
-            "check": "D6_CATALOG_VARIETY",
-            "result": "PASS",
-            "evidence": "Structural pattern: timeline-post (stage-by-stage chronological walkthrough from investigation through plea/trial with deadlines and decision points at each stage)."
-          },
-          {
-            "check": "D7_THREAT_EFFICACY",
-            "result": "PASS",
-            "evidence": "Scary stats are paired with action: 90%+ conviction rate is followed by 'these cases also have more defense opportunities'; loss calculation threat is paired with 'Your attorney should be aggressively challenging'; trial penalty warning is paired with 'ask your attorney to put the plea offer and the estimated post-trial sentence side by side in writing'."
-          },
-          {
-            "check": "D8_IDENTITY_PROTECTION",
-            "result": "PASS",
-            "evidence": "Zero blame language — the post consistently separates person from situation and frames the reader as someone navigating a system, not someone who caused it; no 'you should have' patterns."
-          },
-          {
-            "check": "D9_FEAR_CLARITY_AGENCY",
-            "result": "NEEDS_WORK",
-            "evidence": "Opening validates fear and middle reduces unknown to known, but the closing ends on a CTA ('Take the free Case Progress Score') rather than a standalone agency statement."
-          },
-          {
-            "check": "D10_PHONE_FIRST",
-            "result": "PASS",
-            "evidence": "Only H2/H3 heading levels used, no tables, key 5-minute actions are bolded, and sections stay within the 300-500 word range before the next H2."
-          },
-          {
-            "check": "D11_SCREENSHOT_SENTENCE",
-            "result": "PASS",
-            "evidence": "Every stage H2 has exactly one bolded screenshot sentence under 27 words, e.g. 'The pre-indictment window is where federal cases are won. Once charges drop, the playing field tilts dramatically toward the government.' and 'A federal indictment is the government's opening argument written as a legal document.'"
-          },
-          {
-            "check": "D12_SHAREABLE_FAQ",
-            "result": "NEEDS_WORK",
-            "evidence": "FAQ answers lead with direct answers and use natural voice, but the cooperation answer runs 5 sentences and the sentencing guidelines answer runs 4+ sentences — both slightly long for a standalone support-group reply."
-          }
-        ]
-      }
+      "status": "unchecked",
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

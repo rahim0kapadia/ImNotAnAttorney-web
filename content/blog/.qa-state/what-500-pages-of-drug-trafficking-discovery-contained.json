@@ -1,6 +1,6 @@
 {
   "slug": "what-500-pages-of-drug-trafficking-discovery-contained",
-  "last_checked": "2026-04-10T02:29:01.001Z",
+  "last_checked": "2026-04-10T10:21:59.964Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers (§, U.S.C., Penal Code, Florida Statute) appear anywhere in the post; all legal rules described using general language like 'mandatory minimum' and 'different scheduling classifications in some jurisdictions'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear; the post refers only to 'his attorney' and 'a competent defense attorney' generically"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "All numbers (93.9g, 25.59g, 68.3g, 73%, 21 fingerprints, 500 pages) are case-specific narrative facts internal to the documented case, not population-level statistical claims requiring external sourcing"
+            "evidence": "All numbers (93.9g, 25.59g, 68.3g, 73%, 21 fingerprints, 500 pages, $10,000/$15,000) are case-specific data points from the documented discovery file or hypothetical illustrations, not population-level statistical claims requiring sourcing"
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "The only sentencing claim 'Mandatory minimum: 3 years in state prison' is explicitly qualified with 'in Florida' in the preceding sentence"
+            "evidence": "The mandatory minimum claim is scoped to 'drug trafficking charges in Florida'; discovery rights ('you have the right to see every piece of evidence') reflect constitutional due process; the disclaimer states 'Drug case laws and defenses vary by state and jurisdiction'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (X v. Y format) appear anywhere in the post; legal concepts are described generically ('constructive possession') without citing case law"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral consequence claims (licensing, housing, firearms, voting, immigration, employment) appear; sentencing references ('mandatory prison sentence', 'probation') are direct consequences scoped to the Florida case or phrased as relative contrasts between charge levels"
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

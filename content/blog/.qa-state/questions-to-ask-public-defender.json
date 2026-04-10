@@ -1,6 +1,6 @@
 {
   "slug": "questions-to-ask-public-defender",
-  "last_checked": "2026-04-10T02:22:54.898Z",
+  "last_checked": "2026-04-10T10:10:39.300Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "No statute numbers appear; references use general language like 'some states give you 10 days'"
+            "evidence": "No statute numbers appear anywhere in the post; all legal rules described using general language like 'many states have a 10-day DMV hearing deadline' and 'the standard is typically showing'."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "No individual attorneys or legal scholars named; only source agencies (Bureau of Justice Statistics, American Bar Association)"
+            "evidence": "No individual attorney or legal-scholar names appear; only source agencies cited (Bureau of Justice Statistics, American Bar Association)."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "'200–400+ cases per attorney' and '300 cases' and '350' caseload numbers appear without a named source in the same or preceding sentence"
+            "evidence": "The claim '200–400+ cases per attorney' appears four times (TLDR, body, FAQ twice) without a named source — only the 150-felony ABA maximum and the 80% BJS figure are sourced. Additionally, 'one receptionist for 30 attorneys' is unsourced."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "DMV hearing deadline is qualified with 'some states give you 10 days' and 'many states have a 10-day DMV hearing deadline'"
+            "evidence": "All procedural claims are jurisdiction-qualified: 'some states give you 10 days', 'many states have a 10-day DMV hearing deadline', 'the standard is typically'."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "No case citations appear in the post"
+            "evidence": "No case citations appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "No collateral consequences (licensing, housing, firearms, voting, immigration) are claimed"
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, etc.) appear in the post; outcome references are general ('potential prison time', 'realistic range of outcomes')."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

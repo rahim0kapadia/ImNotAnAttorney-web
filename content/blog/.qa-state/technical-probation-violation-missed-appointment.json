@@ -1,6 +1,6 @@
 {
   "slug": "technical-probation-violation-missed-appointment",
-  "last_checked": "2026-04-10T02:27:04.773Z",
+  "last_checked": "2026-04-10T10:19:28.489Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -28,38 +28,38 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 4,
+        "checks_passed": 5,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No specific statute numbers (§, U.S.C., Penal Code, etc.) appear anywhere in the post; all legal rules are described with general language like 'most jurisdictions,' 'within state statutes,' and 'state statutes or departmental policies.'"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal-scholar names appear; the only named source is 'Bureau of Justice Statistics,' which is a government agency, not an individual expert."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "'Approximately a third of state prison admissions annually are for probation or parole violations' appears unsourced in 'The Bigger Picture' opening sentence before the later BJS-sourced restatement"
+            "evidence": "The first occurrence of 'approximately a third of state prison admissions annually are for probation or parole violations' in the 'Bigger Picture' opening paragraph lacks a named source; the Bureau of Justice Statistics attribution does not appear until the following paragraph."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Procedural claims use jurisdiction qualifiers ('in most jurisdictions,' 'most states,' 'some jurisdictions') or are attributed to 'Supreme Court precedent' for universally applicable constitutional rights (right to counsel, right to cross-examine, preponderance standard); no bare universal deadlines or filing windows appear."
           },
           {
             "check": "CASE_NAME_CHECK",
-            "result": "FAIL",
-            "evidence": "Post cites 'Morrissey v. Brewer and Gagnon v. Scarpelli' in the TLDR and 'Gagnon v. Scarpelli, 1973' in Step 4 — neither is in the allowed terminology exceptions"
+            "result": "PASS",
+            "evidence": "No case citations (X v. Y format) appear anywhere in the post; 'Supreme Court precedent' is referenced generically without naming a specific case."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration) appear; all discussed consequences are direct sentencing outcomes (revocation, added conditions, short jail stays) within the revocation hearing context."
           }
         ]
       }
@@ -67,17 +67,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

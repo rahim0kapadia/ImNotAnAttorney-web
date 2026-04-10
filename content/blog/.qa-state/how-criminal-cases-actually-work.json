@@ -1,6 +1,6 @@
 {
   "slug": "how-criminal-cases-actually-work",
-  "last_checked": "2026-04-10T02:37:09.135Z",
+  "last_checked": "2026-04-10T09:57:42.366Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 44,
             "matches": [
-              "44 em dashes in 4105 words"
+              "44 em dashes in 4113 words"
             ],
             "points_added": 10
           },
@@ -37,38 +37,38 @@
       "passed": false,
       "status": "checked",
       "details": {
-        "checks_passed": 4,
+        "checks_passed": 5,
         "checks_total": 6,
         "results": [
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers or section references appear anywhere in the post; all legal rules described using general language ('legally required', 'constitutional right', 'unlawful stop')"
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear; only agency source 'Bureau of Justice Statistics' is cited, which is allowed"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "'In state systems, the number is between 90-95%' and 'trial (for the 3-10% that get there)' appear without named sources; only the 97% federal figure is attributed to Bureau of Justice Statistics"
+            "evidence": "'3-10%' trial rate appears in TLDR, FAQs, Stage 7 heading, and body with no named source attribution; '90-97%' plea resolution rate in TLDR also unsourced"
           },
           {
             "check": "PROCEDURE_CHECK",
-            "result": "FAIL",
-            "evidence": "'Usually within 24-72 hours of arrest, you appear before a judge' and 'Sentencing typically occurs 30-90 days after conviction' are stated as bare universal timelines without 'in most states' or a specific jurisdiction qualifier"
+            "result": "PASS",
+            "evidence": "All procedural timelines use soft qualifiers — 'usually within 24-72 hours', 'typically complete within 12-24 hours', 'typically occurs 30-90 days' — no bare universal deadlines or filing requirements stated"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Only 'Brady motion/material', 'Daubert/Frye motion', and 'Miranda rights' appear — all listed exceptions functioning as legal terminology"
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Collateral consequences (immigration, employment, licensing, housing) appear only as questions to ask an attorney, not as universal factual claims"
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

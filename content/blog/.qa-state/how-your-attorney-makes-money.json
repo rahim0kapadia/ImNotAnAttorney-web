@@ -1,6 +1,6 @@
 {
   "slug": "how-your-attorney-makes-money",
-  "last_checked": "2026-04-10T02:40:00.824Z",
+  "last_checked": "2026-04-10T10:03:13.456Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -43,32 +43,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No statute numbers, section references, or statutory citations appear anywhere in the post. All legal rules are described in general terms."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear. Sources are limited to organizations: ABA, Bureau of Justice Statistics, state bar associations."
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "FAIL",
-            "evidence": "'Two-thirds of lawyers admit billing irregularities occur at their firms' appears with no named source in the same or immediately preceding sentence"
+            "evidence": "\"Two-thirds of lawyers admit billing irregularities occur at their firms\" — specific statistic with no named source, publication, or year in parentheses."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No filing deadlines, appeal windows, or legal procedural requirements stated as universal rules. The \"two business days\" reference is practical advice about communication expectations, not a legal procedural claim."
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations (X v. Y format) appear anywhere in the post."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "The post does not make collateral-consequence claims about licensing, housing, firearms, voting, or immigration. Discussion is limited to attorney billing incentives and communication patterns."
           }
         ]
       }
@@ -76,17 +76,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 10pm (America/New_York)"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }

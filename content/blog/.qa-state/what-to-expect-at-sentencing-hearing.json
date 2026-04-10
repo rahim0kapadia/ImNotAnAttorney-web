@@ -1,6 +1,6 @@
 {
   "slug": "what-to-expect-at-sentencing-hearing",
-  "last_checked": "2026-04-10T02:43:16.988Z",
+  "last_checked": "2026-04-10T10:26:43.971Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 37,
             "matches": [
-              "37 em dashes in 2986 words"
+              "37 em dashes in 2985 words"
             ],
             "points_added": 10
           }
@@ -34,32 +34,32 @@
           {
             "check": "STATUTE_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "Post uses general language throughout — 'in the federal system,' 'in most jurisdictions,' 'some states' — with zero bare statute numbers or § references."
           },
           {
             "check": "EXPERT_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No individual attorney or legal scholar names appear anywhere in the post; author is 'ImNotAnAttorney Team.'"
           },
           {
             "check": "STATISTICS_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No factual statistical claims appear; '40%' is a hypothetical scenario ('Then you read a case where...'), 'a thousand defendants' is rhetorical, and '$97' is the product's own price."
           },
           {
             "check": "PROCEDURE_CHECK",
             "result": "PASS",
-            "evidence": "Procedural claims are qualified with 'in most jurisdictions', 'in the federal system', 'State systems vary widely', and similar jurisdiction qualifiers"
+            "evidence": "Every procedural description is jurisdiction-qualified — 'in most jurisdictions,' 'in the federal system,' 'Some states,' 'usually within a few weeks,' 'The general order of events, across most jurisdictions.'"
           },
           {
             "check": "CASE_NAME_CHECK",
             "result": "PASS",
-            "evidence": "no issues found"
+            "evidence": "No case citations appear; the 2005 Supreme Court ruling is referenced by year and description only, with no case name given."
           },
           {
             "check": "CONSEQUENCE_CHECK",
             "result": "PASS",
-            "evidence": "Collateral consequences listed as questions ('registration, immigration, professional licensing, voting rights, firearms, housing') without stating any as universal fact"
+            "evidence": "Collateral consequences (registration, immigration, licensing, voting, firearms, housing) appear only as questions to ask — 'What collateral consequences come with this sentence?' — not as universal factual claims."
           }
         ]
       }
@@ -67,17 +67,17 @@
     "slop": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "upl": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     },
     "dna": {
       "passed": false,
       "status": "unchecked",
-      "reason": "credits_depleted"
+      "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
   }
 }
