@@ -360,7 +360,7 @@ export function isTierLive(slug: TierSlug): boolean {
 // ============================================================
 
 /** All $97 playbook slugs — these upgrade to case-decoder, not to each other. */
-const PLAYBOOK_SLUGS: ReadonlySet<TierSlug> = new Set([
+export const PLAYBOOK_SLUGS: ReadonlySet<TierSlug> = new Set([
   "dui-first-offense",
   "drug-possession",
   "probation-violation",
