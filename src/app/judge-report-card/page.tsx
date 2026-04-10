@@ -263,7 +263,7 @@ export default function JudgeReportCardPage() {
             Commission&rsquo;s published guidelines data and
             CourtListener&rsquo;s open court records API. Every metric is
             computed from verified judicial records &mdash; not estimated, not
-            AI-generated.
+            fabricated.
           </p>
           <div className="mt-6">
             <TrustBadges variant="pricing" />
