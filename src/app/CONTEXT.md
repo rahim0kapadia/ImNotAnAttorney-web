@@ -198,7 +198,7 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 | GET | `/api/stats/score-summary` | Aggregate score stats (ISR 5min) |
 
 ### Cron Tasks (12 routes — see lib/CONTEXT.md for task list)
-All cron routes: `GET /api/cron/*` — authenticated via `CRON_SECRET` header.
+All cron routes: `GET /api/cron/*` — authenticated via `CRON_AUTH_TOKEN` header.
 Main orchestrator: `/api/cron/drip` — runs all 22 tasks sequentially.
 Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blog-generate-queue`, `blog-qa`, `blog-publish`, `demand-fetch`, `demand-score`, `demand-classify`, `demand-performance`, `demand-feedback-patterns`, `demand-feedback-revise`, `demand-feedback-score`.
 
