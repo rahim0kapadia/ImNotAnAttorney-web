@@ -739,14 +739,20 @@ function CheckoutContent() {
   const [existingCaseState, setExistingCaseState] = useState("");
   const [useInstallment, setUseInstallment] = useState(planParam === "2x");
 
-  // Read referral promo code from cookie or URL param
+  // Read referral promo code from cookie or URL param.
+  // Blog CTAs pass ref=blog-<slug> for attribution only — not a promo code.
   const [promoCode] = useState<string | null>(() => {
-    if (refParam) return refParam;
-    if (typeof document !== "undefined") {
-      const match = document.cookie.split("; ").find(c => c.startsWith("ref="));
-      return match ? match.split("=")[1] : null;
-    }
-    return null;
+    const raw = (() => {
+      if (refParam) return refParam;
+      if (typeof document !== "undefined") {
+        const match = document.cookie.split("; ").find(c => c.startsWith("ref="));
+        return match ? match.split("=")[1] : null;
+      }
+      return null;
+    })();
+    // blog- prefixed refs are attribution only, not discount codes
+    if (raw && raw.startsWith("blog-")) return null;
+    return raw;
   });
 
   const info = TIER_INFO[tier];
@@ -1310,7 +1316,7 @@ export default function CheckoutPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="flex min-h-[60vh] items-center justify-center" role="status">
           <p className="text-zinc-400">Loading...</p>
         </div>
       }

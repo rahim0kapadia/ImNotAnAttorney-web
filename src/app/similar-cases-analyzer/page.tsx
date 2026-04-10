@@ -2,7 +2,7 @@
  * Similar Cases Analyzer landing page (/similar-cases-analyzer)
  *
  * Standalone Tier 9 data product — $297, instant delivery.
- * Presents k-NN similar case matching from Tier 9 tables.
+ * Presents factually similar case matching from Tier 9 tables.
  * Server component — no client-side interactivity needed.
  */
 import type { Metadata } from "next";
@@ -17,12 +17,12 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Similar Cases Analyzer — $297 | ImNotAnAttorney",
   description:
-    "Find cases with facts like yours and see what happened. k-NN factually similar case matching with outcome probabilities from verified court records.",
+    "Find cases with facts like yours and see what happened. Factually similar case matching with outcome probabilities from verified court records.",
   alternates: { canonical: `${SITE_URL}/similar-cases-analyzer` },
   openGraph: {
     title: "Similar Cases Analyzer — See What Happened in Cases Like Yours",
     description:
-      "k-NN factually similar case matching with outcome data. Every case includes a source URL.",
+      "Factually similar case matching with outcome data. Every case includes a source URL.",
     url: `${SITE_URL}/similar-cases-analyzer`,
   },
 };
@@ -142,7 +142,7 @@ export default function SimilarCasesAnalyzerPage() {
             "@type": "Product",
             name: "Similar Cases Analyzer",
             description:
-              "k-NN factually similar case matching with outcome data from verified court records.",
+              "Factually similar case matching with outcome data from verified court records.",
             url: `${SITE_URL}/similar-cases-analyzer`,
             brand: {
               "@type": "Organization",
@@ -219,7 +219,7 @@ export default function SimilarCasesAnalyzerPage() {
             </h2>
             <ul className="mt-6 space-y-4">
               {[
-                "k-NN factually similar case matching based on your charge and circumstances",
+                "Factually similar case matching based on your charge and circumstances",
                 "Outcome distribution across matched cases (acquittal, dismissal, plea, conviction)",
                 "Case similarity scores showing how close each match is to your facts",
                 "Motion patterns observed in matched cases",
@@ -369,7 +369,7 @@ export default function SimilarCasesAnalyzerPage() {
               your attorney can check every match.
             </p>
             <p className="mt-3 text-sm text-zinc-400">
-              Case matching powered by k-nearest neighbor analysis on case feature vectors &mdash; the same family of algorithms used in academic legal research for outcome prediction. Built on CourtListener&rsquo;s open court records. Every match is computed from verified judicial records, not estimated or AI-generated.
+              Case matching built on CourtListener&rsquo;s open court records, cross-referencing charge type, jurisdiction, evidence patterns, and defendant circumstances. Every match is computed from verified judicial records, not estimated or fabricated.
             </p>
             <TrustBadges variant="pricing" />
           </FadeInUp>

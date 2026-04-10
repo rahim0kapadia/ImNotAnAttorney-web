@@ -266,7 +266,7 @@ export default function PartnersAdmin() {
         </button>
 
         {detailLoading ? (
-          <p className="text-zinc-400">Loading...</p>
+          <p className="text-zinc-400" role="status">Loading...</p>
         ) : (
           <>
             <div className="bg-zinc-900 rounded-xl border border-zinc-500 p-6 mb-6">
@@ -365,14 +365,15 @@ export default function PartnersAdmin() {
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
+                  <caption className="sr-only">Partner referral history with sales and commissions</caption>
                   <thead>
                     <tr className="text-zinc-400 border-b border-zinc-500">
-                      <th className="text-left py-2 pr-4">Date</th>
-                      <th className="text-left py-2 pr-4">Tier</th>
-                      <th className="text-right py-2 pr-4">Sale</th>
-                      <th className="text-right py-2 pr-4">Discount</th>
-                      <th className="text-right py-2 pr-4">Commission</th>
-                      <th className="text-left py-2">Paid</th>
+                      <th scope="col" className="text-left py-2 pr-4">Date</th>
+                      <th scope="col" className="text-left py-2 pr-4">Tier</th>
+                      <th scope="col" className="text-right py-2 pr-4">Sale</th>
+                      <th scope="col" className="text-right py-2 pr-4">Discount</th>
+                      <th scope="col" className="text-right py-2 pr-4">Commission</th>
+                      <th scope="col" className="text-left py-2">Paid</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -576,7 +577,7 @@ export default function PartnersAdmin() {
 
       {/* Partners Table */}
       {loading ? (
-        <p className="text-zinc-400">Loading partners...</p>
+        <p className="text-zinc-400" role="status">Loading partners...</p>
       ) : partners.length === 0 ? (
         <div className="text-center py-12 text-zinc-400">
           <p className="text-lg">No partners yet.</p>
@@ -587,15 +588,16 @@ export default function PartnersAdmin() {
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
+            <caption className="sr-only">All partners with referral counts and commission status</caption>
             <thead>
               <tr className="text-zinc-400 border-b border-zinc-500">
-                <th className="text-left py-3 pr-4">Partner</th>
-                <th className="text-left py-3 pr-4">Code</th>
-                <th className="text-left py-3 pr-4">Status</th>
-                <th className="text-right py-3 pr-4">Referrals</th>
-                <th className="text-right py-3 pr-4">Commission</th>
-                <th className="text-right py-3 pr-4">Unpaid</th>
-                <th className="text-left py-3">Actions</th>
+                <th scope="col" className="text-left py-3 pr-4">Partner</th>
+                <th scope="col" className="text-left py-3 pr-4">Code</th>
+                <th scope="col" className="text-left py-3 pr-4">Status</th>
+                <th scope="col" className="text-right py-3 pr-4">Referrals</th>
+                <th scope="col" className="text-right py-3 pr-4">Commission</th>
+                <th scope="col" className="text-right py-3 pr-4">Unpaid</th>
+                <th scope="col" className="text-left py-3">Actions</th>
               </tr>
             </thead>
             <tbody>

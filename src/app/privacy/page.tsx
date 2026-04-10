@@ -156,7 +156,7 @@ export default function PrivacyPage() {
                 <strong className="text-zinc-300">
                   Analysis technology provider:
                 </strong>{" "}
-                We use automated analysis technology developed by{" "}
+                We use technology developed by{" "}
                 <a
                   href="https://www.anthropic.com"
                   target="_blank"
@@ -300,8 +300,8 @@ export default function PrivacyPage() {
                 uploaded documents. SOC 2 Type II compliant infrastructure
               </li>
               <li>
-                <strong className="text-zinc-300">Anthropic</strong> — Automated
-                analysis processing for report generation (see Section 3 for
+                <strong className="text-zinc-300">Anthropic</strong> — Case
+                information processing for report generation (see Section 3 for
                 details)
               </li>
               <li>
@@ -558,7 +558,7 @@ export default function PrivacyPage() {
                 Categories disclosed to third parties:
               </strong>{" "}
               Identifiers (to Stripe for payment, to Resend for email delivery);
-              case information (to Anthropic for automated analysis); internet/network
+              case information (to Anthropic for case analysis processing); internet/network
               activity (to Google Analytics for traffic analytics). No categories
               are sold.
             </p>

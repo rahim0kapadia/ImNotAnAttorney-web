@@ -15,14 +15,22 @@
  * any page. The tier defaults to dui-first-offense if omitted.
  */
 import { NextRequest, NextResponse } from "next/server";
+import { timingSafeEqual, createHmac } from "crypto";
 
 const QA_EMAIL = process.env.INTERNAL_QA_EMAIL;
 const OPERATOR_SECRET = process.env.OPERATOR_SECRET;
 
+/** Timing-safe string comparison using HMAC-then-compare to eliminate length oracle. */
+function timingSafeCompare(a: string, b: string): boolean {
+  const hmacA = createHmac("sha256", "inna-guard-compare").update(a).digest();
+  const hmacB = createHmac("sha256", "inna-guard-compare").update(b).digest();
+  return timingSafeEqual(hmacA, hmacB);
+}
+
 export async function GET(req: NextRequest) {
   // Gate on operator secret — return 404 to avoid revealing the route exists
   const key = req.nextUrl.searchParams.get("key");
-  if (!OPERATOR_SECRET || key !== OPERATOR_SECRET) {
+  if (!OPERATOR_SECRET || !key || !timingSafeCompare(OPERATOR_SECRET, key)) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 

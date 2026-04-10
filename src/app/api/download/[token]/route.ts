@@ -50,7 +50,7 @@ export async function GET(
   // Look up order by download token
   const { data: order, error: orderError } = await supabase
     .from("orders")
-    .select("id, tier, status, product_type, download_token_expires_at, download_count")
+    .select("id, tier, status, product_type, download_token_expires_at")
     .eq("download_token", token)
     .eq("product_type", "digital-product")
     .single();
@@ -126,15 +126,10 @@ export async function GET(
   }
 
   // Increment download count atomically (fire-and-forget — don't block the redirect).
-  // Uses optimistic locking: the WHERE clause includes the current download_count,
-  // so concurrent requests won't silently overwrite each other. If another request
-  // incremented between our SELECT and this UPDATE, the WHERE won't match (0 rows
-  // updated) — acceptable for an audit counter where occasional misses are fine.
+  // Uses an RPC that does `download_count + 1` in a single UPDATE statement,
+  // eliminating the TOCTOU race of the previous SELECT-then-UPDATE approach.
   void supabase
-    .from("orders")
-    .update({ download_count: (order.download_count || 0) + 1 })
-    .eq("id", order.id)
-    .eq("download_count", order.download_count || 0)
+    .rpc("increment_order_download_count", { p_order_id: order.id })
     .then(() => {}, (err: unknown) => console.error("[Download] Count increment failed:", err));
 
   // Redirect to the signed URL

@@ -1,6 +1,6 @@
 # Pages & Routes — src/app/
 
-> Next.js App Router: 55 pages and 71 API routes. All routes are server components by default; client components marked `"use client"`.
+> Next.js App Router: 58 pages and 80 API routes. All routes are server components by default; client components marked `"use client"`.
 
 ## Page Map
 
@@ -33,6 +33,12 @@
 | `/r/[code]` | `r/[code]/page.tsx` | Short referral link redirect |
 | `/r/[code]/quiz` | `r/[code]/quiz/page.tsx` | Referral-tracked score quiz entry |
 | `/research/defense-score-data` | `research/defense-score-data/page.tsx` | Aggregate score stats (ISR 1h) |
+| `/checkout` | `checkout/page.tsx` | Checkout form with tier selection, email, consent |
+| `/idd` | `idd/page.tsx` | IDD (Indigent Defense Diversion) application page |
+| `/judge-report-card` | `judge-report-card/page.tsx` | Judge report card product page |
+| `/officer-background-check` | `officer-background-check/page.tsx` | Officer background check product page |
+| `/similar-cases-analyzer` | `similar-cases-analyzer/page.tsx` | Similar cases analyzer product page |
+| `/services` | `services/page.tsx` | Services overview/listing page |
 
 ### Standalone Products (catalog: `src/lib/products.ts` — 32 products, 21 active as of 2026-04-08)
 | Route | File | Purpose |
@@ -61,7 +67,7 @@
 ### Protected (Customer Portal)
 | Route | File | Purpose |
 |-------|------|---------|
-| `/my-case` | `my-case/page.tsx` | Single case access (magic link token) |
+| `/my-case/[token]` | `my-case/[token]/page.tsx` | Single case access via magic link token |
 | `/my-cases` | `my-cases/page.tsx` | All cases for authenticated user |
 | `/report/[token]` | `report/[token]/page.tsx` | Case report delivery page |
 
@@ -69,13 +75,14 @@
 | Route | File | Purpose |
 |-------|------|---------|
 | `/operator` | `operator/page.tsx` | Dashboard: active cases, queue, metrics |
+| `/operator/cases` | `operator/cases/page.tsx` | Case listing with search and filters |
 | `/operator/cases/[id]` | `operator/cases/[id]/page.tsx` | Case detail + status controls |
 | `/operator/jobs` | `operator/jobs/page.tsx` | Job queue viewer + retry controls |
 | `/operator/metrics` | `operator/metrics/page.tsx` | System metrics dashboard |
 | `/admin/demand` | `admin/demand/page.tsx` | Market demand intelligence |
 | `/admin/inbox` | `admin/inbox/page.tsx` | Inbound email management |
 | `/admin/partners` | `admin/partners/page.tsx` | Partner application review |
-| `/partner` | `partner/page.tsx` | Partner portal: commissions dashboard |
+| `/partner/dashboard` | `partner/dashboard/page.tsx` | Partner portal dashboard |
 
 ## API Route Groups
 
@@ -193,7 +200,7 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 ### Cron Tasks (12 routes — see lib/CONTEXT.md for task list)
 All cron routes: `GET /api/cron/*` — authenticated via `CRON_SECRET` header.
 Main orchestrator: `/api/cron/drip` — runs all 22 tasks sequentially.
-Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blog-generate-queue`, `blog-qa`, `blog-publish`, `demand-fetch`, `demand-score`, `demand-classify`, `demand-performance`.
+Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blog-generate-queue`, `blog-qa`, `blog-publish`, `demand-fetch`, `demand-score`, `demand-classify`, `demand-performance`, `demand-feedback-patterns`, `demand-feedback-revise`, `demand-feedback-score`.
 
 ### Admin-Only (12 routes)
 | Method | Route | Purpose |

@@ -6,7 +6,7 @@
  * Only customers with paid orders can access the portal.
  */
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 
 export default function CustomerLoginPage() {
@@ -14,6 +14,11 @@ export default function CustomerLoginPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const successRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (sent) successRef.current?.focus();
+  }, [sent]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -56,7 +61,7 @@ export default function CustomerLoginPage() {
         </div>
 
         {sent ? (
-          <div className="bg-green-900/30 border border-green-700 rounded-xl p-6 text-center">
+          <div ref={successRef} tabIndex={-1} className="bg-green-900/30 border border-green-700 rounded-xl p-6 text-center">
             <p className="text-green-300 font-bold text-lg mb-2">Check your email</p>
             <p className="text-zinc-400 text-sm">
               We sent a login link to <strong className="text-white">{email}</strong>.
@@ -72,7 +77,7 @@ export default function CustomerLoginPage() {
         ) : (
           <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
             {error && (
-              <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg mb-4 text-sm">
+              <div role="alert" className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg mb-4 text-sm">
                 {error}
               </div>
             )}
@@ -86,6 +91,7 @@ export default function CustomerLoginPage() {
               placeholder="you@example.com"
               required
               autoFocus
+              aria-invalid={!!error}
               className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white mb-4"
             />
 

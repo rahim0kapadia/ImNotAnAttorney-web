@@ -171,6 +171,7 @@ function CaseListContent() {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search by email..."
+            aria-label="Search cases by email"
             className="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none w-64"
           />
           <button
@@ -185,7 +186,7 @@ function CaseListContent() {
       {/* Table */}
       <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 overflow-hidden">
         {loading ? (
-          <div className="p-8 text-center text-sm text-zinc-400">
+          <div className="p-8 text-center text-sm text-zinc-400" role="status">
             Loading cases...
           </div>
         ) : cases.length === 0 ? (
@@ -194,17 +195,18 @@ function CaseListContent() {
           </div>
         ) : (
           <table className="w-full text-sm">
+            <caption className="sr-only">Customer cases with status, tier, and delivery details</caption>
             <thead>
               <tr className="border-b border-zinc-500 text-left text-xs text-zinc-400 uppercase tracking-wider">
-                <th className="px-4 py-3">Email</th>
-                <th className="px-4 py-3">Tier</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3">Phase</th>
-                <th className="px-4 py-3 text-right">Docs</th>
-                <th className="px-4 py-3 text-right">Findings</th>
-                <th className="px-4 py-3 text-right">Score</th>
-                <th className="px-4 py-3">Due</th>
-                <th className="px-4 py-3">Created</th>
+                <th scope="col" className="px-4 py-3">Email</th>
+                <th scope="col" className="px-4 py-3">Tier</th>
+                <th scope="col" className="px-4 py-3">Status</th>
+                <th scope="col" className="px-4 py-3">Phase</th>
+                <th scope="col" className="px-4 py-3 text-right">Docs</th>
+                <th scope="col" className="px-4 py-3 text-right">Findings</th>
+                <th scope="col" className="px-4 py-3 text-right">Score</th>
+                <th scope="col" className="px-4 py-3">Due</th>
+                <th scope="col" className="px-4 py-3">Created</th>
               </tr>
             </thead>
             <tbody>

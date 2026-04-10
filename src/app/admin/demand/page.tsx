@@ -263,10 +263,11 @@ export default function DemandDashboard() {
             onChange={(e) => setPasswordInput(e.target.value)}
             placeholder="Admin password"
             aria-label="Demand intelligence password"
+            aria-invalid={!!error}
             className="w-full p-3 rounded bg-zinc-800 border border-zinc-700 text-white mb-4"
             autoFocus
           />
-          {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
+          {error && <p role="alert" className="text-red-400 text-sm mb-3">{error}</p>}
           <button
             type="submit"
             className="w-full p-3 rounded bg-amber-600 hover:bg-amber-500 text-white font-medium"
@@ -306,7 +307,7 @@ export default function DemandDashboard() {
         </div>
 
         {error && (
-          <div className="bg-red-900/30 border border-red-700 rounded p-3 text-red-300 text-sm">
+          <div role="alert" className="bg-red-900/30 border border-red-700 rounded p-3 text-red-300 text-sm">
             {error}
           </div>
         )}
@@ -361,16 +362,17 @@ export default function DemandDashboard() {
           <h2 className="text-lg font-semibold text-white mb-3">Demand Leaderboard</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
+              <caption className="sr-only">Demand leaderboard scores by dimension</caption>
               <thead>
                 <tr className="border-b border-zinc-500 text-left text-zinc-400">
-                  <th className="pb-2 pr-4">{dimension === "charge_type" ? "Charge Type" : "Pain Point"}</th>
-                  <th className="pb-2 pr-4 text-right">Posts</th>
-                  <th className="pb-2 pr-4 text-right">Questions</th>
-                  <th className="pb-2 pr-4 text-center">Trend</th>
-                  <th className="pb-2 pr-4 text-right">Demand</th>
-                  <th className="pb-2 pr-4 text-right">Competition</th>
-                  <th className="pb-2 pr-4">Quadrant</th>
-                  <th className="pb-2 text-right">Gap</th>
+                  <th scope="col" className="pb-2 pr-4">{dimension === "charge_type" ? "Charge Type" : "Pain Point"}</th>
+                  <th scope="col" className="pb-2 pr-4 text-right">Posts</th>
+                  <th scope="col" className="pb-2 pr-4 text-right">Questions</th>
+                  <th scope="col" className="pb-2 pr-4 text-center">Trend</th>
+                  <th scope="col" className="pb-2 pr-4 text-right">Demand</th>
+                  <th scope="col" className="pb-2 pr-4 text-right">Competition</th>
+                  <th scope="col" className="pb-2 pr-4">Quadrant</th>
+                  <th scope="col" className="pb-2 text-right">Gap</th>
                 </tr>
               </thead>
               <tbody>
@@ -463,13 +465,14 @@ export default function DemandDashboard() {
           <h2 className="text-lg font-semibold text-white mb-3">Content Performance (All-Time)</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
+              <caption className="sr-only">Blog content performance with subscriber and revenue attribution</caption>
               <thead>
                 <tr className="border-b border-zinc-500 text-left text-zinc-400">
-                  <th className="pb-2 pr-4">Blog Post</th>
-                  <th className="pb-2 pr-4 text-right">Subscribers</th>
-                  <th className="pb-2 pr-4 text-right">Orders</th>
-                  <th className="pb-2 pr-4 text-right">Revenue</th>
-                  <th className="pb-2 text-right">Demand</th>
+                  <th scope="col" className="pb-2 pr-4">Blog Post</th>
+                  <th scope="col" className="pb-2 pr-4 text-right">Subscribers</th>
+                  <th scope="col" className="pb-2 pr-4 text-right">Orders</th>
+                  <th scope="col" className="pb-2 pr-4 text-right">Revenue</th>
+                  <th scope="col" className="pb-2 text-right">Demand</th>
                 </tr>
               </thead>
               <tbody>

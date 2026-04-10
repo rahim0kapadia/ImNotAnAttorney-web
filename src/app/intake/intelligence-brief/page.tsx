@@ -519,7 +519,7 @@ export default function Phase2IntakePage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="flex min-h-[60vh] items-center justify-center" role="status">
           <div className="text-zinc-400">Loading...</div>
         </div>
       }

@@ -1,14 +1,10 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-);
+import { createAdminClient } from '@/lib/supabase/admin';
 
 export const revalidate = 60; // Cache for 60 seconds
 
 export async function GET() {
+  const supabase = createAdminClient();
   const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
   const monthKey = `scholarships_${currentMonth}`;
 

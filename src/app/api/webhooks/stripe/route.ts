@@ -1141,7 +1141,7 @@ export async function POST(req: NextRequest) {
       // ── LOOKUP REFUNDED ORDER for case linking + operator notification ──
       const { data: refundedOrder } = await supabase
         .from("orders")
-        .select("id, email, tier, amount, case_id")
+        .select("id, email, tier, amount")
         .eq("stripe_payment_intent_id", paymentIntentId)
         .single();
 
@@ -1179,24 +1179,36 @@ export async function POST(req: NextRequest) {
 
             if (referral && referral.commission_amount > 0) {
               // Decrement partner totals by the original commission
-              await supabase.rpc("reverse_referral_commission", {
+              const rpcResult = await supabase.rpc("reverse_referral_commission", {
                 p_referral_id: referral.id,
                 p_partner_id: referral.partner_id,
                 p_commission_amount: referral.commission_amount,
-              }).then(async (rpcResult) => {
-                if (rpcResult.error) {
-                  console.error("[Webhook] Commission reversal RPC failed:", rpcResult.error.message);
-                  // Create operator task for manual follow-up instead of non-atomic fallback
+              });
+
+              if (rpcResult.error) {
+                console.error("[Webhook] Commission reversal RPC failed:", rpcResult.error.message);
+                // Look up the case linked to this order for the operator task FK
+                const { data: linkedCase } = await supabase
+                  .from("cases")
+                  .select("id")
+                  .eq("order_id", refundedOrder.id)
+                  .limit(1)
+                  .maybeSingle();
+
+                if (linkedCase) {
                   await supabase.from("operator_tasks").insert({
-                    case_id: refundedOrder.case_id,
+                    case_id: linkedCase.id,
                     task_type: "commission_reversal_failed",
                     title: `Commission reversal failed for referral ${referral.id}`,
                     description: `RPC reverse_referral_commission failed: ${rpcResult.error.message}. Partner: ${referral.partner_id}, Amount: $${(referral.commission_amount / 100).toFixed(2)}`,
                     priority: "HIGH",
                     priority_rank: 2,
                   });
+                } else {
+                  // No linked case — log for operator visibility (operator_tasks requires case_id NOT NULL)
+                  console.error(`[Webhook] Commission reversal failed AND no linked case found for order ${refundedOrder.id}. Partner: ${referral.partner_id}, Amount: $${(referral.commission_amount / 100).toFixed(2)}`);
                 }
-              });
+              }
 
               console.log(`[Webhook] Reversed referral ${referral.id} (commission: $${(referral.commission_amount / 100).toFixed(2)}) for refunded order ${refundedOrder.id}`);
             }

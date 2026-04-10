@@ -331,13 +331,14 @@ export default function SampleXRayPage() {
             {/* Desktop table */}
             <div className="mt-6 hidden overflow-x-auto md:block">
               <table className="w-full text-sm">
+                <caption className="sr-only">Witness contradiction matrix comparing statements and discrepancies</caption>
                 <thead>
                   <tr className="border-b border-zinc-700 text-left text-zinc-400">
-                    <th className="pb-2 pr-4">Witness A</th>
-                    <th className="pb-2 pr-4">Says</th>
-                    <th className="pb-2 pr-4">Witness B</th>
-                    <th className="pb-2 pr-4">Says</th>
-                    <th className="pb-2">Discrepancy</th>
+                    <th scope="col" className="pb-2 pr-4">Witness A</th>
+                    <th scope="col" className="pb-2 pr-4">Says</th>
+                    <th scope="col" className="pb-2 pr-4">Witness B</th>
+                    <th scope="col" className="pb-2 pr-4">Says</th>
+                    <th scope="col" className="pb-2">Discrepancy</th>
                   </tr>
                 </thead>
                 <tbody className="text-zinc-300">
@@ -596,11 +597,12 @@ export default function SampleXRayPage() {
               {/* Category rows */}
               <div className="mt-6 overflow-x-auto">
                 <table className="w-full text-sm">
+                  <caption className="sr-only">Discovery health grades by document category</caption>
                   <thead>
                     <tr className="border-b border-zinc-700 text-left text-zinc-400">
-                      <th className="pb-2 pr-4">Category</th>
-                      <th className="pb-2 pr-4">Grade</th>
-                      <th className="pb-2">Status</th>
+                      <th scope="col" className="pb-2 pr-4">Category</th>
+                      <th scope="col" className="pb-2 pr-4">Grade</th>
+                      <th scope="col" className="pb-2">Status</th>
                     </tr>
                   </thead>
                   <tbody className="text-zinc-300">

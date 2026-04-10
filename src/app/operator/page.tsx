@@ -157,7 +157,7 @@ function HomeContent() {
   // ----- Loading state -----
   if (loading && !m) {
     return (
-      <div className="p-8">
+      <div className="p-8" role="status">
         <p className="text-zinc-400 text-sm">Loading dashboard...</p>
       </div>
     );
@@ -255,13 +255,14 @@ function HomeContent() {
         ) : (
           <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
+              <caption className="sr-only">Failed processing jobs requiring attention</caption>
               <thead>
                 <tr className="border-b border-zinc-500 text-left text-xs text-zinc-400 uppercase tracking-wider">
-                  <th className="px-4 py-3">Job Type</th>
-                  <th className="px-4 py-3">Case</th>
-                  <th className="px-4 py-3">Error</th>
-                  <th className="px-4 py-3">Retries</th>
-                  <th className="px-4 py-3 text-right">Action</th>
+                  <th scope="col" className="px-4 py-3">Job Type</th>
+                  <th scope="col" className="px-4 py-3">Case</th>
+                  <th scope="col" className="px-4 py-3">Error</th>
+                  <th scope="col" className="px-4 py-3">Retries</th>
+                  <th scope="col" className="px-4 py-3 text-right">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -314,14 +315,15 @@ function HomeContent() {
         ) : (
           <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 overflow-hidden">
             <table className="w-full text-sm">
+              <caption className="sr-only">Open operator tasks by priority</caption>
               <thead>
                 <tr className="border-b border-zinc-500 text-left text-xs text-zinc-400 uppercase tracking-wider">
-                  <th className="px-4 py-3">Priority</th>
-                  <th className="px-4 py-3">Title</th>
-                  <th className="px-4 py-3">Type</th>
-                  <th className="px-4 py-3">Case</th>
-                  <th className="px-4 py-3">Due</th>
-                  <th className="px-4 py-3">Status</th>
+                  <th scope="col" className="px-4 py-3">Priority</th>
+                  <th scope="col" className="px-4 py-3">Title</th>
+                  <th scope="col" className="px-4 py-3">Type</th>
+                  <th scope="col" className="px-4 py-3">Case</th>
+                  <th scope="col" className="px-4 py-3">Due</th>
+                  <th scope="col" className="px-4 py-3">Status</th>
                 </tr>
               </thead>
               <tbody>

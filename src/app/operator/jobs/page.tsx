@@ -218,6 +218,7 @@ function JobsContent() {
             value={caseIdInput}
             onChange={(e) => setCaseIdInput(e.target.value)}
             placeholder="Filter by Case ID..."
+            aria-label="Filter by case ID"
             className="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-sm text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none w-64"
           />
           <button
@@ -243,18 +244,19 @@ function JobsContent() {
           </div>
         ) : (
           <table className="w-full text-sm">
+            <caption className="sr-only">Processing job queue with status and progress</caption>
             <thead>
               <tr className="border-b border-zinc-500 text-left text-xs text-zinc-400 uppercase tracking-wider">
-                <th className="px-4 py-3">Type</th>
-                <th className="px-4 py-3">Case</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3">Progress</th>
-                <th className="px-4 py-3 text-right">Items</th>
-                <th className="px-4 py-3">Retries</th>
-                <th className="px-4 py-3">Worker</th>
-                <th className="px-4 py-3">Started</th>
-                <th className="px-4 py-3">Error</th>
-                <th className="px-4 py-3 text-right">Action</th>
+                <th scope="col" className="px-4 py-3">Type</th>
+                <th scope="col" className="px-4 py-3">Case</th>
+                <th scope="col" className="px-4 py-3">Status</th>
+                <th scope="col" className="px-4 py-3">Progress</th>
+                <th scope="col" className="px-4 py-3 text-right">Items</th>
+                <th scope="col" className="px-4 py-3">Retries</th>
+                <th scope="col" className="px-4 py-3">Worker</th>
+                <th scope="col" className="px-4 py-3">Started</th>
+                <th scope="col" className="px-4 py-3">Error</th>
+                <th scope="col" className="px-4 py-3 text-right">Action</th>
               </tr>
             </thead>
             <tbody>

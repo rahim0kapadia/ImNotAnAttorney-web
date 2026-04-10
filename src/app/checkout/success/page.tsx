@@ -766,7 +766,7 @@ export default function CheckoutSuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="flex min-h-[60vh] items-center justify-center" role="status">
           <p className="text-zinc-400">Loading...</p>
         </div>
       }

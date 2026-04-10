@@ -49,7 +49,12 @@ export async function POST(req: NextRequest) {
     const { limited } = await checkRateLimit(supabaseRL, `finalize:${ip}`, 10, 300);
     if (limited) return NextResponse.json({ error: "Too many requests" }, { status: 429 });
 
-    const body = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    }
     const { caseId, email } = body;
 
     if (!caseId) {

@@ -294,7 +294,7 @@ export default function OfficerBackgroundCheckPage() {
           </p>
 
           <p className="mt-3 text-sm text-zinc-400">
-            Reliability analysis built from CourtListener&rsquo;s open court records API, cross-referencing officer appearances across cases, suppression motion outcomes, and testimony challenge patterns. Computed from verified judicial records &mdash; not estimated, not AI-generated.
+            Reliability analysis built from CourtListener&rsquo;s open court records API, cross-referencing officer appearances across cases, suppression motion outcomes, and testimony challenge patterns. Computed from verified judicial records &mdash; not estimated, not fabricated.
           </p>
 
           <div className="mt-8">

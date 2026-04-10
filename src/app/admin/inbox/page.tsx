@@ -176,7 +176,7 @@ function InboxContent() {
             Enter password to continue
           </p>
           {error && (
-            <div className="mb-4 rounded-lg border border-red-800 bg-red-900/20 p-3 text-sm text-red-400">
+            <div role="alert" className="mb-4 rounded-lg border border-red-800 bg-red-900/20 p-3 text-sm text-red-400">
               {error}
             </div>
           )}
@@ -186,6 +186,7 @@ function InboxContent() {
             onChange={(e) => setSecretInput(e.target.value)}
             placeholder="Password"
             aria-label="Admin inbox password"
+            aria-invalid={!!error}
             className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none"
             autoFocus
           />
@@ -251,7 +252,7 @@ function InboxContent() {
         </div>
 
         {error && (
-          <div className="mb-4 rounded-lg border border-red-800 bg-red-900/20 p-4 text-sm text-red-400">
+          <div role="alert" className="mb-4 rounded-lg border border-red-800 bg-red-900/20 p-4 text-sm text-red-400">
             {error}
           </div>
         )}
@@ -260,7 +261,7 @@ function InboxContent() {
           {/* Email list */}
           <div className="space-y-1">
             {loading && emails.length === 0 ? (
-              <p className="text-zinc-400 text-sm">Loading...</p>
+              <p className="text-zinc-400 text-sm" role="status">Loading...</p>
             ) : emails.length === 0 ? (
               <p className="text-zinc-400 text-sm">No emails yet.</p>
             ) : (
@@ -387,6 +388,7 @@ function InboxContent() {
                       value={replyText}
                       onChange={(e) => setReplyText(e.target.value)}
                       placeholder="Type your reply..."
+                      aria-label="Reply message"
                       rows={6}
                       className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none resize-y"
                       autoFocus
@@ -487,7 +489,7 @@ export default function InboxPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <div className="min-h-screen bg-zinc-950 flex items-center justify-center" role="status">
           <p className="text-zinc-400">Loading...</p>
         </div>
       }

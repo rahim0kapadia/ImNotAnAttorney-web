@@ -175,12 +175,13 @@ export default function SamplePage() {
             </p>
             <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Defense milestone assessment table">
               <table className="w-full text-sm">
+                <caption className="sr-only">Defense milestone assessment showing areas, observations, and priority questions</caption>
                 <thead>
                   <tr className="border-b border-zinc-700 text-left text-zinc-400">
-                    <th className="pb-2 pr-4">Area</th>
-                    <th className="pb-2 pr-4">What You Told Us</th>
-                    <th className="pb-2 pr-4">What to Ask About</th>
-                    <th className="pb-2">Priority Qs</th>
+                    <th scope="col" className="pb-2 pr-4">Area</th>
+                    <th scope="col" className="pb-2 pr-4">What You Told Us</th>
+                    <th scope="col" className="pb-2 pr-4">What to Ask About</th>
+                    <th scope="col" className="pb-2">Priority Qs</th>
                   </tr>
                 </thead>
                 <tbody className="text-zinc-300">
@@ -302,11 +303,12 @@ export default function SamplePage() {
                   What the prosecution must prove (elements):
                 </p>
                 <table className="mt-2 w-full text-sm">
+                  <caption className="sr-only">Prosecution elements with plain English explanation and attorney questions</caption>
                   <thead>
                     <tr className="border-b border-zinc-700 text-left text-zinc-400">
-                      <th className="pb-2 pr-4">Element</th>
-                      <th className="pb-2 pr-4">Plain English</th>
-                      <th className="pb-2">Question for Your Attorney</th>
+                      <th scope="col" className="pb-2 pr-4">Element</th>
+                      <th scope="col" className="pb-2 pr-4">Plain English</th>
+                      <th scope="col" className="pb-2">Question for Your Attorney</th>
                     </tr>
                   </thead>
                   <tbody className="text-zinc-300">
@@ -606,11 +608,12 @@ export default function SamplePage() {
 
             <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="7-day action plan table">
               <table className="w-full text-sm">
+                <caption className="sr-only">7-day action plan with daily steps and notes</caption>
                 <thead>
                   <tr className="border-b border-zinc-700 text-left text-zinc-400">
-                    <th className="pb-2 pr-4">Day</th>
-                    <th className="pb-2 pr-4">Action</th>
-                    <th className="pb-2">Note</th>
+                    <th scope="col" className="pb-2 pr-4">Day</th>
+                    <th scope="col" className="pb-2 pr-4">Action</th>
+                    <th scope="col" className="pb-2">Note</th>
                   </tr>
                 </thead>
                 <tbody className="text-zinc-300">

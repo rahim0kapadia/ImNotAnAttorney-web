@@ -73,7 +73,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
   // Loading state
   if (checking) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center" role="status">
         <p className="text-zinc-400 text-sm">Loading...</p>
       </div>
     );
@@ -91,7 +91,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
             Enter password to continue
           </p>
           {error && (
-            <div className="mb-4 rounded-lg border border-red-800 bg-red-900/20 p-3 text-sm text-red-400">
+            <div role="alert" className="mb-4 rounded-lg border border-red-800 bg-red-900/20 p-3 text-sm text-red-400">
               {error}
             </div>
           )}
@@ -101,6 +101,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
             onChange={(e) => setPasswordInput(e.target.value)}
             placeholder="Password"
             aria-label="Operator dashboard password"
+            aria-invalid={!!error}
             className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none"
             autoFocus
           />

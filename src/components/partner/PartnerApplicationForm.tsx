@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface PartnerApplicationFormProps {
   source: string;
@@ -40,9 +40,14 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
     }
   }
 
+  const successRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (submitted) successRef.current?.focus();
+  }, [submitted]);
+
   if (submitted) {
     return (
-      <div className="text-center bg-green-900/30 border border-green-700 rounded-xl p-8">
+      <div ref={successRef} tabIndex={-1} className="text-center bg-green-900/30 border border-green-700 rounded-xl p-8">
         <p className="text-green-300 text-xl font-bold mb-2">Application Submitted</p>
         <p className="text-zinc-400">
           We&apos;ll review your application and email you within 24 hours
@@ -55,7 +60,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
-        <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg">
+        <div role="alert" className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg">
           {error}
         </div>
       )}
@@ -68,6 +73,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            aria-invalid={!!error}
             className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           />
         </div>
@@ -89,6 +95,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            aria-invalid={!!error}
             className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           />
         </div>
