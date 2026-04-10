@@ -1,0 +1,32 @@
+import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+);
+
+export const revalidate = 60; // Cache for 60 seconds
+
+export async function GET() {
+  const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
+  const monthKey = `scholarships_${currentMonth}`;
+
+  const { data: rows } = await supabase
+    .from('counters')
+    .select('key, value')
+    .in('key', ['scholarships_total', 'scholarships_fulfilled', monthKey]);
+
+  const counters = Object.fromEntries((rows ?? []).map((r) => [r.key, Number(r.value)]));
+
+  const total = counters['scholarships_total'] ?? 0;
+  const fulfilled = counters['scholarships_fulfilled'] ?? 0;
+
+  return NextResponse.json({
+    total,
+    fulfilled,
+    waitlist: Math.max(0, total - fulfilled), // Transparent waitlist — spec sub-task 7
+    month: counters[monthKey] ?? 0,
+    monthLabel: new Date().toLocaleString('en-US', { month: 'long', year: 'numeric' }),
+  });
+}
