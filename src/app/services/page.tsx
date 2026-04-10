@@ -108,7 +108,7 @@ const caseTypes = [
         desc: "We analyze every page of your text-based discovery — police reports, lab results, court filings, and spreadsheets — and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each one shows what a good answer looks like — and what a red flag looks like.",
         capabilities: [
           "Judge research — how this judge has ruled on motions like yours, when public court records are available",
-          "A prioritized list of motions your attorney could file, with filing deadlines",
+          "Motion types that may apply to your case, with general filing deadline windows",
           "Discovery Strength Rating + Prosecution Weakness Analysis",
         ],
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
@@ -121,7 +121,7 @@ const caseTypes = [
         desc: "Everything in the X-Ray, plus a full research operation for the life of your case. Weekly updates. Evidence-chain audit. Each witness ranked across 7 trust factors.",
         capabilities: [
           "Judge research with language patterns this judge has responded to in written orders",
-          "A full motion strategy — which motions to file first, in what order",
+          "Questions about motion types, timing, and sequencing for your attorney",
           "Cross-examination question libraries keyed to findings in your discovery",
           "Witness analysis for up to 8 prosecution witnesses",
         ],
@@ -173,7 +173,7 @@ const caseTypes = [
         desc: "We analyze every page of your text-based discovery — police reports, lab results, and court filings — and flag what doesn't add up. Breathalyzer calibration logs. Field sobriety test compliance. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
         capabilities: [
           "Judge research — how this judge has ruled on motions like yours, when public court records are available",
-          "A prioritized list of motions your attorney could file, with filing deadlines",
+          "Motion types that may apply to your case, with general filing deadline windows",
           "Discovery Strength Rating + Prosecution Weakness Analysis",
         ],
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
@@ -186,7 +186,7 @@ const caseTypes = [
         desc: "Everything in the X-Ray, plus a full research operation until your case resolves. Weekly updates. Evidence-chain audit. Each witness ranked across 7 trust factors.",
         capabilities: [
           "Judge research with language patterns this judge has responded to in written orders",
-          "A full motion strategy — which motions to file first, in what order",
+          "Questions about motion types, timing, and sequencing for your attorney",
           "Cross-examination question libraries keyed to findings in your discovery",
           "Expert witness challenge research (breath instrument, blood draw, SFST instructor)",
         ],
@@ -213,7 +213,7 @@ const caseTypes = [
     title: "White Collar",
     subtitle: "Fraud, embezzlement, federal charges",
     description:
-      "Federal cases are a different game. We review your constitutional rights arguments, jury selection factors, and complex charge structures. Our approaches come from attorneys who have handled the highest-profile federal cases — helping you understand the charges and evaluate every strategic decision.",
+      "Federal cases are a different game. We review your constitutional rights arguments, jury selection factors, and complex charge structures. Our approaches come from attorneys who have handled the highest-profile federal cases — helping you understand the charges and the factors involved in each strategic decision.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
@@ -238,7 +238,7 @@ const caseTypes = [
         desc: "We analyze every page of your text-based discovery — financial records, court filings, and spreadsheets — and flag what doesn't add up. Missing exhibits. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
         capabilities: [
           "Judge research — how this judge has ruled on motions like yours, when public court records are available",
-          "A prioritized list of motions your attorney could file, with filing deadlines",
+          "Motion types that may apply to your case, with general filing deadline windows",
           "Discovery Strength Rating + Prosecution Weakness Analysis",
         ],
         discovery: TIER_CORE["x-ray"].requiresDiscovery,
@@ -251,7 +251,7 @@ const caseTypes = [
         desc: "Everything in the X-Ray, plus a full research operation for the life of your case. Federal prosecutor profile. Cooperator analysis. Deep dive into your sentencing guidelines. Weekly updates. Evidence-chain audit. Each witness ranked across 7 trust factors.",
         capabilities: [
           "Judge research with language patterns this judge has responded to in written orders",
-          "A full motion strategy — which motions to file first, in what order",
+          "Questions about motion types, timing, and sequencing for your attorney",
           "Cross-examination question libraries keyed to findings in your discovery",
           "Cooperator and expert witness background research",
         ],
@@ -894,7 +894,7 @@ export default function ServicesPage() {
               <div className="rounded-lg border border-zinc-500 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Discovery Guarantee</p>
                 <p className="text-sm text-zinc-400">
-                  Every piece of discovery we have analyzed has contained at least one discrepancy, gap, or constitutional vulnerability. Every single one. That is not marketing language — it is the nature of police work and prosecutorial preparation. If we analyze your discovery documents and do not identify at least one concrete issue your attorney can act on — a contradiction, a chain of custody gap, a constitutional question, a missing piece of evidence that should be there — you get every dollar back. No forms. No phone calls. No waiting. Just email us and it&apos;s done.
+                  Every piece of discovery we have analyzed has contained at least one discrepancy, gap, or constitutional vulnerability. Every single one. That is not marketing language — it is the nature of police work and prosecutorial preparation. If we analyze your discovery documents and do not identify at least one concrete issue your attorney hasn't raised — a contradiction, a chain of custody gap, a constitutional question, a missing piece of evidence that should be there — you get every dollar back. No forms. No phone calls. No waiting. Just email us and it&apos;s done.
                 </p>
               </div>
               <div className="rounded-lg border border-zinc-500 bg-zinc-950/50 p-5">

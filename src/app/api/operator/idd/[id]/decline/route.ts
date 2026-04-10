@@ -30,20 +30,25 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
 
   const supabase = createAdminClient();
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("idd_applications")
     .update({
       status: "declined",
-      decline_reason: body.reason || null,
+      decline_reason: typeof body.reason === 'string' ? body.reason.slice(0, 2000) : null,
       reviewed_at: new Date().toISOString(),
       reviewed_by: "operator",
     })
     .eq("id", id)
-    .eq("status", "pending");
+    .in("status", ["pending", "waitlisted"])
+    .select("id");
 
   if (error) {
     console.error("[Operator/IDD/Decline] Update failed:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to decline application" }, { status: 500 });
+  }
+
+  if (!data || data.length === 0) {
+    return NextResponse.json({ error: "Application was already processed" }, { status: 409 });
   }
 
   return NextResponse.json({ status: "declined" });

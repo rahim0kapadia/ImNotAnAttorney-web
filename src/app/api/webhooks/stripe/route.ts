@@ -352,23 +352,10 @@ export async function POST(req: NextRequest) {
           await supabase.rpc("increment_counter", { counter_key: "scholarships_total", amount: scholarshipCount });
           await supabase.rpc("increment_counter", { counter_key: monthKey, amount: scholarshipCount });
         } else if (isPlaybookPurchase(tier)) {
-          // Playbook purchase: add half-credit, roll over if >= 2
+          // Playbook purchase: add half-credit, then atomically roll over if >= 2
           await supabase.rpc("increment_counter", { counter_key: "scholarship_half_credits", amount: PLAYBOOK_HALF_CREDITS });
-
-          // Check if half-credits reached 2 (= 1 full scholarship)
-          const { data: halfRow } = await supabase
-            .from("counters")
-            .select("value")
-            .eq("key", "scholarship_half_credits")
-            .single();
-
-          const halves = Number(halfRow?.value ?? 0);
-          if (halves >= 2) {
-            // Roll over: subtract 2 half-credits, add 1 scholarship
-            await supabase.rpc("increment_counter", { counter_key: "scholarship_half_credits", amount: -2 });
-            await supabase.rpc("increment_counter", { counter_key: "scholarships_total", amount: 1 });
-            await supabase.rpc("increment_counter", { counter_key: monthKey, amount: 1 });
-          }
+          // Atomic rollover: locks row, checks >= 2, grants scholarships, updates counters
+          await supabase.rpc("rollover_scholarship_half_credits", { month_key: monthKey });
         }
       } catch (scholarshipErr) {
         // Log but do not bubble — a counter failure must not block order processing

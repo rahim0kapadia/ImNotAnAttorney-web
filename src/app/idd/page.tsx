@@ -49,15 +49,15 @@ export default function IddPage() {
         Every paying customer funds scholarships. This program runs on cross-subsidy, not donations.
       </p>
 
-      <div className="mt-8">
-        <h2 className="text-lg font-semibold text-white">Apply</h2>
+      <section aria-labelledby="apply-heading" className="mt-8">
+        <h2 id="apply-heading" className="text-lg font-semibold text-white">Apply</h2>
         <p className="mt-1 text-sm text-zinc-400">
           You qualify if any one of the conditions below applies to you.
         </p>
         <div className="mt-6">
           <IddApplicationForm />
         </div>
-      </div>
+      </section>
 
       <section aria-labelledby="faq-heading" className="mt-16 space-y-6">
         <h2 id="faq-heading" className="text-lg font-semibold text-white">Common Questions</h2>
@@ -65,7 +65,7 @@ export default function IddPage() {
           <h3 className="font-medium text-zinc-100">What research will I receive?</h3>
           <p className="mt-1 text-sm text-zinc-300">
             The same standalone research products our paying customers receive. Which specific
-            product depends on your situation — our team will match you with the most useful analysis.
+            product depends on your charge type and situation.
           </p>
         </div>
         <div>

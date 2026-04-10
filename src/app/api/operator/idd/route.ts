@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
 
   if (error) {
     console.error("[Operator/IDD] List failed:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch applications" }, { status: 500 });
   }
 
   return NextResponse.json({ applications: data ?? [] });

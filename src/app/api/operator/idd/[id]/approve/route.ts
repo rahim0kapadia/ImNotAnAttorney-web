@@ -14,6 +14,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/auth/guards";
 import { getProduct } from "@/lib/products";
+import { PRODUCT_MATRIX } from "@/lib/product-matrix";
 import { sendEmailWithOperatorAlert, escapeHtml } from "@/lib/email";
 import { randomUUID } from "crypto";
 
@@ -40,6 +41,11 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
   const product = getProduct(productSlug);
   if (!product) {
     return NextResponse.json({ error: `Unknown product: ${productSlug}` }, { status: 400 });
+  }
+
+  const matrixEntry = PRODUCT_MATRIX[productSlug];
+  if (!matrixEntry?.iddEligible) {
+    return NextResponse.json({ error: `Product ${productSlug} is not eligible for IDD scholarships` }, { status: 400 });
   }
 
   const supabase = createAdminClient();
@@ -83,8 +89,8 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
     return NextResponse.json({ error: "Failed to create order" }, { status: 500 });
   }
 
-  // Link order to application + mark approved
-  const { error: updateErr } = await supabase
+  // Link order to application + mark approved (atomic status guard prevents double-approve)
+  const { data: updated, error: updateErr } = await supabase
     .from("idd_applications")
     .update({
       status: "approved",
@@ -93,16 +99,23 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
       reviewed_at: new Date().toISOString(),
       reviewed_by: "operator",
     })
-    .eq("id", id);
+    .eq("id", id)
+    .in("status", ["pending", "waitlisted"])
+    .select("id");
 
-  if (updateErr) {
-    // Order was created — log but don't fail. Operator can manually link.
+  if (updateErr || !updated || updated.length === 0) {
+    // Race condition: another operator already approved/declined. Clean up orphan order.
     console.error(
-      "[Operator/IDD/Approve] Application update failed — order created:",
+      "[Operator/IDD/Approve] Application update failed (likely race) — cleaning up order:",
       order.id,
       "app:",
       id,
       updateErr
+    );
+    await supabase.from("orders").delete().eq("id", order.id);
+    return NextResponse.json(
+      { error: "Application was already processed by another operator" },
+      { status: 409 }
     );
   }
 

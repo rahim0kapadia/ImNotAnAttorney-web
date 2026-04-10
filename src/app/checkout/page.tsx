@@ -102,7 +102,7 @@ function StandaloneCheckout({
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-16">
+    <div className="mx-auto max-w-2xl px-4 py-16">
       <h1 className="text-3xl font-bold text-white">{product.name}</h1>
       <p className="mt-2 text-lg text-amber-400">{product.priceDisplay}</p>
       <p className="mt-4 text-zinc-300">{product.description}</p>
@@ -157,7 +157,7 @@ function StandaloneCheckout({
       <p className="mt-6 text-xs text-zinc-400">
         This report provides legal INFORMATION — not legal ADVICE. Your attorney remains the final authority on strategy decisions.
       </p>
-    </main>
+    </div>
   );
 }
 
@@ -551,7 +551,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Next Court Date Prep — hearing-specific preparation for your next appearance",
       "Your Rights in [State] — jurisdiction-specific rights reference",
       "Realistic Outcome Map — sentencing outcomes from similar cases in your jurisdiction",
-      "Defense Theory Landscape — viable defense strategies applicable to your charges",
+      "Defense Theory Landscape — known defense approaches for your charge type",
       "Prosecution Pressure Tactics Decoder — common pressure tactics and how to recognize them",
       "8-Domain Life Impact Map — immigration, employment, housing, family, financial, licensing, civil rights, future legal",
     ],
@@ -594,7 +594,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Prosecutor Research Profile — prosecution track record and strategy patterns",
     ],
     guarantee:
-      "Three Guarantees: (1) The Discovery Guarantee — if we don't find at least one concrete issue your attorney can act on, every dollar back. (2) The Attorney Meeting Guarantee — if your attorney says there's nothing there, we add a second round at no charge. (3) The Delivery Commitment — delivered within 10 business days or 20% refund automatic; past 15 days, full refund.",
+      "Three Guarantees: (1) The Discovery Guarantee — if we don't find at least one concrete discrepancy, gap, or question your attorney hasn't raised, every dollar back. (2) The Attorney Meeting Guarantee — if your attorney says there's nothing there, we add a second round at no charge. (3) The Delivery Commitment — delivered within 10 business days or 20% refund automatic; past 15 days, full refund.",
     story: "In one trafficking case, we found a 73% weight discrepancy, a CI dual attribution, a drug type mismatch, and 21 unmatched fingerprints — all in one discovery file the attorney had never fully reviewed. Discovery volumes routinely exceed what any single attorney can manually cross-reference — our systematic approach surfaces what manual review naturally misses. That's what a full X-Ray uncovers.",
     validation:
       "The most thorough analysis available without a multi-week engagement. Full discovery, full picture.",
@@ -626,7 +626,7 @@ const TIER_INFO: Record<string, TierInfo> = {
       "Witness analysis (up to 8)",
       "Questions about motion timing for your attorney",
       "Case law reference package",
-      "Research-based questions about case strategy for your attorney",
+      "Research-based questions about your case for your attorney",
       "Attorney delivery package",
       "Weekly updates for duration of case",
       "Evidence Chain Audit — was the evidence handled properly? Every piece traced, custody gaps flagged",
@@ -867,7 +867,8 @@ function CheckoutContent() {
             Buying this for someone you love? Everything works the same — the questions, the templates, the action plan. You&apos;re giving them a real advantage.
           </p>
           {info.isDigitalProduct ? (
-            <div className="mt-4 space-y-2">
+            <fieldset className="mt-4 space-y-2">
+              <legend className="sr-only">Payment option</legend>
               <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:border-zinc-500 has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/5">
                 <input
                   type="radio"
@@ -892,7 +893,7 @@ function CheckoutContent() {
                   <span className="text-sm font-semibold text-white">2 monthly payments of ${(info.priceNum / 2).toFixed(2)}</span>
                 </div>
               </label>
-            </div>
+            </fieldset>
           ) : (
             <div className="mt-2 flex items-baseline gap-2">
               <span className="text-4xl font-bold text-amber-400">
@@ -1253,6 +1254,7 @@ function CheckoutContent() {
           <button
             onClick={handleCheckout}
             disabled={loading || !email || (!info.isDigitalProduct && !consentChecked)}
+            aria-busy={loading}
             className="mt-4 w-full rounded-lg bg-amber-500 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? (

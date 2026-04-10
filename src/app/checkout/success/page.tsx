@@ -279,7 +279,7 @@ function SuccessContent() {
 
   if (verified === null) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center px-4">
+      <div className="flex min-h-[60vh] items-center justify-center px-4" role="status">
         <div className="text-center">
           <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-amber-500 border-t-transparent" />
           <p className="text-zinc-400">Confirming your payment...</p>
@@ -292,7 +292,7 @@ function SuccessContent() {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
         <div className="max-w-lg text-center">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10 text-3xl text-red-400" aria-label="Error">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10 text-3xl text-red-400" role="img" aria-label="Error">
             &#10007;
           </div>
           <h1 className="text-2xl font-bold text-white">Payment Not Confirmed</h1>
@@ -326,7 +326,7 @@ function SuccessContent() {
     <div className="flex min-h-[60vh] items-center justify-center px-4">
       <FadeInUp>
       <div className="max-w-lg text-center">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10 text-3xl text-amber-400" aria-label="Success">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10 text-3xl text-amber-400" role="img" aria-label="Success">
           &#10003;
         </div>
 

@@ -14,10 +14,10 @@ export async function GET() {
 
   const { data: rows } = await supabase
     .from('counters')
-    .select('key, value')
-    .in('key', ['scholarships_total', 'scholarships_fulfilled', monthKey]);
+    .select('id, value')
+    .in('id', ['scholarships_total', 'scholarships_fulfilled', monthKey]);
 
-  const counters = Object.fromEntries((rows ?? []).map((r) => [r.key, Number(r.value)]));
+  const counters = Object.fromEntries((rows ?? []).map((r) => [r.id, Number(r.value)]));
 
   const total = counters['scholarships_total'] ?? 0;
   const fulfilled = counters['scholarships_fulfilled'] ?? 0;
