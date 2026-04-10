@@ -34,7 +34,7 @@ import { PricingTable } from "@/components/PricingTable";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
-import { AnimatedCounter } from "@/components/motion/AnimatedCounter";
+import { ScholarshipCounter } from "@/components/ScholarshipCounter";
 import { TrustBadges } from "@/components/TrustBadges";
 import { TestimonialSection } from "@/components/TestimonialSection";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
@@ -726,6 +726,7 @@ export default function Home() {
           <p className="mt-2 text-center text-sm text-zinc-400">
             Start at {TIER_CORE["case-decoder"].priceDisplay} &mdash; upgrade anytime with full credit.
           </p>
+          <ScholarshipCounter className="mb-8" />
           <FadeInUp>
             <div className="mt-12">
               <PricingTable maxTiers={3} />

@@ -36,6 +36,7 @@ import { LeadCapture } from "@/components/LeadCapture";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { TrustBadges } from "@/components/TrustBadges";
+import { TierBundleValue } from "@/components/TierBundleValue";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
@@ -726,6 +727,7 @@ export default function ServicesPage() {
                     </span>
                   </div>
                   <p className="mt-2 flex-1 text-sm text-zinc-400">{tier.desc}</p>
+                  <TierBundleValue tierSlug={tier.slug} className="mt-4" />
                   <Link
                     href={`/checkout?tier=${tier.slug}`}
                     className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
@@ -796,6 +798,7 @@ export default function ServicesPage() {
                       Includes Case Decoder + Intelligence Brief + X-Ray — everything in one package
                     </p>
                   )}
+                  <TierBundleValue tierSlug={tier.slug} className="mt-4" />
                   <Link
                     href={`/checkout?tier=${tier.slug}`}
                     className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
@@ -856,6 +859,7 @@ export default function ServicesPage() {
                     Requires discovery documents
                   </p>
                 )}
+                <TierBundleValue tierSlug={ct.tiers[4].slug} className="mt-4" />
                 <Link
                   href="/intake?interest=situation-room"
                   className="mt-4 block rounded-lg border border-zinc-700 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
