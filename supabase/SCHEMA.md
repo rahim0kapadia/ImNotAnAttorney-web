@@ -661,6 +661,157 @@ Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):
 | `idx_subscribers_email` | subscribers(email) UNIQUE | Dedup lookups |
 | `idx_drip_dedup` | drip_emails(subscriber_id, email_key) UNIQUE | Prevent duplicate sends |
 
+### External Intelligence Layer (Phase 1 — migration 20260411f)
+
+#### `officer_external_intel`
+Brady/Giglio + National Police Index data for officers. Populated by `ingest-brady-giglio.mjs` and `ingest-npi.mjs`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| officer_name | text | Original name |
+| officer_name_normalized | text | Lowercase, alpha-only (trgm indexed) |
+| state | text | 2-letter state code |
+| agency | text | Law enforcement agency |
+| brady_status | text | 'listed' or null |
+| brady_reason | text | Reason for Brady disclosure |
+| giglio_letter_date | date | Date of Giglio letter |
+| npi_employment_history | jsonb | Agency employment timeline |
+| npi_is_wandering_officer | boolean | Employed by 2+ agencies |
+| decertified | boolean | POST decertification flag |
+| complaint_count | integer | Total complaints |
+| use_of_force_count | integer | UOF incidents |
+| sustained_complaints | integer | Sustained complaint count |
+| credibility_risk_score | integer | Computed risk score |
+| source_urls | text[] | Verification URLs (required) |
+| sources | text[] | Source names |
+| **UNIQUE** | (officer_name_normalized, state, agency) | |
+
+#### `judge_sentencing_patterns`
+USSC sentencing data aggregated by district. Populated by `ingest-ussc-sentencing.mjs`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| judge_name | text | District name (USSC is anonymized) |
+| judge_name_normalized | text | Lowercase (trgm indexed) |
+| district | text | Federal district |
+| state | text | State code |
+| total_cases | integer | Case count |
+| median_sentence_months | numeric | Median sentence |
+| mean_sentence_months | numeric | Mean sentence |
+| p25_sentence_months | numeric | 25th percentile |
+| p75_sentence_months | numeric | 75th percentile |
+| downward_departure_rate | numeric | Below-guideline rate |
+| upward_departure_rate | numeric | Above-guideline rate |
+| substantial_assistance_rate | numeric | 5K1.1 rate |
+| offense_breakdown | jsonb | Offense type distribution |
+| criminal_history_breakdown | jsonb | Criminal history categories |
+| retention_elections | jsonb | Retention election data |
+| aba_rating | text | ABA rating |
+| source_urls | text[] | Verification URLs (required) |
+| data_period | text | e.g. 'FY2024' |
+| **UNIQUE** | (judge_name_normalized, district) | |
+
+#### `prosecution_profiles`
+Prosecution office statistics. Deferred to Phase 2 (no free national dataset).
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| office_name | text | Prosecutor's office |
+| office_type | text | Type (SA, DA, USAO) |
+| state | text | State code |
+| conviction_rate | numeric | Overall conviction rate |
+| plea_rate | numeric | Plea bargain rate |
+| trial_rate | numeric | Trial rate |
+| source_urls | text[] | Verification URLs (required) |
+| **UNIQUE** | (office_name, state) | |
+
+#### `outcome_benchmarks`
+National/state outcome statistics by offense type. Populated by `ingest-bjs-outcomes.mjs`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| jurisdiction_level | text | 'national' or 'state' |
+| jurisdiction_name | text | State name or 'United States' |
+| offense_type | text | Offense category |
+| total_cases | integer | Case count |
+| conviction_rate | numeric | Overall conviction rate |
+| plea_trial_penalty_pct | numeric | Sentence premium for going to trial |
+| median_sentence_months | numeric | Median sentence |
+| source_urls | text[] | Verification URLs (required) |
+| data_period | text | Dataset year |
+| **UNIQUE** | (jurisdiction_level, jurisdiction_name, offense_type) | |
+
+#### `exoneration_patterns`
+Exoneration statistics by offense type. Populated by `ingest-exoneration-registry.mjs`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| offense_type | text | Crime category |
+| total_exonerations | integer | Count |
+| false_confession_pct | numeric | FC contributing factor % |
+| mistaken_id_pct | numeric | MWID contributing factor % |
+| official_misconduct_pct | numeric | OM contributing factor % |
+| forensic_error_pct | numeric | F/MFE contributing factor % |
+| avg_years_served | numeric | Average years wrongfully served |
+| top_factor | text | Highest contributing factor name |
+| top_factor_pct | numeric | Highest factor % |
+| source_urls | text[] | Verification URLs (required) |
+| **UNIQUE** | (offense_type) | |
+
+#### `forensic_lab_profiles`
+Forensic lab accreditation/quality data. Deferred to Phase 2 (state-by-state FOIA).
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| lab_name | text | Lab name |
+| state | text | State code |
+| accreditation_status | text | Current status |
+| known_issues | jsonb | Documented problems |
+| source_urls | text[] | Verification URLs (required) |
+| **UNIQUE** | (lab_name, state) | |
+
+#### `citation_authority`
+Opinion authority scores from CourtListener citation depth analysis. Populated by `enrich-cl-citation-depth.mjs`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| cluster_id | text (PK) | CourtListener cluster ID |
+| case_name | text | Case name |
+| total_citing_opinions | integer | How many opinions cite this one |
+| authority_score | numeric | Computed 0-100 authority score |
+| source_urls | text[] | Verification URLs (required) |
+
+#### `data_source_freshness`
+Tracks ingestion recency for all external data sources.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| source_key | text (PK) | e.g. 'brady_giglio_list' |
+| source_name | text | Human-readable name |
+| source_url | text | Download/API URL |
+| last_ingested_at | timestamptz | Last successful ingest |
+| last_row_count | integer | Rows from last ingest |
+| staleness_threshold_days | integer | Days before flagged stale |
+| is_stale | boolean | Auto-computed flag |
+
+#### `co_defendant_analysis`
+Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| primary_case_id | text | Primary case cluster ID |
+| co_defendant_case_id | text | Co-defendant case cluster ID |
+| outcome_diff | text | Outcome divergence description |
+| divergence_factors | jsonb | Contributing factors |
+| source_urls | text[] | Verification URLs |
+
 ## Triggers
 
 - `update_cases_updated_at` — Auto-sets `updated_at = now()` on every cases row update
