@@ -34,19 +34,39 @@ export async function GET(req: NextRequest) {
   const supabase = createAdminClient();
 
   try {
-    // ── Select top-priority content gaps ──
-    const { data: gaps, error: gapsError } = await supabase
+    // ── Select hub gaps first (charge-type articles take priority) ──
+    const { data: hubGaps, error: hubError } = await supabase
       .from("content_gaps")
-      .select("id, charge_type_slug, pain_point_slug, gap_score, demand_quadrant, suggested_title, suggested_keywords")
+      .select("id, charge_type_slug, pain_point_slug, gap_score, demand_quadrant, suggested_title, suggested_keywords, article_type")
       .eq("status", "identified")
+      .eq("article_type", "hub")
       .gte("gap_score", 7)
       .in("demand_quadrant", ["GOLD_MINE", "RISKY_BET"])
       .order("gap_score", { ascending: false })
-      .limit(3);
+      .limit(1);
 
-    if (gapsError) {
-      throw new Error(`Failed to query content_gaps: ${gapsError.message}`);
+    if (hubError) {
+      throw new Error(`Failed to query hub gaps: ${hubError.message}`);
     }
+
+    // ── Fill remaining slots with spoke gaps ──
+    // Only select spokes for charge types that already have a published hub
+    const spokeLimit = (hubGaps?.length ?? 0) > 0 ? 2 : 3;
+    const { data: spokeGaps, error: spokeError } = await supabase
+      .from("content_gaps")
+      .select("id, charge_type_slug, pain_point_slug, gap_score, demand_quadrant, suggested_title, suggested_keywords, article_type")
+      .eq("status", "identified")
+      .eq("article_type", "spoke")
+      .gte("gap_score", 7)
+      .in("demand_quadrant", ["GOLD_MINE", "RISKY_BET"])
+      .order("gap_score", { ascending: false })
+      .limit(spokeLimit);
+
+    if (spokeError) {
+      throw new Error(`Failed to query spoke gaps: ${spokeError.message}`);
+    }
+
+    const gaps = [...(hubGaps || []), ...(spokeGaps || [])];
 
     if (!gaps || gaps.length === 0) {
       await releaseCronLock(lock.executionId, "completed");
