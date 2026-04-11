@@ -284,7 +284,8 @@ export async function POST(req: NextRequest) {
     //   - court_date: urgency signal for operator prioritization
     //   - consent_timestamp: when customer agreed to terms (legal compliance)
     //   - upgrade_credit_applied: cents credited from a previous tier purchase
-    const { data: orderData, error: orderError } = await supabase
+    let orderData: { id: string } | null = null;
+    const { data: insertedOrder, error: orderError } = await supabase
       .from("orders")
       .insert({
         email,
@@ -308,34 +309,68 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (orderError) {
-      // ── DUPLICATE WEBHOOK HANDLING ──
+      // ── DUPLICATE WEBHOOK HANDLING (RETRY-SAFE) ──
       // Stripe retries webhooks on timeout/5xx. The unique constraint on
       // stripe_session_id causes a 23505 error on duplicate INSERTs.
-      // This is expected behavior — return 200 so Stripe stops retrying.
+      // Instead of returning 200 immediately, look up the existing order
+      // and check if a case was created. If no case exists, fall through
+      // to case creation — this handles the retry scenario where the order
+      // was created but case creation failed (returned 500).
       const isDuplicate = orderError.code === "23505" || orderError.message?.includes("duplicate");
       if (isDuplicate) {
-        console.log("[Stripe Webhook] Duplicate webhook event, skipping:", session.id);
-        return NextResponse.json({ received: true });
+        console.log(`[Webhook] Order already exists for session ${session.id} — checking for case`);
+        const { data: existingOrder } = await supabase
+          .from("orders")
+          .select("id")
+          .eq("stripe_session_id", session.id)
+          .single();
+
+        if (!existingOrder) {
+          // Can't find the order that triggered the unique violation — bail
+          return NextResponse.json({ received: true });
+        }
+
+        // Check if case already exists for this order
+        const { data: existingCase } = await supabase
+          .from("cases")
+          .select("id")
+          .eq("order_id", existingOrder.id)
+          .limit(1)
+          .maybeSingle();
+
+        if (existingCase) {
+          // Both order and case exist — true duplicate, safe to return
+          console.log(`[Webhook] Order and case both exist for session ${session.id} — true duplicate`);
+          return NextResponse.json({ received: true });
+        }
+
+        // Order exists but case doesn't — fall through to case creation
+        console.log(`[Webhook] Order exists but case missing for session ${session.id} — reattempting case creation`);
+        orderData = existingOrder;
       }
 
       // ── GENUINE ORDER INSERT FAILURE ──
       // Payment was collected but we couldn't record it. This is critical —
       // operator must manually create the order in Supabase.
-      console.error("[Stripe Webhook] Order insert error:", orderError);
-      await sendEmail({
-        to: OPERATOR_EMAIL,
-        subject: `URGENT: Order insert failed for ${escapeHtml(email)}`,
-        html: `<h1 style="color: #EF4444;">Order Insert Failed</h1>
-          <p>Payment received but order record failed to create.</p>
-          <p><strong>Customer:</strong> ${escapeHtml(email)}</p>
-          <p><strong>Tier:</strong> ${escapeHtml(tier)}</p>
-          <p><strong>Amount:</strong> $${(amount / 100).toFixed(2)}</p>
-          <p><strong>Stripe Session:</strong> ${escapeHtml(session.id)}</p>
-          <p><strong>Error:</strong> ${escapeHtml(orderError.message)}</p>
-          <p><strong>Action:</strong> Manually create order record in Supabase.</p>`,
-      }, { category: "operator-alert", metadata: { reason: "order-insert-failed", tier, amount } });
-      // Return 500 so Stripe retries — transient DB failures can recover on retry
-      return NextResponse.json({ error: "Order insert failed" }, { status: 500 });
+      if (!orderData) {
+        console.error("[Stripe Webhook] Order insert error:", orderError);
+        await sendEmail({
+          to: OPERATOR_EMAIL,
+          subject: `URGENT: Order insert failed for ${escapeHtml(email)}`,
+          html: `<h1 style="color: #EF4444;">Order Insert Failed</h1>
+            <p>Payment received but order record failed to create.</p>
+            <p><strong>Customer:</strong> ${escapeHtml(email)}</p>
+            <p><strong>Tier:</strong> ${escapeHtml(tier)}</p>
+            <p><strong>Amount:</strong> $${(amount / 100).toFixed(2)}</p>
+            <p><strong>Stripe Session:</strong> ${escapeHtml(session.id)}</p>
+            <p><strong>Error:</strong> ${escapeHtml(orderError.message)}</p>
+            <p><strong>Action:</strong> Manually create order record in Supabase.</p>`,
+          }, { category: "operator-alert", metadata: { reason: "order-insert-failed", tier, amount } });
+        // Return 500 so Stripe retries — transient DB failures can recover on retry
+        return NextResponse.json({ error: "Order insert failed" }, { status: 500 });
+      }
+    } else {
+      orderData = insertedOrder;
     }
 
     // ──────────────────────────────────────────────────────────────
@@ -744,22 +779,25 @@ export async function POST(req: NextRequest) {
       });
 
       if (caseError) {
-        // Case creation failed — operator must create manually.
-        // Order exists but has no linked case, so services can't be delivered
-        // until the operator intervenes.
+        // Case creation failed — return 500 so Stripe retries the webhook.
+        // The 23505 handler above will find the existing order and reattempt
+        // case creation on the next delivery attempt.
         console.error("[Stripe Webhook] Case insert error:", caseError);
         caseId = null;
         await sendEmail({
           to: OPERATOR_EMAIL,
           subject: `URGENT: Case creation failed for ${escapeHtml(email)}`,
           html: `<h1 style="color: #EF4444;">Case Creation Failed</h1>
-            <p>Payment received but case record failed to create.</p>
+            <p>Payment received but case record failed to create. Stripe will retry.</p>
             <p><strong>Customer:</strong> ${escapeHtml(email)}</p>
             <p><strong>Tier:</strong> ${escapeHtml(tier)}</p>
             <p><strong>Order ID:</strong> ${escapeHtml(orderData.id)}</p>
             <p><strong>Error:</strong> ${escapeHtml(caseError.message)}</p>
-            <p><strong>Action:</strong> Manually create case.</p>`,
+            <p><strong>Action:</strong> Stripe will retry automatically. If retries exhaust, manually create case.</p>`,
         }, { category: "operator-alert", order_id: orderData.id, metadata: { reason: "case-insert-failed", tier } });
+        // Return 500 so Stripe retries — the 23505 handler above will find the
+        // existing order and reattempt case creation
+        return NextResponse.json({ error: "Case creation failed, will retry" }, { status: 500 });
       }
 
       // ──────────────────────────────────────────────────────────────
@@ -1168,139 +1206,77 @@ export async function POST(req: NextRequest) {
       const isFullRefund = charge.amount_refunded === charge.amount;
 
       if (isFullRefund) {
-        // ── FULL REFUND: Mark order as refunded, revoke report + download access ──
-        const { error: refundError } = await supabase
-          .from("orders")
-          .update({
-            status: "refunded",
-            refunded_at: new Date().toISOString(),
-            download_token: null,
-            download_token_expires_at: null,
-            // Revoke standalone report access (C11)
-            standalone_report_token_hash: null,
-            standalone_report_storage_path: null,
-            standalone_report_token_expires_at: null,
-          })
-          .eq("stripe_payment_intent_id", paymentIntentId);
+        // ── FULL REFUND: Atomic RPC — order + cases + commission in one transaction ──
+        // Eliminates race condition where order could be marked "refunded" but
+        // case stays active (report access remains open) if a step fails mid-way.
+        const { data: refundResult, error: refundError } = await supabase
+          .rpc("process_full_refund", { p_payment_intent_id: paymentIntentId });
 
         if (refundError) {
-          console.error("[Stripe Webhook] Refund update error:", refundError);
+          console.error("[Stripe Webhook] Atomic refund failed:", refundError);
           await sendEmail({
             to: OPERATOR_EMAIL,
-            subject: `URGENT: Refund DB update failed — PI ${paymentIntentId}`,
-            html: `<p>Stripe processed a full refund but Supabase update failed. Order still shows &quot;paid&quot;. Manual intervention required.</p>
+            subject: `URGENT: Refund processing failed — PI ${paymentIntentId}`,
+            html: `<p>Stripe processed a full refund but the atomic refund RPC failed.</p>
                    <p><strong>payment_intent_id:</strong> ${escapeHtml(paymentIntentId || "unknown")}</p>
                    <p><strong>Error:</strong> ${escapeHtml(refundError.message || "unknown")}</p>`,
           }).catch((emailErr: unknown) => console.error("[Stripe Webhook] Refund alert email failed:", emailErr));
           return NextResponse.json({ error: "Refund recording failed" }, { status: 500 });
         }
+
+        if (refundResult?.already_processed) {
+          console.log(`[Webhook] Refund already processed for PI ${paymentIntentId}`);
+          return NextResponse.json({ received: true });
+        }
+
+        // RPC returns: order_id, email, tier, amount, cases_updated, commission_reversed
+        if (refundResult?.commission_reversed) {
+          console.log(`[Webhook] Commission reversed for refunded order ${refundResult.order_id}`);
+        }
+
+        // ── CUSTOMER NOTIFICATION (full refund) ──
+        const fullRefundAmount = (charge.amount_refunded / 100).toFixed(2);
+        await sendEmailWithOperatorAlert({
+          to: refundResult.email,
+          subject: `Your Refund Has Been Processed — $${fullRefundAmount}`,
+          unsubscribeEmail: refundResult.email,
+          html: `
+            <h1 style="color: #F59E0B;">Refund Processed</h1>
+            <p>Your refund of <strong>$${fullRefundAmount}</strong> has been processed and sent to your original payment method.</p>
+            <p>You'll typically see it reflected in <strong style="color: white;">5-10 business days</strong> depending on your bank.</p>
+            <p style="color: #A1A1AA;">If you have any questions, reply to this email.</p>
+          `,
+        }, `full refund notification for ${refundResult.email}`, { category: "refund-notification", order_id: refundResult.order_id, metadata: { amount: charge.amount_refunded, tier: refundResult.tier } });
+
+        // ── OPERATOR NOTIFICATION (full refund) ──
+        const fullRefundTotal = ((refundResult.amount || 0) / 100).toFixed(2);
+        await sendEmail({
+          to: OPERATOR_EMAIL,
+          subject: `Full Refund: ${escapeHtml(refundResult.tier)} — $${fullRefundAmount}`,
+          html: `<h1 style="color: #EF4444;">Full Refund Processed</h1>
+            <p><strong>Customer:</strong> ${escapeHtml(refundResult.email)}</p>
+            <p><strong>Tier:</strong> ${escapeHtml(refundResult.tier)}</p>
+            <p><strong>Refunded:</strong> $${fullRefundAmount} of $${fullRefundTotal}</p>
+            <p><strong>Cases updated:</strong> ${refundResult.cases_updated}</p>
+            <p><strong>Commission reversed:</strong> ${refundResult.commission_reversed ? "Yes" : "No"}</p>
+            <p><strong>Note:</strong> Upgrade credits voided. Case status updated to 'refunded'. Report access revoked.</p>`,
+        }, { category: "operator-alert", order_id: refundResult.order_id, metadata: { reason: "refund", tier: refundResult.tier, amount: charge.amount_refunded } });
       } else {
         // ── PARTIAL REFUND: Log timestamp for audit, keep order active ──
         await supabase
           .from("orders")
           .update({ refunded_at: new Date().toISOString() })
           .eq("stripe_payment_intent_id", paymentIntentId);
-      }
 
-      // ── LOOKUP REFUNDED ORDER for case linking + operator notification ──
-      const { data: refundedOrder } = await supabase
-        .from("orders")
-        .select("id, email, tier, amount")
-        .eq("stripe_payment_intent_id", paymentIntentId)
-        .single();
+        // ── LOOKUP ORDER for partial refund notifications ──
+        const { data: refundedOrder } = await supabase
+          .from("orders")
+          .select("id, email, tier, amount")
+          .eq("stripe_payment_intent_id", paymentIntentId)
+          .single();
 
-      if (refundedOrder) {
-        if (isFullRefund) {
-          // ── UPDATE LINKED CASE STATUS ──
-          // Updates ALL cases linked to this order — including included deliverables
-          // (e.g., when an IB order is refunded, both the IB case and the included
-          // CD case are marked "refunded" because they share the same order_id).
-          // Setting case to "refunded" causes:
-          //   1. Report page returns 403 (access revoked)
-          //   2. Drip cron skips this order (Part 2 filters by status:"paid")
-          //   3. Upgrade credit is voided (cannot be applied to future purchases)
-          await supabase
-            .from("cases")
-            .update({
-              status: "refunded",
-              updated_at: new Date().toISOString(),
-            })
-            .eq("order_id", refundedOrder.id);
-
-          // ── REVERSE REFERRAL COMMISSION ──
-          // If this order had a partner referral, reverse the commission:
-          //   1. Zero out the commission on the referral record
-          //   2. Decrement the partner's running totals
-          // The referrals table has no "status" column, so we zero the
-          // commission_amount and mark commission_paid=true to exclude it
-          // from future payout calculations.
-          try {
-            const { data: referral } = await supabase
-              .from("referrals")
-              .select("id, partner_id, commission_amount")
-              .eq("order_id", refundedOrder.id)
-              .maybeSingle();
-
-            if (referral && referral.commission_amount > 0) {
-              // Decrement partner totals by the original commission
-              const rpcResult = await supabase.rpc("reverse_referral_commission", {
-                p_referral_id: referral.id,
-                p_partner_id: referral.partner_id,
-                p_commission_amount: referral.commission_amount,
-              });
-
-              if (rpcResult.error) {
-                console.error("[Webhook] Commission reversal RPC failed:", rpcResult.error.message);
-                // Look up the case linked to this order for the operator task FK
-                const { data: linkedCase } = await supabase
-                  .from("cases")
-                  .select("id")
-                  .eq("order_id", refundedOrder.id)
-                  .limit(1)
-                  .maybeSingle();
-
-                if (linkedCase) {
-                  await supabase.from("operator_tasks").insert({
-                    case_id: linkedCase.id,
-                    task_type: "commission_reversal_failed",
-                    title: `Commission reversal failed for referral ${referral.id}`,
-                    description: `RPC reverse_referral_commission failed: ${rpcResult.error.message}. Partner: ${referral.partner_id}, Amount: $${(referral.commission_amount / 100).toFixed(2)}`,
-                    priority: "HIGH",
-                    priority_rank: 2,
-                  });
-                } else {
-                  // No linked case — log for operator visibility (operator_tasks requires case_id NOT NULL)
-                  console.error(`[Webhook] Commission reversal failed AND no linked case found for order ${refundedOrder.id}. Partner: ${referral.partner_id}, Amount: $${(referral.commission_amount / 100).toFixed(2)}`);
-                }
-              }
-
-              console.log(`[Webhook] Reversed referral ${referral.id} (commission: $${(referral.commission_amount / 100).toFixed(2)}) for refunded order ${refundedOrder.id}`);
-            }
-          } catch (refReversalErr) {
-            // Non-blocking — commission reversal failure should not break refund processing
-            console.error("[Webhook] Referral commission reversal error:", refReversalErr);
-          }
-        }
-
-        // ── CUSTOMER NOTIFICATION ──
-        // Full refunds: confirm to customer that refund is processed.
-        // Partial refunds: customer gets no notification from Stripe, so we send one.
-        if (isFullRefund) {
-          const fullRefundAmount = (charge.amount_refunded / 100).toFixed(2);
-          await sendEmailWithOperatorAlert({
-            to: refundedOrder.email,
-            subject: `Your Refund Has Been Processed — $${fullRefundAmount}`,
-            unsubscribeEmail: refundedOrder.email,
-            html: `
-              <h1 style="color: #F59E0B;">Refund Processed</h1>
-              <p>Your refund of <strong>$${fullRefundAmount}</strong> has been processed and sent to your original payment method.</p>
-              <p>You'll typically see it reflected in <strong style="color: white;">5-10 business days</strong> depending on your bank.</p>
-              <p style="color: #A1A1AA;">If you have any questions, reply to this email.</p>
-            `,
-          }, `full refund notification for ${refundedOrder.email}`, { category: "refund-notification", order_id: refundedOrder.id, metadata: { amount: charge.amount_refunded, tier: refundedOrder.tier } });
-        }
-
-        if (!isFullRefund) {
+        if (refundedOrder) {
+          // ── CUSTOMER NOTIFICATION (partial refund) ──
           const partialRefundAmount = (charge.amount_refunded / 100).toFixed(2);
           await sendEmailWithOperatorAlert({
             to: refundedOrder.email,
@@ -1313,23 +1289,19 @@ export async function POST(req: NextRequest) {
               <p style="color: #A1A1AA;">Your report access and any upgrade credits remain active.</p>
             `,
           }, `partial refund notification for ${refundedOrder.email}`, { category: "refund-notification", order_id: refundedOrder.id, metadata: { amount: charge.amount_refunded, tier: refundedOrder.tier } });
-        }
 
-        // ── OPERATOR NOTIFICATION ──
-        // Always notify operator for both full and partial refunds
-        const refundAmount = (charge.amount_refunded / 100).toFixed(2);
-        const totalAmount = ((refundedOrder.amount || 0) / 100).toFixed(2);
-        await sendEmail({
-          to: OPERATOR_EMAIL,
-          subject: `${isFullRefund ? "Full" : "Partial"} Refund: ${escapeHtml(refundedOrder.tier)} — $${refundAmount}`,
-          html: `<h1 style="color: #EF4444;">${isFullRefund ? "Full" : "Partial"} Refund Processed</h1>
-            <p><strong>Customer:</strong> ${escapeHtml(refundedOrder.email)}</p>
-            <p><strong>Tier:</strong> ${escapeHtml(refundedOrder.tier)}</p>
-            <p><strong>Refunded:</strong> $${refundAmount} of $${totalAmount}</p>
-            ${isFullRefund
-              ? "<p><strong>Note:</strong> Upgrade credits voided. Case status updated to 'refunded'. Report access revoked.</p>"
-              : "<p><strong>Note:</strong> Partial refund — order remains 'paid'. Upgrade credits and report access preserved.</p>"}`,
-        }, { category: "operator-alert", order_id: refundedOrder.id, metadata: { reason: "refund", tier: refundedOrder.tier, amount: charge.amount_refunded } });
+          // ── OPERATOR NOTIFICATION (partial refund) ──
+          const partialRefundTotal = ((refundedOrder.amount || 0) / 100).toFixed(2);
+          await sendEmail({
+            to: OPERATOR_EMAIL,
+            subject: `Partial Refund: ${escapeHtml(refundedOrder.tier)} — $${partialRefundAmount}`,
+            html: `<h1 style="color: #EF4444;">Partial Refund Processed</h1>
+              <p><strong>Customer:</strong> ${escapeHtml(refundedOrder.email)}</p>
+              <p><strong>Tier:</strong> ${escapeHtml(refundedOrder.tier)}</p>
+              <p><strong>Refunded:</strong> $${partialRefundAmount} of $${partialRefundTotal}</p>
+              <p><strong>Note:</strong> Partial refund — order remains 'paid'. Upgrade credits and report access preserved.</p>`,
+          }, { category: "operator-alert", order_id: refundedOrder.id, metadata: { reason: "refund", tier: refundedOrder.tier, amount: charge.amount_refunded } });
+        }
       }
     }
   }

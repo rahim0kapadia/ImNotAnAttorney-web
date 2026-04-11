@@ -11,7 +11,7 @@ import { createAdminClient } from "./supabase/admin";
 const cache = new Map<string, { enabled: boolean; tierScope: string[] | null; fetchedAt: number }>();
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
-async function isFeatureEnabled(flagKey: string, tier?: string): Promise<boolean> {
+export async function isFeatureEnabled(flagKey: string, tier?: string): Promise<boolean> {
   const now = Date.now();
   const cached = cache.get(flagKey);
 
