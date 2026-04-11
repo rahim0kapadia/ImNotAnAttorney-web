@@ -87,17 +87,17 @@ const TIER9_PRODUCTS = [
   {
     slug: "judge-report-card",
     price: 19700,
-    intake: { judgeName: "Sarah Martinez", state: "FL", chargeType: "dui-first" },
+    intake: { judgeName: "Chris Altenbernd", state: "FL", chargeType: "dui" },
   },
   {
     slug: "officer-background-check",
     price: 9700,
-    intake: { officerName: "John Smith", state: "FL" },
+    intake: { officerName: "Childs", state: "FL" },
   },
   {
     slug: "similar-cases-analyzer",
     price: 29700,
-    intake: { chargeType: "dui-first", state: "FL" },
+    intake: { chargeType: "dui", state: "FL" },
   },
 ];
 
