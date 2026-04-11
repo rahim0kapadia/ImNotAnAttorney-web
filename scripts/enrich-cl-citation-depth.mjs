@@ -77,11 +77,11 @@ async function main() {
   if (!CL_TOKEN) { console.error("Set COURTLISTENER_TOKEN in .env.local"); process.exit(1); }
   if (!SUPABASE_KEY) { console.error("Set SUPABASE_SERVICE_ROLE_KEY in .env.local"); process.exit(1); }
 
-  // Fetch top-cited opinions from statute_case_law
+  // Fetch top-cited opinions from verified_case_law
   // We need cluster IDs of opinions that are cited most frequently
-  console.log("Fetching top-cited opinions from statute_case_law...");
+  console.log("Fetching top-cited opinions from verified_case_law...");
 
-  // Paginate through statute_case_law to find opinions with courtlistener_cluster_id
+  // Paginate through verified_case_law to find opinions with courtlistener_cluster_id
   // PostgREST caps at 1000 rows — must paginate via Range header
   const candidates = [];
   let offset = 0;
@@ -89,7 +89,7 @@ async function main() {
 
   while (candidates.length < limit) {
     const res = await fetch(
-      SUPABASE_URL + "/rest/v1/statute_case_law?select=courtlistener_cluster_id,case_name,citation&courtlistener_cluster_id=not.is.null&order=courtlistener_cluster_id&offset=" + offset + "&limit=" + PAGE_SIZE,
+      SUPABASE_URL + "/rest/v1/verified_case_law?select=courtlistener_cluster_id,case_name,citation&courtlistener_cluster_id=not.is.null&order=courtlistener_cluster_id&offset=" + offset + "&limit=" + PAGE_SIZE,
       { headers: { apikey: SUPABASE_KEY, Authorization: "Bearer " + SUPABASE_KEY } }
     );
     const batch = await res.json();

@@ -53,7 +53,7 @@ async function main() {
   if (!SUPABASE_KEY) { console.error("Set SUPABASE_SERVICE_ROLE_KEY in .env.local"); process.exit(1); }
 
   // Fetch judges from our database
-  const judgesRes = await fetch(SUPABASE_URL + "/rest/v1/judge_profiles?select=id,name,courtlistener_person_id&order=name", {
+  const judgesRes = await fetch(SUPABASE_URL + "/rest/v1/judge_profiles?select=id,full_name,cl_person_id&order=full_name", {
     headers: { apikey: SUPABASE_KEY, Authorization: "Bearer " + SUPABASE_KEY },
   });
   const judges = await judgesRes.json();
@@ -64,13 +64,13 @@ async function main() {
   let skipped = 0;
 
   for (const judge of judges.slice(0, limit)) {
-    if (!judge.courtlistener_person_id) {
+    if (!judge.cl_person_id) {
       // Try to find person by name via CL people search
-      const lastName = judge.name.split(" ").pop();
+      const lastName = judge.full_name.split(" ").pop();
       try {
         const search = await clFetch("/api/rest/v4/people/?name_last=" + encodeURIComponent(lastName) + "&is_judge=true");
         if (search.results && search.results.length > 0) {
-          judge.courtlistener_person_id = search.results[0].id;
+          judge.cl_person_id = search.results[0].id;
         } else {
           skipped++;
           continue;
@@ -82,7 +82,7 @@ async function main() {
     }
 
     try {
-      const ratings = await clFetch("/api/rest/v4/aba-ratings/?person=" + judge.courtlistener_person_id);
+      const ratings = await clFetch("/api/rest/v4/aba-ratings/?person=" + judge.cl_person_id);
       if (ratings.results && ratings.results.length > 0) {
         // Take the most recent rating
         const latest = ratings.results.sort((a, b) => (b.year_nominated || 0) - (a.year_nominated || 0))[0];
@@ -93,14 +93,14 @@ async function main() {
           const ratingEscaped = String(rating).split("'").join("''");
           sqlLines.push("UPDATE judge_profiles SET aba_rating = '" + ratingEscaped + "', aba_rating_year = " + (year || "NULL") + " WHERE id = '" + judge.id + "';");
           enriched++;
-          console.log("  " + judge.name + ": " + rating + " (" + year + ")");
+          console.log("  " + judge.full_name + ": " + rating + " (" + year + ")");
         }
       }
 
       // Rate limiting: ~200ms between requests to stay well within 5K/hr
       await new Promise(r => setTimeout(r, 200));
     } catch (err) {
-      console.error("  " + judge.name + ": " + err.message);
+      console.error("  " + judge.full_name + ": " + err.message);
     }
   }
 

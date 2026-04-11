@@ -67,7 +67,7 @@ async function main() {
   if (!SUPABASE_KEY) { console.error("Set SUPABASE_SERVICE_ROLE_KEY in .env.local"); process.exit(1); }
 
   // Fetch judges from judge_profiles (which has CL person IDs)
-  const judgesRes = await fetch(SUPABASE_URL + "/rest/v1/judge_profiles?select=id,name,courtlistener_person_id&order=name", {
+  const judgesRes = await fetch(SUPABASE_URL + "/rest/v1/judge_profiles?select=id,full_name,cl_person_id&order=full_name", {
     headers: { apikey: SUPABASE_KEY, Authorization: "Bearer " + SUPABASE_KEY },
   });
   const judges = await judgesRes.json();
@@ -79,13 +79,13 @@ async function main() {
   let noEvents = 0;
 
   for (const judge of judges.slice(0, limit)) {
-    if (!judge.courtlistener_person_id) {
+    if (!judge.cl_person_id) {
       // Try to find person by name via CL people search
-      const lastName = judge.name.split(" ").pop();
+      const lastName = judge.full_name.split(" ").pop();
       try {
         const search = await clFetch("/api/rest/v4/people/?name_last=" + encodeURIComponent(lastName) + "&is_judge=true");
         if (search.results && search.results.length > 0) {
-          judge.courtlistener_person_id = search.results[0].id;
+          judge.cl_person_id = search.results[0].id;
         } else {
           skipped++;
           continue;
@@ -97,7 +97,7 @@ async function main() {
     }
 
     try {
-      const events = await clFetch("/api/rest/v4/retention-events/?person=" + judge.courtlistener_person_id);
+      const events = await clFetch("/api/rest/v4/retention-events/?person=" + judge.cl_person_id);
       if (events.results && events.results.length > 0) {
         // Shape into [{year, vote_pct, retained}]
         const retentionData = events.results.map(e => {
@@ -114,14 +114,14 @@ async function main() {
           };
         }).sort((a, b) => (b.year || 0) - (a.year || 0));
 
-        const normalized = normalizeJudgeName(judge.name);
+        const normalized = normalizeJudgeName(judge.full_name);
         const jsonbStr = JSON.stringify(retentionData).split("'").join("''");
 
         // UPSERT: update judge_sentencing_patterns if a row exists for this judge
         // If no row exists yet, the UPDATE will affect 0 rows (safe no-op)
         sqlLines.push("UPDATE judge_sentencing_patterns SET retention_elections = '" + jsonbStr + "'::jsonb WHERE judge_name_normalized = " + escapeSQLStr(normalized) + ";");
         enriched++;
-        console.log("  " + judge.name + ": " + retentionData.length + " retention event(s)");
+        console.log("  " + judge.full_name + ": " + retentionData.length + " retention event(s)");
       } else {
         noEvents++;
       }
@@ -129,7 +129,7 @@ async function main() {
       // Rate limiting: ~200ms between requests
       await new Promise(r => setTimeout(r, 200));
     } catch (err) {
-      console.error("  " + judge.name + ": " + err.message);
+      console.error("  " + judge.full_name + ": " + err.message);
     }
   }
 

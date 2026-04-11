@@ -217,26 +217,49 @@ async function loadJudgeProfiles() {
 
   if (!serviceRoleKey) throw new Error("SUPABASE_SERVICE_ROLE_KEY not found in .env.local");
 
-  return new Promise((resolve, reject) => {
-    const req = https.request({
-      hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
-      path: "/rest/v1/judge_profiles?select=id,full_name,cl_person_id&limit=50000",
-      method: "GET",
-      headers: {
-        apikey: serviceRoleKey,
-        Authorization: `Bearer ${serviceRoleKey}`,
-      },
-    }, (res) => {
-      let data = "";
-      res.on("data", (d) => (data += d));
-      res.on("end", () => {
-        if (res.statusCode >= 400) reject(new Error(`Judge load ${res.statusCode}: ${data.slice(0, 200)}`));
-        else { try { resolve(JSON.parse(data)); } catch (e) { reject(e); } }
+  // PostgREST silently caps at 1000 rows regardless of ?limit= value.
+  // Must paginate via Range header to load all 15,613+ judges.
+  const PAGE_SIZE = 1000;
+  const allJudges = [];
+  let offset = 0;
+
+  while (true) {
+    const page = await new Promise((resolve, reject) => {
+      const req = https.request({
+        hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
+        path: "/rest/v1/judge_profiles?select=id,full_name,cl_person_id&order=id",
+        method: "GET",
+        headers: {
+          apikey: serviceRoleKey,
+          Authorization: `Bearer ${serviceRoleKey}`,
+          Range: `${offset}-${offset + PAGE_SIZE - 1}`,
+          Prefer: "count=exact",
+        },
+      }, (res) => {
+        let data = "";
+        res.on("data", (d) => (data += d));
+        res.on("end", () => {
+          if (res.statusCode >= 400 && res.statusCode !== 416) {
+            reject(new Error(`Judge load ${res.statusCode}: ${data.slice(0, 200)}`));
+          } else if (res.statusCode === 416) {
+            // Range not satisfiable — no more rows
+            resolve([]);
+          } else {
+            try { resolve(JSON.parse(data)); } catch (e) { reject(e); }
+          }
+        });
       });
+      req.on("error", reject);
+      req.end();
     });
-    req.on("error", reject);
-    req.end();
-  });
+
+    if (page.length === 0) break;
+    allJudges.push(...page);
+    if (page.length < PAGE_SIZE) break;
+    offset += PAGE_SIZE;
+  }
+
+  return allJudges;
 }
 
 // ── Main ────────────────────────────────────────────────────────────────────
