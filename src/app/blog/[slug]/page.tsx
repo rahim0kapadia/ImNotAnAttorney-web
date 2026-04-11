@@ -110,12 +110,13 @@ export default async function BlogPostPage({ params }: PageProps) {
           <p className="mt-4 text-lg text-zinc-400">{post.excerpt}</p>
           <div className="mt-4 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="rounded-full bg-zinc-800 px-3 py-1 text-xs text-zinc-400"
+                href={`/blog?category=${encodeURIComponent(post.category)}`}
+                className="rounded-full bg-zinc-800 px-3 py-1 text-xs text-zinc-400 transition-colors hover:bg-zinc-700 hover:text-zinc-200"
               >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         </div>
