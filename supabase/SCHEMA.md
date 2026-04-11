@@ -461,6 +461,144 @@ Resend inbound webhook storage.
 | description | text | Subreddit description |
 | status | text | `pending`, `approved`, `rejected` |
 
+## Tier 9: Data-Driven Defense Intelligence (Migration TBD)
+
+Nine tables supporting the data-driven defense intelligence layer — judge profiles, officer reliability, sentencing distributions, appellate trends, and case feature engineering. All tables have Row Level Security enabled with `service_all` policy.
+
+**Critical:** All columns with `source_urls` must comply with the no-hallucinated-legal-data safety rule — verification URLs MUST be stored alongside any legal claim (case law, statute, precedent, sentencing data).
+
+#### `judge_prosecutor_pairings`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| judge_id | uuid (FK) | Links to judge_profiles |
+| prosecutor_name | text (NOT NULL) | Named prosecutor |
+| motion_type | text | Type of motion (nullable, e.g., `suppression`, `discovery`) |
+| grant_rate | numeric | Percentage of motions granted (0-100) |
+| sample_size | integer | Number of outcomes observed (default: 0) |
+| source_urls | text[] | Verification URLs (CourtListener, docket records) |
+| last_updated | timestamptz | When grant_rate was last updated |
+| created_at | timestamptz | Record creation timestamp |
+
+#### `case_feature_vectors`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| cluster_id | text (PK) | CourtListener cluster ID |
+| features | jsonb | Numeric feature vector for ML prediction (default: `{}`) |
+| jurisdiction | text | State jurisdiction (nullable) |
+| charge_slug | text | Charge category for this case (nullable) |
+| created_at | timestamptz | When features were computed |
+
+#### `officer_reliability`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| officer_name | text (NOT NULL) | Named law enforcement officer |
+| court | text | Court jurisdiction (nullable) |
+| jurisdiction | text | State jurisdiction (nullable) |
+| testimony_count | integer | Number of times testified (default: 0) |
+| discredited_count | integer | Number of times credibility challenged (default: 0) |
+| reliability_score | numeric | Composite reliability score (0-100, nullable) |
+| brady_history | jsonb | Brady violation history as objects (default: `[]`) |
+| source_urls | text[] | Verification URLs (court records, opinions) |
+| created_at | timestamptz | Record creation timestamp |
+
+#### `judge_quotes`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| judge_id | uuid (FK) | Links to judge_profiles |
+| quote | text (NOT NULL) | Extracted quote from opinion or ruling |
+| topic | text | Subject area (e.g., `sentencing`, `suppression`, `credibility`) |
+| case_cited | text | Case name where quote appears (nullable) |
+| source_url | text | URL to full opinion (nullable, CourtListener) |
+| cluster_id | text | CourtListener cluster ID (nullable) |
+| created_at | timestamptz | When quote was extracted |
+
+#### `sentencing_distributions`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| judge_id | uuid (FK) | Links to judge_profiles |
+| jurisdiction | text | State jurisdiction (nullable) |
+| charge_slug | text | Charge category (e.g., `dui-first-offense`) |
+| median_months | numeric | Median sentence length (nullable) |
+| p25 | numeric | 25th percentile (lower quartile) |
+| p75 | numeric | 75th percentile (upper quartile) |
+| sample_size | integer | Number of sentences observed (default: 0) |
+| source_urls | text[] | Verification URLs (docket records, sentencing data) |
+| created_at | timestamptz | Record creation timestamp |
+
+#### `bench_jury_divergence`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| judge_id | uuid (FK) | Links to judge_profiles |
+| charge_slug | text | Charge category (nullable) |
+| bench_acquittal_rate | numeric | Acquittal rate in bench trials (0-100, nullable) |
+| jury_acquittal_rate | numeric | Acquittal rate in jury trials (0-100, nullable) |
+| bench_sample | integer | Number of bench trials (default: 0) |
+| jury_sample | integer | Number of jury trials (default: 0) |
+| source_urls | text[] | Verification URLs (docket records, trial outcomes) |
+| created_at | timestamptz | Record creation timestamp |
+
+#### `appellate_trends`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| argument_type | text | Type of appeal (e.g., `sentencing`, `conviction`, `procedure`) |
+| jurisdiction | text | State jurisdiction (nullable) |
+| year | integer | Year of appellate decision (nullable) |
+| reverse_rate | numeric | Rate of reversal (0-100, nullable) |
+| affirm_rate | numeric | Rate of affirmance (0-100, nullable) |
+| sample_size | integer | Number of appellate decisions (default: 0) |
+| source_urls | text[] | Verification URLs (appellate opinions, dockets) |
+| created_at | timestamptz | Record creation timestamp |
+
+#### `co_defendant_analysis`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| primary_case_id | text | Case ID for primary defendant (nullable) |
+| co_defendant_case_id | text | Case ID for co-defendant (nullable) |
+| outcome_diff | text | Difference in outcomes (e.g., `acquitted vs. convicted`) |
+| divergence_factors | jsonb | Analyzed factors explaining divergence (default: `{}`) |
+| source_urls | text[] | Verification URLs (court records, dockets) |
+| created_at | timestamptz | Record creation timestamp |
+
+#### `plea_discount_curves`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| jurisdiction | text | State jurisdiction (nullable) |
+| charge_slug | text | Charge category (e.g., `dui-first-offense`) |
+| base_sentence | numeric | Sentence without plea discount (months, nullable) |
+| plea_sentence | numeric | Sentence with plea (months, nullable) |
+| cooperation_bonus | numeric | Additional reduction for cooperation (months, nullable) |
+| sample_size | integer | Number of cases analyzed (default: 0) |
+| source_urls | text[] | Verification URLs (sentencing data, plea agreements) |
+| created_at | timestamptz | Record creation timestamp |
+
+### Judge Profiles Extensions (New Columns)
+
+The `judge_profiles` table receives four new columns to surface Tier 9 intelligence:
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| sentencing_distributions | jsonb | Per-charge sentencing percentiles aggregated from `sentencing_distributions` table (nullable) |
+| judicial_quotes | jsonb | Notable holding quotes by topic, aggregated from `judge_quotes` (nullable) |
+| bench_acquittal_rate | numeric | Overall acquittal rate in bench trials across all charges (nullable) |
+| jury_acquittal_rate | numeric | Overall acquittal rate in jury trials across all charges (nullable) |
+
 ### Engine-Specific Tables
 
 Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):

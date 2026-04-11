@@ -1,23 +1,23 @@
 {
   "slug": "first-time-felony-what-actually-happens",
-  "last_checked": "2026-04-10T11:39:30.729Z",
+  "last_checked": "2026-04-11T04:55:41.113Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
       "passed": true,
       "status": "checked",
-      "score": 23.3,
+      "score": 23.4,
       "details": {
-        "composite_score": 23.3,
+        "composite_score": 23.4,
         "pattern_score": 15,
-        "uniformity_score": 42.7,
+        "uniformity_score": 42.8,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 20,
             "matches": [
-              "20 em dashes in 2249 words"
+              "20 em dashes in 2256 words"
             ],
             "points_added": 10
           },

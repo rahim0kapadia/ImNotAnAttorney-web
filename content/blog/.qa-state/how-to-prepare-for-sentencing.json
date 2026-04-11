@@ -1,15 +1,15 @@
 {
   "slug": "how-to-prepare-for-sentencing",
-  "last_checked": "2026-04-10T10:01:13.413Z",
+  "last_checked": "2026-04-11T04:55:41.975Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
       "passed": true,
       "status": "checked",
-      "score": 25.4,
+      "score": 35.9,
       "details": {
-        "composite_score": 25.4,
-        "pattern_score": 15,
+        "composite_score": 35.9,
+        "pattern_score": 30,
         "uniformity_score": 49.6,
         "flagged_patterns": [
           {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 68,
             "matches": [
-              "68 em dashes in 3355 words"
+              "68 em dashes in 3356 words"
             ],
             "points_added": 10
           },
@@ -29,6 +29,15 @@
               "7 uniform list runs"
             ],
             "points_added": 5
+          },
+          {
+            "detector": "repeated_structural_transition",
+            "severity": "style",
+            "count": 1,
+            "matches": [
+              "\"but here's what nobody mentions\" (x10, threshold 9)"
+            ],
+            "points_added": 15
           }
         ]
       }

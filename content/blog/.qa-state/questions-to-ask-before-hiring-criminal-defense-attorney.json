@@ -1,6 +1,6 @@
 {
   "slug": "questions-to-ask-before-hiring-criminal-defense-attorney",
-  "last_checked": "2026-04-10T10:09:46.168Z",
+  "last_checked": "2026-04-11T04:55:43.305Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,7 +10,7 @@
       "details": {
         "composite_score": 33.6,
         "pattern_score": 30,
-        "uniformity_score": 42.1,
+        "uniformity_score": 42,
         "flagged_patterns": [
           {
             "detector": "tier1_vocabulary",
@@ -24,9 +24,9 @@
           {
             "detector": "em_dash_density",
             "severity": "style",
-            "count": 40,
+            "count": 41,
             "matches": [
-              "40 em dashes in 2457 words"
+              "41 em dashes in 2462 words"
             ],
             "points_added": 10
           },

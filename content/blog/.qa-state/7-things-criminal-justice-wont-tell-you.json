@@ -1,6 +1,6 @@
 {
   "slug": "7-things-criminal-justice-wont-tell-you",
-  "last_checked": "2026-04-10T09:37:48.136Z",
+  "last_checked": "2026-04-11T04:55:38.198Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,7 +26,7 @@
             "severity": "style",
             "count": 63,
             "matches": [
-              "63 em dashes in 3739 words"
+              "63 em dashes in 3741 words"
             ],
             "points_added": 10
           }

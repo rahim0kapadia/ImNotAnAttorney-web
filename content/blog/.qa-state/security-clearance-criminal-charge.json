@@ -1,23 +1,23 @@
 {
   "slug": "security-clearance-criminal-charge",
-  "last_checked": "2026-04-10T10:11:31.242Z",
+  "last_checked": "2026-04-11T04:55:43.598Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
       "passed": true,
       "status": "checked",
-      "score": 19.6,
+      "score": 19.3,
       "details": {
-        "composite_score": 19.6,
+        "composite_score": 19.3,
         "pattern_score": 10,
-        "uniformity_score": 41.9,
+        "uniformity_score": 40.9,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 37,
             "matches": [
-              "37 em dashes in 2632 words"
+              "37 em dashes in 2629 words"
             ],
             "points_added": 10
           }

@@ -53,6 +53,7 @@ const courtlistenerToken = webEnv.match(/COURTLISTENER_TOKEN=([^\r\n]+)/)?.[1] |
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
 const summaryOnly = args.includes("--summary");
+const unverifiedOnly = args.includes("--unverified-only");
 const positionalArgs = args.filter((a) => !a.startsWith("--"));
 // Keep original case for "federal" but uppercase state codes
 const rawJur = positionalArgs[0] || null;
@@ -555,6 +556,7 @@ async function main() {
   const conditions = [];
   if (targetJurisdiction) conditions.push(`jurisdiction = ${q}${targetJurisdiction}${q}`);
   if (targetSlug) conditions.push(`common_charge_slug = ${q}${targetSlug}${q}`);
+  if (unverifiedOnly) conditions.push(`verified_at IS NULL`);
   if (conditions.length > 0) sql += ` WHERE ${conditions.join(" AND ")}`;
   sql += " ORDER BY jurisdiction, common_charge_slug";
 

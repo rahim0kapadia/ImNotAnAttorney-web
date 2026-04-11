@@ -1,23 +1,23 @@
 {
   "slug": "sex-offense-what-every-defendant-needs-to-know",
-  "last_checked": "2026-04-10T18:28:30.989Z",
+  "last_checked": "2026-04-11T04:55:43.876Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
       "passed": true,
       "status": "checked",
-      "score": 27.9,
+      "score": 28,
       "details": {
-        "composite_score": 27.9,
+        "composite_score": 28,
         "pattern_score": 20,
-        "uniformity_score": 46.4,
+        "uniformity_score": 46.6,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
-            "count": 81,
+            "count": 79,
             "matches": [
-              "81 em dashes in 4260 words"
+              "79 em dashes in 4283 words"
             ],
             "points_added": 10
           },

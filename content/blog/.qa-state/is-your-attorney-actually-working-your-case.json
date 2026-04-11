@@ -1,15 +1,15 @@
 {
   "slug": "is-your-attorney-actually-working-your-case",
-  "last_checked": "2026-04-10T10:04:11.945Z",
+  "last_checked": "2026-04-11T04:55:42.581Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
       "passed": true,
       "status": "checked",
-      "score": 25.5,
+      "score": 36,
       "details": {
-        "composite_score": 25.5,
-        "pattern_score": 15,
+        "composite_score": 36,
+        "pattern_score": 30,
         "uniformity_score": 50,
         "flagged_patterns": [
           {
@@ -29,6 +29,15 @@
               "4 uniform list runs"
             ],
             "points_added": 5
+          },
+          {
+            "detector": "repeated_structural_transition",
+            "severity": "style",
+            "count": 1,
+            "matches": [
+              "\"but here's what nobody mentions\" (x8, threshold 8)"
+            ],
+            "points_added": 15
           }
         ]
       }

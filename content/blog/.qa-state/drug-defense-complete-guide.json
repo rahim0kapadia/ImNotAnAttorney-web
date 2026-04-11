@@ -1,6 +1,6 @@
 {
   "slug": "drug-defense-complete-guide",
-  "last_checked": "2026-04-10T11:36:55.699Z",
+  "last_checked": "2026-04-11T04:55:39.875Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 25,
         "pattern_score": 15,
-        "uniformity_score": 48.3,
+        "uniformity_score": 48.2,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 54,
             "matches": [
-              "54 em dashes in 3180 words"
+              "54 em dashes in 3184 words"
             ],
             "points_added": 10
           },

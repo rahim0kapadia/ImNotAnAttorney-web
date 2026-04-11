@@ -1,6 +1,6 @@
 {
   "slug": "federal-investigation-what-to-expect",
-  "last_checked": "2026-04-10T11:38:05.649Z",
+  "last_checked": "2026-04-11T04:55:40.556Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,7 +26,7 @@
             "severity": "style",
             "count": 53,
             "matches": [
-              "53 em dashes in 3649 words"
+              "53 em dashes in 3661 words"
             ],
             "points_added": 10
           }

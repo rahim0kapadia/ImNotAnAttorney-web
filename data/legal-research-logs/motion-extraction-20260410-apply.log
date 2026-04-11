@@ -1,0 +1,131 @@
+=== BULK EXTRACT MOTION TYPES + LEGAL ISSUES (csv-parse) ===
+
+Target clusters (all with cluster_id): 6718
+  [mem post-dump] rss=330MB heap=255/288MB external=2MB
+Streaming opinions CSV through bzcat + csv-parse (escape: \\)...
+Using: C:\Program Files\Git\usr\bin\bzcat.exe
+
+  0.5M rows, 149 matched, 117 extracted (878s)
+  [mem 0.5M] rss=110MB heap=15/40MB external=20MB
+  1.0M rows, 538 matched, 463 extracted (1779s)
+  [mem 1.0M] rss=113MB heap=22/43MB external=29MB
+  500 extractions...
+  1000 extractions...
+  1.5M rows, 1193 matched, 1008 extracted (2734s)
+  [mem 1.5M] rss=108MB heap=19/42MB external=23MB
+  2.0M rows, 1366 matched, 1140 extracted (3251s)
+  [mem 2.0M] rss=103MB heap=12/41MB external=17MB
+  2.5M rows, 1636 matched, 1301 extracted (3736s)
+  [mem 2.5M] rss=108MB heap=22/42MB external=25MB
+  3.0M rows, 1966 matched, 1454 extracted (4537s)
+  [mem 3.0M] rss=103MB heap=22/41MB external=27MB
+  1500 extractions...
+  3.5M rows, 2278 matched, 1653 extracted (5392s)
+  [mem 3.5M] rss=94MB heap=22/40MB external=27MB
+  2000 extractions...
+  4.0M rows, 3226 matched, 2166 extracted (6202s)
+  [mem 4.0M] rss=95MB heap=19/42MB external=22MB
+  2500 extractions...
+  4.5M rows, 4306 matched, 2530 extracted (7010s)
+  [mem 4.5M] rss=62MB heap=9/40MB external=14MB
+  5.0M rows, 4568 matched, 2618 extracted (7747s)
+  [mem 5.0M] rss=67MB heap=12/41MB external=16MB
+  5.5M rows, 4800 matched, 2701 extracted (15069s)
+  [mem 5.5M] rss=66MB heap=8/24MB external=13MB
+  6.0M rows, 4993 matched, 2806 extracted (15883s)
+  [mem 6.0M] rss=70MB heap=20/43MB external=23MB
+  3000 extractions...
+  6.5M rows, 5434 matched, 3001 extracted (17018s)
+  [mem 6.5M] rss=69MB heap=22/43MB external=24MB
+  7.0M rows, 5839 matched, 3161 extracted (18311s)
+  [mem 7.0M] rss=68MB heap=11/40MB external=16MB
+  7.5M rows, 6005 matched, 3250 extracted (19447s)
+  [mem 7.5M] rss=74MB heap=23/44MB external=26MB
+  8.0M rows, 6327 matched, 3446 extracted (20385s)
+  [mem 8.0M] rss=72MB heap=18/42MB external=24MB
+  3500 extractions...
+  8.5M rows, 6957 matched, 3814 extracted (21494s)
+  [mem 8.5M] rss=83MB heap=9/42MB external=14MB
+  4000 extractions...
+  9.0M rows, 8031 matched, 4471 extracted (22857s)
+  [mem 9.0M] rss=69MB heap=14/41MB external=21MB
+  4500 extractions...
+  5000 extractions...
+  9.5M rows, 9246 matched, 5197 extracted (24216s)
+  [mem 9.5M] rss=84MB heap=21/43MB external=26MB
+  5500 extractions...
+  10.0M rows, 9914 matched, 5571 extracted (25092s)
+  [mem 10.0M] rss=79MB heap=22/42MB external=25MB
+  6000 extractions...
+  10.5M rows, 10712 matched, 6024 extracted (26166s)
+  [mem 10.5M] rss=78MB heap=8/41MB external=13MB
+
+Stream complete: 10745929 rows in 444.0 min
+Clusters matched: 10834
+Clusters with extractions: 6083
+
+--- Motion types found ---
+  dismiss_motion                 982
+  suppress_motion                963
+  judgment_acquittal_motion      572
+  new_trial_motion               552
+  in_limine_motion               309
+  mistrial_motion                307
+  continuance_motion             135
+  severance_motion               116
+  bill_of_particulars            76
+  change_of_venue_motion         68
+  discovery_motion               64
+  competency_motion              49
+  recusal_motion                 45
+  arrest_judgment_motion         36
+  withdraw_plea_motion           20
+  speedy_trial_motion            14
+  franks_motion                  5
+  pretrial_release_motion        3
+
+--- Legal issues found ---
+  fourteenth_amendment           2324
+  sixth_amendment                2050
+  sufficiency_of_evidence        1935
+  jury_instruction               1694
+  fourth_amendment               1427
+  fifth_amendment                1245
+  jurisdiction                   1059
+  sentencing                     882
+  expert_testimony               839
+  double_jeopardy                834
+  hearsay                        822
+  ineffective_assistance         811
+  prosecutorial_misconduct       413
+  eighth_amendment               365
+  confession                     360
+  brady_violation                284
+  speedy_trial                   203
+  giglio_violation               108
+  identification                 98
+  chain_of_custody               88
+
+Cached 6083 extractions → C:\Users\email\projects\ImNotAnAttorney-web\data\bulk-verify\motion-extraction-results.json
+
+SQL statements: 6083
+
+--- Applying 6083 updates in batches of 500 ---
+
+  Batch 1/13: 500 clusters — 41/sec
+  Batch 2/13: 500 clusters — 46/sec
+  Batch 3/13: 500 clusters — 48/sec
+  Batch 4/13: 500 clusters — 48/sec
+  Batch 5/13: 500 clusters — 49/sec
+  Batch 6/13: 500 clusters — 49/sec
+  Batch 7/13: 500 clusters — 50/sec
+  Batch 8/13: 500 clusters — 49/sec
+  Batch 9/13: 500 clusters — 49/sec
+  Batch 10/13: 500 clusters — 49/sec
+  Batch 11/13: 500 clusters — 49/sec
+  Batch 12/13: 500 clusters — 50/sec
+  Batch 13/13: 83 clusters — 49/sec
+
+--- Results ---
+Clusters applied: 6083  Errors: 0
+Each cluster updates ALL rows sharing it (~3.8:1 row expansion).

@@ -1,6 +1,6 @@
 {
   "slug": "what-to-expect-after-dui-arrest",
-  "last_checked": "2026-04-10T18:13:13.507Z",
+  "last_checked": "2026-04-11T04:55:45.454Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,7 +10,7 @@
       "details": {
         "composite_score": 34.2,
         "pattern_score": 30,
-        "uniformity_score": 44,
+        "uniformity_score": 43.9,
         "flagged_patterns": [
           {
             "detector": "tier1_vocabulary",
@@ -26,16 +26,16 @@
             "severity": "style",
             "count": 50,
             "matches": [
-              "50 em dashes in 2707 words"
+              "50 em dashes in 2724 words"
             ],
             "points_added": 10
           },
           {
             "detector": "rule_of_three",
             "severity": "style",
-            "count": 7,
+            "count": 6,
             "matches": [
-              "7 uniform list runs"
+              "6 uniform list runs"
             ],
             "points_added": 5
           }

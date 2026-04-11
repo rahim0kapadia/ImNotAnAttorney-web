@@ -1,0 +1,243 @@
+=== BULK MASTER EXTRACTOR — Single-Pass 8-Table Processor ===
+
+Enabled tables: judge_quotes, sentencing_distributions, officer_reliability, judge_prosecutor_pairings, bench_jury_divergence, co_defendant_analysis, plea_discount_curves, appellate_trends
+Mode: GENERATE + APPLY
+Limit: none
+
+Loading dump file...
+Loading jurisdiction_statutes resolver...
+Loaded 4699 jurisdiction_statute rows
+
+Target clusters: 6718
+Clusters with resolved jurisdiction: 6718
+
+Loading judge profiles...
+WARNING: could not load judge profiles: Judge load 400: {"code":"42703","details":null,"hint":"Perhaps you meant to reference the column \"j
+Extractors requiring judges will skip judge matching.
+
+=== PHASE 0: Citation-Map Loading ===
+  Streaming citation-map CSV (522 MB bz2)...
+    1.0M rows, 999999 citations (5s)
+    2.0M rows, 1999999 citations (10s)
+    3.0M rows, 2999999 citations (15s)
+    4.0M rows, 3999999 citations (20s)
+    5.0M rows, 4999999 citations (26s)
+    6.0M rows, 5999999 citations (31s)
+    7.0M rows, 6999999 citations (36s)
+    8.0M rows, 7999999 citations (41s)
+    9.0M rows, 8999999 citations (47s)
+    10.0M rows, 9999999 citations (54s)
+    11.0M rows, 10999999 citations (59s)
+    12.0M rows, 11999999 citations (64s)
+    13.0M rows, 12999999 citations (70s)
+    14.0M rows, 13999999 citations (76s)
+    15.0M rows, 14999999 citations (81s)
+    16.0M rows, 15999999 citations (86s)
+    17.0M rows, 16999999 citations (92s)
+    18.0M rows, 17999999 citations (97s)
+    19.0M rows, 18999999 citations (103s)
+    20.0M rows, 19999999 citations (109s)
+    21.0M rows, 20999999 citations (114s)
+    22.0M rows, 21999999 citations (120s)
+    23.0M rows, 22999999 citations (125s)
+    24.0M rows, 23999999 citations (132s)
+    25.0M rows, 24999999 citations (137s)
+    26.0M rows, 25999999 citations (143s)
+    27.0M rows, 26999999 citations (148s)
+    28.0M rows, 27999999 citations (156s)
+    29.0M rows, 28999999 citations (161s)
+    30.0M rows, 29999999 citations (167s)
+    31.0M rows, 30999999 citations (172s)
+    32.0M rows, 31999999 citations (179s)
+    33.0M rows, 32999999 citations (185s)
+    34.0M rows, 33999999 citations (191s)
+    35.0M rows, 34999999 citations (196s)
+    36.0M rows, 35999999 citations (203s)
+    37.0M rows, 36999999 citations (208s)
+    38.0M rows, 37999999 citations (214s)
+    39.0M rows, 38999999 citations (220s)
+    40.0M rows, 39999999 citations (225s)
+    41.0M rows, 40999999 citations (231s)
+    42.0M rows, 41999999 citations (239s)
+    43.0M rows, 42999999 citations (245s)
+    44.0M rows, 43999999 citations (251s)
+    45.0M rows, 44999999 citations (257s)
+    46.0M rows, 45999999 citations (263s)
+    47.0M rows, 46999999 citations (268s)
+    48.0M rows, 47999999 citations (274s)
+    49.0M rows, 48999999 citations (280s)
+    50.0M rows, 49999999 citations (286s)
+    51.0M rows, 50999999 citations (296s)
+    52.0M rows, 51999999 citations (301s)
+    53.0M rows, 52999999 citations (307s)
+    54.0M rows, 53999999 citations (313s)
+    55.0M rows, 54999999 citations (318s)
+    56.0M rows, 55999999 citations (323s)
+    57.0M rows, 56999999 citations (329s)
+    58.0M rows, 57999999 citations (335s)
+    59.0M rows, 58999999 citations (341s)
+    60.0M rows, 59999999 citations (346s)
+    61.0M rows, 60999999 citations (350s)
+    62.0M rows, 61999999 citations (355s)
+    63.0M rows, 62999999 citations (365s)
+    64.0M rows, 63999999 citations (368s)
+    65.0M rows, 64999999 citations (373s)
+    66.0M rows, 65999999 citations (377s)
+    67.0M rows, 66999999 citations (382s)
+    68.0M rows, 67999999 citations (387s)
+    69.0M rows, 68999999 citations (392s)
+    70.0M rows, 69999999 citations (399s)
+    71.0M rows, 70999999 citations (405s)
+    72.0M rows, 71999999 citations (410s)
+    73.0M rows, 72999999 citations (416s)
+    74.0M rows, 73999999 citations (423s)
+    75.0M rows, 74999999 citations (429s)
+    76.0M rows, 75999999 citations (433s)
+  Citation-map complete: 76959991 rows in 7.3 min
+  Unique citing opinions: 7467956
+
+Phase 0 complete: 437s
+
+=== PHASE 1: Streaming Opinions CSV ===
+  Using pre-filtered CSV: C:\Users\email\projects\ImNotAnAttorney-web\data\bulk-verify\cl-bulk\opinions-filtered.csv
+  (1064.2 MB — will complete in seconds)
+
+
+  Stream complete: 10839 rows in 1.4 min
+  Clusters matched: 10731
+Phase 1 complete: 1.4 min
+
+=== EXTRACTION SUMMARY ===
+  judge_quotes:              32365 quotes
+  sentencing_distributions:  764 opinions with sentence data (441 groups)
+  officer_reliability:       3502 opinions with officer data (25303 officers)
+  judge_prosecutor_pairings: 94 opinions with pairings (378 unique pairings)
+  bench_jury_divergence:     0 classified (0 judge-charge groups)
+  co_defendant_analysis:     413 divergences found
+  plea_discount_curves:      1117 opinions classified (582 groups)
+  appellate_trends:          8645 appeal opinions classified
+
+=== PHASE 2: SQL Generation ===
+  judge_quotes: 32365 INSERTs
+  sentencing_distributions: 122 UPSERTs (sample >= 3)
+  officer_reliability: 5909 INSERTs (testimony >= 2)
+  judge_prosecutor_pairings: 205 INSERTs (sample >= 2)
+  bench_jury_divergence: 0 INSERTs + 0 judge_profiles UPDATEs (bench >= 2 AND jury >= 2)
+  co_defendant_analysis: 413 INSERTs
+  plea_discount_curves: 23 INSERTs (plea >= 3 AND trial >= 3)
+  appellate_trends: 1011 UPSERTs (sample >= 3)
+
+Saved SQL files to: C:\Users\email\projects\ImNotAnAttorney-web\data\bulk-verify\master-extractor-updates
+Total statements: 40048
+
+=== PHASE 3: Applying to Supabase ===
+
+  --- Applying judge_quotes: 32365 statements ---
+    Batch 1/65: 500 — 451/sec
+    Batch 2/65: 500 — 373/sec
+    Batch 3/65: 500 — 348/sec
+    Batch 4/65: 500 — 335/sec
+    Batch 5/65: 500 — 334/sec
+    Batch 6/65: 500 — 335/sec
+    Batch 7/65: 500 — 333/sec
+    Batch 8/65: 500 — 335/sec
+    Batch 9/65: 500 — 333/sec
+    Batch 10/65: 500 — 333/sec
+    Batch 11/65: 500 — 331/sec
+    Batch 12/65: 500 — 332/sec
+    Batch 13/65: 500 — 331/sec
+    Batch 14/65: 500 — 318/sec
+    Batch 15/65: 500 — 319/sec
+    Batch 16/65: 500 — 319/sec
+    Batch 17/65: 500 — 320/sec
+    Batch 18/65: 500 — 318/sec
+    Batch 19/65: 500 — 320/sec
+    Batch 20/65: 500 — 319/sec
+    Batch 21/65: 500 — 320/sec
+    Batch 22/65: 500 — 321/sec
+    Batch 23/65: 500 — 321/sec
+    Batch 24/65: 500 — 321/sec
+    Batch 25/65: 500 — 322/sec
+    Batch 26/65: 500 — 322/sec
+    Batch 27/65: 500 — 323/sec
+    Batch 28/65: 500 — 323/sec
+    Batch 29/65: 500 — 322/sec
+    Batch 30/65: 500 — 322/sec
+    Batch 31/65: 500 — 322/sec
+    Batch 32/65: 500 — 323/sec
+    Batch 33/65: 500 — 323/sec
+    Batch 34/65: 500 — 323/sec
+    Batch 35/65: 500 — 324/sec
+    Batch 36/65: 500 — 323/sec
+    Batch 37/65: 500 — 323/sec
+    Batch 38/65: 500 — 323/sec
+    Batch 39/65: 500 — 323/sec
+    Batch 40/65: 500 — 324/sec
+    Batch 41/65: 500 — 324/sec
+    Batch 42/65: 500 — 324/sec
+    Batch 43/65: 500 — 323/sec
+    Batch 44/65: 500 — 323/sec
+    Batch 45/65: 500 — 323/sec
+    Batch 46/65: 500 — 323/sec
+    Batch 47/65: 500 — 322/sec
+    Batch 48/65: 500 — 322/sec
+    Batch 49/65: 500 — 322/sec
+    Batch 50/65: 500 — 323/sec
+    Batch 51/65: 500 — 323/sec
+    Batch 52/65: 500 — 323/sec
+    Batch 53/65: 500 — 323/sec
+    Batch 54/65: 500 — 323/sec
+    Batch 55/65: 500 — 324/sec
+    Batch 56/65: 500 — 324/sec
+    Batch 57/65: 500 — 324/sec
+    Batch 58/65: 500 — 323/sec
+    Batch 59/65: 500 — 323/sec
+    Batch 60/65: 500 — 322/sec
+    Batch 61/65: 500 — 320/sec
+    Batch 62/65: 500 — 320/sec
+    Batch 63/65: 500 — 320/sec
+    Batch 64/65: 500 — 320/sec
+    Batch 65/65: 365 — 318/sec
+    judge_quotes complete: applied=32365 errors=0
+
+  --- Applying sentencing_distributions: 122 statements ---
+    Batch 1: SQL 400: {"message":"Failed to run sql query: ERROR:  42P10: there is no unique or exclusion constraint matching the ON CONFLICT specification\n"}
+    sentencing_distributions complete: applied=0 errors=1
+
+  --- Applying officer_reliability: 5909 statements ---
+    Batch 1: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 2: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 3: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 4: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 5: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 6: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 7: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 8: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 9: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 10: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 11: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    Batch 12: SQL 400: {"message":"Failed to run sql query: ERROR:  42804: column \"brady_history\" is of type jsonb but expression is of type text[]\nLINE 1: INSERT INTO officer_reliability (officer_name, court, j
+    officer_reliability complete: applied=0 errors=12
+
+  --- Applying judge_prosecutor_pairings: 205 statements ---
+    Batch 1: SQL 400: {"message":"Failed to run sql query: ERROR:  22P02: invalid input syntax for type uuid: \"5739\"\nLINE 1: INSERT INTO judge_prosecutor_pairings (judge_id, prosecutor_name, motion_type, grant_
+    judge_prosecutor_pairings complete: applied=0 errors=1
+
+  --- Applying co_defendant_analysis: 413 statements ---
+    Batch 1/1: 413 — 371/sec
+    co_defendant_analysis complete: applied=413 errors=0
+
+  --- Applying plea_discount_curves: 23 statements ---
+    Batch 1/1: 23 — 36/sec
+    plea_discount_curves complete: applied=23 errors=0
+
+  --- Applying appellate_trends: 1011 statements ---
+    Batch 1: SQL 400: {"message":"Failed to run sql query: ERROR:  42P10: there is no unique or exclusion constraint matching the ON CONFLICT specification\n"}
+    Batch 2: SQL 400: {"message":"Failed to run sql query: ERROR:  42P10: there is no unique or exclusion constraint matching the ON CONFLICT specification\n"}
+    Batch 3: SQL 400: {"message":"Failed to run sql query: ERROR:  42P10: there is no unique or exclusion constraint matching the ON CONFLICT specification\n"}
+    appellate_trends complete: applied=0 errors=3
+
+=== APPLY COMPLETE ===
+Total apply time: 2.1 min
+
+=== TOTAL TIME: 10.8 min ===

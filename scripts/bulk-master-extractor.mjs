@@ -837,8 +837,9 @@ function extractMotionOutcomes(lower) {
 
 function extractJudgeProsecutorPairing(clusterId, lower, text, judge, dumpRow, record) {
   // Need judge
-  let judgeId = record.author_id ? String(record.author_id) : null;
-  if (!judgeId && judge) judgeId = judge.id;
+  // Prefer Supabase UUID from matched judge; CourtListener author_id is numeric and won't match
+  let judgeId = judge ? String(judge.id) : null;
+  if (!judgeId) return; // skip if no judge match — pairings table requires valid UUID
   if (!judgeId) return;
 
   const prosecutors = extractProsecutors(text, lower);
@@ -1428,7 +1429,7 @@ function generateAllSQL() {
         esc(info.name) + ", 'state', 'multi', " +
         info.testimony_count + ", " + info.discredited_count + ", " +
         reliabilityScore.toFixed(3) + ", " +
-        escArrayLiteral(clusterArr) + ", " +
+        "'" + JSON.stringify(clusterArr.map(String)) + "'::jsonb, " +
         escArrayLiteral([verificationUrl]) +
         ") ON CONFLICT DO NOTHING;"
       );

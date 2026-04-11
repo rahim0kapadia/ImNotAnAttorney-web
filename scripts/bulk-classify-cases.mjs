@@ -27,7 +27,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "..");
 const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
-const BATCH_SIZE = 100;
+const BATCH_SIZE = 500;
 
 const BULK_DIR = path.join(PROJECT_ROOT, "data", "bulk-verify", "cl-bulk");
 const CLUSTERS_BZ2 = path.join(BULK_DIR, "opinion-clusters-2026-03-31.csv.bz2");
@@ -396,7 +396,11 @@ async function streamAndClassify(bz2Path, targetClusterIds, rowMap) {
       // Fast path: check if the cluster ID is in the first field before full parsing
       const firstComma = rawLine.indexOf(",");
       if (firstComma < 0) return;
-      const clusterId = rawLine.slice(0, firstComma);
+      let clusterId = rawLine.slice(0, firstComma);
+      // CL clusters CSV wraps IDs in double quotes — strip them
+      if (clusterId.length >= 2 && clusterId[0] === '"' && clusterId[clusterId.length - 1] === '"') {
+        clusterId = clusterId.slice(1, -1);
+      }
 
       if (!targetClusterIds.has(clusterId)) {
         // Progress every 2M lines
@@ -548,9 +552,9 @@ async function main() {
   sqlStatements.push("");
 
   for (const [clusterId, result] of results) {
-    const dbRow = rowMap.get(clusterId);
-    if (!dbRow) continue;
-
+    // Update by cluster_id (not row id) so ALL statute_case_law rows
+    // sharing this CL opinion get the same classification — properties
+    // come from the opinion itself, not the per-statute row.
     let stmt = `UPDATE statute_case_law SET `;
     stmt += `party_side = ${esc(result.partySide)}`;
 
@@ -560,7 +564,7 @@ async function main() {
     if (result.application) stmt += `, application = ${esc(result.application.slice(0, 500))}`;
     stmt += `, is_binding = ${result.isBinding}`;
 
-    stmt += ` WHERE id = ${esc(dbRow.id)};`;
+    stmt += ` WHERE courtlistener_cluster_id = ${esc(clusterId)} AND (party_side IS NULL OR party_side = 'UNKNOWN');`;
     sqlStatements.push(stmt);
   }
 

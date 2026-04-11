@@ -1,6 +1,6 @@
 {
   "slug": "complete-dui-defense-guide",
-  "last_checked": "2026-04-10T18:01:40.032Z",
+  "last_checked": "2026-04-11T04:55:39.353Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 136,
             "matches": [
-              "136 em dashes in 6766 words"
+              "136 em dashes in 6793 words"
             ],
             "points_added": 10
           },
@@ -33,9 +33,9 @@
           {
             "detector": "rule_of_three",
             "severity": "style",
-            "count": 11,
+            "count": 10,
             "matches": [
-              "11 uniform list runs"
+              "10 uniform list runs"
             ],
             "points_added": 5
           }

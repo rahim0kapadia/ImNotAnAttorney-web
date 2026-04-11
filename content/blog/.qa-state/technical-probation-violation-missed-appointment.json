@@ -1,6 +1,6 @@
 {
   "slug": "technical-probation-violation-missed-appointment",
-  "last_checked": "2026-04-10T18:09:29.701Z",
+  "last_checked": "2026-04-11T04:55:44.392Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 21.9,
         "pattern_score": 10,
-        "uniformity_score": 49.5,
+        "uniformity_score": 49.7,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 48,
             "matches": [
-              "48 em dashes in 3080 words"
+              "48 em dashes in 3087 words"
             ],
             "points_added": 10
           }

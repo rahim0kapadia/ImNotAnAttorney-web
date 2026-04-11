@@ -1,23 +1,23 @@
 {
   "slug": "10-day-dmv-deadline",
-  "last_checked": "2026-04-10T11:31:24.151Z",
+  "last_checked": "2026-04-11T04:55:37.718Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
       "passed": true,
       "status": "checked",
-      "score": 25.3,
+      "score": 25.5,
       "details": {
-        "composite_score": 25.3,
+        "composite_score": 25.5,
         "pattern_score": 15,
-        "uniformity_score": 49.5,
+        "uniformity_score": 49.9,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 29,
             "matches": [
-              "29 em dashes in 2788 words"
+              "29 em dashes in 2819 words"
             ],
             "points_added": 10
           },

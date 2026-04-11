@@ -65,5 +65,11 @@ test-reports/
 data/bulk-verify/cl-bulk/
 *.csv.bz2
 
+# Large JSON data files (exceed GitHub 100MB limit)
+data/bulk-verify/statute-case-law-dump.json
+data/bulk-verify/good-law-graph/appeal-citing-map.json
+
 # Local cache directories
 .cap-cache/
+# CocoIndex Code (ccc)
+/.cocoindex_code/

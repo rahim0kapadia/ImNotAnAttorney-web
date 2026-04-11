@@ -1,23 +1,23 @@
 {
   "slug": "can-you-challenge-breathalyzer-results",
-  "last_checked": "2026-04-10T11:33:15.555Z",
+  "last_checked": "2026-04-11T04:55:39.078Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
       "passed": true,
       "status": "checked",
-      "score": 23.8,
+      "score": 23.9,
       "details": {
-        "composite_score": 23.8,
+        "composite_score": 23.9,
         "pattern_score": 15,
-        "uniformity_score": 44.5,
+        "uniformity_score": 44.6,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
-            "count": 50,
+            "count": 51,
             "matches": [
-              "50 em dashes in 3167 words"
+              "51 em dashes in 3187 words"
             ],
             "points_added": 10
           },

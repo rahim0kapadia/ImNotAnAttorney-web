@@ -694,6 +694,7 @@ export async function closeStaleMonitoring(ctx: CronContext): Promise<CronResult
       .from("cases")
       .update({
         status: "completed",
+        completed_at: ctx.now.toISOString(),
         updated_at: ctx.now.toISOString(),
       })
       .eq("id", sCase.id)

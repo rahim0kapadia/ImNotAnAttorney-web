@@ -1,0 +1,89 @@
+=== BULK EXTRACT MOTION TYPES + LEGAL ISSUES (csv-parse) ===
+
+Target clusters (all with cluster_id): 6718
+  [mem post-dump] rss=331MB heap=255/288MB external=2MB
+Using pre-filtered CSV: C:\Users\email\projects\ImNotAnAttorney-web\data\bulk-verify\cl-bulk\opinions-filtered.csv
+  (1064.2 MB — will complete in seconds)
+
+  500 extractions...
+  1000 extractions...
+  1500 extractions...
+  2000 extractions...
+  2500 extractions...
+  3000 extractions...
+  3500 extractions...
+  4000 extractions...
+  4500 extractions...
+  5000 extractions...
+  5500 extractions...
+  6000 extractions...
+
+Stream complete: 10839 rows in 1.0 min
+Clusters matched: 10834
+Clusters with extractions: 6083
+
+--- Motion types found ---
+  dismiss_motion                 982
+  suppress_motion                963
+  judgment_acquittal_motion      572
+  new_trial_motion               552
+  in_limine_motion               309
+  mistrial_motion                307
+  continuance_motion             135
+  severance_motion               116
+  bill_of_particulars            76
+  change_of_venue_motion         68
+  discovery_motion               64
+  competency_motion              49
+  recusal_motion                 45
+  arrest_judgment_motion         36
+  withdraw_plea_motion           20
+  speedy_trial_motion            14
+  franks_motion                  5
+  pretrial_release_motion        3
+
+--- Legal issues found ---
+  fourteenth_amendment           2324
+  sixth_amendment                2050
+  sufficiency_of_evidence        1935
+  jury_instruction               1694
+  fourth_amendment               1427
+  fifth_amendment                1245
+  jurisdiction                   1059
+  sentencing                     882
+  expert_testimony               839
+  double_jeopardy                834
+  hearsay                        822
+  ineffective_assistance         811
+  prosecutorial_misconduct       413
+  eighth_amendment               365
+  confession                     360
+  brady_violation                284
+  speedy_trial                   203
+  giglio_violation               108
+  identification                 98
+  chain_of_custody               88
+
+Cached 6083 extractions → C:\Users\email\projects\ImNotAnAttorney-web\data\bulk-verify\motion-extraction-results.json
+
+SQL statements: 6083
+
+--- Applying 6083 updates in batches of 500 ---
+
+  Batch 1/13: 500 clusters — 37/sec
+  Batch 2/13: 500 clusters — 44/sec
+  Batch 3/13: 500 clusters — 46/sec
+  Batch 4/13: 500 clusters — 48/sec
+  Batch 5/13: 500 clusters — 49/sec
+  Batch 6/13: 500 clusters — 50/sec
+  Batch 7/13: 500 clusters — 51/sec
+  Batch 8/13: 500 clusters — 51/sec
+  Batch 9/13: 500 clusters — 51/sec
+  Batch 10/13: 500 clusters — 51/sec
+  Batch 11/13: 500 clusters — 51/sec
+  Batch 12/13: 500 clusters — 52/sec
+  Batch 13/13: 83 clusters — 51/sec
+
+--- Results ---
+Clusters applied: 6083  Errors: 0
+Each cluster updates ALL rows sharing it (~3.8:1 row expansion).

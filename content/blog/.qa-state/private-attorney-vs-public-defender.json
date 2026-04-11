@@ -1,6 +1,6 @@
 {
   "slug": "private-attorney-vs-public-defender",
-  "last_checked": "2026-04-10T18:06:00.138Z",
+  "last_checked": "2026-04-11T04:55:42.891Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,7 +26,7 @@
             "severity": "style",
             "count": 68,
             "matches": [
-              "68 em dashes in 3139 words"
+              "68 em dashes in 3141 words"
             ],
             "points_added": 10
           }

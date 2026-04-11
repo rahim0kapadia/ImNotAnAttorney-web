@@ -1,6 +1,6 @@
 {
   "slug": "what-to-expect-at-sentencing-hearing",
-  "last_checked": "2026-04-10T10:26:43.971Z",
+  "last_checked": "2026-04-11T04:55:45.590Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 37,
             "matches": [
-              "37 em dashes in 2985 words"
+              "37 em dashes in 2984 words"
             ],
             "points_added": 10
           }

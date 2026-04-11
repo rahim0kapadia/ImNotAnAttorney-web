@@ -30,6 +30,8 @@ import { fileURLToPath } from "url";
 // Re-use COMMON_CHARGES and JURISDICTIONS from the existing taxonomy script
 import { COMMON_CHARGES } from "./generate-charge-taxonomy.js";
 import type { CommonChargeDefinition } from "./generate-charge-taxonomy.js";
+// Claude Code session wrapper — runs under local `claude -p` CLI, no API credits.
+import { callClaude } from "./lib/blog-gen/claude-client.mjs";
 
 // ── Setup ────────────────────────────────────────────────────────────────────
 
@@ -155,41 +157,19 @@ const JURISDICTIONS: ReadonlyArray<{ code: string; name: string }> = [
 
 const MISSING_STATES = ["ID", "SC"];
 
-// ── Anthropic API ─────────────────────────────────────────────────────────────
+// ── Claude Code session (replaces direct Anthropic API) ────────────────────
+// Uses callClaude subprocess wrapper: spawns `claude -p` under the local
+// Claude Code session. Zero Anthropic API credits consumed.
 
 async function callAnthropicAPI(
   prompt: string,
-  maxTokens: number = 16000
+  _maxTokens: number = 16000
 ): Promise<string> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error("Missing ANTHROPIC_API_KEY — check .env.local");
-
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: maxTokens,
-      messages: [{ role: "user", content: prompt }],
-    }),
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Anthropic API error (${response.status}): ${text}`);
-  }
-
-  const data = (await response.json()) as {
-    content: Array<{ type: string; text?: string }>;
-  };
-  const textBlock = data.content.find((b) => b.type === "text");
-  if (!textBlock?.text) throw new Error("No text block in Anthropic response");
-  return textBlock.text;
+  const result = await callClaude({ userPrompt: prompt });
+  if (!result?.text) throw new Error("No text returned from claude -p");
+  return result.text as string;
 }
+
 
 function stripMarkdownFences(raw: string): string {
   let s = raw.trim();

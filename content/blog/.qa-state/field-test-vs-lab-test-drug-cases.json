@@ -1,6 +1,6 @@
 {
   "slug": "field-test-vs-lab-test-drug-cases",
-  "last_checked": "2026-04-10T11:38:46.537Z",
+  "last_checked": "2026-04-11T04:55:40.979Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 21.2,
         "pattern_score": 10,
-        "uniformity_score": 47.4,
+        "uniformity_score": 47.5,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
             "count": 49,
             "matches": [
-              "49 em dashes in 2489 words"
+              "49 em dashes in 2492 words"
             ],
             "points_added": 10
           }

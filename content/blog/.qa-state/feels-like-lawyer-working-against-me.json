@@ -1,6 +1,6 @@
 {
   "slug": "feels-like-lawyer-working-against-me",
-  "last_checked": "2026-04-10T09:53:03.837Z",
+  "last_checked": "2026-04-11T04:55:40.699Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 34,
             "matches": [
-              "34 em dashes in 2888 words"
+              "34 em dashes in 2896 words"
             ],
             "points_added": 10
           }

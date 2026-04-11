@@ -1,6 +1,6 @@
 {
   "slug": "wire-fraud-defense-questions",
-  "last_checked": "2026-04-10T18:16:22.884Z",
+  "last_checked": "2026-04-11T04:55:46.007Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,7 +26,7 @@
             "severity": "style",
             "count": 51,
             "matches": [
-              "51 em dashes in 3941 words"
+              "51 em dashes in 3951 words"
             ],
             "points_added": 10
           }

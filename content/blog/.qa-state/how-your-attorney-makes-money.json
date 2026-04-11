@@ -1,6 +1,6 @@
 {
   "slug": "how-your-attorney-makes-money",
-  "last_checked": "2026-04-10T18:30:27.508Z",
+  "last_checked": "2026-04-11T04:55:42.439Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -15,9 +15,9 @@
           {
             "detector": "em_dash_density",
             "severity": "style",
-            "count": 12,
+            "count": 13,
             "matches": [
-              "12 em dashes in 3725 words"
+              "13 em dashes in 3737 words"
             ],
             "points_added": 10
           },

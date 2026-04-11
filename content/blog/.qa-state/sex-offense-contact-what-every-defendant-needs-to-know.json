@@ -1,6 +1,6 @@
 {
   "slug": "sex-offense-contact-what-every-defendant-needs-to-know",
-  "last_checked": "2026-04-10T10:12:50.595Z",
+  "last_checked": "2026-04-11T04:55:43.739Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 15,
             "matches": [
-              "15 em dashes in 4782 words"
+              "15 em dashes in 4795 words"
             ],
             "points_added": 10
           },

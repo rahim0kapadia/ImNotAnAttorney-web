@@ -1,6 +1,6 @@
 {
   "slug": "why-is-my-criminal-case-taking-so-long",
-  "last_checked": "2026-04-10T18:14:22.945Z",
+  "last_checked": "2026-04-11T04:55:45.720Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -26,7 +26,7 @@
             "severity": "style",
             "count": 67,
             "matches": [
-              "67 em dashes in 2771 words"
+              "67 em dashes in 2778 words"
             ],
             "points_added": 10
           }

@@ -8,13 +8,17 @@
     "start": "next start",
     "lint": "eslint",
     "check-tiers": "node scripts/check-tiers.mjs",
+    "qa:blog": "node scripts/qa-existing-post.mjs",
+    "qa:blog:all": "node scripts/qa-existing-post.mjs --all",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepare": "git config core.hooksPath scripts/hooks || true"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.82.0",
     "@supabase/supabase-js": "^2.97.0",
     "@vercel/analytics": "^1.6.1",
+    "dotenv": "^17.4.1",
     "framer-motion": "^12.35.2",
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.7.0",
@@ -34,6 +38,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.0",
+    "csv-parse": "^6.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "eslint-plugin-jsx-a11y": "^6.10.2",

@@ -1,6 +1,6 @@
 {
   "slug": "trafficking-charges-constructive-possession",
-  "last_checked": "2026-04-10T18:10:12.216Z",
+  "last_checked": "2026-04-11T04:55:44.545Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -17,7 +17,7 @@
             "severity": "style",
             "count": 48,
             "matches": [
-              "48 em dashes in 2566 words"
+              "48 em dashes in 2580 words"
             ],
             "points_added": 10
           }

@@ -203,7 +203,7 @@ export default function SimilarCasesAnalyzerPage() {
               href="/checkout?tier=similar-cases-analyzer"
               className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-black hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
             >
-              Get Your Similar Cases Analysis
+              Get Your Similar Cases Analysis &mdash; $297
             </Link>
           </FadeInUp>
         </section>
@@ -406,7 +406,7 @@ export default function SimilarCasesAnalyzerPage() {
               href="/checkout?tier=similar-cases-analyzer"
               className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-black hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
             >
-              Get Your Similar Cases Analysis
+              Get Your Similar Cases Analysis &mdash; $297
             </Link>
             <p className="mt-6 text-xs text-zinc-500">
               This product provides legal information — verified court data

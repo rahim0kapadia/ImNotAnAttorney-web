@@ -1,0 +1,56 @@
+=== BULK APPEAL OUTCOME CORRELATOR ===
+
+Phases to run: 2, 2, 2
+Dry run: false, Apply mode: true
+
+=== PHASE 2: Stream Opinions CSV → Classify Citing Opinions ===
+
+Loaded 7467956 citing opinion IDs to classify (from 7697 JSONL lines)
+
+  0.5M rows, 379426 opinions classified (989s)
+  1.0M rows, 741248 opinions classified (2258s)
+  1.5M rows, 1124352 opinions classified (3314s)
+  2.0M rows, 1392258 opinions classified (3870s)
+  2.5M rows, 1689715 opinions classified (4599s)
+  3.0M rows, 2020161 opinions classified (5622s)
+  3.5M rows, 2412634 opinions classified (7025s)
+  4.0M rows, 2819226 opinions classified (11391s)
+  4.5M rows, 3131228 opinions classified (12156s)
+  5.0M rows, 3411336 opinions classified (12781s)
+  5.5M rows, 3634698 opinions classified (13251s)
+  6.0M rows, 3977469 opinions classified (13931s)
+  6.5M rows, 4325087 opinions classified (14853s)
+  7.0M rows, 4645600 opinions classified (15603s)
+  7.5M rows, 5011599 opinions classified (16655s)
+  8.0M rows, 5347710 opinions classified (17661s)
+  8.5M rows, 5716057 opinions classified (18975s)
+  9.0M rows, 6146058 opinions classified (20623s)
+  9.5M rows, 6551161 opinions classified (28079s)
+  10.0M rows, 6901142 opinions classified (28957s)
+  10.5M rows, 7282174 opinions classified (29961s)
+
+Stream complete: 10745929 rows in 506.4 min
+Opinions matched: 7467802
+Opinions classified: 8643
+
+Saved Phase 2 output: C:\Users\email\projects\ImNotAnAttorney-web\data\bulk-verify\good-law-graph\appeal-classifications.json
+
+--- Outcomes ---
+  reversed        5847
+  affirmed        2053
+  other           743
+
+--- Argument Types ---
+  fourth_amendment          2204
+  sixth_amendment           1617
+  fifth_amendment           1179
+  fourteenth_amendment      1169
+  jury_instruction          471
+  sufficiency_of_evidence   442
+  double_jeopardy           278
+  eighth_amendment          225
+  sentencing                202
+  ineffective_assistance    197
+
+
+=== COMPLETE ===

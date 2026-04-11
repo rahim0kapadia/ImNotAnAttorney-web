@@ -1,6 +1,6 @@
 {
   "slug": "dui-first-72-hours-what-to-do",
-  "last_checked": "2026-04-10T09:49:49.656Z",
+  "last_checked": "2026-04-11T04:55:40.136Z",
   "all_passed": false,
   "gates": {
     "humanizer": {
@@ -10,14 +10,14 @@
       "details": {
         "composite_score": 24.9,
         "pattern_score": 15,
-        "uniformity_score": 48.1,
+        "uniformity_score": 48,
         "flagged_patterns": [
           {
             "detector": "em_dash_density",
             "severity": "style",
-            "count": 57,
+            "count": 58,
             "matches": [
-              "57 em dashes in 3365 words"
+              "58 em dashes in 3377 words"
             ],
             "points_added": 10
           },
