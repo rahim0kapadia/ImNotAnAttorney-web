@@ -226,26 +226,55 @@ function restQuery(endpoint, headers = {}) {
 
 // ── Feature vector building ─────────────────────────────────────────────────
 
+// Full state name → 2-letter code (checked FIRST to avoid false positives
+// from naive 2-letter substring matching, e.g. "COURT" → "CO", "APPEAL" → "AL")
+const STATE_NAMES = {
+  "ALABAMA": "AL", "ALASKA": "AK", "ARIZONA": "AZ", "ARKANSAS": "AR",
+  "CALIFORNIA": "CA", "COLORADO": "CO", "CONNECTICUT": "CT", "DELAWARE": "DE",
+  "FLORIDA": "FL", "GEORGIA": "GA", "HAWAII": "HI", "IDAHO": "ID",
+  "ILLINOIS": "IL", "INDIANA": "IN", "IOWA": "IA", "KANSAS": "KS",
+  "KENTUCKY": "KY", "LOUISIANA": "LA", "MAINE": "ME", "MARYLAND": "MD",
+  "MASSACHUSETTS": "MA", "MICHIGAN": "MI", "MINNESOTA": "MN", "MISSISSIPPI": "MS",
+  "MISSOURI": "MO", "MONTANA": "MT", "NEBRASKA": "NE", "NEVADA": "NV",
+  "NEW HAMPSHIRE": "NH", "NEW JERSEY": "NJ", "NEW MEXICO": "NM", "NEW YORK": "NY",
+  "NORTH CAROLINA": "NC", "NORTH DAKOTA": "ND", "OHIO": "OH", "OKLAHOMA": "OK",
+  "OREGON": "OR", "PENNSYLVANIA": "PA", "RHODE ISLAND": "RI", "SOUTH CAROLINA": "SC",
+  "SOUTH DAKOTA": "SD", "TENNESSEE": "TN", "TEXAS": "TX", "UTAH": "UT",
+  "VERMONT": "VT", "VIRGINIA": "VA", "WASHINGTON": "WA", "WEST VIRGINIA": "WV",
+  "WISCONSIN": "WI", "WYOMING": "WY", "DISTRICT OF COLUMBIA": "DC",
+};
+
+// Pre-sort state names by length descending so "NEW YORK" matches before "NEW",
+// "WEST VIRGINIA" before "VIRGINIA", "NORTH CAROLINA" before "NORTH", etc.
+const STATE_NAMES_SORTED = Object.entries(STATE_NAMES)
+  .sort((a, b) => b[0].length - a[0].length);
+
 function extractJurisdiction(courtName) {
   if (!courtName) return null;
   const upper = courtName.toUpperCase();
 
-  // Common state patterns (case-insensitive)
-  const states = [
+  // Pass 1: Full state names (longest match first)
+  for (const [name, code] of STATE_NAMES_SORTED) {
+    if (upper.indexOf(name) >= 0) return code;
+  }
+
+  // Pass 2: Word-boundary 2-letter state abbreviations
+  // Use word-boundary regex so "COURT" doesn't match "CO" and "APPEAL" doesn't match "AL"
+  const VALID_STATE_CODES = new Set([
     "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
     "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
     "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
     "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
-  ];
-
-  for (const state of states) {
-    if (upper.indexOf(state) >= 0) return state;
+    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC",
+  ]);
+  const matches = upper.match(/\b([A-Z]{2})\b/g);
+  if (matches) {
+    for (const m of matches) {
+      if (VALID_STATE_CODES.has(m)) return m;
+    }
   }
 
-  // Fall back to two-letter extraction if pattern not matched
-  const match = upper.match(/\b([A-Z]{2})\b/);
-  return match ? match[1] : null;
+  return null;
 }
 
 function classifyCourtLevel(courtName) {
@@ -401,37 +430,42 @@ async function main() {
     console.log(`  charge_slug will be NULL for all rows.`);
   }
 
-  // Phase 1: Load all good-law cases from DB
-  console.log("\nPhase 1: Loading good-law cases from DB...");
+  // Phase 1: Load good-law cases from dump file
+  // The live verified_case_law table has 0 rows, but the dump file has 34,564
+  // rows (statute_case_law) including 2,141 with is_good_law=true.
+  // The dump is already loaded in Phase 0, so we reuse it here.
+  console.log("\nPhase 1: Loading good-law cases from dump file...");
 
   let allCases = [];
-  let offset = 0;
-  const pageSize = 1000;
 
-  while (true) {
-    const query = `/rest/v1/verified_case_law?select=courtlistener_cluster_id,court,year,party_side,outcome,motion_types,legal_issues,benefit_type&is_good_law=eq.true&limit=${pageSize}&offset=${offset}`;
+  if (fs.existsSync(DUMP_FILE)) {
+    const dumpRows = JSON.parse(fs.readFileSync(DUMP_FILE, "utf8"));
 
-    try {
-      const rows = await restQuery(query);
+    for (const row of dumpRows) {
+      // Filter: must have cluster_id and be confirmed good law
+      if (!row.courtlistener_cluster_id) continue;
+      if (row.is_good_law !== true) continue;
 
-      if (!Array.isArray(rows) || rows.length === 0) break;
+      allCases.push({
+        courtlistener_cluster_id: row.courtlistener_cluster_id,
+        court: row.court || null,
+        year: row.year || null,
+        party_side: row.party_side || null,
+        outcome: row.outcome || null,
+        // These columns don't exist in the statute_case_law dump;
+        // the feature vectors will use empty arrays / null, which is
+        // still valid for k-NN (Jaccard of two empty sets = 1.0).
+        motion_types: row.motion_types || [],
+        legal_issues: row.legal_issues || [],
+        benefit_type: row.benefit_type || null,
+      });
 
-      allCases = allCases.concat(rows);
-      console.log(`  Loaded ${allCases.length} cases...`);
-
-      if (rows.length < pageSize) break;
-      offset += pageSize;
-
-      if (allCases.length >= limit) {
-        allCases = allCases.slice(0, limit);
-        break;
-      }
-
-      await sleep(200); // Rate limiting
-    } catch (e) {
-      console.error(`Error loading cases at offset ${offset}:`, e.message);
-      break;
+      if (allCases.length >= limit) break;
     }
+  } else {
+    console.log(`  WARNING: Dump file not found at ${DUMP_FILE}`);
+    console.log(`  Cannot load cases — aborting.`);
+    return;
   }
 
   console.log(`Total good-law cases loaded: ${allCases.length}`);

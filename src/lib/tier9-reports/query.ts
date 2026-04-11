@@ -297,7 +297,9 @@ export async function queryJudgeReportCard(
     sentencingDistributions: sentencing.data ?? [],
     prosecutorPairings: pairings.data ?? [],
     benchJuryDivergence: divergence.data ?? [],
-    quotes: quotes.data ?? [],
+    quotes: (quotes.data ?? [])
+      .filter((q) => q.quote && q.quote.length >= 40)
+      .sort((a, b) => b.quote.length - a.quote.length),
     appellateTrends: appellate.data ?? [],
     usscPatterns: usscData.data?.[0] ?? null,
     isEmpty: false,
