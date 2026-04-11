@@ -319,7 +319,7 @@ async function main() {
   let withDataCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
+  try { for await (const record of parser) {
     rowCount++;
     if (rowCount % 500000 === 0) {
       const elapsed = (Date.now() - startTime) / 1000;
@@ -377,6 +377,9 @@ async function main() {
       bzcat.kill();
       break;
     }
+  } } catch (parseErr) {
+    console.warn(`\n  CSV parse error (continuing with ${withDataCount} extractions): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
