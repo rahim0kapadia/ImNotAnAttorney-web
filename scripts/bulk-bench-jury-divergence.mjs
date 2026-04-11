@@ -212,7 +212,7 @@ async function loadJudgeProfiles() {
   return new Promise((resolve, reject) => {
     const req = https.request({
       hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
-      path: "/rest/v1/judge_profiles?select=id,name&limit=50000",
+      path: "/rest/v1/judge_profiles?select=id,full_name,cl_person_id&limit=50000",
       method: "GET",
       headers: {
         apikey: serviceRoleKey,
@@ -265,9 +265,11 @@ async function main() {
   }
 
   const judgeByNameLower = new Map();
+  const judgeByClPersonId = new Map();
   for (const j of judges) {
-    const nameLower = (j.name || "").toLowerCase();
+    const nameLower = (j.full_name || "").toLowerCase();
     if (nameLower) judgeByNameLower.set(nameLower, j.id);
+    if (j.cl_person_id) judgeByClPersonId.set(j.cl_person_id, j.id);
   }
 
   const bzcatPath = findBzcat();
@@ -311,11 +313,15 @@ async function main() {
 
     classifiedCount++;
 
-    // Find judge by author name
-    const author = (record.author || "").toLowerCase().trim();
+    // Find judge by author_id (CL person ID) or author_str (name fallback)
     let judgeId = null;
-    if (author) {
-      judgeId = judgeByNameLower.get(author);
+    const authorId = record.author_id;
+    if (authorId) {
+      judgeId = judgeByClPersonId.get(authorId);
+    }
+    if (!judgeId) {
+      const authorName = (record.author_str || "").toLowerCase().trim();
+      if (authorName) judgeId = judgeByNameLower.get(authorName);
     }
     if (!judgeId) continue;
 
