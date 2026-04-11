@@ -53,8 +53,12 @@ Continued execution of `docs/plans/2026-04-11-tier9-data-readiness.md`. Phase 2 
 - `bulk-bench-jury-divergence.mjs --apply` — background process, ~4 hours remaining
 - When complete: `bench_jury_divergence` table will have rows, `judge_profiles.bench_acquittal_rate`/`jury_acquittal_rate` will be populated
 
+### Additional DI Platform Phase 0 work (after initial handoff)
+- co_defendant_analysis table recreated + seeded (413 rows from bulk SQL)
+- sentencing_distributions bulk loaded (11→133 rows, jurisdiction-level aggregates)
+- appellate_trends jurisdiction data loaded (1,011/1,523 now have real state codes)
+
 ## Remaining (lower priority, future sessions)
-- **Phase 1h**: co_defendant_analysis — table doesn't exist yet, Situation Room only
 - **Similar Cases FL data**: case_feature_vectors has 28 DUI rows but none in FL. Need FL-specific case extraction.
 - **Quote quality**: Many quotes are very short ("We reverse.", "We affirm Mrs."). Future: min-length filter or relevance scoring.
 - **Quote ordering in reports**: Currently unordered. Could sort topic-specific first in the query.
@@ -71,12 +75,14 @@ node scripts/e2e-tier9.mjs      # all 3 SKUs pass
 |-------|------|------------|
 | judge_profiles | 15,613 | 15,386 jurisdiction, 492 quotes, 0 bench_rate (pending) |
 | judge_quotes | 64,730 | 15,652 linked, 5,494 topic-classified |
-| sentencing_distributions | 11 | 11 with judge_id |
-| bench_jury_divergence | 0 | Pending (script running) |
+| sentencing_distributions | 133 | 11 per-judge + 122 jurisdiction-level |
+| bench_jury_divergence | 0 | Pending (script running ~4hrs) |
 | officer_reliability | 1,524 | Cleaned |
 | case_feature_vectors | 1,008 | 1,008 with charge_slug |
-| appellate_trends | 1,523 | jurisdiction="unknown" (query accepts fallback) |
+| appellate_trends | 1,523 | 1,011 with real jurisdiction |
 | plea_discount_curves | 4 | Cleaned |
+| co_defendant_analysis | 413 | Recreated + seeded |
+| judge_prosecutor_pairings | 205 | Existing data |
 
 ## Ready-to-Paste Prompt for Next Session
 ```
