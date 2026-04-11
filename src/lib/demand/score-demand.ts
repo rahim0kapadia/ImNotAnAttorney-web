@@ -74,6 +74,7 @@ export interface ContentGapRow {
   suggested_title: string;
   suggested_keywords: string[];
   status: string;
+  article_type: "hub" | "spoke";
 }
 
 export interface EmergingTopicRow {
@@ -104,6 +105,8 @@ interface PainPoint {
   blog_slug: string | null;
   title: string;
   category: string;
+  blog_title?: string;
+  target_keyword?: string;
 }
 
 interface ContentPost {
@@ -129,7 +132,7 @@ async function loadChargeTypes(supabase: SupabaseClient): Promise<ChargeType[]> 
 async function loadPainPoints(supabase: SupabaseClient): Promise<PainPoint[]> {
   const { data } = await supabase
     .from("content_pain_points")
-    .select("blog_slug, title, category");
+    .select("blog_slug, title, category, blog_title, target_keyword");
   return data || [];
 }
 
@@ -321,7 +324,8 @@ async function computeContentGaps(
   scores: DemandScoreRow[],
   contentPosts: ContentPost[],
   painPointCategories: PainPointCategory[],
-  feedbackByCharge: Record<string, number>
+  feedbackByCharge: Record<string, number>,
+  painPoints: PainPoint[]
 ): Promise<ContentGapRow[]> {
   // Map pain_point_id → category (charge type inference)
   const ppIdToCategory: Record<number, string> = {};
@@ -380,25 +384,49 @@ async function computeContentGaps(
   const recentScores = scores.filter(s => s.window_label === "7d");
 
   for (const score of recentScores) {
-    if (score.dimension_type !== "charge_type") continue;
     if (!["GOLD_MINE", "RISKY_BET"].includes(score.quadrant)) continue;
     if (score.content_gap_score < 7) continue;
 
-    const key = `${score.dimension_slug}:`;
+    let gapChargeType: string;
+    let gapPainPoint: string | null;
+    let articleType: "hub" | "spoke";
+    let suggestedTitle: string;
+    let suggestedKeywords: string[];
+
+    if (score.dimension_type === "charge_type") {
+      gapChargeType = score.dimension_slug;
+      gapPainPoint = null;
+      articleType = "hub";
+      suggestedTitle = `${score.dimension_label}: What Every Defendant Needs to Know`;
+      suggestedKeywords = [score.dimension_slug.split("-").join(" ")];
+    } else {
+      const parentPP = painPoints.find(pp => pp.blog_slug === score.dimension_slug);
+      if (!parentPP) continue;
+      gapChargeType = parentPP.category.toLowerCase().replace(/ /g, "-");
+      gapPainPoint = score.dimension_slug;
+      articleType = "spoke";
+      suggestedTitle = parentPP.blog_title || score.dimension_label;
+      suggestedKeywords = parentPP.target_keyword
+        ? [parentPP.target_keyword]
+        : [score.dimension_slug.split("-").join(" ")];
+    }
+
+    const key = `${gapChargeType}:${gapPainPoint ?? ""}`;
     if (seen.has(key)) continue;
     seen.add(key);
 
     gaps.push({
-      charge_type_slug: score.dimension_slug,
-      pain_point_slug: null,
+      charge_type_slug: gapChargeType,
+      pain_point_slug: gapPainPoint,
       demand_quadrant: score.quadrant,
       demand_score: score.demand_score,
       has_blog_post: score.has_blog_coverage,
       blog_slug: null,
       gap_score: score.content_gap_score,
-      suggested_title: `${score.dimension_label}: What Every Defendant Needs to Know`,
-      suggested_keywords: [score.dimension_slug.split("-").join(" ")],
+      suggested_title: suggestedTitle,
+      suggested_keywords: suggestedKeywords,
       status: "identified",
+      article_type: articleType,
     });
   }
 
@@ -608,7 +636,7 @@ export async function scoreDemand(supabase: SupabaseClient): Promise<ScoreResult
   }
 
   // Compute content gaps (mutates allScores to fill blog coverage fields)
-  const gaps = await computeContentGaps(allScores, contentPosts, ppCategories, feedbackByCharge);
+  const gaps = await computeContentGaps(allScores, contentPosts, ppCategories, feedbackByCharge, painPoints);
   console.log(`[score-demand] Content gaps identified: ${gaps.length}`);
 
   // Detect emerging topics
