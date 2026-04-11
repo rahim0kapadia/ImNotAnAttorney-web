@@ -193,18 +193,18 @@ export async function queryJudgeReportCard(
 ): Promise<JudgeReportCardData> {
   const supabase = createAdminClient();
 
-  // Look up judge by name (case-insensitive, escaped) + jurisdiction
+  // Look up judge by name (case-insensitive, escaped).
+  // Note: judge_profiles has no jurisdiction/court columns — derive from positions JSONB.
   const safeName = escapeIlike(intake.judgeName);
   const { data: judges } = await supabase
     .from("judge_profiles")
-    .select("id, name, court, jurisdiction, sentencing_distributions, judicial_quotes, bench_acquittal_rate, jury_acquittal_rate")
-    .ilike("name", `%${safeName}%`)
-    .eq("jurisdiction", intake.state)
-    .limit(1);
+    .select("id, full_name, positions, sentencing_distributions, judicial_quotes, bench_acquittal_rate, jury_acquittal_rate")
+    .ilike("full_name", `%${safeName}%`)
+    .limit(5);
 
-  const judge = judges?.[0] ?? null;
+  const rawJudge = judges?.[0] ?? null;
 
-  if (!judge) {
+  if (!rawJudge) {
     return {
       judge: null,
       sentencingDistributions: [],
@@ -216,6 +216,24 @@ export async function queryJudgeReportCard(
       isEmpty: true,
     };
   }
+
+  // Derive court from positions JSONB (most recent judicial appointment)
+  const judicialPosition = Array.isArray(rawJudge.positions)
+    ? (rawJudge.positions as Array<{ court_id?: string; position_type?: string }>)
+        .filter((p) => p.position_type === "jud" && p.court_id)
+        .sort((a, b) => (b.court_id ?? "").localeCompare(a.court_id ?? ""))[0]
+    : null;
+
+  const judge = {
+    id: rawJudge.id as string,
+    name: rawJudge.full_name as string,
+    court: (judicialPosition?.court_id as string) ?? null,
+    jurisdiction: null as string | null,
+    sentencing_distributions: rawJudge.sentencing_distributions,
+    judicial_quotes: rawJudge.judicial_quotes,
+    bench_acquittal_rate: rawJudge.bench_acquittal_rate as number | null,
+    jury_acquittal_rate: rawJudge.jury_acquittal_rate as number | null,
+  };
 
   // Parallel queries for all related data
   const [sentencing, pairings, divergence, quotes, appellate, usscData] =
@@ -278,21 +296,31 @@ export async function queryOfficerBackground(
   const supabase = createAdminClient();
 
   const safeOfficerName = escapeIlike(intake.officerName);
-  const [reliability, external] = await Promise.all([
-    supabase
+
+  // Officer reliability: try with jurisdiction filter first, fall back to name-only
+  // (all existing rows have jurisdiction="multi", so filter always misses)
+  let reliability = await supabase
+    .from("officer_reliability")
+    .select("officer_name, court, jurisdiction, testimony_count, discredited_count, reliability_score, brady_history, source_urls")
+    .ilike("officer_name", `%${safeOfficerName}%`)
+    .eq("jurisdiction", intake.state)
+    .limit(20);
+
+  if (!reliability.data?.length) {
+    reliability = await supabase
       .from("officer_reliability")
       .select("officer_name, court, jurisdiction, testimony_count, discredited_count, reliability_score, brady_history, source_urls")
       .ilike("officer_name", `%${safeOfficerName}%`)
-      .eq("jurisdiction", intake.state)
-      .limit(20),
+      .limit(20);
+  }
 
-    supabase
-      .from("officer_external_intel")
-      .select("officer_name, officer_name_normalized, state, agency, brady_status, brady_reason, npi_employment_history, npi_is_wandering_officer, decertified, decertification_reason, complaint_count, use_of_force_count, sustained_complaints, credibility_risk_score, source_urls, sources")
-      .ilike("officer_name_normalized", `%${safeOfficerName.toLowerCase()}%`)
-      .eq("state", intake.state)
-      .limit(20),
-  ]);
+  // External intel has proper state column — no fallback needed
+  const external = await supabase
+    .from("officer_external_intel")
+    .select("officer_name, officer_name_normalized, state, agency, brady_status, brady_reason, npi_employment_history, npi_is_wandering_officer, decertified, decertification_reason, complaint_count, use_of_force_count, sustained_complaints, credibility_risk_score, source_urls, sources")
+    .ilike("officer_name_normalized", `%${safeOfficerName.toLowerCase()}%`)
+    .eq("state", intake.state)
+    .limit(20);
 
   const hasData = (reliability.data?.length ?? 0) > 0 || (external.data?.length ?? 0) > 0;
 
