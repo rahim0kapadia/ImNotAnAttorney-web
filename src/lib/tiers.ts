@@ -254,7 +254,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode — flip after E2E verification
+    live: true as boolean, // LIVE — 2026-04-11
   },
   "officer-background-check": {
     name: "Officer Background Check",
@@ -269,7 +269,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode — flip after E2E verification
+    live: true as boolean, // LIVE — 2026-04-11
   },
   "similar-cases-analyzer": {
     name: "Similar Cases Analyzer",
@@ -284,7 +284,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode — flip after E2E verification
+    live: true as boolean, // LIVE — 2026-04-11
   },
   "witness-pack": {
     name: "Standalone Witness Pack",

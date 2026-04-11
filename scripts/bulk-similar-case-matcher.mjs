@@ -42,11 +42,67 @@ const SUPABASE_URL = "https://jxjbjmgdukwkoclydqdr.supabase.co";
 const BATCH_SIZE = 100;
 const K_NEIGHBORS = 10;
 
+const DUMP_FILE = path.join(PROJECT_ROOT, "data", "bulk-verify", "statute-case-law-dump.json");
+
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
 const applyMode = args.includes("--apply");
 const limitIdx = args.indexOf("--limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
+
+// ── Charge slug resolution ─────────────────────────────────────────────────
+// ALLOWED_CHARGE_TYPES from src/lib/charge-types.ts — values the intake form accepts.
+const ALLOWED_CHARGE_TYPES = new Set([
+  "drug-possession", "drug-trafficking", "dui", "dui-first", "dui-repeat",
+  "assault", "domestic-violence", "theft", "sex-offense", "sex-offense-contact",
+  "sex-offense-digital", "weapons", "white-collar", "federal",
+  "probation-violation", "self-defense", "other",
+  "drug", "other-felony", "other-misdemeanor", "robbery", "burglary", "fraud",
+]);
+
+// Map taxonomy common_charge_slugs → intake form charge types
+const TAXONOMY_TO_INTAKE = {
+  "dui-dwi": "dui", "dui-first-offense": "dui-first", "dui-repeat-offense": "dui-repeat",
+  "dui-drugs": "dui", "dui-underage": "dui", "dui-commercial": "dui",
+  "simple-assault": "assault", "aggravated-assault": "assault", "assault-deadly-weapon": "assault",
+  "theft-larceny": "theft", "grand-theft": "theft", "petty-theft": "theft", "shoplifting": "theft", "auto-theft": "theft",
+  "drug-possession-marijuana": "drug-possession", "drug-possession-with-intent": "drug-possession",
+  "drug-paraphernalia": "drug-possession", "drug-manufacturing": "drug-trafficking",
+  "domestic-violence": "domestic-violence", "domestic-battery": "domestic-violence",
+  "sex-offense-contact": "sex-offense-contact", "sex-offense-digital": "sex-offense-digital",
+  "indecent-exposure": "sex-offense", "sexual-battery": "sex-offense-contact",
+  "weapons-possession": "weapons", "felon-in-possession": "weapons", "concealed-carry-violation": "weapons",
+  "robbery": "robbery", "armed-robbery": "robbery",
+  "burglary": "burglary", "home-invasion": "burglary",
+  "fraud-general": "fraud", "fraud-wire": "fraud", "fraud-insurance": "fraud",
+  "identity-theft": "fraud", "forgery": "fraud",
+  "embezzlement": "white-collar", "money-laundering": "white-collar", "tax-evasion": "white-collar",
+  "probation-violation": "probation-violation",
+  "federal-other": "federal", "conspiracy": "federal", "racketeering": "federal",
+  "violation-protective-order": "domestic-violence", "receiving-stolen-property": "theft",
+};
+
+function resolveToIntake(taxonomySlug) {
+  if (!taxonomySlug) return null;
+  if (ALLOWED_CHARGE_TYPES.has(taxonomySlug)) return taxonomySlug;
+  if (TAXONOMY_TO_INTAKE[taxonomySlug]) return TAXONOMY_TO_INTAKE[taxonomySlug];
+  return "other";
+}
+
+function pickBestChargeSlug(slugs) {
+  if (!slugs || slugs.length === 0) return null;
+  if (slugs.length === 1) return resolveToIntake(slugs[0]);
+  const counts = {};
+  for (const raw of slugs) {
+    const resolved = resolveToIntake(raw);
+    if (resolved) counts[resolved] = (counts[resolved] || 0) + 1;
+  }
+  let best = null, bestCount = 0;
+  for (const [slug, count] of Object.entries(counts)) {
+    if (count > bestCount) { best = slug; bestCount = count; }
+  }
+  return best;
+}
 
 // ── Helper functions ────────────────────────────────────────────────────────
 
@@ -294,6 +350,57 @@ async function main() {
   loadTokens();
   console.log("Loaded tokens from .env files");
 
+  // Phase 0: Resolve charge slugs from dump file + jurisdiction_statutes FK
+  // Same pattern as bulk-master-extractor.mjs (lines 1680-1757).
+  // Without this, charge_slug is always NULL and the Similar Cases Analyzer
+  // product returns 0 results (it filters by charge_slug).
+  console.log("\nPhase 0: Resolving charge slugs from dump file...");
+
+  const clusterToChargeSlugs = new Map(); // cluster_id → raw_charge_slug[]
+
+  if (fs.existsSync(DUMP_FILE)) {
+    const dump = JSON.parse(fs.readFileSync(DUMP_FILE, "utf8"));
+    console.log(`  Dump rows: ${dump.length}`);
+
+    // Load jurisdiction_statutes resolver (paginated REST)
+    const jurStatuteMap = new Map(); // id → { charge_slug }
+    let jsOffset = 0;
+    while (jsOffset < 100000) {
+      try {
+        const pageRows = await restQuery(
+          `/rest/v1/jurisdiction_statutes?select=id,common_charge_slug&order=id&offset=${jsOffset}&limit=1000`
+        );
+        for (const row of pageRows) {
+          if (row.id && row.common_charge_slug) {
+            jurStatuteMap.set(row.id, row.common_charge_slug);
+          }
+        }
+        if (!Array.isArray(pageRows) || pageRows.length < 1000) break;
+        jsOffset += 1000;
+        await sleep(200);
+      } catch (e) {
+        console.error(`  jurisdiction_statutes load error at offset ${jsOffset}:`, e.message);
+        break;
+      }
+    }
+    console.log(`  jurisdiction_statutes loaded: ${jurStatuteMap.size}`);
+
+    // Map cluster_ids to charge slugs via dump FK
+    for (const row of dump) {
+      if (!row.courtlistener_cluster_id || !row.jurisdiction_statute_id) continue;
+      const cid = String(row.courtlistener_cluster_id);
+      const chargeSlug = jurStatuteMap.get(row.jurisdiction_statute_id);
+      if (chargeSlug) {
+        if (!clusterToChargeSlugs.has(cid)) clusterToChargeSlugs.set(cid, []);
+        clusterToChargeSlugs.get(cid).push(chargeSlug);
+      }
+    }
+    console.log(`  Clusters with charge data: ${clusterToChargeSlugs.size}`);
+  } else {
+    console.log(`  WARNING: Dump file not found at ${DUMP_FILE}`);
+    console.log(`  charge_slug will be NULL for all rows.`);
+  }
+
   // Phase 1: Load all good-law cases from DB
   console.log("\nPhase 1: Loading good-law cases from DB...");
 
@@ -383,17 +490,24 @@ async function main() {
       neighbors: neighbors,
     };
 
+    // Resolve charge_slug from dump file → jurisdiction_statutes FK
+    const rawSlugs = clusterToChargeSlugs.get(String(clusterIds[i]));
+    const resolvedSlug = pickBestChargeSlug(rawSlugs);
+
     featureVectorRows.push({
       cluster_id: clusterIds[i],
       features: features,
       jurisdiction: vectors[i].jurisdiction,
-      charge_slug: null, // No charge context in this phase
+      charge_slug: resolvedSlug,
     });
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
   console.log(`\nk-NN complete in ${elapsed.toFixed(1)}s`);
   console.log(`Feature vectors with neighbors: ${featureVectorRows.length}`);
+
+  const withChargeSlug = featureVectorRows.filter(r => r.charge_slug).length;
+  console.log(`Charge slug resolved: ${withChargeSlug}/${featureVectorRows.length}`);
 
   // Phase 4: Build upsert statements
   console.log("\nPhase 4: Building UPSERT statements...");
@@ -411,7 +525,7 @@ VALUES (
 ON CONFLICT (cluster_id) DO UPDATE SET
   features = EXCLUDED.features,
   jurisdiction = EXCLUDED.jurisdiction,
-  charge_slug = EXCLUDED.charge_slug;
+  charge_slug = COALESCE(EXCLUDED.charge_slug, case_feature_vectors.charge_slug);
 `.trim();
     stmts.push(stmt);
   }

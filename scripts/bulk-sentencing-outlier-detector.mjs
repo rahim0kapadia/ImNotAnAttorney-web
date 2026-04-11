@@ -238,7 +238,7 @@ function stripHtml(html) {
 // ── Judge name matching ─────────────────────────────────────────────────────
 
 async function loadJudges() {
-  const url = "https://jxjbjmgdukwkoclydqdr.supabase.co/rest/v1/judge_profiles?select=id,name&limit=50000";
+  const url = "https://jxjbjmgdukwkoclydqdr.supabase.co/rest/v1/judge_profiles?select=id,full_name&limit=50000";
   const envFile = fs.readFileSync(path.resolve(PROJECT_ROOT, ".env.local"), "utf8");
   let key = null;
   for (const line of envFile.split("\n")) {
@@ -262,8 +262,8 @@ async function loadJudges() {
           const judges = JSON.parse(data);
           const map = new Map();
           for (const j of judges) {
-            if (j.id && j.name) {
-              map.set(j.name.toLowerCase(), j.id);
+            if (j.id && j.full_name) {
+              map.set(j.full_name.toLowerCase(), j.id);
             }
           }
           resolve(map);
