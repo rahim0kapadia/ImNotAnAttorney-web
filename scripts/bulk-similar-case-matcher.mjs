@@ -18,7 +18,7 @@
  * O(n^2) k-NN: ~3,407 good-law cases → ~11.6M comparisons, <30sec
  *
  * Prerequisites:
- *   - statute_case_law rows with is_good_law=true
+ *   - verified_case_law rows with is_good_law=true
  *   - case_feature_vectors table exists (migration applied)
  *   - SUPABASE_SERVICE_ROLE_KEY from .env.local
  *   - SUPABASE_ACCESS_TOKEN from parent ImNotAnAttorney/.env.local
@@ -302,7 +302,7 @@ async function main() {
   const pageSize = 1000;
 
   while (true) {
-    const query = `/rest/v1/statute_case_law?select=courtlistener_cluster_id,court,year,party_side,outcome,motion_types,legal_issues,benefit_type&is_good_law=eq.true&limit=${pageSize}&offset=${offset}`;
+    const query = `/rest/v1/verified_case_law?select=courtlistener_cluster_id,court,year,party_side,outcome,motion_types,legal_issues,benefit_type&is_good_law=eq.true&limit=${pageSize}&offset=${offset}`;
 
     try {
       const rows = await restQuery(query);

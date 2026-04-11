@@ -57,6 +57,21 @@ export interface JudgeReportCardData {
     sample_size: number;
     source_urls: string[] | null;
   }>;
+  usscPatterns: {
+    total_cases: number;
+    median_sentence_months: number | null;
+    mean_sentence_months: number | null;
+    p25_sentence_months: number | null;
+    p75_sentence_months: number | null;
+    downward_departure_rate: number | null;
+    upward_departure_rate: number | null;
+    offense_breakdown: unknown;
+    retention_elections: unknown;
+    aba_rating: string | null;
+    aba_rating_year: number | null;
+    source_urls: string[];
+    data_period: string | null;
+  } | null;
   isEmpty: boolean;
 }
 
@@ -70,6 +85,24 @@ export interface OfficerBackgroundData {
     reliability_score: number | null;
     brady_history: unknown;
     source_urls: string[] | null;
+  }>;
+  externalIntel: Array<{
+    officer_name: string;
+    officer_name_normalized: string;
+    state: string | null;
+    agency: string | null;
+    brady_status: string | null;
+    brady_reason: string | null;
+    npi_employment_history: unknown;
+    npi_is_wandering_officer: boolean | null;
+    decertified: boolean;
+    decertification_reason: string | null;
+    complaint_count: number;
+    use_of_force_count: number;
+    sustained_complaints: number;
+    credibility_risk_score: number | null;
+    source_urls: string[];
+    sources: string[];
   }>;
   isEmpty: boolean;
 }
@@ -97,6 +130,20 @@ export interface SimilarCasesData {
     cooperation_bonus: number | null;
     sample_size: number;
     source_urls: string[] | null;
+  }>;
+  outcomeBenchmarks: Array<{
+    jurisdiction_level: string;
+    jurisdiction_name: string;
+    offense_type: string;
+    total_cases: number | null;
+    conviction_rate: number | null;
+    dismissal_rate: number | null;
+    median_sentence_months: number | null;
+    plea_rate: number | null;
+    trial_rate: number | null;
+    plea_trial_penalty_pct: number | null;
+    source_urls: string[];
+    data_period: string | null;
   }>;
   appellateTrends: Array<{
     argument_type: string;
@@ -165,12 +212,13 @@ export async function queryJudgeReportCard(
       benchJuryDivergence: [],
       quotes: [],
       appellateTrends: [],
+      usscPatterns: null,
       isEmpty: true,
     };
   }
 
   // Parallel queries for all related data
-  const [sentencing, pairings, divergence, quotes, appellate] =
+  const [sentencing, pairings, divergence, quotes, appellate, usscData] =
     await Promise.all([
       supabase
         .from("sentencing_distributions")
@@ -204,6 +252,12 @@ export async function queryJudgeReportCard(
         .eq("jurisdiction", intake.state)
         .order("sample_size", { ascending: false })
         .limit(20),
+
+      supabase
+        .from("judge_sentencing_patterns")
+        .select("total_cases, median_sentence_months, mean_sentence_months, p25_sentence_months, p75_sentence_months, downward_departure_rate, upward_departure_rate, offense_breakdown, retention_elections, aba_rating, aba_rating_year, source_urls, data_period")
+        .ilike("judge_name_normalized", `%${safeName.toLowerCase()}%`)
+        .limit(1),
     ]);
 
   return {
@@ -213,6 +267,7 @@ export async function queryJudgeReportCard(
     benchJuryDivergence: divergence.data ?? [],
     quotes: quotes.data ?? [],
     appellateTrends: appellate.data ?? [],
+    usscPatterns: usscData.data?.[0] ?? null,
     isEmpty: false,
   };
 }
@@ -223,16 +278,28 @@ export async function queryOfficerBackground(
   const supabase = createAdminClient();
 
   const safeOfficerName = escapeIlike(intake.officerName);
-  const { data: officers } = await supabase
-    .from("officer_reliability")
-    .select("officer_name, court, jurisdiction, testimony_count, discredited_count, reliability_score, brady_history, source_urls")
-    .ilike("officer_name", `%${safeOfficerName}%`)
-    .eq("jurisdiction", intake.state)
-    .limit(20);
+  const [reliability, external] = await Promise.all([
+    supabase
+      .from("officer_reliability")
+      .select("officer_name, court, jurisdiction, testimony_count, discredited_count, reliability_score, brady_history, source_urls")
+      .ilike("officer_name", `%${safeOfficerName}%`)
+      .eq("jurisdiction", intake.state)
+      .limit(20),
+
+    supabase
+      .from("officer_external_intel")
+      .select("officer_name, officer_name_normalized, state, agency, brady_status, brady_reason, npi_employment_history, npi_is_wandering_officer, decertified, decertification_reason, complaint_count, use_of_force_count, sustained_complaints, credibility_risk_score, source_urls, sources")
+      .ilike("officer_name_normalized", `%${safeOfficerName.toLowerCase()}%`)
+      .eq("state", intake.state)
+      .limit(20),
+  ]);
+
+  const hasData = (reliability.data?.length ?? 0) > 0 || (external.data?.length ?? 0) > 0;
 
   return {
-    officers: officers ?? [],
-    isEmpty: !officers || officers.length === 0,
+    officers: reliability.data ?? [],
+    externalIntel: external.data ?? [],
+    isEmpty: !hasData,
   };
 }
 
@@ -244,7 +311,7 @@ export async function querySimilarCases(
   // chargeType from intake is already in slug format (from ALLOWED_CHARGE_TYPES allowlist)
   const chargeSlug = intake.chargeType;
 
-  const [vectors, sentencing, plea, appellate] = await Promise.all([
+  const [vectors, sentencing, plea, appellate, benchmarks] = await Promise.all([
     supabase
       .from("case_feature_vectors")
       .select("cluster_id, features, jurisdiction, charge_slug")
@@ -273,18 +340,27 @@ export async function querySimilarCases(
       .eq("jurisdiction", intake.state)
       .order("sample_size", { ascending: false })
       .limit(20),
+
+    supabase
+      .from("outcome_benchmarks")
+      .select("jurisdiction_level, jurisdiction_name, offense_type, total_cases, conviction_rate, dismissal_rate, median_sentence_months, plea_rate, trial_rate, plea_trial_penalty_pct, source_urls, data_period")
+      .eq("offense_type", chargeSlug)
+      .in("jurisdiction_level", ["national", "state"])
+      .limit(10),
   ]);
 
   const hasData =
     (vectors.data?.length ?? 0) > 0 ||
     (sentencing.data?.length ?? 0) > 0 ||
-    (plea.data?.length ?? 0) > 0;
+    (plea.data?.length ?? 0) > 0 ||
+    (benchmarks.data?.length ?? 0) > 0;
 
   return {
     featureVectors: vectors.data ?? [],
     sentencingDistributions: sentencing.data ?? [],
     pleaDiscountCurves: plea.data ?? [],
     appellateTrends: appellate.data ?? [],
+    outcomeBenchmarks: benchmarks.data ?? [],
     isEmpty: !hasData,
   };
 }

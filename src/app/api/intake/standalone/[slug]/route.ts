@@ -96,6 +96,10 @@ const VALID_BREATHALYZER_TYPES = new Set([
   "intoxilyzer", "datamaster", "draeger", "unknown",
 ]);
 
+const VALID_MEDIA_TYPES = new Set([
+  "bodycam", "dashcam", "interview", "surveillance", "other",
+]);
+
 const VALID_CONVICTION_OR_DISMISSAL = new Set(["conviction", "dismissal"]);
 
 const VALID_APPEAL_DEADLINE_STATUS = new Set([
@@ -140,6 +144,13 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   "case-law-intelligence": new Set(["motionFocus"]),
   "expert-witness-challenge": new Set(["expertField"]),
   "discovery-demand-letter": new Set(["arrestDate", "discoveryReceivedSoFar"]),
+  // Priority B — Critical 7 worker standalone products
+  "plea-analyzer": new Set(["sentencingExposure"]),
+  "ach-matrix": new Set(["alternativeExplanations"]),
+  "adversarial-prosecution-sim": new Set(["prosecutionTheory"]),
+  "sentencing-intelligence": new Set(["priorConvictions", "currentSentencingRange"]),
+  "daubert-challenge": new Set(["expertMethodology"]),
+  "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles — product-specific fields are optional since users may not have all data
   "first-72-hours": new Set(["flightRiskFactors", "currentBailAmount"]),
   "defense-preparation": new Set([
@@ -166,6 +177,10 @@ const LONG_TEXT_FIELDS = new Set([
   "locationDescription",
   // Court case port — Wave 2+3 SKUs
   "discoveryReceivedSoFar",
+  // Priority B — Critical 7 worker standalone products
+  "pleaOfferDetails", "knownEvidence", "alternativeExplanations",
+  "defenseStrategy", "prosecutionTheory", "expertMethodology",
+  "incidentDescription", "defenseTheory",
 ]);
 
 /** (C6) Sanitize free-text fields: strip control chars, triple-quotes, limit length. */
@@ -348,6 +363,9 @@ export async function POST(
     }
     if (field === "breathalyzerType" && !VALID_BREATHALYZER_TYPES.has(String(raw))) {
       return NextResponse.json({ error: "Invalid breathalyzer type" }, { status: 400 });
+    }
+    if (field === "mediaType" && !VALID_MEDIA_TYPES.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid media type" }, { status: 400 });
     }
 
     // Boolean fields

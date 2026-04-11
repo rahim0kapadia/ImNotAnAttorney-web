@@ -171,6 +171,10 @@ export interface IBVariables {
   codefendant_divergence_summary?: string;
   plea_discount_curve_summary?: string;
 
+  // External Intelligence Layer — Phase 1
+  outcome_benchmarks_summary?: string;
+  sentencing_range_context?: string;
+
   // Expansion fields (from 6 new intake fields)
   criminal_history: string;
   criminal_history_label: string;

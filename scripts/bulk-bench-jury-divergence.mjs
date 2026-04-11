@@ -14,7 +14,7 @@
  *   - Group by judge_id + charge_slug
  *   - bench_acquittal_rate = bench_acquittals / bench_total
  *   - jury_acquittal_rate = jury_acquittals / jury_total
- *   - Only include groups with bench_sample >= 2 AND jury_sample >= 2
+ *   - Only include groups with bench_sample >= 1 AND jury_sample >= 1
  *
  * Applies via:
  *   INSERT INTO bench_jury_divergence (judge_id, charge_slug, bench_acquittal_rate, jury_acquittal_rate, bench_sample, jury_sample, source_urls)
@@ -350,8 +350,8 @@ async function main() {
     const benchTotal = benchTrials.length;
     const juryTotal = juryTrials.length;
 
-    // Only include if both have >= 2 samples
-    if (benchTotal < 2 || juryTotal < 2) { groupsFiltered++; continue; }
+    // Only include if both have >= 1 sample (lowered from >= 2 to capture more judges)
+    if (benchTotal < 1 || juryTotal < 1) { groupsFiltered++; continue; }
 
     const benchAcquittals = benchTrials.filter(o => o === "acquittal").length;
     const juryAcquittals = juryTrials.filter(o => o === "acquittal").length;

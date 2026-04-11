@@ -351,7 +351,23 @@ async function checkNegativeTreatment(clusterId) {
         const opUrls = cluster.sub_opinions || [];
         if (opUrls.length === 0) continue;
 
-        const opPath = opUrls[0].replace("https://www.courtlistener.com", "");
+        // Select majority/lead opinion — avoid citing dissents
+        let opPath;
+        if (opUrls.length === 1) {
+          opPath = opUrls[0].replace("https://www.courtlistener.com", "");
+        } else {
+          let majorityUrl = null;
+          for (const url of opUrls) {
+            const checkPath = url.replace("https://www.courtlistener.com", "");
+            const opMeta = await clFetch(`${checkPath}?fields=type`);
+            const opType = opMeta.type || "";
+            if (opType === "010combined" || opType === "015lead" || opType === "") {
+              majorityUrl = url;
+              break;
+            }
+          }
+          opPath = (majorityUrl || opUrls[0]).replace("https://www.courtlistener.com", "");
+        }
         const opFullUrl = `https://www.courtlistener.com${opPath}`;
         checkedUrls.push(opFullUrl);
         const opinion = await clFetch(`${opPath}?fields=plain_text,html_with_citations`);
@@ -418,8 +434,23 @@ async function main() {
         const opUrls = cluster.sub_opinions || [];
 
         if (opUrls.length > 0) {
-          // Step 2: Fetch opinion text
-          const opPath = opUrls[0].replace("https://www.courtlistener.com", "");
+          // Step 2: Fetch opinion text — select majority/lead opinion, avoid citing dissents
+          let opPath;
+          if (opUrls.length === 1) {
+            opPath = opUrls[0].replace("https://www.courtlistener.com", "");
+          } else {
+            let majorityUrl = null;
+            for (const url of opUrls) {
+              const checkPath = url.replace("https://www.courtlistener.com", "");
+              const opMeta = await clFetch(`${checkPath}?fields=type`);
+              const opType = opMeta.type || "";
+              if (opType === "010combined" || opType === "015lead" || opType === "") {
+                majorityUrl = url;
+                break;
+              }
+            }
+            opPath = (majorityUrl || opUrls[0]).replace("https://www.courtlistener.com", "");
+          }
           const opinion = await clFetch(`${opPath}?fields=html_with_citations,plain_text`);
           const rawText = opinion.html_with_citations || opinion.plain_text || "";
           const plainText = stripHtml(rawText);

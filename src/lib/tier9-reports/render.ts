@@ -123,6 +123,56 @@ export function renderJudgeReportCard(data: JudgeReportCardData): string {
     </table>
   `;
 
+  // USSC Sentencing Intelligence
+  if (data.usscPatterns) {
+    const p = data.usscPatterns;
+    totalSources += countSources(p.source_urls);
+
+    body += sectionHeader("Federal Sentencing Intelligence (USSC Data)");
+    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
+      Aggregated from U.S. Sentencing Commission individual case files.
+      ${p.data_period ? `Data period: ${escapeHtml(p.data_period)}.` : ""}
+    </p>`;
+
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total Federal Cases</td>
+          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; font-weight: bold;">${p.total_cases}</td></tr>
+      <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Median Sentence</td>
+          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${p.median_sentence_months != null ? `${Number(p.median_sentence_months).toFixed(1)} months` : "—"}</td></tr>
+      <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Sentence Range (25th-75th %ile)</td>
+          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${p.p25_sentence_months != null && p.p75_sentence_months != null ? `${Number(p.p25_sentence_months).toFixed(1)} — ${Number(p.p75_sentence_months).toFixed(1)} months` : "—"}</td></tr>
+      ${p.downward_departure_rate != null ? `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Downward Departure Rate</td>
+          <td style="padding: 8px 16px; color: #4ADE80; border-bottom: 1px solid #1C1917;">${(Number(p.downward_departure_rate) * 100).toFixed(1)}%</td></tr>` : ""}
+      ${p.upward_departure_rate != null ? `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Upward Departure Rate</td>
+          <td style="padding: 8px 16px; color: #EF4444; border-bottom: 1px solid #1C1917;">${(Number(p.upward_departure_rate) * 100).toFixed(1)}%</td></tr>` : ""}
+      ${p.aba_rating ? `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">ABA Rating</td>
+          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${escapeHtml(p.aba_rating)}${p.aba_rating_year ? ` (${p.aba_rating_year})` : ""}</td></tr>` : ""}
+    </table>`;
+
+    // Retention elections
+    if (p.retention_elections && Array.isArray(p.retention_elections) && (p.retention_elections as unknown[]).length > 0) {
+      body += `<h4 style="color: #D4D4D8; margin: 16px 0 8px;">Retention Election History</h4>`;
+      body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+        <thead><tr style="background: #1C1917;">
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Year</th>
+          <th style="padding: 8px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Vote %</th>
+          <th style="padding: 8px 12px; text-align: center; color: #F59E0B; font-size: 13px;">Retained</th>
+        </tr></thead><tbody>`;
+      for (const re of p.retention_elections as Array<Record<string, unknown>>) {
+        body += `<tr style="border-bottom: 1px solid #1C1917;">
+          <td style="padding: 8px 12px; color: #D4D4D8;">${re.year ?? "—"}</td>
+          <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${re.vote_pct != null ? `${Number(re.vote_pct).toFixed(1)}%` : "—"}</td>
+          <td style="padding: 8px 12px; text-align: center; color: ${re.retained ? "#4ADE80" : "#EF4444"};">${re.retained ? "Yes" : "No"}</td>
+        </tr>`;
+      }
+      body += `</tbody></table>`;
+    }
+
+    body += `<p style="color: #52525B; font-size: 11px; margin: 0 0 24px;">
+      Source: U.S. Sentencing Commission ${sourceLinks(p.source_urls)}
+    </p>`;
+  }
+
   // Sentencing Distributions
   body += sectionHeader("Sentencing Patterns");
   if (data.sentencingDistributions.length > 0) {
@@ -360,7 +410,91 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
     }
   }
 
-  const primaryName = data.officers[0]?.officer_name ?? "Officer";
+  // External Intelligence Records
+  if (data.externalIntel.length > 0) {
+    body += sectionHeader("External Intelligence Records");
+    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
+      Data from Brady/Giglio List, National Police Index, and state POST databases.
+    </p>`;
+
+    for (const intel of data.externalIntel) {
+      totalSources += countSources(intel.source_urls);
+
+      // Brady status alert
+      if (intel.brady_status === "listed") {
+        body += `
+          <div style="background: #1C1917; border: 1px solid #7F1D1D; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+            <h3 style="color: #EF4444; margin: 0 0 8px; font-size: 16px;">Brady/Giglio Listed</h3>
+            <p style="color: #D4D4D8; margin: 0;">${intel.brady_reason ? escapeHtml(intel.brady_reason) : "This officer appears on a Brady/Giglio disclosure list."}</p>
+            <p style="color: #71717A; font-size: 12px; margin: 8px 0 0;">
+              Question for your attorney: &ldquo;Has the prosecution disclosed this officer&rsquo;s Brady status?&rdquo;
+            </p>
+          </div>
+        `;
+      }
+
+      // Decertification alert
+      if (intel.decertified) {
+        body += `
+          <div style="background: #1C1917; border: 1px solid #92400E; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+            <h3 style="color: #FBBF24; margin: 0 0 8px; font-size: 16px;">Decertified Officer</h3>
+            <p style="color: #D4D4D8; margin: 0;">${intel.decertification_reason ? escapeHtml(intel.decertification_reason) : "This officer has been decertified."}</p>
+          </div>
+        `;
+      }
+
+      // Employment history
+      if (intel.npi_employment_history && Array.isArray(intel.npi_employment_history)) {
+        body += `<h4 style="color: #D4D4D8; margin: 16px 0 8px;">Employment History</h4>`;
+        body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+          <thead><tr style="background: #1C1917;">
+            <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Agency</th>
+            <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Period</th>
+            <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Separation</th>
+          </tr></thead><tbody>`;
+        for (const job of intel.npi_employment_history as Array<Record<string, string>>) {
+          body += `<tr style="border-bottom: 1px solid #1C1917;">
+            <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(job.agency || "—")}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8;">${job.start || "?"} — ${job.end || "present"}</td>
+            <td style="padding: 8px 12px; color: ${job.separation_reason?.includes("fired") || job.separation_reason?.includes("terminated") ? "#EF4444" : "#A1A1AA"};">${escapeHtml(job.separation_reason || "—")}</td>
+          </tr>`;
+        }
+        body += `</tbody></table>`;
+
+        if (intel.npi_is_wandering_officer) {
+          body += `<p style="color: #EF4444; font-weight: bold; margin: 0 0 16px;">
+            This officer was terminated from 2+ agencies — classified as a &ldquo;wandering officer.&rdquo;
+          </p>`;
+        }
+      }
+
+      // Complaint/use-of-force stats
+      if (intel.complaint_count > 0 || intel.use_of_force_count > 0) {
+        body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+          <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total Complaints</td>
+              <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${intel.complaint_count}</td></tr>
+          <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Sustained Complaints</td>
+              <td style="padding: 8px 16px; color: ${intel.sustained_complaints > 0 ? "#EF4444" : "#FAFAF9"}; border-bottom: 1px solid #1C1917;">${intel.sustained_complaints}</td></tr>
+          <tr><td style="padding: 8px 16px; color: #A1A1AA;">Use of Force Incidents</td>
+              <td style="padding: 8px 16px; color: #FAFAF9;">${intel.use_of_force_count}</td></tr>
+        </table>`;
+      }
+
+      // Credibility risk score
+      if (intel.credibility_risk_score != null) {
+        const riskColor = intel.credibility_risk_score >= 70 ? "#EF4444" : intel.credibility_risk_score >= 40 ? "#FBBF24" : "#4ADE80";
+        body += `<p style="color: ${riskColor}; font-size: 18px; font-weight: bold; margin: 8px 0 16px;">
+          Credibility Risk Score: ${intel.credibility_risk_score}/100
+        </p>`;
+      }
+
+      body += `<p style="color: #52525B; font-size: 11px; margin: 0 0 24px;">
+        Sources: ${intel.sources?.join(", ") || "—"} ${sourceLinks(intel.source_urls)}
+      </p>`;
+    }
+  }
+
+  const primaryName = data.officers[0]?.officer_name ?? data.externalIntel[0]?.officer_name ?? "Officer";
   return wrapReport(`Officer Background Check — ${primaryName}`, body, totalSources);
 }
 
@@ -493,6 +627,45 @@ export function renderSimilarCases(data: SimilarCasesData, intake: { chargeType:
     body += `</tbody></table>`;
   } else {
     body += noDataMessage("appellate trend");
+  }
+
+  // Outcome Benchmarks
+  body += sectionHeader("National &amp; State Outcome Data");
+  if (data.outcomeBenchmarks.length > 0) {
+    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
+      How cases like yours are resolved nationally and in your state, based on federal sentencing data.
+    </p>`;
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <thead><tr style="background: #1C1917;">
+        <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Level</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Cases</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Conviction</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Dismissal</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Plea Rate</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Trial Penalty</th>
+        <th style="padding: 10px 12px; text-align: center; color: #F59E0B; font-size: 13px;">Sources</th>
+      </tr></thead><tbody>`;
+
+    for (const row of data.outcomeBenchmarks) {
+      totalSources += countSources(row.source_urls);
+      body += `<tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.jurisdiction_name)} (${escapeHtml(row.jurisdiction_level)})</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.total_cases ?? "—"}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.conviction_rate != null ? `${(Number(row.conviction_rate) * 100).toFixed(1)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${row.dismissal_rate != null ? `${(Number(row.dismissal_rate) * 100).toFixed(1)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.plea_rate != null ? `${(Number(row.plea_rate) * 100).toFixed(1)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: ${row.plea_trial_penalty_pct && Number(row.plea_trial_penalty_pct) > 0 ? "#EF4444" : "#A1A1AA"}; text-align: right;">${row.plea_trial_penalty_pct != null ? `+${Number(row.plea_trial_penalty_pct).toFixed(0)}%` : "—"}</td>
+        <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
+      </tr>`;
+    }
+    body += `</tbody></table>`;
+
+    body += `<p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+      &ldquo;Trial Penalty&rdquo; shows how much longer average sentences are for defendants who go to trial vs those who accept plea deals.
+      Question for your attorney: &ldquo;Given these numbers, what&rsquo;s the realistic risk-reward of going to trial?&rdquo;
+    </p>`;
+  } else {
+    body += noDataMessage("outcome benchmark");
   }
 
   return wrapReport(
