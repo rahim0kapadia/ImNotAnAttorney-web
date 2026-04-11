@@ -712,11 +712,16 @@ export function runHumanizerCheck(mdxContent, options = {}) {
   }
 
   // ── Detector 14: Repeated structural transitions ──
+  // Density-normalized: flags when a phrase appears more than once per 400 words.
+  // A 1,500-word post gets threshold 4 (ceil(1500/400)). A 3,000-word post gets 8.
+  // This catches repetition in new short-form posts without regressing on existing long-form.
   {
+    const wordCount = body.split(/\s+/).filter(Boolean).length;
+    const densityThreshold = Math.max(3, Math.ceil(wordCount / 400));
     const transitionCounts = {};
     for (const phrase of STRUCTURAL_TRANSITIONS) {
       const hits = countOccurrences(bodyLower, phrase);
-      if (hits >= 3) {
+      if (hits >= densityThreshold) {
         transitionCounts[phrase] = hits;
       }
     }
@@ -728,7 +733,7 @@ export function runHumanizerCheck(mdxContent, options = {}) {
       for (const phrase of repeatedTransitions) {
         const count = transitionCounts[phrase];
         pts += 15;
-        matches.push(`"${phrase}" (x${count})`);
+        matches.push(`"${phrase}" (x${count}, threshold ${densityThreshold})`);
       }
       totalPatternPoints += pts;
       flaggedPatterns.push({
