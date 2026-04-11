@@ -259,15 +259,15 @@ async function main() {
   loadServiceKey();
   let judges = [];
   try {
-    judges = await restApiCall("?table=judge_profiles&select=id,name&limit=50000");
+    judges = await restApiCall("?table=judge_profiles&select=id,full_name&limit=50000");
     if (!Array.isArray(judges)) judges = [];
   } catch (e) {
     console.warn(`Warning: could not load judge profiles: ${e.message.slice(0, 100)}`);
   }
   const judgeMap = new Map();
   for (const j of judges) {
-    if (j.id && j.name) {
-      judgeMap.set(j.name.toLowerCase(), j.id);
+    if (j.id && j.full_name) {
+      judgeMap.set(j.full_name.toLowerCase(), j.id);
     }
   }
   console.log(`Loaded ${judgeMap.size} judges\n`);

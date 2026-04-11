@@ -238,41 +238,33 @@ function stripHtml(html) {
 // ── Judge name matching ─────────────────────────────────────────────────────
 
 async function loadJudges() {
-  const url = "https://jxjbjmgdukwkoclydqdr.supabase.co/rest/v1/judge_profiles?select=id,full_name&limit=50000";
   const envFile = fs.readFileSync(path.resolve(PROJECT_ROOT, ".env.local"), "utf8");
   let key = null;
+  let sbUrl = null;
   for (const line of envFile.split("\n")) {
-    if (line.startsWith("SUPABASE_SERVICE_ROLE_KEY=")) {
-      key = line.slice(25).trim();
-      break;
-    }
+    if (line.startsWith("SUPABASE_SERVICE_ROLE_KEY=")) key = line.slice("SUPABASE_SERVICE_ROLE_KEY=".length).trim();
+    if (line.startsWith("NEXT_PUBLIC_SUPABASE_URL=")) sbUrl = line.slice("NEXT_PUBLIC_SUPABASE_URL=".length).trim();
   }
+  if (!key || !sbUrl) throw new Error("Missing SUPABASE env vars in .env.local");
 
-  return new Promise((resolve, reject) => {
-    https.get(url, {
-      headers: {
-        "Authorization": `Bearer ${key}`,
-        "apikey": key
-      },
-    }, (res) => {
-      let data = "";
-      res.on("data", (d) => (data += d));
-      res.on("end", () => {
-        try {
-          const judges = JSON.parse(data);
-          const map = new Map();
-          for (const j of judges) {
-            if (j.id && j.full_name) {
-              map.set(j.full_name.toLowerCase(), j.id);
-            }
-          }
-          resolve(map);
-        } catch (e) {
-          reject(e);
-        }
-      });
-    }).on("error", reject);
-  });
+  const map = new Map();
+  let offset = 0;
+  const PAGE = 1000;
+  while (true) {
+    const url = `${sbUrl}/rest/v1/judge_profiles?select=id,full_name&order=id&offset=${offset}&limit=${PAGE}`;
+    const res = await fetch(url, {
+      headers: { apikey: key, Authorization: "Bearer " + key }
+    });
+    if (!res.ok) throw new Error("Judge fetch failed: " + res.status + " " + (await res.text()).slice(0, 200));
+    const batch = await res.json();
+    if (!Array.isArray(batch) || batch.length === 0) break;
+    for (const j of batch) {
+      if (j.id && j.full_name) map.set(j.full_name.toLowerCase(), j.id);
+    }
+    offset += PAGE;
+    if (batch.length < PAGE) break;
+  }
+  return map;
 }
 
 // ── Main ────────────────────────────────────────────────────────────────────

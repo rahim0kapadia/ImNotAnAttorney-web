@@ -107,10 +107,10 @@ async function loadJudgeProfiles() {
 
   console.log("Loading judge profiles...");
   return new Promise((resolve, reject) => {
-    const body = JSON.stringify({ select: "id,name" });
+    const body = JSON.stringify({ select: "id,full_name" });
     const req = https.request({
       hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
-      path: "/rest/v1/judge_profiles?select=id,name&limit=50000",
+      path: "/rest/v1/judge_profiles?select=id,full_name&limit=50000",
       method: "GET",
       headers: {
         Authorization: `Bearer ${key}`,
@@ -302,7 +302,7 @@ async function main() {
 
   const profilesByName = new Map();
   for (const p of profiles) {
-    if (p.name) profilesByName.set(p.name.toLowerCase(), p.id);
+    if (p.full_name) profilesByName.set(p.full_name.toLowerCase(), p.id);
   }
 
   const bzcatPath = findBzcat();
