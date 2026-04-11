@@ -165,9 +165,15 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 let supabaseToken = null;
 function loadToken() {
   if (supabaseToken) return;
-  const webEnv = fs.readFileSync(path.resolve(PROJECT_ROOT, ".env.local"), "utf8");
-  for (const line of webEnv.split("\n")) {
-    if (line.startsWith("SUPABASE_ACCESS_TOKEN=")) { supabaseToken = line.slice(22).trim(); break; }
+  // SUPABASE_ACCESS_TOKEN lives in the parent repo, not the web repo
+  const parentEnvPath = path.resolve(PROJECT_ROOT, "..", "ImNotAnAttorney", ".env.local");
+  const envPath = fs.existsSync(parentEnvPath) ? parentEnvPath : path.resolve(PROJECT_ROOT, ".env.local");
+  const envContent = fs.readFileSync(envPath, "utf8");
+  for (const line of envContent.split("\n")) {
+    if (line.startsWith("SUPABASE_ACCESS_TOKEN=")) {
+      supabaseToken = line.split("=").slice(1).join("=").trim();
+      break;
+    }
   }
 }
 
@@ -204,7 +210,9 @@ async function loadJudgeProfiles() {
   const serviceRoleKey = envContent
     .split("\n")
     .find(line => line.startsWith("SUPABASE_SERVICE_ROLE_KEY="))
-    ?.slice(28)
+    ?.split("=")
+    .slice(1)
+    .join("=")
     .trim();
 
   if (!serviceRoleKey) throw new Error("SUPABASE_SERVICE_ROLE_KEY not found in .env.local");
