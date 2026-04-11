@@ -260,7 +260,7 @@ async function main() {
   }
 
   const parser = csvStream.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
   let rowCount = 0;
   parser.on("error", (e) => console.error(`csv-parse error at row ~${rowCount}: ${e.message}`));
@@ -270,33 +270,38 @@ async function main() {
   let withDataCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 500000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${withDataCount} extracted (${elapsed.toFixed(0)}s)\n`);
-      logMem(`${(rowCount / 1000000).toFixed(1)}M`);
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 500000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${withDataCount} extracted (${elapsed.toFixed(0)}s)\n`);
+        logMem(`${(rowCount / 1000000).toFixed(1)}M`);
+      }
+
+      const clusterId = record.cluster_id;
+      if (!clusterId || !targetClusters.has(clusterId)) continue;
+      matchCount++;
+      if (results.has(clusterId)) continue;
+
+      let text = record.plain_text || "";
+      if (text.length < 500) {
+        const html = record.html_with_citations || record.html || record.html_columbia || "";
+        if (html.length > 500) text = stripHtml(html);
+      }
+      if (text.length < 500) continue;
+
+      const extracted = extractFromText(text);
+      if (extracted.motion_types.length === 0 && extracted.legal_issues.length === 0) continue;
+
+      results.set(clusterId, extracted);
+      withDataCount++;
+      if (withDataCount % 500 === 0) process.stdout.write(`  ${withDataCount} extractions...\n`);
+      if (withDataCount >= limit) { bzcat.kill(); break; }
     }
-
-    const clusterId = record.cluster_id;
-    if (!clusterId || !targetClusters.has(clusterId)) continue;
-    matchCount++;
-    if (results.has(clusterId)) continue;
-
-    let text = record.plain_text || "";
-    if (text.length < 500) {
-      const html = record.html_with_citations || record.html || record.html_columbia || "";
-      if (html.length > 500) text = stripHtml(html);
-    }
-    if (text.length < 500) continue;
-
-    const extracted = extractFromText(text);
-    if (extracted.motion_types.length === 0 && extracted.legal_issues.length === 0) continue;
-
-    results.set(clusterId, extracted);
-    withDataCount++;
-    if (withDataCount % 500 === 0) process.stdout.write(`  ${withDataCount} extractions...\n`);
-    if (withDataCount >= limit) { bzcat.kill(); break; }
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

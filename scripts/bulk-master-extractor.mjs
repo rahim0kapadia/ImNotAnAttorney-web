@@ -563,7 +563,7 @@ function extractJudgeQuotes(clusterId, lower, text, judge, dumpRow, record) {
       if (idx === -1) break;
 
       const sentence = extractSentence(text, idx);
-      if (seen.has(sentence)) { idx += anchor.length; continue; }
+      if (seen.has(sentence) || sentence.length < 40) { idx += anchor.length; continue; }
 
       seen.add(sentence);
       quotes.push({
@@ -1212,30 +1212,35 @@ async function runPhase0() {
   bzcat.stderr.on("data", function () {});
 
   const parser = bzcat.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
   let rowCount = 0;
   let matchCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 1000000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write("    " + (rowCount / 1000000).toFixed(1) + "M rows, " + matchCount + " citations (" + elapsed.toFixed(0) + "s)\n");
-    }
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 1000000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write("    " + (rowCount / 1000000).toFixed(1) + "M rows, " + matchCount + " citations (" + elapsed.toFixed(0) + "s)\n");
+      }
 
-    const citedOpinionId = record.cited_opinion_id;
-    const citingOpinionId = record.citing_opinion_id;
-    if (!citedOpinionId || !citingOpinionId) continue;
+      const citedOpinionId = record.cited_opinion_id;
+      const citingOpinionId = record.citing_opinion_id;
+      if (!citedOpinionId || !citingOpinionId) continue;
 
-    if (!citingMap.has(citedOpinionId)) {
-      citingMap.set(citedOpinionId, []);
+      if (!citingMap.has(citedOpinionId)) {
+        citingMap.set(citedOpinionId, []);
+      }
+      citingMap.get(citedOpinionId).push(citingOpinionId);
+      citingOpinionIds.add(String(citingOpinionId));
+      matchCount++;
     }
-    citingMap.get(citedOpinionId).push(citingOpinionId);
-    citingOpinionIds.add(String(citingOpinionId));
-    matchCount++;
+  } catch (parseErr) {
+    console.log("\n  CSV parse error at " + (rowCount / 1000000).toFixed(1) + "M rows (continuing with collected data): " + parseErr.message.slice(0, 120));
+    try { bzcat.kill(); } catch (e) {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
@@ -1266,7 +1271,7 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
   }
 
   const parser = csvStream.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
   const processedClusters = new Set();
@@ -1284,75 +1289,80 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
   const e7 = enabledTables.has("plea_discount_curves");
   const e8 = enabledTables.has("appellate_trends");
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 500000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(
-        "  " + (rowCount / 1000000).toFixed(1) + "M rows | " +
-        matchCount + " matched | " +
-        "quotes: " + quotesExtracted + " | " +
-        "sentencing: " + sentencingExtracted + " | " +
-        "officers: " + officerExtracted + " | " +
-        "pairings: " + pairingExtracted + " | " +
-        "bench/jury: " + benchJuryExtracted + " | " +
-        "co-def: " + coDefExtracted + " | " +
-        "plea: " + pleaExtracted + " | " +
-        "appeal: " + appealExtracted + " | " +
-        elapsed.toFixed(0) + "s elapsed\n"
-      );
-    }
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 500000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(
+          "  " + (rowCount / 1000000).toFixed(1) + "M rows | " +
+          matchCount + " matched | " +
+          "quotes: " + quotesExtracted + " | " +
+          "sentencing: " + sentencingExtracted + " | " +
+          "officers: " + officerExtracted + " | " +
+          "pairings: " + pairingExtracted + " | " +
+          "bench/jury: " + benchJuryExtracted + " | " +
+          "co-def: " + coDefExtracted + " | " +
+          "plea: " + pleaExtracted + " | " +
+          "appeal: " + appealExtracted + " | " +
+          elapsed.toFixed(0) + "s elapsed\n"
+        );
+      }
 
-    const clusterId = record.cluster_id;
-    const opinionId = record.id;
+      const clusterId = record.cluster_id;
+      const opinionId = record.id;
 
-    const isTarget = clusterId && targetClusters.has(clusterId);
-    const isCiting = e8 && opinionId && citingOpinionIds.has(String(opinionId));
+      const isTarget = clusterId && targetClusters.has(clusterId);
+      const isCiting = e8 && opinionId && citingOpinionIds.has(String(opinionId));
 
-    if (!isTarget && !isCiting) continue;
+      if (!isTarget && !isCiting) continue;
 
-    // Get text once, share across extractors. Gate per-extractor by length —
-    // originals require 200/300/500 depending on extractor. Short orders
-    // produce false positives in detectors expecting multi-page opinions.
-    const text = getText(record);
-    if (text.length < 200) continue;
-    const lower = text.toLowerCase();
-    const haveShort = text.length >= 200;  // judge_quotes
-    const haveMid = text.length >= 300;    // plea_discount
-    const haveLong = text.length >= 500;   // sentencing, officer, pairing, bench/jury, co-def
+      // Get text once, share across extractors. Gate per-extractor by length —
+      // originals require 200/300/500 depending on extractor. Short orders
+      // produce false positives in detectors expecting multi-page opinions.
+      const text = getText(record);
+      if (text.length < 200) continue;
+      const lower = text.toLowerCase();
+      const haveShort = text.length >= 200;  // judge_quotes
+      const haveMid = text.length >= 300;    // plea_discount
+      const haveLong = text.length >= 500;   // sentencing, officer, pairing, bench/jury, co-def
 
-    if (isTarget) {
-      // Process EVERY opinion per cluster (majority + concurring + dissent).
-      // Only co-defendant analysis dedupes by cluster (it does this internally).
-      // Matching the originals — do not add a processedClusters guard here.
-      matchCount++;
+      if (isTarget) {
+        // Process EVERY opinion per cluster (majority + concurring + dissent).
+        // Only co-defendant analysis dedupes by cluster (it does this internally).
+        // Matching the originals — do not add a processedClusters guard here.
+        matchCount++;
 
-      const dumpRow = clusterToDumpRow.get(clusterId);
-      const judge = matchJudge(record.author);
-      const strictJudge = exactJudge(record.author);
+        const dumpRow = clusterToDumpRow.get(clusterId);
+        const judge = matchJudge(record.author);
+        const strictJudge = exactJudge(record.author);
 
-      if (e1 && haveShort) extractJudgeQuotes(clusterId, lower, text, judge, dumpRow, record);
-      if (e2 && haveLong) extractSentencing(clusterId, lower, judge, dumpRow, record);
-      if (e3 && haveLong) extractOfficerReliability(clusterId, lower, text);
-      if (e4 && haveLong) extractJudgeProsecutorPairing(clusterId, lower, text, strictJudge, dumpRow, record);
-      if (e5 && haveLong) extractBenchJuryDivergence(clusterId, lower, strictJudge, dumpRow);
-      if (e6 && haveLong) extractCoDefendantDivergence(clusterId, lower);
-      if (e7 && haveMid) extractPleaDiscount(clusterId, lower, dumpRow);
+        if (e1 && haveShort) extractJudgeQuotes(clusterId, lower, text, judge, dumpRow, record);
+        if (e2 && haveLong) extractSentencing(clusterId, lower, judge, dumpRow, record);
+        if (e3 && haveLong) extractOfficerReliability(clusterId, lower, text);
+        if (e4 && haveLong) extractJudgeProsecutorPairing(clusterId, lower, text, strictJudge, dumpRow, record);
+        if (e5 && haveLong) extractBenchJuryDivergence(clusterId, lower, strictJudge, dumpRow);
+        if (e6 && haveLong) extractCoDefendantDivergence(clusterId, lower);
+        if (e7 && haveMid) extractPleaDiscount(clusterId, lower, dumpRow);
 
-      // Limit counts unique clusters, not opinions. Track first-seen.
-      if (!processedClusters.has(clusterId)) {
-        processedClusters.add(clusterId);
-        if (processedClusters.size >= limit) {
-          limitReached = true;
-          bzcat.kill();
-          break;
+        // Limit counts unique clusters, not opinions. Track first-seen.
+        if (!processedClusters.has(clusterId)) {
+          processedClusters.add(clusterId);
+          if (processedClusters.size >= limit) {
+            limitReached = true;
+            bzcat.kill();
+            break;
+          }
         }
       }
-    }
 
-    if (isCiting) {
-      extractAppealClassification(String(opinionId), String(clusterId), lower);
+      if (isCiting) {
+        extractAppealClassification(String(opinionId), String(clusterId), lower);
+      }
     }
+  } catch (parseErr) {
+    console.log("\n  CSV parse error at " + (rowCount / 1000000).toFixed(1) + "M rows (continuing with collected data): " + parseErr.message.slice(0, 120));
+    try { bzcat.kill(); } catch (e) {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
@@ -1766,32 +1776,52 @@ async function main() {
     enabledTables.has("bench_jury_divergence");
 
   if (needsJudges) {
+    // PostgREST silently caps at 1000 rows regardless of ?limit= value.
+    // Must paginate via Range header to load all 15,000+ judges.
     console.log("Loading judge profiles...");
     const serviceKey = loadServiceKey();
     if (serviceKey) {
       try {
-        const judges = await new Promise(function (resolve, reject) {
-          const req = https.request({
-            hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
-            path: "/rest/v1/judge_profiles?select=id,full_name&limit=50000",
-            method: "GET",
-            headers: {
-              apikey: serviceKey,
-              Authorization: "Bearer " + serviceKey,
-            },
-          }, function (res) {
-            let data = "";
-            res.on("data", function (d) { data += d; });
-            res.on("end", function () {
-              if (res.statusCode >= 400) reject(new Error("Judge load " + res.statusCode + ": " + data.slice(0, 200)));
-              else { try { resolve(JSON.parse(data)); } catch (e) { reject(e); } }
-            });
-          });
-          req.on("error", reject);
-          req.end();
-        });
+        var PAGE_SIZE = 1000;
+        var allJudges = [];
+        var offset = 0;
 
-        for (const j of judges) {
+        while (true) {
+          var page = await new Promise(function (resolve, reject) {
+            const req = https.request({
+              hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
+              path: "/rest/v1/judge_profiles?select=id,full_name&order=id",
+              method: "GET",
+              headers: {
+                apikey: serviceKey,
+                Authorization: "Bearer " + serviceKey,
+                Range: offset + "-" + (offset + PAGE_SIZE - 1),
+                Prefer: "count=exact",
+              },
+            }, function (res) {
+              let data = "";
+              res.on("data", function (d) { data += d; });
+              res.on("end", function () {
+                if (res.statusCode >= 400 && res.statusCode !== 416) {
+                  reject(new Error("Judge load " + res.statusCode + ": " + data.slice(0, 200)));
+                } else if (res.statusCode === 416) {
+                  resolve([]);
+                } else {
+                  try { resolve(JSON.parse(data)); } catch (e) { reject(e); }
+                }
+              });
+            });
+            req.on("error", reject);
+            req.end();
+          });
+
+          if (page.length === 0) break;
+          allJudges.push.apply(allJudges, page);
+          if (page.length < PAGE_SIZE) break;
+          offset += PAGE_SIZE;
+        }
+
+        for (const j of allJudges) {
           if (j.id && j.full_name) {
             judgeMap.set(j.full_name.toLowerCase(), { id: j.id, name: j.full_name });
             judgeById.set(String(j.id), { id: j.id, name: j.full_name });

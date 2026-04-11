@@ -212,38 +212,43 @@ async function main() {
 
   // CL opinions CSV uses backslash-escaped quotes (\") in XML/HTML content,
   // not standard CSV double-quote escaping (""). escape: '\\' handles this.
-  const parser = bzcat.stdout.pipe(parse({ columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true }));
+  const parser = bzcat.stdout.pipe(parse({ columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true }));
 
   const results = new Map();
   let rowCount = 0;
   let matchCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 500000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} classified (${elapsed.toFixed(0)}s)\n`);
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 500000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} classified (${elapsed.toFixed(0)}s)\n`);
+      }
+
+      const clusterId = record.cluster_id;
+      if (!clusterId || !targetClusters.has(clusterId)) continue;
+      if (results.has(clusterId)) continue;
+
+      let text = record.plain_text || "";
+      if (text.length < 200) {
+        const html = record.html_with_citations || record.html || record.html_columbia || "";
+        if (html.length > 200) text = stripHtml(html);
+      }
+      if (text.length < 200) continue;
+
+      const classification = classifyText(text, "");
+      if (classification.partySide === "UNKNOWN" && !classification.outcome) continue;
+
+      results.set(clusterId, classification);
+      matchCount++;
+      if (matchCount % 500 === 0) process.stdout.write(`  ${matchCount} classified...\n`);
+      if (matchCount >= limit) { bzcat.kill(); break; }
     }
-
-    const clusterId = record.cluster_id;
-    if (!clusterId || !targetClusters.has(clusterId)) continue;
-    if (results.has(clusterId)) continue;
-
-    let text = record.plain_text || "";
-    if (text.length < 200) {
-      const html = record.html_with_citations || record.html || record.html_columbia || "";
-      if (html.length > 200) text = stripHtml(html);
-    }
-    if (text.length < 200) continue;
-
-    const classification = classifyText(text, "");
-    if (classification.partySide === "UNKNOWN" && !classification.outcome) continue;
-
-    results.set(clusterId, classification);
-    matchCount++;
-    if (matchCount % 500 === 0) process.stdout.write(`  ${matchCount} classified...\n`);
-    if (matchCount >= limit) { bzcat.kill(); break; }
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

@@ -236,6 +236,7 @@ async function streamOpinions(targetClusters, judgeMap) {
       skip_empty_lines: true,
       escape: "\\",
       relax_column_count: true,
+      relax_quotes: true,
     }));
 
   let rowCount = 0;
@@ -245,63 +246,67 @@ async function streamOpinions(targetClusters, judgeMap) {
   let textFound = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 2000 === 0) {
-      const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
-      process.stdout.write(
-        "  " + rowCount + " rows, " + clusterMatches + " cluster hits, " +
-        authorMatches + " author hits, " + sentenceExtractions + " extractions (" +
-        elapsed + "s)\r"
-      );
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 2000 === 0) {
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
+        process.stdout.write(
+          "  " + rowCount + " rows, " + clusterMatches + " cluster hits, " +
+          authorMatches + " author hits, " + sentenceExtractions + " extractions (" +
+          elapsed + "s)\r"
+        );
+      }
+
+      const clusterId = record.cluster_id;
+      if (!clusterId || !targetClusters.has(clusterId)) continue;
+      clusterMatches++;
+
+      const authorId = (record.author_id || "").trim();
+      if (!authorId) continue; // per curiam or no author
+
+      const judgeId = judgeMap.get(authorId);
+      if (!judgeId) continue; // author not in our judge_profiles
+      authorMatches++;
+
+      const dumpRow = targetClusters.get(clusterId);
+
+      // Get opinion text — try plain_text first, fall back to HTML
+      let text = (record.plain_text || "").trim();
+      if (text.length < 200) {
+        const html = record.html_with_citations || record.html || record.html_columbia || "";
+        if (html.length > 200) text = stripHtml(html);
+      }
+      if (text.length < 200) continue;
+      textFound++;
+
+      const sentences = extractSentencingData(text);
+      if (sentences.length === 0) continue;
+      sentenceExtractions++;
+
+      const jurisdiction = dumpRow.jurisdiction;
+      const chargeSlug = dumpRow.chargeSlug;
+      const key = judgeId + "|" + jurisdiction + "|" + chargeSlug;
+
+      if (!distributions.has(key)) {
+        distributions.set(key, {
+          judgeId,
+          jurisdiction,
+          chargeSlug,
+          sentences: [],
+          sourceOpinionIds: new Set(),
+        });
+      }
+
+      const entry = distributions.get(key);
+      for (const s of sentences) {
+        entry.sentences.push(s);
+      }
+      const opId = (record.id || "").trim();
+      if (opId) entry.sourceOpinionIds.add(opId);
     }
-
-    const clusterId = record.cluster_id;
-    if (!clusterId || !targetClusters.has(clusterId)) continue;
-    clusterMatches++;
-
-    const authorId = (record.author_id || "").trim();
-    if (!authorId) continue; // per curiam or no author
-
-    const judgeId = judgeMap.get(authorId);
-    if (!judgeId) continue; // author not in our judge_profiles
-    authorMatches++;
-
-    const dumpRow = targetClusters.get(clusterId);
-
-    // Get opinion text — try plain_text first, fall back to HTML
-    let text = (record.plain_text || "").trim();
-    if (text.length < 200) {
-      const html = record.html_with_citations || record.html || record.html_columbia || "";
-      if (html.length > 200) text = stripHtml(html);
-    }
-    if (text.length < 200) continue;
-    textFound++;
-
-    const sentences = extractSentencingData(text);
-    if (sentences.length === 0) continue;
-    sentenceExtractions++;
-
-    const jurisdiction = dumpRow.jurisdiction;
-    const chargeSlug = dumpRow.chargeSlug;
-    const key = judgeId + "|" + jurisdiction + "|" + chargeSlug;
-
-    if (!distributions.has(key)) {
-      distributions.set(key, {
-        judgeId,
-        jurisdiction,
-        chargeSlug,
-        sentences: [],
-        sourceOpinionIds: new Set(),
-      });
-    }
-
-    const entry = distributions.get(key);
-    for (const s of sentences) {
-      entry.sentences.push(s);
-    }
-    const opId = (record.id || "").trim();
-    if (opId) entry.sourceOpinionIds.add(opId);
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${rowCount} rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
   }
 
   process.stdout.write("\n");

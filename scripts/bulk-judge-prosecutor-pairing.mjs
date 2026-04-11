@@ -102,39 +102,57 @@ let judgeProfiles = null;
 async function loadJudgeProfiles() {
   if (judgeProfiles) return judgeProfiles;
 
-  const url = "https://jxjbjmgdukwkoclydqdr.supabase.co";
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || (fs.readFileSync(path.resolve(PROJECT_ROOT, ".env.local"), "utf8").split("\n").find(l => l.startsWith("SUPABASE_SERVICE_ROLE_KEY=")) || "").slice(27);
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || (() => {
+    const line = fs.readFileSync(path.resolve(PROJECT_ROOT, ".env.local"), "utf8").split("\n").find(l => l.startsWith("SUPABASE_SERVICE_ROLE_KEY=")) || "";
+    return line.split("=").slice(1).join("=").trim();
+  })();
 
   console.log("Loading judge profiles...");
-  return new Promise((resolve, reject) => {
-    const body = JSON.stringify({ select: "id,full_name" });
-    const req = https.request({
-      hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
-      path: "/rest/v1/judge_profiles?select=id,full_name&limit=50000",
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${key}`,
-        "Content-Type": "application/json",
-      },
-    }, (res) => {
-      let data = "";
-      res.on("data", (d) => (data += d));
-      res.on("end", () => {
-        if (res.statusCode >= 400) reject(new Error(`GET ${res.statusCode}: ${data.slice(0, 300)}`));
-        else {
-          try {
-            judgeProfiles = JSON.parse(data);
-            console.log(`Loaded ${judgeProfiles.length} judge profiles`);
-            resolve(judgeProfiles);
-          } catch {
-            reject(new Error("Failed to parse judge profiles JSON"));
+
+  // PostgREST silently caps at 1000 rows regardless of ?limit= value.
+  // Must paginate via Range header to load all 15,000+ judges.
+  const PAGE_SIZE = 1000;
+  const allJudges = [];
+  let offset = 0;
+
+  while (true) {
+    const page = await new Promise((resolve, reject) => {
+      const req = https.request({
+        hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
+        path: "/rest/v1/judge_profiles?select=id,full_name&order=id",
+        method: "GET",
+        headers: {
+          apikey: key,
+          Authorization: `Bearer ${key}`,
+          Range: `${offset}-${offset + PAGE_SIZE - 1}`,
+          Prefer: "count=exact",
+        },
+      }, (res) => {
+        let data = "";
+        res.on("data", (d) => (data += d));
+        res.on("end", () => {
+          if (res.statusCode >= 400 && res.statusCode !== 416) {
+            reject(new Error(`Judge load ${res.statusCode}: ${data.slice(0, 200)}`));
+          } else if (res.statusCode === 416) {
+            resolve([]);
+          } else {
+            try { resolve(JSON.parse(data)); } catch (e) { reject(e); }
           }
-        }
+        });
       });
+      req.on("error", reject);
+      req.end();
     });
-    req.on("error", reject);
-    req.end();
-  });
+
+    if (page.length === 0) break;
+    allJudges.push(...page);
+    if (page.length < PAGE_SIZE) break;
+    offset += PAGE_SIZE;
+  }
+
+  judgeProfiles = allJudges;
+  console.log(`Loaded ${judgeProfiles.length} judge profiles`);
+  return judgeProfiles;
 }
 
 // ── Extract motion outcomes from text ────────────────────────────────────────
@@ -313,7 +331,7 @@ async function main() {
   bzcat.stderr.on("data", () => {});
 
   const parser = bzcat.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
   // Accumulate: Map<judge_id+prosecutor_name+motion_type, {grant_count, deny_count, clusters: Set}>
@@ -323,56 +341,61 @@ async function main() {
   let extractCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 500000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${extractCount} pairs (${elapsed.toFixed(0)}s)\n`);
-    }
-
-    const clusterId = record.cluster_id;
-    if (!clusterId || !targetClusters.has(clusterId)) continue;
-    matchCount++;
-
-    let text = record.plain_text || "";
-    if (text.length < 500) {
-      const html = record.html_with_citations || record.html || record.html_columbia || "";
-      if (html.length > 500) text = stripHtml(html);
-    }
-    if (text.length < 500) continue;
-
-    // Extract judge: try author_id first, then name match
-    let judgeId = record.author_id ? String(record.author_id) : null;
-    if (!judgeId && record.judge_name) {
-      judgeId = profilesByName.get(record.judge_name.toLowerCase()) || null;
-    }
-    if (!judgeId) continue;
-
-    // Extract prosecutors
-    const prosecutors = extractProsecutors(text);
-    if (prosecutors.length === 0) continue;
-
-    // Extract motion outcomes
-    const outcomes = extractMotionOutcomes(text);
-    if (Object.keys(outcomes).length === 0) continue;
-
-    // Accumulate pairings
-    for (const prosecutor of prosecutors) {
-      for (const [motionType, outcome] of Object.entries(outcomes)) {
-        const key = `${judgeId}|${prosecutor}|${motionType}`;
-        if (!pairings.has(key)) {
-          pairings.set(key, { grant_count: 0, deny_count: 0, clusters: new Set() });
-        }
-        const p = pairings.get(key);
-        if (outcome.granted) p.grant_count++;
-        if (outcome.denied) p.deny_count++;
-        p.clusters.add(clusterId);
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 500000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${extractCount} pairs (${elapsed.toFixed(0)}s)\n`);
       }
-    }
 
-    extractCount++;
-    if (extractCount % 500 === 0) process.stdout.write(`  ${extractCount} pairings...\n`);
-    if (extractCount >= limit) { bzcat.kill(); break; }
+      const clusterId = record.cluster_id;
+      if (!clusterId || !targetClusters.has(clusterId)) continue;
+      matchCount++;
+
+      let text = record.plain_text || "";
+      if (text.length < 500) {
+        const html = record.html_with_citations || record.html || record.html_columbia || "";
+        if (html.length > 500) text = stripHtml(html);
+      }
+      if (text.length < 500) continue;
+
+      // Extract judge: try author_id first, then name match
+      let judgeId = record.author_id ? String(record.author_id) : null;
+      if (!judgeId && record.judge_name) {
+        judgeId = profilesByName.get(record.judge_name.toLowerCase()) || null;
+      }
+      if (!judgeId) continue;
+
+      // Extract prosecutors
+      const prosecutors = extractProsecutors(text);
+      if (prosecutors.length === 0) continue;
+
+      // Extract motion outcomes
+      const outcomes = extractMotionOutcomes(text);
+      if (Object.keys(outcomes).length === 0) continue;
+
+      // Accumulate pairings
+      for (const prosecutor of prosecutors) {
+        for (const [motionType, outcome] of Object.entries(outcomes)) {
+          const key = `${judgeId}|${prosecutor}|${motionType}`;
+          if (!pairings.has(key)) {
+            pairings.set(key, { grant_count: 0, deny_count: 0, clusters: new Set() });
+          }
+          const p = pairings.get(key);
+          if (outcome.granted) p.grant_count++;
+          if (outcome.denied) p.deny_count++;
+          p.clusters.add(clusterId);
+        }
+      }
+
+      extractCount++;
+      if (extractCount % 500 === 0) process.stdout.write(`  ${extractCount} pairings...\n`);
+      if (extractCount >= limit) { bzcat.kill(); break; }
+    }
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

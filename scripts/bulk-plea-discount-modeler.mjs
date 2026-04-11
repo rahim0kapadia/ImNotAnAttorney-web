@@ -270,7 +270,7 @@ async function main() {
   bzcat.stderr.on("data", () => {});
 
   const parser = bzcat.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
   // Phase 1 accumulator: key = "jurisdiction|charge_slug"
@@ -285,58 +285,63 @@ async function main() {
   let extractedCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 500000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(
-        `  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${pleaCount} plea / ${trialCount} trial (${elapsed.toFixed(0)}s)\n`
-      );
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 500000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(
+          `  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${pleaCount} plea / ${trialCount} trial (${elapsed.toFixed(0)}s)\n`
+        );
+      }
+
+      const clusterId = record.cluster_id;
+      if (!clusterId || !clusterToRow.has(clusterId)) continue;
+      matchCount++;
+
+      const dumpRow = clusterToRow.get(clusterId);
+
+      let text = record.plain_text || "";
+      if (text.length < 300) {
+        const html = record.html_with_citations || record.html || record.html_columbia || "";
+        if (html.length > 300) text = stripHtml(html);
+      }
+      if (text.length < 300) continue;
+
+      const { type, sentences } = classifyAndExtract(text);
+      if (!type || sentences.length === 0) continue;
+
+      // Derive the group key from the dump row
+      const jurisdiction = dumpRow.jurisdiction || "unknown";
+      // Use statute slug from the dump row if present, otherwise fall back to charge type
+      let chargeSlug = dumpRow.charge_slug || dumpRow.charge_type || "unknown";
+      // Normalise to lowercase snake_case without regex
+      chargeSlug = chargeSlug.toLowerCase().split(" ").join("_").split("-").join("_");
+
+      const groupKey = jurisdiction + "|" + chargeSlug;
+
+      if (!groups.has(groupKey)) {
+        groups.set(groupKey, { jurisdiction, charge_slug: chargeSlug, plea_sentences: [], trial_sentences: [], source_urls: new Set() });
+      }
+      const g = groups.get(groupKey);
+      const url = `https://www.courtlistener.com/opinion/${clusterId}/`;
+      g.source_urls.add(url);
+
+      if (type === "plea") {
+        for (const s of sentences) g.plea_sentences.push(s);
+        pleaCount++;
+      } else {
+        for (const s of sentences) g.trial_sentences.push(s);
+        trialCount++;
+      }
+
+      extractedCount++;
+      if (extractedCount % 500 === 0) process.stdout.write(`  ${extractedCount} opinions extracted...\n`);
+      if (extractedCount >= limit) { bzcat.kill(); break; }
     }
-
-    const clusterId = record.cluster_id;
-    if (!clusterId || !clusterToRow.has(clusterId)) continue;
-    matchCount++;
-
-    const dumpRow = clusterToRow.get(clusterId);
-
-    let text = record.plain_text || "";
-    if (text.length < 300) {
-      const html = record.html_with_citations || record.html || record.html_columbia || "";
-      if (html.length > 300) text = stripHtml(html);
-    }
-    if (text.length < 300) continue;
-
-    const { type, sentences } = classifyAndExtract(text);
-    if (!type || sentences.length === 0) continue;
-
-    // Derive the group key from the dump row
-    const jurisdiction = dumpRow.jurisdiction || "unknown";
-    // Use statute slug from the dump row if present, otherwise fall back to charge type
-    let chargeSlug = dumpRow.charge_slug || dumpRow.charge_type || "unknown";
-    // Normalise to lowercase snake_case without regex
-    chargeSlug = chargeSlug.toLowerCase().split(" ").join("_").split("-").join("_");
-
-    const groupKey = jurisdiction + "|" + chargeSlug;
-
-    if (!groups.has(groupKey)) {
-      groups.set(groupKey, { jurisdiction, charge_slug: chargeSlug, plea_sentences: [], trial_sentences: [], source_urls: new Set() });
-    }
-    const g = groups.get(groupKey);
-    const url = `https://www.courtlistener.com/opinion/${clusterId}/`;
-    g.source_urls.add(url);
-
-    if (type === "plea") {
-      for (const s of sentences) g.plea_sentences.push(s);
-      pleaCount++;
-    } else {
-      for (const s of sentences) g.trial_sentences.push(s);
-      trialCount++;
-    }
-
-    extractedCount++;
-    if (extractedCount % 500 === 0) process.stdout.write(`  ${extractedCount} opinions extracted...\n`);
-    if (extractedCount >= limit) { bzcat.kill(); break; }
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

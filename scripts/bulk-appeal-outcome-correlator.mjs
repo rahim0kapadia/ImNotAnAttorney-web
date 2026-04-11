@@ -235,7 +235,7 @@ async function phase1() {
   bzcat.stderr.on("data", () => {});
 
   const parser = bzcat.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
   // Map: cited_cluster_id -> Array<citing_opinion_id>
@@ -244,25 +244,30 @@ async function phase1() {
   let matchCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 1000000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} citations found (${elapsed.toFixed(0)}s)\n`);
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 1000000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} citations found (${elapsed.toFixed(0)}s)\n`);
+      }
+
+      const citedOpinionId = record.cited_opinion_id;
+      const citingOpinionId = record.citing_opinion_id;
+
+      if (!citedOpinionId || !citingOpinionId) continue;
+
+      // Map opinion_id to cluster_id — for now, assume opinion_id contains cluster info
+      // (We'll verify in Phase 2 by matching against the opinions CSV)
+      if (!citingMap.has(citedOpinionId)) {
+        citingMap.set(citedOpinionId, []);
+      }
+      citingMap.get(citedOpinionId).push(citingOpinionId);
+      matchCount++;
     }
-
-    const citedOpinionId = record.cited_opinion_id;
-    const citingOpinionId = record.citing_opinion_id;
-
-    if (!citedOpinionId || !citingOpinionId) continue;
-
-    // Map opinion_id to cluster_id — for now, assume opinion_id contains cluster info
-    // (We'll verify in Phase 2 by matching against the opinions CSV)
-    if (!citingMap.has(citedOpinionId)) {
-      citingMap.set(citedOpinionId, []);
-    }
-    citingMap.get(citedOpinionId).push(citingOpinionId);
-    matchCount++;
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
@@ -380,7 +385,7 @@ async function phase2() {
   bzcat.stderr.on("data", () => {});
 
   const parser = bzcat.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
   // Array of classifications
@@ -389,48 +394,53 @@ async function phase2() {
   let matchCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 500000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} opinions classified (${elapsed.toFixed(0)}s)\n`);
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 500000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} opinions classified (${elapsed.toFixed(0)}s)\n`);
+      }
+
+      const opinionId = String(record.id);
+      const clusterId = String(record.cluster_id);
+
+      if (!citingOpinionIds.has(opinionId)) continue;
+      matchCount++;
+
+      // Extract text for classification
+      let text = record.plain_text || "";
+      if (text.length < 500) {
+        const html = record.html_with_citations || record.html || record.html_columbia || "";
+        if (html.length > 500) text = stripHtml(html);
+      }
+
+      if (text.length < 500) continue;
+
+      // Classify reversal outcome
+      const outcome = classifyReversal(text);
+
+      // Extract argument type
+      const argumentType = extractArgumentType(text);
+
+      // Get jurisdiction and year from Phase 1 data (if available)
+      const jurisdiction = clusterToJurisdiction[clusterId] || "unknown";
+      const year = clusterToYear[clusterId] || null;
+
+      if (argumentType && year) {
+        classifications.push({
+          opinionId,
+          clusterId,
+          argumentType,
+          jurisdiction,
+          year: parseInt(year, 10),
+          outcome,
+        });
+      }
     }
-
-    const opinionId = String(record.id);
-    const clusterId = String(record.cluster_id);
-
-    if (!citingOpinionIds.has(opinionId)) continue;
-    matchCount++;
-
-    // Extract text for classification
-    let text = record.plain_text || "";
-    if (text.length < 500) {
-      const html = record.html_with_citations || record.html || record.html_columbia || "";
-      if (html.length > 500) text = stripHtml(html);
-    }
-
-    if (text.length < 500) continue;
-
-    // Classify reversal outcome
-    const outcome = classifyReversal(text);
-
-    // Extract argument type
-    const argumentType = extractArgumentType(text);
-
-    // Get jurisdiction and year from Phase 1 data (if available)
-    const jurisdiction = clusterToJurisdiction[clusterId] || "unknown";
-    const year = clusterToYear[clusterId] || null;
-
-    if (argumentType && year) {
-      classifications.push({
-        opinionId,
-        clusterId,
-        argumentType,
-        jurisdiction,
-        year: parseInt(year, 10),
-        outcome,
-      });
-    }
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

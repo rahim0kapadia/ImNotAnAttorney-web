@@ -222,7 +222,7 @@ function extractQuotes(text, limit = 10) {
       if (idx === -1) break;
 
       const sentence = extractSentence(text, idx);
-      if (seen.has(sentence)) { idx += anchor.length; continue; }
+      if (seen.has(sentence) || sentence.length < 40) { idx += anchor.length; continue; }
 
       seen.add(sentence);
       quotes.push({
@@ -255,12 +255,47 @@ async function main() {
   console.log(`Target clusters (all with cluster_id): ${targetClusters.size}`);
 
   // Load judge profiles for name matching
+  // PostgREST silently caps at 1000 rows regardless of ?limit= value.
+  // Must paginate via Range header to load all 15,000+ judges.
   console.log("Loading judge profiles...");
   loadServiceKey();
   let judges = [];
   try {
-    judges = await restApiCall("?table=judge_profiles&select=id,full_name&limit=50000");
-    if (!Array.isArray(judges)) judges = [];
+    const PAGE_SIZE = 1000;
+    let offset = 0;
+    while (true) {
+      const page = await new Promise((resolve, reject) => {
+        const req = https.request({
+          hostname: "jxjbjmgdukwkoclydqdr.supabase.co",
+          path: "/rest/v1/judge_profiles?select=id,full_name&order=id",
+          method: "GET",
+          headers: {
+            apikey: supabaseServiceKey,
+            Authorization: `Bearer ${supabaseServiceKey}`,
+            Range: `${offset}-${offset + PAGE_SIZE - 1}`,
+            Prefer: "count=exact",
+          },
+        }, (res) => {
+          let data = "";
+          res.on("data", (d) => (data += d));
+          res.on("end", () => {
+            if (res.statusCode >= 400 && res.statusCode !== 416) {
+              reject(new Error(`Judge load ${res.statusCode}: ${data.slice(0, 200)}`));
+            } else if (res.statusCode === 416) {
+              resolve([]);
+            } else {
+              try { resolve(JSON.parse(data)); } catch (e) { reject(e); }
+            }
+          });
+        });
+        req.on("error", reject);
+        req.end();
+      });
+      if (page.length === 0) break;
+      judges.push(...page);
+      if (page.length < PAGE_SIZE) break;
+      offset += PAGE_SIZE;
+    }
   } catch (e) {
     console.warn(`Warning: could not load judge profiles: ${e.message.slice(0, 100)}`);
   }
@@ -280,7 +315,7 @@ async function main() {
   bzcat.stderr.on("data", () => {});
 
   const parser = bzcat.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
   const results = [];
@@ -291,67 +326,72 @@ async function main() {
   const judgeMatchCount = { matched: 0, unmatched: 0 };
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 500000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${quotesExtracted} quotes (${elapsed.toFixed(0)}s)\n`);
-    }
-
-    const clusterId = record.cluster_id;
-    if (!clusterId || !targetClusters.has(clusterId)) continue;
-    matchCount++;
-
-    let text = record.plain_text || "";
-    if (text.length < 200) {
-      const html = record.html_with_citations || record.html || record.html_columbia || "";
-      if (html && html.length > 200) {
-        // Strip HTML tags (no regex)
-        const parts = html.split("<");
-        const out = [];
-        for (const part of parts) {
-          const closeIdx = part.indexOf(">");
-          out.push(closeIdx >= 0 ? part.slice(closeIdx + 1) : part);
-        }
-        text = out.join("").trim();
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 500000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${quotesExtracted} quotes (${elapsed.toFixed(0)}s)\n`);
       }
-    }
-    if (text.length < 200) continue;
 
-    const quotes = extractQuotes(text, 10);
-    if (quotes.length === 0) continue;
+      const clusterId = record.cluster_id;
+      if (!clusterId || !targetClusters.has(clusterId)) continue;
+      matchCount++;
 
-    // Try to match opinion author to a judge
-    let judgeId = null;
-    const authorName = record.author || "";
-    if (authorName) {
-      const authorLower = authorName.toLowerCase();
-      for (const [judgeName, id] of judgeMap) {
-        if (authorLower.indexOf(judgeName) >= 0 || judgeName.indexOf(authorLower) >= 0) {
-          judgeId = id;
-          break;
+      let text = record.plain_text || "";
+      if (text.length < 200) {
+        const html = record.html_with_citations || record.html || record.html_columbia || "";
+        if (html && html.length > 200) {
+          // Strip HTML tags (no regex)
+          const parts = html.split("<");
+          const out = [];
+          for (const part of parts) {
+            const closeIdx = part.indexOf(">");
+            out.push(closeIdx >= 0 ? part.slice(closeIdx + 1) : part);
+          }
+          text = out.join("").trim();
         }
       }
-    }
-    if (judgeId) judgeMatchCount.matched++;
-    else judgeMatchCount.unmatched++;
+      if (text.length < 200) continue;
 
-    const caseName = targetClusters.get(clusterId) || "";
-    for (const q of quotes) {
-      results.push({
-        judge_id: judgeId,
-        quote: q.quote,
-        topic: q.topic,
-        case_cited: caseName,
-        source_url: `https://www.courtlistener.com/opinion/${clusterId}/`,
-        cluster_id: clusterId,
-      });
-      topicCounts.set(q.topic, (topicCounts.get(q.topic) || 0) + 1);
-      quotesExtracted++;
-    }
+      const quotes = extractQuotes(text, 10);
+      if (quotes.length === 0) continue;
 
-    if (quotesExtracted % 500 === 0) process.stdout.write(`  ${quotesExtracted} quotes...\n`);
-    if (results.length >= limit) { bzcat.kill(); break; }
+      // Try to match opinion author to a judge
+      let judgeId = null;
+      const authorName = record.author || "";
+      if (authorName) {
+        const authorLower = authorName.toLowerCase();
+        for (const [judgeName, id] of judgeMap) {
+          if (authorLower.indexOf(judgeName) >= 0 || judgeName.indexOf(authorLower) >= 0) {
+            judgeId = id;
+            break;
+          }
+        }
+      }
+      if (judgeId) judgeMatchCount.matched++;
+      else judgeMatchCount.unmatched++;
+
+      const caseName = targetClusters.get(clusterId) || "";
+      for (const q of quotes) {
+        results.push({
+          judge_id: judgeId,
+          quote: q.quote,
+          topic: q.topic,
+          case_cited: caseName,
+          source_url: `https://www.courtlistener.com/opinion/${clusterId}/`,
+          cluster_id: clusterId,
+        });
+        topicCounts.set(q.topic, (topicCounts.get(q.topic) || 0) + 1);
+        quotesExtracted++;
+      }
+
+      if (quotesExtracted % 500 === 0) process.stdout.write(`  ${quotesExtracted} quotes...\n`);
+      if (results.length >= limit) { bzcat.kill(); break; }
+    }
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

@@ -301,6 +301,7 @@ async function main() {
       skip_empty_lines: true,
       escape: "\\",
       relax_column_count: true,
+      relax_quotes: true,
     })
   );
 
@@ -310,52 +311,57 @@ async function main() {
   let withDataCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 500000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(
-        `  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${withDataCount} with officer data (${elapsed.toFixed(0)}s)\n`
-      );
-    }
-
-    const clusterId = record.cluster_id;
-    if (!clusterId || !targetClusters.has(clusterId)) continue;
-    matchCount++;
-
-    let text = record.plain_text || "";
-    if (text.length < 500) {
-      const html = record.html_with_citations || record.html || record.html_columbia || "";
-      if (html.length > 500) text = stripHtml(html);
-    }
-    if (text.length < 500) continue;
-
-    const officerData = extractOfficerData(text);
-    if (officerData.size === 0) continue;
-
-    // Merge into global map
-    for (const [key, officerInfo] of officerData) {
-      if (!globalOfficerMap.has(key)) {
-        globalOfficerMap.set(key, {
-          title: officerInfo.title,
-          name: officerInfo.name,
-          testimony_count: 0,
-          discredited_count: 0,
-          clusters: new Set(),
-        });
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 500000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(
+          `  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${withDataCount} with officer data (${elapsed.toFixed(0)}s)\n`
+        );
       }
-      const global = globalOfficerMap.get(key);
-      global.testimony_count += officerInfo.testimony_count;
-      global.discredited_count += officerInfo.discredited_count;
-      global.clusters.add(clusterId);
-    }
 
-    withDataCount++;
-    if (withDataCount % 500 === 0) process.stdout.write(`  ${withDataCount} opinions with officer data...\n`);
-    if (withDataCount >= limit) {
-      bzcat.kill();
-      break;
+      const clusterId = record.cluster_id;
+      if (!clusterId || !targetClusters.has(clusterId)) continue;
+      matchCount++;
+
+      let text = record.plain_text || "";
+      if (text.length < 500) {
+        const html = record.html_with_citations || record.html || record.html_columbia || "";
+        if (html.length > 500) text = stripHtml(html);
+      }
+      if (text.length < 500) continue;
+
+      const officerData = extractOfficerData(text);
+      if (officerData.size === 0) continue;
+
+      // Merge into global map
+      for (const [key, officerInfo] of officerData) {
+        if (!globalOfficerMap.has(key)) {
+          globalOfficerMap.set(key, {
+            title: officerInfo.title,
+            name: officerInfo.name,
+            testimony_count: 0,
+            discredited_count: 0,
+            clusters: new Set(),
+          });
+        }
+        const global = globalOfficerMap.get(key);
+        global.testimony_count += officerInfo.testimony_count;
+        global.discredited_count += officerInfo.discredited_count;
+        global.clusters.add(clusterId);
+      }
+
+      withDataCount++;
+      if (withDataCount % 500 === 0) process.stdout.write(`  ${withDataCount} opinions with officer data...\n`);
+      if (withDataCount >= limit) {
+        bzcat.kill();
+        break;
+      }
     }
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

@@ -175,25 +175,30 @@ async function phase1() {
   const bzcat1 = spawn(findBzcat(), [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
   bzcat1.stderr.on("data", () => {});
   const parser1 = bzcat1.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
-  for await (const record of parser1) {
-    rowCount++;
-    if (rowCount % 1000000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matches (${elapsed.toFixed(0)}s)\n`);
-    }
+  try {
+    for await (const record of parser1) {
+      rowCount++;
+      if (rowCount % 1000000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matches (${elapsed.toFixed(0)}s)\n`);
+      }
 
-    const clusterId = record.cluster_id;
-    if (!clusterId || !targetClusters.has(clusterId)) continue;
+      const clusterId = record.cluster_id;
+      if (!clusterId || !targetClusters.has(clusterId)) continue;
 
-    const opinionId = record.id;
-    if (!clusterToOpinions.has(clusterId)) {
-      clusterToOpinions.set(clusterId, new Set());
+      const opinionId = record.id;
+      if (!clusterToOpinions.has(clusterId)) {
+        clusterToOpinions.set(clusterId, new Set());
+      }
+      clusterToOpinions.get(clusterId).add(opinionId);
+      matchCount++;
     }
-    clusterToOpinions.get(clusterId).add(opinionId);
-    matchCount++;
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat1.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
@@ -238,24 +243,29 @@ async function phase2() {
   const bzcat2 = spawn(findBzcat(), [CITATION_MAP_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
   bzcat2.stderr.on("data", () => {});
   const parser2 = bzcat2.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
-  for await (const record of parser2) {
-    rowCount++;
-    if (rowCount % 1000000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} citation matches (${elapsed.toFixed(0)}s)\n`);
+  try {
+    for await (const record of parser2) {
+      rowCount++;
+      if (rowCount % 1000000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} citation matches (${elapsed.toFixed(0)}s)\n`);
+      }
+
+      const cited = record.cited_opinion_id;
+      if (!cited || !targetOpinions.has(cited)) continue;
+      const citing = record.citing_opinion_id;
+      if (!citing) continue;
+
+      if (!citingByTarget.has(cited)) citingByTarget.set(cited, new Set());
+      citingByTarget.get(cited).add(citing);
+      matchCount++;
     }
-
-    const cited = record.cited_opinion_id;
-    if (!cited || !targetOpinions.has(cited)) continue;
-    const citing = record.citing_opinion_id;
-    if (!citing) continue;
-
-    if (!citingByTarget.has(cited)) citingByTarget.set(cited, new Set());
-    citingByTarget.get(cited).add(citing);
-    matchCount++;
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat2.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
@@ -294,25 +304,30 @@ async function phase3() {
   const bzcat3 = spawn(findBzcat(), [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
   bzcat3.stderr.on("data", () => {});
   const parser3 = bzcat3.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
   }));
 
-  for await (const record of parser3) {
-    rowCount++;
-    if (rowCount % 1000000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} texts saved (${elapsed.toFixed(0)}s)\n`);
+  try {
+    for await (const record of parser3) {
+      rowCount++;
+      if (rowCount % 1000000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} texts saved (${elapsed.toFixed(0)}s)\n`);
+      }
+
+      const opinionId = record.id;
+      if (!opinionId || !citingSet.has(opinionId)) continue;
+
+      const plainText = record.plain_text || "";
+      if (plainText.length === 0) continue;
+
+      // Cap text length at 50KB to keep output manageable
+      out.write(JSON.stringify({ id: opinionId, text: plainText.slice(0, 50000) }) + "\n");
+      matchCount++;
     }
-
-    const opinionId = record.id;
-    if (!opinionId || !citingSet.has(opinionId)) continue;
-
-    const plainText = record.plain_text || "";
-    if (plainText.length === 0) continue;
-
-    // Cap text length at 50KB to keep output manageable
-    out.write(JSON.stringify({ id: opinionId, text: plainText.slice(0, 50000) }) + "\n");
-    matchCount++;
+  } catch (parseErr) {
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat3.kill(); } catch {}
   }
 
   out.end();
