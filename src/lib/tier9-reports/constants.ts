@@ -1,0 +1,14 @@
+/**
+ * Tier 9 data-driven report constants.
+ * Shared across webhook, intake route, and generation module.
+ */
+
+export const TIER9_SLUGS = new Set([
+  "judge-report-card",
+  "officer-background-check",
+  "similar-cases-analyzer",
+]);
+
+export function isTier9Slug(slug: string): boolean {
+  return TIER9_SLUGS.has(slug);
+}

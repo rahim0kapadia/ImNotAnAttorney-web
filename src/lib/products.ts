@@ -1137,6 +1137,66 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     dripSequenceKey: "bundle_pre_plea",
     isActive: true,
   },
+
+  // ─── TIER 9 DATA-DRIVEN REPORTS ($97-$297) ──────────────────
+  // Query pre-computed Tier 9 database tables (43K+ rows).
+  // No Claude API call — pure data-driven reports from verified court records.
+  // Also defined in tiers.ts for checkout validation; defined here for
+  // getProduct() in intake/delivery/viewer flows.
+  "judge-report-card": {
+    name: "Judge Report Card",
+    category: "research",
+    price: 19700, // $197
+    priceDisplay: "$197",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Judge Report Card is generated on demand from verified court records within 60 seconds.",
+    description:
+      "Sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library for your assigned judge.",
+    intakeFields: ["judgeName", "state", "chargeType"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Your judge is one piece. The Case Decoder analyzes your full defense landscape.",
+    dripSequenceKey: "research_judge_report_card",
+    isActive: true,
+  },
+  "officer-background-check": {
+    name: "Officer Background Check",
+    category: "research",
+    price: 9700, // $97
+    priceDisplay: "$97",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Officer Background Check is generated on demand from cross-case court records within 60 seconds.",
+    description:
+      "Cross-case officer reliability, credibility challenges, and discreditation history from verified court records.",
+    intakeFields: ["officerName", "state"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Officer reliability is one angle. The Case Decoder maps your full defense position.",
+    dripSequenceKey: "research_officer_background",
+    isActive: true,
+  },
+  "similar-cases-analyzer": {
+    name: "Similar Cases Analyzer",
+    category: "research",
+    price: 29700, // $297
+    priceDisplay: "$297",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Similar Cases Analyzer report is generated on demand from verified court records within 60 seconds.",
+    description:
+      "Similar case outcomes, sentencing distributions, plea discount data, and appellate trends for your charge and jurisdiction.",
+    intakeFields: ["chargeType", "state"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Similar cases set expectations. The Case Decoder builds your specific defense strategy.",
+    dripSequenceKey: "research_similar_cases",
+    isActive: true,
+  },
 } as const satisfies Record<string, StandaloneProduct>;
 
 export type ProductSlug = keyof typeof STANDALONE_PRODUCTS;

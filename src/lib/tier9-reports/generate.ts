@@ -1,0 +1,270 @@
+/**
+ * Tier 9 report generation orchestrator.
+ * Flow: fetch order → query DB → render HTML → store → email.
+ * No Claude API call — pure data-driven from pre-computed tables.
+ */
+
+import { randomBytes, createHash } from "crypto";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { sendEmail, sendEmailWithOperatorAlert, escapeHtml } from "@/lib/email";
+import { SITE_URL } from "@/lib/site";
+import { getProduct } from "@/lib/products";
+import {
+  queryJudgeReportCard,
+  queryOfficerBackground,
+  querySimilarCases,
+  type JudgeReportCardIntake,
+  type OfficerBackgroundIntake,
+  type SimilarCasesIntake,
+} from "./query";
+import {
+  renderJudgeReportCard,
+  renderOfficerBackground,
+  renderSimilarCases,
+} from "./render";
+
+const OPERATOR_EMAIL =
+  process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
+
+function hashToken(token: string): string {
+  return createHash("sha256").update(token).digest("hex");
+}
+
+/**
+ * Generate a Tier 9 data-driven report for a given order.
+ * Idempotent — skips if report already exists on the order.
+ *
+ * @param orderId - UUID of the order to generate for.
+ */
+export async function generateTier9Report(orderId: string): Promise<void> {
+  const supabase = createAdminClient();
+
+  // 1. Fetch order with idempotency check
+  const { data: order, error: fetchError } = await supabase
+    .from("orders")
+    .select(
+      "id, email, standalone_product_slug, standalone_intake, standalone_report_token_hash, status"
+    )
+    .eq("id", orderId)
+    .single();
+
+  if (fetchError || !order) {
+    console.error("[Tier9] Order not found:", orderId, fetchError);
+    return;
+  }
+
+  // Idempotency: skip if report already generated
+  if (order.standalone_report_token_hash) {
+    console.log("[Tier9] Report already exists for order:", orderId);
+    return;
+  }
+
+  // Skip refunded orders
+  if (order.status === "refunded") {
+    console.log("[Tier9] Order refunded, skipping:", orderId);
+    return;
+  }
+
+  const slug = order.standalone_product_slug;
+  const intake = order.standalone_intake as Record<string, unknown> | null;
+
+  if (!slug || !intake) {
+    console.error("[Tier9] Missing slug or intake for order:", orderId);
+    await notifyOperatorFailure(orderId, slug, "Missing slug or intake data");
+    return;
+  }
+
+  const product = getProduct(slug);
+  const productName = product?.name || slug;
+
+  try {
+    // 2. Query Tier 9 tables
+    let html: string;
+
+    switch (slug) {
+      case "judge-report-card": {
+        const data = await queryJudgeReportCard(
+          intake as unknown as JudgeReportCardIntake
+        );
+        if (data.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderJudgeReportCard(data);
+        break;
+      }
+
+      case "officer-background-check": {
+        const data = await queryOfficerBackground(
+          intake as unknown as OfficerBackgroundIntake
+        );
+        if (data.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderOfficerBackground(data);
+        break;
+      }
+
+      case "similar-cases-analyzer": {
+        const typedIntake = intake as unknown as SimilarCasesIntake;
+        const data = await querySimilarCases(typedIntake);
+        if (data.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderSimilarCases(data, typedIntake);
+        break;
+      }
+
+      default:
+        console.error("[Tier9] Unknown slug:", slug);
+        await notifyOperatorFailure(orderId, slug, `Unknown Tier 9 slug: ${slug}`);
+        return;
+    }
+
+    // 3. Generate cryptographic report token
+    const reportToken = randomBytes(16).toString("hex");
+    const reportTokenHash = hashToken(reportToken);
+
+    // 4. Upload to Supabase Storage
+    const storagePath = `${orderId}.html`;
+    const { error: uploadError } = await supabase.storage
+      .from("standalone-reports")
+      .upload(storagePath, html, {
+        contentType: "text/html",
+        upsert: true,
+      });
+
+    if (uploadError) {
+      throw new Error(`Storage upload failed: ${uploadError.message}`);
+    }
+
+    // 5. Update order with report metadata
+    const expiresAt = new Date(
+      Date.now() + 365 * 24 * 60 * 60 * 1000
+    ).toISOString();
+
+    const { error: updateError } = await supabase
+      .from("orders")
+      .update({
+        standalone_report_token_hash: reportTokenHash,
+        standalone_report_storage_path: storagePath,
+        standalone_report_token_expires_at: expiresAt,
+      })
+      .eq("id", orderId);
+
+    if (updateError) {
+      throw new Error(`Order update failed: ${updateError.message}`);
+    }
+
+    // 6. Send delivery email
+    const reportUrl = `${SITE_URL}/report/standalone/${reportToken}`;
+
+    await sendEmailWithOperatorAlert(
+      {
+        to: order.email,
+        subject: `Your ${escapeHtml(productName)} Is Ready`,
+        html: `
+          <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Your ${escapeHtml(productName)} Is Ready</h1>
+          <p>Your report has been generated from verified court records. Every data point includes a source URL you can verify independently.</p>
+          <p style="margin: 24px 0;">
+            <a href="${reportUrl}"
+               style="background: #F59E0B; color: #0C0A09; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
+              View Your Report
+            </a>
+          </p>
+          <p style="color: #A1A1AA; font-size: 13px;">This link is active for 12 months. Bookmark it for future reference.</p>
+          <p style="color: #71717A; font-size: 12px; margin-top: 24px;">
+            Questions about your report? Reply to this email and a real person will respond.
+          </p>
+        `,
+      },
+      `tier9 delivery for ${order.email}`,
+      {
+        category: "standalone-delivery",
+        order_id: orderId,
+        metadata: { standalone_product_slug: slug },
+      }
+    );
+
+    console.log(
+      `[Tier9] Report generated and delivered: ${slug} for ${order.email}`
+    );
+  } catch (err) {
+    const errorMsg = err instanceof Error ? err.message : String(err);
+    console.error("[Tier9] Generation failed:", errorMsg);
+    await notifyOperatorFailure(orderId, slug, errorMsg);
+  }
+}
+
+/**
+ * Notify customer and operator when insufficient data is available.
+ * Does not generate a report — offers refund instead.
+ */
+async function notifyInsufficientData(
+  customerEmail: string,
+  productName: string,
+  orderId: string,
+  intake: Record<string, unknown>
+): Promise<void> {
+  // Customer notification
+  await sendEmail({
+    to: customerEmail,
+    subject: `${productName} — Limited Data Available`,
+    html: `
+      <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">${escapeHtml(productName)}</h1>
+      <p>We searched our verified court record database but found insufficient data to generate a meaningful report based on the details you provided.</p>
+      <p>We take data accuracy seriously — we will not generate a report with insufficient evidence to back it up.</p>
+      <p style="margin: 20px 0;"><strong style="color: #FAFAF9;">Your options:</strong></p>
+      <ul style="padding-left: 20px;">
+        <li style="margin-bottom: 8px;">Reply to this email with corrected details (different spelling, full name, etc.) and we will search again</li>
+        <li style="margin-bottom: 8px;">Request a full refund — reply to this email and we will process it immediately</li>
+      </ul>
+      <p style="color: #A1A1AA; font-size: 13px; margin-top: 24px;">
+        Our database covers judges and officers across all 50 states with varying depth.
+        Coverage depends on the volume of public court records available for your jurisdiction.
+      </p>
+    `,
+  });
+
+  // Operator alert
+  await sendEmail({
+    to: OPERATOR_EMAIL,
+    subject: `[ALERT] Insufficient data — ${productName} (${orderId.slice(0, 8)})`,
+    html: `
+      <p>Tier 9 report generation found no data.</p>
+      <p><strong>Product:</strong> ${escapeHtml(productName)}</p>
+      <p><strong>Customer:</strong> ${escapeHtml(customerEmail)}</p>
+      <p><strong>Order:</strong> ${escapeHtml(orderId)}</p>
+      <p><strong>Intake:</strong> <code>${escapeHtml(JSON.stringify(intake))}</code></p>
+      <p>Customer has been notified and offered a refund or retry.</p>
+    `,
+  });
+}
+
+/**
+ * Notify operator of a generation failure with retry command.
+ */
+async function notifyOperatorFailure(
+  orderId: string,
+  slug: string | null,
+  errorMsg: string
+): Promise<void> {
+  const origin = SITE_URL;
+  await sendEmail({
+    to: OPERATOR_EMAIL,
+    subject: `[ERROR] Tier 9 generation failed — ${slug || "unknown"} (${orderId.slice(0, 8)})`,
+    html: `
+      <p>Tier 9 report generation failed.</p>
+      <p><strong>Product:</strong> ${escapeHtml(slug || "unknown")}</p>
+      <p><strong>Order:</strong> ${escapeHtml(orderId)}</p>
+      <p><strong>Error:</strong> ${escapeHtml(errorMsg)}</p>
+      <p><strong>Retry:</strong></p>
+      <pre style="background: #1C1917; padding: 12px; border-radius: 4px; color: #D4D4D8; font-size: 12px; overflow-x: auto;">curl -X POST ${origin}/api/generate/tier9 \\
+  -H "Authorization: Bearer $OPERATOR_SECRET" \\
+  -H "Content-Type: application/json" \\
+  -d '{"orderId":"${orderId}"}'</pre>
+    `,
+  });
+}

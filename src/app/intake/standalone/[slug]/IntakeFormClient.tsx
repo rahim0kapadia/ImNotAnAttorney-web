@@ -1748,6 +1748,80 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
         "Optional. List anything your attorney has already received (police reports, lab results, dashcam, witness statements). Leave blank if you have not received anything yet.",
     },
   ],
+
+  // ─── Tier 9 Data-Driven Reports ─────────────────────────────
+  "judge-report-card": [
+    {
+      kind: "text",
+      name: "judgeName",
+      label: "Judge's full name",
+      required: true,
+      maxLength: 100,
+      placeholder: "e.g., Sarah Martinez",
+      helpText:
+        "Enter the full name of your assigned judge. We search verified court records for their sentencing patterns, motion rulings, and published opinions.",
+    },
+    {
+      kind: "select",
+      name: "state",
+      label: "State",
+      placeholder: "Select state",
+      options: US_STATES,
+      required: true,
+    },
+    {
+      kind: "select",
+      name: "chargeType",
+      label: "Charge type",
+      placeholder: "Select charge type",
+      options: ALLOWED_CHARGE_TYPES.map((ct) => ({
+        value: ct,
+        label: ct.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+      })),
+      required: true,
+    },
+  ],
+  "officer-background-check": [
+    {
+      kind: "text",
+      name: "officerName",
+      label: "Officer's full name",
+      required: true,
+      maxLength: 100,
+      placeholder: "e.g., John Smith",
+      helpText:
+        "Enter the full name of the arresting or testifying officer. We search cross-case court records for their testimony history and credibility challenges.",
+    },
+    {
+      kind: "select",
+      name: "state",
+      label: "State",
+      placeholder: "Select state",
+      options: US_STATES,
+      required: true,
+    },
+  ],
+  "similar-cases-analyzer": [
+    {
+      kind: "select",
+      name: "chargeType",
+      label: "Charge type",
+      placeholder: "Select charge type",
+      options: ALLOWED_CHARGE_TYPES.map((ct) => ({
+        value: ct,
+        label: ct.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+      })),
+      required: true,
+    },
+    {
+      kind: "select",
+      name: "state",
+      label: "State",
+      placeholder: "Select state",
+      options: US_STATES,
+      required: true,
+    },
+  ],
 };
 
 // ─── Bundle FIELD_SETS — computed from included products ──────

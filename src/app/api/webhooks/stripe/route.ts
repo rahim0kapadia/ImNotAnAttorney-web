@@ -52,6 +52,9 @@ import { randomBytes } from "crypto";
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
 
+/** Tier 9 data-driven products — need intake before report generation. */
+const TIER9_SLUGS = new Set(["judge-report-card", "officer-background-check", "similar-cases-analyzer"]);
+
 export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // STRIPE SIGNATURE VERIFICATION (DUAL-MODE)
@@ -501,11 +504,72 @@ export async function POST(req: NextRequest) {
     }
 
     // ──────────────────────────────────────────────────────────────
+    // TIER 9 DATA-DRIVEN PRODUCTS — INTAKE THEN GENERATE
+    // ──────────────────────────────────────────────────────────────
+    // Tier 9 products (Judge Report Card, Officer Background Check,
+    // Similar Cases Analyzer) are isDigitalProduct tiers that need
+    // customer intake before generation. Unlike playbooks (pre-built
+    // PDFs), these query Tier 9 database tables on demand.
+    // Flow: create order → generate intake token → send intake email
+    // → customer fills form → inline generation (no Edge Function).
+    const productType = session.metadata?.product_type || "service";
+
+    if (productType === "digital-product" && TIER9_SLUGS.has(tier) && orderData) {
+      const intakeToken = randomBytes(24).toString("base64url");
+      const intakeTokenHash = hashToken(intakeToken);
+
+      // Set standalone columns so the intake route + report viewer work
+      await supabase
+        .from("orders")
+        .update({
+          product_type: "standalone",
+          standalone_product_slug: tier,
+          standalone_intake_token_hash: intakeTokenHash,
+        })
+        .eq("id", orderData.id);
+
+      const tier9Product = getProduct(tier);
+      const tier9ProductName = tier9Product?.name || tier;
+
+      // Send intake email (same pattern as standalone webhook fast path)
+      await sendEmailWithOperatorAlert(
+        {
+          to: email,
+          subject: `Your ${escapeHtml(tier9ProductName)} — Complete Your Details`,
+          html: `
+            <p>Thank you for your purchase.</p>
+            <p>To generate your personalized ${escapeHtml(tier9ProductName)}, we need a few details about your situation.</p>
+            <p style="margin: 24px 0;">
+              <a href="${origin}/intake/standalone/${tier}?token=${intakeToken}"
+                 style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">
+                Complete Your Details
+              </a>
+            </p>
+            <p>This takes about 1 minute. Your report is generated within 60 seconds of submission.</p>
+          `,
+        },
+        `tier9 intake email for ${email}`,
+        {
+          category: "standalone-intake-invite",
+          metadata: { standalone_product_slug: tier },
+        }
+      );
+
+      // Operator sale notification
+      await sendEmail({
+        to: OPERATOR_EMAIL,
+        subject: `[SALE] ${tier9ProductName} — $${(amount / 100).toFixed(2)}`,
+        html: `<p>New Tier 9 purchase: ${escapeHtml(tier9ProductName)} by ${escapeHtml(email)}</p>`,
+      });
+
+      return NextResponse.json({ received: true });
+    }
+
+    // ──────────────────────────────────────────────────────────────
     // DIGITAL PRODUCT BRANCH (Defense Playbooks)
     // ──────────────────────────────────────────────────────────────
     // Digital products skip the entire case creation / intake / generation
     // pipeline. They deliver a pre-built PDF via signed URL immediately.
-    const productType = session.metadata?.product_type || "service";
 
     if (productType === "digital-product" && orderData) {
       // Generate download token with 72-hour expiry

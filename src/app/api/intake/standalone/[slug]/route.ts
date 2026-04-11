@@ -13,13 +13,15 @@
  *   - (W13) Payload size guard (10KB max)
  *   - (C10/C9) Generation via Supabase Edge Function (no self-referential fetch)
  */
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getProduct } from "@/lib/products";
 import { isValidChargeType } from "@/lib/charge-types";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
 import { hashToken } from "@/lib/site";
+import { isTier9Slug } from "@/lib/tier9-reports/constants";
+import { generateTier9Report } from "@/lib/tier9-reports/generate";
 
 // (C6) Allowlists for enum fields — prevents prompt injection
 const VALID_EMPLOYER_TYPES = new Set([
@@ -386,7 +388,25 @@ export async function POST(
     );
   }
 
-  // (C9/C10) Fire-and-forget to Supabase Edge Function — no self-referential HTTP
+  // Tier 9 data-driven products: generate inline (DB queries only, <5s).
+  // No Edge Function needed — queries pre-computed tables and renders HTML.
+  if (isTier9Slug(slug)) {
+    after(async () => {
+      try {
+        await generateTier9Report(order.id);
+      } catch (err) {
+        console.error("[Intake] Tier 9 generation failed:", err);
+      }
+    });
+
+    return NextResponse.json({
+      status: "generating",
+      message:
+        "Your report is being generated. You'll receive an email within 60 seconds.",
+    });
+  }
+
+  // (C9/C10) Fire-and-forget to Supabase Edge Function — non-Tier-9 products
   fetch(`${SUPABASE_URL}/functions/v1/generate-standalone`, {
     method: "POST",
     headers: {
