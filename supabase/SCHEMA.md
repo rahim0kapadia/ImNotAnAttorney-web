@@ -590,10 +590,11 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 
 ### Judge Profiles Extensions (New Columns)
 
-The `judge_profiles` table receives four new columns to surface Tier 9 intelligence:
+The `judge_profiles` table receives five new columns to surface Tier 9 intelligence:
 
 | Column | Type | Purpose |
 |--------|------|---------|
+| jurisdiction | text | 2-letter state code (e.g., "FL") derived from positions JSONB court_id. "FEDERAL" for circuit/SCOTUS/tax courts. Indexed. Backfilled via `scripts/backfill-judge-jurisdiction.mjs`. |
 | sentencing_distributions | jsonb | Per-charge sentencing percentiles aggregated from `sentencing_distributions` table (nullable) |
 | judicial_quotes | jsonb | Notable holding quotes by topic, aggregated from `judge_quotes` (nullable) |
 | bench_acquittal_rate | numeric | Overall acquittal rate in bench trials across all charges (nullable) |

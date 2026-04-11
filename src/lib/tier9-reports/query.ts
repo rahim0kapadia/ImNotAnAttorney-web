@@ -193,14 +193,23 @@ export async function queryJudgeReportCard(
 ): Promise<JudgeReportCardData> {
   const supabase = createAdminClient();
 
-  // Look up judge by name (case-insensitive, escaped).
-  // Note: judge_profiles has no jurisdiction/court columns — derive from positions JSONB.
+  // Look up judge by name (case-insensitive, escaped) + jurisdiction filter.
   const safeName = escapeIlike(intake.judgeName);
-  const { data: judges } = await supabase
+  let { data: judges } = await supabase
     .from("judge_profiles")
-    .select("id, full_name, positions, sentencing_distributions, judicial_quotes, bench_acquittal_rate, jury_acquittal_rate")
+    .select("id, full_name, jurisdiction, positions, sentencing_distributions, judicial_quotes, bench_acquittal_rate, jury_acquittal_rate")
     .ilike("full_name", `%${safeName}%`)
+    .eq("jurisdiction", intake.state)
     .limit(5);
+
+  // Fall back to name-only if jurisdiction filter yields nothing
+  if (!judges || judges.length === 0) {
+    ({ data: judges } = await supabase
+      .from("judge_profiles")
+      .select("id, full_name, jurisdiction, positions, sentencing_distributions, judicial_quotes, bench_acquittal_rate, jury_acquittal_rate")
+      .ilike("full_name", `%${safeName}%`)
+      .limit(5));
+  }
 
   const rawJudge = judges?.[0] ?? null;
 
@@ -217,7 +226,7 @@ export async function queryJudgeReportCard(
     };
   }
 
-  // Derive court from positions JSONB (most recent judicial appointment)
+  // Derive court from positions JSONB for display (most recent judicial appointment)
   const judicialPosition = Array.isArray(rawJudge.positions)
     ? (rawJudge.positions as Array<{ court_id?: string; position_type?: string }>)
         .filter((p) => p.position_type === "jud" && p.court_id)
@@ -228,7 +237,7 @@ export async function queryJudgeReportCard(
     id: rawJudge.id as string,
     name: rawJudge.full_name as string,
     court: (judicialPosition?.court_id as string) ?? null,
-    jurisdiction: null as string | null,
+    jurisdiction: (rawJudge.jurisdiction as string) ?? null,
     sentencing_distributions: rawJudge.sentencing_distributions,
     judicial_quotes: rawJudge.judicial_quotes,
     bench_acquittal_rate: rawJudge.bench_acquittal_rate as number | null,
