@@ -4,7 +4,7 @@
 
 ## Blog — content/blog/
 
-48+ MDX files. Rendered at `/blog/[slug]` via `next-mdx-remote`. Parsed by `src/lib/blog.ts`.
+60 MDX files. Rendered at `/blog/[slug]` via `next-mdx-remote`. Parsed by `src/lib/blog.ts`. Tag pills on individual posts link to `/blog?category=<category>` for filtered listing.
 
 ### Frontmatter Schema
 
@@ -29,10 +29,13 @@ All fields except `faqs` and `howToSteps` are required. `faqs` generates FAQ sch
 
 | Category | Count | Notes |
 |----------|-------|-------|
-| `dui-defense` | ~19 | Largest category; DUI is the live tier |
-| `drug-defense` | ~6 | Drug possession + trafficking |
-| `federal-crime` | ~3 | Federal criminal defense |
-| Other categories | ~7 | Self-defense, probation, white-collar, general |
+| `general-defense` | 33 | Largest — attorney accountability, process, motions, plea |
+| `dui` | 10 | DUI-specific — breathalyzer, field sobriety, 72-hour guide |
+| `drug-cases` | 6 | Drug possession, trafficking, discovery, testing |
+| `white-collar` | 4 | Federal, wire fraud, cooperation agreements |
+| `probation` | 4 | Violations, drug test, technical violations |
+| `sex-offense` | 2 | Defense guides for sex offense charges |
+| `employment` | 1 | Employment impact of criminal charges |
 
 ### Key Functions (src/lib/blog.ts)
 
@@ -109,7 +112,7 @@ Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 | Constant | Value | File:Line |
 |----------|-------|-----------|
 | BLOG_DIR | `path.join(process.cwd(), "content", "blog")` | `src/lib/blog.ts:33` |
-| Allowed categories | dui-defense, drug-defense, federal-crime, sex-offense, white-collar, probation, self-defense, general-defense | `src/lib/blog.ts` |
+| Allowed categories | dui, drug-cases, white-collar, sex-offense, probation, general-defense, employment | `src/lib/blog.ts` |
 | Required frontmatter | title, date, tags, excerpt, author, category | `src/lib/blog.ts:15-24` |
 | Optional frontmatter | faqs, howToSteps, lastModified | `src/lib/blog.ts:55-60` |
 | Post slug regex | `/^[a-z0-9][a-z0-9-]*[a-z0-9]$/` (prevents path traversal) | `src/lib/blog.ts:106` |
@@ -133,7 +136,7 @@ Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 - Postiz API (self-hosted at localhost:5100) handles final publishing
 
 **Shared state (filesystem only):**
-- `content/blog/*.mdx` — 35+ blog post files (no DB sync)
+- `content/blog/*.mdx` — 60 blog post files (no DB sync)
 - `content/queue/{platform}/pending/` — drafts awaiting review
 - `content/queue/{platform}/approved/` — reviewed drafts awaiting publish
 - `content/queue/{platform}/posted/` — archived after publish

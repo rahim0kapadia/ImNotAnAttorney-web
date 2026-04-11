@@ -1,12 +1,12 @@
 # Architecture — ImNotAnAttorney-web
 
-> Living document. Updated: 2026-04-09. Read this before making any change.
+> Living document. Updated: 2026-04-11. Read this before making any change.
 > Subsystem details live in `CONTEXT.md` files next to the code. This file is the system map.
 > For column-level DB schema: `supabase/SCHEMA.md`. For state machines: `supabase/CONTEXT.md`. For email sequences: `src/lib/CONTEXT.md`.
 
 ## System Overview
 
-Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (48+ MDX blog posts, free ungated resources) with e-commerce (8 playbooks at $97, 5 service tiers at $197–$9,997, 38 standalone products across 4 categories) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
+Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (60 MDX blog posts, free ungated resources, Plea Analyzer acquisition wedge) with e-commerce (8 playbooks at $127/$147, 5 service tiers at $197–$9,997, 44 standalone products — 32 paid $97–$497, 12 free — across 4 categories) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
 
 One of three repos in the INAA ecosystem: `ImNotAnAttorney` (business docs/templates), `ImNotAnAttorney-web` (this, customer-facing), `ImNotAnAttorney-engine` (background job workers). All three share the same Supabase database.
 
@@ -38,11 +38,11 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 |-----------|-------------|---------|
 | **Pages & Routes** | 58 pages + 70 API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
 | **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
-| **Standalone Products** | 38 active: 3 calculators, 8 content guides, 24 research reports, 3 bundles (4 delivery systems) | `src/lib/products.ts` + `src/lib/bundles.ts` |
+| **Standalone Products** | 44 active: 4 calculators, 8 content guides, 29 research reports, 3 bundles (4 delivery systems) | `src/lib/products.ts` + `src/lib/bundles.ts` |
 | **UI Components** | 45+ components (layout, sales, intake, motion) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
 | **Database** | 50+ tables, 41 migrations, 3 Edge Functions, 3 storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
-| **Content** | 48+ MDX blog posts + social content queue | [`content/CONTEXT.md`](content/CONTEXT.md) |
-| **Scripts** | 33 utilities: cron setup, legal research, E2E tests, Tier 9 bulk extraction | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
+| **Content** | 60 MDX blog posts + social content queue | [`content/CONTEXT.md`](content/CONTEXT.md) |
+| **Scripts** | 40+ utilities: cron setup, legal research, E2E tests (Playwright), Tier 9 bulk extraction | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
 | **Design System** | Brand tokens: Amber + Navy on black, Playfair + Lato | [`design-system/brand.md`](design-system/brand.md) |
 
@@ -52,7 +52,8 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 FUNNEL → CAPTURE → PURCHASE → INTAKE → PROCESSING → DELIVERY
 
 Blog/SEO → Free resources (ungated) → Score Quiz (/score, email captured after results)
-         → Playbook Checkout ($97) → Stripe webhook → download_token → PDF email
+         → Plea Analyzer (/plea-analyzer, free acquisition wedge → email capture → upsell)
+         → Playbook Checkout ($127/$147) → Stripe webhook → download_token → PDF email
          → Service Checkout ($197–$9,997) → Stripe webhook → Case created
            → Intake form → Report generation (Edge Function / Engine workers)
            → Operator review → Delivery email → Post-purchase drip
@@ -223,6 +224,29 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 5. **Share** — `POST /api/score/share` re-calculates score server-side (prevents tampering), generates token, stores in `score_results`, returns shareable URL.
 6. **Results** — `/score/results/[token]` renders score band, observations, and upgrade callouts.
 
+## Reddit Monitor Pipeline (End-to-End)
+
+1. **Trigger** — cron-job.org hits `GET /api/cron/reddit-monitor` every 30 minutes.
+2. **Fetch** — Fetches 25 newest posts from 5 subreddits (dui, legaladvice, probation, Felons, publicdefenders) via Reddit JSON API. 24-hour age window filters stale posts.
+3. **Match** — Each post title+body matched against 10 pre-written comment templates (`content/queue/reddit/pending/01-10*.md`). Zero LLM usage.
+4. **Dedup** — Checks `reddit_response_queue` table by `reddit_thread_id`. Skips duplicates.
+5. **Store** — Inserts matched draft into `reddit_response_queue` with template ID, blog URL, and customized response text.
+6. **Notify** — Sends 2-message Telegram notification: (1) thread link with subreddit + template label + detected state, (2) copy-paste reply draft with embedded blog URL.
+
+## Feature Flags — Priority B Workers
+
+7 feature flags registered via migration `20260411e` (seeded as `is_enabled: false`, dark launch). Runtime-toggleable via `feature_flags` table and `isFeatureEnabled()` in `src/lib/feature-flags.ts` (5-minute TTL cache, tier-scoped).
+
+| Flag Key | Worker |
+|----------|--------|
+| `plea_deal_analyzer` | B1: Plea deal analysis |
+| `ach_matrix` | B2: Analysis of Competing Hypotheses matrix |
+| `adversarial_prosecution_sim` | B3: Multi-round prosecution simulation |
+| `sentencing_intelligence` | B4: Quantitative sentencing intelligence |
+| `daubert_challenge` | B5: Expert witness Daubert challenge |
+| `body_camera_analysis` | B6: Body camera/media analysis |
+| `cross_case_aggregator` | B7: Cross-case intelligence aggregator |
+
 ## Gotchas
 
 1. **Dual-mode Stripe requires BOTH keys.** When any tier has `live: true`, `STRIPE_SECRET_KEY_LIVE` and `STRIPE_WEBHOOK_SECRET_LIVE` must be set. Not validated at startup — only at first live payment.
@@ -248,7 +272,7 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 | Magic link auth | No passwords; token in cookie | Criminal defendants won't remember passwords under stress | accepted |
 | Crisis buyer psychology | 7-day convert window, urgency + guarantee | Defendant researches right after arrest, not 6 weeks later | accepted |
 | Claude AI for reports | Opus (Case Decoder, extended thinking) + Sonnet (IB sections) | Opus needed for case-level reasoning; Sonnet sufficient for structured sections | accepted |
-| Orchestrated cron | 22 tasks run sequentially via cron-job.org | Isolated error handling per task; no GitHub Actions cron | accepted |
+| Orchestrated cron | 22 drip tasks + 4 blog pipeline crons + reddit-monitor via cron-job.org | Isolated error handling per task; no GitHub Actions cron | accepted |
 | UPL compliance gate | Every generated report evaluated before delivery | Non-negotiable legal risk mitigation | accepted |
 | Three-repo ecosystem | web + engine + business-docs as separate repos | Engine scales independently; business docs stay out of git deploy | accepted |
 
@@ -260,7 +284,7 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 | Supabase | PostgreSQL + Edge Functions + auth | Site up; no case processing or logins |
 | Resend | Transactional + drip email | No delivery notifications; drip pauses |
 | Claude API | Case Decoder + IB report generation | Reports queue but don't generate |
-| cron-job.org | 22 daily orchestrated tasks | Drip stops; operator alerts stop; reconciliation stops |
+| cron-job.org | 22 drip tasks + 4 blog pipeline + reddit-monitor + demand crons | Drip stops; operator alerts stop; blog pipeline pauses; reddit monitoring stops |
 | Vercel | Hosting + Edge runtime | Site down |
 | Cloudflare | DNS routing | Site unreachable |
 | ImNotAnAttorney-engine | Discovery tier job processing ($2,497+) | Discovery cases stuck at `pending` |

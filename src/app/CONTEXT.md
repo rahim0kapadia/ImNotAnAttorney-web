@@ -35,12 +35,13 @@
 | `/research/defense-score-data` | `research/defense-score-data/page.tsx` | Aggregate score stats (ISR 1h) |
 | `/checkout` | `checkout/page.tsx` | Checkout form with tier selection, email, consent |
 | `/idd` | `idd/page.tsx` | IDD (Indigent Defense Diversion) application page |
+| `/plea-analyzer` | `plea-analyzer/page.tsx` | Free plea deal analyzer (acquisition wedge → email capture → upsell) |
 | `/judge-report-card` | `judge-report-card/page.tsx` | Judge report card product page |
 | `/officer-background-check` | `officer-background-check/page.tsx` | Officer background check product page |
 | `/similar-cases-analyzer` | `similar-cases-analyzer/page.tsx` | Similar cases analyzer product page |
 | `/services` | `services/page.tsx` | Services overview/listing page |
 
-### Standalone Products (catalog: `src/lib/products.ts` — 32 products, 21 active as of 2026-04-08)
+### Standalone Products (catalog: `src/lib/products.ts` — 54 products, 44 active: 32 paid $97–$497, 12 free)
 | Route | File | Purpose |
 |-------|------|---------|
 | `/tools/[slug]` | `tools/[slug]/page.tsx` | Free calculator wizard (Good Time Credit live; SOL and Diversion draft) |
@@ -200,7 +201,7 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 ### Cron Tasks (12 routes — see lib/CONTEXT.md for task list)
 All cron routes: `GET /api/cron/*` — authenticated via `CRON_AUTH_TOKEN` header.
 Main orchestrator: `/api/cron/drip` — runs all 22 tasks sequentially.
-Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blog-generate-queue`, `blog-qa`, `blog-publish`, `demand-fetch`, `demand-score`, `demand-classify`, `demand-performance`, `demand-feedback-patterns`, `demand-feedback-revise`, `demand-feedback-score`.
+Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blog-generate-queue`, `blog-qa`, `blog-publish`, `reddit-monitor`, `demand-fetch`, `demand-score`, `demand-classify`, `demand-performance`, `demand-feedback-patterns`, `demand-feedback-revise`, `demand-feedback-score`.
 
 ### Admin-Only (12 routes)
 | Method | Route | Purpose |
