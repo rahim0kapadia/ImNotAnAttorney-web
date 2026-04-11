@@ -306,7 +306,11 @@ async function main() {
     skip_empty_lines: true,
     escape: "\\",
     relax_column_count: true,
+    relax_quotes: true,
   }));
+  parser.on("error", (err) => {
+    console.warn(`  CSV parse warning (skipping): ${err.message.slice(0, 100)}`);
+  });
 
   // Map<"judge_id|jurisdiction|charge_slug", {judge_id, jurisdiction, charge_slug, sentences: [...]}>
   const distributions = new Map();
