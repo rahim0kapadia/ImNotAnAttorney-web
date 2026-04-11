@@ -87,7 +87,9 @@ function noDataMessage(subject: string): string {
 
 export function renderJudgeReportCard(data: JudgeReportCardData): string {
   const judge = data.judge;
-  if (!judge) return "";
+  if (!judge) {
+    return wrapReport("Judge Report Card", "<p>No judge data available for this query.</p>", 0);
+  }
 
   let totalSources = 0;
   let body = "";

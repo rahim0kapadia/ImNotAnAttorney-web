@@ -129,6 +129,15 @@ export interface SimilarCasesIntake {
 }
 
 // ============================================================
+// HELPERS
+// ============================================================
+
+/** Escape ILIKE special characters to prevent wildcard injection. */
+function escapeIlike(input: string): string {
+  return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
+}
+
+// ============================================================
 // QUERIES
 // ============================================================
 
@@ -137,11 +146,13 @@ export async function queryJudgeReportCard(
 ): Promise<JudgeReportCardData> {
   const supabase = createAdminClient();
 
-  // Look up judge by name (case-insensitive) + jurisdiction
+  // Look up judge by name (case-insensitive, escaped) + jurisdiction
+  const safeName = escapeIlike(intake.judgeName);
   const { data: judges } = await supabase
     .from("judge_profiles")
     .select("id, name, court, jurisdiction, sentencing_distributions, judicial_quotes, bench_acquittal_rate, jury_acquittal_rate")
-    .ilike("name", `%${intake.judgeName}%`)
+    .ilike("name", `%${safeName}%`)
+    .eq("jurisdiction", intake.state)
     .limit(1);
 
   const judge = judges?.[0] ?? null;
@@ -211,10 +222,12 @@ export async function queryOfficerBackground(
 ): Promise<OfficerBackgroundData> {
   const supabase = createAdminClient();
 
+  const safeOfficerName = escapeIlike(intake.officerName);
   const { data: officers } = await supabase
     .from("officer_reliability")
     .select("officer_name, court, jurisdiction, testimony_count, discredited_count, reliability_score, brady_history, source_urls")
-    .ilike("officer_name", `%${intake.officerName}%`)
+    .ilike("officer_name", `%${safeOfficerName}%`)
+    .eq("jurisdiction", intake.state)
     .limit(20);
 
   return {
@@ -228,7 +241,7 @@ export async function querySimilarCases(
 ): Promise<SimilarCasesData> {
   const supabase = createAdminClient();
 
-  // Normalize charge type to charge_slug format
+  // chargeType from intake is already in slug format (from ALLOWED_CHARGE_TYPES allowlist)
   const chargeSlug = intake.chargeType;
 
   const [vectors, sentencing, plea, appellate] = await Promise.all([
@@ -243,6 +256,7 @@ export async function querySimilarCases(
       .from("sentencing_distributions")
       .select("judge_id, charge_slug, median_months, p25, p75, sample_size, source_urls")
       .eq("charge_slug", chargeSlug)
+      .eq("jurisdiction", intake.state)
       .order("sample_size", { ascending: false })
       .limit(50),
 

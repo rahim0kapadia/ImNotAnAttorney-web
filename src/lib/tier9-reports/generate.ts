@@ -31,12 +31,29 @@ function hashToken(token: string): string {
 }
 
 /**
+ * Validate intake shape at runtime before passing to query functions.
+ * Prevents undefined fields from leaking into ILIKE queries.
+ */
+function validateIntakeFields(
+  intake: Record<string, unknown>,
+  requiredFields: string[]
+): boolean {
+  return requiredFields.every(
+    (f) => typeof intake[f] === "string" && intake[f] !== ""
+  );
+}
+
+/**
  * Generate a Tier 9 data-driven report for a given order.
- * Idempotent — skips if report already exists on the order.
+ * Idempotent — skips if report already exists (unless force=true).
  *
  * @param orderId - UUID of the order to generate for.
+ * @param force - If true, regenerate even if a report already exists.
  */
-export async function generateTier9Report(orderId: string): Promise<void> {
+export async function generateTier9Report(
+  orderId: string,
+  force = false
+): Promise<void> {
   const supabase = createAdminClient();
 
   // 1. Fetch order with idempotency check
@@ -53,8 +70,8 @@ export async function generateTier9Report(orderId: string): Promise<void> {
     return;
   }
 
-  // Idempotency: skip if report already generated
-  if (order.standalone_report_token_hash) {
+  // Idempotency: skip if report already generated (unless force)
+  if (order.standalone_report_token_hash && !force) {
     console.log("[Tier9] Report already exists for order:", orderId);
     return;
   }
@@ -68,9 +85,9 @@ export async function generateTier9Report(orderId: string): Promise<void> {
   const slug = order.standalone_product_slug;
   const intake = order.standalone_intake as Record<string, unknown> | null;
 
-  if (!slug || !intake) {
-    console.error("[Tier9] Missing slug or intake for order:", orderId);
-    await notifyOperatorFailure(orderId, slug, "Missing slug or intake data");
+  if (!slug || !intake || typeof intake !== "object") {
+    console.error("[Tier9] Missing slug or invalid intake for order:", orderId);
+    await notifyOperatorFailure(orderId, slug, "Missing slug or invalid intake data");
     return;
   }
 
@@ -83,9 +100,15 @@ export async function generateTier9Report(orderId: string): Promise<void> {
 
     switch (slug) {
       case "judge-report-card": {
-        const data = await queryJudgeReportCard(
-          intake as unknown as JudgeReportCardIntake
-        );
+        if (!validateIntakeFields(intake, ["judgeName", "state", "chargeType"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing judgeName, state, or chargeType");
+          return;
+        }
+        const data = await queryJudgeReportCard({
+          judgeName: intake.judgeName as string,
+          state: intake.state as string,
+          chargeType: intake.chargeType as string,
+        });
         if (data.isEmpty) {
           await notifyInsufficientData(order.email, productName, orderId, intake);
           return;
@@ -95,9 +118,14 @@ export async function generateTier9Report(orderId: string): Promise<void> {
       }
 
       case "officer-background-check": {
-        const data = await queryOfficerBackground(
-          intake as unknown as OfficerBackgroundIntake
-        );
+        if (!validateIntakeFields(intake, ["officerName", "state"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing officerName or state");
+          return;
+        }
+        const data = await queryOfficerBackground({
+          officerName: intake.officerName as string,
+          state: intake.state as string,
+        });
         if (data.isEmpty) {
           await notifyInsufficientData(order.email, productName, orderId, intake);
           return;
@@ -107,7 +135,14 @@ export async function generateTier9Report(orderId: string): Promise<void> {
       }
 
       case "similar-cases-analyzer": {
-        const typedIntake = intake as unknown as SimilarCasesIntake;
+        if (!validateIntakeFields(intake, ["chargeType", "state"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing chargeType or state");
+          return;
+        }
+        const typedIntake = {
+          chargeType: intake.chargeType as string,
+          state: intake.state as string,
+        };
         const data = await querySimilarCases(typedIntake);
         if (data.isEmpty) {
           await notifyInsufficientData(order.email, productName, orderId, intake);
@@ -164,7 +199,7 @@ export async function generateTier9Report(orderId: string): Promise<void> {
     await sendEmailWithOperatorAlert(
       {
         to: order.email,
-        subject: `Your ${escapeHtml(productName)} Is Ready`,
+        subject: `Your ${productName} Is Ready`,
         html: `
           <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Your ${escapeHtml(productName)} Is Ready</h1>
           <p>Your report has been generated from verified court records. Every data point includes a source URL you can verify independently.</p>
@@ -174,7 +209,7 @@ export async function generateTier9Report(orderId: string): Promise<void> {
               View Your Report
             </a>
           </p>
-          <p style="color: #A1A1AA; font-size: 13px;">This link is active for 12 months. Bookmark it for future reference.</p>
+          <p style="color: #A1A1AA; font-size: 13px;">This link is active for 1 year. Bookmark it for future reference.</p>
           <p style="color: #71717A; font-size: 12px; margin-top: 24px;">
             Questions about your report? Reply to this email and a real person will respond.
           </p>

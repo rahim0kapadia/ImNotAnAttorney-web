@@ -47,13 +47,11 @@ import type { EmailLogContext } from "@/lib/email";
 import { signOperatorToken, signPhase2Token, caseThreadId, normalizeEmail, hashToken } from "@/lib/site";
 import { calculateCommission, getPartnerByStripePromoId, getPartnerByPromoCode } from "@/lib/referral";
 import { randomBytes } from "crypto";
+import { TIER9_SLUGS } from "@/lib/tier9-reports/constants";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
-
-/** Tier 9 data-driven products — need intake before report generation. */
-const TIER9_SLUGS = new Set(["judge-report-card", "officer-background-check", "similar-cases-analyzer"]);
 
 export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
@@ -570,7 +568,7 @@ export async function POST(req: NextRequest) {
       await sendEmailWithOperatorAlert(
         {
           to: email,
-          subject: `Your ${escapeHtml(tier9ProductName)} — Complete Your Details`,
+          subject: `Your ${tier9ProductName} — Complete Your Details`,
           html: `
             <p>Thank you for your purchase.</p>
             <p>To generate your personalized ${escapeHtml(tier9ProductName)}, we need a few details about your situation.</p>

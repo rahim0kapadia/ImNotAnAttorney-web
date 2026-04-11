@@ -27,7 +27,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { orderId, force } = body;
+  const { orderId } = body;
+  const force = body.force === true;
   if (
     !orderId ||
     !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
@@ -84,21 +85,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Clear existing report token if force regenerating
-  if (force && order.standalone_report_token_hash) {
-    await supabase
-      .from("orders")
-      .update({
-        standalone_report_token_hash: null,
-        standalone_report_storage_path: null,
-        standalone_report_token_expires_at: null,
-      })
-      .eq("id", orderId);
-  }
-
-  // Generate synchronously (DB queries only, <5s)
+  // Generate synchronously (DB queries only, <5s).
+  // generateTier9Report handles clearing old token atomically — only
+  // nullifies the old token AFTER the new report is fully generated.
   try {
-    await generateTier9Report(orderId);
+    await generateTier9Report(orderId, force);
     return NextResponse.json({
       status: "completed",
       orderId,
@@ -108,7 +99,7 @@ export async function POST(req: NextRequest) {
     const errorMsg = err instanceof Error ? err.message : String(err);
     console.error("[Generate Tier9] Failed:", errorMsg);
     return NextResponse.json(
-      { error: `Generation failed: ${errorMsg}` },
+      { error: "Report generation failed. Check operator email for details." },
       { status: 500 }
     );
   }

@@ -14,6 +14,26 @@ import sanitize from "sanitize-html";
  * Allows: semantic tags (h1-h6, p, ul, ol, li, table, strong, em, a, etc.)
  * Strips: script, iframe, form, input, object, embed, event handlers, javascript: URIs
  */
+/**
+ * CSS properties safe for report rendering.
+ * Blocks position/z-index/fixed overlay attacks while allowing
+ * visual styling needed by Tier 9 data-driven reports (inline styles)
+ * and Claude-generated reports (semantic tags).
+ */
+const SAFE_CSS_PROPERTIES = [
+  "color", "background", "background-color",
+  "font-size", "font-weight", "font-style", "font-family",
+  "text-align", "text-decoration", "text-transform",
+  "margin", "margin-top", "margin-right", "margin-bottom", "margin-left",
+  "padding", "padding-top", "padding-right", "padding-bottom", "padding-left",
+  "border", "border-top", "border-right", "border-bottom", "border-left",
+  "border-color", "border-style", "border-width",
+  "border-collapse", "border-radius", "border-spacing",
+  "line-height", "letter-spacing", "max-width", "width",
+  "display", "overflow", "overflow-x", "white-space",
+  "vertical-align", "list-style", "list-style-type", "table-layout",
+];
+
 export function sanitizeReportHtml(html: string): string {
   return sanitize(html, {
     allowedTags: [
@@ -38,7 +58,14 @@ export function sanitizeReportHtml(html: string): string {
       ol: ["start", "type"],
       time: ["datetime"],
       abbr: ["title"],
-      "*": ["class", "id", "aria-label", "aria-describedby", "role", "lang"],
+      "*": ["class", "id", "style", "aria-label", "aria-describedby", "role", "lang"],
+    },
+    allowedStyles: {
+      // Reject values containing url(), expression(), javascript:, import, -moz-binding
+      // to prevent CSS-based data exfiltration and legacy IE XSS vectors.
+      "*": Object.fromEntries(
+        SAFE_CSS_PROPERTIES.map((prop) => [prop, [/^(?!.*(?:url\s*\(|expression\s*\(|javascript:|import|@import|-moz-binding)).*$/i]])
+      ),
     },
     allowedSchemes: ["http", "https", "mailto"],
     disallowedTagsMode: "discard",
