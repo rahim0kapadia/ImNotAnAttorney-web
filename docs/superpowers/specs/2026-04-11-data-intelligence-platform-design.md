@@ -218,7 +218,7 @@ Inspired by Kleppmann's derived data pattern from *Designing Data-Intensive Appl
 |--------|-----|------|-----|------|---------|-------|
 | **National Registry of Exonerations** | https://exonerationregistry.org/ | 3,698+ exonerations with contributing factors coded (false confession, mistaken ID, forensic error, official misconduct) | Spreadsheet on request, searchable web | FREE | X-Ray (contributing factor matching), War Room | P2 |
 | **BJS Census of Forensic Crime Labs** | https://bjs.ojp.gov/data-collection/census-publicly-funded-forensic-crime-laboratories-cpffcl | Lab accreditation, proficiency tests, backlogs, error rates by discipline | Bulk download | FREE | X-Ray (forensic challenge intel) | P3 |
-| **Daubert Tracker** | https://www.dauberttracker.com/ | 100K+ expert witness challenge outcomes | Paid subscription | PAID | X-Ray, War Room (Daubert/Frye motion ammo). **Note:** corpus table must be named `daubert_challenge_corpus` to avoid collision with existing per-case `expert_witness_challenges` table. | P3 |
+| **Daubert Tracker** | https://www.dauberttracker.com/ | 100K+ expert witness challenge outcomes | Paid subscription | PAID | X-Ray, War Room (Daubert/Frye motion ammo). **Note:** corpus table must be named `daubert_challenge_corpus` to avoid collision with existing per-case `daubert_challenge_corpus` table. | P3 |
 
 ### 3.9 External Data Sources — Bail & Pretrial
 
@@ -252,11 +252,16 @@ These 9 tables already exist via migration `20260409h_tier9_data_driven_intellig
 | `judge_prosecutor_pairings` | **0** | 205 | UUID format error — fixed SQL on disk |
 | `sentencing_distributions` | **0** | 122 | Error — SQL on disk |
 | `appellate_trends` | **~0** | 1,011+ | 3 errors in initial run, appeal-correlator ran separately |
-| `bench_jury_divergence` | **0** | 0 | Legitimate gap — data threshold not met |
+| `bench_jury_divergence` | **0** | 50-200 | Data threshold too strict — Phase 0 re-runs with lower threshold (bench >= 1, jury >= 1) + USSC supplement |
 
 ### 4.2 New External Intelligence Tables (1 migration)
 
 ```sql
+-- ============================================================
+-- EXTENSIONS (must precede GIN trgm indexes)
+-- ============================================================
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
 -- ============================================================
 -- OFFICER EXTERNAL INTELLIGENCE
 -- Sources: Brady/Giglio List, National Police Index, NDI, State POST
@@ -287,7 +292,7 @@ CREATE TABLE officer_external_intel (
   -- Composite
   credibility_risk_score integer,         -- 0-100, computed from all sources
   -- Provenance
-  source_urls text[] NOT NULL DEFAULT '{}' CHECK (array_length(source_urls, 1) > 0),
+  source_urls text[] NOT NULL DEFAULT '{}' CHECK (cardinality(source_urls) > 0),
   sources text[] NOT NULL DEFAULT '{}',   -- ['brady_list', 'npi', 'ndi', 'llead', 'fl_post']
   data_as_of timestamptz DEFAULT now(),
   created_at timestamptz DEFAULT now(),
@@ -335,7 +340,7 @@ CREATE TABLE judge_sentencing_patterns (
   aba_rating text,
   aba_rating_year integer,
   -- Provenance
-  source_urls text[] NOT NULL DEFAULT '{}' CHECK (array_length(source_urls, 1) > 0),
+  source_urls text[] NOT NULL DEFAULT '{}' CHECK (cardinality(source_urls) > 0),
   sources text[] NOT NULL DEFAULT '{}',
   data_as_of timestamptz DEFAULT now(),
   data_period text,                       -- 'FY2002-FY2025' or 'FY2023-2024'
@@ -376,7 +381,7 @@ CREATE TABLE prosecution_profiles (
   -- Equity metrics (where available)
   racial_disparity_data jsonb,
   -- Provenance
-  source_urls text[] NOT NULL DEFAULT '{}' CHECK (array_length(source_urls, 1) > 0),
+  source_urls text[] NOT NULL DEFAULT '{}' CHECK (cardinality(source_urls) > 0),
   sources text[] NOT NULL DEFAULT '{}',
   data_as_of timestamptz DEFAULT now(),
   data_period text,
@@ -422,7 +427,7 @@ CREATE TABLE outcome_benchmarks (
   -- Time metrics
   avg_days_to_disposition integer,
   -- Provenance
-  source_urls text[] NOT NULL DEFAULT '{}' CHECK (array_length(source_urls, 1) > 0),
+  source_urls text[] NOT NULL DEFAULT '{}' CHECK (cardinality(source_urls) > 0),
   sources text[] NOT NULL DEFAULT '{}',
   data_as_of timestamptz DEFAULT now(),
   data_period text,
@@ -459,7 +464,7 @@ CREATE TABLE exoneration_patterns (
   top_factor text,
   top_factor_pct numeric,
   -- Provenance
-  source_urls text[] NOT NULL DEFAULT '{}' CHECK (array_length(source_urls, 1) > 0),
+  source_urls text[] NOT NULL DEFAULT '{}' CHECK (cardinality(source_urls) > 0),
   sources text[] NOT NULL DEFAULT '{}',   -- ['nre']
   data_as_of timestamptz DEFAULT now(),
   created_at timestamptz DEFAULT now(),
@@ -495,7 +500,7 @@ CREATE TABLE forensic_lab_profiles (
   -- Known issues
   known_issues jsonb,                     -- [{year, issue_description, resolution}]
   -- Provenance
-  source_urls text[] NOT NULL DEFAULT '{}' CHECK (array_length(source_urls, 1) > 0),
+  source_urls text[] NOT NULL DEFAULT '{}' CHECK (cardinality(source_urls) > 0),
   sources text[] NOT NULL DEFAULT '{}',   -- ['bjs_cpffcl']
   data_as_of timestamptz DEFAULT now(),
   created_at timestamptz DEFAULT now(),
@@ -523,7 +528,7 @@ CREATE TABLE citation_authority (
   -- Authority score (computed composite)
   authority_score numeric,                -- 0-100
   -- Provenance
-  source_urls text[] NOT NULL DEFAULT '{}' CHECK (array_length(source_urls, 1) > 0),
+  source_urls text[] NOT NULL DEFAULT '{}' CHECK (cardinality(source_urls) > 0),
   sources text[] NOT NULL DEFAULT '{}',   -- ['courtlistener']
   data_as_of timestamptz DEFAULT now(),
   created_at timestamptz DEFAULT now(),
@@ -547,11 +552,6 @@ CREATE TABLE data_source_freshness (
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
 );
-
--- ============================================================
--- EXTENSIONS (must precede GIN trgm indexes)
--- ============================================================
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 -- ============================================================
 -- RLS POLICIES (mirrors Tier 9 pattern from 20260409h migration)
@@ -654,7 +654,7 @@ Each source gets its own ingestion script following the established `scripts/bul
 |--------|--------|-------------|-------|
 | `scripts/ingest-fl-scoresheets.mjs` | FL DOC (FOIA response) | `judge_sentencing_patterns` (FL supplement) | Requires FOIA request first |
 | `scripts/ingest-forensic-lab-census.mjs` | BJS CPFFCL dataset | `forensic_lab_profiles` | ~400 lab profiles |
-| `scripts/ingest-daubert-tracker.mjs` | Daubert Tracker (paid API) | New `expert_witness_challenges` table | Requires subscription |
+| `scripts/ingest-daubert-tracker.mjs` | Daubert Tracker (paid API) | New `daubert_challenge_corpus` table | Requires subscription |
 | `scripts/enrich-cl-audio-transcripts.mjs` | CL `/audio/` + Whisper transcription | `judge_quotes` (supplement with oral argument quotes) | Compute-intensive |
 | `scripts/ingest-state-post-databases.mjs` | Per-state POST scraper | `officer_external_intel` (supplement) | Per-state development |
 | `scripts/ingest-recap-deep.mjs` | CL RECAP endpoints | Enrich federal case data | Federal War Room cases |
@@ -726,7 +726,7 @@ This ensures we never serve data that's older than its staleness threshold witho
 | Bench vs jury divergence | `bench_jury_divergence` (Tier 9) | "Judge acquits at bench trial X%, juries Y%" | P0 (threshold gap — may need lower threshold) |
 | Similar case matches | `case_feature_vectors` (Tier 9) | "10 most similar cases: [outcome distribution]" | Exists |
 | Docket monitoring dashboard | CL `/docket-alerts/` list | "We're monitoring these X dockets for your case" | P2 |
-| Expert witness challenges | `expert_witness_challenges` (Daubert Tracker) | "This prosecution expert was excluded X times for [methodology]" | P3 |
+| Expert witness challenges | `daubert_challenge_corpus` (Daubert Tracker) | "This prosecution expert was excluded X times for [methodology]" | P3 |
 
 **Integration point:** Engine workers + weekly update cron. War Room cases get re-enriched weekly with fresh intelligence layer data.
 
@@ -792,7 +792,7 @@ This ensures we never serve data that's older than its staleness threshold witho
 | CD/IB report generation | `supabase/functions/generate-report/index.ts` | `statute_case_law`, `jurisdiction_statutes` + NEW: `outcome_benchmarks`, `judge_quotes`, `appellate_trends`, `prosecution_profiles` | On case generation |
 | Tier 9 standalone reports | `src/lib/tier9-reports/query.ts` | All 9 Tier 9 tables + NEW: `officer_external_intel`, `judge_sentencing_patterns`, `outcome_benchmarks`, `exoneration_patterns`, `forensic_lab_profiles`, `citation_authority` | On customer purchase |
 | Blog content enrichment | `scripts/lib/blog-gen/*.mjs` | `outcome_benchmarks` (statistics for blog posts) | On blog generation |
-| Score tool context | `src/app/api/score/route.ts` | `outcome_benchmarks` (charge-type benchmarks) | On score submission |
+| Score tool context | `src/app/api/score/route.ts` | `counters`, `score_aggregates` via RPCs — **future:** add `outcome_benchmarks` reads for charge-type context | On score submission |
 | Landing page stats | `src/app/judge-report-card/page.tsx` etc. | `data_source_freshness` (show "data updated [date]") | On page render (ISR) |
 
 ### 7.2 Engine Repo Consumers
@@ -1064,7 +1064,7 @@ Stays within 500 MB free tier through all phases. If we approach 400 MB, archive
 | `scripts/ingest-forensic-lab-census.mjs` | P3 | BJS CPFFCL → forensic_lab_profiles |
 | `scripts/ingest-recap-deep.mjs` | P3 | CL RECAP → federal case enrichment |
 | `scripts/ingest-state-post-databases.mjs` | P3 | Per-state POST → officer_external_intel |
-| `scripts/ingest-daubert-tracker.mjs` | P3 | Daubert Tracker (paid) → daubert_challenge_corpus |
+| `scripts/ingest-daubert-tracker.mjs` | P3 | Daubert Tracker (paid) → `daubert_challenge_corpus` |
 | `scripts/enrich-cl-audio-transcripts.mjs` | P3 | CL /audio/ + Whisper → judge_quotes supplement |
 
 ### New Files (API Routes)
