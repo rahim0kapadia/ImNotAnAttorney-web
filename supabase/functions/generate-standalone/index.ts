@@ -264,6 +264,13 @@ const PRODUCT_META: Record<string, { name: string; price: string }> = {
   "case-law-intelligence": { name: "Case Law Intelligence Pack", price: "$297" },
   "expert-witness-challenge": { name: "Expert Witness Challenge Report", price: "$297" },
   "discovery-demand-letter": { name: "Discovery Demand Letter", price: "$97" },
+  // ─── Priority B — Critical 7 Worker Standalone Products ────
+  "plea-analyzer": { name: "Plea Deal Analyzer", price: "$97" },
+  "ach-matrix": { name: "Case Hypothesis Matrix", price: "$147" },
+  "adversarial-prosecution-sim": { name: "Adversarial Prosecution Simulation", price: "$197" },
+  "sentencing-intelligence": { name: "Sentencing Intelligence Report", price: "$297" },
+  "daubert-challenge": { name: "Daubert Expert Challenge Analysis", price: "$297" },
+  "body-camera-analysis": { name: "Body Camera Analysis Report", price: "$397" },
   // ─── Bundles ───────────────────────────────────────────────
   "first-72-hours": { name: "First 72 Hours Bundle", price: "$97" },
   "defense-preparation": { name: "Defense Preparation Bundle", price: "$197" },
@@ -279,7 +286,10 @@ const PRODUCT_META: Record<string, { name: string; price: string }> = {
  * UPL-safe, anti-hallucination rules, HTML output format.
  */
 function buildSystemPrompt(productName: string, priceDisplay: string): string {
-  return `You are generating a ${productName} for a criminal defendant. This is a PAID PRODUCT (${priceDisplay}) that must deliver standalone value.
+  const productFrame = priceDisplay === "Free"
+    ? `This is a FREE analysis tool that must deliver genuine value.`
+    : `This is a PAID PRODUCT (${priceDisplay}) that must deliver standalone value.`;
+  return `You are generating a ${productName} for a criminal defendant. ${productFrame}
 
 CRITICAL UPL RULES:
 - You provide legal INFORMATION, not legal ADVICE
@@ -289,7 +299,7 @@ CRITICAL UPL RULES:
 
 ANTI-HALLUCINATION RULES:
 - Only cite laws, statutes, and regulations that exist
-- If unsure about a specific state statute, say "state law varies — verify current provisions with your attorney"
+- If unsure about a specific state statute, say "state law varies — exact provisions require jurisdiction-specific research"
 - Do not fabricate employer policies, licensing board rules, or agency regulations
 - Every factual claim must be traceable to a statute, regulation, or documented pattern
 - Never invent case names or case citations
@@ -659,6 +669,58 @@ interface DiscoveryDemandLetterIntake {
   county: string;
   arrestDate: string;
   discoveryReceivedSoFar: string;
+}
+
+// ─── Priority B — Critical 7 Worker Standalone Products ────
+
+interface PleaAnalyzerIntake {
+  state: string;
+  chargeType: string;
+  pleaOfferDetails: string;
+  originalCharges: string;
+  offeredCharges: string;
+  sentencingExposure: string;
+}
+
+interface AchMatrixIntake {
+  state: string;
+  chargeType: string;
+  knownEvidence: string;
+  alternativeExplanations: string;
+  knownFacts: string;
+}
+
+interface AdversarialProsecutionSimIntake {
+  state: string;
+  chargeType: string;
+  defenseStrategy: string;
+  prosecutionTheory: string;
+  knownFacts: string;
+}
+
+interface SentencingIntelligenceIntake {
+  state: string;
+  chargeType: string;
+  judgeName: string;
+  county: string;
+  priorConvictions: string;
+  currentSentencingRange: string;
+}
+
+interface DaubertChallengeIntake {
+  state: string;
+  chargeType: string;
+  expertName: string;
+  expertField: string;
+  expertMethodology: string;
+}
+
+interface BodyCameraAnalysisIntake {
+  state: string;
+  chargeType: string;
+  mediaType: string;
+  incidentDescription: string;
+  defenseTheory: string;
 }
 
 /**
@@ -1465,6 +1527,209 @@ Plain-English explanation covering:
 The letter is a TEMPLATE for the defendant's attorney to review, edit for the specific case, sign, and file. It is NOT legal advice to the defendant. The Section 2 notes must explicitly state: "This letter is a template your attorney can review and adapt. Your attorney remains the final authority on what to file and when." Use "factors to consider", "items typically demanded for this charge type" — never "you should file this" or "we recommend you send this."`;
     }
 
+    // ─── Priority B — Critical 7 Worker Standalone Products ────
+
+    case "plea-analyzer": {
+      const data = intake as unknown as PleaAnalyzerIntake;
+      return `Generate a Plea Deal Analysis for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Original Charges: """${data.originalCharges}"""
+- Offered Charges (plea): """${data.offeredCharges}"""
+- Plea Offer Details: """${data.pleaOfferDetails}"""
+- Sentencing Exposure if Convicted at Trial: """${data.sentencingExposure || "Not provided"}"""
+
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- Do NOT fabricate statute citations, case names, or sentencing guideline numbers. If you reference a guideline range, use well-established federal or state ranges, or note that the exact range requires attorney verification.
+- Do NOT claim to know the specific terms of the plea offer beyond what was provided. Analyze what was provided; note gaps.
+- Frame every analysis point as INFORMATION, not advice. "Factors to consider", "questions worth exploring" — never "you should accept" or "you should reject."
+
+Produce a comprehensive HTML report covering:
+1. Plea Offer Summary — plain-English decode of what the defendant is being asked to agree to
+2. Charge Comparison — original charges vs. offered charges, with severity classification and sentencing range comparison
+3. Sentencing Guideline Analysis — where the offered plea falls relative to published guidelines for this charge type and jurisdiction (use well-established ranges only)
+4. Departure Argument Identification — grounds that could support a below-guidelines sentence if applicable
+5. Leverage Analysis — case-specific factors from the provided facts that create negotiation leverage
+6. Hidden Consequences Scan — employment, housing, immigration, licensing, and civil rights consequences of the specific plea charge (summary level — note the Collateral Consequences product for deeper analysis)
+7. Plea-vs-Trial Risk Framework — factors to weigh when comparing the plea offer against going to trial (framed as considerations, never as a recommendation)
+8. 10 Plea-Specific Questions to Bring to Your Attorney — tailored to the specific offer terms and charge
+
+Frame everything as INFORMATION your attorney can use for plea negotiations — never as legal advice. Use "factors a plea analysis typically addresses", "questions worth exploring", "considerations your attorney may want to discuss" — never "we recommend accepting" or "you should reject."`;
+    }
+
+    case "ach-matrix": {
+      const data = intake as unknown as AchMatrixIntake;
+      return `Generate an Analysis of Competing Hypotheses (ACH) Matrix for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Known Evidence: """${data.knownEvidence}"""
+- Alternative Explanations: """${data.alternativeExplanations || "Not provided"}"""
+- Known Facts: """${data.knownFacts}"""
+
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- Do NOT fabricate case citations, statute numbers, or evidence not mentioned in the intake.
+- Generate ALL plausible hypotheses — including "defendant is guilty as charged." The value is in honest assessment, not confirmation bias.
+- Score evidence using consistent diagnosticity criteria (strongly supports / weakly supports / neutral / weakly contradicts / strongly contradicts).
+
+Produce a comprehensive HTML report covering:
+1. Hypothesis Generation — all plausible explanations for the evidence, numbered H1-Hn. Include the prosecution's strongest theory, the defense's strongest theory, and at least 2-3 alternative explanations.
+2. Evidence Inventory — each piece of evidence listed with its source and reliability assessment
+3. ACH Scoring Matrix — HTML table with hypotheses as columns, evidence as rows, and diagnosticity scores in each cell. Color-code: green for supports, red for contradicts, gray for neutral.
+4. Prosecution's Strongest Theory — which hypothesis the evidence most strongly supports from the prosecution's perspective, and why
+5. Defense Opportunities — where the evidence contradicts the prosecution's theory or is neutral between competing hypotheses
+6. Diagnosticity Analysis — which pieces of evidence are most diagnostic (i.e., they distinguish between competing hypotheses rather than supporting all of them equally)
+7. Missing Evidence — what additional evidence would resolve ambiguity between the top hypotheses
+8. 10 Hypothesis-Specific Questions to Bring to Your Attorney — focused on the gaps and ambiguities the matrix reveals
+
+Frame everything as INFORMATION for discussion with their attorney. The ACH methodology was developed by the CIA for intelligence analysis — it reduces confirmation bias by forcing ALL hypotheses to be evaluated against ALL evidence. This is analysis, not advice.`;
+    }
+
+    case "adversarial-prosecution-sim": {
+      const data = intake as unknown as AdversarialProsecutionSimIntake;
+      return `Generate an Adversarial Prosecution Simulation for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Defense Strategy: """${data.defenseStrategy}"""
+- Prosecution Theory: """${data.prosecutionTheory || "Not provided"}"""
+- Known Facts: """${data.knownFacts}"""
+
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- Do NOT fabricate case citations, statute numbers, or legal holdings.
+- Prosecution arguments must be realistic — grounded in standard prosecution tactics for this charge type.
+- Defense rebuttals must be realistic — grounded in established defense methodology.
+- Rate each round honestly. If the prosecution's counter is strong, say so.
+
+Produce a comprehensive HTML report covering:
+1. Strategy Summary — the defense strategy being tested, restated in plain English
+2. Prosecution Opening Counter — the prosecution's most likely initial response to this defense strategy, with strength rating (STRONG / MEDIUM / WEAK)
+3. Multi-Round Simulation — 3-4 rounds of prosecution attack → defense response → prosecution counter → defense rebuttal. Each round includes:
+   - Prosecution move with reasoning
+   - Strength rating for the prosecution's position
+   - Defense response with reasoning
+   - Assessment of whether the defense response neutralizes the prosecution's point
+4. Convergence Assessment — after the rounds, where does the argument settle? Does the defense strategy survive prosecution pressure or does it break down at a specific point?
+5. Key Vulnerability — the single biggest weakness the prosecution would exploit in this defense strategy
+6. Resilience Considerations — factors that may strengthen this strategy (never as advice), including evidence that would need to be established and arguments that would need to be prepared
+7. Alternative Strategies Defense Attorneys Sometimes Consider — if the simulation reveals fatal vulnerabilities, note 1-2 alternative approaches worth exploring for this charge type
+8. 10 Strategy-Specific Questions to Bring to Your Attorney — focused on the vulnerabilities and counter-arguments the simulation revealed
+
+Frame everything as INFORMATION. This simulation reveals how the prosecution may respond — it does not predict outcomes or recommend strategies.`;
+    }
+
+    case "sentencing-intelligence": {
+      const data = intake as unknown as SentencingIntelligenceIntake;
+      return `Generate a Sentencing Intelligence Report for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Judge Name: """${data.judgeName}"""
+- County / District: """${data.county}"""
+- Prior Convictions: ${data.priorConvictions || "Not provided"}
+- Current Sentencing Range (if known): """${data.currentSentencingRange || "Not provided"}"""
+
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- Do NOT fabricate specific sentencing statistics, departure rates, or judicial patterns you cannot verify.
+- Do NOT claim to have a database of this judge's sentencing history unless the data is well-established and public.
+- If judge-specific data is limited, say so explicitly and provide charge-type and jurisdiction-level patterns instead.
+- Sentencing guidelines ranges must be well-established — use federal guidelines or well-known state guidelines. Do not invent guideline numbers.
+- Do NOT fabricate case citations or statute numbers.
+
+Produce a comprehensive HTML report covering:
+1. Sentencing Landscape Overview — the range of possible sentences for this charge type in this jurisdiction, from minimum to maximum
+2. Guideline Range Analysis — where the published guidelines place this charge type, accounting for prior convictions if provided. Note: exact guideline calculations require an attorney; this provides the framework.
+3. Judge Profile — what is publicly known about this judge's approach to sentencing for this charge type. If limited public information exists for this specific judge, note that explicitly and provide the jurisdictional patterns instead.
+4. Departure Analysis — grounds for downward departure that may apply to this charge type, including mitigating factors, cooperation, acceptance of responsibility, and jurisdiction-specific departure provisions
+5. Aggravating and Mitigating Factor Analysis — factors specific to the defendant's situation that a sentencing court typically weighs
+6. Plea-vs-Trial Sentencing Differential — the well-documented pattern of different sentencing outcomes based on plea vs. trial conviction, specific to this jurisdiction where data exists
+7. Comparable Sentence Research — sentencing patterns for this charge type in this jurisdiction (framed as "sentences courts have imposed for similar charges" — never as a prediction)
+8. 10 Sentencing-Specific Questions to Bring to Your Attorney — including departure arguments, mitigating evidence to gather, and sentencing hearing preparation
+
+Frame everything as INFORMATION. Sentencing outcomes depend on factors this report cannot fully capture. The value is in knowing what factors matter and what questions to ask.`;
+    }
+
+    case "daubert-challenge": {
+      const data = intake as unknown as DaubertChallengeIntake;
+      return `Generate a Daubert Expert Challenge Analysis for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Expert Witness Name: """${data.expertName}"""
+- Expert Field: """${data.expertField}"""
+- Expert Methodology: """${data.expertMethodology || "Not provided — analyze the discipline generally"}"""
+
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- Do NOT fabricate this expert's prior testimony, qualifications, publications, or case history. If you have no specific information about this expert from training data, say so explicitly and analyze the DISCIPLINE's known vulnerabilities instead.
+- Do NOT fabricate case citations or Daubert ruling examples.
+- If the state uses Frye instead of Daubert, note that and analyze under the correct standard.
+- Ground all methodology critiques in well-established scientific and forensic literature concerns.
+
+Produce a comprehensive HTML report covering:
+1. Expert Overview — the expert's stated field and methodology, and the relevant admissibility standard in this state (Daubert, Frye, or state-specific)
+2. Daubert Four-Factor Analysis (or Frye equivalent):
+   a. Testability — can the methodology be and has it been tested?
+   b. Peer Review — has the methodology been subjected to peer review and publication?
+   c. Known Error Rate — what is the documented error rate for this technique?
+   d. General Acceptance — is the methodology generally accepted in the relevant scientific community (not just law enforcement)?
+3. Methodology-Specific Challenges — known vulnerabilities, limitations, and criticisms of this particular forensic discipline from published scientific literature
+4. Qualification Analysis — the gap between what expert testimony requires (demonstrated expertise in the specific technique used) and typical expert CVs in this field
+5. Cross-Examination Scaffolds — 8-10 cross-examination question frameworks organized by Daubert factor, designed to expose methodology weaknesses
+6. Motion in Limine Framework — the structure of a motion to exclude or limit expert testimony based on the Daubert/Frye analysis, framed as "elements a Daubert motion typically addresses"
+7. Even If Denied — how a denied Daubert motion can still limit testimony scope and preserve appellate issues
+8. 10 Expert-Specific Questions to Bring to Your Attorney — including "have you filed a Daubert motion?" and "have you obtained the expert's CV and prior testimony?"
+
+Frame everything as INFORMATION your attorney can use to build a Daubert motion — never as legal advice. Use "factors a Daubert challenge typically addresses", "questions worth exploring", "areas your attorney may want to probe" — never "we recommend" or "you should challenge."`;
+    }
+
+    case "body-camera-analysis": {
+      const data = intake as unknown as BodyCameraAnalysisIntake;
+      return `Generate a Body Camera Analysis Framework for:
+- State: ${data.state}
+- Charge Type: ${data.chargeType}
+- Recording Type: ${data.mediaType}
+- Incident Description: """${data.incidentDescription}"""
+- Defense Theory / Angle: """${data.defenseTheory || "Not provided — analyze for general defense relevance"}"""
+
+DATA ACCURACY RULES (NON-NEGOTIABLE):
+- You are analyzing the LEGAL FRAMEWORK for body camera evidence — you have NOT seen the footage.
+- Do NOT claim to have watched, reviewed, or analyzed actual footage. You are providing a framework for what to look for.
+- Do NOT fabricate department policies, activation requirements, or specific chain of custody rules. Use well-established general patterns.
+- Ground Miranda analysis in well-established constitutional law (Miranda v. Arizona framework, not fabricated subsequent cases).
+
+Produce a comprehensive HTML report covering:
+1. Evidence Framework Overview — what body camera footage can and cannot establish for this charge type, and why it matters for the defense
+2. Miranda Compliance Analysis Framework — what to look for regarding:
+   - When questioning began relative to custody
+   - Whether Miranda warnings were given before custodial interrogation
+   - Completeness of the warnings
+   - Voluntariness indicators (tone, duration, coercion markers)
+   - Invocation of rights — did the defendant invoke and was interrogation stopped?
+3. Procedural Compliance Review — what to look for regarding:
+   - Camera activation timing (most departments require activation at start of encounter)
+   - Gaps in recording and their significance
+   - Chain of custody from recording to disclosure
+   - Whether all officers' cameras are accounted for (not just the primary officer)
+4. Use of Force Assessment Framework — factors to evaluate if force was used:
+   - Proportionality to the threat
+   - De-escalation attempts or absence thereof
+   - Timing and duration
+   - Officer statements during the encounter
+5. Report-to-Footage Consistency — framework for comparing:
+   - Written arrest report narrative vs. what footage typically shows
+   - Timeline discrepancies
+   - Omissions in the report that footage may capture
+   - Statements made by officers on camera that differ from written reports
+6. Defense-Relevant Moments — framework for identifying:
+   - Exculpatory statements or actions by the defendant
+   - Statements by officers that contradict the prosecution theory
+   - Environmental factors (lighting, visibility, conditions)
+   - Behavior consistent with innocence or alternative explanations
+7. Missing Footage Analysis — framework for evaluating:
+   - What happens during recording gaps
+   - Significance of footage from secondary officers not being provided
+   - Discovery obligations for all camera footage
+8. 10 Body-Camera-Specific Questions to Bring to Your Attorney — including questions about obtaining all officers' footage, chain of custody, and report-to-footage comparison
+
+Frame everything as a FRAMEWORK for analyzing body camera evidence — never as analysis of specific footage you have not seen. Use "factors to evaluate", "what to look for", "questions to raise with your attorney" — never "the footage shows" or "we found."`;
+    }
+
     // ─── BUNDLES — combined reports ──────────────────────────────
 
     case "first-72-hours": {
@@ -1713,7 +1978,8 @@ Deno.serve(async (req: Request) => {
 
     // --- 4. Build prompts ---
     const productName = meta.name;
-    const systemPrompt = buildSystemPrompt(productName, meta.price);
+    const priceDisplay = order.product_type === "free-tool" ? "Free" : meta.price;
+    const systemPrompt = buildSystemPrompt(productName, priceDisplay);
     const userPrompt = buildUserPrompt(slug, intake);
 
     if (!userPrompt) {

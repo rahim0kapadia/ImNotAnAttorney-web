@@ -106,6 +106,33 @@ export const PRODUCT_MATRIX: Record<string, MatrixEntry> = {
     iddEligible: true,
   },
 
+  // ── Category H — Priority B Critical 7 (new capabilities) ──
+  'plea-analyzer': {
+    bundledInTiers: ['case-decoder', 'intelligence-brief', 'x-ray', 'war-room', 'situation-room'],
+    iddEligible: true,
+  },
+  'ach-matrix': {
+    bundledInTiers: ['x-ray', 'war-room', 'situation-room'],
+    iddEligible: true,
+  },
+  'adversarial-prosecution-sim': {
+    bundledInTiers: ['war-room', 'situation-room'],
+    iddEligible: true,
+  },
+  'sentencing-intelligence': {
+    bundledInTiers: ['intelligence-brief', 'x-ray', 'war-room', 'situation-room'],
+    iddEligible: true,
+  },
+  'daubert-challenge': {
+    bundledInTiers: ['war-room', 'situation-room'],
+    iddEligible: true,
+  },
+  'body-camera-analysis': {
+    bundledInTiers: ['x-ray', 'war-room', 'situation-room'],
+    tierCondition: 'video',
+    iddEligible: true,
+  },
+
   // ── Standalone-only research (not bundled into any tier) ──
   'expungement-research': { bundledInTiers: [], iddEligible: true },
   'sentence-reduction': { bundledInTiers: [], iddEligible: true },

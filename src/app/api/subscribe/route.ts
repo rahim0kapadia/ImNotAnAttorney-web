@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
     }
     const { email } = body;
-    const ALLOWED_SOURCES = ["lead-capture", "checkout", "blog", "score", "score-page", "resources", "dui-72-hours", "blog-inline-drug-cases", "blog-inline-white-collar", "blog-inline-general-defense"];
+    const ALLOWED_SOURCES = ["lead-capture", "checkout", "blog", "score", "score-page", "resources", "dui-72-hours", "blog-inline-drug-cases", "blog-inline-white-collar", "blog-inline-general-defense", "plea-analyzer-free"];
     const source = ALLOWED_SOURCES.includes(body.source) ? body.source : "lead-capture";
 
     // Score page passes additional context for segmented nurture sequences

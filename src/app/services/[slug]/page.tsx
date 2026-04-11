@@ -451,12 +451,12 @@ const PRODUCT_COPY: Record<
     headline:
       "Know which cases matter to your defense — and which ones the prosecution will cite.",
     stakes:
-      "Case law is the language judges actually speak. The prosecution comes to court with a list of cases they will cite. Defense attorneys who walk in without their own ranked, distinguished, verified counter-list are arguing on the prosecution's terms. $297 for a strategic case law map your attorney can confirm in minutes is invisible against years of consequences riding on which cases get cited first.",
+      "Case law is the language judges actually speak. The prosecution comes to court with a list of cases they will cite. Defense attorneys who walk in without their own ranked, distinguished, verified counter-list are arguing on the prosecution's terms. $297 for a strategic case law map with ranked verification URLs is invisible against years of consequences riding on which cases get cited first.",
     includes: [
       "Strategic classification — Judgment of Acquittal opportunities, danger cases, and defense-favorable holdings for your charge",
       "Per-motion applicability matrix (STRONG / MODERATE / WEAK / REVIEW) so you know which cases support which motions",
       "Prosecution citation anticipation — the cases the State is likely to lead with, with distinguishing arguments for each",
-      "Ranked verification URLs from CourtListener and official state sources your attorney can confirm in ten minutes",
+      "Ranked verification URLs from CourtListener and official state sources — independently verifiable in ten minutes",
       "Tactical timing guide — pretrial, trial, sentencing, appeal — for when each citation is most useful",
       "Plain-English summary of the holdings so you can follow the conversation with your attorney",
       "10 case-law-specific questions to bring to your attorney",
@@ -497,6 +497,101 @@ const PRODUCT_COPY: Record<
     ],
     sampleInsight:
       "In most jurisdictions, the standard discovery request misses three to five items that are routinely available but rarely demanded — body cam from non-arresting officers, dispatch audio, the booking officer's report, calibration logs for any device used to gather evidence, and the CI history file when an informant is involved. A demand letter that names these items by category forces the prosecution to either produce them or refuse on the record, which sets up the motion to compel.",
+  },
+
+  // -- Priority B --- Critical 7 standalone products ---------------------------
+
+  "plea-analyzer": {
+    headline: "Is your plea deal fair?",
+    stakes:
+      "97% of criminal cases end in plea deals. Most defendants accept without comparing the offer against sentencing guidelines, without understanding departure arguments that could reduce the sentence, and without knowing the hidden consequences buried in the terms. The pressure to accept quickly — before you understand what you are agreeing to — is enormous. $97 to see the full picture before the deadline.",
+    includes: [
+      "Plea offer analysis against published sentencing guidelines",
+      "Departure argument identification — grounds for below-guidelines sentences",
+      "Leverage mapping from your case-specific facts",
+      "Hidden consequence scan (employment, housing, immigration, licensing)",
+      "Plea-vs-trial risk comparison based on your charge and jurisdiction",
+      "10 plea-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "A plea offer that reduces the charge from a felony to a misdemeanor may look favorable in criminal court — but the immigration consequences of the misdemeanor plea can be identical to a felony conviction under federal law. The label on the charge matters less than the specific elements the plea admits to. That distinction is invisible unless you look for it.",
+  },
+  "ach-matrix": {
+    headline: "What if the prosecution's theory is right?",
+    stakes:
+      "Confirmation bias is the silent killer in criminal defense. Your attorney builds a defense theory and sees evidence through that lens. The prosecution does the same from the opposite side. Neither is asking the hardest question: what are ALL the plausible explanations for this evidence, including the ones that hurt? $147 for an honest assessment that tests every hypothesis — including the prosecution's strongest — against the actual evidence.",
+    includes: [
+      "All plausible hypotheses generated — defense AND prosecution theories",
+      "Evidence scored against each hypothesis (supports / contradicts / neutral)",
+      "Prosecution's strongest theory identified and pressure-tested",
+      "Defense opportunities where evidence contradicts prosecution theory",
+      "Diagnosticity analysis — which evidence actually distinguishes between theories",
+      "10 hypothesis-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "The most diagnostic evidence in a case is not the evidence that supports your theory — it is the evidence that distinguishes between competing theories. A piece of evidence that supports both the defense and prosecution theories equally tells you nothing. The evidence that supports one and contradicts the other is where cases are decided.",
+  },
+  "adversarial-prosecution-sim": {
+    headline:
+      "What will the prosecution do when your attorney makes that argument?",
+    stakes:
+      "Every defense strategy looks strong until the prosecution responds. Most defendants hear their attorney's plan and feel reassured — without ever learning how the other side will attack it. A multi-round prosecution simulation stress-tests each defense strategy against realistic counterarguments before your attorney tries it in court. $197 vs discovering the vulnerability during trial.",
+    includes: [
+      "Multi-round prosecution vs. defense simulation for each strategy",
+      "Prosecution counter-arguments mapped with strength ratings",
+      "Defense rebuttals generated for each prosecution counter",
+      "Vulnerability identification — where each strategy breaks down",
+      "Strategy ranking by resilience under prosecution pressure",
+      "10 strategy-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "A suppression motion based on an illegal traffic stop looks strong in isolation. But if the prosecution can establish independent source or inevitable discovery — that they would have found the evidence anyway through lawful means — the motion fails even if the stop was illegal. Knowing the prosecution's counter before filing changes how the motion is framed.",
+  },
+  "sentencing-intelligence": {
+    headline: "What does your judge actually do at sentencing?",
+    stakes:
+      "Sentencing guidelines are public. What your specific judge actually does with those guidelines is not — not in any database a defendant can access. Departure rates, plea-vs-trial differentials, patterns in how this judge weighs mitigating factors — this intelligence exists in the courtroom but never reaches the defendant. $297 to know what your judge tends to do before the hearing that determines the outcome.",
+    includes: [
+      "Judge-specific sentencing pattern analysis for your charge type",
+      "Guideline range calculation with departure analysis",
+      "Plea-vs-trial sentencing differential for your jurisdiction",
+      "Mitigating and aggravating factor analysis specific to your case",
+      "Comparable sentence research for similar charges in your jurisdiction",
+      "10 sentencing-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "The difference between a guidelines sentence and a departure sentence is often measured in years. Departure motions succeed when they map mitigating factors to specific departure grounds the judge has accepted before — not when they make general appeals for mercy. Knowing which grounds your judge responds to is the starting point.",
+  },
+  "daubert-challenge": {
+    headline:
+      "Can the prosecution's expert survive a Daubert challenge?",
+    stakes:
+      "Expert witnesses carry weight with juries that fact witnesses do not. When the prosecution's expert testifies that the substance was identified, the blood alcohol was above the limit, or the cause of death was homicide — most jurors accept it. But expert testimony is only as reliable as its methodology, and methodology is exactly what a Daubert challenge tests. $297 for a systematic analysis of whether the prosecution's expert meets the standard — before the jury hears the testimony.",
+    includes: [
+      "Daubert four-factor analysis (testability, peer review, error rate, general acceptance)",
+      "Methodology-specific challenge opportunities",
+      "Qualification gap analysis for the expert's stated credentials",
+      "Cross-examination question scaffolds for the expert's specific field",
+      "Motion in limine framework — elements courts evaluate when challenges are filed",
+      "10 expert-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "The Daubert standard tests the methodology, not the conclusion. An expert whose technique has never been independently validated, whose error rate has never been published, and whose discipline lacks general acceptance outside law enforcement circles is precisely the kind of expert a Daubert motion targets. The motion does not need to succeed to be valuable — even a denied motion creates an appellate record and can limit the scope of testimony.",
+  },
+  "body-camera-analysis": {
+    headline: "What does the body camera footage actually show?",
+    stakes:
+      "Body camera footage is evidence — but not self-interpreting evidence. What the camera captures, what it misses due to angle and activation timing, whether Miranda warnings were given before questioning began, whether force was proportional — these are legal questions, not video questions. $397 for a framework to analyze the footage through a defense lens before your attorney reviews it.",
+    includes: [
+      "Miranda compliance analysis — timing, completeness, voluntariness indicators",
+      "Use of force assessment framework based on documented footage",
+      "Procedural compliance review — activation timing, gaps, chain of custody",
+      "Defense-relevant moment identification with timestamps",
+      "Inconsistency mapping between footage and written reports",
+      "10 body-camera-specific questions to bring to your attorney",
+    ],
+    sampleInsight:
+      "Officers are required to activate body cameras at the start of an encounter in most departments — but the first 30-60 seconds of many recordings capture video without audio due to a buffer feature. Statements made during that silent window may be critical to the defense, and the absence of audio for those statements is a question worth raising.",
   },
 };
 

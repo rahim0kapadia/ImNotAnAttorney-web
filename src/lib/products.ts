@@ -1197,6 +1197,154 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     dripSequenceKey: "research_similar_cases",
     isActive: true,
   },
+
+  // ─── PRIORITY B — Critical 7 Worker Standalone Products ─────
+  "plea-analyzer": {
+    name: "Plea Deal Analyzer",
+    category: "research",
+    price: 9700, // $97
+    priceDisplay: "$97",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your personalized plea analysis is generated within 60 seconds of submitting your details.",
+    description:
+      "Compare your plea offer against sentencing guidelines, map leverage from your case, and surface hidden consequences.",
+    intakeFields: [
+      "state",
+      "chargeType",
+      "pleaOfferDetails",
+      "originalCharges",
+      "offeredCharges",
+      "sentencingExposure",
+    ],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "A plea deal affects every aspect of your case. The Case Decoder maps the full defense landscape.",
+    dripSequenceKey: "research_plea_analyzer",
+    isActive: false,
+  },
+  "ach-matrix": {
+    name: "Case Hypothesis Matrix",
+    category: "research",
+    price: 14700, // $147
+    priceDisplay: "$147",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your personalized hypothesis analysis is generated within 60 seconds of submitting your details.",
+    description:
+      "Every plausible explanation for the evidence — including the prosecution's strongest theory — scored and ranked.",
+    intakeFields: [
+      "state",
+      "chargeType",
+      "knownEvidence",
+      "alternativeExplanations",
+      "knownFacts",
+    ],
+    stripePriceId: null,
+    upsellTier: "intelligence-brief",
+    upsellText:
+      "Hypothesis testing is one layer. The Intelligence Brief adds prosecution pattern analysis and full case intelligence.",
+    dripSequenceKey: "research_ach_matrix",
+    isActive: false,
+  },
+  "adversarial-prosecution-sim": {
+    name: "Adversarial Prosecution Simulation",
+    category: "research",
+    price: 19700, // $197
+    priceDisplay: "$197",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your personalized prosecution simulation is generated within 60 seconds of submitting your details.",
+    description:
+      "Multi-round simulation of how the prosecution will attack each defense strategy — before your attorney tries it in court.",
+    intakeFields: [
+      "state",
+      "chargeType",
+      "defenseStrategy",
+      "prosecutionTheory",
+      "knownFacts",
+    ],
+    stripePriceId: null,
+    upsellTier: "war-room",
+    upsellText:
+      "Stress-testing one strategy is the start. The War Room runs adversarial simulation against your full defense.",
+    dripSequenceKey: "research_adversarial_sim",
+    isActive: false,
+  },
+  "sentencing-intelligence": {
+    name: "Sentencing Intelligence Report",
+    category: "research",
+    price: 29700, // $297
+    priceDisplay: "$297",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your personalized sentencing analysis is generated within 60 seconds of submitting your details.",
+    description:
+      "Judge-specific sentencing patterns, guideline analysis, departure opportunities, and plea-vs-trial comparison for your charge.",
+    intakeFields: [
+      "state",
+      "chargeType",
+      "judgeName",
+      "county",
+      "priorConvictions",
+      "currentSentencingRange",
+    ],
+    stripePriceId: null,
+    upsellTier: "intelligence-brief",
+    upsellText:
+      "Sentencing intelligence is one dimension. The Intelligence Brief combines it with full prosecution pattern analysis.",
+    dripSequenceKey: "research_sentencing_intelligence",
+    isActive: false,
+  },
+  "daubert-challenge": {
+    name: "Daubert Expert Challenge Analysis",
+    category: "research",
+    price: 29700, // $297
+    priceDisplay: "$297",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your personalized Daubert analysis is generated within 60 seconds of submitting your details.",
+    description:
+      "Systematic Daubert factor analysis of the prosecution's expert witness — methodology, qualifications, and challenge opportunities.",
+    intakeFields: [
+      "state",
+      "chargeType",
+      "expertName",
+      "expertField",
+      "expertMethodology",
+    ],
+    stripePriceId: null,
+    upsellTier: "war-room",
+    upsellText:
+      "Challenging one expert is the start. The War Room systematically analyzes every prosecution witness.",
+    dripSequenceKey: "research_daubert_challenge",
+    isActive: false,
+  },
+  "body-camera-analysis": {
+    name: "Body Camera Analysis Report",
+    category: "research",
+    price: 39700, // $397
+    priceDisplay: "$397",
+    delivery: "Under 60 seconds",
+    deliveryDetail:
+      "Your analysis report is generated within 60 seconds of submitting your details.",
+    description:
+      "Legal analysis framework for body camera footage — Miranda compliance, procedural issues, and defense-relevant moments.",
+    intakeFields: [
+      "state",
+      "chargeType",
+      "mediaType",
+      "incidentDescription",
+      "defenseTheory",
+    ],
+    stripePriceId: null,
+    upsellTier: "x-ray",
+    upsellText:
+      "Body camera issues are one piece of the evidence picture. The X-Ray analyzes your full discovery.",
+    dripSequenceKey: "research_body_camera",
+    isActive: false,
+  },
 } as const satisfies Record<string, StandaloneProduct>;
 
 export type ProductSlug = keyof typeof STANDALONE_PRODUCTS;
