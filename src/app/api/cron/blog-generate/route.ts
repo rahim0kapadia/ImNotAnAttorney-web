@@ -65,12 +65,14 @@ export async function GET(req: NextRequest) {
 
     // ── Enqueue one processing_jobs row per gap ──
     // case_id is null for blog jobs (migration 20260409e made it nullable).
-    // target_id carries the content_gap_id; target_type='content_gap' is the discriminator.
+    // content_gaps.id is integer but processing_jobs.target_id is UUID — pass
+    // the gap id through job_subtype (text column) instead.
     const jobs = gaps.map((g) => ({
       job_type: "blog_generate",
       case_id: null,
-      target_id: g.id,
+      target_id: null,
       target_type: "content_gap",
+      job_subtype: String(g.id),
       priority: 5,
       status: "queued",
     }));
