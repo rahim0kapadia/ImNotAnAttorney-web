@@ -238,10 +238,13 @@ export async function queryJudgeReportCard(
   // Parallel queries for all related data
   const [sentencing, pairings, divergence, quotes, appellate, usscData] =
     await Promise.all([
+      // Sentencing distributions: try judge-specific first, fall back to charge-level
+      // (current data has judge_id=NULL on all rows — charge-level aggregates)
       supabase
         .from("sentencing_distributions")
         .select("charge_slug, median_months, p25, p75, sample_size, source_urls")
-        .eq("judge_id", judge.id)
+        .or(`judge_id.eq.${judge.id},judge_id.is.null`)
+        .eq("charge_slug", intake.chargeType)
         .order("sample_size", { ascending: false })
         .limit(50),
 
@@ -264,10 +267,12 @@ export async function queryJudgeReportCard(
         .eq("judge_id", judge.id)
         .limit(30),
 
+      // Appellate trends: try state-specific first; all current rows have jurisdiction="unknown"
+      // so also accept those as a fallback for national-level data
       supabase
         .from("appellate_trends")
         .select("argument_type, reverse_rate, affirm_rate, sample_size, source_urls")
-        .eq("jurisdiction", intake.state)
+        .or(`jurisdiction.eq.${intake.state},jurisdiction.eq.unknown`)
         .order("sample_size", { ascending: false })
         .limit(20),
 
