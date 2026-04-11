@@ -29,7 +29,7 @@ export const maxDuration = 60;
 const TARGET_SUBREDDITS = ['dui', 'legaladvice', 'probation', 'Felons', 'publicdefenders'];
 const USER_AGENT = 'ImNotAnAttorneyBot/1.0 (legal information monitoring)';
 const POSTS_PER_SUB = 25;
-const POST_AGE_LIMIT_MS = 35 * 60 * 1000; // 35 min window (5 min buffer beyond 30-min cron interval)
+const POST_AGE_LIMIT_MS = 24 * 60 * 60 * 1000; // 24h window — dedup guard prevents duplicate notifications
 const DELAY_BETWEEN_SUBS_MS = 1200; // Rate limit courtesy delay between subreddit fetches
 
 // ── Template content cache ────────────────────────────────────
@@ -142,50 +142,75 @@ async function sendTelegramNotification(
   }
 
   const stateLabel = detectedState
-    ? `State detected: ${detectedState}`
-    : 'No state detected';
+    ? `State: ${detectedState}`
+    : '';
 
-  const message = [
-    `🔴 NEW MATCH — r/${subreddit}`,
+  // Message 1: Thread link (tap to open, read the post)
+  const linkMessage = [
+    `🔴 r/${subreddit} — ${templateName}${stateLabel ? ` | ${stateLabel}` : ''}`,
     '',
-    `📌 "${threadTitle}"`,
-    `🔗 ${threadUrl}`,
+    `📌 "${threadTitle.slice(0, 200)}"`,
     '',
-    `⚠️ EDIT before posting — rephrase the opening in your own words. Do NOT paste verbatim.`,
-    '',
-    `--- DRAFT (edit before posting) ---`,
-    '',
-    draftText,
-    '',
-    `--- END DRAFT ---`,
-    '',
-    `📎 Blog (for follow-up reply 30min later, ONLY if asked):`,
-    `https://imnotanattorney.com${blogUrl}`,
-    '',
-    `📊 Template: ${templateName} | ${stateLabel}`,
+    threadUrl,
   ].join('\n');
 
-  // Telegram has a 4096 character limit per message
-  const finalMessage = message.length > 4000
-    ? message.slice(0, 3990) + '\n\n[MESSAGE TRUNCATED]'
-    : message;
+  // Message 2: Copy-paste reply (blog link embedded naturally at the end)
+  const blogLine = `\n\nMore on this: https://imnotanattorney.com${blogUrl}`;
+  const replyMessage = draftText.trim() + blogLine;
+
+  // Telegram 4096 char limit
+  const trimMsg = (msg: string) =>
+    msg.length > 4000 ? msg.slice(0, 3990) + '\n\n[TRIMMED]' : msg;
 
   try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    // Send link message first
+    const res1 = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: chatId,
-        text: finalMessage,
-        disable_web_page_preview: true,
+        text: trimMsg(linkMessage),
+        disable_web_page_preview: false, // let Telegram preview the Reddit thread
       }),
     });
 
-    if (!res.ok) {
-      const body = await res.text();
-      console.error(`[reddit-monitor] Telegram API error: ${res.status} — ${body}`);
+    if (!res1.ok) {
+      const body = await res1.text();
+      console.error(`[reddit-monitor] Telegram API error (link): ${res1.status} — ${body}`);
       return false;
     }
+
+    // Send reply draft as separate message (copy-paste ready).
+    // Retry once on failure — msg 1 already sent, so Rahim has the link.
+    // Without retry, dedup would skip this thread forever and the draft is lost.
+    const replyBody = JSON.stringify({
+      chat_id: chatId,
+      text: trimMsg(replyMessage),
+      disable_web_page_preview: true,
+    });
+
+    let res2 = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: replyBody,
+    });
+
+    if (!res2.ok) {
+      console.warn(`[reddit-monitor] Telegram reply failed (${res2.status}), retrying once...`);
+      await new Promise(r => setTimeout(r, 1000));
+      res2 = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: replyBody,
+      });
+    }
+
+    if (!res2.ok) {
+      const body = await res2.text();
+      console.error(`[reddit-monitor] Telegram reply failed after retry: ${res2.status} — ${body}`);
+      return false;
+    }
+
     return true;
   } catch (err) {
     console.error('[reddit-monitor] Telegram send failed:', (err as Error).message);

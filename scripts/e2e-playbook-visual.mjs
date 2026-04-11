@@ -3,7 +3,7 @@
  * E2E Visual Test — Playbook Purchase Funnel
  *
  * Validates all playbook sales pages, checkout pages, and service listings
- * render correctly using Puppeteer. This is a read-only visual validation
+ * render correctly using Playwright. This is a read-only visual validation
  * script — no Stripe calls, no DB writes. Safe to run against production.
  *
  * Test suites:
@@ -15,9 +15,9 @@
  *
  * Run: node scripts/e2e-playbook-visual.mjs [--base-url http://localhost:3000]
  *
- * Requires: puppeteer (npm install puppeteer --no-save)
+ * Requires: playwright (already a project dependency)
  */
-import puppeteer from "puppeteer";
+import { chromium } from "playwright";
 
 // ================================================================
 // CONFIG
@@ -27,15 +27,16 @@ const BASE_URL = process.argv.includes("--base-url")
   ? process.argv[process.argv.indexOf("--base-url") + 1]
   : "http://localhost:3000";
 
+/** Playbook slugs and their expected prices (post Hormozi pricing lift, 2026-04-07). */
 const PLAYBOOK_SLUGS = [
-  "dui-first-offense",
-  "drug-possession",
-  "probation-violation",
-  "white-collar",
-  "sex-offense",
-  "federal-criminal",
-  "drug-trafficking",
-  "self-defense",
+  { slug: "dui-first-offense", expectedPrice: "$127" },
+  { slug: "drug-possession", expectedPrice: "$127" },
+  { slug: "probation-violation", expectedPrice: "$127" },
+  { slug: "white-collar", expectedPrice: "$147" },
+  { slug: "sex-offense", expectedPrice: "$127" },
+  { slug: "federal-criminal", expectedPrice: "$147" },
+  { slug: "drug-trafficking", expectedPrice: "$147" },
+  { slug: "self-defense", expectedPrice: "$127" },
 ];
 
 const MAIN_TIERS = [
@@ -70,7 +71,7 @@ function assert(condition, testName) {
  */
 async function safeGoto(page, url) {
   try {
-    await page.goto(url, { waitUntil: "networkidle2", timeout: NAV_TIMEOUT });
+    await page.goto(url, { waitUntil: "networkidle", timeout: NAV_TIMEOUT });
     return true;
   } catch (err) {
     console.error(`    ✗ Navigation failed: ${url} — ${err.message}`);
@@ -84,22 +85,10 @@ async function safeGoto(page, url) {
  */
 async function safeTextContent(page, selector, timeout = SELECTOR_TIMEOUT) {
   try {
-    await page.waitForSelector(selector, { timeout });
-    return await page.$eval(selector, (el) => el.textContent?.trim() || "");
+    await page.locator(selector).first().waitFor({ timeout });
+    return (await page.locator(selector).first().textContent())?.trim() || "";
   } catch {
     return null;
-  }
-}
-
-/**
- * Check if a selector exists on the page within a timeout.
- */
-async function selectorExists(page, selector, timeout = SELECTOR_TIMEOUT) {
-  try {
-    await page.waitForSelector(selector, { timeout });
-    return true;
-  } catch {
-    return false;
   }
 }
 
@@ -119,28 +108,24 @@ async function getPageText(page) {
  *
  * For each /playbook/<slug>:
  *   - h1 exists
- *   - Price ($97) is displayed
+ *   - Correct price is displayed
  *   - CTA button/link exists ("Get Instant Access")
  */
 async function testPlaybookSalesPages(page) {
   console.log("\n━━━ Test 1: Playbook Sales Pages ━━━");
 
-  for (const slug of PLAYBOOK_SLUGS) {
+  for (const { slug, expectedPrice } of PLAYBOOK_SLUGS) {
     const url = `${BASE_URL}/playbook/${slug}`;
     console.log(`  → ${slug}`);
 
     if (!(await safeGoto(page, url))) continue;
 
-    // h1 exists
     const h1Text = await safeTextContent(page, "h1");
     assert(h1Text && h1Text.length > 0, `${slug}: h1 exists ("${h1Text?.slice(0, 50)}...")`);
 
-    // Price is displayed — look for "$97" anywhere on page
     const pageText = await getPageText(page);
-    assert(pageText.includes("$97"), `${slug}: price "$97" is displayed`);
+    assert(pageText.includes(expectedPrice), `${slug}: price "${expectedPrice}" is displayed`);
 
-    // CTA button/link exists — the playbook pages use link-styled buttons
-    // with text "Get Instant Access"
     const ctaExists = await page.evaluate(() => {
       const links = Array.from(document.querySelectorAll("a"));
       return links.some((a) => a.textContent?.includes("Get Instant Access"));
@@ -154,41 +139,37 @@ async function testPlaybookSalesPages(page) {
  *
  * For each /checkout?tier=<slug>:
  *   - Page does NOT show "Invalid tier selected"
- *   - Price "$97" is displayed
+ *   - Correct price is displayed
  *   - CTA button exists
  */
 async function testPlaybookCheckoutPages(page) {
   console.log("\n━━━ Test 2: Playbook Checkout Pages ━━━");
 
-  for (const slug of PLAYBOOK_SLUGS) {
+  for (const { slug, expectedPrice } of PLAYBOOK_SLUGS) {
     const url = `${BASE_URL}/checkout?tier=${slug}`;
     console.log(`  → ${slug}`);
 
     if (!(await safeGoto(page, url))) continue;
 
-    // Wait for client-side rendering (checkout is a "use client" component
-    // wrapped in Suspense — content appears after hydration).
-    // Wait for actual content to appear, not just "Loading..." to disappear.
+    // Wait for client-side hydration
     await page.waitForFunction(
       () => {
         const text = document.body.innerText || "";
         return text.includes("$") || text.includes("Invalid tier");
       },
+      undefined,
       { timeout: 15000 }
     ).catch(() => {});
 
     const pageText = await getPageText(page);
 
-    // NOT "Invalid tier selected"
     assert(
       !pageText.includes("Invalid tier selected"),
       `${slug}: no "Invalid tier selected" error`
     );
 
-    // Price "$97" displayed
-    assert(pageText.includes("$97"), `${slug}: price "$97" is displayed`);
+    assert(pageText.includes(expectedPrice), `${slug}: price "${expectedPrice}" is displayed`);
 
-    // CTA button exists — checkout page uses a <button> with dynamic text
     const buttonExists = await page.evaluate(() => {
       const buttons = Array.from(document.querySelectorAll("button"));
       return buttons.some(
@@ -216,18 +197,17 @@ async function testUpgradeCostNotZero(page) {
 
   if (!(await safeGoto(page, url))) return;
 
-  // Wait for hydration — wait for price content to appear
   await page.waitForFunction(
     () => {
       const text = document.body.innerText || "";
       return text.includes("$") || text.includes("Invalid tier");
     },
+    undefined,
     { timeout: 15000 }
   ).catch(() => {});
 
   const pageText = await getPageText(page);
 
-  // The upgrade nudge contains "Upgrade cost: $XXX"
   const upgradeMatch = pageText.match(/Upgrade cost:\s*(\$[\d,]+)/);
   assert(
     upgradeMatch !== null,
@@ -238,7 +218,6 @@ async function testUpgradeCostNotZero(page) {
     const upgradeCost = upgradeMatch[1];
     assert(upgradeCost !== "$0", `upgrade cost is not "$0" (found: "${upgradeCost}")`);
   } else {
-    // If no match, the assertion above already failed; add context
     assert(false, `upgrade cost is not "$0" (nudge text not found)`);
   }
 }
@@ -247,8 +226,7 @@ async function testUpgradeCostNotZero(page) {
  * Test 4: All Service Tiers on /services
  *
  * Visit /services and verify all 8 playbooks are referenced in the
- * "Instant Products" section. Checks for checkout links with the
- * correct tier slugs.
+ * "Instant Products" section.
  */
 async function testServicesPage(page) {
   console.log("\n━━━ Test 4: All 8 Playbooks on /services ━━━");
@@ -258,15 +236,13 @@ async function testServicesPage(page) {
 
   if (!(await safeGoto(page, url))) return;
 
-  // Verify "Instant Products" heading exists
   const instantProductsExists = await page.evaluate(() => {
     const headings = Array.from(document.querySelectorAll("h2"));
     return headings.some((h) => h.textContent?.includes("Instant Products"));
   });
   assert(instantProductsExists, `"Instant Products" section heading exists`);
 
-  // Check for each playbook slug in checkout links anywhere on the page
-  for (const slug of PLAYBOOK_SLUGS) {
+  for (const { slug } of PLAYBOOK_SLUGS) {
     const linkExists = await page.evaluate((s) => {
       const links = Array.from(document.querySelectorAll("a"));
       return links.some(
@@ -283,10 +259,7 @@ async function testServicesPage(page) {
  * Test 5: Main Tiers Checkout
  *
  * Verify the main (non-playbook) tier checkout pages render with
- * the correct prices:
- *   - case-decoder → "$197"
- *   - intelligence-brief → "$997"
- *   - x-ray → "$2,497"
+ * the correct prices.
  */
 async function testMainTiersCheckout(page) {
   console.log("\n━━━ Test 5: Main Tiers Checkout ━━━");
@@ -297,34 +270,32 @@ async function testMainTiersCheckout(page) {
 
     if (!(await safeGoto(page, url))) continue;
 
-    // Wait for hydration — wait for price content to appear
     await page.waitForFunction(
       () => {
         const text = document.body.innerText || "";
         return text.includes("$") || text.includes("Invalid tier");
       },
+      undefined,
       { timeout: 15000 }
     ).catch(() => {});
 
     const pageText = await getPageText(page);
 
-    // No "Invalid tier selected"
     assert(
       !pageText.includes("Invalid tier selected"),
       `${slug}: no "Invalid tier selected" error`
     );
 
-    // Expected price is displayed
     assert(
       pageText.includes(expectedPrice),
       `${slug}: price "${expectedPrice}" is displayed`
     );
 
-    // CTA button exists
     const buttonExists = await page.evaluate(() => {
       const buttons = Array.from(document.querySelectorAll("button"));
       return buttons.some(
         (b) =>
+          b.textContent?.includes("Get My") ||
           b.textContent?.includes("Secure Checkout") ||
           b.textContent?.includes("Pay")
       );
@@ -342,18 +313,15 @@ async function run() {
   console.log(`Target: ${BASE_URL}`);
   console.log(`Time:   ${new Date().toISOString()}\n`);
 
-  const browser = await puppeteer.launch({
-    headless: "new",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  const browser = await chromium.launch({ headless: true });
+
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    userAgent:
+      "Mozilla/5.0 (E2E Visual Test) AppleWebKit/537.36 Chrome/120.0 Safari/537.36",
   });
 
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1280, height: 800 });
-
-  // Set a reasonable user agent
-  await page.setUserAgent(
-    "Mozilla/5.0 (E2E Visual Test) AppleWebKit/537.36 Chrome/120.0 Safari/537.36"
-  );
+  const page = await context.newPage();
 
   try {
     await testPlaybookSalesPages(page);
@@ -366,6 +334,7 @@ async function run() {
     console.error(err.stack);
     failed++;
   } finally {
+    await context.close();
     await browser.close();
   }
 

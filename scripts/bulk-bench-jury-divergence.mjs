@@ -312,6 +312,7 @@ async function main() {
 
   const parser = bzcat.stdout.pipe(parse({
     columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true,
+    relax_quotes: true, on_record: (record) => record,
   }));
 
   // Track observations: judge_id + charge_slug -> { bench: [], jury: [] }
@@ -321,52 +322,62 @@ async function main() {
   let classifiedCount = 0;
   const startTime = Date.now();
 
-  for await (const record of parser) {
-    rowCount++;
-    if (rowCount % 500000 === 0) {
-      const elapsed = (Date.now() - startTime) / 1000;
-      process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${classifiedCount} classified (${elapsed.toFixed(0)}s)\n`);
-    }
-
-    const clusterId = record.cluster_id;
-    if (!clusterId || !targetClusters.has(clusterId)) continue;
-    matchCount++;
-
-    let text = record.plain_text || "";
-    if (text.length < 500) {
-      const html = record.html_with_citations || record.html || record.html_columbia || "";
-      if (html.length > 500) text = stripHtml(html);
-    }
-    if (text.length < 500) continue;
-
-    const { trialType, outcome } = classifyTrial(text);
-    if (!trialType || !outcome) continue;
-
-    classifiedCount++;
-
-    // Find judge by author_id (CL person ID) or author_str (name fallback)
-    let judgeId = null;
-    const authorId = record.author_id;
-    if (authorId) {
-      judgeId = judgeByClPersonId.get(authorId);
-    }
-    if (!judgeId) {
-      const authorName = (record.author_str || "").toLowerCase().trim();
-      if (authorName) judgeId = judgeByNameLower.get(authorName);
-    }
-    if (!judgeId) continue;
-
-    // Get charges for this cluster
-    const charges = clusterToCharges.get(clusterId) || [];
-    for (const chargeSlug of charges) {
-      const key = `${judgeId}|${chargeSlug}`;
-      if (!observations.has(key)) {
-        observations.set(key, { bench: [], jury: [] });
+  // Wrap in try-catch: CL opinions CSV has unescaped quotes in legal text
+  // that cause fatal "Quote Not Closed" errors. We collect data until the
+  // parser crashes, then proceed with what we have.
+  try {
+    for await (const record of parser) {
+      rowCount++;
+      if (rowCount % 500000 === 0) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${classifiedCount} classified (${elapsed.toFixed(0)}s)\n`);
       }
-      observations.get(key)[trialType].push(outcome);
-    }
 
-    if (classifiedCount >= limit) { bzcat.kill(); break; }
+      const clusterId = record.cluster_id;
+      if (!clusterId || !targetClusters.has(clusterId)) continue;
+      matchCount++;
+
+      let text = record.plain_text || "";
+      if (text.length < 500) {
+        const html = record.html_with_citations || record.html || record.html_columbia || "";
+        if (html.length > 500) text = stripHtml(html);
+      }
+      if (text.length < 500) continue;
+
+      const { trialType, outcome } = classifyTrial(text);
+      if (!trialType || !outcome) continue;
+
+      classifiedCount++;
+
+      // Find judge by author_id (CL person ID) or author_str (name fallback)
+      let judgeId = null;
+      const authorId = record.author_id;
+      if (authorId) {
+        judgeId = judgeByClPersonId.get(authorId);
+      }
+      if (!judgeId) {
+        const authorName = (record.author_str || "").toLowerCase().trim();
+        if (authorName) judgeId = judgeByNameLower.get(authorName);
+      }
+      if (!judgeId) continue;
+
+      // Get charges for this cluster
+      const charges = clusterToCharges.get(clusterId) || [];
+      for (const chargeSlug of charges) {
+        const key = `${judgeId}|${chargeSlug}`;
+        if (!observations.has(key)) {
+          observations.set(key, { bench: [], jury: [] });
+        }
+        observations.get(key)[trialType].push(outcome);
+      }
+
+      if (classifiedCount >= limit) { bzcat.kill(); break; }
+    }
+  } catch (parseErr) {
+    // "Quote Not Closed" is fatal in csv-parse — CL opinions CSV has
+    // unescaped quotes in legal opinion text. Proceed with collected data.
+    console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
+    try { bzcat.kill(); } catch {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

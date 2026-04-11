@@ -54,7 +54,7 @@ export interface CaseDetail extends CaseListItem {
 export interface OrderSummary {
   id: string;
   stripe_payment_intent: string | null;
-  amount_cents: number;
+  amount: number;
   status: string;
   paid_at: string | null;
 }

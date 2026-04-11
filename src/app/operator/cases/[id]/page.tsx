@@ -323,7 +323,7 @@ function CaseDetailContent() {
               <div>
                 <span className="text-zinc-400">Payment: </span>
                 <span className="text-zinc-200">
-                  {formatCurrency(c.order.amount_cents)}
+                  {formatCurrency(c.order.amount)}
                 </span>
                 <span className="ml-1 text-zinc-400">({c.order.status})</span>
               </div>

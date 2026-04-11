@@ -54,7 +54,7 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
     // 2. Most recent order
     supabase
       .from("orders")
-      .select("id, stripe_payment_intent, amount_cents, status, paid_at")
+      .select("id, stripe_payment_intent, amount, status, paid_at")
       .eq("case_id", id)
       .order("created_at", { ascending: false })
       .limit(1)

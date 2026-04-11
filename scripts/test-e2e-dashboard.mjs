@@ -38,7 +38,9 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.argv.includes("--base-url")
+  ? process.argv[process.argv.indexOf("--base-url") + 1]
+  : "http://localhost:3000";
 let testCaseId = null;
 let testOrderId = null;
 let testJobId = null;
@@ -79,7 +81,7 @@ async function setup() {
     .insert({
       email: "e2e-test@example.com",
       tier: "x-ray",
-      amount_cents: 249700,
+      amount: 249700,
       status: "paid",
       paid_at: new Date().toISOString(),
       stripe_session_id: "test_sess_e2e_dashboard",
@@ -101,7 +103,7 @@ async function setup() {
       charge_type: "drug-possession",
       status: "processing",
       phase: "cross_document_analysis",
-      report_token: "e2e-test-token-" + Date.now(),
+      report_token: crypto.randomUUID(),
       delivery_due_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
     })
     .select()
@@ -180,7 +182,7 @@ async function setup() {
     .insert({
       email: "e2e-warroom@example.com",
       tier: "war-room",
-      amount_cents: 499700,
+      amount: 499700,
       status: "paid",
       paid_at: new Date().toISOString(),
       stripe_session_id: "test_sess_e2e_warroom",
@@ -199,7 +201,7 @@ async function setup() {
       charge_type: "drug-possession",
       status: "processing",
       phase: "witness_identification",
-      report_token: "e2e-warroom-token-" + Date.now(),
+      report_token: crypto.randomUUID(),
       delivery_due_at: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(),
       witness_count: 3,
     })
@@ -215,7 +217,7 @@ async function setup() {
     .insert({
       email: "e2e-sitroom@example.com",
       tier: "situation-room",
-      amount_cents: 999700,
+      amount: 999700,
       status: "paid",
       paid_at: new Date().toISOString(),
       stripe_session_id: "test_sess_e2e_sitroom",
@@ -234,7 +236,7 @@ async function setup() {
       charge_type: "drug-possession",
       status: "processing",
       phase: "attack_intelligence",
-      report_token: "e2e-sitroom-token-" + Date.now(),
+      report_token: crypto.randomUUID(),
       delivery_due_at: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(),
       witness_count: 5,
     })

@@ -174,7 +174,7 @@ async function createTestCase() {
   const html = renderReportHtml(md, META);
   const token = randomUUID(), orderId = randomUUID(), caseId = randomUUID(), intakeId = randomUUID();
   let err;
-  ({ error: err } = await supabase.from("orders").insert({ id: orderId, email: "test@example.com", tier: "case-decoder", amount_cents: 19700, stripe_session_id: "test_" + Date.now(), stripe_payment_intent: "test_pi_" + Date.now() }));
+  ({ error: err } = await supabase.from("orders").insert({ id: orderId, email: "test@example.com", tier: "case-decoder", amount: 19700, stripe_session_id: "test_" + Date.now(), stripe_payment_intent: "test_pi_" + Date.now() }));
   if (err) { console.error("Order:", err); process.exit(1); }
   ({ error: err } = await supabase.from("cases").insert({ id: caseId, order_id: orderId, email: "test@example.com", first_name: "TestUser", status: "review", tier: "case-decoder", report_html: html, report_token: token }));
   if (err) { console.error("Case:", err); process.exit(1); }
