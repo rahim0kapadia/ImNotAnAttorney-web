@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
     }
 
     // ── Fill remaining slots with spoke gaps ──
-    // Only select spokes for charge types that already have a published hub
+    // Throttle: 2 spoke slots when a hub was queued, 3 when no hubs remain
     const spokeLimit = (hubGaps?.length ?? 0) > 0 ? 2 : 3;
     const { data: spokeGaps, error: spokeError } = await supabase
       .from("content_gaps")
