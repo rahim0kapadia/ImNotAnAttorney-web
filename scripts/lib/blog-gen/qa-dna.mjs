@@ -7,11 +7,11 @@
 // Uses Sonnet — structural evaluation, not legal interpretation. MODEL_MAP
 // should route 'blog_qa_dna' to Sonnet.
 //
-// Ship threshold: 0 FAIL, max 3 NEEDS_WORK (raised from 2 to accommodate
-// new checks during pipeline calibration — tighten to 2 once output quality
-// stabilizes).
+// Ship threshold: 0 FAIL, max 3 NEEDS_WORK.
+// 2026-04-10: Added D13_PRODUCT_BRIDGE, tightened D10 word/section limits
+// for pipeline v2 short-form content (1,000-1,500 words target).
 
-const DNA_CHECKS_TOTAL = 12;
+const DNA_CHECKS_TOTAL = 13;
 const DNA_MAX_NEEDS_WORK = 3;
 
 const CHECK_IDS = [
@@ -27,14 +27,15 @@ const CHECK_IDS = [
   "D10_PHONE_FIRST",
   "D11_SCREENSHOT_SENTENCE",
   "D12_SHAREABLE_FAQ",
+  "D13_PRODUCT_BRIDGE",
 ];
 
 function buildDNAPrompt(mdxContent) {
-  return `You are a structural quality auditor for ImNotAnAttorney.com blog posts. Each post is read by a criminal defendant in crisis on their phone at 2AM. Your job is to verify the post passes the 10 Blog DNA checks that make content actually useful to a crisis reader, not just informative.
+  return `You are a structural quality auditor for ImNotAnAttorney.com blog posts. Each post is read by a criminal defendant in crisis on their phone at 2AM. Your job is to verify the post passes the 13 Blog DNA checks that make content actually useful to a crisis reader, not just informative.
 
-Evaluate this blog post against exactly 12 DNA checks. For each check, return a JSON object with exactly these fields: check (string ID like "D1_3AM_PANIC"), result ("PASS", "NEEDS_WORK", or "FAIL"), evidence (one sentence quoting or describing the specific text that led to your decision).
+Evaluate this blog post against exactly 13 DNA checks. For each check, return a JSON object with exactly these fields: check (string ID like "D1_3AM_PANIC"), result ("PASS", "NEEDS_WORK", or "FAIL"), evidence (one sentence quoting or describing the specific text that led to your decision).
 
-THE 12 DNA CHECKS:
+THE 13 DNA CHECKS:
 
 D1_3AM_PANIC: PASS if (a) the opening hook names the reader's fear in the first 2 sentences, AND (b) every H2 header tells the reader what they GET (action-oriented, e.g. "How to Challenge the Weight on Your Charge"), not what the section is "about" (topical, e.g. "Understanding Weight Thresholds"). FAIL if the opening starts with a definition or history, OR if any H2 is purely topical with no implied action. NEEDS_WORK if the opening is fine but 1-2 H2s are topical.
 
@@ -54,18 +55,20 @@ D8_IDENTITY_PROTECTION: PASS if there is zero blame language in the entire post 
 
 D9_FEAR_CLARITY_AGENCY: PASS if (a) opening names and validates the fear without minimizing, (b) middle explains what's actually happening and reduces unknown to known, (c) closing gives specific actions and ends on competence/agency, (d) final sentence is an agency statement, not a CTA or fear reminder. FAIL if the post opens with explanation instead of emotional acknowledgment, OR closes with fear instead of agency, OR has flat informational tone throughout. NEEDS_WORK if the arc is mostly present but the final sentence is a generic CTA.
 
-D10_PHONE_FIRST: PASS if (a) all tables have at most 2 columns, (b) key actions are bold and not buried in paragraph middles, (c) only H2 and H3 heading levels used (no H4+), (d) every H2 section fits in roughly 300-500 words. FAIL if any table has 3+ columns, OR if any single section exceeds 600 words before the next H2, OR if H4+ heading levels are used. NEEDS_WORK if 1 section runs long (500-600 words) or 1 key action is not bold.
+D10_PHONE_FIRST: PASS if (a) all tables have at most 2 columns, (b) key actions are bold and not buried in paragraph middles, (c) only H2 and H3 heading levels used (no H4+), (d) every H2 section fits in roughly 200-400 words, (e) total body content (excluding frontmatter, TLDRBox, SOCIAL_SPINE, and disclaimer) is under 1,800 words, (f) no more than 4 H2 sections. FAIL if any table has 3+ columns, OR if any single section exceeds 500 words before the next H2, OR if total body content exceeds 1,800 words, OR if there are more than 4 H2 sections, OR if H4+ heading levels are used. NEEDS_WORK if 1 section runs long (400-500 words) or 1 key action is not bold.
 
 D11_SCREENSHOT_SENTENCE: PASS if every H2 section contains exactly one bolded sentence (using **bold** markdown) that is (a) under 27 words, (b) standalone — makes complete sense without the surrounding paragraph, (c) something a defendant would screenshot and text to their spouse/parent/friend at 3AM. The sentence should make the sharer look informed and helpful, not desperate. FAIL if more than 2 H2 sections lack a bolded screenshot-worthy sentence. NEEDS_WORK if 1-2 sections have bold text but it's a generic instruction rather than a shareable insight.
 
 D12_SHAREABLE_FAQ: PASS if every FAQ answer in the faqs frontmatter (a) starts with the direct answer (no preamble like "Great question" or "That depends"), (b) is 2-4 sentences, (c) reads naturally as a standalone reply in a support group — as if posted by someone who's been through it, not an institution explaining policy. FAIL if more than 2 FAQ answers start with hedging/preamble OR exceed 5 sentences OR use institutional voice. NEEDS_WORK if 1-2 FAQ answers are slightly too long or slightly institutional.
+
+D13_PRODUCT_BRIDGE: PASS if the post ends with a product bridge that (a) names a specific INAA product by name (Case Decoder, Intelligence Brief, X-Ray, War Room, DUI Defense Playbook), (b) connects the free content value to the paid product value ("you got X free, the product gives you Y for YOUR case"), (c) does NOT use generic CTA language ("get started", "learn more", "check it out"). FAIL if the post ends with no product mention, OR if the product is introduced without connecting it to the post's value. NEEDS_WORK if the bridge exists but uses generic language.
 
 BLOG POST TO EVALUATE:
 ---
 ${mdxContent}
 ---
 
-Return a JSON array of exactly 12 objects in the order listed above. No other text. Example format:
+Return a JSON array of exactly 13 objects in the order listed above. No other text. Example format:
 [{"check":"D1_3AM_PANIC","result":"PASS","evidence":"Opening hook names the morning-after shame and every H2 is action-oriented"}]`;
 }
 

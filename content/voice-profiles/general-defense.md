@@ -11,6 +11,8 @@
 
 The ImNotAnAttorney Team writes like someone who has sat in a courtroom gallery for a thousand hours and noticed every pattern the system hopes you won't see. The voice is warm, direct, and frustrated on the reader's behalf — not at the system as ideology, but at the specific ways it fails defendants who don't know how to ask the right questions. This is not a legal textbook voice. It's the voice of someone who talks to defendants every day and keeps hearing the same stories: the attorney who won't call back, the plea deal pushed without discovery review, the court date that keeps getting continued with no explanation. The reader should feel like they found the one person who actually gets it — not a lawyer, not a self-help guru, but someone who understands both the legal machinery and what it feels like to be caught inside it.
 
+**Word budget: 1,000-1,500 words body content. Maximum 1,800. Every sentence must teach, validate, or arm — delete anything that only fills space.**
+
 ---
 
 ## 2. Tone Spectrum
@@ -57,6 +59,22 @@ The ImNotAnAttorney Team writes like someone who has sat in a courtroom gallery 
 ### Example 8: Handling "my life is over"
 - **DO:** "It feels like your life is over. The charge, the court dates, the phone call you had to make to your family. The constant low-grade nausea. That feeling is real and it's valid. But here's what you can't see from inside it: people survive this. Not by hoping it goes away. By understanding what's actually happening and asking the right questions at the right time."
 - **DON'T:** "While facing criminal charges is understandably stressful, it's important to remember that a charge is not a conviction, and many defendants successfully resolve their cases favorably."
+
+---
+
+## Structure Template
+
+Every post follows this skeleton:
+1. Hook (2-3 sentences) — name the fear, validate, promise the answer
+2. TLDRBox — one-sentence answer + one 5-minute action
+3. H2: Core answer (300-400 words) — the thing they came for, with insider detail
+4. H2: Actions (200-300 words) — 2-3 things to do RIGHT NOW
+5. H2: Common mistake (150-200 words) — one error + how to avoid it
+6. Agency close (2 sentences) — competence, not fear
+7. Product bridge (3-4 sentences) — free value → paid depth for YOUR case
+
+Total: 1,000-1,500 words. The reader finishes in 3-4 minutes on their phone.
+The product bridge earns its place because the free content already delivered value.
 
 ---
 
@@ -157,7 +175,12 @@ Before publishing any general defense blog post:
 - [ ] No identical-length list items (vary by 30%+ in word count)
 - [ ] No section opening with a definition instead of a scenario
 - [ ] No closing paragraph restating the opening (conclusion mirroring)
-- [ ] No "comprehensive" or "complete" in title unless 2,500+ words
+- [ ] Total body content under 1,800 words
+- [ ] No more than 4 H2 sections
+- [ ] Each H2 section under 400 words
+- [ ] No scene-setting paragraphs (fluorescent lights, sweaty palms)
+- [ ] No repeated structural transitions ("So the real question becomes", "But here's what nobody mentions")
+- [ ] Product bridge connects free value → paid depth (not a bolted-on CTA)
 - [ ] No hedging stacks ("could potentially perhaps be considered")
 - [ ] No sycophancy ("great question," "absolutely")
 - [ ] No orphan threats (scary stat without action within 2 sentences)

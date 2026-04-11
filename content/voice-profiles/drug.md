@@ -11,6 +11,8 @@
 
 Drug defendants face the most fear-driven charges in the system. The numbers on the charge sheet — weight thresholds, mandatory minimums — are designed to terrify. The voice cuts through that terror with precision. This isn't shame like DUI — this is "the system is using numbers against you and those numbers might be wrong." The voice is direct, slightly angry on the reader's behalf, and forensically specific. It treats the reader as someone caught in a machine that runs on weight, not truth. The emotional register is: "Let me show you exactly where the weaknesses are in what they're claiming."
 
+**Word budget: 1,000-1,500 words body content. Maximum 1,800. Every sentence must teach, validate, or arm — delete anything that only fills space.**
+
 ---
 
 ## 2. Tone Spectrum
@@ -65,6 +67,22 @@ Drug defendants face the most fear-driven charges in the system. The numbers on 
 
 - **DO:** "Someone — maybe the arresting officer, maybe the detective, maybe even your own attorney — has mentioned cooperation. Working with investigators. Providing names. The pressure feels enormous because the alternative is the mandatory minimum you've already seen. Here's what they don't tell you in that moment: cooperation is a one-way door. Once you start, you can't undo it. The information you provide gets used whether or not the deal works out the way you expected. And the reduction you're promised is not guaranteed — it's a recommendation to the judge, not a contract. Before any cooperation conversation happens, defendants in this situation typically explore every other avenue first: suppression motions, weight challenges, charge reduction through the evidence itself. Cooperation might be the right move. But it's the last move, not the first."
 - **DON'T:** "Cooperating with law enforcement can sometimes lead to reduced charges or sentences. This decision involves complex legal and personal considerations that should be discussed thoroughly with your attorney."
+
+---
+
+## Structure Template
+
+Every post follows this skeleton:
+1. Hook (2-3 sentences) — name the fear, validate, promise the answer
+2. TLDRBox — one-sentence answer + one 5-minute action
+3. H2: Core answer (300-400 words) — the thing they came for, with insider detail
+4. H2: Actions (200-300 words) — 2-3 things to do RIGHT NOW
+5. H2: Common mistake (150-200 words) — one error + how to avoid it
+6. Agency close (2 sentences) — competence, not fear
+7. Product bridge (3-4 sentences) — free value → paid depth for YOUR case
+
+Total: 1,000-1,500 words. The reader finishes in 3-4 minutes on their phone.
+The product bridge earns its place because the free content already delivered value.
 
 ---
 
@@ -179,7 +197,12 @@ Before publishing any drug defense blog post:
 - [ ] No identical-length list items (vary by 30%+ in word count)
 - [ ] No section opening with a definition instead of a scenario
 - [ ] No closing paragraph restating the opening (conclusion mirroring)
-- [ ] No "comprehensive" or "complete" in title unless 2,500+ words
+- [ ] Total body content under 1,800 words
+- [ ] No more than 4 H2 sections
+- [ ] Each H2 section under 400 words
+- [ ] No scene-setting paragraphs (fluorescent lights, sweaty palms)
+- [ ] No repeated structural transitions ("So the real question becomes", "But here's what nobody mentions")
+- [ ] Product bridge connects free value → paid depth (not a bolted-on CTA)
 - [ ] No hedging stacks ("could potentially perhaps be considered")
 - [ ] No sycophancy ("great question," "absolutely")
 - [ ] No orphan threats (scary stat without action within 2 sentences)

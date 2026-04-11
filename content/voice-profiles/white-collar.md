@@ -11,6 +11,8 @@
 
 The ImNotAnAttorney Team writes for white collar and federal defendants like a strategic advisor laying out a chess board. These readers are professionals — accountants, executives, business owners, physicians, engineers — who have never been inside a courtroom and never expected to be. Their terror is not shame and it is not raw fear of the streets. It is confusion. The investigation crept along for months, maybe years, and then suddenly the numbers in the indictment are numbers they cannot comprehend. They are used to understanding systems, solving problems, reading fine print. The voice meets them at that level: calm, analytical, precise. These readers can handle a higher reading level (10th grade is acceptable for this category). They do not need you to simplify — they need you to explain the system. Why federal investigations take 18 months. Why the conviction rate appears insurmountable. Why cooperation is not the obvious play everyone says it is. The voice is never panicked, never breathless, never dumbed down. It is the voice of someone who has watched this chess game play out hundreds of times and can finally show them where all the pieces are, how they move, and what most people miss.
 
+**Word budget: 1,000-1,500 words body content. Maximum 1,800. Every sentence must teach, validate, or arm — delete anything that only fills space.**
+
 ---
 
 ## 2. Tone Spectrum
@@ -57,6 +59,22 @@ The ImNotAnAttorney Team writes for white collar and federal defendants like a s
 ### Example 8: "Should I talk to the agents?" scenario
 - **DO:** "Two agents show up at your office. They're polite. They say they just have a few questions and you're not in trouble. Here is what 'just a few questions' looks like from the other side: the agents have prepared for this conversation. They already know the answers to most of what they're asking. They are not gathering information — they are testing whether your answers match what they already have. Inconsistencies become evidence. This is not a conversation. It is an interview being conducted by trained investigators on a recorded or documented basis. Whether to speak to federal agents is one of the most consequential early decisions in a federal case, and it is not a decision that benefits from being made in the moment at your office door."
 - **DON'T:** "NEVER talk to federal agents! Anything you say will be used against you. Just say you want a lawyer and shut the door. You have rights!"
+
+---
+
+## Structure Template
+
+Every post follows this skeleton:
+1. Hook (2-3 sentences) — name the fear, validate, promise the answer
+2. TLDRBox — one-sentence answer + one 5-minute action
+3. H2: Core answer (300-400 words) — the thing they came for, with insider detail
+4. H2: Actions (200-300 words) — 2-3 things to do RIGHT NOW
+5. H2: Common mistake (150-200 words) — one error + how to avoid it
+6. Agency close (2 sentences) — competence, not fear
+7. Product bridge (3-4 sentences) — free value → paid depth for YOUR case
+
+Total: 1,000-1,500 words. The reader finishes in 3-4 minutes on their phone.
+The product bridge earns its place because the free content already delivered value.
 
 ---
 
@@ -188,7 +206,12 @@ Before publishing any white collar / federal defense blog post:
 - [ ] No identical-length list items (vary by 30%+ in word count)
 - [ ] No section opening with a definition instead of a scenario
 - [ ] No closing paragraph restating the opening (conclusion mirroring)
-- [ ] No "comprehensive" or "complete" in title unless 2,500+ words
+- [ ] Total body content under 1,800 words
+- [ ] No more than 4 H2 sections
+- [ ] Each H2 section under 400 words
+- [ ] No scene-setting paragraphs (fluorescent lights, sweaty palms)
+- [ ] No repeated structural transitions ("So the real question becomes", "But here's what nobody mentions")
+- [ ] Product bridge connects free value → paid depth (not a bolted-on CTA)
 - [ ] No hedging stacks ("could potentially perhaps be considered")
 - [ ] No sycophancy ("great question," "absolutely")
 - [ ] No orphan threats (scary stat without action within 2 sentences)

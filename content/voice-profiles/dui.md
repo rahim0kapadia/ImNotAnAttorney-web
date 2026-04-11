@@ -11,6 +11,8 @@
 
 The ImNotAnAttorney Team writes DUI content like a calm friend who knows the system saying "yes, you messed up. One mistake. Here's what the next 90 days actually look like." DUI defendants carry intense shame — they made a mistake and they know it. The voice acknowledges that without rubbing it in, then pivots hard to agency. Time pressure is real and specific: DMV hearing deadlines of 7-15 days in most states create genuine urgency that general defense content doesn't have. The reader is often a first-time offender, a professional, terrified of losing their license and their job. They are scanning this at 2AM on their phone, still tasting the shame of the booking photo and the bail receipt. Every sentence either teaches something specific about the DUI process, restores a sense of control over the next 72 hours, or does both. The emotional register is warmer and more urgent than general defense — shame needs warmth to loosen before information can land, and DMV deadlines don't wait for shame to pass on its own.
 
+**Word budget: 1,000-1,500 words body content. Maximum 1,800. Every sentence must teach, validate, or arm — delete anything that only fills space.**
+
 ---
 
 ## 2. Tone Spectrum
@@ -65,6 +67,22 @@ The ImNotAnAttorney Team writes DUI content like a calm friend who knows the sys
 
 - **DO:** "It feels permanent. The mugshot, the charge, the way your stomach drops every time you think about it. Your brain is telling you three things right now: this is who you are now, this will never go away, and this will touch everything. All three of those are lies your nervous system is telling you under stress. This is one charge from one night. Over 1 million DUI arrests happen in the U.S. every year (FBI Uniform Crime Report). Teachers, nurses, engineers, parents — people who never expected to see the inside of a booking room. The next 90 days are not written yet. Defendants who take one specific action this week — requesting the DMV hearing — are already in a different position than those who freeze."
 - **DON'T:** "While it is understandable to feel that a DUI arrest represents a catastrophic event, it is important to maintain perspective. Many individuals who have been arrested for DUI have gone on to resolve their cases favorably and continue with their personal and professional lives."
+
+---
+
+## Structure Template
+
+Every post follows this skeleton:
+1. Hook (2-3 sentences) — name the fear, validate, promise the answer
+2. TLDRBox — one-sentence answer + one 5-minute action
+3. H2: Core answer (300-400 words) — the thing they came for, with insider detail
+4. H2: Actions (200-300 words) — 2-3 things to do RIGHT NOW
+5. H2: Common mistake (150-200 words) — one error + how to avoid it
+6. Agency close (2 sentences) — competence, not fear
+7. Product bridge (3-4 sentences) — free value → paid depth for YOUR case
+
+Total: 1,000-1,500 words. The reader finishes in 3-4 minutes on their phone.
+The product bridge earns its place because the free content already delivered value.
 
 ---
 
@@ -203,7 +221,12 @@ Before publishing any DUI blog post, check every item. Any match triggers a rewr
 - [ ] No identical-length list items (vary by 30%+ in word count)
 - [ ] No section opening with a definition instead of a scenario
 - [ ] No closing paragraph restating the opening (conclusion mirroring)
-- [ ] No "comprehensive" or "complete" in title unless 2,500+ words
+- [ ] Total body content under 1,800 words
+- [ ] No more than 4 H2 sections
+- [ ] Each H2 section under 400 words
+- [ ] No scene-setting paragraphs (fluorescent lights, sweaty palms)
+- [ ] No repeated structural transitions ("So the real question becomes", "But here's what nobody mentions")
+- [ ] Product bridge connects free value → paid depth (not a bolted-on CTA)
 - [ ] No hedging stacks ("could potentially perhaps be considered")
 - [ ] No sycophancy ("great question," "absolutely")
 - [ ] No orphan threats (scary stat without action within 2 sentences)

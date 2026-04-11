@@ -4,9 +4,11 @@
 // (2026-04-09 blog engine port). Only change: TypeScript annotations and type
 // imports removed. All detectors, constants, and scoring thresholds are identical.
 //
-// Detects AI-generated writing patterns using 13 detectors across vocabulary,
+// Detects AI-generated writing patterns using 14 detectors across vocabulary,
 // style, structure, and uniformity dimensions. Returns a composite score;
 // content passes when compositeScore < 45.
+//
+// 2026-04-10: Added Detector 14 (repeated_structural_transition).
 //
 // NO regex on content — all text processing uses split/includes/indexOf/startsWith.
 
@@ -133,6 +135,14 @@ const OPENER_GENERIC_TRANSITIONS = [
   "to put it simply",
   "the truth is",
   "the reality is",
+];
+
+// ── Repeated structural transition phrases (Detector 14) ──
+const STRUCTURAL_TRANSITIONS = [
+  "but here's what nobody mentions",
+  "so the real question becomes",
+  "here's the reality",
+  "here's the thing",
 ];
 
 // ── Sentence-ending characters ──
@@ -695,6 +705,36 @@ export function runHumanizerCheck(mdxContent, options = {}) {
         detector: "vague_authority",
         severity: "style",
         count: vagueCount,
+        matches,
+        points_added: pts,
+      });
+    }
+  }
+
+  // ── Detector 14: Repeated structural transitions ──
+  {
+    const transitionCounts = {};
+    for (const phrase of STRUCTURAL_TRANSITIONS) {
+      const hits = countOccurrences(bodyLower, phrase);
+      if (hits >= 3) {
+        transitionCounts[phrase] = hits;
+      }
+    }
+
+    const repeatedTransitions = Object.keys(transitionCounts);
+    if (repeatedTransitions.length > 0) {
+      let pts = 0;
+      const matches = [];
+      for (const phrase of repeatedTransitions) {
+        const count = transitionCounts[phrase];
+        pts += 15;
+        matches.push(`"${phrase}" (x${count})`);
+      }
+      totalPatternPoints += pts;
+      flaggedPatterns.push({
+        detector: "repeated_structural_transition",
+        severity: "style",
+        count: repeatedTransitions.length,
         matches,
         points_added: pts,
       });
