@@ -161,6 +161,8 @@ export async function POST(req: NextRequest) {
           email: normalizedEmailStandalone,
           charge_type: chargeType && isValidChargeType(chargeType) ? chargeType : "",
           state: typeof body.state === "string" ? body.state.slice(0, 10) : "",
+          judge_name: typeof body.judgeName === "string" ? body.judgeName.slice(0, 100) : "",
+          officer_name: typeof body.officerName === "string" ? body.officerName.slice(0, 100) : "",
         },
       });
 
