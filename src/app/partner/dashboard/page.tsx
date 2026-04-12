@@ -21,22 +21,7 @@ import { formatDate } from "@/lib/format";
 import { tierDisplayName } from "@/lib/tiers";
 import { formatCents } from "@/lib/format";
 import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
-
-interface PartnerData {
-  id: string;
-  name: string;
-  email: string;
-  phone: string | null;
-  company: string | null;
-  promo_code: string | null;
-  commission_rate: number;
-  commission_tier: string;
-  preferred_payment_method: string | null;
-  payment_zelle: string | null;
-  payment_venmo: string | null;
-  payment_check_address: string | null;
-  payment_paypal: string | null;
-}
+import { type Partner } from "@/lib/partner-data";
 
 interface Earnings {
   total_earned: number;
@@ -65,7 +50,7 @@ interface Payout {
 export default function PartnerDashboard() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [partner, setPartner] = useState<PartnerData | null>(null);
+  const [partner, setPartner] = useState<Partner | null>(null);
   const [earnings, setEarnings] = useState<Earnings | null>(null);
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [payouts, setPayouts] = useState<Payout[]>([]);
@@ -105,7 +90,7 @@ export default function PartnerDashboard() {
   if (loading) {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center" role="status" aria-label="Loading dashboard">
-        <div className="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full motion-safe:animate-spin" />
       </div>
     );
   }
@@ -143,6 +128,7 @@ export default function PartnerDashboard() {
       </header>
 
       <div className="max-w-4xl mx-auto px-6 py-8 space-y-8">
+        <h1 className="text-2xl font-bold">Partner Dashboard</h1>
         {error && (
           <div role="alert" className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg text-sm">
             {error}

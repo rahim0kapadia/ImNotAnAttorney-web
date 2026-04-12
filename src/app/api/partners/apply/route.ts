@@ -19,6 +19,7 @@ import { getClientIp } from "@/lib/request";
 import { normalizeEmail, isValidEmail, OPERATOR_EMAIL_FALLBACK, SITE_URL } from "@/lib/site";
 import { createPartnerPromoCode, sanitizePromoCode } from "@/lib/referral";
 import { generateMagicLink } from "@/lib/partner-auth";
+import { partnerWelcomeEmail } from "@/lib/partner-emails";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || OPERATOR_EMAIL_FALLBACK;
@@ -178,6 +179,71 @@ export async function POST(req: NextRequest) {
       );
     }
     partnerId = existingPartner.id;
+
+    // Check if pending partner already has a promo code — generate one if not
+    const { data: pendingRecord } = await supabase
+      .from("partners")
+      .select("promo_code")
+      .eq("id", partnerId)
+      .single();
+
+    if (!pendingRecord?.promo_code) {
+      const firstName = partnerName.split(/\s+/)[0] || "PARTNER";
+      let baseCode = sanitizePromoCode(firstName);
+      if (baseCode.length < 2) baseCode = "PARTNER";
+      let promoCode = baseCode;
+      let suffix = 1;
+      while (true) {
+        const { data: existing } = await supabase
+          .from("partners")
+          .select("id")
+          .eq("promo_code", promoCode)
+          .maybeSingle();
+        if (!existing) break;
+        promoCode = `${baseCode}${suffix}`;
+        suffix++;
+        if (suffix > 100) {
+          promoCode = `${baseCode}${Date.now().toString(36).toUpperCase()}`;
+          break;
+        }
+      }
+      await supabase
+        .from("partners")
+        .update({ promo_code: promoCode, commission_rate: 10 })
+        .eq("id", partnerId);
+    }
+
+    // Create Stripe promo codes if not already set
+    const { data: stripeCheck } = await supabase
+      .from("partners")
+      .select("promo_code, stripe_promo_code_id")
+      .eq("id", partnerId)
+      .single();
+
+    if (stripeCheck?.promo_code && !stripeCheck.stripe_promo_code_id) {
+      try {
+        const stripePromo = await createPartnerPromoCode(partnerId, stripeCheck.promo_code, partnerName);
+        await supabase
+          .from("partners")
+          .update({ stripe_promo_code_id: stripePromo.id })
+          .eq("id", partnerId);
+      } catch (stripeErr) {
+        console.error("[Partner Apply] Stripe promo code creation failed for upgraded partner:", stripeErr);
+      }
+    }
+
+    // Insert audit trail for pending upgrade
+    await supabase.from("partner_applications").insert({
+      name,
+      company: company || null,
+      email: normalizedEmail,
+      phone: phone || null,
+      region: region || null,
+      message: message || null,
+      source: source || null,
+      heard_about_us: heardAboutUs || null,
+      status: "converted",
+    });
   } else {
     // Generate unique promo code from first name
     const firstName = partnerName.split(/\s+/)[0] || "PARTNER";
@@ -276,41 +342,15 @@ export async function POST(req: NextRequest) {
   const displayCode = partnerRecord?.promo_code || "(check your dashboard)";
 
   try {
-    await sendEmail({
-      to: normalizedEmail,
-      subject: "You're In — Your ImNotAnAttorney Partner Code",
-      html: `
-        <div style="font-family: system-ui, sans-serif; max-width: 520px; margin: 0 auto; background: #0A0A0A; padding: 32px; border-radius: 12px;">
-          <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Welcome to the Partner Program</h1>
-          <p style="color: #D4D4D8; line-height: 1.6;">Hey ${escapeHtml(partnerName)},</p>
-          <p style="color: #D4D4D8; line-height: 1.6;">You're approved. Here's your promo code:</p>
-          <div style="background: #1C1917; border: 2px solid #F59E0B; border-radius: 8px; padding: 20px; text-align: center; margin: 24px 0;">
-            <span style="color: #F59E0B; font-size: 28px; font-weight: bold; letter-spacing: 2px;">${escapeHtml(displayCode)}</span>
-          </div>
-          <p style="color: #D4D4D8; line-height: 1.6;">
-            Your code activates when you click the button below to verify your email.
-            Share it with clients for 10% off any product — you earn 10% commission on every sale.
-          </p>
-          ${magicUrl ? `
-          <div style="text-align: center; margin: 24px 0;">
-            <a href="${magicUrl}" style="display: inline-block; padding: 14px 32px; background: #F59E0B; color: #000; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">
-              Verify Email &amp; Open Dashboard
-            </a>
-          </div>
-          <p style="color: #71717A; font-size: 13px;">This link expires in 15 minutes. You can request a new one from the login page anytime.</p>
-          ` : `
-          <p style="color: #D4D4D8; line-height: 1.6;">
-            <a href="${SITE_URL}/partner/login" style="color: #F59E0B;">Log in to your dashboard</a> to verify your email and activate your code.
-          </p>
-          `}
-          <hr style="border: none; border-top: 1px solid #27272A; margin: 24px 0;" />
-          <p style="color: #71717A; font-size: 13px;">
-            Questions? Reply to this email or reach out anytime.<br />
-            — The ImNotAnAttorney Team
-          </p>
-        </div>
-      `,
-    });
+    const welcomeEmail = partnerWelcomeEmail(
+      partnerName.split(" ")[0],
+      displayCode,
+      magicUrl || `${SITE_URL}/partner/login`
+    );
+    await sendEmail(
+      { to: normalizedEmail, subject: welcomeEmail.subject, html: welcomeEmail.html },
+      { category: "partner-activation", metadata: { partner_id: partnerId } }
+    );
   } catch (emailErr) {
     console.error("[Partner Apply] Welcome email failed:", emailErr);
   }

@@ -30,6 +30,7 @@ import { normalizeEmail } from "@/lib/site";
 import { isValidChargeType } from "@/lib/charge-types";
 import { getClientIp } from "@/lib/request";
 import { isValidProduct, getProduct } from "@/lib/products";
+import { sanitizeSubId } from "@/lib/referral";
 
 /**
  * Creates a Stripe Checkout session for a given product tier.
@@ -61,7 +62,8 @@ export async function POST(req: NextRequest) {
     }
     const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType, promoCode, paymentPlan, standaloneProduct } = body;
     const ref = typeof body.ref === "string" && body.ref.length <= 200 ? body.ref : null;
-    const refSub = typeof body.refSub === "string" && body.refSub.length <= 50 ? body.refSub : null;
+    const rawRefSub = typeof body.refSub === "string" ? body.refSub : null;
+    const refSub = rawRefSub ? sanitizeSubId(rawRefSub) : null;
 
     // =========================================================================
     // 1a. STANDALONE PRODUCT CHECKOUT

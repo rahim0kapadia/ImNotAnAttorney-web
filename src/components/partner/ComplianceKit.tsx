@@ -66,7 +66,7 @@ export function ComplianceKit() {
         <ul className="space-y-2">
           {APPROVED_LANGUAGE.map((text, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-              <span className="text-green-400 mt-0.5 shrink-0">&#10003;</span>
+              <span className="text-green-400 mt-0.5 shrink-0" aria-hidden="true">&#10003;</span>
               <span>{text}</span>
             </li>
           ))}
@@ -81,7 +81,7 @@ export function ComplianceKit() {
         <ul className="space-y-2">
           {PROHIBITED_LANGUAGE.map((text, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-              <span className="text-red-400 mt-0.5 shrink-0">&#10007;</span>
+              <span className="text-red-400 mt-0.5 shrink-0" aria-hidden="true">&#10007;</span>
               <span>{text}</span>
             </li>
           ))}
@@ -106,6 +106,8 @@ export function ComplianceKit() {
                 <button
                   onClick={() => handleCopy(d.template, i)}
                   className="text-xs px-3 py-1 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-white transition-colors"
+                  aria-label={copiedIdx === i ? "Copied" : `Copy ${d.label} disclosure`}
+                  aria-live="polite"
                 >
                   {copiedIdx === i ? "Copied!" : "Copy"}
                 </button>

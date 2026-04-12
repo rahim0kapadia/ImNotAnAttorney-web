@@ -85,8 +85,9 @@ export function QRCode({ url, size = 200 }: QRCodeProps) {
     <div className="flex flex-col items-center gap-3">
       <div className="bg-white rounded-xl p-3" style={{ width: size + 24, height: size + 24 }}>
         {loading && (
-          <div style={{ width: size, height: size }} className="flex items-center justify-center">
-            <div className="w-6 h-6 border-2 border-zinc-300 border-t-transparent rounded-full animate-spin" />
+          <div style={{ width: size, height: size }} className="flex items-center justify-center" role="status">
+            <div className="w-6 h-6 border-2 border-zinc-300 border-t-transparent rounded-full motion-safe:animate-spin" />
+            <span className="sr-only">Loading QR code</span>
           </div>
         )}
         <img
@@ -102,6 +103,8 @@ export function QRCode({ url, size = 200 }: QRCodeProps) {
           width={size}
           height={size}
           className={showCanvas ? "block" : "hidden"}
+          role="img"
+          aria-label={`QR code linking to ${url}`}
         />
       </div>
       <button

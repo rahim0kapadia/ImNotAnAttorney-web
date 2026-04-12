@@ -56,7 +56,14 @@ export function EarningsSection({ partner, earnings, payouts }: EarningsSectionP
               {nextTier.threshold} needed for {nextTier.label}
             </span>
           </div>
-          <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
+          <div
+            className="h-2 bg-zinc-800 rounded-full overflow-hidden"
+            role="progressbar"
+            aria-valuenow={earnings.total_referrals}
+            aria-valuemin={0}
+            aria-valuemax={nextTier.threshold}
+            aria-label={`Progress to ${nextTier.label}: ${earnings.total_referrals} of ${nextTier.threshold} referrals`}
+          >
             <div
               className="h-full bg-amber-500 rounded-full transition-all"
               style={{

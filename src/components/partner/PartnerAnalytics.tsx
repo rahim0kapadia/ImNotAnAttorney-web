@@ -63,7 +63,14 @@ export function PartnerAnalytics({ analytics }: PartnerAnalyticsProps) {
                 <span className="text-xs text-zinc-400 w-20 shrink-0 text-right">
                   {m.month}
                 </span>
-                <div className="flex-1 h-6 bg-zinc-800 rounded-full overflow-hidden">
+                <div
+                  role="meter"
+                  aria-valuenow={m.commission}
+                  aria-valuemin={0}
+                  aria-valuemax={maxMonthly}
+                  aria-label={`${m.month}: $${(m.commission / 100).toFixed(2)}, ${m.count} sale${m.count !== 1 ? "s" : ""}`}
+                  className="flex-1 h-6 bg-zinc-800 rounded-full overflow-hidden"
+                >
                   <div
                     className="h-full bg-amber-500 rounded-full transition-all flex items-center justify-end pr-2"
                     style={{

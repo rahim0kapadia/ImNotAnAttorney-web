@@ -85,7 +85,7 @@ export const PARTNER_FAQS = [
   },
   {
     question: "How does the referral work?",
-    answer: "You get a unique promo code. Hand it to defendants when they bond out. They enter the code at checkout for 10% off. You earn 10% commission on every purchase they make. We track it all automatically.",
+    answer: "You get a unique promo code. Hand it to defendants when they bond out. They enter the code at checkout for 10% off. You earn 10-20% commission on every purchase (starting at 10%, increasing to 15% at 5 sales and 20% at 15 sales). We track it all automatically.",
   },
   {
     question: "When do I get paid?",

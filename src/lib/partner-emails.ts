@@ -37,7 +37,7 @@ const moneyStyle = `color: ${GREEN}; font-weight: 700;`;
 const codeStyle = `display: inline-block; background: #1C1917; border: 2px dashed ${AMBER}; padding: 12px 24px; font-size: 24px; font-weight: 800; letter-spacing: 3px; color: ${AMBER}; border-radius: 8px;`;
 const copyBoxStyle = `background: #1C1917; border: 1px solid #27272A; border-radius: 8px; padding: 16px; margin: 12px 0; color: ${ZINC}; font-size: 14px; line-height: 1.5;`;
 
-const dashboardUrl = `${SITE_URL}/partners/dashboard`;
+const dashboardUrl = `${SITE_URL}/partner/dashboard`;
 
 function dollars(cents: number): string {
   return `$${(cents / 100).toFixed(2)}`;

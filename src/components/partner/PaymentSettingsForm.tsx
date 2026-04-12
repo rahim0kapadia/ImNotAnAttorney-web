@@ -147,6 +147,7 @@ export function PaymentSettingsForm({
           type="submit"
           disabled={saving}
           className="px-6 py-2 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 disabled:opacity-50"
+          aria-live="polite"
         >
           {saving ? "Saving..." : saved ? "Saved!" : "Save Settings"}
         </button>

@@ -45,6 +45,8 @@ export function ToolkitSection({ partner, referralUrl }: ToolkitSectionProps) {
               <button
                 onClick={() => handleCopy(partner.promo_code || "", "code")}
                 className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700"
+                aria-label="Copy promo code"
+                aria-live="polite"
               >
                 {codeCopied ? "Copied!" : "Copy"}
               </button>
@@ -58,6 +60,8 @@ export function ToolkitSection({ partner, referralUrl }: ToolkitSectionProps) {
               <button
                 onClick={() => handleCopy(referralUrl, "url")}
                 className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 shrink-0"
+                aria-label="Copy referral URL"
+                aria-live="polite"
               >
                 {urlCopied ? "Copied!" : "Copy"}
               </button>
@@ -69,7 +73,7 @@ export function ToolkitSection({ partner, referralUrl }: ToolkitSectionProps) {
               rel="noopener noreferrer"
               className="inline-block mt-4 text-sm text-amber-400 hover:text-amber-300"
             >
-              Preview what your clients see &rarr;
+              Preview what your clients see<span className="sr-only"> (opens in new tab)</span> &rarr;
             </a>
           </div>
 

@@ -78,6 +78,8 @@ export function CreativeAssets({ promoCode, referralUrl }: CreativeAssetsProps) 
                 <button
                   onClick={() => handleCopy(text, i)}
                   className="text-xs px-3 py-1 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-white transition-colors"
+                  aria-label={copiedIdx === i ? "Copied" : `Copy ${t.label} template`}
+                  aria-live="polite"
                 >
                   {copiedIdx === i ? "Copied!" : "Copy"}
                 </button>
@@ -90,30 +92,11 @@ export function CreativeAssets({ promoCode, referralUrl }: CreativeAssetsProps) 
         })}
       </div>
 
-      {/* One-pager download */}
+      {/* One-pager download — PDF not yet available */}
       <div className="mt-4 pt-4 border-t border-zinc-700">
-        <a
-          href="/partner-assets/partner-one-pager.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm text-amber-400 hover:text-amber-300"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-            />
-          </svg>
-          Download Partner One-Pager (PDF)
-        </a>
+        <p className="text-sm text-zinc-500 italic">
+          Coming soon — partner one-pager PDF with print-ready QR code and talking points.
+        </p>
       </div>
     </section>
   );
