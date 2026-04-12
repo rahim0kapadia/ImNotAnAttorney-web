@@ -72,17 +72,17 @@ export function partnerWelcomeEmail(
       </p>
       <p style="${pStyle}">Every defendant who uses this code at checkout gets 10% off. You earn commission on every sale.</p>
 
-      <h2 style="${h2Style}">Your Dashboard</h2>
+      <h2 style="${h2Style}">Send This to Your Next Client</h2>
+      <p style="${pStyle}">Copy-paste this message right now — it takes 10 seconds:</p>
+      <div style="${copyBoxStyle}">
+        <em>"Hey &mdash; I work with a company that researches criminal cases and helps defendants prepare the right questions for their attorney. If you use my code <strong>${safeCode}</strong> at checkout, you get 10% off. Check it out: ${escapeHtml(SITE_URL)}"</em>
+      </div>
+
+      <h2 style="${h2Style}">Then Check Your Dashboard</h2>
       <p style="${pStyle}">Track referrals, commissions, and payouts in real time:</p>
       <p style="margin: 20px 0; text-align: center;">
         <a href="${escapeHtml(magicLinkUrl)}" style="${btnStyle}">Open My Dashboard</a>
       </p>
-
-      <h2 style="${h2Style}">Your First Message</h2>
-      <p style="${pStyle}">Copy-paste this to your next client:</p>
-      <div style="${copyBoxStyle}">
-        <em>"I work with a research service that helps defendants hold their attorneys accountable. Use code <strong>${safeCode}</strong> at imnotanattorney.com for 10% off. They generate specific questions you can bring to your attorney — it's not legal advice, it's legal information that puts you in control."</em>
-      </div>
 
       <p style="${pStyle}">We'll send you a few tips over the next two weeks to help you get the most out of the program. Reply to any email if you have questions.</p>
     `,
@@ -133,63 +133,28 @@ export function partnerTheMathEmail(
 ): { subject: string; html: string } {
   const safeName = escapeHtml(name);
 
-  // Build commission table from TIER_CORE
-  const earningsRows = [
-    { slug: "dui-first-offense" as const, label: "Defense Playbook" },
-    { slug: "case-decoder" as const, label: "Case Decoder" },
-    { slug: "intelligence-brief" as const, label: "Intelligence Brief" },
-    { slug: "x-ray" as const, label: "The X-Ray" },
-    { slug: "war-room" as const, label: "The War Room" },
-  ];
-
-  const tierRows = COMMISSION_TIERS_CONFIG.map((tier) => {
-    const rows = earningsRows
-      .map((p) => {
-        const price = TIER_CORE[p.slug].price;
-        const commission = Math.floor((price * tier.rate) / 100);
-        return `<tr>
-          <td style="padding: 8px 12px; border-bottom: 1px solid #27272A; color: ${ZINC};">${p.label}</td>
-          <td style="padding: 8px 12px; border-bottom: 1px solid #27272A; color: ${ZINC};">${TIER_CORE[p.slug].priceDisplay}</td>
-          <td style="padding: 8px 12px; border-bottom: 1px solid #27272A; ${moneyStyle}">${dollars(commission)}</td>
-        </tr>`;
-      })
-      .join("");
-
-    return `
-      <h2 style="${h2Style}">${tier.label} (${tier.rate}% commission)</h2>
-      ${tier.threshold > 0 ? `<p style="color: #71717A; font-size: 13px; margin: 0 0 8px;">Unlocked at ${tier.threshold}+ referrals</p>` : ""}
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
-        <tr style="background: #1C1917;">
-          <th style="padding: 8px 12px; text-align: left; color: ${AMBER}; font-size: 13px;">Product</th>
-          <th style="padding: 8px 12px; text-align: left; color: ${AMBER}; font-size: 13px;">Price</th>
-          <th style="padding: 8px 12px; text-align: left; color: ${AMBER}; font-size: 13px;">You Earn</th>
-        </tr>
-        ${rows}
-      </table>
-    `;
-  });
-
-  // Highlight math: 5 X-Ray referrals at Gold tier
+  // Single aspirational scenario — Gold tier (20%) on X-Ray ($2,497)
+  const goldTier = COMMISSION_TIERS_CONFIG.find((t) => t.key === "gold");
+  const goldRate = goldTier?.rate ?? 20;
   const xRayPrice = TIER_CORE["x-ray"].price;
-  const xRayGoldCommission = Math.floor((xRayPrice * 20) / 100);
-  const fiveXRay = xRayGoldCommission * 5;
+  const monthlyEarnings = Math.floor((xRayPrice * goldRate) / 100) * 5;
 
   return {
     subject: "The Math: What 5 Referrals Actually Earns You",
     html: `
-      <h1 style="${h1Style}">Let's do the math, ${safeName}.</h1>
-      <p style="${pStyle}">Every referral earns commission. The more you refer, the higher your rate climbs.</p>
+      <h1 style="${h1Style}">One number, ${safeName}.</h1>
 
-      ${tierRows.join("")}
-
-      <div style="background: #1C1917; border-left: 4px solid ${GREEN}; padding: 16px; margin: 24px 0; border-radius: 0 8px 8px 0;">
-        <p style="color: white; font-size: 18px; margin: 0 0 8px; font-weight: 700;">Quick Math</p>
-        <p style="${pStyle}">5 X-Ray referrals at Gold tier = <span style="${moneyStyle}; font-size: 20px;">${dollars(fiveXRay)}</span></p>
-        <p style="color: #71717A; font-size: 13px; margin: 0;">That's passive income from defendants you're already talking to.</p>
+      <div style="background: #1C1917; border-left: 4px solid ${GREEN}; padding: 24px; margin: 24px 0; border-radius: 0 8px 8px 0; text-align: center;">
+        <p style="${moneyStyle}; font-size: 36px; margin: 0 0 8px;">${dollarsWhole(monthlyEarnings)}/month</p>
+        <p style="color: white; font-size: 16px; margin: 0;">5 X-Ray referrals a month at Gold tier.</p>
       </div>
 
+      <p style="${pStyle}">That's passive income from defendants you're already talking to. The more you refer, the higher your commission rate climbs — and that number grows.</p>
+
+      <p style="${pStyle}">See all commission tiers and earnings in your dashboard:</p>
+
       <p style="margin: 24px 0; text-align: center;">
-        <a href="${dashboardUrl}" style="${btnStyle}">Track My Earnings</a>
+        <a href="${dashboardUrl}" style="${btnStyle}">View My Earnings</a>
       </p>
     `,
   };
@@ -374,7 +339,71 @@ export function partnerPayoutNotificationEmail(
 }
 
 // ============================================================
-// 8. TIER UPGRADE — Real-time
+// 8. DAY 30 RE-ENGAGEMENT
+// ============================================================
+
+export function partnerDay30Email(
+  name: string,
+  totalReferrals: number
+): { subject: string; html: string } {
+  const safeName = escapeHtml(name);
+
+  const statsBlock =
+    totalReferrals > 0
+      ? `
+      <div style="background: #1C1917; border-radius: 8px; padding: 20px; margin: 16px 0; text-align: center;">
+        <p style="color: ${ZINC}; font-size: 14px; margin: 0 0 4px;">Your Referrals So Far</p>
+        <p style="font-size: 32px; font-weight: 800; color: white; margin: 0;">${totalReferrals}</p>
+      </div>
+      <p style="${pStyle}">Keep it going. Every referral helps a defendant take control of their case — and earns you commission.</p>
+    `
+      : `
+      <p style="${pStyle}">Your code is live and ready. The next defendant you talk to is your first commission.</p>
+    `;
+
+  return {
+    subject: "Your Code Is Still Active",
+    html: `
+      <h1 style="${h1Style}">30-day check-in, ${safeName}.</h1>
+      <p style="${pStyle}">Quick reminder: your promo code is still active. Defendants who use it get 10% off, and you earn commission on every sale.</p>
+
+      ${statsBlock}
+
+      <p style="margin: 24px 0; text-align: center;">
+        <a href="${dashboardUrl}" style="${btnStyle}">Open My Dashboard</a>
+      </p>
+    `,
+  };
+}
+
+// ============================================================
+// 9. DAY 60 RE-ENGAGEMENT
+// ============================================================
+
+export function partnerDay60Email(
+  name: string
+): { subject: string; html: string } {
+  const safeName = escapeHtml(name);
+
+  return {
+    subject: "Haven't Shared Your Code Yet?",
+    html: `
+      <h1 style="${h1Style}">Still here, ${safeName}.</h1>
+      <p style="${pStyle}">We noticed you haven't shared your code yet — no pressure, but we want to make sure nothing's holding you back.</p>
+
+      <p style="${pStyle}">If you're not sure how to bring it up, or who to share it with, reply to this email. We'll help you figure out the easiest way to get started.</p>
+
+      <p style="${pStyle}">Your code is still active. One message to one defendant is all it takes.</p>
+
+      <p style="margin: 24px 0; text-align: center;">
+        <a href="${dashboardUrl}" style="${btnStyle}">Check My Dashboard</a>
+      </p>
+    `,
+  };
+}
+
+// ============================================================
+// 10. TIER UPGRADE — Real-time
 // ============================================================
 
 export function partnerTierUpgradeEmail(

@@ -25,6 +25,8 @@ import {
   partnerTheMathEmail,
   partnerSocialProofEmail,
   partnerCheckinEmail,
+  partnerDay30Email,
+  partnerDay60Email,
 } from "@/lib/partner-emails";
 
 // ── Drip sequence definition ────────────────────────────────
@@ -72,6 +74,16 @@ const DRIP_SEQUENCE: DripStep[] = [
     buildEmail: (p) =>
       partnerCheckinEmail(p.name, p.total_referrals || 0, p.total_commission || 0),
   },
+  {
+    key: "partner_day30",
+    dayThreshold: 30,
+    buildEmail: (p) => partnerDay30Email(p.name, p.total_referrals || 0),
+  },
+  {
+    key: "partner_day60",
+    dayThreshold: 60,
+    buildEmail: (p) => partnerDay60Email(p.name),
+  },
 ];
 
 /** Sequence key order for comparison. */
@@ -102,7 +114,7 @@ export async function GET(req: NextRequest) {
       )
       .eq("status", "approved")
       .or(
-        "last_activation_email_key.is.null,last_activation_email_key.neq.partner_checkin"
+        "last_activation_email_key.is.null,last_activation_email_key.neq.partner_day60"
       )
       .limit(100);
 
