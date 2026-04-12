@@ -31,7 +31,7 @@ THE 14 CHECKS:
 
 1. QUESTION_COUNT: The frontmatter field question_count must match the actual count of questions in the body that are directed at the reader's attorney. Count only questions that tell the reader what to ask their attorney. Tolerance: plus or minus 1. FAIL if off by more than 1.
 
-2. CITATION_SOURCING: Every factual claim (statistics, legal rules, procedural requirements) must have an inline source — a statute number, case name, study citation, or named expert. FAIL if more than 2 unsourced factual claims.
+2. CITATION_SOURCING: Every factual claim (statistics, legal rules, procedural requirements) must be sourced. Valid sourcing includes: a statute number, case name, study citation, named expert, OR a jurisdiction qualifier ("in many states," "depending on the jurisdiction," "many jurisdictions require," "under federal rules"). Jurisdiction-qualified claims count as sourced because this is a legal information blog that cannot cite specific statutes inline (anti-hallucination safety rule). FAIL if more than 2 unsourced factual claims that lack BOTH a specific citation AND a jurisdiction qualifier.
 
 3. READABILITY: Action items and direct instructions must be readable at 10th grade level or below. Explanatory sections can be up to 12th grade. FAIL if action items use complex legal jargon without immediate definition.
 

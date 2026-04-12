@@ -1,0 +1,310 @@
+{
+  "slug": "attorney-hasnt-shared-discovery",
+  "last_checked": "2026-04-12T03:18:54.366Z",
+  "all_passed": true,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 19.4,
+      "details": {
+        "composite_score": 19.4,
+        "pattern_score": 10,
+        "uniformity_score": 41.3,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 29,
+            "matches": [
+              "29 em dashes in 1577 words"
+            ],
+            "points_added": 10
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "Post uses general language throughout — 'in many states,' 'under federal rules,' 'many jurisdictions' — no bare statute numbers or specific code references appear anywhere."
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney or legal scholar names appear. Only organizational references: 'ABA Standards for Criminal Justice' and 'bar association criminal case checklists,' which are source agencies, not individuals."
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "All numerical claims are jurisdiction-qualified ranges ('4 to 8 weeks depending on the jurisdiction,' 'Many states require initial disclosure within 15 to 30 days') or hypothetical scenario details ('19 days away,' '150 other cases'), not unsourced factual statistics."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Every procedural claim includes a jurisdiction qualifier: 'in many states,' 'Many states require,' 'in many jurisdictions,' 'Federal cases follow different timelines entirely,' 'depending on jurisdiction.' No bare universal procedural rules found."
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "Only 'Brady material' and 'Brady obligations' appear — both are listed exceptions that function as standard legal terminology rather than case citations."
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "The only consequence claims ('grounds for sanctions, dismissal, or a new trial') are qualified with 'depending on what was withheld, when, and how it affected your case' — no unqualified collateral-consequence claims found."
+          }
+        ]
+      }
+    },
+    "slop": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 14,
+        "checks_total": 14,
+        "hard_gate_failures": [],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "Frontmatter says 4; body contains 4 direct attorney questions ('What discovery have you received so far, and what are we still waiting on?', 'When do you expect to have all discovery reviewed?', 'When is our next call to go over it?', plus the documented discovery request template)."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "All factual claims are either jurisdiction-qualified ('in many states,' 'many jurisdictions,' 'depending on the jurisdiction') or cite named sources (ABA Standards for Criminal Justice, Brady obligations); zero unsourced factual claims."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items use plain language ('Grab your phone,' 'Write down,' 'Ask your attorney directly') and every legal term is immediately defined in parenthetical or dash-offset plain English."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "Zero instances of any flagged cliche phrase found in the entire post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Post uses 'you/your' consistently throughout; brief references to 'defendants' in section headers and one explanatory sentence never exceed 2 consecutive third-person sentences."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Approximately 12-15% of sentences use passive constructions ('is required to share,' 'was withheld,' 'was produced'), well under the 30% threshold."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "All 6 legal terms are defined on first use: discovery (TLDRBox + section 1), Brady material, motion to compel, continuance, arraignment, and sanctions — each with immediate plain-English definition."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Follows problem (opening scenario) → context (3 variables behind delays) → solution (3 action items) → advanced context (delay vs violation) → empowerment CTA — logical and connected throughout."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple actionable CTAs: discovery checklist exercise, documented letter template, specific attorney questions, and a Case Decoder product link in the closing."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct and unhedged ('Grab your phone,' 'push for a date,' 'Write it down'); hedging ('might,' 'may') appears only in informational/explanatory context, well under 15%."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "Longest paragraph is approximately 110 words (the 'Why' explanation); all action-oriented paragraphs are under 100 words; no paragraph approaches 300 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Section 1 is the largest at roughly 30% of total word count (~550 of ~1,800 words); no section exceeds 50%."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat is action-paired within 2 sentences: '19 days away + zero pages' → 'ask the right questions'; 'evidence withheld' → 'discovery checklist'; 'costs defendants months' → delay vs violation distinction + written question action."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opening hooks with a specific 19-day countdown scenario, middle builds with 3-variable framework and ABA standards, closing empowers with completed checklist metaphor and Case Decoder CTA."
+          }
+        ]
+      }
+    },
+    "upl": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "criteria_passed": 15,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Post uses phrases like 'ask your attorney directly,' 'write down,' 'ask for a date' — all are organizational actions or questions to ask an attorney, not legal directives like 'file X' or 'plead Y.'"
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each substantive section redirects to attorney consultation: 'ask your attorney what the specific deadline is,' 'your attorney can file a motion to compel,' 'ask your attorney directly: what discovery have you received,' 'your attorney knows the difference between a delay and a violation.'"
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post never evaluates the reader's specific case strength — it describes general patterns ('discovery delays come down to 3 variables') and tells readers to identify gaps, not that their case is strong or weak."
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "Motion to compel is described as something 'your attorney can file,' not something the reader should file themselves. No procedural step is recommended as a direct reader action — all legal procedures are framed as attorney actions."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, deportation, visa status, DACA, or green cards — criterion is not triggered."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Collateral consequences (deportation, licensing, firearms, etc.) are not mentioned in this post — criterion is not triggered. The only consequence discussed is case outcome, which is core criminal procedure, not collateral."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "No specific bail bond companies, law firms, public defenders, or legal service providers are named. References are to general categories ('your attorney,' 'the prosecution')."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "No instances of 'we recommend,' 'we advise,' 'we suggest,' or 'our recommendation is' in any legal-action context. Product mention uses 'the Case Decoder takes your actual charging documents and builds a personalized breakdown' — descriptive, not advisory."
+          },
+          {
+            "criterion": "U9",
+            "result": "PASS",
+            "evidence": "The opening scenario ('Your court date is 19 days away') is clearly a general second-person framing device used throughout for illustration, not presented as actual case facts or a real case. No hypothetical scenarios are presented that could be mistaken for real cases."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post frames knowledge as empowering better questions: 'this post gives you the 3 variables,' 'those gaps are the specific questions that change a passive case into an active defense,' and consistently directs readers to use information to engage their attorney more effectively."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Legal rules are qualified throughout: 'in many jurisdictions,' 'in many states,' 'there's no single nationwide deadline,' 'depending on the jurisdiction,' 'in most jurisdictions.' Opening paragraph states 'this is general information, not legal advice.'"
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "No outcome guarantees appear. Discovery violations are described as potentially leading to sanctions, dismissal, or new trial with the qualifier 'depending on what was withheld, when, and how it affected your case.' No language promises specific results from following the advice."
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Legal concepts are attributed to sources: Brady material attributed to constitutional obligation, ABA Standards for Criminal Justice cited for continuing disclosure, bar association criminal case checklists cited for the 3-checkpoint framework. Practical advice (writing letters, keeping copies, tracking dates) is organizational, not legal strategy requiring attribution."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims found. The post clearly distinguishes between delays and violations, explains the difference consistently, and doesn't make conflicting statements about legal rules."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Case Decoder is framed as a research and preparation tool: 'builds a personalized breakdown: what discovery to expect...what red flags to look for...and exactly what questions to bring to your next attorney meeting.' Positioned as preparation for attorney meetings, not a substitute for representation."
+          }
+        ]
+      }
+    },
+    "dna": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 11,
+        "checks_total": 13,
+        "needs_work_count": 2,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "PASS",
+            "evidence": "Opening names the fear in sentences 1-2 ('court date is 19 days away…seen exactly zero pages') and all 3 H2s are action-oriented: 'Find Out Who's Holding Your Evidence,' '3 Things to Do,' 'The Mistake That Costs Defendants Months'"
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "NEEDS_WORK",
+            "evidence": "'Arraignment' first appears in the Do-This-Now block without inline definition (defined later in section 1); section 3 paragraph starting 'But here's the part that matters most' runs 5 sentences"
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "PASS",
+            "evidence": "Bold 'Do this right now' block before first H2 gives a concrete phone-notes-app action completable in under 5 minutes with no attorney or computer required"
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Every decision point leads with a default: 30-day threshold triggers a specific question, 3 checkpoints are sequential not alternative, delay vs violation distinction names the variables"
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "PASS",
+            "evidence": "Section 1 uses exactly 3 variables (who/why/how long), section 2 uses exactly 3 numbered checkpoints, section 3 presents a 2-item comparison — no unranked lists exceed 3"
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "Single-post audit — this post uses the framework-post pattern (3-variable diagnostic framework for understanding discovery delays)"
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every threat is action-paired: 'zero pages seen' → build discovery checklist, '150 other cases' → file motion to compel, 'violation' consequences → compare checklist against what's produced; no section closes on fear alone"
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language found — person is always separated from situation, 'the mistake' is framed as a systemic pattern defendants encounter, never as personal failure or poor judgment"
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "PASS",
+            "evidence": "Opening validates fear (19 days, zero pages), middle reduces unknown to known (3 variables, 3 checkpoints), closing ends on agency: 'The evidence in your case isn't a mystery — it's a checklist. And you just started building yours'"
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "NEEDS_WORK",
+            "evidence": "Section 1 ('Find Out Who's Holding Your Evidence') runs approximately 415 words — within the 400-500 NEEDS_WORK range; sections 2 and 3 are within limits, 3 H2s total, no tables, no H4+, total body under 1,800 words"
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "All 3 H2 sections contain exactly one bolded screenshot sentence under 27 words: 'You have a right to see the evidence…' (20w), 'A documented request turns a delay…' (22w), 'You can't spot missing evidence…' (13w)"
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All 4 FAQ answers start with direct answers ('There's no single nationwide deadline,' 'Yes,' 'In most jurisdictions,' 'A delay means…'), run 3-4 sentences each, and read as support-group replies not institutional policy"
+          },
+          {
+            "check": "D13_PRODUCT_BRIDGE",
+            "result": "PASS",
+            "evidence": "Names Case Decoder by name, connects free framework to paid personalization ('This post covered discovery delays in general terms…The Case Decoder takes your actual charging documents'), avoids generic CTA language"
+          }
+        ]
+      }
+    }
+  }
+}
