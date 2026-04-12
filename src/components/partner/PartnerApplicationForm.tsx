@@ -3,17 +3,11 @@ import { useState, useRef, useEffect } from "react";
 
 interface PartnerApplicationFormProps {
   source: string;
-  includeHeardAboutUs?: boolean;
 }
 
-export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: PartnerApplicationFormProps) {
+export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) {
   const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [region, setRegion] = useState("");
-  const [message, setMessage] = useState("");
-  const [heardAboutUs, setHeardAboutUs] = useState("");
   const [compliance, setCompliance] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -27,7 +21,7 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
       const res = await fetch("/api/partners/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, company, email, phone, region, message, heardAboutUs, source, compliance }),
+        body: JSON.stringify({ name, email, compliance, source }),
       });
       if (!res.ok) {
         const data = await res.json();
@@ -50,10 +44,14 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
     return (
       <div ref={successRef} tabIndex={-1} className="text-center bg-green-900/30 border border-green-700 rounded-xl p-8">
         <p className="text-green-300 text-xl font-bold mb-2">You&apos;re In!</p>
-        <p className="text-zinc-400">
-          Check your email for your partner code and dashboard link.
-          Your promo code activates when you click the link in your email.
+        <p className="text-zinc-300 mb-4">
+          Your promo code is on its way. Open your email right now and click the activation link.
         </p>
+        <p className="text-zinc-400 text-sm mb-4">Then send this to your next client:</p>
+        <div className="bg-zinc-800 rounded-lg p-4 text-left text-sm text-zinc-300 mb-4">
+          &ldquo;Hey — I work with a company that researches criminal cases and helps defendants prepare the right questions for their attorney. If you use my code at checkout, you get 10% off. Check it out: imnotanattorney.com&rdquo;
+        </div>
+        <p className="text-zinc-500 text-xs">Your promo code activates when you click the link in your email.</p>
       </div>
     );
   }
@@ -65,110 +63,54 @@ export function PartnerApplicationForm({ source, includeHeardAboutUs = true }: P
           {error}
         </div>
       )}
-      <div className="grid md:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="partner-name" className="block text-sm text-zinc-400 mb-1">Your Name *</label>
+      <div>
+        <label htmlFor="partner-name" className="block text-sm text-zinc-400 mb-1">Your Name *</label>
+        <input
+          id="partner-name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          aria-invalid={!!error}
+          className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+        />
+      </div>
+      <div>
+        <label htmlFor="partner-email" className="block text-sm text-zinc-400 mb-1">Email *</label>
+        <input
+          id="partner-email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          aria-invalid={!!error}
+          className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+        />
+      </div>
+      <div>
+        <label className="flex items-start gap-3 cursor-pointer">
           <input
-            id="partner-name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            type="checkbox"
+            checked={compliance}
+            onChange={(e) => setCompliance(e.target.checked)}
             required
-            aria-invalid={!!error}
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            className="mt-1 h-5 w-5 rounded border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
           />
-        </div>
-        <div>
-          <label htmlFor="partner-company" className="block text-sm text-zinc-400 mb-1">Company / Agency</label>
-          <input
-            id="partner-company"
-            type="text"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-          />
-        </div>
-        <div>
-          <label htmlFor="partner-email" className="block text-sm text-zinc-400 mb-1">Email *</label>
-          <input
-            id="partner-email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            aria-invalid={!!error}
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-          />
-        </div>
-        <div>
-          <label htmlFor="partner-phone" className="block text-sm text-zinc-400 mb-1">Phone</label>
-          <input
-            id="partner-phone"
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-          />
-        </div>
-        <div className="md:col-span-2">
-          <label htmlFor="partner-region" className="block text-sm text-zinc-400 mb-1">Region / Service Area</label>
-          <input
-            id="partner-region"
-            type="text"
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}
-            placeholder="e.g., Maricopa County, AZ"
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-          />
-        </div>
-        {includeHeardAboutUs && (
-          <div className="md:col-span-2">
-            <label htmlFor="partner-heard-about-us" className="block text-sm text-zinc-400 mb-1">How did you hear about us?</label>
-            <input
-              id="partner-heard-about-us"
-              type="text"
-              value={heardAboutUs}
-              onChange={(e) => setHeardAboutUs(e.target.value)}
-              placeholder="Google, social media, friend, etc."
-              className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-            />
-          </div>
-        )}
-        <div className="md:col-span-2">
-          <label htmlFor="partner-message" className="block text-sm text-zinc-400 mb-1">Anything else we should know?</label>
-          <textarea
-            id="partner-message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            rows={3}
-            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-          />
-        </div>
-        <div className="md:col-span-2">
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={compliance}
-              onChange={(e) => setCompliance(e.target.checked)}
-              required
-              className="mt-1 h-5 w-5 rounded border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
-            />
-            <span className="text-sm text-zinc-400">
-              I agree to the{" "}
-              <a href="/partners/terms" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline hover:text-amber-300">
-                Partner Terms of Service<span className="sr-only"> (opens in new tab)</span>
-              </a>{" "}
-              and will not make claims about case outcomes or provide legal advice on behalf of ImNotAnAttorney. *
-            </span>
-          </label>
-        </div>
+          <span className="text-sm text-zinc-400">
+            I agree to the{" "}
+            <a href="/partners/terms" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline hover:text-amber-300">
+              Partner Terms<span className="sr-only"> (opens in new tab)</span>
+            </a>{" "}
+            and understand that ImNotAnAttorney provides information, not legal advice. *
+          </span>
+        </label>
       </div>
       <button
         type="submit"
         disabled={submitting || !compliance}
-        className="w-full py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 disabled:opacity-50 transition-colors"
+        className="w-full py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20 disabled:opacity-50 transition-all cursor-pointer"
       >
-        {submitting ? "Submitting..." : "Submit Application"}
+        {submitting ? "Submitting..." : "Get My Partner Code"}
       </button>
     </form>
   );

@@ -25,7 +25,7 @@ export function PartnerWhyItWorks() {
   return (
     <div className="grid md:grid-cols-2 gap-6 text-left">
       {REASONS.map((item) => (
-        <div key={item.title} className="bg-zinc-800 rounded-xl p-6">
+        <div key={item.title} className="bg-zinc-900/50 rounded-xl border border-zinc-700 p-6">
           <p className="font-bold text-amber-400 mb-2">{item.title}</p>
           <p className="text-zinc-400">{item.desc}</p>
         </div>

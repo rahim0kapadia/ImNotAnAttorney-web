@@ -6,23 +6,24 @@
  */
 
 import Link from "next/link";
-import { COMMISSION_TABLE, xRayEarning, xRayFiveMonthly, PARTNER_FAQS } from "@/lib/partner-data";
+import { xRayEarning, xRayFiveMonthly, PARTNER_FAQS } from "@/lib/partner-data";
 import { PartnerCommissionTable, PartnerHowItWorks, PartnerApplicationForm, PartnerWhyItWorks } from "@/components/partner";
 import { FAQAccordion } from "@/components/FAQAccordion";
-import { TestimonialSection } from "@/components/TestimonialSection";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 
 const HOW_IT_WORKS_STEPS = [
   {
-    title: "Get Your Code",
-    description: "Apply below. Once approved, you get a unique promo code, referral link, QR code, and ready-to-send messages.",
+    title: "Get Your Code in 60 Seconds",
+    description: "Apply below. Instant approval.",
   },
   {
-    title: "Share It",
-    description: "Share your link or code with anyone facing criminal charges. They get 10% off any service.",
+    title: "Hand It Out",
+    description: "Defendants get 10% off. No selling, no explaining.",
   },
   {
-    title: "Earn Commission",
-    description: "Every time someone uses your code, you earn up to 20% commission. Tracked automatically. Paid monthly.",
+    title: "Watch Commissions Roll In",
+    description: "Real-time dashboard. Monthly payouts.",
   },
 ];
 
@@ -30,149 +31,146 @@ export default function PartnersPage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Header */}
-      <header className="border-b border-zinc-500">
+      <header className="border-b border-zinc-700">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="font-bold text-lg text-amber-400">
             ImNotAnAttorney
           </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/partner/login" className="text-sm text-amber-400 hover:text-amber-300">
-              Partner Login
-            </Link>
-            <Link href="/" className="text-sm text-zinc-400 hover:text-white">
-              Back to main site
-            </Link>
-          </div>
+          <Link href="/partner/login" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
+            Partner Login
+          </Link>
         </div>
       </header>
 
       {/* Hero */}
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-24 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-          Know Someone Facing Charges?
-          <br />
-          <span className="text-amber-400">Earn Commission Helping Them.</span>
-        </h1>
-        <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-8">
-          Defendants are searching for answers about their case.
-          Share your referral link. They save 10%.
-          You earn up to 20% commission on every purchase.
-        </p>
-        <a
-          href="#apply"
-          className="inline-block px-8 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 transition-colors"
-        >
-          Apply to Partner Program
-        </a>
+        <FadeInUp>
+          <h1 className="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            Earn {xRayEarning} Every Time a
+            <br />
+            <span className="text-amber-400">Defendant Uses Your Code</span>
+          </h1>
+          <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-4">
+            5 referrals a month = {xRayFiveMonthly} in passive income. They save 10%.
+            You earn up to 20%. No selling required.
+          </p>
+          <p className="text-sm text-zinc-500 mb-8">
+            Bondsmen, paralegals, content creators, advocates — anyone can partner.
+          </p>
+          <a
+            href="#apply"
+            className="inline-block px-8 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20 transition-all cursor-pointer"
+          >
+            Get My Partner Code
+          </a>
+        </FadeInUp>
       </section>
 
       {/* How It Works */}
-      <section className="bg-zinc-900 border-t border-b border-zinc-500 py-16">
+      <section className="bg-zinc-900/50 border-t border-b border-zinc-700 py-16">
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-            How It Works
-          </h2>
+          <FadeInUp>
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-12">
+              How It Works
+            </h2>
+          </FadeInUp>
           <PartnerHowItWorks steps={HOW_IT_WORKS_STEPS} />
         </div>
       </section>
 
-      {/* Who's This For */}
+      {/* Commission Table */}
       <section className="max-w-5xl mx-auto px-6 py-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
-          Who Partners With Us
-        </h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { title: "Bail Bondsmen", desc: "Hand out codes when defendants bond out. They're already looking for help." },
-            { title: "Paralegals & Legal Staff", desc: "Recommend a resource that helps clients show up prepared." },
-            { title: "Content Creators", desc: "Share with your audience. Legal content converts at high rates." },
-            { title: "Community Advocates", desc: "Help people in your network navigate the justice system." },
-            { title: "Court Reporters", desc: "You see defendants every day. Give them a tool that helps." },
-            { title: "Anyone", desc: "Know someone facing charges? That's all it takes." },
-          ].map((item) => (
-            <div key={item.title} className="bg-zinc-900 rounded-xl border border-zinc-500 p-5">
-              <p className="font-bold text-amber-400 mb-1">{item.title}</p>
-              <p className="text-zinc-400 text-sm">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-        <p className="text-center mt-6">
+        <FadeInUp>
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-8">
+            Commission Per Sale
+          </h2>
+        </FadeInUp>
+        <PartnerCommissionTable />
+        <p className="text-center text-zinc-400 text-sm mt-4">
+          One X-Ray referral = {xRayEarning}. Five referrals a month = {xRayFiveMonthly} in passive income.
+        </p>
+        <p className="text-center mt-4">
           <Link href="/partners/bondsman" className="text-amber-400 hover:text-amber-300 text-sm">
             Bail bondsman? See our bondsman-specific page &rarr;
           </Link>
         </p>
       </section>
 
-      {/* Commission Table */}
-      <section className="max-w-5xl mx-auto px-6 py-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
-          Commission Per Sale
-        </h2>
-        <PartnerCommissionTable rows={COMMISSION_TABLE} />
-        <p className="text-center text-zinc-400 text-sm mt-4">
-          One X-Ray referral = {xRayEarning}. Five referrals a month = {xRayFiveMonthly} in passive income.
-        </p>
-      </section>
-
       {/* Why This Works */}
-      <section className="bg-zinc-900 border-t border-b border-zinc-500 py-16">
+      <section className="bg-zinc-900/50 border-t border-b border-zinc-700 py-16">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
-            Why Defendants Buy
-          </h2>
-          <p className="text-zinc-300 text-lg mb-8">
-            Your clients are in crisis. Their attorney isn&apos;t calling back.
-            They don&apos;t understand their charges. They&apos;re scared.
-            ImNotAnAttorney gives them the one thing they need most:
-            <strong className="text-amber-400"> the right questions to ask.</strong>
-          </p>
+          <FadeInUp>
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">
+              Why Defendants Buy
+            </h2>
+            <p className="text-zinc-300 text-lg mb-8">
+              Your clients are in crisis. Their attorney isn&apos;t calling back.
+              They don&apos;t understand their charges. They&apos;re scared.
+              ImNotAnAttorney gives them the one thing they need most:
+              <strong className="text-amber-400"> the right questions to ask.</strong>
+            </p>
+          </FadeInUp>
           <PartnerWhyItWorks />
         </div>
       </section>
 
-      <section className="max-w-3xl mx-auto px-6 py-16">
-        <TestimonialSection
-          variant="inline"
-          testimonials={[
-            {
-              quote: "I started handing the card to every client at release. Three of them bought the playbook within 24 hours. One told me the questions got his case dismissed. I've earned more in referral commissions than I expected.",
-              name: "Mike R.",
-              charge: "Bail Bondsman, Tampa",
-              outcome: "Multiple referral conversions",
-            },
-          ]}
-        />
-        <p className="mt-4 text-center text-xs text-zinc-400">
-          *Based on real defendant experiences. Names changed for privacy.
-        </p>
+      {/* Partner Toolkit (replaces testimonials) */}
+      <section className="py-20">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <FadeInUp>
+            <h2 className="font-display text-3xl font-bold mb-4">Your Partner Toolkit</h2>
+            <p className="text-zinc-400 mb-12">Everything you need to start earning — no selling required</p>
+          </FadeInUp>
+          <StaggerContainer className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: "Unique Promo Code", desc: "Your personal code gives clients 10% off. Tracked automatically." },
+              { title: "Referral Link + QR Code", desc: "Share a link or print a QR code. Clients scan and buy." },
+              { title: "Copy-Paste Messages", desc: "Ready-to-send texts and emails. Just copy, paste, send." },
+              { title: "Real-Time Dashboard", desc: "See every referral, commission, and payout in real time." },
+              { title: "Monthly Payouts", desc: "NET-30 via PayPal, Venmo, Zelle, or check. Your choice." },
+              { title: "Compliance Kit", desc: "Approved language and FTC disclosure templates. Stay protected." },
+            ].map((item) => (
+              <StaggerItem key={item.title}>
+                <div className="bg-zinc-900/50 rounded-xl border border-zinc-700 p-6 text-left">
+                  <h3 className="font-bold text-white mb-2">{item.title}</h3>
+                  <p className="text-sm text-zinc-400">{item.desc}</p>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
       </section>
 
       {/* FAQ */}
       <section className="max-w-3xl mx-auto px-6 py-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
-          Questions
-        </h2>
+        <FadeInUp>
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-8">
+            Questions
+          </h2>
+        </FadeInUp>
         <FAQAccordion items={PARTNER_FAQS} />
       </section>
 
       {/* Application Form */}
       <section
         id="apply"
-        className="bg-zinc-900 border-t border-zinc-500 py-16"
+        className="bg-zinc-900/50 border-t border-zinc-700 py-16"
       >
         <div className="max-w-2xl mx-auto px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-2">
-            Apply Now
-          </h2>
-          <p className="text-center text-zinc-400 mb-8">
-            Takes 60 seconds. We&apos;ll review and get back to you within 24 hours.
-          </p>
+          <FadeInUp>
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-2">
+              Apply Now
+            </h2>
+            <p className="text-center text-zinc-400 mb-8">
+              Takes 60 seconds. We&apos;ll review and get back to you within 24 hours.
+            </p>
+          </FadeInUp>
           <PartnerApplicationForm source="generic" />
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-500 py-8">
+      <footer className="border-t border-zinc-700 py-8">
         <div className="max-w-5xl mx-auto px-6 text-center text-zinc-400 text-sm">
           <p>
             ImNotAnAttorney provides legal information, not legal advice.
