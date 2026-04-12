@@ -3,14 +3,14 @@
  *
  * Standalone Tier 9 data product — $297, instant delivery.
  * Presents factually similar case matching from Tier 9 tables.
- * Server component — no client-side interactivity needed.
+ * Server component — AvailabilityChecker is a client island.
  */
 import type { Metadata } from "next";
-import Link from "next/link";
 import { TrustBadges } from "@/components/TrustBadges";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { SITE_URL } from "@/lib/site";
+import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 /* ---------- Metadata ---------- */
 
@@ -58,7 +58,7 @@ const faqItems = [
   {
     question: "What if there aren\u2019t enough similar cases?",
     answer:
-      "Matching depth varies by charge type and jurisdiction. If we can\u2019t find at least 5 factually similar cases, you\u2019ll be notified before purchase and offered a full refund.",
+      "If we can\u2019t find at least 5 factually similar cases, you\u2019ll see that before checkout \u2014 we won\u2019t charge you for data we don\u2019t have. You can join our waitlist and we\u2019ll notify you when coverage is available.",
   },
   {
     question: "Will my attorney be upset that I looked this up?",
@@ -153,7 +153,7 @@ export default function SimilarCasesAnalyzerPage() {
               price: "297.00",
               priceCurrency: "USD",
               availability: "https://schema.org/InStock",
-              url: `${SITE_URL}/checkout?tier=similar-cases-analyzer`,
+              url: `${SITE_URL}/checkout?standaloneProduct=similar-cases-analyzer`,
             },
           }),
         }}
@@ -199,12 +199,13 @@ export default function SimilarCasesAnalyzerPage() {
             <p className="mt-2 text-sm text-zinc-400">
               Factually similar case matching from verified court records
             </p>
-            <Link
-              href="/checkout?tier=similar-cases-analyzer"
-              className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-black hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-            >
-              Get Your Similar Cases Analysis &mdash; $297
-            </Link>
+            <div className="mt-8">
+              <AvailabilityChecker
+                slug="similar-cases-analyzer"
+                productName="Similar Cases Analyzer"
+                priceDisplay="$297"
+              />
+            </div>
           </FadeInUp>
         </section>
 
@@ -402,12 +403,13 @@ export default function SimilarCasesAnalyzerPage() {
             <p className="mt-4 text-zinc-400">
               Most defendants guess what might happen. Defendants who prepare look at what actually happened. Your prosecutor has seen hundreds of cases like yours &mdash; now you will too.
             </p>
-            <Link
-              href="/checkout?tier=similar-cases-analyzer"
-              className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-black hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-            >
-              Get Your Similar Cases Analysis &mdash; $297
-            </Link>
+            <div className="mt-8">
+              <AvailabilityChecker
+                slug="similar-cases-analyzer"
+                productName="Similar Cases Analyzer"
+                priceDisplay="$297"
+              />
+            </div>
             <p className="mt-6 text-xs text-zinc-500">
               This product provides legal information — verified court data
               compiled for your review. It is not legal advice. Your attorney

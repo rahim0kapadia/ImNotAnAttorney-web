@@ -3,14 +3,14 @@
  *
  * Standalone Tier 9 data product — $97, instant delivery.
  * Presents verified officer reliability data from Tier 9 tables.
- * Server component — no client-side interactivity needed.
+ * Server component — AvailabilityChecker is a client island.
  */
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SITE_URL } from "@/lib/site";
 import { TrustBadges } from "@/components/TrustBadges";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
+import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 export const metadata: Metadata = {
   title: "Officer Background Check — $97 | ImNotAnAttorney",
@@ -85,7 +85,7 @@ const FAQ_ITEMS = [
   {
     question: "What if the officer isn\u2019t in the database?",
     answer:
-      "We cover officers across all 50 states with varying depth. If insufficient data exists for your specific officer, you\u2019ll be notified before purchase and offered a full refund.",
+      "If we don\u2019t have sufficient data for your specific officer, you\u2019ll see that before checkout \u2014 we won\u2019t charge you for data we don\u2019t have. You can join our waitlist and we\u2019ll notify you when coverage is available.",
   },
   {
     question: "Will my attorney be upset that I looked this up?",
@@ -93,8 +93,6 @@ const FAQ_ITEMS = [
       "Good defense attorneys welcome prepared clients. Officer reliability is the kind of information attorneys research themselves \u2014 having it ready saves them time and shows you\u2019re engaged in your defense.",
   },
 ] as const;
-
-const CHECKOUT_URL = "/checkout?tier=officer-background-check";
 
 /* ------------------------------------------------------------------ */
 /*  JSON-LD structured data                                            */
@@ -195,12 +193,13 @@ export default function OfficerBackgroundCheckPage() {
             Cross-case analysis from verified court records
           </p>
 
-          <Link
-            href={CHECKOUT_URL}
-            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-black hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-          >
-            Get Your Officer Background Check &mdash; $97
-          </Link>
+          <div className="mt-6">
+            <AvailabilityChecker
+              slug="officer-background-check"
+              productName="Officer Background Check"
+              priceDisplay="$97"
+            />
+          </div>
         </section>
       </FadeInUp>
 
@@ -332,12 +331,13 @@ export default function OfficerBackgroundCheckPage() {
             Most defendants never think to check the officer&rsquo;s record. Defendants who prepare check everything. The prosecution already has this data &mdash; level the playing field in 60 seconds.
           </p>
 
-          <Link
-            href={CHECKOUT_URL}
-            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-black hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-          >
-            Get Your Officer Background Check &mdash; $97
-          </Link>
+          <div className="mt-6">
+            <AvailabilityChecker
+              slug="officer-background-check"
+              productName="Officer Background Check"
+              priceDisplay="$97"
+            />
+          </div>
 
           <p className="mt-4 text-xs text-zinc-400">
             This is legal information, not legal advice. ImNotAnAttorney
@@ -376,7 +376,7 @@ export default function OfficerBackgroundCheckPage() {
               price: "97.00",
               priceCurrency: "USD",
               availability: "https://schema.org/InStock",
-              url: `${SITE_URL}/checkout?tier=officer-background-check`,
+              url: `${SITE_URL}/checkout?standaloneProduct=officer-background-check`,
             },
           }),
         }}

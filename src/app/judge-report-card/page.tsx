@@ -6,11 +6,11 @@
  * Server component — no client-side interactivity needed.
  */
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SITE_URL } from "@/lib/site";
 import { TrustBadges } from "@/components/TrustBadges";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
+import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 export const metadata: Metadata = {
   title: "Judge Report Card — $197 | ImNotAnAttorney",
@@ -49,7 +49,7 @@ const FAQ_ITEMS = [
   {
     question: "What if my judge isn\u2019t in the database?",
     answer:
-      "We currently cover judges across all 50 states with varying depth. If we don\u2019t have sufficient data for your specific judge, you\u2019ll be notified before purchase and offered a full refund.",
+      "If we don\u2019t have sufficient data for your specific judge, you\u2019ll see that before checkout \u2014 we won\u2019t charge you for data we don\u2019t have. You can join our waitlist and we\u2019ll notify you when coverage is available.",
   },
   {
     question: "Will my attorney be upset that I looked this up?",
@@ -88,8 +88,6 @@ function CheckIcon() {
 }
 
 export default function JudgeReportCardPage() {
-  const checkoutUrl = "/checkout?tier=judge-report-card";
-
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       {/* ── HERO ── */}
@@ -122,12 +120,13 @@ export default function JudgeReportCardPage() {
           <p className="mt-2 text-sm text-zinc-300">
             Based on verified court records with source URLs
           </p>
-          <Link
-            href={checkoutUrl}
-            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-          >
-            Get Your Judge Report Card &mdash; $197
-          </Link>
+          <div className="mt-6">
+            <AvailabilityChecker
+              slug="judge-report-card"
+              productName="Judge Report Card"
+              priceDisplay="$197"
+            />
+          </div>
           <p className="mt-2 text-xs text-zinc-400">
             Generated on demand. Delivered within 60 seconds of purchase.
           </p>
@@ -298,12 +297,13 @@ export default function JudgeReportCardPage() {
             judge. Defendants who prepare walk in with the data. The prosecutor
             already has it &mdash; now you will too.
           </p>
-          <Link
-            href={checkoutUrl}
-            className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-          >
-            Get Your Judge Report Card &mdash; $197
-          </Link>
+          <div className="mt-6">
+            <AvailabilityChecker
+              slug="judge-report-card"
+              productName="Judge Report Card"
+              priceDisplay="$197"
+            />
+          </div>
           <p className="mt-4 text-sm text-zinc-400">
             This report provides legal INFORMATION &mdash; not legal ADVICE.
           </p>
@@ -343,7 +343,7 @@ export default function JudgeReportCardPage() {
               price: "197.00",
               priceCurrency: "USD",
               availability: "https://schema.org/InStock",
-              url: `${SITE_URL}/checkout?tier=judge-report-card`,
+              url: `${SITE_URL}/checkout?standaloneProduct=judge-report-card`,
             },
           }),
         }}
