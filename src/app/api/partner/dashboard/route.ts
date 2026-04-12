@@ -32,6 +32,11 @@ export async function GET(req: NextRequest) {
       .order("created_at", { ascending: false })
       .limit(20);
 
+    // Fetch analytics (monthly + by-tier breakdown)
+    const { data: analytics } = await supabase.rpc("partner_analytics", {
+      p_partner_id: partner.id,
+    });
+
     // Use the maintained partner totals (accurate even with >50 referrals)
     const totalEarned = partner.total_commission || 0;
     const totalPaid = partner.total_paid_out || 0;
@@ -45,10 +50,12 @@ export async function GET(req: NextRequest) {
         company: partner.company,
         promo_code: partner.promo_code,
         commission_rate: partner.commission_rate,
+        commission_tier: partner.commission_tier,
         preferred_payment_method: partner.preferred_payment_method,
         payment_zelle: partner.payment_zelle,
         payment_venmo: partner.payment_venmo,
         payment_check_address: partner.payment_check_address,
+        payment_paypal: partner.payment_paypal,
       },
       earnings: {
         total_earned: totalEarned,
@@ -58,6 +65,7 @@ export async function GET(req: NextRequest) {
       },
       referrals: referrals || [],
       payouts: payouts || [],
+      analytics: analytics || { monthly: [], by_tier: [], total_referrals: 0 },
     });
   } catch (err) {
     console.error("[partner/dashboard] Failed to fetch partner data:", err);

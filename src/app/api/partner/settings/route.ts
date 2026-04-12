@@ -19,10 +19,10 @@ export async function PATCH(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
-  const { preferred_payment_method, payment_zelle, payment_venmo, payment_check_address } = body;
+  const { preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal } = body;
 
   // Validate input types and lengths
-  const stringFields = { payment_zelle, payment_venmo, payment_check_address };
+  const stringFields = { payment_zelle, payment_venmo, payment_check_address, payment_paypal };
   for (const [key, val] of Object.entries(stringFields)) {
     if (val !== undefined && val !== null) {
       if (typeof val !== "string") {
@@ -55,6 +55,9 @@ export async function PATCH(req: NextRequest) {
   }
   if (payment_check_address !== undefined) {
     updates.payment_check_address = payment_check_address || null;
+  }
+  if (payment_paypal !== undefined) {
+    updates.payment_paypal = payment_paypal || null;
   }
 
   const supabase = createAdminClient();

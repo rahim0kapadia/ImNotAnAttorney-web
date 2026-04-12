@@ -119,11 +119,13 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   company: string | null;
   promo_code: string | null;
   commission_rate: number;
+  commission_tier: string;
   status: string;
   preferred_payment_method: string | null;
   payment_zelle: string | null;
   payment_venmo: string | null;
   payment_check_address: string | null;
+  payment_paypal: string | null;
   total_referrals: number;
   total_commission: number;
   total_paid_out: number;
@@ -144,7 +146,7 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   // Fetch partner data
   const { data: partner, error: partnerError } = await supabase
     .from("partners")
-    .select("id, name, email, phone, company, promo_code, commission_rate, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, total_referrals, total_commission, total_paid_out")
+    .select("id, name, email, phone, company, promo_code, commission_rate, commission_tier, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, total_referrals, total_commission, total_paid_out")
     .eq("id", session.partner_id)
     .eq("status", "approved")
     .single();
