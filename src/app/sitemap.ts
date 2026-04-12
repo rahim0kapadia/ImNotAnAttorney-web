@@ -146,6 +146,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     ...blogEntries,
+    // Free Plea Deal Analyzer (primary acquisition wedge)
+    {
+      url: `${SITE_URL}/plea-analyzer`,
+      lastModified: new Date("2026-04-11"),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
     // Start (crisis entry)
     {
       url: `${SITE_URL}/start`,

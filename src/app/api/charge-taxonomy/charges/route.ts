@@ -25,11 +25,18 @@ export async function GET(req: NextRequest) {
     if (jurisdiction && charges.length > 0) {
       const slugList = charges.map((c) => c.slug).join(",");
       const statuteRes = await fetch(
-        `${url}/rest/v1/jurisdiction_statutes?common_charge_slug=in.(${slugList})&jurisdiction=eq.${encodeURIComponent(jurisdiction)}&active=eq.true&select=common_charge_slug,statute_number,offense_class`,
+        `${url}/rest/v1/jurisdiction_statutes?common_charge_slug=in.(${slugList})&jurisdiction=eq.${encodeURIComponent(jurisdiction)}&active=eq.true&select=common_charge_slug,statute_number,offense_class,penalty_min,penalty_max,fine_max,mandatory_minimum`,
         { headers: { apikey: key, Authorization: `Bearer ${key}` } }
       );
-      const statutes: Array<{ common_charge_slug: string; statute_number: string | null; offense_class: string | null }> =
-        statuteRes.ok ? await statuteRes.json() : [];
+      const statutes: Array<{
+        common_charge_slug: string;
+        statute_number: string | null;
+        offense_class: string | null;
+        penalty_min: string | null;
+        penalty_max: string | null;
+        fine_max: string | null;
+        mandatory_minimum: string | null;
+      }> = statuteRes.ok ? await statuteRes.json() : [];
       const statuteMap = new Map(statutes.map((s) => [s.common_charge_slug, s]));
 
       const enriched = charges.map((c) => {
@@ -40,6 +47,10 @@ export async function GET(req: NextRequest) {
           description: c.description,
           statute_number: statute?.statute_number ?? null,
           offense_class: statute?.offense_class ?? null,
+          penalty_min: statute?.penalty_min ?? null,
+          penalty_max: statute?.penalty_max ?? null,
+          fine_max: statute?.fine_max ?? null,
+          mandatory_minimum: statute?.mandatory_minimum ?? null,
         };
       });
       return NextResponse.json(enriched, {

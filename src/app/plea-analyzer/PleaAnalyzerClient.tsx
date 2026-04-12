@@ -68,6 +68,48 @@ const CHARGE_TYPES = [
   { value: "other", label: "Other" },
 ];
 
+/** Maps form chargeType values to charge_categories.slug in the taxonomy DB. */
+const CHARGE_TYPE_TO_CATEGORY: Record<string, string> = {
+  "drug-possession": "drug-offenses",
+  "drug-trafficking": "drug-offenses",
+  "dui": "dui-driving",
+  "dui-first": "dui-driving",
+  "dui-repeat": "dui-driving",
+  "assault": "violent-crimes",
+  "domestic-violence": "domestic-family",
+  "theft": "property-crimes",
+  "white-collar": "fraud-financial",
+  "sex-offense": "sex-offenses",
+  "sex-offense-contact": "sex-offenses",
+  "sex-offense-digital": "sex-offenses",
+  "weapons": "weapons",
+  "federal": "federal-specific",
+  "probation-violation": "probation-parole",
+  "self-defense": "violent-crimes",
+  "other": "other",
+};
+
+interface ChargeResult {
+  slug: string;
+  label: string;
+  description: string | null;
+  statute_number: string | null;
+  offense_class: string | null;
+  penalty_min: string | null;
+  penalty_max: string | null;
+  fine_max: string | null;
+  mandatory_minimum: string | null;
+}
+
+function formatPenalty(c: ChargeResult): string {
+  const parts: string[] = [];
+  if (c.penalty_max) parts.push(`Up to ${c.penalty_max}`);
+  else if (c.penalty_min) parts.push(`From ${c.penalty_min}`);
+  if (c.fine_max) parts.push(`fine up to ${c.fine_max}`);
+  if (c.mandatory_minimum) parts.push(`mandatory minimum: ${c.mandatory_minimum}`);
+  return parts.join(", ") || "Penalty information not available";
+}
+
 type FormState = "form" | "submitting" | "success" | "error";
 
 export default function PleaAnalyzerClient() {
@@ -83,6 +125,53 @@ export default function PleaAnalyzerClient() {
   const [offeredCharges, setOfferedCharges] = useState("");
   const [pleaOfferDetails, setPleaOfferDetails] = useState("");
   const [sentencingExposure, setSentencingExposure] = useState("");
+
+  // Charge lookup widget state
+  const [lookupResults, setLookupResults] = useState<ChargeResult[]>([]);
+  const [lookupLoading, setLookupLoading] = useState(false);
+  const [lookupOpen, setLookupOpen] = useState(false);
+  const [lookupError, setLookupError] = useState("");
+  const [selectedChargeSlug, setSelectedChargeSlug] = useState("");
+  const [lookupStatus, setLookupStatus] = useState("");
+  const sentencingRef = useRef<HTMLTextAreaElement>(null);
+
+  const canLookup = state && chargeType && CHARGE_TYPE_TO_CATEGORY[chargeType];
+
+  const handleLookup = useCallback(async () => {
+    const category = CHARGE_TYPE_TO_CATEGORY[chargeType];
+    if (!category || !state) return;
+    setLookupLoading(true);
+    setLookupError("");
+    setLookupStatus("Looking up charges...");
+    try {
+      const res = await fetch(
+        `/api/charge-taxonomy/charges?category=${encodeURIComponent(category)}&jurisdiction=${encodeURIComponent(state)}`
+      );
+      if (!res.ok) throw new Error("Failed to load charges");
+      const data: ChargeResult[] = await res.json();
+      setLookupResults(data);
+      setLookupOpen(true);
+      const stateLabel = US_STATES.find((s) => s.value === state)?.label ?? state;
+      const typeLabel = CHARGE_TYPES.find((c) => c.value === chargeType)?.label ?? chargeType;
+      setLookupStatus(
+        data.length > 0
+          ? `Found ${data.length} charges for ${typeLabel} in ${stateLabel}`
+          : `No charges found for ${typeLabel} in ${stateLabel}. Enter your sentencing exposure manually.`
+      );
+    } catch {
+      setLookupError("Could not load charges. Try again or enter your sentencing exposure manually.");
+      setLookupStatus("Charge lookup failed.");
+    } finally {
+      setLookupLoading(false);
+    }
+  }, [state, chargeType]);
+
+  const handleChargeSelect = useCallback((charge: ChargeResult) => {
+    setSelectedChargeSlug(charge.slug);
+    setSentencingExposure(formatPenalty(charge));
+    setLookupStatus(`${charge.label} selected, sentencing exposure field updated`);
+    setTimeout(() => sentencingRef.current?.focus(), 50);
+  }, []);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -332,6 +421,7 @@ export default function PleaAnalyzerClient() {
           helps frame the risk comparison.
         </p>
         <textarea
+          ref={sentencingRef}
           id="pa-sentencing"
           aria-describedby="pa-sentencing-help"
           value={sentencingExposure}
@@ -341,6 +431,102 @@ export default function PleaAnalyzerClient() {
           maxLength={400}
           className={inputBase + " resize-y"}
         />
+
+        {/* Charge lookup widget */}
+        <div className="mt-3">
+          <button
+            type="button"
+            disabled={!canLookup || lookupLoading}
+            aria-disabled={!canLookup || lookupLoading}
+            onClick={handleLookup}
+            className="text-sm text-blue-400 hover:text-blue-300 disabled:text-zinc-600 disabled:cursor-not-allowed underline underline-offset-2 transition-colors min-h-[44px] px-1"
+          >
+            {lookupLoading
+              ? "Looking up charges..."
+              : "Don\u2019t know? Look up what you\u2019re facing"}
+          </button>
+
+          {/* Persistent aria-live container — mounted once, content updates */}
+          <div aria-live="polite" className="sr-only">
+            {lookupStatus}
+          </div>
+
+          {lookupError && (
+            <p role="alert" className="text-sm text-red-400 mt-2">
+              {lookupError}
+            </p>
+          )}
+
+          {lookupOpen && lookupResults.length > 0 && (
+            <section
+              aria-labelledby="charge-results-heading"
+              className="mt-4 bg-zinc-900 border border-zinc-700 rounded-lg p-4"
+            >
+              <div className="flex justify-between items-center mb-3">
+                <h3
+                  id="charge-results-heading"
+                  className="text-sm font-medium text-zinc-300"
+                >
+                  {lookupResults.length} charge{lookupResults.length !== 1 ? "s" : ""} found — select yours
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setLookupOpen(false)}
+                  className="text-xs text-zinc-400 hover:text-zinc-200 underline min-h-[44px] px-2"
+                >
+                  Dismiss
+                </button>
+              </div>
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+                {lookupResults.map((charge) => (
+                  <button
+                    key={charge.slug}
+                    type="button"
+                    aria-pressed={selectedChargeSlug === charge.slug}
+                    aria-label={`Select ${charge.label}${charge.offense_class ? `, ${charge.offense_class}` : ""}${charge.penalty_max ? `, up to ${charge.penalty_max}` : ""}${charge.fine_max ? ` and ${charge.fine_max} fine` : ""}`}
+                    onClick={() => handleChargeSelect(charge)}
+                    className={`w-full text-left p-3 rounded-lg border transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900 ${
+                      selectedChargeSlug === charge.slug
+                        ? "border-blue-500 bg-blue-950/30"
+                        : "border-zinc-700 bg-zinc-800 hover:border-zinc-500"
+                    }`}
+                  >
+                    <span className="flex items-center justify-between">
+                      <span className="font-medium text-sm text-zinc-100">
+                        {charge.label}
+                      </span>
+                      {selectedChargeSlug === charge.slug && (
+                        <span className="text-blue-400 text-xs ml-2 shrink-0" aria-hidden="true">
+                          &#10003; Selected
+                        </span>
+                      )}
+                    </span>
+                    {(charge.statute_number || charge.offense_class) && (
+                      <span className="block text-xs text-zinc-400 mt-1">
+                        {charge.statute_number && (
+                          <span className="mr-3">{charge.statute_number}</span>
+                        )}
+                        {charge.offense_class}
+                      </span>
+                    )}
+                    {(charge.penalty_max || charge.fine_max) && (
+                      <span className="block text-xs text-zinc-500 mt-0.5">
+                        {charge.penalty_max && `Up to ${charge.penalty_max}`}
+                        {charge.penalty_max && charge.fine_max && ", "}
+                        {charge.fine_max && `fine up to ${charge.fine_max}`}
+                        {charge.mandatory_minimum && (
+                          <span className="block mt-0.5">
+                            Mandatory minimum: {charge.mandatory_minimum}
+                          </span>
+                        )}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
       </div>
 
       {/* Submit */}
