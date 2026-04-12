@@ -42,7 +42,9 @@ const PARENT_ROOT = path.resolve(PROJECT_ROOT, "..", "ImNotAnAttorney");
 const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
 
 const OUTPUT_DIR = path.join(PROJECT_ROOT, "data", "bulk-verify", "external-intel");
-const CSV_INPUT = path.join(OUTPUT_DIR, "ussc-individual.csv");
+const CSV_INPUT = fs.existsSync(path.join(OUTPUT_DIR, "ussc-individual.csv"))
+  ? path.join(OUTPUT_DIR, "ussc-individual.csv")
+  : path.join(OUTPUT_DIR, "ussc", "opafy24nid.csv");
 const SQL_OUTPUT = path.join(OUTPUT_DIR, "ussc-sentencing-upserts.sql");
 
 const args = process.argv.slice(2);
@@ -204,23 +206,38 @@ function districtLabel(code) {
 }
 
 // ── USSC departure type decoding ─────────────────────────────────────────────
-// BOOTEFLT / BOOTEFTT value meanings (FY2024 codebook, Table 25):
+// BOOTEFLT / BOOTEFTT value meanings (SAS codebook):
 //   1 = Substantial Assistance (5K1.1)
 //   2 = Government sponsored below-range (early disposition / 5K3.1)
 //   3 = Other government motion below range
 //   4 = Below range (other)
 //   5 = Within range
 //   6 = Upward departure
-// We treat blank/5 as "in range".
-function departureType(booteflt, booteftt) {
+// SENTRNGE fallback (FY2024 CSV uses this when BOOTEFLT/BOOTEFTT absent):
+//   0 = Within Range, 1 = Upward Departure, 2 = Substantial Assistance (5K1.1),
+//   3 = Early Disposition (5K3.1), 4 = Government Sponsored Departure,
+//   5 = Downward Departure, 6 = Above Range Variance,
+//   7 = Government Sponsored Variance, 8 = Below Range Variance
+function departureType(booteflt, booteftt, sentrnge) {
   const val = booteflt || booteftt;
-  if (!val || val === "" || val === "5") return "in_range";
-  const n = parseInt(val, 10);
-  if (n === 1) return "substantial_assistance";
-  if (n === 2 || n === 3) return "govt_sponsored_below";
-  if (n === 4) return "downward";
-  if (n === 6) return "upward";
-  return "other";
+  if (val && val !== "" && val !== "5") {
+    const n = parseInt(val, 10);
+    if (n === 1) return "substantial_assistance";
+    if (n === 2 || n === 3) return "govt_sponsored_below";
+    if (n === 4) return "downward";
+    if (n === 6) return "upward";
+    return "other";
+  }
+  // Fallback to SENTRNGE (FY2024 CSV format — post-Booker reporting categories)
+  if (sentrnge && sentrnge !== "" && sentrnge !== "0") {
+    const s = parseInt(sentrnge, 10);
+    if (s === 1 || s === 6) return "upward";          // departure + above-range variance
+    if (s === 2) return "substantial_assistance";       // 5K1.1
+    if (s === 3 || s === 4 || s === 7) return "govt_sponsored_below"; // early disp + govt departure + govt variance
+    if (s === 5 || s === 8) return "downward";          // departure + below-range variance
+    return "other";
+  }
+  return "in_range";
 }
 
 // ── Aggregation ──────────────────────────────────────────────────────────────
@@ -291,8 +308,8 @@ async function main() {
       agg.sentences.push(sentMonths);
       agg.total++;
 
-      // Departure type
-      const dep = departureType(r["BOOTEFLT"], r["BOOTEFTT"]);
+      // Departure type — SENTRNGE fallback for FY2024 CSV (no BOOTEFLT/BOOTEFTT)
+      const dep = departureType(r["BOOTEFLT"], r["BOOTEFTT"], r["SENTRNGE"]);
       if (dep === "substantial_assistance") agg.substantial_assistance++;
       else if (dep === "govt_sponsored_below") agg.govt_sponsored_below++;
       else if (dep === "downward") agg.downward++;
