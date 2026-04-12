@@ -60,6 +60,8 @@ Blog/SEO → Free resources (ungated) → Score Quiz (/score, email captured aft
          → Standalone Product Checkout ($0–$297) → Stripe webhook → Order + intake token
            → Intake form (token-gated) → generate-standalone Edge Function
            → Report uploaded to Storage → Delivery email → /report/standalone/[token]
+         → Tier 9 Standalone ($97–$297) → AvailabilityChecker → Stripe (intake in metadata)
+           → Webhook detects pre-populated intake → instant generation (no intake email)
 
 STANDALONE PRODUCT SYSTEMS (src/lib/products.ts + bundles.ts):
   1. Calculators (free, 3 active) — /tools/[slug] wizard → instant result
@@ -154,7 +156,19 @@ A purely statistical intelligence layer computed from CourtListener's 10M+ opini
 - `/officer-background-check` — $97, instant delivery. Cross-case officer reliability, discreditation history.
 - `/similar-cases-analyzer` — $297, instant delivery. k-NN case matching with outcome distribution.
 
-All 3 are in `tiers.ts` (test mode), link to `/checkout?tier={slug}`, and use Product + BreadcrumbList + FAQPage JSON-LD. No Edge Function needed — on-demand reads from Tier 9 tables.
+All 3 are in `tiers.ts` (live mode since 2026-04-11), gated by `AvailabilityChecker` (see below), and use Product + BreadcrumbList + FAQPage JSON-LD. No Edge Function needed — on-demand reads from Tier 9 tables.
+
+**Availability Gate** (deployed 2026-04-11):
+
+Pre-purchase data check prevents selling products we can't deliver. Each Tier 9 landing page embeds an `AvailabilityChecker` client component that queries `/api/check-availability/[slug]` before showing the checkout CTA.
+
+Flow: Landing page → AvailabilityChecker (name + state input) → POST /api/check-availability/[slug] → coverage.ts queries Tier 9 tables (count only) → available: coverage preview + CTA (intake params in URL) / unavailable: waitlist form → data_waitlist insert + Telegram alert. Checkout passes intake in Stripe metadata → webhook detects pre-populated intake → instant generation (skips intake email).
+
+Key files:
+- `src/components/tier9/AvailabilityChecker.tsx` — client component (6 states: idle/checking/available/unavailable/waitlisted/error)
+- `src/app/api/check-availability/[slug]/route.ts` — API endpoint (rate limited 10/min/IP)
+- `src/lib/tier9-reports/coverage.ts` — lightweight count queries per product
+- `data_waitlist` table — captures demand for uncovered entities (migration `20260411_data_waitlist.sql`)
 
 **IB Prompt Integration** (tasks 15-16):
 
@@ -235,7 +249,7 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 
 ## Feature Flags — Priority B Workers
 
-7 feature flags registered via migration `20260411e` (seeded as `is_enabled: false`, dark launch). Runtime-toggleable via `feature_flags` table and `isFeatureEnabled()` in `src/lib/feature-flags.ts` (5-minute TTL cache, tier-scoped).
+7 feature flags registered via migration `20260411e` (all enabled as of 2026-04-11). Runtime-toggleable via `feature_flags` table and `isFeatureEnabled()` in `src/lib/feature-flags.ts` (5-minute TTL cache, tier-scoped).
 
 | Flag Key | Worker |
 |----------|--------|
@@ -275,6 +289,7 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 | Orchestrated cron | 22 drip tasks + 4 blog pipeline crons + reddit-monitor via cron-job.org | Isolated error handling per task; no GitHub Actions cron | accepted |
 | UPL compliance gate | Every generated report evaluated before delivery | Non-negotiable legal risk mitigation | accepted |
 | Three-repo ecosystem | web + engine + business-docs as separate repos | Engine scales independently; business docs stay out of git deploy | accepted |
+| Tier 9 availability gate | Pre-purchase data check + waitlist for uncovered entities | Never sell products we can't deliver; capture demand signal for data gaps | accepted |
 
 ## External Dependencies
 
@@ -373,4 +388,4 @@ Historical rules — violating any of these has broken production before. Rules 
 - **Deep detail needed:** DB schema → `supabase/SCHEMA.md`; case status state machine → `supabase/CONTEXT.md`; email sequences → `src/lib/CONTEXT.md`; env vars → this file
 - **On any code change:** `node docs/verify-architecture.js` (automated via CI on pull requests)
 - **Verification script:** `docs/verify-architecture.js` — auto-generated, do not edit manually
-- **Last full verification:** 2026-04-01
+- **Last full verification:** 2026-04-11
