@@ -5,7 +5,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { checkJudgeCoverage, checkOfficerCoverage, checkSimilarCasesCoverage } from "@/lib/tier9-reports/coverage";
+import { checkJudgeCoverage, checkOfficerCoverage, checkSimilarCasesCoverage, type CoverageResult } from "@/lib/tier9-reports/coverage";
 import { isValidChargeType } from "@/lib/charge-types";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
@@ -30,9 +30,9 @@ export async function POST(
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
-  let body;
+  let body: Record<string, unknown>;
   try {
-    body = await req.json();
+    body = await req.json() as Record<string, unknown>;
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
@@ -40,6 +40,43 @@ export async function POST(
   const state = typeof body.state === "string" ? body.state.trim().toUpperCase() : "";
   if (!VALID_STATES.has(state)) {
     return NextResponse.json({ error: "Invalid state" }, { status: 400 });
+  }
+
+  // Waitlist helper — only runs when body.waitlist === true && body.email is set
+  async function handleWaitlist(
+    result: CoverageResult,
+    searchName: string,
+    chargeTypeOverride?: string
+  ): Promise<NextResponse> {
+    if (body.waitlist !== true || typeof body.email !== "string") {
+      return NextResponse.json(result);
+    }
+
+    const email = body.email.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json({ error: "Valid email required" }, { status: 400 });
+    }
+
+    const supabase = createAdminClient();
+    await supabase.from("data_waitlist").upsert(
+      {
+        product_slug: slug,
+        search_name: searchName,
+        search_state: state,
+        search_charge_type: chargeTypeOverride ?? null,
+        email,
+      },
+      { onConflict: "product_slug,search_name,search_state,email" }
+    );
+
+    // Fire-and-forget Telegram alert to operator
+    const { exec } = await import("child_process");
+    const msg = `New data request: ${searchName} (${state})\nProduct: ${slug}\nCustomer: ${email}\nCoverage: ${JSON.stringify(result.coverage)}`;
+    exec(
+      `node "C:\\Users\\email\\.claude\\scripts\\telegram\\telegram-send.js" --bot legal --message "${msg.replace(/"/g, '\\"')}"`
+    );
+
+    return NextResponse.json({ ...result, waitlisted: true });
   }
 
   try {
@@ -50,7 +87,7 @@ export async function POST(
           return NextResponse.json({ error: "Judge name required (2-100 chars)" }, { status: 400 });
         }
         const result = await checkJudgeCoverage(judgeName, state);
-        return NextResponse.json(result);
+        return handleWaitlist(result, judgeName);
       }
 
       case "officer-background-check": {
@@ -59,7 +96,7 @@ export async function POST(
           return NextResponse.json({ error: "Officer name required (2-100 chars)" }, { status: 400 });
         }
         const result = await checkOfficerCoverage(officerName, state);
-        return NextResponse.json(result);
+        return handleWaitlist(result, officerName);
       }
 
       case "similar-cases-analyzer": {
@@ -68,7 +105,7 @@ export async function POST(
           return NextResponse.json({ error: "Valid charge type required" }, { status: 400 });
         }
         const result = await checkSimilarCasesCoverage(chargeType, state);
-        return NextResponse.json(result);
+        return handleWaitlist(result, chargeType, chargeType);
       }
 
       default:
