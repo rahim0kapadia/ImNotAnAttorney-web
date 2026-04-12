@@ -172,5 +172,29 @@ export async function POST(
     return NextResponse.json({ error: "Failed to process payout" }, { status: 500 });
   }
 
+  // Payout notification email to partner (non-fatal)
+  try {
+    const { partnerPayoutNotificationEmail } = await import("@/lib/partner-emails");
+    const { sendEmail } = await import("@/lib/email");
+    const { data: partnerForNotif } = await supabase
+      .from("partners")
+      .select("name, email, preferred_payment_method")
+      .eq("id", id)
+      .single();
+    if (partnerForNotif?.email && data?.payout_amount) {
+      const { subject, html } = partnerPayoutNotificationEmail(
+        partnerForNotif.name,
+        data.payout_amount,
+        paymentMethod || partnerForNotif.preferred_payment_method || "zelle"
+      );
+      await sendEmail(
+        { to: partnerForNotif.email, subject, html, unsubscribeEmail: partnerForNotif.email },
+        { category: "partner-payout-notification", metadata: { partner_id: id, amount: data.payout_amount, method: paymentMethod } }
+      );
+    }
+  } catch (notifErr) {
+    console.error("[Admin Partners] Payout notification email failed:", notifErr);
+  }
+
   return NextResponse.json(data);
 }

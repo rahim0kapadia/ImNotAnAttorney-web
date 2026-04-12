@@ -533,14 +533,15 @@ export async function POST(req: NextRequest) {
           const saleAmount = isInstallment ? amount - discountAmount : amount;
           const commissionAmount = calculateCommission(saleAmount, partner.commission_rate);
 
-          // Atomic: insert referral + increment partner totals in one transaction
-          const { error: refError } = await supabase.rpc("track_referral", {
+          // Atomic: insert referral + increment partner totals + tier evaluation in one transaction
+          const { data: trackResult, error: refError } = await supabase.rpc("track_referral", {
             p_partner_id: partner.id,
             p_order_id: orderData.id,
             p_tier: tier,
             p_sale_amount: saleAmount,
             p_discount_amount: discountAmount,
             p_commission_amount: commissionAmount,
+            p_sub_id: session.metadata?.partner_sub_id || null,
           });
 
           if (refError) {
@@ -552,6 +553,56 @@ export async function POST(req: NextRequest) {
             }
           } else {
             console.log(`[Webhook] Referral tracked: partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
+
+            // Sale notification to partner (own try-catch so failures don't swallow)
+            try {
+              const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
+              const { data: partnerDetail } = await supabase
+                .from("partners")
+                .select("name, email, total_commission")
+                .eq("id", partner.id)
+                .single();
+              if (partnerDetail?.email) {
+                const tierName = tier in TIER_CORE ? TIER_CORE[tier as TierSlug].name : tier;
+                const { subject, html } = partnerSaleNotificationEmail(
+                  partnerDetail.name,
+                  tierName,
+                  commissionAmount,
+                  partnerDetail.total_commission || 0
+                );
+                await sendEmail({ to: partnerDetail.email, subject, html, unsubscribeEmail: partnerDetail.email }, {
+                  category: "partner-sale-notification",
+                  metadata: { partner_id: partner.id, tier, commission: commissionAmount },
+                });
+              }
+            } catch (notifErr) {
+              console.error("[Webhook] Partner sale notification failed:", notifErr);
+            }
+
+            // Tier upgrade notification if tier changed
+            if (trackResult?.tier_changed) {
+              try {
+                const { partnerTierUpgradeEmail } = await import("@/lib/partner-emails");
+                const { data: upgPartner } = await supabase
+                  .from("partners")
+                  .select("name, email")
+                  .eq("id", partner.id)
+                  .single();
+                if (upgPartner?.email) {
+                  const { subject, html } = partnerTierUpgradeEmail(
+                    upgPartner.name,
+                    trackResult.new_tier,
+                    trackResult.new_rate
+                  );
+                  await sendEmail({ to: upgPartner.email, subject, html, unsubscribeEmail: upgPartner.email }, {
+                    category: "partner-tier-upgrade",
+                    metadata: { partner_id: partner.id, new_tier: trackResult.new_tier, new_rate: trackResult.new_rate },
+                  });
+                }
+              } catch (tierNotifErr) {
+                console.error("[Webhook] Tier upgrade notification failed:", tierNotifErr);
+              }
+            }
           }
           // Only attribute to the first matching partner — prevent double-attribution
           break;
@@ -569,13 +620,14 @@ export async function POST(req: NextRequest) {
         if (partner && partner.status === "approved") {
           const commissionAmount = calculateCommission(amount, partner.commission_rate);
           // Atomic: same RPC as the primary path to prevent partial-failure inconsistency
-          const { error: refError } = await supabase.rpc("track_referral", {
+          const { data: metaTrackResult, error: refError } = await supabase.rpc("track_referral", {
             p_partner_id: partner.id,
             p_order_id: orderData.id,
             p_tier: tier,
             p_sale_amount: amount,
             p_discount_amount: 0,
             p_commission_amount: commissionAmount,
+            p_sub_id: session.metadata?.partner_sub_id || null,
           });
           if (refError) {
             if (refError.code === "23505") {
@@ -585,6 +637,56 @@ export async function POST(req: NextRequest) {
             }
           } else {
             console.log(`[Webhook] Referral tracked (metadata fallback): partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
+
+            // Sale notification to partner (own try-catch)
+            try {
+              const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
+              const { data: partnerDetail } = await supabase
+                .from("partners")
+                .select("name, email, total_commission")
+                .eq("id", partner.id)
+                .single();
+              if (partnerDetail?.email) {
+                const tierName = tier in TIER_CORE ? TIER_CORE[tier as TierSlug].name : tier;
+                const { subject, html } = partnerSaleNotificationEmail(
+                  partnerDetail.name,
+                  tierName,
+                  commissionAmount,
+                  partnerDetail.total_commission || 0
+                );
+                await sendEmail({ to: partnerDetail.email, subject, html, unsubscribeEmail: partnerDetail.email }, {
+                  category: "partner-sale-notification",
+                  metadata: { partner_id: partner.id, tier, commission: commissionAmount },
+                });
+              }
+            } catch (notifErr) {
+              console.error("[Webhook] Partner sale notification (metadata) failed:", notifErr);
+            }
+
+            // Tier upgrade notification if tier changed
+            if (metaTrackResult?.tier_changed) {
+              try {
+                const { partnerTierUpgradeEmail } = await import("@/lib/partner-emails");
+                const { data: upgPartner } = await supabase
+                  .from("partners")
+                  .select("name, email")
+                  .eq("id", partner.id)
+                  .single();
+                if (upgPartner?.email) {
+                  const { subject, html } = partnerTierUpgradeEmail(
+                    upgPartner.name,
+                    metaTrackResult.new_tier,
+                    metaTrackResult.new_rate
+                  );
+                  await sendEmail({ to: upgPartner.email, subject, html, unsubscribeEmail: upgPartner.email }, {
+                    category: "partner-tier-upgrade",
+                    metadata: { partner_id: partner.id, new_tier: metaTrackResult.new_tier, new_rate: metaTrackResult.new_rate },
+                  });
+                }
+              } catch (tierNotifErr) {
+                console.error("[Webhook] Tier upgrade notification (metadata) failed:", tierNotifErr);
+              }
+            }
           }
         }
       } catch (metaRefErr) {
