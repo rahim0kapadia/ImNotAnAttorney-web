@@ -254,7 +254,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-04-11
+    live: false as boolean, // PAUSED — availability gate shipping, re-enable after deploy
   },
   "officer-background-check": {
     name: "Officer Background Check",
@@ -269,7 +269,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-04-11
+    live: false as boolean, // PAUSED — availability gate shipping, re-enable after deploy
   },
   "similar-cases-analyzer": {
     name: "Similar Cases Analyzer",
@@ -284,7 +284,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-04-11
+    live: false as boolean, // PAUSED — availability gate shipping, re-enable after deploy
   },
   "witness-pack": {
     name: "Standalone Witness Pack",
