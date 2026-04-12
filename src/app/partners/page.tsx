@@ -1,4 +1,3 @@
-"use client";
 /**
  * /partners — Public Partner Signup Page (Generic)
  *
@@ -23,7 +22,7 @@ const HOW_IT_WORKS_STEPS = [
   },
   {
     title: "Earn Commission",
-    description: "Every time someone uses your code, you earn 10% commission. Tracked automatically. Paid monthly.",
+    description: "Every time someone uses your code, you earn up to 20% commission. Tracked automatically. Paid monthly.",
   },
 ];
 
@@ -57,7 +56,7 @@ export default function PartnersPage() {
         <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-8">
           Defendants are searching for answers about their case.
           Share your referral link. They save 10%.
-          You earn 10% commission on every purchase.
+          You earn up to 20% commission on every purchase.
         </p>
         <a
           href="#apply"

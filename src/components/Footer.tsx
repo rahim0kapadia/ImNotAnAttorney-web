@@ -92,6 +92,12 @@ export function Footer() {
                 About
               </Link>
               <Link
+                href="/partners"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Become a Partner
+              </Link>
+              <Link
                 href="/intake"
                 className="text-sm text-amber-400 hover:text-amber-300"
               >

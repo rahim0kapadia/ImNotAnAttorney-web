@@ -10,6 +10,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { BridgePage } from "@/components/BridgePage";
+import { REFERRAL_COOKIE_MAX_AGE } from "@/lib/referral";
 
 interface PageProps {
   params: Promise<{ code: string }>;
@@ -50,13 +51,13 @@ export default async function ReferralPage({ params }: PageProps) {
     );
   }
 
-  // Set referral cookie (30-day, NOT httpOnly — checkout page reads via JS)
+  // Set referral cookie (90-day, NOT httpOnly — checkout page reads via JS)
   const cookieStore = await cookies();
   cookieStore.set("ref", partner.promo_code!, {
     httpOnly: false,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: REFERRAL_COOKIE_MAX_AGE,
     path: "/",
   });
 
