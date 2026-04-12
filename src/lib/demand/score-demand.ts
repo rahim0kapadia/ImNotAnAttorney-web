@@ -132,7 +132,8 @@ async function loadChargeTypes(supabase: SupabaseClient): Promise<ChargeType[]> 
 async function loadPainPoints(supabase: SupabaseClient): Promise<PainPoint[]> {
   const { data } = await supabase
     .from("content_pain_points")
-    .select("blog_slug, title, category, blog_title, target_keyword");
+    .select("blog_slug, title, category, blog_title, target_keyword")
+    .eq("active", true);
   return data || [];
 }
 
@@ -146,7 +147,8 @@ async function loadContentPosts(supabase: SupabaseClient): Promise<ContentPost[]
 async function loadPainPointCategories(supabase: SupabaseClient): Promise<PainPointCategory[]> {
   const { data } = await supabase
     .from("content_pain_points")
-    .select("id, category, blog_slug");
+    .select("id, category, blog_slug")
+    .eq("active", true);
   return data || [];
 }
 
