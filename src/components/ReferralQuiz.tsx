@@ -58,6 +58,7 @@ const FOLLOW_UPS = [
 ];
 
 // Fallback tier slugs — validated at compile time via satisfies
+const FALLBACK_XRAY: TierSlug = "x-ray" satisfies TierSlug;
 const FALLBACK_INTEL: TierSlug = "intelligence-brief" satisfies TierSlug;
 const FALLBACK_DECODER: TierSlug = "case-decoder" satisfies TierSlug;
 
@@ -69,8 +70,43 @@ type RecommendedTier = {
 function getRecommendation(
   chargeSlug: string,
   attorney: string,
+  timing: string,
   concern: string,
 ): RecommendedTier {
+  // Private attorney + no communication + months in → X-Ray upsell
+  // Situation warrants forensic-level analysis — they're paying for an attorney
+  // who isn't delivering, so full discovery + judge intel + 35-50 questions
+  if (
+    attorney === "private" &&
+    concern === "no-communication" &&
+    timing === "months-ago"
+  ) {
+    return {
+      slug: FALLBACK_XRAY,
+      reason:
+        "You\u2019ve invested in a private attorney but aren\u2019t getting answers. " +
+        "The X-Ray gives you the full forensic analysis \u2014 discovery documents, " +
+        "judge intel, prosecution weaknesses \u2014 plus 35\u201350 questions that " +
+        "make your attorney impossible to ignore.",
+    };
+  }
+
+  // Public defender + worried about outcome + months in → Intelligence Brief
+  // PD caseloads mean the defendant needs their own intelligence layer
+  if (
+    attorney === "public-defender" &&
+    concern === "worried" &&
+    timing === "months-ago"
+  ) {
+    return {
+      slug: FALLBACK_INTEL,
+      reason:
+        "With a public defender handling dozens of cases, you need your own " +
+        "intelligence. This is a comprehensive research brief on your judge, " +
+        "your charges, and the specific questions that force attention to YOUR case.",
+    };
+  }
+
   // Federal/serious charges with no communication → Intelligence Brief
   if (
     ["federal-criminal", "drug-trafficking"].includes(chargeSlug) &&
@@ -126,7 +162,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
 
   // Recommendation phase
   if (step === totalSteps) {
-    const rec = getRecommendation(chargeSlug, answers[0] || "", answers[2] || "");
+    const rec = getRecommendation(chargeSlug, answers[0] || "", answers[1] || "", answers[2] || "");
     const tier = TIER_CORE[rec.slug];
     if (!tier) return null;
     const originalPrice = tier.price / 100;
