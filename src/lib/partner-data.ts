@@ -6,11 +6,52 @@
 import { TIER_CORE, type TierSlug } from "@/lib/tiers";
 
 /** Valid payment methods accepted for partner payouts. */
-export const VALID_PAYMENT_METHODS = ["zelle", "venmo", "check"] as const;
+export const VALID_PAYMENT_METHODS = ["zelle", "venmo", "check", "paypal"] as const;
 
 /** Computes unpaid commission from partner totals. */
 export function computeUnpaidCommission(partner: { total_commission?: number; total_paid_out?: number }): number {
   return (partner.total_commission || 0) - (partner.total_paid_out || 0);
+}
+
+/** Canonical partner status values. */
+export const VALID_STATUSES = ["pending", "approved", "suspended"] as const;
+export type PartnerStatus = (typeof VALID_STATUSES)[number];
+
+/** Commission tier definitions. */
+export const COMMISSION_TIERS_CONFIG = [
+  { key: "partner", label: "Partner", threshold: 0, rate: 10 },
+  { key: "silver", label: "Silver Partner", threshold: 5, rate: 15 },
+  { key: "gold", label: "Gold Partner", threshold: 15, rate: 20 },
+] as const;
+
+export type CommissionTierKey = (typeof COMMISSION_TIERS_CONFIG)[number]["key"];
+
+/** Get tier info for a partner's current tier key. */
+export function getTierInfo(tierKey: string) {
+  return COMMISSION_TIERS_CONFIG.find((t) => t.key === tierKey) ?? COMMISSION_TIERS_CONFIG[0];
+}
+
+/** Get the next tier a partner can achieve, or null if at Gold. */
+export function getNextTier(tierKey: string) {
+  const idx = COMMISSION_TIERS_CONFIG.findIndex((t) => t.key === tierKey);
+  return idx < COMMISSION_TIERS_CONFIG.length - 1 ? COMMISSION_TIERS_CONFIG[idx + 1] : null;
+}
+
+/** Shared partner shape — used by dashboard page and auth helpers. */
+export interface Partner {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  company: string | null;
+  promo_code: string | null;
+  commission_rate: number;
+  commission_tier: string;
+  preferred_payment_method: string | null;
+  payment_zelle: string | null;
+  payment_venmo: string | null;
+  payment_check_address: string | null;
+  payment_paypal: string | null;
 }
 
 export const COMMISSION_TIERS: TierSlug[] = [
@@ -48,7 +89,7 @@ export const PARTNER_FAQS = [
   },
   {
     question: "When do I get paid?",
-    answer: "Commissions are tracked in real time. We process payouts monthly via Venmo, Zelle, or check — your choice. You can see your running total and referral history anytime in your partner dashboard.",
+    answer: "Commissions are tracked in real time. Payouts are processed on the 1st of each month (NET-30) via PayPal, Venmo, Zelle, or check — your choice. You can see your running total and referral history anytime in your partner dashboard.",
   },
   {
     question: "What do I need to do?",

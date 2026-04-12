@@ -10,15 +10,10 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { createPartnerPromoCode } from "@/lib/referral";
+import { createPartnerPromoCode, sanitizePromoCode } from "@/lib/referral";
 import { normalizeEmail, isValidEmail } from "@/lib/site";
 import { computeUnpaidCommission } from "@/lib/partner-data";
 import { requireAdmin } from "@/lib/auth/guards";
-
-/** Strip non-alphanumeric chars and uppercase. */
-function sanitizePromoCode(s: string): string {
-  return s.toUpperCase().split("").filter(c => (c >= "A" && c <= "Z") || (c >= "0" && c <= "9")).join("");
-}
 
 export async function GET(req: NextRequest) {
   const auth = requireAdmin(req);

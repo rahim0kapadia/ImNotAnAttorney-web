@@ -14,6 +14,24 @@ import { stripeTest, stripeLive } from "./stripe";
 import { createAdminClient } from "./supabase/admin";
 import type Stripe from "stripe";
 
+/** 90-day referral cookie. Shared by /r/[code] and /r/[code]/[product]. */
+export const REFERRAL_COOKIE_MAX_AGE = 90 * 24 * 60 * 60;
+
+/** Strip non-alphanumeric chars and uppercase. */
+export function sanitizePromoCode(s: string): string {
+  return s
+    .toUpperCase()
+    .split("")
+    .filter((c) => (c >= "A" && c <= "Z") || (c >= "0" && c <= "9"))
+    .join("");
+}
+
+/** Sub-ID sanitizer: alphanumeric + hyphens + underscores, max 50 chars. */
+export function sanitizeSubId(s: string): string | null {
+  const clean = s.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 50);
+  return clean.length > 0 ? clean : null;
+}
+
 const MASTER_COUPON_ID = "bondsman-referral-10pct";
 
 /**
@@ -64,6 +82,7 @@ async function createPromoOnClient(
   return client.promotionCodes.create({
     promotion: { type: "coupon", coupon: MASTER_COUPON_ID },
     code: code.toUpperCase(),
+    active: false,
     metadata: {
       partner_id: partnerId,
       partner_name: partnerName,
@@ -100,6 +119,43 @@ export async function createPartnerPromoCode(
   }
 
   return testPromo;
+}
+
+/**
+ * Activates a partner's Stripe promo code on both test and live.
+ * Called after magic link verification to prevent code farming.
+ */
+export async function activatePartnerPromoCode(
+  stripePromoCodeId: string
+): Promise<void> {
+  try {
+    await stripeTest.promotionCodes.update(stripePromoCodeId, { active: true });
+  } catch (e) {
+    console.warn("[Referral] Failed to activate test promo code:", e);
+  }
+  if (stripeLive) {
+    try {
+      const supabase = createAdminClient();
+      const { data: partner } = await supabase
+        .from("partners")
+        .select("promo_code")
+        .eq("stripe_promo_code_id", stripePromoCodeId)
+        .maybeSingle();
+      if (partner?.promo_code) {
+        const promos = await stripeLive.promotionCodes.list({
+          code: partner.promo_code,
+          limit: 1,
+        });
+        if (promos.data[0]) {
+          await stripeLive.promotionCodes.update(promos.data[0].id, {
+            active: true,
+          });
+        }
+      }
+    } catch (e) {
+      console.warn("[Referral] Failed to activate live promo code:", e);
+    }
+  }
 }
 
 /**
