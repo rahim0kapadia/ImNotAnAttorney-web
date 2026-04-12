@@ -58,9 +58,15 @@ import { getScholarshipCount } from "@/lib/product-matrix";
 function StandaloneCheckout({
   slug,
   chargeParam,
+  judgeName,
+  officerName,
+  stateParam,
 }: {
   slug: string;
   chargeParam: string | null;
+  judgeName: string | null;
+  officerName: string | null;
+  stateParam: string | null;
 }) {
   const product = getProduct(slug)!;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -86,6 +92,9 @@ function StandaloneCheckout({
           standaloneProduct: slug,
           email,
           chargeType: chargeParam || undefined,
+          ...(judgeName && { judgeName }),
+          ...(officerName && { officerName }),
+          ...(stateParam && { state: stateParam }),
         }),
       });
       const data = await res.json();
@@ -719,7 +728,15 @@ function CheckoutContent() {
   // Short-circuit: standalone research products render a minimal purchase card
   // outside the tier upgrade ladder. Must run before any tier lookup.
   if (standaloneSlugParam && isValidProduct(standaloneSlugParam)) {
-    return <StandaloneCheckout slug={standaloneSlugParam} chargeParam={charge} />;
+    return (
+      <StandaloneCheckout
+        slug={standaloneSlugParam}
+        chargeParam={charge}
+        judgeName={searchParams.get("judgeName")}
+        officerName={searchParams.get("officerName")}
+        stateParam={searchParams.get("state")}
+      />
+    );
   }
 
   const tier = searchParams.get("tier") || "case-decoder";

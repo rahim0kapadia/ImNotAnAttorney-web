@@ -195,5 +195,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
+    // Tier 9 standalone data products
+    {
+      url: `${SITE_URL}/judge-report-card`,
+      lastModified: new Date("2026-04-11"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/officer-background-check`,
+      lastModified: new Date("2026-04-11"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/similar-cases-analyzer`,
+      lastModified: new Date("2026-04-11"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
   ];
 }
