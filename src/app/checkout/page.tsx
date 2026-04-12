@@ -772,6 +772,15 @@ function CheckoutContent() {
     return raw;
   });
 
+  // Read sub-ID cookie set by /r/[code]?sub=... deep links
+  const [refSub] = useState<string | null>(() => {
+    if (typeof document !== "undefined") {
+      const match = document.cookie.split("; ").find(c => c.startsWith("ref_sub="));
+      return match ? match.split("=")[1] : null;
+    }
+    return null;
+  });
+
   const info = TIER_INFO[tier];
 
   // Calculate urgency: if court date is <14 days away, highlight priority delivery
@@ -839,6 +848,7 @@ function CheckoutContent() {
           ...(info.isDigitalProduct && { productType: "digital-product" }),
           ...(info.isDigitalProduct && useInstallment && { paymentPlan: true }),
           ...(promoCode && { promoCode }),
+          ...(refSub && { refSub }),
         }),
       });
 

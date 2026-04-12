@@ -10,14 +10,16 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { BridgePage } from "@/components/BridgePage";
-import { REFERRAL_COOKIE_MAX_AGE } from "@/lib/referral";
+import { REFERRAL_COOKIE_MAX_AGE, sanitizeSubId } from "@/lib/referral";
 
 interface PageProps {
   params: Promise<{ code: string }>;
+  searchParams: Promise<{ sub?: string }>;
 }
 
-export default async function ReferralPage({ params }: PageProps) {
+export default async function ReferralPage({ params, searchParams }: PageProps) {
   const { code } = await params;
+  const { sub } = await searchParams;
 
   const supabase = createAdminClient();
   const { data: partner } = await supabase
@@ -60,6 +62,19 @@ export default async function ReferralPage({ params }: PageProps) {
     maxAge: REFERRAL_COOKIE_MAX_AGE,
     path: "/",
   });
+
+  if (sub) {
+    const cleanSub = sanitizeSubId(sub);
+    if (cleanSub) {
+      cookieStore.set("ref_sub", cleanSub, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: REFERRAL_COOKIE_MAX_AGE,
+        path: "/",
+      });
+    }
+  }
 
   return (
     <BridgePage

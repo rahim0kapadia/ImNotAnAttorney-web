@@ -61,6 +61,7 @@ export async function POST(req: NextRequest) {
     }
     const { tier, email, consent, priorityDelivery, courtDate, chargeType, existingCaseNumber, existingCaseState, productType, promoCode, paymentPlan, standaloneProduct } = body;
     const ref = typeof body.ref === "string" && body.ref.length <= 200 ? body.ref : null;
+    const refSub = typeof body.refSub === "string" && body.refSub.length <= 50 ? body.refSub : null;
 
     // =========================================================================
     // 1a. STANDALONE PRODUCT CHECKOUT
@@ -716,6 +717,7 @@ export async function POST(req: NextRequest) {
           ...(resolvedChargeType && { charge_type: resolvedChargeType }),
           ...(referralPartnerId && { partner_id: referralPartnerId }),
           ...(sanitizedPromoCode && { partner_promo_code: sanitizedPromoCode }),
+          ...(refSub && { partner_sub_id: refSub }),
         },
         success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
         cancel_url: `${origin}/checkout?tier=${tier}&plan=2x`,
@@ -763,6 +765,7 @@ export async function POST(req: NextRequest) {
         ...(caseNumberEmail && { case_number_matched_email: caseNumberEmail }),
         ...(referralPartnerId && { partner_id: referralPartnerId }),
         ...(sanitizedPromoCode && { partner_promo_code: sanitizedPromoCode }),
+        ...(refSub && { partner_sub_id: refSub }),
         ...(tierConfig.includesTiers.length > 0 && {
           includes_tiers: tierConfig.includesTiers.join(","),
         }),
