@@ -56,7 +56,7 @@ export function CreativeAssets({ promoCode, referralUrl }: CreativeAssetsProps) 
   }
 
   return (
-    <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
+    <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
       <h2 className="text-xl font-bold mb-4">Creative Assets</h2>
       <p className="text-sm text-zinc-400 mb-4">
         Pre-written content for social media, email, and in-person conversations.
@@ -77,7 +77,7 @@ export function CreativeAssets({ promoCode, referralUrl }: CreativeAssetsProps) 
                 </span>
                 <button
                   onClick={() => handleCopy(text, i)}
-                  className="text-xs px-3 py-1 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-white transition-colors"
+                  className="text-xs px-3 py-1 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-white transition-colors cursor-pointer"
                   aria-label={copiedIdx === i ? "Copied" : `Copy ${t.label} template`}
                   aria-live="polite"
                 >

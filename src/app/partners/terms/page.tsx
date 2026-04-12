@@ -24,7 +24,10 @@ export default function PartnerTermsPage() {
   return (
     <div className="px-4 py-16">
       <div className="mx-auto max-w-3xl">
-        <h1 className="text-3xl font-bold text-white md:text-4xl">
+        <Link href="/partners" className="text-sm text-amber-400 hover:text-amber-300 mb-8 inline-block">
+          &larr; Back to Partner Program
+        </Link>
+        <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
           Partner Terms of Service
         </h1>
         <p className="mt-2 text-sm text-zinc-400">

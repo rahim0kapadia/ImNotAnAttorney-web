@@ -51,7 +51,7 @@ export function ComplianceKit() {
   }
 
   return (
-    <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
+    <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
       <h2 className="text-xl font-bold mb-4">Compliance Kit</h2>
       <p className="text-sm text-zinc-400 mb-6">
         Stay compliant with these guidelines. Using approved language protects
@@ -105,7 +105,7 @@ export function ComplianceKit() {
                 </span>
                 <button
                   onClick={() => handleCopy(d.template, i)}
-                  className="text-xs px-3 py-1 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-white transition-colors"
+                  className="text-xs px-3 py-1 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-white transition-colors cursor-pointer"
                   aria-label={copiedIdx === i ? "Copied" : `Copy ${d.label} disclosure`}
                   aria-live="polite"
                 >

@@ -32,7 +32,7 @@ export function ToolkitSection({ partner, referralUrl }: ToolkitSectionProps) {
   }
 
   return (
-    <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
+    <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
       <h2 className="text-xl font-bold mb-4">Your Toolkit</h2>
       {referralUrl ? (
         <div className="grid md:grid-cols-2 gap-6">
@@ -44,7 +44,7 @@ export function ToolkitSection({ partner, referralUrl }: ToolkitSectionProps) {
               </span>
               <button
                 onClick={() => handleCopy(partner.promo_code || "", "code")}
-                className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700"
+                className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 cursor-pointer"
                 aria-label="Copy promo code"
                 aria-live="polite"
               >
@@ -59,7 +59,7 @@ export function ToolkitSection({ partner, referralUrl }: ToolkitSectionProps) {
               </code>
               <button
                 onClick={() => handleCopy(referralUrl, "url")}
-                className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 shrink-0"
+                className="text-xs px-3 py-1 rounded bg-zinc-800 hover:bg-zinc-700 shrink-0 cursor-pointer"
                 aria-label="Copy referral URL"
                 aria-live="polite"
               >

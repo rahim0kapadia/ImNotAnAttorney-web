@@ -58,7 +58,7 @@ export function PaymentSettingsForm({
   }
 
   return (
-    <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
+    <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
       <h2 className="text-xl font-bold mb-4">Payment Settings</h2>
       <form onSubmit={handleSaveSettings} className="space-y-4">
         <div>
@@ -69,7 +69,7 @@ export function PaymentSettingsForm({
             id="pay-method"
             value={payMethod}
             onChange={(e) => setPayMethod(e.target.value)}
-            className="w-full px-4 py-2 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+            className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           >
             <option value="">Select...</option>
             <option value="zelle">Zelle</option>
@@ -90,7 +90,7 @@ export function PaymentSettingsForm({
               value={payZelle}
               onChange={(e) => setPayZelle(e.target.value)}
               placeholder="your@email.com or (555) 123-4567"
-              className="w-full px-4 py-2 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+              className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
         )}
@@ -106,7 +106,7 @@ export function PaymentSettingsForm({
               value={payVenmo}
               onChange={(e) => setPayVenmo(e.target.value)}
               placeholder="@your-venmo"
-              className="w-full px-4 py-2 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+              className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
         )}
@@ -122,7 +122,7 @@ export function PaymentSettingsForm({
               value={payPaypal}
               onChange={(e) => setPayPaypal(e.target.value)}
               placeholder="your@email.com"
-              className="w-full px-4 py-2 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+              className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
         )}
@@ -138,7 +138,7 @@ export function PaymentSettingsForm({
               onChange={(e) => setPayCheckAddress(e.target.value)}
               placeholder="Street, City, State, ZIP"
               rows={3}
-              className="w-full px-4 py-2 bg-zinc-800 rounded-lg border border-zinc-700 text-white"
+              className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
         )}
@@ -146,7 +146,7 @@ export function PaymentSettingsForm({
         <button
           type="submit"
           disabled={saving}
-          className="px-6 py-2 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 disabled:opacity-50"
+          className="px-6 py-2 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 disabled:opacity-50 cursor-pointer"
           aria-live="polite"
         >
           {saving ? "Saving..." : saved ? "Saved!" : "Save Settings"}

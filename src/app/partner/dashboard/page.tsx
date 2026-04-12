@@ -110,7 +110,7 @@ export default function PartnerDashboard() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Header */}
-      <header className="border-b border-zinc-500">
+      <header className="border-b border-zinc-700">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="text-amber-400 font-bold text-lg">
             ImNotAnAttorney
@@ -128,7 +128,7 @@ export default function PartnerDashboard() {
       </header>
 
       <div className="max-w-4xl mx-auto px-6 py-8 space-y-8">
-        <h1 className="text-2xl font-bold">Partner Dashboard</h1>
+        <h1 className="font-display text-2xl font-bold">Partner Dashboard</h1>
         {error && (
           <div role="alert" className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg text-sm">
             {error}
@@ -142,7 +142,7 @@ export default function PartnerDashboard() {
         <ToolkitSection partner={partner} referralUrl={referralUrl} />
 
         {/* 2. Ready-to-Send Messages */}
-        <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
+        <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
           <h2 className="text-xl font-bold mb-4">Ready-to-Send Messages</h2>
           <MessageTemplates
             promoCode={partner.promo_code || ""}
@@ -166,7 +166,7 @@ export default function PartnerDashboard() {
         <PartnerAnalytics analytics={analytics} />
 
         {/* 7. Recent Activity */}
-        <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
+        <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
           <h2 className="text-xl font-bold mb-4">Recent Activity</h2>
           {referrals.length === 0 ? (
             <p className="text-zinc-400">No referrals yet. Share your code to get started.</p>
@@ -175,7 +175,7 @@ export default function PartnerDashboard() {
               {referrals.slice(0, 20).map((r) => (
                 <div
                   key={r.id}
-                  className="flex items-center justify-between py-2 border-b border-zinc-500/50"
+                  className="flex items-center justify-between py-2 border-b border-zinc-700/50"
                 >
                   <div>
                     <span className="text-zinc-400 text-sm">{formatDate(r.created_at)}</span>
@@ -201,7 +201,7 @@ export default function PartnerDashboard() {
         />
 
         {/* 9. Profile */}
-        <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
+        <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
           <h2 className="text-xl font-bold mb-4">Profile</h2>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
