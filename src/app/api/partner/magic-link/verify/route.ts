@@ -13,6 +13,7 @@ import {
   PARTNER_SESSION_COOKIE,
   PARTNER_SESSION_MAX_AGE,
 } from "@/lib/partner-auth";
+import { activatePartnerPromoCode } from "@/lib/referral";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
@@ -54,6 +55,21 @@ export async function POST(req: NextRequest) {
       { error: "Failed to create session" },
       { status: 500 }
     );
+  }
+
+  // Activate Stripe promo code now that email is verified
+  try {
+    const { data: partnerData } = await supabase
+      .from("partners")
+      .select("stripe_promo_code_id")
+      .eq("id", partnerId)
+      .maybeSingle();
+    if (partnerData?.stripe_promo_code_id) {
+      await activatePartnerPromoCode(partnerData.stripe_promo_code_id);
+    }
+  } catch (e) {
+    console.error("[Magic Link Verify] Promo code activation failed:", e);
+    // Non-fatal — partner can still use dashboard
   }
 
   // Set session cookie and return success
