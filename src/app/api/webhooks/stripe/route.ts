@@ -186,6 +186,62 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Order creation failed" }, { status: 500 });
       }
 
+      // ── PRE-POPULATED INTAKE CHECK (availability gate fast path) ──
+      // When the customer came through the availability checker, intake
+      // fields are already in session metadata. Skip the intake email
+      // and trigger report generation immediately (~60s delivery).
+      const preJudgeName = session.metadata?.judge_name || "";
+      const preOfficerName = session.metadata?.officer_name || "";
+      const preChargeType = session.metadata?.charge_type || "";
+      const preState = session.metadata?.state || "";
+
+      const hasPrePopulatedIntake =
+        (standaloneSlug === "judge-report-card" && preJudgeName && preState) ||
+        (standaloneSlug === "officer-background-check" && preOfficerName && preState) ||
+        (standaloneSlug === "similar-cases-analyzer" && preChargeType && preState);
+
+      if (hasPrePopulatedIntake) {
+        // Build intake object matching what the intake form would submit
+        let intake: Record<string, string> = {};
+        if (standaloneSlug === "judge-report-card") {
+          intake = { judgeName: preJudgeName, state: preState, chargeType: preChargeType || "other" };
+        } else if (standaloneSlug === "officer-background-check") {
+          intake = { officerName: preOfficerName, state: preState };
+        } else if (standaloneSlug === "similar-cases-analyzer") {
+          intake = { chargeType: preChargeType, state: preState };
+        }
+
+        // Write intake directly — same fields the intake API route would set
+        const standaloneSupabaseUpdate = createAdminClient();
+        await standaloneSupabaseUpdate.from("orders")
+          .update({ standalone_intake: intake })
+          .eq("stripe_session_id", session.id);
+
+        // Fetch the order ID for generation
+        const { data: orderForGen } = await standaloneSupabaseUpdate.from("orders")
+          .select("id")
+          .eq("stripe_session_id", session.id)
+          .single();
+
+        if (orderForGen) {
+          // Fire-and-forget — cron Part 5e catches stuck reports
+          const { generateTier9Report } = await import("@/lib/tier9-reports/generate");
+          generateTier9Report(orderForGen.id).catch((err: unknown) => {
+            console.error("[Webhook] Tier9 pre-populated generation error:", err);
+          });
+        }
+
+        // Operator sale notification (includes "pre-populated" flag)
+        await sendEmail({
+          to: OPERATOR_EMAIL,
+          subject: `[SALE] ${product.name} — $${((session.amount_total || 0) / 100).toFixed(2)} (instant)`,
+          html: `<p>New standalone purchase (pre-populated intake, instant generation): ${escapeHtml(product.name)} by ${escapeHtml(customerStandaloneEmail)}</p>`,
+        });
+
+        return NextResponse.json({ received: true });
+      }
+
+      // ── STANDARD FLOW: send intake email ──
       const siteOrigin =
         process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
       await sendEmailWithOperatorAlert(
