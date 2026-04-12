@@ -97,6 +97,92 @@ const DISMISSAL_SIGNALS = [
   "nol pros",
 ];
 
+// ── Extract trial JUDGE name from opinion preamble ─────────────────────────
+// Appellate opinions name the trial judge in the first ~1500 chars.
+// author_id/author_str = appellate judge who WROTE the opinion (wrong for us).
+// We need the trial judge whose bench/jury behavior is being reviewed.
+
+// Patterns by jurisdiction (priority order — most specific first):
+// FL:  "Appeal from the Circuit Court for Broward County; N. Hunter Davis, Judge;"
+// FL:  "Barbara K. Hobbs, Judge." (standalone line)
+// NY:  "(Christopher J. Burns, J.)" or "(Burns, J.)"
+// General: "the Honorable [Name], Judge" / "Before the Honorable [Name]"
+// General: "presiding judge [Name]" / "Judge [Name] presiding"
+// General: "trial court judge [Name]" / "trial judge [Name]"
+
+function extractTrialJudge(text) {
+  // Only scan preamble — body text mentions many judges, causing false positives
+  const preamble = text.slice(0, 1500).toLowerCase();
+
+  // Pattern 1: FL-style — "County; [Name], Judge;" or "[Name], Judge."
+  // Match "Name, Judge" where Name is 2-4 capitalized words before ", judge"
+  const flMatch = preamble.match(/([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){1,4}),\s*judge[.;\s]/i);
+  if (flMatch) {
+    const name = flMatch[1].trim();
+    // Filter out false positives (court names, generic phrases)
+    if (!name.match(/circuit|county|district|court|appeal|supreme|state|united/i)) {
+      return name;
+    }
+  }
+
+  // Pattern 2: NY-style — "(Name, J.)" parenthetical
+  const nyMatch = preamble.match(/\(([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,3}),\s*j\.\)/i);
+  if (nyMatch) {
+    const name = nyMatch[1].trim();
+    if (!name.match(/circuit|county|district|court|appeal|supreme|state/i)) {
+      return name;
+    }
+  }
+
+  // Pattern 3: "the honorable [Name]" — very common across states
+  const honMatch = preamble.match(/(?:the\s+)?honorable\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){1,4})/i);
+  if (honMatch) {
+    const name = honMatch[1].trim();
+    // Strip trailing ", judge" or ", circuit judge" etc
+    const cleaned = name.replace(/,\s*(circuit\s+)?judge.*$/i, "").trim();
+    if (!cleaned.match(/circuit|county|district|court|appeal|supreme|state/i) && cleaned.length > 3) {
+      return cleaned;
+    }
+  }
+
+  // Pattern 4: "presiding judge [Name]" / "trial judge [Name]" / "trial court judge [Name]"
+  const trialMatch = preamble.match(/(?:presiding|trial(?:\s+court)?)\s+judge\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,4})/i);
+  if (trialMatch) {
+    const name = trialMatch[1].trim();
+    // Strip trailing comma/period but preserve middle initials (e.g. "William T. Moore")
+    const cleaned = name.replace(/,\s*$/, "").replace(/\.\s*$/, "").trim();
+    if (cleaned.length > 3) return cleaned;
+  }
+
+  // Pattern 5: "judge [Name] presiding" — common in many states
+  const presidingMatch = preamble.match(/judge\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,4})\s+presiding/i);
+  if (presidingMatch) {
+    const name = presidingMatch[1].trim();
+    const cleaned = name.replace(/,\s*$/, "").replace(/\.\s*$/, "").trim();
+    if (!cleaned.match(/circuit|county|district|court/i) && cleaned.length > 3) return cleaned;
+  }
+
+  // Pattern 6: "the trial court, Judge [Name]," — inline mention
+  const inlineMatch = preamble.match(/(?:the\s+)?trial\s+court,?\s+judge\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,4})/i);
+  if (inlineMatch) {
+    const name = inlineMatch[1].trim();
+    const cleaned = name.replace(/,.*$/, "").replace(/\s+presiding.*$/i, "").trim();
+    if (!cleaned.match(/circuit|county|district|court/i) && cleaned.length > 3) return cleaned;
+  }
+
+  return null;
+}
+
+// Normalize judge name for matching: lowercase, strip titles, collapse whitespace
+function normalizeJudgeName(name) {
+  return name
+    .toLowerCase()
+    .replace(/^(hon\.?|honorable|judge|justice|chief justice)\s+/gi, "")
+    .replace(/\s+(jr\.?|sr\.?|ii|iii|iv)$/gi, (m) => m) // keep suffixes
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 // ── Extract trial classification from text ──────────────────────────────────
 
 function classifyTrial(text) {
@@ -296,12 +382,24 @@ async function main() {
   }
 
   const judgeByNameLower = new Map();
+  const judgeByLastName = new Map(); // last name -> [{id, full}] for partial match
   const judgeByClPersonId = new Map();
   for (const j of judges) {
-    const nameLower = (j.full_name || "").toLowerCase();
-    if (nameLower) judgeByNameLower.set(nameLower, j.id);
+    const nameLower = (j.full_name || "").toLowerCase().trim();
+    if (nameLower) {
+      judgeByNameLower.set(nameLower, j.id);
+      judgeByNameLower.set(normalizeJudgeName(nameLower), j.id);
+      const parts = nameLower.split(/\s+/);
+      if (parts.length >= 2) {
+        const lastName = parts[parts.length - 1].replace(/[,.]$/, "");
+        if (!judgeByLastName.has(lastName)) judgeByLastName.set(lastName, []);
+        judgeByLastName.get(lastName).push({ id: j.id, full: nameLower });
+      }
+    }
     if (j.cl_person_id) judgeByClPersonId.set(j.cl_person_id, j.id);
   }
+  let trialJudgeMatches = 0;
+  let authorFallbackMatches = 0;
 
   const bzcatPath = findBzcat();
   console.log(`\nStreaming opinions CSV through bzcat + csv-parse (escape: \\\\)...`);
@@ -330,7 +428,7 @@ async function main() {
       rowCount++;
       if (rowCount % 500000 === 0) {
         const elapsed = (Date.now() - startTime) / 1000;
-        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${classifiedCount} classified (${elapsed.toFixed(0)}s)\n`);
+        process.stdout.write(`  ${(rowCount / 1000000).toFixed(1)}M rows, ${matchCount} matched, ${classifiedCount} classified, ${trialJudgeMatches} trial-judge + ${authorFallbackMatches} author (${elapsed.toFixed(0)}s)\n`);
       }
 
       const clusterId = record.cluster_id;
@@ -349,15 +447,65 @@ async function main() {
 
       classifiedCount++;
 
-      // Find judge by author_id (CL person ID) or author_str (name fallback)
+      // STRATEGY: Cast a wide net, filter later. Three tiers:
+      // 1. Regex-extract trial judge name from preamble (most precise)
+      // 2. Scan preamble for ANY judge last name from our DB (flexible, catches more)
+      // 3. Fallback to author_id/author_str (appellate judge — rarely useful)
       let judgeId = null;
-      const authorId = record.author_id;
-      if (authorId) {
-        judgeId = judgeByClPersonId.get(authorId);
+
+      // Tier 1: Regex extraction (structured patterns like "Name, Judge.")
+      const trialJudgeName = extractTrialJudge(text);
+      if (trialJudgeName) {
+        const normalized = normalizeJudgeName(trialJudgeName);
+        judgeId = judgeByNameLower.get(normalized);
+        if (!judgeId) {
+          const parts = normalized.split(/\s+/);
+          const lastName = parts[parts.length - 1];
+          const candidates = judgeByLastName.get(lastName);
+          if (candidates && candidates.length === 1) judgeId = candidates[0].id;
+        }
+        if (judgeId) trialJudgeMatches++;
       }
+
+      // Tier 2: Scan preamble for any judge last name from our DB
+      // (catches unstructured mentions like "Judge Smith ruled that...")
       if (!judgeId) {
-        const authorName = (record.author_str || "").toLowerCase().trim();
-        if (authorName) judgeId = judgeByNameLower.get(authorName);
+        const preamble = text.slice(0, 1500).toLowerCase();
+        for (const [lastName, candidates] of judgeByLastName) {
+          if (lastName.length < 4) continue; // skip short names (lee, wu) — too many false positives
+          // Require "judge" or "hon" nearby to reduce false positives
+          const idx = preamble.indexOf(lastName);
+          if (idx < 0) continue;
+          // Check 30 chars before the name for judge/honorable/hon context
+          const context = preamble.slice(Math.max(0, idx - 30), idx);
+          if (context.indexOf("judge") >= 0 || context.indexOf("hon") >= 0 || context.indexOf(", j.") >= 0) {
+            if (candidates.length === 1) {
+              judgeId = candidates[0].id;
+              trialJudgeMatches++;
+              break;
+            }
+            // Multiple judges share this last name — try first+last from preamble
+            for (const c of candidates) {
+              if (preamble.indexOf(c.full) >= 0) {
+                judgeId = c.id;
+                trialJudgeMatches++;
+                break;
+              }
+            }
+            if (judgeId) break;
+          }
+        }
+      }
+
+      // Tier 3: author_id/author_str fallback (appellate judge)
+      if (!judgeId) {
+        const authorId = record.author_id;
+        if (authorId) judgeId = judgeByClPersonId.get(authorId);
+        if (!judgeId) {
+          const authorName = (record.author_str || "").toLowerCase().trim();
+          if (authorName) judgeId = judgeByNameLower.get(authorName);
+        }
+        if (judgeId) authorFallbackMatches++;
       }
       if (!judgeId) continue;
 
@@ -384,6 +532,8 @@ async function main() {
   console.log(`\nStream complete: ${rowCount} rows in ${(elapsed / 60).toFixed(1)} min`);
   console.log(`Clusters matched: ${matchCount}`);
   console.log(`Opinions classified: ${classifiedCount}`);
+  console.log(`Trial judge matches: ${trialJudgeMatches}`);
+  console.log(`Author fallback matches: ${authorFallbackMatches}`);
 
   // Compute divergence
   const divergences = [];
