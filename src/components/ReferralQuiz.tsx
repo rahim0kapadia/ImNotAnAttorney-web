@@ -201,6 +201,24 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               Get Started
             </Link>
 
+            {/* Divider */}
+            <div className="flex items-center gap-3 my-4">
+              <div className="flex-1 h-px bg-zinc-700" />
+              <span className="text-zinc-500 text-sm">or</span>
+              <div className="flex-1 h-px bg-zinc-700" />
+            </div>
+
+            {/* Free court prep CTA */}
+            <Link
+              href={`/r/${promoCode}/reminders?charge=${chargeSlug}&rec=${rec.slug}`}
+              className="block w-full text-center px-6 py-3 border border-zinc-500 text-zinc-300 rounded-xl hover:border-amber-500 hover:text-white transition-colors"
+            >
+              Get Free Court Prep
+            </Link>
+            <p className="text-zinc-500 text-xs text-center mt-2">
+              Court date reminders + what to expect at your hearing.
+            </p>
+
             <Link
               href="/services"
               className="block text-center text-zinc-400 text-sm mt-4 hover:text-zinc-400"
