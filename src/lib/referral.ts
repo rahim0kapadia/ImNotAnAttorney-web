@@ -225,3 +225,20 @@ export async function getPartnerByPromoCode(
   }
   return data;
 }
+
+/**
+ * Calculates 10% partner discount.
+ * Shared between ReferralQuiz (client) and prep page (server).
+ */
+export function calculatePartnerDiscount(priceInCents: number): {
+  original: number;
+  discounted: number;
+  savings: number;
+} {
+  const discounted = Math.round(priceInCents * 0.9);
+  return {
+    original: priceInCents,
+    discounted,
+    savings: priceInCents - discounted,
+  };
+}
