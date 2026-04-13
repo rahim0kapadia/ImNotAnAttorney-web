@@ -743,6 +743,7 @@ function CheckoutContent() {
   const band = searchParams.get("band"); // Score band passed from score page CTA
   const refParam = searchParams.get("ref"); // Referral code from quiz link
   const planParam = searchParams.get("plan"); // Payment plan (e.g., "2x" for installments)
+  const reminderToken = searchParams.get("reminder_token"); // Court reminder attribution token
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -849,6 +850,7 @@ function CheckoutContent() {
           ...(info.isDigitalProduct && useInstallment && { paymentPlan: true }),
           ...(promoCode && { promoCode }),
           ...(refSub && { refSub }),
+          ...(reminderToken && { reminderToken }),
         }),
       });
 

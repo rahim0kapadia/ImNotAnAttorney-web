@@ -695,6 +695,29 @@ export async function POST(req: NextRequest) {
     }
 
     // ──────────────────────────────────────────────────────────────
+    // COURT REMINDER CONVERSION TRACKING
+    // ──────────────────────────────────────────────────────────────
+    // If the customer arrived via a court reminder prep page, the
+    // checkout session carries a court_reminder_token in metadata.
+    // Mark the reminder as converted so we can measure the free-to-paid
+    // funnel and attribute partner referrals through the reminder path.
+    const reminderToken = session.metadata?.court_reminder_token;
+    if (reminderToken && orderData) {
+      const { error: crErr } = await supabase
+        .from("court_reminders")
+        .update({
+          converted_at: new Date().toISOString(),
+          order_id: orderData.id,
+        })
+        .eq("token", reminderToken)
+        .eq("status", "active");
+
+      if (crErr) {
+        console.warn("[Webhook] Court reminder conversion tracking failed:", crErr);
+      }
+    }
+
+    // ──────────────────────────────────────────────────────────────
     // TIER 9 DATA-DRIVEN PRODUCTS — INTAKE THEN GENERATE
     // ──────────────────────────────────────────────────────────────
     // Tier 9 products (Judge Report Card, Officer Background Check,

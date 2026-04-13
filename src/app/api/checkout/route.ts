@@ -64,6 +64,7 @@ export async function POST(req: NextRequest) {
     const ref = typeof body.ref === "string" && body.ref.length <= 200 ? body.ref : null;
     const rawRefSub = typeof body.refSub === "string" ? body.refSub : null;
     const refSub = rawRefSub ? sanitizeSubId(rawRefSub) : null;
+    const reminderToken = typeof body.reminderToken === "string" && body.reminderToken.length <= 100 ? body.reminderToken : null;
 
     // =========================================================================
     // 1a. STANDALONE PRODUCT CHECKOUT
@@ -720,6 +721,7 @@ export async function POST(req: NextRequest) {
           ...(referralPartnerId && { partner_id: referralPartnerId }),
           ...(sanitizedPromoCode && { partner_promo_code: sanitizedPromoCode }),
           ...(refSub && { partner_sub_id: refSub }),
+          ...(reminderToken && { court_reminder_token: reminderToken }),
         },
         success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
         cancel_url: `${origin}/checkout?tier=${tier}&plan=2x`,
@@ -768,6 +770,7 @@ export async function POST(req: NextRequest) {
         ...(referralPartnerId && { partner_id: referralPartnerId }),
         ...(sanitizedPromoCode && { partner_promo_code: sanitizedPromoCode }),
         ...(refSub && { partner_sub_id: refSub }),
+        ...(reminderToken && { court_reminder_token: reminderToken }),
         ...(tierConfig.includesTiers.length > 0 && {
           includes_tiers: tierConfig.includesTiers.join(","),
         }),
