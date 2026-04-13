@@ -135,6 +135,61 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // ── Referral cookie for /r/[code] routes ──────────────────────
+  // In Next.js 16, cookies().set() is not allowed in Server Components.
+  // Middleware is the correct place to set cookies for page routes.
+  if (pathname.startsWith("/r/") && !pathname.startsWith("/r/api")) {
+    const codeMatch = pathname.match(/^\/r\/([^/]+)/);
+    if (codeMatch) {
+      const code = codeMatch[1].toUpperCase();
+      const response = NextResponse.next();
+      response.cookies.set("ref", code, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 90 * 24 * 60 * 60, // 90 days
+        path: "/",
+      });
+      // Also handle sub-ID tracking
+      const url = new URL(req.url);
+      const sub = url.searchParams.get("sub");
+      if (sub) {
+        const cleanSub = sub.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 50);
+        if (cleanSub) {
+          response.cookies.set("ref_sub", cleanSub, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 90 * 24 * 60 * 60,
+            path: "/",
+          });
+        }
+      }
+      // Still need CSP nonce — add it to this response
+      const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+      const supabaseConnectSrc = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://*.supabase.co";
+      const cspHeader = [
+        "default-src 'self'",
+        `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://js.stripe.com https://vercel.live`,
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data: https:",
+        "font-src 'self'",
+        `connect-src 'self' https://api.stripe.com https://vercel.live ${supabaseConnectSrc} https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com`,
+        "frame-src https://js.stripe.com https://hooks.stripe.com",
+        "frame-ancestors 'none'",
+        "object-src 'none'",
+        "worker-src 'self'",
+        "base-uri 'self'",
+        "form-action 'self' https://checkout.stripe.com",
+      ].join("; ");
+      const requestHeaders = new Headers(req.headers);
+      requestHeaders.set("x-nonce", nonce);
+      requestHeaders.set("Content-Security-Policy", cspHeader);
+      response.headers.set("Content-Security-Policy", cspHeader);
+      return response;
+    }
+  }
+
   // ── Nonce-based CSP for page routes ──────────────────────────
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
 

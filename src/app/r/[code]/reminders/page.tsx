@@ -48,15 +48,7 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
     redirect("/");
   }
 
-  // Set referral cookie
-  const cookieStore = await cookies();
-  cookieStore.set("ref", partner.promo_code!, {
-    httpOnly: false,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: REFERRAL_COOKIE_MAX_AGE,
-    path: "/",
-  });
+  // Referral cookie is set by middleware (Next.js 16 — cookies().set() not allowed in Server Components)
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col">

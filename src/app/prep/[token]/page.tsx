@@ -83,17 +83,9 @@ export default async function PrepPage({ params }: PageProps) {
     );
   }
 
-  // Refresh ref cookie for attribution
-  if (reminder.partner_promo_code) {
-    const cookieStore = await cookies();
-    cookieStore.set("ref", reminder.partner_promo_code, {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: REFERRAL_COOKIE_MAX_AGE,
-      path: "/",
-    });
-  }
+  // Note: ref cookie refresh for /prep/[token] is not handled by middleware
+  // (only /r/[code] routes set cookies). Attribution works because the original
+  // /r/[code] visit already set the 90-day cookie, and checkout reads it.
 
   // Calculate countdown
   const now = new Date();

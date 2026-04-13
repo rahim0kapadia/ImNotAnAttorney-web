@@ -74,28 +74,7 @@ export default async function ReferralPage({ params, searchParams }: PageProps) 
     );
   }
 
-  // Set referral cookie (90-day, NOT httpOnly — checkout page reads via JS)
-  const cookieStore = await cookies();
-  cookieStore.set("ref", partner.promo_code!, {
-    httpOnly: false,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: REFERRAL_COOKIE_MAX_AGE,
-    path: "/",
-  });
-
-  if (sub) {
-    const cleanSub = sanitizeSubId(sub);
-    if (cleanSub) {
-      cookieStore.set("ref_sub", cleanSub, {
-        httpOnly: false,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: REFERRAL_COOKIE_MAX_AGE,
-        path: "/",
-      });
-    }
-  }
+  // Referral cookie is set by middleware (Next.js 16 — cookies().set() not allowed in Server Components)
 
   return (
     <BridgePage
