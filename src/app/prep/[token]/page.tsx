@@ -360,8 +360,8 @@ export default async function PrepPage({ params }: PageProps) {
         {/* What Happens Next — always renders */}
         <PrepSectionBlock section={whatHappensNext} />
 
-        {/* Section D: Product Recommendation */}
-        {tier && discount && !courtPassed && (
+        {/* Section D: Product Recommendation / Quiz CTA */}
+        {!courtPassed && (
           <section className="mt-12 bg-zinc-900 rounded-xl border border-zinc-700 p-6">
             <h2 className="font-display text-xl font-bold text-amber-400 mb-3">
               Want questions specific to YOUR case?
@@ -370,28 +370,55 @@ export default async function PrepPage({ params }: PageProps) {
               Your case has specific angles an attorney should investigate — charge-specific weaknesses, procedural requirements, and evidence standards. Our analysis identifies them and gives you the exact questions.
             </p>
 
-            <div className="flex items-baseline gap-3 mb-4">
-              <span className="text-zinc-500 line-through text-lg">
-                ${(discount.original / 100).toFixed(0)}
-              </span>
-              <span className="text-3xl font-bold text-white">
-                ${(discount.discounted / 100).toFixed(2)}
-              </span>
-              <span className="text-amber-400 text-sm font-medium">
-                Save ${(discount.savings / 100).toFixed(0)}
-              </span>
-            </div>
+            {tier && discount ? (
+              <>
+                {partnerCompany && (
+                  <p className="text-amber-400/80 text-sm font-medium mb-3">
+                    Exclusive rate through {partnerCompany}
+                  </p>
+                )}
 
-            <p className="text-zinc-400 text-sm mb-6">
-              {tier.name} — {tier.delivery}
-            </p>
+                <div className="flex items-baseline gap-3 mb-4">
+                  <span className="text-zinc-500 line-through text-lg">
+                    ${(discount.original / 100).toFixed(0)}
+                  </span>
+                  <span className="text-3xl font-bold text-white">
+                    ${(discount.discounted / 100).toFixed(2)}
+                  </span>
+                  <span className="text-amber-400 text-sm font-medium">
+                    Save ${(discount.savings / 100).toFixed(0)}
+                  </span>
+                </div>
 
-            <Link
-              href={checkoutUrl}
-              className="block w-full text-center px-6 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] transition-all"
-            >
-              Get Questions Specific to Your Case
-            </Link>
+                <p className="text-zinc-400 text-sm mb-6">
+                  {tier.name} — {tier.delivery}
+                </p>
+
+                <Link
+                  href={checkoutUrl}
+                  className="block w-full text-center px-6 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] transition-all"
+                >
+                  Get Questions Specific to Your Case
+                </Link>
+              </>
+            ) : (
+              <>
+                {partnerCompany && (
+                  <p className="text-amber-400/80 text-sm font-medium mb-3">
+                    Exclusive rates available through {partnerCompany}
+                  </p>
+                )}
+                <p className="text-zinc-400 text-sm mb-6">
+                  Take a 2-minute quiz. We&apos;ll tell you exactly which questions your attorney should be answering — based on your charge, your county, and your situation.
+                </p>
+                <Link
+                  href={`/score${reminder.partner_promo_code ? `?ref=${reminder.partner_promo_code}` : ""}`}
+                  className="block w-full text-center px-6 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] transition-all"
+                >
+                  Take the Free Defense Quiz
+                </Link>
+              </>
+            )}
           </section>
         )}
 
