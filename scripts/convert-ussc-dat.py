@@ -15,6 +15,7 @@ import os
 # Only extract columns needed by ingest-ussc-bench-jury.mjs and ingest-ussc-sentencing.mjs
 NEEDED = {
     "DISPOSIT", "SENTTOT", "SENSPLT0", "DISTRICT", "OFFGUIDE", "SENTRNGE",
+    "OFFTYPE2", "OFFTYPSB",  # FY14-17 use OFFTYPE2/OFFTYPSB instead of OFFGUIDE
     "CIRCDIST", "USSCIDN", "MONSEX", "NEWRACE", "XCRHISSR",
     "BOOTEFLT", "BOOTEFTT", "ZONE", "GLMIN", "GLMAX",
 }

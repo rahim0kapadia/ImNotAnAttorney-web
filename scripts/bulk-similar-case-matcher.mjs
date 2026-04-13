@@ -114,8 +114,10 @@ function esc(val) {
 function escJsonb(obj) {
   if (!obj) return "NULL";
   const json = JSON.stringify(obj);
-  const escaped = json.split("\\").join("\\\\").split("'").join("''");
-  return `'${escaped}'::jsonb`;
+  // Only escape single quotes for SQL — JSON backslashes are already
+  // correct from JSON.stringify. Double-escaping them corrupts the JSON
+  // and causes "invalid input syntax for type json" errors.
+  return "'" + json.split("'").join("''") + "'::jsonb";
 }
 
 function sleep(ms) {
@@ -440,11 +442,20 @@ async function main() {
 
   if (fs.existsSync(DUMP_FILE)) {
     const dumpRows = JSON.parse(fs.readFileSync(DUMP_FILE, "utf8"));
+    const seenClusters = new Set();
 
     for (const row of dumpRows) {
-      // Filter: must have cluster_id and be confirmed good law
+      // Filter: must have cluster_id. All cases are valid for factual
+      // similarity matching — is_good_law only matters for legal citations,
+      // not for "what happened in cases like yours" (outcomes, patterns).
       if (!row.courtlistener_cluster_id) continue;
-      if (row.is_good_law !== true) continue;
+
+      // Deduplicate by cluster_id — a single opinion can be cited by
+      // multiple statutes. Keep first occurrence (preserves is_good_law
+      // priority since those appear first in the dump).
+      const cid = String(row.courtlistener_cluster_id);
+      if (seenClusters.has(cid)) continue;
+      seenClusters.add(cid);
 
       allCases.push({
         courtlistener_cluster_id: row.courtlistener_cluster_id,
@@ -468,7 +479,7 @@ async function main() {
     return;
   }
 
-  console.log(`Total good-law cases loaded: ${allCases.length}`);
+  console.log(`Total unique cases loaded: ${allCases.length}`);
 
   if (allCases.length === 0) {
     console.log("No cases to process.");

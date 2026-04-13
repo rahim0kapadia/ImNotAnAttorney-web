@@ -1,0 +1,20 @@
+Most Serious Offense,Guilty Plea,Trial rate,Mean sentence,Median sentence,Mean sentence trial,Mean sentence plea,Days to disposition
+All offenses,94,6,38,17,78,29,265
+Violent offenses,90,10,71,36,127,53,295
+Murder/Nonnegligent manslaughter,61,39,244,264,267,192,505
+Sexual assault,88,12,106,60,158,80,348
+Rape,84,16,138,96,,,
+Other sexual assault,91,9,78,44,,,
+Robbery,89,11,87,60,146,64,282
+Aggravated assault,92,8,41,24,75,33,279
+Other violent,93,7,38,18,63,31,244
+Property offenses,95,5,30,15,50,24,237
+Burglary,94,6,41,24,68,32,234
+Larceny,95,5,22,12,34,18,220
+Motor vehicle theft,96,4,19,12,,,
+Fraud/Forgery,95,5,28,12,42,22,261
+Drug offenses,96,4,31,14,63,26,271
+Possession,98,2,23,12,36,19,257
+Trafficking,94,6,38,21,70,30,282
+Weapon offenses,96,4,32,23,56,27,253
+Other specified offenses,92,8,24,12,38,19,253

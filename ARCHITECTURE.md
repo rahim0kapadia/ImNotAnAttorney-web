@@ -124,7 +124,7 @@ A purely statistical intelligence layer computed from CourtListener's 10M+ opini
 1. Judge × Prosecutor pairing matrix (`judge_prosecutor_pairings`) — motion grant rates per judge-prosecutor pair
 2. k-NN similar-case matching (`case_feature_vectors`) — feature vectors + nearest neighbors from DB data
 3. Sentencing outlier detection (`sentencing_distributions`) — sentence length extraction + percentile computation
-4. Bench vs jury divergence per judge (`bench_jury_divergence`) — bench vs jury outcome classification
+4. Bench vs jury sentencing divergence (`bench_jury_divergence`) — USSC district-level plea/bench/jury sentencing + CL opinion-mined acquittal rates
 5. Judge quote library (`judge_quotes`) — extracted judicial holding quotes from opinions
 6. Officer reliability cross-case patterns (`officer_reliability`) — cross-case officer credibility tracking
 7. Appeal outcome correlation (`appellate_trends`) — appellate reversal/affirmance rates via citation-map
@@ -137,7 +137,8 @@ A purely statistical intelligence layer computed from CourtListener's 10M+ opini
 - `bulk-sentencing-outlier-detector.mjs` — sentence length extraction + percentile computation
 - `bulk-officer-reliability-aggregator.mjs` — cross-case officer credibility tracking
 - `bulk-judge-prosecutor-pairing.mjs` — motion grant rates by judge-prosecutor pair
-- `bulk-bench-jury-divergence.mjs` — bench vs jury outcome classification
+- `bulk-bench-jury-divergence.mjs` — bench vs jury outcome classification (CL opinions)
+- `ingest-ussc-bench-jury.mjs` — USSC district-level plea/bench/jury sentencing divergence (FY14-24, 739K cases)
 - `bulk-appeal-outcome-correlator.mjs` — appellate reversal/affirmance rates via citation-map
 - `bulk-similar-case-matcher.mjs` — feature vectors + k-NN from DB data
 - `bulk-co-defendant-divergence-analyzer.mjs` — co-defendant outcome comparison

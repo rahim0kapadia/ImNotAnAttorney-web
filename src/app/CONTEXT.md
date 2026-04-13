@@ -184,6 +184,11 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 | POST | `/api/deliver` | Email report to customer + set `delivered_at` |
 | GET | `/api/download/[token]` | Download token validation |
 
+### Tier 9 Availability Gate (1 route)
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/check-availability/[slug]` | Pre-purchase data check for Tier 9 SKUs (judge-report-card, officer-background-check, similar-cases-analyzer). Returns coverage counts + availability boolean. Waitlist capture when `waitlist: true` + `email` in body → `data_waitlist` upsert + Telegram alert. Rate limited: 10/min per IP. |
+
 ### Standalone Product Routes (calculators, intake, tools)
 | Method | Route | Purpose |
 |--------|-------|---------|

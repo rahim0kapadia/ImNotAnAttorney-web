@@ -612,7 +612,10 @@ async function main() {
     }
 
     // Accumulate rates (average later if multiple rows per key)
-    if (convRate !== null) { agg.conviction_rate_sum += convRate; agg.rate_rows++; }
+    // Increment rate_rows if ANY rate is present (not just convRate)
+    const hasAnyRate = convRate !== null || acqRate !== null || dismissRate !== null || pleaRate !== null || trialRate !== null;
+    if (hasAnyRate) { agg.rate_rows++; }
+    if (convRate !== null) { agg.conviction_rate_sum += convRate; }
     if (acqRate !== null) { agg.acquittal_rate_sum += acqRate; }
     if (dismissRate !== null) { agg.dismissal_rate_sum += dismissRate; }
     if (pleaRate !== null) { agg.plea_rate_sum += pleaRate; }
@@ -667,7 +670,8 @@ async function main() {
       "INSERT INTO outcome_benchmarks\n" +
       "  (jurisdiction_level, jurisdiction_name, offense_type,\n" +
       "   conviction_rate, acquittal_rate, dismissal_rate,\n" +
-      "   plea_rate, trial_rate, plea_trial_penalty_pct,\n" +
+      "   plea_conviction_rate, trial_conviction_rate, plea_trial_penalty_pct,\n" +
+      "   plea_avg_sentence_months, trial_avg_sentence_months,\n" +
       "   median_sentence_months, mean_sentence_months,\n" +
       "   avg_days_to_disposition,\n" +
       "   source_urls, data_as_of)\n" +
@@ -681,9 +685,11 @@ async function main() {
       "  " + fmtFloat(pleaRateFinal) + ",\n" +
       "  " + fmtFloat(trialRateFinal) + ",\n" +
       "  " + fmtFloat2(plTrialPenalty) + ",\n" +
+      "  " + fmtFloat2(pleaSentFinal) + ",\n" +
+      "  " + fmtFloat2(trialSentFinal) + ",\n" +
       "  " + fmtFloat2(medSentFinal) + ",\n" +
       "  " + fmtFloat2(meanSentFinal) + ",\n" +
-      "  " + fmtFloat2(avgDaysFinal) + ",\n" +
+      "  " + (avgDaysFinal !== null ? Math.round(avgDaysFinal) : "NULL") + ",\n" +
       "  ARRAY[" + esc(SOURCE_URL) + "],\n" +
       "  now()\n" +
       ")\n" +
@@ -691,9 +697,11 @@ async function main() {
       "  conviction_rate = EXCLUDED.conviction_rate,\n" +
       "  acquittal_rate = EXCLUDED.acquittal_rate,\n" +
       "  dismissal_rate = EXCLUDED.dismissal_rate,\n" +
-      "  plea_rate = EXCLUDED.plea_rate,\n" +
-      "  trial_rate = EXCLUDED.trial_rate,\n" +
+      "  plea_conviction_rate = EXCLUDED.plea_conviction_rate,\n" +
+      "  trial_conviction_rate = EXCLUDED.trial_conviction_rate,\n" +
       "  plea_trial_penalty_pct = EXCLUDED.plea_trial_penalty_pct,\n" +
+      "  plea_avg_sentence_months = EXCLUDED.plea_avg_sentence_months,\n" +
+      "  trial_avg_sentence_months = EXCLUDED.trial_avg_sentence_months,\n" +
       "  median_sentence_months = EXCLUDED.median_sentence_months,\n" +
       "  mean_sentence_months = EXCLUDED.mean_sentence_months,\n" +
       "  avg_days_to_disposition = EXCLUDED.avg_days_to_disposition,\n" +

@@ -556,7 +556,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 | plea_median_sentence | numeric | Median sentence months for plea deals (context) |
 | plea_sample | integer | Number of plea deals (default: 0) |
 | fiscal_year_range | text | USSC fiscal year range, e.g. "FY2018-FY2024" |
-| offense_category | text | Human-readable offense category from OFFGUIDE |
+| offense_category | text | Human-readable offense category (from OFFGUIDE FY18+, OFFTYPE2 FY14-17) |
 
 #### `appellate_trends`
 

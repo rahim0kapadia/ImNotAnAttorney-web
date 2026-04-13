@@ -1,5 +1,5 @@
 /**
- * Bulk Dump — Export all statute_case_law rows to local JSON
+ * Bulk Dump — Export all verified_case_law rows to local JSON
  *
  * Single Supabase Management API query. Writes to data/bulk-verify/.
  * Zero rate limit risk — one query, one response.
@@ -72,20 +72,19 @@ function supabaseQuery(sql) {
 }
 
 async function main() {
-  console.log("=== BULK DUMP: statute_case_law ===\n");
+  console.log("=== BULK DUMP: case_law ===\n");
 
-  const sql = `SELECT id, jurisdiction_statute_id, case_name, citation, court, year,
-    holding, is_good_law, source_urls, courtlistener_cluster_id, confidence_score,
-    verified_at, party_side, outcome, holding_excerpt, key_quote, application,
-    is_binding, negative_treatment, negative_treatment_checked_at, validation_level
-  FROM statute_case_law
+  const sql = `SELECT id, case_name, citation, court, year,
+    holding, is_good_law, courtlistener_cluster_id,
+    verified_at, jurisdiction
+  FROM case_law
   ORDER BY created_at`;
 
   console.log("Querying Supabase...");
   const rows = await supabaseQuery(sql);
 
   if (!Array.isArray(rows) || rows.length === 0) {
-    console.log("No rows found in statute_case_law.");
+    console.log("No rows found in case_law.");
     process.exit(0);
   }
 
@@ -102,8 +101,8 @@ async function main() {
   const verified = rows.filter(r => r.is_good_law === true).length;
   const badLaw = rows.filter(r => r.is_good_law === false).length;
   const unverified = rows.filter(r => r.is_good_law === null).length;
-  const withSourceUrls = rows.filter(r => r.source_urls && r.source_urls.length > 0).length;
   const withClusterId = rows.filter(r => r.courtlistener_cluster_id).length;
+  const withJurisdiction = rows.filter(r => r.jurisdiction && r.jurisdiction.trim()).length;
   const needsVerification = rows.filter(r => r.is_good_law === null && r.citation).length;
 
   console.log(`\nDumped to: ${outputPath}`);
@@ -114,8 +113,8 @@ async function main() {
   console.log(`Verified (good law):     ${verified}`);
   console.log(`Bad law (overruled):     ${badLaw}`);
   console.log(`Unverified (null):       ${unverified}`);
-  console.log(`With source_urls:        ${withSourceUrls}`);
   console.log(`With CL cluster ID:      ${withClusterId}`);
+  console.log(`With jurisdiction:       ${withJurisdiction}`);
   console.log(`Needs verification:      ${needsVerification}`);
   console.log(`\nFile size: ${(fs.statSync(outputPath).size / 1024).toFixed(1)} KB`);
 }

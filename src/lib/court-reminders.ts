@@ -24,6 +24,9 @@ export interface CourtReminder {
   created_at: string;
   converted_at: string | null;
   order_id: string | null;
+  indemnitor_name?: string | null;
+  indemnitor_email?: string | null;
+  last_name?: string | null;
 }
 
 // ── Reminder intervals (days before court date) ─────────────

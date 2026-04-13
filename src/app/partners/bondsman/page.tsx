@@ -107,11 +107,11 @@ export default function BondsmanPartnersPage() {
           </FadeInUp>
           <StaggerContainer className="grid md:grid-cols-3 gap-6">
             {[
-              { title: "Free Court Prep for Your Clients", desc: "Date reminders, what to expect at their hearing, and how to show up ready." },
+              { title: "Free FTA Prevention", desc: "Your clients get court date reminders and hearing prep automatically. Reduce your FTA rate — protect your bottom line." },
+              { title: "Client Tracker Dashboard", desc: "See all your clients, their court dates, and reminder status in one place. Free — other companies charge $99/month." },
+              { title: "One-Tap Client Entry", desc: "Add a client from your dashboard. We email them their court prep page and handle all reminders automatically." },
               { title: "You Earn 10-20% on Upgrades", desc: "When they're ready for case-specific analysis, your code gets them 10% off and you earn commission." },
-              { title: "One Link. Every Client.", desc: "Text it, say it, email it. We do the rest." },
-              { title: "Real-Time Dashboard", desc: "See every referral, commission, and payout in real time." },
-              { title: "Monthly Payouts", desc: "NET-30 via PayPal, Venmo, Zelle, or check. Your choice." },
+              { title: "FTA Savings Calculator", desc: "See how much court reminders save you in prevented forfeitures. Real math, real numbers." },
               { title: "Compliance Kit", desc: "Approved language and FTC disclosure templates. Stay protected." },
             ].map((item) => (
               <StaggerItem key={item.title}>

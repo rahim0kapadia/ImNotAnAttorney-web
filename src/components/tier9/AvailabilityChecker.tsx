@@ -57,24 +57,70 @@ const US_STATES = [
   { value: 'WY', label: 'Wyoming' },
 ];
 
-const CHARGE_TYPES = [
-  { value: 'drug-possession', label: 'Drug Possession' },
-  { value: 'drug-trafficking', label: 'Drug Trafficking' },
-  { value: 'dui', label: 'DUI / DWI' },
-  { value: 'dui-first', label: 'DUI — First Offense' },
-  { value: 'dui-repeat', label: 'DUI — Repeat Offense' },
-  { value: 'assault', label: 'Assault' },
-  { value: 'domestic-violence', label: 'Domestic Violence' },
-  { value: 'theft', label: 'Theft / Larceny' },
-  { value: 'white-collar', label: 'White Collar / Financial Crime' },
-  { value: 'sex-offense', label: 'Sex Offense' },
-  { value: 'sex-offense-contact', label: 'Sex Offense — Contact' },
-  { value: 'sex-offense-digital', label: 'Sex Offense — Digital / Possession' },
-  { value: 'weapons', label: 'Weapons Charge' },
-  { value: 'federal', label: 'Federal Charge' },
-  { value: 'probation-violation', label: 'Probation Violation' },
-  { value: 'self-defense', label: 'Self-Defense Claim' },
-  { value: 'other', label: 'Other' },
+const CHARGE_GROUPS = [
+  {
+    label: 'DUI & Driving Offenses',
+    options: [
+      { value: 'dui', label: 'DUI / DWI' },
+      { value: 'dui-first', label: 'DUI — First Offense' },
+      { value: 'dui-repeat', label: 'DUI — Repeat Offense' },
+      { value: 'hit-and-run', label: 'Hit and Run / Fleeing' },
+    ],
+  },
+  {
+    label: 'Drug Offenses',
+    options: [
+      { value: 'drug-possession', label: 'Drug Possession' },
+      { value: 'drug-trafficking', label: 'Drug Trafficking' },
+    ],
+  },
+  {
+    label: 'Violent Crimes',
+    options: [
+      { value: 'assault', label: 'Assault' },
+      { value: 'domestic-violence', label: 'Domestic Violence' },
+      { value: 'murder', label: 'Murder / Attempted Murder' },
+      { value: 'manslaughter', label: 'Manslaughter / Vehicular Homicide' },
+      { value: 'kidnapping', label: 'Kidnapping / Human Trafficking' },
+      { value: 'robbery', label: 'Robbery' },
+      { value: 'stalking', label: 'Stalking / Harassment' },
+      { value: 'child-abuse', label: 'Child Abuse / Endangerment' },
+    ],
+  },
+  {
+    label: 'Property Crimes',
+    options: [
+      { value: 'theft', label: 'Theft / Larceny' },
+      { value: 'burglary', label: 'Burglary / Breaking and Entering' },
+      { value: 'arson', label: 'Arson' },
+    ],
+  },
+  {
+    label: 'Sex Offenses',
+    options: [
+      { value: 'sex-offense', label: 'Sex Offense' },
+      { value: 'sex-offense-contact', label: 'Sex Offense — Contact' },
+      { value: 'sex-offense-digital', label: 'Sex Offense — Digital / Possession' },
+    ],
+  },
+  {
+    label: 'Financial Crimes',
+    options: [
+      { value: 'white-collar', label: 'White Collar / Financial Crime' },
+      { value: 'fraud', label: 'Fraud / Identity Theft' },
+    ],
+  },
+  {
+    label: 'Other Charges',
+    options: [
+      { value: 'weapons', label: 'Weapons Charge' },
+      { value: 'federal', label: 'Federal Charge' },
+      { value: 'probation-violation', label: 'Probation Violation' },
+      { value: 'self-defense', label: 'Self-Defense Claim' },
+      { value: 'contempt', label: 'Contempt / Obstruction' },
+      { value: 'other', label: 'Other' },
+    ],
+  },
 ];
 
 /** Human-readable labels for coverage keys returned by the API. */
@@ -151,6 +197,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
   const errorRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const firstInputRef = useRef<HTMLInputElement | HTMLSelectElement>(null);
+  const prevStateRef = useRef<ComponentState>('idle');
 
   // Pre-fill email from localStorage on mount
   useEffect(() => {
@@ -162,10 +209,31 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     }
   }, []);
 
+  // Deterministic focus management on state transitions (no setTimeout race)
+  useEffect(() => {
+    const prev = prevStateRef.current;
+    prevStateRef.current = componentState;
+
+    switch (componentState) {
+      case 'available':
+      case 'unavailable':
+      case 'waitlisted':
+        resultRef.current?.focus();
+        break;
+      case 'error':
+        errorRef.current?.focus();
+        break;
+      case 'idle':
+        if (prev === 'error') firstInputRef.current?.focus();
+        break;
+    }
+  }, [componentState]);
+
   /* ── Availability check ── */
 
   const handleCheck = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    if (componentState === 'checking') return;
     setErrorMsg('');
     setComponentState('checking');
 
@@ -190,11 +258,9 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       setCoverage(data.coverage);
       setMatchedName(data.matchedName);
       setComponentState(data.available ? 'available' : 'unavailable');
-      setTimeout(() => resultRef.current?.focus(), 50);
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
       setComponentState('error');
-      setTimeout(() => errorRef.current?.focus(), 50);
     }
   }, [slug, name, state, chargeType]);
 
@@ -230,14 +296,12 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           // localStorage unavailable
         }
         setComponentState('waitlisted');
-        setTimeout(() => resultRef.current?.focus(), 50);
       } else {
         throw new Error('Waitlist registration failed. Please try again.');
       }
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
       setComponentState('error');
-      setTimeout(() => errorRef.current?.focus(), 50);
     }
   }, [slug, name, state, chargeType, email]);
 
@@ -246,7 +310,6 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
   const handleRetry = useCallback(() => {
     setErrorMsg('');
     setComponentState('idle');
-    setTimeout(() => firstInputRef.current?.focus(), 50);
   }, []);
 
   /* ── Build checkout URL ── */
@@ -287,12 +350,12 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">
             {entries.map(([key, count]) => (
               <div key={key} className="flex items-baseline gap-2">
-                <dd className="text-2xl font-bold text-amber-500 tabular-nums">
-                  {count.toLocaleString()}
-                </dd>
-                <dt className="text-sm text-zinc-400">
+                <dt className="text-sm text-zinc-400 order-2">
                   {COVERAGE_LABELS[key] ?? key}
                 </dt>
+                <dd className="text-2xl font-bold text-amber-500 tabular-nums order-1">
+                  {count.toLocaleString()}
+                </dd>
               </div>
             ))}
           </dl>
@@ -309,6 +372,14 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
         >
           Get Your {productName} — {priceDisplay}
         </a>
+
+        <button
+          type="button"
+          onClick={handleRetry}
+          className="w-full text-center text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-3 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
+        >
+          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : 'name'}
+        </button>
       </div>
     );
   }
@@ -331,6 +402,14 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           we have enough data to generate your {productName}. No charge until
           then.
         </p>
+
+        <button
+          type="button"
+          onClick={handleRetry}
+          className="text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-4 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
+        >
+          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : 'name'}
+        </button>
       </div>
     );
   }
@@ -342,7 +421,6 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
         ref={errorRef}
         tabIndex={-1}
         role="alert"
-        aria-live="polite"
         className="bg-red-950/40 border border-red-800 rounded-lg p-6"
       >
         <p className="text-red-300 text-sm mb-4">{errorMsg}</p>
@@ -359,6 +437,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       <div
         ref={resultRef}
         tabIndex={-1}
+        role="status"
         className="bg-zinc-900 border border-zinc-700 rounded-lg p-8"
       >
         <h3 className="text-xl font-display font-bold text-zinc-200 mb-2">
@@ -370,7 +449,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           do — no charge until then.
         </p>
 
-        <form onSubmit={handleWaitlist} className="space-y-4">
+        <form onSubmit={handleWaitlist} aria-label={`Join waitlist for ${productName}`} className="space-y-4">
           <div>
             <label htmlFor={`${id}-waitlist-email`} className={labelClass}>
               Email address{' '}
@@ -463,10 +542,14 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
             disabled={isChecking}
           >
             <option value="">Select charge type</option>
-            {CHARGE_TYPES.map((c) => (
-              <option key={c.value} value={c.value}>
-                {c.label}
-              </option>
+            {CHARGE_GROUPS.map((group) => (
+              <optgroup key={group.label} label={group.label}>
+                {group.options.map((c) => (
+                  <option key={c.value} value={c.value}>
+                    {c.label}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
         </div>
@@ -499,7 +582,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       </div>
 
       {/* Submit */}
-      <button type="submit" disabled={isChecking} className={primaryBtnClass}>
+      <button type="submit" aria-disabled={isChecking || undefined} className={primaryBtnClass}>
         {isChecking ? (
           <span className="inline-flex items-center justify-center gap-2">
             <svg
@@ -529,6 +612,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           'Check Availability'
         )}
       </button>
+
+      <div aria-live="polite" className="sr-only">
+        {isChecking ? 'Checking availability, please wait...' : ''}
+      </div>
     </form>
   );
 }

@@ -17,11 +17,27 @@ import { ComplianceKit } from "@/components/partner/ComplianceKit";
 import { EarningsSection } from "@/components/partner/EarningsSection";
 import { PartnerAnalytics, type AnalyticsData } from "@/components/partner/PartnerAnalytics";
 import { PaymentSettingsForm } from "@/components/partner/PaymentSettingsForm";
+import { ClientTracker } from "@/components/partner/ClientTracker";
+import { FtaCalculator } from "@/components/partner/FtaCalculator";
+import { AddClientModal } from "@/components/partner/AddClientModal";
 import { formatDate } from "@/lib/format";
 import { tierDisplayName } from "@/lib/tiers";
 import { formatCents } from "@/lib/format";
 import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
 import { type Partner } from "@/lib/partner-data";
+
+interface CourtClient {
+  id: string;
+  token: string;
+  first_name: string;
+  charge_type: string;
+  county_state: string;
+  court_date: string;
+  status: string;
+  reminders_sent: string[];
+  created_at: string;
+  converted_at: string | null;
+}
 
 interface Earnings {
   total_earned: number;
@@ -56,6 +72,8 @@ export default function PartnerDashboard() {
   const [payouts, setPayouts] = useState<Payout[]>([]);
   const [analytics, setAnalytics] = useState<AnalyticsData>({ monthly: [], by_tier: [], total_referrals: 0 });
   const [reminderSignups, setReminderSignups] = useState(0);
+  const [courtClients, setCourtClients] = useState<CourtClient[]>([]);
+  const [showAddClient, setShowAddClient] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchDashboard = useCallback(async () => {
@@ -73,6 +91,7 @@ export default function PartnerDashboard() {
       setPayouts(data.payouts || []);
       setAnalytics(data.analytics || { monthly: [], by_tier: [], total_referrals: 0 });
       setReminderSignups(data.reminderSignups ?? 0);
+      setCourtClients(data.courtClients || []);
     } catch {
       setError("Failed to load dashboard");
     } finally {
@@ -140,11 +159,21 @@ export default function PartnerDashboard() {
           </div>
         )}
 
-        {/* Court prep sign-ups stat */}
-        <div className="bg-zinc-900 rounded-xl border border-zinc-700 p-4">
-          <p className="text-sm text-zinc-400">Court prep sign-ups</p>
-          <p className="text-2xl font-bold">{reminderSignups}</p>
-        </div>
+        {/* Client Tracker — FTA Prevention Dashboard */}
+        <ClientTracker
+          clients={courtClients}
+          onAddClient={() => setShowAddClient(true)}
+        />
+
+        {/* FTA Savings Calculator */}
+        <FtaCalculator />
+
+        {/* Add Client Modal */}
+        <AddClientModal
+          open={showAddClient}
+          onClose={() => setShowAddClient(false)}
+          onSuccess={() => fetchDashboard()}
+        />
 
         {/* 1. Toolkit */}
         <ToolkitSection partner={partner} referralUrl={referralUrl} />

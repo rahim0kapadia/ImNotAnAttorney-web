@@ -43,6 +43,36 @@ const DUMP_FILE = path.join(PROJECT_ROOT, "data", "bulk-verify", "statute-case-l
 const CITING_MAP_FILE = path.join(PROJECT_ROOT, "data", "bulk-verify", "good-law-graph", "appeal-citing-map.json");
 const CLASSIFICATIONS_FILE = path.join(PROJECT_ROOT, "data", "bulk-verify", "good-law-graph", "appeal-classifications.json");
 
+// ── Court name → state code mapping ──────────────────────────────────────────
+// Derives 2-letter state code from CL court name string. Returns "federal" for
+// federal circuits, null if unrecognized. Uses char-code scan (no regex).
+const STATE_NAMES_TO_CODES = {
+  alabama: "AL", alaska: "AK", arizona: "AZ", arkansas: "AR", california: "CA",
+  colorado: "CO", connecticut: "CT", delaware: "DE", florida: "FL", georgia: "GA",
+  hawaii: "HI", idaho: "ID", illinois: "IL", indiana: "IN", iowa: "IA",
+  kansas: "KS", kentucky: "KY", louisiana: "LA", maine: "ME", maryland: "MD",
+  massachusetts: "MA", michigan: "MI", minnesota: "MN", mississippi: "MS",
+  missouri: "MO", montana: "MT", nebraska: "NE", nevada: "NV",
+  "new hampshire": "NH", "new jersey": "NJ", "new mexico": "NM", "new york": "NY",
+  "north carolina": "NC", "north dakota": "ND", ohio: "OH", oklahoma: "OK",
+  oregon: "OR", pennsylvania: "PA", "rhode island": "RI", "south carolina": "SC",
+  "south dakota": "SD", tennessee: "TN", texas: "TX", utah: "UT", vermont: "VT",
+  virginia: "VA", washington: "WA", "west virginia": "WV", wisconsin: "WI",
+  wyoming: "WY", "district of columbia": "DC", "d.c.": "DC",
+};
+
+function deriveJurisdictionFromCourt(courtName) {
+  if (!courtName) return null;
+  const lc = courtName.toLowerCase();
+  // Check for federal circuit courts
+  if (lc.indexOf("circuit") >= 0 || lc.indexOf("united states") >= 0) return "federal";
+  // Scan for state names in court name
+  for (const [name, code] of Object.entries(STATE_NAMES_TO_CODES)) {
+    if (lc.indexOf(name) >= 0) return code;
+  }
+  return null;
+}
+
 const args = process.argv.slice(2);
 const phases = args.filter(a => a.startsWith("--phase")).map(a => parseInt(a.split(" ")[1] || args[args.indexOf(a) + 1], 10));
 const runAll = args.includes("--all");
@@ -223,7 +253,9 @@ async function phase1() {
     if (r.courtlistener_cluster_id) {
       const clusterId = String(r.courtlistener_cluster_id);
       targetClusters.add(clusterId);
-      if (r.jurisdiction) clusterToJurisdiction.set(clusterId, r.jurisdiction);
+      // Derive jurisdiction from court name if jurisdiction field missing
+      const jur = r.jurisdiction || deriveJurisdictionFromCourt(r.court);
+      if (jur) clusterToJurisdiction.set(clusterId, jur);
       if (r.year) clusterToYear.set(clusterId, r.year);
     }
   }

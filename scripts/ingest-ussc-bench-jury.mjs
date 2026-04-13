@@ -66,7 +66,7 @@ const MIN_BENCH_PER_OFFENSE = 2;
 const MIN_JURY_PER_OFFENSE = 5;
 
 // ── Columns we need (header-name → local key) ──────────────────────────────
-const NEEDED_COLS = ["DISPOSIT", "SENTTOT", "SENSPLT0", "DISTRICT", "OFFGUIDE", "SENTRNGE"];
+const NEEDED_COLS = ["DISPOSIT", "SENTTOT", "SENSPLT0", "DISTRICT", "OFFGUIDE", "OFFTYPE2", "OFFTYPSB", "SENTRNGE"];
 
 // ── Env loading ─────────────────────────────────────────────────────────────
 
@@ -144,24 +144,42 @@ function districtLabel(code) {
   return DISTRICT_LABELS[String(code).trim()] || ("District Code " + code);
 }
 
-// ── OFFGUIDE → offense category labels ──────────────────────────────────────
+// ── Offense category labels (from USSC codebooks) ─────────────────────────
 
+// OFFGUIDE (FY18+): derived from primary sentencing guideline
 const OFFGUIDE_LABELS = {
-  "1": "Homicide", "2": "Sex Offenses", "3": "Kidnapping",
-  "4": "Drug Trafficking", "5": "Drug Possession", "6": "Fraud",
-  "7": "Property Offenses", "8": "Robbery", "9": "Arson",
-  "10": "Extortion/Racketeering", "11": "Firearms", "12": "Tax",
-  "13": "Money Laundering", "14": "Immigration", "15": "Child Exploitation",
-  "16": "Administration of Justice", "17": "Environmental", "18": "Food & Drug",
-  "19": "National Defense", "20": "Antitrust", "21": "Bribery/Corruption",
-  "22": "Civil Rights", "23": "Counterfeiting", "24": "Gambling",
-  "25": "Money Laundering", "26": "Individual Rights", "27": "Other",
-  "28": "Pornography/Prostitution", "29": "Prison Offenses", "30": "Stalking/Harassment",
+  "1": "Administration of Justice", "2": "Antitrust", "3": "Arson",
+  "4": "Assault", "5": "Bribery/Corruption", "6": "Burglary/Trespass",
+  "7": "Child Pornography", "8": "Commercialized Vice", "9": "Drug Possession",
+  "10": "Drug Trafficking", "11": "Environmental", "12": "Extortion/Racketeering",
+  "13": "Firearms", "14": "Food & Drug", "15": "Forgery/Counterfeiting",
+  "16": "Fraud/Theft/Embezzlement", "17": "Immigration", "18": "Individual Rights",
+  "19": "Kidnapping", "20": "Manslaughter", "21": "Money Laundering",
+  "22": "Murder", "23": "National Defense", "24": "Obscenity/Sex Offenses",
+  "25": "Prison Offenses", "26": "Robbery", "27": "Sex Abuse",
+  "28": "Stalking/Harassment", "29": "Tax", "30": "Other",
 };
 
-function offguideLabel(code) {
+// OFFTYPE2 (FY99-FY17): derived from statute of conviction
+const OFFTYPE2_LABELS = {
+  "1": "Murder", "2": "Manslaughter", "3": "Kidnapping",
+  "4": "Sex Abuse", "5": "Assault", "6": "Robbery",
+  "9": "Arson", "10": "Drug Trafficking", "11": "Drug Communication",
+  "12": "Drug Possession", "13": "Firearms", "15": "Burglary",
+  "16": "Auto Theft", "17": "Larceny", "18": "Fraud",
+  "19": "Embezzlement", "20": "Forgery/Counterfeiting", "21": "Bribery",
+  "22": "Tax", "23": "Money Laundering", "24": "Racketeering/Extortion",
+  "25": "Gambling", "26": "Civil Rights", "27": "Immigration",
+  "28": "Pornography/Prostitution", "29": "Prison Offenses",
+  "30": "Administration of Justice", "31": "Environmental",
+  "32": "National Defense", "33": "Antitrust", "34": "Food & Drug",
+  "35": "Other", "42": "Child Pornography", "43": "Obscenity", "44": "Prostitution",
+};
+
+function offguideLabel(code, useOfftype2) {
   const key = String(code).trim();
-  return OFFGUIDE_LABELS[key] || OFFGUIDE_LABELS[key.padStart(2, "0")] || ("Offense " + key);
+  const map = useOfftype2 ? OFFTYPE2_LABELS : OFFGUIDE_LABELS;
+  return map[key] || ("Offense " + key);
 }
 
 // ── Math helpers ────────────────────────────────────────────────────────────
@@ -457,10 +475,22 @@ async function parseUSSCCsv(csvPath, fyLabel, groups, stats) {
     // Filter invalid sentences (9996-9999 = missing codes in USSC)
     if (isNaN(sentMonths) || sentMonths < 0 || sentMonths > 9000) continue;
 
-    const offCode = headerMap.OFFGUIDE !== undefined ? (fields[headerMap.OFFGUIDE] || "").trim() : "";
+    // Offense category: OFFGUIDE (FY18+) > OFFTYPSB (FY10-17) > OFFTYPE2 (FY99-17)
+    // Resolve to human label at parse time so grouping keys are consistent across years
+    let offLabel = "";
+    if (headerMap.OFFGUIDE !== undefined) {
+      const raw = (fields[headerMap.OFFGUIDE] || "").trim();
+      if (raw) offLabel = OFFGUIDE_LABELS[raw] || ("Offense " + raw);
+    } else if (headerMap.OFFTYPSB !== undefined) {
+      const raw = (fields[headerMap.OFFTYPSB] || "").trim();
+      if (raw) offLabel = OFFTYPE2_LABELS[raw] || ("Offense " + raw);
+    } else if (headerMap.OFFTYPE2 !== undefined) {
+      const raw = (fields[headerMap.OFFTYPE2] || "").trim();
+      if (raw) offLabel = OFFTYPE2_LABELS[raw] || ("Offense " + raw);
+    }
 
     // Get or create groups for this district + offense and district aggregate
-    const offKey = distCode + "|" + (offCode || "unknown");
+    const offKey = distCode + "|" + (offLabel || "unknown");
     const aggKey = distCode + "|all";
 
     if (!groups.has(offKey)) groups.set(offKey, { bench: [], jury: [], plea: [] });
@@ -568,7 +598,7 @@ async function main() {
     }
 
     const distName = districtLabel(distCode);
-    const offName = isAggregate ? "All Offenses" : offguideLabel(offCode);
+    const offName = isAggregate ? "All Offenses" : offCode; // already resolved to label at parse time
 
     const benchMedian = median(data.bench);
     const juryMedian = median(data.jury);

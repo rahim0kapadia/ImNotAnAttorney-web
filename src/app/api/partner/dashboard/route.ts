@@ -43,6 +43,33 @@ export async function GET(req: NextRequest) {
       .select("*", { count: "exact", head: true })
       .eq("partner_promo_code", partner.promo_code);
 
+    // Court prep clients — full list for client tracker
+    const { data: courtClients } = await supabase
+      .from("court_reminders")
+      .select("id, first_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at")
+      .eq("partner_promo_code", partner.promo_code)
+      .order("court_date", { ascending: true })
+      .limit(100);
+
+    // Check-in summaries per client
+    const reminderIds = (courtClients || []).map((c: { id: string }) => c.id);
+    const checkInSummary: Record<string, { count: number; lastCheckIn: string | null }> = {};
+    if (reminderIds.length > 0) {
+      const { data: checkIns } = await supabase
+        .from("client_check_ins")
+        .select("court_reminder_id, checked_in_at")
+        .in("court_reminder_id", reminderIds)
+        .order("checked_in_at", { ascending: false });
+      for (const ci of (checkIns || [])) {
+        const existing = checkInSummary[ci.court_reminder_id];
+        if (!existing) {
+          checkInSummary[ci.court_reminder_id] = { count: 1, lastCheckIn: ci.checked_in_at };
+        } else {
+          existing.count++;
+        }
+      }
+    }
+
     // Use the maintained partner totals (accurate even with >50 referrals)
     const totalEarned = partner.total_commission || 0;
     const totalPaid = partner.total_paid_out || 0;
@@ -70,6 +97,8 @@ export async function GET(req: NextRequest) {
         total_referrals: partner.total_referrals || 0,
       },
       reminderSignups: reminderSignups ?? 0,
+      courtClients: courtClients || [],
+      checkInSummary,
       referrals: referrals || [],
       payouts: payouts || [],
       analytics: analytics || { monthly: [], by_tier: [], total_referrals: 0 },

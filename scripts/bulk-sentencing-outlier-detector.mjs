@@ -141,6 +141,86 @@ function extractSentencingData(text) {
   return [...new Set(sentences)];
 }
 
+
+// ── Derive state abbreviation from court name ──────────────────────────────
+const STATE_PATTERNS = new Map([
+  ['alabama', 'AL'], ['alaska', 'AK'], ['arizona', 'AZ'], ['arkansas', 'AR'],
+  ['california', 'CA'], ['colorado', 'CO'], ['connecticut', 'CT'], ['delaware', 'DE'],
+  ['florida', 'FL'], ['georgia', 'GA'], ['hawaii', 'HI'], ['idaho', 'ID'],
+  ['illinois', 'IL'], ['indiana', 'IN'], ['iowa', 'IA'], ['kansas', 'KS'],
+  ['kentucky', 'KY'], ['louisiana', 'LA'], ['maine', 'ME'], ['maryland', 'MD'],
+  ['massachusetts', 'MA'], ['michigan', 'MI'], ['minnesota', 'MN'], ['mississippi', 'MS'],
+  ['missouri', 'MO'], ['montana', 'MT'], ['nebraska', 'NE'], ['nevada', 'NV'],
+  ['new hampshire', 'NH'], ['new jersey', 'NJ'], ['new mexico', 'NM'], ['new york', 'NY'],
+  ['north carolina', 'NC'], ['north dakota', 'ND'], ['ohio', 'OH'], ['oklahoma', 'OK'],
+  ['oregon', 'OR'], ['pennsylvania', 'PA'], ['rhode island', 'RI'], ['south carolina', 'SC'],
+  ['south dakota', 'SD'], ['tennessee', 'TN'], ['texas', 'TX'], ['utah', 'UT'],
+  ['vermont', 'VT'], ['virginia', 'VA'], ['washington', 'WA'], ['west virginia', 'WV'],
+  ['wisconsin', 'WI'], ['wyoming', 'WY'], ['district of columbia', 'DC'],
+  ['united states', 'US'],
+]);
+
+function deriveJurisdiction(court) {
+  if (!court) return null;
+  const lower = court.toLowerCase();
+  for (const [state, abbr] of STATE_PATTERNS) {
+    if (lower.indexOf(state) >= 0) return abbr;
+  }
+  return null;
+}
+
+// ── Extract trial JUDGE name from opinion preamble ─────────────────────────
+// Ported from bulk-bench-jury-divergence.mjs.
+// author_str = appellate judge who WROTE the opinion (wrong for sentencing).
+// We need the trial judge. Appellate opinions name them in the first ~1500 chars.
+function extractTrialJudge(text) {
+  const preamble = text.slice(0, 1500).toLowerCase();
+
+  // FL-style: "County; [Name], Judge;" or "[Name], Judge."
+  const flMatch = preamble.match(/([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){1,4}),\s*judge[.;\s]/i);
+  if (flMatch) {
+    const name = flMatch[1].trim();
+    if (!name.match(/circuit|county|district|court|appeal|supreme|state|united/i)) return name;
+  }
+
+  // NY-style: "(Name, J.)" parenthetical
+  const nyMatch = preamble.match(/\(([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,3}),\s*j\.\)/i);
+  if (nyMatch) {
+    const name = nyMatch[1].trim();
+    if (!name.match(/circuit|county|district|court|appeal|supreme|state/i)) return name;
+  }
+
+  // "the honorable [Name]"
+  const honMatch = preamble.match(/(?:the\s+)?honorable\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){1,4})/i);
+  if (honMatch) {
+    const cleaned = honMatch[1].trim().replace(/,\s*(circuit\s+)?judge.*$/i, "").trim();
+    if (!cleaned.match(/circuit|county|district|court|appeal|supreme|state/i) && cleaned.length > 3) return cleaned;
+  }
+
+  // "presiding judge [Name]" / "trial judge [Name]"
+  const trialMatch = preamble.match(/(?:presiding|trial(?:\s+court)?)\s+judge\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,4})/i);
+  if (trialMatch) {
+    const cleaned = trialMatch[1].trim().replace(/,\s*$/, "").replace(/\.\s*$/, "").trim();
+    if (cleaned.length > 3) return cleaned;
+  }
+
+  // "judge [Name] presiding"
+  const presidingMatch = preamble.match(/judge\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,4})\s+presiding/i);
+  if (presidingMatch) {
+    const cleaned = presidingMatch[1].trim().replace(/,\s*$/, "").replace(/\.\s*$/, "").trim();
+    if (!cleaned.match(/circuit|county|district|court/i) && cleaned.length > 3) return cleaned;
+  }
+
+  // "the trial court, Judge [Name],"
+  const inlineMatch = preamble.match(/(?:the\s+)?trial\s+court,?\s+judge\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,4})/i);
+  if (inlineMatch) {
+    const cleaned = inlineMatch[1].trim().replace(/,.*$/, "").replace(/\s+presiding.*$/i, "").trim();
+    if (!cleaned.match(/circuit|county|district|court/i) && cleaned.length > 3) return cleaned;
+  }
+
+  return null;
+}
+
 // ── SQL / Supabase ──────────────────────────────────────────────────────────
 
 function esc(val) {
@@ -341,17 +421,36 @@ async function main() {
     const sentences = extractSentencingData(text);
     if (sentences.length === 0) continue;
 
-    // Attempt to match opinion author to judge
+    // Extract trial judge from opinion preamble (appellate opinions name the trial judge)
     let judgeId = null;
-    const authorStr = (record.author || "").toLowerCase();
-    for (const [judgeName, jId] of judges) {
-      if (authorStr.indexOf(judgeName) >= 0) {
-        judgeId = jId;
-        break;
+    const trialJudgeName = extractTrialJudge(text);
+    if (trialJudgeName) {
+      const lower = trialJudgeName.toLowerCase();
+      if (judges.has(lower)) {
+        judgeId = judges.get(lower);
+      } else {
+        for (const [judgeName, jId] of judges) {
+          if (judgeName.indexOf(lower) >= 0 || lower.indexOf(judgeName) >= 0) {
+            judgeId = jId;
+            break;
+          }
+        }
+      }
+    }
+    // Fallback: author_str (appellate opinion writer — less useful but better than nothing)
+    if (!judgeId) {
+      const authorStr = (record.author_str || "").toLowerCase();
+      if (authorStr.length > 3) {
+        for (const [judgeName, jId] of judges) {
+          if (authorStr.indexOf(judgeName) >= 0) {
+            judgeId = jId;
+            break;
+          }
+        }
       }
     }
 
-    const jurisdiction = dumpRow.jurisdiction || "unknown";
+    const jurisdiction = dumpRow.jurisdiction || deriveJurisdiction(dumpRow.court) || "unknown";
     const chargeSlug = dumpRow.statute_slug || "unknown";
     const key = `${judgeId || "unknown"}|${jurisdiction}|${chargeSlug}`;
 
@@ -387,30 +486,105 @@ async function main() {
   console.log(`Clusters matched: ${matchCount}`);
   console.log(`Clusters with sentence data: ${withDataCount}`);
 
-  // Compute percentiles and filter groups with sample_size >= 3
+  // Diagnostic: judge match + field population rates
+  let judgeMatched = 0, judgeUnmatched = 0;
+  let jurisdictionKnown = 0, chargeKnown = 0;
+  for (const [, entry] of distributions) {
+    const n = entry.sentences.length;
+    if (entry.judge_id) judgeMatched += n;
+    else judgeUnmatched += n;
+    if (entry.jurisdiction !== "unknown") jurisdictionKnown += n;
+    if (entry.charge_slug !== "unknown") chargeKnown += n;
+  }
+  const totalSentences = judgeMatched + judgeUnmatched;
+  console.log(`\nJudge match rate:        ${judgeMatched}/${totalSentences} (${((judgeMatched / (totalSentences || 1)) * 100).toFixed(1)}%)`);
+  console.log(`Jurisdiction populated:  ${jurisdictionKnown}/${totalSentences}`);
+  console.log(`Charge slug populated:   ${chargeKnown}/${totalSentences}`);
+  console.log(`Unique groups:           ${distributions.size}`);
+
+  // ── Tiered grouping with rollup ──
+  // Tier 1: judge+jurisdiction+charge (most specific — what the table schema wants)
+  // Tier 2: judge+jurisdiction (roll up across charges for the same judge)
+  // Tier 3: judge-only (broadest — total sentencing pattern)
+  // Coverage check picks the most specific tier available at query time.
+
   const results = [];
+  let tier1 = 0, tier2 = 0, tier3 = 0;
+
+  // Tier 1: Fine-grained grouping (already in distributions map)
   for (const [, entry] of distributions) {
     if (entry.sentences.length < 3) continue;
-
-    const sorted = entry.sentences.sort((a, b) => a - b);
-    const p25 = computePercentile(sorted, 25);
-    const median = computePercentile(sorted, 50);
-    const p75 = computePercentile(sorted, 75);
-
+    const sorted = [...entry.sentences].sort((a, b) => a - b);
     results.push({
       judge_id: entry.judge_id,
       jurisdiction: entry.jurisdiction,
       charge_slug: entry.charge_slug,
-      median_months: Math.round(median * 100) / 100,
-      p25: Math.round(p25 * 100) / 100,
-      p75: Math.round(p75 * 100) / 100,
-      sample_size: entry.sentences.length,
+      median_months: Math.round(computePercentile(sorted, 50) * 100) / 100,
+      p25: Math.round(computePercentile(sorted, 25) * 100) / 100,
+      p75: Math.round(computePercentile(sorted, 75) * 100) / 100,
+      sample_size: sorted.length,
       source_urls: ["https://www.courtlistener.com/"],
     });
+    tier1++;
   }
 
-  console.log(`\nDistributions (sample_size >= 3): ${results.length}`);
-  console.log(`Sample distribution sample sizes:`);
+  // Tier 2: Roll up by judge+jurisdiction (aggregate across charge slugs)
+  const byJudgeJurisdiction = new Map();
+  for (const [, entry] of distributions) {
+    if (!entry.judge_id) continue;
+    const key = `${entry.judge_id}|${entry.jurisdiction}`;
+    if (!byJudgeJurisdiction.has(key)) {
+      byJudgeJurisdiction.set(key, { judge_id: entry.judge_id, jurisdiction: entry.jurisdiction, sentences: [] });
+    }
+    byJudgeJurisdiction.get(key).sentences.push(...entry.sentences);
+  }
+  for (const [, entry] of byJudgeJurisdiction) {
+    if (entry.sentences.length < 3) continue;
+    const sorted = [...entry.sentences].sort((a, b) => a - b);
+    results.push({
+      judge_id: entry.judge_id,
+      jurisdiction: entry.jurisdiction,
+      charge_slug: "_all",
+      median_months: Math.round(computePercentile(sorted, 50) * 100) / 100,
+      p25: Math.round(computePercentile(sorted, 25) * 100) / 100,
+      p75: Math.round(computePercentile(sorted, 75) * 100) / 100,
+      sample_size: sorted.length,
+      source_urls: ["https://www.courtlistener.com/"],
+    });
+    tier2++;
+  }
+
+  // Tier 3: Roll up by judge only (aggregate across jurisdictions + charges)
+  const byJudge = new Map();
+  for (const [, entry] of distributions) {
+    if (!entry.judge_id) continue;
+    if (!byJudge.has(entry.judge_id)) {
+      byJudge.set(entry.judge_id, { judge_id: entry.judge_id, sentences: [] });
+    }
+    byJudge.get(entry.judge_id).sentences.push(...entry.sentences);
+  }
+  for (const [, entry] of byJudge) {
+    if (entry.sentences.length < 3) continue;
+    const sorted = [...entry.sentences].sort((a, b) => a - b);
+    results.push({
+      judge_id: entry.judge_id,
+      jurisdiction: "_all",
+      charge_slug: "_all",
+      median_months: Math.round(computePercentile(sorted, 50) * 100) / 100,
+      p25: Math.round(computePercentile(sorted, 25) * 100) / 100,
+      p75: Math.round(computePercentile(sorted, 75) * 100) / 100,
+      sample_size: sorted.length,
+      source_urls: ["https://www.courtlistener.com/"],
+    });
+    tier3++;
+  }
+
+  console.log(`\nDistributions (sample_size >= 3):`);
+  console.log(`  Tier 1 (judge+jurisdiction+charge): ${tier1}`);
+  console.log(`  Tier 2 (judge+jurisdiction):         ${tier2}`);
+  console.log(`  Tier 3 (judge only):                 ${tier3}`);
+  console.log(`  Total:                               ${results.length}`);
+  console.log(`\nSample distributions:`);
   for (let i = 0; i < Math.min(10, results.length); i++) {
     const r = results[i];
     console.log(`  ${r.judge_id || "unknown"}|${r.jurisdiction}|${r.charge_slug}: median=${r.median_months}mo, p25=${r.p25}mo, p75=${r.p75}mo (n=${r.sample_size})`);

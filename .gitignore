@@ -69,7 +69,31 @@ data/bulk-verify/cl-bulk/
 data/bulk-verify/statute-case-law-dump.json
 data/bulk-verify/good-law-graph/appeal-citing-map.json
 
+# USSC sentencing data (multi-GB .dat/.sas/.sps files + zip archives)
+data/bulk-verify/external-intel/ussc/
+data/bulk-verify/external-intel/**/*.zip
+data/bulk-verify/external-intel/*.zip
+*.dat
+*.sas
+*.sps
+
+# Large HTML caches and SQL dumps (re-generated from scripts)
+data/bulk-verify/external-intel/*-cache.html
+data/bulk-verify/external-intel/*-upserts.sql
+data/bulk-verify/external-intel/bjs-extracted/
+
+# Pipeline logs (ephemeral)
+logs/
+data/pipeline-output.log
+data/bench-jury-run.log
+data/tmp-*.sql
+data/tmp-*.html
+
+# Test results
+test-results/
+
 # Local cache directories
 .cap-cache/
 # CocoIndex Code (ccc)
 /.cocoindex_code/
+.cocoindex_code/

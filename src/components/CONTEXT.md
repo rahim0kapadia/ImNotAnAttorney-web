@@ -1,6 +1,6 @@
 # UI Components — src/components/
 
-> 44 React components. Server Components by default; client components marked `"use client"` for interactivity.
+> 45 React components. Server Components by default; client components marked `"use client"` for interactivity.
 
 ## Component Groups
 
@@ -76,6 +76,11 @@
 | `partner/PartnerHowItWorks.tsx` | Program mechanics explanation | No |
 | `partner/PartnerWhyItWorks.tsx` | Value proposition display | No |
 | `partner/index.ts` | Barrel export | N/A |
+
+### Tier 9
+| File | Purpose | Client |
+|------|---------|--------|
+| `tier9/AvailabilityChecker.tsx` | Pre-purchase data availability gate. 6 states (idle, checking, available, unavailable, waitlisted, error). POSTs to `/api/check-availability/[slug]`, renders coverage stats as `dl/dt/dd`, waitlist email capture on unavailable. WCAG AA: labeled inputs, aria-required, role="alert"/"status", aria-busy, focus management via refs. | Yes |
 
 ### Other
 | File | Purpose | Client |
