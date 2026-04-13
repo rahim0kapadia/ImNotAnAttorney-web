@@ -26,7 +26,7 @@ test.describe("Court Reminders Platform", () => {
     await page.goto(`${BASE}/r/${PARTNER_CODE}/quiz`);
     await expect(page.getByText("What are you charged with?")).toBeVisible();
     await expect(page.getByText("DUI / DWI")).toBeVisible();
-    await expect(page.getByText("Drug possession")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Drug possession" })).toBeVisible();
   });
 
   test("quiz flow → recommendation page shows court prep CTA", async ({
@@ -134,7 +134,7 @@ test.describe("Court Reminders Platform", () => {
     // Prep page content checks
     // Countdown should show "30 days" (approximately)
     await expect(page.getByText(/your court date is in/i)).toBeVisible();
-    await expect(page.getByText(/\d+ day/)).toBeVisible();
+    await expect(page.getByText(/\d+ day/).first()).toBeVisible();
 
     // What to expect section (DUI-specific)
     await expect(
