@@ -13,16 +13,18 @@ import { CourtReminderForm } from "@/components/CourtReminderForm";
 import { REFERRAL_COOKIE_MAX_AGE } from "@/lib/referral";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 
-export const metadata: Metadata = {
-  title: "Free Court Prep | ImNotAnAttorney",
-  description:
-    "Court date reminders, what to expect at your hearing, and how to prepare. Free — no account needed.",
-  openGraph: {
-    title: "Free Court Prep",
-    description: "Court date reminders + what to expect at your hearing.",
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Free Court Prep | ImNotAnAttorney",
+    description:
+      "Court date reminders, what to expect at your hearing, and how to prepare. Free — no account needed.",
+    openGraph: {
+      title: "Free Court Prep",
+      description: "Court date reminders + what to expect at your hearing.",
+      type: "website",
+    },
+  };
+}
 
 interface PageProps {
   params: Promise<{ code: string }>;
