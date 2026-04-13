@@ -6,11 +6,30 @@
  * not approved, shows a generic fallback.
  */
 
+import type { Metadata } from "next";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { BridgePage } from "@/components/BridgePage";
 import { REFERRAL_COOKIE_MAX_AGE, sanitizeSubId } from "@/lib/referral";
+
+export const metadata: Metadata = {
+  title: "Court Prep for Your Case | ImNotAnAttorney",
+  description:
+    "Understand your charges and get the right questions for your attorney. Legal information — not legal advice.",
+  openGraph: {
+    title: "Court Prep for Your Case",
+    description:
+      "Understand your charges. Get the right questions for your attorney.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Court Prep for Your Case",
+    description:
+      "Understand your charges. Get the right questions for your attorney.",
+  },
+};
 
 interface PageProps {
   params: Promise<{ code: string }>;

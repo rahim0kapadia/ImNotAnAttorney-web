@@ -14,24 +14,19 @@ interface MessageTemplatesProps {
 
 const TEMPLATES = [
   {
-    label: "Check-in pitch",
+    label: "Add to your check-in text",
     template: (code: string, url: string) =>
-      `Hey [name], checking in. Quick tip — a lot of my clients use this service to get the right questions to ask their attorney. Helped a few people catch things their lawyer missed. Use my code ${code} for 10% off: ${url}`,
+      `Hey [name], this is [your name]. Check-in: [day/time]. Court prep resource a lot of my clients use before their attorney meeting: ${url} — code ${code} saves 10%.`,
   },
   {
-    label: "Right after bonding out",
+    label: "Quick share",
     template: (code: string, url: string) =>
-      `Hey [name], you're going to have a lot of questions about your case. This service researches your charges and gives you the exact questions to ask your attorney. Use my code ${code} for 10% off: ${url}`,
+      `Hey [name], a lot of my clients use this to prepare for their case. Helps you know the right questions for your attorney: ${url} — code ${code} saves 10%.`,
   },
   {
-    label: "Follow-up nudge",
+    label: "For someone else",
     template: (code: string, url: string) =>
-      `Hey [name], still dealing with your case? The people I've sent here say it helped them feel way more prepared for their attorney meetings. ${url} — my code ${code} saves you 10%.`,
-  },
-  {
-    label: "General share",
-    template: (code: string, url: string) =>
-      `If you or someone you know is dealing with criminal charges, this service researches your case and gives you the questions that close the information gap. Code ${code} for 10% off: ${url}`,
+      `Someone dealing with a case? This helps them prepare and ask their attorney the right questions: ${url} — code ${code} for 10% off.`,
   },
 ];
 
@@ -70,7 +65,8 @@ export function MessageTemplates({ promoCode, referralUrl }: MessageTemplatesPro
         );
       })}
       <p className="text-xs text-zinc-400">
-        Replace [name] with the defendant&apos;s name when you paste.
+        Replace [name] and [your name] when you paste. The first template works
+        best — add it to the text you already send about check-ins.
       </p>
     </div>
   );

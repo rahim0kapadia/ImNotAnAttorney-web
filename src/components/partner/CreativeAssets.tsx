@@ -39,9 +39,9 @@ const TEMPLATES = [
       `Subject: Following up — that case research tool\n\nHey [name],\n\nJust checking in. I know things are stressful right now, but I wanted to remind you about that service I mentioned — ImNotAnAttorney.\n\nThe people I've sent there say it helped them feel way more prepared for their attorney meetings. They dig into your specific case and generate questions you wouldn't think to ask.\n\nLink: ${url}\nCode ${code} = 10% off\n\nNo pressure, but the earlier you get this info the more useful it is.\n\n[Your name]`,
   },
   {
-    label: "Verbal Script (for bondsmen)",
+    label: "Verbal One-Liner (for bondsmen)",
     template: (code: string, url: string) =>
-      `\"Hey, real quick before you go — a lot of my clients use this service called ImNotAnAttorney. They research your case and give you the right questions to ask your attorney. It's not legal advice, it's the information that helps you stay on top of your case. If you're interested, use my code ${code} and you get 10% off. The website is ${url}.\"`,
+      `After you ask who their attorney is, say:\n\n"A lot of my clients use this to prepare for their attorney meetings — imnotanattorney.com. My code ${code} saves you 10%."\n\n17 words. One sentence. That's it.`,
   },
 ];
 
