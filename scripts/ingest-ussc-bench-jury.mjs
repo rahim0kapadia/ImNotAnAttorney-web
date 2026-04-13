@@ -708,8 +708,8 @@ async function main() {
 
   // Update data_source_freshness
   const freshnessSQL =
-    "INSERT INTO data_source_freshness (source_key, last_ingested_at, last_row_count, is_stale) " +
-    "VALUES ('ussc_bench_jury_divergence', now(), " + results.length + ", false) " +
+    "INSERT INTO data_source_freshness (source_key, source_name, source_url, last_ingested_at, last_row_count, is_stale) " +
+    "VALUES ('ussc_bench_jury_divergence', 'USSC Bench vs Jury Divergence', 'https://www.ussc.gov/research/datafiles/commission-datafiles', now(), " + results.length + ", false) " +
     "ON CONFLICT (source_key) DO UPDATE SET " +
     "last_ingested_at = now(), last_row_count = " + results.length + ", is_stale = false;";
 
