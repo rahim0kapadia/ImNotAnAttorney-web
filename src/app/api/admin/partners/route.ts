@@ -171,13 +171,18 @@ export async function POST(req: NextRequest) {
     const stripePromo = await createPartnerPromoCode(partner.id, code, partner.name);
 
     // Update partner with Stripe promo code references
-    await supabase
+    const { error: updateErr } = await supabase
       .from("partners")
       .update({
         stripe_coupon_id: "bondsman-referral-10pct",
         stripe_promo_code_id: stripePromo.id,
       })
       .eq("id", partner.id);
+
+    if (updateErr) {
+      console.error("[Admin Partners] Failed to save Stripe promo refs for partner", partner.id, updateErr);
+      // Partner and Stripe promo exist — only the DB link failed. Log and continue.
+    }
   } catch (stripeErr) {
     console.error("[Admin Partners] Stripe promo code error:", stripeErr);
     // Partner created but promo code failed, don't roll back, operator can retry
