@@ -50,6 +50,8 @@ export interface JudgeReportCardData {
     trial_penalty_pct: number | null;
     offense_category: string | null;
     fiscal_year_range: string | null;
+    plea_median_sentence: number | null;
+    plea_sample: number;
   }>;
   quotes: Array<{
     quote: string;
@@ -207,7 +209,7 @@ const STATE_NAMES: Record<string, string> = {
   WI: "Wisconsin", WY: "Wyoming",
 };
 
-const BENCH_JURY_SELECT = "charge_slug, bench_acquittal_rate, jury_acquittal_rate, bench_sample, jury_sample, source_urls, district, bench_median_sentence, jury_median_sentence, trial_penalty_pct, offense_category, fiscal_year_range";
+const BENCH_JURY_SELECT = "charge_slug, bench_acquittal_rate, jury_acquittal_rate, bench_sample, jury_sample, source_urls, district, bench_median_sentence, jury_median_sentence, trial_penalty_pct, offense_category, fiscal_year_range, plea_median_sentence, plea_sample";
 
 // ============================================================
 // QUERIES

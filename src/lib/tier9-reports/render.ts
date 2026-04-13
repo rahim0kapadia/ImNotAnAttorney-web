@@ -251,22 +251,22 @@ export function renderJudgeReportCard(data: JudgeReportCardData): string {
 
     if (hasSentencingData) {
       // USSC sentencing divergence view
-      body += sectionHeader("Bench vs Jury Trial Sentencing");
+      body += sectionHeader("Plea vs Bench Trial vs Jury Trial Sentencing");
       body += `
         <p style="color: #A1A1AA; font-size: 13px; margin: 0 0 12px 0;">
           Federal sentencing data (USSC)${districtName ? ` — districts in ${escapeHtml(districtName.split(" of ").pop() || "")}` : ""}.
           ${data.benchJuryDivergence[0]?.fiscal_year_range ? escapeHtml(data.benchJuryDivergence[0].fiscal_year_range) + "." : ""}
-          Median sentence in months. Trial penalty = how much longer jury sentences are vs bench.
+          Median sentence in months. Shows what defendants actually received by disposition type.
         </p>
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
           <thead>
             <tr style="background: #1C1917;">
               <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Offense Type</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Plea Median</th>
               <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Bench Median</th>
               <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Jury Median</th>
               <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Trial Penalty</th>
-              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Bench n</th>
-              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Jury n</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Cases</th>
               <th style="padding: 10px 12px; text-align: center; color: #F59E0B; font-size: 13px;">Sources</th>
             </tr>
           </thead>
@@ -281,14 +281,15 @@ export function renderJudgeReportCard(data: JudgeReportCardData): string {
         const penaltyColor = penalty != null
           ? (penalty > 20 ? "#EF4444" : penalty < -20 ? "#22C55E" : "#FAFAF9")
           : "#A1A1AA";
+        const totalCases = (row.plea_sample || 0) + row.bench_sample + row.jury_sample;
         body += `
             <tr style="border-bottom: 1px solid #1C1917;">
               <td style="padding: 8px 12px; color: #D4D4D8;">${row.offense_category || row.charge_slug || "All"}</td>
+              <td style="padding: 8px 12px; color: #22C55E; text-align: right; font-weight: 600;">${row.plea_median_sentence != null ? `${Number(row.plea_median_sentence).toFixed(1)} mo` : "—"}</td>
               <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.bench_median_sentence != null ? `${Number(row.bench_median_sentence).toFixed(1)} mo` : "—"}</td>
-              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.jury_median_sentence != null ? `${Number(row.jury_median_sentence).toFixed(1)} mo` : "—"}</td>
+              <td style="padding: 8px 12px; color: #EF4444; text-align: right; font-weight: 600;">${row.jury_median_sentence != null ? `${Number(row.jury_median_sentence).toFixed(1)} mo` : "—"}</td>
               <td style="padding: 8px 12px; color: ${penaltyColor}; text-align: right; font-weight: 600;">${penaltyStr}</td>
-              <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.bench_sample}</td>
-              <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.jury_sample}</td>
+              <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${totalCases.toLocaleString()}</td>
               <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
             </tr>
         `;
