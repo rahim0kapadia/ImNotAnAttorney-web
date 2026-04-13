@@ -10,7 +10,6 @@
 
 import type { Metadata } from "next";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -20,9 +19,8 @@ import {
 import { getInsiderTips, getAttorneyQuestions, getWhatHappensNext } from "@/lib/prep-content";
 import type { PrepSection } from "@/lib/prep-content";
 import { queryPrepData, parseStateCode } from "@/lib/prep-data";
-import type { PrepAggregateData } from "@/lib/prep-data";
 import { TIER_CORE } from "@/lib/tiers";
-import { calculatePartnerDiscount, REFERRAL_COOKIE_MAX_AGE } from "@/lib/referral";
+import { calculatePartnerDiscount } from "@/lib/referral";
 import { CheckInButton } from "@/components/partner/CheckInButton";
 
 interface PageProps {
@@ -143,9 +141,11 @@ export default async function PrepPage({ params }: PageProps) {
       <div className="max-w-2xl mx-auto px-4 py-16">
         {/* Partner branding */}
         {partnerCompany && (
-          <p className="text-zinc-500 text-sm text-center mb-6">
-            Court prep provided by {partnerCompany} — powered by ImNotAnAttorney
-          </p>
+          <div className="bg-zinc-900 border border-zinc-700 rounded-xl px-6 py-4 mb-8 text-center">
+            <p className="text-zinc-400 text-sm">Court prep provided by</p>
+            <p className="text-white text-lg font-bold mt-1">{partnerCompany}</p>
+            <p className="text-zinc-500 text-xs mt-1">Powered by ImNotAnAttorney</p>
+          </div>
         )}
 
         {/* Check-In Button — only before court date */}

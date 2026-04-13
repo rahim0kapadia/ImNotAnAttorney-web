@@ -51,7 +51,7 @@ function reminderProgress(sent: string[]): string {
   return `${count}/${total}`;
 }
 
-export function ClientTracker({ clients, onAddClient }: ClientTrackerProps) {
+export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTrackerProps) {
   const activeClients = clients.filter(c => c.status === "active");
   const upcomingThisWeek = activeClients.filter(c => {
     const d = daysUntil(c.court_date);
@@ -71,7 +71,7 @@ export function ClientTracker({ clients, onAddClient }: ClientTrackerProps) {
       </div>
 
       {/* Summary stats */}
-      <div className="grid grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-4 gap-3 mb-6">
         <div className="bg-zinc-800 rounded-lg p-3 text-center">
           <p className="text-2xl font-bold">{activeClients.length}</p>
           <p className="text-xs text-zinc-400">Active</p>
@@ -83,6 +83,10 @@ export function ClientTracker({ clients, onAddClient }: ClientTrackerProps) {
         <div className="bg-zinc-800 rounded-lg p-3 text-center">
           <p className="text-2xl font-bold text-green-400">{clients.filter(c => c.converted_at).length}</p>
           <p className="text-xs text-zinc-400">Converted</p>
+        </div>
+        <div className="bg-zinc-800 rounded-lg p-3 text-center">
+          <p className="text-2xl font-bold text-blue-400">{Object.values(checkInSummary).reduce((sum, s) => sum + s.count, 0)}</p>
+          <p className="text-xs text-zinc-400">Check-Ins</p>
         </div>
       </div>
 
@@ -100,6 +104,7 @@ export function ClientTracker({ clients, onAddClient }: ClientTrackerProps) {
                 <th className="pb-2 pr-4">Court Date</th>
                 <th className="pb-2 pr-4">Status</th>
                 <th className="pb-2 pr-4">Reminders</th>
+                <th className="pb-2 pr-4">Check-Ins</th>
               </tr>
             </thead>
             <tbody>
@@ -107,6 +112,7 @@ export function ClientTracker({ clients, onAddClient }: ClientTrackerProps) {
                 const days = daysUntil(c.court_date);
                 const badge = statusBadge(c.status, days, !!c.converted_at);
                 const chargeName = CHARGE_DISPLAY_NAMES[c.charge_type] || c.charge_type;
+                const ciData = checkInSummary[c.id];
                 return (
                   <tr key={c.id} className="border-b border-zinc-800">
                     <td className="py-3 pr-4 text-white">{c.first_name}</td>
@@ -120,6 +126,13 @@ export function ClientTracker({ clients, onAddClient }: ClientTrackerProps) {
                       </span>
                     </td>
                     <td className="py-3 pr-4 text-zinc-400">{reminderProgress(c.reminders_sent)}</td>
+                    <td className="py-3 pr-4 text-zinc-400">
+                      {ciData ? (
+                        <span>{ciData.count} <span className="text-zinc-600 text-xs">{ciData.lastCheckIn ? `(${new Date(ciData.lastCheckIn).toLocaleDateString("en-US", { month: "short", day: "numeric" })})` : ""}</span></span>
+                      ) : (
+                        <span>&mdash;</span>
+                      )}
+                    </td>
                   </tr>
                 );
               })}

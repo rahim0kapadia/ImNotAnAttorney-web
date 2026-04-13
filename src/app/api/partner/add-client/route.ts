@@ -35,13 +35,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { first_name, email, charge_type, county_state, court_date } = body;
+  const { first_name, email, charge_type, county_state, court_date, last_name, indemnitor_name, indemnitor_email } = body;
   if (!first_name?.trim() || !email?.trim() || !charge_type?.trim() || !county_state?.trim() || !court_date?.trim()) {
     return NextResponse.json({ error: "All fields are required" }, { status: 400 });
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+  }
+
+  if (indemnitor_email?.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(indemnitor_email.trim())) {
+    return NextResponse.json({ error: "Invalid co-signer email address" }, { status: 400 });
   }
 
   if (!CHARGE_DISPLAY_NAMES[charge_type]) {
@@ -66,6 +70,9 @@ export async function POST(req: NextRequest) {
     county_state: county_state.trim(),
     court_date,
     partner_promo_code: partner.promo_code,
+    ...(last_name?.trim() && { last_name: last_name.trim() }),
+    ...(indemnitor_name?.trim() && { indemnitor_name: indemnitor_name.trim() }),
+    ...(indemnitor_email?.trim() && { indemnitor_email: indemnitor_email.trim().toLowerCase() }),
   });
 
   if (insertErr) {
@@ -91,6 +98,24 @@ export async function POST(req: NextRequest) {
     });
   } catch (e) {
     console.warn("[Partner Add Client] Email failed:", e);
+  }
+
+  // Send indemnitor (co-signer) a welcome email if provided
+  if (indemnitor_email?.trim()) {
+    const safeIndemnitorName = escapeHtml(indemnitor_name?.trim() || "");
+    try {
+      await sendEmail({
+        to: indemnitor_email.trim().toLowerCase(),
+        subject: `Court date reminder set up for ${safeName}`,
+        html: `
+          <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Court date reminders are set up.</h1>
+          <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">${safeCompany} set up court date reminders for ${safeName}.${safeIndemnitorName ? ` ${safeIndemnitorName}, you` : " You"}'ll receive reminder emails before their court date on ${escapeHtml(court_date)}.</p>
+          <p style="color: #71717A; font-size: 13px;">ImNotAnAttorney provides legal information — not legal advice.</p>
+        `,
+      });
+    } catch (e) {
+      console.warn("[Partner Add Client] Indemnitor email failed:", e);
+    }
   }
 
   return NextResponse.json({ success: true });

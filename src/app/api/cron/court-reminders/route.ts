@@ -6,6 +6,8 @@
  *
  * Queries active reminders, checks which intervals are due,
  * sends emails, marks as sent. Handles post-court follow-up separately.
+ * Sends indemnitor (co-signer) copies of pre-court reminders.
+ * Includes partner branding when applicable.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -24,7 +26,7 @@ import {
 
 const EMAIL_BUILDERS: Record<
   string,
-  (ctx: { firstName: string; chargeType: string; countyState: string; courtDate: string; token: string }) => { subject: string; html: string }
+  (ctx: { firstName: string; chargeType: string; countyState: string; courtDate: string; token: string; partnerCompany?: string }) => { subject: string; html: string }
 > = {
   reminder_14d: reminder14d,
   reminder_7d: reminder7d,
@@ -65,6 +67,19 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ sent: 0, message: "No active reminders" });
     }
 
+    // Batch-fetch partner company names for branding
+    const promoCodes = [...new Set(reminders.filter(r => r.partner_promo_code).map(r => r.partner_promo_code as string))];
+    const partnerMap: Record<string, string> = {};
+    if (promoCodes.length > 0) {
+      const { data: partners } = await supabase
+        .from("partners")
+        .select("promo_code, company, name")
+        .in("promo_code", promoCodes);
+      for (const p of (partners || [])) {
+        partnerMap[p.promo_code] = p.company || p.name;
+      }
+    }
+
     const now = new Date();
 
     for (const r of reminders) {
@@ -79,6 +94,7 @@ export async function GET(req: NextRequest) {
         countyState: r.county_state,
         courtDate: r.court_date,
         token: r.token,
+        partnerCompany: r.partner_promo_code ? partnerMap[r.partner_promo_code] : undefined,
       };
 
       // Pre-court reminders
@@ -92,6 +108,19 @@ export async function GET(req: NextRequest) {
             await sendEmail({ to: r.email, subject: email.subject, html: email.html });
             alreadySent.add(interval.key);
             sent++;
+
+            // Send to indemnitor (co-signer) if applicable
+            if (r.indemnitor_email) {
+              try {
+                await sendEmail({
+                  to: r.indemnitor_email,
+                  subject: `${r.first_name}'s court date reminder`,
+                  html: email.html,
+                });
+              } catch (e) {
+                console.warn(`[Court Reminders Cron] Indemnitor email failed for ${r.id}:`, e);
+              }
+            }
           } catch (e) {
             console.error(`[Court Reminders Cron] Failed ${interval.key} for ${r.id}:`, e);
             errors++;

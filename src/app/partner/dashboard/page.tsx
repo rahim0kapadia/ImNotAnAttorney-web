@@ -19,6 +19,7 @@ import { PartnerAnalytics, type AnalyticsData } from "@/components/partner/Partn
 import { PaymentSettingsForm } from "@/components/partner/PaymentSettingsForm";
 import { ClientTracker } from "@/components/partner/ClientTracker";
 import { FtaCalculator } from "@/components/partner/FtaCalculator";
+import { ComplianceReportButton } from "@/components/partner/ComplianceReportButton";
 import { AddClientModal } from "@/components/partner/AddClientModal";
 import { formatDate } from "@/lib/format";
 import { tierDisplayName } from "@/lib/tiers";
@@ -73,6 +74,7 @@ export default function PartnerDashboard() {
   const [analytics, setAnalytics] = useState<AnalyticsData>({ monthly: [], by_tier: [], total_referrals: 0 });
   const [reminderSignups, setReminderSignups] = useState(0);
   const [courtClients, setCourtClients] = useState<CourtClient[]>([]);
+  const [checkInSummary, setCheckInSummary] = useState<Record<string, { count: number; lastCheckIn: string | null }>>({});
   const [showAddClient, setShowAddClient] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -92,6 +94,7 @@ export default function PartnerDashboard() {
       setAnalytics(data.analytics || { monthly: [], by_tier: [], total_referrals: 0 });
       setReminderSignups(data.reminderSignups ?? 0);
       setCourtClients(data.courtClients || []);
+      setCheckInSummary(data.checkInSummary || {});
     } catch {
       setError("Failed to load dashboard");
     } finally {
@@ -163,7 +166,13 @@ export default function PartnerDashboard() {
         <ClientTracker
           clients={courtClients}
           onAddClient={() => setShowAddClient(true)}
+          checkInSummary={checkInSummary}
         />
+
+        {/* Compliance Report */}
+        <div className="flex justify-end">
+          <ComplianceReportButton />
+        </div>
 
         {/* FTA Savings Calculator */}
         <FtaCalculator />
