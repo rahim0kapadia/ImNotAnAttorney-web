@@ -204,13 +204,21 @@ export async function GET(req: NextRequest) {
         }
 
         if (anySendSucceeded) {
-          await supabase
+          const { error: updateErr } = await supabase
             .from("partners")
             .update({
               last_activation_email_key: nextStep.key,
               activation_email_sent_at: new Date().toISOString(),
             })
             .eq("id", partner.id);
+
+          if (updateErr) {
+            console.error(
+              `[Partner Drip] Failed to record drip progress for partner ${partner.id}:`,
+              updateErr
+            );
+          }
+
           sent++;
         } else {
           console.error(`[Partner Drip] All channels failed for ${nextStep.key} to ${partner.email}`);
