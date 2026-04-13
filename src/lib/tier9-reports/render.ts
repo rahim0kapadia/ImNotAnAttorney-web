@@ -250,51 +250,110 @@ export function renderJudgeReportCard(data: JudgeReportCardData): string {
     const districtName = data.benchJuryDivergence.find((r) => r.district)?.district ?? "";
 
     if (hasSentencingData) {
-      // USSC sentencing divergence view
-      body += sectionHeader("Plea vs Bench Trial vs Jury Trial Sentencing");
-      body += `
-        <p style="color: #A1A1AA; font-size: 13px; margin: 0 0 12px 0;">
-          Federal sentencing data (USSC)${districtName ? ` — districts in ${escapeHtml(districtName.split(" of ").pop() || "")}` : ""}.
-          ${data.benchJuryDivergence[0]?.fiscal_year_range ? escapeHtml(data.benchJuryDivergence[0].fiscal_year_range) + "." : ""}
-          Median sentence in months. Shows what defendants actually received by disposition type.
-        </p>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
-          <thead>
-            <tr style="background: #1C1917;">
-              <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Offense Type</th>
-              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Plea Median</th>
-              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Bench Median</th>
-              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Jury Median</th>
-              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Trial Penalty</th>
-              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Cases</th>
-              <th style="padding: 10px 12px; text-align: center; color: #F59E0B; font-size: 13px;">Sources</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
+      // Human-readable sentence duration
+      const fmtSent = (mo: number | null): string => {
+        if (mo == null) return "—";
+        const m = Number(mo);
+        if (m <= 0) return "Probation";
+        if (m < 12) return `${Math.round(m)} month${Math.round(m) !== 1 ? "s" : ""}`;
+        const yrs = m / 12;
+        if (yrs === Math.floor(yrs)) return `${Math.floor(yrs)} year${yrs !== 1 ? "s" : ""}`;
+        return `~${Math.round(yrs)} year${Math.round(yrs) !== 1 ? "s" : ""}`;
+      };
+
+      // Multiplier: how many times longer than plea
+      const fmtMult = (sentence: number | null, plea: number | null): string => {
+        if (sentence == null || plea == null) return "";
+        const s = Number(sentence);
+        const p = Number(plea);
+        if (p <= 0 || s <= 0) return "";
+        const mult = s / p;
+        if (mult < 1.2) return "";
+        return `${mult.toFixed(1)}x longer than plea`;
+      };
+
+      // Group rows by district
+      const byDistrict = new Map<string, typeof data.benchJuryDivergence>();
       for (const row of data.benchJuryDivergence) {
-        totalSources += countSources(row.source_urls);
-        const penalty = row.trial_penalty_pct != null ? Number(row.trial_penalty_pct) : null;
-        const penaltyStr = penalty != null
-          ? `${penalty >= 0 ? "+" : ""}${penalty.toFixed(0)}%`
-          : "—";
-        const penaltyColor = penalty != null
-          ? (penalty > 20 ? "#EF4444" : penalty < -20 ? "#22C55E" : "#FAFAF9")
-          : "#A1A1AA";
-        const totalCases = (row.plea_sample || 0) + row.bench_sample + row.jury_sample;
-        body += `
-            <tr style="border-bottom: 1px solid #1C1917;">
-              <td style="padding: 8px 12px; color: #D4D4D8;">${row.offense_category || row.charge_slug || "All"}</td>
-              <td style="padding: 8px 12px; color: #22C55E; text-align: right; font-weight: 600;">${row.plea_median_sentence != null ? `${Number(row.plea_median_sentence).toFixed(1)} mo` : "—"}</td>
-              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.bench_median_sentence != null ? `${Number(row.bench_median_sentence).toFixed(1)} mo` : "—"}</td>
-              <td style="padding: 8px 12px; color: #EF4444; text-align: right; font-weight: 600;">${row.jury_median_sentence != null ? `${Number(row.jury_median_sentence).toFixed(1)} mo` : "—"}</td>
-              <td style="padding: 8px 12px; color: ${penaltyColor}; text-align: right; font-weight: 600;">${penaltyStr}</td>
-              <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${totalCases.toLocaleString()}</td>
-              <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
-            </tr>
-        `;
+        const dist = row.district || "Federal";
+        if (!byDistrict.has(dist)) byDistrict.set(dist, []);
+        byDistrict.get(dist)!.push(row);
       }
-      body += `</tbody></table>`;
+
+      body += sectionHeader("What Happens If You Fight vs Take the Deal");
+
+      for (const [district, rows] of byDistrict) {
+        const agg = rows.find((r) => r.offense_category === "All Offenses" || r.charge_slug === "All Offenses");
+        const perOffense = rows.filter((r) => r !== agg);
+        const fyRange = (agg || rows[0])?.fiscal_year_range ?? "";
+
+        if (agg) {
+          totalSources += countSources(agg.source_urls);
+          const totalCases = (agg.plea_sample || 0) + agg.bench_sample + agg.jury_sample;
+          const juryMult = fmtMult(agg.jury_median_sentence, agg.plea_median_sentence);
+          const benchMult = fmtMult(agg.bench_median_sentence, agg.plea_median_sentence);
+
+          body += `
+            <div style="background: #1C1917; border-left: 4px solid #F59E0B; padding: 16px 20px; margin-bottom: 16px; border-radius: 4px;">
+              <p style="color: #A1A1AA; font-size: 12px; margin: 0 0 14px 0;">
+                ${escapeHtml(district)} &middot; ${totalCases.toLocaleString()} cases &middot; ${escapeHtml(fyRange)}
+              </p>
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 10px 0; color: #22C55E; font-size: 15px; font-weight: 600;">Take the plea deal</td>
+                  <td style="padding: 10px 0; color: #22C55E; font-size: 15px; font-weight: 600; text-align: right;">
+                    ${fmtSent(agg.plea_median_sentence)}
+                  </td>
+                </tr>
+                <tr style="border-top: 1px solid #292524;">
+                  <td style="padding: 10px 0; color: #FAFAF9; font-size: 15px;">Judge trial (no jury)</td>
+                  <td style="padding: 10px 0; color: #FAFAF9; font-size: 15px; text-align: right;">
+                    ${fmtSent(agg.bench_median_sentence)}${benchMult ? ` <span style="color: #A1A1AA; font-size: 12px;">&middot; ${benchMult}</span>` : ""}
+                  </td>
+                </tr>
+                <tr style="border-top: 1px solid #292524;">
+                  <td style="padding: 10px 0; color: #EF4444; font-size: 15px; font-weight: 600;">Jury trial</td>
+                  <td style="padding: 10px 0; color: #EF4444; font-size: 15px; font-weight: 600; text-align: right;">
+                    ${fmtSent(agg.jury_median_sentence)}${juryMult ? ` <span style="color: #EF4444; font-size: 12px;">&middot; ${juryMult}</span>` : ""}
+                  </td>
+                </tr>
+              </table>
+              ${juryMult ? `<p style="color: #A1A1AA; font-size: 12px; margin: 12px 0 0 0; line-height: 1.5;">Defendants who chose jury trial in this district received sentences ${juryMult}. Based on federal sentencing data — state courts may differ. ${sourceLinks(agg.source_urls)}</p>` : ""}
+            </div>
+          `;
+        }
+
+        // Per-offense breakdown (compact table under the card)
+        if (perOffense.length > 0) {
+          body += `
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+              <thead>
+                <tr style="background: #1C1917;">
+                  <th style="padding: 8px 12px; text-align: left; color: #A1A1AA; font-size: 12px;">By Offense Type</th>
+                  <th style="padding: 8px 12px; text-align: right; color: #22C55E; font-size: 12px;">Plea</th>
+                  <th style="padding: 8px 12px; text-align: right; color: #FAFAF9; font-size: 12px;">Judge Trial</th>
+                  <th style="padding: 8px 12px; text-align: right; color: #EF4444; font-size: 12px;">Jury Trial</th>
+                  <th style="padding: 8px 12px; text-align: right; color: #A1A1AA; font-size: 12px;">Cases</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+          for (const row of perOffense) {
+            totalSources += countSources(row.source_urls);
+            const cases = (row.plea_sample || 0) + row.bench_sample + row.jury_sample;
+            body += `
+                <tr style="border-bottom: 1px solid #1C1917;">
+                  <td style="padding: 6px 12px; color: #D4D4D8; font-size: 13px;">${escapeHtml(row.offense_category || row.charge_slug || "Other")}</td>
+                  <td style="padding: 6px 12px; color: #22C55E; text-align: right; font-size: 13px;">${fmtSent(row.plea_median_sentence)}</td>
+                  <td style="padding: 6px 12px; color: #FAFAF9; text-align: right; font-size: 13px;">${fmtSent(row.bench_median_sentence)}</td>
+                  <td style="padding: 6px 12px; color: #EF4444; text-align: right; font-size: 13px;">${fmtSent(row.jury_median_sentence)}</td>
+                  <td style="padding: 6px 12px; color: #A1A1AA; text-align: right; font-size: 13px;">${cases.toLocaleString()}</td>
+                </tr>
+            `;
+          }
+          body += `</tbody></table>`;
+        }
+      }
     } else {
       // Original acquittal rate view (CL opinion mining — kept for future use)
       body += sectionHeader("Bench vs Jury Trial Divergence");
