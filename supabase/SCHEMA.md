@@ -539,14 +539,24 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 | Column | Type | Purpose |
 |--------|------|---------|
 | id | uuid (PK) | Auto-generated |
-| judge_id | uuid (FK) | Links to judge_profiles |
-| charge_slug | text | Charge category (nullable) |
-| bench_acquittal_rate | numeric | Acquittal rate in bench trials (0-100, nullable) |
-| jury_acquittal_rate | numeric | Acquittal rate in jury trials (0-100, nullable) |
+| judge_id | uuid (FK) | Links to judge_profiles (NULL for district-level USSC data) |
+| charge_slug | text | Charge/offense category (nullable) |
+| bench_acquittal_rate | numeric | Acquittal rate in bench trials (CL opinion data, nullable) |
+| jury_acquittal_rate | numeric | Acquittal rate in jury trials (CL opinion data, nullable) |
 | bench_sample | integer | Number of bench trials (default: 0) |
 | jury_sample | integer | Number of jury trials (default: 0) |
-| source_urls | text[] | Verification URLs (docket records, trial outcomes) |
+| source_urls | text[] | Verification URLs |
 | created_at | timestamptz | Record creation timestamp |
+| district | text | Federal district name (USSC data, nullable) |
+| bench_median_sentence | numeric | Median sentence months for bench trials (USSC) |
+| jury_median_sentence | numeric | Median sentence months for jury trials (USSC) |
+| bench_mean_sentence | numeric | Mean sentence months for bench trials (USSC) |
+| jury_mean_sentence | numeric | Mean sentence months for jury trials (USSC) |
+| trial_penalty_pct | numeric | % difference: (jury−bench)/bench × 100 |
+| plea_median_sentence | numeric | Median sentence months for plea deals (context) |
+| plea_sample | integer | Number of plea deals (default: 0) |
+| fiscal_year_range | text | USSC fiscal year range, e.g. "FY2018-FY2024" |
+| offense_category | text | Human-readable offense category from OFFGUIDE |
 
 #### `appellate_trends`
 

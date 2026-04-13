@@ -244,39 +244,88 @@ export function renderJudgeReportCard(data: JudgeReportCardData): string {
     body += noDataMessage("prosecutor pairing");
   }
 
-  // Bench vs Jury Divergence
-  body += sectionHeader("Bench vs Jury Trial Divergence");
+  // Bench vs Jury Divergence — auto-detects data type (USSC sentencing vs CL acquittal)
   if (data.benchJuryDivergence.length > 0) {
-    body += `
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
-        <thead>
-          <tr style="background: #1C1917;">
-            <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Charge Type</th>
-            <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Bench Acquittal</th>
-            <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Jury Acquittal</th>
-            <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Bench Cases</th>
-            <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Jury Cases</th>
-            <th style="padding: 10px 12px; text-align: center; color: #F59E0B; font-size: 13px;">Sources</th>
-          </tr>
-        </thead>
-        <tbody>
-    `;
-    for (const row of data.benchJuryDivergence) {
-      totalSources += countSources(row.source_urls);
+    const hasSentencingData = data.benchJuryDivergence.some((r) => r.bench_median_sentence != null);
+    const districtName = data.benchJuryDivergence.find((r) => r.district)?.district ?? "";
+
+    if (hasSentencingData) {
+      // USSC sentencing divergence view
+      body += sectionHeader("Bench vs Jury Trial Sentencing");
       body += `
-          <tr style="border-bottom: 1px solid #1C1917;">
-            <td style="padding: 8px 12px; color: #D4D4D8;">${row.charge_slug ? escapeHtml(row.charge_slug) : "All"}</td>
-            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.bench_acquittal_rate != null ? `${Number(row.bench_acquittal_rate).toFixed(1)}%` : "—"}</td>
-            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.jury_acquittal_rate != null ? `${Number(row.jury_acquittal_rate).toFixed(1)}%` : "—"}</td>
-            <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.bench_sample}</td>
-            <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.jury_sample}</td>
-            <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
-          </tr>
+        <p style="color: #A1A1AA; font-size: 13px; margin: 0 0 12px 0;">
+          Federal sentencing data (USSC)${districtName ? ` — districts in ${escapeHtml(districtName.split(" of ").pop() || "")}` : ""}.
+          ${data.benchJuryDivergence[0]?.fiscal_year_range ? escapeHtml(data.benchJuryDivergence[0].fiscal_year_range) + "." : ""}
+          Median sentence in months. Trial penalty = how much longer jury sentences are vs bench.
+        </p>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+          <thead>
+            <tr style="background: #1C1917;">
+              <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Offense Type</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Bench Median</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Jury Median</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Trial Penalty</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Bench n</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Jury n</th>
+              <th style="padding: 10px 12px; text-align: center; color: #F59E0B; font-size: 13px;">Sources</th>
+            </tr>
+          </thead>
+          <tbody>
       `;
+      for (const row of data.benchJuryDivergence) {
+        totalSources += countSources(row.source_urls);
+        const penalty = row.trial_penalty_pct != null ? Number(row.trial_penalty_pct) : null;
+        const penaltyStr = penalty != null
+          ? `${penalty >= 0 ? "+" : ""}${penalty.toFixed(0)}%`
+          : "—";
+        const penaltyColor = penalty != null
+          ? (penalty > 20 ? "#EF4444" : penalty < -20 ? "#22C55E" : "#FAFAF9")
+          : "#A1A1AA";
+        body += `
+            <tr style="border-bottom: 1px solid #1C1917;">
+              <td style="padding: 8px 12px; color: #D4D4D8;">${row.offense_category || row.charge_slug || "All"}</td>
+              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.bench_median_sentence != null ? `${Number(row.bench_median_sentence).toFixed(1)} mo` : "—"}</td>
+              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.jury_median_sentence != null ? `${Number(row.jury_median_sentence).toFixed(1)} mo` : "—"}</td>
+              <td style="padding: 8px 12px; color: ${penaltyColor}; text-align: right; font-weight: 600;">${penaltyStr}</td>
+              <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.bench_sample}</td>
+              <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.jury_sample}</td>
+              <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
+            </tr>
+        `;
+      }
+      body += `</tbody></table>`;
+    } else {
+      // Original acquittal rate view (CL opinion mining — kept for future use)
+      body += sectionHeader("Bench vs Jury Trial Divergence");
+      body += `
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+          <thead>
+            <tr style="background: #1C1917;">
+              <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Charge Type</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Bench Acquittal</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Jury Acquittal</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Bench Cases</th>
+              <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Jury Cases</th>
+              <th style="padding: 10px 12px; text-align: center; color: #F59E0B; font-size: 13px;">Sources</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+      for (const row of data.benchJuryDivergence) {
+        totalSources += countSources(row.source_urls);
+        body += `
+            <tr style="border-bottom: 1px solid #1C1917;">
+              <td style="padding: 8px 12px; color: #D4D4D8;">${row.charge_slug ? escapeHtml(row.charge_slug) : "All"}</td>
+              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.bench_acquittal_rate != null ? `${Number(row.bench_acquittal_rate).toFixed(1)}%` : "—"}</td>
+              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.jury_acquittal_rate != null ? `${Number(row.jury_acquittal_rate).toFixed(1)}%` : "—"}</td>
+              <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.bench_sample}</td>
+              <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.jury_sample}</td>
+              <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
+            </tr>
+        `;
+      }
+      body += `</tbody></table>`;
     }
-    body += `</tbody></table>`;
-  } else {
-    body += noDataMessage("bench vs jury divergence");
   }
 
   // Judge Quotes

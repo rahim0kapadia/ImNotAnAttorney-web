@@ -17,6 +17,7 @@ cols_of_interest = [c for c in df.columns if c.upper() in (
     "SENTMON", "SENTTOT", "ZONE", "BOOTEFLT", "BOOTEFTT", "NEWCNVTN", "DISTRICT",
     "CIRCDIST", "MONSEX", "NEWRACE", "XCRHISSR", "JUDGE", "USSCIDN", "SENSPLT0",
     "SESSION", "ACCESSION", "OFFGUIDE", "WEAPON", "DRUGTYP", "FINE", "COMESSION",
+    "DISPOSIT", "SENTRNGE", "GLMIN", "GLMAX",
 )]
 if cols_of_interest:
     df = df[cols_of_interest]

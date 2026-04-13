@@ -43,6 +43,13 @@ export interface JudgeReportCardData {
     bench_sample: number;
     jury_sample: number;
     source_urls: string[] | null;
+    // USSC sentencing divergence columns (populated by ingest-ussc-bench-jury.mjs)
+    district: string | null;
+    bench_median_sentence: number | null;
+    jury_median_sentence: number | null;
+    trial_penalty_pct: number | null;
+    offense_category: string | null;
+    fiscal_year_range: string | null;
   }>;
   quotes: Array<{
     quote: string;
@@ -184,6 +191,24 @@ function escapeIlike(input: string): string {
   return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
 }
 
+// State abbreviation → full name (for USSC district ILIKE lookups)
+const STATE_NAMES: Record<string, string> = {
+  AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California",
+  CO: "Colorado", CT: "Connecticut", DE: "Delaware", DC: "District of Columbia",
+  FL: "Florida", GA: "Georgia", GU: "Guam", HI: "Hawaii", ID: "Idaho",
+  IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky",
+  LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan",
+  MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska",
+  NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York",
+  NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon",
+  PA: "Pennsylvania", PR: "Puerto Rico", RI: "Rhode Island", SC: "South Carolina",
+  SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont",
+  VA: "Virginia", VI: "Virgin Islands", WA: "Washington", WV: "West Virginia",
+  WI: "Wisconsin", WY: "Wyoming",
+};
+
+const BENCH_JURY_SELECT = "charge_slug, bench_acquittal_rate, jury_acquittal_rate, bench_sample, jury_sample, source_urls, district, bench_median_sentence, jury_median_sentence, trial_penalty_pct, offense_category, fiscal_year_range";
+
 // ============================================================
 // QUERIES
 // ============================================================
@@ -244,8 +269,12 @@ export async function queryJudgeReportCard(
     jury_acquittal_rate: rawJudge.jury_acquittal_rate as number | null,
   };
 
+  // State name for USSC district-level bench/jury fallback lookup
+  const stateName = STATE_NAMES[intake.state?.toUpperCase()] ?? intake.state;
+  const safeStateName = escapeIlike(stateName);
+
   // Parallel queries for all related data
-  const [sentencing, pairings, divergence, quotes, appellate, usscData] =
+  const [sentencing, pairings, divergence, districtDivergence, quotes, appellate, usscData] =
     await Promise.all([
       // Sentencing distributions: try judge-specific first, fall back to charge-level
       // (current data has judge_id=NULL on all rows — charge-level aggregates)
@@ -264,10 +293,20 @@ export async function queryJudgeReportCard(
         .order("sample_size", { ascending: false })
         .limit(50),
 
+      // Judge-specific bench/jury data (from CL opinion mining — currently empty)
       supabase
         .from("bench_jury_divergence")
-        .select("charge_slug, bench_acquittal_rate, jury_acquittal_rate, bench_sample, jury_sample, source_urls")
+        .select(BENCH_JURY_SELECT)
         .eq("judge_id", judge.id)
+        .limit(20),
+
+      // District-level bench/jury data (from USSC — fallback when no judge-level data)
+      supabase
+        .from("bench_jury_divergence")
+        .select(BENCH_JURY_SELECT)
+        .ilike("district", `%${safeStateName}%`)
+        .is("judge_id", null)
+        .order("jury_sample", { ascending: false })
         .limit(20),
 
       supabase
@@ -276,12 +315,11 @@ export async function queryJudgeReportCard(
         .eq("judge_id", judge.id)
         .limit(30),
 
-      // Appellate trends: try state-specific first; all current rows have jurisdiction="unknown"
-      // so also accept those as a fallback for national-level data
+      // Appellate trends: filter by intake state, fall back to "federal" for federal cases
       supabase
         .from("appellate_trends")
         .select("argument_type, reverse_rate, affirm_rate, sample_size, source_urls")
-        .or(`jurisdiction.eq.${intake.state},jurisdiction.eq.unknown`)
+        .or(`jurisdiction.eq.${intake.state},jurisdiction.eq.federal`)
         .order("sample_size", { ascending: false })
         .limit(20),
 
@@ -292,11 +330,16 @@ export async function queryJudgeReportCard(
         .limit(1),
     ]);
 
+  // Prefer judge-level bench/jury data; fall back to district-level USSC data
+  const benchJuryData = (divergence.data ?? []).length > 0
+    ? (divergence.data ?? [])
+    : (districtDivergence.data ?? []);
+
   return {
     judge,
     sentencingDistributions: sentencing.data ?? [],
     prosecutorPairings: pairings.data ?? [],
-    benchJuryDivergence: divergence.data ?? [],
+    benchJuryDivergence: benchJuryData,
     quotes: (quotes.data ?? [])
       .filter((q) => q.quote && q.quote.length >= 40)
       .sort((a, b) => b.quote.length - a.quote.length),
