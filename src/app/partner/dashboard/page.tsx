@@ -55,6 +55,7 @@ export default function PartnerDashboard() {
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [payouts, setPayouts] = useState<Payout[]>([]);
   const [analytics, setAnalytics] = useState<AnalyticsData>({ monthly: [], by_tier: [], total_referrals: 0 });
+  const [reminderSignups, setReminderSignups] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
   const fetchDashboard = useCallback(async () => {
@@ -71,6 +72,7 @@ export default function PartnerDashboard() {
       setReferrals(data.referrals || []);
       setPayouts(data.payouts || []);
       setAnalytics(data.analytics || { monthly: [], by_tier: [], total_referrals: 0 });
+      setReminderSignups(data.reminderSignups ?? 0);
     } catch {
       setError("Failed to load dashboard");
     } finally {
@@ -138,8 +140,24 @@ export default function PartnerDashboard() {
           </div>
         )}
 
+        {/* Court prep sign-ups stat */}
+        <div className="bg-zinc-900 rounded-xl border border-zinc-700 p-4">
+          <p className="text-sm text-zinc-400">Court prep sign-ups</p>
+          <p className="text-2xl font-bold">{reminderSignups}</p>
+        </div>
+
         {/* 1. Toolkit */}
         <ToolkitSection partner={partner} referralUrl={referralUrl} />
+
+        {/* How your link works */}
+        <div className="bg-zinc-900 rounded-xl border border-zinc-700 p-4">
+          <h3 className="font-bold text-amber-400 mb-2">How your link works</h3>
+          <p className="text-sm text-zinc-300">
+            When clients use your link, they take a quick quiz and get a product recommendation.
+            They can also set up free court prep — date reminders + what to expect at their hearing.
+            You earn commission whether they buy now or later through a reminder.
+          </p>
+        </div>
 
         {/* 2. Ready-to-Send Messages */}
         <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">

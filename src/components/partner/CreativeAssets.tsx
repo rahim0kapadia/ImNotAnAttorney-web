@@ -41,7 +41,7 @@ const TEMPLATES = [
   {
     label: "Verbal One-Liner (for bondsmen)",
     template: (code: string, url: string) =>
-      `After you ask who their attorney is, say:\n\n"A lot of my clients use this to prepare for their attorney meetings — imnotanattorney.com. My code ${code} saves you 10%."\n\n17 words. One sentence. That's it.`,
+      `After you tell them about check-ins, say:\n\n"Free court prep — reminders before your court date and what to expect at your hearing. imnotanattorney.com, code ${code} saves you 10%."\n\nOne sentence. That's it.`,
   },
 ];
 

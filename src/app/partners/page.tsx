@@ -51,8 +51,8 @@ export default function PartnersPage() {
             <span className="text-amber-400">Defendant Uses Your Code</span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-4">
-            5 referrals a month = {xRayFiveMonthly} in passive income. They save 10%.
-            You earn up to 20%. No selling required.
+            Your referrals get free court prep — date reminders and hearing guidance.
+            You earn 10-20% on every product they purchase. No selling required.
           </p>
           <p className="text-sm text-zinc-500 mb-8">
             Bondsmen, paralegals, content creators, advocates — anyone can partner.
@@ -162,7 +162,7 @@ export default function PartnersPage() {
               Apply Now
             </h2>
             <p className="text-center text-zinc-400 mb-8">
-              Takes 60 seconds. We&apos;ll review and get back to you within 24 hours.
+              Takes 60 seconds. Instant approval — check your email.
             </p>
           </FadeInUp>
           <PartnerApplicationForm source="generic" />

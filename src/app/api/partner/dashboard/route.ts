@@ -37,6 +37,12 @@ export async function GET(req: NextRequest) {
       p_partner_id: partner.id,
     });
 
+    // Court prep sign-ups attributed to this partner
+    const { count: reminderSignups } = await supabase
+      .from("court_reminders")
+      .select("*", { count: "exact", head: true })
+      .eq("partner_promo_code", partner.promo_code);
+
     // Use the maintained partner totals (accurate even with >50 referrals)
     const totalEarned = partner.total_commission || 0;
     const totalPaid = partner.total_paid_out || 0;
@@ -63,6 +69,7 @@ export async function GET(req: NextRequest) {
         pending_payout: totalEarned - totalPaid,
         total_referrals: partner.total_referrals || 0,
       },
+      reminderSignups: reminderSignups ?? 0,
       referrals: referrals || [],
       payouts: payouts || [],
       analytics: analytics || { monthly: [], by_tier: [], total_referrals: 0 },

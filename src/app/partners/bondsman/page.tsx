@@ -107,9 +107,9 @@ export default function BondsmanPartnersPage() {
           </FadeInUp>
           <StaggerContainer className="grid md:grid-cols-3 gap-6">
             {[
-              { title: "Unique Promo Code", desc: "Your personal code gives clients 10% off. Tracked automatically." },
-              { title: "Referral Link + QR Code", desc: "Share a link or print a QR code. Clients scan and buy." },
-              { title: "Copy-Paste Messages", desc: "Ready-to-send texts and emails. Just copy, paste, send." },
+              { title: "Free Court Prep for Your Clients", desc: "Date reminders, what to expect at their hearing, and how to show up ready." },
+              { title: "You Earn 10-20% on Upgrades", desc: "When they're ready for case-specific analysis, your code gets them 10% off and you earn commission." },
+              { title: "One Link. Every Client.", desc: "Text it, say it, email it. We do the rest." },
               { title: "Real-Time Dashboard", desc: "See every referral, commission, and payout in real time." },
               { title: "Monthly Payouts", desc: "NET-30 via PayPal, Venmo, Zelle, or check. Your choice." },
               { title: "Compliance Kit", desc: "Approved language and FTC disclosure templates. Stay protected." },
@@ -139,7 +139,7 @@ export default function BondsmanPartnersPage() {
           <FadeInUp>
             <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-2">Apply Now</h2>
             <p className="text-center text-zinc-400 mb-8">
-              Takes 60 seconds. We&apos;ll review and get back to you within 24 hours.
+              Takes 60 seconds. Instant approval — check your email.
             </p>
           </FadeInUp>
           <PartnerApplicationForm source="bondsman" />

@@ -16,17 +16,17 @@ const TEMPLATES = [
   {
     label: "Add to your check-in text",
     template: (code: string, url: string) =>
-      `Hey [name], this is [your name]. Check-in: [day/time]. Court prep resource a lot of my clients use before their attorney meeting: ${url} — code ${code} saves 10%.`,
+      `Hey [name], this is [your name]. Check-in: [day/time]. Free court prep — reminders and what to expect at your hearing: ${url} — code ${code} saves 10% on upgrades.`,
   },
   {
     label: "Quick share",
     template: (code: string, url: string) =>
-      `Hey [name], a lot of my clients use this to prepare for their case. Helps you know the right questions for your attorney: ${url} — code ${code} saves 10%.`,
+      `Hey [name], free court date reminders + hearing prep for your case: ${url} — code ${code} saves 10% if you need anything more.`,
   },
   {
     label: "For someone else",
     template: (code: string, url: string) =>
-      `Someone dealing with a case? This helps them prepare and ask their attorney the right questions: ${url} — code ${code} for 10% off.`,
+      `Someone dealing with a case? Free court prep — date reminders, what to expect, how to prepare: ${url} — code ${code} for 10% off.`,
   },
 ];
 
