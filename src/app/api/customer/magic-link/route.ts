@@ -13,6 +13,8 @@ import { generateCustomerMagicLink } from "@/lib/customer-auth";
 import { sendCustomerMagicLinkEmail } from "@/lib/email";
 import { SITE_URL, normalizeEmail, isValidEmail } from "@/lib/site";
 import { getClientIp } from "@/lib/request";
+import { sendSMS, capSMS } from "@/lib/sms";
+import { getClientPrefs, shouldSendSMS, shouldSendEmail, canSendClientSMS } from "@/lib/notification-prefs";
 
 export async function POST(req: NextRequest) {
   try {
@@ -72,8 +74,24 @@ export async function POST(req: NextRequest) {
     const { token } = result;
     const magicUrl = `${SITE_URL}/my-cases/login/verify#token=${token}`;
 
-    // Send via email
-    await sendCustomerMagicLinkEmail(normalizedEmail, magicUrl);
+    const { data: reminderRow } = await supabase
+      .from("court_reminders")
+      .select("phone, notification_prefs, sms_consent_at")
+      .eq("email", normalizedEmail)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const prefs = getClientPrefs(reminderRow?.notification_prefs || null);
+
+    if (shouldSendEmail(prefs.magic_link)) {
+      await sendCustomerMagicLinkEmail(normalizedEmail, magicUrl);
+    }
+
+    if (shouldSendSMS(prefs.magic_link) && canSendClientSMS(reminderRow?.phone, reminderRow?.sms_consent_at)) {
+      await sendSMS(reminderRow!.phone!, capSMS(`ImNotAnAttorney login: ${magicUrl}`))
+        .catch(e => console.warn("[Customer Magic Link] SMS failed:", e));
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
