@@ -1,11 +1,11 @@
 // src/lib/sms.ts
 /**
- * @fileoverview Telnyx SMS utility.
+ * @fileoverview Twilio SMS utility.
  *
- * Sends SMS via Telnyx REST API v2.
- * Gracefully degrades if Telnyx credentials not configured.
+ * Sends SMS via Twilio REST API.
+ * Gracefully degrades if Twilio credentials not configured.
  *
- * Env vars: TELNYX_API_KEY, TELNYX_FROM_NUMBER
+ * Env vars: TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER
  */
 
 // ── SMS Core ──────────────────────────────────────────────
@@ -19,40 +19,39 @@ export async function sendSMS(
   to: string,
   body: string
 ): Promise<{ success: boolean; error?: string }> {
-  const apiKey = process.env.TELNYX_API_KEY;
-  const fromNumber = process.env.TELNYX_FROM_NUMBER;
+  const sid = process.env.TWILIO_ACCOUNT_SID;
+  const token = process.env.TWILIO_AUTH_TOKEN;
+  const from = process.env.TWILIO_PHONE_NUMBER;
 
-  if (!apiKey || !fromNumber) {
-    console.warn("[Telnyx SMS] Not configured — skipping SMS");
+  if (!sid || !token || !from) {
+    console.warn("[Twilio SMS] Not configured — skipping SMS");
     return { success: false, error: "SMS not configured" };
   }
 
   try {
-    const res = await fetch("https://api.telnyx.com/v2/messages", {
+    const url = `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`;
+    const auth = Buffer.from(`${sid}:${token}`).toString("base64");
+
+    const res = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
+        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: JSON.stringify({
-        from: fromNumber,
-        to,
-        text: body,
-      }),
+      body: new URLSearchParams({ To: to, From: from, Body: body }).toString(),
     });
 
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      const errors = (data as { errors?: { detail?: string }[] }).errors;
-      const errMsg = errors?.[0]?.detail || `HTTP ${res.status}`;
-      console.error("[Telnyx SMS] Send failed:", errMsg);
+      const errMsg = (data as Record<string, string>).message || `HTTP ${res.status}`;
+      console.error("[Twilio SMS] Send failed:", errMsg);
       return { success: false, error: errMsg };
     }
 
     return { success: true };
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : "Unknown error";
-    console.error("[Telnyx SMS] Error:", errMsg);
+    console.error("[Twilio SMS] Error:", errMsg);
     return { success: false, error: errMsg };
   }
 }
