@@ -52,6 +52,7 @@ export interface Partner {
   payment_venmo: string | null;
   payment_check_address: string | null;
   payment_paypal: string | null;
+  notification_prefs: Partial<import("./notification-prefs").PartnerNotificationPrefs> | null;
 }
 
 export const COMMISSION_TIERS: TierSlug[] = [

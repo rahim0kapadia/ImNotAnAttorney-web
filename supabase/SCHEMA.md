@@ -822,6 +822,87 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | divergence_factors | jsonb | Contributing factors |
 | source_urls | text[] | Verification URLs |
 
+## Partner & Reminder Tables
+*(Added by migrations post-012 — not in original snapshot)*
+
+#### `court_reminders`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| token | text | Unsubscribe/opt-in token |
+| first_name | text | Client first name |
+| last_name | text | Client last name (optional) |
+| email | text | Client email |
+| charge_type | text | Primary charge type |
+| county_state | text | Jurisdiction |
+| court_date | text | Next court date |
+| recommended_tier | text | Suggested product tier |
+| partner_promo_code | text | Referring partner promo code |
+| status | text | `active` / `completed` / `unsubscribed` |
+| reminders_sent | text[] | Keys of sent reminders |
+| created_at | timestamptz | Row creation timestamp |
+| converted_at | timestamptz | When client purchased |
+| order_id | uuid | Linked order (FK) |
+| indemnitor_name | text | Bondsman indemnitor name |
+| indemnitor_email | text | Bondsman indemnitor email |
+| phone | text | Client phone (E.164) — added migration 20260414a |
+| sms_consent_at | timestamptz | 10DLC consent timestamp — added migration 20260414a |
+| notification_prefs | jsonb | Channel preference overrides (JSONB) — added migration 20260414a |
+
+#### `partners`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| name | text | Partner display name |
+| email | text | Partner email (unique) |
+| phone | text | Partner phone |
+| company | text | Company name |
+| promo_code | text | Unique referral code |
+| commission_rate | numeric | Commission percentage |
+| commission_tier | text | `partner` / `silver` / `gold` |
+| status | text | `pending` / `approved` / `suspended` |
+| preferred_payment_method | text | `zelle` / `venmo` / `check` / `paypal` |
+| payment_zelle | text | Zelle handle |
+| payment_venmo | text | Venmo handle |
+| payment_check_address | text | Mailing address for checks |
+| payment_paypal | text | PayPal email |
+| total_referrals | integer | Lifetime referral count |
+| total_commission | numeric | Lifetime commission earned (cents) |
+| total_paid_out | numeric | Lifetime commission paid out (cents) |
+| notification_prefs | jsonb | Channel preference overrides (JSONB) — added migration 20260414a |
+
+#### `referrals`
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| partner_id | uuid (FK) | Referring partner |
+| order_id | uuid (FK) | Linked order |
+| commission_amount | numeric | Commission earned (cents) |
+| status | text | `pending` / `paid` / `refunded` |
+| created_at | timestamptz | Row creation timestamp |
+| locked_at | timestamptz | Commission lock timestamp (45-day holdback) — added migration 20260414a |
+
+#### `sms_log`
+SMS delivery audit log. Mirrors `email_log` pattern. Service-role write only via `createAdminClient()`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| recipient | text (indexed) | E.164 phone number |
+| body | text | Message body |
+| category | text (indexed) | Message category (e.g. `court_reminder`, `magic_link`) |
+| court_reminder_id | uuid (FK) | Linked court reminder (nullable, ON DELETE SET NULL) |
+| partner_id | uuid (FK) | Linked partner (nullable, ON DELETE SET NULL) |
+| success | boolean | Delivery success flag |
+| error_message | text | Error detail if failed |
+| metadata | jsonb | Provider response metadata |
+| created_at | timestamptz | Row creation timestamp |
+
+RLS: enabled. Policy `sms_log_deny_all` denies all anon/authenticated access.
+
 ## Triggers
 
 - `update_cases_updated_at` — Auto-sets `updated_at = now()` on every cases row update

@@ -31,14 +31,14 @@ const SESSION_EXPIRY_DAYS = 30;
  */
 export async function generateMagicLink(email: string): Promise<{
   token: string;
-  partner: { id: string; name: string; phone: string | null };
+  partner: { id: string; name: string; phone: string | null; notification_prefs: Record<string, string> | null };
 } | null> {
   const supabase = createAdminClient();
 
   // Look up approved partner by email
   const { data: partner, error } = await supabase
     .from("partners")
-    .select("id, name, phone")
+    .select("id, name, phone, notification_prefs")
     .eq("email", normalizeEmail(email))
     .eq("status", "approved")
     .limit(1)
@@ -126,6 +126,7 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   payment_venmo: string | null;
   payment_check_address: string | null;
   payment_paypal: string | null;
+  notification_prefs: Partial<import("./notification-prefs").PartnerNotificationPrefs> | null;
   total_referrals: number;
   total_commission: number;
   total_paid_out: number;
@@ -146,7 +147,7 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   // Fetch partner data
   const { data: partner, error: partnerError } = await supabase
     .from("partners")
-    .select("id, name, email, phone, company, promo_code, commission_rate, commission_tier, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, total_referrals, total_commission, total_paid_out")
+    .select("id, name, email, phone, company, promo_code, commission_rate, commission_tier, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, total_referrals, total_commission, total_paid_out, notification_prefs")
     .eq("id", session.partner_id)
     .eq("status", "approved")
     .single();

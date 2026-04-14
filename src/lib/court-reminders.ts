@@ -27,6 +27,9 @@ export interface CourtReminder {
   indemnitor_name?: string | null;
   indemnitor_email?: string | null;
   last_name?: string | null;
+  phone?: string | null;
+  sms_consent_at?: string | null;
+  notification_prefs?: Partial<import("./notification-prefs").ClientNotificationPrefs> | null;
 }
 
 // ── Reminder intervals (days before court date) ─────────────
