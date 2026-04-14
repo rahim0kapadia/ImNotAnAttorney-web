@@ -19,6 +19,8 @@ import { requireCron } from "@/lib/auth/guards";
 import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
+import { sendSMS, capSMS } from "@/lib/sms";
+import { getPartnerPrefs, shouldSendEmail, shouldSendSMS } from "@/lib/notification-prefs";
 import { SITE_URL } from "@/lib/site";
 import {
   partnerFirstShareEmail,
@@ -40,6 +42,8 @@ interface PartnerRow {
   id: string;
   name: string;
   email: string;
+  phone: string | null;
+  notification_prefs: Record<string, string> | null;
   promo_code: string | null;
   total_referrals: number;
   total_commission: number;
@@ -110,7 +114,7 @@ export async function GET(req: NextRequest) {
     const { data: partners, error: fetchErr } = await supabase
       .from("partners")
       .select(
-        "id, name, email, promo_code, total_referrals, total_commission, last_activation_email_key, created_at"
+        "id, name, email, phone, notification_prefs, promo_code, total_referrals, total_commission, last_activation_email_key, created_at"
       )
       .eq("status", "approved")
       .or(
@@ -165,29 +169,39 @@ export async function GET(req: NextRequest) {
           continue;
         }
 
-        // Build and send the email
+        // Build and send via preferred channels
         const { subject, html } = nextStep.buildEmail(partner as PartnerRow);
+        const prefs = getPartnerPrefs(partner.notification_prefs);
+        let anySendSucceeded = false;
 
-        const result = await sendEmail(
-          {
-            to: partner.email,
-            subject,
-            html,
-            unsubscribeEmail: partner.email,
-          },
-          {
-            category: "partner-drip",
-            email_key: nextStep.key,
-            metadata: {
-              partner_id: partner.id,
-              step: nextStep.key,
-              day: nextStep.dayThreshold,
+        if (shouldSendEmail(prefs.drip)) {
+          const result = await sendEmail(
+            {
+              to: partner.email,
+              subject,
+              html,
+              unsubscribeEmail: partner.email,
             },
-          }
-        );
+            {
+              category: "partner-drip",
+              email_key: nextStep.key,
+              metadata: {
+                partner_id: partner.id,
+                step: nextStep.key,
+                day: nextStep.dayThreshold,
+              },
+            }
+          );
+          if (result.success) anySendSucceeded = true;
+        }
 
-        if (result.success) {
-          // Update partner's drip progress
+        if (shouldSendSMS(prefs.drip) && partner.phone) {
+          const smsResult = await sendSMS(partner.phone, capSMS(`${subject}. Dashboard: https://imnotanattorney.com/partner/dashboard`));
+          if (smsResult.success) anySendSucceeded = true;
+          else console.warn("[Partner Drip] SMS failed:", smsResult.error);
+        }
+
+        if (anySendSucceeded) {
           await supabase
             .from("partners")
             .update({
@@ -195,13 +209,9 @@ export async function GET(req: NextRequest) {
               activation_email_sent_at: new Date().toISOString(),
             })
             .eq("id", partner.id);
-
           sent++;
         } else {
-          console.error(
-            `[Partner Drip] Failed to send ${nextStep.key} to ${partner.email}:`,
-            result.error
-          );
+          console.error(`[Partner Drip] All channels failed for ${nextStep.key} to ${partner.email}`);
           errors++;
         }
       } catch (partnerErr) {
