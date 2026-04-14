@@ -109,6 +109,18 @@ export function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+/** Normalize phone to E.164 format (+1XXXXXXXXXX). Strips formatting, prepends +1 for bare 10-digit. */
+export function normalizePhone(raw: string): string {
+  const stripped = raw.replace(/[\s\-\(\)\.]/g, "");
+  if (/^\d{10}$/.test(stripped)) return "+1" + stripped;
+  return stripped;
+}
+
+/** Validates US E.164 phone number. */
+export function isValidPhone(phone: string): boolean {
+  return /^\+1\d{10}$/.test(phone);
+}
+
 // ============================================================
 // OPERATOR TOKEN SIGNING
 // ============================================================

@@ -10,7 +10,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { generateMagicLink } from "@/lib/partner-auth";
 import { sendEmail, escapeHtml } from "@/lib/email";
-import { sendSMS } from "@/lib/twilio";
+import { sendSMS } from "@/lib/sms";
 import { SITE_URL, normalizeEmail } from "@/lib/site";
 import { getClientIp } from "@/lib/request";
 
