@@ -106,11 +106,10 @@ async function loadTheoryMap() {
 
 async function loadSampleOpinions(limit) {
   const rows = await supabaseQuery(
-    "SELECT scl.courtlistener_cluster_id as cluster_id, scl.case_name, scl.court, " +
-    "js.jurisdiction, scl.is_good_law, scl.source_urls " +
-    "FROM statute_case_law scl " +
-    "JOIN jurisdiction_statutes js ON js.id = scl.jurisdiction_statute_id " +
-    "WHERE scl.courtlistener_cluster_id IS NOT NULL " +
+    "SELECT cl.id as cluster_id, cl.case_name, cl.court, " +
+    "'US' as jurisdiction, cl.is_good_law " +
+    "FROM case_law cl " +
+    "WHERE cl.case_name IS NOT NULL AND cl.citation IS NOT NULL " +
     "ORDER BY random() LIMIT " + limit
   );
   console.log("Sample opinions loaded: " + rows.length);

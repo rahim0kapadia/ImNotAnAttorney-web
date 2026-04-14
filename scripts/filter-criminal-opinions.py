@@ -77,6 +77,9 @@ def is_criminal(row):
 
 
 def main():
+    # CL opinions can be 10MB+ of HTML. Raise CSV field size limit.
+    csv.field_size_limit(50 * 1024 * 1024)  # 50MB
+
     if not os.path.exists(BZ2_PATH):
         print(f"ERROR: bz2 file not found: {BZ2_PATH}", file=sys.stderr)
         sys.exit(1)
@@ -102,7 +105,17 @@ def main():
         with open(OUT_PATH, "w", newline="", encoding="utf-8") as outfile:
             writer = None  # initialized on first criminal record
 
-            for row in reader:
+            parse_errors = 0
+            while True:
+                try:
+                    row = next(reader)
+                except StopIteration:
+                    break
+                except Exception as e:
+                    parse_errors += 1
+                    if parse_errors <= 10:
+                        print(f"  Parse error #{parse_errors} at ~row {total}: {e}")
+                    continue
                 total += 1
 
                 # Progress every 100K records
@@ -138,13 +151,17 @@ def main():
                         outfile,
                         fieldnames=reader.fieldnames,
                         lineterminator="\n",
+                        extrasaction="ignore",
                     )
                     writer.writeheader()
                     print(f"  First criminal opinion at row {total} — header written.")
                     print(f"  Columns: {len(reader.fieldnames)}")
                     sys.stdout.flush()
 
-                writer.writerow(row)
+                # CL CSV has rows with extra columns (misaligned delimiters in
+                # legal text). DictReader creates None keys for overflow. Strip them.
+                cleaned = {k: v for k, v in row.items() if k is not None}
+                writer.writerow(cleaned)
 
     elapsed = time.time() - start
     rate = total / elapsed if elapsed > 0 else 0

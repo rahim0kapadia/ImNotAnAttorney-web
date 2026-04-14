@@ -264,6 +264,32 @@ async function loadTheoryMap() {
   return map;
 }
 
+// ── Load cluster_id → jurisdiction from pre-built map (case_name_full extraction) ──
+function loadClusterJurisdictionMap() {
+  const mapPath = path.join(PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "cluster-jurisdiction-map.json");
+  if (!fs.existsSync(mapPath)) {
+    console.log("  No cluster-jurisdiction-map.json found. Run extract-cluster-jurisdictions.mjs first.");
+    return new Map();
+  }
+  const raw = JSON.parse(fs.readFileSync(mapPath, "utf8"));
+  const map = new Map(Object.entries(raw));
+  console.log("  Cluster jurisdiction map: " + map.size.toLocaleString() + " entries");
+  return map;
+}
+
+// ── Load court-jurisdiction-map.json for court_id → jurisdiction fallback ─────
+function loadCourtJurisdictionMap() {
+  const mapPath = path.join(PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "court-jurisdiction-map.json");
+  if (!fs.existsSync(mapPath)) {
+    console.log("  No court-jurisdiction-map.json found.");
+    return new Map();
+  }
+  const raw = JSON.parse(fs.readFileSync(mapPath, "utf8"));
+  const map = new Map(Object.entries(raw));
+  console.log("  Court jurisdiction map: " + map.size.toLocaleString() + " entries");
+  return map;
+}
+
 // ── Load existing cluster_id → jurisdiction from classified_opinions ──────────
 async function loadExistingJurisdictions() {
   console.log("Loading existing jurisdictions from classified_opinions...");
@@ -454,6 +480,8 @@ async function main() {
   loadToken();
 
   // Load reference maps (one streamer at a time — OOM gotcha)
+  const clusterJurisdictions = loadClusterJurisdictionMap();
+  const courtMap = loadCourtJurisdictionMap();
   const [statuteMap, theoryMap, existingJurisdictions] = await Promise.all([
     loadStatuteMap(),
     loadTheoryMap(),
@@ -605,13 +633,12 @@ async function main() {
 
       processed++;
 
-      // Derive jurisdiction: existing DB rows first, then text heuristic
-      let jurisdiction = existingJurisdictions.get(cluster_id) || null;
-      if (!jurisdiction) {
-        jurisdiction = deriveJurisdictionFromText(text) ||
-                       deriveJurisdictionFromText(record.author_str || "") ||
-                       "unknown";
-      }
+      // Derive jurisdiction: cluster map (case_name_full) > existing DB > text heuristic
+      let jurisdiction =
+        clusterJurisdictions.get(cluster_id) ||
+        existingJurisdictions.get(cluster_id) ||
+        deriveJurisdictionFromText(text) ||
+        "unknown";
 
       // Classify opinion type
       const { type: opinion_type } = classifyOpinionType(text);
@@ -646,7 +673,9 @@ async function main() {
 
       // case_name placeholder — ON CONFLICT COALESCE preserves real name from existing row
       const case_name = "cluster:" + cluster_id;
-      const court = (record.author_str || "unknown").slice(0, 200);
+      // author_str is judge name, not court. Court resolution needs docket data.
+      // For now store "unknown" — future: resolve via cluster→docket→court pipeline.
+      const court = "unknown";
       const decision_date = record.date_created ? record.date_created.slice(0, 10) : null;
       const source_url = "https://www.courtlistener.com/opinion/" + cluster_id + "/";
 
