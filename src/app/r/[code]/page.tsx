@@ -91,7 +91,8 @@ export default async function ReferralPage({ params }: PageProps) {
 
   // Capture Referer header before after() (headers() must be called in request scope)
   const headersList = await headers();
-  const referrerUrl = headersList.get("referer") || null;
+  const rawReferer = headersList.get("referer");
+  const referrerUrl = rawReferer ? rawReferer.slice(0, 500) : null;
 
   // Fire-and-forget link_click event -- runs after response is sent
   after(async () => {

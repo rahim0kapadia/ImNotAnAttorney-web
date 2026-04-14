@@ -25,33 +25,34 @@ export async function POST(req: NextRequest) {
 
   const { partner_promo_code, event_type, metadata } = body;
 
-  if (!partner_promo_code || typeof partner_promo_code !== "string") {
+  if (!partner_promo_code || typeof partner_promo_code !== "string" || partner_promo_code.length > 50) {
     return NextResponse.json({ error: "partner_promo_code required" }, { status: 400 });
   }
+
+  const normalizedCode = partner_promo_code.toUpperCase();
 
   if (!event_type || !ALLOWED_EVENT_TYPES.has(event_type)) {
     return NextResponse.json({ error: "Invalid event_type" }, { status: 400 });
   }
 
-  // Validate metadata: must be plain object, whitelisted keys, max size
+  // Validate metadata: must be plain object, whitelisted keys only
   let sanitizedMetadata: Record<string, unknown> = {};
   if (metadata != null) {
     if (typeof metadata !== "object" || Array.isArray(metadata)) {
       return NextResponse.json({ error: "metadata must be an object" }, { status: 400 });
-    }
-    if (JSON.stringify(metadata).length > MAX_METADATA_SIZE) {
-      return NextResponse.json({ error: "metadata too large" }, { status: 400 });
     }
     for (const key of Object.keys(metadata)) {
       if (ALLOWED_METADATA_KEYS.has(key)) {
         sanitizedMetadata[key] = String(metadata[key]).slice(0, 200);
       }
     }
+    if (JSON.stringify(sanitizedMetadata).length > MAX_METADATA_SIZE) {
+      return NextResponse.json({ error: "metadata too large" }, { status: 400 });
+    }
   }
 
+  // Rate limit: 10 per IP per minute (before DB client to minimize resources on abuse)
   const supabase = createAdminClient();
-
-  // Rate limit: 10 per IP per minute
   const ip = getClientIp(req);
   const { limited: ipLimited } = await checkRateLimit(
     supabase,
@@ -63,10 +64,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Rate limited" }, { status: 429 });
   }
 
-  // Rate limit: 10 per promo code per minute
+  // Rate limit: 10 per promo code per minute (normalized)
   const { limited } = await checkRateLimit(
     supabase,
-    `partner-event:${partner_promo_code}`,
+    `partner-event:${normalizedCode}`,
     10,
     60
   );
@@ -78,7 +79,7 @@ export async function POST(req: NextRequest) {
   const { data: partner } = await supabase
     .from("partners")
     .select("id, status")
-    .eq("promo_code", partner_promo_code.toUpperCase())
+    .eq("promo_code", normalizedCode)
     .eq("status", "approved")
     .limit(1)
     .maybeSingle();

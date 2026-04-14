@@ -26,8 +26,10 @@ export function getMilestoneMessage(totalReferrals: number): string | null {
 export function buildTierProgress(totalReferrals: number, commissionTier: string): string {
   const next = getNextTier(commissionTier);
   if (!next) {
-    const current = COMMISSION_TIERS_CONFIG.find((t) => t.key === commissionTier) ?? COMMISSION_TIERS_CONFIG[COMMISSION_TIERS_CONFIG.length - 1];
-    return `[${current.label} - ${current.rate}%]`;
+    const current = COMMISSION_TIERS_CONFIG.find((t) => t.key === commissionTier);
+    if (!current) console.warn(`[PartnerSMS] Unknown commission tier: ${commissionTier}`);
+    const tier = current ?? COMMISSION_TIERS_CONFIG[COMMISSION_TIERS_CONFIG.length - 1];
+    return `[${tier.label} - ${tier.rate}%]`;
   }
   return `[${totalReferrals}/${next.threshold} to ${next.label} - ${next.rate}%]`;
 }

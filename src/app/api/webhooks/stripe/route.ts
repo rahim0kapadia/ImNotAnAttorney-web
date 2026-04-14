@@ -604,11 +604,13 @@ export async function POST(req: NextRequest) {
             }
 
             // Fire-and-forget purchase event for conversion funnel
-            supabase.from("partner_events").insert({
-              partner_id: partner.id,
-              event_type: "purchase",
-              metadata: { tier, sale_amount_cents: amount },
-            }).then(({ error }) => {
+            after(async () => {
+              const sb = createAdminClient();
+              const { error } = await sb.from("partner_events").insert({
+                partner_id: partner.id,
+                event_type: "purchase",
+                metadata: { tier },
+              });
               if (error) console.warn("[Webhook] Purchase event insert failed:", error.message);
             });
 
@@ -715,11 +717,13 @@ export async function POST(req: NextRequest) {
             }
 
             // Fire-and-forget purchase event for conversion funnel
-            supabase.from("partner_events").insert({
-              partner_id: partner.id,
-              event_type: "purchase",
-              metadata: { tier, sale_amount_cents: amount },
-            }).then(({ error }) => {
+            after(async () => {
+              const sb = createAdminClient();
+              const { error } = await sb.from("partner_events").insert({
+                partner_id: partner.id,
+                event_type: "purchase",
+                metadata: { tier },
+              });
               if (error) console.warn("[Webhook] Purchase event insert failed:", error.message);
             });
 

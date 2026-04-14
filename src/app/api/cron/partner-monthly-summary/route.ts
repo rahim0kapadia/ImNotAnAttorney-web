@@ -69,6 +69,10 @@ export async function GET(req: NextRequest) {
       .lte("created_at", rangeEnd)
       .limit(5000);
 
+    if ((allMonthReferrals || []).length >= 5000) {
+      console.warn("[MonthlySummary] Referral count hit limit (5000). Pagination needed.");
+    }
+
     const referralsByPartner = new Map<string, { commission_amount: number; tier: string }[]>();
     for (const ref of (allMonthReferrals || [])) {
       const existing = referralsByPartner.get(ref.partner_id) || [];
@@ -77,7 +81,7 @@ export async function GET(req: NextRequest) {
     }
 
     for (const partner of (partners || [])) {
-      const pendingBalance = (partner.total_commission || 0) - (partner.total_paid_out || 0);
+      const pendingBalance = Math.max(0, (partner.total_commission || 0) - (partner.total_paid_out || 0));
       const monthRefs = referralsByPartner.get(partner.id) || [];
       const monthEarningsCents = monthRefs.reduce((sum, r) => sum + (r.commission_amount || 0), 0);
 
@@ -89,8 +93,8 @@ export async function GET(req: NextRequest) {
 
       const prefs = getPartnerPrefs(partner.notification_prefs || null);
 
-      // SMS
-      if (shouldSendSMS(prefs.commission_earned) && partner.phone) {
+      // SMS (monthly summary is a payout/balance notification, not per-sale alert)
+      if (shouldSendSMS(prefs.payout) && partner.phone) {
         try {
           const smsText = buildMonthlySummarySMS({
             monthName,
@@ -108,7 +112,7 @@ export async function GET(req: NextRequest) {
       }
 
       // Email
-      if (shouldSendEmail(prefs.commission_earned) && partner.email) {
+      if (shouldSendEmail(prefs.payout) && partner.email) {
         try {
           const tierBreakdown = monthRefs.reduce<Record<string, { count: number; total: number }>>((acc, r) => {
             if (!acc[r.tier]) acc[r.tier] = { count: 0, total: 0 };
@@ -141,14 +145,14 @@ export async function GET(req: NextRequest) {
                   <h2 style="color:#F59E0B;">${escapeHtml(monthName)} Summary</h2>
                   <p style="color:#D4D4D8;">Hey ${firstName},</p>
                   <div style="background:#1C1917;padding:20px;border-radius:12px;border-left:4px solid #F59E0B;margin:16px 0;">
-                    <p style="color:white;font-size:24px;margin:0;">${formatCents(monthEarningsCents)} earned</p>
+                    <p style="color:white;font-size:24px;margin:0;">${escapeHtml(formatCents(monthEarningsCents))} earned</p>
                     <p style="color:#A1A1AA;margin:4px 0 0;">${monthRefs.length} referral${monthRefs.length !== 1 ? "s" : ""} in ${escapeHtml(monthName)}</p>
                   </div>
                   ${tierRows ? `<table style="width:100%;border-collapse:collapse;margin:12px 0;"><thead><tr><th style="text-align:left;padding:4px 8px;color:#71717A;">Product</th><th style="text-align:left;padding:4px 8px;color:#71717A;">Sales</th><th style="text-align:left;padding:4px 8px;color:#71717A;">Earned</th></tr></thead><tbody>${tierRows}</tbody></table>` : ""}
                   ${progressLine}
                   <div style="background:#1C1917;padding:16px;border-radius:8px;margin:16px 0;">
                     <p style="color:#A1A1AA;margin:0;">Pending payout balance</p>
-                    <p style="color:white;font-size:20px;margin:4px 0 0;">${formatCents(pendingBalance)}</p>
+                    <p style="color:white;font-size:20px;margin:4px 0 0;">${escapeHtml(formatCents(pendingBalance))}</p>
                     <p style="color:#71717A;font-size:13px;margin:4px 0 0;">Payouts process on the 1st of each month.</p>
                   </div>
                 </div>
