@@ -21,6 +21,7 @@ import { ClientTracker } from "@/components/partner/ClientTracker";
 import { FtaCalculator } from "@/components/partner/FtaCalculator";
 import { ComplianceReportButton } from "@/components/partner/ComplianceReportButton";
 import { AddClientModal } from "@/components/partner/AddClientModal";
+import { NotificationSettings } from "@/components/partner/NotificationSettings";
 import { formatDate } from "@/lib/format";
 import { tierDisplayName } from "@/lib/tiers";
 import { formatCents } from "@/lib/format";
@@ -255,6 +256,9 @@ export default function PartnerDashboard() {
           initialPaypal={partner.payment_paypal || ""}
           onError={(msg) => setError(msg)}
         />
+
+        {/* Notification Preferences */}
+        <NotificationSettings hasPhone={!!partner.phone} />
 
         {/* 9. Profile */}
         <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
