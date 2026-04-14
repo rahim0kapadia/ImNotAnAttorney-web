@@ -316,7 +316,7 @@
       "linkedProducts": ["dui-defense-playbook"],
       "linkedTiers": [],
       "iddEligible": true,
-      "freeEntryPoint": "/score"
+      "freeEntryPoint": "/score?charge=dui"
     }
   ]
 }

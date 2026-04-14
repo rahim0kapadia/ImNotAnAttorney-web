@@ -626,7 +626,7 @@ export default function Home() {
                         {cat.description}
                       </p>
                       <p className="mt-3 text-xs font-semibold text-amber-500 group-hover:text-amber-400">
-                        {cat.playbook ? `Defense Playbook \u2014 ${TIER_CORE["dui-first-offense"].priceDisplay} \u2192` : `Case Research \u2014 ${TIER_CORE["case-decoder"].priceDisplay} \u2192`}
+                        {cat.playbook ? `Defense Playbook \u2014 ${TIER_CORE[cat.playbook as keyof typeof TIER_CORE]?.priceDisplay ?? TIER_CORE["dui-first-offense"].priceDisplay} \u2192` : `Case Research \u2014 ${TIER_CORE["case-decoder"].priceDisplay} \u2192`}
                       </p>
                     </Link>
                   </StaggerItem>

@@ -20,7 +20,44 @@ import { useReducedMotion, AnimatePresence, motion, LazyMotion, domAnimation } f
  * details, sensitive last (charge type, criminal history, profession).
  * Builds momentum before asking harder questions — maximizes completion.
  */
+/** Valid chargeType values accepted by the quiz */
+const VALID_CHARGE_TYPES = new Set([
+  "dui", "drug-possession", "drug-trafficking", "probation-violation",
+  "white-collar", "sex-offense", "federal-criminal", "self-defense",
+  "other-felony", "other-misdemeanor",
+]);
+
+/** Charge type labels for confirmation screen */
+const CHARGE_LABELS: Record<string, string> = {
+  "dui": "DUI / DWI",
+  "drug-possession": "Drug possession",
+  "drug-trafficking": "Drug trafficking / distribution",
+  "probation-violation": "Probation violation",
+  "white-collar": "White collar / fraud",
+  "sex-offense": "Sex offense",
+  "federal-criminal": "Federal criminal charge",
+  "self-defense": "Self-defense / justifiable force",
+  "other-felony": "Other felony",
+  "other-misdemeanor": "Other misdemeanor",
+};
+
 const questions = [
+  {
+    id: "chargeType",
+    label: "What are you charged with?",
+    options: [
+      { value: "dui", label: "DUI / DWI" },
+      { value: "drug-possession", label: "Drug possession" },
+      { value: "drug-trafficking", label: "Drug trafficking / distribution" },
+      { value: "probation-violation", label: "Probation violation" },
+      { value: "white-collar", label: "White collar / fraud" },
+      { value: "sex-offense", label: "Sex offense" },
+      { value: "federal-criminal", label: "Federal criminal charge" },
+      { value: "self-defense", label: "Self-defense / justifiable force" },
+      { value: "other-felony", label: "Other felony" },
+      { value: "other-misdemeanor", label: "Other misdemeanor" },
+    ],
+  },
   {
     id: "hasAttorney",
     label: "Do you have an attorney?",
@@ -90,22 +127,6 @@ const questions = [
       { value: "yes", label: "Yes" },
       { value: "no", label: "No" },
       { value: "dont-know", label: "I don't know what that is" },
-    ],
-  },
-  {
-    id: "chargeType",
-    label: "What are you charged with?",
-    options: [
-      { value: "dui", label: "DUI / DWI" },
-      { value: "drug-possession", label: "Drug possession" },
-      { value: "drug-trafficking", label: "Drug trafficking / distribution" },
-      { value: "probation-violation", label: "Probation violation" },
-      { value: "white-collar", label: "White collar / fraud" },
-      { value: "sex-offense", label: "Sex offense" },
-      { value: "federal-criminal", label: "Federal criminal charge" },
-      { value: "self-defense", label: "Self-defense / justifiable force" },
-      { value: "other-felony", label: "Other felony" },
-      { value: "other-misdemeanor", label: "Other misdemeanor" },
     ],
   },
   {
@@ -912,7 +933,12 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 export default function ScoreClient() {
   const searchParams = useSearchParams();
   const blogRef = searchParams.get("ref");
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const chargeParam = searchParams.get("charge");
+  const prefillCharge = chargeParam && VALID_CHARGE_TYPES.has(chargeParam) ? chargeParam : null;
+
+  const [answers, setAnswers] = useState<Record<string, string>>(
+    prefillCharge ? { chargeType: prefillCharge } : {}
+  );
   const [result, setResult] = useState<ScoreResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -924,8 +950,8 @@ export default function ScoreClient() {
   } | null>(null);
   const scoreRef = useRef<HTMLDivElement>(null);
 
-  // Wizard state
-  const [currentStep, setCurrentStep] = useState(0);
+  // Wizard state — skip chargeType question (step 0) when pre-filled from URL
+  const [currentStep, setCurrentStep] = useState(prefillCharge ? 1 : 0);
   const [direction, setDirection] = useState<"forward" | "back">("forward");
   const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const questionContainerRef = useRef<HTMLDivElement>(null);
@@ -1098,10 +1124,12 @@ export default function ScoreClient() {
             Free — 60 seconds, no email required
           </span>
           <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
-            Is Your Attorney Actually Working Your Case?
+            {prefillCharge
+              ? `${CHARGE_LABELS[prefillCharge] || "Your"} case active? Find out if your defense is on track.`
+              : "Is Your Attorney Actually Working Your Case?"}
           </h1>
           <p className="mt-3 text-base text-zinc-300">
-            Find out in 60 seconds. 10 questions, instant score, anonymous — nothing stored, nothing sold.
+            Find out in 60 seconds. {prefillCharge ? "9" : "10"} questions, instant score, anonymous — nothing stored, nothing sold.
           </p>
         </div>
 

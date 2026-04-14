@@ -40,7 +40,7 @@ export function HomepageHero() {
   const secondaryHref = selectedSlug ? "/start" : "/playbooks";
   const secondaryLabel = selectedSlug
     ? `Need deeper analysis? Case Decoder \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`
-    : "See the Defense Playbook for your charges \u2014 $97 each";
+    : `See the Defense Playbook for your charges \u2014 from ${TIER_CORE["dui-first-offense"].priceDisplay}`;
 
   return (
     <>

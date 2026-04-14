@@ -25,14 +25,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Defense Playbooks — $97 Instant Download",
+  title: "Defense Playbooks — Instant Download",
   description:
-    "Choose your charge type and get an instant-download defense playbook: 26 questions that change how your next attorney meeting goes, case stage roadmap, red flag checklist, attorney scorecard, and emergency guide. $97.",
+    "Choose your charge type and get an instant-download defense playbook: 26 questions that change how your next attorney meeting goes, case stage roadmap, red flag checklist, attorney scorecard, and emergency guide.",
   alternates: {
     canonical: `${SITE_URL}/playbooks`,
   },
   openGraph: {
-    title: "Defense Playbooks — $97 Instant Download",
+    title: "Defense Playbooks — Instant Download",
     description:
       "Choose your charge type. Get 26 questions that change how your next attorney meeting goes, a case stage roadmap, red flag checklist, and attorney scorecard. Instant PDF download.",
     url: `${SITE_URL}/playbooks`,
@@ -122,7 +122,7 @@ export default function PlaybooksCatalogPage() {
         <div className="mx-auto max-w-5xl text-center">
           <FadeInUp>
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-amber-400">
-              Instant Download &middot; $97
+              Instant Download &middot; from {TIER_CORE["dui-first-offense"].priceDisplay}
             </p>
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Defense Playbooks

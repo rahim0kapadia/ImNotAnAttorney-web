@@ -98,7 +98,7 @@ export function Footer() {
                 Become a Partner
               </Link>
               <Link
-                href="/intake"
+                href="/score"
                 className="text-sm text-amber-400 hover:text-amber-300"
               >
                 Get Started →

@@ -22,7 +22,7 @@ const CATEGORY_PLAYBOOK: Record<string, string> = {
   "sex-offense": "sex-offense",
   "self-defense": "self-defense",
   probation: "probation-violation",
-  "general-defense": "dui-first-offense",
+  "general-defense": "case-decoder",
 };
 
 /**
@@ -94,10 +94,11 @@ export function BlogCTA({ category, slug }: { category?: string; slug?: string }
     );
   }
 
-  // Tier playbook branch (unchanged)
-  const playbookSlug = category ? CATEGORY_PLAYBOOK[category] || "dui-first-offense" : "dui-first-offense";
+  // Tier playbook or Case Decoder branch
+  const playbookSlug = category ? CATEGORY_PLAYBOOK[category] || "case-decoder" : "case-decoder";
   const tier = TIER_CORE[playbookSlug as keyof typeof TIER_CORE];
   const isLive = tier?.live === true;
+  const isCaseDecoder = playbookSlug === "case-decoder";
 
   return (
     <FadeInUp>
@@ -109,8 +110,9 @@ export function BlogCTA({ category, slug }: { category?: string; slug?: string }
               <span className="text-amber-400">Would you even know?</span>
             </h3>
             <p className="mt-2 text-sm text-zinc-400">
-              {tier.name}: 26 questions that change how your next attorney meeting goes.
-              Built from real case research. {tier.priceDisplay}, instant download.
+              {isCaseDecoder
+                ? `${tier.name}: We read your actual case file and hand you 15 specific questions for your next attorney meeting. ${tier.priceDisplay}, delivered in ${tier.delivery}.`
+                : `${tier.name}: 26 questions that change how your next attorney meeting goes. Built from real case research. ${tier.priceDisplay}, instant download.`}
             </p>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
               <Link

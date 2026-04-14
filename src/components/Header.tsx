@@ -111,7 +111,7 @@ export function Header() {
             </Link>
           ))}
           <Link
-            href="/start"
+            href="/score"
             className="rounded-lg bg-amber-500 px-4 py-3 text-base font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-md hover:shadow-amber-500/30"
           >
             Get Started
@@ -186,7 +186,7 @@ export function Header() {
               </Link>
             ))}
             <Link
-              href="/start"
+              href="/score"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg bg-amber-500 px-4 py-3 text-center text-base font-semibold text-black transition-colors hover:bg-amber-400"
             >
