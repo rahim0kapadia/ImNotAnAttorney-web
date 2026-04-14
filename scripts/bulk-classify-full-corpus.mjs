@@ -45,6 +45,12 @@ const MIN_TEXT_LEN = 500;
 const OPINIONS_BZ2 = path.join(
   PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "opinions-2026-03-31.csv.bz2"
 );
+// Pre-filtered criminal CSV produced by scripts/filter-criminal-opinions.py
+// (indexed_bzip2, 12-core parallel, ~50min run). When present, skip bzcat
+// entirely — stream directly for ~10x faster classification reruns.
+const OPINIONS_CRIMINAL_CSV = path.join(
+  PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "opinions-criminal.csv"
+);
 
 // ── CLI flags ────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -416,10 +422,17 @@ async function applyBatches(upserts, applyStart) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log("=== FULL CORPUS BULK CLASSIFICATION (50GB bzcat stream) ===\n");
-  console.log("Mode:         " + (applyMode ? "APPLY (writes to DB)" : "DRY RUN (stats only)"));
+  // Auto-detect source: pre-filtered CSV (fast) vs raw bz2 (slow bzcat)
+  const useCriminalCsv = fs.existsSync(OPINIONS_CRIMINAL_CSV);
+  const sourceLabel = useCriminalCsv
+    ? "opinions-criminal.csv (pre-filtered, direct stream)"
+    : "opinions-2026-03-31.csv.bz2 (bzcat decompression)";
+
+  console.log("=== FULL CORPUS BULK CLASSIFICATION ===\n");
+  console.log("Source:         " + sourceLabel);
+  console.log("Mode:           " + (applyMode ? "APPLY (writes to DB)" : "DRY RUN (stats only)"));
   console.log("Criminal limit: " + (isFinite(criminalLimit) ? criminalLimit : "unlimited"));
-  console.log("Resume from:  row " + resumeFrom);
+  console.log("Resume from:    row " + resumeFrom);
   console.log("");
 
   // Crash diagnostics
@@ -432,8 +445,9 @@ async function main() {
     process.exit(3);
   });
 
-  if (!fs.existsSync(OPINIONS_BZ2)) {
-    console.error("ERROR: opinions bz2 not found: " + OPINIONS_BZ2);
+  if (!useCriminalCsv && !fs.existsSync(OPINIONS_BZ2)) {
+    console.error("ERROR: neither opinions-criminal.csv nor opinions bz2 found.");
+    console.error("  Run: python3 scripts/filter-criminal-opinions.py");
     process.exit(1);
   }
 
@@ -447,34 +461,59 @@ async function main() {
   ]);
   logMem("post-db-load");
 
-  // ── bzcat stream ────────────────────────────────────────────────────────────
-  const bzcatPath = findBzcat();
-  console.log("\nStreaming " + OPINIONS_BZ2 + " via bzcat...");
-  console.log("bzcat path: " + bzcatPath + "\n");
+  // ── Stream setup: pre-filtered CSV (fast) or bzcat bz2 (slow) ───────────────
+  let parser;
+  let bzcat = null; // only set when using bzcat fallback
 
-  const bzcat = spawn(bzcatPath, [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
-  let bzcatStderr = "";
-  bzcat.stderr.on("data", (d) => { bzcatStderr += d.toString().slice(0, 2000); });
-  bzcat.on("error", (e) => console.error("bzcat error: " + e.message));
-  bzcat.on("exit", (code, signal) => {
-    if (code !== 0 && code !== null) {
-      console.error("bzcat exited: code=" + code + " signal=" + signal + " stderr=" + bzcatStderr.slice(0, 500));
-    }
-  });
+  if (useCriminalCsv) {
+    // Fast path: opinions-criminal.csv produced by filter-criminal-opinions.py
+    // Already filtered to criminal opinions — no keyword check needed in stream loop.
+    console.log("\nStreaming pre-filtered CSV: " + OPINIONS_CRIMINAL_CSV + "\n");
+    const csvStream = fs.createReadStream(OPINIONS_CRIMINAL_CSV);
+    parser = csvStream.pipe(
+      parse({
+        columns: true,
+        skip_empty_lines: true,
+        escape: "\\",
+        relax_column_count: true,
+        relax_quotes: true,
+      })
+    );
+    parser.on("error", (e) =>
+      console.error("csv-parse error at row ~" + rowCount + ": " + e.message.slice(0, 150))
+    );
+  } else {
+    // Slow path: bzcat decompression of full 50GB bz2
+    // Consider running filter-criminal-opinions.py first for ~10x faster reruns.
+    const bzcatPath = findBzcat();
+    console.log("\nStreaming " + OPINIONS_BZ2 + " via bzcat...");
+    console.log("bzcat path: " + bzcatPath);
+    console.log("TIP: run python3 scripts/filter-criminal-opinions.py first for ~10x faster reruns.\n");
 
-  // CL CSV: backslash-escaped quotes, relax_column_count + relax_quotes for legal text
-  const parser = bzcat.stdout.pipe(
-    parse({
-      columns: true,
-      skip_empty_lines: true,
-      escape: "\\",
-      relax_column_count: true,
-      relax_quotes: true,
-    })
-  );
-  parser.on("error", (e) =>
-    console.error("csv-parse error at row ~" + rowCount + ": " + e.message.slice(0, 150))
-  );
+    bzcat = spawn(bzcatPath, [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
+    let bzcatStderr = "";
+    bzcat.stderr.on("data", (d) => { bzcatStderr += d.toString().slice(0, 2000); });
+    bzcat.on("error", (e) => console.error("bzcat error: " + e.message));
+    bzcat.on("exit", (code, signal) => {
+      if (code !== 0 && code !== null) {
+        console.error("bzcat exited: code=" + code + " signal=" + signal + " stderr=" + bzcatStderr.slice(0, 500));
+      }
+    });
+
+    // CL CSV: backslash-escaped quotes, relax_column_count + relax_quotes for legal text
+    parser = bzcat.stdout.pipe(
+      parse({
+        columns: true,
+        skip_empty_lines: true,
+        escape: "\\",
+        relax_column_count: true,
+        relax_quotes: true,
+      })
+    );
+    parser.on("error", (e) =>
+      console.error("csv-parse error at row ~" + rowCount + ": " + e.message.slice(0, 150))
+    );
+  }
 
   // ── Counters ────────────────────────────────────────────────────────────────
   let rowCount = 0;
