@@ -204,7 +204,9 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
         if (email.delayDays === 0) continue;
         if (email.relativeToMeeting) continue;
         if (skipUpsell && email.key.includes("upsell")) continue;
-        if (email.key.includes("upsell") && PLAYBOOK_SLUGS.has(order.tier as TierSlug) && emailsWithCd.has(order.email.toLowerCase())) continue;
+        // Skip ALL playbook drip emails if customer already has a Case Decoder —
+        // activation pitches CD, check-in references questions CD supersedes, upsell is redundant.
+        if (PLAYBOOK_SLUGS.has(order.tier as TierSlug) && emailsWithCd.has(order.email.toLowerCase())) continue;
 
         // ── RELATIVE-TO-SUBMISSION TIMING ──
         if (email.relativeToSubmission) {
