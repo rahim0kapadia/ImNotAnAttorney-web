@@ -8,6 +8,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendSMS } from "@/lib/sms";
+import { getClientPrefs, shouldSendSMS, canSendClientSMS } from "@/lib/notification-prefs";
 
 const TWELVE_HOURS_MS = 12 * 60 * 60 * 1000;
 
@@ -29,7 +31,7 @@ export async function POST(req: NextRequest) {
   // Validate token matches an active court_reminders row
   const { data: reminder, error: reminderErr } = await supabase
     .from("court_reminders")
-    .select("id")
+    .select("id, phone, notification_prefs, sms_consent_at")
     .eq("token", token)
     .eq("status", "active")
     .maybeSingle();
@@ -73,6 +75,15 @@ export async function POST(req: NextRequest) {
   if (insertErr) {
     console.error("[check-in] Insert failed:", insertErr);
     return NextResponse.json({ error: "Check-in failed" }, { status: 500 });
+  }
+
+  // SMS confirmation (fire-and-forget — don't delay the response)
+  if (canSendClientSMS(reminder.phone, reminder.sms_consent_at)) {
+    const prefs = getClientPrefs(reminder.notification_prefs);
+    if (shouldSendSMS(prefs.check_in)) {
+      sendSMS(reminder.phone!, `Check-in confirmed for ${new Date().toLocaleDateString("en-US")}.`)
+        .catch(e => console.warn("[Check-In] SMS failed:", e));
+    }
   }
 
   return NextResponse.json({ success: true, checkedInAt: inserted.checked_in_at });
