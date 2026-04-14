@@ -20,6 +20,19 @@ import { caseThreadId } from "@/lib/site";
 import type { CronContext, CronResult } from "./types";
 import { emptyResult } from "./types";
 
+async function batchOrderEmailLookup(
+  supabase: CronContext["supabase"],
+  sourceEmails: string[],
+  applyFilter: (query: any) => any,
+  label: string
+): Promise<Set<string>> {
+  if (sourceEmails.length === 0) return new Set();
+  const base = supabase.from("orders").select("email").in("email", sourceEmails).eq("status", "paid");
+  const { data, error } = await applyFilter(base);
+  if (error) console.error(`[Drip Cron] ${label} error:`, error);
+  return new Set((data ?? []).map((o: { email: string }) => o.email.toLowerCase()));
+}
+
 export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResult> {
   const result = emptyResult();
 
@@ -107,34 +120,22 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
   const caseDecoderEmails = [...new Set(
     orders.filter((o) => o.tier === "case-decoder").map((o) => o.email.toLowerCase())
   )];
-  const { data: higherTierOrders, error: htError } = caseDecoderEmails.length > 0
-    ? await ctx.supabase
-        .from("orders")
-        .select("email")
-        .in("email", caseDecoderEmails)
-        .eq("status", "paid")
-        .not("tier", "in", '("case-decoder","extra-witness","witness-pack")')
-    : { data: [] as { email: string }[] };
-  if (htError) console.error("[Drip Cron] Higher-tier orders query error:", htError);
-  const emailsWithHigherTier = new Set(
-    (higherTierOrders ?? []).map((o) => o.email.toLowerCase())
+  const emailsWithHigherTier = await batchOrderEmailLookup(
+    ctx.supabase,
+    caseDecoderEmails,
+    (q) => q.not("tier", "in", '("case-decoder","extra-witness","witness-pack")'),
+    "Higher-tier orders"
   );
 
   // ── N+1 FIX: Batch-fetch CD orders for playbook upsell suppression ──
   const playbookOrderEmails = [...new Set(
     orders.filter((o) => PLAYBOOK_SLUGS.has(o.tier as TierSlug)).map((o) => o.email.toLowerCase())
   )];
-  const { data: cdOrdersForPlaybooks, error: cdError } = playbookOrderEmails.length > 0
-    ? await ctx.supabase
-        .from("orders")
-        .select("email")
-        .in("email", playbookOrderEmails)
-        .eq("status", "paid")
-        .eq("tier", "case-decoder")
-    : { data: [] as { email: string }[] };
-  if (cdError) console.error("[Drip Cron] CD orders query error:", cdError);
-  const emailsWithCd = new Set(
-    (cdOrdersForPlaybooks ?? []).map((o: { email: string }) => o.email.toLowerCase())
+  const emailsWithCd = await batchOrderEmailLookup(
+    ctx.supabase,
+    playbookOrderEmails,
+    (q) => q.eq("tier", "case-decoder"),
+    "CD orders for playbooks"
   );
 
   // ── N+1 FIX: Batch-fetch intakes for personalization ──

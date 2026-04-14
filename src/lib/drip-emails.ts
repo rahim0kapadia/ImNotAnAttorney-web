@@ -850,6 +850,21 @@ interface PlaybookEmailConfig {
   checkinQuestion: string;
 }
 
+function playbookUpsellHtml(slug: TierSlug, caseType: string): string {
+  const tier = TIER_CORE[slug];
+  return `
+    <h1 style="color: #F59E0B;">Generic vs. Case-Specific</h1>
+    <p>The Playbook gives you questions that apply to ${caseType} cases generally. The <strong style="color: white;">Case Decoder</strong> gives you 15 questions built from YOUR charges, YOUR state, YOUR stage, YOUR attorney situation.</p>
+    <p>Generic questions open the conversation. <strong style="color: white;">Case-specific questions change it.</strong></p>
+    <p>The difference: when your attorney hears a question from the Playbook, they know the answer. When they hear a question from your Case Decoder, they have to actually check the file.</p>
+    <p><strong style="color: white;">That's the meeting that changes everything.</strong></p>
+    <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+      <strong style="color: white;">You have already paid ${tier.priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween(slug, "case-decoder")}.</strong> ${TIER_CORE["case-decoder"].delivery} delivery.
+    </p>
+    ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween(slug, "case-decoder")}`, "/checkout?tier=case-decoder")}
+  `;
+}
+
 function makePlaybookSequence(config: PlaybookEmailConfig): DripEmail[] {
   const { slug, caseType, activationFocus, checkinQuestion } = config;
   const tier = TIER_CORE[slug];
@@ -886,17 +901,7 @@ function makePlaybookSequence(config: PlaybookEmailConfig): DripEmail[] {
       delayDays: 7,
       tier: slug,
       subject: "Generic questions open the conversation. Case-specific ones change it.",
-      html: `
-        <h1 style="color: #F59E0B;">Generic vs. Case-Specific</h1>
-        <p>The Playbook gives you questions that apply to ${caseType} cases generally. The <strong style="color: white;">Case Decoder</strong> gives you 15 questions built from YOUR charges, YOUR state, YOUR stage, YOUR attorney situation.</p>
-        <p>Generic questions open the conversation. <strong style="color: white;">Case-specific questions change it.</strong></p>
-        <p>The difference: when your attorney hears a question from the Playbook, they know the answer. When they hear a question from your Case Decoder, they have to actually check the file.</p>
-        <p><strong style="color: white;">That's the meeting that changes everything.</strong></p>
-        <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-          <strong style="color: white;">You have already paid ${tier.priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween(slug, "case-decoder")}.</strong> ${TIER_CORE["case-decoder"].delivery} delivery.
-        </p>
-        ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween(slug, "case-decoder")}`, "/checkout?tier=case-decoder")}
-      `,
+      html: playbookUpsellHtml(slug, caseType),
     },
   ];
 }
@@ -1702,17 +1707,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     delayDays: 7,
     tier: "dui-first-offense",
     subject: "Generic questions are a start. Case-specific ones change the conversation.",
-    html: `
-      <h1 style="color: #F59E0B;">Generic vs. Case-Specific</h1>
-      <p>The Playbook gives you 26 questions that apply to DUI cases generally. The <strong style="color: white;">Case Decoder</strong> gives you 15 questions built from YOUR charges, YOUR state, YOUR stage, YOUR attorney situation.</p>
-      <p>Generic questions open the conversation. <strong style="color: white;">Case-specific questions change it.</strong></p>
-      <p>The difference: when your attorney hears a question from the Playbook, they know the answer. When they hear a question from your Case Decoder, they have to actually check the file.</p>
-      <p><strong style="color: white;">That's the meeting that changes everything.</strong></p>
-      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">You have already paid ${TIER_CORE["dui-first-offense"].priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween("dui-first-offense", "case-decoder")}.</strong> ${TIER_CORE["case-decoder"].delivery} delivery.
-      </p>
-      ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween("dui-first-offense", "case-decoder")}`, "/checkout?tier=case-decoder")}
-    `,
+    html: playbookUpsellHtml("dui-first-offense", "DUI"),
   },
 
   // --- Non-DUI Playbook Sequences (factory-generated, 7 slugs × 3 emails) ---
