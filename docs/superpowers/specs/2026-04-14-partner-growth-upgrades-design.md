@@ -34,19 +34,19 @@ Bail bondsmen (primary), paralegals, legal advocates. Busy, low-tech, barely com
 
 **Problem:** When bondsman shares their referral link on Facebook/iMessage/text, the preview shows generic "Court Prep for Your Case" — no trust transfer in the preview card.
 
-**Solution:** `generateMetadata()` in `/r/[code]/page.tsx` already queries the partner. Inject partner context into OG tags.
+**Solution:** `generateMetadata()` in `/r/[code]/page.tsx` needs partner context to inject into OG tags.
 
-**Implementation:** The `generateMetadata()` function in `src/app/r/[code]/page.tsx` currently returns hardcoded meta. Change it to:
+**Implementation:**
 
-1. Query the partner by promo code (same query the page component already does — extract to shared helper to avoid duplicate queries)
-2. If partner found and approved, set OG tags:
+1. **Fix `generateMetadata()` signature** — Currently declared as `generateMetadata(): Promise<Metadata>` with NO params. Must change to `generateMetadata({ params }: { params: Promise<{ code: string }> }): Promise<Metadata>` to receive the route segment (same pattern as `/blog/[slug]`, `/services/[slug]`, `/report/[token]`).
+2. **Shared query helper with `React.cache()`** — Create a `getPartnerByCode(code: string)` function wrapped in `React.cache()` at module level. Both `generateMetadata()` and the page component call this. `React.cache()` guarantees deduplication within the same server request (Supabase client calls are not plain `fetch()` with identical URLs, so Next.js auto-dedup does not apply).
+3. **Expand partner SELECT** — The shared helper must select `name, company, city, promo_code, status` (adding `city` for Section 1.3).
+4. If partner found and approved, set OG tags:
    - `og:title`: `"Court Prep for Your Case — Referred by {company || name}"`
    - `og:description`: `"{name} from {company} trusts this service. Understand your charges and get the right questions for your attorney."`
    - `twitter:title`: same as og:title
    - `twitter:description`: same as og:description
-3. If partner not found, return existing generic meta (no change to fallback path)
-
-**Shared query helper:** Create a `getPartnerByCode(code: string)` function in `src/app/r/[code]/page.tsx` (module-level, not exported) that both `generateMetadata()` and the page component call. Next.js deduplicates fetch calls within the same request, so this won't double-query.
+5. If partner not found, return existing generic meta (no change to fallback path)
 
 ### 1.2 Referral Event Tracking
 
@@ -78,21 +78,26 @@ CREATE INDEX idx_partner_events_funnel
 | `quiz_complete` | `src/components/ReferralQuiz.tsx` via `POST /api/partner/track-event` | User reaches recommendation step (step === totalSteps) | `{"charge_type": selected_charge_slug}` |
 | `purchase` | `src/app/api/webhooks/stripe/route.ts` | After `track_referral` RPC succeeds | `{"tier": tier_slug, "sale_amount_cents": amount}` |
 
-**Fire-and-forget pattern:** Each event INSERT uses the Supabase admin client. The insert call is NOT awaited — it runs as a detached promise. If it fails, it logs a warning and does not affect the user-facing response. Example implementation:
+**Fire-and-forget pattern:** Event INSERTs must NOT block page render or webhook response.
+
+- **In server components** (`/r/[code]/page.tsx`, `/r/[code]/quiz/page.tsx`): Use Next.js `after()` API. `after()` runs callbacks after the response is sent but before the Vercel function is frozen — detached promises have no guarantee of completing in serverless environments. The webhook file already imports `after` from `next/server`.
+- **In Route Handlers** (webhook, track-event endpoint): Detached promises are acceptable since the handler awaits other operations before returning.
+
+Example for server component event tracking:
 
 ```typescript
-// Non-blocking — never blocks page render
-const supabase = createAdminClient();
-supabase
-  .from("partner_events")
-  .insert({
+import { after } from "next/server";
+
+// In the server component body:
+after(async () => {
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("partner_events").insert({
     partner_id: partner.id,
     event_type: "link_click",
     metadata: { referrer_url: null },
-  })
-  .then(({ error }) => {
-    if (error) console.warn("[PartnerEvents] Insert failed:", error.message);
   });
+  if (error) console.warn("[PartnerEvents] Insert failed:", error.message);
+});
 ```
 
 **Invariant:** No PII in partner_events. No customer names, emails, phone numbers, or case details. Only partner_id, event_type, and the metadata fields listed above.
