@@ -101,7 +101,8 @@ export async function middleware(req: NextRequest) {
       pathname === "/api/partner/magic-link" ||
       pathname === "/api/partner/magic-link/verify" ||
       pathname === "/api/partners/apply" ||
-      pathname === "/api/partner/logout"
+      pathname === "/api/partner/logout" ||
+      pathname === "/api/partner/track-event"
     ) {
       return NextResponse.next();
     }
