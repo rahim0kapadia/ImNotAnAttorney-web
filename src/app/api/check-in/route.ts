@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
   if (canSendClientSMS(reminder.phone, reminder.sms_consent_at)) {
     const prefs = getClientPrefs(reminder.notification_prefs);
     if (shouldSendSMS(prefs.check_in)) {
-      sendSMS(reminder.phone!, `Check-in confirmed for ${new Date().toLocaleDateString("en-US")}.`)
+      sendSMS(reminder.phone!, `Check-in confirmed for ${new Date().toLocaleDateString("en-US")}.`, { category: "check_in", court_reminder_id: reminder.id })
         .catch(e => console.warn("[Check-In] SMS failed:", e));
     }
   }

@@ -9,6 +9,16 @@
  * Phone numbers must be 10-digit US (stripped of +1 prefix for the gateway).
  */
 
+// ── Types ─────────────────────────────────────────────────
+
+/** Optional context for sms_log audit trail. Fire-and-forget — never blocks send. */
+export interface SmsLogContext {
+  category: string;
+  court_reminder_id?: string;
+  partner_id?: string;
+  metadata?: Record<string, unknown>;
+}
+
 // ── SMS Core ──────────────────────────────────────────────
 
 /** Truncate SMS to single segment. Appends "..." if truncated. */
@@ -25,7 +35,8 @@ function toGatewayAddress(phone: string): string {
 
 export async function sendSMS(
   to: string,
-  body: string
+  body: string,
+  logContext?: SmsLogContext
 ): Promise<{ success: boolean; error?: string }> {
   const apiKey = process.env.RESEND_API_KEY;
 
@@ -33,6 +44,8 @@ export async function sendSMS(
     console.warn("[SMS] RESEND_API_KEY not configured — skipping SMS");
     return { success: false, error: "SMS not configured" };
   }
+
+  let result: { success: boolean; error?: string };
 
   try {
     const res = await fetch("https://api.resend.com/emails", {
@@ -53,13 +66,47 @@ export async function sendSMS(
       const data = await res.json().catch(() => ({}));
       const errMsg = (data as { message?: string }).message || `HTTP ${res.status}`;
       console.error("[SMS] Send failed:", errMsg);
-      return { success: false, error: errMsg };
+      result = { success: false, error: errMsg };
+    } else {
+      result = { success: true };
     }
-
-    return { success: true };
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : "Unknown error";
     console.error("[SMS] Error:", errMsg);
-    return { success: false, error: errMsg };
+    result = { success: false, error: errMsg };
+  }
+
+  // Fire-and-forget audit log
+  if (logContext) {
+    logSmsSend(to, body, result, logContext).catch(() => {});
+  }
+
+  return result;
+}
+
+// ── Audit Log ─────────────────────────────────────────────
+
+import { createAdminClient } from "@/lib/supabase/admin";
+
+async function logSmsSend(
+  recipient: string,
+  body: string,
+  result: { success: boolean; error?: string },
+  context: SmsLogContext
+): Promise<void> {
+  try {
+    const supabase = createAdminClient();
+    await supabase.from("sms_log").insert({
+      recipient,
+      body,
+      category: context.category,
+      court_reminder_id: context.court_reminder_id || null,
+      partner_id: context.partner_id || null,
+      success: result.success,
+      error_message: result.error || null,
+      metadata: context.metadata || null,
+    });
+  } catch (err) {
+    console.error("[SMS Log] Failed to log:", err);
   }
 }

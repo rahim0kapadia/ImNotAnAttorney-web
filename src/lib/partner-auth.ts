@@ -3,7 +3,7 @@
  *
  * Magic link flow:
  *   1. Partner enters email → generateMagicLink() creates a 15-min token
- *   2. Token sent via email (Resend) + optional SMS (Bird)
+ *   2. Token sent via email (Resend) + optional SMS (text.email gateway)
  *   3. Partner clicks link → verifyMagicLink() validates + marks used
  *   4. createPartnerSession() creates a 30-day session → cookie set
  *   5. validatePartnerSession() checks cookie on each protected request

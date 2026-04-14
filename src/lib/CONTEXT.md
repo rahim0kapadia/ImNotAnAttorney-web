@@ -97,7 +97,7 @@
 | `batch-api.ts` | Batch processing wrapper for document pipeline |
 | `format.ts` | String formatting helpers (dates, currency, case IDs) |
 | `request.ts` | HTTP fetch wrapper with retry + error normalization |
-| `sms.ts` | Telnyx SMS (court reminders, magic links, partner notifications) |
+| `sms.ts` | SMS via text.email gateway (court reminders, magic links, partner notifications) |
 | `notification-prefs.ts` | Channel preference types, defaults, merge logic, consent guards |
 | `clipboard.ts` | Client-side clipboard utilities |
 | `supabase/admin.ts` | Supabase admin client (service role key, bypasses RLS) |

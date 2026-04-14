@@ -52,7 +52,7 @@ export default function PartnersPage() {
           </h1>
           <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-4">
             Your referrals get free court prep — date reminders and hearing guidance.
-            You earn 10-20% on every product they purchase. No selling required.
+            You earn up to 20% on every product they purchase. No selling required.
           </p>
           <p className="text-sm text-zinc-500 mb-8">
             Bondsmen, paralegals, content creators, advocates — anyone can partner.

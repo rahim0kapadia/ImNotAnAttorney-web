@@ -230,7 +230,7 @@ Patterns that span multiple subsystems:
 - **HTML escaping.** All user strings in email/report HTML pass through `escapeHtml()` before interpolation. Prevents XSS in transactional emails and reports.
 - **Fire-and-forget logging.** Email sends, cron results, analytics events logged to DB asynchronously. Failures logged to console but never break the response.
 - **Client IP extraction.** Prefers Cloudflare `cf-connecting-ip`, falls back to `x-real-ip`, then `x-forwarded-for` (first entry). Used for rate limiting and analytics.
-- **SMS notifications (Telnyx).** `sms.ts` sends via Telnyx REST API v2. Env vars: `TELNYX_API_KEY`, `TELNYX_FROM_NUMBER`. Gracefully degrades if not configured. All SMS bodies capped at 160 chars via `capSMS()`. All client SMS gated on 10DLC consent (`canSendClientSMS`).
+- **SMS notifications (text.email gateway).** `sms.ts` sends SMS by emailing `{phone}@text.email` via existing Resend API. No additional env vars — uses `RESEND_API_KEY`. Gracefully degrades if send fails. All SMS bodies capped at 160 chars via `capSMS()`. All client SMS gated on consent (`canSendClientSMS`). Twilio kept as backup (10DLC pending, creds in `.env.local`).
 - **Notification preferences.** JSONB `notification_prefs` column on `court_reminders` (clients) and `partners` (bondsmen). Stores only overrides; `notification-prefs.ts` merges with defaults (all email). Safety invariant: `court_reminders` channel is never "sms" alone — always "email" or "both". `dispatchNotification` pattern: check prefs → gate email/SMS → `Promise.allSettled` for parallel sends.
 - **Commission holdback.** Referral commissions lock after 45 days via `lock-commissions` cron. `referrals.locked_at` tracks confirmation. Refunded orders excluded (`.gt("commission_amount", 0)`).
 
@@ -390,8 +390,9 @@ All vars verified present in `src/` via `process.env.*` grep. Common trap: the c
 | `CRONJOB_API_KEY` | scripts/setup-cronjob-org.js | cron-job.org job registration |
 | `INDEXNOW_KEY` | blog-generation/publish, /api/indexnow | IndexNow search engine ping |
 | `GITHUB_TOKEN` | blog-generation/publish | Git commit of generated blog posts |
-| `TELNYX_API_KEY` | sms.ts | Telnyx API key |
-| `TELNYX_FROM_NUMBER` | sms.ts | Telnyx sender phone (+19568486343) |
+| `TWILIO_ACCOUNT_SID` | sms.ts (backup) | Twilio SID — backup provider, 10DLC pending |
+| `TWILIO_AUTH_TOKEN` | sms.ts (backup) | Twilio auth — backup provider |
+| `TWILIO_FROM_NUMBER` | sms.ts (backup) | Twilio sender phone (+16204624622) |
 | `NEXT_PUBLIC_GA_ID` | CookieConsent | Google Analytics ID |
 | `NEXT_PUBLIC_META_PIXEL_ID` | CookieConsent | Meta (FB) pixel ID |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | CookieConsent | Google Ads ID |

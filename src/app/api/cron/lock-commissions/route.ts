@@ -85,7 +85,7 @@ export async function GET(req: NextRequest) {
     for (const [partnerId, { total }] of Object.entries(byPartner)) {
       const { data: partner } = await supabase
         .from("partners")
-        .select("email, phone, notification_prefs, name")
+        .select("id, email, phone, notification_prefs, name")
         .eq("id", partnerId)
         .maybeSingle();
 
@@ -115,7 +115,7 @@ export async function GET(req: NextRequest) {
       }
 
       if (shouldSendSMS(prefs.payout) && partner.phone) {
-        sendSMS(partner.phone, capSMS(`INAA: $${dollars} commission confirmed! Included in your next monthly payout.`))
+        sendSMS(partner.phone, capSMS(`INAA: $${dollars} commission confirmed! Included in your next monthly payout.`), { category: "commission_locked", partner_id: partner.id })
           .catch((e) => console.warn("[Lock Commissions] Notification SMS failed:", e));
       }
     }

@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
 
     const { data: reminderRow } = await supabase
       .from("court_reminders")
-      .select("phone, notification_prefs, sms_consent_at")
+      .select("id, phone, notification_prefs, sms_consent_at")
       .eq("email", normalizedEmail)
       .order("created_at", { ascending: false })
       .limit(1)
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
     await sendCustomerMagicLinkEmail(normalizedEmail, magicUrl);
 
     if (shouldSendSMS(prefs.magic_link) && canSendClientSMS(reminderRow?.phone, reminderRow?.sms_consent_at)) {
-      await sendSMS(reminderRow!.phone!, capSMS(`ImNotAnAttorney login: ${magicUrl}`))
+      await sendSMS(reminderRow!.phone!, capSMS(`ImNotAnAttorney login: ${magicUrl}`), { category: "magic_link", court_reminder_id: reminderRow!.id })
         .catch(e => console.warn("[Customer Magic Link] SMS failed:", e));
     }
 

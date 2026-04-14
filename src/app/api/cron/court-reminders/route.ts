@@ -71,14 +71,15 @@ export async function GET(req: NextRequest) {
 
     // Batch-fetch partner company names + notification prefs for branding and alerts
     const promoCodes = [...new Set(reminders.filter(r => r.partner_promo_code).map(r => r.partner_promo_code as string))];
-    const partnerMap: Record<string, { company: string; email: string; phone: string | null; notification_prefs: unknown }> = {};
+    const partnerMap: Record<string, { id: string; company: string; email: string; phone: string | null; notification_prefs: unknown }> = {};
     if (promoCodes.length > 0) {
       const { data: partners } = await supabase
         .from("partners")
-        .select("promo_code, company, name, email, phone, notification_prefs")
+        .select("id, promo_code, company, name, email, phone, notification_prefs")
         .in("promo_code", promoCodes);
       for (const p of (partners || [])) {
         partnerMap[p.promo_code] = {
+          id: p.id,
           company: p.company || p.name,
           email: p.email,
           phone: p.phone,
@@ -122,7 +123,7 @@ export async function GET(req: NextRequest) {
 
             if (shouldSendSMS(prefs.court_reminders) && canSendClientSMS(r.phone, r.sms_consent_at)) {
               const smsBody = capSMS(`${r.first_name}, court in ${interval.daysBefore}d (${r.court_date}). Prep: https://imnotanattorney.com/prep/${r.token}`);
-              sends.push(sendSMS(r.phone!, smsBody));
+              sends.push(sendSMS(r.phone!, smsBody, { category: "court_reminder", court_reminder_id: r.id }));
             }
 
             // Fallback: if prefs routed to zero channels, force email (keep people out of jail)
@@ -174,7 +175,7 @@ export async function GET(req: NextRequest) {
 
               if (shouldSendSMS(partnerPrefs.client_reminded) && p.phone) {
                 partnerSends.push(
-                  sendSMS(p.phone, capSMS(`INAA: ${msg}`))
+                  sendSMS(p.phone, capSMS(`INAA: ${msg}`), { category: "partner_client_reminded", partner_id: p.id, court_reminder_id: r.id })
                     .catch(e => console.warn("[Cron] Partner notification SMS failed:", e))
                 );
               }
@@ -201,7 +202,7 @@ export async function GET(req: NextRequest) {
           }
 
           if (shouldSendSMS(prefs.post_court) && canSendClientSMS(r.phone, r.sms_consent_at)) {
-            sends.push(sendSMS(r.phone!, capSMS(`${r.first_name}, your court date passed. Check your prep page for next steps: https://imnotanattorney.com/prep/${r.token}`)));
+            sends.push(sendSMS(r.phone!, capSMS(`${r.first_name}, your court date passed. Check your prep page for next steps: https://imnotanattorney.com/prep/${r.token}`), { category: "post_court", court_reminder_id: r.id }));
           }
 
           // Fallback: if prefs routed to zero channels, force email

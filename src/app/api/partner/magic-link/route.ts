@@ -2,7 +2,7 @@
  * POST /api/partner/magic-link — Request a magic link for partner login.
  *
  * Public route (no auth). Rate-limited to 3 requests per email per hour + 10 per IP per hour.
- * Sends magic link via Resend (email) + Bird (SMS, if phone on file + preference enabled).
+ * Sends magic link via Resend (email) + text.email gateway (SMS, if phone on file + preference enabled).
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (shouldSendSMS(prefs.magic_link) && partner.phone) {
-      sendSMS(partner.phone, capSMS(`ImNotAnAttorney Partner Login: ${magicUrl}`))
+      sendSMS(partner.phone, capSMS(`ImNotAnAttorney Partner Login: ${magicUrl}`), { category: "partner_magic_link", partner_id: partner.id })
         .catch(e => console.warn("[Partner Magic Link] SMS failed:", e));
     }
 

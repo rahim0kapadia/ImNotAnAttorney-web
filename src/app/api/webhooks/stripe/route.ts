@@ -563,7 +563,7 @@ export async function POST(req: NextRequest) {
               const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
               const { data: partnerDetail } = await supabase
                 .from("partners")
-                .select("name, email, total_commission, phone, notification_prefs")
+                .select("id, name, email, total_commission, phone, notification_prefs")
                 .eq("id", partner.id)
                 .single();
               if (partnerDetail?.email) {
@@ -587,7 +587,7 @@ export async function POST(req: NextRequest) {
 
                 // Fire-and-forget SMS — don't await, avoid webhook timeout risk
                 if (shouldSendSMS(partnerPrefs.payout) && partnerDetail.phone) {
-                  sendSMS(partnerDetail.phone, capSMS(`INAA: You earned $${commissionDollars} from a referral! Confirms ${holdbackDate}.`))
+                  sendSMS(partnerDetail.phone, capSMS(`INAA: You earned $${commissionDollars} from a referral! Confirms ${holdbackDate}.`), { category: "commission_earned", partner_id: partnerDetail.id })
                     .catch(e => console.warn("[Webhook] Partner sale SMS failed:", e));
                 }
               }
@@ -659,7 +659,7 @@ export async function POST(req: NextRequest) {
               const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
               const { data: partnerDetail } = await supabase
                 .from("partners")
-                .select("name, email, total_commission, phone, notification_prefs")
+                .select("id, name, email, total_commission, phone, notification_prefs")
                 .eq("id", partner.id)
                 .single();
               if (partnerDetail?.email) {
@@ -682,7 +682,7 @@ export async function POST(req: NextRequest) {
                 }
 
                 if (shouldSendSMS(partnerPrefs.payout) && partnerDetail.phone) {
-                  sendSMS(partnerDetail.phone, capSMS(`INAA: You earned $${commissionDollars} from a referral! Confirms ${holdbackDate}.`))
+                  sendSMS(partnerDetail.phone, capSMS(`INAA: You earned $${commissionDollars} from a referral! Confirms ${holdbackDate}.`), { category: "commission_earned", partner_id: partnerDetail.id })
                     .catch(e => console.warn("[Webhook] Partner sale SMS (metadata) failed:", e));
                 }
               }

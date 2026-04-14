@@ -196,7 +196,7 @@ export async function GET(req: NextRequest) {
         }
 
         if (shouldSendSMS(prefs.drip) && partner.phone) {
-          const smsResult = await sendSMS(partner.phone, capSMS(`${subject}. Dashboard: https://imnotanattorney.com/partner/dashboard`));
+          const smsResult = await sendSMS(partner.phone, capSMS(`${subject}. Dashboard: https://imnotanattorney.com/partner/dashboard`), { category: "partner_drip", partner_id: partner.id });
           if (smsResult.success) anySendSucceeded = true;
           else console.warn("[Partner Drip] SMS failed:", smsResult.error);
         }
