@@ -1,64 +1,33 @@
 /**
- * GET /api/admin/pillar-stats?key=<OPERATOR_SECRET>
+ * GET /api/admin/pillar-stats
  *
  * Returns per-pillar coverage and revenue stats for the Content Pillar Engine
  * dashboard. Combines the pillar registry (24 pillars) with Supabase data
  * from content_gaps, blog_drafts, and orders.
  *
- * Auth: ?key= query param matching OPERATOR_SECRET (timing-safe).
- * Returns 401 on missing/wrong key.
+ * Auth: ADMIN_PASSWORD via X-Admin-Password header (middleware-enforced).
  */
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { timingSafeEqual, createHmac } from "crypto";
-import * as fs from "fs";
-import * as path from "path";
+import pillarRegistryData from "@/data/pillar-registry.json";
 
-// ── Auth ──────────────────────────────────────────────────────
-function timingSafeCompare(a: string, b: string): boolean {
-  const hmacA = createHmac("sha256", "inna-guard-compare").update(a).digest();
-  const hmacB = createHmac("sha256", "inna-guard-compare").update(b).digest();
-  return timingSafeEqual(hmacA, hmacB);
-}
-
-// ── Pillar registry loader ────────────────────────────────────
+// ── Pillar registry ──────────────────────────────────────────
 interface PillarEntry {
   slug: string;
   pillarTitle: string;
   articleCountGoal: number;
 }
 
-function loadPillarRegistry(): PillarEntry[] {
-  try {
-    const registryPath = path.join(
-      process.cwd(),
-      "..",
-      "ImNotAnAttorney",
-      "system",
-      "pillar-registry.json"
-    );
-    const raw = fs.readFileSync(registryPath, "utf-8");
-    const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed?.pillars)) return [];
-    return parsed.pillars.map((p: Record<string, unknown>) => ({
-      slug: p.slug as string,
-      pillarTitle: p.pillarTitle as string,
-      articleCountGoal: (p.articleCountGoal as number) || 0,
-    }));
-  } catch {
-    return [];
-  }
-}
+const pillars: PillarEntry[] = (pillarRegistryData.pillars ?? []).map(
+  (p: Record<string, unknown>) => ({
+    slug: p.slug as string,
+    pillarTitle: p.pillarTitle as string,
+    articleCountGoal: (p.articleCountGoal as number) || 0,
+  })
+);
 
-// ── Route handler ─────────────────────────────────────────────
-export async function GET(req: NextRequest) {
-  const secret = process.env.OPERATOR_SECRET;
-  const key = req.nextUrl.searchParams.get("key");
-  if (!secret || !key || !timingSafeCompare(secret, key)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const pillars = loadPillarRegistry();
+// ── Route handler (auth handled by middleware for /api/admin/*) ─
+export async function GET() {
   const supabase = createAdminClient();
 
   // Run all three queries in parallel.
