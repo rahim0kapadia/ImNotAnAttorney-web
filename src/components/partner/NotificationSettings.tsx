@@ -8,7 +8,8 @@ const LABELS: Record<keyof PartnerNotificationPrefs, string> = {
   magic_link: "Login links",
   client_reminded: "Client reminder alerts",
   drip: "Tips & onboarding",
-  payout: "Commission & payouts",
+  commission_earned: "Commission alerts",
+  payout: "Payouts & holdback",
 };
 
 const CHANNELS: Channel[] = ["email", "sms", "both"];

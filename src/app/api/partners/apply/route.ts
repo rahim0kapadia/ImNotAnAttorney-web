@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
-  const { name, company, email, phone, region, message, source, heardAboutUs, compliance } = body;
+  const { name, company, email, phone, city, region, message, source, heardAboutUs, compliance } = body;
 
   if (!name?.trim() || !email?.trim()) {
     return NextResponse.json(
@@ -73,10 +73,10 @@ export async function POST(req: NextRequest) {
 
   // Type and length validation
   const MAX_LENGTHS: Record<string, number> = {
-    name: 200, company: 200, email: 254, phone: 50,
+    name: 200, company: 200, email: 254, phone: 50, city: 100,
     region: 200, message: 2000, source: 100, heardAboutUs: 500,
   };
-  for (const [key, val] of Object.entries({ name, company, email, phone, region, message, source, heardAboutUs })) {
+  for (const [key, val] of Object.entries({ name, company, email, phone, city, region, message, source, heardAboutUs })) {
     if (val !== undefined && val !== null) {
       if (typeof val !== "string") {
         return NextResponse.json({ error: `${key} must be a string` }, { status: 400 });
@@ -167,6 +167,7 @@ export async function POST(req: NextRequest) {
         status: "approved",
         name: partnerName,
         company: company || null,
+        city: city || null,
         phone: phone || null,
       })
       .eq("id", existingPartner.id);
@@ -275,6 +276,7 @@ export async function POST(req: NextRequest) {
       .insert({
         name: partnerName,
         company: company || null,
+        city: city || null,
         email: normalizedEmail,
         phone: phone || null,
         status: "approved",

@@ -21,6 +21,7 @@ export interface PartnerNotificationPrefs {
   client_reminded: Channel;
   drip: Channel;
   payout: Channel;
+  commission_earned: Channel;
 }
 
 export const CLIENT_DEFAULTS: ClientNotificationPrefs = {
@@ -35,6 +36,7 @@ export const PARTNER_DEFAULTS: PartnerNotificationPrefs = {
   client_reminded: "email",
   drip: "email",
   payout: "email",
+  commission_earned: "email",
 };
 
 // SAFETY: court_reminders must NEVER be "sms" alone.

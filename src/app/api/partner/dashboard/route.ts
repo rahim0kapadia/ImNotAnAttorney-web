@@ -32,10 +32,11 @@ export async function GET(req: NextRequest) {
       .order("created_at", { ascending: false })
       .limit(20);
 
-    // Fetch analytics (monthly + by-tier breakdown)
-    const { data: analytics } = await supabase.rpc("partner_analytics", {
-      p_partner_id: partner.id,
-    });
+    // Fetch analytics + funnel in parallel (independent queries)
+    const [{ data: analytics }, { data: funnel }] = await Promise.all([
+      supabase.rpc("partner_analytics", { p_partner_id: partner.id }),
+      supabase.rpc("partner_conversion_funnel", { p_partner_id: partner.id }),
+    ]);
 
     // Court prep sign-ups attributed to this partner
     const { count: reminderSignups } = await supabase
@@ -102,6 +103,10 @@ export async function GET(req: NextRequest) {
       referrals: referrals || [],
       payouts: payouts || [],
       analytics: analytics || { monthly: [], by_tier: [], total_referrals: 0 },
+      funnel: funnel || {
+        last_30_days: { link_clicks: 0, quiz_starts: 0, quiz_completions: 0, purchases: 0 },
+        all_time: { link_clicks: 0, quiz_starts: 0, quiz_completions: 0, purchases: 0 },
+      },
     });
   } catch (err) {
     console.error("[partner/dashboard] Failed to fetch partner data:", err);

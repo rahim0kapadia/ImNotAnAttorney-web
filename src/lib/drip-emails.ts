@@ -18,13 +18,14 @@
  *
  * 4. **Post-purchase sequences** (POST_PURCHASE_EMAILS) — tier-specific emails
  *    triggered after a purchase. Each tier has its own sequence:
- *      - Case Decoder: intake reminder → delivery → meeting prep → story harvest → humanization followup → upsell → referral
- *      - Intelligence Brief: phase2 reminder → delivery → meeting prep → story harvest → upsell → referral
- *      - X-Ray: intake reminder → delivery → upload reminder → meeting prep → story harvest → upsell → referral → status update
- *      - War Room: intake reminder → delivery → meeting prep → story harvest → status update → referral
- *      - Situation Room: intake reminder → delivery → meeting prep → story harvest → status update → referral
+ *      - Case Decoder: intake reminder → delivery → meeting prep → story harvest → humanization followup → upsell
+ *      - Intelligence Brief: phase2 reminder → delivery → meeting prep → story harvest → upsell
+ *      - X-Ray: intake reminder → delivery → upload reminder → meeting prep → story harvest → upsell → status update
+ *      - War Room: intake reminder → delivery → meeting prep → story harvest → status update
+ *      - Situation Room: intake reminder → delivery → meeting prep → story harvest → status update
  *      - Witness Pack: delivery → upload reminder → status update → story harvest → upsell
  *      - Extra Witness: delivery
+ *      - Playbooks (8 types): activation → check-in → upsell (factory-generated for non-DUI)
  *
  * 5. **Abandoned score sequence** (ABANDONED_SCORE_EMAILS) — for subscribers who
  *    started the /score quiz but didn't complete (source: "score-abandoned").
@@ -78,7 +79,7 @@
  * CAN-SPAM footer is added by sendEmail() in lib/email.ts — not here.
  */
 
-import { TIER_CORE, upgradePrice, upgradeCostBetween } from "@/lib/tiers";
+import { TIER_CORE, upgradePrice, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { getChargeLabel } from "@/lib/score";
 import { escapeHtml } from "@/lib/email";
 
@@ -831,12 +832,122 @@ export const WINBACK_EMAILS: DripEmail[] = [
 // ============================================================
 // POST-PURCHASE SEQUENCES (buyers)
 // Organized by tier. Each tier has: delivery (day 0), story harvest
-// (day 5 relative to delivery), upsell, and optionally referral.
+// (day 5 relative to delivery), and upsell.
 //
 // Day-0 emails are sent by delivery/webhook endpoints, not the cron.
 // Story-harvest emails use relativeToDelivery: true so the delay
 // is measured from cases.delivered_at, not the purchase date.
 // ============================================================
+
+// --- Playbook email factory (7 non-DUI types × 3 emails = 21 entries) ---
+// Firestone "cycle of engagement": activation (Day 1) → check-in (Day 3) → upsell (Day 7).
+// DUI has its own hand-written sequence (DMV deadline is DUI-specific content).
+
+interface PlaybookEmailConfig {
+  slug: TierSlug;
+  caseType: string;
+  activationFocus: string;
+  checkinQuestion: string;
+}
+
+function makePlaybookSequence(config: PlaybookEmailConfig): DripEmail[] {
+  const { slug, caseType, activationFocus, checkinQuestion } = config;
+  const tier = TIER_CORE[slug];
+  return [
+    {
+      key: `post_${slug}_playbook_activation`,
+      delayDays: 1,
+      tier: slug,
+      subject: `Your ${tier.name} — start here`,
+      html: `
+        <h1 style="color: #F59E0B;">Start Here</h1>
+        <p>${activationFocus}</p>
+        <p><strong style="color: white;">Open your Playbook and find the first question in that section. Read it out loud.</strong> That's today's task — one question, one action.</p>
+        <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+          <strong style="color: white;">You have already paid ${tier.priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween(slug, "case-decoder")}.</strong> We research YOUR charges, YOUR jurisdiction, and generate 15 questions specific to your case. Credit applies within 30 days.
+        </p>
+        ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween(slug, "case-decoder")}`, "/checkout?tier=case-decoder")}
+      `,
+    },
+    {
+      key: `post_${slug}_playbook_checkin`,
+      delayDays: 3,
+      tier: slug,
+      subject: checkinQuestion,
+      html: `
+        <h1 style="color: #F59E0B;">A Question Worth Asking</h1>
+        <p>${checkinQuestion}</p>
+        <p>If they did — good. If they haven't — bring it up at your next meeting. The Playbook gives you the words. The meeting is where you use them.</p>
+        <p><strong style="color: white;">Reply to this email and tell me what happened.</strong> Your experience helps us build better resources for every defendant who comes after you. Your reply is confidential.</p>
+      `,
+    },
+    {
+      key: `post_${slug}_playbook_upsell`,
+      delayDays: 7,
+      tier: slug,
+      subject: "Generic questions open the conversation. Case-specific ones change it.",
+      html: `
+        <h1 style="color: #F59E0B;">Generic vs. Case-Specific</h1>
+        <p>The Playbook gives you questions that apply to ${caseType} cases generally. The <strong style="color: white;">Case Decoder</strong> gives you 15 questions built from YOUR charges, YOUR state, YOUR stage, YOUR attorney situation.</p>
+        <p>Generic questions open the conversation. <strong style="color: white;">Case-specific questions change it.</strong></p>
+        <p>The difference: when your attorney hears a question from the Playbook, they know the answer. When they hear a question from your Case Decoder, they have to actually check the file.</p>
+        <p><strong style="color: white;">That's the meeting that changes everything.</strong></p>
+        <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+          <strong style="color: white;">You have already paid ${tier.priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween(slug, "case-decoder")}.</strong> ${TIER_CORE["case-decoder"].delivery} delivery.
+        </p>
+        ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween(slug, "case-decoder")}`, "/checkout?tier=case-decoder")}
+      `,
+    },
+  ];
+}
+
+const PLAYBOOK_EMAIL_CONFIGS: PlaybookEmailConfig[] = [
+  {
+    slug: "drug-possession",
+    caseType: "drug possession",
+    activationFocus: "Your Playbook covers the evidence chain and how every piece of physical evidence was collected, stored, and tested. Start with the search warrant section. If your case involved a search, the questions there are the ones your attorney needs to hear first.",
+    checkinQuestion: "Did your attorney explain how the search was authorized?",
+  },
+  {
+    slug: "probation-violation",
+    caseType: "probation violation",
+    activationFocus: "Your Playbook breaks down the types of violations and what each one means for your hearing. Start with the violation type breakdown. Understanding whether yours is technical or substantive changes the entire conversation with your attorney.",
+    checkinQuestion: "Has your attorney explained your options before the hearing?",
+  },
+  {
+    slug: "white-collar",
+    caseType: "white-collar",
+    activationFocus: "Your Playbook covers document preservation and your rights if cooperation comes up. Start with the document preservation section. If you haven't addressed it already, today is the day. The questions about cooperation are ones your attorney may not raise first.",
+    checkinQuestion: "Has your attorney discussed the cooperation question?",
+  },
+  {
+    slug: "sex-offense",
+    caseType: "sex offense",
+    activationFocus: "Your Playbook covers registry implications and evidence handling procedures. Start with the evidence handling section. The forensic evidence procedures in your case have specific requirements that, if not followed, create questions your attorney should be asking.",
+    checkinQuestion: "Has your attorney reviewed the forensic evidence procedures?",
+  },
+  {
+    slug: "federal-criminal",
+    caseType: "federal criminal",
+    activationFocus: "Your Playbook covers federal sentencing guidelines and the plea framework. Start with the sentencing guidelines section. Federal cases move differently than state cases, and the questions about your guideline range change the math on every decision ahead.",
+    checkinQuestion: "Has your attorney walked you through the sentencing guidelines?",
+  },
+  {
+    slug: "drug-trafficking",
+    caseType: "drug trafficking",
+    activationFocus: "Your Playbook covers CI reliability and how quantity determinations work. Start with the quantity challenges section. How the quantity in your case was calculated, and whether that calculation holds up, is a question your attorney needs to address early.",
+    checkinQuestion: "Has your attorney addressed how the quantity was determined?",
+  },
+  {
+    slug: "self-defense",
+    caseType: "self-defense",
+    activationFocus: "Your Playbook covers the elements of self-defense and witness identification. Start with the self-defense elements section. Understanding which elements apply to your situation determines what your attorney needs to prove and what questions to ask the witnesses.",
+    checkinQuestion: "Has your attorney discussed what the witnesses will say?",
+  },
+];
+
+const PLAYBOOK_DRIP_EMAILS: DripEmail[] = PLAYBOOK_EMAIL_CONFIGS.flatMap(makePlaybookSequence);
+
 
 export const POST_PURCHASE_EMAILS: DripEmail[] = [
   // --- Case Decoder ($197) ---
@@ -978,20 +1089,6 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
       <p style="margin-top: 16px; color: #A1A1AA;">Motion deadlines, evidence preservation windows, and plea negotiation leverage all erode with time.</p>
       <p style="margin-top: 16px; color: #71717A;">If budget is a factor and you want the full picture later, you can always upgrade from the Intelligence Brief to the X-Ray — your payment applies as credit. ${link("Compare tiers", "/services")}</p>
-    `,
-  },
-
-  {
-    key: "post_case_decoder_referral",
-    delayDays: 14,
-    tier: "case-decoder",
-    subject: "Know someone facing charges?",
-    html: `
-      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
-      <p>If your Case Decoder helped you ask better questions, it can help someone else too.</p>
-      <p>Share this with anyone facing charges who needs clarity about their case:</p>
-      ${cta("Share ImNotAnAttorney →", "/?ref=friend")}
-      <p style="color: #71717A;">Every defendant deserves to know what's in their case.</p>
     `,
   },
 
@@ -1184,22 +1281,6 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p>Just reply to this email. One sentence is fine. Your experience helps us build better reports for every defendant who comes after you.</p>
     `,
   },
-  // --- IB Referral (14 days after delivery) ---
-  {
-    key: "post_intelligence_brief_referral",
-    delayDays: 14,
-    tier: "intelligence-brief",
-    relativeToDelivery: true,
-    subject: "Know someone facing charges?",
-    html: `
-      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
-      <p>If your Intelligence Brief helped you ask better questions, it can help someone else too.</p>
-      <p>Every defendant deserves to walk into their attorney's office knowing what's in their case — not guessing.</p>
-      ${cta("Share ImNotAnAttorney →", "/?ref=friend")}
-      <p style="color: #71717A;">Every defendant deserves to know what's in their case.</p>
-    `,
-  },
-
   // --- IB Discovery-Arrival (30 days after delivery, IB -> X-Ray) ---
   // Bridges IB patterns to discovery evidence. Credit-as-hero.
   {
@@ -1338,22 +1419,6 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <p style="color: #71717A; margin-top: 12px;">The Witness Pack is a different product for a different question — targeted witness credibility research only (up to 3 witnesses, ${TIER_CORE["witness-pack"].priceDisplay}, 3-5 business days). It does not include motion analysis, evidence chain review, or weekly case updates. One option if witness credibility is the most time-sensitive piece and your next hearing is soon. <a href="${getSiteUrl()}/checkout?tier=witness-pack" style="color: #A1A1AA;">Learn more</a></p>
     `,
   },
-  // --- X-Ray Referral (14 days after delivery) ---
-  {
-    key: "post_x_ray_referral",
-    delayDays: 14,
-    tier: "x-ray",
-    relativeToDelivery: true,
-    subject: "Know someone facing charges?",
-    html: `
-      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
-      <p>If your discovery analysis revealed what your attorney missed, imagine what it could find in someone else's case.</p>
-      <p>Share this with anyone facing charges who needs clarity about their evidence:</p>
-      ${cta("Share ImNotAnAttorney →", "/?ref=friend")}
-      <p style="color: #71717A;">Every defendant deserves to know what's in their discovery.</p>
-    `,
-  },
-
   // --- X-Ray Active-Wait Emails (relative to document submission, not purchase) ---
   // These fill the silence between doc submission and report delivery (7-10 days).
   {
@@ -1475,23 +1540,6 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       </p>
     `,
   },
-  {
-    key: "post_war_room_referral",
-    delayDays: 14,
-    tier: "war-room",
-    relativeToDelivery: true,
-    subject: "Know someone facing charges?",
-    html: `
-      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
-      <p>You know what it's like to face the system without enough information. If someone you know is in the same position, you can help them skip the confusion.</p>
-      <p style="font-size: 18px; color: white;"><strong>Send them to ${link("imnotanattorney.com", "/")}</strong></p>
-      <p>They can start with a free Case Progress Score — no payment, no commitment. Just clarity on where they stand.</p>
-      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        Every defendant deserves to walk into their attorney's office with the right questions. You did it. They can too.
-      </p>
-    `,
-  },
-
   // --- War Room Meeting Prep (3 days after delivery) ---
   {
     key: "post_war_room_meeting_prep",
@@ -1617,22 +1665,6 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       </p>
     `,
   },
-  // --- Situation Room Referral (21 days after delivery — longer relationship) ---
-  {
-    key: "post_situation_room_referral",
-    delayDays: 21,
-    tier: "situation-room",
-    relativeToDelivery: true,
-    subject: "Know someone facing charges?",
-    html: `
-      <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
-      <p>You know what it's like to face the system without enough information. If someone you know is in the same position, you can help them skip the confusion.</p>
-      <p>They don't need the Situation Room to start. A free Case Progress Score gives them clarity on where they stand — no payment, no commitment.</p>
-      ${cta("Share ImNotAnAttorney →", "/?ref=friend")}
-      <p style="color: #71717A;">Every defendant deserves to walk into their attorney's office with the right questions.</p>
-    `,
-  },
-
   // --- DUI Defense Playbook ($97) ---
   // Digital product: no case table, no relativeToDelivery.
   // All delays relative to paid_at (delivery is instant via webhook).
@@ -1667,7 +1699,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
   },
   {
     key: "post_dui_playbook_upsell",
-    delayDays: 5,
+    delayDays: 7,
     tier: "dui-first-offense",
     subject: "Generic questions are a start. Case-specific ones change the conversation.",
     html: `
@@ -1682,18 +1714,9 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween("dui-first-offense", "case-decoder")}`, "/checkout?tier=case-decoder")}
     `,
   },
-  {
-    key: "post_dui_playbook_referral",
-    delayDays: 10,
-    tier: "dui-first-offense",
-    subject: "Know someone facing a DUI?",
-    html: `
-      <h1 style="color: #F59E0B;">Know Someone Facing a DUI?</h1>
-      <p>If someone you know just got pulled over — or is about to go to court — forward them this email.</p>
-      <p>The DUI Defense Playbook is the thing I wish existed when I was in their position. 26 questions, a case stage roadmap, a red flag checklist, and an attorney scorecard. ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download.</p>
-      ${cta("Share the DUI Defense Playbook →", "/playbook/dui-first-offense")}
-    `,
-  },
+
+  // --- Non-DUI Playbook Sequences (factory-generated, 7 slugs × 3 emails) ---
+  ...PLAYBOOK_DRIP_EMAILS,
 
   // --- Discovery Status Update (X-Ray, War Room, Situation Room) ---
   // Sent 3 days after upload finalization to reassure the customer their
@@ -2163,15 +2186,6 @@ export function personalizeEmailHtml(
       }
       return html + personalNote;
     }
-
-    case "post_case_decoder_referral":
-      if (isFamilyBuyer) {
-        return html + calloutBox(`
-          <p style="color: #D4D4D8; margin: 0;">You showed up for ${name} when it mattered. If you know someone else going through this — another family member, a friend — they deserve the same clarity you got.</p>
-        `);
-      }
-      return html;
-
     // ── Intelligence Brief emails ──
 
     case "post_intelligence_brief_delivery":
@@ -2212,15 +2226,6 @@ export function personalizeEmailHtml(
         `);
       }
       return html;
-
-    case "post_intelligence_brief_referral":
-      if (isFamilyBuyer) {
-        return html + calloutBox(`
-          <p style="color: #D4D4D8; margin: 0;">You showed up for ${name} when it mattered. If you know someone else going through this — another family member, a friend — they deserve the same clarity you got.</p>
-        `);
-      }
-      return html;
-
     default:
       return html;
   }

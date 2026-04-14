@@ -241,7 +241,7 @@ The drip email system is a **multi-sequence orchestration engine** that sends te
 **Location:** `src/lib/drip-emails.ts` lines 714+
 **Trigger:** Order with `status == "paid"` AND `paid_at >= 90 days ago`
 **Schedule:** Varies by tier (Days 0, 1, 2, 3+) with relativeToDelivery, relativeToSubmission timing modes
-**Goal:** Reduce buyer's remorse → onboard to intake → delivery → meeting prep → story harvest → upsell → referral
+**Goal:** Reduce buyer's remorse → onboard to intake → delivery → meeting prep → story harvest → upsell
 
 **Email Sequences by Tier:**
 

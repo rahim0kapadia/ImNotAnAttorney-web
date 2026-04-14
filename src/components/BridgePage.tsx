@@ -14,13 +14,14 @@ import { FadeInUp } from "@/components/motion/FadeInUp";
 interface BridgePageProps {
   partnerName: string;
   company: string | null;
+  city?: string | null;
   promoCode: string;
 }
 
-export function BridgePage({ partnerName, company, promoCode }: BridgePageProps) {
-  const displayName = company
-    ? `${partnerName} from ${company}`
-    : partnerName;
+export function BridgePage({ partnerName, company, city, promoCode }: BridgePageProps) {
+  let displayName = partnerName;
+  if (company && city) displayName = `${partnerName} from ${company}, ${city}`;
+  else if (company) displayName = `${partnerName} from ${company}`;
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col">

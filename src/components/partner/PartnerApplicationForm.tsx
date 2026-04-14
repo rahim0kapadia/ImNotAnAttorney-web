@@ -8,6 +8,7 @@ interface PartnerApplicationFormProps {
 export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
   const [compliance, setCompliance] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -21,7 +22,7 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
       const res = await fetch("/api/partners/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, compliance, source }),
+        body: JSON.stringify({ name, email, city: city.trim() || undefined, compliance, source }),
       });
       if (!res.ok) {
         const data = await res.json();
@@ -84,6 +85,17 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
           onChange={(e) => setEmail(e.target.value)}
           required
           aria-invalid={!!error}
+          className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+        />
+      </div>
+      <div>
+        <label htmlFor="partner-city" className="block text-sm text-zinc-400 mb-1">City</label>
+        <input
+          id="partner-city"
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          placeholder="e.g. Tampa"
           className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
         />
       </div>

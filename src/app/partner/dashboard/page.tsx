@@ -16,6 +16,7 @@ import { CreativeAssets } from "@/components/partner/CreativeAssets";
 import { ComplianceKit } from "@/components/partner/ComplianceKit";
 import { EarningsSection } from "@/components/partner/EarningsSection";
 import { PartnerAnalytics, type AnalyticsData } from "@/components/partner/PartnerAnalytics";
+import { ConversionFunnel, EMPTY_FUNNEL, type FunnelState } from "@/components/partner/ConversionFunnel";
 import { PaymentSettingsForm } from "@/components/partner/PaymentSettingsForm";
 import { ClientTracker } from "@/components/partner/ClientTracker";
 import { FtaCalculator } from "@/components/partner/FtaCalculator";
@@ -73,6 +74,7 @@ export default function PartnerDashboard() {
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [payouts, setPayouts] = useState<Payout[]>([]);
   const [analytics, setAnalytics] = useState<AnalyticsData>({ monthly: [], by_tier: [], total_referrals: 0 });
+  const [funnel, setFunnel] = useState<FunnelState>(EMPTY_FUNNEL);
   const [reminderSignups, setReminderSignups] = useState(0);
   const [courtClients, setCourtClients] = useState<CourtClient[]>([]);
   const [checkInSummary, setCheckInSummary] = useState<Record<string, { count: number; lastCheckIn: string | null }>>({});
@@ -93,6 +95,7 @@ export default function PartnerDashboard() {
       setReferrals(data.referrals || []);
       setPayouts(data.payouts || []);
       setAnalytics(data.analytics || { monthly: [], by_tier: [], total_referrals: 0 });
+      setFunnel(data.funnel || EMPTY_FUNNEL);
       setReminderSignups(data.reminderSignups ?? 0);
       setCourtClients(data.courtClients || []);
       setCheckInSummary(data.checkInSummary || {});
@@ -221,6 +224,9 @@ export default function PartnerDashboard() {
 
         {/* 6. Analytics */}
         <PartnerAnalytics analytics={analytics} />
+
+        {/* 6b. Conversion Funnel */}
+        <ConversionFunnel funnel={funnel} />
 
         {/* 7. Recent Activity */}
         <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">

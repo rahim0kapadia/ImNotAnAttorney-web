@@ -49,6 +49,7 @@ import { calculateCommission, getPartnerByStripePromoId, getPartnerByPromoCode }
 import { randomBytes } from "crypto";
 import { TIER9_SLUGS } from "@/lib/tier9-reports/constants";
 import { sendSMS, capSMS } from "@/lib/sms";
+import { buildCommissionSMS } from "@/lib/partner-sms";
 import { getPartnerPrefs, shouldSendEmail, shouldSendSMS } from "@/lib/notification-prefs";
 
 /** Fallback operator email if OPERATOR_EMAIL env var is not set. */
@@ -563,16 +564,15 @@ export async function POST(req: NextRequest) {
               const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
               const { data: partnerDetail } = await supabase
                 .from("partners")
-                .select("id, name, email, total_commission, phone, notification_prefs")
+                .select("id, name, email, total_commission, phone, notification_prefs, total_referrals, commission_tier, promo_code")
                 .eq("id", partner.id)
                 .single();
               if (partnerDetail?.email) {
                 const partnerPrefs = getPartnerPrefs(partnerDetail.notification_prefs || null);
                 const tierName = tier in TIER_CORE ? TIER_CORE[tier as TierSlug].name : tier;
-                const commissionDollars = (commissionAmount / 100).toFixed(2);
-                const holdbackDate = new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US");
+                const holdbackDate = new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { month: "short", day: "numeric" });
 
-                if (shouldSendEmail(partnerPrefs.payout)) {
+                if (shouldSendEmail(partnerPrefs.commission_earned)) {
                   const { subject, html } = partnerSaleNotificationEmail(
                     partnerDetail.name,
                     tierName,
@@ -586,14 +586,31 @@ export async function POST(req: NextRequest) {
                 }
 
                 // Fire-and-forget SMS — don't await, avoid webhook timeout risk
-                if (shouldSendSMS(partnerPrefs.payout) && partnerDetail.phone) {
-                  sendSMS(partnerDetail.phone, capSMS(`INAA: You earned $${commissionDollars} from a referral! Confirms ${holdbackDate}.`), { category: "commission_earned", partner_id: partnerDetail.id })
-                    .catch(e => console.warn("[Webhook] Partner sale SMS failed:", e));
+                if (shouldSendSMS(partnerPrefs.commission_earned) && partnerDetail.phone) {
+                  const smsText = buildCommissionSMS({
+                      amountCents: commissionAmount,
+                      tierName,
+                      totalReferrals: partnerDetail.total_referrals ?? 0,
+                      commissionTier: partnerDetail.commission_tier ?? "partner",
+                      promoCode: partnerDetail.promo_code ?? "",
+                      holdbackDate,
+                    });
+                    sendSMS(partnerDetail.phone, smsText, { category: "commission_earned", partner_id: partnerDetail.id })
+                      .catch(e => console.warn("[Webhook] Partner sale SMS failed:", e));
                 }
               }
             } catch (notifErr) {
               console.error("[Webhook] Partner sale notification failed:", notifErr);
             }
+
+            // Fire-and-forget purchase event for conversion funnel
+            supabase.from("partner_events").insert({
+              partner_id: partner.id,
+              event_type: "purchase",
+              metadata: { tier, sale_amount_cents: amount },
+            }).then(({ error }) => {
+              if (error) console.warn("[Webhook] Purchase event insert failed:", error.message);
+            });
 
             // Tier upgrade notification if tier changed
             if (trackResult?.tier_changed) {
@@ -659,16 +676,15 @@ export async function POST(req: NextRequest) {
               const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
               const { data: partnerDetail } = await supabase
                 .from("partners")
-                .select("id, name, email, total_commission, phone, notification_prefs")
+                .select("id, name, email, total_commission, phone, notification_prefs, total_referrals, commission_tier, promo_code")
                 .eq("id", partner.id)
                 .single();
               if (partnerDetail?.email) {
                 const partnerPrefs = getPartnerPrefs(partnerDetail.notification_prefs || null);
                 const tierName = tier in TIER_CORE ? TIER_CORE[tier as TierSlug].name : tier;
-                const commissionDollars = (commissionAmount / 100).toFixed(2);
-                const holdbackDate = new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US");
+                const holdbackDate = new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { month: "short", day: "numeric" });
 
-                if (shouldSendEmail(partnerPrefs.payout)) {
+                if (shouldSendEmail(partnerPrefs.commission_earned)) {
                   const { subject, html } = partnerSaleNotificationEmail(
                     partnerDetail.name,
                     tierName,
@@ -681,14 +697,31 @@ export async function POST(req: NextRequest) {
                   });
                 }
 
-                if (shouldSendSMS(partnerPrefs.payout) && partnerDetail.phone) {
-                  sendSMS(partnerDetail.phone, capSMS(`INAA: You earned $${commissionDollars} from a referral! Confirms ${holdbackDate}.`), { category: "commission_earned", partner_id: partnerDetail.id })
-                    .catch(e => console.warn("[Webhook] Partner sale SMS (metadata) failed:", e));
+                if (shouldSendSMS(partnerPrefs.commission_earned) && partnerDetail.phone) {
+                  const smsText = buildCommissionSMS({
+                      amountCents: commissionAmount,
+                      tierName,
+                      totalReferrals: partnerDetail.total_referrals ?? 0,
+                      commissionTier: partnerDetail.commission_tier ?? "partner",
+                      promoCode: partnerDetail.promo_code ?? "",
+                      holdbackDate,
+                    });
+                    sendSMS(partnerDetail.phone, smsText, { category: "commission_earned", partner_id: partnerDetail.id })
+                      .catch(e => console.warn("[Webhook] Partner sale SMS (metadata) failed:", e));
                 }
               }
             } catch (notifErr) {
               console.error("[Webhook] Partner sale notification (metadata) failed:", notifErr);
             }
+
+            // Fire-and-forget purchase event for conversion funnel
+            supabase.from("partner_events").insert({
+              partner_id: partner.id,
+              event_type: "purchase",
+              metadata: { tier, sale_amount_cents: amount },
+            }).then(({ error }) => {
+              if (error) console.warn("[Webhook] Purchase event insert failed:", error.message);
+            });
 
             // Tier upgrade notification if tier changed
             if (metaTrackResult?.tier_changed) {

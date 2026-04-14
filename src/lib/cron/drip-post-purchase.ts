@@ -15,6 +15,7 @@
 import { sendEmailWithRetry } from "@/lib/email";
 import { getPostPurchaseEmails, personalizeEmailHtml } from "@/lib/drip-emails";
 import type { DripEmail, DripPersonalizationData } from "@/lib/drip-emails";
+import { PLAYBOOK_SLUGS, type TierSlug } from "@/lib/tiers";
 import { caseThreadId } from "@/lib/site";
 import type { CronContext, CronResult } from "./types";
 import { emptyResult } from "./types";
@@ -106,6 +107,22 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
     (higherTierOrders ?? []).map((o) => o.email.toLowerCase())
   );
 
+  // ── N+1 FIX: Batch-fetch CD orders for playbook upsell suppression ──
+  const playbookOrderEmails = [...new Set(
+    orders.filter((o) => PLAYBOOK_SLUGS.has(o.tier as TierSlug)).map((o) => o.email.toLowerCase())
+  )];
+  const { data: cdOrdersForPlaybooks } = playbookOrderEmails.length > 0
+    ? await ctx.supabase
+        .from("orders")
+        .select("email")
+        .in("email", playbookOrderEmails)
+        .eq("status", "paid")
+        .eq("tier", "case-decoder")
+    : { data: [] as { email: string }[] };
+  const emailsWithCd = new Set(
+    (cdOrdersForPlaybooks ?? []).map((o: { email: string }) => o.email.toLowerCase())
+  );
+
   // ── N+1 FIX: Batch-fetch intakes for personalization ──
   const intakeIds = [...new Set(
     (allCases ?? []).filter((c) => c.intake_id).map((c) => c.intake_id!)
@@ -159,6 +176,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
         if (email.delayDays === 0) continue;
         if (email.relativeToMeeting) continue;
         if (skipUpsell && email.key.includes("upsell")) continue;
+        if (email.key.includes("upsell") && emailsWithCd.has(order.email.toLowerCase())) continue;
 
         // ── RELATIVE-TO-SUBMISSION TIMING ──
         if (email.relativeToSubmission) {
@@ -206,6 +224,9 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
 
         // ── RELATIVE-TO-PURCHASE TIMING (default) ──
         if (daysSincePurchase >= email.delayDays && !sentKeys.has(email.key)) {
+          // Skip emails whose send window has passed — prevents stale activation
+          // emails for existing customers when new email entries are added.
+          if (daysSincePurchase > email.delayDays + 3) continue;
           nextEmail = email;
           break;
         }

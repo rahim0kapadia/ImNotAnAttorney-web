@@ -7,7 +7,7 @@
  * Empowerment framing per crisis purchasing psychology research.
  */
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { TIER_CORE, isValidTier, type TierSlug } from "@/lib/tiers";
 import Link from "next/link";
 
@@ -148,6 +148,25 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
 
   const totalSteps = 4; // SMIQ + 3 follow-ups
   const progress = Math.min(((step + 1) / (totalSteps + 1)) * 100, 100);
+
+  // Fire quiz_complete event when recommendation step renders (before early return)
+  const eventFired = useRef(false);
+  useEffect(() => {
+    if (step === totalSteps && !eventFired.current) {
+      eventFired.current = true;
+      fetch("/api/partner/track-event", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          partner_promo_code: promoCode,
+          event_type: "quiz_complete",
+          metadata: { charge_type: chargeSlug },
+        }),
+      }).catch(() => {
+        // Fire-and-forget -- don't block UI on tracking failure
+      });
+    }
+  }, [step, promoCode, chargeSlug]);
 
   function selectCharge(slug: string) {
     setChargeSlug(slug);

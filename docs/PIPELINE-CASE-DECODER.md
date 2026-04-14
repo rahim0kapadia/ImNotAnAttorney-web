@@ -564,7 +564,6 @@ The Case Decoder tier has four post-purchase emails defined in `POST_PURCHASE_EM
 | `post_case_decoder_delivery` | Day 0 | Purchase | "Your Attorney Meeting Prep Kit is ready" | Skipped by cron (day-0 emails handled by delivery endpoint) |
 | `post_case_decoder_story_harvest` | Day 5 | **Delivery** | "You met with your attorney -- what was the first question they stopped to think about?" | Collect customer stories for social proof |
 | `post_case_decoder_upsell` | Day 7 | Purchase | "Ready to go deeper?" | Upsell to Intelligence Brief ($997, $800 after credit) |
-| `post_case_decoder_referral` | Day 14 | Purchase | "Know someone facing charges?" | Referral request with share link |
 
 **Key design decisions:**
 
