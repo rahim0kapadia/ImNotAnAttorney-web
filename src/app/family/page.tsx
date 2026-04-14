@@ -218,6 +218,30 @@ export default function FamilyPage() {
         </section>
       </FadeInUp>
 
+      {/* PAID CTA — Case Decoder */}
+      <FadeInUp>
+        <div className="mt-8 rounded-xl border border-amber-500/20 bg-zinc-900 p-6 text-center">
+          <h3 className="text-lg font-semibold text-white">
+            Ready to do more than check a score?
+          </h3>
+          <p className="mt-2 text-sm text-zinc-300">
+            The Case Decoder analyzes the actual case file &mdash; charges,
+            evidence, attorney actions &mdash; and hands your loved one 15
+            specific questions for their next attorney meeting.
+          </p>
+          <a
+            href="/checkout?tier=case-decoder"
+            className="mt-4 inline-flex min-h-[44px] items-center justify-center rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+          >
+            Get the Case Decoder &mdash; $197 &rarr;
+          </a>
+          <p className="mt-2 text-xs text-zinc-500">
+            48-hour delivery. Full refund if we don&apos;t find something the
+            attorney hasn&apos;t raised.
+          </p>
+        </div>
+      </FadeInUp>
+
       {/* DEEPER RESOURCES */}
       <section className="mt-16">
         <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-6">

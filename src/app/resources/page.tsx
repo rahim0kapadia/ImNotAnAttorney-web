@@ -49,11 +49,13 @@ const resources = [
     title: "The Discovery Checklist: 7 Evidence Problems Real Cases Actually Hide",
     desc: "Based on defense frameworks from attorneys who\u2019ve handled thousands of cases. 7 evidence problems real cases hide, the questions that expose each one, and a printable accountability checklist.",
     type: "Free Guide",
+    href: "/blog/how-to-read-your-discovery",
   },
   {
     title: "10 Questions That Change How Your Next Attorney Meeting Goes",
     desc: "The original questions that separate informed defendants from easy clients. Good attorneys welcome these questions \u2014 they show you\u2019re paying attention to your own case.",
     type: "Free Guide",
+    href: "/blog/10-questions-every-defendant-should-ask",
   },
 ];
 
@@ -146,7 +148,18 @@ export default function ResourcesPage() {
                 <span className="inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
                   {r.type}
                 </span>
-                <h3 className="mt-3 font-bold text-white">{r.title}</h3>
+                <h3 className="mt-3 font-bold text-white">
+                  {r.href ? (
+                    <Link
+                      href={r.href}
+                      className="hover:text-amber-400 focus-visible:text-amber-400"
+                    >
+                      {r.title} <span aria-hidden="true">&rarr;</span>
+                    </Link>
+                  ) : (
+                    r.title
+                  )}
+                </h3>
                 <p className="mt-2 text-sm text-zinc-400">{r.desc}</p>
               </StaggerItem>
             ))}

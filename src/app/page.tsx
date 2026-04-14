@@ -426,6 +426,14 @@ export default function Home() {
               </StaggerItem>
             ))}
           </StaggerContainer>
+          <div className="mt-8 text-center">
+            <a
+              href="/checkout?tier=case-decoder"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-amber-500 px-8 py-3 text-base font-semibold text-black transition-colors hover:bg-amber-400"
+            >
+              Start Your Case Research &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+            </a>
+          </div>
         </div>
       </section>
 
@@ -541,6 +549,14 @@ export default function Home() {
               </div>
             </StaggerItem>
           </StaggerContainer>
+          <div className="mt-8 text-center">
+            <a
+              href="/checkout?tier=case-decoder"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-amber-500 px-8 py-3 text-base font-semibold text-black transition-colors hover:bg-amber-400"
+            >
+              Get Your Case Decoded &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+            </a>
+          </div>
         </div>
       </section>
 

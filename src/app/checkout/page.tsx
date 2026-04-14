@@ -161,6 +161,16 @@ function StandaloneCheckout({
             {error}
           </p>
         )}
+
+        <div className="mt-4">
+          <TrustBadges variant="compact" />
+        </div>
+
+        <p className="mt-4 text-xs text-zinc-400">
+          Find It or It&apos;s Free &mdash; if your report doesn&apos;t surface
+          something your attorney hasn&apos;t raised, one email to
+          help@imnotanattorney.com for a full refund.
+        </p>
       </div>
 
       <p className="mt-6 text-xs text-zinc-400">

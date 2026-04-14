@@ -82,6 +82,10 @@ function InlineCTA({ variant }: { variant: "mid" | "end" }) {
       >
         Get Your Case Analysis — {TIER_CORE["case-decoder"].priceDisplay} →
       </Link>
+      <p className="mt-2 text-xs text-zinc-400">
+        Delivered within 48 hours. Find It or It&apos;s Free &mdash; full refund
+        if we don&apos;t find something your attorney hasn&apos;t raised.
+      </p>
     </div>
   );
 }

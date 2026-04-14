@@ -219,12 +219,18 @@ export function DiscoveryReveal() {
             We find them in yours.
           </span>
         </p>
-        <div className="mt-6 text-center">
+        <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <a
+            href="/checkout?tier=case-decoder"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+          >
+            Get Your Case Analyzed &mdash; $197 &rarr;
+          </a>
           <Link
             href="/sample"
-            className="text-sm font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+            className="text-sm text-zinc-400 underline underline-offset-2 hover:text-zinc-300"
           >
-            See the full sample report from this case &rarr;
+            See the full sample report
           </Link>
         </div>
       </div>

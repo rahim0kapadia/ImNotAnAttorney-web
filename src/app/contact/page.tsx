@@ -126,8 +126,13 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* LEGAL DISCLAIMER — UPL compliance. Do not remove without attorney review. */}
-        <div className="mt-8 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
+        {/* CONFIDENTIALITY + LEGAL DISCLAIMER — Do not remove without attorney review. */}
+        <div className="mt-8 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4 space-y-3">
+          <p className="text-xs text-zinc-400">
+            Your name, email address, and any information you share with us is
+            kept strictly confidential and will never be shared with prosecutors,
+            law enforcement, or any third party.
+          </p>
           <p className="text-xs text-zinc-400">
             ImNotAnAttorney provides legal information and research — not legal
             advice. We are not a law firm and do not create an attorney-client
