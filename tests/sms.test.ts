@@ -8,15 +8,11 @@ describe("sendSMS", () => {
   beforeEach(() => {
     vi.resetModules();
     mockFetch.mockReset();
-    vi.stubEnv("TWILIO_ACCOUNT_SID", "ACtest123");
-    vi.stubEnv("TWILIO_AUTH_TOKEN", "test-token");
-    vi.stubEnv("TWILIO_PHONE_NUMBER", "+15551230000");
+    vi.stubEnv("RESEND_API_KEY", "re_test_key");
   });
 
-  it("returns not configured when env vars missing", async () => {
-    vi.stubEnv("TWILIO_ACCOUNT_SID", "");
-    vi.stubEnv("TWILIO_AUTH_TOKEN", "");
-    vi.stubEnv("TWILIO_PHONE_NUMBER", "");
+  it("returns not configured when RESEND_API_KEY missing", async () => {
+    vi.stubEnv("RESEND_API_KEY", "");
     const { sendSMS } = await import("@/lib/sms");
     const result = await sendSMS("+15551234567", "test");
     expect(result.success).toBe(false);
@@ -24,26 +20,33 @@ describe("sendSMS", () => {
     expect(mockFetch).not.toHaveBeenCalled();
   });
 
-  it("sends correct request to Twilio API", async () => {
-    mockFetch.mockResolvedValueOnce({ ok: true, status: 201, json: async () => ({ sid: "SM123" }) });
+  it("sends to correct text.email gateway address", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ id: "email-1" }) });
     const { sendSMS } = await import("@/lib/sms");
     const result = await sendSMS("+15551234567", "Hello world");
     expect(result.success).toBe(true);
     const [url, opts] = mockFetch.mock.calls[0];
-    expect(url).toBe("https://api.twilio.com/2010-04-01/Accounts/ACtest123/Messages.json");
-    expect(opts.headers["Authorization"]).toMatch(/^Basic /);
-    expect(opts.headers["Content-Type"]).toBe("application/x-www-form-urlencoded");
-    expect(opts.body).toContain("To=%2B15551234567");
-    expect(opts.body).toContain("From=%2B15551230000");
-    expect(opts.body).toContain("Body=Hello+world");
+    expect(url).toBe("https://api.resend.com/emails");
+    expect(opts.headers["Authorization"]).toBe("Bearer re_test_key");
+    const body = JSON.parse(opts.body);
+    expect(body.to).toEqual(["5551234567@text.email"]);
+    expect(body.text).toBe("Hello world");
+  });
+
+  it("strips +1 prefix for gateway address", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ id: "email-2" }) });
+    const { sendSMS } = await import("@/lib/sms");
+    await sendSMS("+16504846374", "test");
+    const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+    expect(body.to).toEqual(["6504846374@text.email"]);
   });
 
   it("returns error on non-ok response", async () => {
-    mockFetch.mockResolvedValueOnce({ ok: false, status: 400, json: async () => ({ message: "Invalid phone" }) });
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 400, json: async () => ({ message: "Invalid recipient" }) });
     const { sendSMS } = await import("@/lib/sms");
-    const result = await sendSMS("+1bad", "test");
+    const result = await sendSMS("+15551234567", "test");
     expect(result.success).toBe(false);
-    expect(result.error).toContain("Invalid phone");
+    expect(result.error).toContain("Invalid recipient");
   });
 
   it("returns error on network failure", async () => {

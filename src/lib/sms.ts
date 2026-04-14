@@ -1,11 +1,12 @@
 // src/lib/sms.ts
 /**
- * @fileoverview Twilio SMS utility.
+ * @fileoverview SMS via email-to-text gateway (text.email).
  *
- * Sends SMS via Twilio REST API.
- * Gracefully degrades if Twilio credentials not configured.
+ * Sends SMS by emailing {phone}@text.email via Resend.
+ * They handle 10DLC compliance. We pay $0 per message — just Resend email cost.
  *
- * Env vars: TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER
+ * Requires: RESEND_API_KEY (already configured for email delivery).
+ * Phone numbers must be 10-digit US (stripped of +1 prefix for the gateway).
  */
 
 // ── SMS Core ──────────────────────────────────────────────
@@ -15,43 +16,50 @@ export function capSMS(text: string, maxLen = 160): string {
   return text.length <= maxLen ? text : text.slice(0, maxLen - 3) + "...";
 }
 
+/** Strip +1 prefix to get bare 10-digit number for the gateway address. */
+function toGatewayAddress(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  const bare = digits.startsWith("1") && digits.length === 11 ? digits.slice(1) : digits;
+  return `${bare}@text.email`;
+}
+
 export async function sendSMS(
   to: string,
   body: string
 ): Promise<{ success: boolean; error?: string }> {
-  const sid = process.env.TWILIO_ACCOUNT_SID;
-  const token = process.env.TWILIO_AUTH_TOKEN;
-  const from = process.env.TWILIO_PHONE_NUMBER;
+  const apiKey = process.env.RESEND_API_KEY;
 
-  if (!sid || !token || !from) {
-    console.warn("[Twilio SMS] Not configured — skipping SMS");
+  if (!apiKey) {
+    console.warn("[SMS] RESEND_API_KEY not configured — skipping SMS");
     return { success: false, error: "SMS not configured" };
   }
 
   try {
-    const url = `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`;
-    const auth = Buffer.from(`${sid}:${token}`).toString("base64");
-
-    const res = await fetch(url, {
+    const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        Authorization: `Basic ${auth}`,
-        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
       },
-      body: new URLSearchParams({ To: to, From: from, Body: body }).toString(),
+      body: JSON.stringify({
+        from: "ImNotAnAttorney <notifications@imnotanattorney.com>",
+        to: [toGatewayAddress(to)],
+        subject: "Court Reminder",
+        text: body,
+      }),
     });
 
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      const errMsg = (data as Record<string, string>).message || `HTTP ${res.status}`;
-      console.error("[Twilio SMS] Send failed:", errMsg);
+      const errMsg = (data as { message?: string }).message || `HTTP ${res.status}`;
+      console.error("[SMS] Send failed:", errMsg);
       return { success: false, error: errMsg };
     }
 
     return { success: true };
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : "Unknown error";
-    console.error("[Twilio SMS] Error:", errMsg);
+    console.error("[SMS] Error:", errMsg);
     return { success: false, error: errMsg };
   }
 }
