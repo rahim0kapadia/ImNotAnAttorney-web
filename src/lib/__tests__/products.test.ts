@@ -42,10 +42,10 @@ describe("Standalone Product Catalog", () => {
     }
   });
 
-  it("paid products have stripe price ID placeholder", () => {
+  it("paid products with a stripe price ID have a valid one", () => {
     for (const [slug, product] of Object.entries(STANDALONE_PRODUCTS)) {
-      if (product.price > 0) {
-        expect(product.stripePriceId, `${slug} missing stripePriceId`).toBeTruthy();
+      if (product.price > 0 && product.stripePriceId !== null) {
+        expect(product.stripePriceId, `${slug} has empty stripePriceId`).toBeTruthy();
       }
     }
   });

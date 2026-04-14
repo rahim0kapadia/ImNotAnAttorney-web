@@ -192,7 +192,13 @@ describe("calculateScore", () => {
             obs.toLowerCase().includes("justified") ||
             obs.toLowerCase().includes("felony") ||
             obs.toLowerCase().includes("misdemeanor") ||
-            obs.toLowerCase().includes("cases")
+            obs.toLowerCase().includes("cases") ||
+            obs.toLowerCase().includes("evidence") ||
+            obs.toLowerCase().includes("defense theory") ||
+            obs.toLowerCase().includes("forensic") ||
+            obs.toLowerCase().includes("guideline") ||
+            obs.toLowerCase().includes("threat") ||
+            obs.toLowerCase().includes("technical")
         );
         expect(hasChargeObs).toBe(true);
       }
@@ -234,7 +240,7 @@ describe("calculateScore", () => {
       const notSure = score({ hasAttorney: "not-sure" });
       const pub = score({ hasAttorney: "public-defender" });
       expect(pub.score - notSure.score).toBe(10);
-      expect(notSure.observations.some((o) => o.includes("not certain about your representation"))).toBe(true);
+      expect(notSure.observations.some((o) => o.includes("Confirm whether you have active counsel"))).toBe(true);
     });
   });
 
@@ -265,7 +271,7 @@ describe("calculateScore", () => {
 
     it("dont-know penalizes -10 and adds observation", () => {
       const result = score({ motionsFiled: "dont-know" });
-      expect(result.observations.some((o) => o.includes("don't know whether motions"))).toBe(true);
+      expect(result.observations.some((o) => o.includes("don't know, nothing may have been filed"))).toBe(true);
     });
 
     it("yes at 3+ months adds a positive observation", () => {
@@ -302,7 +308,7 @@ describe("calculateScore", () => {
 
     it("dont-know adds educational observation about discovery", () => {
       const result = score({ hasDiscovery: "dont-know" });
-      expect(result.observations.some((o) => o.includes("Discovery is the evidence"))).toBe(true);
+      expect(result.observations.some((o) => o.includes("Discovery is evidence the prosecution must share"))).toBe(true);
     });
   });
 
@@ -349,7 +355,7 @@ describe("calculateScore", () => {
 
     it("no penalizes -12 and adds observation", () => {
       const result = score({ strategyDiscussed: "no" });
-      expect(result.observations.some((o) => o.includes("hasn't discussed case strategy"))).toBe(true);
+      expect(result.observations.some((o) => o.includes("defense theory hasn't been explained"))).toBe(true);
     });
   });
 
@@ -636,14 +642,14 @@ describe("getChargeSpecificObservation", () => {
 
   it("returns drug-specific observation for drug charge", () => {
     const obs = getChargeSpecificObservation("drug", 0, "private");
-    expect(obs).toContain("drug");
+    expect(obs).toContain("evidence was obtained");
   });
 
   it("returns different observation for no-attorney DUI", () => {
     const withAtty = getChargeSpecificObservation("dui", 0, "private");
     const noAtty = getChargeSpecificObservation("dui", 0, "no");
     expect(withAtty).not.toBe(noAtty);
-    expect(noAtty).toContain("right attorney");
+    expect(noAtty).toContain("DUI defense starts");
   });
 
   it("returns different observation for late-stage DUI", () => {
@@ -665,8 +671,8 @@ describe("getChargeSpecificObservation", () => {
   it("drug-possession returns same observation style as legacy drug", () => {
     const possession = getChargeSpecificObservation("drug-possession", 0, "private");
     const legacy = getChargeSpecificObservation("drug", 0, "private");
-    expect(possession).toContain("drug possession");
-    expect(legacy).toContain("drug possession");
+    expect(possession).toBe(legacy);
+    expect(possession).toContain("evidence was obtained");
   });
 
   it("drug-trafficking mentions mandatory minimums or quantity", () => {
