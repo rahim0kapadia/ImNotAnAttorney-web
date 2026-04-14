@@ -191,6 +191,20 @@ export default function PartnerDashboard() {
         {/* 1. Toolkit */}
         <ToolkitSection partner={partner} referralUrl={referralUrl} />
 
+        {/* Bail Packet Insert */}
+        <Link
+          href="/partner/card"
+          className="block bg-zinc-900 rounded-xl border border-zinc-700 p-4 hover:border-amber-500/50 transition-colors group"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-bold text-amber-400 mb-1">Bail Packet Insert</h3>
+              <p className="text-sm text-zinc-400">Print a full-page insert with your QR code. Drop it in every bail packet.</p>
+            </div>
+            <span className="text-zinc-500 group-hover:text-amber-400 transition-colors text-xl">&rarr;</span>
+          </div>
+        </Link>
+
         {/* How your link works */}
         <div className="bg-zinc-900 rounded-xl border border-zinc-700 p-4">
           <h3 className="font-bold text-amber-400 mb-2">How your link works</h3>
