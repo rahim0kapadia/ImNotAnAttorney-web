@@ -1,0 +1,136 @@
+[
+  {
+    "charge_slug": "dui",
+    "theories": [
+      {"theory_name": "improper_stop", "theory_keywords": ["traffic stop", "probable cause for stop", "reasonable suspicion to stop", "pretextual stop", "improper stop"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "field_sobriety_test_invalid", "theory_keywords": ["field sobriety", "nhtsa protocol", "standardized field sobriety", "sfst", "walk and turn", "one leg stand", "horizontal gaze nystagmus"], "motion_types": ["suppress_motion", "in_limine_motion"]},
+      {"theory_name": "breathalyzer_malfunction", "theory_keywords": ["breathalyzer", "intoxilyzer", "breath test", "calibration", "breath alcohol", "breath sample", "mouth alcohol"], "motion_types": ["suppress_motion", "in_limine_motion"]},
+      {"theory_name": "blood_test_chain_of_custody", "theory_keywords": ["chain of custody", "blood draw", "blood sample", "blood test", "blood alcohol", "fermentation", "contamination", "phlebotomist"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "rising_blood_alcohol", "theory_keywords": ["rising blood alcohol", "absorption rate", "retrograde extrapolation", "bac at time of driving"], "motion_types": ["in_limine_motion"]},
+      {"theory_name": "miranda_violation", "theory_keywords": ["miranda", "custodial interrogation", "right to remain silent", "miranda warning", "miranda rights"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "illegal_checkpoint", "theory_keywords": ["checkpoint", "sobriety checkpoint", "roadblock", "dui checkpoint", "random stop"], "motion_types": ["suppress_motion", "dismiss_motion"]},
+      {"theory_name": "no_probable_cause_arrest", "theory_keywords": ["probable cause for arrest", "warrantless arrest", "no probable cause", "lacked probable cause"], "motion_types": ["suppress_motion", "dismiss_motion"]},
+      {"theory_name": "medical_condition_defense", "theory_keywords": ["medical condition", "gerd", "acid reflux", "diabetes", "ketoacidosis", "hypoglycemia", "neurological"], "motion_types": ["in_limine_motion"]},
+      {"theory_name": "independent_blood_test_denial", "theory_keywords": ["independent test", "independent blood test", "right to independent test", "independent sample"], "motion_types": ["suppress_motion", "dismiss_motion"]}
+    ]
+  },
+  {
+    "charge_slug": "drug-possession",
+    "theories": [
+      {"theory_name": "illegal_search_and_seizure", "theory_keywords": ["search and seizure", "warrantless search", "search warrant", "fourth amendment", "4th amendment", "unreasonable search"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "constructive_possession_challenge", "theory_keywords": ["constructive possession", "dominion and control", "knowledge of contraband", "mere presence", "proximity to drugs"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "invalid_consent_search", "theory_keywords": ["consent to search", "voluntary consent", "coerced consent", "scope of consent", "withdrew consent"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "entrapment", "theory_keywords": ["entrapment", "predisposition", "government inducement", "outrageous government conduct"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "lab_testing_errors", "theory_keywords": ["lab test", "substance identification", "drug test", "forensic analysis", "confirmatory test", "field test", "false positive"], "motion_types": ["in_limine_motion", "dismiss_motion"]},
+      {"theory_name": "miranda_violation", "theory_keywords": ["miranda", "custodial interrogation", "right to remain silent", "miranda warning"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "chain_of_custody_break", "theory_keywords": ["chain of custody", "evidence handling", "evidence storage", "evidence integrity", "tampering"], "motion_types": ["suppress_motion", "in_limine_motion"]},
+      {"theory_name": "invalid_traffic_stop", "theory_keywords": ["traffic stop", "pretextual stop", "reasonable suspicion", "probable cause for stop"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "prescription_defense", "theory_keywords": ["prescription", "valid prescription", "prescribed medication", "authorized possession"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "insufficient_quantity", "theory_keywords": ["usable quantity", "trace amount", "residue", "insufficient quantity", "de minimis"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]}
+    ]
+  },
+  {
+    "charge_slug": "assault",
+    "theories": [
+      {"theory_name": "self_defense", "theory_keywords": ["self-defense", "self defense", "stand your ground", "castle doctrine", "reasonable force", "imminent threat", "proportional force"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "defense_of_others", "theory_keywords": ["defense of others", "defense of another", "defense of third party", "protecting another"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "lack_of_intent", "theory_keywords": ["lack of intent", "no intent", "accidental", "accident", "unintentional", "without intent"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "consent", "theory_keywords": ["consent", "mutual combat", "consensual fight", "agreed to fight"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "misidentification", "theory_keywords": ["misidentification", "mistaken identity", "eyewitness identification", "photo lineup", "show-up", "wrong person"], "motion_types": ["dismiss_motion", "suppress_motion"]},
+      {"theory_name": "insufficient_evidence_of_injury", "theory_keywords": ["no injury", "lack of injury", "minor injury", "no visible injury", "insufficient evidence of harm"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "alibi", "theory_keywords": ["alibi", "not present", "elsewhere at the time", "alibi witness"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "false_accusation", "theory_keywords": ["false accusation", "fabricated", "recanted", "recantation", "false report", "false allegation"], "motion_types": ["dismiss_motion"]}
+    ]
+  },
+  {
+    "charge_slug": "theft",
+    "theories": [
+      {"theory_name": "claim_of_right", "theory_keywords": ["claim of right", "believed property was theirs", "good faith belief", "ownership dispute"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "lack_of_intent_to_steal", "theory_keywords": ["no intent to steal", "lack of intent", "borrowed", "intended to return", "no intent to permanently deprive"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "consent_of_owner", "theory_keywords": ["consent of owner", "permission", "authorized", "owner consented"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "mistaken_identity", "theory_keywords": ["misidentification", "mistaken identity", "wrong person", "surveillance", "identification error"], "motion_types": ["dismiss_motion", "suppress_motion"]},
+      {"theory_name": "value_dispute", "theory_keywords": ["value of property", "property valuation", "below threshold", "misdemeanor threshold", "felony threshold"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "duress", "theory_keywords": ["duress", "coercion", "forced to", "threatened", "under threat"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "entrapment", "theory_keywords": ["entrapment", "government inducement", "sting operation", "bait car"], "motion_types": ["dismiss_motion"]}
+    ]
+  },
+  {
+    "charge_slug": "robbery",
+    "theories": [
+      {"theory_name": "mistaken_identity", "theory_keywords": ["misidentification", "mistaken identity", "eyewitness identification", "lineup", "photo array", "show-up identification"], "motion_types": ["dismiss_motion", "suppress_motion"]},
+      {"theory_name": "lack_of_force_or_threat", "theory_keywords": ["no force", "no threat", "lack of force", "no intimidation", "no weapon"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "alibi", "theory_keywords": ["alibi", "not present", "elsewhere", "alibi witness", "surveillance"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "duress", "theory_keywords": ["duress", "coercion", "forced to participate", "threatened"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "intoxication_defense", "theory_keywords": ["voluntary intoxication", "involuntary intoxication", "incapable of forming intent", "specific intent"], "motion_types": ["in_limine_motion"]},
+      {"theory_name": "illegal_identification_procedure", "theory_keywords": ["suggestive lineup", "suggestive identification", "unduly suggestive", "tainted identification"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "claim_of_right", "theory_keywords": ["claim of right", "believed property was theirs", "ownership dispute"], "motion_types": ["dismiss_motion"]}
+    ]
+  },
+  {
+    "charge_slug": "burglary",
+    "theories": [
+      {"theory_name": "lack_of_intent_to_commit_crime", "theory_keywords": ["no intent", "lack of intent", "no intent to commit felony", "no intent to commit crime inside"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "consent_to_enter", "theory_keywords": ["consent to enter", "permission", "invited", "authorized entry", "open to public"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "mistaken_identity", "theory_keywords": ["misidentification", "mistaken identity", "wrong person", "fingerprint", "dna"], "motion_types": ["dismiss_motion", "suppress_motion"]},
+      {"theory_name": "illegal_search", "theory_keywords": ["search and seizure", "warrantless search", "fourth amendment", "search warrant defective"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "alibi", "theory_keywords": ["alibi", "not present", "elsewhere", "alibi witness"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "no_unlawful_entry", "theory_keywords": ["no breaking", "no entry", "door was open", "unlocked", "no forced entry"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "intoxication_negating_intent", "theory_keywords": ["voluntary intoxication", "incapable of forming intent", "specific intent crime"], "motion_types": ["in_limine_motion"]}
+    ]
+  },
+  {
+    "charge_slug": "domestic-violence",
+    "theories": [
+      {"theory_name": "self_defense", "theory_keywords": ["self-defense", "self defense", "reasonable force", "imminent threat", "battered spouse", "battered person"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "false_accusation", "theory_keywords": ["false accusation", "fabricated", "false allegation", "recanted", "recantation", "false report", "motive to lie"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "lack_of_injury_evidence", "theory_keywords": ["no injury", "lack of injury", "no visible injury", "self-inflicted", "inconsistent with allegation"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "mutual_combat", "theory_keywords": ["mutual combat", "both parties fought", "mutual aggression", "primary aggressor"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "violation_of_confrontation_clause", "theory_keywords": ["confrontation clause", "hearsay", "unavailable witness", "right to cross-examine", "crawford", "testimonial statement"], "motion_types": ["suppress_motion", "dismiss_motion"]},
+      {"theory_name": "miranda_violation", "theory_keywords": ["miranda", "custodial interrogation", "statements suppressed", "right to remain silent"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "no_domestic_relationship", "theory_keywords": ["no relationship", "not household member", "not domestic partner", "stranger", "no qualifying relationship"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "accident", "theory_keywords": ["accident", "accidental", "unintentional", "no intent to harm"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]}
+    ]
+  },
+  {
+    "charge_slug": "drug-trafficking",
+    "theories": [
+      {"theory_name": "illegal_search_and_seizure", "theory_keywords": ["search and seizure", "warrantless search", "search warrant", "fourth amendment", "unreasonable search", "wiretap"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "entrapment", "theory_keywords": ["entrapment", "government inducement", "predisposition", "undercover", "confidential informant", "sting operation"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "constructive_possession_challenge", "theory_keywords": ["constructive possession", "dominion and control", "mere presence", "proximity", "knowledge of drugs"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "insufficient_evidence_of_intent", "theory_keywords": ["no intent to distribute", "personal use", "lack of distribution evidence", "no scales", "no packaging"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "chain_of_custody_break", "theory_keywords": ["chain of custody", "evidence handling", "evidence tampering", "evidence integrity"], "motion_types": ["suppress_motion", "in_limine_motion"]},
+      {"theory_name": "lab_testing_errors", "theory_keywords": ["lab test", "substance identification", "forensic analysis", "weight discrepancy", "quantity dispute"], "motion_types": ["in_limine_motion", "dismiss_motion"]},
+      {"theory_name": "miranda_violation", "theory_keywords": ["miranda", "custodial interrogation", "right to remain silent", "confession suppressed"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "duress", "theory_keywords": ["duress", "coercion", "forced", "threatened", "under threat of harm"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "illegal_wiretap", "theory_keywords": ["wiretap", "electronic surveillance", "title iii", "illegal intercept", "pen register"], "motion_types": ["suppress_motion"]}
+    ]
+  },
+  {
+    "charge_slug": "murder",
+    "theories": [
+      {"theory_name": "self_defense", "theory_keywords": ["self-defense", "self defense", "stand your ground", "castle doctrine", "reasonable force", "imminent threat", "fear of death", "fear of great bodily harm"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "lack_of_premeditation", "theory_keywords": ["no premeditation", "lack of premeditation", "heat of passion", "sudden provocation", "voluntary manslaughter", "adequate provocation"], "motion_types": ["dismiss_motion", "in_limine_motion"]},
+      {"theory_name": "mistaken_identity", "theory_keywords": ["misidentification", "mistaken identity", "eyewitness", "dna", "lineup", "forensic evidence"], "motion_types": ["dismiss_motion", "suppress_motion"]},
+      {"theory_name": "alibi", "theory_keywords": ["alibi", "not present", "elsewhere", "alibi witness", "surveillance", "cell phone location"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "insanity_defense", "theory_keywords": ["insanity", "not guilty by reason of insanity", "mental disease", "mental defect", "mcnaghten", "irresistible impulse"], "motion_types": ["in_limine_motion"]},
+      {"theory_name": "illegal_search_and_seizure", "theory_keywords": ["search and seizure", "warrantless search", "fourth amendment", "evidence suppressed", "fruit of the poisonous tree"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "coerced_confession", "theory_keywords": ["coerced confession", "involuntary confession", "miranda violation", "false confession", "confession suppressed"], "motion_types": ["suppress_motion"]},
+      {"theory_name": "defense_of_others", "theory_keywords": ["defense of others", "defense of another", "protecting another", "reasonable belief of threat"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "accident", "theory_keywords": ["accident", "accidental death", "no intent to kill", "unintentional", "involuntary manslaughter"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "insufficient_forensic_evidence", "theory_keywords": ["forensic evidence", "dna evidence", "ballistic evidence", "cause of death", "manner of death", "autopsy"], "motion_types": ["dismiss_motion", "in_limine_motion", "judgment_acquittal_motion"]}
+    ]
+  },
+  {
+    "charge_slug": "sex-offense",
+    "theories": [
+      {"theory_name": "consent", "theory_keywords": ["consent", "consensual", "consented", "agreed to", "willing participant"], "motion_types": ["dismiss_motion", "judgment_acquittal_motion"]},
+      {"theory_name": "false_accusation", "theory_keywords": ["false accusation", "false allegation", "fabricated", "recanted", "recantation", "motive to lie", "false report"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "mistaken_identity", "theory_keywords": ["misidentification", "mistaken identity", "dna exclusion", "wrong person"], "motion_types": ["dismiss_motion", "suppress_motion"]},
+      {"theory_name": "statute_of_limitations", "theory_keywords": ["statute of limitations", "time-barred", "expired", "stale claim"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "forensic_evidence_challenge", "theory_keywords": ["dna evidence", "forensic evidence", "rape kit", "sane exam", "chain of custody", "contamination"], "motion_types": ["suppress_motion", "in_limine_motion"]},
+      {"theory_name": "alibi", "theory_keywords": ["alibi", "not present", "elsewhere", "alibi witness"], "motion_types": ["dismiss_motion"]},
+      {"theory_name": "age_knowledge_defense", "theory_keywords": ["age of victim", "knowledge of age", "reasonable belief of age", "mistake of age"], "motion_types": ["dismiss_motion", "in_limine_motion"]},
+      {"theory_name": "suggestive_interview", "theory_keywords": ["suggestive interview", "leading questions", "forensic interview", "child interview protocol", "tainted testimony"], "motion_types": ["suppress_motion", "in_limine_motion"]}
+    ]
+  }
+]
