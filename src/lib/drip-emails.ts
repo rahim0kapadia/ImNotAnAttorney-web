@@ -864,7 +864,7 @@ function makePlaybookSequence(config: PlaybookEmailConfig): DripEmail[] {
         <p>${activationFocus}</p>
         <p><strong style="color: white;">Open your Playbook and find the first question in that section. Read it out loud.</strong> That's today's task — one question, one action.</p>
         <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-          <strong style="color: white;">You have already paid ${tier.priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween(slug, "case-decoder")}.</strong> We research YOUR charges, YOUR jurisdiction, and generate 15 questions specific to your case. Credit applies within 30 days.
+          <strong style="color: white;">You have already paid ${tier.priceDisplay}. The ${TIER_CORE["case-decoder"].name} costs ${upgradeCostBetween(slug, "case-decoder")}.</strong> We research YOUR charges, YOUR jurisdiction, and generate 15 questions specific to your case. Credit applies within 12 months.
         </p>
         ${cta(`Get the ${TIER_CORE["case-decoder"].name} — ${upgradeCostBetween(slug, "case-decoder")}`, "/checkout?tier=case-decoder")}
       `,

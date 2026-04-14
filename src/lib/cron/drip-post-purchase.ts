@@ -44,10 +44,15 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
 
   // ── N+1 FIX: Batch-fetch all subscribers for order emails ──
   const orderEmails = [...new Set(orders.map((o) => o.email.toLowerCase()))];
-  const { data: allSubscribers } = await ctx.supabase
+  const { data: allSubscribers, error: subError } = await ctx.supabase
     .from("subscribers")
     .select("id, email, unsubscribed_at")
     .in("email", orderEmails);
+  if (subError) {
+    console.error("[Drip Cron] Subscribers query error:", subError);
+    result.errors++;
+    return result; // CAN-SPAM: cannot send without unsubscribe check
+  }
 
   const subscriberByEmail = new Map<string, { id: string; unsubscribed_at: string | null }>();
   for (const sub of allSubscribers ?? []) {
@@ -56,12 +61,18 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
 
   // ── N+1 FIX: Batch-fetch all drip_emails for those subscriber IDs ──
   const subscriberIds = (allSubscribers ?? []).map((s) => s.id);
-  const { data: allDripEmails } = subscriberIds.length > 0
+  const { data: allDripEmails, error: dripError } = subscriberIds.length > 0
     ? await ctx.supabase
         .from("drip_emails")
         .select("subscriber_id, email_key")
         .in("subscriber_id", subscriberIds)
+        .limit(10000)
     : { data: [] as { subscriber_id: string; email_key: string }[] };
+  if (dripError) {
+    console.error("[Drip Cron] Drip emails query error:", dripError);
+    result.errors++;
+    return result; // Cannot send without dedup check — risk of duplicate emails
+  }
 
   const sentBySubscriber = new Map<string, Set<string>>();
   for (const row of allDripEmails ?? []) {
@@ -72,7 +83,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
   }
 
   // ── N+1 FIX: Batch-fetch all cases for those emails ──
-  const { data: allCases } = await ctx.supabase
+  const { data: allCases, error: casesError } = await ctx.supabase
     .from("cases")
     .select("id, email, tier, intake_id, report_token, status, delivered_at, updated_at, file_urls, created_at")
     .in("email", orderEmails);
@@ -90,12 +101,13 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
   for (const [, cases] of casesByEmailTier) {
     cases.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   }
+  if (casesError) console.error("[Drip Cron] Cases query error:", casesError);
 
   // ── N+1 FIX: Batch-fetch higher-tier orders for upsell skip ──
   const caseDecoderEmails = [...new Set(
     orders.filter((o) => o.tier === "case-decoder").map((o) => o.email.toLowerCase())
   )];
-  const { data: higherTierOrders } = caseDecoderEmails.length > 0
+  const { data: higherTierOrders, error: htError } = caseDecoderEmails.length > 0
     ? await ctx.supabase
         .from("orders")
         .select("email")
@@ -103,6 +115,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
         .eq("status", "paid")
         .not("tier", "in", '("case-decoder","extra-witness","witness-pack")')
     : { data: [] as { email: string }[] };
+  if (htError) console.error("[Drip Cron] Higher-tier orders query error:", htError);
   const emailsWithHigherTier = new Set(
     (higherTierOrders ?? []).map((o) => o.email.toLowerCase())
   );
@@ -111,7 +124,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
   const playbookOrderEmails = [...new Set(
     orders.filter((o) => PLAYBOOK_SLUGS.has(o.tier as TierSlug)).map((o) => o.email.toLowerCase())
   )];
-  const { data: cdOrdersForPlaybooks } = playbookOrderEmails.length > 0
+  const { data: cdOrdersForPlaybooks, error: cdError } = playbookOrderEmails.length > 0
     ? await ctx.supabase
         .from("orders")
         .select("email")
@@ -119,6 +132,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
         .eq("status", "paid")
         .eq("tier", "case-decoder")
     : { data: [] as { email: string }[] };
+  if (cdError) console.error("[Drip Cron] CD orders query error:", cdError);
   const emailsWithCd = new Set(
     (cdOrdersForPlaybooks ?? []).map((o: { email: string }) => o.email.toLowerCase())
   );
@@ -140,6 +154,20 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
   for (const order of orders) {
     try {
       const paidAt = new Date(order.paid_at);
+
+      // ── SKIP SUPERSEDED PLAYBOOK ORDERS ──
+      // If customer bought multiple playbooks, only send sequence for the most recent.
+      if (PLAYBOOK_SLUGS.has(order.tier as TierSlug)) {
+        const hasNewerPlaybook = orders.some((o) =>
+          o.email.toLowerCase() === order.email.toLowerCase() &&
+          PLAYBOOK_SLUGS.has(o.tier as TierSlug) &&
+          new Date(o.paid_at).getTime() > paidAt.getTime()
+        );
+        if (hasNewerPlaybook) {
+          result.skipped++;
+          continue;
+        }
+      }
       const daysSincePurchase = Math.floor(
         (ctx.now.getTime() - paidAt.getTime()) / (1000 * 60 * 60 * 24)
       );
@@ -226,7 +254,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
         if (daysSincePurchase >= email.delayDays && !sentKeys.has(email.key)) {
           // Skip emails whose send window has passed — prevents stale activation
           // emails for existing customers when new email entries are added.
-          if (daysSincePurchase > email.delayDays + 3) continue;
+          if (daysSincePurchase > email.delayDays + 7) continue;
           nextEmail = email;
           break;
         }
