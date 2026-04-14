@@ -1915,6 +1915,11 @@ function getNurtureEmails(): DripEmail[] {
  * @param tier - The tier slug (e.g., "case-decoder", "x-ray", "war-room").
  * @returns Only the drip emails matching that tier.
  */
+/** Whether this email is an upsell (suffix-based, not fragile substring match). */
+export function isUpsellEmail(email: DripEmail): boolean {
+  return email.key.endsWith("_upsell");
+}
+
 export function getPostPurchaseEmails(tier: string): DripEmail[] {
   return POST_PURCHASE_EMAILS.filter((e) => e.tier === tier);
 }
