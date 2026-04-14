@@ -539,7 +539,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 | Column | Type | Purpose |
 |--------|------|---------|
 | id | uuid (PK) | Auto-generated |
-| judge_id | uuid (FK) | Links to judge_profiles (NULL for district-level USSC data) |
+| judge_id | uuid (FK) | Links to judge_profiles (NULL for district/locality-level aggregate data) |
 | charge_slug | text | Charge/offense category (nullable) |
 | bench_acquittal_rate | numeric | Acquittal rate in bench trials (CL opinion data, nullable) |
 | jury_acquittal_rate | numeric | Acquittal rate in jury trials (CL opinion data, nullable) |
@@ -547,16 +547,17 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 | jury_sample | integer | Number of jury trials (default: 0) |
 | source_urls | text[] | Verification URLs |
 | created_at | timestamptz | Record creation timestamp |
-| district | text | Federal district name (USSC data, nullable) |
-| bench_median_sentence | numeric | Median sentence months for bench trials (USSC) |
-| jury_median_sentence | numeric | Median sentence months for jury trials (USSC) |
-| bench_mean_sentence | numeric | Mean sentence months for bench trials (USSC) |
-| jury_mean_sentence | numeric | Mean sentence months for jury trials (USSC) |
+| district | text | District/locality name (USSC federal districts or VA county/city names) |
+| state_code | text | 2-letter state code (e.g. "VA", "FL"). Indexed. Engine queries by this. |
+| bench_median_sentence | numeric | Median sentence months for bench trials |
+| jury_median_sentence | numeric | Median sentence months for jury trials |
+| bench_mean_sentence | numeric | Mean sentence months for bench trials |
+| jury_mean_sentence | numeric | Mean sentence months for jury trials |
 | trial_penalty_pct | numeric | % difference: (jury−bench)/bench × 100 |
 | plea_median_sentence | numeric | Median sentence months for plea deals (context) |
 | plea_sample | integer | Number of plea deals (default: 0) |
-| fiscal_year_range | text | USSC fiscal year range, e.g. "FY2018-FY2024" |
-| offense_category | text | Human-readable offense category (from OFFGUIDE FY18+, OFFTYPE2 FY14-17) |
+| fiscal_year_range | text | Data year range, e.g. "FY2018-FY2024" or "2024" |
+| offense_category | text | Human-readable offense category |
 
 #### `appellate_trends`
 
@@ -718,7 +719,8 @@ USSC sentencing data aggregated by district. Populated by `ingest-ussc-sentencin
 | offense_breakdown | jsonb | Offense type distribution |
 | criminal_history_breakdown | jsonb | Criminal history categories |
 | retention_elections | jsonb | Retention election data |
-| aba_rating | text | ABA rating |
+| aba_rating | text | ABA rating (wq/q/nq/ewq) |
+| aba_rating_year | integer | Year of ABA rating |
 | source_urls | text[] | Verification URLs (required) |
 | data_period | text | e.g. 'FY2024' |
 | **UNIQUE** | (judge_name_normalized, district) | |
