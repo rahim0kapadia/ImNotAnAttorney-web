@@ -1,6 +1,7 @@
 // src/app/api/court-reminders/[token]/phone/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { autoUpgradeOnPhone } from "@/lib/notification-prefs";
 import { normalizePhone, isValidPhone } from "@/lib/site";
 
@@ -9,6 +10,15 @@ export async function PATCH(
   { params }: { params: Promise<{ token: string }> }
 ) {
   const { token } = await params;
+
+  const supabase = createAdminClient();
+
+  // Rate limit: 3 phone updates per token per hour
+  const { limited } = await checkRateLimit(supabase, `phone:${token}`, 3, 3600);
+  if (limited) {
+    return NextResponse.json({ error: "Too many attempts. Try again later." }, { status: 429 });
+  }
+
   let body: { phone: string };
   try {
     body = await req.json();
@@ -23,8 +33,6 @@ export async function PATCH(
       { status: 400 }
     );
   }
-
-  const supabase = createAdminClient();
   const { data: reminder, error: fetchErr } = await supabase
     .from("court_reminders")
     .select("id, notification_prefs")

@@ -84,9 +84,8 @@ export async function POST(req: NextRequest) {
 
     const prefs = getClientPrefs(reminderRow?.notification_prefs || null);
 
-    if (shouldSendEmail(prefs.magic_link)) {
-      await sendCustomerMagicLinkEmail(normalizedEmail, magicUrl);
-    }
+    // Auth-critical: always send email for login links (user can't log in if SMS fails)
+    await sendCustomerMagicLinkEmail(normalizedEmail, magicUrl);
 
     if (shouldSendSMS(prefs.magic_link) && canSendClientSMS(reminderRow?.phone, reminderRow?.sms_consent_at)) {
       await sendSMS(reminderRow!.phone!, capSMS(`ImNotAnAttorney login: ${magicUrl}`))

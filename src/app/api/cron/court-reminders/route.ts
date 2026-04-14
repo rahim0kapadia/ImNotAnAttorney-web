@@ -125,12 +125,16 @@ export async function GET(req: NextRequest) {
               sends.push(sendSMS(r.phone!, smsBody));
             }
 
+            // Fallback: if prefs routed to zero channels, force email (keep people out of jail)
+            if (sends.length === 0) {
+              sends.push(sendEmail({ to: r.email, subject: email.subject, html: email.html }));
+            }
+
             const results = await Promise.allSettled(sends);
-            // Gate on at least one successful send — if ALL fail, don't mark sent so cron retries next run
             const anySucceeded = results.some(
               (res) => res.status === "fulfilled" && (res.value as { success?: boolean })?.success !== false
             );
-            if (!anySucceeded && results.length > 0) {
+            if (!anySucceeded) {
               console.error(`[Cron] All sends failed for ${interval.key} / ${r.id}`);
               errors++;
               continue; // skip alreadySent — will retry next cron run
@@ -200,12 +204,17 @@ export async function GET(req: NextRequest) {
             sends.push(sendSMS(r.phone!, capSMS(`${r.first_name}, your court date passed. Check your prep page for next steps: https://imnotanattorney.com/prep/${r.token}`)));
           }
 
+          // Fallback: if prefs routed to zero channels, force email
+          if (sends.length === 0) {
+            sends.push(sendEmail({ to: r.email, subject: email.subject, html: email.html }));
+          }
+
           const results = await Promise.allSettled(sends);
           const anySucceeded = results.some(
             (res) => res.status === "fulfilled" && (res.value as { success?: boolean })?.success !== false
           );
 
-          if (!anySucceeded && results.length > 0) {
+          if (!anySucceeded) {
             console.error(`[Cron] All sends failed for post_court / ${r.id}`);
             errors++;
           } else {

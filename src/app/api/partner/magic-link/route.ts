@@ -72,24 +72,23 @@ export async function POST(req: NextRequest) {
     const magicUrl = `${SITE_URL}/partner/login/verify#token=${token}`;
     const prefs = getPartnerPrefs(partner.notification_prefs || null);
 
-    if (shouldSendEmail(prefs.magic_link)) {
-      await sendEmail({
-        to: normalizedEmail,
-        subject: "Your ImNotAnAttorney Partner Login Link",
-        html: `
-          <div style="font-family: system-ui, sans-serif; max-width: 480px; margin: 0 auto;">
-            <h2 style="color: #F59E0B;">Partner Login</h2>
-            <p>Hey ${escapeHtml(partner.name)},</p>
-            <p>Click below to access your partner dashboard:</p>
-            <a href="${magicUrl}" style="display: inline-block; padding: 12px 24px; background: #F59E0B; color: #000; font-weight: bold; text-decoration: none; border-radius: 8px; margin: 16px 0;">
-              Open Dashboard
-            </a>
-            <p style="color: #888; font-size: 14px;">This link expires in 15 minutes and can only be used once.</p>
-            <p style="color: #888; font-size: 14px;">If you didn't request this, you can safely ignore this email.</p>
-          </div>
-        `,
-      });
-    }
+    // Auth-critical: always send email (user can't log in if SMS fails or phone removed)
+    await sendEmail({
+      to: normalizedEmail,
+      subject: "Your ImNotAnAttorney Partner Login Link",
+      html: `
+        <div style="font-family: system-ui, sans-serif; max-width: 480px; margin: 0 auto;">
+          <h2 style="color: #F59E0B;">Partner Login</h2>
+          <p>Hey ${escapeHtml(partner.name)},</p>
+          <p>Click below to access your partner dashboard:</p>
+          <a href="${magicUrl}" style="display: inline-block; padding: 12px 24px; background: #F59E0B; color: #000; font-weight: bold; text-decoration: none; border-radius: 8px; margin: 16px 0;">
+            Open Dashboard
+          </a>
+          <p style="color: #888; font-size: 14px;">This link expires in 15 minutes and can only be used once.</p>
+          <p style="color: #888; font-size: 14px;">If you didn't request this, you can safely ignore this email.</p>
+        </div>
+      `,
+    });
 
     if (shouldSendSMS(prefs.magic_link) && partner.phone) {
       sendSMS(partner.phone, capSMS(`ImNotAnAttorney Partner Login: ${magicUrl}`))

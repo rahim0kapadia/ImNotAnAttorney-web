@@ -57,7 +57,8 @@ export function autoUpgradeOnPhone(
   current: Partial<ClientNotificationPrefs> | null
 ): Partial<ClientNotificationPrefs> {
   const merged = { ...(current || {}) };
-  if (!merged.court_reminders || merged.court_reminders === "email") {
+  // Upgrade to "both" if unset, email, or sms-only (enforce safety invariant)
+  if (!merged.court_reminders || merged.court_reminders === "email" || !COURT_REMINDER_SAFE_CHANNELS.has(merged.court_reminders)) {
     merged.court_reminders = "both";
   }
   return merged;
