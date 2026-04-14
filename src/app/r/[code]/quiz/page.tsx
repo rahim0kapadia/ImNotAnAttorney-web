@@ -29,11 +29,19 @@ export default async function ReferralQuizPage({ params }: PageProps) {
     redirect("/");
   }
 
-  // Fire-and-forget quiz_start event -- runs after response is sent
+  // Fire-and-forget quiz_start event -- deduplicated within 60s window per partner
   after(async () => {
     try {
-      const supabase = createAdminClient();
-      await supabase.from("partner_events").insert({
+      const sb = createAdminClient();
+      // Skip if a quiz_start already fired for this partner in the last 60s (back button, refresh)
+      const { count } = await sb
+        .from("partner_events")
+        .select("*", { count: "exact", head: true })
+        .eq("partner_id", partner.id)
+        .eq("event_type", "quiz_start")
+        .gte("created_at", new Date(Date.now() - 60_000).toISOString());
+      if ((count ?? 0) > 0) return;
+      await sb.from("partner_events").insert({
         partner_id: partner.id,
         event_type: "quiz_start",
         metadata: {},

@@ -56,6 +56,64 @@ import { getPartnerPrefs, shouldSendEmail, shouldSendSMS } from "@/lib/notificat
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
 
+/**
+ * Notify a partner of a completed sale via email and/or SMS.
+ * Isolated in its own try-catch so notification failures never break order processing.
+ */
+async function notifyPartnerOfSale(
+  supabase: ReturnType<typeof createAdminClient>,
+  partnerId: string,
+  tier: string,
+  commissionAmount: number,
+  amount: number,
+  logPrefix: string
+) {
+  try {
+    const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
+    const { data: partnerDetail } = await supabase
+      .from("partners")
+      .select("id, name, email, total_commission, phone, notification_prefs, total_referrals, commission_tier, promo_code")
+      .eq("id", partnerId)
+      .single();
+    if (!partnerDetail?.email) return;
+
+    const partnerPrefs = getPartnerPrefs(partnerDetail.notification_prefs || null);
+    const tierName = tier in TIER_CORE ? TIER_CORE[tier as TierSlug].name : tier;
+    const holdbackDate = new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+
+    if (shouldSendEmail(partnerPrefs.commission_earned)) {
+      const { subject, html } = partnerSaleNotificationEmail(
+        partnerDetail.name,
+        tierName,
+        commissionAmount,
+        partnerDetail.total_commission || 0
+      );
+      await sendEmail({ to: partnerDetail.email, subject, html, unsubscribeEmail: partnerDetail.email }, {
+        category: "partner-sale-notification",
+        metadata: { partner_id: partnerId, tier, commission: commissionAmount },
+      });
+    }
+
+    // Fire-and-forget SMS — don't await, avoid webhook timeout risk.
+    // total_referrals is read post-increment from the same primary — safe for first-sale detection.
+    // Theoretical concurrent race results in missed celebration (not duplicate), which is acceptable.
+    if (shouldSendSMS(partnerPrefs.commission_earned) && partnerDetail.phone) {
+      const smsText = buildCommissionSMS({
+        amountCents: commissionAmount,
+        tierName,
+        totalReferrals: partnerDetail.total_referrals ?? 0,
+        commissionTier: partnerDetail.commission_tier ?? "partner",
+        promoCode: partnerDetail.promo_code ?? "",
+        holdbackDate,
+      });
+      sendSMS(partnerDetail.phone, smsText, { category: "commission_earned", partner_id: partnerDetail.id })
+        .catch(e => console.warn(`${logPrefix} Partner sale SMS failed:`, e));
+    }
+  } catch (notifErr) {
+    console.error(`${logPrefix} Partner sale notification failed:`, notifErr);
+  }
+}
+
 export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // STRIPE SIGNATURE VERIFICATION (DUAL-MODE)
@@ -560,48 +618,7 @@ export async function POST(req: NextRequest) {
             console.log(`[Webhook] Referral tracked: partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
 
             // Sale notification to partner (own try-catch so failures don't swallow)
-            try {
-              const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
-              const { data: partnerDetail } = await supabase
-                .from("partners")
-                .select("id, name, email, total_commission, phone, notification_prefs, total_referrals, commission_tier, promo_code")
-                .eq("id", partner.id)
-                .single();
-              if (partnerDetail?.email) {
-                const partnerPrefs = getPartnerPrefs(partnerDetail.notification_prefs || null);
-                const tierName = tier in TIER_CORE ? TIER_CORE[tier as TierSlug].name : tier;
-                const holdbackDate = new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { month: "short", day: "numeric" });
-
-                if (shouldSendEmail(partnerPrefs.commission_earned)) {
-                  const { subject, html } = partnerSaleNotificationEmail(
-                    partnerDetail.name,
-                    tierName,
-                    commissionAmount,
-                    partnerDetail.total_commission || 0
-                  );
-                  await sendEmail({ to: partnerDetail.email, subject, html, unsubscribeEmail: partnerDetail.email }, {
-                    category: "partner-sale-notification",
-                    metadata: { partner_id: partner.id, tier, commission: commissionAmount },
-                  });
-                }
-
-                // Fire-and-forget SMS — don't await, avoid webhook timeout risk
-                if (shouldSendSMS(partnerPrefs.commission_earned) && partnerDetail.phone) {
-                  const smsText = buildCommissionSMS({
-                      amountCents: commissionAmount,
-                      tierName,
-                      totalReferrals: partnerDetail.total_referrals ?? 0,
-                      commissionTier: partnerDetail.commission_tier ?? "partner",
-                      promoCode: partnerDetail.promo_code ?? "",
-                      holdbackDate,
-                    });
-                    sendSMS(partnerDetail.phone, smsText, { category: "commission_earned", partner_id: partnerDetail.id })
-                      .catch(e => console.warn("[Webhook] Partner sale SMS failed:", e));
-                }
-              }
-            } catch (notifErr) {
-              console.error("[Webhook] Partner sale notification failed:", notifErr);
-            }
+            await notifyPartnerOfSale(supabase, partner.id, tier, commissionAmount, amount, "[Webhook]");
 
             // Fire-and-forget purchase event for conversion funnel
             after(async () => {
@@ -674,47 +691,7 @@ export async function POST(req: NextRequest) {
             console.log(`[Webhook] Referral tracked (metadata fallback): partner=${partner.name}, commission=$${(commissionAmount / 100).toFixed(2)}`);
 
             // Sale notification to partner (own try-catch)
-            try {
-              const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
-              const { data: partnerDetail } = await supabase
-                .from("partners")
-                .select("id, name, email, total_commission, phone, notification_prefs, total_referrals, commission_tier, promo_code")
-                .eq("id", partner.id)
-                .single();
-              if (partnerDetail?.email) {
-                const partnerPrefs = getPartnerPrefs(partnerDetail.notification_prefs || null);
-                const tierName = tier in TIER_CORE ? TIER_CORE[tier as TierSlug].name : tier;
-                const holdbackDate = new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { month: "short", day: "numeric" });
-
-                if (shouldSendEmail(partnerPrefs.commission_earned)) {
-                  const { subject, html } = partnerSaleNotificationEmail(
-                    partnerDetail.name,
-                    tierName,
-                    commissionAmount,
-                    partnerDetail.total_commission || 0
-                  );
-                  await sendEmail({ to: partnerDetail.email, subject, html, unsubscribeEmail: partnerDetail.email }, {
-                    category: "partner-sale-notification",
-                    metadata: { partner_id: partner.id, tier, commission: commissionAmount },
-                  });
-                }
-
-                if (shouldSendSMS(partnerPrefs.commission_earned) && partnerDetail.phone) {
-                  const smsText = buildCommissionSMS({
-                      amountCents: commissionAmount,
-                      tierName,
-                      totalReferrals: partnerDetail.total_referrals ?? 0,
-                      commissionTier: partnerDetail.commission_tier ?? "partner",
-                      promoCode: partnerDetail.promo_code ?? "",
-                      holdbackDate,
-                    });
-                    sendSMS(partnerDetail.phone, smsText, { category: "commission_earned", partner_id: partnerDetail.id })
-                      .catch(e => console.warn("[Webhook] Partner sale SMS (metadata) failed:", e));
-                }
-              }
-            } catch (notifErr) {
-              console.error("[Webhook] Partner sale notification (metadata) failed:", notifErr);
-            }
+            await notifyPartnerOfSale(supabase, partner.id, tier, commissionAmount, amount, "[Webhook/meta]");
 
             // Fire-and-forget purchase event for conversion funnel
             after(async () => {
