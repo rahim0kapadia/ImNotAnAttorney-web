@@ -8,15 +8,13 @@ describe("sendSMS", () => {
   beforeEach(() => {
     vi.resetModules();
     mockFetch.mockReset();
-    vi.stubEnv("BIRD_API_KEY", "test-key");
-    vi.stubEnv("BIRD_WORKSPACE_ID", "test-workspace");
-    vi.stubEnv("BIRD_CHANNEL_ID", "test-channel");
+    vi.stubEnv("TELNYX_API_KEY", "test-key");
+    vi.stubEnv("TELNYX_FROM_NUMBER", "+15551230000");
   });
 
   it("returns not configured when env vars missing", async () => {
-    vi.stubEnv("BIRD_API_KEY", "");
-    vi.stubEnv("BIRD_WORKSPACE_ID", "");
-    vi.stubEnv("BIRD_CHANNEL_ID", "");
+    vi.stubEnv("TELNYX_API_KEY", "");
+    vi.stubEnv("TELNYX_FROM_NUMBER", "");
     const { sendSMS } = await import("@/lib/sms");
     const result = await sendSMS("+15551234567", "test");
     expect(result.success).toBe(false);
@@ -24,21 +22,22 @@ describe("sendSMS", () => {
     expect(mockFetch).not.toHaveBeenCalled();
   });
 
-  it("sends correct request to Bird API", async () => {
-    mockFetch.mockResolvedValueOnce({ ok: true, status: 202, json: async () => ({ id: "msg-1" }) });
+  it("sends correct request to Telnyx API", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ data: { id: "msg-1" } }) });
     const { sendSMS } = await import("@/lib/sms");
     const result = await sendSMS("+15551234567", "Hello world");
     expect(result.success).toBe(true);
     const [url, opts] = mockFetch.mock.calls[0];
-    expect(url).toBe("https://api.bird.com/workspaces/test-workspace/channels/test-channel/messages");
-    expect(opts.headers["Authorization"]).toBe("AccessKey test-key");
+    expect(url).toBe("https://api.telnyx.com/v2/messages");
+    expect(opts.headers["Authorization"]).toBe("Bearer test-key");
     const body = JSON.parse(opts.body);
-    expect(body.receiver.contacts[0].identifierValue).toBe("+15551234567");
-    expect(body.body.text.text).toBe("Hello world");
+    expect(body.to).toBe("+15551234567");
+    expect(body.from).toBe("+15551230000");
+    expect(body.text).toBe("Hello world");
   });
 
   it("returns error on non-ok response", async () => {
-    mockFetch.mockResolvedValueOnce({ ok: false, status: 400, json: async () => ({ message: "Invalid phone" }) });
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 400, json: async () => ({ errors: [{ detail: "Invalid phone" }] }) });
     const { sendSMS } = await import("@/lib/sms");
     const result = await sendSMS("+1bad", "test");
     expect(result.success).toBe(false);

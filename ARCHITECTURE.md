@@ -179,6 +179,47 @@ Key files:
 
 **CSV Parsing Pattern:** All opinions CSV scripts use `csv-parse` with `escape: "\\"` for CourtListener's backslash-escaped quotes. No hand-rolled parsers.
 
+## Data Sources Priority — ALWAYS Check Bulk Before API
+
+A hard lesson learned in April 2026: 80K CourtListener API calls were made (estimated 32 hours, rate-limit thrashing) to fetch data that was already available in local bulk CSV files. The same work took ~20 minutes from bulk. This section exists to prevent recurrence.
+
+**Rule: Local bulk data is always the primary source. CourtListener API is fallback for data filed AFTER the last quarterly dump.**
+
+### Bulk Files (primary — check first)
+
+All files at `data/bulk-verify/cl-bulk/`. Regenerated quarterly (March 31, June 30, Sept 30, Dec 31).
+
+| File | Size | Contents |
+|------|------|----------|
+| `opinion-clusters-2026-03-31.csv.bz2` | 2.3GB | Cluster metadata: id, case_name, case_name_full, posture, disposition, headmatter, judges, attorneys |
+| `opinions-2026-03-31.csv.bz2` | 51GB | Full opinion text by cluster_id |
+| `opinions-filtered.csv` | 1.1GB (8.3M rows) | Pre-filtered opinions, already decompressed — start here |
+| `citation-map-2026-03-31.csv.bz2` | 499MB | Citation relationships between clusters |
+| `fjc-integrated-database-2026-03-31.csv.bz2` | 267MB | Federal Judicial Center judge/court data |
+
+External datasets at `data/bulk-verify/external-intel/`: BJS felony outcomes, USSC sentencing statistics, exoneration registry.
+
+**Existing bulk scripts:**
+- `bulk-master-extractor.mjs` — single-pass 8-table extractor across all bulk files (the canonical entry point)
+- `enrich-from-bulk.mjs` — targeted enrichment pass for specific tables/columns
+
+### CourtListener API (fallback only)
+
+Use only for:
+- Data filed after March 31, 2026 (not in the quarterly dump)
+- Real-time lookups (e.g., verifying a single case during report generation)
+- Cluster detail fields not present in the bulk CSV (rare)
+
+Rate limit: ~5 req/sec authenticated. Token: `COURTLISTENER_TOKEN` in `.env.local`.
+
+### Bulk CSV Gotchas (from `~/.claude/rules/cl-bulk-data-defensive.md`)
+
+- CL CSVs quote ALL values — strip surrounding quotes before matching IDs
+- Always use `relax_quotes: true`, `relax_column_count: true` in csv-parse
+- Run ONE CSV streamer at a time — two concurrent streams = OOM on Windows
+- Never use `| head`, `| tail`, `| grep` on background Bash commands (orphan processes, no output)
+- Env var parsing: `.split("=").slice(1).join("=")` — JWT keys contain `=` characters
+
 ## Cross-Cutting Concerns
 
 Patterns that span multiple subsystems:
@@ -189,7 +230,7 @@ Patterns that span multiple subsystems:
 - **HTML escaping.** All user strings in email/report HTML pass through `escapeHtml()` before interpolation. Prevents XSS in transactional emails and reports.
 - **Fire-and-forget logging.** Email sends, cron results, analytics events logged to DB asynchronously. Failures logged to console but never break the response.
 - **Client IP extraction.** Prefers Cloudflare `cf-connecting-ip`, falls back to `x-real-ip`, then `x-forwarded-for` (first entry). Used for rate limiting and analytics.
-- **SMS notifications (Bird).** `sms.ts` sends via Bird REST API. Env vars: `BIRD_API_KEY`, `BIRD_WORKSPACE_ID`, `BIRD_CHANNEL_ID`. Gracefully degrades if not configured. All SMS bodies capped at 160 chars via `capSMS()`. All client SMS gated on 10DLC consent (`canSendClientSMS`).
+- **SMS notifications (Telnyx).** `sms.ts` sends via Telnyx REST API v2. Env vars: `TELNYX_API_KEY`, `TELNYX_FROM_NUMBER`. Gracefully degrades if not configured. All SMS bodies capped at 160 chars via `capSMS()`. All client SMS gated on 10DLC consent (`canSendClientSMS`).
 - **Notification preferences.** JSONB `notification_prefs` column on `court_reminders` (clients) and `partners` (bondsmen). Stores only overrides; `notification-prefs.ts` merges with defaults (all email). Safety invariant: `court_reminders` channel is never "sms" alone — always "email" or "both". `dispatchNotification` pattern: check prefs → gate email/SMS → `Promise.allSettled` for parallel sends.
 - **Commission holdback.** Referral commissions lock after 45 days via `lock-commissions` cron. `referrals.locked_at` tracks confirmation. Refunded orders excluded (`.gt("commission_amount", 0)`).
 
@@ -349,9 +390,8 @@ All vars verified present in `src/` via `process.env.*` grep. Common trap: the c
 | `CRONJOB_API_KEY` | scripts/setup-cronjob-org.js | cron-job.org job registration |
 | `INDEXNOW_KEY` | blog-generation/publish, /api/indexnow | IndexNow search engine ping |
 | `GITHUB_TOKEN` | blog-generation/publish | Git commit of generated blog posts |
-| `BIRD_API_KEY` | sms.ts | Bird SMS API key |
-| `BIRD_WORKSPACE_ID` | sms.ts | Bird workspace ID |
-| `BIRD_CHANNEL_ID` | sms.ts | Bird SMS channel ID |
+| `TELNYX_API_KEY` | sms.ts | Telnyx API key |
+| `TELNYX_FROM_NUMBER` | sms.ts | Telnyx sender phone (+19568486343) |
 | `NEXT_PUBLIC_GA_ID` | CookieConsent | Google Analytics ID |
 | `NEXT_PUBLIC_META_PIXEL_ID` | CookieConsent | Meta (FB) pixel ID |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | CookieConsent | Google Ads ID |
