@@ -189,6 +189,9 @@ Patterns that span multiple subsystems:
 - **HTML escaping.** All user strings in email/report HTML pass through `escapeHtml()` before interpolation. Prevents XSS in transactional emails and reports.
 - **Fire-and-forget logging.** Email sends, cron results, analytics events logged to DB asynchronously. Failures logged to console but never break the response.
 - **Client IP extraction.** Prefers Cloudflare `cf-connecting-ip`, falls back to `x-real-ip`, then `x-forwarded-for` (first entry). Used for rate limiting and analytics.
+- **SMS notifications (Bird).** `sms.ts` sends via Bird REST API. Env vars: `BIRD_API_KEY`, `BIRD_WORKSPACE_ID`, `BIRD_CHANNEL_ID`. Gracefully degrades if not configured. All SMS bodies capped at 160 chars via `capSMS()`. All client SMS gated on 10DLC consent (`canSendClientSMS`).
+- **Notification preferences.** JSONB `notification_prefs` column on `court_reminders` (clients) and `partners` (bondsmen). Stores only overrides; `notification-prefs.ts` merges with defaults (all email). Safety invariant: `court_reminders` channel is never "sms" alone — always "email" or "both". `dispatchNotification` pattern: check prefs → gate email/SMS → `Promise.allSettled` for parallel sends.
+- **Commission holdback.** Referral commissions lock after 45 days via `lock-commissions` cron. `referrals.locked_at` tracks confirmation. Refunded orders excluded (`.gt("commission_amount", 0)`).
 
 ## Architecture Patterns
 
@@ -346,9 +349,9 @@ All vars verified present in `src/` via `process.env.*` grep. Common trap: the c
 | `CRONJOB_API_KEY` | scripts/setup-cronjob-org.js | cron-job.org job registration |
 | `INDEXNOW_KEY` | blog-generation/publish, /api/indexnow | IndexNow search engine ping |
 | `GITHUB_TOKEN` | blog-generation/publish | Git commit of generated blog posts |
-| `TWILIO_ACCOUNT_SID` | twilio.ts | Twilio auth for operator SMS alerts |
-| `TWILIO_AUTH_TOKEN` | twilio.ts | Twilio auth |
-| `TWILIO_PHONE_NUMBER` | twilio.ts | Twilio sender number |
+| `BIRD_API_KEY` | sms.ts | Bird SMS API key |
+| `BIRD_WORKSPACE_ID` | sms.ts | Bird workspace ID |
+| `BIRD_CHANNEL_ID` | sms.ts | Bird SMS channel ID |
 | `NEXT_PUBLIC_GA_ID` | CookieConsent | Google Analytics ID |
 | `NEXT_PUBLIC_META_PIXEL_ID` | CookieConsent | Meta (FB) pixel ID |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | CookieConsent | Google Ads ID |
