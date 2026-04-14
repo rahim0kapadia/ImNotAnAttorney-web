@@ -2,7 +2,7 @@
  * POST /api/partner/magic-link — Request a magic link for partner login.
  *
  * Public route (no auth). Rate-limited to 3 requests per email per hour + 10 per IP per hour.
- * Sends magic link via Resend (email) + Twilio (SMS, if phone on file).
+ * Sends magic link via Resend (email) + Bird (SMS, if phone on file + preference enabled).
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -10,7 +10,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { generateMagicLink } from "@/lib/partner-auth";
 import { sendEmail, escapeHtml } from "@/lib/email";
-import { sendSMS } from "@/lib/sms";
+import { sendSMS, capSMS } from "@/lib/sms";
+import { getPartnerPrefs, shouldSendEmail, shouldSendSMS } from "@/lib/notification-prefs";
 import { SITE_URL, normalizeEmail } from "@/lib/site";
 import { getClientIp } from "@/lib/request";
 
@@ -69,34 +70,30 @@ export async function POST(req: NextRequest) {
 
     const { token, partner } = result;
     const magicUrl = `${SITE_URL}/partner/login/verify#token=${token}`;
+    const prefs = getPartnerPrefs(partner.notification_prefs || null);
 
-    // Send via email
-    await sendEmail({
-      to: normalizedEmail,
-      subject: "Your ImNotAnAttorney Partner Login Link",
-      html: `
-        <div style="font-family: system-ui, sans-serif; max-width: 480px; margin: 0 auto;">
-          <h2 style="color: #F59E0B;">Partner Login</h2>
-          <p>Hey ${escapeHtml(partner.name)},</p>
-          <p>Click below to access your partner dashboard:</p>
-          <a href="${magicUrl}" style="display: inline-block; padding: 12px 24px; background: #F59E0B; color: #000; font-weight: bold; text-decoration: none; border-radius: 8px; margin: 16px 0;">
-            Open Dashboard
-          </a>
-          <p style="color: #888; font-size: 14px;">This link expires in 15 minutes and can only be used once.</p>
-          <p style="color: #888; font-size: 14px;">If you didn't request this, you can safely ignore this email.</p>
-        </div>
-      `,
-    });
+    if (shouldSendEmail(prefs.magic_link)) {
+      await sendEmail({
+        to: normalizedEmail,
+        subject: "Your ImNotAnAttorney Partner Login Link",
+        html: `
+          <div style="font-family: system-ui, sans-serif; max-width: 480px; margin: 0 auto;">
+            <h2 style="color: #F59E0B;">Partner Login</h2>
+            <p>Hey ${escapeHtml(partner.name)},</p>
+            <p>Click below to access your partner dashboard:</p>
+            <a href="${magicUrl}" style="display: inline-block; padding: 12px 24px; background: #F59E0B; color: #000; font-weight: bold; text-decoration: none; border-radius: 8px; margin: 16px 0;">
+              Open Dashboard
+            </a>
+            <p style="color: #888; font-size: 14px;">This link expires in 15 minutes and can only be used once.</p>
+            <p style="color: #888; font-size: 14px;">If you didn't request this, you can safely ignore this email.</p>
+          </div>
+        `,
+      });
+    }
 
-    // Send via SMS if phone on file
-    if (partner.phone) {
-      const smsResult = await sendSMS(
-        partner.phone,
-        `ImNotAnAttorney Partner Login: ${magicUrl} — expires in 15 min.`
-      );
-      if (!smsResult.success) {
-        console.warn("[Partner Magic Link] SMS failed:", smsResult.error);
-      }
+    if (shouldSendSMS(prefs.magic_link) && partner.phone) {
+      sendSMS(partner.phone, capSMS(`ImNotAnAttorney Partner Login: ${magicUrl}`))
+        .catch(e => console.warn("[Partner Magic Link] SMS failed:", e));
     }
 
     return NextResponse.json({ sent: true });
