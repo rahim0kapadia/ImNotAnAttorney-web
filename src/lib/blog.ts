@@ -235,6 +235,14 @@ export interface BlogPost {
   readingTime: string;
   /** Raw MDX body content (without frontmatter). */
   content: string;
+  /** Content pillar slug for product CTA matching (from frontmatter). */
+  pillarSlug: string;
+  /** Product slugs linked to this pillar (from frontmatter). */
+  linkedProducts: string[];
+  /** Free entry point URL for this pillar (from frontmatter). */
+  freeEntryPoint: string;
+  /** Lowest-priced tier slug for paid CTA (from frontmatter). */
+  ctaTier: string;
 }
 
 // ============================================================
@@ -307,6 +315,10 @@ export function getPostBySlug(slug: string): BlogPost | null {
     lastModified: data.lastModified || data.date || new Date().toISOString().split("T")[0],
     readingTime: stats.text,
     content,
+    pillarSlug: data.pillarSlug || "",
+    linkedProducts: data.linkedProducts || [],
+    freeEntryPoint: data.freeEntryPoint || "",
+    ctaTier: data.ctaTier || "",
   };
 }
 

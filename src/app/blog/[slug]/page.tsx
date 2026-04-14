@@ -25,6 +25,7 @@
 import Link from "next/link";
 import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { BlogCTA } from "@/components/BlogCTA";
+import { PillarCTA } from "@/components/blog/PillarCTA";
 import { BlogCard } from "@/components/BlogCard";
 import { PlaybookCTA } from "@/components/PlaybookCTA";
 import { SourceIntelligence, ATTORNEYS } from "@/components/SourceIntelligence";
@@ -278,9 +279,19 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* Service CTA */}
+        {/* Service CTA — pillar-aware when available, fallback to generic */}
         <div className="mt-12">
-          <BlogCTA category={post.category} slug={slug} />
+          {post.pillarSlug ? (
+            <PillarCTA
+              pillarSlug={post.pillarSlug}
+              linkedProducts={post.linkedProducts}
+              freeEntryPoint={post.freeEntryPoint}
+              ctaTier={post.ctaTier}
+              articleSlug={slug}
+            />
+          ) : (
+            <BlogCTA category={post.category} slug={slug} />
+          )}
         </div>
 
         {/* Score CTA — Free defense quiz */}

@@ -166,6 +166,7 @@ export async function POST(req: NextRequest) {
           product_type: "standalone",
           standalone_product_slug: standaloneSlug,
           standalone_intake_token_hash: intakeTokenHash,
+          pillar_ref: session.metadata?.pillar_ref || null,
         });
 
       if (standaloneOrderError) {
@@ -360,6 +361,7 @@ export async function POST(req: NextRequest) {
         upgrade_credit_applied: session.metadata?.upgrade_credit_applied
           ? parseInt(session.metadata.upgrade_credit_applied, 10)
           : 0,
+        pillar_ref: session.metadata?.pillar_ref || null,
       })
       .select("id")
       .single();

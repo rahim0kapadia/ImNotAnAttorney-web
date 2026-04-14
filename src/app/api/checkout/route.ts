@@ -167,6 +167,7 @@ export async function POST(req: NextRequest) {
           state: typeof body.state === "string" ? body.state.slice(0, 10) : "",
           judge_name: typeof body.judgeName === "string" ? body.judgeName.slice(0, 100) : "",
           officer_name: typeof body.officerName === "string" ? body.officerName.slice(0, 100) : "",
+          ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
         },
       });
 
@@ -722,6 +723,7 @@ export async function POST(req: NextRequest) {
           ...(sanitizedPromoCode && { partner_promo_code: sanitizedPromoCode }),
           ...(refSub && { partner_sub_id: refSub }),
           ...(reminderToken && { court_reminder_token: reminderToken }),
+          ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
         },
         success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
         cancel_url: `${origin}/checkout?tier=${tier}&plan=2x`,
@@ -775,6 +777,7 @@ export async function POST(req: NextRequest) {
           includes_tiers: tierConfig.includesTiers.join(","),
         }),
         referral_url: ref || "",
+        ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
       },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
       cancel_url: `${origin}/checkout?tier=${tier}`,
