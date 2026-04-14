@@ -1,7 +1,7 @@
 /**
- * GET /api/cron/sms-health-check — Weekly SMS gateway health probe.
+ * GET /api/cron/sms-health-check — Daily SMS gateway health probe.
  *
- * Schedule: Weekly (Mondays 10:00 UTC) via cron-job.org.
+ * Schedule: Daily at 10:00 UTC via cron-job.org.
  * Protected by CRON_AUTH_TOKEN bearer token.
  *
  * Sends a test SMS to Rahim's number via text.email gateway,
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
   const auth = requireCron(req);
   if (!auth.authorized) return auth.error;
 
-  const lock = await acquireCronLock("sms-health-check", 6 * 24 * 60 * 60 * 1000); // 6-day lockout
+  const lock = await acquireCronLock("sms-health-check", 23 * 60 * 60 * 1000); // 23-hour lockout
   if (!lock.shouldRun) {
     return NextResponse.json({ skipped: true, reason: lock.reason });
   }
