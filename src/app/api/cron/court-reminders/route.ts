@@ -14,7 +14,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireCron } from "@/lib/auth/guards";
 import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, escapeHtml } from "@/lib/email";
+import { sendSMS, capSMS } from "@/lib/sms";
+import { getClientPrefs, getPartnerPrefs, shouldSendEmail, shouldSendSMS, canSendClientSMS } from "@/lib/notification-prefs";
 import { REMINDER_INTERVALS, POST_COURT_KEY } from "@/lib/court-reminders";
 import {
   reminder14d,
@@ -67,16 +69,21 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ sent: 0, message: "No active reminders" });
     }
 
-    // Batch-fetch partner company names for branding
+    // Batch-fetch partner company names + notification prefs for branding and alerts
     const promoCodes = [...new Set(reminders.filter(r => r.partner_promo_code).map(r => r.partner_promo_code as string))];
-    const partnerMap: Record<string, string> = {};
+    const partnerMap: Record<string, { company: string; email: string; phone: string | null; notification_prefs: unknown }> = {};
     if (promoCodes.length > 0) {
       const { data: partners } = await supabase
         .from("partners")
-        .select("promo_code, company, name")
+        .select("promo_code, company, name, email, phone, notification_prefs")
         .in("promo_code", promoCodes);
       for (const p of (partners || [])) {
-        partnerMap[p.promo_code] = p.company || p.name;
+        partnerMap[p.promo_code] = {
+          company: p.company || p.name,
+          email: p.email,
+          phone: p.phone,
+          notification_prefs: p.notification_prefs,
+        };
       }
     }
 
@@ -94,7 +101,7 @@ export async function GET(req: NextRequest) {
         countyState: r.county_state,
         courtDate: r.court_date,
         token: r.token,
-        partnerCompany: r.partner_promo_code ? partnerMap[r.partner_promo_code] : undefined,
+        partnerCompany: r.partner_promo_code ? partnerMap[r.partner_promo_code]?.company : undefined,
       };
 
       // Pre-court reminders
@@ -103,26 +110,75 @@ export async function GET(req: NextRequest) {
           const builder = EMAIL_BUILDERS[interval.key];
           if (!builder) continue;
 
+          const prefs = getClientPrefs(r.notification_prefs);
+
           try {
             const email = builder(ctx);
-            await sendEmail({ to: r.email, subject: email.subject, html: email.html });
+            const sends: Promise<unknown>[] = [];
+
+            if (shouldSendEmail(prefs.court_reminders)) {
+              sends.push(sendEmail({ to: r.email, subject: email.subject, html: email.html }));
+            }
+
+            if (shouldSendSMS(prefs.court_reminders) && canSendClientSMS(r.phone, r.sms_consent_at)) {
+              const smsBody = capSMS(`${r.first_name}, court in ${interval.daysBefore}d (${r.court_date}). Prep: https://imnotanattorney.com/prep/${r.token}`);
+              sends.push(sendSMS(r.phone!, smsBody));
+            }
+
+            const results = await Promise.allSettled(sends);
+            // Gate on at least one successful send — if ALL fail, don't mark sent so cron retries next run
+            const anySucceeded = results.some(
+              (res) => res.status === "fulfilled" && (res.value as { success?: boolean })?.success !== false
+            );
+            if (!anySucceeded && results.length > 0) {
+              console.error(`[Cron] All sends failed for ${interval.key} / ${r.id}`);
+              errors++;
+              continue; // skip alreadySent — will retry next cron run
+            }
             alreadySent.add(interval.key);
             sent++;
 
-            // Send to indemnitor (co-signer) if applicable
+            // Indemnitor — email only for now
             if (r.indemnitor_email) {
-              try {
-                await sendEmail({
-                  to: r.indemnitor_email,
-                  subject: `${r.first_name}'s court date reminder`,
-                  html: email.html,
-                });
-              } catch (e) {
-                console.warn(`[Court Reminders Cron] Indemnitor email failed for ${r.id}:`, e);
+              await sendEmail({
+                to: r.indemnitor_email,
+                subject: `${r.first_name}'s court date reminder`,
+                html: email.html,
+              }).catch(e => console.warn(`[Cron] Indemnitor email failed for ${r.id}:`, e));
+            }
+
+            // Partner "client reminded" notification (uses batch-fetched partnerMap, no N+1)
+            if (r.partner_promo_code && partnerMap[r.partner_promo_code]) {
+              const p = partnerMap[r.partner_promo_code];
+              const partnerPrefs = getPartnerPrefs(p.notification_prefs as Record<string, string> | null);
+              const msg = `We reminded ${r.first_name} about their court date on ${r.court_date}.`;
+              const partnerSends: Promise<unknown>[] = [];
+
+              if (shouldSendEmail(partnerPrefs.client_reminded)) {
+                partnerSends.push(
+                  sendEmail({
+                    to: p.email,
+                    subject: `Client reminder sent: ${r.first_name}`,
+                    html: `<p style="color:#D4D4D8;font-size:15px;">${escapeHtml(msg)}</p>`,
+                    unsubscribeEmail: p.email,
+                  }, {
+                    category: "partner-client-reminded",
+                    metadata: { court_reminder_id: r.id, partner_promo_code: r.partner_promo_code },
+                  }).catch(e => console.warn("[Cron] Partner notification email failed:", e))
+                );
               }
+
+              if (shouldSendSMS(partnerPrefs.client_reminded) && p.phone) {
+                partnerSends.push(
+                  sendSMS(p.phone, capSMS(`INAA: ${msg}`))
+                    .catch(e => console.warn("[Cron] Partner notification SMS failed:", e))
+                );
+              }
+
+              await Promise.allSettled(partnerSends);
             }
           } catch (e) {
-            console.error(`[Court Reminders Cron] Failed ${interval.key} for ${r.id}:`, e);
+            console.error(`[Cron] Failed ${interval.key} for ${r.id}:`, e);
             errors++;
           }
         }
@@ -130,20 +186,41 @@ export async function GET(req: NextRequest) {
 
       // Post-court follow-up (+1 day)
       if (daysUntil < -1 && !alreadySent.has(POST_COURT_KEY)) {
+        const prefs = getClientPrefs(r.notification_prefs);
+
         try {
           const email = postCourtEmail(ctx);
-          await sendEmail({ to: r.email, subject: email.subject, html: email.html });
-          alreadySent.add(POST_COURT_KEY);
-          sent++;
+          const sends: Promise<unknown>[] = [];
 
-          // Mark as completed after post-court email
-          await supabase
-            .from("court_reminders")
-            .update({ status: "completed", reminders_sent: Array.from(alreadySent) })
-            .eq("id", r.id);
-          continue; // Skip the regular update below
+          if (shouldSendEmail(prefs.post_court)) {
+            sends.push(sendEmail({ to: r.email, subject: email.subject, html: email.html }));
+          }
+
+          if (shouldSendSMS(prefs.post_court) && canSendClientSMS(r.phone, r.sms_consent_at)) {
+            sends.push(sendSMS(r.phone!, capSMS(`${r.first_name}, your court date passed. Check your prep page for next steps: https://imnotanattorney.com/prep/${r.token}`)));
+          }
+
+          const results = await Promise.allSettled(sends);
+          const anySucceeded = results.some(
+            (res) => res.status === "fulfilled" && (res.value as { success?: boolean })?.success !== false
+          );
+
+          if (!anySucceeded && results.length > 0) {
+            console.error(`[Cron] All sends failed for post_court / ${r.id}`);
+            errors++;
+          } else {
+            alreadySent.add(POST_COURT_KEY);
+            sent++;
+
+            // Mark as completed after post-court
+            await supabase
+              .from("court_reminders")
+              .update({ status: "completed", reminders_sent: Array.from(alreadySent) })
+              .eq("id", r.id);
+            continue; // Skip the regular update below
+          }
         } catch (e) {
-          console.error(`[Court Reminders Cron] Failed post_court for ${r.id}:`, e);
+          console.error(`[Cron] Failed post_court for ${r.id}:`, e);
           errors++;
         }
       }
