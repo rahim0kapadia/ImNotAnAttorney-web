@@ -10,6 +10,7 @@ import type {
   OfficerBackgroundData,
   SimilarCasesData,
 } from "./query";
+import type { DefenseIntelligenceData } from "@/lib/defense-intelligence/query";
 
 // ============================================================
 // SHARED HELPERS
@@ -85,7 +86,10 @@ function noDataMessage(subject: string): string {
 // JUDGE REPORT CARD
 // ============================================================
 
-export function renderJudgeReportCard(data: JudgeReportCardData): string {
+export function renderJudgeReportCard(
+  data: JudgeReportCardData,
+  intelligence?: DefenseIntelligenceData
+): string {
   const judge = data.judge;
   if (!judge) {
     return wrapReport("Judge Report Card", "<p>No judge data available for this query.</p>", 0);
@@ -441,6 +445,8 @@ export function renderJudgeReportCard(data: JudgeReportCardData): string {
     body += noDataMessage("appellate trend");
   }
 
+  body += intelligence ? renderIntelligenceSection(intelligence) : "";
+
   return wrapReport(`Judge Report Card — ${judge.name}`, body, totalSources);
 }
 
@@ -611,7 +617,11 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
 // SIMILAR CASES ANALYZER
 // ============================================================
 
-export function renderSimilarCases(data: SimilarCasesData, intake: { chargeType: string; state: string }): string {
+export function renderSimilarCases(
+  data: SimilarCasesData,
+  intake: { chargeType: string; state: string },
+  intelligence?: DefenseIntelligenceData
+): string {
   let totalSources = 0;
   let body = "";
 
@@ -777,9 +787,123 @@ export function renderSimilarCases(data: SimilarCasesData, intake: { chargeType:
     body += noDataMessage("outcome benchmark");
   }
 
+  body += intelligence ? renderIntelligenceSection(intelligence) : "";
+
   return wrapReport(
     `Similar Cases Analysis — ${intake.chargeType} in ${intake.state}`,
     body,
     totalSources
   );
+}
+
+// ============================================================
+// DEFENSE INTELLIGENCE SECTION (shared by Judge Report Card + Similar Cases)
+// ============================================================
+
+function renderIntelligenceSection(intel: DefenseIntelligenceData): string {
+  const sections: string[] = [];
+
+  if (intel.theoryOutcomes.length > 0) {
+    const theoryRows = intel.theoryOutcomes
+      .slice(0, 10)
+      .map((t) => `
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #292524; color: #D4D4D8;">
+            ${escapeHtml(t.defense_theory.split("_").join(" "))}
+          </td>
+          <td style="padding: 8px; border-bottom: 1px solid #292524; color: #D4D4D8; text-align: center;">
+            ${t.motion_success_rate !== null ? (t.motion_success_rate * 100).toFixed(0) + "%" : "\u2014"}
+          </td>
+          <td style="padding: 8px; border-bottom: 1px solid #292524; color: #D4D4D8; text-align: center;">
+            ${t.case_success_rate !== null ? (t.case_success_rate * 100).toFixed(0) + "%" : "\u2014"}
+          </td>
+          <td style="padding: 8px; border-bottom: 1px solid #292524; color: #71717A; text-align: center;">
+            ${t.attempts} ${sourceLinks(t.sample_source_urls)}
+          </td>
+        </tr>`)
+      .join("");
+
+    sections.push(`
+      <div style="margin-top: 32px;">
+        <h2 style="color: #F59E0B; font-size: 20px; margin: 0 0 8px;">Defense Theory Intelligence</h2>
+        <p style="color: #71717A; font-size: 12px; margin: 0 0 16px;">
+          Based on published court opinions. Rates may differ from unpublished dispositions and plea agreements.
+        </p>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 2px solid #422006;">
+              <th style="padding: 8px; text-align: left; color: #A1A1AA; font-size: 13px;">Theory</th>
+              <th style="padding: 8px; text-align: center; color: #A1A1AA; font-size: 13px;">Motion Grant Rate</th>
+              <th style="padding: 8px; text-align: center; color: #A1A1AA; font-size: 13px;">Case Success Rate</th>
+              <th style="padding: 8px; text-align: center; color: #A1A1AA; font-size: 13px;">Cases (N)</th>
+            </tr>
+          </thead>
+          <tbody>${theoryRows}</tbody>
+        </table>
+      </div>
+    `);
+  }
+
+  if (intel.motionPatterns.length > 0) {
+    const motionRows = intel.motionPatterns
+      .slice(0, 10)
+      .map((m) => `
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #292524; color: #D4D4D8;">
+            ${escapeHtml(m.motion_type.split("_").join(" "))}
+          </td>
+          <td style="padding: 8px; border-bottom: 1px solid #292524; color: #D4D4D8; text-align: center;">
+            ${m.grant_rate !== null ? (m.grant_rate * 100).toFixed(0) + "%" : "\u2014"}
+          </td>
+          <td style="padding: 8px; border-bottom: 1px solid #292524; color: #71717A; text-align: center;">
+            ${m.filed_count} ${sourceLinks(m.sample_source_urls)}
+          </td>
+        </tr>`)
+      .join("");
+
+    sections.push(`
+      <div style="margin-top: 32px;">
+        <h2 style="color: #F59E0B; font-size: 20px; margin: 0 0 8px;">Motion Success Patterns</h2>
+        <p style="color: #71717A; font-size: 12px; margin: 0 0 16px;">
+          Motion-level grant rates. &ldquo;Granted&rdquo; means the motion itself was granted, not the case outcome.
+        </p>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 2px solid #422006;">
+              <th style="padding: 8px; text-align: left; color: #A1A1AA; font-size: 13px;">Motion Type</th>
+              <th style="padding: 8px; text-align: center; color: #A1A1AA; font-size: 13px;">Grant Rate</th>
+              <th style="padding: 8px; text-align: center; color: #A1A1AA; font-size: 13px;">Filed (N)</th>
+            </tr>
+          </thead>
+          <tbody>${motionRows}</tbody>
+        </table>
+      </div>
+    `);
+  }
+
+  if (intel.relevantOpinions.length > 0) {
+    const opinionItems = intel.relevantOpinions
+      .slice(0, 5)
+      .map((op) => `
+        <div style="padding: 12px; background: #1C1917; border-radius: 6px; margin-bottom: 8px;">
+          <p style="color: #FAFAF9; font-weight: bold; margin: 0 0 4px;">
+            ${escapeHtml(op.case_name)} ${sourceLinks(op.source_urls)}
+          </p>
+          ${op.holding_text ? `<p style="color: #A1A1AA; font-size: 13px; margin: 0;">${escapeHtml(op.holding_text.slice(0, 300))}${op.holding_text.length > 300 ? "..." : ""}</p>` : ""}
+          <p style="color: #71717A; font-size: 11px; margin: 4px 0 0;">
+            ${op.defense_theories.map(t => t.split("_").join(" ")).join(", ")}
+            ${op.case_favorability !== null ? " | Favorability: " + op.case_favorability + "/100" : ""}
+          </p>
+        </div>`)
+      .join("");
+
+    sections.push(`
+      <div style="margin-top: 32px;">
+        <h2 style="color: #F59E0B; font-size: 20px; margin: 0 0 16px;">Relevant Court Opinions</h2>
+        ${opinionItems}
+      </div>
+    `);
+  }
+
+  return sections.join("");
 }

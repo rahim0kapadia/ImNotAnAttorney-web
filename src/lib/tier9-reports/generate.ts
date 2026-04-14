@@ -18,6 +18,9 @@ import {
   type SimilarCasesIntake,
 } from "./query";
 import {
+  queryDefenseIntelligence,
+} from "@/lib/defense-intelligence/query";
+import {
   renderJudgeReportCard,
   renderOfficerBackground,
   renderSimilarCases,
@@ -113,7 +116,12 @@ export async function generateTier9Report(
           await notifyInsufficientData(order.email, productName, orderId, intake);
           return;
         }
-        html = renderJudgeReportCard(data);
+        const intelligence = await queryDefenseIntelligence(
+          intake.chargeType as string,
+          intake.state as string,
+          "judge-report-card"
+        );
+        html = renderJudgeReportCard(data, intelligence.isEmpty ? undefined : intelligence);
         break;
       }
 
@@ -148,7 +156,12 @@ export async function generateTier9Report(
           await notifyInsufficientData(order.email, productName, orderId, intake);
           return;
         }
-        html = renderSimilarCases(data, typedIntake);
+        const similarIntelligence = await queryDefenseIntelligence(
+          typedIntake.chargeType,
+          typedIntake.state,
+          "similar-cases-analyzer"
+        );
+        html = renderSimilarCases(data, typedIntake, similarIntelligence.isEmpty ? undefined : similarIntelligence);
         break;
       }
 
