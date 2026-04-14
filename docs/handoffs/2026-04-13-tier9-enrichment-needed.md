@@ -64,17 +64,26 @@ The product promises outcome distributions, motion patterns, and defense approac
 
 ## Remaining Steps — Enrichment Pipeline
 
-1. **Build enrichment script** — For each of the 39,959 cluster_ids, fetch the full opinion from CourtListener API (`/api/rest/v4/clusters/{id}/`). Extract:
-   - `outcome` — from opinion status/posture (affirmed, reversed, remanded, etc.)
-   - `party_side` — defendant or prosecution appeal
-   - `motion_types` — regex/NLP on opinion text for suppression, dismissal, etc.
-   - Batch at ~3 req/sec with rate limit handling
+**CRITICAL LESSON LEARNED (2026-04-13):** The first enrichment attempt used 80K CourtListener API calls (~32 hours, constant rate-limit thrashing) for data already in local bulk CSVs. The bulk approach does the same work in ~20 minutes. **Always exhaust bulk data before touching the API.**
 
-2. **Backfill sentencing_distributions** — The 50GB bulk CSV has sentencing data. Re-run bulk-master-extractor with `--tables sentencing_distributions` to expand from 133 rows. Or pull from BJS/USSC external datasets (scripts already exist: `scripts/ingest-bjs-outcomes.mjs`, `scripts/download-external-datasets.mjs`).
+### Data source priority
+
+1. `opinions-filtered.csv` (1.1GB, 8.3M rows, already decompressed) — start here for opinion text
+2. `opinion-clusters-2026-03-31.csv.bz2` (2.3GB) — cluster metadata: posture, disposition, headmatter
+3. `data/bulk-verify/external-intel/` — BJS/USSC sentencing, exoneration registry
+4. CourtListener API — **fallback only**, for cases filed after March 31, 2026 that are not in the dump
+
+### Steps
+
+1. **Enrich vectors from bulk CSV** — `enrich-from-bulk.mjs` streams `opinions-filtered.csv` to extract outcome, party_side, and motion_types from opinion text. Uses `bulk-master-extractor.mjs` pattern: single streamer, `relax_quotes: true`, `relax_column_count: true`. Matches on `cluster_id` (strip surrounding quotes — CL CSVs quote all values). Target: fill nulls in the 39,959 vectors.
+
+2. **Backfill sentencing_distributions from bulk** — Re-run `bulk-master-extractor.mjs --tables sentencing_distributions` against the opinions bulk CSV to expand from 133 rows. Then supplement with BJS/USSC datasets: `scripts/ingest-bjs-outcomes.mjs`, `scripts/download-external-datasets.mjs` (scripts exist, data already downloaded).
 
 3. **Harvard CAP bulk download** — 6.7M historical cases (1658-2018). One-time download, local processing. Adds historical depth for deeper similar-case matching. Lower priority than steps 1-2.
 
 4. **Re-run k-NN after enrichment** — Once vectors have real outcomes and motions, the similarity matching improves dramatically (Jaccard similarity on motion_types becomes meaningful).
+
+5. **API gap-fill (last resort)** — Only after bulk enrichment is complete, identify vectors still missing outcome data. These are cases not in the March 31 dump (filed after that date). Pull those specific cluster_ids from the API — targeted, not a full sweep.
 
 ## Verification
 - `cd C:\Users\email\projects\ImNotAnAttorney-web && npx next build` — should compile clean
