@@ -22,6 +22,7 @@ import { queryPrepData, parseStateCode } from "@/lib/prep-data";
 import { TIER_CORE } from "@/lib/tiers";
 import { calculatePartnerDiscount } from "@/lib/referral";
 import { CheckInButton } from "@/components/partner/CheckInButton";
+import { PhoneOptIn } from "@/components/PhoneOptIn";
 
 interface PageProps {
   params: Promise<{ token: string }>;
@@ -151,6 +152,13 @@ export default async function PrepPage({ params }: PageProps) {
         {/* Check-In Button — only before court date */}
         {!courtPassed && (
           <CheckInButton token={token} lastCheckIn={lastCheckInRow?.checked_in_at ?? null} />
+        )}
+
+        {/* SMS Text Reminders — only before court date */}
+        {!courtPassed && (
+          <div className="mb-8">
+            <PhoneOptIn token={token} hasPhone={!!reminder.phone} />
+          </div>
         )}
 
         {/* Section A: Countdown */}
