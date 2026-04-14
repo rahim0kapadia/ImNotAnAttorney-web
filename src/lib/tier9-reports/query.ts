@@ -5,6 +5,7 @@
  */
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import type { JustfairJudgeData } from "@/lib/defense-intelligence/query";
 
 // ============================================================
 // TYPES
@@ -81,6 +82,7 @@ export interface JudgeReportCardData {
     source_urls: string[];
     data_period: string | null;
   } | null;
+  justfair?: JustfairJudgeData | null;
   isEmpty: boolean;
 }
 
@@ -112,6 +114,11 @@ export interface OfficerBackgroundData {
     credibility_risk_score: number | null;
     source_urls: string[];
     sources: string[];
+  }>;
+  agencyIncidents: Array<{
+    agency: string;
+    use_of_force_count: number;
+    source_urls: string[];
   }>;
   isEmpty: boolean;
 }
@@ -193,22 +200,6 @@ function escapeIlike(input: string): string {
   return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
 }
 
-// State abbreviation → full name (for USSC district ILIKE lookups)
-const STATE_NAMES: Record<string, string> = {
-  AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California",
-  CO: "Colorado", CT: "Connecticut", DE: "Delaware", DC: "District of Columbia",
-  FL: "Florida", GA: "Georgia", GU: "Guam", HI: "Hawaii", ID: "Idaho",
-  IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky",
-  LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan",
-  MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska",
-  NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York",
-  NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon",
-  PA: "Pennsylvania", PR: "Puerto Rico", RI: "Rhode Island", SC: "South Carolina",
-  SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont",
-  VA: "Virginia", VI: "Virgin Islands", WA: "Washington", WV: "West Virginia",
-  WI: "Wisconsin", WY: "Wyoming",
-};
-
 const BENCH_JURY_SELECT = "charge_slug, bench_acquittal_rate, jury_acquittal_rate, bench_sample, jury_sample, source_urls, district, bench_median_sentence, jury_median_sentence, trial_penalty_pct, offense_category, fiscal_year_range, plea_median_sentence, plea_sample";
 
 // ============================================================
@@ -271,9 +262,7 @@ export async function queryJudgeReportCard(
     jury_acquittal_rate: rawJudge.jury_acquittal_rate as number | null,
   };
 
-  // State name for USSC district-level bench/jury fallback lookup
-  const stateName = STATE_NAMES[intake.state?.toUpperCase()] ?? intake.state;
-  const safeStateName = escapeIlike(stateName);
+  // State code for USSC district-level bench/jury fallback lookup
 
   // Parallel queries for all related data
   const [sentencing, pairings, divergence, districtDivergence, quotes, appellate, usscData] =
@@ -306,7 +295,7 @@ export async function queryJudgeReportCard(
       supabase
         .from("bench_jury_divergence")
         .select(BENCH_JURY_SELECT)
-        .ilike("district", `%${safeStateName}%`)
+        .eq("state_code", intake.state.toUpperCase())
         .is("judge_id", null)
         .order("jury_sample", { ascending: false })
         .limit(20),
@@ -383,11 +372,27 @@ export async function queryOfficerBackground(
     .eq("state", intake.state)
     .limit(20);
 
+  // Agency-level fatal encounter data (stored with __agency__: prefix by ingest-fatal-encounters.mjs)
+  const agencies = (external.data ?? [])
+    .map((r) => r.agency as string)
+    .filter(Boolean);
+  let agencyIncidents: Array<{ agency: string; use_of_force_count: number; source_urls: string[] }> = [];
+  if (agencies.length > 0) {
+    const agencyKeys = agencies.map((a) => `__agency__:${(a as string).toLowerCase().trim()}`);
+    const { data: agencyData } = await supabase
+      .from("officer_external_intel")
+      .select("agency, use_of_force_count, source_urls")
+      .in("officer_name_normalized", agencyKeys)
+      .eq("state", intake.state);
+    agencyIncidents = (agencyData ?? []).filter((r) => r.use_of_force_count > 0) as typeof agencyIncidents;
+  }
+
   const hasData = (reliability.data?.length ?? 0) > 0 || (external.data?.length ?? 0) > 0;
 
   return {
     officers: reliability.data ?? [],
     externalIntel: external.data ?? [],
+    agencyIncidents,
     isEmpty: !hasData,
   };
 }

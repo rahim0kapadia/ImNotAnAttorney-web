@@ -1,6 +1,6 @@
 # Architecture — ImNotAnAttorney-web
 
-> Living document. Updated: 2026-04-11. Read this before making any change.
+> Living document. Updated: 2026-04-14. Read this before making any change.
 > Subsystem details live in `CONTEXT.md` files next to the code. This file is the system map.
 > For column-level DB schema: `supabase/SCHEMA.md`. For state machines: `supabase/CONTEXT.md`. For email sequences: `src/lib/CONTEXT.md`.
 
@@ -198,6 +198,24 @@ All files at `data/bulk-verify/cl-bulk/`. Regenerated quarterly (March 31, June 
 | `fjc-integrated-database-2026-03-31.csv.bz2` | 267MB | Federal Judicial Center judge/court data |
 
 External datasets at `data/bulk-verify/external-intel/`: BJS felony outcomes, USSC sentencing statistics, exoneration registry.
+
+### JUSTFAIR — Federal Sentencing Intelligence (primary for federal courts)
+
+Source: QSIDE Institute, 595,851 federal sentencing records (FY2001-2023). Downloaded from [osf.io/nseh5](https://osf.io/nseh5/). Local CSV at `data/external-intel/justfair/FinalDataset.csv` (1.3GB, gitignored).
+
+| Table | Contents | Row Count |
+|-------|----------|-----------|
+| `judge_demographics` | Federal judge background: appointing president/party, ABA rating, law school, gender, race, active years | ~1,126 judges |
+| `judge_sentencing_demographics` | Sentencing by defendant race per judge: median sentence, departure rates, sample sizes | ~4,500 rows |
+| `outcome_benchmarks` | National plea/trial/dismissal rates by offense type (BJS) | ~10 rows |
+| `officer_external_intel` | Agency-level fatal encounter data (Fatal Encounters dataset, 2013+) | ~2,000 rows |
+
+**Integration points:**
+- **Judge Report Card** — `queryJustfairJudge()` in `defense-intelligence/query.ts` → demographics + racial disparity sections in `render.ts`
+- **Officer Background Check** — agency fatal encounters via `officer_external_intel` → agency alert section in `render.ts`
+- **Intelligence Brief** — JUSTFAIR fields injected via `variables.ts` → 3 section builders in `prompts.ts`
+- **Case Decoder** — sentencing context from `sentencing_distributions` + `outcome_benchmarks` injected in Edge Function
+- **Availability gate** — `coverage.ts` checks `judge_demographics` for federal judge coverage
 
 **Existing bulk scripts:**
 - `bulk-master-extractor.mjs` — single-pass 8-table extractor across all bulk files (the canonical entry point)
@@ -433,4 +451,4 @@ Historical rules — violating any of these has broken production before. Rules 
 - **Deep detail needed:** DB schema → `supabase/SCHEMA.md`; case status state machine → `supabase/CONTEXT.md`; email sequences → `src/lib/CONTEXT.md`; env vars → this file
 - **On any code change:** `node docs/verify-architecture.js` (automated via CI on pull requests)
 - **Verification script:** `docs/verify-architecture.js` — auto-generated, do not edit manually
-- **Last full verification:** 2026-04-11
+- **Last full verification:** 2026-04-14

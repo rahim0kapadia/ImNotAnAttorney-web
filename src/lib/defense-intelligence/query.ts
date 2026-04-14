@@ -88,6 +88,44 @@ export interface DefenseIntelligenceData {
 }
 
 // ============================================================
+// JUSTFAIR TYPES (federal sentencing + judge demographics)
+// Source: osf.io/nseh5 — 595,851 federal sentencing records
+// FEDERAL COURTS ONLY — state court judges return isEmpty=true
+// ============================================================
+
+export interface JudgeDemographics {
+  judge_name: string;
+  judge_name_normalized: string;
+  district: string | null;
+  gender: string | null;
+  race_ethnicity: string | null;
+  appointing_president: string | null;
+  appointing_party: string | null;
+  aba_rating: string | null;
+  birth_year: number | null;
+  law_school: string | null;
+  senior_status_date: string | null;
+  active_start: number | null;
+  active_end: number | null;
+  source_urls: string[];
+}
+
+export interface JudgeSentencingByRace {
+  defendant_race: string;
+  total_cases: number;
+  median_sentence_months: number | null;
+  mean_sentence_months: number | null;
+  guideline_departure_rate: number | null;
+  avg_departure_pct: number | null;
+}
+
+export interface JustfairJudgeData {
+  demographics: JudgeDemographics | null;
+  sentencingByRace: JudgeSentencingByRace[];
+  isEmpty: boolean;
+}
+
+// ============================================================
 // CONFIDENCE THRESHOLDS (spec Section 8.4)
 // ============================================================
 
@@ -229,5 +267,45 @@ export async function queryDefenseIntelligence(
     motionPatterns,
     relevantOpinions,
     isEmpty: !hasData,
+  };
+}
+
+// ============================================================
+// JUSTFAIR QUERIES (federal sentencing + judge demographics)
+// ============================================================
+
+/**
+ * Query JUSTFAIR judge demographics + racial disparity data.
+ * FEDERAL COURTS ONLY — 1,126 judges in database.
+ * State court judges will return isEmpty=true.
+ */
+export async function queryJustfairJudge(
+  judgeName: string
+): Promise<JustfairJudgeData> {
+  const supabase = createAdminClient();
+  const safeName = judgeName.toLowerCase().replace(/[%_\\]/g, (ch) => `\\${ch}`);
+
+  const [demoResult, raceResult] = await Promise.all([
+    supabase
+      .from("judge_demographics")
+      .select("*")
+      .ilike("judge_name_normalized", `%${safeName}%`)
+      .limit(1),
+
+    supabase
+      .from("judge_sentencing_demographics")
+      .select("defendant_race, total_cases, median_sentence_months, mean_sentence_months, guideline_departure_rate, avg_departure_pct")
+      .ilike("judge_name_normalized", `%${safeName}%`)
+      .gte("total_cases", MINIMUM_SAMPLE_SIZE)
+      .order("total_cases", { ascending: false }),
+  ]);
+
+  const demographics = (demoResult.data?.[0] as JudgeDemographics) ?? null;
+  const sentencingByRace = (raceResult.data ?? []) as JudgeSentencingByRace[];
+
+  return {
+    demographics,
+    sentencingByRace,
+    isEmpty: !demographics && sentencingByRace.length === 0,
   };
 }

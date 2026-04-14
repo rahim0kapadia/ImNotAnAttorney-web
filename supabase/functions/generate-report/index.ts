@@ -2574,6 +2574,28 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
     console.log(`[generate-report] Defendant profile injected for case ${caseId}`);
   }
 
+  // ── JUSTFAIR sentencing context for Case Decoder ──────────────
+  let cdSentencingContext = "";
+  try {
+    const [sentRows, obRows] = await Promise.all([
+      supabaseSelect(supabaseUrl, supabaseKey, "sentencing_distributions",
+        `charge_slug=eq.${encodeURIComponent(intake.charge_type)}&select=median_months,p25,p75,sample_size&limit=5`),
+      supabaseSelect(supabaseUrl, supabaseKey, "outcome_benchmarks",
+        `offense_type=eq.${encodeURIComponent("all offenses")}&jurisdiction_level=eq.national&limit=1`),
+    ]);
+    const s = (sentRows as Record<string, unknown>[])[0];
+    const ob = (obRows as Record<string, unknown>[])[0];
+    const parts: string[] = [];
+    if (s) parts.push(`District median for ${intake.charge_type}: ${(s.median_months as number)?.toFixed(1) ?? "N/A"} months (P25: ${(s.p25 as number)?.toFixed(1) ?? "N/A"}, P75: ${(s.p75 as number)?.toFixed(1) ?? "N/A"}, N=${s.sample_size ?? 0})`);
+    if (ob) parts.push(`National plea rate: ${ob.plea_rate ? ((ob.plea_rate as number) * 100).toFixed(1) + "%" : "94%"} (BJS)`);
+    if (parts.length > 0) {
+      cdSentencingContext = `\n<sentencing_context>\n${parts.join("\n")}\nSource: JUSTFAIR (osf.io/nseh5) + BJS. Federal courts — state courts may differ.\n</sentencing_context>`;
+      console.log(`[generate-report] Sentencing context injected for CD`);
+    }
+  } catch (e) {
+    console.warn(`[generate-report] Sentencing query failed (non-fatal):`, e);
+  }
+
   const comm = intake.communication_frequency;
   const commInstruction = comm === "Rarely" || comm === "Never returned calls"
     ? `\nCommunication has been poor (${comm}). Emphasize urgency in the email template and include the follow-up template. Include all 5 Advocacy Steps with emphasis on Steps 1-3 for immediate action.`
@@ -2826,7 +2848,7 @@ support persons.`);
 - Mental Health Relevant: ${intake.mental_health_relevant || "Not provided"}
 - Primary Frustration (their words): ${intake.situation || "Not provided"}
 - Specific Question (their words): ${intake.specific_question || "Not provided"}
-${chargeBlock}${commInstruction}${evidenceBlock}${legalDataBlock}${defendantProfileBlock}
+${chargeBlock}${commInstruction}${evidenceBlock}${legalDataBlock}${defendantProfileBlock}${cdSentencingContext}
 ${conditionalInstructions.join("")}${systemTruthSection}
 
 **GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
@@ -4168,8 +4190,69 @@ async function handleIBPhaseA(
   if (ibDefendantProfileBlock) console.log(`[IB-Phase-A] Defendant profile injected for case ${caseId}`);
   if (ibCaseIntelligenceBlock) console.log(`[IB-Phase-A] Case intelligence injected for case ${caseId}`);
 
+  // ── JUSTFAIR judge intelligence (federal courts) ──────────────
+  const judgeNameNorm = encodeURIComponent((phase2.judge_name || "").toLowerCase());
+  let justfairDemoSummary = "";
+  let justfairSentencing = "";
+  let justfairRacial = "";
+  let sentencingContext = "";
+  let outcomeBenchmarks = "";
+
+  try {
+    const [demoRows, raceRows, sentRows, obRows] = await Promise.all([
+      supabaseSelect(supabaseUrl, supabaseKey, "judge_demographics",
+        `judge_name_normalized=ilike.*${judgeNameNorm}*&limit=1`),
+      supabaseSelect(supabaseUrl, supabaseKey, "judge_sentencing_demographics",
+        `judge_name_normalized=ilike.*${judgeNameNorm}*&total_cases=gte.5&order=total_cases.desc`),
+      supabaseSelect(supabaseUrl, supabaseKey, "sentencing_distributions",
+        `charge_slug=eq.${encodeURIComponent(intake.charge_type)}&select=median_months,p25,p75,sample_size&limit=5`),
+      supabaseSelect(supabaseUrl, supabaseKey, "outcome_benchmarks",
+        `offense_type=eq.${encodeURIComponent("all offenses")}&jurisdiction_level=eq.national&limit=1`),
+    ]);
+
+    // Format demographics summary
+    const demo = (demoRows as any[])[0];
+    if (demo) {
+      justfairDemoSummary = [
+        demo.appointing_president ? `Appointed by ${demo.appointing_president} (${demo.appointing_party || "Unknown"})` : null,
+        demo.aba_rating ? `ABA Rating: ${demo.aba_rating}` : null,
+        demo.law_school ? `Law School: ${demo.law_school}` : null,
+        demo.active_start ? `Active: ${demo.active_start}–${demo.active_end || "present"}` : null,
+      ].filter(Boolean).join(". ");
+    }
+
+    // Format racial disparity
+    if ((raceRows as any[]).length > 0) {
+      justfairRacial = (raceRows as any[]).map((r: any) =>
+        `${r.defendant_race}: ${r.total_cases} cases, median ${r.median_sentence_months?.toFixed(1) ?? "N/A"} mo, departure rate ${r.guideline_departure_rate ? (r.guideline_departure_rate * 100).toFixed(1) + "%" : "N/A"}`
+      ).join("; ");
+    }
+
+    // Format sentencing context
+    if ((sentRows as any[]).length > 0) {
+      const s = (sentRows as any[])[0];
+      sentencingContext = `District median for ${intake.charge_type}: ${s.median_months?.toFixed(1) ?? "N/A"} months (P25: ${s.p25?.toFixed(1) ?? "N/A"}, P75: ${s.p75?.toFixed(1) ?? "N/A"}, N=${s.sample_size ?? 0})`;
+    }
+
+    // Format outcome benchmarks
+    const ob = (obRows as any[])[0];
+    if (ob) {
+      outcomeBenchmarks = `National plea rate: ${ob.plea_rate ? (ob.plea_rate * 100).toFixed(1) + "%" : "94%"} (BJS). Trial rate: ${ob.trial_rate ? (ob.trial_rate * 100).toFixed(1) + "%" : "~6%"}.`;
+    }
+
+    if (justfairDemoSummary) console.log(`[IB-Phase-A] JUSTFAIR demographics injected for judge: ${phase2.judge_name}`);
+  } catch (e) {
+    console.warn(`[IB-Phase-A] JUSTFAIR queries failed (non-fatal):`, e);
+  }
+
   // Build variables
   const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, "", null, ibLegalDataBlock, ibDefendantProfileBlock, ibCaseIntelligenceBlock);
+  // Inject JUSTFAIR fields (not part of buildIBVariables signature to avoid breaking Phase B)
+  if (justfairDemoSummary) v.judge_demographics_summary = justfairDemoSummary;
+  if (justfairSentencing) v.judge_sentencing_justfair = justfairSentencing;
+  if (justfairRacial) v.judge_racial_disparity = justfairRacial;
+  if (sentencingContext) v.sentencing_range_context = sentencingContext;
+  if (outcomeBenchmarks) v.outcome_benchmarks_summary = outcomeBenchmarks;
 
   // Phase A sections (parallel)
   const phaseASections = [
@@ -4308,8 +4391,57 @@ async function handleIBPhaseB(
   if (ibBDefendantProfileBlock) console.log(`[IB-Phase-B] Defendant profile injected for case ${caseId}`);
   if (ibBCaseIntelligenceBlock) console.log(`[IB-Phase-B] Case intelligence injected for case ${caseId}`);
 
+  // ── JUSTFAIR judge intelligence (federal courts) — same queries as Phase A ──
+  const bJudgeNameNorm = encodeURIComponent((phase2.judge_name || "").toLowerCase());
+  let bJustfairDemo = "", bJustfairRacial = "", bSentCtx = "", bOutcomeBench = "";
+  try {
+    const [bDemoRows, bRaceRows, bSentRows, bObRows] = await Promise.all([
+      supabaseSelect(supabaseUrl, supabaseKey, "judge_demographics",
+        `judge_name_normalized=ilike.*${bJudgeNameNorm}*&limit=1`),
+      supabaseSelect(supabaseUrl, supabaseKey, "judge_sentencing_demographics",
+        `judge_name_normalized=ilike.*${bJudgeNameNorm}*&total_cases=gte.5&order=total_cases.desc`),
+      supabaseSelect(supabaseUrl, supabaseKey, "sentencing_distributions",
+        `charge_slug=eq.${encodeURIComponent(intake.charge_type)}&select=median_months,p25,p75,sample_size&limit=5`),
+      supabaseSelect(supabaseUrl, supabaseKey, "outcome_benchmarks",
+        `offense_type=eq.${encodeURIComponent("all offenses")}&jurisdiction_level=eq.national&limit=1`),
+    ]);
+    const bDemo = (bDemoRows as any[])[0];
+    if (bDemo) {
+      bJustfairDemo = [
+        bDemo.appointing_president ? `Appointed by ${bDemo.appointing_president} (${bDemo.appointing_party || "Unknown"})` : null,
+        bDemo.aba_rating ? `ABA Rating: ${bDemo.aba_rating}` : null,
+        bDemo.law_school ? `Law School: ${bDemo.law_school}` : null,
+        bDemo.active_start ? `Active: ${bDemo.active_start}–${bDemo.active_end || "present"}` : null,
+      ].filter(Boolean).join(". ");
+    }
+    if ((bRaceRows as any[]).length > 0) {
+      bJustfairRacial = (bRaceRows as any[]).map((r: any) =>
+        `${r.defendant_race}: ${r.total_cases} cases, median ${r.median_sentence_months?.toFixed(1) ?? "N/A"} mo, departure rate ${r.guideline_departure_rate ? (r.guideline_departure_rate * 100).toFixed(1) + "%" : "N/A"}`
+      ).join("; ");
+    }
+    if ((bSentRows as any[]).length > 0) {
+      const bs = (bSentRows as any[])[0];
+      bSentCtx = `District median for ${intake.charge_type}: ${bs.median_months?.toFixed(1) ?? "N/A"} months (P25: ${bs.p25?.toFixed(1) ?? "N/A"}, P75: ${bs.p75?.toFixed(1) ?? "N/A"}, N=${bs.sample_size ?? 0})`;
+    }
+    const bOb = (bObRows as any[])[0];
+    if (bOb) {
+      bOutcomeBench = `National plea rate: ${bOb.plea_rate ? (bOb.plea_rate * 100).toFixed(1) + "%" : "94%"} (BJS). Trial rate: ${bOb.trial_rate ? (bOb.trial_rate * 100).toFixed(1) + "%" : "~6%"}.`;
+    }
+  } catch (e) {
+    console.warn(`[IB-Phase-B] JUSTFAIR queries failed (non-fatal):`, e);
+  }
+
+  // Helper: inject JUSTFAIR fields into variables object
+  const injectJustfair = (vars: Record<string, string>) => {
+    if (bJustfairDemo) vars.judge_demographics_summary = bJustfairDemo;
+    if (bJustfairRacial) vars.judge_racial_disparity = bJustfairRacial;
+    if (bSentCtx) vars.sentencing_range_context = bSentCtx;
+    if (bOutcomeBench) vars.outcome_benchmarks_summary = bOutcomeBench;
+  };
+
   // Build variables with Phase A outputs included
   const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, phaseAOutputs, ibBLegalDataBlock, ibBDefendantProfileBlock, ibBCaseIntelligenceBlock);
+  injectJustfair(v);
 
   // Phase B sections (sequential — each may depend on prior outputs)
   const phaseBSections = [
@@ -4328,6 +4460,7 @@ async function handleIBPhaseB(
       // For later sections, rebuild variables with latest outputs
       if (section.key === "your-plan" || section.key === "questions" || section.key === "48hr-priorities") {
         const updatedV = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, allOutputs, ibBLegalDataBlock, ibBDefendantProfileBlock, ibBCaseIntelligenceBlock);
+        injectJustfair(updatedV);
         const prompt = buildIBPrompt(section.key, updatedV);
         section.system = prompt.system;
         section.user = prompt.user;

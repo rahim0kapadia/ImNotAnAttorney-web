@@ -29,12 +29,12 @@ const FAQ_ITEMS = [
   {
     question: "What data is in the Judge Report Card?",
     answer:
-      "Sentencing patterns, prosecutor pairing analysis, bench vs jury divergence, direct quotes from court opinions, and appellate trends. Every data point includes a source URL you can verify independently.",
+      "Judge background (appointing president, ABA rating, law school), sentencing patterns from 595,851 federal cases, demographic sentencing analysis, prosecutor pairing data, bench vs jury divergence, direct quotes from court opinions, and appellate trends. Every data point includes a source URL you can verify independently.",
   },
   {
     question: "Where does the data come from?",
     answer:
-      "Verified public court records via CourtListener and official court databases. We do not generate or estimate data \u2014 every metric traces to a specific court record.",
+      "Federal court data from JUSTFAIR (QSIDE Institute) covering 595,851 sentencing records. State court data from CourtListener. We do not generate or estimate data \u2014 every metric traces to a specific court record.",
   },
   {
     question: "Is this legal advice?",
@@ -59,12 +59,13 @@ const FAQ_ITEMS = [
 ];
 
 const CHECK_ITEMS = [
-  "Judge sentencing patterns for your charge type",
+  "Judge background: appointing president, ABA rating, law school",
+  "Sentencing patterns backed by 595,851 federal cases",
+  "Defendant demographic sentencing analysis",
   "Prosecutor pairing analysis \u2014 how your judge rules on your prosecutor\u2019s motions",
   "Bench vs jury trial divergence data",
   "Direct judge quotes from verified court opinions",
   "Appellate trend analysis for your circuit",
-  "Sentencing deviation flags (above/below median)",
   "Every data point linked to its source URL",
 ];
 

@@ -82,6 +82,16 @@ function noDataMessage(subject: string): string {
   return `<p style="color: #A1A1AA; font-style: italic;">No ${escapeHtml(subject)} data available in our database for this query.</p>`;
 }
 
+/** Format months value for sentencing display */
+function fmtMonths(v: number | null): string {
+  return v !== null ? `${Number(v).toFixed(1)} mo` : "—";
+}
+
+/** Format decimal as percentage */
+function fmtPct(v: number | null): string {
+  return v !== null ? `${(Number(v) * 100).toFixed(1)}%` : "—";
+}
+
 // ============================================================
 // JUDGE REPORT CARD
 // ============================================================
@@ -127,34 +137,57 @@ export function renderJudgeReportCard(
     </table>
   `;
 
-  // USSC Sentencing Intelligence
-  if (data.usscPatterns) {
-    const p = data.usscPatterns;
-    totalSources += countSources(p.source_urls);
+  // JUSTFAIR Judge Background (federal courts only)
+  if (data.justfair?.demographics) {
+    const d = data.justfair.demographics;
+    body += sectionHeader("Judge Background — Federal Court Intelligence");
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Source: JUSTFAIR (QSIDE Institute), USSC FY2001-2023. Federal courts only. <a href="https://osf.io/nseh5/" style="color: #F59E0B;">[source]</a></p>`;
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">`;
 
-    body += sectionHeader("Federal Sentencing Intelligence (USSC Data)");
-    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
-      Aggregated from U.S. Sentencing Commission individual case files.
-      ${p.data_period ? `Data period: ${escapeHtml(p.data_period)}.` : ""}
-    </p>`;
+    const demoRows: [string, string | null][] = [
+      ["Appointed By", d.appointing_president ? `${escapeHtml(d.appointing_president)} (${escapeHtml(d.appointing_party ?? "Unknown")})` : null],
+      ["ABA Rating", d.aba_rating],
+      ["Law School", d.law_school],
+      ["Gender", d.gender],
+      ["Active", d.active_start ? `${d.active_start}–${d.active_end ?? "present"}` : null],
+      ["Senior Status", d.senior_status_date ?? "No"],
+    ];
+
+    for (const [label, value] of demoRows) {
+      if (!value) continue;
+      body += `<tr>
+        <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">${escapeHtml(label)}</td>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${value}</td>
+      </tr>`;
+    }
+    body += `</table>`;
+    totalSources++;
+  }
+
+  // Sentencing Intelligence — enhanced with JUSTFAIR source citation
+  if (data.usscPatterns) {
+    const s = data.usscPatterns;
+    totalSources += countSources(s.source_urls);
+
+    body += sectionHeader("Sentencing Intelligence — 595,851 Federal Cases Analyzed");
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">This judge's sentencing patterns from USSC/JUSTFAIR data. <a href="https://osf.io/nseh5/" style="color: #F59E0B;">[source]</a></p>`;
 
     body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
-      <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total Federal Cases</td>
-          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; font-weight: bold;">${p.total_cases}</td></tr>
-      <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Median Sentence</td>
-          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${p.median_sentence_months != null ? `${Number(p.median_sentence_months).toFixed(1)} months` : "—"}</td></tr>
-      <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Sentence Range (25th-75th %ile)</td>
-          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${p.p25_sentence_months != null && p.p75_sentence_months != null ? `${Number(p.p25_sentence_months).toFixed(1)} — ${Number(p.p75_sentence_months).toFixed(1)} months` : "—"}</td></tr>
-      ${p.downward_departure_rate != null ? `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Downward Departure Rate</td>
-          <td style="padding: 8px 16px; color: #4ADE80; border-bottom: 1px solid #1C1917;">${(Number(p.downward_departure_rate) * 100).toFixed(1)}%</td></tr>` : ""}
-      ${p.upward_departure_rate != null ? `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Upward Departure Rate</td>
-          <td style="padding: 8px 16px; color: #EF4444; border-bottom: 1px solid #1C1917;">${(Number(p.upward_departure_rate) * 100).toFixed(1)}%</td></tr>` : ""}
-      ${p.aba_rating ? `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">ABA Rating</td>
-          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${escapeHtml(p.aba_rating)}${p.aba_rating_year ? ` (${p.aba_rating_year})` : ""}</td></tr>` : ""}
-    </table>`;
+      <thead><tr>
+        <th style="padding: 8px 16px; color: #A1A1AA; border-bottom: 2px solid #292524; text-align: left;"></th>
+        <th style="padding: 8px 16px; color: #F59E0B; border-bottom: 2px solid #292524; text-align: right;">This Judge</th>
+      </tr></thead><tbody>`;
 
-    // Retention elections
-    if (p.retention_elections && Array.isArray(p.retention_elections) && (p.retention_elections as unknown[]).length > 0) {
+    body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total Cases</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${s.total_cases?.toLocaleString() ?? "—"}</td></tr>`;
+    body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Median Sentence</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtMonths(s.median_sentence_months)}</td></tr>`;
+    body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Range (P25–P75)</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtMonths(s.p25_sentence_months)} – ${fmtMonths(s.p75_sentence_months)}</td></tr>`;
+    body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Downward Departures</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtPct(s.downward_departure_rate)}</td></tr>`;
+    body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Upward Departures</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtPct(s.upward_departure_rate)}</td></tr>`;
+
+    body += `</tbody></table>`;
+
+    // Retention elections (preserved from existing)
+    if (s.retention_elections && Array.isArray(s.retention_elections) && (s.retention_elections as unknown[]).length > 0) {
       body += `<h4 style="color: #D4D4D8; margin: 16px 0 8px;">Retention Election History</h4>`;
       body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
         <thead><tr style="background: #1C1917;">
@@ -162,7 +195,7 @@ export function renderJudgeReportCard(
           <th style="padding: 8px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Vote %</th>
           <th style="padding: 8px 12px; text-align: center; color: #F59E0B; font-size: 13px;">Retained</th>
         </tr></thead><tbody>`;
-      for (const re of p.retention_elections as Array<Record<string, unknown>>) {
+      for (const re of s.retention_elections as Array<Record<string, unknown>>) {
         body += `<tr style="border-bottom: 1px solid #1C1917;">
           <td style="padding: 8px 12px; color: #D4D4D8;">${re.year ?? "—"}</td>
           <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${re.vote_pct != null ? `${Number(re.vote_pct).toFixed(1)}%` : "—"}</td>
@@ -173,8 +206,34 @@ export function renderJudgeReportCard(
     }
 
     body += `<p style="color: #52525B; font-size: 11px; margin: 0 0 24px;">
-      Source: U.S. Sentencing Commission ${sourceLinks(p.source_urls)}
+      Source: U.S. Sentencing Commission / JUSTFAIR ${sourceLinks(s.source_urls)}
     </p>`;
+  }
+
+  // JUSTFAIR Sentencing by Defendant Demographics
+  if (data.justfair?.sentencingByRace && data.justfair.sentencingByRace.length > 0) {
+    body += sectionHeader("Sentencing by Defendant Demographics");
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Factual sentencing data by defendant race for this judge. No editorial interpretation. <a href="https://osf.io/nseh5/" style="color: #F59E0B;">[source]</a></p>`;
+
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <thead><tr>
+        <th style="padding: 8px 16px; color: #A1A1AA; border-bottom: 2px solid #292524; text-align: left;">Defendant Race</th>
+        <th style="padding: 8px 16px; color: #A1A1AA; border-bottom: 2px solid #292524; text-align: right;">Cases</th>
+        <th style="padding: 8px 16px; color: #A1A1AA; border-bottom: 2px solid #292524; text-align: right;">Median Sentence</th>
+        <th style="padding: 8px 16px; color: #A1A1AA; border-bottom: 2px solid #292524; text-align: right;">Departure Rate</th>
+      </tr></thead><tbody>`;
+
+    for (const row of data.justfair.sentencingByRace) {
+      body += `<tr>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${escapeHtml(row.defendant_race)}</td>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${row.total_cases.toLocaleString()}</td>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtMonths(row.median_sentence_months)}</td>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtPct(row.guideline_departure_rate)}</td>
+      </tr>`;
+    }
+
+    body += `</tbody></table>`;
+    totalSources++;
   }
 
   // Sentencing Distributions
@@ -606,6 +665,25 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
       body += `<p style="color: #52525B; font-size: 11px; margin: 0 0 24px;">
         Sources: ${intel.sources?.join(", ") || "—"} ${sourceLinks(intel.source_urls)}
       </p>`;
+    }
+  }
+
+  // Agency Fatal Encounter Alerts (from Fatal Encounters dataset)
+  if (data.agencyIncidents && data.agencyIncidents.length > 0) {
+    body += sectionHeader("Agency Fatal Encounter History");
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Fatal encounters involving this officer's agency since 2013. Agency-level data — not specific to this officer. <a href="https://fatalencounters.org/" style="color: #F59E0B;">[source]</a></p>`;
+
+    for (const ai of data.agencyIncidents) {
+      body += `
+        <div style="background: #1C1917; border: 1px solid #92400E; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+          <p style="color: #FBBF24; font-weight: bold; margin: 0 0 8px;">${escapeHtml(ai.agency)}</p>
+          <p style="color: #D4D4D8; margin: 0;">${ai.use_of_force_count} fatal encounter${ai.use_of_force_count !== 1 ? "s" : ""} recorded since 2013</p>
+          <p style="color: #71717A; font-size: 12px; margin: 8px 0 0;">
+            Question for your attorney: &ldquo;Has the arresting agency&rsquo;s use-of-force history been reviewed?&rdquo;
+          </p>
+        </div>
+      `;
+      totalSources += countSources(ai.source_urls);
     }
   }
 

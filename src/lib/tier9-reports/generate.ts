@@ -19,6 +19,7 @@ import {
 } from "./query";
 import {
   queryDefenseIntelligence,
+  queryJustfairJudge,
 } from "@/lib/defense-intelligence/query";
 import {
   renderJudgeReportCard,
@@ -116,11 +117,15 @@ export async function generateTier9Report(
           await notifyInsufficientData(order.email, productName, orderId, intake);
           return;
         }
-        const intelligence = await queryDefenseIntelligence(
-          intake.chargeType as string,
-          intake.state as string,
-          "judge-report-card"
-        );
+        const [intelligence, justfairData] = await Promise.all([
+          queryDefenseIntelligence(
+            intake.chargeType as string,
+            intake.state as string,
+            "judge-report-card"
+          ),
+          queryJustfairJudge(intake.judgeName as string),
+        ]);
+        data.justfair = justfairData;
         html = renderJudgeReportCard(data, intelligence.isEmpty ? undefined : intelligence);
         break;
       }

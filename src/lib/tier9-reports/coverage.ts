@@ -55,12 +55,15 @@ export async function checkJudgeCoverage(
   const judicial = positions.find((p) => p.position_type === "jud" && p.court_id);
 
   // Parallel count queries
-  const [quotes, sentencing, pairings, appellate, divergence] = await Promise.all([
+  const [quotes, sentencing, pairings, appellate, divergence, justfairDemo] = await Promise.all([
     supabase.from("judge_quotes").select("id", { count: "exact", head: true }).eq("judge_id", judgeId),
     supabase.from("sentencing_distributions").select("id", { count: "exact", head: true }).eq("judge_id", judgeId),
     supabase.from("judge_prosecutor_pairings").select("id", { count: "exact", head: true }).eq("judge_id", judgeId),
     supabase.from("appellate_trends").select("id", { count: "exact", head: true }).eq("jurisdiction", state),
     supabase.from("bench_jury_divergence").select("id", { count: "exact", head: true }).eq("judge_id", judgeId),
+    // JUSTFAIR federal judge demographics (1,126 judges)
+    supabase.from("judge_demographics").select("judge_name", { count: "exact", head: true })
+      .ilike("judge_name_normalized", `%${safeName.toLowerCase()}%`),
   ]);
 
   const coverage = {
@@ -69,10 +72,13 @@ export async function checkJudgeCoverage(
     pairings: pairings.count ?? 0,
     appellate: appellate.count ?? 0,
     benchJury: divergence.count ?? 0,
+    justfairDemographics: justfairDemo.count ?? 0,
   };
 
-  // Available if judge exists AND has meaningful data in at least one section
-  const available = coverage.quotes >= 5 || coverage.sentencing >= 1 || coverage.pairings >= 1;
+  // Available if CL data OR JUSTFAIR data exists
+  const available =
+    coverage.quotes >= 5 || coverage.sentencing >= 1 || coverage.pairings >= 1 ||
+    coverage.justfairDemographics >= 1;
 
   return {
     available,

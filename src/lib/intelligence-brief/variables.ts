@@ -175,6 +175,11 @@ export interface IBVariables {
   outcome_benchmarks_summary?: string;
   sentencing_range_context?: string;
 
+  // JUSTFAIR judge intelligence (federal courts)
+  judge_demographics_summary?: string;
+  judge_sentencing_justfair?: string;
+  judge_racial_disparity?: string;
+
   // Expansion fields (from 6 new intake fields)
   criminal_history: string;
   criminal_history_label: string;

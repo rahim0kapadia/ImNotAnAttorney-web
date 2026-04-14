@@ -168,7 +168,9 @@ ${v.bench_jury_divergence_summary ? `<tier9_data context="War Room+ only — ben
 BENCH VS JURY DIVERGENCE DATA (verified, with source URLs):
 ${v.bench_jury_divergence_summary}
 INSTRUCTION: Incorporate into Section 1c (The Two Paths) — use this data to inform the bench vs jury election discussion. Present the divergence as verified data, cite source URLs. Do NOT recommend bench or jury — present the data and generate an attorney question.
-</tier9_data>` : ""}`,
+</tier9_data>` : ""}
+${v.sentencing_range_context ? `<sentencing_context>\n${v.sentencing_range_context}\n</sentencing_context>` : ""}
+${v.outcome_benchmarks_summary ? `<outcome_benchmarks>\n${v.outcome_benchmarks_summary}\n</outcome_benchmarks>` : ""}`,
   };
 }
 
@@ -261,7 +263,9 @@ ${v.similar_case_matches ? `<tier9_data context="War Room+ only — similar case
 SIMILAR CASE MATCHES (k-NN verified, with source URLs):
 ${v.similar_case_matches}
 INSTRUCTION: Weave into Section 2a — "Cases like yours that resulted in acquittal/dismissal" as grounding data. Present as verified case matches with source URLs. Frame as hope-grounding: "Among cases with similar facts, here's what happened." Do NOT present as predictions.
-</tier9_data>` : ""}`,
+</tier9_data>` : ""}
+${v.sentencing_range_context ? `<sentencing_context>\n${v.sentencing_range_context}\n</sentencing_context>` : ""}
+${v.outcome_benchmarks_summary ? `<outcome_benchmarks>\n${v.outcome_benchmarks_summary}\n</outcome_benchmarks>` : ""}`,
   };
 }
 
@@ -745,7 +749,12 @@ ${v.appellate_trends_summary ? `<tier9_data context="IB+ — appellate trends fo
 APPELLATE TRENDS (verified, with source URLs):
 ${v.appellate_trends_summary}
 INSTRUCTION: Integrate into Section 3e — present the reversal/overreach rate as verified data. Frame as intelligence: "In this circuit, [charge] convictions are reversed at [X]% — [above/below] the baseline." Always cite source URLs. Pair with attorney question about appeal preservation.
-</tier9_data>` : ""}`,
+</tier9_data>` : ""}
+${v.judge_demographics_summary ? `<judge_background>\n${v.judge_demographics_summary}\n</judge_background>` : ""}
+${v.judge_sentencing_justfair ? `<judge_sentencing_patterns>\n${v.judge_sentencing_justfair}\n</judge_sentencing_patterns>` : ""}
+${v.judge_racial_disparity ? `<judge_demographic_sentencing>\n${v.judge_racial_disparity}\n</judge_demographic_sentencing>` : ""}
+${v.sentencing_range_context ? `<sentencing_context>\n${v.sentencing_range_context}\n</sentencing_context>` : ""}
+${v.outcome_benchmarks_summary ? `<outcome_benchmarks>\n${v.outcome_benchmarks_summary}\n</outcome_benchmarks>` : ""}`,
   };
 }
 
