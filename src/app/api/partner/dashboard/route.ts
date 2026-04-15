@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
     // Court prep clients — full list for client tracker
     const { data: courtClients } = await supabase
       .from("court_reminders")
-      .select("id, first_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at")
+      .select("id, first_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at, check_in_days, check_in_source")
       .eq("partner_promo_code", partner.promo_code)
       .order("court_date", { ascending: true })
       .limit(100);

@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requirePartnerAuth } from "@/lib/partner-helpers";
 import { VALID_PAYMENT_METHODS } from "@/lib/partner-data";
+import { validateCheckInDays } from "@/lib/check-in-schedule";
 
 export async function PATCH(req: NextRequest) {
   const { partner, error: authError } = await requirePartnerAuth(req);
@@ -19,7 +20,7 @@ export async function PATCH(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
-  const { preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal } = body;
+  const { preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, default_check_in_days } = body;
 
   // Validate input types and lengths
   const stringFields = { payment_zelle, payment_venmo, payment_check_address, payment_paypal };
@@ -40,6 +41,18 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Invalid payment method" }, { status: 400 });
   }
 
+  // Validate check-in days
+  if (default_check_in_days !== undefined) {
+    if (default_check_in_days !== null) {
+      if (!Array.isArray(default_check_in_days)) {
+        return NextResponse.json({ error: "default_check_in_days must be an array or null" }, { status: 400 });
+      }
+      if (default_check_in_days.length > 0 && !validateCheckInDays(default_check_in_days)) {
+        return NextResponse.json({ error: "Invalid check-in days" }, { status: 400 });
+      }
+    }
+  }
+
   const updates: Record<string, unknown> = {
     updated_at: new Date().toISOString(),
   };
@@ -58,6 +71,9 @@ export async function PATCH(req: NextRequest) {
   }
   if (payment_paypal !== undefined) {
     updates.payment_paypal = payment_paypal || null;
+  }
+  if (default_check_in_days !== undefined) {
+    updates.default_check_in_days = default_check_in_days;
   }
 
   const supabase = createAdminClient();

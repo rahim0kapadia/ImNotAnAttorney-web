@@ -8,6 +8,7 @@
  */
 
 import { CHARGE_DISPLAY_NAMES } from "@/lib/court-reminders";
+import { getETDow, getETDate } from "@/lib/check-in-schedule";
 
 interface CourtClient {
   id: string;
@@ -20,6 +21,8 @@ interface CourtClient {
   reminders_sent: string[];
   created_at: string;
   converted_at: string | null;
+  check_in_days: string[] | null;
+  check_in_source: string | null;
 }
 
 interface ClientTrackerProps {
@@ -52,6 +55,8 @@ function reminderProgress(sent: string[]): string {
 }
 
 export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTrackerProps) {
+  const todayDow = getETDow();
+  const todayDateStr = getETDate();
   const activeClients = clients.filter(c => c.status === "active");
   const upcomingThisWeek = activeClients.filter(c => {
     const d = daysUntil(c.court_date);
@@ -105,6 +110,7 @@ export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTr
                 <th className="pb-2 pr-4">Status</th>
                 <th className="pb-2 pr-4">Reminders</th>
                 <th className="pb-2 pr-4">Check-Ins</th>
+                <th className="pb-2 pr-4">Schedule</th>
               </tr>
             </thead>
             <tbody>
@@ -113,9 +119,28 @@ export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTr
                 const badge = statusBadge(c.status, days, !!c.converted_at);
                 const chargeName = CHARGE_DISPLAY_NAMES[c.charge_type] || c.charge_type;
                 const ciData = checkInSummary[c.id];
+                const hasSchedule = c.check_in_days && c.check_in_days.length > 0;
+                const isScheduledToday = hasSchedule && c.check_in_days!.includes(todayDow);
+                const checkedInToday = ciData?.lastCheckIn &&
+                  new Date(ciData.lastCheckIn).toLocaleDateString("en-CA", { timeZone: "America/New_York" }) === todayDateStr;
                 return (
                   <tr key={c.id} className="border-b border-zinc-800">
-                    <td className="py-3 pr-4 text-white">{c.first_name}</td>
+                    <td className="py-3 pr-4 text-white">
+                      <span className="flex items-center gap-2">
+                        {c.first_name}
+                        {hasSchedule ? (
+                          checkedInToday
+                            ? <span className="inline-block w-2.5 h-2.5 rounded-full bg-green-500" title="Checked in today" />
+                            : isScheduledToday
+                              ? <span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500" title="Missed check-in today" />
+                              : <span className="inline-block w-2.5 h-2.5 rounded-full bg-zinc-600" title="Not scheduled today" />
+                        ) : (
+                          c.court_date > todayDateStr
+                            ? <span className="text-xs text-amber-400 font-medium">Schedule needed</span>
+                            : null
+                        )}
+                      </span>
+                    </td>
                     <td className="py-3 pr-4 text-zinc-300">{chargeName}</td>
                     <td className="py-3 pr-4 text-zinc-300">
                       {new Date(c.court_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}
@@ -129,6 +154,18 @@ export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTr
                     <td className="py-3 pr-4 text-zinc-400">
                       {ciData ? (
                         <span>{ciData.count} <span className="text-zinc-600 text-xs">{ciData.lastCheckIn ? `(${new Date(ciData.lastCheckIn).toLocaleDateString("en-US", { month: "short", day: "numeric" })})` : ""}</span></span>
+                      ) : (
+                        <span>&mdash;</span>
+                      )}
+                    </td>
+                    <td className="py-3 pr-4 text-zinc-400 text-xs">
+                      {hasSchedule ? (
+                        <span>
+                          {c.check_in_days!.map(d => d.charAt(0).toUpperCase() + d.slice(1)).join(", ")}
+                          {c.check_in_source === "partner" && (
+                            <span className="ml-1 text-amber-400" title="Set by partner">*</span>
+                          )}
+                        </span>
                       ) : (
                         <span>&mdash;</span>
                       )}

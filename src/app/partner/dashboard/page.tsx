@@ -40,6 +40,8 @@ interface CourtClient {
   reminders_sent: string[];
   created_at: string;
   converted_at: string | null;
+  check_in_days: string[] | null;
+  check_in_source: string | null;
 }
 
 interface Earnings {
