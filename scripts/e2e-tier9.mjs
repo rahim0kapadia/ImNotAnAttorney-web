@@ -1,10 +1,12 @@
 /**
  * E2E Test — Tier 9 Standalone SKU Generation Pipeline
  *
- * Tests the full purchase flow for all 3 Tier 9 data-driven products:
+ * Tests the full purchase flow for all 5 Tier 9 data-driven products:
  *   1. Judge Report Card ($197)
  *   2. Officer Background Check ($97)
  *   3. Similar Cases Analyzer ($297)
+ *   4. District Court Intelligence ($97)
+ *   5. Arrest Survival Kit ($47)
  *
  * Flow per product:
  *   1. Fire signed Stripe webhook (checkout.session.completed)
@@ -98,6 +100,16 @@ const TIER9_PRODUCTS = [
     slug: "similar-cases-analyzer",
     price: 29700,
     intake: { chargeType: "dui", state: "FL" },
+  },
+  {
+    slug: "district-court-intelligence",
+    price: 9700,
+    intake: { state: "FL" },
+  },
+  {
+    slug: "arrest-survival-kit",
+    price: 4700,
+    intake: { state: "FL" },
   },
 ];
 
