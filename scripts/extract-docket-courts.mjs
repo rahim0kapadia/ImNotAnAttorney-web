@@ -148,8 +148,19 @@ if (!existsSync(COURT_JURISDICTION_MAP)) {
   process.exit(1);
 }
 
-const clusterDocket = JSON.parse(readFileSync(CLUSTER_DOCKET_MAP, 'utf8'));
-const courtJurisdiction = JSON.parse(readFileSync(COURT_JURISDICTION_MAP, 'utf8'));
+let clusterDocket, courtJurisdiction;
+try {
+  clusterDocket = JSON.parse(readFileSync(CLUSTER_DOCKET_MAP, 'utf8'));
+} catch (e) {
+  console.error('Failed to parse ' + CLUSTER_DOCKET_MAP + ': ' + e.message);
+  process.exit(1);
+}
+try {
+  courtJurisdiction = JSON.parse(readFileSync(COURT_JURISDICTION_MAP, 'utf8'));
+} catch (e) {
+  console.error('Failed to parse ' + COURT_JURISDICTION_MAP + ': ' + e.message);
+  process.exit(1);
+}
 
 console.log('  Cluster->Docket entries: ' + Object.keys(clusterDocket).length.toLocaleString());
 console.log('  Court->Jurisdiction entries: ' + Object.keys(courtJurisdiction).length.toLocaleString());

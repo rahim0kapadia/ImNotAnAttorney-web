@@ -34,39 +34,39 @@ function findBzcat() {
 
 // State name → code (for parsing full_name)
 const STATE_MAP = {
-  'alabama': 'AL', 'alaska': 'AK', 'arizona': 'AZ', 'arkansas': 'AR',
-  'california': 'CA', 'colorado': 'CO', 'connecticut': 'CT', 'delaware': 'DE',
-  'florida': 'FL', 'georgia': 'GA', 'hawaii': 'HI', 'idaho': 'ID',
-  'illinois': 'IL', 'indiana': 'IN', 'iowa': 'IA', 'kansas': 'KS',
-  'kentucky': 'KY', 'louisiana': 'LA', 'maine': 'ME', 'maryland': 'MD',
-  'massachusetts': 'MA', 'michigan': 'MI', 'minnesota': 'MN', 'mississippi': 'MS',
-  'missouri': 'MO', 'montana': 'MT', 'nebraska': 'NE', 'nevada': 'NV',
-  'new hampshire': 'NH', 'new jersey': 'NJ', 'new mexico': 'NM', 'new york': 'NY',
-  'north carolina': 'NC', 'north dakota': 'ND', 'ohio': 'OH', 'oklahoma': 'OK',
-  'oregon': 'OR', 'pennsylvania': 'PA', 'rhode island': 'RI', 'south carolina': 'SC',
-  'south dakota': 'SD', 'tennessee': 'TN', 'texas': 'TX', 'utah': 'UT',
-  'vermont': 'VT', 'virginia': 'VA', 'washington': 'WA', 'west virginia': 'WV',
-  'wisconsin': 'WI', 'wyoming': 'WY', 'district of columbia': 'DC',
-  'guam': 'GU', 'puerto rico': 'PR', 'virgin islands': 'VI',
-  'northern mariana': 'MP', 'american samoa': 'AS',
+  'alabama': 'al', 'alaska': 'ak', 'arizona': 'az', 'arkansas': 'ar',
+  'california': 'ca', 'colorado': 'co', 'connecticut': 'ct', 'delaware': 'de',
+  'florida': 'fl', 'georgia': 'ga', 'hawaii': 'hi', 'idaho': 'id',
+  'illinois': 'il', 'indiana': 'in', 'iowa': 'ia', 'kansas': 'ks',
+  'kentucky': 'ky', 'louisiana': 'la', 'maine': 'me', 'maryland': 'md',
+  'massachusetts': 'ma', 'michigan': 'mi', 'minnesota': 'mn', 'mississippi': 'ms',
+  'missouri': 'mo', 'montana': 'mt', 'nebraska': 'ne', 'nevada': 'nv',
+  'new hampshire': 'nh', 'new jersey': 'nj', 'new mexico': 'nm', 'new york': 'ny',
+  'north carolina': 'nc', 'north dakota': 'nd', 'ohio': 'oh', 'oklahoma': 'ok',
+  'oregon': 'or', 'pennsylvania': 'pa', 'rhode island': 'ri', 'south carolina': 'sc',
+  'south dakota': 'sd', 'tennessee': 'tn', 'texas': 'tx', 'utah': 'ut',
+  'vermont': 'vt', 'virginia': 'va', 'washington': 'wa', 'west virginia': 'wv',
+  'wisconsin': 'wi', 'wyoming': 'wy', 'district of columbia': 'dc',
+  'guam': 'gu', 'puerto rico': 'pr', 'virgin islands': 'vi',
+  'northern mariana': 'mp', 'american samoa': 'as',
 };
 
 // CL court_id prefix → state code (common patterns)
 const ID_PREFIX_MAP = {
-  'ala': 'AL', 'alaska': 'AK', 'ariz': 'AZ', 'ark': 'AR',
-  'cal': 'CA', 'colo': 'CO', 'conn': 'CT', 'del': 'DE',
-  'fla': 'FL', 'ga': 'GA', 'haw': 'HI', 'idaho': 'ID',
-  'ill': 'IL', 'ind': 'IN', 'iowa': 'IA', 'kan': 'KS',
-  'ky': 'KY', 'la': 'LA', 'me': 'ME', 'md': 'MD',
-  'mass': 'MA', 'mich': 'MI', 'minn': 'MN', 'miss': 'MS',
-  'mo': 'MO', 'mont': 'MT', 'neb': 'NE', 'nev': 'NV',
-  'nh': 'NH', 'nj': 'NJ', 'nm': 'NM', 'ny': 'NY',
-  'nc': 'NC', 'nd': 'ND', 'ohio': 'OH', 'okla': 'OK',
-  'or': 'OR', 'pa': 'PA', 'ri': 'RI', 'sc': 'SC',
-  'sd': 'SD', 'tenn': 'TN', 'tex': 'TX', 'utah': 'UT',
-  'vt': 'VT', 'va': 'VA', 'wash': 'WA', 'wva': 'WV',
-  'wis': 'WI', 'wyo': 'WY', 'dc': 'DC',
-  'guam': 'GU', 'pr': 'PR', 'vi': 'VI',
+  'ala': 'al', 'alaska': 'ak', 'ariz': 'az', 'ark': 'ar',
+  'cal': 'ca', 'colo': 'co', 'conn': 'ct', 'del': 'de',
+  'fla': 'fl', 'ga': 'ga', 'haw': 'hi', 'idaho': 'id',
+  'ill': 'il', 'ind': 'in', 'iowa': 'ia', 'kan': 'ks',
+  'ky': 'ky', 'la': 'la', 'me': 'me', 'md': 'md',
+  'mass': 'ma', 'mich': 'mi', 'minn': 'mn', 'miss': 'ms',
+  'mo': 'mo', 'mont': 'mt', 'neb': 'ne', 'nev': 'nv',
+  'nh': 'nh', 'nj': 'nj', 'nm': 'nm', 'ny': 'ny',
+  'nc': 'nc', 'nd': 'nd', 'ohio': 'oh', 'okla': 'ok',
+  'or': 'or', 'pa': 'pa', 'ri': 'ri', 'sc': 'sc',
+  'sd': 'sd', 'tenn': 'tn', 'tex': 'tx', 'utah': 'ut',
+  'vt': 'vt', 'va': 'va', 'wash': 'wa', 'wva': 'wv',
+  'wis': 'wi', 'wyo': 'wy', 'dc': 'dc',
+  'guam': 'gu', 'pr': 'pr', 'vi': 'vi',
 };
 
 // Sort prefixes by length descending — longer/more-specific prefixes first
@@ -174,6 +174,7 @@ const csvParser = parse({
   cast: false,
 });
 
+bzcat.stderr.on('data', (d) => process.stderr.write(d));
 bzcat.stdout.pipe(csvParser);
 
 const courtMap = {};
