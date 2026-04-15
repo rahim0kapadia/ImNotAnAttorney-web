@@ -680,6 +680,7 @@ interface PleaAnalyzerIntake {
   originalCharges: string;
   offeredCharges: string;
   sentencingExposure: string;
+  sentencingContext?: string;
 }
 
 interface AchMatrixIntake {
@@ -1538,7 +1539,7 @@ The letter is a TEMPLATE for the defendant's attorney to review, edit for the sp
 - Offered Charges (plea): """${data.offeredCharges}"""
 - Plea Offer Details: """${data.pleaOfferDetails}"""
 - Sentencing Exposure if Convicted at Trial: """${data.sentencingExposure || "Not provided"}"""
-
+${data.sentencingContext ? `\n<sentencing_context>\n${data.sentencingContext}\nUse this verified data to ground your sentencing analysis. Cite as "JUSTFAIR/BJS federal sentencing data" — note state courts may differ.\n</sentencing_context>` : ""}
 DATA ACCURACY RULES (NON-NEGOTIABLE):
 - Do NOT fabricate statute citations, case names, or sentencing guideline numbers. If you reference a guideline range, use well-established federal or state ranges, or note that the exact range requires attorney verification.
 - Do NOT claim to know the specific terms of the plea offer beyond what was provided. Analyze what was provided; note gaps.

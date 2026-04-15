@@ -150,6 +150,32 @@ export async function POST(req: NextRequest) {
     sentencingExposure: sanitizeText(sentencingExposure || "", 400),
   };
 
+  // Query JUSTFAIR sentencing context for plea grounding (non-blocking failure)
+  let sentencingContext = "";
+  try {
+    const [sentRows, obRows] = await Promise.all([
+      supabase
+        .from("sentencing_distributions")
+        .select("median_months, p25, p75, sample_size")
+        .eq("charge_slug", sanitized.chargeType)
+        .limit(5),
+      supabase
+        .from("outcome_benchmarks")
+        .select("plea_rate, trial_rate")
+        .eq("offense_type", "all offenses")
+        .eq("jurisdiction_level", "national")
+        .limit(1),
+    ]);
+    const s = sentRows.data?.[0];
+    const ob = obRows.data?.[0];
+    const parts: string[] = [];
+    if (s) parts.push(`District median for ${sanitized.chargeType}: ${(s.median_months as number)?.toFixed(1) ?? "N/A"} months (P25: ${(s.p25 as number)?.toFixed(1) ?? "N/A"}, P75: ${(s.p75 as number)?.toFixed(1) ?? "N/A"}, N=${s.sample_size ?? 0})`);
+    if (ob) parts.push(`National plea rate: ${ob.plea_rate ? ((ob.plea_rate as number) * 100).toFixed(1) + "%" : "94%"} (BJS)`);
+    if (parts.length > 0) sentencingContext = parts.join(". ") + ". Source: JUSTFAIR + BJS. Federal courts — state courts may differ.";
+  } catch {
+    // Non-fatal — plea analyzer works without sentencing context
+  }
+
   // Generate intake token for report delivery (same pattern as paid flow)
   const intakeToken = randomBytes(24).toString("base64url");
   const intakeTokenHash = hashToken(intakeToken);
@@ -166,7 +192,7 @@ export async function POST(req: NextRequest) {
       product_type: "free-tool",
       standalone_product_slug: "plea-analyzer",
       standalone_intake_token_hash: intakeTokenHash,
-      standalone_intake: sanitized,
+      standalone_intake: { ...sanitized, sentencingContext },
       paid_at: new Date().toISOString(),
     })
     .select("id")
