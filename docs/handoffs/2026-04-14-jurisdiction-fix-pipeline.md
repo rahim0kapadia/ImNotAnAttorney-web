@@ -37,6 +37,12 @@ Built a pipeline: `cluster_id → docket_id → court_id → jurisdiction`
 
 ## Next session steps (in order)
 
+### 0. Rebuild jurisdiction map (court map was fixed for MT/AK prefix ordering)
+```bash
+node scripts/build-final-jurisdiction-map.mjs
+```
+Runtime: ~55 min. Streams 65M dockets, filters to 4.1M needed. Overwrites cluster-jurisdiction-map.json.
+
 ### 1. Run classification (THE MAIN EVENT)
 ```bash
 node scripts/bulk-classify-full-corpus.mjs --apply
@@ -54,10 +60,12 @@ Could be optimized but not blocking.
 node scripts/compute-pattern-tables.mjs --apply
 ```
 
-### 3. Git push
+### 3. Implement IB Defense Matrix
+Spec at: `docs/superpowers/specs/2026-04-14-ib-defense-matrix-design.md`
+Mechanical render layer in Edge Function — 5 changes, 1 file.
+
+### 4. Git push
 ```bash
-git add scripts/build-court-jurisdiction-map.mjs scripts/extract-cluster-jurisdictions.mjs scripts/extract-docket-courts.mjs scripts/build-final-jurisdiction-map.mjs
-git add scripts/bulk-classify-full-corpus.mjs
 git push origin master
 ```
 
