@@ -28,6 +28,7 @@ import https from "https";
 import { spawn } from "child_process";
 import { createInterface } from "readline";
 import { fileURLToPath } from "url";
+import { stripQuotes } from "./lib/csv-utils.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "..");
@@ -50,23 +51,6 @@ const outputIdx = args.indexOf("--output");
 const outputPath = outputIdx >= 0 ? path.resolve(args[outputIdx + 1]) : DEFAULT_OUTPUT;
 const limitIdx = args.indexOf("--limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
-
-// ── String Helpers ───────────────────────────────────────────────────────────
-
-// Strip surrounding double-quotes from a CSV header/value field (no regex)
-function stripQuotes(s) {
-  s = s.trim();
-  if (s.length >= 2 && s[0] === '"' && s[s.length - 1] === '"') {
-    return s.slice(1, -1);
-  }
-  if (s.length >= 1 && s[0] === '"') {
-    return s.slice(1);
-  }
-  if (s.length >= 1 && s[s.length - 1] === '"') {
-    return s.slice(0, -1);
-  }
-  return s;
-}
 
 // ── SQL Helpers ─────────────────────────────────────────────────────────────
 

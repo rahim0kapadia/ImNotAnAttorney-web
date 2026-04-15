@@ -12,6 +12,7 @@ import { parse } from 'csv-parse';
 import { writeFileSync, existsSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { stripQuotes } from './lib/csv-utils.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, '..');
@@ -80,13 +81,6 @@ const FEDERAL_PATTERNS = [
   'cadc', 'cafc', 'scotus', 'bap', 'uscfc', 'cit', 'ccpa',
   'armfor', 'tax', 'mc', 'mspb', 'ag', 'olc', 'fisc', 'fiscr',
 ];
-
-function stripQuotes(val) {
-  if (!val) return '';
-  if (val.charAt(0) === '"') val = val.slice(1);
-  if (val.charAt(val.length - 1) === '"') val = val.slice(0, -1);
-  return val;
-}
 
 function deriveJurisdiction(courtId, fullName, jurisdictionType) {
   const id = courtId.toLowerCase();

@@ -4254,6 +4254,14 @@ async function handleIBPhaseA(
   if (sentencingContext) v.sentencing_range_context = sentencingContext;
   if (outcomeBenchmarks) v.outcome_benchmarks_summary = outcomeBenchmarks;
 
+  // ── Defense intelligence (Tier 9 verified court data) ──────────────
+  const defenseIntelA = await fetchDefenseIntelligenceForIB(intake.charge_type, intake.state, supabaseUrl, supabaseKey);
+  const defenseIntelBlockA = formatDefenseIntelBlock(defenseIntelA, intake.state, intake.charge_type);
+  if (defenseIntelBlockA) {
+    v.defense_intelligence_block = defenseIntelBlockA;
+    console.log(`[IB-Phase-A] Defense intelligence injected: ${defenseIntelA.theories.length} theories, ${defenseIntelA.motions.length} motions`);
+  }
+
   // Phase A sections (parallel)
   const phaseASections = [
     { key: "case-roadmap", system: buildIBPrompt("case-roadmap", v).system, user: buildIBPrompt("case-roadmap", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 4000 },
@@ -4443,6 +4451,14 @@ async function handleIBPhaseB(
   const v = buildIBVariables(intake, phase2, priorCdHtml, chargeContext, judgeResearch, phaseAOutputs, ibBLegalDataBlock, ibBDefendantProfileBlock, ibBCaseIntelligenceBlock);
   injectJustfair(v);
 
+  // ── Defense intelligence (Tier 9 verified court data) ──────────────
+  const defenseIntelB = await fetchDefenseIntelligenceForIB(intake.charge_type, intake.state, supabaseUrl, supabaseKey);
+  const defenseIntelBlockB = formatDefenseIntelBlock(defenseIntelB, intake.state, intake.charge_type);
+  if (defenseIntelBlockB) {
+    v.defense_intelligence_block = defenseIntelBlockB;
+    console.log(`[IB-Phase-B] Defense intelligence injected: ${defenseIntelB.theories.length} theories, ${defenseIntelB.motions.length} motions`);
+  }
+
   // Phase B sections (sequential — each may depend on prior outputs)
   const phaseBSections = [
     { key: "letter-to-you", system: buildIBPrompt("letter-to-you", v).system, user: buildIBPrompt("letter-to-you", v).user, model: "claude-sonnet-4-6", temp: 0.4, max: 800 },
@@ -4477,6 +4493,12 @@ async function handleIBPhaseB(
   // Strip any LLM-generated methodology disclaimers (renderer adds its own)
   for (const key of Object.keys(allOutputs)) {
     allOutputs[key] = stripIBMethodologyNotes(allOutputs[key]);
+  }
+
+  // Mechanical render — bypasses Claude for Appendix F
+  if (!defenseIntelB.isEmpty) {
+    allOutputs["tier9-data-appendix"] = renderDefenseMatrix(defenseIntelB, intake.charge_type, intake.state);
+    console.log(`[IB-Phase-B] Defense matrix rendered (mechanical, no Claude)`);
   }
 
   // Compile HTML report
@@ -4696,6 +4718,99 @@ function buildEmploymentDetailDeno(status: string, industry: string): string {
   if (!status || status === "Not provided") return "Not provided";
   const base = status.replace(/-/g, " ");
   return industry ? `${base} — ${industry}` : base;
+}
+
+// ============================================================
+// DEFENSE INTELLIGENCE: PostgREST fetch + mechanical render
+// Tier-gated: IB = jurisdiction-wide (judge_id IS NULL)
+// ============================================================
+
+async function fetchDefenseIntelligenceForIB(
+  chargeType: string,
+  state: string,
+  supabaseUrl: string,
+  supabaseKey: string
+// deno-lint-ignore no-explicit-any
+): Promise<{ theories: any[]; motions: any[]; isEmpty: boolean }> {
+  try {
+    const ct = encodeURIComponent(chargeType);
+    const st = encodeURIComponent(state.toLowerCase());
+    const [theories, motions] = await Promise.all([
+      supabaseSelect(supabaseUrl, supabaseKey, "defense_theory_outcomes",
+        `charge_slug=eq.${ct}&jurisdiction=eq.${st}&attempts=gte.5&order=attempts.desc&limit=10&select=defense_theory,attempts,successes,motion_success_rate,best_combined_motion,sample_source_urls,data_source_note`),
+      supabaseSelect(supabaseUrl, supabaseKey, "motion_success_patterns",
+        `charge_slug=eq.${ct}&jurisdiction=eq.${st}&judge_id=is.null&filed_count=gte.5&order=filed_count.desc&limit=10&select=motion_type,filed_count,granted_count,denied_count,grant_rate,sample_source_urls,data_source_note`),
+    ]);
+    // deno-lint-ignore no-explicit-any
+    const isEmpty = (theories as any[]).length === 0 && (motions as any[]).length === 0;
+    // deno-lint-ignore no-explicit-any
+    return { theories: theories as any[], motions: motions as any[], isEmpty };
+  } catch (e) {
+    console.warn("[IB] Defense intelligence fetch failed (non-fatal):", e);
+    return { theories: [], motions: [], isEmpty: true };
+  }
+}
+
+// deno-lint-ignore no-explicit-any
+function formatDefenseIntelBlock(data: { theories: any[]; motions: any[]; isEmpty: boolean }, state: string, chargeType: string): string {
+  if (data.isEmpty) return "";
+  const parts: string[] = [];
+  if (data.motions.length > 0) {
+    parts.push(`MOTION FILING PATTERNS (${state.toUpperCase()}, ${chargeType}):`);
+    // deno-lint-ignore no-explicit-any
+    for (const m of data.motions) {
+      const rate = m.grant_rate != null ? (m.grant_rate * 100).toFixed(1) + "%" : "N/A";
+      parts.push(`- ${(m.motion_type || "").replace(/_/g, " ")}: ${rate} granted (${m.filed_count} filed)`);
+    }
+  }
+  if (data.theories.length > 0) {
+    parts.push(`\nDEFENSE THEORY OUTCOMES:`);
+    // deno-lint-ignore no-explicit-any
+    for (const t of data.theories) {
+      const rate = t.motion_success_rate != null ? (t.motion_success_rate * 100).toFixed(1) + "%" : "N/A";
+      parts.push(`- ${(t.defense_theory || "").replace(/_/g, " ")}: ${rate} success (${t.attempts} attempts)`);
+    }
+  }
+  return `\n<defense_intelligence context="IB tier — jurisdiction-level, verified court data. DO NOT fabricate statistics.">\n${parts.join("\n")}\n\nRULES: Reference specific rates when presenting legal information. Never invent statistics beyond what is provided here. If this block is empty, do not fabricate rates.\n</defense_intelligence>`;
+}
+
+// deno-lint-ignore no-explicit-any
+function renderDefenseMatrix(data: { theories: any[]; motions: any[]; isEmpty: boolean }, chargeLabel: string, state: string): string {
+  if (data.isEmpty) return "";
+
+  const totalDataPoints = data.theories.reduce((s: number, t: { attempts?: number }) => s + (t.attempts || 0), 0) +
+    data.motions.reduce((s: number, m: { filed_count?: number }) => s + (m.filed_count || 0), 0);
+  const stateUpper = (state || "").toUpperCase();
+
+  let html = `<h2 class="section-h2">Appendix F: Data-Driven Defense Intelligence</h2>\n<p class="body-text"><strong>${totalDataPoints} verified data points</strong> compiled from classified court opinions in ${escapeHtml(stateUpper)}.</p>`;
+
+  if (data.theories.length > 0) {
+    html += `\n<h3 class="section-h3">Defense Theory Success Rates</h3>\n<table class="report-table"><thead><tr><th class="table-header">Theory</th><th class="table-header">Cases</th><th class="table-header">Success Rate</th><th class="table-header">Best Motion Pairing</th></tr></thead><tbody>`;
+    for (const t of data.theories) {
+      const rate = t.motion_success_rate != null ? (t.motion_success_rate * 100).toFixed(1) + "%" : "N/A";
+      const theory = (t.defense_theory || "").replace(/_/g, " ");
+      html += `\n<tr><td class="table-cell">${escapeHtml(theory)}</td><td class="table-cell">${t.attempts}</td><td class="table-cell">${rate}</td><td class="table-cell">${escapeHtml(t.best_combined_motion || "\u2014")}</td></tr>`;
+    }
+    html += `\n</tbody></table>`;
+  }
+
+  if (data.motions.length > 0) {
+    html += `\n<h3 class="section-h3">Motion Filing Patterns</h3>\n<table class="report-table"><thead><tr><th class="table-header">Motion Type</th><th class="table-header">Filed</th><th class="table-header">Granted</th><th class="table-header">Grant Rate</th></tr></thead><tbody>`;
+    for (const m of data.motions) {
+      const rate = m.grant_rate != null ? (m.grant_rate * 100).toFixed(1) + "%" : "N/A";
+      const motionType = (m.motion_type || "").replace(/_/g, " ");
+      html += `\n<tr><td class="table-cell">${escapeHtml(motionType)}</td><td class="table-cell">${m.filed_count}</td><td class="table-cell">${m.granted_count}</td><td class="table-cell">${rate}</td></tr>`;
+    }
+    html += `\n</tbody></table>`;
+  }
+
+  const sourceNote = data.theories[0]?.data_source_note || data.motions[0]?.data_source_note || "";
+  if (sourceNote) {
+    html += `\n<p class="source-note">${escapeHtml(sourceNote)}</p>`;
+  }
+  html += `\n<p class="source-note">Every data point traces to a public court opinion. This is historical pattern data, not a prediction for your case.</p>`;
+
+  return html;
 }
 
 // Inline prompt builder — generates system + user prompt for a given section key
@@ -4919,7 +5034,7 @@ Output: ## Section 4
 ### 4f-4g. (If plea active: Before You Sign + Decision Checklist)
 ### Bottom Line (~50w)
 Word budget: ~2,400.`,
-      user: `Generate Section 4.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Plea: ${v.plea_status} | Plea terms: ${v.plea_terms} | Discovery: ${v.discovery_status} | Attorney: ${v.attorney_type} | Priors: ${v.prior_convictions} | Criminal history: ${v.criminal_history_label} | Case stage (raw): ${v.case_stage_raw} | Mental health: ${v.mental_health_relevant}\nCharge context: ${v.charge_specific_data}\n</intake>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 4.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Court: ${v.next_court_date} | Plea: ${v.plea_status} | Plea terms: ${v.plea_terms} | Discovery: ${v.discovery_status} | Attorney: ${v.attorney_type} | Priors: ${v.prior_convictions} | Criminal history: ${v.criminal_history_label} | Case stage (raw): ${v.case_stage_raw} | Mental health: ${v.mental_health_relevant}\nCharge context: ${v.charge_specific_data}\n</intake>${v.defense_intelligence_block || ""}\n${v.prior_section_outputs_xml}`,
     },
     "protection": {
       system: `You are an elite criminal defense research analyst generating Section 5: Protecting Your Case and Life.
@@ -5030,7 +5145,7 @@ Output: ## Section 3
 ### 3e. Jurisdiction Profile (~200w)
 ### Bottom Line (~50w)
 Word budget: ~2,250.`,
-      user: `Generate Section 3.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Priors: ${v.prior_convictions_summary} | Probation: ${v.on_probation_parole} | Plea: ${v.plea_status} | Discovery: ${v.discovery_status} | Criminal history: ${v.criminal_history_label}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<judge_research>\n${v.judge_research_data}\n</judge_research>${v.case_intelligence_block}\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
+      user: `Generate Section 3.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Jurisdiction: ${v.jurisdiction_level} | Stage: ${v.case_stage} | Arrest: ${v.arrest_date} | Priors: ${v.prior_convictions_summary} | Probation: ${v.on_probation_parole} | Plea: ${v.plea_status} | Discovery: ${v.discovery_status} | Criminal history: ${v.criminal_history_label}\nCharge context: ${v.charge_specific_data}\n</intake>\n\n<judge_research>\n${v.judge_research_data}\n</judge_research>${v.case_intelligence_block}${v.defense_intelligence_block || ""}\n\n<prior_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n</prior_sections>\n${v.prior_section_outputs_xml}`,
     },
     "your-plan": {
       system: `You are an elite criminal defense research analyst generating Section 6: Your Plan.
@@ -5378,6 +5493,8 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
     buildAttorneyScriptPack(),
     sectionOutputs["questions"] || "",
     buildYourRights(stateForRights),
+    // Appendix F: Data-Driven Defense Intelligence (mechanical render, no Claude)
+    sectionOutputs["tier9-data-appendix"] || "",
   ].filter((s) => s.trim()).map((s) => md2html(s)).join('\n<div class="page-break"></div>\n');
 
   return `<!DOCTYPE html>

@@ -711,6 +711,10 @@ async function main() {
         totalApplied += applied;
         totalErrors += errors;
       }
+      // Dry-run: discard periodically to prevent OOM (W11)
+      if (!applyMode && upserts.length >= BATCH_SIZE * 4) {
+        upserts.length = 0;
+      }
     }
   } catch (parseErr) {
     console.log(

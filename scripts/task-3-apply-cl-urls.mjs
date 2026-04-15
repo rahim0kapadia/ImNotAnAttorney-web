@@ -1,5 +1,15 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import https from 'https';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Load SUPABASE_ACCESS_TOKEN from parent project env
+const _envFile = fs.readFileSync(path.resolve(__dirname, '..', '..', 'ImNotAnAttorney', '.env.local'), 'utf8');
+const _tokenLine = _envFile.split('\n').find(l => l.startsWith('SUPABASE_ACCESS_TOKEN='));
+const SUPABASE_TOKEN = _tokenLine ? _tokenLine.slice(_tokenLine.indexOf('=') + 1).trim() : null;
+if (!SUPABASE_TOKEN) { console.error('Missing SUPABASE_ACCESS_TOKEN in ImNotAnAttorney/.env.local'); process.exit(1); }
 
 // Check if pre-generated CL SQL file exists, otherwise run the bulk script first
 const clSqlPath = 'data/bulk-verify/cl-verification-updates.sql';
@@ -42,7 +52,7 @@ async function applyBatch(statements, batchIndex) {
       path: '/v1/projects/jxjbjmgdukwkoclydqdr/database/query',
       method: 'POST',
       headers: {
-        'Authorization': `Bearer sbp_c48b0dc14342c5a996a4721d9f06b5ee93d96105`,
+        'Authorization': `Bearer ${SUPABASE_TOKEN}`,
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(postData)
       }

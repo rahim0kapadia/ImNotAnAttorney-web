@@ -18,6 +18,7 @@ import { parse } from 'csv-parse';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { stripQuotes } from './lib/csv-utils.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, '..');
@@ -38,13 +39,6 @@ function findBzcat() {
     try { if (existsSync(p)) return p; } catch {}
   }
   return 'bzcat';
-}
-
-function stripQuotes(val) {
-  if (!val) return '';
-  if (val.charAt(0) === '"') val = val.slice(1);
-  if (val.charAt(val.length - 1) === '"') val = val.slice(0, -1);
-  return val;
 }
 
 // ── Phase 1: Load reference maps ──────────────────────────────────────────

@@ -5,7 +5,18 @@
  *
  * Run: node scripts/migrate-009-tier-inclusion.mjs
  */
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import { createClient } from "@supabase/supabase-js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Load SUPABASE_ACCESS_TOKEN from parent project env
+const _envFile = fs.readFileSync(path.resolve(__dirname, "..", "..", "ImNotAnAttorney", ".env.local"), "utf8");
+const _tokenLine = _envFile.split("\n").find(l => l.startsWith("SUPABASE_ACCESS_TOKEN="));
+const SUPABASE_TOKEN = _tokenLine ? _tokenLine.slice(_tokenLine.indexOf("=") + 1).trim() : null;
+if (!SUPABASE_TOKEN) { console.error("Missing SUPABASE_ACCESS_TOKEN in ImNotAnAttorney/.env.local"); process.exit(1); }
 
 const supabaseUrl = "https://jxjbjmgdukwkoclydqdr.supabase.co";
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -33,7 +44,7 @@ async function runMigration() {
 }
 
 async function runViaManagementAPI() {
-  const accessToken = "sbp_c48b0dc14342c5a996a4721d9f06b5ee93d96105";
+  const accessToken = SUPABASE_TOKEN;
   const projectRef = "jxjbjmgdukwkoclydqdr";
 
   const migrations = [
