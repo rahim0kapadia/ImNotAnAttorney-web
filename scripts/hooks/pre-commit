@@ -33,90 +33,102 @@ fi
 # Collect staged .mdx files under content/blog/ (added or modified).
 staged_mdx=$(git diff --cached --name-only --diff-filter=AM | grep -E '^content/blog/[^/]+\.mdx$' || true)
 
-if [ -z "$staged_mdx" ]; then
-  exit 0
-fi
+if [ -n "$staged_mdx" ]; then
+  echo "[blog-qa] Validating staged .mdx files against sidecar safety gates..."
 
-echo "[blog-qa] Validating staged .mdx files against sidecar safety gates..."
+  fail=0
+  missing=""
+  failed_posts=""
+  updated_sidecars=""
 
-fail=0
-missing=""
-failed_posts=""
-updated_sidecars=""
+  while IFS= read -r file; do
+    [ -z "$file" ] && continue
+    slug=$(basename "$file" .mdx)
+    sidecar="content/blog/.qa-state/${slug}.json"
 
-while IFS= read -r file; do
-  [ -z "$file" ] && continue
-  slug=$(basename "$file" .mdx)
-  sidecar="content/blog/.qa-state/${slug}.json"
-
-  if [ "${BLOG_QA_HOOK_FRESH:-0}" = "1" ]; then
-    # Fresh mode: re-run anti_hallucination gate for this file.
-    echo "[blog-qa]   → $slug (fresh)"
-    node scripts/qa-existing-post.mjs "$file" --gate=anti_hallucination > /dev/null 2>&1 || true
-    if [ -f "$sidecar" ]; then
-      updated_sidecars="$updated_sidecars $sidecar"
+    if [ "${BLOG_QA_HOOK_FRESH:-0}" = "1" ]; then
+      # Fresh mode: re-run anti_hallucination gate for this file.
+      echo "[blog-qa]   → $slug (fresh)"
+      node scripts/qa-existing-post.mjs "$file" --gate=anti_hallucination > /dev/null 2>&1 || true
+      if [ -f "$sidecar" ]; then
+        updated_sidecars="$updated_sidecars $sidecar"
+      fi
     fi
-  fi
 
-  if [ ! -f "$sidecar" ]; then
-    missing="$missing $slug"
-    fail=1
-    continue
-  fi
+    if [ ! -f "$sidecar" ]; then
+      missing="$missing $slug"
+      fail=1
+      continue
+    fi
 
-  # Check sidecar: humanizer and anti_hallucination must both be checked+passed
-  result=$(node -e "
-    try {
-      const j = require('./$sidecar');
-      const h = j.gates.humanizer;
-      const ah = j.gates.anti_hallucination;
-      const hOk = h && h.passed === true && h.status === 'checked';
-      const ahOk = ah && ah.passed === true && ah.status === 'checked';
-      if (hOk && ahOk) {
-        console.log('PASS');
-      } else {
-        const bad = [];
-        if (!hOk) bad.push('humanizer');
-        if (!ahOk) bad.push('anti_hallucination');
-        console.log('FAIL:' + bad.join(','));
+    # Check sidecar: humanizer and anti_hallucination must both be checked+passed
+    result=$(node -e "
+      try {
+        const j = require('./$sidecar');
+        const h = j.gates.humanizer;
+        const ah = j.gates.anti_hallucination;
+        const hOk = h && h.passed === true && h.status === 'checked';
+        const ahOk = ah && ah.passed === true && ah.status === 'checked';
+        if (hOk && ahOk) {
+          console.log('PASS');
+        } else {
+          const bad = [];
+          if (!hOk) bad.push('humanizer');
+          if (!ahOk) bad.push('anti_hallucination');
+          console.log('FAIL:' + bad.join(','));
+        }
+      } catch (e) {
+        console.log('ERROR:' + e.message);
       }
-    } catch (e) {
-      console.log('ERROR:' + e.message);
-    }
-  ")
+    ")
 
-  if [ "$result" = "PASS" ]; then
-    echo "[blog-qa]   ✓ $slug"
-  else
-    echo "[blog-qa]   ✗ $slug — $result"
-    failed_posts="$failed_posts $slug"
-    fail=1
+    if [ "$result" = "PASS" ]; then
+      echo "[blog-qa]   ✓ $slug"
+    else
+      echo "[blog-qa]   ✗ $slug — $result"
+      failed_posts="$failed_posts $slug"
+      fail=1
+    fi
+  done <<< "$staged_mdx"
+
+  # Auto-stage any sidecars we touched in fresh mode.
+  if [ -n "$updated_sidecars" ]; then
+    # shellcheck disable=SC2086
+    git add $updated_sidecars
   fi
-done <<< "$staged_mdx"
 
-# Auto-stage any sidecars we touched in fresh mode.
-if [ -n "$updated_sidecars" ]; then
-  # shellcheck disable=SC2086
-  git add $updated_sidecars
+  if [ -n "$missing" ]; then
+    echo ""
+    echo "[blog-qa] MISSING SIDECARS:$missing"
+    echo "[blog-qa] Run: node scripts/qa-existing-post.mjs <file> --gate=anti_hallucination"
+  fi
+
+  if [ "$fail" = "1" ]; then
+    echo ""
+    echo "[blog-qa] BLOCKED: one or more staged .mdx files failed SAFETY gates."
+    echo "[blog-qa] (humanizer + anti_hallucination are blocking; quality gates are advisory)"
+    echo ""
+    echo "[blog-qa] To refresh sidecars:"
+    echo "[blog-qa]   node scripts/qa-existing-post.mjs <file> --gate=anti_hallucination"
+    echo ""
+    echo "[blog-qa] Emergency bypass: BLOG_QA_SKIP_HOOK=1 git commit ..."
+    exit 1
+  fi
+
+  echo "[blog-qa] All staged .mdx files pass their safety gates."
 fi
 
-if [ -n "$missing" ]; then
-  echo ""
-  echo "[blog-qa] MISSING SIDECARS:$missing"
-  echo "[blog-qa] Run: node scripts/qa-existing-post.mjs <file> --gate=anti_hallucination"
+# ── Price staleness check ──
+# When tiers.ts or products.ts is staged, verify value-stack anchors
+# are still above product prices. Blocks commit on mismatch.
+STAGED_FILES=$(git diff --cached --name-only)
+if echo "$STAGED_FILES" | grep -qE "src/lib/(tiers|products)\.ts$"; then
+  echo "[price-check] tiers.ts or products.ts staged — running staleness detector..."
+  node scripts/check-price-staleness.mjs || {
+    echo "[price-check] BLOCKED: Price staleness detected. Fix value-stack anchors before committing."
+    exit 1
+  }
+  echo "[price-check] All anchors valid."
 fi
 
-if [ "$fail" = "1" ]; then
-  echo ""
-  echo "[blog-qa] BLOCKED: one or more staged .mdx files failed SAFETY gates."
-  echo "[blog-qa] (humanizer + anti_hallucination are blocking; quality gates are advisory)"
-  echo ""
-  echo "[blog-qa] To refresh sidecars:"
-  echo "[blog-qa]   node scripts/qa-existing-post.mjs <file> --gate=anti_hallucination"
-  echo ""
-  echo "[blog-qa] Emergency bypass: BLOG_QA_SKIP_HOOK=1 git commit ..."
-  exit 1
-fi
-
-echo "[blog-qa] All staged .mdx files pass their safety gates."
 exit 0
