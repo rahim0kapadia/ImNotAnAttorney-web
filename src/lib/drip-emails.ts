@@ -1212,11 +1212,11 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Your X-Ray analysis needs one more thing — 5 minutes of Phase 2 details",
     html: `
       <h1 style="color: #F59E0B;">Your X-Ray Is Waiting on One Step</h1>
-      <p>Your X-Ray Discovery Analysis includes a full Intelligence Brief — jurisdiction intelligence, judge patterns, prosecution strategy, and 10-15 targeted questions — all built into your $2,497 package at no extra charge.</p>
+      <p>Your X-Ray Discovery Analysis includes a full Intelligence Brief — jurisdiction intelligence, judge patterns, prosecution strategy, and 10-15 targeted questions — all built into your ${TIER_CORE["x-ray"].priceDisplay} package at no extra charge.</p>
       <p>To generate it, we need a few more details about your judge, your attorney, your jurisdiction, and your case stage. <strong style="color: white;">It takes about 5 minutes.</strong></p>
       ${cta("Complete Phase 2 Intake →", "/intake/intelligence-brief")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">Why this matters:</strong> Without Phase 2, your X-Ray analysis can still process your discovery documents — but it will be missing the jurisdiction intelligence, judge patterns, and attorney coordination framework that make the X-Ray worth $2,497. Your report lands flatter than it should. Five minutes now, a much sharper analysis on the other side.
+        <strong style="color: white;">Why this matters:</strong> Without Phase 2, your X-Ray analysis can still process your discovery documents — but it will be missing the jurisdiction intelligence, judge patterns, and attorney coordination framework that make the X-Ray worth ${TIER_CORE["x-ray"].priceDisplay}. Your report lands flatter than it should. Five minutes now, a much sharper analysis on the other side.
       </p>
     `,
   },
@@ -1227,7 +1227,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Your War Room needs one more thing — 5 minutes of Phase 2 details",
     html: `
       <h1 style="color: #F59E0B;">Your War Room Is Waiting on One Step</h1>
-      <p>Your War Room includes a full Intelligence Brief — jurisdiction intelligence, judge patterns, prosecution strategy, and 10-15 targeted questions — bundled into your $4,997 package at no extra charge.</p>
+      <p>Your War Room includes a full Intelligence Brief — jurisdiction intelligence, judge patterns, prosecution strategy, and 10-15 targeted questions — bundled into your ${TIER_CORE["war-room"].priceDisplay} package at no extra charge.</p>
       <p>To generate it, we need a few more details about your judge, your attorney, your jurisdiction, and your case stage. <strong style="color: white;">It takes about 5 minutes.</strong></p>
       ${cta("Complete Phase 2 Intake →", "/intake/intelligence-brief")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
@@ -1242,7 +1242,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Your Situation Room needs one more thing — 5 minutes of Phase 2 details",
     html: `
       <h1 style="color: #F59E0B;">Your Situation Room Is Waiting on One Step</h1>
-      <p>Your Situation Room includes a full Intelligence Brief — jurisdiction intelligence, judge patterns, prosecution strategy, and 10-15 targeted questions — bundled into your $9,997 package at no extra charge.</p>
+      <p>Your Situation Room includes a full Intelligence Brief — jurisdiction intelligence, judge patterns, prosecution strategy, and 10-15 targeted questions — bundled into your ${TIER_CORE["situation-room"].priceDisplay} package at no extra charge.</p>
       <p>To generate it, we need a few more details about your judge, your attorney, your jurisdiction, and your case stage. <strong style="color: white;">It takes about 5 minutes.</strong></p>
       ${cta("Complete Phase 2 Intake →", "/intake/intelligence-brief")}
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">

@@ -9,7 +9,7 @@
  */
 
 import { sendEmail, sendEmailWithRetry, escapeHtml } from "@/lib/email";
-import { tierDisplayName, tierPriceNum } from "@/lib/tiers";
+import { tierDisplayName, tierPriceNum, TIER_CORE } from "@/lib/tiers";
 import { caseThreadId } from "@/lib/site";
 import type { CronContext, CronResult } from "./types";
 import { emptyResult } from "./types";
@@ -337,7 +337,7 @@ interface GuaranteeEscalationSpec {
 const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
   {
     tier: "case-decoder",
-    tierLabel: "Case Decoder ($197)",
+    tierLabel: `${tierDisplayName("case-decoder")} (${TIER_CORE["case-decoder"].priceDisplay})`,
     thresholds: [{
       businessDays: 0,
       guaranteeType: "cd-delivery",
@@ -352,7 +352,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
   },
   {
     tier: "intelligence-brief",
-    tierLabel: "Intelligence Brief ($997)",
+    tierLabel: `${tierDisplayName("intelligence-brief")} (${TIER_CORE["intelligence-brief"].priceDisplay})`,
     thresholds: [{
       businessDays: 0,
       guaranteeType: "ib-delivery",
@@ -367,7 +367,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
   },
   {
     tier: "x-ray",
-    tierLabel: "X-Ray ($2,497)",
+    tierLabel: `${tierDisplayName("x-ray")} (${TIER_CORE["x-ray"].priceDisplay})`,
     thresholds: [
       {
         businessDays: 0,
@@ -395,7 +395,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
   },
   {
     tier: "war-room",
-    tierLabel: "War Room ($4,997)",
+    tierLabel: `${tierDisplayName("war-room")} (${TIER_CORE["war-room"].priceDisplay})`,
     thresholds: [
       {
         businessDays: 0,
@@ -423,7 +423,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
   },
   {
     tier: "situation-room",
-    tierLabel: "Situation Room ($9,997)",
+    tierLabel: `${tierDisplayName("situation-room")} (${TIER_CORE["situation-room"].priceDisplay})`,
     thresholds: [
       {
         businessDays: 0,

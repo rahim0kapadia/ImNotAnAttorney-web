@@ -299,7 +299,7 @@ export async function POST(req: NextRequest) {
     upgradeHtml = upgradeCost
       ? `<div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
           <p style="margin: 0; color: #F59E0B; font-weight: bold;">Need deeper ongoing investigation?</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${isValidTier(tier) ? TIER_CORE[tier].priceDisplay : ""} is credited toward ${tierDisplayName("war-room")} ($4,997). Pay only ${upgradeCost}. Witness dossiers, judge intelligence, and weekly updates. <a href="${origin}/services#war-room" style="color: #F59E0B;">Learn more</a></p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${isValidTier(tier) ? TIER_CORE[tier].priceDisplay : ""} is credited toward ${tierDisplayName("war-room")} (${TIER_CORE["war-room"].priceDisplay}). Pay only ${upgradeCost}. Witness dossiers, judge intelligence, and weekly updates. <a href="${origin}/services#war-room" style="color: #F59E0B;">Learn more</a></p>
         </div>`
       : "";
   } else if (tier === "war-room") {

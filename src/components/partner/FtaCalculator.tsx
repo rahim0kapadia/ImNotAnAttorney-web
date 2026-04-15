@@ -8,6 +8,7 @@
  */
 
 import { useState } from "react";
+import { tierPriceNum } from "@/lib/tiers";
 
 export function FtaCalculator() {
   const [monthlyClients, setMonthlyClients] = useState(20);
@@ -25,8 +26,8 @@ export function FtaCalculator() {
   const ftaPrevented = ftaWithout - ftaWith;
   const savedAmount = ftaPrevented * avgBail;
 
-  // Commission estimate (5% conversion at avg $197)
-  const commissionEstimate = Math.round(annualClients * 0.05 * 197 * 0.1);
+  // Commission estimate (5% conversion at avg Case Decoder price)
+  const commissionEstimate = Math.round(annualClients * 0.05 * tierPriceNum("case-decoder") * 0.1);
 
   return (
     <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
