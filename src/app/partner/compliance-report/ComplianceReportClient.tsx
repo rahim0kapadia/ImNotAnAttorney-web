@@ -8,6 +8,7 @@
 
 import { useState, useMemo } from "react";
 import { CHARGE_DISPLAY_NAMES } from "@/lib/court-reminders";
+import { formatDaysDisplay, countScheduledDays } from "@/lib/check-in-schedule";
 
 // ── Types ──────────────────────────────────────────────────────
 interface ComplianceClient {
@@ -21,6 +22,8 @@ interface ComplianceClient {
   reminders_sent: string[];
   created_at: string;
   converted_at: string | null;
+  check_in_days: string[] | null;
+  check_in_source: string | null;
 }
 
 interface ComplianceReportClientProps {
@@ -59,6 +62,22 @@ function formatDateShort(iso: string): string {
     day: "numeric",
     year: "numeric",
   });
+}
+
+/**
+ * Calculate compliance rate for display.
+ * Denominator counts from created_at (intentional simplification).
+ * Numerator capped at scheduled to prevent >100% display.
+ */
+function getComplianceRate(client: ComplianceClient, clientCheckIns: number): string {
+  if (!client.check_in_days || client.check_in_days.length === 0) return "\u2014";
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
+  const endDate = today < client.court_date ? today : client.court_date;
+  const startDate = new Date(client.created_at).toLocaleDateString("en-CA", { timeZone: "America/New_York" });
+  const scheduled = countScheduledDays(client.check_in_days, startDate, endDate);
+  if (scheduled === 0) return "\u2014";
+  const pct = Math.min(100, Math.round((clientCheckIns / scheduled) * 100));
+  return `${Math.min(clientCheckIns, scheduled)} / ${scheduled} (${pct}%)`;
 }
 
 // ── Component ──────────────────────────────────────────────────
@@ -235,7 +254,9 @@ export function ComplianceReportClient({
                   <th className="pb-2 pr-3 font-semibold text-right">
                     Check-Ins
                   </th>
-                  <th className="pb-2 font-semibold">Last Check-In</th>
+                  <th className="pb-2 pr-3 font-semibold">Last Check-In</th>
+                  <th scope="col" className="px-4 py-3 font-semibold text-zinc-200">Schedule</th>
+                  <th scope="col" className="px-4 py-3 font-semibold text-zinc-200">Compliance</th>
                 </tr>
               </thead>
               <tbody>
@@ -266,10 +287,25 @@ export function ComplianceReportClient({
                       <td className="py-2 pr-3 text-right">
                         {ci?.count || 0}
                       </td>
-                      <td className="py-2 text-zinc-400 print:text-gray-600">
+                      <td className="py-2 pr-3 text-zinc-400 print:text-gray-600">
                         {ci?.lastCheckIn
                           ? formatDateShort(ci.lastCheckIn)
                           : "--"}
+                      </td>
+                      <td className="px-4 py-3 text-zinc-400 text-sm">
+                        {formatDaysDisplay(c.check_in_days) || "\u2014"}
+                        {c.check_in_source && (
+                          <span className="block text-xs text-zinc-500">
+                            {c.check_in_source === "client"
+                              ? "set by client"
+                              : c.check_in_source === "partner"
+                              ? "set by bondsman"
+                              : "default"}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-zinc-300 font-medium">
+                        {getComplianceRate(c, ci?.count ?? 0)}
                       </td>
                     </tr>
                   );

@@ -39,21 +39,29 @@ export default async function ComplianceReportPage() {
   const { data: clients } = await supabase
     .from("court_reminders")
     .select(
-      "id, first_name, last_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at"
+      "id, first_name, last_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at, check_in_days, check_in_source"
     )
     .eq("partner_promo_code", partner.promo_code)
     .order("court_date", { ascending: true });
 
-  // Fetch check-ins for those clients
+  // Fetch check-ins for those clients — paginated to avoid PostgREST 1000-row cap
   const clientIds = (clients || []).map((c) => c.id);
-  let checkIns: Array<{ court_reminder_id: string; checked_in_at: string }> =
-    [];
+  const allCheckIns: Array<{ court_reminder_id: string; checked_in_at: string }> = [];
   if (clientIds.length > 0) {
-    const { data } = await supabase
-      .from("client_check_ins")
-      .select("court_reminder_id, checked_in_at")
-      .in("court_reminder_id", clientIds);
-    checkIns = data || [];
+    let checkInOffset = 0;
+    let checkInHasMore = true;
+    while (checkInHasMore) {
+      const { data: page } = await supabase
+        .from("client_check_ins")
+        .select("court_reminder_id, checked_in_at")
+        .in("court_reminder_id", clientIds)
+        .range(checkInOffset, checkInOffset + 999);
+
+      if (!page || page.length === 0) { checkInHasMore = false; break; }
+      allCheckIns.push(...page);
+      checkInOffset += 1000;
+      if (page.length < 1000) checkInHasMore = false;
+    }
   }
 
   return (
@@ -65,7 +73,7 @@ export default async function ComplianceReportPage() {
         promo_code: partner.promo_code,
       }}
       clients={clients || []}
-      checkIns={checkIns}
+      checkIns={allCheckIns}
     />
   );
 }
