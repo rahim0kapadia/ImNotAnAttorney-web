@@ -487,7 +487,7 @@ function SuccessContent() {
                   Get Case-Specific Questions — Case Decoder
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  The Case Decoder is {TIER_CORE["case-decoder"].priceDisplay} — your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? "$97"} playbook purchase is fully credited, so you pay just {upgradeCostBetween(tier as TierSlug, "case-decoder")}. Every dollar moves upward. The Playbook gives you general questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
+                  The Case Decoder is {TIER_CORE["case-decoder"].priceDisplay} — your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? ""} playbook purchase is fully credited, so you pay just {upgradeCostBetween(tier as TierSlug, "case-decoder")}. Every dollar moves upward. The Playbook gives you general questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
                 </p>
                 {/* Charge-type-specific loss-aversion copy (Kahneman/Cialdini/Suby) */}
                 <p className="mt-2 text-sm text-zinc-300">
@@ -508,7 +508,7 @@ function SuccessContent() {
                   href="/checkout?tier=case-decoder"
                   className="mt-4 inline-block rounded-lg border border-amber-500/50 px-6 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
                 >
-                  Upgrade for {upgradeCostBetween(tier as TierSlug, "case-decoder")} (your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? "$97"} credited) &rarr;
+                  Upgrade for {upgradeCostBetween(tier as TierSlug, "case-decoder")} (your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? ""} credited) &rarr;
                 </Link>
               </div>
             )}
@@ -580,7 +580,7 @@ function SuccessContent() {
                 </p>
 
                 <p className="text-lg font-bold text-white">
-                  You have already paid $997.
+                  {`You have already paid ${TIER_CORE["intelligence-brief"].priceDisplay}.`}
                 </p>
                 <p className="mt-1 text-sm text-zinc-400">
                   The X-Ray costs {upgradeCostBetween("intelligence-brief", "x-ray")} more. That&apos;s it.
@@ -616,7 +616,7 @@ function SuccessContent() {
                 </p>
 
                 <p className="text-lg font-bold text-white">
-                  You have already paid $2,497.
+                  {`You have already paid ${TIER_CORE["x-ray"].priceDisplay}.`}
                 </p>
 
                 <p className="mt-2 text-sm text-zinc-300">
