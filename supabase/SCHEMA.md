@@ -812,6 +812,49 @@ Tracks ingestion recency for all external data sources.
 | staleness_threshold_days | integer | Days before flagged stale |
 | is_stale | boolean | Auto-computed flag |
 
+#### `judge_demographics`
+Federal judge biographical data from JUSTFAIR (QSIDE Institute). 1,126 federal judges. Migration `20260414f_justfair_demographics.sql`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| judge_name | text | Original judge name |
+| judge_name_normalized | text | Lowercased for matching (GIN trigram index) |
+| district | text | Federal district (e.g. "District of Columbia") |
+| gender | text | Judge gender |
+| race_ethnicity | text | Judge race/ethnicity |
+| appointing_president | text | Appointing president name |
+| appointing_party | text | Appointing party (Republican/Democrat) |
+| aba_rating | text | ABA rating at confirmation |
+| birth_year | integer | Birth year |
+| law_school | text | Law school attended |
+| senior_status_date | text | Senior status date if applicable |
+| active_start | integer | Year active service began |
+| active_end | integer | Year active service ended (null = current) |
+| source_urls | text[] | Verification URLs (required) |
+| created_at | timestamptz | Row creation timestamp |
+
+Unique constraint: `(judge_name_normalized, district)`. Indexes: GIN trigram on `judge_name_normalized`, btree on `district`, btree on `appointing_party`.
+
+#### `judge_sentencing_demographics`
+Per-judge sentencing patterns broken down by defendant race. JUSTFAIR source. Migration `20260414f_justfair_demographics.sql`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| id | uuid (PK) | Auto-generated |
+| judge_name_normalized | text | Lowercased judge name (GIN trigram index) |
+| district | text | Federal district |
+| defendant_race | text | Defendant race category |
+| total_cases | integer | Number of cases for this judge+race combo |
+| median_sentence_months | numeric | Median sentence length in months |
+| mean_sentence_months | numeric | Mean sentence length in months |
+| guideline_departure_rate | numeric | Rate of guideline departures (0-1) |
+| avg_departure_pct | numeric | Average departure percentage |
+| source_urls | text[] | Verification URLs (required) |
+| created_at | timestamptz | Row creation timestamp |
+
+Unique constraint: `(judge_name_normalized, district, defendant_race)`. Indexes: GIN trigram on `judge_name_normalized`, btree on `district`, btree on `defendant_race`.
+
 #### `co_defendant_analysis`
 Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 

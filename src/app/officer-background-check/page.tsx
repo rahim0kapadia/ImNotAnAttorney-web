@@ -38,6 +38,9 @@ const FEATURES = [
   "Discreditation history from other cases",
   "Testimony challenge patterns",
   "Procedural compliance track record",
+  "Employment history timeline (NPI — 3 states: AZ, CA, GA)",
+  "Wandering officer detection (terminated → rehired pattern)",
+  "Agency incident data from Fatal Encounters database",
   "Prior complaints and disciplinary actions from court records",
   "Every finding linked to its source URL",
 ] as const;
@@ -296,7 +299,7 @@ export default function OfficerBackgroundCheckPage() {
           </p>
 
           <p className="mt-3 text-sm text-zinc-400">
-            Reliability analysis built from CourtListener&rsquo;s open court records API, cross-referencing officer appearances across cases, suppression motion outcomes, and testimony challenge patterns. Computed from verified judicial records &mdash; not estimated, not fabricated.
+            Reliability analysis built from CourtListener&rsquo;s open court records, the National Police Index (NPI) employment database, and Fatal Encounters incident records. Cross-referencing officer appearances across cases, employment history, suppression motion outcomes, and testimony challenge patterns. Computed from verified records &mdash; not estimated, not fabricated.
           </p>
 
           <div className="mt-8">

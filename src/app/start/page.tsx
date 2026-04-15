@@ -134,10 +134,11 @@ function StartContent() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-md text-base text-zinc-400">
-            40+ elite defense attorneys&apos; methodology. Applied to your specific charges.
+            595,851 federal sentencing records. 15,386 judges profiled.
+            52 jurisdictions mapped. Applied to your specific charges.
           </p>
           <p className="mx-auto mt-2 max-w-md text-xs text-zinc-400">
-            Research frameworks informed by 40+ elite defense pioneers.
+            Research frameworks informed by 40+ elite defense pioneers, grounded in real case data.
           </p>
 
           {/* Binary routing — no "or", just two paths */}

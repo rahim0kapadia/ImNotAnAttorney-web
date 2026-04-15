@@ -119,7 +119,7 @@ export default function FamilyPage() {
               {
                 num: "4",
                 title: "Write character reference letters",
-                text: "When sentencing arrives, character letters from family carry weight. Describe their positive qualities, community ties, and support system.",
+                text: "When sentencing arrives, character letters from family carry weight. Describe their positive qualities, community ties, and support system. Our sentencing calculator — backed by 595,851 federal records — can show you what judges in their district have done in similar cases.",
               },
               {
                 num: "5",

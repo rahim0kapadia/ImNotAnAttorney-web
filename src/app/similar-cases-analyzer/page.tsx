@@ -227,8 +227,9 @@ export default function SimilarCasesAnalyzerPage() {
                 "Outcome distribution across matched cases (acquittal, dismissal, plea, conviction)",
                 "Case similarity scores showing how close each match is to your facts",
                 "Motion patterns observed in matched cases",
-                "Sentencing ranges observed in matched cases",
+                "Sentencing ranges grounded in 595,851 federal sentencing records (JUSTFAIR/USSC)",
                 "Defense approaches observed in matched cases and their outcomes",
+                "National outcome benchmarks from the Bureau of Justice Statistics",
                 "Every matched case linked to its source URL",
               ].map((item) => (
                 <li key={item} className="flex gap-3 text-zinc-200">
@@ -369,7 +370,8 @@ export default function SimilarCasesAnalyzerPage() {
             <p className="mt-4 text-zinc-300">
               Every case in your report links directly to a public court record.
               No scraped summaries. No fabricated case names. Verified source
-              data from CourtListener and official court databases — so you and
+              data from CourtListener, 595,851 federal sentencing records
+              (JUSTFAIR/USSC), and BJS national outcome data — so you and
               your attorney can check every match.
             </p>
             <p className="mt-3 text-sm text-zinc-400">

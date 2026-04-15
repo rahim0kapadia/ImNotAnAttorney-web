@@ -211,9 +211,9 @@ export default function PlaybooksCatalogPage() {
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-center text-zinc-400">
               Built from methods developed by elite defense attorneys across
-              375+ exonerations and thousands of criminal cases &mdash;
-              including DUI procedural challenge frameworks and forensic
-              evidence methodologies developed by elite defense attorneys.
+              375+ exonerations and thousands of criminal cases. Grounded in
+              595,851 federal sentencing records, 15,386 judge profiles, and
+              4,699 verified statutes across 52 jurisdictions.
             </p>
           </FadeInUp>
 

@@ -114,6 +114,37 @@ export default function PartnersPage() {
         </div>
       </section>
 
+      {/* Data Depth — Trust Signal */}
+      <section className="py-16">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <FadeInUp>
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">
+              Backed by Real Data
+            </h2>
+            <p className="text-zinc-300 text-lg mb-8">
+              Our reports draw from{" "}
+              <strong className="text-amber-400">595,851 federal sentencing records</strong>,{" "}
+              <strong className="text-amber-400">15,386 judge profiles</strong>,{" "}
+              officer employment histories across 3 states, and 30,000+ police
+              encounter records. Every finding links to a verified source.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { stat: "595,851", label: "Federal sentencing records" },
+                { stat: "15,386", label: "Judge profiles" },
+                { stat: "52", label: "Jurisdictions covered" },
+                { stat: "4,699", label: "Statutes verified" },
+              ].map((item) => (
+                <div key={item.label} className="bg-zinc-900/50 rounded-lg border border-zinc-700 p-4">
+                  <div className="font-display text-2xl font-bold text-amber-400">{item.stat}</div>
+                  <div className="text-xs text-zinc-400 mt-1">{item.label}</div>
+                </div>
+              ))}
+            </div>
+          </FadeInUp>
+        </div>
+      </section>
+
       {/* Partner Toolkit (replaces testimonials) */}
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-4 text-center">

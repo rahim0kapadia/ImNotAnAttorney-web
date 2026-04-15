@@ -263,6 +263,54 @@ export default function ResourcesPage() {
         </section>
         </FadeInUp>
 
+        {/* FREE TOOLS — Sentencing Calculator + Judge Comparison */}
+        <FadeInUp>
+        <section className="mt-12">
+          <h2 className="font-display text-xl font-bold text-white">
+            Free Tools
+          </h2>
+          <p className="mt-1 text-sm text-zinc-400">
+            Built on 595,851 federal sentencing records and 15,386 judge profiles. No email required.
+          </p>
+          <StaggerContainer className="mt-6 grid gap-4 md:grid-cols-2">
+            <StaggerItem className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
+              <span className="inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                Free Tool
+              </span>
+              <h3 className="mt-3 font-bold text-white">
+                <Link
+                  href="/tools/sentencing-calculator"
+                  className="hover:text-amber-400 focus-visible:text-amber-400"
+                >
+                  Federal Sentencing Calculator <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </h3>
+              <p className="mt-2 text-sm text-zinc-400">
+                See real sentencing outcomes for your charge type, district, and judge &mdash;
+                backed by USSC data from FY2001&ndash;2023.
+              </p>
+            </StaggerItem>
+            <StaggerItem className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
+              <span className="inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                Free Tool
+              </span>
+              <h3 className="mt-3 font-bold text-white">
+                <Link
+                  href="/tools/judge-comparison"
+                  className="hover:text-amber-400 focus-visible:text-amber-400"
+                >
+                  Judge Comparison Tool <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </h3>
+              <p className="mt-2 text-sm text-zinc-400">
+                Compare two federal judges side by side &mdash; sentencing patterns,
+                departure rates, and demographic breakdowns from JUSTFAIR data.
+              </p>
+            </StaggerItem>
+          </StaggerContainer>
+        </section>
+        </FadeInUp>
+
         {/* SCORE CTA — Free defense quiz, THE email capture point */}
         <FadeInUp>
         <section className="mt-16 rounded-xl border border-amber-500/30 bg-amber-500/5 p-8 text-center">
