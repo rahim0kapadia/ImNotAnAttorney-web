@@ -8,6 +8,7 @@
   "demand-score": 7452826,
   "demand-performance": 7452827,
   "reddit-monitor": 7472667,
+  "check-in-prompt": 7487154,
   "_notes": {
     "drip": "ON — daily 14:00 UTC. Ghost duplicate 7310015 deleted 2026-03-27.",
     "engine": "OFF — disabled intentionally.",
@@ -17,6 +18,7 @@
     "demand-classify": "ON — daily 07:00 UTC. LLM classification of demand signals.",
     "demand-score": "ON — daily 08:00 UTC. Demand scoring and priority ranking.",
     "demand-performance": "ON — daily 09:00 UTC. Content performance tracking (internally gates to weekly).",
-    "reddit-monitor": "ON — every 30 min. Reddit response pipeline: match threads → Telegram draft notifications."
+    "reddit-monitor": "ON — every 30 min. Reddit response pipeline: match threads → Telegram draft notifications.",
+    "check-in-prompt": "ON — daily 8:00 America/New_York. Scheduled check-in: Phase 1 daily prompt + Phase 2 missed-alert batch (via after())."
   }
 }
