@@ -12,6 +12,113 @@
  *   - Negation window (Section 3.4 of spec)
  */
 
+// ── Charge name keywords (broad category identification from opinion text) ──
+// Multi-word phrases that unambiguously identify charge families.
+// These supplement statute-citation-based extraction which only works when
+// opinions explicitly cite statute numbers.
+// Keys are the 10 broad charge categories matching charge_defense_theories.
+export const CHARGE_NAME_KEYWORDS = {
+  "dui": [
+    "driving under the influence", "drunk driving", "driving while intoxicated",
+    "driving while impaired", "operating under the influence",
+    "operating while intoxicated", "operating while impaired",
+    "impaired driving", "intoxicated driving",
+    "driving a motor vehicle while under the influence",
+    "operating a vehicle while intoxicated",
+    "boating under the influence",
+  ],
+  "drug-possession": [
+    "possession of controlled substance", "drug possession",
+    "possession of marijuana", "possession of cocaine",
+    "possession of heroin", "possession of methamphetamine",
+    "possession of cannabis", "narcotic possession",
+    "simple possession", "felony possession",
+    "possession of a controlled", "possession of narcotics",
+    "unlawful possession of a controlled", "illegal possession of a controlled",
+    "possession of drug paraphernalia",
+  ],
+  "drug-trafficking": [
+    "drug trafficking", "trafficking in controlled",
+    "trafficking in cocaine", "trafficking in heroin",
+    "trafficking in methamphetamine", "trafficking in marijuana",
+    "intent to distribute", "distribution of controlled",
+    "possession with intent to deliver", "delivery of controlled",
+    "manufacturing controlled substance", "drug distribution",
+    "narcotics trafficking", "trafficking in drugs",
+    "possession with intent to sell",
+  ],
+  "assault": [
+    "aggravated assault", "simple assault", "assault and battery",
+    "aggravated battery", "felonious assault",
+    "assault with a deadly weapon", "assault with intent",
+    "assault in the first degree", "assault in the second degree",
+    "assault in the third degree", "assault with a firearm",
+    "assault on a law enforcement", "criminal assault",
+    "convicted of battery", "charged with battery", "guilty of battery",
+    "convicted of assault", "charged with assault", "guilty of assault",
+    "count of assault", "count of battery",
+  ],
+  "theft": [
+    "grand theft", "petit theft", "petty theft",
+    "grand larceny", "petit larceny", "petty larceny",
+    "larceny by trick", "shoplifting", "receiving stolen property",
+    "theft of property", "theft by deception", "theft by unlawful taking",
+    "theft of services", "identity theft", "motor vehicle theft",
+    "theft by receiving",
+    "convicted of larceny", "charged with larceny", "guilty of larceny",
+    "convicted of theft", "charged with theft", "guilty of theft",
+    "convicted of embezzlement", "charged with embezzlement",
+  ],
+  "robbery": [
+    "armed robbery", "aggravated robbery",
+    "robbery in the first degree", "robbery in the second degree",
+    "robbery with a weapon", "bank robbery", "home invasion robbery",
+    "carjacking", "strong-arm robbery", "robbery by force",
+    "robbery by threat", "robbery by sudden snatching",
+    "convicted of robbery", "charged with robbery", "guilty of robbery",
+    "count of robbery", "offense of robbery",
+  ],
+  "burglary": [
+    "burglary of a dwelling", "burglary of a structure",
+    "burglary of a conveyance", "residential burglary",
+    "commercial burglary", "breaking and entering",
+    "burglary in the first degree", "burglary in the second degree",
+    "burglary in the third degree", "aggravated burglary",
+    "home invasion",
+    "convicted of burglary", "charged with burglary", "guilty of burglary",
+    "count of burglary", "offense of burglary",
+  ],
+  "domestic-violence": [
+    "domestic violence", "domestic battery", "domestic assault",
+    "intimate partner violence", "spousal abuse", "domestic abuse",
+    "violation of protective order", "violation of restraining order",
+    "domestic battery by strangulation", "domestic aggravated battery",
+  ],
+  "murder": [
+    "first degree murder", "first-degree murder",
+    "second degree murder", "second-degree murder",
+    "felony murder", "capital murder",
+    "voluntary manslaughter", "involuntary manslaughter",
+    "vehicular homicide", "vehicular manslaughter",
+    "murder in the first degree", "murder in the second degree",
+    "attempted murder", "premeditated murder", "criminal homicide",
+    "convicted of murder", "charged with murder", "guilty of murder",
+    "offense is murder", "offense of murder", "count of murder",
+    "convicted of homicide", "charged with homicide",
+    "convicted of manslaughter", "charged with manslaughter",
+  ],
+  "sex-offense": [
+    "sexual assault", "sexual battery", "sexual abuse",
+    "indecent assault", "lewd and lascivious", "molestation",
+    "sex offense", "sexual misconduct", "indecent exposure",
+    "child sexual abuse", "statutory rape", "criminal sexual conduct",
+    "aggravated sexual assault", "sexual exploitation",
+    "rape in the first degree", "rape in the second degree",
+    "convicted of rape", "charged with rape", "guilty of rape",
+    "forcible rape", "count of rape", "offense of rape",
+  ],
+};
+
 // ── Motion type signals ─────────────────────────────────────────────────────
 // Each entry: [canonical_name, ...phrases to match in lowercased text]
 // Sourced from scripts/bulk-extract-motion-legal-issues.mjs (18 types)
@@ -100,6 +207,71 @@ export function extractMotionTypes(text) {
         found.push(canonical);
         break; // Found this motion type, move to next
       }
+    }
+  }
+
+  return found;
+}
+
+/**
+ * Extract charge types from opinion text via keyword matching.
+ * Scans lowercased text for multi-word charge-identifying phrases.
+ * Returns broad category slugs (our 10 charge families).
+ *
+ * @param {string} text — opinion text (plain text, not HTML)
+ * @returns {string[]} — array of broad charge category slugs
+ */
+export function extractChargesFromKeywords(text) {
+  if (!text) return [];
+  const lower = text.toLowerCase();
+  const found = [];
+
+  for (const [slug, phrases] of Object.entries(CHARGE_NAME_KEYWORDS)) {
+    for (const phrase of phrases) {
+      if (lower.indexOf(phrase) >= 0) {
+        found.push(slug);
+        break; // Found this charge category, move to next
+      }
+    }
+  }
+
+  return found;
+}
+
+/**
+ * Extract charge types from theory keyword aggregation.
+ * Uses charge_defense_theories keywords as charge identification signals.
+ * Requires 3+ distinct theory keywords for the SAME charge_slug to classify.
+ * This high threshold avoids false positives from common legal terms.
+ *
+ * @param {string} text — opinion text (plain text, not HTML)
+ * @param {Map<string, Array<{theory_name: string, theory_keywords: string[], motion_types: string[]}>>} theoryMap
+ * @returns {string[]} — array of charge slugs with strong keyword evidence
+ */
+export function extractChargesFromTheoryKeywords(text, theoryMap) {
+  if (!text || !theoryMap) return [];
+  const lower = text.toLowerCase();
+  const found = [];
+  const THRESHOLD = 3; // Require 3+ distinct keyword hits per charge
+
+  for (const [chargeSlug, theories] of theoryMap) {
+    let keywordHits = 0;
+    const seenKeywords = new Set();
+
+    for (const theory of theories) {
+      for (const kw of theory.theory_keywords) {
+        if (seenKeywords.has(kw)) continue;
+        if (lower.indexOf(kw) >= 0) {
+          seenKeywords.add(kw);
+          keywordHits++;
+          if (keywordHits >= THRESHOLD) break;
+        }
+      }
+      if (keywordHits >= THRESHOLD) break;
+    }
+
+    if (keywordHits >= THRESHOLD) {
+      found.push(chargeSlug);
     }
   }
 
@@ -543,11 +715,24 @@ export function extractAll(params) {
     holding_text: null,
   };
 
-  // 1. Extract charge types (always runs)
+  // 1. Extract charge types (always runs) — three methods, merged
   if (extractionSteps.extractCharges) {
+    const chargeSet = new Set();
+
+    // Method A: Statute citation → charge_slug (granular, high precision)
     const citations = extractStatuteCitations(text);
-    const matches = matchStatutesToCharges(citations, jurisdiction, statuteMap);
-    result.charge_types = matches.map(m => m.charge_slug);
+    const statuteMatches = matchStatutesToCharges(citations, jurisdiction, statuteMap);
+    for (const m of statuteMatches) chargeSet.add(m.charge_slug);
+
+    // Method B: Direct charge name keywords → broad category (high recall)
+    const keywordMatches = extractChargesFromKeywords(text);
+    for (const slug of keywordMatches) chargeSet.add(slug);
+
+    // Method C: Theory keyword aggregation → broad category (3+ keywords required)
+    const theoryMatches = extractChargesFromTheoryKeywords(text, theoryMap);
+    for (const slug of theoryMatches) chargeSet.add(slug);
+
+    result.charge_types = Array.from(chargeSet);
   }
 
   // 2. Extract motion types
