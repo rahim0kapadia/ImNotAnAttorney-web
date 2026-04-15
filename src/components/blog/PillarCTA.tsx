@@ -7,9 +7,10 @@
  *   A) Free entry point exists  -> blue primary CTA (free) + amber secondary (paid)
  *   B) No free entry point      -> amber primary CTA (paid) + delivery info
  *
- * Self-contained: no imports from other project files (except next/link pattern
- * replaced with <a> tags so onClick GA4 tracking fires).
+ * Prices sourced from TIER_CORE (single source of truth).
  */
+
+import { TIER_CORE } from "@/lib/tiers";
 
 declare global {
   interface Window {
@@ -32,14 +33,6 @@ interface PillarCTAProps {
 /* ------------------------------------------------------------------ */
 /*  Static maps                                                        */
 /* ------------------------------------------------------------------ */
-
-const TIER_LABELS: Record<string, { name: string; price: string; delivery: string }> = {
-  "case-decoder":        { name: "Case Decoder",          price: "$197",   delivery: "48hr delivery" },
-  "intelligence-brief":  { name: "Intelligence Brief",    price: "$997",   delivery: "72hr delivery" },
-  "x-ray":               { name: "The X-Ray",             price: "$2,497", delivery: "10 business days" },
-  "war-room":            { name: "The War Room",          price: "$4,997", delivery: "25-28 days" },
-  "situation-room":      { name: "The Situation Room",    price: "$9,997", delivery: "Priority delivery" },
-};
 
 const PILLAR_HOOKS: Record<string, string> = {
   "plea-analyzer":            "Your plea deal might have hidden terms.",
@@ -69,9 +62,9 @@ export function PillarCTA({
   if (!pillarSlug) return null;
 
   const hook = PILLAR_HOOKS[pillarSlug] || DEFAULT_HOOK;
-  const tier = TIER_LABELS[ctaTier];
+  const tier = TIER_CORE[ctaTier as keyof typeof TIER_CORE];
   const tierName = tier?.name ?? "Full Analysis";
-  const tierPrice = tier?.price ?? "";
+  const tierPrice = tier?.priceDisplay ?? "";
   const tierDelivery = tier?.delivery ?? "";
 
   function trackClick(ctaType: "free_entry" | "paid_tier") {

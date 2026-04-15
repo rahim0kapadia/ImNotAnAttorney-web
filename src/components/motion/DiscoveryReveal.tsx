@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { TIER_CORE } from "@/lib/tiers";
 
 /**
  * DiscoveryReveal — Real PCSO Discovery Report Images
@@ -224,7 +225,7 @@ export function DiscoveryReveal() {
             href="/checkout?tier=case-decoder"
             className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
           >
-            Get Your Case Analyzed &mdash; $197 &rarr;
+            Get Your Case Analyzed &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
           </a>
           <Link
             href="/sample"

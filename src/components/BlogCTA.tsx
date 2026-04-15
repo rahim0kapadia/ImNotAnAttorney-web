@@ -9,6 +9,7 @@
  */
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
+import { getProduct } from "@/lib/products";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { TrustBadges } from "@/components/TrustBadges";
 
@@ -24,6 +25,8 @@ const CATEGORY_PLAYBOOK: Record<string, string> = {
   probation: "probation-violation",
   "general-defense": "case-decoder",
 };
+
+const _employmentPrice = getProduct("employment-impact")?.priceDisplay ?? "$197";
 
 /**
  * Categories that route to standalone research products instead of TIER_CORE
@@ -44,12 +47,12 @@ const STANDALONE_CATEGORY_CTA: Record<
 > = {
   employment: {
     slug: "employment-impact",
-    price: "$197",
+    price: _employmentPrice,
     headline: "Will THIS specific charge cost YOUR specific job?",
     headlineAccent: "Find out in 48 hours.",
     subhead:
       "Employment Impact Assessment: state-specific background check analysis, employer type rules, and professional license implications for your exact situation. 60-second intake, report delivered in 48 hours. 7-day refund guarantee.",
-    primaryLabel: "Get Your Employment Impact Assessment — $197",
+    primaryLabel: `Get Your Employment Impact Assessment — ${_employmentPrice}`,
     secondaryLabel: "Not sure yet? Take the free Defense Milestone Score",
   },
 };
