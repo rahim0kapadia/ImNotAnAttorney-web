@@ -80,6 +80,21 @@ git push origin master
 | `data/bulk-verify/cl-bulk/cluster-jurisdiction-map.json` | Loaded by classifier |
 | `data/bulk-verify/cl-bulk/dockets-2026-03-31.csv.bz2` | 5GB new download |
 
+## Deferred review fixes (do after classification)
+
+### SECURITY — Token rotation needed
+Supabase Management API tokens (`sbp_fea5e71...` and `sbp_c48b0dc1...`) are hardcoded in COMMITTED files:
+`scripts/verify-tasks-applied.mjs`, `scripts/task-3-apply-cl-urls.mjs`, `scripts/task-2-apply-cap-verification.mjs`, `scripts/task-2-3-final-apply.mjs`, `scripts/task-1-apply-enrichment.mjs`, `scripts/migrate-009-tier-inclusion.mjs`.
+**Rotate both tokens in Supabase dashboard, then scrub from code and load from env vars.**
+
+### Code quality (from 3-agent review, 2026-04-14)
+- **W1**: `source_urls` grows unbounded on re-runs (array_cat in ON CONFLICT). Fix: conditional append checking existence.
+- **W2**: `date_created` used as `decision_date` — should be `date_filed` from clusters. Needs cluster data join.
+- **W4**: No bzcat error/stderr handlers in `build-court-jurisdiction-map.mjs` and `extract-cluster-jurisdictions.mjs`. Add `bzcat.on('error')` + `bzcat.stderr.on('data')`.
+- **W7**: `stripQuotes()` duplicated in 4 scripts. Extract to `scripts/lib/csv-utils.mjs`.
+- **W9/W10**: Delete `extract-docket-courts.mjs` (superseded by `build-final-jurisdiction-map.mjs`). Delete any remaining `parse-cl-courts.mjs`.
+- **W11**: Dry-run upserts array grows unbounded. Flush/discard periodically when `!applyMode`.
+
 ## Expected outcome
 Before: 200K federal + 655K "unknown" jurisdiction → 0% state charge extraction
 After: ~800K+ with correct jurisdiction → statute lookup works → charge extraction should jump from 0.3% to 15-40%+
