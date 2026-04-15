@@ -154,35 +154,35 @@ const DUI_FIRST_OFFENSE: PlaybookConfig = {
       {
         title: "Emergency Playbook (Book 1)",
         desc: "What to do right now. First 72 Hours checklist, DMV deadline alert, 5 Priority Questions, crisis resources. Start here.",
-        value: "$97",
+        value: "$197", // anchor:dui-first-offense
       },
       {
         title: "Charge Reality Report",
         desc: "DUI first offense elements explained in plain English \u2014 dual-track (DMV + criminal), sentencing ranges, what the prosecution must prove.",
-        value: "$297",
+        value: "$347", // anchor:dui-first-offense
       },
       {
         title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
-        value: "$197",
+        value: "$297", // anchor:dui-first-offense
       },
       {
         title: "DUI Case Stage Roadmap",
         desc: "Arrest through resolution timeline with milestones \u2014 DMV deadline, arraignment, pre-trial, discovery, resolution. Know what should happen and when.",
-        value: "$97",
+        value: "$197", // anchor:dui-first-offense
       },
       {
         title: "Red Flag Checklist",
         desc: "12 specific things that could get evidence thrown out \u2014 breathalyzer calibration, FST protocol, 15-minute observation, officer training records.",
-        value: "$97",
+        value: "$197", // anchor:dui-first-offense
       },
       {
         title: "Case Progress Scorecard",
         desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. A $5,000 attorney who challenges evidence beats a $10,000 one who takes the plea.",
-        value: "$97",
+        value: "$197", // anchor:dui-first-offense
       },
     ],
-    totalValue: "$882",
+    totalValue: "$1,432",
   },
   guarantee: {
     headline: "5 questions you never thought to ask \u2014 or full refund.",
@@ -313,35 +313,35 @@ const DRUG_POSSESSION: PlaybookConfig = {
       {
         title: "Emergency Playbook (Book 1)",
         desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, what makes your case unique, crisis resources. Start here.",
-        value: "$97",
+        value: "$197", // anchor:drug-possession
       },
       {
         title: "Charge Reality Report",
         desc: "Drug possession elements explained in plain English \u2014 schedules, weight thresholds, sentencing ranges, what the prosecution must prove.",
-        value: "$297",
+        value: "$347", // anchor:drug-possession
       },
       {
         title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
-        value: "$197",
+        value: "$297", // anchor:drug-possession
       },
       {
         title: "Drug Case Stage Roadmap",
         desc: "Arrest through resolution timeline with milestones \u2014 bond hearing, arraignment, diversion evaluation, pre-trial, discovery, resolution.",
-        value: "$97",
+        value: "$197", // anchor:drug-possession
       },
       {
         title: "Red Flag Checklist",
         desc: "12 specific things that could get evidence thrown out \u2014 lab analysis, chain of custody, search legality, CI reliability, weight discrepancies.",
-        value: "$97",
+        value: "$197", // anchor:drug-possession
       },
       {
         title: "Case Progress Scorecard",
         desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. An attorney who challenges evidence beats one who takes the standard plea.",
-        value: "$97",
+        value: "$197", // anchor:drug-possession
       },
     ],
-    totalValue: "$882",
+    totalValue: "$1,432",
   },
   guarantee: {
     headline:
@@ -478,35 +478,35 @@ const PROBATION_VIOLATION: PlaybookConfig = {
       {
         title: "Emergency Playbook (Book 1)",
         desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, violation type assessment, crisis resources. Start here.",
-        value: "$97",
+        value: "$197", // anchor:probation-violation
       },
       {
         title: "Probation Violation Reality Report",
         desc: "Technical vs. substantive violations, burden of proof, your rights at the hearing, state cap laws, and what the prosecution must prove \u2014 all in plain English.",
-        value: "$297",
+        value: "$347", // anchor:probation-violation
       },
       {
         title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from landmark case law and 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes.",
-        value: "$197",
+        value: "$297", // anchor:probation-violation
       },
       {
         title: "Revocation Hearing Roadmap",
         desc: "From alleged violation through disposition \u2014 every stage, what typically happens, and what questions to ask at each step.",
-        value: "$97",
+        value: "$197", // anchor:probation-violation
       },
       {
         title: "Red Flag Checklist",
         desc: "12 specific issues that could change the outcome \u2014 unconfirmed drug tests, PO procedural errors, missing notice, Bearden defense triggers.",
-        value: "$97",
+        value: "$197", // anchor:probation-violation
       },
       {
         title: "Case Progress Scorecard",
         desc: "Rate your attorney on 10 behaviors. An attorney who negotiates alternatives before the hearing beats one who just shows up.",
-        value: "$97",
+        value: "$197", // anchor:probation-violation
       },
     ],
-    totalValue: "$882",
+    totalValue: "$1,432",
   },
   guarantee: {
     headline:
@@ -643,35 +643,35 @@ const WHITE_COLLAR: PlaybookConfig = {
       {
         title: "Emergency Playbook (Book 1)",
         desc: "What to do right now. Document preservation checklist, 5 Priority Questions, financial exposure assessment, crisis resources. Start here.",
-        value: "$97",
+        value: "$247", // anchor:white-collar
       },
       {
         title: "Charge Reality Report",
         desc: "White collar offense elements explained in plain English \u2014 wire fraud, embezzlement, tax evasion, identity theft, securities fraud, money laundering. Loss amount table, sentencing guidelines, what the prosecution must prove.",
-        value: "$297",
+        value: "$497", // anchor:white-collar
       },
       {
         title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
-        value: "$197",
+        value: "$347", // anchor:white-collar
       },
       {
         title: "Federal Case Stage Roadmap",
         desc: "Pre-indictment investigation through post-conviction \u2014 9 stages with milestones, attorney benchmarks, and red flags at each stage.",
-        value: "$97",
+        value: "$247", // anchor:white-collar
       },
       {
         title: "Red Flag Checklist",
         desc: "12 specific issues that could change the outcome \u2014 loss calculation gaps, undisclosed Brady material, unchallenged cooperators, forfeiture exposure, missing motions.",
-        value: "$97",
+        value: "$197", // anchor:white-collar
       },
       {
         title: "Case Progress Scorecard",
         desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. An attorney who challenges the loss calculation beats one who accepts the government\u2019s number.",
-        value: "$97",
+        value: "$197", // anchor:white-collar
       },
     ],
-    totalValue: "$882",
+    totalValue: "$1,732",
   },
   guarantee: {
     headline:
@@ -808,35 +808,35 @@ const SEX_OFFENSE: PlaybookConfig = {
       {
         title: "Emergency Playbook (Book 1)",
         desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, collateral consequences overview, crisis resources. Start here.",
-        value: "$97",
+        value: "$197", // anchor:sex-offense
       },
       {
         title: "Charge Reality Report",
         desc: "Sex offense elements explained in plain English \u2014 sexual assault, child abuse, statutory rape, internet offenses, federal charges. Sentencing ranges, registration tiers, what the prosecution must prove.",
-        value: "$297",
+        value: "$347", // anchor:sex-offense
       },
       {
         title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
-        value: "$197",
+        value: "$297", // anchor:sex-offense
       },
       {
         title: "Sex Offense Case Stage Roadmap",
         desc: "Accusation through post-conviction \u2014 10 stages with milestones, attorney benchmarks, and red flags. Includes plea negotiation strategy and civil commitment risk assessment.",
-        value: "$97",
+        value: "$197", // anchor:sex-offense
       },
       {
         title: "Red Flag Checklist",
         desc: "12 specific issues that could change the outcome \u2014 forensic interview protocol violations, SANE exam ambiguity, digital attribution gaps, accuser credibility concerns.",
-        value: "$97",
+        value: "$197", // anchor:sex-offense
       },
       {
         title: "Case Progress Scorecard",
         desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. An attorney who challenges forensic evidence beats one who accepts the prosecution\u2019s reports.",
-        value: "$97",
+        value: "$197", // anchor:sex-offense
       },
     ],
-    totalValue: "$882",
+    totalValue: "$1,432",
   },
   guarantee: {
     headline:
@@ -973,35 +973,35 @@ const FEDERAL_CRIMINAL: PlaybookConfig = {
       {
         title: "Emergency Playbook (Book 1)",
         desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, federal vs. state differences, crisis resources. Start here.",
-        value: "$97",
+        value: "$247", // anchor:federal-criminal
       },
       {
         title: "Federal System Reality Report",
         desc: "How the federal system actually works \u2014 sentencing guidelines formula, mandatory minimums, grand jury process, cooperation mechanics, BOP designation. Everything your attorney assumes you already know.",
-        value: "$297",
+        value: "$497", // anchor:federal-criminal
       },
       {
         title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
-        value: "$197",
+        value: "$347", // anchor:federal-criminal
       },
       {
         title: "Federal Case Stage Roadmap",
         desc: "Target letter through post-conviction \u2014 13 stages with milestones, attorney benchmarks, and red flags. Includes cooperation decision points and sentencing preparation timeline.",
-        value: "$97",
+        value: "$247", // anchor:federal-criminal
       },
       {
         title: "Red Flag Checklist",
         desc: "12 specific issues that could change the outcome \u2014 guideline miscalculations, missed departure arguments, cooperation terms gaps, Brady violations, PSR objection deadlines.",
-        value: "$97",
+        value: "$197", // anchor:federal-criminal
       },
       {
         title: "Case Progress Scorecard",
         desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. An attorney who independently calculates the guidelines beats one who accepts the government\u2019s version.",
-        value: "$97",
+        value: "$197", // anchor:federal-criminal
       },
     ],
-    totalValue: "$882",
+    totalValue: "$1,732",
   },
   guarantee: {
     headline:
@@ -1138,35 +1138,35 @@ const DRUG_TRAFFICKING: PlaybookConfig = {
       {
         title: "Emergency Playbook (Book 1)",
         desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, conspiracy exposure assessment, crisis resources. Start here.",
-        value: "$97",
+        value: "$247", // anchor:drug-trafficking
       },
       {
         title: "Trafficking Charge Reality Report",
         desc: "How the system actually works \u2014 mandatory minimum quantity tables, conspiracy liability (being held responsible for others' actions), enhancement factors, safety valve eligibility, cooperation mechanics. Everything your attorney assumes you already know.",
-        value: "$297",
+        value: "$497", // anchor:drug-trafficking
       },
       {
         title: "26 Questions That Change How Your Next Attorney Meeting Goes",
         desc: "Derived from 40+ elite defense attorneys\u2019 techniques. 6-part format per question with follow-up probes. The research alone took months.",
-        value: "$197",
+        value: "$347", // anchor:drug-trafficking
       },
       {
         title: "Drug Trafficking Case Stage Roadmap",
         desc: "Arrest through post-conviction \u2014 12 stages with milestones, attorney benchmarks, and red flags. Includes cooperation decision points and sentencing preparation timeline.",
-        value: "$97",
+        value: "$247", // anchor:drug-trafficking
       },
       {
         title: "Red Flag Checklist",
         desc: "12 specific issues that could change the outcome \u2014 quantity miscalculations, informant credibility gaps, missed suppression motions, cooperation risks, Pinkerton exposure.",
-        value: "$97",
+        value: "$197", // anchor:drug-trafficking
       },
       {
         title: "Case Progress Scorecard",
         desc: "Rate your attorney on 10 behaviors before it\u2019s too late to switch. An attorney who independently challenges the drug quantity beats one who accepts the government\u2019s calculation.",
-        value: "$97",
+        value: "$197", // anchor:drug-trafficking
       },
     ],
-    totalValue: "$882",
+    totalValue: "$1,732",
   },
   guarantee: {
     headline:
@@ -1302,40 +1302,40 @@ const SELF_DEFENSE: PlaybookConfig = {
       {
         title: "Emergency Playbook (Book 1)",
         desc: "What to do right now. First 72 Hours checklist, 5 Priority Questions, force proportionality assessment, crisis resources. Start here.",
-        value: "$97",
+        value: "$197", // anchor:self-defense
       },
       {
         title: "26 Attorney Questions",
         desc: "5 priority + 21 organized by evidence, case strength, and attorney accountability",
-        value: "$250",
+        value: "$297", // anchor:self-defense
       },
       {
         title: "Five-Element Self-Defense Guide",
         desc: "Innocence, imminence, proportionality, avoidance, reasonableness \u2014 explained in plain English with Stand Your Ground state-by-state breakdown",
-        value: "$150",
+        value: "$197", // anchor:self-defense
       },
       {
         title: "11-Stage Case Roadmap",
         desc: "From incident through immunity hearing, trial, sentencing, and appeal \u2014 what typically happens at each stage and what questions to ask",
-        value: "$125",
+        value: "$197", // anchor:self-defense
       },
       {
         title: "12-Point Red Flag Checklist",
         desc: "Evidence gaps, missing experts, unexplored immunity hearings, civil exposure blind spots",
-        value: "$100",
+        value: "$197", // anchor:self-defense
       },
       {
         title: "Attorney Scorecard + Meeting Templates",
         desc: "Rate your representation, email template, phone script \u2014 ready to use today",
-        value: "$75",
+        value: "$150", // anchor:self-defense
       },
       {
         title: "Charge Reality Report",
         desc: "Perfect vs. imperfect self-defense, sentencing ranges, resolution paths, collateral consequences with statute citations",
-        value: "$85",
+        value: "$197", // anchor:self-defense
       },
     ],
-    totalValue: "$882",
+    totalValue: "$1,432",
   },
   guarantee: {
     headline: "The 5-Question Guarantee",

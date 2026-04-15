@@ -28,6 +28,8 @@
  * Once all tiers are live, remove the dual-mode code (see stripe.ts).
  */
 export const TIER_CORE = {
+  // When changing this price, also update valueStack in playbook-configs.ts
+  // Rule: 10x minimum multiple, no single component below product price
   "dui-first-offense": {
     name: "DUI Defense Playbook",
     price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
@@ -43,6 +45,8 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE — real payments enabled 2026-03-24
   },
+    // When changing this price, also update valueStack in playbook-configs.ts
+  // Rule: 10x minimum multiple, no single component below product price
   "drug-possession": {
     name: "Drug Possession Defense Playbook",
     price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
@@ -58,6 +62,8 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE — 2026-03-25
   },
+    // When changing this price, also update valueStack in playbook-configs.ts
+  // Rule: 10x minimum multiple, no single component below product price
   "probation-violation": {
     name: "Probation Violation Defense Playbook",
     price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
@@ -73,6 +79,8 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE — 2026-03-25
   },
+    // When changing this price, also update valueStack in playbook-configs.ts
+  // Rule: 10x minimum multiple, no single component below product price
   "white-collar": {
     name: "White Collar Defense Playbook",
     price: 14700, // cents — raised from $97 → $147 (2026-04-07, Hormozi premium tier for higher-stakes charges)
@@ -88,6 +96,8 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE — 2026-03-25
   },
+    // When changing this price, also update valueStack in playbook-configs.ts
+  // Rule: 10x minimum multiple, no single component below product price
   "sex-offense": {
     name: "Sex Offense Defense Playbook",
     price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
@@ -103,6 +113,8 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE — 2026-03-25
   },
+    // When changing this price, also update valueStack in playbook-configs.ts
+  // Rule: 10x minimum multiple, no single component below product price
   "federal-criminal": {
     name: "Federal Criminal Defense Playbook",
     price: 14700, // cents — raised from $97 → $147 (2026-04-07, Hormozi premium tier: federal stakes)
@@ -118,6 +130,8 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE — 2026-03-25
   },
+    // When changing this price, also update valueStack in playbook-configs.ts
+  // Rule: 10x minimum multiple, no single component below product price
   "drug-trafficking": {
     name: "Drug Trafficking Defense Playbook",
     price: 14700, // cents — raised from $97 → $147 (2026-04-07, Hormozi premium tier: trafficking stakes)
@@ -133,6 +147,8 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE — 2026-03-25
   },
+    // When changing this price, also update valueStack in playbook-configs.ts
+  // Rule: 10x minimum multiple, no single component below product price
   "self-defense": {
     name: "Self-Defense / Justifiable Force Defense Playbook",
     price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
