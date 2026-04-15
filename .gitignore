@@ -73,6 +73,10 @@ data/bulk-verify/good-law-graph/appeal-citing-map.json
 data/bulk-verify/external-intel/ussc/
 data/bulk-verify/external-intel/**/*.zip
 data/bulk-verify/external-intel/*.zip
+
+# JUSTFAIR data (1.3GB CSV + generated SQL output)
+data/external-intel/justfair/FinalDataset.csv
+data/external-intel/justfair/sql-output/
 *.dat
 *.sas
 *.sps
