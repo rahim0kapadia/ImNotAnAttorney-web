@@ -59,6 +59,11 @@ Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment fo
 | `src/lib/intelligence-brief/prompts.ts` | 9 prompt builders for report generation |
 | `src/lib/playbook-configs.ts` | 8 charge-type playbook configs |
 
+## Pricing Architecture
+All prices come from `tiers.ts` (TIER_CORE) and `products.ts` (STANDALONE_PRODUCTS).
+NEVER hardcode prices in components or pages. See `src/lib/PRICING-ARCHITECTURE.md` for the full three-layer system (mechanical, value-stack anchors, prose template functions).
+When changing prices, the pre-commit hook validates automatically via `scripts/check-price-staleness.mjs`.
+
 ## Important Notes
 
 - Repo: github.com/rahim0kapadia/ImNotAnAttorney-web
