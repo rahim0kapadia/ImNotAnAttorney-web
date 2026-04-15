@@ -145,7 +145,7 @@ function esc(val) {
 
 function escArr(arr) {
   if (!arr || arr.length === 0) return "'{}'";
-  const inner = arr.map((v) => '"' + String(v).split('"').join('\\"') + '"').join(",");
+  const inner = arr.map((v) => '"' + String(v).split("'").join("''").split('"').join('\\"') + '"').join(",");
   return "'{" + inner + "}'";
 }
 
@@ -182,6 +182,7 @@ const STATE_PATTERNS = [
   ["hawaii", "hi"], ["new hampshire", "nh"], ["maine", "me"], ["montana", "mt"],
   ["rhode island", "ri"], ["delaware", "de"], ["south dakota", "sd"],
   ["north dakota", "nd"], ["alaska", "ak"], ["vermont", "vt"], ["wyoming", "wy"],
+  ["district of columbia", "dc"],
 ];
 
 function deriveJurisdictionFromText(text) {
@@ -268,7 +269,7 @@ async function loadTheoryMap() {
 function loadClusterJurisdictionMap() {
   const mapPath = path.join(PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "cluster-jurisdiction-map.json");
   if (!fs.existsSync(mapPath)) {
-    console.log("  No cluster-jurisdiction-map.json found. Run extract-cluster-jurisdictions.mjs first.");
+    console.log("  No cluster-jurisdiction-map.json found. Run build-final-jurisdiction-map.mjs first (see docs/handoffs/2026-04-14-jurisdiction-fix-pipeline.md).");
     return new Map();
   }
   const raw = JSON.parse(fs.readFileSync(mapPath, "utf8"));
@@ -481,7 +482,6 @@ async function main() {
 
   // Load reference maps (one streamer at a time — OOM gotcha)
   const clusterJurisdictions = loadClusterJurisdictionMap();
-  const courtMap = loadCourtJurisdictionMap();
   const [statuteMap, theoryMap, existingJurisdictions] = await Promise.all([
     loadStatuteMap(),
     loadTheoryMap(),
@@ -518,7 +518,7 @@ async function main() {
     console.log("bzcat path: " + bzcatPath);
     console.log("TIP: run python3 scripts/filter-criminal-opinions.py first for ~10x faster reruns.\n");
 
-    bzcat = spawn(bzcatPath, [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
+    bzcat = spawn(bzcatPath, [OPINIONS_BZ2], { stdio: ["ignore", "pipe", "pipe"] });
     let bzcatStderr = "";
     bzcat.stderr.on("data", (d) => { bzcatStderr += d.toString().slice(0, 2000); });
     bzcat.on("error", (e) => console.error("bzcat error: " + e.message));
@@ -627,7 +627,7 @@ async function main() {
       // Enforce --limit on criminal opinions
       if (criminalCount > criminalLimit) {
         console.log("\n--limit " + criminalLimit + " criminal opinions reached. Stopping stream.");
-        try { bzcat.kill(); } catch {}
+        try { if (bzcat) bzcat.kill(); } catch {}
         break;
       }
 
@@ -635,7 +635,7 @@ async function main() {
 
       // Derive jurisdiction: cluster map (case_name_full) > existing DB > text heuristic
       let jurisdiction =
-        clusterJurisdictions.get(cluster_id) ||
+        (clusterJurisdictions.get(cluster_id) || "").toLowerCase() ||
         existingJurisdictions.get(cluster_id) ||
         deriveJurisdictionFromText(text) ||
         "unknown";
@@ -708,7 +708,7 @@ async function main() {
       "\n  CSV parse error at row " + rowCount +
       " (continuing with collected data): " + parseErr.message.slice(0, 150)
     );
-    try { bzcat.kill(); } catch {}
+    try { if (bzcat) bzcat.kill(); } catch {}
   }
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);

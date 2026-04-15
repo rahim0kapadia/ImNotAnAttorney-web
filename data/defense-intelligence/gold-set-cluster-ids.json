@@ -1,0 +1,1002 @@
+[
+  {
+    "cluster_id": "dd57cd01-f445-4964-bf41-2680fcf13105",
+    "case_name": "Commonwealth v. Fuentes",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "4b9caea0-9762-4358-a957-70b0b025d802",
+    "case_name": "State v. William A. Case, Jr. (072688)",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "7da0571f-2104-44f8-afb8-53957df0a3c3",
+    "case_name": "DA v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "e2a1e70d-3a10-420b-a3cd-3a68f44d70b9",
+    "case_name": "Pickett v. Copeland",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d5df1e7b-d19e-449c-9ee6-ef5a3016d370",
+    "case_name": "State v. Jones",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "cc89f96c-8466-4057-8774-527216ea9f15",
+    "case_name": "State of Maine v. Dale M. Pinkham Sr.",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d601361d-b6b8-4058-8998-499933b0ad15",
+    "case_name": "State v. Dominy",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "00a09f52-c798-42dd-be91-f690f28a1a15",
+    "case_name": "In re United States Currency In Amount of $26,980.00",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "802dd44b-58e2-4de5-badb-720e105c24a3",
+    "case_name": "People v. Clemons",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "392e6d08-db64-48f3-b6cb-352066d68936",
+    "case_name": "State v. Cline",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "5a65cd76-3732-498c-a391-7f28f195ccbd",
+    "case_name": "People v. Naylor",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "1260f2c0-d213-4803-8ce1-d32377e5a30b",
+    "case_name": "State of Iowa v. Randy Mitchell Copenhaver",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "8c665634-e2f2-4e68-a042-ffa7657f53ba",
+    "case_name": "Misskelley v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "bf2013ec-53e3-4195-adb0-c4cd7c4b9fc1",
+    "case_name": "State v. Montgomery",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "4568c960-f8f0-41fe-94d9-4b0e4a3668e4",
+    "case_name": "United States v. Gilbert Isgar",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "ed811c98-d435-40dd-91ed-d23e48ccc75f",
+    "case_name": "State of New Jersey v. Louise Frank",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "09adcf3a-21d2-48b2-a1e1-073b15696ca9",
+    "case_name": "People v. Williams",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "2d67dc84-bc2f-4166-b7d8-290415c969eb",
+    "case_name": "State v. Donaldson",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "cf25feb8-87d5-4f56-9803-c61a85d0661e",
+    "case_name": "People v. Harvey",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "abba0259-e153-47b1-800f-f5efc884a71a",
+    "case_name": "State v. Anderson",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "c709fc71-43bc-4bc6-b39b-3d98394cf05f",
+    "case_name": "Adam Horton v. State of Indiana",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "affb5c3f-ee16-4d5f-a2d9-22cb0982d78a",
+    "case_name": "Cary v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "14f63c17-0738-4e92-b3ab-a96b58729c57",
+    "case_name": "Pickens v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "648870a0-8325-4b12-aae3-8e03968a9801",
+    "case_name": "State v. Dorsey",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "5376496c-8c13-40f3-9ac1-af53233234c0",
+    "case_name": "In Re Standard Jury Instructions in Criminal Cases—Report 2011-01",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "130436ec-120a-471a-9500-96309a45bffb",
+    "case_name": "State v. William A. Case, Jr. (072688)",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f426d18b-0f6c-4c83-b941-7e5e1754f380",
+    "case_name": "People v. Bosca",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "9976cb80-f38b-40f5-891a-fcd5ac5f4d3a",
+    "case_name": "Nance v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "b9632051-39df-4420-92ee-9553bad1b921",
+    "case_name": "State v. Pena",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "e0a7a97e-6406-492e-abfe-6debee610baf",
+    "case_name": "People v. Bosca",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "b03e1531-2c3a-4ca8-a870-a374436b89f7",
+    "case_name": "State of Maine v. John E. Sasso",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "9b037738-90f2-4e56-86d1-7bdbbb915430",
+    "case_name": "Savord v. Morton",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "4dba7b6f-7b2f-4801-a43a-54bb09dea13b",
+    "case_name": "State of Arizona v. Christopher Mathew Payne",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "8adb5f7e-ce1e-439a-9d11-97e773054c1c",
+    "case_name": "CHRISTINA BELT, v.UNITED STATES",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f5624e43-ec17-45e0-9639-431ac6a1598f",
+    "case_name": "State v. Atwood",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "04ab0f93-299b-4fcf-81e6-2680cde8544f",
+    "case_name": "State v. JTS",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "3505a3aa-4870-4fe2-9081-9d6189c79e68",
+    "case_name": "State of Maine v. Thayne M. Ormsby",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "ee46e676-785b-4cd0-80a8-0e18d3e83580",
+    "case_name": "Dannie Carl Pattison v. State of Indiana",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "cd5271eb-f667-4e1c-ae17-79609af34941",
+    "case_name": "People v. Alexander",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "89f8c963-2289-462e-aa56-cd075986890c",
+    "case_name": "State v. Jeremiah J. Purtell",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "99411bc6-bf85-40f2-ba68-b26ca502c912",
+    "case_name": "State v. Bouhdida",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "6090d73c-a82d-4b39-8e17-b5fcdd9263c0",
+    "case_name": "State of Maine v. Michaela C. Davenport",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "0cdbc57d-0a38-46db-8d97-f4583ddef773",
+    "case_name": "People v. Stiff",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "87dcbf6b-d792-4340-aba9-999398018a2a",
+    "case_name": "State of Arizona Ex Rel. Montgomery v. Hrach Shilgevorkyan",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "0e0da79e-cf6f-4946-ab9b-ea292f02a20e",
+    "case_name": "State v. Loo",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "ce85407a-1b3a-4fa0-9416-6e392fd1de2e",
+    "case_name": "Casey v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "626feef2-f84e-4bb4-b665-cc0b93bca1da",
+    "case_name": "Rambin v. Allstate Insurance Company",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "23b47501-3378-450a-96f8-1a1e69bd36fa",
+    "case_name": "Henry v. Cash Biz, LP",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "a1548ac4-aaa3-4344-bf55-2ccfce1927e8",
+    "case_name": "ROSANNE L. WOODROOF v. JOSEPH F. CUNNINGHAM",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "10682572-9052-46fa-9230-551d1074b75b",
+    "case_name": "Johnson v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "7e7ad548-448e-49fe-af67-34de37411598",
+    "case_name": "People v. Bosca",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d74fa485-9698-49f4-b763-8ad55592db6a",
+    "case_name": "State v. William A. Case, Jr. (072688)",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "ffaddde3-daee-4ce4-861a-5a94ad3fcbd4",
+    "case_name": "State v. Bouhdida",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "005e2dda-45b9-4b50-8df2-38cd89d7c0f3",
+    "case_name": "K.F. v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "35b908c4-1121-47f4-96db-11b7f6638a1b",
+    "case_name": "State v. Burkert",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "5909ed4e-f9e6-4c70-ae9d-7701c269dfad",
+    "case_name": "State v. Lippold",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "5ff207b5-a191-4b62-8c20-5636a12f7965",
+    "case_name": "Gorman v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "09d9e5d6-f338-4573-9053-71926ed48565",
+    "case_name": "State v. Cline",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "720b9ad0-42b6-46b4-ba4e-ef06755cf4f7",
+    "case_name": "People v. Dobek",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "3064c05a-5eb3-4335-ab0f-1cbbcea3dfa8",
+    "case_name": "Woodson v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "93bd79d4-dc22-4d2e-87ad-1a916b054938",
+    "case_name": "Hunter v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "c15c2e88-3dd8-4af7-a26f-2c9b1488526d",
+    "case_name": "Larson v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "8f9dd6be-739b-4c9c-b332-af38d9e9481b",
+    "case_name": "State v. Thues",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "b293b25a-f552-4a2a-b7a3-30501ebb1310",
+    "case_name": "State of Maine v. Michaela C. Davenport",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "2ca5d40b-abd2-45e2-aaf2-93bc8ffdeed0",
+    "case_name": "Shepherd v. District of Columbia",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "b25748cc-36d0-4956-9b3f-031e313e7a89",
+    "case_name": "State v. Harrell",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "88febec8-e624-4115-87eb-cb2f0c8850e4",
+    "case_name": "State v. Baker",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "a7b0fae5-57e7-4c99-896c-24fdcf261457",
+    "case_name": "State v. Jenkins",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "5e12bf4b-9a9e-4b33-b6f4-0cb4686c09cf",
+    "case_name": "State v. Zuber",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "3f8dc768-f828-4454-8889-54c142488ef0",
+    "case_name": "STATE ex rel. OKLAHOMA BAR ASSOCIATION v. FARBER",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "bcd668ee-c265-4360-adbc-201303f1224f",
+    "case_name": "State v. Williams",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "03d8daa0-2353-4329-ac05-55cdabd3d099",
+    "case_name": "State of Iowa v. Randy Mitchell Copenhaver",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "649a9bfc-d514-4043-a17d-05478020c150",
+    "case_name": "Jones v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "c4679f2e-60ab-4665-a56f-08beace43b74",
+    "case_name": "People v. Hudson",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "0e0462e1-ba95-437a-81ec-46696086c4f7",
+    "case_name": "People v. Hudson",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "1c6f68d3-2f60-4915-9d1b-4b82e470eb63",
+    "case_name": "Doe v. Attorney General.",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "7e818aea-3590-493b-b285-7fad687b4ef0",
+    "case_name": "Allen v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "2783240f-f50d-4c0c-80dc-d7b9eb2279d2",
+    "case_name": "Sanders v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "07ab3a98-5dab-4f68-aa8e-5d6f359aa021",
+    "case_name": "Evans v. United States",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f0a15522-b563-4c42-a495-84cbd6f61ff4",
+    "case_name": "Small v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "5a40a1a2-0974-4f85-b029-6f0c434d4643",
+    "case_name": "Rambin v. Allstate Insurance Company",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "afa8aabf-68a1-4c46-a671-69928c1d948a",
+    "case_name": "Winer v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "e90d9eb3-b047-4295-8b75-506545acfdd3",
+    "case_name": "State of Iowa v. Walter Scott Sutton",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f79f0128-2f13-41d7-9e32-2fce2c6bcde4",
+    "case_name": "State v. Kazanas.",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d3b3c2fb-6fb0-4416-aad4-ab456116cf30",
+    "case_name": "State v. Clayton W. Williams",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "13a5f040-c3b0-4dfc-b7b9-99474cfa5e09",
+    "case_name": "In Re Standard Jury Instructions in Criminal Cases—Report 2011-01",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "fe5c48ca-ee03-4201-81fb-6fe3d01503a7",
+    "case_name": "State v. Locquiao",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "7aef2387-78c0-4f35-a34f-d1e4c0b60535",
+    "case_name": "Simmons v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "0b14c7f3-3138-4236-aea3-b0920e89926c",
+    "case_name": "Commonwealth v. Giulian v. Aplt.",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d2013c3b-289e-46f6-a8f0-89d734a6abcb",
+    "case_name": "People v. Hill",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f01bfbff-1b47-4af2-9f05-8b0b8ab3fe87",
+    "case_name": "State v. French",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "b37ce01c-0bb7-486a-89cb-c27dddd91b54",
+    "case_name": "State v. Randolph",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "228da0d1-d3c5-49fe-a0dc-238314291998",
+    "case_name": "State v. Buddemeyer",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "67e1cdc5-97ec-46bc-8532-2888788cf4a1",
+    "case_name": "Johnson v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "29e8fd24-da1e-4d8b-86c1-75a1b1595b6e",
+    "case_name": "Dunn v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "b6d36e7f-eac6-40f1-adb6-9953d9d0b8a2",
+    "case_name": "K.F. v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "7f4af692-3e05-43de-ab43-cb6a925e17cf",
+    "case_name": "State of Maine v. Nicholas Sexton",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "227042f6-0c37-41b9-8856-0414482d9b19",
+    "case_name": "State v. Mann",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "3a7d90cb-5b4e-4fa9-a41f-e701651b0766",
+    "case_name": "State v. Burkert",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "bb869c73-378b-4af4-8fee-81a99235a339",
+    "case_name": "United States v. Ilario M.A. Zannino",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "7b64568c-b356-4e24-9a6c-a9dbd9e624f0",
+    "case_name": "State of Maine v. Dale M. Pinkham Sr.",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "9b9f116b-b1d1-4e87-a4f5-03bc42f63ab7",
+    "case_name": "in Re Bradley Estate",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "3c1502b6-6dc2-4e80-8cb7-33075cfb6403",
+    "case_name": "In Re Slaughter",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "929ef630-d909-482f-9120-7be6a4a8dfc1",
+    "case_name": "Commonwealth v. Jarosz",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "625e103d-c5dc-433d-adf9-1dd49c9a38af",
+    "case_name": "Joanna S. Robinson v. State of Indiana",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "462c7d3a-6e16-4640-9ab9-51e885ebc937",
+    "case_name": "State of Maine v. Nathan P. Tarbox",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "7c02f9a2-5d41-4b51-8a92-7077c3885137",
+    "case_name": "State v. Marcello",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "9d0de786-09d8-4e1a-a3ec-b36b1d6892f3",
+    "case_name": "State v. Burkert",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "664773e6-aadb-4033-a40f-e2dc6b46449e",
+    "case_name": "State v. Mann",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "a8b385e5-7fd1-4e08-87d3-a7e38e6bd85d",
+    "case_name": "State of Iowa v. Carrie McIver",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "13dd5c0b-b0fe-4b44-9393-61ea0ea603f4",
+    "case_name": "People v. Jones",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "9b73626d-6064-42dd-9bf2-101f6606c5c1",
+    "case_name": "State ex rel. J.A.",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "2d351961-ea3c-4971-a004-e470e406152f",
+    "case_name": "State v. Florida",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "952b487d-8ebf-48b5-8ab6-1a1d03fbde1f",
+    "case_name": "Finley, William Bryan Iii",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "c33c46e8-1dca-4692-96d3-a71eaab6192f",
+    "case_name": "State v. Nash",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "96270f06-3f47-4225-9ace-0a0b213cdf4f",
+    "case_name": "Stephanie F. v. George C.",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "8b9b3982-1929-47a0-b770-47e787279d30",
+    "case_name": "State of Maine v. George Jaime",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "0769c6dd-d76c-4ea9-aff3-7d5793875155",
+    "case_name": "State of Arizona Ex Rel. Montgomery v. Hrach Shilgevorkyan",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "b0772eb2-c692-4486-b91e-78f7fd0d55fb",
+    "case_name": "Delay v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f75bccc6-5e68-4c74-a9a9-de1e15b73cf0",
+    "case_name": "People v. Miller",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "a8ce3adc-fcc0-412b-9852-b2917f06abfc",
+    "case_name": "People v. Clemons",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "dd9622c8-4fb3-46df-8354-3ffbeef597b4",
+    "case_name": "State v. Yazzie",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f776856f-3403-4838-b20d-334c7c0e0cce",
+    "case_name": "Sanders v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "c5bc5272-4495-4889-bee0-e9b4c886c2bd",
+    "case_name": "State of Arizona v. Christopher Mathew Payne",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d05de2d5-4b55-48ea-a3a6-428a9db39c09",
+    "case_name": "State v. Hammer",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f991b2dc-218e-428a-a708-2c4ee01cc87e",
+    "case_name": "CHRISTINA BELT, v.UNITED STATES",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "e20c62a4-1219-4250-b85b-9038fc43b6ee",
+    "case_name": "State v. District Court",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "16403f1a-5aa1-42f4-b3b2-6854527798f4",
+    "case_name": "Fisher v. County of Roanoke",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "0192e229-d2eb-416e-aae3-407c160d6f59",
+    "case_name": "State v. Olbricht",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "22219c73-18a9-41fe-8593-f66d13a2ecba",
+    "case_name": "Roy v. United States",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f3a0efde-d26d-4984-8025-4c1f16056151",
+    "case_name": "State v. Carl Hreha (070222)",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "2e3882ca-0e24-4f11-99f9-61d132a130b1",
+    "case_name": "Rice v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "e213df70-3a19-4249-88e0-5e2751923538",
+    "case_name": "Hanna v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "68b4346b-b18c-464d-94f1-a7dcf4d3b86a",
+    "case_name": "People v. Larson",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "41276754-a8ce-4b97-95e8-06451e70a188",
+    "case_name": "Johnson v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f3222797-00c5-41e6-aaa7-c1b0a109348b",
+    "case_name": "People v. Wear",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "2d92142e-bff5-4a85-9a29-68f72df35fc8",
+    "case_name": "State v. Reed",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "2e741b43-af72-4a41-ad39-439ac8a17fbb",
+    "case_name": "Evans v. United States",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "0d6de8d3-b900-4440-b2bc-c8dc902353fa",
+    "case_name": "State v. Nash",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "9fbab91c-3e85-441f-9b7e-c622c30e2616",
+    "case_name": "People v. Dobek",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "5b491420-af64-4d76-8897-f09450ce9e17",
+    "case_name": "State v. Agee",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d1fd4f69-f471-40c8-8a19-e384a3b6b792",
+    "case_name": "State v. Ryan",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "3e45ac08-83d3-41dc-b390-d486bd08c58c",
+    "case_name": "Leathers v. Cotton",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "255534b6-1798-4176-b385-984c98dcee62",
+    "case_name": "People v. Miller",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f4e126a7-e2cb-442d-be85-091544ce4b09",
+    "case_name": "State of Maine v. Holly Morrison",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "761eba8e-82da-43c7-a361-4461435809c8",
+    "case_name": "State v. Ferguson",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "81cf5c61-0746-490c-8dab-872bf040a5aa",
+    "case_name": "State of Iowa v. Randy Mitchell Copenhaver",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "8792393f-7f81-4b98-9b82-dbda83100d6b",
+    "case_name": "STATE OF NEW JERSEY VS. RORY EDWARD TRINGALI(11-04-0030, BURLINGTON COUNTY AND STATEWIDE)",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "bde16f81-5541-4ddd-a779-05e51de45f02",
+    "case_name": "State v. Nash",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "a1d02504-9615-4dc2-8bd8-a3594082d495",
+    "case_name": "State v. Thonesavanh",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "81977554-e1da-45b3-b923-b5cc06b5edd8",
+    "case_name": "Consalvo v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "cfc167a1-e84e-4486-9d89-1ca00cf141c9",
+    "case_name": "J.D. v. M.D.F.",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "769818dd-cd91-4a0d-8198-edd71eaa67f3",
+    "case_name": "State v. Kantaras",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "8b09d740-4b46-45a3-9fd8-b616f57eaa7d",
+    "case_name": "State of Iowa v. Carrie McIver",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "4853cf97-5341-4d26-9707-6fcaa8a01a92",
+    "case_name": "Pennekamp v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "57caaf03-5e77-4fad-83eb-1412de85361d",
+    "case_name": "State v. Sailer",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "84321193-d4d1-4a9c-b90f-e7d0f028fad6",
+    "case_name": "In Re: Vencil, N. Appeal of: PA State Police",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "2b760b02-70f0-49a6-904e-52ca151ce45e",
+    "case_name": "People v. Clemons",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "344586da-b7f0-420b-8298-a4896e04c3dd",
+    "case_name": "Michael D. Tann v. United States",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "043fbd5d-a59b-425f-b5cf-026cbf1b5488",
+    "case_name": "Best v. Taylor MacHine Works",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d6bd6e89-fc2d-449d-80e3-f473c2a3a88f",
+    "case_name": "State of Maine v. Dale M. Pinkham Sr.",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "263d6cd3-40cb-4ea4-8d9e-2364d5e53473",
+    "case_name": "Sanders v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "35655386-2ed3-43e8-8961-b53236506f78",
+    "case_name": "State v. Day",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "7fa3db27-f031-4238-872a-6665653f5e84",
+    "case_name": "NYIA GORE v. UNITED STATES",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "2ca09679-c400-4bb8-ae12-123406453934",
+    "case_name": "State v. Hughes",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d3e3f775-bf84-41f6-b1cb-9b8d87c9c8a3",
+    "case_name": "Small v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "60928c84-ab8e-417d-afbf-0e34decd92d1",
+    "case_name": "Terrence Melvin Koonce v. District of Columbia",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "a2059219-2821-4982-8fd3-a493ac063bfd",
+    "case_name": "State v. Moa",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "84c47735-de86-4ff4-8808-e19cf60dd2c9",
+    "case_name": "People v. Masten",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "99415cf1-297f-46e5-be95-765989f6f4ab",
+    "case_name": "Commonwealth v. Raven",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "193a742d-4d20-452d-b79a-fba34e0ad345",
+    "case_name": "State v. Wyman",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "655f75fa-3f95-40f5-b754-53a3b5491cd6",
+    "case_name": "People v. Solloway",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "349ee4d0-336d-46ce-b9c4-c60d8cec9e54",
+    "case_name": "Hunter v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "7c9eada5-5d4d-4a29-b82e-3e37f6ef5a1d",
+    "case_name": "State v. Nash",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "6b69fccf-24ea-4a8f-bdd9-8eb48df936e3",
+    "case_name": "Roberto Morales Diaz v. State of Iowa",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "8c0eb4da-3d8d-4a1c-a6be-7ec601bd86e2",
+    "case_name": "State v. Fyfe",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "841a67f5-0767-4047-a749-374ec8f5ba14",
+    "case_name": "Limited Stores, Inc. v. Wilson-Robinson",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "8c7a8061-1ac9-4fc3-8b9b-f21cb5e33643",
+    "case_name": "State v. Mann",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "def47e22-4374-4eef-abeb-633f4f63eb88",
+    "case_name": "Terrence Melvin Koonce v. District of Columbia",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "cb2eac2f-8dee-4f72-8530-1243c031bb69",
+    "case_name": "Molitor v. Kaneland Community Unit District No. 302",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "c9532b65-3bb9-42b0-a869-6813a9441297",
+    "case_name": "People v. Oglesby",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "858cf45c-c05e-4973-bfde-cf7b11c56440",
+    "case_name": "State of Maine v. Matthew Reed",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "e757c53c-12e2-4153-9caf-6e2e8e8b3fc2",
+    "case_name": "In re Williams",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "98417e0d-5799-460a-827a-aa9f67eebf9f",
+    "case_name": "Ledford v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d5896f38-2b25-4de4-85f4-19b60b795ebe",
+    "case_name": "People v. Bosca",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "12f0a0ec-3fbf-4b1f-bc1a-755be866e515",
+    "case_name": "State v. Atwood",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "dc1ff355-dddc-4452-ace4-90b6b145b9cb",
+    "case_name": "United States v. Gilbert Isgar",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "d104f803-5ed9-442a-8db3-5b86c96a420a",
+    "case_name": "Commonwealth v. Yuhasz",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "68588e48-7e09-4547-880d-b85040ae5b4c",
+    "case_name": "Troy Daniel Dowell v. State of Iowa",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "f5a5ef20-86ce-4049-8840-7f30e86d9377",
+    "case_name": "State of Maine v. Luke A. Bryant",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "b9fdc762-09be-4063-ae9b-7e611662fd14",
+    "case_name": "Scott v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "686f31b1-f72d-4057-bb72-59621abd120c",
+    "case_name": "People v. Harris",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "b5675c08-79c1-4260-b8ec-596633699c74",
+    "case_name": "State v. Lewis",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "a6678174-f069-43d4-bf72-d7e714f9b590",
+    "case_name": "State v. Al-Sharif Scriven(075682)",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "82cddf09-132e-47ba-a6d3-0ad663c461e3",
+    "case_name": "Eide v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "57f0171d-0d81-4105-9856-e0a7c3a10c55",
+    "case_name": "Adam Horton v. State of Indiana",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "409f200a-e60e-40b3-ae81-d74f5aec699f",
+    "case_name": "State v. Atwood",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "05df9c5d-a433-478d-b57b-9a140e765cbd",
+    "case_name": "McDade v. State",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "0caac4fc-df1e-477a-a4ff-bf2f075aa0bb",
+    "case_name": "Commonwealth v. Gibbs",
+    "jurisdiction": "US"
+  },
+  {
+    "cluster_id": "167e0670-e485-4984-b1e9-88236f69ef40",
+    "case_name": "United States v. Broussard",
+    "jurisdiction": "US"
+  }
+]
