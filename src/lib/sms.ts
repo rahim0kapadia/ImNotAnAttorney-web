@@ -9,6 +9,9 @@
  * Phone numbers must be 10-digit US (stripped of +1 prefix for the gateway).
  */
 
+import { createAdminClient } from "@/lib/supabase/admin";
+import { isSmsSuspended } from "@/lib/sms-suspensions";
+
 // ── Types ─────────────────────────────────────────────────
 
 /** Optional context for sms_log audit trail. Fire-and-forget — never blocks send. */
@@ -38,12 +41,28 @@ export async function sendSMS(
   to: string,
   body: string,
   logContext?: SmsLogContext
-): Promise<{ success: boolean; error?: string }> {
+): Promise<{ success: boolean; error?: string; skipped?: "suspended" }> {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
     console.warn("[SMS] RESEND_API_KEY not configured — skipping SMS");
     return { success: false, error: "SMS not configured" };
+  }
+
+  // Layer 2 guard: skip if phone is suspended (prior gateway bounce).
+  try {
+    const supabaseForCheck = createAdminClient();
+    const suspended = await isSmsSuspended(supabaseForCheck, to);
+    if (suspended) {
+      const result = { success: false, error: "phone suspended (prior bounce)", skipped: "suspended" as const };
+      if (logContext) {
+        logSmsSend(to, body, { success: false, error: result.error }, { ...logContext, category: logContext.category + ":suspended" }).catch(() => {});
+      }
+      return result;
+    }
+  } catch (err) {
+    // Fail open — don't block sends on suspension-check errors.
+    console.warn("[SMS] Suspension check failed, proceeding:", err instanceof Error ? err.message : err);
   }
 
   let result: { success: boolean; error?: string };
@@ -86,8 +105,6 @@ export async function sendSMS(
 }
 
 // ── Audit Log ─────────────────────────────────────────────
-
-import { createAdminClient } from "@/lib/supabase/admin";
 
 async function logSmsSend(
   recipient: string,

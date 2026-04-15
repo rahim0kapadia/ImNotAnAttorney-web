@@ -16,6 +16,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { extractPhoneFromGateway, suspendSmsPhone } from "@/lib/sms-suspensions";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -103,9 +104,35 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = createAdminClient();
+  let smsSuspended = 0;
+  const suspendedPhones: string[] = [];
 
   for (const email of recipients) {
     const normalizedEmail = email.toLowerCase().trim();
+
+    // Layer 2 SMS path: {10digits}@text.email is our SMS gateway. A bounce here
+    // means the gateway rejected the number — suspend future sends.
+    const gatewayPhone = extractPhoneFromGateway(normalizedEmail);
+    if (gatewayPhone) {
+      const res = await suspendSmsPhone(supabase, gatewayPhone, {
+        reason: type,
+        bounceType: data?.bounce?.type || data?.bounce?.subType || null,
+        source: "resend_webhook",
+        metadata: {
+          email_id: data?.email_id,
+          resend_to: data?.to,
+          resend_from: data?.from,
+          received_at: new Date().toISOString(),
+        },
+      });
+      if (res.ok && !res.alreadySuspended) {
+        smsSuspended += 1;
+        suspendedPhones.push(gatewayPhone);
+      }
+      // Don't unsubscribe the gateway address from the subscriber list —
+      // it's not a real subscriber. Skip to next recipient.
+      continue;
+    }
 
     // Auto-unsubscribe the recipient
     const { error } = await supabase
@@ -121,5 +148,30 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  return NextResponse.json({ received: true, unsubscribed: recipients.length });
+  // Telegram alert on new SMS suspensions (real-time Layer 2 signal).
+  if (smsSuspended > 0) {
+    void sendSmsSuspensionAlert(suspendedPhones, type);
+  }
+
+  return NextResponse.json({
+    received: true,
+    unsubscribed: recipients.length - smsSuspended,
+    smsSuspended,
+  });
+}
+
+async function sendSmsSuspensionAlert(phones: string[], eventType: string): Promise<void> {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN_LEGAL;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!botToken || !chatId) return;
+  const text = `SMS Gateway Alert (${eventType})\n\n${phones.length} phone(s) suspended after text.email bounce:\n${phones.map((p) => `- ${p}`).join("\n")}`;
+  try {
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text }),
+    });
+  } catch {
+    // Fire-and-forget — alert failures don't break webhook 200.
+  }
 }
