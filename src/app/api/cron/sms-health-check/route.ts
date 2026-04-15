@@ -1,7 +1,7 @@
 /**
  * GET /api/cron/sms-health-check — Daily SMS gateway health probe.
  *
- * Schedule: Daily at 10:00 UTC via cron-job.org.
+ * Schedule: Daily at 10:00 America/New_York via cron-job.org (jobId 7485383).
  * Protected by CRON_AUTH_TOKEN bearer token.
  *
  * Sends a test SMS to Rahim's number via text.email gateway,
