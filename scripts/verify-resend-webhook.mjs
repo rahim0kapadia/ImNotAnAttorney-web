@@ -35,8 +35,14 @@ const REQUIRED_EVENTS = ["email.bounced", "email.complained"];
 console.log("=== Layer 2 SMS bounce webhook verification ===\n");
 
 // 1. Local env
+// Prefer full-access "Dev1" key when present — restricted RESEND_API_KEY can't list webhooks.
+const apiKey = env.RESEND_API_KEY_FULL || env.RESEND_API_KEY;
+const usingFull = !!env.RESEND_API_KEY_FULL;
+
 console.log("1. Local .env.local");
 console.log("   RESEND_API_KEY:", env.RESEND_API_KEY ? "SET" : "MISSING");
+console.log("   RESEND_API_KEY_FULL:", env.RESEND_API_KEY_FULL ? "SET" : "MISSING (webhook list will fail on restricted key)");
+console.log("   using:", usingFull ? "RESEND_API_KEY_FULL" : "RESEND_API_KEY (restricted)");
 console.log("   RESEND_WEBHOOK_SECRET:", env.RESEND_WEBHOOK_SECRET ? "SET" : "MISSING");
 if (env.RESEND_WEBHOOK_SECRET) {
   console.log("   secret prefix:", env.RESEND_WEBHOOK_SECRET.slice(0, 6) + "...");
@@ -44,15 +50,15 @@ if (env.RESEND_WEBHOOK_SECRET) {
 }
 console.log();
 
-if (!env.RESEND_API_KEY) {
-  console.error("Cannot query Resend API without RESEND_API_KEY");
+if (!apiKey) {
+  console.error("Cannot query Resend API without an API key");
   process.exit(1);
 }
 
 // 2. Resend API — list webhooks
 console.log("2. Resend webhooks (GET /webhooks)");
 const resp = await fetch("https://api.resend.com/webhooks", {
-  headers: { Authorization: `Bearer ${env.RESEND_API_KEY}` },
+  headers: { Authorization: `Bearer ${apiKey}` },
 });
 if (!resp.ok) {
   console.error("   ERROR:", resp.status, await resp.text());
