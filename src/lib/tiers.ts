@@ -302,6 +302,36 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE — 2026-04-11 (availability gate deployed)
   },
+  "district-court-intelligence": {
+    name: "District Court Intelligence",
+    price: 9700, // cents
+    priceDisplay: "$97",
+    delivery: "Instant",
+    deliveryDetail: "Your District Court Intelligence report is generated on demand within 60 seconds of purchase.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    live: false as boolean, // test mode — flip after E2E validation
+  },
+  "arrest-survival-kit": {
+    name: "Arrest Survival Kit",
+    price: 4700, // cents
+    priceDisplay: "$47",
+    delivery: "Instant",
+    deliveryDetail: "Your Arrest Survival Kit is generated on demand within 60 seconds of purchase.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    live: false as boolean, // test mode — flip after E2E validation
+  },
   "witness-pack": {
     name: "Standalone Witness Pack",
     price: 29700,

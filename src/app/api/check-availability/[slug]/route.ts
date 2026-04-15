@@ -5,12 +5,12 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { checkJudgeCoverage, checkOfficerCoverage, checkSimilarCasesCoverage, type CoverageResult } from "@/lib/tier9-reports/coverage";
+import { checkJudgeCoverage, checkOfficerCoverage, checkSimilarCasesCoverage, checkDistrictCoverage, checkArrestKitCoverage, type CoverageResult } from "@/lib/tier9-reports/coverage";
 import { isValidChargeType } from "@/lib/charge-types";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
 
-const TIER9_SLUGS = new Set(["judge-report-card", "officer-background-check", "similar-cases-analyzer"]);
+const TIER9_SLUGS = new Set(["judge-report-card", "officer-background-check", "similar-cases-analyzer", "district-court-intelligence", "arrest-survival-kit"]);
 const VALID_STATES = new Set(["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","DC"]);
 
 export async function POST(
@@ -106,6 +106,16 @@ export async function POST(
         }
         const result = await checkSimilarCasesCoverage(chargeType, state);
         return handleWaitlist(result, chargeType, chargeType);
+      }
+
+      case "district-court-intelligence": {
+        const result = await checkDistrictCoverage(state);
+        return handleWaitlist(result, state);
+      }
+
+      case "arrest-survival-kit": {
+        const result = await checkArrestKitCoverage(state);
+        return handleWaitlist(result, state);
       }
 
       default:

@@ -657,6 +657,74 @@ export default function SampleXRayPage() {
         <SectionDivider />
 
         {/* ============================================================
+            BLOCK 8B: JUDGE & SENTENCING INTELLIGENCE (JUSTFAIR)
+            ============================================================ */}
+        <FadeInUp>
+          <section>
+            <h2 className="text-2xl font-bold text-white">
+              Judge &amp; Sentencing Intelligence
+            </h2>
+            <p className="mt-2 text-sm text-zinc-400">
+              Your X-Ray now includes federal sentencing data from 595,851 cases.
+              This grounds every finding in real-world outcomes — not estimates.
+            </p>
+
+            <div className="mt-6 rounded-xl border border-zinc-500 bg-zinc-900 p-6">
+              <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">
+                Sample — Middle District of Florida
+              </p>
+
+              <div className="mt-4 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <caption className="sr-only">Federal sentencing intelligence data for sample case</caption>
+                  <thead>
+                    <tr className="border-b border-zinc-700 text-left text-zinc-400">
+                      <th scope="col" className="pb-2 pr-4">Metric</th>
+                      <th scope="col" className="pb-2 pr-4">This District</th>
+                      <th scope="col" className="pb-2">National</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-zinc-300">
+                    <tr className="border-b border-zinc-500">
+                      <th scope="row" className="py-2 pr-4 font-normal text-zinc-300">Median sentence (drug possession)</th>
+                      <td className="py-2 pr-4 text-zinc-400">24.0 months</td>
+                      <td className="py-2 text-zinc-400">27.0 months</td>
+                    </tr>
+                    <tr className="border-b border-zinc-500">
+                      <th scope="row" className="py-2 pr-4 font-normal text-zinc-300">Downward departure rate</th>
+                      <td className="py-2 pr-4 text-zinc-400">31.4%</td>
+                      <td className="py-2 text-zinc-400">28.7%</td>
+                    </tr>
+                    <tr className="border-b border-zinc-500">
+                      <th scope="row" className="py-2 pr-4 font-normal text-zinc-300">Plea rate</th>
+                      <td className="py-2 pr-4 text-zinc-400">97.2%</td>
+                      <td className="py-2 text-zinc-400">96.1%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="py-2 pr-4 font-normal text-zinc-300">Trial penalty (jury vs plea)</th>
+                      <td className="py-2 pr-4 text-red-400 font-semibold">+63%</td>
+                      <td className="py-2 text-red-400">+58%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p className="mt-4 text-sm text-zinc-400">
+                Your full X-Ray includes judge-specific sentencing outlier flags, officer
+                reliability cross-case data, and sentencing by defendant demographics —
+                all from verified federal court records.
+              </p>
+              <p className="mt-2 text-xs text-zinc-500">
+                Source: JUSTFAIR (QSIDE Institute) — 595,851 federal sentencing records,
+                FY2001-2023. Federal courts only.
+              </p>
+            </div>
+          </section>
+        </FadeInUp>
+
+        <SectionDivider />
+
+        {/* ============================================================
             BLOCK 9: PROCESS TRANSPARENCY
             ============================================================ */}
         <FadeInUp>

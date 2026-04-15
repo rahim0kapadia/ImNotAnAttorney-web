@@ -309,3 +309,196 @@ export async function queryJustfairJudge(
     isEmpty: !demographics && sentencingByRace.length === 0,
   };
 }
+
+// ============================================================
+// DISTRICT COURT INTELLIGENCE TYPES + QUERIES
+// ============================================================
+
+const STATE_NAMES: Record<string, string> = {
+  AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas",
+  CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware",
+  DC: "District of Columbia", FL: "Florida", GA: "Georgia", HI: "Hawaii",
+  ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa",
+  KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine",
+  MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota",
+  MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska",
+  NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico",
+  NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio",
+  OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island",
+  SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas",
+  UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington",
+  WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming",
+};
+
+export interface DistrictCourtIntelData {
+  stateName: string;
+  stateCode: string;
+  judges: JudgeDemographics[];
+  outcomeBenchmarks: Array<{
+    jurisdiction_level: string;
+    jurisdiction_name: string;
+    offense_type: string;
+    total_cases: number | null;
+    conviction_rate: number | null;
+    dismissal_rate: number | null;
+    median_sentence_months: number | null;
+    plea_rate: number | null;
+    trial_rate: number | null;
+    plea_trial_penalty_pct: number | null;
+    source_urls: string[];
+    data_period: string | null;
+  }>;
+  prosecutionPatterns: Array<{
+    motion_type: string | null;
+    grant_rate: number | null;
+    sample_size: number;
+    source_urls: string[] | null;
+  }>;
+  sentencingDistributions: Array<{
+    charge_slug: string;
+    median_months: number | null;
+    p25: number | null;
+    p75: number | null;
+    sample_size: number;
+    source_urls: string[] | null;
+  }>;
+  isEmpty: boolean;
+}
+
+/**
+ * Query district-level intelligence for a state's federal courts.
+ * Aggregates across all judges in the state's federal districts.
+ * FEDERAL COURTS ONLY.
+ */
+export async function queryDistrictCourtIntel(
+  stateCode: string
+): Promise<DistrictCourtIntelData> {
+  const supabase = createAdminClient();
+  const stateName = STATE_NAMES[stateCode.toUpperCase()] ?? stateCode;
+  const safeStateName = stateName.toLowerCase().replace(/[%_\\]/g, (ch) => `\\${ch}`);
+
+  const [demoResult, benchResult, pairingResult, sentencingResult] = await Promise.all([
+    // All federal judges in this state's districts
+    supabase
+      .from("judge_demographics")
+      .select("*")
+      .ilike("district", `%${safeStateName}%`)
+      .order("judge_name_normalized", { ascending: true })
+      .limit(200),
+
+    // Outcome benchmarks — state + national for comparison
+    supabase
+      .from("outcome_benchmarks")
+      .select("jurisdiction_level, jurisdiction_name, offense_type, total_cases, conviction_rate, dismissal_rate, median_sentence_months, plea_rate, trial_rate, plea_trial_penalty_pct, source_urls, data_period")
+      .or(`jurisdiction_name.ilike.%${safeStateName}%,jurisdiction_level.eq.national`)
+      .order("total_cases", { ascending: false })
+      .limit(30),
+
+    // Aggregated prosecution patterns (district level, no prosecutor names)
+    supabase
+      .from("judge_prosecutor_pairings")
+      .select("motion_type, grant_rate, sample_size, source_urls")
+      .eq("jurisdiction", stateCode.toUpperCase())
+      .gte("sample_size", MINIMUM_SAMPLE_SIZE)
+      .order("sample_size", { ascending: false })
+      .limit(50),
+
+    // Sentencing distributions for the state (non-judge-specific)
+    supabase
+      .from("sentencing_distributions")
+      .select("charge_slug, median_months, p25, p75, sample_size, source_urls")
+      .is("judge_id", null)
+      .gte("sample_size", MINIMUM_SAMPLE_SIZE)
+      .order("sample_size", { ascending: false })
+      .limit(30),
+  ]);
+
+  const judges = (demoResult.data ?? []) as JudgeDemographics[];
+  const outcomeBenchmarks = (benchResult.data ?? []) as DistrictCourtIntelData["outcomeBenchmarks"];
+  const prosecutionPatterns = (pairingResult.data ?? []) as DistrictCourtIntelData["prosecutionPatterns"];
+  const sentencingDistributions = (sentencingResult.data ?? []) as DistrictCourtIntelData["sentencingDistributions"];
+
+  const hasData =
+    judges.length > 0 ||
+    outcomeBenchmarks.length > 0 ||
+    sentencingDistributions.length > 0;
+
+  return {
+    stateName,
+    stateCode: stateCode.toUpperCase(),
+    judges,
+    outcomeBenchmarks,
+    prosecutionPatterns,
+    sentencingDistributions,
+    isEmpty: !hasData,
+  };
+}
+
+// ============================================================
+// ARREST SURVIVAL KIT TYPES + QUERIES
+// ============================================================
+
+export interface ArrestSurvivalKitData {
+  stateName: string;
+  stateCode: string;
+  agencyIncidents: Array<{
+    agency: string;
+    use_of_force_count: number;
+    source_urls: string[];
+  }>;
+  officerStats: {
+    totalAgencies: number;
+    totalOfficers: number;
+    wanderingOfficerCount: number;
+  };
+  isEmpty: boolean;
+}
+
+/**
+ * Query agency-level data for the Arrest Survival Kit.
+ * Always "available" — rights checklist is universal, agency data is bonus.
+ */
+export async function queryArrestSurvivalKit(
+  stateCode: string
+): Promise<ArrestSurvivalKitData> {
+  const supabase = createAdminClient();
+  const stateName = STATE_NAMES[stateCode.toUpperCase()] ?? stateCode;
+  const upperState = stateCode.toUpperCase();
+
+  const [agencyResult, officerResult] = await Promise.all([
+    // Agency-level incident data
+    supabase
+      .from("agency_incidents")
+      .select("agency, use_of_force_count, source_urls")
+      .eq("state", upperState)
+      .order("use_of_force_count", { ascending: false })
+      .limit(20),
+
+    // Officer external intel aggregate for the state
+    supabase
+      .from("officer_external_intel")
+      .select("agency, npi_is_wandering_officer")
+      .eq("state", upperState)
+      .limit(500),
+  ]);
+
+  const agencyIncidents = (agencyResult.data ?? []) as ArrestSurvivalKitData["agencyIncidents"];
+  const officers = officerResult.data ?? [];
+
+  // Aggregate officer stats
+  const agencies = new Set(officers.map((o: Record<string, unknown>) => o.agency as string).filter(Boolean));
+  const wanderingCount = officers.filter((o: Record<string, unknown>) => o.npi_is_wandering_officer === true).length;
+
+  return {
+    stateName,
+    stateCode: upperState,
+    agencyIncidents,
+    officerStats: {
+      totalAgencies: agencies.size,
+      totalOfficers: officers.length,
+      wanderingOfficerCount: wanderingCount,
+    },
+    // Always available — rights checklist is universal
+    isEmpty: false,
+  };
+}

@@ -10,7 +10,11 @@ import type {
   OfficerBackgroundData,
   SimilarCasesData,
 } from "./query";
-import type { DefenseIntelligenceData } from "@/lib/defense-intelligence/query";
+import type {
+  DefenseIntelligenceData,
+  DistrictCourtIntelData,
+  ArrestSurvivalKitData,
+} from "@/lib/defense-intelligence/query";
 
 // ============================================================
 // SHARED HELPERS
@@ -872,6 +876,279 @@ export function renderSimilarCases(
     body,
     totalSources
   );
+}
+
+// ============================================================
+// DISTRICT COURT INTELLIGENCE
+// ============================================================
+
+export function renderDistrictCourtIntel(data: DistrictCourtIntelData): string {
+  let totalSources = 0;
+  let body = "";
+
+  // District Overview — Judge Demographics Aggregate
+  body += sectionHeader(`Federal Court Overview — ${escapeHtml(data.stateName)}`);
+  if (data.judges.length > 0) {
+    const partyCount = new Map<string, number>();
+    const genderCount = new Map<string, number>();
+    const districts = new Set<string>();
+    for (const j of data.judges) {
+      if (j.district) districts.add(j.district);
+      const party = j.appointing_party ?? "Unknown";
+      partyCount.set(party, (partyCount.get(party) ?? 0) + 1);
+      const gender = j.gender ?? "Unknown";
+      genderCount.set(gender, (genderCount.get(gender) ?? 0) + 1);
+    }
+
+    body += `<p style="color: #D4D4D8; margin-bottom: 16px;">
+      <strong style="color: #F59E0B;">${data.judges.length}</strong> federal judges across
+      <strong style="color: #F59E0B;">${districts.size}</strong> district${districts.size !== 1 ? "s" : ""} in ${escapeHtml(data.stateName)}.
+      Source: JUSTFAIR (QSIDE Institute). <a href="https://osf.io/nseh5/" style="color: #F59E0B;">[source]</a>
+    </p>`;
+
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <thead><tr style="background: #1C1917;">
+        <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Appointing Party</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Judges</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">% of Bench</th>
+      </tr></thead><tbody>`;
+    for (const [party, count] of [...partyCount.entries()].sort((a, b) => b[1] - a[1])) {
+      body += `<tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(party)}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${count}</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${((count / data.judges.length) * 100).toFixed(0)}%</td>
+      </tr>`;
+    }
+    body += `</tbody></table>`;
+    totalSources++;
+  } else {
+    body += noDataMessage("federal judge demographics");
+  }
+
+  // Outcome Benchmarks
+  body += sectionHeader("Case Outcome Benchmarks");
+  if (data.outcomeBenchmarks.length > 0) {
+    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
+      How cases are resolved in this jurisdiction vs nationally. Based on BJS and USSC data.
+    </p>`;
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <thead><tr style="background: #1C1917;">
+        <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Jurisdiction</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Cases</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Conviction</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Dismissal</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Plea Rate</th>
+      </tr></thead><tbody>`;
+
+    for (const row of data.outcomeBenchmarks) {
+      totalSources += countSources(row.source_urls);
+      body += `<tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.jurisdiction_name)} (${escapeHtml(row.jurisdiction_level)})</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.total_cases?.toLocaleString() ?? "—"}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.conviction_rate != null ? `${(Number(row.conviction_rate) * 100).toFixed(1)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${row.dismissal_rate != null ? `${(Number(row.dismissal_rate) * 100).toFixed(1)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.plea_rate != null ? `${(Number(row.plea_rate) * 100).toFixed(1)}%` : "—"}</td>
+      </tr>`;
+    }
+    body += `</tbody></table>`;
+  } else {
+    body += noDataMessage("outcome benchmark");
+  }
+
+  // Sentencing Distributions
+  body += sectionHeader("Sentencing Patterns by Charge Type");
+  if (data.sentencingDistributions.length > 0) {
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <thead><tr style="background: #1C1917;">
+        <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Charge Type</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">25th %ile</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Median</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">75th %ile</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Cases</th>
+      </tr></thead><tbody>`;
+    for (const row of data.sentencingDistributions) {
+      totalSources += countSources(row.source_urls);
+      body += `<tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.charge_slug)}</td>
+        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p25 != null ? `${Number(row.p25).toFixed(1)} mo` : "—"}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${row.median_months != null ? `${Number(row.median_months).toFixed(1)} mo` : "—"}</td>
+        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p75 != null ? `${Number(row.p75).toFixed(1)} mo` : "—"}</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.sample_size}</td>
+      </tr>`;
+    }
+    body += `</tbody></table>`;
+  } else {
+    body += noDataMessage("sentencing distribution");
+  }
+
+  // Prosecution Patterns (aggregated, no names)
+  body += sectionHeader("Prosecution Patterns — Motion Grant Rates");
+  if (data.prosecutionPatterns.length > 0) {
+    // Aggregate by motion_type
+    const byType = new Map<string, { totalGrant: number; totalSize: number }>();
+    for (const row of data.prosecutionPatterns) {
+      const type = row.motion_type ?? "All Motions";
+      const existing = byType.get(type) ?? { totalGrant: 0, totalSize: 0 };
+      if (row.grant_rate != null) {
+        existing.totalGrant += Number(row.grant_rate) * row.sample_size;
+        existing.totalSize += row.sample_size;
+      }
+      byType.set(type, existing);
+      totalSources += countSources(row.source_urls);
+    }
+
+    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
+      Aggregated motion outcomes across all prosecutors in this district. No individual names.
+    </p>`;
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <thead><tr style="background: #1C1917;">
+        <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Motion Type</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Avg Grant Rate</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Total Cases</th>
+      </tr></thead><tbody>`;
+    for (const [type, agg] of byType) {
+      const avgRate = agg.totalSize > 0 ? (agg.totalGrant / agg.totalSize) : null;
+      body += `<tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(type)}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${avgRate != null ? `${avgRate.toFixed(1)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${agg.totalSize.toLocaleString()}</td>
+      </tr>`;
+    }
+    body += `</tbody></table>`;
+  } else {
+    body += noDataMessage("prosecution pattern");
+  }
+
+  return wrapReport(`District Court Intelligence — ${data.stateName}`, body, totalSources);
+}
+
+// ============================================================
+// ARREST SURVIVAL KIT
+// ============================================================
+
+const RIGHTS_CHECKLIST = [
+  { right: "Right to Remain Silent (5th Amendment)", detail: "You do not have to answer questions beyond identifying information. Anything you say can and will be used against you." },
+  { right: "Right to an Attorney (6th Amendment)", detail: "You have the right to an attorney. If you cannot afford one, one will be appointed. Invoke this clearly: 'I want a lawyer.'" },
+  { right: "Right Against Unreasonable Search (4th Amendment)", detail: "Officers generally need a warrant to search you, your car, or your home. Exceptions exist (plain view, consent, search incident to arrest)." },
+  { right: "Right to Know the Charges", detail: "You have the right to be informed of the charges against you." },
+  { right: "Right to a Phone Call", detail: "After booking, you have the right to make a phone call. Use it to contact an attorney or someone who can arrange bail." },
+  { right: "Right to Refuse Consent to Search", detail: "You can refuse a search. Say clearly: 'I do not consent to a search.' Officers may search anyway — your refusal is on the record." },
+  { right: "Right to Medical Attention", detail: "If you are injured or ill, you have the right to receive medical attention while in custody." },
+  { right: "Right to Bail (in most cases)", detail: "For most non-capital offenses, you have the right to bail. Bail amounts are set by a judge at your first appearance." },
+];
+
+const FIRST_48_HOURS = [
+  { time: "0–1 hours", action: "Invoke your right to silence. Say: 'I want a lawyer.' Do not discuss your case with anyone." },
+  { time: "1–4 hours", action: "During booking, provide only identifying information. Do not sign anything without reading it." },
+  { time: "4–8 hours", action: "Use your phone call to contact an attorney. If you cannot reach one, contact family to arrange one." },
+  { time: "8–24 hours", action: "Do not discuss your case with cellmates or officers. Write down everything you remember about the arrest while it is fresh." },
+  { time: "24–48 hours", action: "Prepare for your first appearance/arraignment. Your attorney (or public defender) should be present. Bail will be addressed." },
+  { time: "After release", action: "Document everything immediately: officer names, badge numbers, what was said, timeline of events. Photograph any injuries." },
+];
+
+export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
+  let totalSources = 0;
+  let body = "";
+
+  // Your Rights During Arrest
+  body += sectionHeader("Your Constitutional Rights During Arrest");
+  body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 16px;">
+    These rights apply in every state. Know them before you need them.
+  </p>`;
+
+  for (const item of RIGHTS_CHECKLIST) {
+    body += `
+      <div style="margin-bottom: 12px; padding: 12px 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <p style="color: #FAFAF9; font-weight: bold; margin: 0 0 4px;">${escapeHtml(item.right)}</p>
+        <p style="color: #A1A1AA; font-size: 13px; margin: 0;">${escapeHtml(item.detail)}</p>
+      </div>
+    `;
+  }
+
+  // First 48 Hours Timeline
+  body += sectionHeader("The First 48 Hours — What to Do and When");
+  body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+    <thead><tr style="background: #1C1917;">
+      <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px; width: 120px;">Timeframe</th>
+      <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Action</th>
+    </tr></thead><tbody>`;
+  for (const step of FIRST_48_HOURS) {
+    body += `<tr style="border-bottom: 1px solid #1C1917;">
+      <td style="padding: 8px 12px; color: #F59E0B; font-weight: bold; vertical-align: top;">${escapeHtml(step.time)}</td>
+      <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(step.action)}</td>
+    </tr>`;
+  }
+  body += `</tbody></table>`;
+
+  // What NOT to Say
+  body += sectionHeader("What NOT to Say — 5 Statements That Hurt Defendants");
+  const badStatements = [
+    { statement: '"I didn\'t do anything wrong"', why: "Implies you know what 'wrong' means in this context. Say nothing instead." },
+    { statement: '"Can I just explain what happened?"', why: "Explanations become confessions. Wait for your attorney." },
+    { statement: '"I know my rights"', why: "Then exercise them silently. Stating this often precedes a waiver." },
+    { statement: '"I\'ll cooperate"', why: "Cooperation without an attorney present means giving up leverage your attorney could use." },
+    { statement: '"Off the record..."', why: "Nothing is off the record. Everything you say is evidence." },
+  ];
+  for (const item of badStatements) {
+    body += `
+      <div style="margin-bottom: 12px; padding: 12px 16px; border-left: 3px solid #EF4444; background: #1C1917;">
+        <p style="color: #EF4444; font-weight: bold; margin: 0 0 4px;">${escapeHtml(item.statement)}</p>
+        <p style="color: #A1A1AA; font-size: 13px; margin: 0;">${escapeHtml(item.why)}</p>
+      </div>
+    `;
+  }
+
+  // Agency Data (if available)
+  if (data.agencyIncidents.length > 0) {
+    body += sectionHeader(`Agency Incident Data — ${escapeHtml(data.stateName)}`);
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+      Fatal encounters involving law enforcement agencies in your state since 2013.
+      Agency-level data from Fatal Encounters database.
+      <a href="https://fatalencounters.org/" style="color: #F59E0B;">[source]</a>
+    </p>`;
+
+    for (const ai of data.agencyIncidents.slice(0, 10)) {
+      totalSources += countSources(ai.source_urls);
+      body += `
+        <div style="background: #1C1917; border: 1px solid #92400E; border-radius: 8px; padding: 16px; margin-bottom: 12px;">
+          <p style="color: #FBBF24; font-weight: bold; margin: 0 0 8px;">${escapeHtml(ai.agency)}</p>
+          <p style="color: #D4D4D8; margin: 0;">${ai.use_of_force_count} fatal encounter${ai.use_of_force_count !== 1 ? "s" : ""} recorded since 2013</p>
+        </div>
+      `;
+    }
+  }
+
+  // Officer Stats Summary
+  if (data.officerStats.totalOfficers > 0) {
+    body += sectionHeader("Officer Intelligence Coverage");
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Agencies with officer data</td>
+          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${data.officerStats.totalAgencies}</td></tr>
+      <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Officers in database</td>
+          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${data.officerStats.totalOfficers.toLocaleString()}</td></tr>
+      ${data.officerStats.wanderingOfficerCount > 0 ? `
+      <tr><td style="padding: 8px 16px; color: #A1A1AA;">Wandering officers flagged</td>
+          <td style="padding: 8px 16px; color: #EF4444; font-weight: bold;">${data.officerStats.wanderingOfficerCount}</td></tr>
+      ` : ""}
+    </table>`;
+  }
+
+  // Upsell to Officer Background Check
+  body += `
+    <div style="background: #1C1917; border: 1px solid #422006; border-radius: 8px; padding: 20px; margin-top: 32px; text-align: center;">
+      <p style="color: #F59E0B; font-weight: bold; font-size: 16px; margin: 0 0 8px;">Know Your Arresting Officer</p>
+      <p style="color: #A1A1AA; font-size: 14px; margin: 0 0 16px;">
+        Get a full background check on your arresting officer — cross-case reliability, testimony challenges,
+        Brady violations, and employment history.
+      </p>
+      <a href="https://imnotanattorney.com/officer-background-check"
+         style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+        Officer Background Check — $97
+      </a>
+    </div>
+  `;
+
+  return wrapReport(`Arrest Survival Kit — ${data.stateName}`, body, totalSources);
 }
 
 // ============================================================

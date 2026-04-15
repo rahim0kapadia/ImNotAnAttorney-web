@@ -119,6 +119,78 @@ export async function checkOfficerCoverage(
   };
 }
 
+export async function checkDistrictCoverage(
+  stateCode: string
+): Promise<CoverageResult> {
+  const supabase = createAdminClient();
+  const safeState = escapeIlike(stateCode);
+
+  // Map state code to state name for district ilike match
+  const stateNames: Record<string, string> = {
+    AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas",
+    CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware",
+    DC: "District of Columbia", FL: "Florida", GA: "Georgia", HI: "Hawaii",
+    ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa",
+    KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine",
+    MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota",
+    MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska",
+    NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico",
+    NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio",
+    OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island",
+    SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas",
+    UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington",
+    WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming",
+  };
+  const stateName = stateNames[safeState.toUpperCase()] ?? safeState;
+  const safeStateName = escapeIlike(stateName).toLowerCase();
+
+  const [judges, benchmarks] = await Promise.all([
+    supabase.from("judge_demographics").select("judge_name", { count: "exact", head: true })
+      .ilike("district", `%${safeStateName}%`),
+    supabase.from("outcome_benchmarks").select("id", { count: "exact", head: true })
+      .ilike("jurisdiction_name", `%${safeStateName}%`),
+  ]);
+
+  const coverage = {
+    judges: judges.count ?? 0,
+    benchmarks: benchmarks.count ?? 0,
+  };
+
+  return {
+    available: coverage.judges >= 1 || coverage.benchmarks >= 1,
+    coverage,
+    matchedName: stateName,
+    matchedCourt: null,
+  };
+}
+
+export async function checkArrestKitCoverage(
+  stateCode: string
+): Promise<CoverageResult> {
+  const supabase = createAdminClient();
+  const upperState = stateCode.toUpperCase();
+
+  const [agencies, officers] = await Promise.all([
+    supabase.from("agency_incidents").select("agency", { count: "exact", head: true })
+      .eq("state", upperState),
+    supabase.from("officer_external_intel").select("officer_name", { count: "exact", head: true })
+      .eq("state", upperState),
+  ]);
+
+  const coverage = {
+    agencies: agencies.count ?? 0,
+    officers: officers.count ?? 0,
+  };
+
+  // Always available — rights checklist is universal
+  return {
+    available: true,
+    coverage,
+    matchedName: null,
+    matchedCourt: null,
+  };
+}
+
 export async function checkSimilarCasesCoverage(
   chargeType: string,
   state: string

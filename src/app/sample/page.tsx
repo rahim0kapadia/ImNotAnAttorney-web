@@ -367,6 +367,69 @@ export default function SamplePage() {
             </div>
           </section>
 
+          {/* SENTENCING CONTEXT — JUSTFAIR data (new Phase 6 section) */}
+          <SectionDivider />
+          <section>
+            <h2 className="text-xl font-bold text-white">
+              Sentencing Context — Federal Data
+            </h2>
+            <p className="mt-2 text-sm text-zinc-400">
+              Your report now includes sentencing context from 595,851 federal
+              cases (JUSTFAIR / USSC). This grounds your conversation with real
+              numbers — not guesses.
+            </p>
+
+            <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Federal sentencing context table">
+              <table className="w-full text-sm">
+                <caption className="mb-4 text-left text-base font-semibold text-zinc-300">
+                  Sample sentencing data — DWI, Southern District of Texas
+                </caption>
+                <thead>
+                  <tr className="border-b border-zinc-700 text-left text-zinc-400">
+                    <th scope="col" className="pb-2 pr-4">Metric</th>
+                    <th scope="col" className="pb-2 pr-4">Value</th>
+                    <th scope="col" className="pb-2">Source</th>
+                  </tr>
+                </thead>
+                <tbody className="text-zinc-300">
+                  <tr className="border-b border-zinc-500">
+                    <th scope="row" className="py-2 pr-4 font-normal text-zinc-300">Median sentence (DWI 1st)</th>
+                    <td className="py-2 pr-4 text-zinc-400">3.0 months</td>
+                    <td className="py-2 text-zinc-400">JUSTFAIR</td>
+                  </tr>
+                  <tr className="border-b border-zinc-500">
+                    <th scope="row" className="py-2 pr-4 font-normal text-zinc-300">Range (25th–75th percentile)</th>
+                    <td className="py-2 pr-4 text-zinc-400">1.0 – 8.0 months</td>
+                    <td className="py-2 text-zinc-400">USSC</td>
+                  </tr>
+                  <tr className="border-b border-zinc-500">
+                    <th scope="row" className="py-2 pr-4 font-normal text-zinc-300">Downward departure rate</th>
+                    <td className="py-2 pr-4 text-zinc-400">34.2%</td>
+                    <td className="py-2 text-zinc-400">USSC</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" className="py-2 pr-4 font-normal text-zinc-300">Plea rate (district)</th>
+                    <td className="py-2 pr-4 text-zinc-400">96.1%</td>
+                    <td className="py-2 text-zinc-400">BJS</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-4 text-sm text-zinc-400">
+              <span className="font-semibold text-zinc-300">
+                Why this matters:
+              </span>{" "}
+              When your attorney says &ldquo;most cases like yours end with
+              probation,&rdquo; you can ask: &ldquo;The federal data shows a
+              34.2% downward departure rate in this district — does that apply
+              to my situation?&rdquo; Data turns vague answers into specific
+              conversations.
+            </p>
+            <p className="mt-2 text-xs text-zinc-500">
+              Source: JUSTFAIR (QSIDE Institute) — 595,851 federal sentencing records, FY2001-2023. Federal courts only.
+            </p>
+          </section>
+
           <InlineCTA variant="mid" />
 
           <SectionDivider />

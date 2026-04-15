@@ -132,6 +132,9 @@ const COVERAGE_LABELS: Record<string, string> = {
   benchJury: 'bench vs jury comparisons',
   officers: 'cross-case reliability records',
   similarCases: 'similar cases matched',
+  judges: 'federal judges in database',
+  benchmarks: 'outcome benchmark records',
+  agencies: 'agencies with incident data',
 };
 
 const LOCALSTORAGE_KEY = 'inna_email';
@@ -140,7 +143,7 @@ const LOCALSTORAGE_KEY = 'inna_email';
 /* Types                                                       */
 /* ────────────────────────────────────────────────────────── */
 
-type Slug = 'judge-report-card' | 'officer-background-check' | 'similar-cases-analyzer';
+type Slug = 'judge-report-card' | 'officer-background-check' | 'similar-cases-analyzer' | 'district-court-intelligence' | 'arrest-survival-kit';
 
 interface AvailabilityCheckerProps {
   slug: Slug;
@@ -240,7 +243,8 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     const payload: Record<string, string> = { state };
     if (slug === 'judge-report-card') payload.judgeName = name;
     else if (slug === 'officer-background-check') payload.officerName = name;
-    else payload.chargeType = chargeType;
+    else if (slug === 'similar-cases-analyzer') payload.chargeType = chargeType;
+    // arrest-survival-kit: state-only (already in base payload)
 
     try {
       const res = await fetch(`/api/check-availability/${slug}`, {
@@ -274,7 +278,8 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     const payload: Record<string, unknown> = { state, email, waitlist: true };
     if (slug === 'judge-report-card') payload.judgeName = name;
     else if (slug === 'officer-background-check') payload.officerName = name;
-    else payload.chargeType = chargeType;
+    else if (slug === 'similar-cases-analyzer') payload.chargeType = chargeType;
+    // arrest-survival-kit: state-only (already in base payload)
 
     try {
       const res = await fetch(`/api/check-availability/${slug}`, {
@@ -378,7 +383,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="w-full text-center text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-3 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : 'name'}
+          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
         </button>
       </div>
     );
@@ -408,7 +413,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-4 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : 'name'}
+          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
         </button>
       </div>
     );

@@ -20,11 +20,15 @@ import {
 import {
   queryDefenseIntelligence,
   queryJustfairJudge,
+  queryDistrictCourtIntel,
+  queryArrestSurvivalKit,
 } from "@/lib/defense-intelligence/query";
 import {
   renderJudgeReportCard,
   renderOfficerBackground,
   renderSimilarCases,
+  renderDistrictCourtIntel,
+  renderArrestSurvivalKit,
 } from "./render";
 
 const OPERATOR_EMAIL =
@@ -167,6 +171,30 @@ export async function generateTier9Report(
           "similar-cases-analyzer"
         );
         html = renderSimilarCases(data, typedIntake, similarIntelligence.isEmpty ? undefined : similarIntelligence);
+        break;
+      }
+
+      case "district-court-intelligence": {
+        if (!validateIntakeFields(intake, ["state"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing state");
+          return;
+        }
+        const data = await queryDistrictCourtIntel(intake.state as string);
+        if (data.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderDistrictCourtIntel(data);
+        break;
+      }
+
+      case "arrest-survival-kit": {
+        if (!validateIntakeFields(intake, ["state"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing state");
+          return;
+        }
+        const data = await queryArrestSurvivalKit(intake.state as string);
+        html = renderArrestSurvivalKit(data);
         break;
       }
 

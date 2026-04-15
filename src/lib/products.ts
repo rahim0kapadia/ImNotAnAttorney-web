@@ -1235,6 +1235,43 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
+  "district-court-intelligence": {
+    name: "District Court Intelligence",
+    category: "research",
+    price: 9700, // $97
+    priceDisplay: "$97",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your District Court Intelligence report is generated on demand from 595,851 federal sentencing records within 60 seconds.",
+    description:
+      "Federal district sentencing patterns, outcome benchmarks, prosecution patterns, and judge demographics for your court district.",
+    intakeFields: ["state"],
+    stripePriceId: null,
+    upsellTier: "judge-report-card",
+    upsellText:
+      "District patterns set the context. A Judge Report Card shows YOUR judge's specific patterns.",
+    dripSequenceKey: "research_district_court",
+    isActive: true,
+  },
+  "arrest-survival-kit": {
+    name: "Arrest Survival Kit",
+    category: "research",
+    price: 4700, // $47
+    priceDisplay: "$47",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Arrest Survival Kit is generated on demand within 60 seconds of purchase.",
+    description:
+      "Your rights during arrest, agency incident data, and critical first-48-hours action plan for your jurisdiction.",
+    intakeFields: ["state"],
+    stripePriceId: null,
+    upsellTier: "officer-background-check",
+    upsellText:
+      "Know your rights — then know your arresting officer's track record.",
+    dripSequenceKey: "research_arrest_kit",
+    isActive: true,
+  },
+
   // ─── PRIORITY B — Critical 7 Worker Standalone Products ─────
   "plea-analyzer": {
     name: "Plea Deal Analyzer",
