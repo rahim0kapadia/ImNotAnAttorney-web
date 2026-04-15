@@ -10,22 +10,25 @@ import { TrustBadges } from "@/components/TrustBadges";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
 import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 /* ---------- Metadata ---------- */
 
-export const metadata: Metadata = {
-  title: "Similar Cases Analyzer — $297 | ImNotAnAttorney",
-  description:
-    "Find cases with facts like yours and see what happened. Factually similar case matching with outcome probabilities from verified court records.",
-  alternates: { canonical: `${SITE_URL}/similar-cases-analyzer` },
-  openGraph: {
-    title: "Similar Cases Analyzer — See What Happened in Cases Like Yours",
+export function generateMetadata(): Metadata {
+  return {
+    title: `Similar Cases Analyzer — ${TIER_CORE["similar-cases-analyzer"].priceDisplay} | ImNotAnAttorney`,
     description:
-      "Factually similar case matching with outcome data. Every case includes a source URL.",
-    url: `${SITE_URL}/similar-cases-analyzer`,
-  },
-};
+      "Find cases with facts like yours and see what happened. Factually similar case matching with outcome probabilities from verified court records.",
+    alternates: { canonical: `${SITE_URL}/similar-cases-analyzer` },
+    openGraph: {
+      title: "Similar Cases Analyzer — See What Happened in Cases Like Yours",
+      description:
+        "Factually similar case matching with outcome data. Every case includes a source URL.",
+      url: `${SITE_URL}/similar-cases-analyzer`,
+    },
+  };
+}
 
 /* ---------- FAQ Data ---------- */
 
@@ -192,7 +195,7 @@ export default function SimilarCasesAnalyzerPage() {
               similar to yours and see how they resolved — from verified court
               records.
             </p>
-            <p className="mt-6 text-3xl font-bold text-amber-400">$297</p>
+            <p className="mt-6 text-3xl font-bold text-amber-400">{TIER_CORE["similar-cases-analyzer"].priceDisplay}</p>
             <p className="mt-2 text-sm text-zinc-400">
               Your attorney charges more per hour than this costs &mdash; and this is data they&rsquo;d need weeks to compile.
             </p>
@@ -203,7 +206,7 @@ export default function SimilarCasesAnalyzerPage() {
               <AvailabilityChecker
                 slug="similar-cases-analyzer"
                 productName="Similar Cases Analyzer"
-                priceDisplay="$297"
+                priceDisplay={TIER_CORE["similar-cases-analyzer"].priceDisplay}
               />
             </div>
           </FadeInUp>
@@ -398,7 +401,7 @@ export default function SimilarCasesAnalyzerPage() {
               id="cta-heading"
               className="font-display text-2xl font-bold text-white"
             >
-              Get Your Similar Cases Analysis — $297
+              Get Your Similar Cases Analysis — {TIER_CORE["similar-cases-analyzer"].priceDisplay}
             </h2>
             <p className="mt-4 text-zinc-400">
               Most defendants guess what might happen. Defendants who prepare look at what actually happened. Your prosecutor has seen hundreds of cases like yours &mdash; now you will too.
@@ -407,7 +410,7 @@ export default function SimilarCasesAnalyzerPage() {
               <AvailabilityChecker
                 slug="similar-cases-analyzer"
                 productName="Similar Cases Analyzer"
-                priceDisplay="$297"
+                priceDisplay={TIER_CORE["similar-cases-analyzer"].priceDisplay}
               />
             </div>
             <p className="mt-6 text-xs text-zinc-500">

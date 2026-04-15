@@ -7,24 +7,27 @@
  */
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
 import { TrustBadges } from "@/components/TrustBadges";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
-export const metadata: Metadata = {
-  title: "Officer Background Check — $97 | ImNotAnAttorney",
-  description:
-    "Cross-case officer reliability analysis. Has your arresting officer been discredited in other cases? Verified court records with source URLs.",
-  alternates: { canonical: `${SITE_URL}/officer-background-check` },
-  openGraph: {
-    title:
-      "Officer Background Check — Know Your Arresting Officer's Track Record",
+export function generateMetadata(): Metadata {
+  return {
+    title: `Officer Background Check — ${TIER_CORE["officer-background-check"].priceDisplay} | ImNotAnAttorney`,
     description:
-      "Cross-case reliability analysis from verified court records. Every finding includes a source URL.",
-    url: `${SITE_URL}/officer-background-check`,
-  },
-};
+      "Cross-case officer reliability analysis. Has your arresting officer been discredited in other cases? Verified court records with source URLs.",
+    alternates: { canonical: `${SITE_URL}/officer-background-check` },
+    openGraph: {
+      title:
+        "Officer Background Check — Know Your Arresting Officer's Track Record",
+      description:
+        "Cross-case reliability analysis from verified court records. Every finding includes a source URL.",
+      url: `${SITE_URL}/officer-background-check`,
+    },
+  };
+}
 
 /* ------------------------------------------------------------------ */
 /*  Static data                                                        */
@@ -183,7 +186,7 @@ export default function OfficerBackgroundCheckPage() {
             procedures been questioned? The prosecution knows. Now you will too.
           </p>
 
-          <p className="mt-6 text-4xl font-extrabold text-amber-400">$97</p>
+          <p className="mt-6 text-4xl font-extrabold text-amber-400">{TIER_CORE["officer-background-check"].priceDisplay}</p>
 
           <p className="mt-2 text-sm text-zinc-400">
             Less than a court filing fee &mdash; for data that could change your defense strategy.
@@ -197,7 +200,7 @@ export default function OfficerBackgroundCheckPage() {
             <AvailabilityChecker
               slug="officer-background-check"
               productName="Officer Background Check"
-              priceDisplay="$97"
+              priceDisplay={TIER_CORE["officer-background-check"].priceDisplay}
             />
           </div>
         </section>
@@ -324,7 +327,7 @@ export default function OfficerBackgroundCheckPage() {
             className="font-display text-2xl font-bold text-white"
           >
             Get Your Officer Background Check &mdash;{" "}
-            <span className="text-amber-400">$97</span>
+            <span className="text-amber-400">{TIER_CORE["officer-background-check"].priceDisplay}</span>
           </h2>
 
           <p className="mt-4 text-zinc-400">
@@ -335,7 +338,7 @@ export default function OfficerBackgroundCheckPage() {
             <AvailabilityChecker
               slug="officer-background-check"
               productName="Officer Background Check"
-              priceDisplay="$97"
+              priceDisplay={TIER_CORE["officer-background-check"].priceDisplay}
             />
           </div>
 

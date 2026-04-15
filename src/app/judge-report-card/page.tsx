@@ -7,23 +7,26 @@
  */
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
 import { TrustBadges } from "@/components/TrustBadges";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
-export const metadata: Metadata = {
-  title: "Judge Report Card — $197 | ImNotAnAttorney",
-  description:
-    "Know your judge's sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library. Every data point sourced from verified court records.",
-  alternates: { canonical: `${SITE_URL}/judge-report-card` },
-  openGraph: {
-    title: "Judge Report Card — Know Your Judge Before Your First Hearing",
+export function generateMetadata(): Metadata {
+  return {
+    title: `Judge Report Card — ${TIER_CORE["judge-report-card"].priceDisplay} | ImNotAnAttorney`,
     description:
-      "Sentencing patterns, prosecutor pairing data, bench vs jury divergence. Verified court records with source URLs.",
-    url: `${SITE_URL}/judge-report-card`,
-  },
-};
+      "Know your judge's sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library. Every data point sourced from verified court records.",
+    alternates: { canonical: `${SITE_URL}/judge-report-card` },
+    openGraph: {
+      title: "Judge Report Card — Know Your Judge Before Your First Hearing",
+      description:
+        "Sentencing patterns, prosecutor pairing data, bench vs jury divergence. Verified court records with source URLs.",
+      url: `${SITE_URL}/judge-report-card`,
+    },
+  };
+}
 
 const FAQ_ITEMS = [
   {
@@ -113,7 +116,7 @@ export default function JudgeReportCardPage() {
             Every judge has patterns. The prosecutor knows them. Now you will
             too.
           </p>
-          <p className="mt-6 text-4xl font-extrabold text-amber-400">$197</p>
+          <p className="mt-6 text-4xl font-extrabold text-amber-400">{TIER_CORE["judge-report-card"].priceDisplay}</p>
           <p className="mt-2 text-sm text-zinc-400">
             Less than one hour of your attorney&rsquo;s time &mdash; for data
             your attorney may not have.
@@ -125,7 +128,7 @@ export default function JudgeReportCardPage() {
             <AvailabilityChecker
               slug="judge-report-card"
               productName="Judge Report Card"
-              priceDisplay="$197"
+              priceDisplay={TIER_CORE["judge-report-card"].priceDisplay}
             />
           </div>
           <p className="mt-2 text-xs text-zinc-400">
@@ -302,7 +305,7 @@ export default function JudgeReportCardPage() {
             <AvailabilityChecker
               slug="judge-report-card"
               productName="Judge Report Card"
-              priceDisplay="$197"
+              priceDisplay={TIER_CORE["judge-report-card"].priceDisplay}
             />
           </div>
           <p className="mt-4 text-sm text-zinc-400">
