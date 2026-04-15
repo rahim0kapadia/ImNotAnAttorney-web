@@ -39,11 +39,12 @@ type AnswerValue = string | number;
 interface Step {
   id: string;
   label: string;
-  type: "select" | "dropdown" | "number" | "date";
+  type: "select" | "dropdown" | "number" | "date" | "text";
   options?: StepOption[];
   dynamicOptions?: (answers: Record<string, AnswerValue>) => StepOption[];
   placeholder?: string;
   helpText?: string;
+  optional?: boolean;
 }
 
 const GOOD_TIME_STEPS: Step[] = [
@@ -348,10 +349,98 @@ const DIVERSION_STEPS: Step[] = [
   },
 ];
 
+// --- Federal sentencing calculator steps (all 50 states + DC) ---------
+
+const FEDERAL_STATES: StepOption[] = [
+  { value: "AL", label: "Alabama" }, { value: "AK", label: "Alaska" },
+  { value: "AZ", label: "Arizona" }, { value: "AR", label: "Arkansas" },
+  { value: "CA", label: "California" }, { value: "CO", label: "Colorado" },
+  { value: "CT", label: "Connecticut" }, { value: "DE", label: "Delaware" },
+  { value: "DC", label: "District of Columbia" }, { value: "FL", label: "Florida" },
+  { value: "GA", label: "Georgia" }, { value: "HI", label: "Hawaii" },
+  { value: "ID", label: "Idaho" }, { value: "IL", label: "Illinois" },
+  { value: "IN", label: "Indiana" }, { value: "IA", label: "Iowa" },
+  { value: "KS", label: "Kansas" }, { value: "KY", label: "Kentucky" },
+  { value: "LA", label: "Louisiana" }, { value: "ME", label: "Maine" },
+  { value: "MD", label: "Maryland" }, { value: "MA", label: "Massachusetts" },
+  { value: "MI", label: "Michigan" }, { value: "MN", label: "Minnesota" },
+  { value: "MS", label: "Mississippi" }, { value: "MO", label: "Missouri" },
+  { value: "MT", label: "Montana" }, { value: "NE", label: "Nebraska" },
+  { value: "NV", label: "Nevada" }, { value: "NH", label: "New Hampshire" },
+  { value: "NJ", label: "New Jersey" }, { value: "NM", label: "New Mexico" },
+  { value: "NY", label: "New York" }, { value: "NC", label: "North Carolina" },
+  { value: "ND", label: "North Dakota" }, { value: "OH", label: "Ohio" },
+  { value: "OK", label: "Oklahoma" }, { value: "OR", label: "Oregon" },
+  { value: "PA", label: "Pennsylvania" }, { value: "RI", label: "Rhode Island" },
+  { value: "SC", label: "South Carolina" }, { value: "SD", label: "South Dakota" },
+  { value: "TN", label: "Tennessee" }, { value: "TX", label: "Texas" },
+  { value: "UT", label: "Utah" }, { value: "VT", label: "Vermont" },
+  { value: "VA", label: "Virginia" }, { value: "WA", label: "Washington" },
+  { value: "WV", label: "West Virginia" }, { value: "WI", label: "Wisconsin" },
+  { value: "WY", label: "Wyoming" },
+];
+
+const SENTENCING_CALC_STEPS: Step[] = [
+  {
+    id: "state",
+    label: "What state is the federal court in?",
+    type: "dropdown",
+    options: FEDERAL_STATES,
+    helpText: "Federal district courts — sentencing data from USSC FY2001-2023.",
+  },
+  {
+    id: "chargeType",
+    label: "What type of charge?",
+    type: "select",
+    options: [
+      { value: "drug-possession", label: "Drug Possession" },
+      { value: "drug-trafficking", label: "Drug Trafficking" },
+      { value: "dui", label: "DUI / DWI" },
+      { value: "assault", label: "Assault" },
+      { value: "theft-property", label: "Theft / Property Crime" },
+      { value: "domestic-violence", label: "Domestic Violence" },
+      { value: "white-collar", label: "White Collar / Fraud" },
+      { value: "sex-offense", label: "Sex Offense" },
+      { value: "federal-criminal", label: "Federal" },
+      { value: "other-felony", label: "Other Felony" },
+      { value: "other-misdemeanor", label: "Other Misdemeanor" },
+    ],
+  },
+  {
+    id: "judgeName",
+    label: "Judge name (optional)",
+    type: "text",
+    placeholder: "e.g., Amy Berman Jackson",
+    helpText:
+      "If you know the judge assigned to your case, we\u2019ll pull their specific sentencing data. Leave blank to see district-level data only.",
+    optional: true,
+  },
+];
+
+// --- Judge comparison wizard steps ------------------------------------
+
+const JUDGE_COMPARISON_STEPS: Step[] = [
+  {
+    id: "judgeNameA",
+    label: "First judge\u2019s name",
+    type: "text",
+    placeholder: "e.g., Amy Berman Jackson",
+    helpText: "Federal judges only \u2014 1,126 judges in database.",
+  },
+  {
+    id: "judgeNameB",
+    label: "Second judge\u2019s name",
+    type: "text",
+    placeholder: "e.g., Royce Lamberth",
+  },
+];
+
 const STEP_MAP: Record<string, Step[]> = {
   "good-time": GOOD_TIME_STEPS,
   "diversion-eligibility": DIVERSION_STEPS,
   "veterans-court": VETERANS_COURT_STEPS,
+  "sentencing-calculator": SENTENCING_CALC_STEPS,
+  "judge-comparison": JUDGE_COMPARISON_STEPS,
 };
 
 const DEFAULT_PRISON_TYPE: Record<string, string> = {
@@ -417,10 +506,95 @@ interface VeteransCourtClientResult {
   fallbackMessage?: string;
 }
 
+// --- Sentencing calculator result types --------------------------------
+
+interface SentencingCalcResult {
+  state: string;
+  chargeType: string;
+  federalOnly: boolean;
+  districtPatterns: Array<{
+    judge_name: string;
+    district: string;
+    total_cases: number;
+    median_sentence_months: number | null;
+    downward_departure_rate: number | null;
+    upward_departure_rate: number | null;
+  }>;
+  chargeDistribution: {
+    median_months: number | null;
+    p25: number | null;
+    p75: number | null;
+    sample_size: number;
+  } | null;
+  judgePattern: {
+    judge_name: string;
+    total_cases: number;
+    median_sentence_months: number | null;
+    p25_sentence_months: number | null;
+    p75_sentence_months: number | null;
+    downward_departure_rate: number | null;
+    upward_departure_rate: number | null;
+  } | null;
+  judgeDemographics: {
+    judge_name: string;
+    appointing_president: string | null;
+    appointing_party: string | null;
+    aba_rating: string | null;
+    law_school: string | null;
+    active_start: number | null;
+    active_end: number | null;
+  } | null;
+  judgeName: string | null;
+  dataSource: string;
+  sourceUrl: string;
+}
+
+// --- Judge comparison result types ------------------------------------
+
+interface JudgeComparisonJudgeData {
+  searchName: string;
+  found: boolean;
+  demographics: {
+    judge_name: string;
+    district: string | null;
+    appointing_president: string | null;
+    appointing_party: string | null;
+    aba_rating: string | null;
+    law_school: string | null;
+    gender: string | null;
+    active_start: number | null;
+    active_end: number | null;
+  } | null;
+  sentencingPattern: {
+    total_cases: number;
+    median_sentence_months: number | null;
+    p25_sentence_months: number | null;
+    p75_sentence_months: number | null;
+    downward_departure_rate: number | null;
+    upward_departure_rate: number | null;
+  } | null;
+  sentencingByRace: Array<{
+    defendant_race: string;
+    total_cases: number;
+    median_sentence_months: number | null;
+    guideline_departure_rate: number | null;
+  }>;
+}
+
+interface JudgeComparisonResult {
+  judgeA: JudgeComparisonJudgeData;
+  judgeB: JudgeComparisonJudgeData;
+  federalOnly: boolean;
+  dataSource: string;
+  sourceUrl: string;
+}
+
 type CalculatorResult =
   | GoodTimeResult
   | DiversionClientResult
-  | VeteransCourtClientResult;
+  | VeteransCourtClientResult
+  | SentencingCalcResult
+  | JudgeComparisonResult;
 
 interface Props {
   slug: string;
@@ -822,6 +996,520 @@ function VeteransCourtResults({
   );
 }
 
+// --- Sentencing calculator type guard + renderer ----------------------
+
+function isSentencingCalcResult(
+  slug: string,
+  _r: CalculatorResult,
+): _r is SentencingCalcResult {
+  return slug === "sentencing-calculator";
+}
+
+function fmtMo(v: number | null): string {
+  return v !== null ? `${Number(v).toFixed(1)} mo` : "\u2014";
+}
+
+function fmtPct(v: number | null): string {
+  return v !== null ? `${(Number(v) * 100).toFixed(1)}%` : "\u2014";
+}
+
+function SentencingCalcResults({ result }: { result: SentencingCalcResult }) {
+  const hasData =
+    result.districtPatterns.length > 0 || result.chargeDistribution !== null;
+
+  if (!hasData) {
+    return (
+      <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6">
+        <p className="text-zinc-200">
+          No federal sentencing data found for this state and charge
+          combination. Try a different charge type or state.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* Federal Courts Label */}
+      <div className="mb-6 bg-blue-500/10 border border-blue-500/30 rounded-lg px-4 py-3">
+        <p className="text-sm text-blue-300">
+          Federal courts only \u2014 data from 595,851 USSC sentencing records
+          (FY2001-2023).{" "}
+          <a
+            href={result.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-400 hover:underline"
+          >
+            [source]
+          </a>
+        </p>
+      </div>
+
+      {/* Charge-level headline */}
+      {result.chargeDistribution && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+            Sentencing Range \u2014{" "}
+            {result.chargeType.replace(/-/g, " ")}
+          </h3>
+          <dl className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <dt className="text-zinc-400 text-sm">Median Sentence</dt>
+              <dd className="text-2xl font-bold text-zinc-50">
+                {fmtMo(result.chargeDistribution.median_months)}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-zinc-400 text-sm">25th\u201375th Percentile</dt>
+              <dd className="text-2xl font-bold text-zinc-50">
+                {result.chargeDistribution.p25 !== null &&
+                result.chargeDistribution.p75 !== null
+                  ? `${Number(result.chargeDistribution.p25).toFixed(1)}\u2013${Number(result.chargeDistribution.p75).toFixed(1)} mo`
+                  : "\u2014"}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-zinc-400 text-sm">Cases Analyzed</dt>
+              <dd className="text-2xl font-bold text-amber-400">
+                {result.chargeDistribution.sample_size.toLocaleString()}
+              </dd>
+            </div>
+          </dl>
+        </section>
+      )}
+
+      {/* Judge-specific data */}
+      {result.judgePattern && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+            Judge: {result.judgePattern.judge_name}
+          </h3>
+          {result.judgeDemographics && (
+            <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-5 mb-4">
+              <dl className="grid grid-cols-2 gap-3 text-sm">
+                {result.judgeDemographics.appointing_president && (
+                  <>
+                    <dt className="text-zinc-400">Appointed By</dt>
+                    <dd className="text-zinc-100">
+                      {result.judgeDemographics.appointing_president} (
+                      {result.judgeDemographics.appointing_party ?? "Unknown"})
+                    </dd>
+                  </>
+                )}
+                {result.judgeDemographics.aba_rating && (
+                  <>
+                    <dt className="text-zinc-400">ABA Rating</dt>
+                    <dd className="text-zinc-100">
+                      {result.judgeDemographics.aba_rating}
+                    </dd>
+                  </>
+                )}
+                {result.judgeDemographics.law_school && (
+                  <>
+                    <dt className="text-zinc-400">Law School</dt>
+                    <dd className="text-zinc-100">
+                      {result.judgeDemographics.law_school}
+                    </dd>
+                  </>
+                )}
+                {result.judgeDemographics.active_start && (
+                  <>
+                    <dt className="text-zinc-400">Active</dt>
+                    <dd className="text-zinc-100">
+                      {result.judgeDemographics.active_start}\u2013
+                      {result.judgeDemographics.active_end ?? "present"}
+                    </dd>
+                  </>
+                )}
+              </dl>
+            </div>
+          )}
+          <dl className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 grid grid-cols-2 gap-4">
+            <div>
+              <dt className="text-zinc-400 text-sm">Total Cases</dt>
+              <dd className="text-xl font-bold text-zinc-50">
+                {result.judgePattern.total_cases.toLocaleString()}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-zinc-400 text-sm">Median Sentence</dt>
+              <dd className="text-xl font-bold text-zinc-50">
+                {fmtMo(result.judgePattern.median_sentence_months)}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-zinc-400 text-sm">Downward Departures</dt>
+              <dd className="text-xl font-bold text-green-400">
+                {fmtPct(result.judgePattern.downward_departure_rate)}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-zinc-400 text-sm">Upward Departures</dt>
+              <dd className="text-xl font-bold text-red-400">
+                {fmtPct(result.judgePattern.upward_departure_rate)}
+              </dd>
+            </div>
+          </dl>
+        </section>
+      )}
+
+      {/* No judge found notice */}
+      {result.judgeName && !result.judgePattern && (
+        <div className="mb-8 bg-zinc-900 border border-zinc-700 rounded-lg p-5">
+          <p className="text-zinc-300">
+            No sentencing data found for &ldquo;{result.judgeName}&rdquo;. This
+            database covers 1,126 federal judges. State court judges are not
+            included.
+          </p>
+        </div>
+      )}
+
+      {/* District patterns table */}
+      {result.districtPatterns.length > 0 && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+            Federal Sentencing in {result.state}
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b-2 border-zinc-700">
+                  <th className="text-left py-2 px-3 text-zinc-400 font-medium">
+                    District
+                  </th>
+                  <th className="text-right py-2 px-3 text-zinc-400 font-medium">
+                    Cases
+                  </th>
+                  <th className="text-right py-2 px-3 text-zinc-400 font-medium">
+                    Median
+                  </th>
+                  <th className="text-right py-2 px-3 text-zinc-400 font-medium">
+                    \u2193 Departures
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {result.districtPatterns.slice(0, 10).map((p, i) => (
+                  <tr key={i} className="border-b border-zinc-800">
+                    <td className="py-2 px-3 text-zinc-200">
+                      {p.district ?? p.judge_name}
+                    </td>
+                    <td className="py-2 px-3 text-zinc-200 text-right">
+                      {p.total_cases.toLocaleString()}
+                    </td>
+                    <td className="py-2 px-3 text-zinc-200 text-right">
+                      {fmtMo(p.median_sentence_months)}
+                    </td>
+                    <td className="py-2 px-3 text-zinc-200 text-right">
+                      {fmtPct(p.downward_departure_rate)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+    </>
+  );
+}
+
+// --- Judge comparison type guard + renderer ----------------------------
+
+function isJudgeComparisonResult(
+  slug: string,
+  _r: CalculatorResult,
+): _r is JudgeComparisonResult {
+  return slug === "judge-comparison";
+}
+
+function JudgeComparisonResults({
+  result,
+}: {
+  result: JudgeComparisonResult;
+}) {
+  const { judgeA, judgeB } = result;
+
+  if (!judgeA.found && !judgeB.found) {
+    return (
+      <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6">
+        <p className="text-zinc-200">
+          Neither judge was found in the federal database. This tool covers
+          1,126 federal judges (JUSTFAIR/USSC). State court judges are not
+          included.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* Federal Courts Label */}
+      <div className="mb-6 bg-blue-500/10 border border-blue-500/30 rounded-lg px-4 py-3">
+        <p className="text-sm text-blue-300">
+          Federal courts only \u2014 1,126 judges from JUSTFAIR/USSC
+          (FY2001-2023).{" "}
+          <a
+            href={result.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-400 hover:underline"
+          >
+            [source]
+          </a>
+        </p>
+      </div>
+
+      {/* Not found warnings */}
+      {!judgeA.found && (
+        <div className="mb-4 bg-zinc-900 border border-amber-800/40 rounded-lg p-4">
+          <p className="text-sm text-amber-300">
+            &ldquo;{judgeA.searchName}&rdquo; not found in federal database.
+          </p>
+        </div>
+      )}
+      {!judgeB.found && (
+        <div className="mb-4 bg-zinc-900 border border-amber-800/40 rounded-lg p-4">
+          <p className="text-sm text-amber-300">
+            &ldquo;{judgeB.searchName}&rdquo; not found in federal database.
+          </p>
+        </div>
+      )}
+
+      {/* Side-by-side sentencing comparison */}
+      {(judgeA.sentencingPattern || judgeB.sentencingPattern) && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+            Sentencing Comparison
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b-2 border-zinc-700">
+                  <th className="text-left py-2 px-3 text-zinc-400 font-medium" />
+                  <th className="text-right py-2 px-3 text-amber-400 font-medium">
+                    {judgeA.demographics?.judge_name ?? judgeA.searchName}
+                  </th>
+                  <th className="text-right py-2 px-3 text-blue-400 font-medium">
+                    {judgeB.demographics?.judge_name ?? judgeB.searchName}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-zinc-800">
+                  <td className="py-2 px-3 text-zinc-400">Total Cases</td>
+                  <td className="py-2 px-3 text-zinc-200 text-right">
+                    {judgeA.sentencingPattern?.total_cases?.toLocaleString() ??
+                      "\u2014"}
+                  </td>
+                  <td className="py-2 px-3 text-zinc-200 text-right">
+                    {judgeB.sentencingPattern?.total_cases?.toLocaleString() ??
+                      "\u2014"}
+                  </td>
+                </tr>
+                <tr className="border-b border-zinc-800">
+                  <td className="py-2 px-3 text-zinc-400">Median Sentence</td>
+                  <td className="py-2 px-3 text-zinc-200 text-right">
+                    {fmtMo(
+                      judgeA.sentencingPattern?.median_sentence_months ?? null,
+                    )}
+                  </td>
+                  <td className="py-2 px-3 text-zinc-200 text-right">
+                    {fmtMo(
+                      judgeB.sentencingPattern?.median_sentence_months ?? null,
+                    )}
+                  </td>
+                </tr>
+                <tr className="border-b border-zinc-800">
+                  <td className="py-2 px-3 text-zinc-400">
+                    Range (P25\u2013P75)
+                  </td>
+                  <td className="py-2 px-3 text-zinc-200 text-right">
+                    {judgeA.sentencingPattern
+                      ? `${fmtMo(judgeA.sentencingPattern.p25_sentence_months)} \u2013 ${fmtMo(judgeA.sentencingPattern.p75_sentence_months)}`
+                      : "\u2014"}
+                  </td>
+                  <td className="py-2 px-3 text-zinc-200 text-right">
+                    {judgeB.sentencingPattern
+                      ? `${fmtMo(judgeB.sentencingPattern.p25_sentence_months)} \u2013 ${fmtMo(judgeB.sentencingPattern.p75_sentence_months)}`
+                      : "\u2014"}
+                  </td>
+                </tr>
+                <tr className="border-b border-zinc-800">
+                  <td className="py-2 px-3 text-zinc-400">
+                    Downward Departures
+                  </td>
+                  <td className="py-2 px-3 text-green-400 text-right">
+                    {fmtPct(
+                      judgeA.sentencingPattern?.downward_departure_rate ?? null,
+                    )}
+                  </td>
+                  <td className="py-2 px-3 text-green-400 text-right">
+                    {fmtPct(
+                      judgeB.sentencingPattern?.downward_departure_rate ?? null,
+                    )}
+                  </td>
+                </tr>
+                <tr className="border-b border-zinc-800">
+                  <td className="py-2 px-3 text-zinc-400">
+                    Upward Departures
+                  </td>
+                  <td className="py-2 px-3 text-red-400 text-right">
+                    {fmtPct(
+                      judgeA.sentencingPattern?.upward_departure_rate ?? null,
+                    )}
+                  </td>
+                  <td className="py-2 px-3 text-red-400 text-right">
+                    {fmtPct(
+                      judgeB.sentencingPattern?.upward_departure_rate ?? null,
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* Side-by-side demographics */}
+      {(judgeA.demographics || judgeB.demographics) && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+            Judge Background
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[judgeA, judgeB].map((judge, idx) => (
+              <div
+                key={idx}
+                className="bg-zinc-900 border border-zinc-700 rounded-lg p-5"
+              >
+                <h4
+                  className={`font-medium mb-3 ${idx === 0 ? "text-amber-400" : "text-blue-400"}`}
+                >
+                  {judge.demographics?.judge_name ?? judge.searchName}
+                </h4>
+                {judge.demographics ? (
+                  <dl className="space-y-2 text-sm">
+                    {judge.demographics.appointing_president && (
+                      <div className="flex justify-between">
+                        <dt className="text-zinc-400">Appointed By</dt>
+                        <dd className="text-zinc-100">
+                          {judge.demographics.appointing_president} (
+                          {judge.demographics.appointing_party ?? "?"})
+                        </dd>
+                      </div>
+                    )}
+                    {judge.demographics.aba_rating && (
+                      <div className="flex justify-between">
+                        <dt className="text-zinc-400">ABA Rating</dt>
+                        <dd className="text-zinc-100">
+                          {judge.demographics.aba_rating}
+                        </dd>
+                      </div>
+                    )}
+                    {judge.demographics.law_school && (
+                      <div className="flex justify-between">
+                        <dt className="text-zinc-400">Law School</dt>
+                        <dd className="text-zinc-100">
+                          {judge.demographics.law_school}
+                        </dd>
+                      </div>
+                    )}
+                    {judge.demographics.gender && (
+                      <div className="flex justify-between">
+                        <dt className="text-zinc-400">Gender</dt>
+                        <dd className="text-zinc-100">
+                          {judge.demographics.gender}
+                        </dd>
+                      </div>
+                    )}
+                    {judge.demographics.active_start && (
+                      <div className="flex justify-between">
+                        <dt className="text-zinc-400">Active</dt>
+                        <dd className="text-zinc-100">
+                          {judge.demographics.active_start}\u2013
+                          {judge.demographics.active_end ?? "present"}
+                        </dd>
+                      </div>
+                    )}
+                  </dl>
+                ) : (
+                  <p className="text-sm text-zinc-500">
+                    Not found in federal database
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Racial disparity data */}
+      {(judgeA.sentencingByRace.length > 0 ||
+        judgeB.sentencingByRace.length > 0) && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-zinc-50 mb-3">
+            Sentencing by Defendant Demographics
+          </h3>
+          <p className="text-xs text-zinc-400 mb-3">
+            Factual sentencing data by defendant race. No editorial
+            interpretation.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[judgeA, judgeB].map((judge, idx) => (
+              <div
+                key={idx}
+                className="bg-zinc-900 border border-zinc-700 rounded-lg p-5"
+              >
+                <h4
+                  className={`font-medium mb-3 text-sm ${idx === 0 ? "text-amber-400" : "text-blue-400"}`}
+                >
+                  {judge.demographics?.judge_name ?? judge.searchName}
+                </h4>
+                {judge.sentencingByRace.length > 0 ? (
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-zinc-700">
+                        <th className="text-left py-1 text-zinc-400">Race</th>
+                        <th className="text-right py-1 text-zinc-400">
+                          Cases
+                        </th>
+                        <th className="text-right py-1 text-zinc-400">
+                          Median
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {judge.sentencingByRace.map((row, ri) => (
+                        <tr key={ri} className="border-b border-zinc-800">
+                          <td className="py-1 text-zinc-200">
+                            {row.defendant_race}
+                          </td>
+                          <td className="py-1 text-zinc-200 text-right">
+                            {row.total_cases.toLocaleString()}
+                          </td>
+                          <td className="py-1 text-zinc-200 text-right">
+                            {fmtMo(row.median_sentence_months)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <p className="text-sm text-zinc-500">
+                    No demographic data available
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </>
+  );
+}
+
 // --- Main component ------------------------------------------------
 
 export default function CalculatorClient({ slug, product }: Props) {
@@ -924,9 +1612,10 @@ export default function CalculatorClient({ slug, product }: Props) {
     : step.options;
   const currentAnswer = answers[step.id];
   const canProceed =
-    currentAnswer !== undefined &&
-    currentAnswer !== "" &&
-    !(typeof currentAnswer === "number" && Number.isNaN(currentAnswer));
+    step.optional ||
+    (currentAnswer !== undefined &&
+      currentAnswer !== "" &&
+      !(typeof currentAnswer === "number" && Number.isNaN(currentAnswer)));
 
   async function handleNext() {
     if (!canProceed) return;
@@ -967,7 +1656,11 @@ export default function CalculatorClient({ slug, product }: Props) {
           Your Results
         </h2>
 
-        {isDiversionResult(slug, result) ? (
+        {isSentencingCalcResult(slug, result) ? (
+          <SentencingCalcResults result={result} />
+        ) : isJudgeComparisonResult(slug, result) ? (
+          <JudgeComparisonResults result={result} />
+        ) : isDiversionResult(slug, result) ? (
           <DiversionResults result={result} />
         ) : isVeteransCourtResult(slug, result) ? (
           <VeteransCourtResults result={result} />
@@ -1279,6 +1972,27 @@ export default function CalculatorClient({ slug, product }: Props) {
               step.helpText ? `help-${step.id}` : undefined
             }
             className="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-4 py-3 text-lg text-zinc-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+          />
+        )}
+
+        {step.type === "text" && (
+          <input
+            type="text"
+            autoComplete="off"
+            aria-label={step.label}
+            placeholder={step.placeholder}
+            value={
+              typeof answers[step.id] === "string"
+                ? (answers[step.id] as string)
+                : ""
+            }
+            onChange={(e) =>
+              setAnswers((a) => ({ ...a, [step.id]: e.target.value }))
+            }
+            aria-describedby={
+              step.helpText ? `help-${step.id}` : undefined
+            }
+            className="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-4 py-3 text-lg text-zinc-50 placeholder:text-zinc-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
           />
         )}
       </fieldset>

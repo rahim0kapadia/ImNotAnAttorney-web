@@ -133,6 +133,43 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
+  "sentencing-calculator": {
+    name: "Federal Sentencing Calculator",
+    category: "calculator",
+    price: 0,
+    priceDisplay: "Free",
+    delivery: "Instant",
+    deliveryDetail:
+      "Sentencing data returned instantly from 595,851 federal sentencing records.",
+    description:
+      "Look up real federal sentencing data by charge type and state — median sentences, departure rates, and judge-specific patterns.",
+    intakeFields: ["state", "chargeType"],
+    stripePriceId: null,
+    upsellTier: "judge-report-card",
+    upsellText:
+      "Want the full picture on your judge? The Judge Report Card includes sentencing patterns, demographics, and racial disparity data.",
+    dripSequenceKey: "calculator_sentencing",
+    isActive: true,
+  },
+  "judge-comparison": {
+    name: "Judge Comparison Tool",
+    category: "calculator",
+    price: 0,
+    priceDisplay: "Free",
+    delivery: "Instant",
+    deliveryDetail:
+      "Side-by-side judge comparison from federal sentencing data.",
+    description:
+      "Compare two federal judges side-by-side — sentencing patterns, departure rates, demographics, and defendant demographic data.",
+    intakeFields: ["judgeNameA", "judgeNameB"],
+    stripePriceId: null,
+    upsellTier: "judge-report-card",
+    upsellText:
+      "Get the complete intelligence package on your judge — not just a comparison, but a full report with quotes, sentencing, and accountability data.",
+    dripSequenceKey: "calculator_judge_comparison",
+    isActive: true,
+  },
+
   // ─── RESEARCH PRODUCTS ($97-$297 — instant generated reports) ─
   "employment-impact": {
     name: "Employment Impact Assessment",
