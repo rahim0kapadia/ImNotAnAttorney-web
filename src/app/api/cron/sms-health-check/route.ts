@@ -90,7 +90,10 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       ok: alerts.length === 0,
-      testSms: testResult.success ? "sent" : testResult.error,
+      testSms: TEST_PHONE
+        ? (testResult.success ? "sent" : "failed")
+        : "skipped",
+      testSmsError: TEST_PHONE && !testResult.success ? testResult.error : undefined,
       recentLogs: recentLogs?.length ?? 0,
       bounces: bounces?.length ?? 0,
       alerts,
