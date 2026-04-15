@@ -9,10 +9,28 @@
  */
 import { spawn } from 'child_process';
 import { parse } from 'csv-parse';
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const COURTS_BZ2 = 'data/bulk-verify/cl-bulk/courts-2026-03-31.csv.bz2';
-const OUTPUT = 'data/bulk-verify/cl-bulk/court-jurisdiction-map.json';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(__dirname, '..');
+
+const COURTS_BZ2 = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'courts-2026-03-31.csv.bz2');
+const OUTPUT = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'court-jurisdiction-map.json');
+
+function findBzcat() {
+  const candidates = [
+    'C:\\Program Files\\Git\\usr\\bin\\bzcat.exe',
+    'C:\\Program Files\\Git\\mingw64\\bin\\bzcat.exe',
+    'bzcat',
+  ];
+  for (const p of candidates) {
+    if (p === 'bzcat') return p;
+    try { if (existsSync(p)) return p; } catch {}
+  }
+  return 'bzcat';
+}
 
 // State name → code (for parsing full_name)
 const STATE_MAP = {
@@ -144,7 +162,7 @@ function deriveJurisdiction(courtId, fullName, jurisdictionType) {
 console.log('=== Court Jurisdiction Map Builder ===');
 console.log('Input: ' + COURTS_BZ2);
 
-const bzcat = spawn('C:\\Program Files\\Git\\usr\\bin\\bzcat.exe', [COURTS_BZ2], {
+const bzcat = spawn(findBzcat(), [COURTS_BZ2], {
   stdio: ['ignore', 'pipe', 'pipe'],
 });
 
@@ -188,7 +206,7 @@ try {
 }
 
 console.log('\nTotal courts: ' + total);
-console.log('Mapped: ' + mapped + ' (' + (mapped/total*100).toFixed(1) + '%)');
+console.log('Mapped: ' + mapped + ' (' + (total > 0 ? (mapped/total*100).toFixed(1) : '0.0') + '%)');
 console.log('Unmapped: ' + unmapped);
 
 // Distribution

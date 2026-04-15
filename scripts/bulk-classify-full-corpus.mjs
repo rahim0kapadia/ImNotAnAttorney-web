@@ -91,6 +91,11 @@ function isCriminalOpinion(lowerText) {
 let supabaseToken = null;
 function loadToken() {
   if (supabaseToken) return;
+  // Check process.env first so CI/container environments don't need the file
+  if (process.env.SUPABASE_ACCESS_TOKEN) {
+    supabaseToken = process.env.SUPABASE_ACCESS_TOKEN.trim();
+    return;
+  }
   const envPath = path.resolve(PROJECT_ROOT, "..", "ImNotAnAttorney", ".env.local");
   const raw = fs.readFileSync(envPath, "utf8");
   for (const line of raw.split("\n")) {
@@ -99,7 +104,7 @@ function loadToken() {
       return;
     }
   }
-  throw new Error("SUPABASE_ACCESS_TOKEN not found in ImNotAnAttorney/.env.local");
+  throw new Error("SUPABASE_ACCESS_TOKEN not found in process.env or ImNotAnAttorney/.env.local");
 }
 
 // ── Management API query ──────────────────────────────────────────────────────
@@ -140,12 +145,12 @@ function sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
 // ── SQL escaping ──────────────────────────────────────────────────────────────
 function esc(val) {
   if (val === null || val === undefined) return "NULL";
-  return "'" + String(val).split("'").join("''") + "'";
+  return "'" + String(val).split("\\").join("\\\\").split("'").join("''") + "'";
 }
 
 function escArr(arr) {
   if (!arr || arr.length === 0) return "'{}'";
-  const inner = arr.map((v) => '"' + String(v).split("'").join("''").split('"').join('\\"') + '"').join(",");
+  const inner = arr.map((v) => '"' + String(v).split("\\").join("\\\\").split("'").join("''").split('"').join('\\"') + '"').join(",");
   return "'{" + inner + "}'";
 }
 
@@ -361,6 +366,7 @@ function buildUpsert(params) {
   // ON CONFLICT: update all extractable fields; preserve existing non-empty values
   // via COALESCE / CASE so re-runs enrich rather than overwrite
   const updates = [
+    "case_name = CASE WHEN EXCLUDED.case_name LIKE 'cluster:%' THEN classified_opinions.case_name ELSE EXCLUDED.case_name END",
     "opinion_type = EXCLUDED.opinion_type",
     "charge_types = CASE WHEN array_length(EXCLUDED.charge_types, 1) > 0 THEN EXCLUDED.charge_types ELSE classified_opinions.charge_types END",
     "motion_types = CASE WHEN array_length(EXCLUDED.motion_types, 1) > 0 THEN EXCLUDED.motion_types ELSE classified_opinions.motion_types END",
@@ -372,7 +378,7 @@ function buildUpsert(params) {
     "classification_confidence = EXCLUDED.classification_confidence",
     "cross_validation_signals = EXCLUDED.cross_validation_signals",
     "classified_by = EXCLUDED.classified_by",
-    "source_urls = array_cat(classified_opinions.source_urls, EXCLUDED.source_urls)",
+    "source_urls = ARRAY(SELECT DISTINCT unnest(array_cat(classified_opinions.source_urls, EXCLUDED.source_urls)))",
     "updated_at = now()",
   ];
 
@@ -482,6 +488,7 @@ async function main() {
 
   // Load reference maps (one streamer at a time — OOM gotcha)
   const clusterJurisdictions = loadClusterJurisdictionMap();
+  const courtMap = loadCourtJurisdictionMap();
   const [statuteMap, theoryMap, existingJurisdictions] = await Promise.all([
     loadStatuteMap(),
     loadTheoryMap(),
@@ -633,9 +640,11 @@ async function main() {
 
       processed++;
 
-      // Derive jurisdiction: cluster map (case_name_full) > existing DB > text heuristic
+      // Derive jurisdiction: cluster map (case_name_full) > court_id map > existing DB > text heuristic > "unknown"
+      const courtId = (record.court_id || "").split('"').join("").trim();
       let jurisdiction =
         (clusterJurisdictions.get(cluster_id) || "").toLowerCase() ||
+        (courtMap.get(courtId) || "").toLowerCase() ||
         existingJurisdictions.get(cluster_id) ||
         deriveJurisdictionFromText(text) ||
         "unknown";
@@ -676,7 +685,7 @@ async function main() {
       // author_str is judge name, not court. Court resolution needs docket data.
       // For now store "unknown" — future: resolve via cluster→docket→court pipeline.
       const court = "unknown";
-      const decision_date = record.date_created ? record.date_created.slice(0, 10) : null;
+      const decision_date = record.date_filed ? record.date_filed.slice(0, 10) : null;
       const source_url = "https://www.courtlistener.com/opinion/" + cluster_id + "/";
 
       upserts.push(
@@ -760,12 +769,17 @@ async function main() {
   if (!skipPatterns && totalApplied > 0) {
     console.log("\n--- Computing pattern tables ---");
     try {
-      const { execSync } = await import("child_process");
-      execSync("node scripts/compute-pattern-tables.mjs --apply", {
+      const { spawnSync } = await import("child_process");
+      const result = spawnSync("node", ["scripts/compute-pattern-tables.mjs", "--apply"], {
         cwd: PROJECT_ROOT,
         stdio: "inherit",
         timeout: 300000, // 5 min
       });
+      if (result.status !== 0) {
+        const errMsg = result.error ? result.error.message : ("exit code " + result.status);
+        console.error("Pattern table computation failed: " + errMsg.slice(0, 200));
+        console.log("Run manually: node scripts/compute-pattern-tables.mjs --apply");
+      }
     } catch (e) {
       console.error("Pattern table computation failed: " + e.message.slice(0, 200));
       console.log("Run manually: node scripts/compute-pattern-tables.mjs --apply");

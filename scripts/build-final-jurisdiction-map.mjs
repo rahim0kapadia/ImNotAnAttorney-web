@@ -7,16 +7,38 @@
  *
  * Memory-efficient: only stores docket_ids we care about (~unique count from clusters).
  *
+ * NOTE: This is the authoritative merger — produces cluster-jurisdiction-map.json.
+ * extract-docket-courts.mjs --merge produces cluster-jurisdiction-map-v2.json as an
+ * alternative path. Both files are kept; neither replaces the other.
+ *
  * Output: data/bulk-verify/cl-bulk/cluster-jurisdiction-map.json (overwrites v1)
  */
 import { spawn } from 'child_process';
 import { parse } from 'csv-parse';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const DOCKETS_BZ2 = 'data/bulk-verify/cl-bulk/dockets-2026-03-31.csv.bz2';
-const CLUSTER_DOCKET_MAP = 'data/bulk-verify/cl-bulk/cluster-docket-map.json';
-const COURT_JURISDICTION_MAP = 'data/bulk-verify/cl-bulk/court-jurisdiction-map.json';
-const OUTPUT = 'data/bulk-verify/cl-bulk/cluster-jurisdiction-map.json';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(__dirname, '..');
+
+const DOCKETS_BZ2 = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'dockets-2026-03-31.csv.bz2');
+const CLUSTER_DOCKET_MAP = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'cluster-docket-map.json');
+const COURT_JURISDICTION_MAP = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'court-jurisdiction-map.json');
+const OUTPUT = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'cluster-jurisdiction-map.json');
+
+function findBzcat() {
+  const candidates = [
+    'C:\\Program Files\\Git\\usr\\bin\\bzcat.exe',
+    'C:\\Program Files\\Git\\mingw64\\bin\\bzcat.exe',
+    'bzcat',
+  ];
+  for (const p of candidates) {
+    if (p === 'bzcat') return p;
+    try { if (existsSync(p)) return p; } catch {}
+  }
+  return 'bzcat';
+}
 
 function stripQuotes(val) {
   if (!val) return '';
@@ -42,7 +64,13 @@ if (!existsSync(DOCKETS_BZ2)) {
 }
 
 console.log('Loading cluster-docket-map.json...');
-const clusterDocket = JSON.parse(readFileSync(CLUSTER_DOCKET_MAP, 'utf8'));
+let clusterDocket;
+try {
+  clusterDocket = JSON.parse(readFileSync(CLUSTER_DOCKET_MAP, 'utf8'));
+} catch (err) {
+  console.error('Failed to parse ' + CLUSTER_DOCKET_MAP + ': ' + err.message);
+  process.exit(1);
+}
 const clusterCount = Object.keys(clusterDocket).length;
 console.log('  ' + clusterCount.toLocaleString() + ' clusters');
 
@@ -54,14 +82,20 @@ for (const docketId of Object.values(clusterDocket)) {
 console.log('  ' + neededDockets.size.toLocaleString() + ' unique docket_ids to resolve');
 
 console.log('Loading court-jurisdiction-map.json...');
-const courtJurisdiction = JSON.parse(readFileSync(COURT_JURISDICTION_MAP, 'utf8'));
+let courtJurisdiction;
+try {
+  courtJurisdiction = JSON.parse(readFileSync(COURT_JURISDICTION_MAP, 'utf8'));
+} catch (err) {
+  console.error('Failed to parse ' + COURT_JURISDICTION_MAP + ': ' + err.message);
+  process.exit(1);
+}
 console.log('  ' + Object.keys(courtJurisdiction).length.toLocaleString() + ' courts');
 
 // ── Phase 2: Stream dockets CSV, only keep matching entries ──────────────
 console.log('\nStreaming ' + DOCKETS_BZ2 + '...');
 console.log('Only keeping docket_ids that match our clusters (' + neededDockets.size.toLocaleString() + ' needed)');
 
-const bzcat = spawn('C:\\Program Files\\Git\\usr\\bin\\bzcat.exe', [DOCKETS_BZ2], {
+const bzcat = spawn(findBzcat(), [DOCKETS_BZ2], {
   stdio: ['ignore', 'pipe', 'pipe'],
 });
 bzcat.stderr.on('data', d => {
@@ -83,24 +117,25 @@ bzcat.stdout.pipe(csvParser);
 const docketCourt = new Map();
 let total = 0;
 let matched = 0;
+let earlyExit = false;
 const start = Date.now();
 
 try {
   for await (const record of csvParser) {
     total++;
 
+    // Progress logged unconditionally on row count, before skip check
+    if (total % 5000000 === 0) {
+      const elapsed = ((Date.now() - start) / 1000).toFixed(0);
+      const rate = (total / ((Date.now() - start) / 1000)).toFixed(0);
+      const pct = neededDockets.size > 0 ? (matched / neededDockets.size * 100).toFixed(1) : '0.0';
+      console.log('  ' + (total/1e6).toFixed(0) + 'M scanned | ' + matched.toLocaleString() + '/' + neededDockets.size.toLocaleString() + ' matched (' + pct + '%) | ' + elapsed + 's | ' + rate + '/sec');
+    }
+
     const docketId = stripQuotes(record.id || '');
 
     // Skip dockets we don't need
-    if (!neededDockets.has(docketId)) {
-      if (total % 5000000 === 0) {
-        const elapsed = ((Date.now() - start) / 1000).toFixed(0);
-        const rate = (total / ((Date.now() - start) / 1000)).toFixed(0);
-        const pct = (matched / neededDockets.size * 100).toFixed(1);
-        console.log('  ' + (total/1e6).toFixed(0) + 'M scanned | ' + matched.toLocaleString() + '/' + neededDockets.size.toLocaleString() + ' matched (' + pct + '%) | ' + elapsed + 's | ' + rate + '/sec');
-      }
-      continue;
-    }
+    if (!neededDockets.has(docketId)) continue;
 
     const courtId = stripQuotes(record.court_id || '');
     if (courtId) {
@@ -108,22 +143,25 @@ try {
       matched++;
     }
 
-    // Progress
+    // Progress on matched milestones
     if (matched % 100000 === 0 && matched > 0) {
       const elapsed = ((Date.now() - start) / 1000).toFixed(0);
-      const pct = (matched / neededDockets.size * 100).toFixed(1);
+      const pct = neededDockets.size > 0 ? (matched / neededDockets.size * 100).toFixed(1) : '0.0';
       console.log('  ' + matched.toLocaleString() + '/' + neededDockets.size.toLocaleString() + ' dockets resolved (' + pct + '%) | ' + (total/1e6).toFixed(1) + 'M scanned | ' + elapsed + 's');
     }
 
     // Early exit if all needed dockets found
     if (matched >= neededDockets.size) {
       console.log('  All needed dockets found! Stopping early at row ' + total.toLocaleString());
+      earlyExit = true;
       try { bzcat.kill(); } catch {}
       break;
     }
   }
 } catch (err) {
-  console.error('Stream error at row ' + total + ': ' + err.message);
+  if (!earlyExit) {
+    console.error('Stream error at row ' + total + ': ' + err.message);
+  }
 }
 
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
@@ -151,9 +189,9 @@ for (const [clusterId, docketId] of Object.entries(clusterDocket)) {
   resolved++;
 }
 
-console.log('Resolved: ' + resolved.toLocaleString() + ' clusters → jurisdiction');
-console.log('Missing docket→court: ' + missingDocket.toLocaleString());
-console.log('Missing court→jurisdiction: ' + missingJurisdiction.toLocaleString());
+console.log('Resolved: ' + resolved.toLocaleString() + ' clusters -> jurisdiction');
+console.log('Missing docket->court: ' + missingDocket.toLocaleString());
+console.log('Missing court->jurisdiction: ' + missingJurisdiction.toLocaleString());
 
 // Distribution
 const dist = {};

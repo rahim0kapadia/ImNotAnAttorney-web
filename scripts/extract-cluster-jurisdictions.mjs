@@ -13,38 +13,66 @@
  */
 import { spawn } from 'child_process';
 import { parse } from 'csv-parse';
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const CLUSTERS_BZ2 = 'data/bulk-verify/cl-bulk/opinion-clusters-2026-03-31.csv.bz2';
-const OUT_JURISDICTION = 'data/bulk-verify/cl-bulk/cluster-jurisdiction-map.json';
-const OUT_DOCKET = 'data/bulk-verify/cl-bulk/cluster-docket-map.json';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(__dirname, '..');
+
+const CLUSTERS_BZ2 = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'opinion-clusters-2026-03-31.csv.bz2');
+const OUT_JURISDICTION = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'cluster-jurisdiction-map.json');
+const OUT_DOCKET = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'cluster-docket-map.json');
+
+function findBzcat() {
+  const candidates = [
+    'C:\\Program Files\\Git\\usr\\bin\\bzcat.exe',
+    'C:\\Program Files\\Git\\mingw64\\bin\\bzcat.exe',
+    'bzcat',
+  ];
+  for (const p of candidates) {
+    if (p === 'bzcat') return p;
+    try { if (existsSync(p)) return p; } catch {}
+  }
+  return 'bzcat';
+}
+
+function stripQuotes(val) {
+  if (!val) return '';
+  if (val.charAt(0) === '"') val = val.slice(1);
+  if (val.charAt(val.length - 1) === '"') val = val.slice(0, -1);
+  return val;
+}
 
 // State patterns — same as bulk-classify but also catches "Commonwealth of X", "People of the State of X"
+// Codes are lowercase to match pipeline convention
 const STATE_PATTERNS = [
-  ["florida", "FL"], ["california", "CA"], ["texas", "TX"], ["new york", "NY"],
-  ["illinois", "IL"], ["pennsylvania", "PA"], ["ohio", "OH"], ["georgia", "GA"],
-  ["north carolina", "NC"], ["michigan", "MI"], ["new jersey", "NJ"],
-  ["virginia", "VA"], ["washington", "WA"], ["arizona", "AZ"], ["massachusetts", "MA"],
-  ["tennessee", "TN"], ["indiana", "IN"], ["missouri", "MO"], ["maryland", "MD"],
-  ["wisconsin", "WI"], ["colorado", "CO"], ["minnesota", "MN"], ["south carolina", "SC"],
-  ["alabama", "AL"], ["louisiana", "LA"], ["kentucky", "KY"], ["oregon", "OR"],
-  ["oklahoma", "OK"], ["connecticut", "CT"], ["utah", "UT"], ["iowa", "IA"],
-  ["nevada", "NV"], ["arkansas", "AR"], ["mississippi", "MS"], ["kansas", "KS"],
-  ["new mexico", "NM"], ["nebraska", "NE"], ["idaho", "ID"], ["west virginia", "WV"],
-  ["hawaii", "HI"], ["new hampshire", "NH"], ["maine", "ME"], ["montana", "MT"],
-  ["rhode island", "RI"], ["delaware", "DE"], ["south dakota", "SD"],
-  ["north dakota", "ND"], ["alaska", "AK"], ["vermont", "VT"], ["wyoming", "WY"],
-  ["district of columbia", "DC"],
+  ["florida", "fl"], ["california", "ca"], ["texas", "tx"], ["new york", "ny"],
+  ["illinois", "il"], ["pennsylvania", "pa"], ["ohio", "oh"], ["georgia", "ga"],
+  ["north carolina", "nc"], ["michigan", "mi"], ["new jersey", "nj"],
+  ["virginia", "va"], ["washington", "wa"], ["arizona", "az"], ["massachusetts", "ma"],
+  ["tennessee", "tn"], ["indiana", "in"], ["missouri", "mo"], ["maryland", "md"],
+  ["wisconsin", "wi"], ["colorado", "co"], ["minnesota", "mn"], ["south carolina", "sc"],
+  ["alabama", "al"], ["louisiana", "la"], ["kentucky", "ky"], ["oregon", "or"],
+  ["oklahoma", "ok"], ["connecticut", "ct"], ["utah", "ut"], ["iowa", "ia"],
+  ["nevada", "nv"], ["arkansas", "ar"], ["mississippi", "ms"], ["kansas", "ks"],
+  ["new mexico", "nm"], ["nebraska", "ne"], ["idaho", "id"], ["west virginia", "wv"],
+  ["hawaii", "hi"], ["new hampshire", "nh"], ["maine", "me"], ["montana", "mt"],
+  ["rhode island", "ri"], ["delaware", "de"], ["south dakota", "sd"],
+  ["north dakota", "nd"], ["alaska", "ak"], ["vermont", "vt"], ["wyoming", "wy"],
+  ["district of columbia", "dc"],
 ];
 
-// Federal indicators in case_name_full
+// Federal indicators in case_name_full.
+// "district court" removed — too broad, matches state district courts.
+// Use "united states district" instead.
 const FEDERAL_PATTERNS = [
   "united states of america",
   "united states v.",
   "u.s. v.",
   "circuit court of appeals",
   "court of appeals for the",
-  "district court",
+  "united states district",
   "bankruptcy court",
   "court of federal claims",
   "court of international trade",
@@ -70,11 +98,12 @@ function deriveJurisdictionFromCaseName(caseName, caseNameFull) {
 
 // ── Stream clusters CSV ─────────────────────────────────────────────────────
 console.log('=== Cluster Jurisdiction Extractor ===');
-console.log(`Input: ${CLUSTERS_BZ2}`);
+console.log('Input: ' + CLUSTERS_BZ2);
 
-const bzcat = spawn('C:\\Program Files\\Git\\usr\\bin\\bzcat.exe', [CLUSTERS_BZ2], {
+const bzcat = spawn(findBzcat(), [CLUSTERS_BZ2], {
   stdio: ['ignore', 'pipe', 'pipe'],
 });
+bzcat.stderr.on('data', (d) => process.stderr.write(d));
 
 const parser = parse({
   columns: true,
@@ -99,18 +128,10 @@ try {
   for await (const record of parser) {
     total++;
 
-    let clusterId = record.id || '';
-    if (clusterId.charAt(0) === '"') clusterId = clusterId.slice(1);
-    if (clusterId.charAt(clusterId.length - 1) === '"') clusterId = clusterId.slice(0, -1);
-    let caseName = record.case_name || '';
-    if (caseName.charAt(0) === '"') caseName = caseName.slice(1);
-    if (caseName.charAt(caseName.length - 1) === '"') caseName = caseName.slice(0, -1);
-    let caseNameFull = record.case_name_full || '';
-    if (caseNameFull.charAt(0) === '"') caseNameFull = caseNameFull.slice(1);
-    if (caseNameFull.charAt(caseNameFull.length - 1) === '"') caseNameFull = caseNameFull.slice(0, -1);
-    let docketId = record.docket_id || '';
-    if (docketId.charAt(0) === '"') docketId = docketId.slice(1);
-    if (docketId.charAt(docketId.length - 1) === '"') docketId = docketId.slice(0, -1);
+    const clusterId = stripQuotes(record.id || '');
+    const caseName = stripQuotes(record.case_name || '');
+    const caseNameFull = stripQuotes(record.case_name_full || '');
+    const docketId = stripQuotes(record.docket_id || '');
 
     if (!clusterId) continue;
 
@@ -135,32 +156,34 @@ try {
     if (total % 500000 === 0) {
       const elapsed = ((Date.now() - start) / 1000).toFixed(0);
       const rate = (total / ((Date.now() - start) / 1000)).toFixed(0);
-      console.log(`  ${(total/1e6).toFixed(1)}M clusters | ${mapped.toLocaleString()} mapped (${(mapped/total*100).toFixed(1)}%) | ${federal.toLocaleString()} federal | ${elapsed}s | ${rate}/sec`);
+      const mappedPct = total > 0 ? (mapped/total*100).toFixed(1) : '0.0';
+      console.log('  ' + (total/1e6).toFixed(1) + 'M clusters | ' + mapped.toLocaleString() + ' mapped (' + mappedPct + '%) | ' + federal.toLocaleString() + ' federal | ' + elapsed + 's | ' + rate + '/sec');
     }
   }
 } catch (err) {
-  console.error(`Stream error at row ${total}: ${err.message}`);
+  console.error('Stream error at row ' + total + ': ' + err.message);
   console.log('Saving partial results...');
 }
 
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-console.log(`\n=== Complete ===`);
-console.log(`Total clusters: ${total.toLocaleString()}`);
-console.log(`Mapped: ${mapped.toLocaleString()} (${(mapped/total*100).toFixed(1)}%)`);
-console.log(`Federal: ${federal.toLocaleString()}`);
-console.log(`Unknown: ${unknown.toLocaleString()}`);
-console.log(`Elapsed: ${elapsed}s`);
+const mappedPct = total > 0 ? (mapped/total*100).toFixed(1) : '0.0';
+console.log('\n=== Complete ===');
+console.log('Total clusters: ' + total.toLocaleString());
+console.log('Mapped: ' + mapped.toLocaleString() + ' (' + mappedPct + '%)');
+console.log('Federal: ' + federal.toLocaleString());
+console.log('Unknown: ' + unknown.toLocaleString());
+console.log('Elapsed: ' + elapsed + 's');
 
 // Top states
 const sorted = Object.entries(stateCounts).sort((a,b) => b[1] - a[1]);
 console.log('\nTop 15 states:');
 for (const [code, count] of sorted.slice(0, 15)) {
-  console.log(`  ${code}: ${count.toLocaleString()}`);
+  console.log('  ' + code + ': ' + count.toLocaleString());
 }
 
 // Write outputs
-console.log(`\nWriting ${OUT_JURISDICTION} (${Object.keys(jurisdictionMap).length.toLocaleString()} entries)...`);
+console.log('\nWriting ' + OUT_JURISDICTION + ' (' + Object.keys(jurisdictionMap).length.toLocaleString() + ' entries)...');
 writeFileSync(OUT_JURISDICTION, JSON.stringify(jurisdictionMap));
-console.log(`Writing ${OUT_DOCKET} (${Object.keys(docketMap).length.toLocaleString()} entries)...`);
+console.log('Writing ' + OUT_DOCKET + ' (' + Object.keys(docketMap).length.toLocaleString() + ' entries)...');
 writeFileSync(OUT_DOCKET, JSON.stringify(docketMap));
 console.log('Done.');

@@ -12,6 +12,10 @@
  * Final output: cluster-jurisdiction-map-v2.json
  *   Complete cluster_id → jurisdiction mapping via: cluster → docket → court → jurisdiction
  *
+ * NOTE: build-final-jurisdiction-map.mjs is the authoritative merger that produces
+ * cluster-jurisdiction-map.json. This script's --merge mode produces the alternative
+ * cluster-jurisdiction-map-v2.json. Both files are kept; neither replaces the other.
+ *
  * Usage:
  *   node scripts/extract-docket-courts.mjs          # Build docket→court map only
  *   node scripts/extract-docket-courts.mjs --merge   # Also merge into cluster jurisdiction map
@@ -19,13 +23,31 @@
 import { spawn } from 'child_process';
 import { parse } from 'csv-parse';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const DOCKETS_BZ2 = 'data/bulk-verify/cl-bulk/dockets-2026-03-31.csv.bz2';
-const DOCKET_COURT_MAP = 'data/bulk-verify/cl-bulk/docket-court-map.json';
-const CLUSTER_DOCKET_MAP = 'data/bulk-verify/cl-bulk/cluster-docket-map.json';
-const COURT_JURISDICTION_MAP = 'data/bulk-verify/cl-bulk/court-jurisdiction-map.json';
-const OUTPUT = 'data/bulk-verify/cl-bulk/cluster-jurisdiction-map-v2.json';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(__dirname, '..');
+
+const DOCKETS_BZ2 = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'dockets-2026-03-31.csv.bz2');
+const DOCKET_COURT_MAP = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'docket-court-map.json');
+const CLUSTER_DOCKET_MAP = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'cluster-docket-map.json');
+const COURT_JURISDICTION_MAP = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'court-jurisdiction-map.json');
+const OUTPUT = path.join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk', 'cluster-jurisdiction-map-v2.json');
 const doMerge = process.argv.includes('--merge');
+
+function findBzcat() {
+  const candidates = [
+    'C:\\Program Files\\Git\\usr\\bin\\bzcat.exe',
+    'C:\\Program Files\\Git\\mingw64\\bin\\bzcat.exe',
+    'bzcat',
+  ];
+  for (const p of candidates) {
+    if (p === 'bzcat') return p;
+    try { if (existsSync(p)) return p; } catch {}
+  }
+  return 'bzcat';
+}
 
 // Strip CL CSV surrounding quotes without regex (project rule)
 function stripQuotes(val) {
@@ -44,7 +66,7 @@ if (!existsSync(DOCKETS_BZ2)) {
   process.exit(1);
 }
 
-const bzcat = spawn('C:\\Program Files\\Git\\usr\\bin\\bzcat.exe', [DOCKETS_BZ2], {
+const bzcat = spawn(findBzcat(), [DOCKETS_BZ2], {
   stdio: ['ignore', 'pipe', 'pipe'],
 });
 bzcat.stderr.on('data', d => {
@@ -62,7 +84,7 @@ const csvParser = parse({
 
 bzcat.stdout.pipe(csvParser);
 
-const docketCourt = {};
+const docketCourt = new Map();
 let total = 0;
 let mapped = 0;
 const start = Date.now();
@@ -83,7 +105,7 @@ try {
     const courtId = stripQuotes(record.court_id || record.court || '');
 
     if (docketId && courtId) {
-      docketCourt[docketId] = courtId;
+      docketCourt.set(docketId, courtId);
       mapped++;
     }
 
@@ -99,14 +121,15 @@ try {
 }
 
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+const mappedPct = total > 0 ? (mapped/total*100).toFixed(1) : '0.0';
 console.log('\n=== Phase 1 Complete ===');
 console.log('Total dockets: ' + total.toLocaleString());
-console.log('With court: ' + mapped.toLocaleString() + ' (' + (mapped/total*100).toFixed(1) + '%)');
+console.log('With court: ' + mapped.toLocaleString() + ' (' + mappedPct + '%)');
 console.log('Elapsed: ' + elapsed + 's');
 
 console.log('\nWriting ' + DOCKET_COURT_MAP + '...');
-writeFileSync(DOCKET_COURT_MAP, JSON.stringify(docketCourt));
-console.log('  ' + Object.keys(docketCourt).length.toLocaleString() + ' entries');
+writeFileSync(DOCKET_COURT_MAP, JSON.stringify(Object.fromEntries(docketCourt)));
+console.log('  ' + docketCourt.size.toLocaleString() + ' entries');
 
 // ── Phase 2 (--merge): Combine all maps → cluster_id → jurisdiction ─────────
 if (!doMerge) {
@@ -128,9 +151,9 @@ if (!existsSync(COURT_JURISDICTION_MAP)) {
 const clusterDocket = JSON.parse(readFileSync(CLUSTER_DOCKET_MAP, 'utf8'));
 const courtJurisdiction = JSON.parse(readFileSync(COURT_JURISDICTION_MAP, 'utf8'));
 
-console.log('  Cluster→Docket entries: ' + Object.keys(clusterDocket).toLocaleString());
-console.log('  Court→Jurisdiction entries: ' + Object.keys(courtJurisdiction).toLocaleString());
-console.log('  Docket→Court entries: ' + Object.keys(docketCourt).length.toLocaleString());
+console.log('  Cluster->Docket entries: ' + Object.keys(clusterDocket).length.toLocaleString());
+console.log('  Court->Jurisdiction entries: ' + Object.keys(courtJurisdiction).length.toLocaleString());
+console.log('  Docket->Court entries: ' + docketCourt.size.toLocaleString());
 
 const finalMap = {};
 let resolved = 0;
@@ -138,7 +161,7 @@ let missingDocket = 0;
 let missingJurisdiction = 0;
 
 for (const [clusterId, docketId] of Object.entries(clusterDocket)) {
-  const courtId = docketCourt[docketId];
+  const courtId = docketCourt.get(docketId);
   if (!courtId) { missingDocket++; continue; }
 
   const jurisdiction = courtJurisdiction[courtId];
@@ -149,9 +172,9 @@ for (const [clusterId, docketId] of Object.entries(clusterDocket)) {
 }
 
 console.log('\n=== Merge Results ===');
-console.log('Resolved: ' + resolved.toLocaleString() + ' clusters → jurisdiction');
-console.log('Missing docket→court: ' + missingDocket.toLocaleString());
-console.log('Missing court→jurisdiction: ' + missingJurisdiction.toLocaleString());
+console.log('Resolved: ' + resolved.toLocaleString() + ' clusters -> jurisdiction');
+console.log('Missing docket->court: ' + missingDocket.toLocaleString());
+console.log('Missing court->jurisdiction: ' + missingJurisdiction.toLocaleString());
 
 // Distribution
 const dist = {};
@@ -164,6 +187,6 @@ for (const [code, count] of sorted.slice(0, 15)) {
   console.log('  ' + code + ': ' + count.toLocaleString());
 }
 
-console.log('\nWriting ' + OUTPUT + ' (' + Object.keys(finalMap).toLocaleString() + ' entries)...');
+console.log('\nWriting ' + OUTPUT + ' (' + Object.keys(finalMap).length.toLocaleString() + ' entries)...');
 writeFileSync(OUTPUT, JSON.stringify(finalMap));
 console.log('Done.');

@@ -1,3 +1,4 @@
+BEGIN;
 
     DELETE FROM defense_theory_outcomes;
 
@@ -124,4 +125,5 @@
     FROM expanded e
     GROUP BY e.motion_type, e.charge_slug, e.jurisdiction
     HAVING count(*) >= 1;
-  
+
+COMMIT;
