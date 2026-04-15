@@ -38,10 +38,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing Svix headers" }, { status: 400 });
     }
 
-    // Basic timestamp check — reject webhooks older than 5 minutes
+    // Basic timestamp check — reject webhooks older than 5 minutes or malformed
     const ts = parseInt(svixTimestamp, 10);
-    if (Math.abs(Date.now() / 1000 - ts) > 300) {
-      return NextResponse.json({ error: "Timestamp too old" }, { status: 400 });
+    if (!Number.isFinite(ts) || Math.abs(Date.now() / 1000 - ts) > 300) {
+      return NextResponse.json({ error: "Timestamp too old or malformed" }, { status: 400 });
     }
 
     // Verify HMAC signature
@@ -97,8 +97,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true });
   }
 
-  // Extract recipient email(s)
-  const recipients: string[] = data?.to || [];
+  // Extract recipient email(s). `data.to` is usually string[] but some events
+  // deliver a single string — normalize, then cap to avoid pathological payloads.
+  const rawTo = data?.to;
+  const toList: string[] = Array.isArray(rawTo) ? rawTo : rawTo ? [rawTo] : [];
+  const MAX_RECIPIENTS = 100;
+  const recipients = toList.slice(0, MAX_RECIPIENTS).filter((x): x is string => typeof x === "string");
   if (recipients.length === 0) {
     return NextResponse.json({ received: true });
   }
@@ -116,7 +120,7 @@ export async function POST(req: NextRequest) {
     if (gatewayPhone) {
       const res = await suspendSmsPhone(supabase, gatewayPhone, {
         reason: type,
-        bounceType: data?.bounce?.type || data?.bounce?.subType || null,
+        bounceType: data?.bounce?.type ?? data?.bounce?.subType ?? null,
         source: "resend_webhook",
         metadata: {
           email_id: data?.email_id,

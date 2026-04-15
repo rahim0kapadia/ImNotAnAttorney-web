@@ -34,7 +34,6 @@ export async function isSmsSuspended(
     .select("phone")
     .eq("phone", normalized)
     .is("resolved_at", null)
-    .limit(1)
     .maybeSingle();
   return !!data;
 }

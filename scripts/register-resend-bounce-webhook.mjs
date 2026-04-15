@@ -58,9 +58,11 @@ for (const h of hooks) {
 }
 console.log();
 
+const normalize = (u) => (u || "").replace(/\/$/, "").toLowerCase();
+const targetNorm = normalize(ENDPOINT);
 const match = hooks.find((h) => {
   const e = h.endpoint || h.endpoint_url || h.url;
-  return e === ENDPOINT;
+  return normalize(e) === targetNorm;
 });
 
 if (match) {

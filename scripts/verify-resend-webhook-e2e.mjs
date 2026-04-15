@@ -40,7 +40,9 @@ if (!secret) {
   process.exit(1);
 }
 const endpoint = "https://imnotanattorney.com/api/webhooks/resend";
-const TEST_PHONE = "0000000000";
+// NANP reserved range (555-0100 through 555-0199 — never assigned to real customers),
+// so cleanup can't clobber real suspensions even if a concurrent bounce hits.
+const TEST_PHONE = "5555550137";
 
 console.log("=== Layer 2 E2E webhook verification ===\n");
 
@@ -116,14 +118,17 @@ try {
     process.exit(3);
   }
 
-  // 5. Cleanup
-  await query("DELETE FROM sms_suspensions WHERE phone = $1", [TEST_PHONE]);
-  console.log("   cleanup: test row deleted\n");
-
   console.log("OK: Layer 2 E2E PASS — endpoint, signature verification, DB write all working.");
   console.log("NOTE: This only proves OUR endpoint works. Separately verify the webhook is");
   console.log("      REGISTERED in the Resend dashboard (https://resend.com/webhooks)");
   console.log("      pointing at", endpoint, "with events email.bounced + email.complained.");
 } finally {
+  // Cleanup runs even on early exit/crash so a test row never lingers in prod.
+  try {
+    await query("DELETE FROM sms_suspensions WHERE phone = $1", [TEST_PHONE]);
+    console.log("   cleanup: test row deleted");
+  } catch (err) {
+    console.error("   cleanup failed:", err instanceof Error ? err.message : err);
+  }
   await end();
 }

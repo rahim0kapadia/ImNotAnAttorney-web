@@ -49,14 +49,17 @@ export async function sendSMS(
     return { success: false, error: "SMS not configured" };
   }
 
+  // Single admin client per send — reused by suspension check + audit log.
+  const supabase = createAdminClient();
+
   // Layer 2 guard: skip if phone is suspended (prior gateway bounce).
+  // The category stays unchanged so the sms_log.category index keeps its cardinality —
+  // downstream queries filter skipped-by-suspension rows via `error_message`.
   try {
-    const supabaseForCheck = createAdminClient();
-    const suspended = await isSmsSuspended(supabaseForCheck, to);
-    if (suspended) {
+    if (await isSmsSuspended(supabase, to)) {
       const result = { success: false, error: "phone suspended (prior bounce)", skipped: "suspended" as const };
       if (logContext) {
-        logSmsSend(to, body, { success: false, error: result.error }, { ...logContext, category: logContext.category + ":suspended" }).catch(() => {});
+        logSmsSend(supabase, to, body, { success: false, error: result.error }, logContext).catch(() => {});
       }
       return result;
     }
@@ -96,9 +99,9 @@ export async function sendSMS(
     result = { success: false, error: errMsg };
   }
 
-  // Fire-and-forget audit log
+  // Fire-and-forget audit log (reuses the admin client created above).
   if (logContext) {
-    logSmsSend(to, body, result, logContext).catch(() => {});
+    logSmsSend(supabase, to, body, result, logContext).catch(() => {});
   }
 
   return result;
@@ -106,14 +109,16 @@ export async function sendSMS(
 
 // ── Audit Log ─────────────────────────────────────────────
 
+import type { SupabaseClient } from "@supabase/supabase-js";
+
 async function logSmsSend(
+  supabase: SupabaseClient,
   recipient: string,
   body: string,
   result: { success: boolean; error?: string },
   context: SmsLogContext
 ): Promise<void> {
   try {
-    const supabase = createAdminClient();
     await supabase.from("sms_log").insert({
       recipient,
       body,

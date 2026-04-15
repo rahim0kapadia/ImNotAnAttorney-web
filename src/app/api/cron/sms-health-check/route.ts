@@ -15,7 +15,9 @@ import { acquireCronLock, releaseCronLock } from "@/lib/cron-idempotency";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendSMS } from "@/lib/sms";
 
-const TEST_PHONE = "+16504846374";
+// Operator phone for the test SMS. If unset, the test-SMS step is skipped and
+// the probe still runs the success-rate + bounce-scan checks.
+const TEST_PHONE = process.env.SMS_HEALTH_TEST_PHONE || null;
 const SUCCESS_RATE_THRESHOLD = 0.8;
 const LOOKBACK_DAYS = 7;
 
@@ -32,15 +34,19 @@ export async function GET(req: NextRequest) {
   const alerts: string[] = [];
 
   try {
-    // Layer 1: Send test SMS
-    const testResult = await sendSMS(
-      TEST_PHONE,
-      `INAA SMS health check — ${new Date().toISOString().slice(0, 10)}`,
-      { category: "health_check" }
-    );
-
-    if (!testResult.success) {
-      alerts.push(`Test SMS FAILED: ${testResult.error}`);
+    // Layer 1: Send test SMS (only if operator phone is configured).
+    let testResult: { success: boolean; error?: string };
+    if (TEST_PHONE) {
+      testResult = await sendSMS(
+        TEST_PHONE,
+        `INAA SMS health check — ${new Date().toISOString().slice(0, 10)}`,
+        { category: "health_check" }
+      );
+      if (!testResult.success) {
+        alerts.push(`Test SMS FAILED: ${testResult.error}`);
+      }
+    } else {
+      testResult = { success: false, error: "SMS_HEALTH_TEST_PHONE not set — skipped" };
     }
 
     // Layer 2: Check recent success rate from sms_log
