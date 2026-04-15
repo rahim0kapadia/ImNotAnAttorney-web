@@ -23,6 +23,7 @@ import { TIER_CORE } from "@/lib/tiers";
 import { calculatePartnerDiscount } from "@/lib/referral";
 import { CheckInButton } from "@/components/partner/CheckInButton";
 import { PhoneOptIn } from "@/components/PhoneOptIn";
+import { ClientNotificationSettings } from "@/components/ClientNotificationSettings";
 
 interface PageProps {
   params: Promise<{ token: string }>;
@@ -158,12 +159,7 @@ export default async function PrepPage({ params }: PageProps) {
         {!courtPassed && (
           <div className="mb-8">
             <PhoneOptIn token={token} hasPhone={!!reminder.phone} />
-            {reminder.phone && (
-              <details className="text-xs text-zinc-500 mt-2">
-                <summary className="cursor-pointer hover:text-zinc-400">Notification settings</summary>
-                <p className="mt-1 text-zinc-600">Manage your notification preferences via the settings API. Court reminders always include email for safety.</p>
-              </details>
-            )}
+            {reminder.phone && <ClientNotificationSettings token={token} />}
           </div>
         )}
 

@@ -218,12 +218,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${SITE_URL}/partners`,
       lastModified: new Date(),
-      changeFrequency: "yearly" as const,
-      priority: 0.5,
-    },
-    {
-      url: `${SITE_URL}/partners`,
-      lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.5,
     },
