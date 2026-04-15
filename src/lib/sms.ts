@@ -16,6 +16,7 @@ export interface SmsLogContext {
   category: string;
   court_reminder_id?: string;
   partner_id?: string;
+  subject?: string; // Email-to-SMS subject line override
   metadata?: Record<string, unknown>;
 }
 
@@ -57,7 +58,7 @@ export async function sendSMS(
       body: JSON.stringify({
         from: "ImNotAnAttorney <notifications@imnotanattorney.com>",
         to: [toGatewayAddress(to)],
-        subject: "Court Reminder",
+        subject: logContext?.subject ?? "Court Reminder",
         text: body,
       }),
     });

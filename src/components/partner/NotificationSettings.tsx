@@ -10,6 +10,7 @@ const LABELS: Record<keyof PartnerNotificationPrefs, string> = {
   drip: "Tips & onboarding",
   commission_earned: "Commission alerts",
   payout: "Payouts & holdback",
+  missed_check_in: "Missed check-in alerts",
 };
 
 const CHANNELS: Channel[] = ["email", "sms", "both"];
