@@ -16,15 +16,15 @@ const PRODUCT_COPY: Record<
   string,
   {
     headline: string;
-    stakes: string;
+    stakes: string | ((price: string) => string);
     includes: string[];
     sampleInsight: string;
   }
 > = {
   "employment-impact": {
     headline: "Will this charge cost you your job?",
-    stakes:
-      "The average American earns $56,000/year. A conviction-related job loss costs $80,000+ in the first year alone — lost wages, gap in employment history, reduced future earning potential. The $197 cost of knowing is invisible against those stakes.",
+    stakes: (price: string) =>
+      `The average American earns $56,000/year. A conviction-related job loss costs $80,000+ in the first year alone — lost wages, gap in employment history, reduced future earning potential. The ${price} cost of knowing is invisible against those stakes.`,
     includes: [
       "Background check impact analysis (FCRA, state, FBI)",
       "Employer type-specific rules (government, regulated, private)",
@@ -38,8 +38,8 @@ const PRODUCT_COPY: Record<
   },
   "judge-profile": {
     headline: "Know your judge before your first hearing.",
-    stakes:
-      "Most defendants walk into court knowing nothing about the person who will decide their fate. Meanwhile, the prosecutors who appear before this judge have spent years learning what works in their courtroom and what backfires. The $497 cost of leveling that information gap is invisible against the years of consequences a single ruling can carry.",
+    stakes: (price: string) =>
+      `Most defendants walk into court knowing nothing about the person who will decide their fate. Meanwhile, the prosecutors who appear before this judge have spent years learning what works in their courtroom and what backfires. The ${price} cost of leveling that information gap is invisible against the years of consequences a single ruling can carry.`,
     includes: [
       "Background and judicial appointment history where documented",
       "Judicial philosophy and observed approach to criminal cases",
@@ -55,8 +55,8 @@ const PRODUCT_COPY: Record<
   },
   "motion-opportunity-scan": {
     headline: "Know which motions apply before you pay for discovery analysis.",
-    stakes:
-      "Most defendants find out what motions could have been filed only after the deadline passes. By then the issues are waived, the evidence is locked in, and the leverage is gone. A 60-second scan of motion opportunities filtered by your charge, jurisdiction, and case stage costs $497. Missing a motion deadline costs years.",
+    stakes: (price: string) =>
+      `Most defendants find out what motions could have been filed only after the deadline passes. By then the issues are waived, the evidence is locked in, and the leverage is gone. A 60-second scan of motion opportunities filtered by your charge, jurisdiction, and case stage costs ${price}. Missing a motion deadline costs years.`,
     includes: [
       "10-20 motion opportunities filtered by your charge and jurisdiction",
       "Case-stage filter showing only motions timely for your current stage",
@@ -75,8 +75,8 @@ const PRODUCT_COPY: Record<
 
   "breathalyzer-challenge": {
     headline: "Can the breathalyzer result be challenged?",
-    stakes:
-      "Breathalyzer machines have a documented 66% error rate when improperly calibrated. An attorney charges $200-400 just to look at this issue — $97 is invisible against those stakes. False positives from GERD, diabetes, and other medical conditions are well-documented. Every state mandates calibration schedules and operator certification requirements, and those requirements are not always followed.",
+    stakes: (price: string) =>
+      `Breathalyzer machines have a documented 66% error rate when improperly calibrated. An attorney charges $200-400 just to look at this issue — ${price} is invisible against those stakes. False positives from GERD, diabetes, and other medical conditions are well-documented. Every state mandates calibration schedules and operator certification requirements, and those requirements are not always followed.`,
     includes: [
       "Challenge viability assessment (STRONG / MODERATE / WEAK)",
       "State calibration requirements with statute citations",
@@ -91,8 +91,8 @@ const PRODUCT_COPY: Record<
   "fst-review": {
     headline:
       "Were your field sobriety tests administered correctly?",
-    stakes:
-      "66% of field sobriety tests violate NHTSA standards. Even under ideal conditions, the one-leg-stand test is only 65% accurate — according to NHTSA's own studies. Officers rarely follow the exact protocol. $97 vs $200-400 for an attorney to perform the same analysis.",
+    stakes: (price: string) =>
+      `66% of field sobriety tests violate NHTSA standards. Even under ideal conditions, the one-leg-stand test is only 65% accurate — according to NHTSA's own studies. Officers rarely follow the exact protocol. ${price} vs $200-400 for an attorney to perform the same analysis.`,
     includes: [
       "NHTSA compliance check per test administered",
       "Physical factor analysis independent of impairment (age, weight, injuries, footwear)",
@@ -105,8 +105,8 @@ const PRODUCT_COPY: Record<
   },
   "plea-consequences": {
     headline: "What are you actually agreeing to?",
-    stakes:
-      "There are 45,000+ documented collateral consequences that defendants are never told about. A plea that looks favorable in criminal court can be devastating for immigration, employment, professional licensing, and housing. The pressure to accept quickly — without understanding the full picture — is intense. $97 vs making a decision worth $50,000 or more without all the facts.",
+    stakes: (price: string) =>
+      `There are 45,000+ documented collateral consequences that defendants are never told about. A plea that looks favorable in criminal court can be devastating for immigration, employment, professional licensing, and housing. The pressure to accept quickly — without understanding the full picture — is intense. ${price} vs making a decision worth $50,000 or more without all the facts.`,
     includes: [
       "Plain-English plea offer decode",
       "Criminal consequences breakdown",
@@ -120,8 +120,8 @@ const PRODUCT_COPY: Record<
   },
   "drug-test-reliability": {
     headline: "Can the drug test results be challenged?",
-    stakes:
-      "Field drug tests have documented false positive rates that are higher than most defendants realize. Chain of custody gaps are common. Lab certifications may have lapsed. $97 vs $200-400 for an attorney to perform the same analysis of the testing evidence.",
+    stakes: (price: string) =>
+      `Field drug tests have documented false positive rates that are higher than most defendants realize. Chain of custody gaps are common. Lab certifications may have lapsed. ${price} vs $200-400 for an attorney to perform the same analysis of the testing evidence.`,
     includes: [
       "Published false positive rates for the test type used in your case",
       "Chain of custody requirements and potential gaps",
@@ -135,8 +135,8 @@ const PRODUCT_COPY: Record<
   "bail-hearing-prep": {
     headline:
       "Prepare for the hearing that determines your freedom.",
-    stakes:
-      "The bail hearing window is 24-48 hours. This is the liberty decision — a judge weighing flight risk, danger to the community, and community ties. $97 to understand what the judge is looking for vs going in blind to the hearing that determines whether you wait at home or in jail.",
+    stakes: (price: string) =>
+      `The bail hearing window is 24-48 hours. This is the liberty decision — a judge weighing flight risk, danger to the community, and community ties. ${price} to understand what the judge is looking for vs going in blind to the hearing that determines whether you wait at home or in jail.`,
     includes: [
       "How bail hearings work — what judges consider and in what order",
       "Factors in your favor based on your situation",
@@ -150,8 +150,8 @@ const PRODUCT_COPY: Record<
   "sentencing-prep": {
     headline:
       "Prepare for the most consequential hearing of your case.",
-    stakes:
-      "Sentencing determines the actual outcome — everything before it was process. Mitigation evidence, character references, allocution preparation — each element matters, and each has rules. $97 vs walking into the hearing that decides the rest of your life without preparation.",
+    stakes: (price: string) =>
+      `Sentencing determines the actual outcome — everything before it was process. Mitigation evidence, character references, allocution preparation — each element matters, and each has rules. ${price} vs walking into the hearing that decides the rest of your life without preparation.`,
     includes: [
       "Sentencing hearing structure and what to expect",
       "Published sentencing range for your charge in your jurisdiction",
@@ -166,8 +166,8 @@ const PRODUCT_COPY: Record<
   "family-case-research": {
     headline:
       "Understand what your loved one is facing.",
-    stakes:
-      "Family members are a new audience — buying for someone they care about who is inside the system. Legal jargon makes an already terrifying situation worse. $97 to understand the charges, the timeline, and how to actually help — in plain English, not legalese.",
+    stakes: (price: string) =>
+      `Family members are a new audience — buying for someone they care about who is inside the system. Legal jargon makes an already terrifying situation worse. ${price} to understand the charges, the timeline, and how to actually help — in plain English, not legalese.`,
     includes: [
       "Plain-English charge explanation",
       "What is happening now based on the current case stage",
@@ -181,8 +181,8 @@ const PRODUCT_COPY: Record<
   "arrest-report-review": {
     headline:
       "What does your arrest report actually say — and what's wrong with it?",
-    stakes:
-      "Every error in the arrest report is a potential defense motion. Miranda issues, probable cause gaps, procedural violations — they are all in the document. This is pre-discovery intelligence at $97, vs waiting weeks or months for your attorney to review it.",
+    stakes: (price: string) =>
+      `Every error in the arrest report is a potential defense motion. Miranda issues, probable cause gaps, procedural violations — they are all in the document. This is pre-discovery intelligence at ${price}, vs waiting weeks or months for your attorney to review it.`,
     includes: [
       "Plain-English report summary",
       "Potential issues identified (inconsistencies, missing information, procedure violations)",
@@ -198,8 +198,8 @@ const PRODUCT_COPY: Record<
 
   "collateral-consequences": {
     headline: "What happens to the rest of your life?",
-    stakes:
-      "There are 45,000+ documented collateral consequences of a criminal record. Employment, housing, voting, gun rights, professional licensing, custody, immigration — each follows different rules, different timelines, and different standards. The $147 cost of knowing is invisible against any single surprise consequence that surfaces months or years later.",
+    stakes: (price: string) =>
+      `There are 45,000+ documented collateral consequences of a criminal record. Employment, housing, voting, gun rights, professional licensing, custody, immigration — each follows different rules, different timelines, and different standards. The ${price} cost of knowing is invisible against any single surprise consequence that surfaces months or years later.`,
     includes: [
       "Consequences inventory by severity (CRITICAL / SIGNIFICANT / MODERATE)",
       "Employment and background check impact",
@@ -215,8 +215,8 @@ const PRODUCT_COPY: Record<
   },
   "license-risk": {
     headline: "Will you lose your license?",
-    stakes:
-      "A professional license represents $100,000+ per year in earning capacity. Some licensing boards mandate self-reporting within DAYS of an arrest — not a conviction, an arrest. Missing that deadline can be an independent violation worse than the underlying charge. $297 vs career extinction.",
+    stakes: (price: string) =>
+      `A professional license represents $100,000+ per year in earning capacity. Some licensing boards mandate self-reporting within DAYS of an arrest — not a conviction, an arrest. Missing that deadline can be an independent violation worse than the underlying charge. ${price} vs career extinction.`,
     includes: [
       "Risk assessment per license and charge combination",
       "Board reporting requirements with deadlines",
@@ -232,8 +232,8 @@ const PRODUCT_COPY: Record<
   },
   "immigration-impact": {
     headline: "Will this charge affect your immigration status?",
-    stakes:
-      "For non-citizens, the stakes are existential. A state misdemeanor can be classified as a federal 'aggravated felony' for immigration purposes. CIMT classification, aggravated felony analysis, and plea consequences operate under completely different rules than criminal court. $297 vs a $2,000-5,000 immigration attorney consultation for the same analysis.",
+    stakes: (price: string) =>
+      `For non-citizens, the stakes are existential. A state misdemeanor can be classified as a federal 'aggravated felony' for immigration purposes. CIMT classification, aggravated felony analysis, and plea consequences operate under completely different rules than criminal court. ${price} vs a $2,000-5,000 immigration attorney consultation for the same analysis.`,
     includes: [
       "Deportation risk assessment",
       "Crime Involving Moral Turpitude (CIMT) analysis",
@@ -249,8 +249,8 @@ const PRODUCT_COPY: Record<
   },
   "security-clearance": {
     headline: "Will this charge cost you your clearance?",
-    stakes:
-      "A security clearance represents $100,000-300,000 in annual income. Self-reporting obligations mean that failure to report can be a bigger problem than the charge itself. The adjudicative guidelines have specific mitigating conditions — knowing which ones apply is the difference between keeping and losing the clearance. $147 to know what to report and when.",
+    stakes: (price: string) =>
+      `A security clearance represents $100,000-300,000 in annual income. Self-reporting obligations mean that failure to report can be a bigger problem than the charge itself. The adjudicative guidelines have specific mitigating conditions — knowing which ones apply is the difference between keeping and losing the clearance. ${price} to know what to report and when.`,
     includes: [
       "Clearance risk level assessment",
       "Self-reporting obligations under SEAD 3 and EO 12968",
@@ -264,8 +264,8 @@ const PRODUCT_COPY: Record<
   },
   "custody-impact": {
     headline: "Will this charge affect your custody?",
-    stakes:
-      "For parents, this is the nuclear emotional trigger. Criminal court and family court are separate systems with separate standards, separate timelines, and separate judges. The other parent can file an emergency motion IMMEDIATELY. $197 to understand how these two systems interact vs a custody surprise that arrives without warning.",
+    stakes: (price: string) =>
+      `For parents, this is the nuclear emotional trigger. Criminal court and family court are separate systems with separate standards, separate timelines, and separate judges. The other parent can file an emergency motion IMMEDIATELY. ${price} to understand how these two systems interact vs a custody surprise that arrives without warning.`,
     includes: [
       "Custody impact assessment based on charge and jurisdiction",
       "How criminal and family courts interact",
@@ -283,8 +283,8 @@ const PRODUCT_COPY: Record<
 
   "expungement-research": {
     headline: "Can your record be cleared?",
-    stakes:
-      "Post-conviction consequences compound over years — every background check, every job application, every housing application. Eligibility for expungement varies dramatically by state, charge type, and completion status. $97 vs $500-1,500 for an attorney just to assess eligibility before any work begins.",
+    stakes: (price: string) =>
+      `Post-conviction consequences compound over years — every background check, every job application, every housing application. Eligibility for expungement varies dramatically by state, charge type, and completion status. ${price} vs $500-1,500 for an attorney just to assess eligibility before any work begins.`,
     includes: [
       "Eligibility determination for your charge and jurisdiction",
       "Waiting period calculation based on your timeline",
@@ -298,8 +298,8 @@ const PRODUCT_COPY: Record<
   },
   "sentence-reduction": {
     headline: "Can your sentence be reduced?",
-    stakes:
-      "Rule 35 motions, compassionate release, retroactive guideline changes — mechanisms exist for sentence reduction that most defendants never learn about. $147 is 5-10% of what an appellate attorney charges just for an initial consultation.",
+    stakes: (price: string) =>
+      `Rule 35 motions, compassionate release, retroactive guideline changes — mechanisms exist for sentence reduction that most defendants never learn about. ${price} is 5-10% of what an appellate attorney charges just for an initial consultation.`,
     includes: [
       "Available sentence reduction mechanisms by jurisdiction",
       "Applicable mechanism analysis for your specific situation",
@@ -312,8 +312,8 @@ const PRODUCT_COPY: Record<
   },
   "appeal-viability": {
     headline: "Is an appeal worth pursuing?",
-    stakes:
-      "An appellate attorney viability consultation costs $1,000-2,000. $297 provides the same analysis using published appellate standards and success rates — the same framework an appellate attorney uses to assess whether your case has grounds.",
+    stakes: (price: string) =>
+      `An appellate attorney viability consultation costs $1,000-2,000. ${price} provides the same analysis using published appellate standards and success rates — the same framework an appellate attorney uses to assess whether your case has grounds.`,
     includes: [
       "Viability assessment (STRONG / MODERATE / WEAK / NOT VIABLE)",
       "Deadline status — whether you are still within the filing window",
@@ -327,8 +327,8 @@ const PRODUCT_COPY: Record<
   },
   "ineffective-counsel": {
     headline: "Did your attorney fail you?",
-    stakes:
-      "The Strickland standard requires proving two separate things — deficient performance AND prejudice. This is the highest-stakes analysis in the post-conviction space. $297 for documented analysis to bring to a new attorney, built on the same two-prong framework that courts use to evaluate these claims.",
+    stakes: (price: string) =>
+      `The Strickland standard requires proving two separate things — deficient performance AND prejudice. This is the highest-stakes analysis in the post-conviction space. ${price} for documented analysis to bring to a new attorney, built on the same two-prong framework that courts use to evaluate these claims.`,
     includes: [
       "Strickland standard explained — the two-prong test in plain English",
       "Issue analysis per identified problem in your case",
@@ -344,8 +344,8 @@ const PRODUCT_COPY: Record<
 
   "attorney-performance-review": {
     headline: "Is your attorney doing their job?",
-    stakes:
-      "Attorney distrust and communication gaps are the #1 reason defendants seek outside information. Knowing what to expect — communication frequency, motion filing timelines, discovery requests — is the difference between informed concern and unnecessary panic. $97 to benchmark attorney performance against what defendants in your situation have a right to expect.",
+    stakes: (price: string) =>
+      `Attorney distrust and communication gaps are the #1 reason defendants seek outside information. Knowing what to expect — communication frequency, motion filing timelines, discovery requests — is the difference between informed concern and unnecessary panic. ${price} to benchmark attorney performance against what defendants in your situation have a right to expect.`,
     includes: [
       "Communication frequency benchmark for your case type",
       "Motion filing timeline analysis",
@@ -358,8 +358,8 @@ const PRODUCT_COPY: Record<
   },
   "probation-violation-response": {
     headline: "What happens when you violate probation?",
-    stakes:
-      "Missed appointment, failed drug test, new arrest — each type of violation carries different consequences and different response strategies. The difference between a technical violation and a substantive violation can mean the difference between modified conditions and revocation. $97 vs guessing at what comes next.",
+    stakes: (price: string) =>
+      `Missed appointment, failed drug test, new arrest — each type of violation carries different consequences and different response strategies. The difference between a technical violation and a substantive violation can mean the difference between modified conditions and revocation. ${price} vs guessing at what comes next.`,
     includes: [
       "Violation severity assessment for your specific situation",
       "Technical vs. substantive classification and why it matters",
@@ -386,8 +386,8 @@ const PRODUCT_COPY: Record<
   },
   "constructive-possession": {
     headline: "Were the items actually yours?",
-    stakes:
-      "Drugs or weapons found in shared spaces — cars, apartments, common areas — create possession questions that are more complex than most defendants realize. Proximity alone is not possession. $97 for an analysis of constructive possession law in your state applied to your specific facts.",
+    stakes: (price: string) =>
+      `Drugs or weapons found in shared spaces — cars, apartments, common areas — create possession questions that are more complex than most defendants realize. Proximity alone is not possession. ${price} for an analysis of constructive possession law in your state applied to your specific facts.`,
     includes: [
       "Constructive possession elements in your state",
       "Proximity analysis — what proximity does and does not prove",
@@ -400,8 +400,8 @@ const PRODUCT_COPY: Record<
   },
   "self-surrender-prep": {
     headline: "How to prepare for self-surrender.",
-    stakes:
-      "Self-surrender is a zero-competition niche — and defendants facing it have almost no reliable information available. $97 for a step-by-step preparation guide covering personal, financial, and legal readiness when you know you are going in.",
+    stakes: (price: string) =>
+      `Self-surrender is a zero-competition niche — and defendants facing it have almost no reliable information available. ${price} for a step-by-step preparation guide covering personal, financial, and legal readiness when you know you are going in.`,
     includes: [
       "Pre-surrender checklist (personal, financial, legal affairs)",
       "What to bring and what to leave home",
@@ -415,8 +415,8 @@ const PRODUCT_COPY: Record<
   "probation-rights": {
     headline:
       "What can your probation officer actually require?",
-    stakes:
-      "'Can my PO do this?' is one of the most common questions on every probation forum. The line between standard conditions, special conditions, and overreach is not always clear — and most defendants do not know where it is. $97 to understand your rights, your conditions, and the difference.",
+    stakes: (price: string) =>
+      `'Can my PO do this?' is one of the most common questions on every probation forum. The line between standard conditions, special conditions, and overreach is not always clear — and most defendants do not know where it is. ${price} to understand your rights, your conditions, and the difference.`,
     includes: [
       "Standard vs. special conditions breakdown for your jurisdiction",
       "Probation officer authority limits in your state",
@@ -432,8 +432,8 @@ const PRODUCT_COPY: Record<
 
   "trial-prep-package": {
     headline: "Walk into trial with the materials your defense needs.",
-    stakes:
-      "Trial is the moment everything before it was building toward. Most defendants get there with a binder of notes and hope. The ones who walk in with a coherent theme, voir dire questions tailored to their charge, opening and closing frameworks built on the same patterns elite trial lawyers use, and a Judgment of Acquittal package ready to file at the close of the State's case — those are the ones who give their attorney the materials to work with. $1,997 against a trial outcome that decides the rest of your life is invisible.",
+    stakes: (price: string) =>
+      `Trial is the moment everything before it was building toward. Most defendants get there with a binder of notes and hope. The ones who walk in with a coherent theme, voir dire questions tailored to their charge, opening and closing frameworks built on the same patterns elite trial lawyers use, and a Judgment of Acquittal package ready to file at the close of the State's case — those are the ones who give their attorney the materials to work with. ${price} against a trial outcome that decides the rest of your life is invisible.`,
     includes: [
       "Case theme architecture — one phrase the jury can hold onto",
       "Voir dire intelligence with juror screening considerations for your charge type",
@@ -450,8 +450,8 @@ const PRODUCT_COPY: Record<
   "case-law-intelligence": {
     headline:
       "Know which cases matter to your defense — and which ones the prosecution will cite.",
-    stakes:
-      "Case law is the language judges actually speak. The prosecution comes to court with a list of cases they will cite. Defense attorneys who walk in without their own ranked, distinguished, verified counter-list are arguing on the prosecution's terms. $297 for a strategic case law map with ranked verification URLs is invisible against years of consequences riding on which cases get cited first.",
+    stakes: (price: string) =>
+      `Case law is the language judges actually speak. The prosecution comes to court with a list of cases they will cite. Defense attorneys who walk in without their own ranked, distinguished, verified counter-list are arguing on the prosecution's terms. ${price} for a strategic case law map with ranked verification URLs is invisible against years of consequences riding on which cases get cited first.`,
     includes: [
       "Strategic classification — Judgment of Acquittal opportunities, danger cases, and defense-favorable holdings for your charge",
       "Per-motion applicability matrix (STRONG / MODERATE / WEAK / REVIEW) so you know which cases support which motions",
@@ -467,8 +467,8 @@ const PRODUCT_COPY: Record<
   "expert-witness-challenge": {
     headline:
       "Daubert-test the expert before they testify against you.",
-    stakes:
-      "Expert witnesses carry weight with juries that lay witnesses do not. When the prosecution puts an expert on the stand, the defense has one shot at undermining the credibility — and it starts long before the trial, with a Daubert challenge to the methodology. Most defendants never know whether their attorney filed one. $297 for a documented Daubert analysis your attorney can build a motion from is invisible against the testimony that may convict you.",
+    stakes: (price: string) =>
+      `Expert witnesses carry weight with juries that lay witnesses do not. When the prosecution puts an expert on the stand, the defense has one shot at undermining the credibility — and it starts long before the trial, with a Daubert challenge to the methodology. Most defendants never know whether their attorney filed one. ${price} for a documented Daubert analysis your attorney can build a motion from is invisible against the testimony that may convict you.`,
     includes: [
       "Daubert factor analysis — testability, peer review, error rate, general acceptance — applied to the expert's discipline",
       "Qualification gap research — the credentials the expert claims and the gaps in them",
@@ -484,8 +484,8 @@ const PRODUCT_COPY: Record<
   "discovery-demand-letter": {
     headline:
       "Demand the discovery your attorney did not know to ask for.",
-    stakes:
-      "Discovery is what the prosecution must turn over. Most defendants assume their attorney has demanded everything. Most attorneys demand the standard list. The items prosecutors regularly withhold — body cam footage from the secondary officer, calibration logs for the breathalyzer for the prior 90 days, the CI's prior reliability history, the lab analyst's bench notes — are precisely the items a charge-specific demand letter targets. $97 for a letter your attorney can file as-is is the cheapest leverage in your case.",
+    stakes: (price: string) =>
+      `Discovery is what the prosecution must turn over. Most defendants assume their attorney has demanded everything. Most attorneys demand the standard list. The items prosecutors regularly withhold — body cam footage from the secondary officer, calibration logs for the breathalyzer for the prior 90 days, the CI's prior reliability history, the lab analyst's bench notes — are precisely the items a charge-specific demand letter targets. ${price} for a letter your attorney can file as-is is the cheapest leverage in your case.`,
     includes: [
       "Charge-specific demand letter listing the items prosecutors regularly withhold for your offense type",
       "Jurisdiction-specific procedural framing so the letter cites the right rule",
@@ -503,8 +503,8 @@ const PRODUCT_COPY: Record<
 
   "plea-analyzer": {
     headline: "Is your plea deal fair?",
-    stakes:
-      "97% of criminal cases end in plea deals. Most defendants accept without comparing the offer against sentencing guidelines, without understanding departure arguments that could reduce the sentence, and without knowing the hidden consequences buried in the terms. The pressure to accept quickly — before you understand what you are agreeing to — is enormous. $97 to see the full picture before the deadline.",
+    stakes: (price: string) =>
+      `97% of criminal cases end in plea deals. Most defendants accept without comparing the offer against sentencing guidelines, without understanding departure arguments that could reduce the sentence, and without knowing the hidden consequences buried in the terms. The pressure to accept quickly — before you understand what you are agreeing to — is enormous. ${price} to see the full picture before the deadline.`,
     includes: [
       "Plea offer analysis against published sentencing guidelines",
       "Departure argument identification — grounds for below-guidelines sentences",
@@ -518,8 +518,8 @@ const PRODUCT_COPY: Record<
   },
   "ach-matrix": {
     headline: "What if the prosecution's theory is right?",
-    stakes:
-      "Confirmation bias is the silent killer in criminal defense. Your attorney builds a defense theory and sees evidence through that lens. The prosecution does the same from the opposite side. Neither is asking the hardest question: what are ALL the plausible explanations for this evidence, including the ones that hurt? $147 for an honest assessment that tests every hypothesis — including the prosecution's strongest — against the actual evidence.",
+    stakes: (price: string) =>
+      `Confirmation bias is the silent killer in criminal defense. Your attorney builds a defense theory and sees evidence through that lens. The prosecution does the same from the opposite side. Neither is asking the hardest question: what are ALL the plausible explanations for this evidence, including the ones that hurt? ${price} for an honest assessment that tests every hypothesis — including the prosecution's strongest — against the actual evidence.`,
     includes: [
       "All plausible hypotheses generated — defense AND prosecution theories",
       "Evidence scored against each hypothesis (supports / contradicts / neutral)",
@@ -534,8 +534,8 @@ const PRODUCT_COPY: Record<
   "adversarial-prosecution-sim": {
     headline:
       "What will the prosecution do when your attorney makes that argument?",
-    stakes:
-      "Every defense strategy looks strong until the prosecution responds. Most defendants hear their attorney's plan and feel reassured — without ever learning how the other side will attack it. A multi-round prosecution simulation stress-tests each defense strategy against realistic counterarguments before your attorney tries it in court. $197 vs discovering the vulnerability during trial.",
+    stakes: (price: string) =>
+      `Every defense strategy looks strong until the prosecution responds. Most defendants hear their attorney's plan and feel reassured — without ever learning how the other side will attack it. A multi-round prosecution simulation stress-tests each defense strategy against realistic counterarguments before your attorney tries it in court. ${price} vs discovering the vulnerability during trial.`,
     includes: [
       "Multi-round prosecution vs. defense simulation for each strategy",
       "Prosecution counter-arguments mapped with strength ratings",
@@ -549,8 +549,8 @@ const PRODUCT_COPY: Record<
   },
   "sentencing-intelligence": {
     headline: "What does your judge actually do at sentencing?",
-    stakes:
-      "Sentencing guidelines are public. What your specific judge actually does with those guidelines is not — not in any database a defendant can access. Departure rates, plea-vs-trial differentials, patterns in how this judge weighs mitigating factors — this intelligence exists in the courtroom but never reaches the defendant. $297 to know what your judge tends to do before the hearing that determines the outcome.",
+    stakes: (price: string) =>
+      `Sentencing guidelines are public. What your specific judge actually does with those guidelines is not — not in any database a defendant can access. Departure rates, plea-vs-trial differentials, patterns in how this judge weighs mitigating factors — this intelligence exists in the courtroom but never reaches the defendant. ${price} to know what your judge tends to do before the hearing that determines the outcome.`,
     includes: [
       "Judge-specific sentencing pattern analysis for your charge type",
       "Guideline range calculation with departure analysis",
@@ -565,8 +565,8 @@ const PRODUCT_COPY: Record<
   "daubert-challenge": {
     headline:
       "Can the prosecution's expert survive a Daubert challenge?",
-    stakes:
-      "Expert witnesses carry weight with juries that fact witnesses do not. When the prosecution's expert testifies that the substance was identified, the blood alcohol was above the limit, or the cause of death was homicide — most jurors accept it. But expert testimony is only as reliable as its methodology, and methodology is exactly what a Daubert challenge tests. $297 for a systematic analysis of whether the prosecution's expert meets the standard — before the jury hears the testimony.",
+    stakes: (price: string) =>
+      `Expert witnesses carry weight with juries that fact witnesses do not. When the prosecution's expert testifies that the substance was identified, the blood alcohol was above the limit, or the cause of death was homicide — most jurors accept it. But expert testimony is only as reliable as its methodology, and methodology is exactly what a Daubert challenge tests. ${price} for a systematic analysis of whether the prosecution's expert meets the standard — before the jury hears the testimony.`,
     includes: [
       "Daubert four-factor analysis (testability, peer review, error rate, general acceptance)",
       "Methodology-specific challenge opportunities",
@@ -580,8 +580,8 @@ const PRODUCT_COPY: Record<
   },
   "body-camera-analysis": {
     headline: "What does the body camera footage actually show?",
-    stakes:
-      "Body camera footage is evidence — but not self-interpreting evidence. What the camera captures, what it misses due to angle and activation timing, whether Miranda warnings were given before questioning began, whether force was proportional — these are legal questions, not video questions. $397 for a framework to analyze the footage through a defense lens before your attorney reviews it.",
+    stakes: (price: string) =>
+      `Body camera footage is evidence — but not self-interpreting evidence. What the camera captures, what it misses due to angle and activation timing, whether Miranda warnings were given before questioning began, whether force was proportional — these are legal questions, not video questions. ${price} for a framework to analyze the footage through a defense lens before your attorney reviews it.`,
     includes: [
       "Miranda compliance analysis — timing, completeness, voluntariness indicators",
       "Use of force assessment framework based on documented footage",
@@ -635,7 +635,9 @@ export default async function ProductLandingPage({ params }: Props) {
 
         {/* Stakes */}
         <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-8">
-          <p className="text-zinc-300 leading-relaxed">{copy.stakes}</p>
+          <p className="text-zinc-300 leading-relaxed">
+            {typeof copy.stakes === "function" ? copy.stakes(product.priceDisplay) : copy.stakes}
+          </p>
         </div>
 
         {/* What's included */}
