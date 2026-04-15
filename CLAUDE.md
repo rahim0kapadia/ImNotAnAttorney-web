@@ -1,14 +1,8 @@
+<!-- caveman-compressed -->
 # ImNotAnAttorney-web — Claude Code Instructions
 
-## The Cascade Rule — Multi-Win or Redesign (HARD RULE, always active)
-Every decision must create wins that cascade outward. Not zero-sum. Not give-and-take. Not even triple-win as a ceiling. Butterfly effect — everyone touched by the decision, direct and downstream, ends up better off.
-**Before any decision, map the win cascade:** us / direct counterparty / their downstream / ecosystem / future-us / adjacent players. Name a specific win for each node that applies. If you can't, the decision is not ready — redesign it.
-**Escape clause (use sparingly):** If no version wins for everyone after real effort, choose the path with the fewest losers AND actively compensate them. Never pretend the loss isn't there.
-**Tie-in to triangulation:** .01% experts usually got there because their frameworks create cascading value. Prefer experts tagged `cascade_profile: native` in `~/.claude/experts/`. When an expert's advice fails the cascade test, synthesize with a second lens — don't settle.
-**Heritage:** Sanpo yoshi (Omi merchants, 1600s) expanded to unlimited stakeholders. Full version: `C:\Users\email\.claude\rules\atlas-identity.md`.
-
 ## Ecosystem — INAA Project Family
-This project is part of the INAA (ImNotAnAttorney) ecosystem. You may freely read files from sibling repos to answer questions or build features:
+Part of INAA (ImNotAnAttorney) ecosystem. Freely read files from sibling repos:
 
 | Repo | Path | Role |
 |------|------|------|
@@ -17,16 +11,16 @@ This project is part of the INAA (ImNotAnAttorney) ecosystem. You may freely rea
 | ImNotAnAttorney-engine | `C:\Users\email\projects\ImNotAnAttorney-engine\` | Backend worker pipeline (41 workers, 6 phases, discovery tier processing) |
 | KDP-Publishing (legal only) | `C:\Users\email\projects\KDP-Publishing\books\` | INAA Defense Guides (Jordan Blake). Only legal defense books. |
 
-**Default boundary**: Do NOT read files from projects outside this table unless Rahim explicitly directs you to.
+**Default boundary**: Do NOT read files from projects outside this table unless Rahim explicitly directs.
 
-**How the repos connect:**
+**How repos connect:**
 - **This repo → Engine:** Stripe webhook creates `cases` + `processing_jobs` rows. Engine polls `processing_jobs` via cron-job.org every 5min. Discovery tiers ($2,497+) processed by engine workers.
 - **This repo → Parent:** Reads `system/EVALUATION-TEAM.md` for audit criteria. Engine reads `system/templates/` for prompt templates at runtime.
 - **Shared Supabase:** All 3 repos share one database (`jxjbjmgdukwkoclydqdr`). Web owns checkout/intake/delivery. Engine owns analysis/research/strategy tables. Parent seeds reference data.
 - **This repo handles:** Playbooks ($97), Case Decoder ($197), Intelligence Brief ($997) generation via Supabase Edge Functions. Blog, checkout, intake, delivery, cron, email.
 - **Engine handles:** X-Ray ($2,497), War Room ($4,997), Situation Room ($9,997) — full discovery analysis pipeline.
 
-**Architecture docs:** Each repo has its own `ARCHITECTURE.md` at root. Read the relevant one before cross-repo work.
+**Architecture docs:** Each repo has own `ARCHITECTURE.md` at root. Read before cross-repo work.
 
 ## Identity: Atticus (Atti)
 
@@ -36,7 +30,7 @@ Eval framework: `ImNotAnAttorney/system/EVALUATION-TEAM.md` (11 teams, 164 crite
 
 ## What This Is
 
-A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment for criminal defendants holding their attorneys accountable. 43 blog posts, 48 pages, multi-tier checkout ($97-$9,997).
+Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment for criminal defendants holding attorneys accountable. 43 blog posts, 48 pages, multi-tier checkout ($97-$9,997).
 
 ## Tech Stack
 
@@ -69,7 +63,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 
 - Repo: github.com/rahim0kapadia/ImNotAnAttorney-web
 - Vercel account: `rahim0kapadia-1967` / team: `rahim-kapadias-projects`
-- **CRITICAL: Production Vercel project is `imnotanattorney` (prj_zqxNgG9xcM235bnKRoEgP5kBOEEr), NOT `imnotanattorney-web`.** Env vars and CLI commands must target the production project. `.vercel/project.json` is set correctly — verify with `vercel env ls`.
+- **CRITICAL: Production Vercel project is `imnotanattorney` (prj_zqxNgG9xcM235bnKRoEgP5kBOEEr), NOT `imnotanattorney-web`.** Env vars and CLI commands must target production project. `.vercel/project.json` set correctly — verify with `vercel env ls`.
 - Deploy: `git push origin master` → auto-deploy. NEVER `vercel deploy`, `vercel env pull`, or `vercel domains` commands
 - Domain: imnotanattorney.com — Cloudflare A records → Vercel. Already configured. DO NOT touch domain settings.
 - Twitter: @ImNotAnAttorney (live: https://x.com/ImNotAnAttorney)
@@ -93,11 +87,11 @@ Full verification: `node ~/projects/continuous-verification/verify.mjs --project
 
 - **Brand identity:** `design-system/brand.md` -- read BEFORE any UI/frontend work. Defines colors, typography, theme constraints.
 - **Design intelligence:** UIU UX Pro Max skill at `.claude/skills/ui-ux-pro-max/` -- run `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system` for industry-specific design recommendations.
-- **Global design rule:** `~/.claude/rules/design-intelligence.md` auto-loads on UI files. Defines priority chain: brand.md > UIU search > frontend-design skill > existing patterns.
+- **Global design rule:** `~/.claude/rules/design-intelligence.md` auto-loads on UI files. Priority chain: brand.md > UIU search > frontend-design skill > existing patterns.
 - **Brand:** Dark mode only. Amber (#f59e0b) + Navy (#1E3A8A) on black. Playfair Display (display) + Lato (body).
 
 <important if="building UI components, pages, styling, or frontend features">
-Read `design-system/brand.md` FIRST. All colors, fonts, and design decisions must follow it. Use UIU UX Pro Max search for accessibility rules, UX patterns, and industry guidance.
+Read `design-system/brand.md` FIRST. All colors, fonts, design decisions must follow it. Use UIU UX Pro Max search for accessibility rules, UX patterns, industry guidance.
 </important>
 
 ## Reference
