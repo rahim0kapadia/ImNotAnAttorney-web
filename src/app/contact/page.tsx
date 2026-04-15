@@ -131,7 +131,12 @@ export default function ContactPage() {
           <p className="text-xs text-zinc-400">
             Your name, email address, and any information you share with us is
             kept strictly confidential and will never be shared with prosecutors,
-            law enforcement, or any third party.
+            law enforcement, or sold to marketers. We use essential processors
+            (payments, email, hosting) to deliver our service — see our{" "}
+            <Link href="/privacy" className="underline underline-offset-2 hover:text-zinc-300">
+              Privacy Policy
+            </Link>{" "}
+            for the full list.
           </p>
           <p className="text-xs text-zinc-400">
             ImNotAnAttorney provides legal information and research — not legal
