@@ -18,6 +18,7 @@
  */
 
 import { useState, useRef, useCallback } from "react";
+import { TIER_CORE } from "@/lib/tiers";
 
 const US_STATES = [
   { value: "AL", label: "Alabama" }, { value: "AK", label: "Alaska" },
@@ -239,7 +240,7 @@ export default function PleaAnalyzerClient() {
             href="/checkout?tier=case-decoder"
             className="inline-block bg-amber-500 hover:bg-amber-400 text-black font-semibold py-3 px-8 rounded-lg transition-colors"
           >
-            Get Your Case Decoder — $197
+            Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay}
           </a>
           <p className="text-zinc-500 text-xs mt-3">
             15 defense-specific questions + full case landscape analysis.

@@ -18,7 +18,7 @@ describe("crossValidate", () => {
     };
     const result = crossValidate(extracted, clMetadata);
     expect(result.confidence).toBe("verified");
-    expect(result.signals.charge_types.independent).toBeGreaterThanOrEqual(2);
+    expect((result as any).signals.charge_types.independent).toBeGreaterThanOrEqual(2);
   });
 
   it("returns low_confidence when charge_types have <2 independent signals", () => {
@@ -29,7 +29,7 @@ describe("crossValidate", () => {
       motion_outcomes: [],
     };
     const clMetadata = {
-      nature_of_suit: null,
+      nature_of_suit: null as unknown as string,
       court: "fladc1",
       jurisdiction: "FL",
       docketCharges: [],
@@ -46,13 +46,13 @@ describe("crossValidate", () => {
       motion_outcomes: [],
     };
     const clMetadata = {
-      nature_of_suit: null,
+      nature_of_suit: null as unknown as string,
       court: "fladc1",
       jurisdiction: "FL",
       docketCharges: ["dui"],
     };
     const result = crossValidate(extracted, clMetadata);
-    expect(result.signals.charge_types.independent).toBeGreaterThanOrEqual(2);
+    expect((result as any).signals.charge_types.independent).toBeGreaterThanOrEqual(2);
     expect(result.confidence).toBe("verified");
   });
 });

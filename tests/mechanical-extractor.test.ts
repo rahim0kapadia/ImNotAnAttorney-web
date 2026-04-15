@@ -203,10 +203,10 @@ describe("computeCaseFavorability", () => {
       [{ motion_type: "suppress_motion", outcome: "granted" }],
       false
     );
-    expect(bad).toBeLessThan(good);
+    expect(bad!).toBeLessThan(good!);
   });
 
   it("returns null with no outcomes", () => {
-    expect(computeCaseFavorability([], null)).toBeNull();
+    expect(computeCaseFavorability([], null as any)).toBeNull();
   });
 });

@@ -13,6 +13,7 @@ import Link from "next/link";
 import { SITE_URL } from "@/lib/site";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
+import { TIER_CORE } from "@/lib/tiers";
 import { TestimonialSection } from "@/components/TestimonialSection";
 
 export const metadata: Metadata = {
@@ -233,7 +234,7 @@ export default function FamilyPage() {
             href="/checkout?tier=case-decoder"
             className="mt-4 inline-flex min-h-[44px] items-center justify-center rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
           >
-            Get the Case Decoder &mdash; $197 &rarr;
+            Get the Case Decoder &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
           </a>
           <p className="mt-2 text-xs text-zinc-500">
             48-hour delivery. Full refund if we don&apos;t find something the

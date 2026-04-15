@@ -17,6 +17,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
 import PleaAnalyzerClient from "./PleaAnalyzerClient";
 
 export const metadata: Metadata = {
@@ -101,7 +102,7 @@ export default function PleaAnalyzerPage() {
             information. We built this tool because informed defendants make
             better decisions, and better decisions create better outcomes for
             everyone in the system. If the analysis helps you, the Case Decoder
-            ($197) maps your complete defense landscape. But the plea analysis
+            ({TIER_CORE["case-decoder"].priceDisplay}) maps your complete defense landscape. But the plea analysis
             stands on its own with no obligation.
           </p>
         </div>
