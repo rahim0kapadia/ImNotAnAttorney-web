@@ -7,11 +7,13 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, escapeHtml } from "@/lib/email";
 import { SITE_URL } from "@/lib/site";
-import { escapeHtml } from "@/lib/email";
 import { randomUUID } from "crypto";
 import type { CourtReminder } from "@/lib/court-reminders";
+import { validateCheckInDays, sortCheckInDays } from "@/lib/check-in-schedule";
+import { getPartnerPrefs, shouldSendEmail, shouldSendSMS, type PartnerNotificationPrefs } from "@/lib/notification-prefs";
+import { sendSMS, capSMS } from "@/lib/sms";
 
 interface CreateBody {
   first_name: string;
@@ -21,6 +23,8 @@ interface CreateBody {
   court_date: string;
   recommended_tier?: string;
   partner_promo_code?: string;
+  check_in_days?: string[] | null;
+  check_in_idk?: boolean;
 }
 
 export async function POST(req: NextRequest) {
@@ -51,6 +55,38 @@ export async function POST(req: NextRequest) {
   const token = randomUUID();
   const supabase = createAdminClient();
 
+  // -- Check-in schedule resolution --
+  let checkInDays: string[] | null = null;
+  let checkInSource: string | null = null;
+  let resolvedPartner: {
+    id: string; email: string; phone: string | null;
+    notification_prefs: Partial<PartnerNotificationPrefs> | null;
+    sms_consent_at: string | null; name: string;
+    company: string | null; default_check_in_days: string[] | null;
+  } | null = null;
+
+  if (body.partner_promo_code) {
+    if (body.check_in_days && !body.check_in_idk) {
+      if (!validateCheckInDays(body.check_in_days)) {
+        return NextResponse.json({ error: "Invalid check-in days" }, { status: 400 });
+      }
+      checkInDays = sortCheckInDays(body.check_in_days);
+      checkInSource = "client";
+    } else if (body.check_in_idk) {
+      const { data: partner } = await supabase
+        .from("partners")
+        .select("id, email, phone, notification_prefs, sms_consent_at, name, company, default_check_in_days")
+        .eq("promo_code", body.partner_promo_code)
+        .maybeSingle();
+
+      if (partner?.default_check_in_days && partner.default_check_in_days.length > 0) {
+        checkInDays = partner.default_check_in_days;
+        checkInSource = "default";
+      }
+      resolvedPartner = partner;
+    }
+  }
+
   const { error: insertErr } = await supabase.from("court_reminders").insert({
     token,
     first_name: first_name.trim(),
@@ -60,11 +96,41 @@ export async function POST(req: NextRequest) {
     court_date,
     recommended_tier: body.recommended_tier || null,
     partner_promo_code: body.partner_promo_code || null,
+    check_in_days: checkInDays,
+    check_in_source: checkInSource,
   });
 
   if (insertErr) {
     console.error("[Court Reminders] Insert error:", insertErr);
     return NextResponse.json({ error: "Failed to create reminder" }, { status: 500 });
+  }
+
+  // -- Bondsman fallback notification (no schedule set) --
+  if (body.partner_promo_code && !checkInDays && body.check_in_idk) {
+    const partner = resolvedPartner;
+
+    if (partner) {
+      const prefs = getPartnerPrefs(partner.notification_prefs);
+      const dashUrl = `${SITE_URL}/partner/dashboard`;
+      const msg = `${first_name.trim()} signed up for court reminders but doesn't know their check-in schedule. Set it here: ${dashUrl}`;
+
+      if (shouldSendEmail(prefs.missed_check_in)) {
+        sendEmail({
+          to: partner.email,
+          subject: `Check-in schedule needed for ${first_name.trim()}`,
+          html: `<p style="color:#D4D4D8;font-size:15px;">${escapeHtml(msg)}</p>
+                 <a href="${dashUrl}" style="display:inline-block;padding:12px 24px;background:#F59E0B;color:#000;font-weight:bold;border-radius:8px;text-decoration:none;margin-top:16px;">Set Schedule</a>`,
+        }).catch((e) => console.error("[Court Reminders] Partner email failed:", e));
+      }
+
+      if (shouldSendSMS(prefs.missed_check_in) && partner.phone) {
+        sendSMS(
+          partner.phone,
+          capSMS(`${first_name.trim()} needs a check-in schedule. Set it: ${dashUrl} — Do not reply`),
+          { category: "schedule_needed", partner_id: partner.id, subject: "Check-In Schedule Needed" }
+        ).catch((e) => console.warn("[Court Reminders] Partner SMS failed:", e));
+      }
+    }
   }
 
   // ── Send confirmation email ──

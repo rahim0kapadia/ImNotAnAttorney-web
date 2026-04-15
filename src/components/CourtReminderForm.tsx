@@ -8,6 +8,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CHARGE_DISPLAY_NAMES } from "@/lib/court-reminders";
+import { CheckInDayPicker } from "@/components/partner/CheckInDayPicker";
 
 interface CourtReminderFormProps {
   chargeType?: string;
@@ -33,6 +34,8 @@ export function CourtReminderForm({
   const [charge, setCharge] = useState(chargeType || "");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [checkInDays, setCheckInDays] = useState<string[]>([]);
+  const [checkInIdk, setCheckInIdk] = useState(false);
 
   const showChargeField = !chargeType;
 
@@ -53,6 +56,8 @@ export function CourtReminderForm({
           court_date: courtDate,
           recommended_tier: recommendedTier,
           partner_promo_code: partnerPromoCode,
+          check_in_days: checkInIdk ? null : (checkInDays.length > 0 ? checkInDays : undefined),
+          check_in_idk: checkInIdk ? true : undefined,
         }),
       });
 
@@ -124,6 +129,30 @@ export function CourtReminderForm({
           className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-xl text-white focus:border-amber-500 focus:outline-none"
         />
       </div>
+
+      {partnerPromoCode && (
+        <div className="mt-4">
+          <CheckInDayPicker
+            value={checkInDays}
+            onChange={setCheckInDays}
+            disabled={checkInIdk || submitting}
+            label="What days does your bondsman want you to check in?"
+          />
+          <label className="flex items-center gap-2 text-sm text-zinc-400 mt-3 min-h-[44px]">
+            <input
+              type="checkbox"
+              checked={checkInIdk}
+              disabled={submitting}
+              onChange={(e) => {
+                setCheckInIdk(e.target.checked);
+                if (e.target.checked) setCheckInDays([]);
+              }}
+              className="rounded border-zinc-600"
+            />
+            I don&apos;t know
+          </label>
+        </div>
+      )}
 
       <div>
         <label htmlFor="countyState" className="block text-sm font-medium text-zinc-300 mb-1">
