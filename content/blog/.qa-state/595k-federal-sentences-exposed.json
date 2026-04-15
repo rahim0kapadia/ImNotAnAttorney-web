@@ -1,0 +1,330 @@
+{
+  "slug": "595k-federal-sentences-exposed",
+  "last_checked": "2026-04-15T04:16:22.076Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 33.1,
+      "details": {
+        "composite_score": 33.1,
+        "pattern_score": 35,
+        "uniformity_score": 28.6,
+        "flagged_patterns": [
+          {
+            "detector": "tier1_vocabulary",
+            "severity": "tier1",
+            "count": 1,
+            "matches": [
+              "landscape (x1)"
+            ],
+            "points_added": 15
+          },
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 11,
+            "matches": [
+              "11 em dashes in 1162 words"
+            ],
+            "points_added": 10
+          },
+          {
+            "detector": "sycophancy_markers",
+            "severity": "sycophancy",
+            "count": 1,
+            "matches": [
+              "\"absolutely\" (x1)"
+            ],
+            "points_added": 10
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "No statute numbers or section references appear anywhere in the post. All legal rules referenced using general language like 'Federal Sentencing Guidelines are advisory' and 'based on statutory factors'."
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney or legal scholar names appear. Only source organizations cited: QSIDE Institute, United States Sentencing Commission, USSC."
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "All statistics (595,851 records, FY2001-FY2023, 10%-60% departure rates, 20-40 percentage point deviations) are attributed to JUSTFAIR dataset / QSIDE Institute / USSC. Remaining numbers (40% above, 30% below, 60 months, 48, 72, 50 times) appear in clearly hypothetical scenarios, not factual claims."
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "No procedural deadlines, filing requirements, or hearing timelines stated. The only procedural reference — guidelines became advisory after 2005 — is clearly scoped to federal sentencing context."
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear. The 2005 Supreme Court ruling is referenced without naming the case. No 'v.' patterns found."
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment) appear anywhere in the post. Content is limited to sentencing outcome patterns."
+          }
+        ]
+      }
+    },
+    "slop": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 12,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "JARGON_DEFINITION"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "No question_count field in frontmatter and zero attorney-directed questions in body — no mismatch."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "All statistical claims attributed to JUSTFAIR dataset (QSIDE Institute) and USSC data; Supreme Court 2005 ruling referenced with sufficient context."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items ('Use the free Federal Sentencing Calculator,' 'Get the Judge Report Card') are plain-language and well below 10th grade level."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "Zero instances of flagged cliches found in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Consistent second-person voice throughout; isolated third-person references ('A defendant in the Southern District') are single-sentence explanatory asides, never 2+ consecutive."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Estimated 3-4 passive constructions ('is generated,' 'the judge assigned') out of ~75 sentences — well under 30%."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "FAIL",
+            "reason": "Three legal terms undefined on first use: 'allocution,' 'presentence report,' and 'disposition method' — all used without explanation."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Clean problem→context→evidence→application→action arc across six sections with no orphaned paragraphs."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Two explicit CTAs: free Sentencing Calculator link and paid Judge Report Card checkout link, both with clear next-step language."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct ('Use the free calculator,' 'Get the Judge Report Card'); hedging appears only in informational context ('Not deterministic,' 'Not more important than the facts')."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "Longest paragraph approximately 90 words; no paragraph approaches the 300-word limit and action paragraphs stay under 100."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Largest section ('What the Data Actually Shows') is roughly 300 of ~1,270 total words (~24%), well under the 50% threshold."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "NEEDS_WORK",
+            "reason": "Opening narrative presents a stark threat (40% above guidelines, years lost) across 6 paragraphs with no paired action until several sections later; subsequent fear-action pairing in the body is solid."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong courtroom scenario hook, evidence-rich middle built on 595K records, and empowering close with two specific tools — complete arc."
+          }
+        ]
+      }
+    },
+    "upl": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "criteria_passed": 13,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Post uses descriptive framing ('your mitigation strategy should be calibrated,' 'the emphasis shifts') rather than direct commands. Closest directive is 'Start free' and 'Go deeper' which direct to tools, not legal actions."
+          },
+          {
+            "criterion": "U2",
+            "result": "FAIL",
+            "evidence": "Multiple sections discuss legal decisions (plea negotiation, bench vs. jury choice, mitigation strategy calibration) without proximate attorney redirects. The 'Why This Matters for Your Case' section discusses plea negotiation meaning and bench-vs-jury decisions with no attorney consultation redirect until the later 'What You Can Do' section."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post explicitly states 'You are not a statistic. Your case has its own facts' and 'Nobody is saying a departure rate number determines your sentence.' No passage renders judgment about the reader's specific circumstances."
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "Post describes what departures, plea negotiations, and bench-vs-jury decisions are but does not recommend filing specific motions or taking specific procedural steps. It frames these as decisions to discuss with counsel."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "No immigration consequences are discussed in this post. The content is limited to federal sentencing patterns and does not mention deportation, visa status, DACA, or green cards."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "No collateral consequences (license loss, housing, firearms, voting) are discussed. The post focuses exclusively on sentencing length and departure rates, not downstream consequences."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "No specific bail bond companies, law firms, or legal service providers are named. References are to general categories ('your attorney,' 'defense attorneys,' 'the prosecutor')."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "The post uses 'We are not attorneys. We do not give legal advice' and 'we believe in one thing absolutely' — first-person plural is used for identity statements and information framing, never for recommending legal actions or strategies."
+          },
+          {
+            "criterion": "U9",
+            "result": "PASS",
+            "evidence": "The opening courtroom scenario uses second-person present tense ('You are sitting in a courtroom') which could read as a real scenario rather than a clearly labeled hypothetical. However, the scenario is clearly illustrative/rhetorical and immediately transitions to data discussion. Borderline but the framing is recognizably literary, not a case study presented as fact."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post explicitly frames knowledge as closing an information gap: 'the defendant should never be the least informed person in the courtroom.' Products are positioned as research tools. The 'What You Can Do' section opens with 'We are not attorneys. We do not give legal advice. That is between you and your attorney.'"
+          },
+          {
+            "criterion": "U11",
+            "result": "FAIL",
+            "evidence": "Several legal rules stated without qualification: 'After the Supreme Court's 2005 ruling, judges calculate the guidelines range but can sentence above or below it based on statutory factors' — presented as certainty without 'generally' or 'typically.' The plea negotiation and bench-vs-jury sections state legal dynamics as universal facts applying to the reader ('Your plea negotiation changes meaning') without jurisdictional qualification."
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Post avoids outcome guarantees. States 'Nobody is saying a departure rate number determines your sentence' and frames data as context rather than prediction. Does not claim following the information leads to reduced sentences."
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Legal and statistical claims are attributed to specific sources: JUSTFAIR dataset, QSIDE Institute, United States Sentencing Commission, and the Supreme Court's 2005 ruling. Data patterns are presented as empirical findings from named datasets, not as the blog's original legal positions."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims found. The post consistently treats guidelines as advisory, departure rates as variable, and judicial patterns as statistical rather than deterministic. All claims are internally consistent."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Products are framed as research tools: Sentencing Calculator 'estimates your guidelines range,' Judge Report Card 'pulls your specific judge's sentencing history.' The post explicitly states 'We are not attorneys. We do not give legal advice. That is between you and your attorney.'"
+          }
+        ]
+      }
+    },
+    "dna": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 3,
+        "checks_total": 13,
+        "needs_work_count": 5,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "FAIL",
+            "evidence": "Opening hook is strong (courtroom sentencing scenario names fear), but 4 of 5 H2s are purely topical: 'The Dataset Nobody Talks About', 'Judges Have Patterns — The Data Proves It', 'What the Data Actually Shows', 'Why This Matters for Your Case' — none tell the reader what they GET or imply action"
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "FAIL",
+            "evidence": "5+ legal terms used without inline definition on first use: 'presentence report', 'mitigation package', 'allocution', 'statutory factors', 'disposition method' — reader must already know courtroom vocabulary to follow"
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No concrete immediate-action block before the first H2; the opening is a 10-sentence narrative scenario with no 'do this right now' moment — first actionable item appears in the TLDRBox or buried in the final H2 section"
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "NEEDS_WORK",
+            "evidence": "The bench vs. jury decision point in 'Why This Matters' says 'that information exists' and 'most defendants make the bench-versus-jury choice without it' but provides no default recommendation or named variables to evaluate"
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "NEEDS_WORK",
+            "evidence": "Both 'What the Data Actually Shows' and 'Why This Matters for Your Case' present 4 bolded unranked items each with no 'start with these' priority marker"
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "Single-post audit — structural pattern is system-decoder-post (decoding federal sentencing data to reveal hidden judicial patterns)"
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "FAIL",
+            "evidence": "Opening paragraph presents 40%-above and 30%-below sentencing stats with no paired action within 2 sentences; opening section closes on 'you drew the wrong judge. And nobody told you that mattered' — pure fear, no action pairing"
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language throughout; the defendant 'did everything right' and the problem is systemic (judge lottery) — person is cleanly separated from situation in every sentence"
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "PASS",
+            "evidence": "Arc intact — opening validates fear (unfair sentence scenario), middle reduces unknown to known (data patterns explained), final bold line is agency statement: 'Your judge has a pattern. You should know what it is before you walk into that courtroom'"
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "FAIL",
+            "evidence": "5 H2 sections ('The Dataset Nobody Talks About', 'Judges Have Patterns', 'What the Data Actually Shows', 'Why This Matters', 'What You Can Do') exceeds the 4-section maximum for mobile scannability"
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "NEEDS_WORK",
+            "evidence": "'What the Data Actually Shows' section has 4 bolded topic-label sentences ('Departure rates vary wildly', 'Appointing party correlates...') instead of one standalone screenshot-worthy insight a defendant would text to family"
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "FAQ 1 ('The JUSTFAIR dataset, maintained by the QSIDE Institute, aggregates data...') and FAQ 4 ('A downward departure is when a judge sentences below...') read like institutional explainers, not a support-group member sharing what they learned"
+          },
+          {
+            "check": "D13_PRODUCT_BRIDGE",
+            "result": "NEEDS_WORK",
+            "evidence": "Names Judge Report Card and Sentencing Calculator with feature descriptions, but never explicitly bridges 'this post showed you judges have patterns — the Report Card shows YOUR judge's pattern for YOUR case'; free-to-paid value connection is implied, not stated"
+          }
+        ]
+      }
+    }
+  }
+}

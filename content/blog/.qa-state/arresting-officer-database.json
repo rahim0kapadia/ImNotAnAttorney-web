@@ -1,0 +1,312 @@
+{
+  "slug": "arresting-officer-database",
+  "last_checked": "2026-04-15T04:14:49.634Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 18.2,
+      "details": {
+        "composite_score": 18.2,
+        "pattern_score": 10,
+        "uniformity_score": 37.4,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 16,
+            "matches": [
+              "16 em dashes in 1180 words"
+            ],
+            "points_added": 10
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "No statute numbers or section references appear anywhere in the post — all legal rules described using general institutional language like 'Peace Officer Standards and Training (POST) commission'"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney or legal scholar names appear — only organizations (Invisible Institute, POST commissions) and databases (National Police Index, Fatal Encounters)"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "Two statistics found: '24 states' attributed to National Police Index, 'over 30,000 incidents since 2000' attributed to Fatal Encounters database — both sourced inline"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "No procedural deadlines, filing requirements, or hearing timelines claimed — post discusses defense preparation strategy in general terms with jurisdiction disclaimer at bottom"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear anywhere in the post"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "No collateral consequence claims (licensing, housing, voting, firearms, employment) appear — post focuses exclusively on officer credibility and cross-examination strategy"
+          }
+        ]
+      }
+    },
+    "slop": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 12,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "QUESTION_COUNT"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "FAIL",
+            "reason": "Frontmatter has no question_count field; body contains 2 attorney-directed questions ('Have you looked into this officer's employment history...' and 'What do we know about the arresting officer's background...')."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Factual claims are attributed to named sources (National Police Index, Invisible Institute, Fatal Encounters database, POST commissions) or qualified by jurisdiction; no unsourced factual claims exceed the threshold."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items ('Write down the officer's full name,' 'ask a specific question') use plain language at or below 10th grade level, and legal terms like POST and wandering officers are immediately defined."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "Zero instances of flagged cliches found in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Post maintains second person throughout; third-person references ('most defendants,' 'an officer') describe other parties rather than addressing the reader in third person."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Approximately 15-18% of sentences use passive voice ('is certified,' 'have been aggregated,' 'is organized,' 'has been terminated'), well under the 30% threshold."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "'Impeachment material' is used without definition; cross-examination is borderline but common enough — 1 clearly undefined legal term."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Sections follow a clear arc: hook → context (officer resume) → evidence (data) → relevance (trial impact) → gap identification → action steps."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Post includes two Officer Background Check product links with pricing, plus a specific attorney question to ask today."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Hedging ('could change,' 'could reframe') appears only in informational statements; all direct action statements ('Write down,' 'Give that to,' 'Ask your attorney') are unhedged."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words; action-oriented paragraphs in the final section stay under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "'Why This Matters at Trial' is the largest section at roughly 24% of total word count; no section approaches the 50% threshold."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "Every threat is paired with action: 'credibility contest with nothing' → 'level that field with documented history'; 'defense is missing a chapter' → next section opens with concrete steps."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Opens with a compelling direct-address hook ('You know his name'), builds with NPI/Fatal Encounters data and credibility analysis, closes with specific actions and a product CTA."
+          }
+        ]
+      }
+    },
+    "upl": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "criteria_passed": 14,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Post uses informational framing ('ask your defense team,' 'give that to your defense team') and frames actions as questions to ask attorneys, not direct legal commands."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Each section involving legal decisions redirects to defense team or attorney — 'give that to your defense team,' 'ask your attorney this question today,' 'always work with a licensed attorney in your jurisdiction.'"
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post never evaluates the reader's specific case strength. Uses conditional framing: 'IF the officer has a pattern... that context is relevant to your defense team.'"
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "Post does not recommend filing motions or procedural steps. It describes what impeachment material is and tells readers to bring information to their defense team, not to act on it themselves."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "No immigration consequences are discussed in this post, so no immigration-specific redirect is required."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "No collateral consequences (license loss, housing, firearms, voting) are discussed. Post is limited to officer credibility and trial testimony dynamics."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "No specific bail bond companies, law firms, or legal service providers are named. References are to general categories ('your defense team,' 'your defense attorney,' 'a licensed attorney')."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "Post uses 'we are not attorneys' in disclaimer but never uses 'we recommend,' 'we advise,' or 'we suggest' in any legal-action context."
+          },
+          {
+            "criterion": "U9",
+            "result": "PASS",
+            "evidence": "No hypothetical scenarios are presented. Post discusses general patterns (wandering officers, credibility contests) as systemic descriptions, not fabricated case facts."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post consistently frames knowledge as empowering the reader to work with their attorney — 'give that to your defense team,' 'ask your attorney this question today' — not as enabling self-representation."
+          },
+          {
+            "criterion": "U11",
+            "result": "FAIL",
+            "evidence": "The section 'Why This Matters at Trial' states 'Your case will likely come down to credibility' and 'The jury's default is to believe the officer' as certainties applying to the reader's case without qualifiers like 'in general' or 'typically.' Should be framed as 'many cases' or 'in general.'"
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Post does not guarantee outcomes. Uses conditional language: 'could change the entire dynamic,' 'could reframe how your jury evaluates.' Disclaimer adds 'officer employment records and their admissibility vary by jurisdiction.'"
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Legal concepts are attributed to named sources: National Police Index (Invisible Institute), POST commissions, Fatal Encounters database. Impeachment material is described as a legal concept, not presented as the blog's original legal position."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims found. Post consistently describes officer credibility as potential impeachment material and does not make conflicting statements about legal rules."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Officer Background Check is framed as a research tool: 'pulls cross-case officer reliability data... from verified court records and public databases — the kind of information that should be in every defense file.' Positioned as feeding information to defense team, not replacing attorney."
+          }
+        ]
+      }
+    },
+    "dna": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 13,
+        "needs_work_count": 4,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "FAIL",
+            "evidence": "Opening hook is strong ('What you don't know is where he was before he was here'), but 3 of 5 H2s are purely topical: 'The Officer Has a Resume', 'What the Data Shows', 'Why This Matters at Trial' — none tell the reader what they GET."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "NEEDS_WORK",
+            "evidence": "'Impeachment material' used without inline definition; 'cross-examination' used repeatedly without 8th-grade gloss; paragraph starting 'Think about what your defense attorney knows' runs 5 sentences."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No concrete immediate action before the first H2. The opening four paragraphs are atmospheric narrative. First actionable instruction ('Write down the officer's full name') appears in the final section."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Post follows a single narrative path with clear default: check the officer's history, ask your attorney the specific question, fill the gap with the Officer Background Check. No unresolved 'it depends' forks."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "PASS",
+            "evidence": "No section presents more than 3 unranked action items. The final section gives a sequential 3-step flow in prose (write name, ask attorney, fill gap) without overloading."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "Single-post audit. This post uses the system-decoder-post pattern — decoding the officer employment tracking system (NPI, POST records, Fatal Encounters) and translating it into defense value."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every threat is paired: 'Most defendants walk into that credibility contest with nothing' is followed within 2 sentences by 'The only way to level that field is with documented history.' No section closes on fear alone."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language. The defendant is consistently positioned as someone with an information gap to close, never as someone who caused their situation. All agency language is forward-looking."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Fear→clarity→agency arc is present throughout, but the final sentence is a product CTA ('that's the gap the Officer Background Check fills') rather than an agency statement about the defendant's competence."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "FAIL",
+            "evidence": "5 H2 sections (max 4): 'The Officer Has a Resume', 'What the Data Shows', 'Why This Matters at Trial', 'The Credibility Gap You Can Close', 'What to Do With This'. No table or H4 violations; word counts per section are within range."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "NEEDS_WORK",
+            "evidence": "Sections 1, 3, and 4 have strong screenshot sentences under 27 words. Section 2 ('What the Data Shows') has no bold sentence. Section 5 has '**Not sure where to start?**' — a generic question, not a shareable insight."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "FAQs 1 and 3 read encyclopedic/institutional ('The project is maintained by the Invisible Institute, a nonprofit journalism organization based in Chicago') rather than support-group voice. FAQs 2 and 4 are stronger."
+          },
+          {
+            "check": "D13_PRODUCT_BRIDGE",
+            "result": "PASS",
+            "evidence": "Names 'Officer Background Check' by name, connects free content ('you learned what data exists') to paid value ('pulls cross-case reliability data for YOUR officer'), avoids generic CTA language, includes $97 price."
+          }
+        ]
+      }
+    }
+  }
+}

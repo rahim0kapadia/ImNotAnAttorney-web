@@ -1,0 +1,312 @@
+{
+  "slug": "sentencing-gap-nobody-talks-about",
+  "last_checked": "2026-04-15T04:17:21.978Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 19.6,
+      "details": {
+        "composite_score": 19.6,
+        "pattern_score": 10,
+        "uniformity_score": 42,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 20,
+            "matches": [
+              "20 em dashes in 1336 words"
+            ],
+            "points_added": 10
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": true,
+      "status": "checked",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "No statute numbers, section symbols, or specific code references appear anywhere in the post — all legal rules described in general terms ('federal sentencing guidelines')"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney or legal scholar names appear — only source agencies (QSIDE Institute, U.S. Sentencing Commission, Open Science Framework)"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS",
+            "evidence": "All statistics sourced: '595,851 federal sentencing records' attributed to 'JUSTFAIR dataset compiled by the QSIDE Institute from U.S. Sentencing Commission records'; departure rate ranges (10%-60%) presented as findings from that dataset; '15,000+ judge profiles' attributed to 'published opinions'; percentage examples (45%, 8%) are hypothetical illustrations, not factual claims"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "No procedural deadlines, filing requirements, or hearing timelines stated — post recommends asking attorney about judge patterns but makes no claims about specific procedures"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations appear in the post — no 'v.' references or named cases"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration) appear — post discusses only sentence length variation"
+          }
+        ]
+      }
+    },
+    "slop": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 11,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "QUESTION_COUNT"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "FAIL",
+            "reason": "Frontmatter has no question_count field; body contains ~5 attorney-directed questions (4 in 'What Your Defense Team Should Know' plus 1 explicit 'ask your attorney' in closing)."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "All major claims sourced to JUSTFAIR dataset (QSIDE Institute, U.S. Sentencing Commission, 595,851 records, Open Science Framework); no unsourced factual claims found."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items ('Ask your attorney one question') and instructions are plain-language and well below 10th grade level; explanatory sections use accessible phrasing throughout."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "Zero instances of flagged cliches found in the post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Consistent second-person ('you/your') throughout all body sections; no switches to 'the defendant' or 'one should' in the main text."
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Estimated ~20% passive voice ('is publicly available,' 'is documented,' 'is not classified'); well under the 30% threshold with most sentences actively constructed."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "'Presentence investigation report' and 'sentencing memorandum' are used in the Preparation Gap section without definition on first use; 2 undefined legal terms."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Clear logical flow: hook (two defendants) → problem (hidden data) → explanation (departure rates) → deeper context (demographics) → checklist (defense team questions) → action (CTA)."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Three clear CTAs: explicit attorney question to ask, Judge Report Card product link at $197, and free Sentencing Calculator link with upgrade path."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct ('Ask your attorney,' 'your attorney should be crafting,' 'your attorney needs'); hedging ('does not guarantee') appears only in informational caveats, not action items."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "No paragraph exceeds 300 words; longest paragraphs are ~80 words; action-oriented paragraphs are well under 100 words."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Seven sections distribute word count roughly evenly (150-250 words each); no section approaches 50% of total ~1,300 word count."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "NEEDS_WORK",
+            "reason": "Opening threat (36 vs 60 months) and demographic disparity paragraph both present scary outcomes where paired actions arrive 3-5 sentences later rather than within the required 2-sentence window."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong hook (two-defendant scenario with specific numbers), evidence-rich middle (595,851 records, departure rate ranges, demographic patterns), and empowering close (specific attorney question, two product CTAs)."
+          }
+        ]
+      }
+    },
+    "upl": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "criteria_passed": 14,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Post frames all action through attorney/defense team: 'Ask your attorney one question,' 'your attorney should be crafting arguments,' 'your attorney needs a different approach.' No direct legal commands to the reader."
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Every decision-action section redirects to attorney: 'your defense team's sentencing strategy' (Departure Rates), 'your attorney needs to know that' (Demographic Gap), 'Ask your attorney one question' (What To Do), plus footer disclaimer 'Always work with a licensed attorney.'"
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post discusses aggregate data patterns across 595,851 records, never evaluates the reader's specific case. Explicitly states 'A high downward departure rate does not guarantee leniency in your case' and 'does not predict individual case outcomes.'"
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "No motions, filings, or procedural steps are recommended. Post advises asking your attorney about data patterns, not taking any legal action independently."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Citizenship status is mentioned only as a demographic variable tracked in the JUSTFAIR dataset. No immigration consequences (deportation, visa impact, DACA) are discussed, so no immigration-attorney redirect is required."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "No collateral consequences (professional licenses, housing, firearms, voting, student loans) are mentioned anywhere in the post. Criterion is not triggered."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "No bail bond companies, law firms, or legal service providers are named. QSIDE Institute and JUSTFAIR are cited as data sources, not legal service providers."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "First-person plural appears only in the disclaimer ('We are not attorneys and do not provide legal representation'). No 'we recommend,' 'we advise,' or 'we suggest' appears in any legal-action context."
+          },
+          {
+            "criterion": "U9",
+            "result": "FAIL",
+            "evidence": "Opening scenario — 'Two defendants. Same charge. Same criminal history category. Same federal district. Same courthouse. One gets 36 months. The other gets 60.' — is a hypothetical illustration not labeled as hypothetical, example, or illustrative."
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Post consistently frames data as empowering the defense team: 'gives your defense team concrete data to inform their sentencing strategy,' 'Ask your attorney one question.' Never implies the reader can handle sentencing without an attorney."
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Legal information is framed as aggregate data patterns with qualifiers: 'does not guarantee leniency in your case,' 'does not predict individual case outcomes,' 'patterns over hundreds of cases are more predictive than any single anecdote.' Footer explicitly states 'This is legal information, not legal advice.'"
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Post explicitly disclaims outcome guarantees: 'A high downward departure rate does not guarantee leniency in your case. A low departure rate does not guarantee severity.' Footer reinforces: 'does not predict individual case outcomes.'"
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "All data claims attributed to named sources: JUSTFAIR dataset, QSIDE Institute, U.S. Sentencing Commission. Advice is practical (ask your attorney about patterns, review data) rather than legal strategy requiring attribution."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal claims found. Sentencing variation, departure rates, and demographic patterns are described consistently throughout. All statistics reference the same 595,851-record dataset."
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Judge Report Card framed as data tool: 'pulls your assigned judge's sentencing patterns... from verified federal court records' and '$197 for the intelligence that should inform every sentencing strategy.' Sentencing Calculator framed as 'see aggregate sentencing data.' Neither described as replacing attorney."
+          }
+        ]
+      }
+    },
+    "dna": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 4,
+        "checks_total": 13,
+        "needs_work_count": 5,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "FAIL",
+            "evidence": "Opening hook is strong (36 vs 60 months fear), but 5 of 6 H2s are purely topical — 'The Data Nobody Shows Defendants', 'The Demographic Gap', 'The Preparation Gap' describe what sections are about, not what the reader gets."
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "FAIL",
+            "evidence": "Three legal terms used without inline definition: 'presentence investigation report', 'sentencing memorandum', and 'offense level' all appear with no dash or parenthetical explanation."
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No concrete immediate action before the first H2 — the first actionable item ('Ask your attorney one question') appears in the final section, 1,200+ words into the post."
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Single clear path throughout: know your judge's sentencing data before your hearing. No competing options or 'it depends' without named variables."
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "NEEDS_WORK",
+            "evidence": "'What Your Defense Team Should Know' presents 4 unranked items (Departure patterns, Median sentences, Demographic patterns, Comparison to peers) with no 'start with these' priority markers."
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "System-decoder-post pattern — decodes the federal sentencing system using aggregate data to reveal a hidden gap."
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "NEEDS_WORK",
+            "evidence": "'The Data Nobody Shows Defendants' section closes on a threat — 'Most defendants face sentencing without ever seeing a single number from it' — with no paired action in the same section."
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language throughout; the post frames disparity as a systemic issue, never implies the reader caused their situation."
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Fear-clarity arc is solid but the final sentence is a CTA ('Use the free Federal Sentencing Calculator') rather than an agency statement about the reader's competence."
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "FAIL",
+            "evidence": "6 H2 sections ('The Data Nobody Shows Defendants' through 'What To Do Right Now') exceeds the 4-section maximum for mobile scannability."
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "NEEDS_WORK",
+            "evidence": "'What Your Defense Team Should Know' has no bolded screenshot sentence, and 'What To Do Right Now' only has '**Facing sentencing soon?**' which is a CTA prompt, not a shareable insight."
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "NEEDS_WORK",
+            "evidence": "FAQ 1 ('Federal sentencing data from 595,851 records shows substantial variation') and FAQ 4 ('The data referenced here comes from the JUSTFAIR dataset') read as institutional research summaries, not support-group replies."
+          },
+          {
+            "check": "D13_PRODUCT_BRIDGE",
+            "result": "PASS",
+            "evidence": "Names Judge Report Card, connects article's 595,851-record dataset to the product's personalized output, and avoids generic CTA language ('$197 for the intelligence that should be the foundation')."
+          }
+        ]
+      }
+    }
+  }
+}
