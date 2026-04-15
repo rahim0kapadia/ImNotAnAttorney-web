@@ -12,58 +12,14 @@
 
 import fs from "fs";
 import path from "path";
-import https from "https";
 import { fileURLToPath } from "url";
+import { query, end } from "./lib/db.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "..");
-const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
-const BATCH_SIZE = 500;
 
 const args = process.argv.slice(2);
 const applyMode = args.includes("--apply");
-
-// Load SUPABASE_ACCESS_TOKEN
-let supabaseToken = null;
-const parentEnv = fs.readFileSync(
-  path.resolve(PROJECT_ROOT, "..", "ImNotAnAttorney", ".env.local"), "utf8"
-);
-for (const line of parentEnv.split("\n")) {
-  if (line.startsWith("SUPABASE_ACCESS_TOKEN=")) {
-    const eqIdx = line.indexOf("=");
-    supabaseToken = line.slice(eqIdx + 1).trim();
-    break;
-  }
-}
-if (!supabaseToken) { console.error("Missing SUPABASE_ACCESS_TOKEN"); process.exit(1); }
-
-function supabaseQuery(sql) {
-  return new Promise(function (resolve, reject) {
-    const body = JSON.stringify({ query: sql });
-    const req = https.request({
-      hostname: "api.supabase.com",
-      path: "/v1/projects/" + PROJECT_REF + "/database/query",
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + supabaseToken,
-        "Content-Type": "application/json",
-        "Content-Length": Buffer.byteLength(body),
-      },
-    }, function (res) {
-      let data = "";
-      res.on("data", function (d) { data += d; });
-      res.on("end", function () {
-        if (res.statusCode >= 400) reject(new Error("SQL " + res.statusCode + ": " + data.slice(0, 300)));
-        else { try { resolve(JSON.parse(data)); } catch (e) { resolve(data); } }
-      });
-    });
-    req.on("error", reject);
-    req.write(body);
-    req.end();
-  });
-}
-
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 async function main() {
   console.log("=".repeat(60));
@@ -216,12 +172,12 @@ async function main() {
   if (applyMode) {
     console.log("\nApplying pattern computation...");
     try {
-      await supabaseQuery(fullSQL);
+      await query(fullSQL);
       console.log("Pattern tables computed.");
 
       // Verify counts
-      const theoryCnt = await supabaseQuery("SELECT count(*) as cnt FROM defense_theory_outcomes");
-      const motionCnt = await supabaseQuery("SELECT count(*) as cnt FROM motion_success_patterns");
+      const theoryCnt = await query("SELECT count(*) as cnt FROM defense_theory_outcomes");
+      const motionCnt = await query("SELECT count(*) as cnt FROM motion_success_patterns");
       console.log("defense_theory_outcomes: " + (theoryCnt[0]?.cnt || 0) + " rows");
       console.log("motion_success_patterns: " + (motionCnt[0]?.cnt || 0) + " rows");
     } catch (err) {
@@ -231,6 +187,8 @@ async function main() {
   } else {
     console.log("Run with --apply to compute patterns.");
   }
+
+  await end();
 }
 
 main().catch(err => { console.error("Fatal:", err); process.exit(1); });
