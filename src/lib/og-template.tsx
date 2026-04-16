@@ -28,9 +28,10 @@ interface OgTemplateProps {
 export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProps) {
   let fontData: ArrayBuffer | undefined;
   try {
-    fontData = (await readFile(
+    const buf = await readFile(
       join(process.cwd(), "src/assets/fonts/PlayfairDisplay-Variable.ttf")
-    )).buffer as ArrayBuffer;
+    );
+    fontData = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
   } catch {
     // Fallback to system serif if file not found
   }
