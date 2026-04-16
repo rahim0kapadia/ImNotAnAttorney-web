@@ -43,7 +43,7 @@ export function Footer() {
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-3 text-lg font-bold tracking-tight">
               <Image
-                src="/brand/inaa-logo-sm.png"
+                src="/brand/inaa-logo.png"
                 alt="ImNotAnAttorney logo"
                 width={48}
                 height={48}

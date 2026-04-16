@@ -63,7 +63,7 @@ export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProp
         {/* Logo watermark, right side */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://imnotanattorney.com/brand/inaa-logo-sm.png"
+          src="https://imnotanattorney.com/brand/inaa-logo.png"
           alt=""
           width={200}
           height={200}
@@ -90,7 +90,7 @@ export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProp
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://imnotanattorney.com/brand/inaa-logo-sm.png"
+              src="https://imnotanattorney.com/brand/inaa-logo.png"
               alt=""
               width={44}
               height={44}
