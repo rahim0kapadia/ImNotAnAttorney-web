@@ -45,6 +45,7 @@ interface PartnerRow {
   phone: string | null;
   notification_prefs: Record<string, string> | null;
   promo_code: string | null;
+  source: string | null;
   total_referrals: number;
   total_commission: number;
   last_activation_email_key: string | null;
@@ -59,7 +60,8 @@ const DRIP_SEQUENCE: DripStep[] = [
       partnerFirstShareEmail(
         p.name,
         p.promo_code || "YOUR-CODE",
-        `${SITE_URL}/r/${encodeURIComponent(p.promo_code || "")}`
+        `${SITE_URL}/r/${encodeURIComponent(p.promo_code || "")}`,
+        p.source
       ),
   },
   {
@@ -114,7 +116,7 @@ export async function GET(req: NextRequest) {
     const { data: partners, error: fetchErr } = await supabase
       .from("partners")
       .select(
-        "id, name, email, phone, notification_prefs, promo_code, total_referrals, total_commission, last_activation_email_key, created_at"
+        "id, name, email, phone, notification_prefs, promo_code, source, total_referrals, total_commission, last_activation_email_key, created_at"
       )
       .eq("status", "approved")
       .or(
@@ -155,7 +157,7 @@ export async function GET(req: NextRequest) {
           if (lastIdx >= 0 && lastIdx < DRIP_SEQUENCE.length - 1) {
             nextStep = DRIP_SEQUENCE[lastIdx + 1];
           }
-          // If lastIdx is the last step (partner_checkin), sequence is complete
+          // If lastIdx is the last step (partner_day60), sequence is complete
         }
 
         if (!nextStep) {

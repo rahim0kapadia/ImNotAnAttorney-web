@@ -53,6 +53,8 @@ export interface Partner {
   payment_check_address: string | null;
   payment_paypal: string | null;
   notification_prefs: Partial<import("./notification-prefs").PartnerNotificationPrefs> | null;
+  source: string | null;
+  city: string | null;
 }
 
 export const COMMISSION_TIERS: TierSlug[] = [

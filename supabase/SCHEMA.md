@@ -917,6 +917,10 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | total_commission | numeric | Lifetime commission earned (cents) |
 | total_paid_out | numeric | Lifetime commission paid out (cents) |
 | notification_prefs | jsonb | Channel preference overrides (JSONB) — added migration 20260414a |
+| city | text | Partner city (from application) |
+| region | text | Partner region/state (from application) |
+| source | text | Partner type: `bondsman`, `attorney`, `generic`, or null |
+| last_activation_email_key | text | Last drip email sent (cron dedup) |
 
 #### `referrals`
 

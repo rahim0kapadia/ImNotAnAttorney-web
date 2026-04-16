@@ -90,6 +90,8 @@ export async function GET(req: NextRequest) {
         payment_venmo: partner.payment_venmo,
         payment_check_address: partner.payment_check_address,
         payment_paypal: partner.payment_paypal,
+        source: partner.source,
+        city: partner.city,
       },
       earnings: {
         total_earned: totalEarned,

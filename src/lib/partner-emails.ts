@@ -96,18 +96,21 @@ export function partnerWelcomeEmail(
 export function partnerFirstShareEmail(
   name: string,
   promoCode: string,
-  referralUrl: string
+  referralUrl: string,
+  source?: string | null
 ): { subject: string; html: string } {
   const safeName = escapeHtml(name);
   const safeCode = escapeHtml(promoCode);
   const safeUrl = escapeHtml(referralUrl);
+  const isBondsman = source === "bondsman";
 
-  return {
-    subject: "Send This to Your Next Client (30 Seconds)",
-    html: `
-      <h1 style="${h1Style}">One message. That's it.</h1>
-      <p style="${pStyle}">${safeName}, the partners who earn the most do one thing consistently: they share their code before the defendant leaves the building.</p>
-
+  const messageBlock = isBondsman
+    ? `
+      <h2 style="${h2Style}">Hand This to Every Client</h2>
+      <p style="${pStyle}">Print your Compliance Checklist from the dashboard and hand it to every client at bonding. It covers bail conditions, court dates, and free court reminders — everything they need in one page.</p>
+      <p style="${pStyle}">The defendants who sign up for reminders are the ones who show up. That's fewer FTAs for you and better outcomes for them.</p>
+    `
+    : `
       <h2 style="${h2Style}">Text This Right Now</h2>
       <div style="${copyBoxStyle}">
         <em>"Hey — I set you up with a research service that'll help you stay on top of your case. Go to ${safeUrl} and use code <strong>${safeCode}</strong> for 10% off. They'll generate questions you can bring to your attorney."</em>
@@ -116,9 +119,20 @@ export function partnerFirstShareEmail(
 
       <h2 style="${h2Style}">Pro Tip: QR Code</h2>
       <p style="${pStyle}">Print your referral URL as a QR code on your business card. Defendants scan it on the spot — no typing, no forgotten codes.</p>
+    `;
+
+  return {
+    subject: isBondsman
+      ? "Print Your Checklist — Hand It to Every Client"
+      : "Send This to Your Next Client (30 Seconds)",
+    html: `
+      <h1 style="${h1Style}">${isBondsman ? "One page. Every client." : "One message. That's it."}</h1>
+      <p style="${pStyle}">${safeName}, the partners who earn the most do one thing consistently: they ${isBondsman ? "hand the checklist to every client before they leave the building" : "share their code before the defendant leaves the building"}.</p>
+
+      ${messageBlock}
 
       <p style="margin: 24px 0; text-align: center;">
-        <a href="${dashboardUrl}" style="${btnStyle}">Check My Dashboard</a>
+        <a href="${isBondsman ? `${SITE_URL}/partner/checklist` : dashboardUrl}" style="${btnStyle}">${isBondsman ? "Print My Checklist" : "Check My Dashboard"}</a>
       </p>
     `,
   };

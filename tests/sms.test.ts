@@ -4,11 +4,23 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 const mockFetch = vi.fn();
 vi.stubGlobal("fetch", mockFetch);
 
+// Mock Supabase admin client so sendSMS doesn't route fetch through Supabase
+vi.mock("@/lib/supabase/admin", () => ({
+  createAdminClient: () => ({ from: () => ({ insert: async () => ({ error: null }) }) }),
+}));
+
+// Mock suspension check so it doesn't query the DB
+vi.mock("@/lib/sms-suspensions", () => ({
+  isSmsSuspended: async () => false,
+}));
+
 describe("sendSMS", () => {
   beforeEach(() => {
     vi.resetModules();
     mockFetch.mockReset();
     vi.stubEnv("RESEND_API_KEY", "re_test_key");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
+    vi.stubEnv("SUPABASE_SERVICE_ROLE_KEY", "test-service-role-key");
   });
 
   it("returns not configured when RESEND_API_KEY missing", async () => {
