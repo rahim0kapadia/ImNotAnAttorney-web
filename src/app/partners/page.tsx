@@ -5,7 +5,13 @@
  * community advocates, anyone. Commission table derived from TIER_CORE.
  */
 
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Become a Partner",
+  description: "Join the ImNotAnAttorney partner program. Earn commission on every referral while helping defendants get the legal information they need.",
+};
 import { xRayEarning, xRayFiveMonthly, PARTNER_FAQS } from "@/lib/partner-data";
 import { PartnerCommissionTable, PartnerHowItWorks, PartnerApplicationForm, PartnerWhyItWorks } from "@/components/partner";
 import { FAQAccordion } from "@/components/FAQAccordion";

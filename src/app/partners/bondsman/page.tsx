@@ -4,7 +4,13 @@
  * Targeted version with bondsman-focused copy. Application pre-tags as source: bondsman.
  */
 
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Bail Bond Partner Program",
+  description: "Partner with ImNotAnAttorney to help your clients prepare for court. Free court reminders, compliance tools, and commission on referrals.",
+};
 import { xRayEarning, xRayFiveMonthly, PARTNER_FAQS } from "@/lib/partner-data";
 import { PartnerCommissionTable, PartnerHowItWorks, PartnerApplicationForm, PartnerWhyItWorks } from "@/components/partner";
 import { FAQAccordion } from "@/components/FAQAccordion";
