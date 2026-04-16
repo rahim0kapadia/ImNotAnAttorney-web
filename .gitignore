@@ -46,7 +46,12 @@ next-env.d.ts
 # IDE
 .idea/
 .vscode/
-.claude/
+
+# .claude/: ignore most agent state but keep shared commands in repo.
+# Must use .claude/* (children) not .claude/ (directory) because gitignore
+# cannot negate a fully-ignored directory.
+.claude/*
+!.claude/commands/
 
 # Tool artifacts
 .review-state.json
