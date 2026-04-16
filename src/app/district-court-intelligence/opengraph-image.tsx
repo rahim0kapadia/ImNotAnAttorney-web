@@ -3,7 +3,7 @@ import { TIER_CORE } from "@/lib/tiers";
 export const alt = "District Court Intelligence — ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
-export default function Image() {
+export default async function Image() {
   const tier = TIER_CORE["district-court-intelligence"];
   return renderOgImage({
     title: "District Court Intelligence",

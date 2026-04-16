@@ -3,7 +3,7 @@ import { TIER_CORE } from "@/lib/tiers";
 export const alt = "Arrest Survival Kit — ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
-export default function Image() {
+export default async function Image() {
   const tier = TIER_CORE["arrest-survival-kit"];
   return renderOgImage({
     title: "Arrest Survival Kit",
