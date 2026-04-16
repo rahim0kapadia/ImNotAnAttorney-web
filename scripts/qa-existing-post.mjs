@@ -1,33 +1,20 @@
 #!/usr/bin/env node
-// qa-existing-post.mjs — Unified QA runner for existing blog posts.
+// DEPRECATED: LLM gates now run session-native via /blog-pipeline skill.
+// This script is retained for humanizer-only mode (pre-commit hook outside CC session).
 //
-// Runs all 5 quality gates against a .mdx file (or every .mdx file with --all)
-// and writes the outcome to a sidecar JSON at content/blog/.qa-state/<slug>.json.
-// The sidecar is committed to the repo so blog.ts can hard-gate renders at
-// build time without making LLM calls.
+// qa-existing-post.mjs — Humanizer-only QA runner for existing blog posts.
 //
-// Gate order (humanizer first — pure JS, always runs; LLM gates second):
-//   1. humanizer          (pure JS — detects AI writing patterns)
-//   2. anti_hallucination (Opus — safety-critical legal fact check)
-//   3. slop               (Sonnet — 14 content quality checks)
-//   4. upl                (Sonnet — 15 UPL compliance criteria)
-//   5. dna                (Sonnet — 12 structural DNA checks)
-//
-// LLM gates run via `claude -p` headless subprocess (see claude-client.mjs).
-// No Anthropic API credits are consumed — the CLI uses whatever auth you're
-// signed into Claude Code with. If a gate throws, that single gate is recorded
-// as { passed: false, status: "unchecked", reason: "<error>" } so a single
-// flaky call doesn't nuke a 59-post baseline.
+// Runs the humanizer gate (pure JS) against a .mdx file (or every .mdx file
+// with --all) and writes the outcome to a sidecar JSON at
+// content/blog/.qa-state/<slug>.json.
 //
 // Usage:
 //   node scripts/qa-existing-post.mjs content/blog/foo.mdx
 //   node scripts/qa-existing-post.mjs --all
-//   node scripts/qa-existing-post.mjs --all --gate=dna
-//   node scripts/qa-existing-post.mjs --all --skip-llm        # humanizer only
-//   node scripts/qa-existing-post.mjs --all --only-stale      # re-run fails
+//   node scripts/qa-existing-post.mjs --all --only-stale
 //
 // Exit codes:
-//   0 = all targeted posts passed (or --skip-llm and humanizer passed)
+//   0 = all targeted posts passed humanizer
 //   1 = one or more posts failed
 //   2 = runner-level error (missing file, bad args)
 
@@ -36,11 +23,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import { runHumanizerCheck } from "./lib/blog-gen/humanizer.mjs";
-import { runSlopAudit } from "./lib/blog-gen/qa-slop.mjs";
-import { runUPLCheck } from "./lib/blog-gen/qa-upl.mjs";
-import { runDNACheck } from "./lib/blog-gen/qa-dna.mjs";
-import { runAntiHallucinationCheck } from "./lib/blog-gen/qa-anti-hallucination.mjs";
-import { callClaude } from "./lib/blog-gen/claude-client.mjs";
 import { createClient } from "@supabase/supabase-js";
 import * as dotenv from "dotenv";
 dotenv.config({ path: ".env.local" });
@@ -70,96 +52,34 @@ const QA_STATE_DIR = path.join(BLOG_DIR, ".qa-state");
 // ── Argument parsing ─────────────────────────────────────────────────────────
 
 function parseArgs(argv) {
-  const args = { all: false, gate: null, skipLlm: false, onlyStale: false, parallel: false, file: null };
+  const args = { all: false, onlyStale: false, file: null };
   for (const raw of argv.slice(2)) {
     if (raw === "--all") args.all = true;
-    else if (raw === "--skip-llm") args.skipLlm = true;
     else if (raw === "--only-stale") args.onlyStale = true;
-    else if (raw === "--parallel") args.parallel = true;
-    else if (raw.startsWith("--gate=")) args.gate = raw.slice("--gate=".length);
     else if (!raw.startsWith("--")) args.file = raw;
   }
   return args;
 }
 
 // ── Gate runners ─────────────────────────────────────────────────────────────
+// LLM gates (anti-hallucination, slop, UPL, DNA) removed — now run
+// session-native via /blog-pipeline skill. Only humanizer (pure JS) remains.
 
-const GATE_ORDER = ["humanizer", "anti_hallucination", "slop", "upl", "dna"];
+const GATE_ORDER = ["humanizer"];
 
-function uncheckedResult(reason) {
-  return { passed: false, status: "unchecked", reason };
-}
-
-async function runGate(name, slug, fn) {
-  const startMs = Date.now();
-  try {
-    const r = await fn();
-    const dur = ((Date.now() - startMs) / 1000).toFixed(1);
-    process.stdout.write(
-      `    → ${name.padEnd(18)} ${r.passed ? "PASS" : "FAIL"} (${dur}s)\n`,
-    );
-    return { passed: r.passed, status: "checked", details: r.details };
-  } catch (err) {
-    const dur = ((Date.now() - startMs) / 1000).toFixed(1);
-    const msg = String(err?.message || err).slice(0, 200);
-    process.stdout.write(
-      `    → ${name.padEnd(18)} UNCHECKED (${dur}s) — ${msg}\n`,
-    );
-    return uncheckedResult(String(err?.message || err).slice(0, 500));
-  }
-}
-
-async function runAllGates(mdxContent, { gateFilter, skipLlm, parallel, slug }) {
+async function runAllGates(mdxContent) {
   const gates = {};
-
-  // ── 1. Humanizer (pure JS, always runs) ──
-  if (!gateFilter || gateFilter === "humanizer") {
-    const adaptiveThreshold = await loadAdaptiveThreshold();
-    const h = runHumanizerCheck(mdxContent, { threshold: adaptiveThreshold });
-    gates.humanizer = {
-      passed: h.passed,
-      status: "checked",
-      score: h.score,
-      details: h.details,
-    };
-    process.stdout.write(
-      `    → humanizer ... ${h.passed ? "PASS" : "FAIL"} (score ${h.score})\n`,
-    );
-  }
-
-  if (skipLlm) return gates;
-
-  // Build gate list — each entry is [name, fn]. Order matters for sequential.
-  const llmGates = [];
-  if (!gateFilter || gateFilter === "anti_hallucination") {
-    llmGates.push(["anti_hallucination", () => runAntiHallucinationCheck(mdxContent, { callClaude })]);
-  }
-  if (!gateFilter || gateFilter === "slop") {
-    llmGates.push(["slop", () => runSlopAudit(mdxContent, null, { callClaude })]);
-  }
-  if (!gateFilter || gateFilter === "upl") {
-    llmGates.push(["upl", () => runUPLCheck(mdxContent, { callClaude })]);
-  }
-  if (!gateFilter || gateFilter === "dna") {
-    llmGates.push(["dna", () => runDNACheck(mdxContent, { callClaude })]);
-  }
-
-  if (parallel) {
-    // --parallel: fire all 4 claude -p subprocesses at once. Fast (~65s/post)
-    // but burns through Claude Code rate limits 4x faster.
-    await Promise.all(
-      llmGates.map(([name, fn]) =>
-        runGate(name, slug, fn).then((r) => (gates[name] = r)),
-      ),
-    );
-  } else {
-    // Default: sequential. Slower (~4min/post) but rate-limit-friendly.
-    // Each gate completes before the next starts.
-    for (const [name, fn] of llmGates) {
-      gates[name] = await runGate(name, slug, fn);
-    }
-  }
-
+  const adaptiveThreshold = await loadAdaptiveThreshold();
+  const h = runHumanizerCheck(mdxContent, { threshold: adaptiveThreshold });
+  gates.humanizer = {
+    passed: h.passed,
+    status: "checked",
+    score: h.score,
+    details: h.details,
+  };
+  process.stdout.write(
+    `    → humanizer ... ${h.passed ? "PASS" : "FAIL"} (score ${h.score})\n`,
+  );
   return gates;
 }
 
@@ -213,12 +133,7 @@ async function processPost(filePath, opts) {
     }
   }
 
-  const freshGates = await runAllGates(mdx, {
-    gateFilter: opts.gate,
-    skipLlm: opts.skipLlm,
-    parallel: opts.parallel,
-    slug,
-  });
+  const freshGates = await runAllGates(mdx);
 
   const existing = readExisting(slug);
   const mergedGates = mergeGates(existing, freshGates);

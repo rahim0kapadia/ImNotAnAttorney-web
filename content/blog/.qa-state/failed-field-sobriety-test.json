@@ -1,8 +1,7 @@
 {
   "slug": "failed-field-sobriety-test",
-  "last_checked": "2026-04-16T16:05:00.000Z",
+  "last_checked": "2026-04-16T16:14:45.981Z",
   "all_passed": true,
-  "published_hash": "beef2a002a0db900801a759cea6a4010",
   "gates": {
     "anti_hallucination": {
       "status": "checked",
@@ -12,23 +11,52 @@
         "passed": 6,
         "failed": 0,
         "results": [
-          {"check": "STATUTE_CHECK", "result": "PASS"},
-          {"check": "EXPERT_CHECK", "result": "PASS"},
-          {"check": "STATISTICS_CHECK", "result": "PASS"},
-          {"check": "PROCEDURE_CHECK", "result": "PASS"},
-          {"check": "CASE_NAME_CHECK", "result": "PASS"},
-          {"check": "CONSEQUENCE_CHECK", "result": "PASS"}
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "PASS"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS"
+          }
         ]
       }
     },
     "humanizer": {
-      "status": "checked",
       "passed": true,
+      "status": "checked",
+      "score": 16.2,
       "details": {
-        "compositeScore": 16.2,
-        "patternScore": 10,
-        "uniformityScore": 30.7,
-        "flaggedPatterns": ["em_dash_density: 19 in 1116 words"]
+        "composite_score": 16.2,
+        "pattern_score": 10,
+        "uniformity_score": 30.7,
+        "flagged_patterns": [
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 19,
+            "matches": [
+              "19 em dashes in 1116 words"
+            ],
+            "points_added": 10
+          }
+        ]
       }
     },
     "slop": {
@@ -41,7 +69,10 @@
         "needs_work": 0,
         "hard_gate_failures": 0,
         "fix_cycle": 1,
-        "fixes_applied": ["QUESTION_COUNT: 5→1", "JARGON_DEFINITION: defined 'discovery' inline"]
+        "fixes_applied": [
+          "QUESTION_COUNT: 5→1",
+          "JARGON_DEFINITION: defined 'discovery' inline"
+        ]
       }
     },
     "upl": {
@@ -62,7 +93,11 @@
         "failed": 0,
         "needs_work": 0,
         "fix_cycle": 1,
-        "fixes_applied": ["D1: renamed H2 to action-oriented", "D2: defined 'discovery' inline", "D9: added agency close sentence"],
+        "fixes_applied": [
+          "D1: renamed H2 to action-oriented",
+          "D2: defined 'discovery' inline",
+          "D9: added agency close sentence"
+        ],
         "catalog_pattern": "system-decoder-post"
       }
     }

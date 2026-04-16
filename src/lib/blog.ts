@@ -33,10 +33,10 @@
  *   - BLOG_QA_BYPASS=1  Local dev only — allow all posts through without gate
  *                       enforcement. Logs a loud warning. Never set in prod.
  *
- * LLM gates run via `scripts/lib/blog-gen/claude-client.mjs`, which spawns
- * `claude -p` under the local Claude Code CLI auth — no Anthropic API credits
- * are consumed. Safety gates must pass for rendering; quality gates log
- * warnings but don't block. Rebuild sidecars with:
+ * LLM gates run session-native via /blog-pipeline skill. Humanizer gate
+ * (pure JS) runs via qa-existing-post.mjs. Safety gates must pass for
+ * rendering; quality gates log warnings but don't block. Rebuild humanizer
+ * sidecars with:
  *
  *     node scripts/qa-existing-post.mjs --all
  */
@@ -93,8 +93,8 @@ interface QaGateRecord {
   passed: boolean;
   /**
    * `"checked"` — gate actually ran to completion.
-   * `"unchecked"` — gate could not run (claude -p subprocess error, timeout,
-   * parse error, etc.). Always paired with a `reason`.
+   * `"unchecked"` — gate could not run (error, timeout, parse failure, etc.).
+   * Always paired with a `reason`.
    */
   status?: "checked" | "unchecked";
   /** Free-text reason when `status === "unchecked"`. */
