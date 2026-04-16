@@ -97,5 +97,6 @@
       "status": "unchecked",
       "reason": "claude -p failed after 2 attempts: claude -p exited 1: You've hit your limit · resets 3am (America/New_York)"
     }
-  }
+  },
+  "published_hash": "9ad7e1d26cb095ac13079bbf02db10cc"
 }

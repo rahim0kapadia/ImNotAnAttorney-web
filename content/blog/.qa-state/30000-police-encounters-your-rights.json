@@ -1,0 +1,323 @@
+{
+  "slug": "30000-police-encounters-your-rights",
+  "last_checked": "2026-04-15T04:17:57.088Z",
+  "all_passed": false,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 28.4,
+      "details": {
+        "composite_score": 28.4,
+        "pattern_score": 25,
+        "uniformity_score": 36.2,
+        "flagged_patterns": [
+          {
+            "detector": "tier1_vocabulary",
+            "severity": "tier1",
+            "count": 1,
+            "matches": [
+              "leverage (x1)"
+            ],
+            "points_added": 15
+          },
+          {
+            "detector": "em_dash_density",
+            "severity": "style",
+            "count": 20,
+            "matches": [
+              "20 em dashes in 1511 words"
+            ],
+            "points_added": 10
+          }
+        ]
+      }
+    },
+    "anti_hallucination": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 5,
+        "checks_total": 6,
+        "results": [
+          {
+            "check": "STATUTE_CHECK",
+            "result": "PASS",
+            "evidence": "No statute numbers or section references appear anywhere in the post; all legal rules described using general language like 'states that require it'"
+          },
+          {
+            "check": "EXPERT_CHECK",
+            "result": "PASS",
+            "evidence": "No individual attorney or legal-scholar names appear; only institutional references (Fatal Encounters database) and generic roles ('your attorney', 'your defense team')"
+          },
+          {
+            "check": "STATISTICS_CHECK",
+            "result": "FAIL",
+            "evidence": "'Under stress, people process roughly 80% less information than they do in calm conditions' — specific percentage claim with no named source in the same or immediately preceding sentence"
+          },
+          {
+            "check": "PROCEDURE_CHECK",
+            "result": "PASS",
+            "evidence": "Identification requirement qualified with 'in states that require it'; remaining rights statements are universal federal constitutional protections, not jurisdiction-specific procedural deadlines or filing requirements"
+          },
+          {
+            "check": "CASE_NAME_CHECK",
+            "result": "PASS",
+            "evidence": "No case citations (X v. Y) appear anywhere in the post"
+          },
+          {
+            "check": "CONSEQUENCE_CHECK",
+            "result": "PASS",
+            "evidence": "No collateral-consequence claims (licensing, housing, firearms, voting, immigration, employment); post discusses only direct criminal-proceeding outcomes like evidence admissibility and plea leverage"
+          }
+        ]
+      }
+    },
+    "slop": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 10,
+        "checks_total": 14,
+        "hard_gate_failures": [
+          "QUESTION_COUNT",
+          "FEAR_ACTION_PAIRING"
+        ],
+        "results": [
+          {
+            "check": "QUESTION_COUNT",
+            "result": "FAIL",
+            "reason": "No question_count field in frontmatter and zero attorney-directed questions in the body — this post contains rights statements, not questions to ask counsel."
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "Two unsourced statistical claims (80% stress-processing figure, 72-hour footage overwrite cycle) hit but do not exceed the 2-claim threshold; all legal rights are constitutional and all data claims are attributed to Fatal Encounters by name."
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "All four action sentences are 10 words or fewer, the memorization and agency-research directives use plain language, and no action item contains undefined jargon."
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "Zero instances of any flagged cliche phrase across the entire post."
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "NEEDS_WORK",
+            "reason": "The 48-hours passage drops second person for 5 consecutive sentences ('Evidence is freshest... most defendants do the most damage'), mixing neutral and third-person 'defendants' constructions before returning to 'you.'"
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Approximately 15 passive constructions out of ~110 sentences (~14%), well under the 30% threshold."
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "NEEDS_WORK",
+            "reason": "'Evidence admissibility' and 'plea leverage' are used without definition on first appearance; both are technical legal terms a crisis reader may not know."
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Clear progression from hook (encounter warning) to context (database/patterns) to solution (rights explanation) to action (memorization + CTA), with no orphaned paragraphs."
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Four distinct CTAs: Arrest Survival Kit product link ($47), Officer Background Check product link, four-sentence memorization exercise, and agency-research action step."
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements are direct imperatives ('Memorize four sentences,' 'Say them out loud,' 'Do not post anything') with zero hedging language."
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "Longest paragraph is approximately 90 words (48-hour rule passage); no paragraph exceeds 300 words and all action paragraphs stay under 100."
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "Largest section ('The Rights You Have') is approximately 350 of 1,450 total words (~24%); no section exceeds the 50% threshold."
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "FAIL",
+            "reason": "Opening three paragraphs present escalating threat (no warning, no rewind, 30,000 deaths) with no paired action for 12+ sentences; the 'Patterns' section bold callout repeats the threat pattern without action pairing — violates Witte EPPM framework."
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Strong scenario hook (encounter-starts-now framing), evidence-driven middle (Fatal Encounters data, agency patterns, rights breakdown), and empowering close with concrete memorization exercise and product CTAs."
+          }
+        ]
+      }
+    },
+    "upl": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "criteria_passed": 10,
+        "criteria_total": 15,
+        "results": [
+          {
+            "criterion": "U1",
+            "result": "FAIL",
+            "evidence": "Post gives direct instructions: 'Memorize four sentences,' 'Say them out loud. Say them again,' 'Do not discuss the case with anyone except your attorney. Do not post anything. Do not consent to follow-up interviews without counsel present.' These are directives the reader is told to follow, not descriptions of what typically happens."
+          },
+          {
+            "criterion": "U2",
+            "result": "FAIL",
+            "evidence": "The sections 'The Rights You Have,' 'The Gap Between Knowing and Doing,' and 'What You Can Do Right Now' discuss legal decisions and actions (exercising rights, 48-hour conduct rules, refusing searches) without any proximate attorney redirect. The only attorney mention is the closing disclaimer footer, not within those sections."
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "Post does not evaluate any reader's specific legal situation. Statements like 'The data does not tell you what happened in your case' and 'not as proof of anything about your specific case' maintain general framing."
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "Post does not recommend filing specific motions or procedural steps. It describes rights and general preparation but does not say 'file a motion to suppress' or similar."
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "Post does not discuss immigration consequences, deportation, visa status, DACA, or green cards, so no immigration attorney redirect is required."
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "Post does not mention collateral consequences such as professional license loss, housing restrictions, firearm rights, voting rights, or student loan eligibility."
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "Post does not name any specific bail bond companies, law firms, or legal service providers. References are to general categories and ImNotAnAttorney's own products."
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "Post does not use 'we recommend,' 'we advise,' 'we suggest,' or similar first-person plural recommendation language in a legal-action context. 'We are not attorneys' appears only in the disclaimer."
+          },
+          {
+            "criterion": "U9",
+            "result": "PASS",
+            "evidence": "Post does not use hypothetical scenarios to illustrate legal concepts. It references aggregate data and general rights statements rather than fictional case examples."
+          },
+          {
+            "criterion": "U10",
+            "result": "FAIL",
+            "evidence": "The 'What You Can Do Right Now' section frames the information as self-sufficient preparation: 'Two things you can do today' with no mention of attorney involvement. The 48-hour rule section instructs readers on post-encounter conduct without framing it as questions to discuss with counsel. Overall tone implies the reader can handle encounter preparation using only this information."
+          },
+          {
+            "criterion": "U11",
+            "result": "FAIL",
+            "evidence": "Rights are stated as universal certainties without jurisdictional qualification: 'You have the right to remain silent,' 'You have the right to refuse consent to a search,' 'These rights are not favors. They are constitutional protections.' No 'in general,' 'typically,' or 'in most jurisdictions' qualifiers appear in the rights section. Only the footer disclaimer mentions jurisdiction variance."
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "Post does not promise specific legal outcomes. It states data provides 'context' not proof, and does not claim following advice will lead to charge reduction or dismissal."
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Legal strategies are not presented as the blog's original positions. Rights described are constitutional (4th, 5th, 6th Amendment). The Fatal Encounters database is named and attributed. The stress-processing claim references physiology. No unattributed legal tactics appear."
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal statements appear in the post. Rights statements are consistent throughout, and data claims are internally coherent."
+          },
+          {
+            "criterion": "U15",
+            "result": "FAIL",
+            "evidence": "The Arrest Survival Kit is described as 'a jurisdiction-specific rights guide, agency incident data, and a structured first-48-hours action plan' — framed as a self-contained preparation tool, not as a research tool to bring to an attorney. The Officer Background Check is described as preparation for cross-examination with no mention of attorney involvement. Neither product description frames it as supplementing legal representation."
+          }
+        ]
+      }
+    },
+    "dna": {
+      "passed": false,
+      "status": "checked",
+      "details": {
+        "checks_passed": 2,
+        "checks_total": 13,
+        "needs_work_count": 4,
+        "results": [
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "FAIL",
+            "evidence": "Opening hook is strong but 4+ H2s are purely topical: '30,000 Records Nobody Reads', 'What the Patterns Show', 'The Gap Between Knowing and Doing', 'What Your Agency's Data Says' — none tell the reader what they GET"
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "FAIL",
+            "evidence": "4 legal terms used without inline definition: 'probable cause', 'evidence admissibility', 'plea leverage', 'obstruction' — reader must already know what these mean"
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "FAIL",
+            "evidence": "No concrete 5-minute action before the first H2; opening is three paragraphs of context and statistics with no actionable step until 'What You Can Do Right Now' at the very end"
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Post is directive throughout — rights are presented as things to do, not options to weigh; 'memorize four sentences' and 'know your agency' are clear defaults"
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "NEEDS_WORK",
+            "evidence": "Rights section presents 4 unranked items (silent, refuse search, free to leave, attorney) with no 'start with these' priority marker"
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "Single-post audit — post uses system-decoder-post pattern (decoding the Fatal Encounters database and its implications)"
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "NEEDS_WORK",
+            "evidence": "Opening '30,000 police encounters ended in death' statistic is connected thematically to knowing rights but not paired with a specific action within 2 sentences; section 1 closes on the count with no paired action"
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "NEEDS_WORK",
+            "evidence": "'It is also when most defendants do the most damage — talking about what happened, posting on social media' edges toward lecturing by implying defendants harm themselves through poor choices"
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "NEEDS_WORK",
+            "evidence": "Fear-clarity-agency arc present but final content sentence is a product pitch ('Knowing the officer's track record before cross-examination is not optional — it is preparation') rather than a standalone agency statement"
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "FAIL",
+            "evidence": "6 H2 sections (max 4 allowed): '30,000 Records Nobody Reads', 'What the Patterns Show', 'The Rights You Have', 'The Gap Between Knowing and Doing', 'What Your Agency's Data Says', 'What You Can Do Right Now'"
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "FAIL",
+            "evidence": "4 of 6 H2 sections lack a qualifying bolded sentence — sections 1 and 2 have bold text exceeding 27 words (31 and 29 respectively), sections 5 and 6 have no bolded standalone sentence at all"
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "FAIL",
+            "evidence": "FAQ 1 is 6 sentences (max 5), and FAQs 2-4 use institutional voice ('comprehensive dataset tracking', 'Agency-level incident patterns provide context') rather than support-group voice"
+          },
+          {
+            "check": "D13_PRODUCT_BRIDGE",
+            "result": "FAIL",
+            "evidence": "Primary bridge names 'Arrest Survival Kit' ($47) which is not a recognized INAA product (not Case Decoder, Intelligence Brief, X-Ray, War Room, or DUI Defense Playbook); secondary mention 'Officer Background Check' also not in approved product list"
+          }
+        ]
+      }
+    }
+  },
+  "published_hash": "db688d9cc659beae967d343790e13f00"
+}
