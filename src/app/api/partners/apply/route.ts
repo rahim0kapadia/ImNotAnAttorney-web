@@ -169,6 +169,7 @@ export async function POST(req: NextRequest) {
         company: company || null,
         city: city || null,
         phone: phone || null,
+        source: source || null,
       })
       .eq("id", existingPartner.id);
 
@@ -282,6 +283,7 @@ export async function POST(req: NextRequest) {
         status: "approved",
         promo_code: promoCode,
         commission_rate: 10,
+        source: source || null,
       })
       .select("id, promo_code")
       .single();
