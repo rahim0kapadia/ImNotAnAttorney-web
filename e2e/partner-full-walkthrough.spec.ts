@@ -157,8 +157,11 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
     const count = await toggleBtns.count();
     expect(count).toBeGreaterThan(0);
 
-    await toggleBtns.first().click();
-    await page.waitForTimeout(1000);
+    // Click a non-active channel to trigger a real toggle
+    const inactiveToggle = page.locator('button[aria-pressed="false"]').first();
+    await inactiveToggle.click();
+    // Wait for save round-trip (button disables during save, re-enables after)
+    await expect(inactiveToggle).toBeEnabled({ timeout: 5000 });
     await page.screenshot({ path: "e2e/screenshots/walkthrough-notifications.png" });
   });
 

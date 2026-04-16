@@ -7,7 +7,26 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { requirePartnerAuth } from "@/lib/partner-helpers";
+import { requirePartnerAuth, paginatedQuery, batchedInQuery } from "@/lib/partner-helpers";
+
+interface CourtClient {
+  id: string;
+  first_name: string;
+  charge_type: string | null;
+  county_state: string | null;
+  court_date: string | null;
+  status: string;
+  reminders_sent: number;
+  created_at: string;
+  converted_at: string | null;
+  check_in_days: number[];
+  check_in_source: string | null;
+}
+
+interface CheckIn {
+  court_reminder_id: string;
+  checked_in_at: string;
+}
 
 export async function GET(req: NextRequest) {
   const { partner, error: authError } = await requirePartnerAuth(req);
@@ -44,29 +63,33 @@ export async function GET(req: NextRequest) {
       .select("*", { count: "exact", head: true })
       .eq("partner_promo_code", partner.promo_code);
 
-    // Court prep clients — full list for client tracker
-    const { data: courtClients } = await supabase
-      .from("court_reminders")
-      .select("id, first_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at, check_in_days, check_in_source")
-      .eq("partner_promo_code", partner.promo_code)
-      .order("court_date", { ascending: true })
-      .limit(100);
+    // Court prep clients — full list for client tracker (paginated, no silent cap)
+    const { data: courtClients } = await paginatedQuery<CourtClient>(supabase, {
+      table: "court_reminders",
+      select: "id, first_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at, check_in_days, check_in_source",
+      filters: [{ column: "partner_promo_code", op: "eq", value: partner.promo_code }],
+      order: { column: "court_date", ascending: true },
+    });
 
-    // Check-in summaries per client
-    const reminderIds = (courtClients || []).map((c: { id: string }) => c.id);
+    // Check-in summaries per client (batched, URL-length safe)
+    const reminderIds = courtClients.map((c) => c.id);
     const checkInSummary: Record<string, { count: number; lastCheckIn: string | null }> = {};
     if (reminderIds.length > 0) {
-      const { data: checkIns } = await supabase
-        .from("client_check_ins")
-        .select("court_reminder_id, checked_in_at")
-        .in("court_reminder_id", reminderIds)
-        .order("checked_in_at", { ascending: false });
-      for (const ci of (checkIns || [])) {
+      const { data: checkIns } = await batchedInQuery<CheckIn>(supabase, {
+        table: "client_check_ins",
+        select: "court_reminder_id, checked_in_at",
+        inColumn: "court_reminder_id",
+        ids: reminderIds,
+      });
+      for (const ci of checkIns) {
         const existing = checkInSummary[ci.court_reminder_id];
         if (!existing) {
           checkInSummary[ci.court_reminder_id] = { count: 1, lastCheckIn: ci.checked_in_at };
         } else {
           existing.count++;
+          if (ci.checked_in_at > existing.lastCheckIn!) {
+            existing.lastCheckIn = ci.checked_in_at;
+          }
         }
       }
     }
@@ -100,7 +123,7 @@ export async function GET(req: NextRequest) {
         total_referrals: partner.total_referrals || 0,
       },
       reminderSignups: reminderSignups ?? 0,
-      courtClients: courtClients || [],
+      courtClients,
       checkInSummary,
       referrals: referrals || [],
       payouts: payouts || [],
