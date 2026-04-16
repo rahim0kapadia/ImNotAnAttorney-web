@@ -14,7 +14,6 @@ import { formatDaysDisplay, countScheduledDays } from "@/lib/check-in-schedule";
 interface ComplianceClient {
   id: string;
   first_name: string;
-  last_name: string | null;
   charge_type: string;
   county_state: string;
   court_date: string;
@@ -272,7 +271,6 @@ export function ComplianceReportClient({
                     >
                       <td className="py-2 pr-3">
                         {c.first_name}
-                        {c.last_name ? ` ${c.last_name}` : ""}
                       </td>
                       <td className="py-2 pr-3 text-zinc-400 print:text-gray-600">
                         {CHARGE_DISPLAY_NAMES[c.charge_type] || c.charge_type}

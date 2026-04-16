@@ -111,10 +111,10 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
     await authenticateAndGo(page, bondsmanId!, `${BASE}/partner/dashboard`);
 
     await expect(page.getByText("Partner Dashboard")).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByText("QA Walkthrough Bondsman")).toBeVisible();
+    await expect(page.getByText("QA Walkthrough Bondsman").first()).toBeVisible();
     await expect(page.getByText(/add client/i).first()).toBeVisible();
     await expect(page.getByRole("heading", { name: /compliance checklist/i })).toBeVisible();
-    await expect(page.getByText("QAWALK")).toBeVisible();
+    await expect(page.getByText("QAWALK").first()).toBeVisible();
     await expect(page.getByText("Ready-to-Send Messages")).toBeVisible();
     await expect(page.getByText("Creative Assets")).toBeVisible();
     await expect(page.getByText("Compliance Kit")).toBeVisible();
@@ -168,11 +168,11 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
     const addBtn = page.getByRole("button", { name: /add client/i });
     await addBtn.click();
 
-    const modal = page.locator('[role="dialog"]');
+    const modal = page.getByRole("dialog", { name: /add a client/i });
     await expect(modal).toBeVisible({ timeout: 5_000 });
 
     await page.getByLabel(/first name/i).fill("Test Defendant");
-    await page.getByLabel(/email/i).last().fill("test-defendant-e2e@example.com");
+    await modal.getByLabel(/client email/i).fill("test-defendant-e2e@example.com");
 
     const chargeSelect = modal.locator("select").first();
     const chargeOptions = await chargeSelect.locator("option").allTextContents();
@@ -219,7 +219,7 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
   test("compliance report page loads with stats", async ({ page }) => {
     await authenticateAndGo(page, bondsmanId!, `${BASE}/partner/compliance-report`);
 
-    await expect(page.getByText(/compliance report/i).first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByText(/defendant management report/i).first()).toBeVisible({ timeout: 15_000 });
     const dateFilter = page.locator("select").first();
     await expect(dateFilter).toBeVisible();
     await expect(page.getByRole("button", { name: /print/i })).toBeVisible();
@@ -243,7 +243,7 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
     await authenticateAndGo(page, e2ePartnerId, `${BASE}/partner/card`);
 
     await expect(page.getByRole("button", { name: /print insert/i })).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByText("Your attorney works in this courthouse")).toBeVisible();
+    await expect(page.getByText("Your attorney works in this courthouse").first()).toBeVisible();
     await expect(page.locator('img[alt*="QR code"]').first()).toBeVisible({ timeout: 15_000 });
     await page.screenshot({ path: "e2e/screenshots/walkthrough-card.png", fullPage: true });
   });

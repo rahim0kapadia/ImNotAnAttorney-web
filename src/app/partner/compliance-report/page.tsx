@@ -1,79 +1,61 @@
+"use client";
 /**
- * /partner/compliance-report — Server-rendered, print-optimized compliance
- * report for surety audits.
+ * /partner/compliance-report — Print-optimized compliance report for surety
+ * audits.
  *
- * Auth: validates partner session cookie server-side, redirects to login if
- * invalid. Fetches all court_reminders + client_check_ins for the partner,
- * then hands data to the client component for date filtering + print.
+ * Auth: client-side via /api/partner/compliance-report (cookie-based).
+ * Matches the auth pattern used by /partner/checklist, /partner/card, and
+ * /partner/dashboard.
  */
 
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { createAdminClient } from "@/lib/supabase/admin";
-import {
-  validatePartnerSession,
-  PARTNER_SESSION_COOKIE,
-} from "@/lib/partner-auth";
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { ComplianceReportClient } from "./ComplianceReportClient";
 
-export const metadata = {
-  title: "Compliance Report — ImNotAnAttorney Partner",
-};
+type ComplianceData = Parameters<typeof ComplianceReportClient>[0];
 
-export default async function ComplianceReportPage() {
-  const cookieStore = await cookies();
-  const sessionToken = cookieStore.get(PARTNER_SESSION_COOKIE)?.value;
+export default function ComplianceReportPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<ComplianceData | null>(null);
 
-  if (!sessionToken) {
-    redirect("/partner/login");
-  }
-
-  const partner = await validatePartnerSession(sessionToken);
-  if (!partner) {
-    redirect("/partner/login");
-  }
-
-  const supabase = createAdminClient();
-
-  // Fetch all clients linked to this partner's promo code
-  const { data: clients } = await supabase
-    .from("court_reminders")
-    .select(
-      "id, first_name, last_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at, check_in_days, check_in_source"
-    )
-    .eq("partner_promo_code", partner.promo_code)
-    .order("court_date", { ascending: true });
-
-  // Fetch check-ins for those clients — paginated to avoid PostgREST 1000-row cap
-  const clientIds = (clients || []).map((c) => c.id);
-  const allCheckIns: Array<{ court_reminder_id: string; checked_in_at: string }> = [];
-  if (clientIds.length > 0) {
-    let checkInOffset = 0;
-    let checkInHasMore = true;
-    while (checkInHasMore) {
-      const { data: page } = await supabase
-        .from("client_check_ins")
-        .select("court_reminder_id, checked_in_at")
-        .in("court_reminder_id", clientIds)
-        .range(checkInOffset, checkInOffset + 999);
-
-      if (!page || page.length === 0) { checkInHasMore = false; break; }
-      allCheckIns.push(...page);
-      checkInOffset += 1000;
-      if (page.length < 1000) checkInHasMore = false;
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch("/api/partner/compliance-report");
+      if (res.status === 401) { router.push("/partner/login"); return; }
+      if (!res.ok) return;
+      const json = await res.json();
+      setData(json);
+    } catch {
+      // Network error — stay on loading state
+    } finally {
+      setLoading(false);
     }
+  }, [router]);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center" role="status" aria-label="Loading compliance report">
+        <div className="animate-pulse text-zinc-400">Loading compliance report...</div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <p className="text-zinc-400">Failed to load report data.</p>
+      </div>
+    );
   }
 
   return (
     <ComplianceReportClient
-      partner={{
-        name: partner.name,
-        email: partner.email,
-        company: partner.company,
-        promo_code: partner.promo_code,
-      }}
-      clients={clients || []}
-      checkIns={allCheckIns}
+      partner={data.partner}
+      clients={data.clients}
+      checkIns={data.checkIns}
     />
   );
 }
