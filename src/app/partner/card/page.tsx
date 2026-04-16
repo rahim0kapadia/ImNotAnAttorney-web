@@ -23,6 +23,19 @@ export default function BailPacketCard() {
     city: string | null;
   } | null>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
+  const [previewScale, setPreviewScale] = useState(1);
+
+  // Scale the 8.5in preview card to fit narrow viewports
+  useEffect(() => {
+    function updateScale() {
+      const cardPx = 8.5 * 96; // 816px
+      const available = window.innerWidth - 32; // px-4 padding
+      setPreviewScale(Math.min(1, available / cardPx));
+    }
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
+  }, []);
 
   const fetchPartner = useCallback(async () => {
     try {
@@ -106,7 +119,15 @@ export default function BailPacketCard() {
 
       {/* Screen preview wrapper */}
       <div className="print:hidden bg-zinc-950 min-h-screen flex items-start justify-center py-8 px-4">
-        <div className="bg-white rounded-lg shadow-2xl shadow-amber-500/10" style={{ width: "8.5in", minHeight: "11in" }}>
+        <div
+          className="bg-white rounded-lg shadow-2xl shadow-amber-500/10"
+          style={{
+            width: "8.5in",
+            minHeight: "11in",
+            transform: previewScale < 1 ? `scale(${previewScale})` : undefined,
+            transformOrigin: "top center",
+          }}
+        >
           <CardContent
             companyLine={companyLine}
             promoCode={partner.promo_code}
