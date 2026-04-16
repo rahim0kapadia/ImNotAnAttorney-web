@@ -60,15 +60,18 @@ export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProp
           }}
         />
 
-        {/* Subtle amber glow bottom-right */}
-        <div
+        {/* Logo watermark — right side */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://imnotanattorney.com/brand/inaa-logo-sm.png"
+          alt=""
+          width={200}
+          height={200}
           style={{
             position: "absolute",
-            right: 0,
-            bottom: 0,
-            width: 400,
-            height: 300,
-            background: "radial-gradient(circle at bottom right, rgba(245,158,11,0.06) 0%, transparent 70%)",
+            right: 48,
+            bottom: 48,
+            opacity: 0.15,
           }}
         />
 
@@ -83,21 +86,16 @@ export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProp
             height: "100%",
           }}
         >
-          {/* Top: Brand mark */}
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 8,
-                background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <span style={{ fontSize: 22, fontWeight: 900, color: "#09090b" }}>I</span>
-            </div>
+          {/* Top: Brand mark with logo */}
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://imnotanattorney.com/brand/inaa-logo-sm.png"
+              alt=""
+              width={44}
+              height={44}
+              style={{ borderRadius: 8 }}
+            />
             <span style={{ fontSize: 22, fontWeight: 700, color: "#a1a1aa", letterSpacing: 1 }}>
               IMNOTANATTORNEY
             </span>
