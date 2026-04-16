@@ -251,14 +251,16 @@ export default function Home() {
           <FadeInUp>
             <blockquote className="border-l-4 border-amber-500/50 pl-6 text-zinc-300 leading-relaxed">
               <p>
-                I hired an attorney the same way you did. Paid the retainer.
-                Waited for the plan. The calls got shorter. Then they stopped.
-                Seven months in, I decided to read the file myself. I didn&apos;t
-                know what I was looking for. I found three things that changed
-                everything about my case. My attorney never mentioned any of them.
+                We got tired of the system the way it is &mdash; and chose to do
+                something about it for people in our situation. We hired attorneys
+                the same way you did. Paid the retainers. Waited for the plan.
+                The calls got shorter. Then they stopped. So we started reading
+                the files ourselves. We didn&apos;t know what we were looking for.
+                We found things that changed everything about our cases. Our
+                attorneys never mentioned any of them. That&apos;s why this exists.
               </p>
               <footer className="mt-4 text-sm text-amber-400 font-semibold">
-                &mdash; ImNotAnAttorney Founder
+                &mdash; The ImNotAnAttorney Team
               </footer>
             </blockquote>
           </FadeInUp>
@@ -289,7 +291,7 @@ export default function Home() {
           <FadeInUp>
             <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
               You searched for this at 2am.{" "}
-              <span className="text-amber-400">So did I.</span>
+              <span className="text-amber-400">So did we.</span>
             </h2>
           </FadeInUp>
           <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-2">
@@ -664,7 +666,7 @@ export default function Home() {
               </p>
               <p className="mt-3 text-zinc-300 leading-relaxed">
                 We&apos;re researchers, not lawyers. We read your case file the way
-                I read mine &mdash; looking for what doesn&apos;t add up. We hand you
+                we read ours &mdash; looking for what doesn&apos;t add up. We hand you
                 the questions. Your attorney has to answer them. That&apos;s where
                 their work begins and ours ends.
               </p>

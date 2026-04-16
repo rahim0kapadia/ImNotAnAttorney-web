@@ -893,7 +893,7 @@ function makePlaybookSequence(config: PlaybookEmailConfig): DripEmail[] {
         <h1 style="color: #F59E0B;">A Question Worth Asking</h1>
         <p>${checkinQuestion}</p>
         <p>If they did, good. If they haven't, bring it up at your next meeting. The Playbook gives you the words. The meeting is where you use them.</p>
-        <p><strong style="color: white;">Reply to this email and tell me what happened.</strong> Your experience helps us build better resources for every defendant who comes after you. Your reply is confidential.</p>
+        <p><strong style="color: white;">Reply to this email and tell us what happened.</strong> Your experience helps us build better resources for every defendant who comes after you. Your reply is confidential.</p>
       `,
     },
     {
@@ -1010,7 +1010,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li><strong style="color: white;">Send the email from "Exactly What to Say"</strong>, it's already written, just copy-paste</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        After your next attorney meeting, reply to this email and tell me: <strong style="color: white;">which question got the most reaction?</strong> Real cases make this service better for every defendant who comes after you.
+        After your next attorney meeting, reply to this email and tell us: <strong style="color: white;">which question got the most reaction?</strong> Real cases make this service better for every defendant who comes after you.
       </p>
     `,
   },
@@ -1055,7 +1055,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Whether or not you've met with your attorney yet, one quick question",
     html: `
       <h1 style="color: #F59E0B;">One Quick Question</h1>
-      <p>Whether you've already met with your attorney or you're still preparing, I have one question:</p>
+      <p>Whether you've already met with your attorney or you're still preparing, we have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which part of your report has been most useful so far?</strong></p>
       <p>Was it the questions? The email template? Understanding what the prosecution has to prove? The 7-day action plan?</p>
       <p>Just reply to this email. One sentence is fine. Your experience helps us build better reports for every defendant who comes after you.</p>
@@ -1172,7 +1172,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li><strong style="color: white;">Review the 10-15 questions in Appendix D, pick your top 5</strong> for your next attorney meeting</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        After your next attorney meeting, reply to this email and tell me: <strong style="color: white;">which question got the most reaction?</strong> Real cases make this service better for every defendant who comes after you.
+        After your next attorney meeting, reply to this email and tell us: <strong style="color: white;">which question got the most reaction?</strong> Real cases make this service better for every defendant who comes after you.
       </p>
     `,
   },
@@ -1280,7 +1280,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Whether or not you've met with your attorney yet, one quick question",
     html: `
       <h1 style="color: #F59E0B;">One Quick Question</h1>
-      <p>Whether you've already met with your attorney or you're still preparing, I have one question:</p>
+      <p>Whether you've already met with your attorney or you're still preparing, we have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which part of your Intelligence Brief has been most useful so far?</strong></p>
       <p>Was it the Jurisdiction Intelligence Summary? The Questions for Your Attorney? The 14-Day Action Plan? The Difficult Conversation Scripts?</p>
       <p>Just reply to this email. One sentence is fine. Your experience helps us build better reports for every defendant who comes after you.</p>
@@ -1353,7 +1353,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
         <li><strong style="color: white;">Use the Red Flags summary</strong> as your meeting agenda</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        After your next attorney meeting, reply to this email and tell me: <strong style="color: white;">which finding got the biggest reaction?</strong> Real cases make this service better for every defendant who comes after you.
+        After your next attorney meeting, reply to this email and tell us: <strong style="color: white;">which finding got the biggest reaction?</strong> Real cases make this service better for every defendant who comes after you.
       </p>
     `,
   },
@@ -1378,7 +1378,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "You met with your attorney, what was the first finding they hadn't seen?",
     html: `
       <h1 style="color: #F59E0B;">How Did It Go?</h1>
-      <p>You walked into that meeting with a full discovery analysis. I have one question:</p>
+      <p>You walked into that meeting with a full discovery analysis. we have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which finding surprised your attorney?</strong></p>
       <p>Just reply to this email. Your experience makes every future analysis better.</p>
       <p style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #333;">
@@ -1575,7 +1575,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Whether or not you've met with your attorney yet, one quick question",
     html: `
       <h1 style="color: #F59E0B;">One Quick Question</h1>
-      <p>Whether you've already met with your attorney or you're still reviewing the package, I have one question:</p>
+      <p>Whether you've already met with your attorney or you're still reviewing the package, we have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which part of your War Room package has been most useful so far?</strong></p>
       <p>Was it the witness dossiers? The prosecution analysis? The motion landscape? The case law references?</p>
       <p>Just reply to this email. One sentence is fine. Your experience at this level helps us build better intelligence for every defendant who comes after you.</p>
@@ -1643,7 +1643,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "How's the case progressing?",
     html: `
       <h1 style="color: #F59E0B;">How's the Case Progressing?</h1>
-      <p>You're in the Situation Room, the most comprehensive intelligence package available. I have one question:</p>
+      <p>You're in the Situation Room, the most comprehensive intelligence package available. we have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>What's made the biggest difference so far?</strong></p>
       <p>Just reply to this email. Your experience at this level is invaluable for refining every aspect of what we deliver.</p>
     `,
@@ -1699,7 +1699,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">Which Question Surprised You?</h1>
       <p>You've had a few days with the Playbook. Which of the 26 questions surprised you most?</p>
       <p>Was it the breathalyzer calibration question? The 15-minute observation period? The FST conditions?</p>
-      <p><strong style="color: white;">Reply to this email and tell me.</strong> Real feedback from real defendants makes this better for everyone who comes after you. Your reply is confidential.</p>
+      <p><strong style="color: white;">Reply to this email and tell us.</strong> Real feedback from real defendants makes this better for everyone who comes after you. Your reply is confidential.</p>
     `,
   },
   {
@@ -1862,7 +1862,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Whether or not you've met with your attorney yet, one quick question",
     html: `
       <h1 style="color: #F59E0B;">One Quick Question</h1>
-      <p>Whether you've already met with your attorney or you're still reviewing, I have one question:</p>
+      <p>Whether you've already met with your attorney or you're still reviewing, we have one question:</p>
       <p style="font-size: 18px; color: white;"><strong>Which part of your witness analysis has been most useful so far?</strong></p>
       <p>Was it the statement inconsistencies? The cross-examination questions? The behavioral patterns?</p>
       <p>Just reply to this email. One sentence is fine. Your experience helps us build better analysis for every defendant who comes after you.</p>
