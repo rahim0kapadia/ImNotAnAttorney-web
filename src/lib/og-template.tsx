@@ -1,20 +1,14 @@
 /**
- * og-template.tsx, Shared OG image template for all pages.
+ * og-template.tsx — Shared OG image template for all pages.
  *
- * Renders a branded 1200x630 PNG with:
- * - Playfair Display custom font for the title
- * - Bold amber accent bar on the left edge
- * - Brand mark top-left with amber icon
- * - Optional eyebrow (amber, uppercase)
- * - Title + subtitle with auto-sizing
- * - Tagline footer
+ * Branded 1200x630 PNG: amber accent bar, logo mark, auto-sized title,
+ * optional eyebrow/subtitle, tagline footer.
  *
- * Uses Node runtime (not edge) because custom fonts need fs access.
- * All opengraph-image.tsx files should NOT export runtime = "edge".
+ * satori (next/og) only supports static-weight OpenType fonts, not variable
+ * fonts. PlayfairDisplay-Variable.ttf crashes it. Font loading removed;
+ * system serif is the safe fallback.
  */
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
@@ -25,17 +19,7 @@ interface OgTemplateProps {
   eyebrow?: string;
 }
 
-export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProps) {
-  let fontData: ArrayBuffer | undefined;
-  try {
-    const buf = await readFile(
-      join(process.cwd(), "src/assets/fonts/PlayfairDisplay-Variable.ttf")
-    );
-    fontData = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
-  } catch {
-    // Fallback to system serif if file not found
-  }
-
+export function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProps) {
   const titleSize = title.length > 50 ? 38 : title.length > 35 ? 44 : 52;
 
   return new ImageResponse(
@@ -125,7 +109,6 @@ export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProp
                 color: "#ffffff",
                 lineHeight: 1.15,
                 maxWidth: 950,
-                fontFamily: fontData ? "Playfair" : "serif",
               }}
             >
               {title}
@@ -157,20 +140,6 @@ export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProp
         </div>
       </div>
     ),
-    {
-      ...OG_SIZE,
-      ...(fontData
-        ? {
-            fonts: [
-              {
-                name: "Playfair",
-                data: fontData,
-                style: "normal" as const,
-                weight: 800 as const,
-              },
-            ],
-          }
-        : {}),
-    }
+    { ...OG_SIZE }
   );
 }
