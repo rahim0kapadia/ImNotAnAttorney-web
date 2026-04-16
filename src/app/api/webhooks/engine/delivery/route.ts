@@ -1,5 +1,5 @@
 /**
- * @file /api/webhooks/engine/delivery — Engine delivery notification webhook
+ * @file /api/webhooks/engine/delivery, Engine delivery notification webhook
  *
  * Pipeline position: Called by the ImNotAnAttorney-engine's delivery_notification
  * worker when a discovery-tier report (X-Ray, War Room, Situation Room) is ready,
@@ -9,24 +9,24 @@
  *
  * Payload from the engine worker:
  *   {
- *     type?:        "delivery" | "update"  — defaults to "delivery" if omitted
- *     caseId:       string   — INNA case UUID
- *     orderId:      string   — INNA order UUID
- *     tier:         string   — tier slug (e.g. "x-ray", "war-room", "situation-room")
- *     downloadUrls: string[] — one or more signed/absolute URLs for the report files
- *     deliveredAt:  string   — ISO timestamp from the engine
- *     updateSummary?: string — plain-text summary of weekly update (type: "update" only)
+ *     type?:        "delivery" | "update" , defaults to "delivery" if omitted
+ *     caseId:       string  , INNA case UUID
+ *     orderId:      string  , INNA order UUID
+ *     tier:         string  , tier slug (e.g. "x-ray", "war-room", "situation-room")
+ *     downloadUrls: string[], one or more signed/absolute URLs for the report files
+ *     deliveredAt:  string  , ISO timestamp from the engine
+ *     updateSummary?: string, plain-text summary of weekly update (type: "update" only)
  *   }
  *
- * Flow (type: "delivery" — initial delivery):
- *   1. Authenticate request (OPERATOR_SECRET bearer token — same auth as /api/generate/*)
+ * Flow (type: "delivery", initial delivery):
+ *   1. Authenticate request (OPERATOR_SECRET bearer token, same auth as /api/generate/*)
  *   2. Load order + case to get customer email and tier context
  *   3. Atomically update case + order status to "delivered" (or "monitoring" for War Room)
  *   4. Send tier-specific delivery email to customer with all download URLs
  *   5. Record post-purchase drip sequence start (prevents cron double-delivery)
  *   6. Return { success: true }
  *
- * Flow (type: "update" — War Room weekly / Situation Room update):
+ * Flow (type: "update", War Room weekly / Situation Room update):
  *   1. Authenticate request
  *   2. Load case to get customer email
  *   3. Do NOT change case status (already delivered/monitoring)
@@ -37,7 +37,7 @@
  * The engine worker should include: Authorization: Bearer <OPERATOR_SECRET>
  *
  * Error strategy: Non-critical failures (email, drip) are logged but do NOT fail the
- * response — the engine worker should not retry just because an email bounced.
+ * response, the engine worker should not retry just because an email bounced.
  * Critical failures (case not found, status update failed) return 4xx/5xx so the
  * engine can retry.
  */
@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
   const now = deliveredAt || new Date().toISOString();
 
   // ================================================================
-  // TYPE: "update" — War Room / Situation Room weekly update delivery
+  // TYPE: "update", War Room / Situation Room weekly update delivery
   // ================================================================
   // Does NOT change case status. Sends an update email only.
   if (deliveryType === "update") {
@@ -157,7 +157,7 @@ export async function POST(req: NextRequest) {
     const updateEmailResult = await sendEmailWithOperatorAlert(
       {
         to: updateCaseData.email,
-        subject: `Your ${tierName} — Weekly Update Ready`,
+        subject: `Your ${tierName}, Weekly Update Ready`,
         unsubscribeEmail: updateCaseData.email,
         threadingHeaders: {
           inReplyTo: caseThreadId(caseId),
@@ -188,7 +188,7 @@ export async function POST(req: NextRequest) {
       emailDelivered: updateEmailResult.success,
       message: updateEmailResult.success
         ? "Update email sent to customer"
-        : "Update email failed — operator alerted",
+        : "Update email failed, operator alerted",
     });
   }
 
@@ -208,7 +208,7 @@ export async function POST(req: NextRequest) {
 
   // Idempotency: if already delivered or monitoring, return success without re-processing
   if (caseData.status === "delivered" || caseData.status === "monitoring") {
-    console.warn(`[Engine-Delivery] Case ${caseId} already in terminal state (${caseData.status}) — skipping`);
+    console.warn(`[Engine-Delivery] Case ${caseId} already in terminal state (${caseData.status}), skipping`);
     return NextResponse.json({
       success: true,
       skipped: true,
@@ -219,7 +219,7 @@ export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // ATOMIC STATUS UPDATE: case + order → "delivered" or "monitoring"
   // ──────────────────────────────────────────────────────────────
-  // War Room transitions to "monitoring" after initial delivery —
+  // War Room transitions to "monitoring" after initial delivery,
   // weekly docket_monitor updates continue and use type:"update".
   // All other tiers transition to "delivered" (terminal).
   const primaryUrl = downloadUrls[0];
@@ -236,12 +236,12 @@ export async function POST(req: NextRequest) {
       updated_at: new Date().toISOString(),
     })
     .eq("id", caseId)
-    .not("status", "in", '("delivered","monitoring")') // Atomic guard — only one caller can win
+    .not("status", "in", '("delivered","monitoring")') // Atomic guard, only one caller can win
     .select("id")
     .single();
 
   if (!caseGuard) {
-    // Either already delivered/monitoring (race) or unexpected state — log, don't block
+    // Either already delivered/monitoring (race) or unexpected state, log, don't block
     console.warn(`[Engine-Delivery] Case status update skipped for ${caseId} (already in terminal state or race condition)`);
   }
 
@@ -289,10 +289,10 @@ export async function POST(req: NextRequest) {
       <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
         <p style="margin: 0; color: white; font-weight: bold;">How to use your X-Ray Analysis:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Read the Executive Summary first</strong> — your case at a glance, one page</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Hand page 2 (Top 3 Findings) to your attorney</strong> — these are the highest-leverage issues</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Read the Executive Summary first</strong>, your case at a glance, one page</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Hand page 2 (Top 3 Findings) to your attorney</strong>, these are the highest-leverage issues</li>
           <li style="margin-bottom: 8px;"><strong style="color: white;">Use the "If You Only Have 15 Minutes" question list</strong> at your next meeting</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Review the Red Flags section carefully</strong> — these are where evidence problems live</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Review the Red Flags section carefully</strong>, these are where evidence problems live</li>
         </ol>
       </div>`;
     const upgradeCost = isValidTier(tier) ? upgradePrice(tier) : null;
@@ -307,10 +307,10 @@ export async function POST(req: NextRequest) {
       <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
         <p style="margin: 0; color: white; font-weight: bold;">Your War Room package is ready:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Download all report files</strong> — they are linked above</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Review your Judge Intelligence Profile</strong> — sentencing patterns, tendencies, motion preferences</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Review each Witness Dossier</strong> — background, credibility vulnerabilities, cross-exam questions</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Weekly updates begin now</strong> — you'll hear from us each week as new findings emerge</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Download all report files</strong>, they are linked above</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Review your Judge Intelligence Profile</strong>, sentencing patterns, tendencies, motion preferences</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Review each Witness Dossier</strong>, background, credibility vulnerabilities, cross-exam questions</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Weekly updates begin now</strong>, you'll hear from us each week as new findings emerge</li>
         </ol>
       </div>`;
     const upgradeCost = upgradePrice("war-room");
@@ -325,13 +325,13 @@ export async function POST(req: NextRequest) {
       <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
         <p style="margin: 0; color: white; font-weight: bold;">Your Situation Room package is ready:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Download all deliverables</strong> — linked above</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Download all deliverables</strong>, linked above</li>
           <li style="margin-bottom: 8px;"><strong style="color: white;">24-48hr priority turnaround</strong> is now active on all updates</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Trial Intelligence Operations activate</strong> when your trial date is confirmed — reply to this email with your trial date</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Trial Intelligence Operations activate</strong> when your trial date is confirmed, reply to this email with your trial date</li>
           <li style="margin-bottom: 8px;"><strong style="color: white;">Reply to this email</strong> any time you need priority analysis or have new documents</li>
         </ol>
       </div>`;
-    upgradeHtml = ""; // Top tier — no upgrade
+    upgradeHtml = ""; // Top tier, no upgrade
   } else {
     // Generic fallback for any other tier
     instructionsHtml = `
@@ -399,7 +399,7 @@ export async function POST(req: NextRequest) {
       );
     }
   } catch (err) {
-    // Non-critical — log but don't fail the response
+    // Non-critical, log but don't fail the response
     console.error("[Engine-Delivery] Failed to record drip:", err);
   }
 
@@ -414,6 +414,6 @@ export async function POST(req: NextRequest) {
     emailDelivered: emailResult.success,
     message: emailResult.success
       ? "Delivery recorded and email sent to customer"
-      : "Delivery recorded but email failed — operator alerted",
+      : "Delivery recorded but email failed, operator alerted",
   });
 }

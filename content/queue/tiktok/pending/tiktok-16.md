@@ -3,7 +3,7 @@
 **Topic:** Suppression motion deadlines that close permanently
 **Format:** talking head + calendar visual + urgency
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + ticking tension ambient
+**Trending sound suggestion:** Original audio, voiceover + ticking tension ambient
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -18,7 +18,7 @@
 ## Body
 [SECOND 3-12]
 **Visual**: Timeline showing arraignment date, then a window labeled "SUPPRESSION MOTION WINDOW: 30-45 DAYS" that closes with a lock icon.
-**Audio/Voiceover**: "Suppression motions -- the ones that ask the judge to throw out illegally obtained evidence -- often have to be filed within 30 to 45 days of arraignment. If your attorney misses that window, you permanently lose the right to challenge how the evidence was obtained. Doesn't matter if the search was illegal. Doesn't matter if the stop had no basis. The window closed. You're stuck with the evidence."
+**Audio/Voiceover**: "Suppression motions, the ones that ask the judge to throw out illegally obtained evidence, often have to be filed within 30 to 45 days of arraignment. If your attorney misses that window, you permanently lose the right to challenge how the evidence was obtained. Doesn't matter if the search was illegal. Doesn't matter if the stop had no basis. The window closed. You're stuck with the evidence."
 **Text overlay**: "SUPPRESSION MOTION: 30-45 days after arraignment. Miss it = waived FOREVER."
 
 [SECOND 12-20]
@@ -32,7 +32,7 @@
 **Text overlay**: "ASK: What is the suppression deadline? Has it passed? Are you filing one?"
 
 [SECOND 27-30]
-**Visual**: Calendar from the opening -- but rewound to before the deadline, with "MOTION TO SUPPRESS: FILED" written in green.
+**Visual**: Calendar from the opening, but rewound to before the deadline, with "MOTION TO SUPPRESS: FILED" written in green.
 **Text overlay**: "Don't let deadlines pass in silence. imnotanattorney.com"
 **Audio**: Lock clicks open. Confident beat.
 
@@ -48,13 +48,13 @@ If your case is active, ask this question TODAY. Follow for more.
 - 0:27 "Don't let deadlines pass in silence."
 
 ## Caption
-Suppression motions can get your case dismissed entirely -- but most have a 30-45 day filing window after arraignment. Miss it and the right to challenge that evidence is gone forever. Ask your attorney today: what's the suppression deadline on my case?
+Suppression motions can get your case dismissed entirely, but most have a 30-45 day filing window after arraignment. Miss it and the right to challenge that evidence is gone forever. Ask your attorney today: what's the suppression deadline on my case?
 
 ## Hashtags
 #criminaldefense #suppressionmotion #motiondeadline #attorneyaccountability #knowyourrights
 
 ---
 
-**Context**: Sourced from what-motions-should-your-attorney-be-filing and what-happens-if-attorney-misses-deadline. The permanent waiver angle is terrifying for defendants -- the idea that their attorney's inaction can permanently close a defense avenue creates urgency to ask the question NOW.
+**Context**: Sourced from what-motions-should-your-attorney-be-filing and what-happens-if-attorney-misses-deadline. The permanent waiver angle is terrifying for defendants, the idea that their attorney's inaction can permanently close a defense avenue creates urgency to ask the question NOW.
 **Loop strategy**: Opens with missed deadline, closes with rewound calendar showing the motion filed on time. The visual "what could have been" drives rewatches.
 **KPI target**: Saves (defendants with active cases will save this and act on it immediately)

@@ -1,5 +1,5 @@
 /**
- * @file /api/webhooks/resend-inbound — Resend inbound email webhook handler
+ * @file /api/webhooks/resend-inbound, Resend inbound email webhook handler
  *
  * Receives `email.received` events from Resend when someone emails
  * help@imnotanattorney.com. The webhook payload only contains metadata,
@@ -20,9 +20,9 @@ export async function POST(req: NextRequest) {
   const webhookSecret = process.env.RESEND_INBOUND_WEBHOOK_SECRET;
 
   // ── SIGNATURE VERIFICATION ──
-  // REJECT if secret not configured — prevents forged inbound email injection
+  // REJECT if secret not configured, prevents forged inbound email injection
   if (!webhookSecret) {
-    console.error("[Resend Inbound] RESEND_INBOUND_WEBHOOK_SECRET not configured — rejecting request");
+    console.error("[Resend Inbound] RESEND_INBOUND_WEBHOOK_SECRET not configured, rejecting request");
     return NextResponse.json({ error: "Webhook verification not configured" }, { status: 500 });
   }
   {
@@ -145,7 +145,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "DB insert failed" }, { status: 500 });
   }
 
-  console.warn(`[Resend Inbound] Stored email from ${emailData.from || data.from} — ${emailData.subject || data.subject}`);
+  console.warn(`[Resend Inbound] Stored email from ${emailData.from || data.from}, ${emailData.subject || data.subject}`);
   return NextResponse.json({ received: true, stored: true });
 }
 

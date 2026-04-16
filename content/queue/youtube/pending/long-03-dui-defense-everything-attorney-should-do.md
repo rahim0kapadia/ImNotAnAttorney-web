@@ -13,7 +13,7 @@ target_length: 10-12 minutes
 
 **Format**: Long-form (16:9)
 **Target length**: 10-12 minutes
-**Target audience**: People charged with DUI (first offense or otherwise) who have hired an attorney and want to know if that attorney is doing their job — anxious, uncertain, and often feeling like they're being rushed toward a plea
+**Target audience**: People charged with DUI (first offense or otherwise) who have hired an attorney and want to know if that attorney is doing their job, anxious, uncertain, and often feeling like they're being rushed toward a plea
 
 ---
 
@@ -27,14 +27,14 @@ target_length: 10-12 minutes
 ### Thumbnail Concept
 **Version A**: Close-up of a breathalyzer device with a large red X over it. Text in bold: "NOT ENOUGH." White/red on dark background. Implies the breathalyzer result alone isn't the whole story.
 
-**Version B**: Checklist graphic with 7 items — first 2 checked in green, remaining 5 unchecked in red. Text: "IS YOUR DUI LAWYER DOING ALL 7?" High contrast, clean design.
+**Version B**: Checklist graphic with 7 items, first 2 checked in green, remaining 5 unchecked in red. Text: "IS YOUR DUI LAWYER DOING ALL 7?" High contrast, clean design.
 
 ### Description
 You blew a number. You got charged. Your attorney said "we'll handle it."
 
 Handle WHAT exactly?
 
-A real DUI defense involves challenging the traffic stop, the field sobriety tests, the breathalyzer calibration, the blood draw procedure, the officer's training records, AND the 10-day DMV deadline. If your attorney isn't doing all of this, you're not getting a defense — you're getting a plea.
+A real DUI defense involves challenging the traffic stop, the field sobriety tests, the breathalyzer calibration, the blood draw procedure, the officer's training records, AND the 10-day DMV deadline. If your attorney isn't doing all of this, you're not getting a defense, you're getting a plea.
 
 This is legal information, not legal advice. We are not attorneys.
 
@@ -65,7 +65,7 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 "You blew a 0.09. Your attorney looked at it and said 'we'll handle it.' But when you ask what the strategy is, the answer is: wait for the plea offer."
 
 **[0:05-0:15] THE PROMISE**
-"In the next ten minutes, I'm going to walk you through everything a real DUI defense looks like — every challenge a competent attorney should be pursuing, the deadlines most attorneys miss, and the exact checklist you can use to evaluate whether your attorney is actually defending you or just managing your expectations."
+"In the next ten minutes, I'm going to walk you through everything a real DUI defense looks like, every challenge a competent attorney should be pursuing, the deadlines most attorneys miss, and the exact checklist you can use to evaluate whether your attorney is actually defending you or just managing your expectations."
 
 **[0:15-0:30] CREDIBILITY + STAKES**
 "We're ImNotAnAttorney. We've studied how the best DUI defense attorneys in the country approach cases. What they challenge. What motions they file. What most attorneys skip."
@@ -79,7 +79,7 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 
 **[0:30-1:00] SETUP: THE ANATOMY OF A DUI CASE**
 [B-roll: highway at night, dashboard view]
-"Every DUI case is a chain of events. An officer sees something. They pull you over. They administer tests. They arrest you. They process your blood or breath. Each link in that chain has rules. If any link breaks — the evidence it produced may not hold up."
+"Every DUI case is a chain of events. An officer sees something. They pull you over. They administer tests. They arrest you. They process your blood or breath. Each link in that chain has rules. If any link breaks, the evidence it produced may not hold up."
 
 "Your attorney's job is to test every link. Here's what that looks like."
 
@@ -87,11 +87,11 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 
 **[1:00-2:15] CHALLENGE 1: WAS THE TRAFFIC STOP LEGAL?**
 [Text on screen: "CHALLENGE #1: THE STOP"]
-"Before anything else — was the traffic stop itself legal? Officers need reasonable suspicion to pull you over. Not a hunch. Not a feeling. Articulable facts."
+"Before anything else, was the traffic stop itself legal? Officers need reasonable suspicion to pull you over. Not a hunch. Not a feeling. Articulable facts."
 
 "Was it a weave within your lane? Many courts have ruled that minor lane deviation alone is insufficient. Was it a broken taillight? Was the stop based on a tip? Who was the tipster? Was the tip verified before the stop?"
 
-"If the stop was illegal, everything that followed — the field sobriety tests, the breathalyzer, the arrest — is fruit of the poisonous tree. It can all be suppressed."
+"If the stop was illegal, everything that followed, the field sobriety tests, the breathalyzer, the arrest, is fruit of the poisonous tree. It can all be suppressed."
 
 [Text on screen: "Ask your attorney: Have you reviewed the basis for the traffic stop? Is there grounds for a suppression motion?"]
 "If your attorney hasn't even looked at the legality of the stop, they're not defending your case. They're processing it."
@@ -105,7 +105,7 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 
 "Here's what matters: these tests have specific administration protocols. The officer has to follow them exactly. If they don't, the results are compromised."
 
-"Was the Walk and Turn administered on a flat, dry, well-lit surface? Did the officer demonstrate properly? Did they give the correct instructions? Did you have a medical condition that affects balance — an inner ear problem, a leg injury, neuropathy, medication?"
+"Was the Walk and Turn administered on a flat, dry, well-lit surface? Did the officer demonstrate properly? Did they give the correct instructions? Did you have a medical condition that affects balance, an inner ear problem, a leg injury, neuropathy, medication?"
 
 "NHTSA's own research shows that even when administered perfectly, these tests have significant error rates. The One Leg Stand is only 65% accurate. That means one in three sober people will fail it."
 
@@ -124,21 +124,21 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 [On-screen checklist appearing item by item]
 "Was the machine calibrated within the required timeframe? Who performed the calibration? Were they certified? Were there any error codes or anomalies in the calibration log? Was the machine's margin of error documented?"
 
-"Many breathalyzer machines have a margin of error of plus or minus 0.01 to 0.02. If you blew a 0.09, and the margin of error is 0.02, your actual BAC could have been 0.07 — below the legal limit."
+"Many breathalyzer machines have a margin of error of plus or minus 0.01 to 0.02. If you blew a 0.09, and the margin of error is 0.02, your actual BAC could have been 0.07, below the legal limit."
 
 [Text on screen: "0.09 BAC + 0.02 margin of error = possibly 0.07"]
-"If your attorney has never requested the calibration records for the machine used in your case — ask them why. This is one of the most basic defense steps in any DUI case."
+"If your attorney has never requested the calibration records for the machine used in your case, ask them why. This is one of the most basic defense steps in any DUI case."
 
 ---
 
 **[5:15-6:30] CHALLENGE 4: BLOOD DRAW PROCEDURE**
-[PATTERN INTERRUPT: medical/clinical B-roll — different visual tone from rest of video]
+[PATTERN INTERRUPT: medical/clinical B-roll, different visual tone from rest of video]
 [Text on screen: "CHALLENGE #4: BLOOD DRAW"]
 "If your BAC was measured by blood draw instead of breathalyzer, there are separate issues."
 
 "Who drew the blood? Were they qualified? Was the draw site cleaned with a non-alcohol-based swab? Cleaning with an alcohol swab can contaminate the sample and inflate the result."
 
-"Was the blood stored properly? Blood samples that aren't refrigerated promptly can ferment — which produces alcohol. This means the sample at the lab may test higher than your actual BAC at the time of the stop."
+"Was the blood stored properly? Blood samples that aren't refrigerated promptly can ferment, which produces alcohol. This means the sample at the lab may test higher than your actual BAC at the time of the stop."
 
 "Chain of custody: who handled the sample between the draw and the lab? Is every transfer documented? Any gap is a defense."
 
@@ -152,7 +152,7 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 
 "Were they certified to administer field sobriety tests? When was their last certification? Were they trained on the specific breathalyzer model used?"
 
-"Officer disciplinary records — including complaints about dishonesty or procedure violations — may be discoverable depending on your jurisdiction."
+"Officer disciplinary records, including complaints about dishonesty or procedure violations, may be discoverable depending on your jurisdiction."
 
 "The person who collected the evidence against you is a witness. Their credibility, training, and history matter. Your attorney should be investigating them."
 
@@ -163,12 +163,12 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 [Text on screen: "THE DEADLINE YOUR ATTORNEY MIGHT MISS"]
 "In many states, including Florida and California, you have approximately 10 days after a DUI arrest to request an administrative hearing with the DMV to challenge your license suspension."
 
-"If you miss this deadline, your license is automatically suspended — regardless of what happens in your criminal case."
+"If you miss this deadline, your license is automatically suspended, regardless of what happens in your criminal case."
 
 "This is a separate process from the criminal case. Many attorneys miss it. Many defendants don't even know it exists."
 
 [Text on screen: "Ask your attorney TODAY: Have you filed for the DMV administrative hearing?"]
-"If your arrest was more than a week ago and your attorney hasn't mentioned this — call them right now. Not after this video. Now. This deadline does not wait."
+"If your arrest was more than a week ago and your attorney hasn't mentioned this, call them right now. Not after this video. Now. This deadline does not wait."
 
 ---
 
@@ -176,14 +176,14 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 [Text on screen: "CHALLENGE #6: RISING BAC"]
 "Here's one most defendants have never heard of. Your blood alcohol level doesn't peak immediately after your last drink. It continues to rise for 30 to 90 minutes."
 
-"This means your BAC at the time of the TEST may have been higher than your BAC at the time of DRIVING. The legal standard is your BAC when you were operating the vehicle — not when you were at the police station an hour later."
+"This means your BAC at the time of the TEST may have been higher than your BAC at the time of DRIVING. The legal standard is your BAC when you were operating the vehicle, not when you were at the police station an hour later."
 
 "If there was a significant time gap between the stop and the test, the rising blood alcohol defense may apply. Your attorney should be evaluating this."
 
 ---
 
 **[9:15-10:30] THE DUI DEFENSE CHECKLIST**
-[Text on screen: "THE CHECKLIST — Screenshot this."]
+[Text on screen: "THE CHECKLIST, Screenshot this."]
 [Direct to camera, deliberate pace]
 "Here's your DUI defense checklist. Screenshot this. Bring it to your next meeting."
 
@@ -197,25 +197,25 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 "Seven: Has the rising blood alcohol defense been evaluated?"
 "Eight: Have any motions been filed?"
 
-"If your attorney can check all eight boxes and explain their analysis for each — you probably have a good attorney. If they can't check more than two or three — you need to ask some hard questions."
+"If your attorney can check all eight boxes and explain their analysis for each, you probably have a good attorney. If they can't check more than two or three, you need to ask some hard questions."
 
 ---
 
 **[10:30-11:00] WHEN THE PLEA IS RIGHT**
 [Tone shift: balanced, fair]
-"Look — sometimes the plea is the right call. The evidence is strong. The stop was clean. The tests were properly administered. Your attorney has done the work and concluded that a negotiated resolution is the best path."
+"Look, sometimes the plea is the right call. The evidence is strong. The stop was clean. The tests were properly administered. Your attorney has done the work and concluded that a negotiated resolution is the best path."
 
-"That's fine — if it comes AFTER the investigation. A plea recommendation that comes before your attorney has checked any of these boxes is not strategy. It's convenience."
+"That's fine, if it comes AFTER the investigation. A plea recommendation that comes before your attorney has checked any of these boxes is not strategy. It's convenience."
 
 ---
 
 **[11:00-12:00] CTA**
 [Text on screen: "imnotanattorney.com"]
-"If you're facing a DUI, we built a DUI Defense Playbook — a $97 guide that covers every one of these challenges in detail, with the exact questions to ask for each one. It's not legal advice. It's the research your attorney should be doing. Link in the description."
+"If you're facing a DUI, we built a DUI Defense Playbook, a $97 guide that covers every one of these challenges in detail, with the exact questions to ask for each one. It's not legal advice. It's the research your attorney should be doing. Link in the description."
 
-"For a personalized analysis of your specific case — what's been done, what's been missed, and what to ask next — that's our Case Decoder."
+"For a personalized analysis of your specific case, what's been done, what's been missed, and what to ask next, that's our Case Decoder."
 
-"Know What They Know. Subscribe — next week we're covering drug cases: your rights they hope you don't know about."
+"Know What They Know. Subscribe, next week we're covering drug cases: your rights they hope you don't know about."
 
 ---
 
@@ -231,12 +231,12 @@ DUI defense, how to beat a DUI, DUI attorney, DUI lawyer, breathalyzer calibrati
 
 **[0:20-0:30]** "Many breathalyzers have a margin of error of plus or minus 0.01 to 0.02. If you blew a 0.09 and the margin is 0.02, your actual BAC could have been 0.07. Below the legal limit."
 
-**[0:30-0:40]** "If your attorney hasn't requested the calibration records for the specific machine used in your case — ask them why. Today."
+**[0:30-0:40]** "If your attorney hasn't requested the calibration records for the specific machine used in your case, ask them why. Today."
 
 **[0:40-0:52]** "One question: 'Have you reviewed the breathalyzer calibration records?' Their answer tells you everything. Know What They Know. Link in bio."
 
 ---
 
-**Context**: DUI is one of the highest-search-volume criminal defense topics. Maps to "5-questions-dui-attorney," "what-to-expect-after-dui-arrest," "breathalyzer-calibration-records," "field-sobriety-test-standards," and "10-day-dmv-deadline" blog posts. All facts are sourced from existing INNA content. Directly sells the DUI Defense Playbook ($97) — the most accessible product in the lineup.
-**Retention strategy**: Six separate challenges create a "how many is MY attorney doing?" self-assessment that keeps viewers engaged through the whole video. The 10-day DMV deadline at 7:30 is a high-urgency pattern interrupt that re-engages anyone who was drifting. The checklist at the end is screenshot-worthy — viewers will save and share.
+**Context**: DUI is one of the highest-search-volume criminal defense topics. Maps to "5-questions-dui-attorney," "what-to-expect-after-dui-arrest," "breathalyzer-calibration-records," "field-sobriety-test-standards," and "10-day-dmv-deadline" blog posts. All facts are sourced from existing INNA content. Directly sells the DUI Defense Playbook ($97), the most accessible product in the lineup.
+**Retention strategy**: Six separate challenges create a "how many is MY attorney doing?" self-assessment that keeps viewers engaged through the whole video. The 10-day DMV deadline at 7:30 is a high-urgency pattern interrupt that re-engages anyone who was drifting. The checklist at the end is screenshot-worthy, viewers will save and share.
 **KPI target**: CTR > 9% (DUI is high-search, high-urgency). AVD > 50%. DUI Playbook sales from video > 15 units in first 30 days.

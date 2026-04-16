@@ -1,5 +1,5 @@
 /**
- * GET /api/cron/court-reminders — Sends court date reminder emails.
+ * GET /api/cron/court-reminders, Sends court date reminder emails.
  *
  * Schedule: Every 6 hours via cron-job.org.
  * Protected by CRON_AUTH_TOKEN bearer token.
@@ -138,12 +138,12 @@ export async function GET(req: NextRequest) {
             if (!anySucceeded) {
               console.error(`[Cron] All sends failed for ${interval.key} / ${r.id}`);
               errors++;
-              continue; // skip alreadySent — will retry next cron run
+              continue; // skip alreadySent, will retry next cron run
             }
             alreadySent.add(interval.key);
             sent++;
 
-            // Indemnitor — email only for now
+            // Indemnitor, email only for now
             if (r.indemnitor_email) {
               await sendEmail({
                 to: r.indemnitor_email,

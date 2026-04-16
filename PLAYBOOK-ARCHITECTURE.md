@@ -59,7 +59,7 @@ Every playbook is a `PlaybookConfig` object. This is the single source of truth 
 
 ```typescript
 export interface PlaybookConfig {
-  /** Tier slug — must match tiers.ts key */
+  /** Tier slug, must match tiers.ts key */
   slug: TierSlug;
 
   /** SEO title (browser tab) */
@@ -76,7 +76,7 @@ export interface PlaybookConfig {
     subheadline: string;      // What's included summary
   };
 
-  /** Agitate section — pain points */
+  /** Agitate section, pain points */
   agitate: {
     headline: string;         // Section heading
     paragraphs: string[];     // 2-3 empathetic paragraphs
@@ -86,7 +86,7 @@ export interface PlaybookConfig {
     }>;
   };
 
-  /** Proof section — methodology cards */
+  /** Proof section, methodology cards */
   proof: {
     headline: string;
     methods: Array<{          // 3 defense methodology cards
@@ -96,7 +96,7 @@ export interface PlaybookConfig {
     }>;
   };
 
-  /** Value stack — what's inside */
+  /** Value stack, what's inside */
   valueStack: {
     sections: Array<{         // 6 components included in playbook
       title: string;
@@ -108,7 +108,7 @@ export interface PlaybookConfig {
 
   /** Guarantee copy */
   guarantee: {
-    headline: string;         // e.g., "5 questions you never thought to ask — or full refund."
+    headline: string;         // e.g., "5 questions you never thought to ask, or full refund."
     body: string;
   };
 
@@ -118,7 +118,7 @@ export interface PlaybookConfig {
     notForYou: string[];      // 4 bullet points (with ✗)
   };
 
-  /** Methodology disclosure — charge-specific wording */
+  /** Methodology disclosure, charge-specific wording */
   methodologyText: string;
 
   /** Urgency deadlines */
@@ -133,7 +133,7 @@ export interface PlaybookConfig {
   /** FAQ items */
   faq: Array<{ q: string; a: string }>;
 
-  /** Final CTA — comparison line */
+  /** Final CTA, comparison line */
   comparisonLine: string;     // e.g., "A 30-minute attorney consultation costs $150–$250."
 
   /** Summary line for final CTA */
@@ -144,7 +144,7 @@ export interface PlaybookConfig {
 ### Defined Configs (8 total)
 
 | Slug | Name | Price | Status | Cover Image |
-|------|------|-------|--------|-------------|
+|------|------|-------|------, |-------------|
 | `dui-first-offense` | DUI Defense Playbook | $97 | LIVE | ✓ |
 | `drug-possession` | Drug Possession Defense Playbook | $97 | TEST | ✓ |
 | `drug-trafficking` | Drug Trafficking Defense Playbook | $197 | TEST | ✓ |
@@ -167,12 +167,12 @@ export interface PlaybookConfig {
 A browsable grid of all live playbooks. Users select their charge type here before viewing the sales page.
 
 #### Page Structure
-- **Hero Section** — "Defense Playbooks" heading with value prop
-- **Card Grid** — 4 columns desktop, 2 columns tablet, 1 column mobile
+- **Hero Section**, "Defense Playbooks" heading with value prop
+- **Card Grid**, 4 columns desktop, 2 columns tablet, 1 column mobile
   - Each card links to `/playbook/[slug]`
   - Shows charge type, description (truncated), price, delivery badge
-- **Value Props Section** — 6 icons + copy (26 Questions, Roadmap, Red Flags, Scorecard, Emergency Guide, Upgrade Path)
-- **UPL Disclaimer** — "These playbooks provide legal information, not legal advice"
+- **Value Props Section**, 6 icons + copy (26 Questions, Roadmap, Red Flags, Scorecard, Emergency Guide, Upgrade Path)
+- **UPL Disclaimer**, "These playbooks provide legal information, not legal advice"
 
 #### Key Features
 - **Live-only filtering:** Only displays playbooks where `TIER_CORE[slug].live === true`
@@ -182,7 +182,7 @@ A browsable grid of all live playbooks. Users select their charge type here befo
 
 #### Metadata
 ```typescript
-title: "Defense Playbooks — $97 Instant Download for Every Charge Type | ImNotAnAttorney"
+title: "Defense Playbooks, $97 Instant Download for Every Charge Type | ImNotAnAttorney"
 description: "Choose your charge type and get an instant-download defense playbook..."
 canonical: https://imnotanattorney.com/playbooks
 ```
@@ -198,55 +198,55 @@ A long-form, conversion-optimized sales funnel. All charge-type-specific copy co
 
 #### Page Structure (in order)
 
-1. **Hero** — Eyebrow, headline, price, CTA buttons, cover image
-   - Primary CTA: "Get Instant Access — $[price]"
+1. **Hero**, Eyebrow, headline, price, CTA buttons, cover image
+   - Primary CTA: "Get Instant Access, $[price]"
    - Secondary CTA: "2 payments of $[price/2]"
    - Delivery promise: "Download within 60 seconds"
 
-2. **Two-Book Split** — Visual breakdown of Emergency Playbook vs. Full Defense Playbook
+2. **Two-Book Split**, Visual breakdown of Emergency Playbook vs. Full Defense Playbook
    - Book 1 (red): "What to do right now. First 72 Hours..."
    - Book 2 (gold): "The complete reference. Case stage roadmap..."
 
-3. **Agitate** — Pain points (headline + 3 paragraphs + 3 cards)
+3. **Agitate**, Pain points (headline + 3 paragraphs + 3 cards)
    - Validates prospect's situation with empathetic copy
    - Cards highlight the problem this playbook solves
 
-4. **Proof** — 3 methodology cards with defense attorney attributions
+4. **Proof**, 3 methodology cards with defense attorney attributions
    - Each card: name, title, insight
    - Builds credibility through documented defense strategies
 
-5. **Value Stack** — 6 components included + total strikethrough value
+5. **Value Stack**, 6 components included + total strikethrough value
    - Shows individual component values (strikethrough)
    - Displays final price and total value comparison
 
-6. **Guarantee** — Risk-reversal copy (refund + credit policy)
+6. **Guarantee**, Risk-reversal copy (refund + credit policy)
    - Headline + detailed body copy
 
-7. **Who It's For** — Two-column audience split
+7. **Who It's For**, Two-column audience split
    - "This is for you if..." (5 checkmarks)
    - "This is NOT for you if..." (4 X marks)
 
-8. **Methodology Disclosure** — UPL compliance disclaimer
+8. **Methodology Disclosure**, UPL compliance disclaimer
    - Confirms playbook provides INFORMATION, not ADVICE
 
-9. **Urgency** — Time-sensitive deadlines specific to charge type
+9. **Urgency**, Time-sensitive deadlines specific to charge type
    - Base deadlines from config
    - Dynamic deadline: "30 days from purchase" (upgrade credit expiry)
 
-10. **FAQ** — Accordion with dynamically injected items
+10. **FAQ**, Accordion with dynamically injected items
     - Base FAQs from config
     - Dynamic FAQ items added:
       - "What if I need something more personalized?"
       - "[Tier] vs. [Next Tier]?" (if upgrade path exists)
 
-11. **Final CTA** — Comparison line + price + summary + buttons
+11. **Final CTA**, Comparison line + price + summary + buttons
     - Mirrors Hero CTA but with different framing
 
-12. **Upgrade Path** — (Conditional) Link to next tier if available
+12. **Upgrade Path**, (Conditional) Link to next tier if available
     - Shows upgrade price (with credit deduction)
     - 30-day expiry on credit
 
-13. **Exit Capture** — (DUI only, hardcoded)
+13. **Exit Capture**, (DUI only, hardcoded)
     - Free 72-Hour Emergency Checklist lead magnet
     - Component: `LeadCapture` with upsell to full playbook
 
@@ -260,15 +260,15 @@ A long-form, conversion-optimized sales funnel. All charge-type-specific copy co
 
 **Metadata Generation:**
 ```typescript
-title: "${tier.name} — ${tier.priceDisplay} Instant Download | ImNotAnAttorney"
+title: "${tier.name}, ${tier.priceDisplay} Instant Download | ImNotAnAttorney"
 description: config.seoDescription
 canonical: https://imnotanattorney.com/playbook/[slug]
 ```
 
 **Schema Markup:** Two `<script type="application/ld+json">` blocks
-- **BreadcrumbList** — Home > Playbooks > [Charge Type]
-- **Product** — Stripe offer, shipping, return policy
-- **FAQPage** — All FAQ items for rich snippets
+- **BreadcrumbList**, Home > Playbooks > [Charge Type]
+- **Product**, Stripe offer, shipping, return policy
+- **FAQPage**, All FAQ items for rich snippets
 
 ---
 
@@ -317,11 +317,11 @@ const faqItems = [
 ```
 
 **Sub-components Used:**
-- `FadeInUp` — Scroll reveal animations
-- `StaggerContainer / StaggerItem` — Staggered animations on card grids
-- `TrustBadges` — Credibility badges (compact + checkout variants)
-- `LeadCapture` — Lead magnet (DUI only)
-- `Link` from `next/link` — Client routing
+- `FadeInUp`, Scroll reveal animations
+- `StaggerContainer / StaggerItem`, Staggered animations on card grids
+- `TrustBadges`, Credibility badges (compact + checkout variants)
+- `LeadCapture`, Lead magnet (DUI only)
+- `Link` from `next/link`, Client routing
 
 ---
 
@@ -358,9 +358,9 @@ All playbook pricing and metadata lives here. Playbook configs reference this as
 ```
 
 **Key Functions Used by PlaybookSalesPage:**
-- `nextTierSlug(slug)` — Returns next tier in upgrade path, or null
-- `upgradePrice(slug)` — Returns cost difference with credit applied
-- `TIER_CORE[slug]` — Direct tier lookup
+- `nextTierSlug(slug)`, Returns next tier in upgrade path, or null
+- `upgradePrice(slug)`, Returns cost difference with credit applied
+- `TIER_CORE[slug]`, Direct tier lookup
 
 ---
 
@@ -444,17 +444,17 @@ All playbook pricing and metadata lives here. Playbook configs reference this as
 - **Title:** Multi-keyword (includes charge types + price)
 - **Meta description:** Long-tail (26 questions, roadmap, checklist, scorecard)
 - **H1:** "Defense Playbooks"
-- **Schema:** (None currently — could add CollectionPage)
+- **Schema:** (None currently, could add CollectionPage)
 
 ### Individual Sales Pages (`/playbook/[slug]`)
 
-- **Title:** "[Charge Type] — $[Price] Instant Download | ImNotAnAttorney"
+- **Title:** "[Charge Type], $[Price] Instant Download | ImNotAnAttorney"
 - **Meta description:** Pulled from `config.seoDescription`
 - **H1:** Headline from `config.hero.headline`
 - **Schema (injected in page.tsx):**
-  - **BreadcrumbList** — Home > Playbooks > [Charge Type]
-  - **Product** — Full offer schema (price, availability, shipping, returns)
-  - **FAQPage** — All FAQ items for rich snippets
+  - **BreadcrumbList**, Home > Playbooks > [Charge Type]
+  - **Product**, Full offer schema (price, availability, shipping, returns)
+  - **FAQPage**, All FAQ items for rich snippets
 
 ### Homepage Integration
 

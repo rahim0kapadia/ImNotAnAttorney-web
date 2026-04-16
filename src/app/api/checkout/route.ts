@@ -12,7 +12,7 @@
  * - Email normalization (lowercase + trim) for consistent Supabase lookups
  * - Upgrade credit calculation: 100% of prior lower-tier purchases applied as a
  *   one-time Stripe coupon, with a 12-month expiration window
- * - Situation Room ($9,997): requires active War Room — API validates prerequisite before creating session
+ * - Situation Room ($9,997): requires active War Room, API validates prerequisite before creating session
  * - Consent checkbox required server-side for tiers >= $2,497 (legal risk mitigation)
  * - Redirect URLs sourced from NEXT_PUBLIC_SITE_URL env var, never from the request
  *   Origin header, to prevent open-redirect attacks
@@ -70,13 +70,13 @@ export async function POST(req: NextRequest) {
     // 1a. STANDALONE PRODUCT CHECKOUT
     // Runs BEFORE tier validation. Standalone products (Employment Impact
     // Assessment, License Risk, etc.) do NOT participate in the tier upgrade
-    // ladder — they have independent pricing, no upgrade credits, no case
+    // ladder, they have independent pricing, no upgrade credits, no case
     // creation, and a separate post-purchase intake flow.
     // The webhook writes tier: "standalone" (sentinel) to prevent
     // contaminating tier-based queries.
     // =========================================================================
     if (standaloneProduct !== undefined && standaloneProduct !== null && standaloneProduct !== "") {
-      // Type check first — prevent array/object injection
+      // Type check first, prevent array/object injection
       if (typeof standaloneProduct !== "string") {
         return NextResponse.json({ error: "Invalid product" }, { status: 400 });
       }
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Product not available" }, { status: 400 });
       }
 
-      // Email validation — match tier checkout's regex pattern
+      // Email validation, match tier checkout's regex pattern
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         return NextResponse.json(
           { error: "Valid email required" },
@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
       const siteUrlStandalone =
         process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 
-      // Standalone products are always live — use live Stripe client explicitly
+      // Standalone products are always live, use live Stripe client explicitly
       if (!stripeLive) {
         return NextResponse.json(
           { error: "Payment not configured" },
@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // Inline price_data (same pattern as tier checkout) — products.ts is
+      // Inline price_data (same pattern as tier checkout), products.ts is
       // the single source of truth for pricing, no pre-created Stripe Prices
       const standaloneSession = await stripeLive.checkout.sessions.create({
         mode: "payment",
@@ -186,7 +186,7 @@ export async function POST(req: NextRequest) {
 
     const tierConfig = TIERS[tier];
 
-    // Use env var for redirect URLs — never trust Origin header (open redirect risk).
+    // Use env var for redirect URLs, never trust Origin header (open redirect risk).
     // If the env var is missing, fall back to the production domain as a safe default.
     const origin =
       process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
@@ -361,7 +361,7 @@ export async function POST(req: NextRequest) {
     // find the original order email to include in upgrade credit calculation.
     // =========================================================================
     let caseNumberEmail: string | null = null;
-    // Validated/sanitized values — used for both DB query and Stripe metadata
+    // Validated/sanitized values, used for both DB query and Stripe metadata
     let trimmedCaseNumber = "";
     let trimmedCaseState = "";
     if (existingCaseNumber && existingCaseState) {
@@ -472,7 +472,7 @@ export async function POST(req: NextRequest) {
       if (priorOrders && priorOrders.length > 0) {
         // POLICY: Upgrade credits use base tier price, not amount actually paid.
         // A customer who bought CD ($197) then upgraded to IB (paying $800 after $197 credit)
-        // gets $997 credit toward X-Ray — the full IB base price, not the $800 they paid.
+        // gets $997 credit toward X-Ray, the full IB base price, not the $800 they paid.
         // This incentivizes the upgrade ladder by making each next tier more attractive.
         // Confirmed as correct business behavior 2026-03-27.
         //
@@ -559,7 +559,7 @@ export async function POST(req: NextRequest) {
         price_data: {
           currency: "usd",
           product_data: {
-            name: `Priority Delivery — ${tierConfig.name}`,
+            name: `Priority Delivery, ${tierConfig.name}`,
             description: tierConfig.priorityDelivery || "Expedited delivery",
           },
           unit_amount: tierConfig.priorityPrice,
@@ -575,7 +575,7 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     let referralStripePromoId: string | undefined;
     let referralPartnerId: string | undefined;
-    // Sanitize promoCode early — used in both DB lookup and Stripe metadata
+    // Sanitize promoCode early, used in both DB lookup and Stripe metadata
     const sanitizedPromoCode = (promoCode && typeof promoCode === "string" && promoCode.length <= 50)
       ? promoCode.toUpperCase()
       : null;
@@ -620,7 +620,7 @@ export async function POST(req: NextRequest) {
       const sessionTotal = tierConfig.price + (priorityDelivery && tierConfig.priorityPrice ? tierConfig.priorityPrice : 0);
       const cappedCombined = Math.min(combinedAmount, Math.max(sessionTotal - 50, 0));
 
-      // Delete the original upgrade coupon — it's replaced by the combined one
+      // Delete the original upgrade coupon, it's replaced by the combined one
       await stripeForDiscount.coupons.del(stripeCouponId).catch(() => {});
 
       if (cappedCombined > 0) {
@@ -680,14 +680,14 @@ export async function POST(req: NextRequest) {
           }
         } catch (err) {
           console.error("[Checkout] Installment coupon conversion failed:", err);
-          // Proceed with original one-time discount — customer still gets the discount on first payment
+          // Proceed with original one-time discount, customer still gets the discount on first payment
         }
       }
 
       const installmentSession = await tierStripeInstallment.checkout.sessions.create({
         mode: "subscription",
         payment_method_types: ["card"],
-        // NOTE: customer_email (not customer) is intentional — creates a fresh
+        // NOTE: customer_email (not customer) is intentional, creates a fresh
         // Stripe Customer per session for privacy isolation. Criminal defense
         // clients should not see saved payment methods from prior purchases.
         customer_email: normalizedEmail || undefined,
@@ -747,7 +747,7 @@ export async function POST(req: NextRequest) {
     const session = await tierStripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
-      // customer_email (not customer) — see installment path comment for rationale
+      // customer_email (not customer), see installment path comment for rationale
       customer_email: normalizedEmail || undefined,
       line_items: lineItems,
       ...discountConfig,

@@ -8,16 +8,16 @@
 ## Critical (must resolve before writing code)
 
 ### 1. Navy (#1E3A8A) banned as text color
-- **WCAG 1.4.3** — Navy on #0a0a0a = 2.1:1 contrast (fails AA for all text sizes)
+- **WCAG 1.4.3**, Navy on #0a0a0a = 2.1:1 contrast (fails AA for all text sizes)
 - **Rule:** Navy is background/accent ONLY, never text. All text must use: #ededed (body), #a1a1aa (muted), #d4d4d8 (emphasis), #fbbf24/#f59e0b (amber accent)
-- **Enforcement:** Check every Tailwind class — no `text-blue-*` or `text-[#1E3A8A]`
+- **Enforcement:** Check every Tailwind class, no `text-blue-*` or `text-[#1E3A8A]`
 
 ### 2. Sample report: dual presentation required
-- **WCAG 1.1.1** — Screenshot of a data table is an image of structured info. Alt text can't convey tabular data.
+- **WCAG 1.1.1**, Screenshot of a data table is an image of structured info. Alt text can't convey tabular data.
 - **Rule:** Every sample report section must have BOTH:
   1. `<figure>` with `<img>` + descriptive alt text (1+ sentence describing the data shown)
   2. Accessible HTML `<table>` with 3-4 sample rows, `<caption>`, `<th scope="col">`, `<th scope="row">`
-- **Why:** Primary conversion element — blind users can't evaluate the product without the data. Also better for SEO (crawlable structured content).
+- **Why:** Primary conversion element, blind users can't evaluate the product without the data. Also better for SEO (crawlable structured content).
 
 ## Major (built-in requirements)
 
@@ -38,7 +38,7 @@
 
 ### 5. Section landmarks
 - Each major block: `<section aria-labelledby="section-heading-id">`
-- NO duplicate `<main>` — layout already provides it
+- NO duplicate `<main>`, layout already provides it
 - Page wrapper is a plain `<div>`, not a landmark
 
 ## Minor
@@ -78,7 +78,7 @@
 
 ### Page Structure
 - [ ] Page `<title>` via `generateMetadata` ("Judge Report Card | ImNotAnAttorney")
-- [ ] Single `<h1>` — product name in hero
+- [ ] Single `<h1>`, product name in hero
 - [ ] H1 > H2 hierarchy, no skipped levels
 - [ ] Each section: `<section aria-labelledby="...">`
 - [ ] No duplicate `<main>` inside page component
@@ -123,7 +123,7 @@
 - [ ] No CLS from late-loading images
 
 ### Links
-- [ ] CTA describes destination: "Get Your Judge Report Card — $197"
+- [ ] CTA describes destination: "Get Your Judge Report Card, $197"
 - [ ] External links: `<span class="sr-only">(opens in new tab)</span>`
 - [ ] No "Click here" without context
 

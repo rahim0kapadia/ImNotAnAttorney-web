@@ -1,5 +1,5 @@
 /**
- * ServicesFilteredContent — Client wrapper that reads DiscoveryGate filter via context.
+ * ServicesFilteredContent, Client wrapper that reads DiscoveryGate filter via context.
  *
  * Replaces the render-prop pattern that caused a RSC violation (functions cannot
  * be passed to client components). The filter state lives in DiscoveryGate's context;
@@ -31,7 +31,7 @@ export function GateContextCopy() {
   return (
     <p className="mt-4 text-center text-sm text-zinc-400">
       {filter === "pre-discovery"
-        ? "Showing services that work from your case details alone — no documents needed."
+        ? "Showing services that work from your case details alone, no documents needed."
         : "Showing services that analyze your police reports and case documents."}
     </p>
   );

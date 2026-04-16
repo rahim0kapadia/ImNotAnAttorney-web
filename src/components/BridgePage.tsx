@@ -1,10 +1,10 @@
 "use client";
 /**
- * Bridge page component — trust transfer from partner to service.
+ * Bridge page component, trust transfer from partner to service.
  *
  * Short interstitial following Russell Brunson's bridge page framework.
  * Warm traffic from trusted source = short bridge, one CTA.
- * Per Cialdini's Unity Principle — partner name + company carry through.
+ * Per Cialdini's Unity Principle, partner name + company carry through.
  */
 
 import Link from "next/link";
@@ -48,7 +48,7 @@ export function BridgePage({ partnerName, company, city, promoCode }: BridgePage
 
             <p className="text-zinc-200 mb-8">
               We research your specific charges, your judge, and your attorney&apos;s
-              track record — then give you the exact questions that hold your
+              track record, then give you the exact questions that hold your
               attorney accountable.
             </p>
           </FadeInUp>
@@ -72,7 +72,7 @@ export function BridgePage({ partnerName, company, city, promoCode }: BridgePage
             </div>
 
             <p className="text-zinc-400 text-sm mt-8">
-              ImNotAnAttorney provides legal information and questions — not legal advice.
+              ImNotAnAttorney provides legal information and questions, not legal advice.
             </p>
           </FadeInUp>
         </div>

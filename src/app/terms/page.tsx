@@ -17,7 +17,7 @@ import { TIER_CORE } from "@/lib/tiers";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "Terms of Service for ImNotAnAttorney — legal information and research services.",
+    "Terms of Service for ImNotAnAttorney, legal information and research services.",
   alternates: {
     canonical: `${SITE_URL}/terms`,
   },
@@ -35,7 +35,7 @@ export default function TermsPage() {
         </p>
 
         <div className="mt-10 space-y-8 text-sm leading-relaxed text-zinc-400">
-          {/* Human intro — before the legal language starts */}
+          {/* Human intro, before the legal language starts */}
           <p className="text-base text-zinc-300">
             We built this business because we&apos;ve been where you are. We know
             what it feels like when the system stops communicating and nobody
@@ -62,7 +62,7 @@ export default function TermsPage() {
               of our services, you agree to be bound by these Terms of Service
               (&quot;Terms&quot;). These Terms constitute a legally binding
               agreement between you and ImNotAnAttorney. We encourage you to read
-              them in full — and if anything doesn&apos;t make sense, reach out
+              them in full, and if anything doesn&apos;t make sense, reach out
               before purchasing.
             </p>
           </section>
@@ -81,7 +81,7 @@ export default function TermsPage() {
               review and trial intelligence.
             </p>
             <p className="mt-2">
-              Our services are designed to supplement — not replace — the
+              Our services are designed to supplement, not replace, the
               professional judgment of a licensed attorney. We provide you with
               information and questions; your attorney provides the legal
               strategy.
@@ -90,7 +90,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              3. What We Do — And What We Don&apos;t
+              3. What We Do, And What We Don&apos;t
             </h2>
             <p>
               <strong className="text-amber-400">
@@ -106,7 +106,7 @@ export default function TermsPage() {
               information, factual analysis of case documents, established legal
               frameworks and procedures, and specific questions you can bring to
               your attorney. Our reports identify patterns, potential issues, and
-              areas worth exploring — they do not tell you what to do.
+              areas worth exploring, they do not tell you what to do.
             </p>
             <p className="mt-2">
               <strong className="text-zinc-300">What we do NOT provide:</strong>{" "}
@@ -121,13 +121,13 @@ export default function TermsPage() {
               Your attorney makes the legal decisions. We make sure you
               understand what decisions are being made, and why. Our reports are
               designed to work best when brought into a conversation with your
-              attorney — giving you the context and questions to have a
+              attorney, giving you the context and questions to have a
               productive discussion.
             </p>
             <p className="mt-2">
-              No communication with ImNotAnAttorney — including submitting case
+              No communication with ImNotAnAttorney, including submitting case
               details, purchasing services, receiving reports, or exchanging
-              emails — creates an attorney-client relationship, establishes any
+              emails, creates an attorney-client relationship, establishes any
               privilege of confidentiality associated with such a relationship,
               or creates any fiduciary duty between you and ImNotAnAttorney.
             </p>
@@ -138,7 +138,7 @@ export default function TermsPage() {
               While we strive for thoroughness, our analysis is based on the
               information you provide. We don&apos;t have access to sealed court
               records, private conversations between attorneys and judges, or
-              real-time courtroom dynamics — which means there are things your
+              real-time courtroom dynamics, which means there are things your
               attorney knows that we can&apos;t account for. All content is
               reviewed for quality before delivery but is not verified by a
               licensed attorney.
@@ -155,7 +155,7 @@ export default function TermsPage() {
               published work of 40+ criminal defense attorneys. Your case data
               is not used to improve or train our analysis systems, and every
               report goes through a quality review before delivery. Like any
-              analytical tool, our technology has limitations — it can miss
+              analytical tool, our technology has limitations, it can miss
               nuance or produce errors, which is why our reports are designed as
               a starting point for conversations with your attorney, not a
               replacement for one. See our{" "}
@@ -181,7 +181,7 @@ export default function TermsPage() {
                 Each service tier includes a specific delivery timeframe stated
                 at the time of purchase. If we fail to deliver your report
                 within the guaranteed timeframe, you are entitled to a full
-                cash refund — no questions asked. To claim a delivery
+                cash refund, no questions asked. To claim a delivery
                 guarantee refund, contact us within 7 days of the missed
                 delivery deadline.
               </li>
@@ -193,10 +193,10 @@ export default function TermsPage() {
                 contact us within 30 days. We&apos;ll apply 100% of your
                 purchase as a credit toward any higher service tier.
                 Satisfaction credits are non-transferable and have no cash
-                value. This is a credit, not a cash refund — the delivery
+                value. This is a credit, not a cash refund, the delivery
                 guarantee above is the cash refund. Satisfaction credits do
                 not trigger deletion of your documents or revocation of
-                report access — only cash refunds (delivery guarantee) and
+                report access, only cash refunds (delivery guarantee) and
                 chargebacks do.
               </li>
               <li>
@@ -266,9 +266,9 @@ export default function TermsPage() {
               7. Intellectual Property
             </h2>
             <p>
-              All content on this website — including blog posts, guides,
+              All content on this website, including blog posts, guides,
               analysis templates, report formats, scoring methodologies, and
-              question frameworks — is the intellectual property of
+              question frameworks, is the intellectual property of
               ImNotAnAttorney and is protected by applicable copyright and
               intellectual property laws. You may not reproduce, distribute,
               modify, or resell our content without prior written permission.
@@ -303,7 +303,7 @@ export default function TermsPage() {
             </p>
             <p className="mt-2">
               We deliver our services as described on our website at the time of
-              your purchase — no hidden fees, no bait-and-switch. Beyond that,
+              your purchase, no hidden fees, no bait-and-switch. Beyond that,
               we provide our services &quot;as is&quot; and &quot;as
               available&quot; without additional warranties, express or implied,
               including implied warranties of merchantability or fitness for a
@@ -312,7 +312,7 @@ export default function TermsPage() {
             <p className="mt-2">
               We&apos;re a research partner, not a guarantor. Legal outcomes
               depend on facts, attorneys, judges, and circumstances we
-              can&apos;t control. What we can control — and do — is the quality
+              can&apos;t control. What we can control, and do, is the quality
               of the information and questions we put in your hands.
             </p>
           </section>

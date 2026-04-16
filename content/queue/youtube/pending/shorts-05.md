@@ -34,11 +34,11 @@ imnotanattorney.com/score
 
 [0:04-0:15] SIGN 1:
 [TEXT ON SCREEN: "#1: No discovery review with YOU"]
-"Sign one. They haven't reviewed discovery with you. Not just received it — reviewed it WITH you. You have a right to see the evidence the prosecution is using against you. If your attorney says 'don't worry about the paperwork,' worry about the paperwork. You lived the events. You will spot things they might miss."
+"Sign one. They haven't reviewed discovery with you. Not just received it, reviewed it WITH you. You have a right to see the evidence the prosecution is using against you. If your attorney says 'don't worry about the paperwork,' worry about the paperwork. You lived the events. You will spot things they might miss."
 
 [0:15-0:26] SIGN 2:
 [TEXT ON SCREEN: "#2: Zero motions filed"]
-"Sign two. No motions filed. It's been months. Ask them: what motions have you filed? If the answer is none and there's no specific explanation for why — that's not strategy. Motions to suppress evidence, motions to compel discovery, motions to dismiss — these are the tools of defense. If your attorney isn't using them, they're not defending."
+"Sign two. No motions filed. It's been months. Ask them: what motions have you filed? If the answer is none and there's no specific explanation for why, that's not strategy. Motions to suppress evidence, motions to compel discovery, motions to dismiss, these are the tools of defense. If your attorney isn't using them, they're not defending."
 
 [0:26-0:37] SIGN 3:
 [TEXT ON SCREEN: "#3: Every date ends in a continuance"]
@@ -46,7 +46,7 @@ imnotanattorney.com/score
 
 [0:37-0:47] SIGN 4:
 [TEXT ON SCREEN: "#4: They can't name your charges"]
-"Sign four. They confuse your facts with another client's or don't remember your charges without checking their file. If your attorney asks you to 'remind them' about your case at every meeting — they have too many clients and yours isn't getting the attention it needs."
+"Sign four. They confuse your facts with another client's or don't remember your charges without checking their file. If your attorney asks you to 'remind them' about your case at every meeting, they have too many clients and yours isn't getting the attention it needs."
 
 [0:47-0:57] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com/score"]

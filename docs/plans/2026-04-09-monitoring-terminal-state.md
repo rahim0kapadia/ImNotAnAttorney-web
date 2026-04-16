@@ -92,7 +92,7 @@ Follow-up migration to land in a separate approved session:
 ## Files to modify
 
 | File | Change |
-|------|--------|
+|------|------, |
 | `src/lib/types/operator.ts` | Add `completed` to the CaseStatus union. Add the `monitoring: ["completed"]` key to ALLOWED_TRANSITIONS. Update the terminal-statuses doc comment. |
 | `supabase/CONTEXT.md` | Update the state machine ASCII diagram. Update the Status Definitions table. Update the ALLOWED_TRANSITIONS code snippet. |
 | `supabase/SCHEMA.md` | Add a `completed_at` row to the cases table column reference. |
@@ -137,7 +137,7 @@ These are uncommitted work from parallel sessions. This plan does not touch any 
 
 ## Verification steps before commit
 
-1. Run the command `npx tsc --noEmit --skipLibCheck` from the repository root. Output must be clean with zero errors and zero warnings related to the touched files.
+1. Run the command `npx tsc,noEmit,skipLibCheck` from the repository root. Output must be clean with zero errors and zero warnings related to the touched files.
 2. Run the Grep tool for every `"monitoring"` and `'monitoring'` literal in the `src` directory to confirm no other file needs updating when `completed` is added. Every occurrence must still make semantic sense with the new terminal status in place.
 3. Read the updated `CaseStatus` type and `ALLOWED_TRANSITIONS` in full to confirm the state machine diagram in CONTEXT.md matches the TypeScript source.
 4. Open the new migration file and confirm it uses `IF NOT EXISTS` guards on both the column and the index so it is idempotent and safe to re-run against any environment.

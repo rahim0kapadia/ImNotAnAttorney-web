@@ -2,7 +2,7 @@
  * Defense Intelligence Query Module
  *
  * Single query surface for all intelligence data.
- * Wraps and extends tier9-reports/query.ts — no breaking changes.
+ * Wraps and extends tier9-reports/query.ts, no breaking changes.
  *
  * Integration principles (spec Section 7.1):
  *   1. Every product works with zero intelligence data
@@ -89,8 +89,8 @@ export interface DefenseIntelligenceData {
 
 // ============================================================
 // JUSTFAIR TYPES (federal sentencing + judge demographics)
-// Source: osf.io/nseh5 — 595,851 federal sentencing records
-// FEDERAL COURTS ONLY — state court judges return isEmpty=true
+// Source: osf.io/nseh5, 595,851 federal sentencing records
+// FEDERAL COURTS ONLY, state court judges return isEmpty=true
 // ============================================================
 
 export interface JudgeDemographics {
@@ -276,7 +276,7 @@ export async function queryDefenseIntelligence(
 
 /**
  * Query JUSTFAIR judge demographics + racial disparity data.
- * FEDERAL COURTS ONLY — 1,126 judges in database.
+ * FEDERAL COURTS ONLY, 1,126 judges in database.
  * State court judges will return isEmpty=true.
  */
 export async function queryJustfairJudge(
@@ -386,7 +386,7 @@ export async function queryDistrictCourtIntel(
       .order("judge_name_normalized", { ascending: true })
       .limit(200),
 
-    // Outcome benchmarks — state + national for comparison
+    // Outcome benchmarks, state + national for comparison
     supabase
       .from("outcome_benchmarks")
       .select("jurisdiction_level, jurisdiction_name, offense_type, total_cases, conviction_rate, dismissal_rate, median_sentence_months, plea_rate, trial_rate, plea_trial_penalty_pct, source_urls, data_period")
@@ -456,7 +456,7 @@ export interface ArrestSurvivalKitData {
 
 /**
  * Query agency-level data for the Arrest Survival Kit.
- * Always "available" — rights checklist is universal, agency data is bonus.
+ * Always "available", rights checklist is universal, agency data is bonus.
  */
 export async function queryArrestSurvivalKit(
   stateCode: string
@@ -498,7 +498,7 @@ export async function queryArrestSurvivalKit(
       totalOfficers: officers.length,
       wanderingOfficerCount: wanderingCount,
     },
-    // Always available — rights checklist is universal
+    // Always available, rights checklist is universal
     isEmpty: false,
   };
 }

@@ -122,7 +122,7 @@ function HomeContent() {
         tasks: tasksJson.tasks ?? [],
       });
     } catch {
-      // network error — keep stale data
+      // network error, keep stale data
     } finally {
       setLoading(false);
     }
@@ -343,7 +343,7 @@ function HomeContent() {
                       </Link>
                     </td>
                     <td className="px-4 py-3 text-zinc-400">
-                      {t.due_at ? formatDate(t.due_at) : "—"}
+                      {t.due_at ? formatDate(t.due_at) : ", "}
                     </td>
                     <td className="px-4 py-3">
                       <StatusBadge status={t.status} />

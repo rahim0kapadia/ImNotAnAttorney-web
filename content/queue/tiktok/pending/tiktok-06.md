@@ -3,7 +3,7 @@
 **Topic:** Who actually has the power to drop criminal charges
 **Format:** talking head + text overlay + myth-busting
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + "wrong buzzer" sound effect + beat
+**Trending sound suggestion:** Original audio, voiceover + "wrong buzzer" sound effect + beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -18,12 +18,12 @@
 ## Body
 [SECOND 3-12]
 **Visual**: Diagram showing hierarchy: STATE > PROSECUTOR > JUDGE > VICTIM (crossed out).
-**Audio/Voiceover**: "In criminal cases, the STATE brings charges. The prosecutor -- not the judge, not the police, not the victim -- has almost exclusive power over whether charges stay or go. The victim can ask the prosecutor to drop them, and sometimes that matters. But the prosecutor makes the final call. Every time."
+**Audio/Voiceover**: "In criminal cases, the STATE brings charges. The prosecutor, not the judge, not the police, not the victim, has almost exclusive power over whether charges stay or go. The victim can ask the prosecutor to drop them, and sometimes that matters. But the prosecutor makes the final call. Every time."
 **Text overlay**: "STATE brings charges. PROSECUTOR decides. Victim has no veto."
 
 [SECOND 12-20]
 **Visual**: List of actual reasons charges get dropped, appearing one at a time.
-**Audio/Voiceover**: "Charges actually get dropped for specific reasons. Insufficient evidence. Constitutional violations -- like an illegal search. Witness problems. Procedural errors. Diversion programs. Not because someone asked nicely."
+**Audio/Voiceover**: "Charges actually get dropped for specific reasons. Insufficient evidence. Constitutional violations, like an illegal search. Witness problems. Procedural errors. Diversion programs. Not because someone asked nicely."
 **Text overlay**: "Evidence. Constitutional violations. Witness issues. Procedure. Diversion."
 
 [SECOND 20-27]
@@ -32,7 +32,7 @@
 **Text overlay**: "ASK: What are the legal grounds for dismissal?"
 
 [SECOND 27-30]
-**Visual**: The text message from the opening -- but now a new message appears below: "Ask your attorney about motion to dismiss instead."
+**Visual**: The text message from the opening, but now a new message appears below: "Ask your attorney about motion to dismiss instead."
 **Text overlay**: "Skip the myths. Ask the real questions. imnotanattorney.com"
 **Audio**: Clean resolution beat.
 
@@ -48,7 +48,7 @@ Follow for the questions that actually matter in your case.
 - 0:27 "Skip the myths. Ask the real questions."
 
 ## Caption
-"She's gonna drop the charges." That's not how any of this works. The victim doesn't press or drop charges in criminal cases. The prosecutor does. Here are the actual reasons charges get dismissed -- and the questions you should be asking your attorney instead of waiting on a phone call.
+"She's gonna drop the charges." That's not how any of this works. The victim doesn't press or drop charges in criminal cases. The prosecutor does. Here are the actual reasons charges get dismissed, and the questions you should be asking your attorney instead of waiting on a phone call.
 
 ## Hashtags
 #chargesdroppd #criminalcharges #criminaldefense #mythbusted #knowyourrights

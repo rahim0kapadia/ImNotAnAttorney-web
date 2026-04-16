@@ -1,4 +1,4 @@
-# Bird SMS + Notification Preference System — Implementation Plan
+# Bird SMS + Notification Preference System, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -16,9 +16,9 @@
 
 These override specific sections in the tasks below. Code review identified 2 critical, 7 important, and 4 suggestion-level issues. All are fixed here.
 
-### C1. SAFETY — court_reminders must never be "sms" alone (affects Tasks 1, 9)
+### C1. SAFETY, court_reminders must never be "sms" alone (affects Tasks 1, 9)
 
-If a defendant sets court reminders to SMS-only and their phone is dead at 3AM, they get ZERO notification and miss court. `court_reminders` channel is restricted to `"email"` or `"both"` — never `"sms"` alone.
+If a defendant sets court reminders to SMS-only and their phone is dead at 3AM, they get ZERO notification and miss court. `court_reminders` channel is restricted to `"email"` or `"both"`, never `"sms"` alone.
 
 **Task 1 already updated** with `COURT_REMINDER_SAFE_CHANNELS`, `validateClientPrefs()`, and tests.
 
@@ -42,7 +42,7 @@ With:
 
 ### I1. validatePartnerSession missing notification_prefs (affects Tasks 8, 9, 10)
 
-`src/lib/partner-auth.ts` line 149 — add `notification_prefs` to the `.select()` string:
+`src/lib/partner-auth.ts` line 149, add `notification_prefs` to the `.select()` string:
 ```typescript
 .select("id, name, email, phone, company, promo_code, commission_rate, commission_tier, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, total_referrals, total_commission, total_paid_out, notification_prefs")
 ```
@@ -53,12 +53,12 @@ notification_prefs: Record<string, string> | null;
 
 ### I2. Stripe webhook timeout risk from SMS (affects Task 11)
 
-Move SMS send inside `waitUntil` or `after()` to avoid contributing to Stripe's 30-second webhook timeout. **Override Task 11, Step 2** — wrap the SMS call:
+Move SMS send inside `waitUntil` or `after()` to avoid contributing to Stripe's 30-second webhook timeout. **Override Task 11, Step 2**, wrap the SMS call:
 
 ```typescript
 // Use waitUntil to prevent webhook timeout from Bird API latency
 if (shouldSendSMS(partnerPrefs.payout) && partnerDetail.phone) {
-  // Fire-and-forget — don't await in the webhook response path
+  // Fire-and-forget, don't await in the webhook response path
   sendSMS(
     partnerDetail.phone,
     `INAA: You earned $${commissionDollars} from a new referral! Confirms ${holdbackDate}.`
@@ -294,7 +294,7 @@ describe("shouldSendEmail / shouldSendSMS", () => {
 - [ ] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run tests/notification-prefs.test.ts`
-Expected: FAIL — module `@/lib/notification-prefs` not found
+Expected: FAIL, module `@/lib/notification-prefs` not found
 
 - [ ] **Step 3: Implement notification-prefs.ts**
 
@@ -480,7 +480,7 @@ describe("sendSMS", () => {
 - [ ] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run tests/sms.test.ts`
-Expected: FAIL — module `@/lib/sms` not found
+Expected: FAIL, module `@/lib/sms` not found
 
 - [ ] **Step 3: Implement sms.ts**
 
@@ -506,7 +506,7 @@ export async function sendSMS(
   body: string
 ): Promise<{ success: boolean; error?: string }> {
   if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID || !BIRD_CHANNEL_ID) {
-    console.warn("[Bird SMS] Not configured — skipping SMS to", to);
+    console.warn("[Bird SMS] Not configured, skipping SMS to", to);
     return { success: false, error: "SMS not configured" };
   }
 
@@ -570,7 +570,7 @@ git rm src/lib/twilio.ts
 
 - [ ] **Step 7: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 8: Commit**
@@ -592,27 +592,27 @@ git commit -m "feat(sms): replace Twilio with Bird API, same sendSMS interface"
 - [ ] **Step 1: Write migration SQL**
 
 ```sql
--- supabase/migrations/20260414a_sms_notification_prefs.sql
--- Bird SMS + notification preference system foundation.
--- Adds phone, notification_prefs (JSONB overrides), sms_consent_at to court_reminders.
--- Adds notification_prefs to partners.
--- Adds locked_at to partner_referrals for 45-day commission holdback.
+, supabase/migrations/20260414a_sms_notification_prefs.sql
+, Bird SMS + notification preference system foundation.
+, Adds phone, notification_prefs (JSONB overrides), sms_consent_at to court_reminders.
+, Adds notification_prefs to partners.
+, Adds locked_at to partner_referrals for 45-day commission holdback.
 
--- Client phone + SMS consent
+, Client phone + SMS consent
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS phone text;
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS sms_consent_at timestamptz;
 
--- Notification preferences (JSONB overrides, NULL = all defaults)
+, Notification preferences (JSONB overrides, NULL = all defaults)
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS notification_prefs jsonb;
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS notification_prefs jsonb;
 
--- Commission holdback (45-day locking period)
+, Commission holdback (45-day locking period)
 ALTER TABLE partner_referrals ADD COLUMN IF NOT EXISTS locked_at timestamptz;
 ```
 
 - [ ] **Step 2: Apply migration via Supabase Management API**
 
-Read `C:\Users\email\.claude\projects\C--Users-email-projects-ImNotAnAttorney-web\memory\reference-supabase-management-api.md` for the API pattern. Apply using the management API — do NOT use `supabase db push` CLI.
+Read `C:\Users\email\.claude\projects\C, Users-email-projects-ImNotAnAttorney-web\memory\reference-supabase-management-api.md` for the API pattern. Apply using the management API, do NOT use `supabase db push` CLI.
 
 - [ ] **Step 3: Update CourtReminder interface**
 
@@ -666,7 +666,7 @@ locked_at           | timestamptz | NULL    | Commission confirmed after 45-day 
 
 - [ ] **Step 5: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 6: Commit**
@@ -692,7 +692,7 @@ git commit -m "feat(sms): add phone, notification_prefs, locked_at columns"
 ```typescript
 // src/app/api/court-reminders/[token]/phone/route.ts
 /**
- * PATCH /api/court-reminders/[token]/phone — Add phone to a court reminder.
+ * PATCH /api/court-reminders/[token]/phone, Add phone to a court reminder.
  *
  * Validates E.164 format, stores phone + sms_consent_at,
  * auto-upgrades notification_prefs.court_reminders to "both".
@@ -883,11 +883,11 @@ In `src/app/prep/[token]/page.tsx`, after fetching the reminder data and before 
 2. Import `PhoneOptIn` from `@/components/PhoneOptIn`.
 3. Render `<PhoneOptIn token={token} hasPhone={!!reminder.phone} />` after the header section, before insider tips.
 
-Exact insertion point depends on current page structure — the component goes between the header/hero and the first content section.
+Exact insertion point depends on current page structure, the component goes between the header/hero and the first content section.
 
 - [ ] **Step 4: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 5: Commit**
@@ -899,7 +899,7 @@ git commit -m "feat(sms): phone collection on prep page with 10DLC consent"
 
 ---
 
-### Task 5: Court Reminder Cron — SMS Path
+### Task 5: Court Reminder Cron, SMS Path
 
 **Files:**
 - Modify: `src/app/api/cron/court-reminders/route.ts`
@@ -946,7 +946,7 @@ for (const interval of REMINDER_INTERVALS) {
       alreadySent.add(interval.key);
       sent++;
 
-      // Send to indemnitor (co-signer) if applicable — email only for now
+      // Send to indemnitor (co-signer) if applicable, email only for now
       if (r.indemnitor_email) {
         try {
           await sendEmail({
@@ -1045,7 +1045,7 @@ Also add import at top: `import { getClientPrefs, getPartnerPrefs, shouldSendEma
 
 - [ ] **Step 5: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 6: Run existing tests**
@@ -1102,7 +1102,7 @@ if (shouldSendEmail(prefs.magic_link)) {
 if (shouldSendSMS(prefs.magic_link) && reminderRow?.phone) {
   const smsResult = await sendSMS(
     reminderRow.phone,
-    `ImNotAnAttorney login: ${magicUrl} — expires in 15 min.`
+    `ImNotAnAttorney login: ${magicUrl}, expires in 15 min.`
   );
   if (!smsResult.success) {
     console.warn("[Customer Magic Link] SMS failed:", smsResult.error);
@@ -1114,7 +1114,7 @@ Remove the existing unconditional `sendCustomerMagicLinkEmail` call and replace 
 
 - [ ] **Step 2: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 3: Commit**
@@ -1163,7 +1163,7 @@ Ensure the reminder query includes `phone` and `notification_prefs` in the selec
 
 - [ ] **Step 3: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 4: Commit**
@@ -1177,7 +1177,7 @@ git commit -m "feat(sms): check-in confirmation respects notification channel pr
 
 ## Phase 3: Bondsman SMS
 
-### Task 8: Partner Magic Link — Preference-Aware
+### Task 8: Partner Magic Link, Preference-Aware
 
 **Files:**
 - Modify: `src/app/api/partner/magic-link/route.ts`
@@ -1218,7 +1218,7 @@ if (shouldSendEmail(prefs.magic_link)) {
 if (shouldSendSMS(prefs.magic_link) && partner.phone) {
   const smsResult = await sendSMS(
     partner.phone,
-    `ImNotAnAttorney Partner Login: ${magicUrl} — expires in 15 min.`
+    `ImNotAnAttorney Partner Login: ${magicUrl}, expires in 15 min.`
   );
   if (!smsResult.success) {
     console.warn("[Partner Magic Link] SMS failed:", smsResult.error);
@@ -1230,7 +1230,7 @@ Replace the existing unconditional email send + conditional SMS send with the pr
 
 - [ ] **Step 2: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 3: Commit**
@@ -1254,7 +1254,7 @@ git commit -m "feat(sms): partner magic link respects notification channel prefs
 ```typescript
 // src/app/api/partner/notification-prefs/route.ts
 /**
- * GET/PATCH /api/partner/notification-prefs — Read/update partner notification preferences.
+ * GET/PATCH /api/partner/notification-prefs, Read/update partner notification preferences.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -1457,23 +1457,23 @@ In `src/app/partner/dashboard/page.tsx`:
 
 - [ ] **Step 4: Update requirePartnerAuth to include notification_prefs**
 
-Check `src/lib/partner-helpers.ts` — ensure `requirePartnerAuth` returns `notification_prefs` in the partner object. If the select query doesn't include it, add it.
+Check `src/lib/partner-helpers.ts`, ensure `requirePartnerAuth` returns `notification_prefs` in the partner object. If the select query doesn't include it, add it.
 
 - [ ] **Step 5: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 6: Commit**
 
 ```bash
 git add src/components/partner/NotificationSettings.tsx src/app/api/partner/notification-prefs/route.ts src/app/partner/dashboard/page.tsx
-git commit -m "feat(sms): bondsman notification settings — per-type channel preferences"
+git commit -m "feat(sms): bondsman notification settings, per-type channel preferences"
 ```
 
 ---
 
-### Task 10: Partner Drip — SMS Path
+### Task 10: Partner Drip, SMS Path
 
 **Files:**
 - Modify: `src/app/api/cron/partner-drip/route.ts`
@@ -1497,7 +1497,7 @@ if (shouldSendEmail(prefs.drip)) {
 }
 
 if (shouldSendSMS(prefs.drip) && partner.phone) {
-  // Short SMS version — strip HTML, truncate to 160 chars
+  // Short SMS version, strip HTML, truncate to 160 chars
   const smsBody = email.subject + ". Check your partner dashboard: https://imnotanattorney.com/partner/dashboard";
   await sendSMS(partner.phone, smsBody);
 }
@@ -1507,7 +1507,7 @@ Ensure the partner query includes `phone` and `notification_prefs` in the select
 
 - [ ] **Step 2: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 3: Commit**
@@ -1574,7 +1574,7 @@ Ensure `partnerDetail` select includes `phone, notification_prefs`.
 
 - [ ] **Step 3: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 4: Commit**
@@ -1598,7 +1598,7 @@ git commit -m "feat(sms): notify partner on sale earned via preferred channel"
 ```typescript
 // src/app/api/cron/lock-commissions/route.ts
 /**
- * GET /api/cron/lock-commissions — Lock commissions past 45-day holdback.
+ * GET /api/cron/lock-commissions, Lock commissions past 45-day holdback.
  *
  * Schedule: Daily via cron-job.org.
  * Protected by CRON_AUTH_TOKEN bearer token.
@@ -1752,14 +1752,14 @@ fetch(url, {
 
 - [ ] **Step 3: Type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 4: Commit**
 
 ```bash
 git add src/app/api/cron/lock-commissions/route.ts
-git commit -m "feat(payout): commission locking cron — 45-day holdback + partner notifications"
+git commit -m "feat(payout): commission locking cron, 45-day holdback + partner notifications"
 ```
 
 ---
@@ -1792,7 +1792,7 @@ git commit -m "docs: add SMS notification system and payout holdback to architec
 
 - [ ] **Step 1: Full type check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: 0 errors
 
 - [ ] **Step 2: Run all tests**
@@ -1802,12 +1802,12 @@ Expected: All tests pass (existing + new notification-prefs + sms tests)
 
 - [ ] **Step 3: Run CV**
 
-Run: `node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends`
+Run: `node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends`
 Expected: All probes pass (except pre-existing H2 drift)
 
 - [ ] **Step 4: Verify no Twilio references remain**
 
-Run: `grep -r "twilio\|TWILIO" src/ --include="*.ts" --include="*.tsx"`
+Run: `grep -r "twilio\|TWILIO" src/,include="*.ts",include="*.tsx"`
 Expected: No matches
 
 - [ ] **Step 5: Final commit if any remaining changes**

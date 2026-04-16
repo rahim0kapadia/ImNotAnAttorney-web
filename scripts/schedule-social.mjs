@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * schedule-social.mjs — Multi-platform scheduled posting via Postiz API
+ * schedule-social.mjs, Multi-platform scheduled posting via Postiz API
  *
  * Usage:
  *   node scripts/schedule-social.mjs twitter       # Schedule all pending twitter
@@ -64,7 +64,7 @@ function parseFrontmatter(raw) {
   return { fmLines: lines.slice(fmStart + 1, fmEnd), bodyLines: lines.slice(fmEnd + 1) };
 }
 
-// Extract the actual post content — strip metadata headers, engagement notes, etc.
+// Extract the actual post content, strip metadata headers, engagement notes, etc.
 function extractPostContent(bodyLines, platform) {
   const skipPrefixes = [
     '## ',

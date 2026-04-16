@@ -1,4 +1,4 @@
-# Comprehensive US Criminal Charge Taxonomy — Implementation Plan
+# Comprehensive US Criminal Charge Taxonomy, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -15,15 +15,15 @@
 - **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web`
 - **Problem:** Current system has 17 charge slugs covering ~7 of 38 NIBRS categories. Theft/Burglary/Robbery lumped together. No statute-level precision. Missing categories hit "Other." Intake asks redundant questions. Missing DB seed data forces hardcoded fallback.
 - **Key files to read first:**
-  - `src/lib/charge-types.ts` — current ALLOWED_CHARGE_TYPES
-  - `src/app/intake/page.tsx` — current intake form with hardcoded charge questions
-  - `supabase/functions/generate-report/index.ts` — `resolveChargeSlug()`, `getChargeContext()`, `getChargeContextFallback()` (lines 1655-1942)
-  - `supabase/migrations/00001_initial_schema.sql` — existing `charge_types` and `experts` table DDL
-  - `src/components/ChargeTypeSelector.tsx` — current homepage charge selector (8 types)
+  - `src/lib/charge-types.ts`, current ALLOWED_CHARGE_TYPES
+  - `src/app/intake/page.tsx`, current intake form with hardcoded charge questions
+  - `supabase/functions/generate-report/index.ts`, `resolveChargeSlug()`, `getChargeContext()`, `getChargeContextFallback()` (lines 1655-1942)
+  - `supabase/migrations/00001_initial_schema.sql`, existing `charge_types` and `experts` table DDL
+  - `src/components/ChargeTypeSelector.tsx`, current homepage charge selector (8 types)
 - **Tech stack:** Next.js 15 App Router, Supabase PostgreSQL, Anthropic Batch API, Tailwind CSS, TypeScript
 - **Key decisions:**
   - Three-layer hierarchy (categories → common charges → jurisdiction statutes) per NCIC/SEARCH methodology
-  - All 52 jurisdictions at once — no phasing by state
+  - All 52 jurisdictions at once, no phasing by state
   - Statute data always included in charge context block at every tier (not just upper tiers)
   - Card-based visual selectors per Friedman/Hagan/Covello, not dropdowns
   - "Don't know" / "My charge isn't listed" off-ramps at every screen
@@ -37,8 +37,8 @@
 **Why:** Clean progressive narrowing UX (never >15 options per screen), statute-level precision for reports, expert/question reuse across states, incremental data loading. Backed by NCIC as national standard and validated by 4 domain experts (Friedman, Covello, Hagan, Robinson).
 
 **Rejected alternatives:**
-- **Flat Statute Import (A)** — rejected because no structure for progressive narrowing, overwhelming UX (thousands of statutes per state), no natural grouping for expert panels
-- **Search-First with Fallback (C)** — rejected because search UX is hard for panicked 2AM users (typos, legal term confusion), and the fallback path is Approach B anyway
+- **Flat Statute Import (A)**, rejected because no structure for progressive narrowing, overwhelming UX (thousands of statutes per state), no natural grouping for expert panels
+- **Search-First with Fallback (C)**, rejected because search UX is hard for panicked 2AM users (typos, legal term confusion), and the fallback path is Approach B anyway
 
 ---
 
@@ -52,11 +52,11 @@
 - [ ] **Step 1: Write the migration DDL**
 
 ```sql
--- 028-charge-taxonomy.sql
--- Three-layer charge taxonomy: categories → common charges → jurisdiction statutes
--- Plus charge-specific intake questions (DB-driven, replaces hardcoded)
+, 028-charge-taxonomy.sql
+, Three-layer charge taxonomy: categories → common charges → jurisdiction statutes
+, Plus charge-specific intake questions (DB-driven, replaces hardcoded)
 
--- Layer 1: Top-level charge categories (12 rows)
+, Layer 1: Top-level charge categories (12 rows)
 CREATE TABLE IF NOT EXISTS charge_categories (
   slug text PRIMARY KEY,
   label text NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS charge_categories (
   updated_at timestamptz DEFAULT now() NOT NULL
 );
 
--- Layer 2: Common charge names (~200 rows, NCIC-backed)
+, Layer 2: Common charge names (~200 rows, NCIC-backed)
 CREATE TABLE IF NOT EXISTS common_charges (
   slug text PRIMARY KEY,
   label text NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS common_charges (
   updated_at timestamptz DEFAULT now() NOT NULL
 );
 
--- Layer 3: Jurisdiction-specific statutes (~8,000-10,000 rows)
+, Layer 3: Jurisdiction-specific statutes (~8,000-10,000 rows)
 CREATE TABLE IF NOT EXISTS jurisdiction_statutes (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   common_charge_slug text NOT NULL REFERENCES common_charges(slug),
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS jurisdiction_statutes (
   UNIQUE(common_charge_slug, jurisdiction)
 );
 
--- Charge-specific intake questions (~600-800 rows)
+, Charge-specific intake questions (~600-800 rows)
 CREATE TABLE IF NOT EXISTS charge_questions (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   common_charge_slug text NOT NULL REFERENCES common_charges(slug),
@@ -118,19 +118,19 @@ CREATE TABLE IF NOT EXISTS charge_questions (
   UNIQUE(common_charge_slug, question_id)
 );
 
--- Add columns to existing tables
+, Add columns to existing tables
 ALTER TABLE experts ADD COLUMN IF NOT EXISTS common_charge_slugs text[];
 ALTER TABLE cases ADD COLUMN IF NOT EXISTS common_charge_slug text;
 ALTER TABLE cases ADD COLUMN IF NOT EXISTS jurisdiction_statute_id uuid;
 
--- Indexes
+, Indexes
 CREATE INDEX IF NOT EXISTS idx_common_charges_category ON common_charges(category_slug);
 CREATE INDEX IF NOT EXISTS idx_jurisdiction_statutes_charge ON jurisdiction_statutes(common_charge_slug);
 CREATE INDEX IF NOT EXISTS idx_jurisdiction_statutes_jurisdiction ON jurisdiction_statutes(jurisdiction);
 CREATE INDEX IF NOT EXISTS idx_charge_questions_charge ON charge_questions(common_charge_slug);
 CREATE INDEX IF NOT EXISTS idx_experts_common_charges ON experts USING GIN (common_charge_slugs);
 
--- Updated_at triggers
+, Updated_at triggers
 CREATE TRIGGER set_updated_at_charge_categories BEFORE UPDATE ON charge_categories
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER set_updated_at_common_charges BEFORE UPDATE ON common_charges
@@ -138,7 +138,7 @@ CREATE TRIGGER set_updated_at_common_charges BEFORE UPDATE ON common_charges
 CREATE TRIGGER set_updated_at_jurisdiction_statutes BEFORE UPDATE ON jurisdiction_statutes
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Seed charge_categories (12 rows, frequency-sorted)
+, Seed charge_categories (12 rows, frequency-sorted)
 INSERT INTO charge_categories (slug, label, description, icon_name, sort_order) VALUES
   ('dui-driving', 'DUI & Driving Offenses', 'Driving under the influence, reckless driving, hit and run, vehicular crimes', 'car', 1),
   ('drug-offenses', 'Drug Offenses', 'Possession, trafficking, distribution, paraphernalia, manufacturing', 'pill', 2),
@@ -157,21 +157,21 @@ ON CONFLICT (slug) DO NOTHING;
 
 - [ ] **Step 2: Apply migration via Supabase Management API**
 
-Read `C:\Users\email\.claude\projects\C--Users-email-projects-ImNotAnAttorney-web\memory\reference-supabase-management-api.md` for the migration application method. Run the migration against the production Supabase database.
+Read `C:\Users\email\.claude\projects\C, Users-email-projects-ImNotAnAttorney-web\memory\reference-supabase-management-api.md` for the migration application method. Run the migration against the production Supabase database.
 
 - [ ] **Step 3: Verify tables created**
 
 Query Supabase to confirm all 4 new tables exist and `charge_categories` has 12 rows:
 ```sql
 SELECT count(*) FROM charge_categories;
--- Expected: 12
+, Expected: 12
 ```
 
 - [ ] **Step 4: Commit**
 
 ```bash
 git add supabase/migrations/028-charge-taxonomy.sql
-git commit -m "feat(db): add charge taxonomy tables — categories, common charges, jurisdiction statutes, charge questions"
+git commit -m "feat(db): add charge taxonomy tables, categories, common charges, jurisdiction statutes, charge questions"
 ```
 
 ---
@@ -186,8 +186,8 @@ This script generates the master prompt, submits batch requests to the Anthropic
 - [ ] **Step 1: Read existing Batch API patterns**
 
 Read these files to understand the Batch API infrastructure:
-- `src/lib/batch-api.ts` — Batch API utility module (types, poll/fetch helpers)
-- `supabase/functions/submit-cd-batch/index.ts` — example batch submission
+- `src/lib/batch-api.ts`, Batch API utility module (types, poll/fetch helpers)
+- `supabase/functions/submit-cd-batch/index.ts`, example batch submission
 
 - [ ] **Step 2: Write the generation script**
 
@@ -201,7 +201,7 @@ Create `scripts/generate-charge-taxonomy.ts`. The script must:
 
 The common charges list should be structured as a TypeScript const array. Include all charges identified in the NIBRS gap analysis from the spec:
 
-Categories and example charges to include (not exhaustive — the script defines the full list):
+Categories and example charges to include (not exhaustive, the script defines the full list):
 - **DUI & Driving:** DUI/DWI, DUI first offense, DUI repeat, reckless driving, hit and run, vehicular homicide, driving on suspended, fleeing/eluding
 - **Drug Offenses:** drug possession, drug trafficking, drug manufacturing, drug paraphernalia, prescription fraud
 - **Violent Crimes:** murder 1st degree, murder 2nd degree, voluntary manslaughter, involuntary manslaughter, aggravated assault, simple assault, battery, robbery, armed robbery, kidnapping, arson
@@ -218,7 +218,7 @@ Categories and example charges to include (not exhaustive — the script defines
 
 Test with a single jurisdiction (FL) first:
 ```bash
-npx tsx scripts/generate-charge-taxonomy.ts --jurisdiction FL --dry-run
+npx tsx scripts/generate-charge-taxonomy.ts,jurisdiction FL,dry-run
 ```
 
 Verify the output JSON has the expected structure.
@@ -240,7 +240,7 @@ git commit -m "feat: add charge taxonomy data generation script"
 - [ ] **Step 1: Run the generation script for all jurisdictions**
 
 ```bash
-npx tsx scripts/generate-charge-taxonomy.ts --all
+npx tsx scripts/generate-charge-taxonomy.ts,all
 ```
 
 This submits 52 API requests. Each response is saved to `data/charge-taxonomy/{jurisdiction}.json`. Monitor for rate limits and errors.
@@ -248,7 +248,7 @@ This submits 52 API requests. Each response is saved to `data/charge-taxonomy/{j
 - [ ] **Step 2: Run validation**
 
 ```bash
-npx tsx scripts/generate-charge-taxonomy.ts --validate
+npx tsx scripts/generate-charge-taxonomy.ts,validate
 ```
 
 Check:
@@ -305,19 +305,19 @@ Apply `029-charge-taxonomy-seed.sql` to the production database.
 - [ ] **Step 4: Verify data in database**
 
 ```sql
-SELECT count(*) FROM common_charges;           -- ~200
-SELECT count(*) FROM jurisdiction_statutes;     -- ~8,000-10,000
-SELECT count(*) FROM charge_questions;          -- ~600-800
-SELECT count(*) FROM charge_categories;         -- 12
+SELECT count(*) FROM common_charges;          , ~200
+SELECT count(*) FROM jurisdiction_statutes;    , ~8,000-10,000
+SELECT count(*) FROM charge_questions;         , ~600-800
+SELECT count(*) FROM charge_categories;        , 12
 SELECT jurisdiction, count(*) FROM jurisdiction_statutes GROUP BY jurisdiction ORDER BY count DESC LIMIT 5;
--- Should see top states with ~150-200 statutes each
+, Should see top states with ~150-200 statutes each
 ```
 
 - [ ] **Step 5: Commit**
 
 ```bash
 git add scripts/build-seed-migration.ts supabase/migrations/029-charge-taxonomy-seed.sql
-git commit -m "feat(db): seed charge taxonomy — ~200 common charges, ~10K jurisdiction statutes, ~700 questions"
+git commit -m "feat(db): seed charge taxonomy, ~200 common charges, ~10K jurisdiction statutes, ~700 questions"
 ```
 
 ---
@@ -412,7 +412,7 @@ git commit -m "feat: add charge taxonomy query library with enriched context bui
 ### Task 6: Integrate enriched charge context into report generation
 
 **Files:**
-- Modify: `supabase/functions/generate-report/index.ts` (lines 1655-1942 — `resolveChargeSlug()`, `getChargeContext()`, `getChargeContextFallback()`)
+- Modify: `supabase/functions/generate-report/index.ts` (lines 1655-1942, `resolveChargeSlug()`, `getChargeContext()`, `getChargeContextFallback()`)
 - Modify: `src/lib/charge-types.ts`
 
 - [ ] **Step 1: Read the current charge context functions**
@@ -430,15 +430,15 @@ In `supabase/functions/generate-report/index.ts`, update `resolveChargeSlug()`:
 
 In `supabase/functions/generate-report/index.ts`, modify `getChargeContext()`:
 1. First, try to resolve via new tables: query `common_charges` for the slug, then `jurisdiction_statutes` for the jurisdiction, then `experts` for the common charge
-2. If found, use `buildEnrichedChargeContext()` to format the enriched block (import from charge-taxonomy.ts — note: edge functions may need the function inlined since they can't import from src/lib)
+2. If found, use `buildEnrichedChargeContext()` to format the enriched block (import from charge-taxonomy.ts, note: edge functions may need the function inlined since they can't import from src/lib)
 3. If new tables return nothing, fall back to existing `charge_types` + `experts` query
 4. If that also fails, fall back to `getChargeContextFallback()`
 
-The enriched block is richer than the old format but goes into the same `${v.charge_specific_data}` slot — no changes needed to prompts.ts.
+The enriched block is richer than the old format but goes into the same `${v.charge_specific_data}` slot, no changes needed to prompts.ts.
 
 - [ ] **Step 4: Add legacy slug resolver to `src/lib/charge-types.ts`**
 
-Add a `resolveLegacyChargeSlug()` function that maps old slugs to new common_charge slugs (pure function, no DB needed — uses a hardcoded map derived from the spec's legacy slug table). Keep `ALLOWED_CHARGE_TYPES` and `isValidChargeType()` unchanged.
+Add a `resolveLegacyChargeSlug()` function that maps old slugs to new common_charge slugs (pure function, no DB needed, uses a hardcoded map derived from the spec's legacy slug table). Keep `ALLOWED_CHARGE_TYPES` and `isValidChargeType()` unchanged.
 
 - [ ] **Step 5: Test with an existing case**
 
@@ -452,7 +452,7 @@ Pick an existing case from the database. Manually trigger report generation and 
 
 ```bash
 git add supabase/functions/generate-report/index.ts src/lib/charge-types.ts
-git commit -m "feat: integrate enriched charge context — statute, elements, penalties in every report"
+git commit -m "feat: integrate enriched charge context, statute, elements, penalties in every report"
 ```
 
 ---
@@ -466,7 +466,7 @@ git commit -m "feat: integrate enriched charge context — statute, elements, pe
 
 - [ ] **Step 1: Read existing ChargeTypeSelector for patterns**
 
-Read `src/components/ChargeTypeSelector.tsx` — note the card grid pattern, radiogroup ARIA, toggle behavior, and Tailwind styling.
+Read `src/components/ChargeTypeSelector.tsx`, note the card grid pattern, radiogroup ARIA, toggle behavior, and Tailwind styling.
 
 - [ ] **Step 2: Read the brand design system**
 
@@ -490,7 +490,7 @@ Create `src/components/IntakeChargeCategories.tsx`:
 
 ```bash
 git add src/components/IntakeChargeCategories.tsx
-git commit -m "feat: add IntakeChargeCategories component — card grid with category selection"
+git commit -m "feat: add IntakeChargeCategories component, card grid with category selection"
 ```
 
 ---
@@ -509,7 +509,7 @@ Create `src/components/IntakeChargeSelector.tsx`:
 - When jurisdiction is a state (e.g., "FL"), fetches jurisdiction_statutes to show statute numbers alongside each charge
 - Renders a list of selectable cards/buttons, each showing:
   - Charge label (e.g., "Aggravated Assault / Battery")
-  - Statute number + offense class when available (e.g., "FL 784.045 — 2nd Degree Felony")
+  - Statute number + offense class when available (e.g., "FL 784.045, 2nd Degree Felony")
   - No statute info shown when jurisdiction is "unknown"
 - "My charge isn't listed" option at bottom → reveals a free-text input field
 - Toggle behavior: click selects, click again deselects
@@ -519,7 +519,7 @@ Create `src/components/IntakeChargeSelector.tsx`:
 
 ```bash
 git add src/components/IntakeChargeSelector.tsx
-git commit -m "feat: add IntakeChargeSelector — charge list with statute numbers per jurisdiction"
+git commit -m "feat: add IntakeChargeSelector, charge list with statute numbers per jurisdiction"
 ```
 
 ---
@@ -537,14 +537,14 @@ Create `src/components/IntakeChargeQuestions.tsx`:
 - Fetches charge questions for the given slug from Supabase
 - Renders each question as a labeled select/radio group
 - Each question has "Don't know" as the last option
-- One question visible at a time (progressive disclosure per Friedman) OR all at once (depending on count — if ≤4 questions, show all; if >4, paginate)
+- One question visible at a time (progressive disclosure per Friedman) OR all at once (depending on count, if ≤4 questions, show all; if >4, paginate)
 - Stores answers in internal state, calls onChange with all answers on each change
 
 - [ ] **Step 2: Commit**
 
 ```bash
 git add src/components/IntakeChargeQuestions.tsx
-git commit -m "feat: add IntakeChargeQuestions — DB-driven charge-specific questions"
+git commit -m "feat: add IntakeChargeQuestions, DB-driven charge-specific questions"
 ```
 
 ---
@@ -571,21 +571,21 @@ Read `src/app/intake/page.tsx` in its entirety. Note:
 In Step 1 of the wizard, replace:
 - The charge type dropdown (`stateChargeTypes` / `federalChargeTypes` / `allChargeTypes`) with `<IntakeChargeCategories>` → `<IntakeChargeSelector>`
 - The `chargeSpecificQuestions` Record with `<IntakeChargeQuestions>`
-- The sex offense sub-routing (no longer needed — sex offenses are distinct common charges in the new taxonomy: `sex-offense-contact`, `sex-offense-digital`, `indecent-exposure`, etc.)
+- The sex offense sub-routing (no longer needed, sex offenses are distinct common charges in the new taxonomy: `sex-offense-contact`, `sex-offense-digital`, `indecent-exposure`, etc.)
 
 The flow within Step 1 becomes:
 1. Jurisdiction selection (keep existing)
 2. State dropdown (keep existing, shown when "State" selected)
-3. `<IntakeChargeCategories>` — category card grid
-4. `<IntakeChargeSelector>` — specific charge with statute numbers (shown after category selected)
-5. `<IntakeChargeQuestions>` — fact-pattern questions (shown after charge selected)
+3. `<IntakeChargeCategories>`, category card grid
+4. `<IntakeChargeSelector>`, specific charge with statute numbers (shown after category selected)
+5. `<IntakeChargeQuestions>`, fact-pattern questions (shown after charge selected)
 
 - [ ] **Step 3: Update form state**
 
 Add these fields to the form state:
-- `categorySlug: string` — selected charge category
-- `commonChargeSlug: string` — selected common charge
-- `jurisdictionStatuteId: string` — resolved statute ID (if available)
+- `categorySlug: string`, selected charge category
+- `commonChargeSlug: string`, selected common charge
+- `jurisdictionStatuteId: string`, resolved statute ID (if available)
 
 Keep `chargeType: string` in the form state for backward compatibility at the API level. Set it from `commonChargeSlug` when the form submits.
 
@@ -613,7 +613,7 @@ Verify the build succeeds with no TypeScript errors.
 
 ```bash
 git add src/app/intake/page.tsx src/app/api/intake/route.ts
-git commit -m "feat(intake): rewrite charge selection — 3-screen progressive narrowing with statute display"
+git commit -m "feat(intake): rewrite charge selection, 3-screen progressive narrowing with statute display"
 ```
 
 ---
@@ -660,9 +660,9 @@ Read `src/components/HomepageHero.tsx`. Note the `selectedSlug` state and how CT
 - [ ] **Step 2: Update for category-based selection**
 
 When a category is selected:
-- If the category has a matching playbook (e.g., `dui-driving` → `dui-first-offense`), show "Get Your {playbook} — $97" CTA
-- If the category has no playbook (e.g., `violent-crimes`), show "Start Your Case Research — $197" CTA pointing to `/start`
-- Secondary CTA always available: "Need deeper analysis? Case Decoder — $197"
+- If the category has a matching playbook (e.g., `dui-driving` → `dui-first-offense`), show "Get Your {playbook}, $97" CTA
+- If the category has no playbook (e.g., `violent-crimes`), show "Start Your Case Research, $197" CTA pointing to `/start`
+- Secondary CTA always available: "Need deeper analysis? Case Decoder, $197"
 
 When no category selected: default CTAs unchanged (Case Decoder primary, Browse Playbooks secondary).
 
@@ -682,7 +682,7 @@ git commit -m "feat: update HomepageHero for category-based charge selection"
 
 - [ ] **Step 1: Read current page.tsx**
 
-Read `src/app/page.tsx` — note the "Defense Playbooks by Charge Type" section (lines ~583-621) and the structured data schema with `knowsAbout`.
+Read `src/app/page.tsx`, note the "Defense Playbooks by Charge Type" section (lines ~583-621) and the structured data schema with `knowsAbout`.
 
 - [ ] **Step 2: Update catalog grid**
 
@@ -722,7 +722,7 @@ cd C:\Users\email\projects\ImNotAnAttorney-web && npx next build
 - [ ] **Step 2: Run CV (Continuous Verification)**
 
 ```bash
-node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends
+node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends
 ```
 
 - [ ] **Step 3: Visual QA via Playwright MCP**
@@ -730,7 +730,7 @@ node ~/projects/continuous-verification/verify.mjs --project inna --probe-only -
 Navigate to `https://imnotanattorney.com` and verify:
 1. Homepage shows 12 charge category cards (not 8)
 2. Clicking a category updates CTA appropriately
-3. Navigate to `/intake` — verify 3-screen charge selection flow:
+3. Navigate to `/intake`, verify 3-screen charge selection flow:
    - Select jurisdiction → select category → select specific charge (with statute number)
    - Charge-specific questions load dynamically
    - "I don't know" / "My charge isn't listed" paths work

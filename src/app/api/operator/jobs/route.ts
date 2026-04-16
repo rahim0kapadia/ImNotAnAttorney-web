@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/jobs — Paginated processing job list with filters
+ * @file /api/operator/jobs, Paginated processing job list with filters
  *
  * GET: Lists processing jobs with optional filters for status, job_type, case_id.
  *      Ordered by priority ascending (higher priority first), then created_at descending.

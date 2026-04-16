@@ -1,5 +1,5 @@
 /**
- * @file Feedback Patterns — extracts structural features from published blog
+ * @file Feedback Patterns, extracts structural features from published blog
  * posts and identifies winning patterns by comparing top vs bottom performers.
  *
  * Pure TypeScript analysis, no LLM calls. Reads MDX files from content/blog/.

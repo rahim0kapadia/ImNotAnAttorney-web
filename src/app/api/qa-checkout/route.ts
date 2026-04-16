@@ -6,7 +6,7 @@
  *
  * Creates a Stripe checkout session with the internal QA coupon (100% off)
  * and redirects to the Stripe-hosted checkout page. Saves pasting long
- * Stripe URLs — just open this URL in a browser.
+ * Stripe URLs, just open this URL in a browser.
  *
  * Supports both tier products (?tier=) and standalone products (?product=).
  *
@@ -28,7 +28,7 @@ function timingSafeCompare(a: string, b: string): boolean {
 }
 
 export async function GET(req: NextRequest) {
-  // Gate on operator secret — return 404 to avoid revealing the route exists
+  // Gate on operator secret, return 404 to avoid revealing the route exists
   const key = req.nextUrl.searchParams.get("key");
   if (!OPERATOR_SECRET || !key || !timingSafeCompare(OPERATOR_SECRET, key)) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });

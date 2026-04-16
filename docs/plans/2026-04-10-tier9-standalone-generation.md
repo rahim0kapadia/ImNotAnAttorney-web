@@ -3,7 +3,7 @@
 **Date:** 2026-04-10
 **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web\`
 **Problem:** 3 Tier 9 standalone SKUs have deployed landing pages but no backend to generate reports on purchase.
-**Spec:** User instructions (no separate spec file — architecture decisions inline below).
+**Spec:** User instructions (no separate spec file, architecture decisions inline below).
 
 ## Context
 
@@ -24,11 +24,11 @@ These products query **pre-computed Tier 9 database tables** (43K+ rows). No Cla
 Landing pages link to `/checkout?tier=judge-report-card` (tier checkout path). The webhook currently routes `isDigitalProduct` tiers to the playbook download path. We add a branch that detects Tier 9 slugs and routes them to a standalone-like intake flow instead.
 
 This means:
-- **Zero landing page changes** — checkout URL stays the same
-- **Checkout API** — unchanged (tier path creates session with `product_type: "digital-product"`)
-- **Webhook** — new branch for Tier 9 SKUs (creates intake token, sends intake email)
-- **Intake form** — new FIELD_SETS entries for the 3 SKUs
-- **Generation** — new Next.js module queries DB, renders HTML, stores, emails
+- **Zero landing page changes**, checkout URL stays the same
+- **Checkout API**, unchanged (tier path creates session with `product_type: "digital-product"`)
+- **Webhook**, new branch for Tier 9 SKUs (creates intake token, sends intake email)
+- **Intake form**, new FIELD_SETS entries for the 3 SKUs
+- **Generation**, new Next.js module queries DB, renders HTML, stores, emails
 
 ### Key Files
 
@@ -36,12 +36,12 @@ This means:
 |------|------|
 | `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\tiers.ts` | SKU definitions (already has all 3, `live: false`) |
 | `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\products.ts` | Standalone product catalog (need to add 3 entries for `getProduct()`) |
-| `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\webhooks\stripe\route.ts` | Webhook — add Tier 9 branch after order creation |
-| `C:\Users\email\projects\ImNotAnAttorney-web\src\app\intake\standalone\[slug]\IntakeFormClient.tsx` | Intake form — add FIELD_SETS for 3 SKUs |
-| `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\intake\standalone\[slug]\route.ts` | Intake API — add validation + Tier 9 generation trigger |
+| `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\webhooks\stripe\route.ts` | Webhook, add Tier 9 branch after order creation |
+| `C:\Users\email\projects\ImNotAnAttorney-web\src\app\intake\standalone\[slug]\IntakeFormClient.tsx` | Intake form, add FIELD_SETS for 3 SKUs |
+| `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\intake\standalone\[slug]\route.ts` | Intake API, add validation + Tier 9 generation trigger |
 | `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\tier9-reports\` | NEW: generation module (query + render + store + email) |
 | `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\generate\tier9\route.ts` | NEW: operator retry route |
-| `C:\Users\email\projects\ImNotAnAttorney-web\src\app\report\standalone\[token]\page.tsx` | Existing report viewer — works as-is |
+| `C:\Users\email\projects\ImNotAnAttorney-web\src\app\report\standalone\[token]\page.tsx` | Existing report viewer, works as-is |
 
 ### Tech Stack
 
@@ -87,13 +87,13 @@ This intercepts Tier 9 SKUs before the playbook path. Remaining `digital-product
 
 ## Task 3: Create Tier 9 report generation module
 
-**Why:** Core generation logic — queries Tier 9 tables, renders HTML, uploads to Storage, sends delivery email.
+**Why:** Core generation logic, queries Tier 9 tables, renders HTML, uploads to Storage, sends delivery email.
 
 **Directory:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\tier9-reports\`
 
-### 3a: `constants.ts` — slug set + type guard
+### 3a: `constants.ts`, slug set + type guard
 
-### 3b: `query.ts` — database queries
+### 3b: `query.ts`, database queries
 
 One function per SKU. Uses `createAdminClient()`.
 
@@ -101,7 +101,7 @@ One function per SKU. Uses `createAdminClient()`.
 - **`queryOfficerBackground(intake)`:** Query officer_reliability by officer_name ILIKE + optional jurisdiction/state. Return typed result + isEmpty flag.
 - **`querySimilarCases(intake)`:** Query case_feature_vectors by charge_slug + jurisdiction. Fetch sentencing_distributions (aggregate for charge_slug), plea_discount_curves, appellate_trends. Return typed result + isEmpty flag.
 
-### 3c: `render.ts` — HTML report templates
+### 3c: `render.ts`, HTML report templates
 
 One function per SKU. Takes query results, returns HTML string.
 
@@ -115,7 +115,7 @@ Design principles:
 - Tables for structured data (sentencing distributions, pairings)
 - Blockquotes for judge quotes with citation
 
-### 3d: `generate.ts` — orchestrator
+### 3d: `generate.ts`, orchestrator
 
 ```
 generateTier9Report(orderId: string): Promise<void>
@@ -135,7 +135,7 @@ Flow:
 
 Uses: `@/lib/supabase/admin`, `@/lib/email`, `@/lib/site`.
 
-### 3e: `index.ts` — public exports
+### 3e: `index.ts`, public exports
 
 ---
 
@@ -198,7 +198,7 @@ POST endpoint, auth via OPERATOR_SECRET bearer token. Body: `{ orderId }`. Calls
 
 ## Task 7: E2E verification in Stripe test mode
 
-1. Verify TypeScript compiles (`npx tsc --noEmit`)
+1. Verify TypeScript compiles (`npx tsc,noEmit`)
 2. Verify dev server starts
 3. Test checkout -> webhook -> intake email flow for each SKU
 4. Test intake form submission -> report generation
@@ -210,12 +210,12 @@ POST endpoint, auth via OPERATOR_SECRET bearer token. Body: `{ orderId }`. Calls
 
 ## Deviations
 
-(None yet — log any plan departures here during execution.)
+(None yet, log any plan departures here during execution.)
 
 ## Session Notes
 
 - Checkout flow needs NO changes. Landing pages -> `/checkout?tier=judge-report-card` -> tier checkout -> Stripe session with `product_type: "digital-product"` -> webhook intercepts for Tier 9 -> intake email.
 - Both tiers.ts (checkout validation) and products.ts (intake/delivery) define the 3 slugs.
-- Report viewer at `/report/standalone/[token]` works as-is — reads `orders.standalone_report_token_hash`.
-- Intake form at `/intake/standalone/[slug]` works as-is — just needs FIELD_SETS entries.
+- Report viewer at `/report/standalone/[token]` works as-is, reads `orders.standalone_report_token_hash`.
+- Intake form at `/intake/standalone/[slug]` works as-is, just needs FIELD_SETS entries.
 - If judge/officer not in DB: generation sends "limited data" email + operator alert, does not generate empty report.

@@ -8,15 +8,15 @@ QA the live homepage at https://imnotanattorney.com after the multi-charge redes
 Use Playwright MCP (headless browser) to navigate, click, screenshot, and evaluate DOM on the live homepage. Never puppeteer or screen-capture-mcp.
 
 ## Files Modified
-- `C:\Users\email\.claude\settings.json` — added `"enabledMcpjsonServers": ["playwright"]` to fix Playwright MCP not connecting. External linter also added `enforce-procedure-read.js` and `track-procedure-read.js` hooks.
+- `C:\Users\email\.claude\settings.json`, added `"enabledMcpjsonServers": ["playwright"]` to fix Playwright MCP not connecting. External linter also added `enforce-procedure-read.js` and `track-procedure-read.js` hooks.
 
 ## What Didn't Work
-- **Puppeteer MCP was used by mistake** — Playwright MCP was configured in `~/.claude/.mcp.json` but wasn't appearing in deferred tools. Root cause: needed explicit `enabledMcpjsonServers` entry in settings.json. Puppeteer got partial results (screenshot confirmed 8 buttons render correctly, default CTA shows "Start Your Case Research — $197") but click tests failed on selector syntax.
+- **Puppeteer MCP was used by mistake**, Playwright MCP was configured in `~/.claude/.mcp.json` but wasn't appearing in deferred tools. Root cause: needed explicit `enabledMcpjsonServers` entry in settings.json. Puppeteer got partial results (screenshot confirmed 8 buttons render correctly, default CTA shows "Start Your Case Research, $197") but click tests failed on selector syntax.
 - **Lesson:** When a configured MCP server doesn't appear in deferred tools, check `enabledMcpjsonServers` in settings.json. Don't silently fall back to a different tool.
 
 ## Partial Results (from puppeteer, before we stopped)
 - 8 charge type buttons confirmed visible: DUI, Drug Possession, Drug Trafficking, Probation Violation, White Collar, Sex Offense, Federal Criminal, Self-Defense
-- Default CTA: "Start Your Case Research — $197" + "Browse all Defense Playbooks — $97 each"
+- Default CTA: "Start Your Case Research, $197" + "Browse all Defense Playbooks, $97 each"
 - These need re-verification with Playwright
 
 ## Remaining Steps

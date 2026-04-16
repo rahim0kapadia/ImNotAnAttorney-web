@@ -1,6 +1,6 @@
 /**
- * GET /api/admin/demand/emerging — emerging topics (detected/promoted)
- * PATCH /api/admin/demand/emerging — promote or dismiss a topic
+ * GET /api/admin/demand/emerging, emerging topics (detected/promoted)
+ * PATCH /api/admin/demand/emerging, promote or dismiss a topic
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";

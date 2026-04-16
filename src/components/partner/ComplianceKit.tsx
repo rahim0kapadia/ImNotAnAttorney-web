@@ -1,6 +1,6 @@
 "use client";
 /**
- * Partner Compliance Kit — approved/prohibited language + FTC disclosure templates.
+ * Partner Compliance Kit, approved/prohibited language + FTC disclosure templates.
  * Helps partners stay within legal guidelines when promoting the service.
  */
 
@@ -36,7 +36,7 @@ const FTC_DISCLOSURES = [
   {
     label: "In Person (verbal for bondsmen)",
     template:
-      "Full transparency — I get a referral fee if you use my code. I recommend them because my clients tell me it helped them feel more prepared.",
+      "Full transparency, I get a referral fee if you use my code. I recommend them because my clients tell me it helped them feel more prepared.",
   },
 ];
 

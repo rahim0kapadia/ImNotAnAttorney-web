@@ -1,4 +1,4 @@
-# INAA Legal Data Pipeline — End-to-End Architecture
+# INAA Legal Data Pipeline, End-to-End Architecture
 
 Last updated: 2026-03-28
 
@@ -42,17 +42,17 @@ Customer pays → Case created → Intake form submitted
 ## DATA PIPELINE MAP
 
 ### Status Key
-- ✅ LIVE — producer writes, consumer reads, deliverable ships
-- ⚠️ PARTIAL — some data flows, gaps exist
-- ❌ BROKEN — consumer expects data, producer doesn't exist or isn't running
-- 🔲 DESIGNED — table/schema exists, no producer built yet
+- ✅ LIVE, producer writes, consumer reads, deliverable ships
+- ⚠️ PARTIAL, some data flows, gaps exist
+- ❌ BROKEN, consumer expects data, producer doesn't exist or isn't running
+- 🔲 DESIGNED, table/schema exists, no producer built yet
 
 ---
 
 ### Layer 1: Charge Taxonomy (per charge × jurisdiction, reusable)
 
 | # | Data Point | Producer | Table | Consumer | Deliverable | Status |
-|---|-----------|----------|-------|----------|-------------|--------|
+|---|---------, |----------|-------|----------|-------------|------, |
 | 1 | Charge categories (12) | Migration 028 seed | `charge_categories` | `getChargeCategories()` → IntakeChargeCategories | Intake Step 1 category grid | ✅ LIVE |
 | 2 | Common charges (115) | Migration 029 seed | `common_charges` | `getCommonCharges()` → IntakeChargeSelector | Intake charge selection | ✅ LIVE |
 | 3 | Charge questions (161) | Migration 029 seed | `charge_questions` | `getChargeQuestions()` → IntakeChargeQuestions | Intake charge-specific questions | ✅ LIVE |
@@ -67,8 +67,8 @@ Customer pays → Case created → Intake form submitted
 ### Layer 2: Legal Research (per case, run before report generation)
 
 | # | Data Point | Producer | Table | Consumer | Deliverable | Status |
-|---|-----------|----------|-------|----------|-------------|--------|
-| 11 | Pre-researched case law | **Engine: legal-research.mjs (NOT RUNNING)** | `case_law_references` (research_source=pre_research) | `fetchLegalResearchData():2113` → report prompt | "PRE-RESEARCHED CASE LAW" — Claude told to cite THESE over generated | ❌ BROKEN |
+|---|---------, |----------|-------|----------|-------------|------, |
+| 11 | Pre-researched case law | **Engine: legal-research.mjs (NOT RUNNING)** | `case_law_references` (research_source=pre_research) | `fetchLegalResearchData():2113` → report prompt | "PRE-RESEARCHED CASE LAW", Claude told to cite THESE over generated | ❌ BROKEN |
 | 12 | Court name + type | **Engine: jurisdiction-profile.mjs (NOT RUNNING)** | `jurisdiction_profiles` | `fetchLegalResearchData():2103` → report prompt | "JURISDICTION PROFILE" block | 🔲 DESIGNED (table created via migration 011, no producer yet) |
 | 13 | Speedy trial statute + days | **Engine: jurisdiction-profile.mjs** | `jurisdiction_profiles.speedy_trial_*` | `fetchLegalResearchData()` → report prompt | Speedy trial clock in report | ❌ BROKEN |
 | 14 | Charge statute text + URL | **Engine: jurisdiction-profile.mjs** | `jurisdiction_profiles.charge_statute_*` | `fetchLegalResearchData()` → report prompt | Statute text with source link | ❌ BROKEN |
@@ -80,7 +80,7 @@ Customer pays → Case created → Intake form submitted
 ### Layer 3: Enrichment (nice-to-have, improves quality)
 
 | # | Data Point | Producer | Table | Consumer | Deliverable | Status |
-|---|-----------|----------|-------|----------|-------------|--------|
+|---|---------, |----------|-------|----------|-------------|------, |
 | 19 | Diversion program eligibility | **NONE** | No table (data in engine's `diversion-programs.json` but not loaded) | `buildLegalOptions()` | Section 4 alternative paths | ❌ BROKEN |
 | 20 | Collateral consequences (NICCC) | **NONE** | No table | `buildProtection()` | Section 5b Life Impact Map (800 words) | ❌ BROKEN |
 | 21 | Professional licensing impact | **NONE** | No table | `buildProtection():406-413` | Industry-specific licensing consequences | ❌ BROKEN |
@@ -91,7 +91,7 @@ Customer pays → Case created → Intake form submitted
 ### Layer 4: Working Data (already functional)
 
 | # | Data Point | Producer | Table | Consumer | Deliverable | Status |
-|---|-----------|----------|-------|----------|-------------|--------|
+|---|---------, |----------|-------|----------|-------------|------, |
 | 25 | Case record | Stripe webhook + intake | `cases` | All report generation | Case context | ✅ LIVE |
 | 26 | Intake form data | Customer via /intake | `intakes` | All report generation | Customer's situation | ✅ LIVE |
 | 27 | Legacy charge types | Migration 004 seed | `charge_types` | `getChargeContext()` fallback path | Legacy expert routing | ✅ LIVE |
@@ -105,8 +105,8 @@ Customer pays → Case created → Intake form submitted
 ## BROKEN LINK SUMMARY
 
 **12 of 31 data points still broken** (down from 18). Progress:
-- Items 4-9: ⚠️ PARTIAL — 510 statute rows loaded across 5 states (FL, GA, IL, NC, PA). FL statutes being verified via Online Sunshine. AI-generated data pending full verification.
-- Items 12, 16: 🔲 DESIGNED — tables created (migration 011 applied 2026-03-28), no producer yet.
+- Items 4-9: ⚠️ PARTIAL, 510 statute rows loaded across 5 states (FL, GA, IL, NC, PA). FL statutes being verified via Online Sunshine. AI-generated data pending full verification.
+- Items 12, 16: 🔲 DESIGNED, tables created (migration 011 applied 2026-03-28), no producer yet.
 - Items 10-11, 13-15, 17-24: ❌ Still broken.
 
 Remaining gaps:
@@ -123,7 +123,7 @@ Migration 011 applied. Migration 030 added research tracking columns + `statute_
 ## DATA SOURCES (for the research skill that fixes this)
 
 | Layer | Source | Auth | Rate Limit | Coverage | What It Provides |
-|-------|--------|------|-----------|----------|------------------|
+|-------|------, |------|---------, |----------|------------------|
 | Federal statutes | GovInfo API | Free api.data.gov key | Generous | All federal titles | Statute text, section-level |
 | Federal regs | eCFR API | None | None stated | All CFR titles | Point-in-time regulation text |
 | Federal bulk | uscode.house.gov XML | None | N/A (download) | Full US Code | Offline statute corpus |
@@ -142,27 +142,27 @@ Migration 011 applied. Migration 030 added research tracking columns + `statute_
 
 ## THE FIX: Legal Research Skill
 
-### Level 1 — Per Charge × Jurisdiction (run once, reuse across all cases)
+### Level 1, Per Charge × Jurisdiction (run once, reuse across all cases)
 Populates: `jurisdiction_statutes`, `case_law_references` (charge-level), `charge_questions`
 
 For each of 115 charges × 52 jurisdictions:
-1. **Statute lookup** — search state legislature site + Justia + Cornell LII
-2. **Extract** — statute number, title, elements, penalties, mandatory minimums, enhancements
-3. **Validate** — statute must appear in 2+ sources; store source URLs
-4. **Case law** — search CourtListener for 5-10 landmark cases citing this statute
-5. **Validate citations** — CourtListener Citation Lookup API
-6. **Store** — `jurisdiction_statutes` with `source_urls[]`, `verified_at`, `confidence_score`
+1. **Statute lookup**, search state legislature site + Justia + Cornell LII
+2. **Extract**, statute number, title, elements, penalties, mandatory minimums, enhancements
+3. **Validate**, statute must appear in 2+ sources; store source URLs
+4. **Case law**, search CourtListener for 5-10 landmark cases citing this statute
+5. **Validate citations**, CourtListener Citation Lookup API
+6. **Store**, `jurisdiction_statutes` with `source_urls[]`, `verified_at`, `confidence_score`
 
-### Level 2 — Per Case (run when case created, before report generation)
+### Level 2, Per Case (run when case created, before report generation)
 Populates: `jurisdiction_profiles`, `judge_profiles`, `cases.wex_definitions`, `case_law_references` (case-specific)
 
 For each new case:
-1. **Jurisdiction profile** — court info from CourtListener Courts API, speedy trial from state rules
-2. **Judge profile** — CourtListener People API + Ballotpedia (if elected)
-3. **Wex definitions** — Cornell LII for charge-specific terms
-4. **Case-specific case law** — CourtListener search for this charge + jurisdiction + relevant facts
-5. **Motion deadlines** — state Rules of Criminal Procedure lookup
-6. **Arraignment date** — docket search if case number provided
+1. **Jurisdiction profile**, court info from CourtListener Courts API, speedy trial from state rules
+2. **Judge profile**, CourtListener People API + Ballotpedia (if elected)
+3. **Wex definitions**, Cornell LII for charge-specific terms
+4. **Case-specific case law**, CourtListener search for this charge + jurisdiction + relevant facts
+5. **Motion deadlines**, state Rules of Criminal Procedure lookup
+6. **Arraignment date**, docket search if case number provided
 
 ### Validation Rules (from CASE persona)
 - Every statute: 2+ source URLs confirming the statute number exists
@@ -176,11 +176,11 @@ For each new case:
 
 ### Apply from parent project (migration 011)
 ```sql
--- These tables are defined in ImNotAnAttorney/supabase/migrations/011-legal-source-maximization.sql
--- They need to be applied to the shared Supabase database
+, These tables are defined in ImNotAnAttorney/supabase/migrations/011-legal-source-maximization.sql
+, They need to be applied to the shared Supabase database
 CREATE TABLE jurisdiction_profiles ( ... );
 CREATE TABLE judge_profiles ( ... );
--- verified_case_law table + case_law_references enhancements
+, verified_case_law table + case_law_references enhancements
 ```
 
 ### New columns for research skill output
@@ -211,20 +211,20 @@ CREATE TABLE statute_case_law (
 
 ## PRIORITY ORDER
 
-### P0 — Fix the 5 CRITICAL broken links (items 4-8, 11, 12-14, 16, 17)
+### P0, Fix the 5 CRITICAL broken links (items 4-8, 11, 12-14, 16, 17)
 These directly cause hallucinated data in customer reports.
 
-### P1 — Apply migration 011 to create missing tables
+### P1, Apply migration 011 to create missing tables
 `jurisdiction_profiles` and `judge_profiles` don't exist. The consumers already query them.
 
-### P2 — Build Level 1 skill (per charge × jurisdiction)
+### P2, Build Level 1 skill (per charge × jurisdiction)
 Start with FL (active case state), then top 10 states, then expand.
 
-### P3 — Build Level 2 skill (per case enrichment)
+### P3, Build Level 2 skill (per case enrichment)
 Triggered on case creation, populates case-specific data before report generation.
 
-### P4 — Backfill experts.common_charge_slugs
+### P4, Backfill experts.common_charge_slugs
 Map existing 63 expert rows to the new taxonomy slugs.
 
-### P5 — Fill enrichment layer (items 19-24)
+### P5, Fill enrichment layer (items 19-24)
 Diversion programs, collateral consequences, licensing impact, courthouse logistics.

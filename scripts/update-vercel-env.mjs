@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Update (or create) a single env var on the Vercel production project.
 // Targets the production project prj_zqxNgG9xcM235bnKRoEgP5kBOEEr (imnotanattorney)
-// — NOT the stale prj_fgx7OUbudHbS2WrfoaLKb07jJAnB (imnotanattorney-web) in .env.local.
+//, NOT the stale prj_fgx7OUbudHbS2WrfoaLKb07jJAnB (imnotanattorney-web) in .env.local.
 //
 // Usage:
 //   node scripts/update-vercel-env.mjs <KEY> <VALUE>
@@ -38,7 +38,7 @@ if (!key || !value) {
 const env = loadEnv();
 const projectFile = path.join(__dirname, "..", ".vercel", "project.json");
 if (!fs.existsSync(projectFile)) {
-  console.error("Missing .vercel/project.json — cannot determine project.");
+  console.error("Missing .vercel/project.json, cannot determine project.");
   process.exit(1);
 }
 const { projectId, orgId } = JSON.parse(fs.readFileSync(projectFile, "utf8"));

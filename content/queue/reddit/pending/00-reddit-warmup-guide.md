@@ -14,7 +14,7 @@ title: "Reddit Account Warm-Up Guide: Karma Ladder Methodology"
 
 **Username options** (avoid anything that screams "brand"):
 - Something personal but professional. Examples: DefendYourRights_, CaseReviewGuy, NotYourLawyerButStill
-- NOT "ImNotAnAttorney_Official" or "INNA_Legal" -- instant death
+- NOT "ImNotAnAttorney_Official" or "INNA_Legal", instant death
 
 **Profile:**
 - Bio: Something like "Researching criminal defense cases. Not an attorney. Asking the questions defendants should be asking."
@@ -38,7 +38,7 @@ title: "Reddit Account Warm-Up Guide: Karma Ladder Methodology"
 - Rules: Supportive community. No judgment. No preaching.
 - Culture: Very emotional. People post at their worst moments. Empathy first, information second. Stories and personal experiences are valued.
 - Karma threshold: Low
-- Strategy: Share DUI defense information -- FST standards, breathalyzer calibration, DMV deadlines
+- Strategy: Share DUI defense information, FST standards, breathalyzer calibration, DMV deadlines
 - Tone: Empathetic, knowledgeable, zero judgment. "I've seen a lot of these cases" energy.
 
 **r/ExCons** (~30K members)
@@ -50,16 +50,16 @@ title: "Reddit Account Warm-Up Guide: Karma Ladder Methodology"
 - Rules: Mostly for public defenders, not defendants
 - Culture: Frustrated, overworked professionals venting and sharing resources
 - Strategy: DO NOT post here as a brand. Lurk only. Understand the PD perspective to write better content elsewhere.
-- Tone: N/A -- lurk only
+- Tone: N/A, lurk only
 
 ### Secondary (broader legal/justice community):
 
-**r/Ask_Lawyers** -- verified lawyers answer questions
-**r/law** -- legal news and discussion
-**r/criminaldefense** -- smaller community, more niche
-**r/Prisoners** -- support community
-**r/probation** -- people on probation discussing conditions
-**r/Felons** -- employment, housing, rights restoration
+**r/Ask_Lawyers**, verified lawyers answer questions
+**r/law**, legal news and discussion
+**r/criminaldefense**, smaller community, more niche
+**r/Prisoners**, support community
+**r/probation**, people on probation discussing conditions
+**r/Felons**, employment, housing, rights restoration
 
 ---
 
@@ -69,9 +69,9 @@ title: "Reddit Account Warm-Up Guide: Karma Ladder Methodology"
 
 **Daily tasks:**
 - Read 20+ posts per target subreddit
-- Sort by Top (All Time) and Top (Month) -- note patterns
-- Sort by Controversial -- learn what NOT to do
-- Read moderated/removed posts -- understand the lines
+- Sort by Top (All Time) and Top (Month), note patterns
+- Sort by Controversial, learn what NOT to do
+- Read moderated/removed posts, understand the lines
 - Save threads where you could have added genuine value
 - Note recurring questions that never get a truly great answer
 
@@ -104,7 +104,7 @@ title: "Reddit Account Warm-Up Guide: Karma Ladder Methodology"
 - Comment on r/AskReddit threads with thoughtful answers
 - Engage in r/news discussions about criminal justice topics
 - Comment on r/todayilearned legal facts ("TIL about Brady v. Maryland...")
-- Engage in ANY sub you genuinely use -- the point is a real-looking post history
+- Engage in ANY sub you genuinely use, the point is a real-looking post history
 
 **Legal sub comments (the real work):**
 - Answer questions in r/legaladvice with specific, sourced information
@@ -125,7 +125,7 @@ title: "Reddit Account Warm-Up Guide: Karma Ladder Methodology"
 **The 9:1 rule in practice:**
 - 9 comments that are pure value with zero connection to INNA
 - 1 comment where your knowledge naturally aligns with what INNA does
-- Even the "1" should NOT mention INNA -- it should just demonstrate the type of expertise INNA provides
+- Even the "1" should NOT mention INNA, it should just demonstrate the type of expertise INNA provides
 
 ---
 
@@ -144,10 +144,10 @@ Information posts (high upvote potential):
 - "A guide to reading your own discovery" (adapted from blog knowledge, NOT copy-pasted)
 - "NHTSA field sobriety test accuracy: what the government's own data says"
 - "The 10-day DMV deadline after a DUI arrest that most people miss"
-- "What actually happens at arraignment -- from someone who's reviewed hundreds of cases"
+- "What actually happens at arraignment, from someone who's reviewed hundreds of cases"
 
 Question posts (engagement drivers):
-- "For those who've been through the criminal justice system -- what do you wish you'd known earlier?"
+- "For those who've been through the criminal justice system, what do you wish you'd known earlier?"
 - "What's the one thing your attorney did (or didn't do) that made the biggest difference?"
 
 Data posts (high credibility):
@@ -183,10 +183,10 @@ After giving them 5-6 specific questions with explanation: "There's a site calle
 
 **Rules for Phase 4:**
 - Maximum 1 mention per week across ALL subreddits
-- Never in the first comment on a thread -- let others establish the conversation first
+- Never in the first comment on a thread, let others establish the conversation first
 - Never without 3+ paragraphs of genuine value BEFORE the mention
 - If removing the mention makes the comment pointless, don't post it
-- If you get called out, own it gracefully: "Fair point -- I should have left that out. The info in the comment still stands though."
+- If you get called out, own it gracefully: "Fair point, I should have left that out. The info in the comment still stands though."
 - Stop immediately if any comment gets flagged or removed
 
 **What NEVER to do:**
@@ -206,15 +206,15 @@ After giving them 5-6 specific questions with explanation: "There's a site calle
 **Wednesday:** 10 comments across legal subs + 1 original post if ready
 **Thursday:** 5 legal comments + 5 general sub comments
 **Friday:** 10 comments across legal subs
-**Saturday:** Light engagement -- 3-5 comments on trending threads
-**Sunday:** Research -- read new posts, save threads for Monday engagement
+**Saturday:** Light engagement, 3-5 comments on trending threads
+**Sunday:** Research, read new posts, save threads for Monday engagement
 
 ---
 
 ## Subreddit-Specific Rules Summary
 
 | Subreddit | Can Comment? | Can Post? | Can Mention INNA? | Tone |
-|-----------|-------------|-----------|-------------------|------|
+|---------, |-------------|---------, |-------------------|------|
 | r/legaladvice | Yes (Phase 2+) | Yes (Phase 3+) | Only Phase 4, very rarely | Factual, measured |
 | r/dui | Yes (Phase 2+) | Yes (Phase 3+) | Only Phase 4 | Empathetic, specific |
 | r/ExCons | Yes (Phase 2+) | Carefully (Phase 3+) | Almost never | Real, respectful |
@@ -232,7 +232,7 @@ After giving them 5-6 specific questions with explanation: "There's a site calle
 - Comments posted (legal vs. general)
 - Upvote ratio on legal comments
 - Threads saved for future content
-- Any comments removed by mods (red flag -- analyze why)
+- Any comments removed by mods (red flag, analyze why)
 
 **Monthly:**
 - Top-performing comments (what format/topic worked?)

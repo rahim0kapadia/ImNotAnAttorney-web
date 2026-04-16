@@ -1,5 +1,5 @@
 /**
- * /start layout — metadata for the Covello-compliant crisis entry page.
+ * /start layout, metadata for the Covello-compliant crisis entry page.
  *
  * Metadata is in the layout because the page component is a client component
  * (requires useState for interactive document routing).

@@ -12,19 +12,19 @@
  *                                -> /sample (proof / objection handling)
  *
  * Page structure (conversion-optimized order):
- *   1. Hero — H1 with VoC emotional hook (attorney won't call back) + dual CTA
- *   2. Proof — Real case findings (weight, CI phone, drug type) with attorney attributions
- *   3. Urgency bar — Motion deadline scarcity
- *   4. Pain points — Four defendant frustrations that validate the visitor's situation
- *   5. Bridge — Identity statement ("people like us read the discovery ourselves")
- *   6. How it works — 3-step process (tell us, we research, you ask)
- *   7. Attorneys behind your questions — Credibility via 40+ named attorneys
- *   8. Value anchor — Stakes comparison ($10K-$100K attorney vs {TIER_CORE["case-decoder"].priceDisplay}-{TIER_CORE["situation-room"].priceDisplay} service)
- *   9. Guarantee — Tiered guarantee (delivery + satisfaction)
- *  10. Pricing — PricingTable component (first 3 tiers shown on landing page)
- *  11. Lead capture — Email opt-in for non-buyers
- *  12. FAQ — Schema-marked FAQ accordion (7 questions, SEO + objection handling)
- *  13. Final CTA — Urgency close with deadline framing
+ *   1. Hero, H1 with VoC emotional hook (attorney won't call back) + dual CTA
+ *   2. Proof, Real case findings (weight, CI phone, drug type) with attorney attributions
+ *   3. Urgency bar, Motion deadline scarcity
+ *   4. Pain points, Four defendant frustrations that validate the visitor's situation
+ *   5. Bridge, Identity statement ("people like us read the discovery ourselves")
+ *   6. How it works, 3-step process (tell us, we research, you ask)
+ *   7. Attorneys behind your questions, Credibility via 40+ named attorneys
+ *   8. Value anchor, Stakes comparison ($10K-$100K attorney vs {TIER_CORE["case-decoder"].priceDisplay}-{TIER_CORE["situation-room"].priceDisplay} service)
+ *   9. Guarantee, Tiered guarantee (delivery + satisfaction)
+ *  10. Pricing, PricingTable component (first 3 tiers shown on landing page)
+ *  11. Lead capture, Email opt-in for non-buyers
+ *  12. FAQ, Schema-marked FAQ accordion (7 questions, SEO + objection handling)
+ *  13. Final CTA, Urgency close with deadline framing
  *
  * SEO: FAQ schema markup (FAQPage JSON-LD) injected for rich snippets.
  * OG/meta: Title uses VoC emotional hook for social sharing.
@@ -48,9 +48,9 @@ import type { Metadata } from "next";
 
 /** Page-level metadata. Title uses VoC emotional hook for SEO + social click-through. */
 export const metadata: Metadata = {
-  title: "ImNotAnAttorney — Your Case File Has Answers. We Find Them.",
+  title: "ImNotAnAttorney, Your Case File Has Answers. We Find Them.",
   description:
-    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions — Case Decoder ${TIER_CORE["case-decoder"].priceDisplay}, 48-hour delivery.`,
+    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions, Case Decoder ${TIER_CORE["case-decoder"].priceDisplay}, 48-hour delivery.`,
   alternates: {
     canonical: SITE_URL,
   },
@@ -78,17 +78,17 @@ const homeFaqs = [
   {
     question: "Is this legal? Am I allowed to do this?",
     answer:
-      "Absolutely. You have a constitutional right to understand your own case. INAA provides legal research and questions — documented defense methodologies applied to your specific charges. We do not provide legal advice. Your attorney provides legal advice. We provide the information — so you know what they know.",
+      "Absolutely. You have a constitutional right to understand your own case. INAA provides legal research and questions, documented defense methodologies applied to your specific charges. We do not provide legal advice. Your attorney provides legal advice. We provide the information, so you know what they know.",
   },
   {
     question: "Can I get a refund?",
     answer:
-      `Find It or It's Free. If we don't identify at least one gap your attorney hasn't raised, full refund — no forms, no arguments. If we miss the delivery deadline, full refund AND you keep the report. Every dollar you spend is credited toward the next tier. Credits valid for 12 months.`,
+      `Find It or It's Free. If we don't identify at least one gap your attorney hasn't raised, full refund, no forms, no arguments. If we miss the delivery deadline, full refund AND you keep the report. Every dollar you spend is credited toward the next tier. Credits valid for 12 months.`,
   },
   {
     question: "Will asking these questions upset my attorney?",
     answer:
-      "The right attorneys welcome informed clients. The questions give you a way to find out which one you have. Defendants who come to meetings with specific, documented questions get more attorney time, more motions filed, and more thorough defense work. The questions don\u2019t create conflict — they create accountability.",
+      "The right attorneys welcome informed clients. The questions give you a way to find out which one you have. Defendants who come to meetings with specific, documented questions get more attorney time, more motions filed, and more thorough defense work. The questions don\u2019t create conflict, they create accountability.",
   },
   {
     question: "What if my attorney retaliates or drops my case?",
@@ -98,12 +98,12 @@ const homeFaqs = [
   {
     question: "What if I don't have my discovery documents yet?",
     answer:
-      `That's fine — our ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}) and ${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay}) don't require discovery. We can analyze your charges, research your jurisdiction, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.`,
+      `That's fine, our ${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay}) and ${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay}) don't require discovery. We can analyze your charges, research your jurisdiction, and generate targeted questions with just your case information. When you get discovery, upgrade to The X-Ray with full credit.`,
   },
   {
     question: "How fast do I get my report?",
     answer:
-      `${TIER_CORE["case-decoder"].name}: ${TIER_CORE["case-decoder"].delivery}. ${TIER_CORE["intelligence-brief"].name}: ${TIER_CORE["intelligence-brief"].delivery}. ${TIER_CORE["x-ray"].name}: ${TIER_CORE["x-ray"].delivery}. ${TIER_CORE["war-room"].name}: ${TIER_CORE["war-room"].delivery.split(" +")[0]} initial + weekly updates. ${TIER_CORE["situation-room"].name}: ${TIER_CORE["situation-room"].delivery} with Trial Intelligence Operations. Every report is built from elite defense methodology and reviewed before delivery — the timeline is our commitment, the quality is our guarantee.`,
+      `${TIER_CORE["case-decoder"].name}: ${TIER_CORE["case-decoder"].delivery}. ${TIER_CORE["intelligence-brief"].name}: ${TIER_CORE["intelligence-brief"].delivery}. ${TIER_CORE["x-ray"].name}: ${TIER_CORE["x-ray"].delivery}. ${TIER_CORE["war-room"].name}: ${TIER_CORE["war-room"].delivery.split(" +")[0]} initial + weekly updates. ${TIER_CORE["situation-room"].name}: ${TIER_CORE["situation-room"].delivery} with Trial Intelligence Operations. Every report is built from elite defense methodology and reviewed before delivery, the timeline is our commitment, the quality is our guarantee.`,
   },
   {
     question: "I've already spent everything on my attorney. Is $197 worth it?",
@@ -113,12 +113,12 @@ const homeFaqs = [
   {
     question: "What if my case is already too far along?",
     answer:
-      "It's almost never too late. Most of what we find — discovery gaps, officer inconsistencies, missed motions — can be raised at any stage before sentencing. Even at the plea stage, strong questions give your attorney leverage to negotiate better terms. We've found critical issues in cases that were months into the process.",
+      "It's almost never too late. Most of what we find, discovery gaps, officer inconsistencies, missed motions, can be raised at any stage before sentencing. Even at the plea stage, strong questions give your attorney leverage to negotiate better terms. We've found critical issues in cases that were months into the process.",
   },
   {
     question: "What's the Defense Playbook?",
     answer:
-      `The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) is an instant-download PDF with 26 questions that change how your next attorney meeting goes, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and a Case Progress Scorecard. No intake form, no wait — built from 40+ elite defense attorneys' documented strategies. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} within 30 days.`,
+      `The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) is an instant-download PDF with 26 questions that change how your next attorney meeting goes, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and a Case Progress Scorecard. No intake form, no wait, built from 40+ elite defense attorneys' documented strategies. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} within 30 days.`,
   },
   {
     question: "What if I already bought a lower tier?",
@@ -218,7 +218,7 @@ export default function Home() {
                 {
                   "@type": "Offer",
                   name: "The Situation Room",
-                  description: "Trial Intelligence Operations — evening debrief, morning prep, priority response, all witnesses researched",
+                  description: "Trial Intelligence Operations, evening debrief, morning prep, priority response, all witnesses researched",
                   price: (TIER_CORE["situation-room"].price / 100).toFixed(2),
                   priceCurrency: "USD",
                 },
@@ -228,7 +228,7 @@ export default function Home() {
         }}
       />
 
-      {/* DefinedTermSet Schema — Legal Glossary for AI/Entity SEO */}
+      {/* DefinedTermSet Schema, Legal Glossary for AI/Entity SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -239,13 +239,13 @@ export default function Home() {
       <HomepageHero />
 
       {/* ------------------------------------------------------------------ */}
-      {/* PROOF SECTION — PCSO-Authentic Discovery Document Reveal          */}
+      {/* PROOF SECTION, PCSO-Authentic Discovery Document Reveal          */}
       {/* Pixel-accurate replica of a real PCSO supplement report with      */}
       {/* three findings highlighted on scroll. Replaces static proof cards.*/}
       {/* ------------------------------------------------------------------ */}
       <DiscoveryReveal />
 
-      {/* BACKSTORY — Chaperon's trust ladder: peer voice before product      */}
+      {/* BACKSTORY, Chaperon's trust ladder: peer voice before product      */}
       <section className="px-4 py-12">
         <div className="mx-auto max-w-2xl">
           <FadeInUp>
@@ -265,7 +265,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* URGENCY BAR — Motion deadline scarcity. Creates time pressure      */}
+      {/* URGENCY BAR, Motion deadline scarcity. Creates time pressure      */}
       {/* without being manipulative (suppression motions genuinely expire). */}
       <section className="border-y border-amber-500/20 bg-amber-500/5 px-4 py-4">
         <p className="text-center text-sm text-amber-400">
@@ -280,7 +280,7 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* PAIN POINTS — Four defendant frustrations (VoC verbatim)         */}
+      {/* PAIN POINTS, Four defendant frustrations (VoC verbatim)         */}
       {/* Titles are near-exact quotes from defendant forums (Avvo, Quora, */}
       {/* r/legaladvice). Per Wiebe: use their exact words, not ours.      */}
       {/* ------------------------------------------------------------------ */}
@@ -358,7 +358,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BRIDGE — Identity statement. Transitions from pain to action by    */}
+      {/* BRIDGE, Identity statement. Transitions from pain to action by    */}
       {/* creating an in-group ("people like us") before the how-it-works.  */}
       <section className="border-t border-zinc-500 px-4 py-10">
         <p className="text-center text-lg font-semibold text-white">
@@ -370,7 +370,7 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* HOW IT WORKS — 3-step simplification                              */}
+      {/* HOW IT WORKS, 3-step simplification                              */}
       {/*   Step 01: Tell us about your case (10 min intake form)           */}
       {/*   Step 02: We research everything (40+ attorney methodologies)    */}
       {/*   Step 03: You ask the questions (bring report to attorney)       */}
@@ -438,7 +438,7 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* WHAT WE LOOK FOR — Reframed in defendant voice per Phase 5 audit  */}
+      {/* WHAT WE LOOK FOR, Reframed in defendant voice per Phase 5 audit  */}
       {/* (Brunson/Chaperon/Laja: original had zero named attorneys despite  */}
       {/* claiming "40+ named." Defendant voice is more honest and more     */}
       {/* conversion-effective for crisis buyers.)                          */}
@@ -496,7 +496,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VALUE ANCHOR — Stakes comparison. Frames our pricing against the   */}
+      {/* VALUE ANCHOR, Stakes comparison. Frames our pricing against the   */}
       {/* attorney retainer already paid ($10K-$100K) and potential          */}
       {/* conviction cost (1-20 years). Makes $197-$9,997 feel small.       */}
       <section className="border-t border-zinc-500 px-4 py-16 section-alt">
@@ -575,19 +575,19 @@ export default function Home() {
                 quote: "The questions alone saved my case. My attorney had no idea I knew about the Brady violation.",
                 name: "David R.",
                 charge: "Federal Drug Conspiracy, Southern District",
-                outcome: "Charges reduced to misdemeanor — 4 months from report to resolution",
+                outcome: "Charges reduced to misdemeanor, 4 months from report to resolution",
               },
               {
                 quote: "My attorney was doing a good job, but I needed to understand the case myself. The Intelligence Brief showed me exactly what was happening and gave me the right questions to ask. My attorney actually thanked me for being so prepared.",
                 name: "Rachel T.",
                 charge: "White Collar Fraud, New Jersey",
-                outcome: "Charges dismissed — attorney credited preparation for stronger motion strategy",
+                outcome: "Charges dismissed, attorney credited preparation for stronger motion strategy",
               },
               {
                 quote: "I hadn\u2019t heard from my attorney in three weeks and was starting to panic. The Case Decoder gave me an email template with specific questions. My attorney responded the same day and walked me through everything. Turns out he was working the case \u2014 he just wasn\u2019t communicating.",
                 name: "Anthony W.",
                 charge: "Drug Possession, Georgia",
-                outcome: "Case resolved favorably — attorney engagement improved immediately",
+                outcome: "Case resolved favorably, attorney engagement improved immediately",
               },
               {
                 quote: "My son\u2019s probation officer said he violated a condition he was never told about. The Case Decoder gave us the specific questions to challenge it. His attorney filed a motion the next day.",
@@ -603,7 +603,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CHARGE CATALOG — 12 charge-category cards for SEO + routing */}
+      {/* CHARGE CATALOG, 12 charge-category cards for SEO + routing */}
       {(() => {
         const CHARGE_CATEGORIES = [
           { slug: "dui-driving", label: "DUI & Driving Offenses", description: "Breathalyzer challenges, field sobriety analysis, rising BAC defense", playbook: "dui-first-offense" },
@@ -653,7 +653,7 @@ export default function Home() {
         );
       })()}
 
-      {/* WHAT WE ARE — Peer-voiced identity (Chaperon rewrite). Moved from    */}
+      {/* WHAT WE ARE, Peer-voiced identity (Chaperon rewrite). Moved from    */}
       {/* post-DiscoveryReveal to pre-guarantee per all 5 experts.            */}
       <section className="px-4 py-10">
         <div className="mx-auto max-w-3xl">
@@ -673,7 +673,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GUARANTEE SECTION — Named guarantee, cash refund first.             */}
+      {/* GUARANTEE SECTION, Named guarantee, cash refund first.             */}
       <section className="border-t border-zinc-500 px-4 py-16">
         <div className="mx-auto max-w-3xl text-center">
           <FadeInUp>
@@ -691,7 +691,7 @@ export default function Home() {
                 <p className="text-sm font-semibold text-amber-400">The Discovery Guarantee</p>
                 <p className="mt-1 text-base text-zinc-300">
                   We will identify at least one gap, missed question, or unexamined area
-                  in your case that your attorney has not raised — or we refund every
+                  in your case that your attorney has not raised, or we refund every
                   dollar. No forms. No arguments. One email to help@imnotanattorney.com.
                 </p>
               </div>
@@ -752,7 +752,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* LEAD CAPTURE — Email opt-in for visitors not ready to buy.         */}
+      {/* LEAD CAPTURE, Email opt-in for visitors not ready to buy.         */}
       {/* Falls back to free score link for zero-friction engagement.       */}
       <section className="border-t border-zinc-500 px-4 py-20">
         <div className="mx-auto max-w-2xl">
@@ -768,13 +768,13 @@ export default function Home() {
               href="/score"
               className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
             >
-              Check your Defense Milestone Score — free, no email required.
+              Check your Defense Milestone Score, free, no email required.
             </Link>
           </p>
         </div>
       </section>
 
-      {/* FAQ — Renders the homeFaqs array via FAQAccordion component.       */}
+      {/* FAQ, Renders the homeFaqs array via FAQAccordion component.       */}
       {/* Handles remaining objections. Schema markup is injected above     */}
       {/* via faqSchema JSON-LD for Google rich snippet eligibility.        */}
       <section className="border-t border-zinc-500 px-4 py-20">
@@ -788,7 +788,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FINAL CTA — Fear → empowerment close (Wolf). Opens with their     */}
+      {/* FINAL CTA, Fear → empowerment close (Wolf). Opens with their     */}
       {/* 2am emotional state, closes with empowered identity.             */}
       <section className="border-t border-zinc-500 px-4 py-20 text-center">
         <div className="mx-auto max-w-2xl">

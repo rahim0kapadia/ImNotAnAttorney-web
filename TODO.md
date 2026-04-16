@@ -1,4 +1,4 @@
-# ImNotAnAttorney-Web — TODO
+# ImNotAnAttorney-Web, TODO
 
 ## Completed
 
@@ -31,11 +31,11 @@
 - [x] End-to-end payment flow tested
 
 ### Product Templates
-- [x] Case Decoder ($197) — intake, prompt, report, SOP
-- [x] Intelligence Brief ($997) — intake, 4 prompts, report, SOP
+- [x] Case Decoder ($197), intake, prompt, report, SOP
+- [x] Intelligence Brief ($997), intake, 4 prompts, report, SOP
 
 ### Integration Audit Fixes (Feb 19, 2026)
-- [x] Fixed services page tier slugs (3 tiers had wrong checkout URLs — $8,991 blocked)
+- [x] Fixed services page tier slugs (3 tiers had wrong checkout URLs, $8,991 blocked)
 - [x] Webhook creates cases record for discovery tiers ($997+)
 - [x] Webhook sends upload link in payment confirmation email
 - [x] Webhook sends operator notification email on every order
@@ -45,7 +45,7 @@
 - [x] Upload route: sends receipt email on each upload
 - [x] Subscribe route: sends welcome email with PDF guide link
 - [x] Intake route: sends confirmation email with next steps
-- [x] Footer: added Situation Room ($4,997) — was listing only 4 of 5 tiers
+- [x] Footer: added Situation Room ($4,997), was listing only 4 of 5 tiers
 - [x] Success page: changed contact email from nonexistent help@ to rahim0kapadia@gmail.com
 - [x] Created favicon (amber "IA" on dark background via ImageResponse)
 - [x] Resources page: removed 3 fake downloadable resources
@@ -56,13 +56,13 @@
 
 ## Blocked (Needs Rahim)
 
-- [ ] **UPL legal review** — Consult attorney on service boundaries (BLOCKER for live payments)
-- [ ] **Terms of Service** — Required before accepting real payments
-- [ ] **Privacy Policy** — Required — collecting PII
-- [ ] **Stripe live mode** — LAST STEP. Switch test to live keys only after full e2e verification. Rahim initiates.
-- [x] **Resend domain verification** — Domain verified, inbound webhook for admin emails
-- [ ] **Domain email** — Set up help@imnotanattorney.com (Cloudflare email routing)
-- [ ] **Twitter account** — Create @ImNotAnAttorney
+- [ ] **UPL legal review**, Consult attorney on service boundaries (BLOCKER for live payments)
+- [ ] **Terms of Service**, Required before accepting real payments
+- [ ] **Privacy Policy**, Required, collecting PII
+- [ ] **Stripe live mode**, LAST STEP. Switch test to live keys only after full e2e verification. Rahim initiates.
+- [x] **Resend domain verification**, Domain verified, inbound webhook for admin emails
+- [ ] **Domain email**, Set up help@imnotanattorney.com (Cloudflare email routing)
+- [ ] **Twitter account**, Create @ImNotAnAttorney
 
 ## Backlog
 
@@ -75,8 +75,8 @@
 
 ### Medium Priority
 - [ ] Upgrade credit system backend (UI promises 100% credit, no backend tracking)
-- [ ] Add-on purchase flow ($149/$297 — products exist, no checkout links)
-- [ ] Consolidate tier data into single source (currently in 5 places — drift risk)
+- [ ] Add-on purchase flow ($149/$297, products exist, no checkout links)
+- [ ] Consolidate tier data into single source (currently in 5 places, drift risk)
 - [ ] Admin dashboard (view orders/intakes/subscribers)
 - [ ] Create real PDFs for resources page (attorney tracker, discovery checklist, motion deadlines)
 - [ ] Analytics setup (Vercel Analytics)
@@ -100,6 +100,6 @@
 **Production:** https://imnotanattorney.com
 **Vercel:** rahim-kapadias-projects/imnotanattorney
 **Supabase:** Kapadia Labs > imnotanattorney
-**Stripe:** Test mode — webhook at production URL
+**Stripe:** Test mode, webhook at production URL
 **Architecture:** See ../ImNotAnAttorney/ARCHITECTURE.md
 **Last updated:** Feb 19, 2026

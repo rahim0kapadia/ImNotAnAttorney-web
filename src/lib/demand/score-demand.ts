@@ -1,5 +1,5 @@
 /**
- * @fileoverview Demand scorer — computes demand scores, quadrants, content gaps,
+ * @fileoverview Demand scorer, computes demand scores, quadrants, content gaps,
  * and emerging topics from reddit_signals data.
  *
  * Ported from scripts/demand/score-demand.mjs.
@@ -222,9 +222,9 @@ function scoreDimension(
     windowStart.setUTCDate(windowStart.getUTCDate() - days);
     const prevStart = new Date(windowStart.getTime() - days * 24 * 60 * 60 * 1000);
 
-    // Current window signals — filtered in-memory from bulk fetch
+    // Current window signals, filtered in-memory from bulk fetch
     const signals = filterSignals(allSignals, dimType, dimSlug, windowStart, windowEnd);
-    // Previous window signals (for trend) — filtered in-memory
+    // Previous window signals (for trend), filtered in-memory
     const prevSignals = filterSignals(allSignals, dimType, dimSlug, prevStart, windowStart);
 
     // Volume metrics (price-sensitive posts weighted 1.5x)
@@ -474,7 +474,7 @@ async function detectEmergingTopics(supabase: SupabaseClient): Promise<EmergingT
     const rawTokens = text.split(" ");
     const words: string[] = [];
     for (const token of rawTokens) {
-      // Keep only a-z, 0-9 characters — build clean token char by char
+      // Keep only a-z, 0-9 characters, build clean token char by char
       let clean = "";
       for (let ci = 0; ci < token.length; ci++) {
         const ch = token.charCodeAt(ci);
@@ -607,7 +607,7 @@ export async function scoreDemand(supabase: SupabaseClient): Promise<ScoreResult
   const signals180: SignalRow[] = allSignals || [];
   console.log(`[score-demand] Bulk fetch: ${signals180.length} signals over 180 days`);
 
-  // Pass 1: Count posts per dimension for 7d window (percentile baseline) — in-memory
+  // Pass 1: Count posts per dimension for 7d window (percentile baseline), in-memory
   const weekAgo = new Date(now);
   weekAgo.setUTCHours(0, 0, 0, 0);
   weekAgo.setUTCDate(weekAgo.getUTCDate() - 7);
@@ -621,7 +621,7 @@ export async function scoreDemand(supabase: SupabaseClient): Promise<ScoreResult
   const maxCount = preCountList.length > 0 ? Math.max(...preCountList) : 0;
   console.log(`[score-demand] Baseline: ${preCountList.length} dimensions, max=${maxCount} posts`);
 
-  // Pass 2: Full scoring with complete distribution — all in-memory, no DB queries
+  // Pass 2: Full scoring with complete distribution, all in-memory, no DB queries
   const allScores: DemandScoreRow[] = [];
 
   console.log("[score-demand] Pass 2: scoring charge types...");

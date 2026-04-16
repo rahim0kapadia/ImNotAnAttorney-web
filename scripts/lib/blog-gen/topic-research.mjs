@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-// topic-research.mjs — Topic enrichment for the blog generation pipeline.
+// topic-research.mjs, Topic enrichment for the blog generation pipeline.
 //
 // Ported from ImNotAnAttorney-web/src/lib/blog-generation/topic-research.ts
 // (2026-04-09 blog engine port).
@@ -91,7 +91,7 @@ export async function enrichTopic(gap, supabase) {
   // for drafts that have been committed to GitHub (status='published').
   //
   // Two-step query: PostgREST .eq() on a joined table (content_gaps) does NOT
-  // filter parent rows — it just nullifies the nested object. So we first
+  // filter parent rows, it just nullifies the nested object. So we first
   // resolve content_gap IDs for this charge type, then fetch matching drafts.
   const { data: relatedGapRows, error: relatedGapErr } = await supabase
     .from("content_gaps")

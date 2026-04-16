@@ -3,14 +3,14 @@
  *
  * Constructs additional reference URLs for each case in statute_case_law and
  * appends them to source_urls[]. Does NOT fetch the URLs (Cloudflare blocks)
- * — just stores them as cross-references for manual verification by the user.
+ *, just stores them as cross-references for manual verification by the user.
  *
  * The URLs are predictable from citation pattern:
  *   Justia:     https://law.justia.com/cases/federal/us/<vol>/<page>/
  *   Google:     https://scholar.google.com/scholar_case?q=<encoded citation>
  *   CourtListener (search): https://www.courtlistener.com/?q=<citation>
  *
- * These don't VERIFY the case exists — they provide additional reference URLs
+ * These don't VERIFY the case exists, they provide additional reference URLs
  * that the user (or future scripts) can use to manually validate.
  *
  * Usage:

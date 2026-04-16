@@ -20,13 +20,13 @@ Under Brady v. Maryland, the prosecution is constitutionally required to turn ov
 
 In a drug case specifically, your discovery should include:
 
-**Lab reports.** Was the substance actually tested by a crime lab, or just field-tested at the scene? Field tests are notoriously unreliable -- chocolate has tested presumptive positive for marijuana, baking soda has triggered false positives for cocaine. The lab confirmation matters. Who performed the analysis? What method was used? Were chain of custody protocols followed from seizure to lab?
+**Lab reports.** Was the substance actually tested by a crime lab, or just field-tested at the scene? Field tests are notoriously unreliable, chocolate has tested presumptive positive for marijuana, baking soda has triggered false positives for cocaine. The lab confirmation matters. Who performed the analysis? What method was used? Were chain of custody protocols followed from seizure to lab?
 
 **Search warrant details.** What was the probable cause? Was the warrant specific enough? Was it executed properly? If police searched your home, car, or person, the legality of that search is often the entire ballgame. An illegal search means the evidence gets suppressed, and a drug case without drugs usually gets dismissed.
 
-**Informant information.** If a confidential informant was involved, there are disclosure requirements. How reliable is this CI? What's their track record? What are they getting in return for their cooperation? CI testimony is some of the least reliable evidence in criminal cases -- they have every incentive to exaggerate or fabricate.
+**Informant information.** If a confidential informant was involved, there are disclosure requirements. How reliable is this CI? What's their track record? What are they getting in return for their cooperation? CI testimony is some of the least reliable evidence in criminal cases, they have every incentive to exaggerate or fabricate.
 
-**Surveillance records.** Body cams, dash cams, wiretaps, GPS tracking. If it exists, you're entitled to know about it. Body camera footage is often the most important evidence in the entire case -- and officers sometimes "forget" to activate their cameras during critical moments.
+**Surveillance records.** Body cams, dash cams, wiretaps, GPS tracking. If it exists, you're entitled to know about it. Body camera footage is often the most important evidence in the entire case, and officers sometimes "forget" to activate their cameras during critical moments.
 
 **Officer history.** The officer who arrested you has a training record and possibly a disciplinary history. That history matters, especially if there are credibility issues.
 
@@ -36,6 +36,6 @@ In a drug case specifically, your discovery should include:
 - They say "the discovery looks fine" without specifics
 - They haven't filed a motion to compel when the prosecution is dragging their feet
 
-You don't need a law degree to ask: "Can I see my discovery?" If your attorney says no, or gets vague, or tells you not to worry about it -- that tells you something important about how your case is being handled.
+You don't need a law degree to ask: "Can I see my discovery?" If your attorney says no, or gets vague, or tells you not to worry about it, that tells you something important about how your case is being handled.
 
 **Image direction**: Document stack with magnifying glass highlighting inconsistencies | **Republish to**: Blog link in bio

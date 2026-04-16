@@ -103,7 +103,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required statewide for all DUI convictions",
     dmvDeadline: "10 days",
     lookback: "10 years",
-    note: "California's 10-day DMV hearing deadline is critical — miss it and you lose the right to challenge your administrative license suspension. Penalty assessments can quadruple the base fine.",
+    note: "California's 10-day DMV hearing deadline is critical, miss it and you lose the right to challenge your administrative license suspension. Penalty assessments can quadruple the base fine.",
   },
   colorado: {
     name: "Colorado",
@@ -117,7 +117,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for 8 months (BAC 0.15+: 2 years)",
     dmvDeadline: "7 days",
     lookback: "Lifetime",
-    note: "Colorado has a two-tier system: DWAI (0.05-0.079) is a lesser charge with lower penalties, but still goes on your record. Colorado uses a lifetime lookback — every prior DUI counts, no matter how old.",
+    note: "Colorado has a two-tier system: DWAI (0.05-0.079) is a lesser charge with lower penalties, but still goes on your record. Colorado uses a lifetime lookback, every prior DUI counts, no matter how old.",
   },
   connecticut: {
     name: "Connecticut",
@@ -201,7 +201,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for BAC 0.20+ (1 year)",
     dmvDeadline: "7 days",
     lookback: "10 years",
-    note: "Idaho's enhanced penalty threshold is 0.20 — significantly higher than most states. The 7-day administrative hearing request deadline is one of the shortest in the country.",
+    note: "Idaho's enhanced penalty threshold is 0.20, significantly higher than most states. The 7-day administrative hearing request deadline is one of the shortest in the country.",
   },
   illinois: {
     name: "Illinois",
@@ -327,7 +327,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for 2 years if BAC 0.15+",
     dmvDeadline: "15 days",
     lookback: "Lifetime",
-    note: "Massachusetts uses a lifetime lookback — a DUI from 30 years ago counts as a prior offense. This is one of the harshest lookback policies in the nation. The state calls DUI 'OUI' (Operating Under the Influence).",
+    note: "Massachusetts uses a lifetime lookback, a DUI from 30 years ago counts as a prior offense. This is one of the harshest lookback policies in the nation. The state calls DUI 'OUI' (Operating Under the Influence).",
   },
   michigan: {
     name: "Michigan",
@@ -355,7 +355,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Available as alternative to full suspension",
     dmvDeadline: "60 days",
     lookback: "10 years",
-    note: "Minnesota's license plate impoundment law is unique — repeat offenders may have their plates confiscated and replaced with special 'whiskey plates.'",
+    note: "Minnesota's license plate impoundment law is unique, repeat offenders may have their plates confiscated and replaced with special 'whiskey plates.'",
   },
   mississippi: {
     name: "Mississippi",
@@ -467,7 +467,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for 1 year for all first-offense DUI",
     dmvDeadline: "10 days",
     lookback: "Lifetime",
-    note: "New Mexico requires ignition interlock for every DUI conviction — even first offenses. The state uses a lifetime lookback, so every prior DUI counts regardless of how old it is.",
+    note: "New Mexico requires ignition interlock for every DUI conviction, even first offenses. The state uses a lifetime lookback, so every prior DUI counts regardless of how old it is.",
   },
   "new-york": {
     name: "New York",
@@ -481,7 +481,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for all DWI convictions (minimum 6 months)",
     dmvDeadline: "15 days",
     lookback: "10 years",
-    note: "New York distinguishes between DWAI (Driving While Ability Impaired, BAC 0.05-0.07) — a traffic infraction — and DWI (BAC 0.08+) — a misdemeanor. A conditional license may be available during the suspension period.",
+    note: "New York distinguishes between DWAI (Driving While Ability Impaired, BAC 0.05-0.07), a traffic infraction, and DWI (BAC 0.08+), a misdemeanor. A conditional license may be available during the suspension period.",
   },
   "north-carolina": {
     name: "North Carolina",
@@ -509,7 +509,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for BAC 0.16+ (180 days)",
     dmvDeadline: null,
     lookback: "7 years",
-    note: "North Dakota offers a 24/7 Sobriety Program as an alternative to traditional penalties — participants submit to twice-daily alcohol testing.",
+    note: "North Dakota offers a 24/7 Sobriety Program as an alternative to traditional penalties, participants submit to twice-daily alcohol testing.",
   },
   ohio: {
     name: "Ohio",
@@ -565,7 +565,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for 1 year if BAC 0.10+",
     dmvDeadline: "30 days",
     lookback: "10 years",
-    note: "Pennsylvania uses a three-tier BAC system: General Impairment (0.08–0.099), High Rate (0.10–0.159), and Highest Rate (0.16+). A first-offense General Impairment DUI carries no mandatory suspension — only the higher tiers do.",
+    note: "Pennsylvania uses a three-tier BAC system: General Impairment (0.08–0.099), High Rate (0.10–0.159), and Highest Rate (0.16+). A first-offense General Impairment DUI carries no mandatory suspension, only the higher tiers do.",
   },
   "rhode-island": {
     name: "Rhode Island",
@@ -621,7 +621,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for all DUI convictions",
     dmvDeadline: null,
     lookback: "10 years",
-    note: "Tennessee has a mandatory minimum 48-hour jail sentence with no exceptions — even for first offenses. If BAC is 0.20+, the mandatory minimum increases to 7 days. Tennessee requires IID for all DUI convictions.",
+    note: "Tennessee has a mandatory minimum 48-hour jail sentence with no exceptions, even for first offenses. If BAC is 0.20+, the mandatory minimum increases to 7 days. Tennessee requires IID for all DUI convictions.",
   },
   texas: {
     name: "Texas",
@@ -635,7 +635,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "May be ordered; required for BAC 0.15+",
     dmvDeadline: "15 days",
     lookback: "Lifetime (for felony enhancement after 2 priors)",
-    note: "Texas calls DUI 'DWI' (Driving While Intoxicated). The 15-day ALR hearing request deadline is critical — miss it and the administrative license suspension stands. Texas uses a lifetime lookback for third-offense felony enhancement.",
+    note: "Texas calls DUI 'DWI' (Driving While Intoxicated). The 15-day ALR hearing request deadline is critical, miss it and the administrative license suspension stands. Texas uses a lifetime lookback for third-offense felony enhancement.",
   },
   utah: {
     name: "Utah",
@@ -649,7 +649,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for 18 months",
     dmvDeadline: "10 days",
     lookback: "10 years",
-    note: "Utah has the lowest BAC limit in the nation at 0.05 — significantly lower than the 0.08 standard in all other states. This went into effect December 2018. The state also imposes a mandatory 48-hour jail sentence or equivalent community service.",
+    note: "Utah has the lowest BAC limit in the nation at 0.05, significantly lower than the 0.08 standard in all other states. This went into effect December 2018. The state also imposes a mandatory 48-hour jail sentence or equivalent community service.",
   },
   vermont: {
     name: "Vermont",
@@ -663,7 +663,7 @@ export const STATE_DUI_LAWS: Record<string, StateDuiData> = {
     interlock: "Required for BAC 0.16+ or refusal",
     dmvDeadline: "7 days",
     lookback: "Lifetime",
-    note: "Vermont has a relatively short license suspension (90 days) but a lifetime lookback — every prior DUI counts. The state's maximum jail sentence of 2 years is among the highest for a first offense.",
+    note: "Vermont has a relatively short license suspension (90 days) but a lifetime lookback, every prior DUI counts. The state's maximum jail sentence of 2 years is among the highest for a first offense.",
   },
   virginia: {
     name: "Virginia",

@@ -1,5 +1,5 @@
 /**
- * Bulk Classify Opinions from Filtered CSV — Phase 2 Pipeline
+ * Bulk Classify Opinions from Filtered CSV, Phase 2 Pipeline
  *
  * Streams data/bulk-verify/cl-bulk/opinions-filtered.csv (10,839 records,
  * 1,667 with substantial plain_text), runs mechanical extraction +
@@ -111,7 +111,7 @@ function escJsonb(obj) {
   return esc(JSON.stringify(obj));
 }
 
-// ── HTML stripping (no regex — project rule) ─────────────────────────────────
+// ── HTML stripping (no regex, project rule) ─────────────────────────────────
 function stripHtml(html) {
   if (!html) return "";
   const parts = html.split("<");
@@ -124,7 +124,7 @@ function stripHtml(html) {
 }
 
 // ── Jurisdiction heuristic from text ─────────────────────────────────────────
-// State name → two-letter code. No regex — indexOf scanning.
+// State name → two-letter code. No regex, indexOf scanning.
 const STATE_PATTERNS = [
   ["florida", "fl"], ["california", "ca"], ["texas", "tx"], ["new york", "ny"],
   ["illinois", "il"], ["pennsylvania", "pa"], ["ohio", "oh"], ["georgia", "ga"],
@@ -320,7 +320,7 @@ async function main() {
 
   loadToken();
 
-  // Load reference maps from DB (one streamer at a time — OOM gotcha)
+  // Load reference maps from DB (one streamer at a time, OOM gotcha)
   const [statuteMap, theoryMap, existingJurisdictions] = await Promise.all([
     loadStatuteMap(),
     loadTheoryMap(),
@@ -362,7 +362,7 @@ async function main() {
     for await (const record of parser) {
       rowCount++;
 
-      // CL CSVs quote ALL values — strip surrounding quotes before using
+      // CL CSVs quote ALL values, strip surrounding quotes before using
       const cluster_id = (record.cluster_id || "").split('"').join("").trim();
       if (!cluster_id) { skippedNoText++; continue; }
 
@@ -434,7 +434,7 @@ async function main() {
       else lowConfidence++;
 
       // Build case_name from author_str + type (CL opinions CSV doesn't carry
-      // case_name — cluster CSV does. We use a placeholder that the existing row
+      // case_name, cluster CSV does. We use a placeholder that the existing row
       // from Task 8 will keep via COALESCE in the ON CONFLICT clause.)
       const case_name = "cluster:" + cluster_id;
 
@@ -496,7 +496,7 @@ async function main() {
   console.log("  Low confidence:      " + lowConfidence);
 
   if (dryRun || upserts.length === 0) {
-    if (dryRun) console.log("\nDry run — no DB writes.");
+    if (dryRun) console.log("\nDry run, no DB writes.");
     else console.log("\nNo upserts to apply.");
     return;
   }
@@ -523,7 +523,7 @@ async function main() {
       const rate = (applied / ((Date.now() - applyStart) / 1000)).toFixed(0);
       process.stdout.write(
         "  Batch " + batchNum + "/" + totalBatches +
-        ": " + batch.length + " rows — " + rate + "/sec\n"
+        ": " + batch.length + " rows, " + rate + "/sec\n"
       );
     } catch (e) {
       errors++;

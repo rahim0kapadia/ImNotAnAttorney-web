@@ -34,7 +34,7 @@ imnotanattorney.com
 
 [0:04-0:14] THE RIGHT:
 [TEXT ON SCREEN: "Brady v. Maryland: Your constitutional right"]
-"Under Brady v. Maryland — a Supreme Court ruling — the prosecution is required to share ALL evidence with the defense. Including evidence that helps you. This isn't optional. It's a constitutional right. And Brady violations — prosecutors hiding exculpatory evidence — are one of the most common reasons cases get overturned on appeal."
+"Under Brady v. Maryland, a Supreme Court ruling, the prosecution is required to share ALL evidence with the defense. Including evidence that helps you. This isn't optional. It's a constitutional right. And Brady violations, prosecutors hiding exculpatory evidence, are one of the most common reasons cases get overturned on appeal."
 
 [0:14-0:26] THE PROBLEM:
 [TEXT ON SCREEN: "Most defendants never read their discovery."]
@@ -42,15 +42,15 @@ imnotanattorney.com
 
 [0:26-0:37] WHAT TO LOOK FOR:
 [TEXT ON SCREEN: "4 things to look for"]
-"When you get your discovery, look for four things. One: contradictions between different officers' reports. Two: timeline gaps that don't add up. Three: evidence that should exist but is missing — like body camera footage. Four: anything that contradicts the prosecution's version of what happened."
+"When you get your discovery, look for four things. One: contradictions between different officers' reports. Two: timeline gaps that don't add up. Three: evidence that should exist but is missing, like body camera footage. Four: anything that contradicts the prosecution's version of what happened."
 
 [0:37-0:48] THE ASK:
 [TEXT ON SCREEN: "3 questions for your attorney"]
-"Ask your attorney three things. Have you received all discovery from the prosecution? Can I have a complete copy? Is there anything outstanding that hasn't been turned over? If they push back on giving you a copy — that's a red flag about how your case is being handled. Put the request in writing."
+"Ask your attorney three things. Have you received all discovery from the prosecution? Can I have a complete copy? Is there anything outstanding that hasn't been turned over? If they push back on giving you a copy, that's a red flag about how your case is being handled. Put the request in writing."
 
 [0:48-0:57] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]
-"The evidence is your case. Don't let someone else decide what you need to see. Know What They Know. Full discovery guide — link in bio."
+"The evidence is your case. Don't let someone else decide what you need to see. Know What They Know. Full discovery guide, link in bio."
 
 ## On-Screen Text
 - [0:00] "Have YOU seen your file?"

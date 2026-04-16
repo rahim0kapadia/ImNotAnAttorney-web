@@ -3,7 +3,7 @@
  *
  * Uses readline (raw line scanning) instead of csv-parse to bypass the 5-8x
  * parsing overhead that made full-file scans take 33+ hours. Only the cluster_id
- * column (col 22, 0-indexed 21) is checked per line — no full CSV parsing.
+ * column (col 22, 0-indexed 21) is checked per line, no full CSV parsing.
  *
  * Output: a standard CSV file with header + matching rows. Typically ~350MB for
  * ~7K target clusters. All downstream scripts (motion extraction, master extractor,
@@ -49,7 +49,7 @@ function findBzcat() {
 
 /**
  * Fast column extraction from a CSV line. Handles quoted fields correctly
- * for the target column only — doesn't parse the full row.
+ * for the target column only, doesn't parse the full row.
  *
  * Returns the value of column at `targetIndex` (0-based).
  */
@@ -79,7 +79,7 @@ function extractColumn(line, targetIndex) {
       col++;
       start = i;
     } else {
-      // Unquoted field — find next comma
+      // Unquoted field, find next comma
       const commaIdx = line.indexOf(',', i);
       if (commaIdx === -1) {
         // Last column on line
@@ -142,7 +142,7 @@ async function main() {
   let headerWritten = false;
 
   // Multi-line record handling. CL opinions CSV has full opinion text in quoted
-  // fields with embedded newlines — one csv-parse "record" spans ~41 physical
+  // fields with embedded newlines, one csv-parse "record" spans ~41 physical
   // lines on average (3.1B lines / 76M records). We detect record boundaries by
   // checking if a line starts with "<digits>", (the quoted numeric id column).
   // Continuation lines inside quoted text fields won't match this pattern.
@@ -174,7 +174,7 @@ async function main() {
   for await (const line of rl) {
     lineCount++;
 
-    // First line = header — write unconditionally
+    // First line = header, write unconditionally
     if (!headerWritten) {
       out.write(line + "\n");
       headerWritten = true;
@@ -197,7 +197,7 @@ async function main() {
       recordCount++;
       currentRecordLines.push(line);
     } else {
-      // Continuation line — belongs to current record
+      // Continuation line, belongs to current record
       currentRecordLines.push(line);
     }
 

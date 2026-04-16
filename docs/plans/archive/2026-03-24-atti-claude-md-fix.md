@@ -1,8 +1,8 @@
-# Atti Persona & CLAUDE.md Architecture Fix — INAA-web
+# Atti Persona & CLAUDE.md Architecture Fix, INAA-web
 
 **Date:** 2026-03-24
 **Repo:** ImNotAnAttorney-web
-**Problem:** CLAUDE.md is 221 lines (over 200-line recommendation). Only 1 rules file exists (persona). Critical rules like "fix the engine not the output," brand voice, UPL constraints, and the engine mapping table are inline — competing for attention with every user prompt. No `@path` imports or `<important>` tags used.
+**Problem:** CLAUDE.md is 221 lines (over 200-line recommendation). Only 1 rules file exists (persona). Critical rules like "fix the engine not the output," brand voice, UPL constraints, and the engine mapping table are inline, competing for attention with every user prompt. No `@path` imports or `<important>` tags used.
 **Context:** This plan mirrors what was created for Cloud Culture (CLOUD_CULTURE/docs/plans/2026-03-24-nimbus-persona-and-claude-md-fix.md). Same research, same architecture, adapted for INAA-web.
 
 ---
@@ -19,17 +19,17 @@
 ## The Core Problem: Instruction Decay + Wasted Context
 
 At 221 lines, CLAUDE.md contains:
-- **~70 lines of inventory** (pages list, component list, blog post list) — Claude can derive this from the codebase
-- **~20 lines of engine mapping table** — critical but only relevant when fixing bugs
-- **~15 lines of CV commands** — only relevant when Rahim says "run CV"
-- **~10 lines of SEO/GEO feature list** — derivable from code
+- **~70 lines of inventory** (pages list, component list, blog post list), Claude can derive this from the codebase
+- **~20 lines of engine mapping table**, critical but only relevant when fixing bugs
+- **~15 lines of CV commands**, only relevant when Rahim says "run CV"
+- **~10 lines of SEO/GEO feature list**, derivable from code
 
 Most of this competes for attention every session but is only needed sometimes.
 
 ### Reliability Hierarchy (from research)
 
 | Mechanism | Reliability | Use For |
-|-----------|-------------|---------|
+|---------, |-------------|---------|
 | **`.claude/rules/` (no `paths:`)** | ~100% | Persona, always-on behavioral rules |
 | **`@path` imports in CLAUDE.md** | ~100% | Critical reference files that must be visible |
 | **`.claude/rules/` (with `paths:`)** | ~70-80% | Conditional rules scoped to file types |
@@ -50,22 +50,22 @@ Most of this competes for attention every session but is only needed sometimes.
 ## Current CLAUDE.md Audit (221 Lines)
 
 | Lines | Section | Classification | Reasoning |
-|-------|---------|---------------|-----------|
-| 1-5 | Identity pointer | **INLINE** — keep | 2 lines, already compact |
-| 7-12 | What This Is | **INLINE** — keep | 4 lines, core identity |
-| 14-30 | Pages list | **DELETE** | Derivable from `ls src/app/` — Claude can read the filesystem |
+|-------|---------|---------------|---------, |
+| 1-5 | Identity pointer | **INLINE**, keep | 2 lines, already compact |
+| 7-12 | What This Is | **INLINE**, keep | 4 lines, core identity |
+| 14-30 | Pages list | **DELETE** | Derivable from `ls src/app/`, Claude can read the filesystem |
 | 32-53 | Components list | **DELETE** | Derivable from `ls src/components/` |
 | 55-90 | Blog posts list (35 items) | **DELETE** | Derivable from `ls content/blog/` |
-| 92-100 | Tech Stack | **INLINE** — keep | 9 lines, essential context |
+| 92-100 | Tech Stack | **INLINE**, keep | 9 lines, essential context |
 | 102-118 | SEO + GEO features | **DELETE or TRIM** | Most derivable from code. Keep 2-3 lines about schema utility location |
-| 120-135 | Growth Features | **DELETE** | Derivable from code. Score page details, drip sequences — Claude can read the files |
-| 137-143 | Product Tiers | **RULES** | Move to `.claude/rules/product-tiers.md` — Claude needs tier names/prices to write copy correctly |
+| 120-135 | Growth Features | **DELETE** | Derivable from code. Score page details, drip sequences, Claude can read the files |
+| 137-143 | Product Tiers | **RULES** | Move to `.claude/rules/product-tiers.md`, Claude needs tier names/prices to write copy correctly |
 | 145-149 | Brand Voice | **RULES** | Move to `.claude/rules/brand-voice.md` |
-| 151-172 | Fix the Engine table | **RULES** | Move to `.claude/rules/fix-engine.md` — critical every session |
+| 151-172 | Fix the Engine table | **RULES** | Move to `.claude/rules/fix-engine.md`, critical every session |
 | 174-178 | DO NOT list | **RULES** | Merge into brand-voice rules file |
-| 180-184 | Important Notes | **INLINE** — trim | Keep repo URL + Vercel deploy status. 2 lines. |
+| 180-184 | Important Notes | **INLINE**, trim | Keep repo URL + Vercel deploy status. 2 lines. |
 | 187-217 | CV section | **CONDITIONAL** | Wrap in `<important if="running CV or verification">`. Only needed when Rahim says "run CV" |
-| 219-221 | Reference paths | **INLINE** — keep | 2 lines |
+| 219-221 | Reference paths | **INLINE**, keep | 2 lines |
 
 **Projected result:** ~60-80 lines inline + 3 rules files + 1 conditional block.
 
@@ -77,9 +77,9 @@ Most of this competes for attention every session but is only needed sometimes.
 
 **`.claude/rules/brand-voice.md`** (~15 lines, no `paths:` frontmatter)
 ```
-INAA-web brand voice rules — auto-loaded every session.
+INAA-web brand voice rules, auto-loaded every session.
 
-Voice: Bold, irreverent, slightly provocative. Speaks like a defendant who's been through the system. NOT corporate lawyer voice — for regular people.
+Voice: Bold, irreverent, slightly provocative. Speaks like a defendant who's been through the system. NOT corporate lawyer voice, for regular people.
 Example: "Your attorney forgot to file that motion? Cool. Here are 7 questions that'll remind them."
 
 DO NOT:
@@ -94,9 +94,9 @@ Tagline: "We Research. You Ask."
 
 **`.claude/rules/fix-engine.md`** (~20 lines, no `paths:` frontmatter)
 ```
-Fix the engine, not the output — MANDATORY for all INAA-web work.
+Fix the engine, not the output, MANDATORY for all INAA-web work.
 
-When ANY output needs fixing, fix the engine/pipeline/config that PRODUCES it — never the individual artifact.
+When ANY output needs fixing, fix the engine/pipeline/config that PRODUCES it, never the individual artifact.
 
 | Bad output | Fix THIS (the engine) |
 |------------|----------------------|
@@ -117,14 +117,14 @@ Fix the engine = fix ALL outputs, current and future.
 
 **`.claude/rules/product-tiers.md`** (~15 lines, no `paths:` frontmatter)
 ```
-INAA product tiers — needed for all copy, pricing, and checkout work.
+INAA product tiers, needed for all copy, pricing, and checkout work.
 
-- Case Decoder ($97) — Charge analysis + 10-15 questions
-- Intelligence Brief ($497) — Judge intel + accountability research + 15-25 questions
-- X-Ray ($2,497) — Full discovery analysis + 35-50 questions + Discovery Strength Rating
-- War Room ($4,997) — Ongoing intelligence operation with weekly updates
-- Witness Pack (add-on) — Witness background + credibility analysis
-- Situation Room (add-on) — Full-team defense coordination
+- Case Decoder ($97), Charge analysis + 10-15 questions
+- Intelligence Brief ($497), Judge intel + accountability research + 15-25 questions
+- X-Ray ($2,497), Full discovery analysis + 35-50 questions + Discovery Strength Rating
+- War Room ($4,997), Ongoing intelligence operation with weekly updates
+- Witness Pack (add-on), Witness background + credibility analysis
+- Situation Room (add-on), Full-team defense coordination
 
 Stripe policy: SANDBOX MODE (test keys) until Rahim explicitly approves live switch.
 ```
@@ -134,14 +134,14 @@ Stripe policy: SANDBOX MODE (test keys) until Rahim explicitly approves live swi
 Target: ~70-80 lines. Delete all inventory lists (pages, components, blog posts, SEO features, growth features). Keep only what Claude can't derive from the filesystem.
 
 ```markdown
-# ImNotAnAttorney-web — Claude Code Instructions
+# ImNotAnAttorney-web, Claude Code Instructions
 
 ## Identity: Atticus (Atti)
-Auto-loaded via `.claude/rules/atti-persona.md` — 6 thinking modes, research-first rule, voice.
+Auto-loaded via `.claude/rules/atti-persona.md`, 6 thinking modes, research-first rule, voice.
 Rules auto-loaded: brand-voice, fix-engine, product-tiers.
 
 ## What This Is
-A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment for criminal defendants.
+A Next.js content-driven sales funnel for ImNotAnAttorney, legal empowerment for criminal defendants.
 35 blog posts, 14 pages, multi-tier checkout ($97-$4,997). See `docs/ARCHITECTURE.md` for full system architecture.
 
 ## Tech Stack
@@ -149,7 +149,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 - **Styling:** Tailwind CSS
 - **CMS:** MDX files in `content/blog/`
 - **Database:** Supabase (cases, orders, drip email tracking, discovery documents, counters, score_aggregates)
-- **Payments:** Stripe Checkout — SANDBOX MODE (see `.claude/rules/product-tiers.md`)
+- **Payments:** Stripe Checkout, SANDBOX MODE (see `.claude/rules/product-tiers.md`)
 - **Email:** Resend (drip sequences, delivery notifications, admin digests)
 - **Hosting:** Vercel (live, auto-deploys on push to master)
 - **Schema:** FAQ, Service, Organization, Article, HowTo, BreadcrumbList (with speakable, @id binding, citation)
@@ -158,7 +158,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 | File | Purpose |
 |------|---------|
 | `src/lib/schema.ts` | Structured data generators (about entities, citation mapping) |
-| `src/lib/tiers.ts` | TIER_CORE array — single source of truth for pricing |
+| `src/lib/tiers.ts` | TIER_CORE array, single source of truth for pricing |
 | `src/lib/drip-emails.ts` | 7+ email sequence definitions |
 | `src/lib/blog.ts` | Frontmatter parser + renderer |
 | `src/app/api/cron/drip/route.ts` | 22-part drip dispatcher |
@@ -171,7 +171,7 @@ A Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment 
 
 <important if="Rahim says run CV or you are doing verification">
 ## Continuous Verification (CV)
-Run: `node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends`
+Run: `node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends`
 Hypotheses: H1 (UPL gate), H2 (cron 48h), H3 (site up), H5 (adversarial UPL), H6 (orders healthy).
 H1 CLEAN as of 2026-03-13.
 </important>
@@ -188,17 +188,17 @@ For every line in the new CLAUDE.md: "If I remove this, will Claude make a mista
 
 ### Step 4: Verify
 
-1. Fresh session — ask Atti "who are you?" (should get persona without reading files)
+1. Fresh session, ask Atti "who are you?" (should get persona without reading files)
 2. Ask Atti to fix a bug in email content (should know to fix `drip-emails.ts`, not one email)
-3. Ask Atti to write blog copy (should use brand voice — bold, irreverent, no legal advice)
+3. Ask Atti to write blog copy (should use brand voice, bold, irreverent, no legal advice)
 4. Ask Atti about product tiers (should know all 6 tiers and prices)
 5. Say "run CV" (should know the command from `<important>` block)
-6. Verify: did Atti try to read pages/components/blog lists from CLAUDE.md? (Should NOT — they're deleted, Atti reads from filesystem when needed)
+6. Verify: did Atti try to read pages/components/blog lists from CLAUDE.md? (Should NOT, they're deleted, Atti reads from filesystem when needed)
 
 ### Step 5: Clean Up
 
 - Verify all `.claude/rules/` files load (no `paths:` frontmatter)
-- Run `wc -l` — CLAUDE.md must be under 100 lines
+- Run `wc -l`, CLAUDE.md must be under 100 lines
 - Total rules files + CLAUDE.md must be under 200 lines combined
 - Delete any stale memory files that reference old CLAUDE.md structure
 
@@ -219,7 +219,7 @@ For every line in the new CLAUDE.md: "If I remove this, will Claude make a mista
 
 ## Also Apply to Other INAA Projects
 
-The main INAA project CLAUDE.md is 393 lines — nearly 2x the recommendation. The engine has no CLAUDE.md at all (which is fine — it only has the persona in rules). The main project needs the same treatment in a separate session.
+The main INAA project CLAUDE.md is 393 lines, nearly 2x the recommendation. The engine has no CLAUDE.md at all (which is fine, it only has the persona in rules). The main project needs the same treatment in a separate session.
 
 ---
 

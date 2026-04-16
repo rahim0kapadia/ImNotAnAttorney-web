@@ -12,7 +12,7 @@
  *
  * Items REMAINING after the scrub are general legal concepts (e.g., "Challenge
  * the traffic stop validity", "Rising blood alcohol defense", "Self-defense")
- * — these are legal categories, not factual citations that need verification.
+ *, these are legal categories, not factual citations that need verification.
  */
 
 import fs from "fs";
@@ -50,7 +50,7 @@ function isUnverifiable(item) {
   if (item.toLowerCase().indexOf("with your attorney") !== -1) return true;
 
   // 3. Contains an inline statute § with a section number
-  // Pattern: "§ 123.45" or "§ ABC-123" — anything after § with digits
+  // Pattern: "§ 123.45" or "§ ABC-123", anything after § with digits
   if (containsInlineStatuteCite(item)) return true;
 
   // 4. Contains state code prefixes that indicate a pinpoint cite
@@ -186,7 +186,7 @@ function hasUpperCaseLetter(s) {
   return false;
 }
 
-// Bare case-derived terms — well-known case names used as standalone references
+// Bare case-derived terms, well-known case names used as standalone references
 // (e.g., "Miranda warnings", "Brady disclosure", "Terry stop"). Per the strict
 // rule, anything related to case law without a verification URL is unverifiable.
 const BARE_CASE_NAMES = [
@@ -284,7 +284,7 @@ function containsBareCodeRef(text) {
       while (j < text.length && text[j] >= "0" && text[j] <= "9") j++;
       // Check if next is space + uppercase letters (code reference)
       if (j < text.length - 2 && text[j] === " " && isUpperCaseChar(text[j + 1]) && isUpperCaseChar(text[j + 2])) {
-        // Could be "625 ILCS" — confirm by checking that uppercase run is 3-6 chars
+        // Could be "625 ILCS", confirm by checking that uppercase run is 3-6 chars
         let k = j + 1;
         while (k < text.length && text[k] >= "A" && text[k] <= "Z") k++;
         const codeLen = k - (j + 1);
@@ -299,7 +299,7 @@ function containsBareCodeRef(text) {
 }
 
 function containsBareCaseName(text) {
-  // Bare case-name detection — case-derived terms like "Miranda warnings" or
+  // Bare case-name detection, case-derived terms like "Miranda warnings" or
   // "post-Miranda admissions". A hyphen before/after still counts as a match
   // because "pre-Miranda" is still referencing the case.
   for (const name of BARE_CASE_NAMES) {
@@ -448,7 +448,7 @@ function main() {
   console.log(`\n=== Summary ===`);
   console.log(`Files affected : ${totalFiles}`);
   console.log(`Citations scrubbed : ${totalScrubbed}`);
-  if (dryRun) console.log(`(dry run — no changes written)`);
+  if (dryRun) console.log(`(dry run, no changes written)`);
 }
 
 main();

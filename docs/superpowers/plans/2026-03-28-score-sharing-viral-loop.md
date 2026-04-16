@@ -1,4 +1,4 @@
-# Score Sharing Viral Loop — Implementation Plan
+# Score Sharing Viral Loop, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -12,16 +12,16 @@
 
 ## Context
 - **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web`
-- **Problem:** Score quiz has zero sharing mechanics. Every completion is a dead end — no viral coefficient. This is the lowest-effort growth lever with all 15 products LIVE.
+- **Problem:** Score quiz has zero sharing mechanics. Every completion is a dead end, no viral coefficient. This is the lowest-effort growth lever with all 15 products LIVE.
 - **Key files to read first:**
-  - `src/app/score/page.tsx` — Score page (where share UI goes)
-  - `src/lib/score.ts` — `calculateScore()`, `ScoreInput`, `ScoreResult`, `ALLOWED_VALUES`
-  - `src/app/api/score/route.ts` — Existing score API (validation pattern to match)
-  - `src/components/ShareButtons.tsx` — Reusable share component (already imported on score page)
-  - `src/app/opengraph-image.tsx` — OG image pattern to follow
+  - `src/app/score/page.tsx`, Score page (where share UI goes)
+  - `src/lib/score.ts`, `calculateScore()`, `ScoreInput`, `ScoreResult`, `ALLOWED_VALUES`
+  - `src/app/api/score/route.ts`, Existing score API (validation pattern to match)
+  - `src/components/ShareButtons.tsx`, Reusable share component (already imported on score page)
+  - `src/app/opengraph-image.tsx`, OG image pattern to follow
 - **Tech stack:** Next.js 15, React 19, Tailwind 4, Supabase PostgreSQL, Edge runtime
 - **Key decisions:**
-  - Token-based URLs for privacy (not URL params) — criminal defense is sensitive
+  - Token-based URLs for privacy (not URL params), criminal defense is sensitive
   - Lazy storage: scores stored ONLY on share click (preserves "Your answers are not stored" promise)
   - Server-side re-validation: share endpoint re-runs `calculateScore()` to prevent tampering
   - 90-day TTL on shared results
@@ -30,7 +30,7 @@
 
 ---
 
-### Task 1: Database Migration — score_results table
+### Task 1: Database Migration, score_results table
 
 **Files:**
 - Create: `supabase/migrations/032-score-results.sql`
@@ -38,9 +38,9 @@
 - [ ] **Step 1: Write the migration**
 
 ```sql
--- Score results for shareable URLs.
--- Only populated when a user clicks "Share" (lazy persistence).
--- Privacy-first: no user_id, no email, no IP. Anonymous by design.
+, Score results for shareable URLs.
+, Only populated when a user clicks "Share" (lazy persistence).
+, Privacy-first: no user_id, no email, no IP. Anonymous by design.
 
 CREATE TABLE score_results (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -104,7 +104,7 @@ git commit -m "feat(score): add score_results table for shareable score URLs"
 
 ---
 
-### Task 2: Share API Route — POST /api/score/share
+### Task 2: Share API Route, POST /api/score/share
 
 **Files:**
 - Create: `src/app/api/score/share/route.ts`
@@ -114,14 +114,14 @@ git commit -m "feat(score): add score_results table for shareable score URLs"
 
 ```typescript
 /**
- * POST /api/score/share — Generate a shareable score URL.
+ * POST /api/score/share, Generate a shareable score URL.
  *
  * Accepts the original 10 quiz answers, re-calculates the score server-side
  * (preventing tampering), generates a 12-char token, stores the verified
  * result in score_results, and returns the shareable URL.
  *
  * Privacy: scores are stored ONLY when the user explicitly shares.
- * The token is opaque — no score data in the URL.
+ * The token is opaque, no score data in the URL.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { randomBytes } from "crypto";
@@ -190,19 +190,19 @@ export async function POST(req: NextRequest) {
 
 - [ ] **Step 2: Verify TypeScript compiles**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: No errors.
 
 - [ ] **Step 3: Commit**
 
 ```bash
 git add src/app/api/score/share/route.ts
-git commit -m "feat(score): add POST /api/score/share — token-based shareable URLs"
+git commit -m "feat(score): add POST /api/score/share, token-based shareable URLs"
 ```
 
 ---
 
-### Task 3: Results Page — /score/results/[token]
+### Task 3: Results Page, /score/results/[token]
 
 **Files:**
 - Create: `src/app/score/results/[token]/page.tsx`
@@ -212,11 +212,11 @@ git commit -m "feat(score): add POST /api/score/share — token-based shareable 
 
 ```typescript
 /**
- * Shared Score Results Page — /score/results/[token]
+ * Shared Score Results Page, /score/results/[token]
  *
  * Public page displaying a shared Defense Milestone Score. Fetched server-side
  * from Supabase by token. Shows score arc, observations, and CTA to take the
- * quiz. No auth required — anyone with the link can view.
+ * quiz. No auth required, anyone with the link can view.
  *
  * If token is invalid or expired, shows a fallback with CTA to take the quiz.
  */
@@ -247,7 +247,7 @@ async function getScoreResult(token: string): Promise<ScoreResultRow | null> {
 
   if (error || !data) return null;
 
-  // view_count tracking deferred — column exists, can be populated via
+  // view_count tracking deferred, column exists, can be populated via
   // a lightweight API endpoint or cron later. Skipping here to avoid
   // non-atomic read-then-write race condition.
 
@@ -263,22 +263,22 @@ export async function generateMetadata({
   const result = await getScoreResult(token);
   if (!result) {
     return {
-      title: "Score Expired — ImNotAnAttorney",
-      description: "This Defense Milestone Score has expired. Take the quiz yourself — free, 60 seconds, no email required.",
+      title: "Score Expired, ImNotAnAttorney",
+      description: "This Defense Milestone Score has expired. Take the quiz yourself, free, 60 seconds, no email required.",
     };
   }
   return {
-    title: `Defense Milestone Score: ${result.score_band} — ImNotAnAttorney`,
-    description: "Someone shared their criminal defense readiness score. Check yours — free, 60 seconds, no email required.",
+    title: `Defense Milestone Score: ${result.score_band}, ImNotAnAttorney`,
+    description: "Someone shared their criminal defense readiness score. Check yours, free, 60 seconds, no email required.",
     openGraph: {
       title: `Defense Milestone Score: ${result.score_band}`,
-      description: "Check your criminal defense readiness — free, 60 seconds, no email required.",
+      description: "Check your criminal defense readiness, free, 60 seconds, no email required.",
       url: `https://imnotanattorney.com/score/results/${token}`,
     },
     twitter: {
       card: "summary_large_image",
       title: `Defense Milestone Score: ${result.score_band}`,
-      description: "Check your criminal defense readiness — free, 60 seconds, no email required.",
+      description: "Check your criminal defense readiness, free, 60 seconds, no email required.",
     },
   };
 }
@@ -392,7 +392,7 @@ export function ScoreResultDisplay({ score, band, observations }: ScoreResultDis
 
 - [ ] **Step 3: Verify TypeScript compiles**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: No errors.
 
 - [ ] **Step 4: Commit**
@@ -426,7 +426,7 @@ import { ImageResponse } from "next/og";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export const runtime = "edge";
-export const alt = "Defense Milestone Score — ImNotAnAttorney";
+export const alt = "Defense Milestone Score, ImNotAnAttorney";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -529,7 +529,7 @@ export default async function Image({ params }: { params: Promise<{ token: strin
             textAlign: "center",
           }}
         >
-          Im<span style={{ color: "#f59e0b" }}>Not</span>AnAttorney — Know What They Know.
+          Im<span style={{ color: "#f59e0b" }}>Not</span>AnAttorney, Know What They Know.
         </div>
       </div>
     ),
@@ -540,7 +540,7 @@ export default async function Image({ params }: { params: Promise<{ token: strin
 
 - [ ] **Step 2: Verify TypeScript compiles**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: No errors.
 
 - [ ] **Step 3: Commit**
@@ -552,7 +552,7 @@ git commit -m "feat(score): add dynamic OG image for shared score results"
 
 ---
 
-### Task 5: Score Page — Replace Generic Share with Personalized Share
+### Task 5: Score Page, Replace Generic Share with Personalized Share
 
 **Files:**
 - Modify: `src/app/score/page.tsx` (section 10, lines ~727-735)
@@ -607,13 +607,13 @@ async function handleShare() {
 Replace the existing ShareButtons section (around lines 727-735):
 
 ```tsx
-{/* 10. SHARE BUTTONS — viral growth loop */}
+{/* 10. SHARE BUTTONS, viral growth loop */}
 <ShareButtons
   url="/score"
   title="Defense Milestone Score"
-  heading="Know someone facing charges? Send them this tool — 60 seconds, free, no email."
+  heading="Know someone facing charges? Send them this tool, 60 seconds, free, no email."
   subheading="Share the tool, not your result. Their score stays private."
-  shareText="Check if your attorney is actually working your case — free, 60 seconds, no email required: "
+  shareText="Check if your attorney is actually working your case, free, 60 seconds, no email required: "
   utmParams="utm_source=share&utm_medium=score&utm_campaign=viral"
 />
 ```
@@ -621,13 +621,13 @@ Replace the existing ShareButtons section (around lines 727-735):
 With this new section:
 
 ```tsx
-{/* 10. SHARE YOUR SCORE — personalized viral share */}
+{/* 10. SHARE YOUR SCORE, personalized viral share */}
 {!shareToken ? (
   <FadeInUp>
     <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center">
       <p className="text-sm font-bold text-white">Know someone facing charges?</p>
       <p className="mt-1 text-xs text-zinc-400">
-        Send them this — 60 seconds, free, no email required.
+        Send them this, 60 seconds, free, no email required.
       </p>
       <button
         onClick={handleShare}
@@ -645,7 +645,7 @@ With this new section:
     title={`Defense Milestone Score: ${result.band}`}
     heading="Share your score"
     subheading="Your score link is ready. Pick how you want to share it."
-    shareText={`I just scored my criminal defense in 60 seconds — free, no email. Worth checking if you have a case: ${shareUrl}`}
+    shareText={`I just scored my criminal defense in 60 seconds, free, no email. Worth checking if you have a case: ${shareUrl}`}
     emailBody={`I used this free tool to check if my attorney is hitting basic defense milestones. Takes 60 seconds, no email required: ${shareUrl}`}
   />
 )}
@@ -653,7 +653,7 @@ With this new section:
 
 - [ ] **Step 3: Verify TypeScript compiles**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: No errors.
 
 - [ ] **Step 4: Run existing tests**
@@ -676,7 +676,7 @@ git commit -m "feat(score): replace generic share with personalized token-based 
 
 - [ ] **Step 1: TypeScript check**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: Clean.
 
 - [ ] **Step 2: Run all tests**

@@ -11,13 +11,13 @@
  *                                                   -> /checkout?tier=<next> (OTO upgrade)
  *
  * Query parameters:
- *   session_id — Stripe checkout session ID (used for server-side verification)
- *   tier — Product tier slug (determines next steps and OTO offer)
+ *   session_id, Stripe checkout session ID (used for server-side verification)
+ *   tier, Product tier slug (determines next steps and OTO offer)
  *
  * Page states:
- *   1. Loading — Spinner while verifying session with /api/checkout/verify
- *   2. Verification failed — Error state with link to /services
- *   3. Verified — Success state with:
+ *   1. Loading, Spinner while verifying session with /api/checkout/verify
+ *   2. Verification failed, Error state with link to /services
+ *   3. Verified, Success state with:
  *      a. Tier-specific next steps (action copy + delivery timeline)
  *      b. Case Decoder: "Complete Your Case Details" CTA -> /intake
  *      c. Discovery tiers: "Check your email for upload link" + fallback /upload link
@@ -65,7 +65,7 @@ const TIER_NEXT_STEPS: Record<
     name: TIER_CORE["dui-first-offense"].name,
     delivery: TIER_CORE["dui-first-offense"].delivery,
     action:
-      "Your DUI Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+      "Your DUI Defense Playbook has been sent to your email. Check your inbox, if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
@@ -73,7 +73,7 @@ const TIER_NEXT_STEPS: Record<
     name: TIER_CORE["drug-possession"].name,
     delivery: TIER_CORE["drug-possession"].delivery,
     action:
-      "Your Drug Possession Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+      "Your Drug Possession Defense Playbook has been sent to your email. Check your inbox, if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
@@ -81,7 +81,7 @@ const TIER_NEXT_STEPS: Record<
     name: TIER_CORE["probation-violation"].name,
     delivery: TIER_CORE["probation-violation"].delivery,
     action:
-      "Your Probation Violation Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+      "Your Probation Violation Defense Playbook has been sent to your email. Check your inbox, if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
@@ -89,7 +89,7 @@ const TIER_NEXT_STEPS: Record<
     name: TIER_CORE["white-collar"].name,
     delivery: TIER_CORE["white-collar"].delivery,
     action:
-      "Your White Collar Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+      "Your White Collar Defense Playbook has been sent to your email. Check your inbox, if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
@@ -97,7 +97,7 @@ const TIER_NEXT_STEPS: Record<
     name: TIER_CORE["sex-offense"].name,
     delivery: TIER_CORE["sex-offense"].delivery,
     action:
-      "Your Sex Offense Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+      "Your Sex Offense Defense Playbook has been sent to your email. Check your inbox, if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
@@ -105,7 +105,7 @@ const TIER_NEXT_STEPS: Record<
     name: TIER_CORE["federal-criminal"].name,
     delivery: TIER_CORE["federal-criminal"].delivery,
     action:
-      "Your Federal Criminal Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+      "Your Federal Criminal Defense Playbook has been sent to your email. Check your inbox, if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
@@ -113,7 +113,7 @@ const TIER_NEXT_STEPS: Record<
     name: TIER_CORE["drug-trafficking"].name,
     delivery: TIER_CORE["drug-trafficking"].delivery,
     action:
-      "Your Drug Trafficking Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+      "Your Drug Trafficking Defense Playbook has been sent to your email. Check your inbox, if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
@@ -121,7 +121,7 @@ const TIER_NEXT_STEPS: Record<
     name: TIER_CORE["self-defense"].name,
     delivery: TIER_CORE["self-defense"].delivery,
     action:
-      "Your Self-Defense / Justifiable Force Defense Playbook has been sent to your email. Check your inbox — if you don't see it in 5 minutes, check spam.",
+      "Your Self-Defense / Justifiable Force Defense Playbook has been sent to your email. Check your inbox, if you don't see it in 5 minutes, check spam.",
     showUpload: false,
     isDigitalProduct: true,
   },
@@ -191,7 +191,7 @@ const TIER_NEXT_STEPS: Record<
 };
 
 /**
- * SuccessContent — client component that handles session verification,
+ * SuccessContent, client component that handles session verification,
  * OTO timer management, and conditional next-step rendering.
  */
 function SuccessContent() {
@@ -249,7 +249,7 @@ function SuccessContent() {
     // Compute end time from server-side session creation timestamp
     let end: number;
     if (sessionCreated) {
-      // sessionCreated is Unix seconds from Stripe — convert to ms + 24h
+      // sessionCreated is Unix seconds from Stripe, convert to ms + 24h
       end = sessionCreated * 1000 + 24 * 60 * 60 * 1000;
       // Cache in localStorage for flicker-free re-renders
       try { localStorage.setItem(key, String(end)); } catch { /* Safari private browsing */ }
@@ -260,7 +260,7 @@ function SuccessContent() {
       if (cached) {
         end = Number(cached);
       } else {
-        return; // No server time yet, no cache — wait for verify response
+        return; // No server time yet, no cache, wait for verify response
       }
     }
 
@@ -297,7 +297,7 @@ function SuccessContent() {
           </div>
           <h1 className="text-2xl font-bold text-white">Payment Not Confirmed</h1>
           <p className="mt-4 text-zinc-400">
-            We couldn&apos;t verify this payment. If you completed checkout, check your email for a confirmation — it may take a moment to process.
+            We couldn&apos;t verify this payment. If you completed checkout, check your email for a confirmation, it may take a moment to process.
           </p>
           {sessionId && (
             <p className="mt-3 text-sm text-zinc-400">
@@ -367,13 +367,13 @@ function SuccessContent() {
           <>
             <p className="mt-3 text-lg text-amber-400">{info.name}</p>
 
-            {/* DIGITAL PRODUCT — show download buttons if URLs available, else email fallback */}
+            {/* DIGITAL PRODUCT, show download buttons if URLs available, else email fallback */}
             {info.isDigitalProduct ? (
               <div className="mt-6">
                 {downloadUrl ? (
                   <div className="space-y-3">
                     <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-5">
-                      <p className="text-sm font-semibold text-red-400">Start Here — Emergency Playbook</p>
+                      <p className="text-sm font-semibold text-red-400">Start Here, Emergency Playbook</p>
                       <p className="mt-1 text-xs text-zinc-400">Your First 72 Hours checklist, 5 Priority Questions, and what to do right now.</p>
                       <a
                         href={emergencyDownloadUrl || downloadUrl}
@@ -384,7 +384,7 @@ function SuccessContent() {
                     </div>
                     <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-5">
                       <p className="text-sm font-semibold text-amber-400">Full Defense Playbook</p>
-                      <p className="mt-1 text-xs text-zinc-400">Complete reference — case stage roadmap, red flag checklist, scorecard, all 26 questions.</p>
+                      <p className="mt-1 text-xs text-zinc-400">Complete reference, case stage roadmap, red flag checklist, scorecard, all 26 questions.</p>
                       <a
                         href={downloadUrl}
                         className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
@@ -402,7 +402,7 @@ function SuccessContent() {
                       Your playbook download link has been sent to <span className="text-zinc-300">{customerEmail}</span>
                     </p>
                     <p className="mt-2 text-sm text-zinc-400">
-                      Check your inbox — if you don&apos;t see it in 5 minutes, check spam.
+                      Check your inbox, if you don&apos;t see it in 5 minutes, check spam.
                     </p>
                   </div>
                 )}
@@ -424,13 +424,13 @@ function SuccessContent() {
               </>
             )}
 
-            {/* INTAKE CTA — Case Decoder customers may not have submitted case  */}
+            {/* INTAKE CTA, Case Decoder customers may not have submitted case  */}
             {/* details yet (intake is separate from checkout). Shows CTA to    */}
             {/* /intake?tier=case-decoder so we can start generating the report.*/}
             {info.noIntakeAction && info.intakeUrl && (
               <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
                 <p className="text-sm font-semibold text-amber-400">
-                  One step left — tell us about your case
+                  One step left, tell us about your case
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
                   {info.noIntakeAction}
@@ -467,13 +467,13 @@ function SuccessContent() {
                   Your purchase just funded {getScholarshipCount(tier)} scholarship{getScholarshipCount(tier) > 1 ? 's' : ''}
                 </p>
                 <p className="mt-1 text-sm text-zinc-400">
-                  A defendant who cannot afford defense research will receive the same analysis you did — because of you.
+                  A defendant who cannot afford defense research will receive the same analysis you did, because of you.
                 </p>
               </div>
             )}
 
             {/* ------------------------------------------------------------ */}
-            {/* OTO UPGRADE OFFERS — Tier-specific, time-limited.           */}
+            {/* OTO UPGRADE OFFERS, Tier-specific, time-limited.           */}
             {/* Each block shows: countdown timer, next tier name, what it  */}
             {/* adds, and the upgrade cost (current purchase credited).     */}
             {/* Only visible while timeLeft is active (24h window).         */}
@@ -481,24 +481,24 @@ function SuccessContent() {
             {timeLeft && timeLeft !== "Expired" && (tier === "dui-first-offense" || tier === "drug-possession" || tier === "probation-violation" || tier === "white-collar" || tier === "sex-offense" || tier === "federal-criminal" || tier === "drug-trafficking" || tier === "self-defense") && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
+                  Upgrade offer, <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
                 <p className="text-sm font-semibold text-amber-400">
-                  Get Case-Specific Questions — Case Decoder
+                  Get Case-Specific Questions, Case Decoder
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  The Case Decoder is {TIER_CORE["case-decoder"].priceDisplay} — your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? ""} playbook purchase is fully credited, so you pay just {upgradeCostBetween(tier as TierSlug, "case-decoder")}. Every dollar moves upward. The Playbook gives you general questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
+                  The Case Decoder is {TIER_CORE["case-decoder"].priceDisplay}, your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? ""} playbook purchase is fully credited, so you pay just {upgradeCostBetween(tier as TierSlug, "case-decoder")}. Every dollar moves upward. The Playbook gives you general questions, the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
                 </p>
                 {/* Charge-type-specific loss-aversion copy (Kahneman/Cialdini/Suby) */}
                 <p className="mt-2 text-sm text-zinc-300">
                   {tier === "dui-first-offense"
-                    ? "DUI cases have time-critical evidence windows — breathalyzer calibration logs and dash cam footage can be deleted at 30 or 90 days. The Case Decoder identifies exactly which suppression questions to ask before those windows close."
+                    ? "DUI cases have time-critical evidence windows, breathalyzer calibration logs and dash cam footage can be deleted at 30 or 90 days. The Case Decoder identifies exactly which suppression questions to ask before those windows close."
                     : tier === "drug-possession" || tier === "drug-trafficking"
                     ? "Drug cases often hinge on search legality and chain-of-custody gaps your attorney may not have checked. The Case Decoder maps the specific suppression opportunities in your case before motion deadlines pass."
                     : tier === "federal-criminal"
-                    ? "Federal cases move on a different timeline — grand jury strategy, cooperation pressure, and sentencing guidelines create layers that general questions can't reach. The Case Decoder breaks down the federal-specific questions that change outcomes."
+                    ? "Federal cases move on a different timeline, grand jury strategy, cooperation pressure, and sentencing guidelines create layers that general questions can't reach. The Case Decoder breaks down the federal-specific questions that change outcomes."
                     : tier === "white-collar"
-                    ? "White collar cases are document-heavy — forensic accounting gaps, transaction timelines, and asset protection questions require charge-specific analysis. The Case Decoder identifies the financial evidence questions worth asking in your attorney meeting."
+                    ? "White collar cases are document-heavy, forensic accounting gaps, transaction timelines, and asset protection questions require charge-specific analysis. The Case Decoder identifies the financial evidence questions worth asking in your attorney meeting."
                     : "The Playbook gives you the general framework. The Case Decoder applies it to YOUR specific charges, YOUR jurisdiction, and YOUR attorney's track record."}
                 </p>
                 <p className="mt-1 text-xs text-zinc-400">
@@ -512,16 +512,16 @@ function SuccessContent() {
                 </Link>
               </div>
             )}
-            {/* CD BUYER OTO — Tier-jump capable. Shows both IB and X-Ray.     */}
+            {/* CD BUYER OTO, Tier-jump capable. Shows both IB and X-Ray.     */}
             {/* Resequenced per Suby: timer > CTA/price > urgency > features. */}
             {/* X-Ray as primary, IB as budget alternative.                   */}
             {timeLeft && timeLeft !== "Expired" && tier === "case-decoder" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  Upgrade offer — <span className="animate-pulse">{timeLeft}</span> remaining
+                  Upgrade offer, <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
 
-                {/* Credit headline — relief first (Covello) */}
+                {/* Credit headline, relief first (Covello) */}
                 <p className="text-lg font-bold text-white">
                   You have already paid {TIER_CORE["case-decoder"].priceDisplay}.
                 </p>
@@ -529,23 +529,23 @@ function SuccessContent() {
                 {/* Primary CTA: X-Ray (before urgency copy per Suby) */}
                 <div className="mt-4 rounded-lg border border-amber-500/30 bg-zinc-900/50 p-4">
                   <p className="text-sm font-semibold text-amber-400">
-                    The X-Ray — {upgradeCostBetween("case-decoder", "x-ray")} after credit
+                    The X-Ray, {upgradeCostBetween("case-decoder", "x-ray")} after credit
                   </p>
                   <p className="mt-1 text-sm text-zinc-400">
-                    Your judge, your prosecutor, your case documents — 35-50 specific questions. Delivered in 10 business days.
+                    Your judge, your prosecutor, your case documents, 35-50 specific questions. Delivered in 10 business days.
                   </p>
                   <Link
                     href="/checkout?tier=x-ray"
                     className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-2 text-sm font-bold text-black transition-colors hover:bg-amber-400"
                   >
-                    Get The X-Ray — {upgradeCostBetween("case-decoder", "x-ray")} &rarr;
+                    Get The X-Ray, {upgradeCostBetween("case-decoder", "x-ray")} &rarr;
                   </Link>
                 </div>
 
                 {/* Budget alternative: Intelligence Brief */}
                 <div className="mt-3 rounded-lg border border-zinc-700 bg-zinc-900/50 p-4">
                   <p className="text-sm font-semibold text-zinc-300">
-                    Intelligence Brief — {upgradeCostBetween("case-decoder", "intelligence-brief")} after credit
+                    Intelligence Brief, {upgradeCostBetween("case-decoder", "intelligence-brief")} after credit
                   </p>
                   <p className="mt-1 text-sm text-zinc-400">
                     Jurisdiction intelligence, judge patterns, prosecution tendencies. Delivered in 72 hours.
@@ -554,7 +554,7 @@ function SuccessContent() {
                     href="/checkout?tier=intelligence-brief"
                     className="mt-3 inline-block rounded-lg border border-zinc-500 px-6 py-2 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-400"
                   >
-                    Get Intelligence Brief — {upgradeCostBetween("case-decoder", "intelligence-brief")} &rarr;
+                    Get Intelligence Brief, {upgradeCostBetween("case-decoder", "intelligence-brief")} &rarr;
                   </Link>
                 </div>
 
@@ -569,14 +569,14 @@ function SuccessContent() {
                 </p>
               </div>
             )}
-            {/* IB BUYER OTO — X-Ray. Credit-as-hero, Suby sequencing, Covello CCO. */}
+            {/* IB BUYER OTO, X-Ray. Credit-as-hero, Suby sequencing, Covello CCO. */}
             {timeLeft && timeLeft !== "Expired" && tier === "intelligence-brief" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-1 text-sm text-zinc-400">
                   Your Intelligence Brief is complete. Here&apos;s what it can&apos;t do on its own.
                 </p>
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  One-time upgrade — <span className="animate-pulse">{timeLeft}</span> remaining
+                  One-time upgrade, <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
 
                 <p className="text-lg font-bold text-white">
@@ -590,11 +590,11 @@ function SuccessContent() {
                   href="/checkout?tier=x-ray"
                   className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
                 >
-                  Get The X-Ray — {upgradeCostBetween("intelligence-brief", "x-ray")} &rarr;
+                  Get The X-Ray, {upgradeCostBetween("intelligence-brief", "x-ray")} &rarr;
                 </Link>
 
                 <p className="mt-4 text-sm text-zinc-300">
-                  Your Intelligence Brief identifies patterns in how cases like yours are prosecuted. The X-Ray tests whether those patterns hold in your actual case documents — every police report, lab result, and witness statement, page by page.
+                  Your Intelligence Brief identifies patterns in how cases like yours are prosecuted. The X-Ray tests whether those patterns hold in your actual case documents, every police report, lab result, and witness statement, page by page.
                 </p>
                 <p className="mt-2 text-sm text-zinc-300">
                   Discovery arrives on a timeline outside your control. When it does, the questions change from &ldquo;what typically happens&rdquo; to &ldquo;what is actually in here.&rdquo; One option is to have that analysis ready before your next attorney meeting.
@@ -605,14 +605,14 @@ function SuccessContent() {
                 </p>
               </div>
             )}
-            {/* X-RAY BUYER OTO — War Room with single CTA + gray secondary. Covello CCO. */}
+            {/* X-RAY BUYER OTO, War Room with single CTA + gray secondary. Covello CCO. */}
             {timeLeft && timeLeft !== "Expired" && tier === "x-ray" && (
               <div className="mt-8 rounded-xl border-2 border-amber-500/50 bg-amber-500/5 p-6">
                 <p className="mb-1 text-sm text-zinc-400">
                   Your X-Ray analysis is complete and documented.
                 </p>
                 <p className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-500">
-                  One-time upgrade — <span className="animate-pulse">{timeLeft}</span> remaining
+                  One-time upgrade, <span className="animate-pulse">{timeLeft}</span> remaining
                 </p>
 
                 <p className="text-lg font-bold text-white">
@@ -620,12 +620,12 @@ function SuccessContent() {
                 </p>
 
                 <p className="mt-2 text-sm text-zinc-300">
-                  Discovery findings have a shelf life. Witnesses&apos; memories fade. Motion windows close. The X-Ray maps what&apos;s there — the War Room tracks what changes and builds the case for your attorney while there is still time to act on it.
+                  Discovery findings have a shelf life. Witnesses&apos; memories fade. Motion windows close. The X-Ray maps what&apos;s there, the War Room tracks what changes and builds the case for your attorney while there is still time to act on it.
                 </p>
 
                 <div className="mt-4 rounded-lg border border-amber-500/30 bg-zinc-900/50 p-4">
                   <p className="text-sm font-semibold text-amber-400">
-                    The War Room — {upgradeCostBetween("x-ray", "war-room")} after credit
+                    The War Room, {upgradeCostBetween("x-ray", "war-room")} after credit
                   </p>
                   <p className="mt-1 text-sm text-zinc-400">
                     25-28 days of active intelligence work. Witness dossiers, motion landscape, case law package, weekly updates through resolution.
@@ -634,7 +634,7 @@ function SuccessContent() {
                     href="/checkout?tier=war-room"
                     className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-2 text-sm font-bold text-black transition-colors hover:bg-amber-400"
                   >
-                    Get The War Room — {upgradeCostBetween("x-ray", "war-room")} &rarr;
+                    Get The War Room, {upgradeCostBetween("x-ray", "war-room")} &rarr;
                   </Link>
                 </div>
 
@@ -650,7 +650,7 @@ function SuccessContent() {
                 </p>
               </div>
             )}
-            {/* WAR ROOM BUYER — Value reinforcement, NO upgrade CTA. */}
+            {/* WAR ROOM BUYER, Value reinforcement, NO upgrade CTA. */}
             {tier === "war-room" && (
               <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
                 <p className="text-sm font-semibold text-amber-400">
@@ -670,7 +670,7 @@ function SuccessContent() {
                   </li>
                   <li className="flex gap-2">
                     <span className="text-amber-500 font-semibold shrink-0">3.</span>
-                    <span>After discovery upload, the full War Room operation begins — witness dossiers, motion landscape, case law package, and your attorney delivery package.</span>
+                    <span>After discovery upload, the full War Room operation begins, witness dossiers, motion landscape, case law package, and your attorney delivery package.</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-amber-500 font-semibold shrink-0">4.</span>
@@ -678,7 +678,7 @@ function SuccessContent() {
                   </li>
                 </ol>
                 <p className="mt-4 text-sm text-zinc-400">
-                  Questions about your engagement? Email us — responses within 4 hours.
+                  Questions about your engagement? Email us, responses within 4 hours.
                 </p>
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
@@ -702,19 +702,19 @@ function SuccessContent() {
           </p>
         )}
 
-        {/* REFERRAL CTA — Growth loop: share with someone facing charges */}
+        {/* REFERRAL CTA, Growth loop: share with someone facing charges */}
         <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
           <p className="text-sm font-semibold text-amber-400">Know someone facing charges?</p>
           <p className="mt-1 text-xs text-zinc-400">Forward them this link. Most defendants don&apos;t know they can hold their attorney accountable.</p>
           <div className="mt-3 flex flex-wrap gap-2 justify-center">
             <a
-              href={`sms:?body=${encodeURIComponent(`This helped me with my case — they research your charges and give you the exact questions to ask your attorney: ${SITE_URL}`)}`}
+              href={`sms:?body=${encodeURIComponent(`This helped me with my case, they research your charges and give you the exact questions to ask your attorney: ${SITE_URL}`)}`}
               className="rounded-lg bg-zinc-800 px-4 py-2 text-xs text-white transition-colors hover:bg-zinc-700"
             >
               Text a Friend
             </a>
             <a
-              href={`https://wa.me/?text=${encodeURIComponent(`This helped me with my case — they research your charges and give you the exact questions to ask your attorney: ${SITE_URL}`)}`}
+              href={`https://wa.me/?text=${encodeURIComponent(`This helped me with my case, they research your charges and give you the exact questions to ask your attorney: ${SITE_URL}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg bg-zinc-800 px-4 py-2 text-xs text-white transition-colors hover:bg-zinc-700"
@@ -744,7 +744,7 @@ function SuccessContent() {
         </div>
 
         <p className="mt-8 text-xs text-zinc-400">
-          ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created.
+          ImNotAnAttorney provides legal information and research, not legal advice. No attorney-client relationship is created.
         </p>
         <p className="mt-4 text-sm text-zinc-400">
           Questions? Email us at{" "}

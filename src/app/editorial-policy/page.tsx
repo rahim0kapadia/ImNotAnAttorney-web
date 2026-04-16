@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Editorial Policy — How We Research and Create Content",
+  title: "Editorial Policy, How We Research and Create Content",
   description:
     "How ImNotAnAttorney researches, creates, and maintains legal information content. Our standards, sources, and UPL safeguards.",
   alternates: {
@@ -39,7 +39,7 @@ export default function EditorialPolicyPage() {
           <section>
             <h2 className="text-xl font-bold text-white">Our Mission</h2>
             <p className="mt-3 leading-relaxed">
-              ImNotAnAttorney exists to give criminal defendants the information they need to hold their attorneys accountable. We provide legal information — never legal advice. Every piece of content is designed to help defendants ask better questions, understand their case, and recognize when something is wrong.
+              ImNotAnAttorney exists to give criminal defendants the information they need to hold their attorneys accountable. We provide legal information, never legal advice. Every piece of content is designed to help defendants ask better questions, understand their case, and recognize when something is wrong.
             </p>
           </section>
 
@@ -53,7 +53,7 @@ export default function EditorialPolicyPage() {
                 <strong className="text-zinc-300">Primary sources:</strong> State and federal statutes (.gov), court rules, bar association ethical rules, Supreme Court decisions, state appellate court opinions
               </li>
               <li>
-                <strong className="text-zinc-300">Attorney methodology:</strong> Published frameworks from 40+ named criminal defense attorneys — their books, CLEs, bar journal articles, and published case strategies
+                <strong className="text-zinc-300">Attorney methodology:</strong> Published frameworks from 40+ named criminal defense attorneys, their books, CLEs, bar journal articles, and published case strategies
               </li>
               <li>
                 <strong className="text-zinc-300">Academic sources:</strong> Law school clinics (.edu), legal aid organizations, Department of Justice research publications
@@ -75,7 +75,7 @@ export default function EditorialPolicyPage() {
             <h2 className="text-xl font-bold text-white">Content Creation Process</h2>
             <ol className="mt-4 list-decimal space-y-3 pl-6 text-zinc-400">
               <li>
-                <strong className="text-zinc-300">Topic identification:</strong> We identify questions defendants actually ask — from court waiting rooms, legal forums, and direct communication with defendants navigating the system
+                <strong className="text-zinc-300">Topic identification:</strong> We identify questions defendants actually ask, from court waiting rooms, legal forums, and direct communication with defendants navigating the system
               </li>
               <li>
                 <strong className="text-zinc-300">Research:</strong> Every article begins with primary source research. We read the actual statutes, rules, and case law before writing a single word
@@ -105,7 +105,7 @@ export default function EditorialPolicyPage() {
                 <strong className="text-zinc-300">We do not tell you what to do.</strong> We give you questions to ask, information to understand, and frameworks to evaluate. The decisions are yours and your attorney&apos;s.
               </li>
               <li>
-                <strong className="text-zinc-300">We do not replace your attorney.</strong> We help you work with your attorney more effectively — or recognize when your attorney is not working for you.
+                <strong className="text-zinc-300">We do not replace your attorney.</strong> We help you work with your attorney more effectively, or recognize when your attorney is not working for you.
               </li>
               <li>
                 <strong className="text-zinc-300">We do not guarantee outcomes.</strong> Criminal cases are complex. Better questions lead to better defense, but no one can guarantee results.
@@ -123,7 +123,7 @@ export default function EditorialPolicyPage() {
               <Link href="/about" className="text-amber-400 underline underline-offset-2 hover:text-amber-300">
                 ImNotAnAttorney research team
               </Link>
-              . Our expertise comes from lived experience as criminal defendants who discovered critical discrepancies in our own cases — including 68.3 grams of missing evidence, a confidential informant phone with dual attribution issues, and a drug type mismatch — that our paid attorneys never raised.
+              . Our expertise comes from lived experience as criminal defendants who discovered critical discrepancies in our own cases, including 68.3 grams of missing evidence, a confidential informant phone with dual attribution issues, and a drug type mismatch, that our paid attorneys never raised.
             </p>
             <p className="mt-3 leading-relaxed">
               ImNotAnAttorney was built by studying the published methodologies of 40+ elite criminal defense attorneys and translating their frameworks into tools any defendant can use.

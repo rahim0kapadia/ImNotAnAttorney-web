@@ -129,11 +129,11 @@ test.describe("Partner Checklist Feature", () => {
     await expect(page.getByRole("button", { name: /print checklist/i })).toBeVisible({ timeout: 15_000 });
     await expect(page.getByRole("button", { name: /back to dashboard/i })).toBeVisible();
 
-    // Header — co-branded (use .first() — dual render: screen + print blocks)
+    // Header, co-branded (use .first(), dual render: screen + print blocks)
     await expect(page.getByText("QA Bail Bonds, Tampa").first()).toBeVisible();
     await expect(page.getByText("Bail Conditions Checklist").first()).toBeVisible();
 
-    // Bail condition checkboxes (.first() — dual screen+print render)
+    // Bail condition checkboxes (.first(), dual screen+print render)
     await expect(page.getByText("Do not leave jurisdiction").first()).toBeVisible();
     await expect(page.getByText("No new arrests while on bail").first()).toBeVisible();
     await expect(page.getByText("Attend ALL scheduled court dates").first()).toBeVisible();

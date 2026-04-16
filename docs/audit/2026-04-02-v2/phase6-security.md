@@ -22,17 +22,17 @@ The application demonstrates **above-average security posture** for a Next.js YM
 
 ## Section 1: Verified Recent Fixes
 
-### M1: IndexNow Route Auth -- VERIFIED FIXED
+### M1: IndexNow Route Auth, VERIFIED FIXED
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\indexnow\route.ts:17-19`
-**Status:** FIXED. Now uses `requireCron(req)` from `@/lib/auth/guards` instead of inline Buffer comparison. SSRF mitigation also present -- URL domain validation at line 38-47 ensures only `imnotanattorney.com` URLs are submitted to the IndexNow API.
+**Status:** FIXED. Now uses `requireCron(req)` from `@/lib/auth/guards` instead of inline Buffer comparison. SSRF mitigation also present, URL domain validation at line 38-47 ensures only `imnotanattorney.com` URLs are submitted to the IndexNow API.
 
-### M2: Intake Unknown Charge Type Rejection -- VERIFIED FIXED
+### M2: Intake Unknown Charge Type Rejection, VERIFIED FIXED
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\intake\route.ts:103-109`
 **Status:** FIXED. Unknown charge types now return 400 immediately. The allowlist is imported from `@/lib/charge-types` (centralized). Both the new taxonomy slugs and legacy free-form values are included for backward compatibility.
 
-### M3: Charge-Taxonomy Cache-Control Headers -- VERIFIED FIXED
+### M3: Charge-Taxonomy Cache-Control Headers, VERIFIED FIXED
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\charge-taxonomy\categories\route.ts:10-12`
 **Status:** FIXED. Returns `Cache-Control: public, max-age=3600` (1-hour cache). Verified on the categories endpoint; charges and questions routes should be checked for consistency.
@@ -48,11 +48,11 @@ The application demonstrates **above-average security posture** for a Next.js YM
 All database operations use the Supabase JS client's parameterized query builder (`.eq()`, `.gte()`, `.select()`, etc.). No raw SQL string concatenation found in any route handler. The only RPC calls use named parameters (`p_key`, `p_max_requests`, etc.).
 
 Files checked:
-- `src/app/api/intake/route.ts` -- parameterized queries only
-- `src/app/api/checkout/route.ts` -- parameterized queries only
-- `src/app/api/upload/route.ts` -- parameterized queries only
-- `src/app/api/webhooks/stripe/route.ts` -- parameterized queries only
-- `src/lib/rate-limit.ts` -- RPC with named params
+- `src/app/api/intake/route.ts`, parameterized queries only
+- `src/app/api/checkout/route.ts`, parameterized queries only
+- `src/app/api/upload/route.ts`, parameterized queries only
+- `src/app/api/webhooks/stripe/route.ts`, parameterized queries only
+- `src/lib/rate-limit.ts`, RPC with named params
 
 ### 2.2 XSS in Report HTML (sanitize-html)
 
@@ -63,7 +63,7 @@ The sanitize-html configuration is significantly tightened from defaults:
 - Removed `<style>`, `<script>`, `<html>`, `<head>`, `<body>`, `<meta>`, `<link>` tags
 - CSS property values use strict regex patterns (no wildcards)
 - `background` property regex prevents `url()` data exfiltration
-- `img` only allows `src`, `alt`, `width`, `height` -- no `onerror`/`onload`
+- `img` only allows `src`, `alt`, `width`, `height`, no `onerror`/`onload`
 
 **One concern:** The `<a>` tag allows `href` with no protocol restriction in the sanitize-html config. While sanitize-html strips `javascript:` by default, the explicit config does not enforce `https:` only. Since reports are system-generated (not user-authored), this is low risk.
 
@@ -72,7 +72,7 @@ The sanitize-html configuration is significantly tightened from defaults:
 **Risk:** LOW (well-mitigated)
 **Files:** All email-generating routes
 
-The `escapeHtml()` function at `src/lib/email.ts:31-38` escapes `& < > " '` -- the complete set for HTML entity prevention. Verified usage across:
+The `escapeHtml()` function at `src/lib/email.ts:31-38` escapes `& < > " '`, the complete set for HTML entity prevention. Verified usage across:
 - Stripe webhook operator emails (line 137-142)
 - Intake confirmation emails (line 308-312, 367-396)
 - Upload receipt emails (line 336)
@@ -90,15 +90,15 @@ Charge types are validated against an explicit allowlist before being used in re
 
 ## Section 3: Broken Authentication (A07:2021)
 
-### 3.1 Timing-Safe Comparisons -- WELL IMPLEMENTED
+### 3.1 Timing-Safe Comparisons, WELL IMPLEMENTED
 
 **Files:**
-- `src/lib/auth/guards.ts:37-41` -- HMAC-then-compare (Node Runtime)
-- `src/middleware.ts:19-36` -- HMAC-then-compare (Edge Runtime, Web Crypto)
-- `src/app/api/deliver/route.ts:57-61` -- HMAC-then-compare
-- `src/lib/site.ts:171-177` -- Character-by-character XOR comparison
+- `src/lib/auth/guards.ts:37-41`, HMAC-then-compare (Node Runtime)
+- `src/middleware.ts:19-36`, HMAC-then-compare (Edge Runtime, Web Crypto)
+- `src/app/api/deliver/route.ts:57-61`, HMAC-then-compare
+- `src/lib/site.ts:171-177`, Character-by-character XOR comparison
 
-All three auth layers (middleware, guards, deliver) use HMAC-then-compare to eliminate the length oracle. The HMAC approach is correct -- `timingSafeEqual` alone would leak whether the attacker's input has the correct LENGTH via the early `bufA.length !== bufB.length` check.
+All three auth layers (middleware, guards, deliver) use HMAC-then-compare to eliminate the length oracle. The HMAC approach is correct, `timingSafeEqual` alone would leak whether the attacker's input has the correct LENGTH via the early `bufA.length !== bufB.length` check.
 
 ### FINDING S-1: Operator Token Verification Uses XOR Instead of HMAC-then-Compare
 
@@ -115,7 +115,7 @@ for (let i = 0; i < providedHmac.length; i++) {
 return mismatch === 0;
 ```
 
-The `length !== length` check on line 172 is a length oracle -- it returns early when lengths differ, leaking information about the expected length. For HMAC hex digests this is low-impact (always 64 chars), but it breaks the pattern established everywhere else in the codebase (HMAC-then-compare). More critically, `charCodeAt()` XOR on JS strings is not guaranteed constant-time by all JS engines (V8 optimizations can short-circuit).
+The `length !== length` check on line 172 is a length oracle, it returns early when lengths differ, leaking information about the expected length. For HMAC hex digests this is low-impact (always 64 chars), but it breaks the pattern established everywhere else in the codebase (HMAC-then-compare). More critically, `charCodeAt()` XOR on JS strings is not guaranteed constant-time by all JS engines (V8 optimizations can short-circuit).
 
 **Remediation:** Use the same `timingSafeCompare()` pattern from `guards.ts`:
 ```typescript
@@ -124,12 +124,12 @@ const hmacB = createHmac("sha256", "inna-token-verify").update(expectedHmac).dig
 return timingSafeEqual(hmacA, hmacB);
 ```
 
-### 3.2 Magic Link Security -- WELL IMPLEMENTED
+### 3.2 Magic Link Security, WELL IMPLEMENTED
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\customer-auth.ts`
 
-- Tokens: `crypto.randomBytes(32)` -- 256-bit, cryptographically secure
-- Storage: SHA-256 hashed -- plaintext never in DB
+- Tokens: `crypto.randomBytes(32)`, 256-bit, cryptographically secure
+- Storage: SHA-256 hashed, plaintext never in DB
 - Expiry: 15 minutes
 - Single-use: Atomic RPC `consume_customer_magic_link` prevents TOCTOU race
 - Session: 30 days, token hashed in DB
@@ -138,7 +138,7 @@ return timingSafeEqual(hmacA, hmacB);
 - Rate limiting: 3/email/hour + 10/IP/hour
 - Token format validation: `/^[0-9a-f]{64}$/` regex check before DB lookup
 
-### 3.3 Admin/Operator/Cron Auth -- WELL IMPLEMENTED
+### 3.3 Admin/Operator/Cron Auth, WELL IMPLEMENTED
 
 Defense-in-depth: middleware (Edge Runtime) blocks unauthenticated requests first, then route handlers re-check with `requireAdmin()`, `requireOperatorSecret()`, or `requireCron()` from guards.ts. Both layers use timing-safe comparison. Missing env vars fail closed (return 500 "Server misconfigured").
 
@@ -151,10 +151,10 @@ Defense-in-depth: middleware (Edge Runtime) blocks unauthenticated requests firs
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\.env.local`
 
 Four `NEXT_PUBLIC_*` variables exposed to the client bundle:
-1. `NEXT_PUBLIC_SUPABASE_URL` -- Public by design (project URL)
-2. `NEXT_PUBLIC_SUPABASE_ANON_KEY` -- Defined but **never imported or used** in any source file
-3. `NEXT_PUBLIC_SITE_URL` -- Public by design (site URL)
-4. `NEXT_PUBLIC_GA_ID` -- Public by design (analytics)
+1. `NEXT_PUBLIC_SUPABASE_URL`, Public by design (project URL)
+2. `NEXT_PUBLIC_SUPABASE_ANON_KEY`, Defined but **never imported or used** in any source file
+3. `NEXT_PUBLIC_SITE_URL`, Public by design (site URL)
+4. `NEXT_PUBLIC_GA_ID`, Public by design (analytics)
 
 ### FINDING S-2: Unused Supabase Anon Key in Environment
 
@@ -164,7 +164,7 @@ Four `NEXT_PUBLIC_*` variables exposed to the client bundle:
 
 **Remediation:** Remove `NEXT_PUBLIC_SUPABASE_ANON_KEY` from `.env.local` and from Vercel env vars. If it's not used, it shouldn't exist.
 
-### 4.2 Secrets Not in NEXT_PUBLIC_ -- VERIFIED SAFE
+### 4.2 Secrets Not in NEXT_PUBLIC_, VERIFIED SAFE
 
 All secret keys are correctly stored without the `NEXT_PUBLIC_` prefix:
 - `STRIPE_SECRET_KEY`, `STRIPE_SECRET_KEY_LIVE`
@@ -189,11 +189,11 @@ Customer email addresses appear in server logs when webhook metadata is incomple
 
 **Recommendation:** No code change needed. This is an error path that fires only when Stripe metadata is missing (payment without tier/email). Log retention should be reviewed in Vercel settings. If GDPR applies, document this as a legitimate interest for fraud prevention.
 
-### 4.4 Error Messages -- VERIFIED SAFE
+### 4.4 Error Messages, VERIFIED SAFE
 
 Error responses across all routes return generic messages:
 - `"Something went wrong"` (500s)
-- `"Invalid case ID or email"` (403 on upload -- unified to prevent case enumeration)
+- `"Invalid case ID or email"` (403 on upload, unified to prevent case enumeration)
 - `"Unauthorized"` (401s)
 - `"Too many requests"` (429s)
 
@@ -203,12 +203,12 @@ No stack traces, database error details, or internal paths leak to clients.
 
 ## Section 5: API Security (A01:2021)
 
-### 5.1 Rate Limiting -- COMPREHENSIVE
+### 5.1 Rate Limiting, COMPREHENSIVE
 
 PostgreSQL-based rate limiting via `check_rate_limit()` RPC with in-memory fallback (fails closed). Coverage:
 
 | Endpoint | Limit | Window |
-|----------|-------|--------|
+|----------|-------|------, |
 | `/api/subscribe` | 5/IP | 60s |
 | `/api/score` | 10/IP | 60s |
 | `/api/intake` | 5/IP | 300s |
@@ -237,7 +237,7 @@ if (limited) {
 
 ### 5.2 CORS Configuration
 
-No explicit CORS headers found in middleware, route handlers, or `next.config.ts`. Next.js defaults to same-origin policy for API routes. The Stripe webhooks and Resend webhooks authenticate via signatures, not CORS. The embed script (`public/embed.js`) runs on third-party domains but only creates DOM elements with hardcoded links -- no cross-origin API calls.
+No explicit CORS headers found in middleware, route handlers, or `next.config.ts`. Next.js defaults to same-origin policy for API routes. The Stripe webhooks and Resend webhooks authenticate via signatures, not CORS. The embed script (`public/embed.js`) runs on third-party domains but only creates DOM elements with hardcoded links, no cross-origin API calls.
 
 **Verdict:** Correct. No CORS relaxation needed.
 
@@ -251,12 +251,12 @@ No explicit CORS headers found in middleware, route handlers, or `next.config.ts
 
 ## Section 6: Security Misconfiguration (A05:2021)
 
-### 6.1 Security Headers -- COMPREHENSIVE
+### 6.1 Security Headers, COMPREHENSIVE
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\next.config.ts`
 
 | Header | Value | Assessment |
-|--------|-------|------------|
+|------, |-------|------------|
 | HSTS | `max-age=63072000; includeSubDomains; preload` | Excellent (2 years, preload) |
 | X-Content-Type-Options | `nosniff` | Correct |
 | X-Frame-Options | `DENY` | Correct |
@@ -310,7 +310,7 @@ More importantly, `worker-src` is not set. While `default-src 'self'` provides c
 **Source:** `npm audit` output from 2026-04-02
 
 | Package | Severity | CVE/Advisory | Impact |
-|---------|----------|-------------|--------|
+|---------|----------|-------------|------, |
 | **next 16.1.6** | MODERATE | GHSA-mq59-m269-xvcx | **null origin can bypass Server Actions CSRF checks** |
 | **next 16.1.6** | MODERATE | GHSA-ggv3-7p47-pfv8 | HTTP request smuggling in rewrites |
 | **next 16.1.6** | MODERATE | GHSA-3x4c-7xq6-9pq8 | Unbounded next/image disk cache growth |
@@ -363,16 +363,16 @@ SHA-256 hashed 32-byte tokens in `customer_sessions` table. 30-day expiry. `http
 
 This is one of the strongest implementations I have reviewed:
 
-1. **UUID validation on caseId** (line 164) -- prevents path traversal
-2. **Ownership verification** (line 202-223) -- email must match case record
-3. **Tier guard** (line 230-236) -- only discovery tiers can upload
-4. **MIME allowlist** (line 49-62, 183-188) -- server-side enforcement
-5. **Magic byte validation** (line 69-128, 272-277) -- validates actual file content matches claimed MIME type, with sub-format verification for shared headers (RIFF for WebP vs WAV, PK for ZIP vs DOCX)
-6. **50MB size limit** (line 37, 244-249) -- server-side enforcement
-7. **Filename sanitization** (line 262) -- non-alphanumeric replaced with underscores
-8. **Private bucket** (line 279-284) -- `discovery-files` bucket is private, no public URLs
-9. **Rate limiting** (line 140-144) -- 10 uploads per 5 minutes per IP
-10. **Atomic file_urls append** (line 308-321) -- RPC prevents TOCTOU race
+1. **UUID validation on caseId** (line 164), prevents path traversal
+2. **Ownership verification** (line 202-223), email must match case record
+3. **Tier guard** (line 230-236), only discovery tiers can upload
+4. **MIME allowlist** (line 49-62, 183-188), server-side enforcement
+5. **Magic byte validation** (line 69-128, 272-277), validates actual file content matches claimed MIME type, with sub-format verification for shared headers (RIFF for WebP vs WAV, PK for ZIP vs DOCX)
+6. **50MB size limit** (line 37, 244-249), server-side enforcement
+7. **Filename sanitization** (line 262), non-alphanumeric replaced with underscores
+8. **Private bucket** (line 279-284), `discovery-files` bucket is private, no public URLs
+9. **Rate limiting** (line 140-144), 10 uploads per 5 minutes per IP
+10. **Atomic file_urls append** (line 308-321), RPC prevents TOCTOU race
 
 No findings in this section.
 
@@ -383,18 +383,18 @@ No findings in this section.
 ### 10.1 HMAC Usage
 
 Three distinct HMAC keys used:
-- `"inna-guard-compare"` -- timing-safe auth comparison (guards.ts, deliver/route.ts)
-- `"inna-middleware-hmac-key"` -- timing-safe auth comparison (middleware.ts, Edge Runtime)
-- `"webhook-cmp"` -- Svix signature comparison (resend webhook)
+- `"inna-guard-compare"`, timing-safe auth comparison (guards.ts, deliver/route.ts)
+- `"inna-middleware-hmac-key"`, timing-safe auth comparison (middleware.ts, Edge Runtime)
+- `"webhook-cmp"`, Svix signature comparison (resend webhook)
 
 These are static strings, not secrets. Their purpose is solely to ensure fixed-length digests for `timingSafeEqual`. The actual security comes from the secrets being compared (ADMIN_PASSWORD, OPERATOR_SECRET, etc.), not from these HMAC keys.
 
 ### 10.2 Token Generation
 
-- Magic links: `crypto.randomBytes(32)` -- 256-bit, correct
-- Report tokens: `crypto.randomUUID()` -- 122-bit, adequate for unguessable URLs
-- Session tokens: `crypto.randomBytes(32)` -- 256-bit, correct
-- CSP nonce: `crypto.randomUUID()` base64-encoded -- adequate
+- Magic links: `crypto.randomBytes(32)`, 256-bit, correct
+- Report tokens: `crypto.randomUUID()`, 122-bit, adequate for unguessable URLs
+- Session tokens: `crypto.randomBytes(32)`, 256-bit, correct
+- CSP nonce: `crypto.randomUUID()` base64-encoded, adequate
 
 ### 10.3 Token Storage
 
@@ -406,13 +406,13 @@ All tokens stored as SHA-256 hashes. Plaintext only in cookie/URL. Verified in:
 
 ## Section 11: SSRF
 
-### 11.1 IndexNow URL Validation -- VERIFIED SAFE
+### 11.1 IndexNow URL Validation, VERIFIED SAFE
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\indexnow\route.ts:37-47`
 
 URLs are validated against the site's own domain (`siteHost`). Non-matching URLs are filtered out. The `INDEXNOW_ENDPOINT` is hardcoded to `https://api.indexnow.org/indexnow`. No user-supplied URLs reach external fetch calls.
 
-### 11.2 Other Fetch Targets -- VERIFIED SAFE
+### 11.2 Other Fetch Targets, VERIFIED SAFE
 
 All `fetch()` calls in the codebase target:
 1. Internal API routes via `${origin}/api/...` where `origin` comes from `NEXT_PUBLIC_SITE_URL` env var (not request headers)
@@ -486,21 +486,21 @@ The architectural invariant (ARCHITECTURE.md invariant #1) requiring all reports
 
 ### Immediate (this week)
 
-1. **S-5: Dependency updates** -- `npm audit fix` for non-breaking fixes (flatted, picomatch, brace-expansion, yaml). Then `npm install next@16.2.2` and test. The Next.js CSRF bypass and HTTP smuggling advisories affect production security.
+1. **S-5: Dependency updates**, `npm audit fix` for non-breaking fixes (flatted, picomatch, brace-expansion, yaml). Then `npm install next@16.2.2` and test. The Next.js CSRF bypass and HTTP smuggling advisories affect production security.
 
-2. **S-3: Unsubscribe rate limiting** -- 5-line code change. Prevents mass unsubscription attacks.
+2. **S-3: Unsubscribe rate limiting**, 5-line code change. Prevents mass unsubscription attacks.
 
 ### Next sprint
 
-3. **S-6: Report token hashing** -- Database migration + code change. Requires a graceful migration path for existing tokens. High impact for data breach protection.
+3. **S-6: Report token hashing**, Database migration + code change. Requires a graceful migration path for existing tokens. High impact for data breach protection.
 
-4. **S-1: Operator token timing** -- Small code change in `site.ts`. Low effort, improves consistency.
+4. **S-1: Operator token timing**, Small code change in `site.ts`. Low effort, improves consistency.
 
-5. **S-4: CSP hardening** -- 2-line addition to middleware.ts. Low risk.
+5. **S-4: CSP hardening**, 2-line addition to middleware.ts. Low risk.
 
 ### Housekeeping
 
-6. **S-2: Remove unused anon key** -- Cleanup only. No security impact.
+6. **S-2: Remove unused anon key**, Cleanup only. No security impact.
 
 ---
 
@@ -508,16 +508,16 @@ The architectural invariant (ARCHITECTURE.md invariant #1) requiring all reports
 
 These patterns demonstrate strong security engineering and should be preserved:
 
-1. **Defense-in-depth auth** -- Middleware (Edge) + route guards (Node) with independent timing-safe checks
-2. **HMAC-then-compare** -- Eliminates the length oracle that `timingSafeEqual` alone cannot solve
-3. **Rate limiting with closed fallback** -- In-memory fallback when Supabase is unavailable, blocks rather than allows
-4. **Input allowlisting** -- Every user input validated against predefined sets (charge types, case stages, sources, bands)
-5. **Atomic claim-then-mutate** -- Conditional UPDATE as mutex prevents TOCTOU races in delivery and generation
-6. **Cron idempotency** -- Distributed lock via database prevents duplicate execution across serverless instances
-7. **Magic byte validation** -- File upload validates actual content, not just MIME type header
-8. **HTML escaping** -- Consistent use of `escapeHtml()` across all email templates
-9. **Anti-enumeration** -- Magic link and unsubscribe endpoints always return success regardless of email existence
-10. **SSRF prevention** -- IndexNow validates URLs against site domain; checkout uses env var for redirects, never request Origin
+1. **Defense-in-depth auth**, Middleware (Edge) + route guards (Node) with independent timing-safe checks
+2. **HMAC-then-compare**, Eliminates the length oracle that `timingSafeEqual` alone cannot solve
+3. **Rate limiting with closed fallback**, In-memory fallback when Supabase is unavailable, blocks rather than allows
+4. **Input allowlisting**, Every user input validated against predefined sets (charge types, case stages, sources, bands)
+5. **Atomic claim-then-mutate**, Conditional UPDATE as mutex prevents TOCTOU races in delivery and generation
+6. **Cron idempotency**, Distributed lock via database prevents duplicate execution across serverless instances
+7. **Magic byte validation**, File upload validates actual content, not just MIME type header
+8. **HTML escaping**, Consistent use of `escapeHtml()` across all email templates
+9. **Anti-enumeration**, Magic link and unsubscribe endpoints always return success regardless of email existence
+10. **SSRF prevention**, IndexNow validates URLs against site domain; checkout uses env var for redirects, never request Origin
 
 ---
 

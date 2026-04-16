@@ -6,7 +6,7 @@
 
 ## Goal
 
-Match all forms, error states, loading states, and tables to the gold standard pattern in `src/components/idd/IddApplicationForm.tsx` — specifically `role="alert"`, `aria-invalid`, `aria-describedby`, `role="status"`, `scope="col"`, `<caption>`, `aria-label`, and focus management on success states.
+Match all forms, error states, loading states, and tables to the gold standard pattern in `src/components/idd/IddApplicationForm.tsx`, specifically `role="alert"`, `aria-invalid`, `aria-describedby`, `role="status"`, `scope="col"`, `<caption>`, `aria-label`, and focus management on success states.
 
 ## Changes (all mechanical attribute additions, no logic changes)
 
@@ -50,4 +50,4 @@ Match all forms, error states, loading states, and tables to the gold standard p
 
 ## Verification
 
-Run `npx tsc --noEmit` after all edits to confirm no type errors.
+Run `npx tsc,noEmit` after all edits to confirm no type errors.

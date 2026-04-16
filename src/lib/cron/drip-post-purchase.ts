@@ -1,5 +1,5 @@
 /**
- * @file Part 2 — Post-purchase emails (customers who bought)
+ * @file Part 2, Post-purchase emails (customers who bought)
  *
  * Sends tier-specific follow-up emails after purchase/delivery.
  * Skips refunded orders (status != "paid") and unsubscribed customers.
@@ -39,7 +39,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
   const ninetyDaysAgo = new Date(ctx.now);
   ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
 
-  // Only fetch orders with status "paid" — refunded orders are excluded.
+  // Only fetch orders with status "paid", refunded orders are excluded.
   const { data: orders, error: orderError } = await ctx.supabase
     .from("orders")
     .select("id, email, tier, paid_at")
@@ -84,7 +84,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
   if (dripError) {
     console.error("[Drip Cron] Drip emails query error:", dripError);
     result.errors++;
-    return result; // Cannot send without dedup check — risk of duplicate emails
+    return result; // Cannot send without dedup check, risk of duplicate emails
   }
 
   const sentBySubscriber = new Map<string, Set<string>>();
@@ -205,7 +205,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
         if (email.delayDays === 0) continue;
         if (email.relativeToMeeting) continue;
         if (skipUpsell && isUpsellEmail(email)) continue;
-        // Skip ALL playbook drip emails if customer already has a Case Decoder —
+        // Skip ALL playbook drip emails if customer already has a Case Decoder,
         // activation pitches CD, check-in references questions CD supersedes, upsell is redundant.
         if (PLAYBOOK_SLUGS.has(order.tier as TierSlug) && emailsWithCd.has(order.email.toLowerCase())) continue;
 
@@ -257,7 +257,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
 
         // ── RELATIVE-TO-PURCHASE TIMING (default) ──
         if (daysSincePurchase >= email.delayDays && !sentKeys.has(email.key)) {
-          // Skip emails whose send window has passed — prevents stale activation
+          // Skip emails whose send window has passed, prevents stale activation
           // emails for existing customers when new email entries are added.
           if (daysSincePurchase > email.delayDays + 7) continue;
           nextEmail = email;
@@ -303,7 +303,7 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
       // ── GUARD: IB Phase 2 reminder only sends if Phase 2 intake hasn't been submitted ──
       // Applies to standalone IB orders AND the bundled IB deliverable inside
       // X-Ray / War Room / Situation Room. All four share the same IB case
-      // lookup — the bundled tiers create a sibling IB case with the same
+      // lookup, the bundled tiers create a sibling IB case with the same
       // customer email when the webhook fans out the included deliverables.
       const phase2ReminderKeys = new Set([
         "post_intelligence_brief_phase2_reminder",

@@ -1,6 +1,6 @@
 "use client";
 /**
- * /my-cases — Customer portal dashboard.
+ * /my-cases, Customer portal dashboard.
  *
  * Displays the customer's orders and associated cases.
  * Redirects to login if not authenticated.

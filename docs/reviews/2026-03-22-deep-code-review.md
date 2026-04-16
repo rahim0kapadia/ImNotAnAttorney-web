@@ -1,6 +1,6 @@
 # Deep Code Review: ImNotAnAttorney-web
 **Date:** 2026-03-22
-**Scope:** Full site — 49 API routes, 38 lib files, 37 components, middleware
+**Scope:** Full site, 49 API routes, 38 lib files, 37 components, middleware
 **Agents:** 6 parallel reviewers (payments, auth, cron, admin, public, frontend)
 **Raw findings:** 114 issues (18 CRITICAL, 28 HIGH, 38 MEDIUM, 30 LOW)
 
@@ -36,7 +36,7 @@ Below: deduplicated, prioritized by business impact.
 **Impact:** Anyone who knows a caseId UUID + email can upload files. Not behind middleware auth. CaseId appears in customer URLs, email is often known.
 **Fix:** Add middleware cookie check for `/api/upload/` paths, or require a session token.
 
-### 6. Partner session accumulation — old sessions never invalidated on new login
+### 6. Partner session accumulation, old sessions never invalidated on new login
 **File:** `src/lib/partner-auth.ts:91-108`
 **Impact:** Unlike customer auth (which deletes old sessions), partner auth inserts without deleting. Compromised tokens remain valid for 30 days even after re-login.
 **Fix:** Add `await supabase.from("partner_sessions").delete().eq("partner_id", partner.id)` before creating new session.
@@ -92,20 +92,20 @@ Below: deduplicated, prioritized by business impact.
 
 ### 16. Non-subscriber customers get duplicate lifecycle emails
 **File:** `src/lib/cron/customer-lifecycle.ts:37-52`
-**Impact:** If customer has no subscriber record, dedup check is skipped but dedup record is also not inserted (line 66: `if (sendResult.success && expSub?.id)` — false when `expSub` is null). Same email sent daily.
+**Impact:** If customer has no subscriber record, dedup check is skipped but dedup record is also not inserted (line 66: `if (sendResult.success && expSub?.id)`, false when `expSub` is null). Same email sent daily.
 **Fix:** Create a subscriber record for the customer, or use the order table for dedup.
 
 ### 17. Installment commission uses inconsistent discount amount
 **File:** `src/app/api/webhooks/stripe/route.ts:277-278`
 **Impact:** `saleAmount = fullPrice - firstInstallmentDiscount`. But Stripe applies subscription discounts per-invoice. Commission base is overstated for installment plans.
-**Fix:** Clarify commission model — commission on full price, or per-payment? Adjust discount accordingly.
+**Fix:** Clarify commission model, commission on full price, or per-payment? Adjust discount accordingly.
 
 ### 18. Generate/evaluate routes missing try/catch on req.json()
 **Files:** `generate/case-decoder/route.ts:54`, `generate/intelligence-brief/route.ts:39`, `judge-research/route.ts:36`, `evaluate/case-decoder/route.ts:38`
 **Impact:** Malformed JSON throws unhandled exception with stack trace in response. All admin routes already have this protection.
 **Fix:** Wrap in try/catch, return 400.
 
-### 19. Job retry race condition — not atomic
+### 19. Job retry race condition, not atomic
 **File:** `src/app/api/operator/jobs/[id]/retry/route.ts:61-72`
 **Impact:** Read-then-write without conditional update. Two operators retrying simultaneously both succeed, incrementing retry_count twice.
 **Fix:** Add `.eq("status", "failed")` to update query, check affected rows.
@@ -117,7 +117,7 @@ Below: deduplicated, prioritized by business impact.
 
 ### 21. Path traversal in blog slug lookup
 **File:** `src/lib/blog.ts:105`
-**Impact:** `path.join(BLOG_DIR, \`${slug}.mdx\`)` — slug like `../../etc/passwd` resolves outside blog directory. Function is exported and could be called from other contexts.
+**Impact:** `path.join(BLOG_DIR, \`${slug}.mdx\`)`, slug like `../../etc/passwd` resolves outside blog directory. Function is exported and could be called from other contexts.
 **Fix:** Validate slug with `/^[a-z0-9][a-z0-9-]*[a-z0-9]$/`.
 
 ### 22. Admin password stored plaintext in sessionStorage
@@ -157,33 +157,33 @@ Below: deduplicated, prioritized by business impact.
 
 ---
 
-## MEDIUM (Fix This Month) — 38 items
+## MEDIUM (Fix This Month), 38 items
 
 Key themes:
 - **N+1 queries** in cron tasks (drip-post-purchase:123, reconciliation:37, operator-alerts:255+, monitoring:110)
 - **Missing rate limiting** on unsubscribe, score/count, partner logout
 - **Non-constant-time signature comparison** in Resend webhooks (resend/route.ts:54, resend-inbound/route.ts:49)
 - **Fire-and-forget fetch** losing critical generation triggers (intake/route.ts:253, intelligence-brief/route.ts:200)
-- **IP extraction inconsistency** — customer/logout and upload/finalize use raw header instead of `getClientIp()`
+- **IP extraction inconsistency**, customer/logout and upload/finalize use raw header instead of `getClientIp()`
 - **In-memory rate limit fallback** allows 600/hr vs intended 3/hr when Supabase is down (rate-limit.ts:21-23)
 - **Week number dedup key** missing year component (monitoring.ts:107)
 - **Report HTML** returned in every case detail response, bloating payloads (operator/cases/[id]/route.ts:185)
 - **select("*")** returning all columns including potential future sensitive ones (operator/cases/[id]/route.ts:50)
 - **Inbound email HTML** stored without sanitization (resend-inbound/route.ts:103-114)
 - **Missing input validation** on admin demand routes (gaps:44, emerging:39, subreddits:39)
-- **BlogInlineCapture source attribution** broken — `blog-inline-*` not in ALLOWED_SOURCES (BlogInlineCapture.tsx:41)
+- **BlogInlineCapture source attribution** broken, `blog-inline-*` not in ALLOWED_SOURCES (BlogInlineCapture.tsx:41)
 - **caseId format check** missing on upload/finalize too (upload/route.ts:69 vs finalize)
 - **Lock-not-acquired** returns 200 OK, misleading monitoring (cron/drip/route.ts:87)
 
 ---
 
-## LOW (Backlog) — 30 items
+## LOW (Backlog), 30 items
 
 Key themes:
 - Orphaned Stripe coupons on session creation failure
 - Unused function parameters
 - Missing accessibility (ARIA, keyboard nav on radio groups)
-- Hardcoded HMAC keys (cosmetic — not real secrets)
+- Hardcoded HMAC keys (cosmetic, not real secrets)
 - Pagination missing on partners list, referral history
 - Footer Situation Room link bypasses application gate
 - Email subject header injection potential
@@ -196,7 +196,7 @@ Key themes:
 ## Summary Table
 
 | Category | CRITICAL | HIGH | MEDIUM | LOW | Total |
-|----------|----------|------|--------|-----|-------|
+|----------|----------|------|------, |---, |-------|
 | Payments/Checkout | 3 | 2 | 5 | 4 | 14 |
 | Auth/Security | 3 | 3 | 5 | 4 | 15 |
 | Cron/Pipeline | 5 | 5 | 7 | 4 | 21 |
@@ -212,4 +212,4 @@ Key themes:
 3. **Cron correctness** (#3 dedup cleanup, #4 stale month, #8 flag-before-check, #9 ctx.now)
 4. **Input validation batch** (#12 phase2 length, #18 req.json, #23 UUID validation, #27 array types)
 5. **Infrastructure** (#14 IP spoofing, #15 advisory lock, #22 operator auth)
-6. **Social proof** (#13) — DEFERRED. Will swap fake for real data as purchases come in. TODO: research the .01% expert on soliciting social proof/testimonials from customers (especially in legal/sensitive services).
+6. **Social proof** (#13), DEFERRED. Will swap fake for real data as purchases come in. TODO: research the .01% expert on soliciting social proof/testimonials from customers (especially in legal/sensitive services).

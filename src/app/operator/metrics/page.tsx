@@ -123,7 +123,7 @@ function MetricsContent() {
           <p className="text-3xl font-bold text-white">
             {m.avg_delivery_hours != null
               ? `${m.avg_delivery_hours.toFixed(1)}h`
-              : "—"}
+              : ", "}
           </p>
         </div>
         <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">

@@ -68,7 +68,7 @@ const CRON_JOBS = [
     name: 'drip',
     schedule: { minutes: [0], hours: [14] },
     timeout: 300,
-    description: 'Daily drip orchestrator — 19 tasks (emails, alerts, cleanup, reconciliation)',
+    description: 'Daily drip orchestrator, 19 tasks (emails, alerts, cleanup, reconciliation)',
   },
   {
     name: 'engine',
@@ -95,7 +95,7 @@ const CRON_JOBS = [
       hours: [-1],
     },
     timeout: 30,
-    description: 'Poll Anthropic Batch API results — processes completed CD + IB Phase A batches',
+    description: 'Poll Anthropic Batch API results, processes completed CD + IB Phase A batches',
   },
 ];
 
@@ -168,7 +168,7 @@ function sleep(ms) {
 
 async function main() {
   console.log('Setting up cron-job.org for ImNotAnAttorney');
-  if (DRY_RUN) console.log('*** DRY RUN — no API calls will be made ***');
+  if (DRY_RUN) console.log('*** DRY RUN, no API calls will be made ***');
   console.log('='.repeat(50));
 
   let existingJobs = new Set();
@@ -201,7 +201,7 @@ async function main() {
     const result = await createCronJob(job);
     results.push(result);
 
-    // cron-job.org rate limit: 5 requests/minute — wait 13s between calls
+    // cron-job.org rate limit: 5 requests/minute, wait 13s between calls
     if (i < CRON_JOBS.length - 1) {
       console.log('  (waiting 13s for rate limit...)');
       await sleep(13000);

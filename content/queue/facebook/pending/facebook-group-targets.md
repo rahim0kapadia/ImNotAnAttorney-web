@@ -5,7 +5,7 @@ project: inna
 status: pending
 created: 2026-03-13T10:00:00-04:00
 agent: social-facebook-engine
-title: "Facebook Group Target List — Research-Backed"
+title: "Facebook Group Target List, Research-Backed"
 ---
 
 # Facebook Group Target List for ImNotAnAttorney
@@ -33,7 +33,7 @@ Facebook skews older than TikTok/Instagram. The INNA audience here is primarily:
 - **Entry strategy:** Respond to existing posts with genuine empathy and information for 2 weeks before posting original content.
 
 ### 2. Incarcerated Loved Ones
-- **URL:** Search "Incarcerated Loved Ones" on Facebook (16,500+ members per academic research — PMC, SAGE journals)
+- **URL:** Search "Incarcerated Loved Ones" on Facebook (16,500+ members per academic research, PMC, SAGE journals)
 - **Estimated size:** 16,500+ members (verified via academic study)
 - **Focus:** Support, advocacy, and information sharing for families of incarcerated people
 - **Posting rules:** Encouragement-focused, no judgment, information sharing encouraged
@@ -190,9 +190,9 @@ Facebook skews older than TikTok/Instagram. The INNA audience here is primarily:
 2. NEVER give legal advice. Always frame as "questions to consider asking your attorney."
 3. ALWAYS include the disclaimer: "This is information, not legal advice."
 4. Respond to people in crisis with genuine empathy FIRST, information SECOND.
-5. If someone asks "what should I do?" -- respond with "here are questions you might want to ask your attorney," NEVER "you should do X."
+5. If someone asks "what should I do?", respond with "here are questions you might want to ask your attorney," NEVER "you should do X."
 6. Build relationships with group admins. Be their most helpful, consistent contributor.
 7. Track which groups drive profile visits and website traffic via UTM parameters on your profile link.
-8. Post to one group per day per piece of content. Do NOT cross-post the same content to 5 groups in one day -- that looks like spam and gets flagged.
+8. Post to one group per day per piece of content. Do NOT cross-post the same content to 5 groups in one day, that looks like spam and gets flagged.
 9. Vary content type by group culture: data-heavy for reform groups, story-heavy for family groups, how-to-heavy for DUI groups.
 10. If a post gets removed by admins, do NOT repost. Message the admin, ask what was wrong, adjust, and try a different piece next time.

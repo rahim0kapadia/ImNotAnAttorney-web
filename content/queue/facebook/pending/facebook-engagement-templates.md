@@ -12,7 +12,7 @@ title: "Engagement Reply Templates + Community Voice Guidelines"
 
 Reply templates for responding to common posts and questions in Facebook support groups. Adapt tone to match each group's culture. Lead with empathy. Provide information, never advice. Close with a reminder that you are sharing information, not legal counsel.
 
-## Rules -- Non-Negotiable
+## Rules, Non-Negotiable
 
 1. NEVER pitch INNA products in comments. No product mentions. No pricing. No "check out our service."
 2. NEVER say "you should do X" about legal strategy. Say "here are questions you might want to ask your attorney."
@@ -34,7 +34,7 @@ This is incredibly frustrating, and you are not alone. Attorney communication fa
 
 A few things that might help:
 
-Switch from phone calls to email. Not because email is better -- because email creates a paper trail. Phone calls leave no record.
+Switch from phone calls to email. Not because email is better, because email creates a paper trail. Phone calls leave no record.
 
 Send a direct email with specific questions:
 - "What is the current status of my case?"
@@ -45,11 +45,11 @@ Send a direct email with specific questions:
 
 Document the date you sent it. Give them 5 business days.
 
-If they still do not respond -- you now have documented evidence for a bar complaint. And many attorneys suddenly find time in their schedule once a bar complaint is filed.
+If they still do not respond, you now have documented evidence for a bar complaint. And many attorneys suddenly find time in their schedule once a bar complaint is filed.
 
 You are not being difficult by expecting communication. You are exercising a right.
 
-(Sharing this as general information, not legal advice -- I'm not an attorney.)
+(Sharing this as general information, not legal advice, I'm not an attorney.)
 
 ---
 
@@ -59,17 +59,17 @@ You are not being difficult by expecting communication. You are exercising a rig
 
 **Response:**
 
-I cannot tell you whether to take it -- that is between you and your attorney, and it is YOUR decision. But I can share some questions that experienced defense attorneys say should be answered BEFORE any plea decision:
+I cannot tell you whether to take it, that is between you and your attorney, and it is YOUR decision. But I can share some questions that experienced defense attorneys say should be answered BEFORE any plea decision:
 
 1. Has your attorney received and reviewed ALL discovery?
 2. Can your attorney name the 3 biggest weaknesses in the prosecution's case?
 3. Have any motions been filed (suppression, dismissal, compel)?
-4. What is your REALISTIC sentence exposure if you go to trial -- not the maximum, the realistic range?
+4. What is your REALISTIC sentence exposure if you go to trial, not the maximum, the realistic range?
 5. What are the collateral consequences of this plea? (employment, housing, custody, immigration, voting, professional licenses)
 6. Are you eligible for diversion or deferred adjudication?
 7. Can your attorney counter-offer with different terms?
 
-If your attorney is recommending a plea and cannot answer these questions -- the recommendation may have come before the investigation.
+If your attorney is recommending a plea and cannot answer these questions, the recommendation may have come before the investigation.
 
 A plea recommendation should come AFTER the work, not before it.
 
@@ -91,9 +91,9 @@ Questions to ask before signing a retainer:
 - "Who specifically will handle my case day-to-day? Will it be you or an associate?"
 - "How many active cases are you currently handling?"
 - "What motions do you anticipate filing in my case?"
-- "How often will you communicate updates -- even when nothing has changed?"
-- "What is your approach -- are you a negotiator or do you try cases?"
-- "How do you bill -- flat fee, hourly, or hybrid? What does trial cost on top of retainer?"
+- "How often will you communicate updates, even when nothing has changed?"
+- "What is your approach, are you a negotiator or do you try cases?"
+- "How do you bill, flat fee, hourly, or hybrid? What does trial cost on top of retainer?"
 
 Watch for red flags:
 - They promise a specific outcome during the consultation
@@ -101,7 +101,7 @@ Watch for red flags:
 - They cannot explain what work they would actually do
 - They pressure you to sign immediately
 
-A consultation where you leave with more questions than answers is actually a good sign -- it means the attorney is being honest about the complexity. Beware the one who guarantees everything in 20 minutes.
+A consultation where you leave with more questions than answers is actually a good sign, it means the attorney is being honest about the complexity. Beware the one who guarantees everything in 20 minutes.
 
 Also: check your state bar's website for disciplinary records before hiring. It takes 2 minutes and can save you thousands.
 
@@ -119,11 +119,11 @@ There is a way to find out for sure.
 
 Most jurisdictions have online court dockets. Search "[your county] clerk of court" and look up your case number (it is on your bail paperwork or summons). You can see every document that has been filed.
 
-If the only things on the docket are appearance entries and continuance requests -- no motions, no discovery demands, no defense filings -- that tells you something.
+If the only things on the docket are appearance entries and continuance requests, no motions, no discovery demands, no defense filings, that tells you something.
 
 A continuance just pushes your case back. A motion actually challenges the prosecution's evidence. They are not the same thing.
 
-If you see activity you did not know about, that might mean your attorney is working but terrible at communicating. If you see nothing -- that is a different conversation.
+If you see activity you did not know about, that might mean your attorney is working but terrible at communicating. If you see nothing, that is a different conversation.
 
 Either way, checking the docket gives you facts instead of feelings. And facts are what you bring to your next meeting.
 
@@ -139,16 +139,16 @@ Either way, checking the docket gives you facts instead of feelings. And facts a
 
 I hear you. This frustration is real.
 
-Some context that might help: the American Bar Association recommends a maximum of 150 felony cases per attorney per year. Many public defenders carry 300 to 500 active cases at once. If you do the math -- 50-hour work week divided by 400 clients -- each client gets roughly 7.5 minutes of their attorney's time per week.
+Some context that might help: the American Bar Association recommends a maximum of 150 felony cases per attorney per year. Many public defenders carry 300 to 500 active cases at once. If you do the math, 50-hour work week divided by 400 clients, each client gets roughly 7.5 minutes of their attorney's time per week.
 
 That is not enough time to read a police report, let alone prepare a defense.
 
 That does not excuse it. But it helps explain it. The system gave your attorney 400 cases. That does not mean they do not care. It means the system makes it nearly impossible to show it.
 
 What you can do:
-- Be the client who communicates in writing. Send clear, specific questions by email -- not phone calls.
+- Be the client who communicates in writing. Send clear, specific questions by email, not phone calls.
 - Ask concrete questions: "Have you received discovery?" "Have you considered any motions?" "What is the next step?"
-- Avoid "what's happening with my case?" -- that is easy to dodge. Ask questions that require specific answers.
+- Avoid "what's happening with my case?", that is easy to dodge. Ask questions that require specific answers.
 - Document every communication attempt.
 
 You can also request a substitution of counsel by filing a motion with the court. The judge will need to find your reasons sufficient.
@@ -169,11 +169,11 @@ You are not helpless. There is real, concrete work you can do from the outside.
 
 Things family members can do:
 - Request a copy of the discovery from the attorney (you may need a signed authorization from the defendant)
-- Check the court docket online -- see what has been filed and what has not
+- Check the court docket online, see what has been filed and what has not
 - Keep a log of all communication attempts with the attorney (dates, times, responses)
 - Research the specific charges and what motions are typically filed for those charges
-- Gather character letters, employment records, treatment documentation -- things that help at sentencing or plea negotiations
-- Attend court dates when possible -- judges notice family support
+- Gather character letters, employment records, treatment documentation, things that help at sentencing or plea negotiations
+- Attend court dates when possible, judges notice family support
 
 Questions to bring to the attorney:
 - "What is the current status of discovery?"
@@ -194,11 +194,11 @@ Your research does not replace the attorney. But it can prompt the attorney to d
 
 **Response (short version):**
 
-No, I am not an attorney. I share legal information -- not legal advice. There is an important difference. I help people understand their rights and know what questions to ask their attorneys. Every person's case is different, which is why the advice should always come from a licensed attorney who knows the specific facts.
+No, I am not an attorney. I share legal information, not legal advice. There is an important difference. I help people understand their rights and know what questions to ask their attorneys. Every person's case is different, which is why the advice should always come from a licensed attorney who knows the specific facts.
 
 **Response (longer version, if the question is asked with skepticism):**
 
-No, I am not an attorney, and I am careful to never cross that line. What I share is legal information -- facts about how the system works, what rights defendants and family members have, and what questions to ask. That is different from legal advice, which is case-specific guidance that only a licensed attorney can provide.
+No, I am not an attorney, and I am careful to never cross that line. What I share is legal information, facts about how the system works, what rights defendants and family members have, and what questions to ask. That is different from legal advice, which is case-specific guidance that only a licensed attorney can provide.
 
 I believe defendants and their families deserve access to the information that helps them work more effectively with their attorneys. Not to replace the attorney. To make sure the attorney is doing the work.
 
@@ -214,7 +214,7 @@ Everything I share comes with the same reminder: this is information, not legal 
 
 I hear you, and I can tell this is weighing on you heavily.
 
-I cannot tell you what to do -- that is a question for a licensed attorney who can review your specific case. What I can do is share some questions that might help you have a more productive conversation with your attorney:
+I cannot tell you what to do, that is a question for a licensed attorney who can review your specific case. What I can do is share some questions that might help you have a more productive conversation with your attorney:
 
 [Then tailor 3-4 questions from the relevant INNA topic area. Examples:]
 
@@ -225,7 +225,7 @@ If the issue is attorney communication:
 
 If the issue is plea pressure:
 - "What are the 3 biggest weaknesses in the prosecution's case?"
-- "What is my realistic sentence exposure -- not the maximum?"
+- "What is my realistic sentence exposure, not the maximum?"
 - "Am I eligible for diversion or deferred adjudication?"
 
 If the issue is confusion about process:
@@ -245,7 +245,7 @@ Bringing specific questions changes the conversation. Your attorney is more like
 
 **Response:**
 
-I hear you. And honestly -- a lot of what you are saying is not wrong. The system is not built to make things easy for defendants or their families. It is overwhelming by design.
+I hear you. And honestly, a lot of what you are saying is not wrong. The system is not built to make things easy for defendants or their families. It is overwhelming by design.
 
 But here is what I have seen: the defendants who ask hard questions early get better outcomes than the ones who stay quiet and hope for the best. Not every time. Not magically. But consistently.
 
@@ -259,13 +259,13 @@ You are here. You are reading. You are looking for answers. That is not nothing.
 
 ---
 
-## TEMPLATE 10: "I/my loved one was just arrested -- what do I do?"
+## TEMPLATE 10: "I/my loved one was just arrested, what do I do?"
 
 **Trigger:** Someone posts in crisis mode immediately after an arrest or while trying to bond someone out.
 
 **Response:**
 
-First -- take a breath. The panic you are feeling right now is normal. Everyone feels it. And the situation is almost certainly not as final as it feels in this moment.
+First, take a breath. The panic you are feeling right now is normal. Everyone feels it. And the situation is almost certainly not as final as it feels in this moment.
 
 Here is what matters right now, in order:
 
@@ -277,13 +277,13 @@ Here is what matters right now, in order:
 
 4. Retain an attorney or request a public defender. If you are hiring private, ask: "Who will actually handle the case? How many active cases do you have? What is your approach?" If you cannot afford private, a public defender will be assigned at the first court appearance.
 
-5. The first court appearance (arraignment) is usually within 24-48 hours. This is not a trial. Charges are read, bail is confirmed, and a "not guilty" plea is entered (this is standard -- it preserves all options). The whole thing takes about 5 minutes.
+5. The first court appearance (arraignment) is usually within 24-48 hours. This is not a trial. Charges are read, bail is confirmed, and a "not guilty" plea is entered (this is standard, it preserves all options). The whole thing takes about 5 minutes.
 
 6. After the arraignment: ask the attorney "When will you receive discovery?" and "When will I hear from you next?" Set the communication expectation now.
 
 You are not powerless. The first 72 hours feel like chaos, but there is a process, and now you know the steps.
 
-(This is information, not legal advice. Every situation is different -- consult with a licensed attorney.)
+(This is information, not legal advice. Every situation is different, consult with a licensed attorney.)
 
 ---
 
@@ -293,7 +293,7 @@ You are not powerless. The first 72 hours feel like chaos, but there is a proces
 - Conversational and direct. Not academic. Not corporate. Not preachy.
 - Write like someone who has been through the system and came out the other side with knowledge.
 - Use "I hear you" before "here's what you can do."
-- Avoid exclamation points. Avoid emojis. This audience is in pain -- do not perform enthusiasm.
+- Avoid exclamation points. Avoid emojis. This audience is in pain, do not perform enthusiasm.
 - Match the emotional register of the person you are responding to. If they are calm, be informational. If they are panicking, be grounding. If they are angry, validate before educating.
 
 ### Phrasing Guide
@@ -317,14 +317,14 @@ You are not powerless. The first 72 hours feel like chaos, but there is a proces
 
 If someone challenges you ("who are you to give advice?" / "you're not a lawyer" / "this is spam"):
 - Do not get defensive.
-- Acknowledge: "You're right -- I'm not an attorney, and I'm careful not to cross that line."
+- Acknowledge: "You're right, I'm not an attorney, and I'm careful not to cross that line."
 - Clarify: "I share information and questions. Not advice. Everyone's case is different."
 - Let it go. Do not engage in arguments. One calm response is enough. Move on to helping someone else.
 
 ### Handling Requests to DM / Take Offline
 
 If someone asks to take the conversation to DMs or asks for private advice:
-- "I appreciate the trust, but I keep conversations in the group so everyone can benefit from the information. And I want to be clear -- I am not an attorney and cannot advise on specific cases. What I can do is share questions that might help you have a better conversation with your attorney."
+- "I appreciate the trust, but I keep conversations in the group so everyone can benefit from the information. And I want to be clear, I am not an attorney and cannot advise on specific cases. What I can do is share questions that might help you have a better conversation with your attorney."
 - Never move to DMs for case-specific discussions. That creates an implied advisory relationship.
 
 ### Frequency

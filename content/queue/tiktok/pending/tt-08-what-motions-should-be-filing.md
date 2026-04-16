@@ -10,7 +10,7 @@ topic: What motions should your attorney be filing?
 blog_slug: what-motions-should-your-attorney-be-filing
 estimated_duration: 45s
 format: Standard (talking head + motion graphics)
-suggested_sound: "Original audio — authoritative voiceover + subtle courtroom ambience"
+suggested_sound: "Original audio, authoritative voiceover + subtle courtroom ambience"
 suggested_posting_time: "Thursday 6:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Thursday 6:00 PM EST"
 
 **Format**: Standard
 **Duration**: 45 seconds
-**Suggested sound**: Original audio — authoritative voiceover + subtle ambience
+**Suggested sound**: Original audio, authoritative voiceover + subtle ambience
 **Suggested posting time**: Thursday 6:00 PM EST
 
 ---
@@ -30,22 +30,22 @@ suggested_posting_time: "Thursday 6:00 PM EST"
 
 [SECOND 1-3]
 **Visual**: Cut to person, direct stare.
-**Audio/Voiceover**: "If your attorney hasn't filed a single motion — no suppression, no Brady demand, nothing — that's not a defense strategy. That's surrendering before the fight starts."
+**Audio/Voiceover**: "If your attorney hasn't filed a single motion, no suppression, no Brady demand, nothing, that's not a defense strategy. That's surrendering before the fight starts."
 **Text overlay**: "Zero motions = surrendering before the fight"
 
 [SECOND 3-12]
 **Visual**: Text cards appearing with motion types, each with a one-line explanation. Clean design.
-**Audio/Voiceover**: "Here are the motions that win cases. Motion to suppress — throws out evidence obtained illegally. If the stop was bad, the search was bad, or the confession was coerced — this kills the case."
+**Audio/Voiceover**: "Here are the motions that win cases. Motion to suppress, throws out evidence obtained illegally. If the stop was bad, the search was bad, or the confession was coerced, this kills the case."
 **Text overlay**: "MOTION TO SUPPRESS: Throws out illegally obtained evidence"
 
 [SECOND 12-20]
 **Visual**: New card. Different angle.
-**Audio/Voiceover**: "Brady motion — forces the prosecution to hand over evidence that helps you. They're legally required to share it. They don't always. This motion makes them."
+**Audio/Voiceover**: "Brady motion, forces the prosecution to hand over evidence that helps you. They're legally required to share it. They don't always. This motion makes them."
 **Text overlay**: "BRADY MOTION: Forces prosecution to share evidence that helps you"
 
 [SECOND 20-28]
 **Visual**: New card. Tighter shot.
-**Audio/Voiceover**: "Motion to dismiss — challenges whether the charges themselves are legally valid. Speedy trial motion — asserts your constitutional right to a timely trial. Every continuance without a motion is time wasted."
+**Audio/Voiceover**: "Motion to dismiss, challenges whether the charges themselves are legally valid. Speedy trial motion, asserts your constitutional right to a timely trial. Every continuance without a motion is time wasted."
 **Text overlay**: "MOTION TO DISMISS / SPEEDY TRIAL MOTION"
 
 [SECOND 28-38]
@@ -61,7 +61,7 @@ suggested_posting_time: "Thursday 6:00 PM EST"
 ---
 
 ### Caption
-Cases aren't won at trial. They're won in the motion stage. Motion to suppress. Brady demands. Motion to dismiss. If your attorney has filed zero motions, ask why — because a motion never filed is a right waived forever.
+Cases aren't won at trial. They're won in the motion stage. Motion to suppress. Brady demands. Motion to dismiss. If your attorney has filed zero motions, ask why, because a motion never filed is a right waived forever.
 
 ### Hashtags
 #criminaldefense #motiontosuppress #Bradymotion #courtmotions #defendantrights #legalstrategy
@@ -72,5 +72,5 @@ Legal pad with motion names written on it. Red circle around "0 motions filed." 
 ---
 
 **Context**: Motions are where cases are actually won, but most defendants don't know what they are. This is educational content that positions INNA as the expert resource for understanding the legal process. Drives Defense Playbook sales.
-**Loop strategy**: The opening docket with zero motions creates curiosity — viewers loop to cross-reference the motion types against their own case.
+**Loop strategy**: The opening docket with zero motions creates curiosity, viewers loop to cross-reference the motion types against their own case.
 **KPI target**: Saves (defendants will save this as a reference list of motions)

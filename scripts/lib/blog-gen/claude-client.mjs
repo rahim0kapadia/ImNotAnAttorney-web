@@ -1,8 +1,8 @@
-// claude-client.mjs — Claude Code headless subprocess wrapper for blog QA gates.
+// claude-client.mjs, Claude Code headless subprocess wrapper for blog QA gates.
 //
 // Replaces the previous direct Anthropic SDK client. Spawns `claude -p` as a
 // subprocess and pipes the prompt via stdin. Runs under whatever auth the local
-// Claude Code CLI is signed into — no Anthropic API credits consumed.
+// Claude Code CLI is signed into, no Anthropic API credits consumed.
 //
 // Why stdin (not argv): blog MDX content is routinely 5-15 KB. Windows cmd.exe
 // caps command-line arguments at 8191 characters, so argv-style prompts would
@@ -14,11 +14,11 @@
 //
 // systemPrompt handling: `claude -p` has no --system flag, so a non-empty
 // systemPrompt is prepended to userPrompt with a blank-line separator. All 4
-// current gates pass empty systemPrompt anyway — this is future-proofing only.
+// current gates pass empty systemPrompt anyway, this is future-proofing only.
 
 import { spawn } from "child_process";
 
-const DEFAULT_TIMEOUT_MS = 10 * 60 * 1000; // 10 min per call — allows Opus deep reasoning on long posts
+const DEFAULT_TIMEOUT_MS = 10 * 60 * 1000; // 10 min per call, allows Opus deep reasoning on long posts
 
 export class ClaudeHeadlessError extends Error {
   constructor(message) {
@@ -44,7 +44,7 @@ export async function callClaude({
   systemPrompt = "",
   userPrompt,
   timeoutMs = DEFAULT_TIMEOUT_MS,
-  // jobType, maxTokens, jobId, purpose, model — all accepted for signature
+  // jobType, maxTokens, jobId, purpose, model, all accepted for signature
   // compatibility but unused. The CLI's configured session model is used.
 } = {}) {
   if (!userPrompt || typeof userPrompt !== "string") {
@@ -63,7 +63,7 @@ export async function callClaude({
       return await spawnClaudeOnce(combinedPrompt, timeoutMs);
     } catch (err) {
       lastError = err;
-      // Don't retry timeouts — something upstream is broken, fail fast
+      // Don't retry timeouts, something upstream is broken, fail fast
       if (String(err?.message || "").includes("timed out")) throw err;
       if (attempt < maxAttempts) {
         await new Promise((r) => setTimeout(r, 2000));

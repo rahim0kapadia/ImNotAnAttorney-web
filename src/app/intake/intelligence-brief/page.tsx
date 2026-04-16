@@ -1,5 +1,5 @@
 /**
- * Phase 2 Intake Form — Intelligence Brief (/intake/intelligence-brief)
+ * Phase 2 Intake Form, Intelligence Brief (/intake/intelligence-brief)
  *
  * Collects additional case details needed for the Intelligence Brief tier
  * that go beyond the standard Case Decoder intake form.
@@ -7,7 +7,7 @@
  * Accessed via email link after the included Case Decoder is delivered:
  *   /intake/intelligence-brief?case=<caseId>&token=<hmac>
  *
- * The HMAC token prevents unauthorized access — only the customer with the
+ * The HMAC token prevents unauthorized access, only the customer with the
  * email link can submit Phase 2 details for their specific case.
  *
  * Fields collected:
@@ -429,9 +429,9 @@ function Phase2IntakeForm() {
               >
                 <option value="">Select</option>
                 <option value="no">No</option>
-                <option value="probation">Yes — Probation</option>
-                <option value="parole">Yes — Parole</option>
-                <option value="both">Yes — Both</option>
+                <option value="probation">Yes, Probation</option>
+                <option value="parole">Yes, Parole</option>
+                <option value="both">Yes, Both</option>
                 <option value="unsure">Not sure</option>
               </select>
               <p className="mt-1 text-xs text-zinc-400">

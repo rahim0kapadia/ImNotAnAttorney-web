@@ -11,7 +11,7 @@ suggested_time: "Sunday 6:00 PM ET"
 target_groups: ["Innocence Project Groups", "Federal Defendant Support Groups", "Drug Charge Support Groups"]
 ---
 
-## Facebook Post: Question of the Day — Prosecution Weaknesses
+## Facebook Post: Question of the Day, Prosecution Weaknesses
 
 **Type**: Text post (colored background)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -37,11 +37,11 @@ Specific weaknesses. Like:
 - "The warrant application contains information that may have been exaggerated."
 - "The key witness has a credibility issue that we can challenge."
 
-If your attorney has not walked you through the specific weaknesses in the prosecution's case — ask them. Tomorrow.
+If your attorney has not walked you through the specific weaknesses in the prosecution's case, ask them. Tomorrow.
 
 "What are the three biggest weaknesses in the State's case against me?"
 
-Their answer — or their inability to give one — tells you whether they've actually done the work.
+Their answer, or their inability to give one, tells you whether they've actually done the work.
 
 What has your attorney told you about the weaknesses in your case?
 
@@ -49,7 +49,7 @@ What has your attorney told you about the weaknesses in your case?
 
 ### Visual Direction
 
-Colored text background — burgundy. The opening statement "Every single case has weaknesses" is the hook that stops the scroll.
+Colored text background, burgundy. The opening statement "Every single case has weaknesses" is the hook that stops the scroll.
 
 ### Link Strategy
 
@@ -59,4 +59,4 @@ No link. Engagement post. This generates the deepest discussion threads because 
 
 **Share trigger**: A family member sends this to the defendant with: "Ask your lawyer this exact question." A defendant who asked the question and got a vague answer sends it to their support network as evidence.
 **Context**: The idea that "every case has weaknesses" is revelatory for many defendants who assume the prosecution's case is airtight because their attorney hasn't said otherwise.
-**KPI target**: Comments (expect specific case details to be shared — respond with empathy, never legal advice) + saves + Messenger shares
+**KPI target**: Comments (expect specific case details to be shared, respond with empathy, never legal advice) + saves + Messenger shares

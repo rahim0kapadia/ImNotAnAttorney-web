@@ -33,7 +33,7 @@ const LIMIT = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 const offsetIdx = args.indexOf("--offset");
 const OFFSET = offsetIdx >= 0 ? parseInt(args[offsetIdx + 1], 10) : 0;
 const BATCH_SIZE = 50;
-const REQUEST_DELAY_MS = 1000; // 1 req/sec — slower but avoids CL rate limit 429s
+const REQUEST_DELAY_MS = 1000; // 1 req/sec, slower but avoids CL rate limit 429s
 
 // ── Env ─────────────────────────────────────────────────────────────────────
 function loadEnv(filepath) {
@@ -155,10 +155,10 @@ function escJsonb(obj) {
  * Extract party_side from case_name_full, case_name, headmatter, or opinion text.
  *
  * Sources (in priority order):
- * 1. case_name_full — "Defendant Below, Appellant" (often empty)
- * 2. headmatter — HTML with party roles
- * 3. case_name — "State v. X" pattern (tells us it's criminal, not who appealed)
- * 4. opinion text — "defendant appeals", "state cross-appeals", etc.
+ * 1. case_name_full, "Defendant Below, Appellant" (often empty)
+ * 2. headmatter, HTML with party roles
+ * 3. case_name, "State v. X" pattern (tells us it's criminal, not who appealed)
+ * 4. opinion text, "defendant appeals", "state cross-appeals", etc.
  */
 function extractPartySide(caseNameFull, caseName, headmatter, opinionText) {
   // Try case_name_full first (most explicit)
@@ -202,7 +202,7 @@ function extractPartySide(caseNameFull, caseName, headmatter, opinionText) {
     if (/\bcommonwealth[\s-]*appellant\b/.test(head)) return "prosecution";
   }
 
-  // Fallback: case_name pattern — "State/People/Commonwealth v. X" → defendant is subject
+  // Fallback: case_name pattern, "State/People/Commonwealth v. X" → defendant is subject
   // Can't determine who APPEALED, but we know the defendant's side
   if (caseName) {
     const upper = caseName.toUpperCase();

@@ -1,19 +1,19 @@
 ## Context
 - **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web`
-- **Problem:** 4-agent elite review (Security, Backend Architect, Frontend Developer, Code Quality) audited the full site. Found issues beyond the partner portal — in Stripe webhook, checkout flows, accessibility, and data integrity.
+- **Problem:** 4-agent elite review (Security, Backend Architect, Frontend Developer, Code Quality) audited the full site. Found issues beyond the partner portal, in Stripe webhook, checkout flows, accessibility, and data integrity.
 - **Key files to read first:** `src/app/api/webhooks/stripe/route.ts`, `src/lib/partner-auth.ts`, `src/app/api/checkout/verify/route.ts`, `src/middleware.ts`, `src/lib/rate-limit.ts`
 - **Tech stack:** Next.js 15 (App Router), Tailwind CSS, Supabase, Stripe, Resend, Twilio
-- **Key decisions:** Prioritize by blast radius — security/data integrity first, then reliability, then UX/a11y, then polish.
+- **Key decisions:** Prioritize by blast radius, security/data integrity first, then reliability, then UX/a11y, then polish.
 
 ---
 
-## Phase 1: Security — CRITICAL (4 tasks)
+## Phase 1: Security, CRITICAL (4 tasks)
 
 ### 1.1 Hash magic link tokens before storage
 **Files:** `src/lib/partner-auth.ts`, `supabase/migrations/015-partner-portal-fixes.sql`
 **Found by:** Security, Backend, Code Quality (3/4 agents)
 
-Session tokens are hashed — magic link tokens are not. Fix:
+Session tokens are hashed, magic link tokens are not. Fix:
 - `partner-auth.ts:56-58`: Change `token` → `hashToken(token)` in the insert
 - Create migration `020-hash-magic-link-tokens.sql`:
   - Backfill: `UPDATE partner_magic_links SET token = encode(sha256(token::bytea), 'hex')`
@@ -35,7 +35,7 @@ ALTER TABLE partners ENABLE ROW LEVEL SECURITY;
 
 The verify endpoint returns signed Supabase Storage URLs for digital products without any auth. Anyone with a valid `session_id` (visible in browser history, Stripe dashboard) gets the PDF. The webhook already handles email delivery with token-based URLs.
 
-Fix: Remove lines 79-113 (the signed URL generation block). The response already returns `verified: true` with tier/email/amount — the success page doesn't need download URLs from this endpoint.
+Fix: Remove lines 79-113 (the signed URL generation block). The response already returns `verified: true` with tier/email/amount, the success page doesn't need download URLs from this endpoint.
 
 ### 1.4 Add rate limiting to checkout verify + magic link verify endpoints
 **Files:** `src/app/api/checkout/verify/route.ts`, `src/app/api/partner/magic-link/verify/route.ts`
@@ -46,12 +46,12 @@ Both endpoints are unauthenticated and make external API calls (Stripe, Supabase
 
 ---
 
-## Phase 2: Data Integrity — CRITICAL (3 tasks)
+## Phase 2: Data Integrity, CRITICAL (3 tasks)
 
 ### 2.1 Add `return` after order insert failure in webhook
 **Files:** `src/app/api/webhooks/stripe/route.ts:236`
 
-After order insert fails (non-duplicate), the code sends an operator alert but falls through to send a "Payment Confirmed" email to the customer — even though no order record exists. Add `return NextResponse.json({ received: true });` after the operator alert email (after line 235).
+After order insert fails (non-duplicate), the code sends an operator alert but falls through to send a "Payment Confirmed" email to the customer, even though no order record exists. Add `return NextResponse.json({ received: true });` after the operator alert email (after line 235).
 
 ### 2.2 Add unique constraint on referrals to prevent duplicates
 **Files:** `supabase/migrations/020-hash-magic-link-tokens.sql` (add to same migration)
@@ -96,7 +96,7 @@ Replace the 3-step JS code in the webhook with a single `.rpc("track_referral", 
 ### 3.1 Remove `setInterval` from rate-limit.ts
 **Files:** `src/lib/rate-limit.ts:39-46`
 
-Anti-pattern in serverless. The in-memory store is per-invocation anyway on Vercel. Remove the `setInterval` cleanup — stale entries die with the function instance.
+Anti-pattern in serverless. The in-memory store is per-invocation anyway on Vercel. Remove the `setInterval` cleanup, stale entries die with the function instance.
 
 ### 3.2 Rename local `sendEmailWithRetry` in webhook
 **Files:** `src/app/api/webhooks/stripe/route.ts:55-81`
@@ -115,7 +115,7 @@ Duplicates the constant locally. Import from `site.ts` instead.
 
 ---
 
-## Phase 4: Accessibility — HIGH (5 tasks)
+## Phase 4: Accessibility, HIGH (5 tasks)
 
 ### 4.1 Add `<main>` landmark to public pages
 **Files:** `src/app/page.tsx`, `src/app/services/page.tsx`, `src/app/checkout/page.tsx`, `src/app/score/page.tsx`
@@ -140,11 +140,11 @@ Add a "Back" button on steps 1-3 so users can correct their charge type selectio
 ### 4.5 Fix `autoFocus` on mobile score page
 **Files:** `src/app/score/page.tsx:544`
 
-Remove `autoFocus={isCrisis}` — it forces keyboard open on mobile, scrolling past the score results.
+Remove `autoFocus={isCrisis}`, it forces keyboard open on mobile, scrolling past the score results.
 
 ---
 
-## Phase 5: Frontend Polish — MEDIUM (4 tasks)
+## Phase 5: Frontend Polish, MEDIUM (4 tasks)
 
 ### 5.1 Wrap `localStorage.setItem` in try/catch on success page
 **Files:** `src/app/checkout/success/page.tsx:247`
@@ -173,26 +173,26 @@ CREATE INDEX IF NOT EXISTS idx_referrals_unpaid ON referrals(partner_id) WHERE c
 
 ## Deferred (not in this round)
 
-- **Admin httpOnly cookie auth** — significant architectural change, admin is internal-only
-- **Demand route auth dedup** — timing-safe length oracle is low-risk since middleware handles auth first
-- **CSRF token header** — `SameSite: strict` covers modern browsers
-- **Session cleanup cron** — needs cron infrastructure, separate task
-- **Supabase client singleton** — low-impact optimization
-- **Promo code entropy** — 3-digit suffix is adequate at current scale
+- **Admin httpOnly cookie auth**, significant architectural change, admin is internal-only
+- **Demand route auth dedup**, timing-safe length oracle is low-risk since middleware handles auth first
+- **CSRF token header**, `SameSite: strict` covers modern browsers
+- **Session cleanup cron**, needs cron infrastructure, separate task
+- **Supabase client singleton**, low-impact optimization
+- **Promo code entropy**, 3-digit suffix is adequate at current scale
 
 ---
 
 ## Migration 020 (combines Phases 1-2 DB changes)
 
 ```sql
--- 020-security-and-integrity.sql
+, 020-security-and-integrity.sql
 
--- 1.1: Backfill magic link token hashes
+, 1.1: Backfill magic link token hashes
 UPDATE partner_magic_links
 SET token = encode(sha256(token::bytea), 'hex')
-WHERE length(token) = 64; -- only unhashed tokens (64 hex chars)
+WHERE length(token) = 64;, only unhashed tokens (64 hex chars)
 
--- 1.1: Update consume_magic_link to accept raw token and hash it
+, 1.1: Update consume_magic_link to accept raw token and hash it
 CREATE OR REPLACE FUNCTION consume_magic_link(p_token text)
 RETURNS uuid AS $$
 DECLARE
@@ -212,14 +212,14 @@ REVOKE EXECUTE ON FUNCTION consume_magic_link(text) FROM public;
 REVOKE EXECUTE ON FUNCTION consume_magic_link(text) FROM anon;
 GRANT EXECUTE ON FUNCTION consume_magic_link(text) TO service_role;
 
--- 1.2: RLS on partners table
+, 1.2: RLS on partners table
 ALTER TABLE partners ENABLE ROW LEVEL SECURITY;
 
--- 2.2: Unique constraint on referrals
+, 2.2: Unique constraint on referrals
 CREATE UNIQUE INDEX IF NOT EXISTS idx_referrals_order_partner
   ON referrals(order_id, partner_id);
 
--- 2.3: Atomic referral tracking RPC
+, 2.3: Atomic referral tracking RPC
 CREATE OR REPLACE FUNCTION track_referral(
   p_partner_id uuid, p_order_id uuid, p_tier text,
   p_sale_amount integer, p_discount_amount integer, p_commission_amount integer
@@ -240,7 +240,7 @@ REVOKE EXECUTE ON FUNCTION track_referral(uuid, uuid, text, integer, integer, in
 REVOKE EXECUTE ON FUNCTION track_referral(uuid, uuid, text, integer, integer, integer) FROM anon;
 GRANT EXECUTE ON FUNCTION track_referral(uuid, uuid, text, integer, integer, integer) TO service_role;
 
--- 5.4: Partial index for payout performance
+, 5.4: Partial index for payout performance
 CREATE INDEX IF NOT EXISTS idx_referrals_unpaid
   ON referrals(partner_id) WHERE commission_paid = false;
 ```
@@ -250,7 +250,7 @@ CREATE INDEX IF NOT EXISTS idx_referrals_unpaid
 ## Issue-to-Task Map
 
 | # | Agent(s) | Sev | Task | Phase |
-|---|----------|-----|------|-------|
+|---|----------|---, |------|-------|
 | 1 | Sec+BE+CQ | CRITICAL | Hash magic link tokens | 1.1 |
 | 2 | Sec | CRITICAL | RLS on partners table | 1.2 |
 | 3 | Sec+BE | HIGH | Remove download URLs from verify | 1.3 |
@@ -273,9 +273,9 @@ CREATE INDEX IF NOT EXISTS idx_referrals_unpaid
 | 20 | BE | MEDIUM | Partial index for unpaid referrals | 5.4 |
 
 ## Verification
-1. `npx tsc --noEmit --skipLibCheck` — TypeScript passes
-2. `npx next build` — production build succeeds
-3. Manual: POST invalid JSON to `/api/partners/apply` — still returns 400
-4. Manual: Test magic link flow — request, verify, dashboard access
-5. Manual: Test checkout flow — purchase, success page (no download URL leak)
-6. Manual: Screen reader test on landing page — `<main>` landmark present
+1. `npx tsc,noEmit,skipLibCheck`, TypeScript passes
+2. `npx next build`, production build succeeds
+3. Manual: POST invalid JSON to `/api/partners/apply`, still returns 400
+4. Manual: Test magic link flow, request, verify, dashboard access
+5. Manual: Test checkout flow, purchase, success page (no download URL leak)
+6. Manual: Screen reader test on landing page, `<main>` landmark present

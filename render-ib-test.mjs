@@ -67,7 +67,7 @@ console.log(
   "/ 9 expected"
 );
 
-// Report metadata — load from .meta.json sidecar if it exists, else fall back to Danielle
+// Report metadata, load from .meta.json sidecar if it exists, else fall back to Danielle
 const metaPath = inputPath.replace(/\.md$/, ".meta.json");
 let meta;
 if (fs.existsSync(metaPath)) {

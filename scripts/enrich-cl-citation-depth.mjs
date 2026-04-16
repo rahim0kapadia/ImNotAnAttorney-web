@@ -12,14 +12,14 @@
  *   5. Call CL /api/rest/v4/opinions-cited/?cited_opinion={id} for depth sample
  *   6. Compute authority score and write SQL
  *
- * CL rate limit: 5K queries/hour — 200ms delay between calls.
+ * CL rate limit: 5K queries/hour, 200ms delay between calls.
  * Each opinion needs ~3 API calls (opinion, cluster, opinions-cited).
  * With --limit 200: ~200 * 3 * 200ms = ~2 min.
  *
  * Authority score = weighted combo of:
- *   - Total citing opinions (50%) — from cluster.citation_count
- *   - Average citation depth (30%) — from opinions-cited sample
- *   - Max citation depth bonus (20%) — foundational opinions cited deeply
+ *   - Total citing opinions (50%), from cluster.citation_count
+ *   - Average citation depth (30%), from opinions-cited sample
+ *   - Max citation depth bonus (20%), foundational opinions cited deeply
  *
  * Usage:
  *   node scripts/enrich-cl-citation-depth.mjs                # Dry-run
@@ -56,7 +56,7 @@ function escapeSQL(str) {
 /**
  * Extract the numeric opinion ID from a CL source_url.
  * URL format: https://www.courtlistener.com/opinion/{id}/slug/
- * Uses indexOf — no regex per project rules.
+ * Uses indexOf, no regex per project rules.
  */
 function extractOpinionId(sourceUrl) {
   if (!sourceUrl) return null;
@@ -84,7 +84,7 @@ async function clFetch(endpoint, retries) {
         headers: { Authorization: "Token " + CL_TOKEN },
       });
       if (res.status === 429) {
-        // Rate limited — back off
+        // Rate limited, back off
         var wait = Math.min(10000, 2000 * Math.pow(2, attempt));
         console.log("  Rate limited, waiting " + (wait / 1000) + "s...");
         await new Promise(function (r) { setTimeout(r, wait); });

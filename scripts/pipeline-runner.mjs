@@ -57,27 +57,27 @@ function log(msg) {
  */
 const STAGES = [
   {
-    label: 'Stage 1 — bulk-master-extractor',
+    label: 'Stage 1, bulk-master-extractor',
     cmd:   'node --max-old-space-size=8192 scripts/bulk-master-extractor.mjs --apply',
   },
   {
-    label: 'Stage 2a — appeal-outcome-correlator phase 1',
+    label: 'Stage 2a, appeal-outcome-correlator phase 1',
     cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 1',
   },
   {
-    label: 'Stage 2b — appeal-outcome-correlator phase 2',
+    label: 'Stage 2b, appeal-outcome-correlator phase 2',
     cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 2',
   },
   {
-    label: 'Stage 2c — appeal-outcome-correlator phase 3',
+    label: 'Stage 2c, appeal-outcome-correlator phase 3',
     cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 3',
   },
   {
-    label: 'Stage 2d — appeal-outcome-correlator phase 4 (apply)',
+    label: 'Stage 2d, appeal-outcome-correlator phase 4 (apply)',
     cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 4 --apply',
   },
   {
-    label: 'Stage 3 — bulk-similar-case-matcher',
+    label: 'Stage 3, bulk-similar-case-matcher',
     cmd:   'node --max-old-space-size=8192 scripts/bulk-similar-case-matcher.mjs --apply',
   },
 ];
@@ -93,7 +93,7 @@ function sendTelegram(message) {
       { stdio: 'inherit', cwd: PROJECT_ROOT }
     );
   } catch (err) {
-    log(`WARN: Telegram notification failed — ${err.message}`);
+    log(`WARN: Telegram notification failed, ${err.message}`);
   }
 }
 
@@ -113,7 +113,7 @@ function runStage(stage) {
   log(`CMD    ${stage.cmd}`);
 
   if (isDryRun) {
-    log(`DRY-RUN — skipping execution`);
+    log(`DRY-RUN, skipping execution`);
     return;
   }
 
@@ -145,7 +145,7 @@ async function main() {
       failedStage = stage;
       log(`FAIL   ${stage.label}`);
       log(`ERROR  ${err.message}`);
-      log('Pipeline halted — skipping remaining stages.');
+      log('Pipeline halted, skipping remaining stages.');
       break;
     }
   }
@@ -159,11 +159,11 @@ async function main() {
   log(`Pipeline ${summary}`);
   log('='.repeat(72));
 
-  // Telegram notification — always attempt, never throw
+  // Telegram notification, always attempt, never throw
   const telegramMsg = isDryRun
     ? `[DRY-RUN] INA Tier 9 pipeline would have run ${STAGES.length} stages`
     : failedStage
-      ? `INA Tier 9 pipeline FAILED: ${failedStage.label} — ${formatDuration(totalElapsed)} elapsed`
+      ? `INA Tier 9 pipeline FAILED: ${failedStage.label}, ${formatDuration(totalElapsed)} elapsed`
       : `INA Tier 9 pipeline DONE in ${formatDuration(totalElapsed)}`;
 
   sendTelegram(telegramMsg);
@@ -172,7 +172,7 @@ async function main() {
 }
 
 // ---------------------------------------------------------------------------
-// Entry — catch-all so the script itself never crashes
+// Entry, catch-all so the script itself never crashes
 // ---------------------------------------------------------------------------
 
 main().catch((err) => {
@@ -181,7 +181,7 @@ main().catch((err) => {
     log(err.stack ?? '(no stack)');
     sendTelegram(`INA Tier 9 pipeline FATAL error: ${err.message}`);
   } catch (_) {
-    // truly last-resort — can't even log
+    // truly last-resort, can't even log
     console.error('FATAL (unloggable):', err);
   }
   process.exit(1);

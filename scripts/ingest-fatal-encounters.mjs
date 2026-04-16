@@ -63,7 +63,7 @@ function escNum(n) {
 
 /**
  * Normalize a string: lowercase, keep only a-z, 0-9, and space, collapse spaces.
- * Uses char-code loop — no regex on file contents (hook-enforced).
+ * Uses char-code loop, no regex on file contents (hook-enforced).
  */
 function normalize(str) {
   if (!str) return "";
@@ -246,10 +246,10 @@ async function main() {
 
   console.log("Raw rows processed: " + rawCount);
   console.log("Records after filtering (since 2013): " + records.length);
-  console.log("Skipped — no agency: " + skippedNoAgency);
-  console.log("Skipped — no state: " + skippedNoState);
-  console.log("Skipped — no date: " + skippedNoDate);
-  console.log("Skipped — pre-2013: " + skippedPreCutoff);
+  console.log("Skipped, no agency: " + skippedNoAgency);
+  console.log("Skipped, no state: " + skippedNoState);
+  console.log("Skipped, no date: " + skippedNoDate);
+  console.log("Skipped, pre-2013: " + skippedPreCutoff);
 
   if (records.length === 0) {
     console.log("\nNo records to process. Exiting.");

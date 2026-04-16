@@ -6,11 +6,11 @@
  * Streams the 50 GB opinions CSV using csv-parse (with escape: "\\" for CL's
  * backslash-escaped quotes). For each opinion matching our cluster IDs,
  * extracts three deterministic signals from plain_text:
- *   1. motion_types[] — which motion types this case supports
- *   2. legal_issues[] — 4A/5A/6A/Brady/IAC/speedy/etc.
- *   3. supporting_rulings[] — granted/denied directions per motion
+ *   1. motion_types[], which motion types this case supports
+ *   2. legal_issues[], 4A/5A/6A/Brady/IAC/speedy/etc.
+ *   3. supporting_rulings[], granted/denied directions per motion
  *
- * Updates via COALESCE additive pattern — fills empty arrays, never overwrites.
+ * Updates via COALESCE additive pattern, fills empty arrays, never overwrites.
  * Store verification source URL in source_urls[] per safety rule.
  *
  * Prerequisites:
@@ -217,7 +217,7 @@ function logMem(label) {
 async function main() {
   console.log("=== BULK EXTRACT MOTION TYPES + LEGAL ISSUES (csv-parse) ===\n");
 
-  // Crash diagnostics — catch silent deaths
+  // Crash diagnostics, catch silent deaths
   process.on("uncaughtException", (e) => { console.error(`UNCAUGHT: ${e.stack || e.message}`); process.exit(2); });
   process.on("unhandledRejection", (e) => { console.error(`UNHANDLED: ${e?.stack || e}`); process.exit(3); });
 
@@ -231,7 +231,7 @@ async function main() {
       targetClusters.add(String(r.courtlistener_cluster_id));
     }
   }
-  // Free the dump array — only the Set is needed
+  // Free the dump array, only the Set is needed
   dump.length = 0;
 
   console.log(`Target clusters (all with cluster_id): ${targetClusters.size}`);
@@ -243,7 +243,7 @@ async function main() {
   const filteredSize = fs.existsSync(OPINIONS_FILTERED) ? fs.statSync(OPINIONS_FILTERED).size : 0;
   if (filteredSize > 10000) {
     console.log(`Using pre-filtered CSV: ${OPINIONS_FILTERED}`);
-    console.log(`  (${(fs.statSync(OPINIONS_FILTERED).size / 1024 / 1024).toFixed(1)} MB — will complete in seconds)\n`);
+    console.log(`  (${(fs.statSync(OPINIONS_FILTERED).size / 1024 / 1024).toFixed(1)} MB, will complete in seconds)\n`);
     csvStream = fs.createReadStream(OPINIONS_FILTERED);
   } else {
     const bzcatPath = findBzcat();
@@ -339,7 +339,7 @@ async function main() {
   if (dryRun) { console.log(`\nDry run complete.`); return; }
   if (results.size === 0) { console.log("\nNo extractions to apply."); return; }
 
-  // Build UPDATE statements — additive COALESCE pattern
+  // Build UPDATE statements, additive COALESCE pattern
   // Uses array_cat + DISTINCT to merge new signals with existing, no overwrites.
   const stmts = [];
   for (const [clusterId, r] of results) {
@@ -387,7 +387,7 @@ async function main() {
       await supabaseQuery(batch.join("\n"));
       applied += batch.length;
       const rate = (applied / ((Date.now() - applyStart) / 1000)).toFixed(0);
-      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} clusters — ${rate}/sec\n`);
+      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} clusters, ${rate}/sec\n`);
     } catch (e) {
       errors++;
       console.error(`  Batch ${batchNum}: ${e.message.slice(0, 200)}`);

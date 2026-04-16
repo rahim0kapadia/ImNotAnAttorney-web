@@ -1,5 +1,5 @@
 /**
- * Health Check Endpoint — GET /api/health
+ * Health Check Endpoint, GET /api/health
  *
  * Checks Supabase connectivity and presence of required env vars.
  * Returns 200 if healthy, 503 if degraded.

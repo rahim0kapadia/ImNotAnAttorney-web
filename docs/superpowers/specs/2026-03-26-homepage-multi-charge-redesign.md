@@ -1,7 +1,7 @@
-# Homepage Multi-Charge Redesign — Expert-Informed Design Spec
+# Homepage Multi-Charge Redesign, Expert-Informed Design Spec
 
 **Date:** 2026-03-26
-**Status:** Draft — Awaiting Rahim approval
+**Status:** Draft, Awaiting Rahim approval
 **Supersedes:** `docs/superpowers/specs/2026-03-18-homepage-redesign-design.md`
 **Expert Panel:** Peep Laja (CRO/ResearchXL), Sabri Suby (crisis direct response), Chris Dreyer (legal marketing/SEO), Alex Hormozi (offer architecture)
 **Project:** `C:\Users\email\projects\ImNotAnAttorney-web\`
@@ -21,13 +21,13 @@ Six hardcoded DUI references exist in the current homepage:
 5. **Final CTA** (line ~778-781): `href="/checkout?tier=dui-first-offense"` + "Get Your DUI Defense Playbook"
 6. **Meta description** (line ~53): mentions "DUI Defense Playbook"
 
-The ChargeTypeSelector exists but is a dead end — visitor selects a charge type and nothing happens. No CTA appears. No routing fires. The highest-intent visitor self-identifies and then gets abandoned.
+The ChargeTypeSelector exists but is a dead end, visitor selects a charge type and nothing happens. No CTA appears. No routing fires. The highest-intent visitor self-identifies and then gets abandoned.
 
 ### Expert Diagnosis
 
-**Broken layer: POSITIONING (Peep Laja)** — The narrative is charge-neutral and strong. The concrete artifacts (CTAs, pricing, urgency) hardcode DUI. Fix the artifacts, not the story.
+**Broken layer: POSITIONING (Peep Laja)**, The narrative is charge-neutral and strong. The concrete artifacts (CTAs, pricing, urgency) hardcode DUI. Fix the artifacts, not the story.
 
-**Homepage role: ROUTER, not closer (all 4 experts)** — The homepage qualifies and routes. Individual playbook/product pages close the sale.
+**Homepage role: ROUTER, not closer (all 4 experts)**, The homepage qualifies and routes. Individual playbook/product pages close the sale.
 
 ---
 
@@ -63,7 +63,7 @@ On selection: the primary CTA text and href update to route to that charge type'
 ### Decision 4: Add Playbook Catalog grid section
 
 **Source:** Sabri Suby blueprint, endorsed by Dreyer for SEO.
-**Reasoning:** SEO visitors arriving for a specific charge type need a clear route from the homepage. 8 cards with charge-specific discovery findings, $97 badge, and direct CTA. Also strengthens Entity SEO — Google and AI systems can extract what charge types are served.
+**Reasoning:** SEO visitors arriving for a specific charge type need a clear route from the homepage. 8 cards with charge-specific discovery findings, $97 badge, and direct CTA. Also strengthens Entity SEO, Google and AI systems can extract what charge types are served.
 
 ### Decision 5: War Room/Situation Room off homepage pricing
 
@@ -72,7 +72,7 @@ On selection: the primary CTA text and href update to route to that charge type'
 
 ---
 
-## 3. Changes — Phase 1 (Highest Leverage)
+## 3. Changes, Phase 1 (Highest Leverage)
 
 ### C1: Rewrite ChargeTypeSelector component
 
@@ -86,7 +86,7 @@ On selection: the primary CTA text and href update to route to that charge type'
 - Emit the selected tier slug to parent on click
 - Keep the one-liner reveal behavior
 - Responsive: 2-column grid on mobile, 4-column on desktop (8 buttons)
-- "Other" removed entirely — all 8 charge types have explicit buttons
+- "Other" removed entirely, all 8 charge types have explicit buttons
 
 ```typescript
 interface ChargeTypeSelectorProps {
@@ -108,31 +108,31 @@ Charge type to tier slug mapping:
 
 ### C2: Make homepage hero CTA dynamic
 
-**File:** `src/app/page.tsx` — Hero section (lines ~220-248)
+**File:** `src/app/page.tsx`, Hero section (lines ~220-248)
 
 **Problem:** The page.tsx is a Server Component. ChargeTypeSelector is a Client Component. The CTA needs to react to selector state.
 
 **Solution:** Extract the hero + selector + CTA into a new Client Component: `src/components/HomepageHero.tsx`
 
 This component:
-1. Renders the H1 (unchanged — it's already charge-neutral)
+1. Renders the H1 (unchanged, it's already charge-neutral)
 2. Renders the ChargeTypeSelector with onSelect callback
 3. Maintains `selectedSlug` state
 4. When no selection: Primary CTA = Case Decoder ($197) pointing to `/start`. Secondary = "Browse all playbooks" pointing to `/playbooks`
-5. When charge selected: Primary CTA = `[Charge] Defense Playbook — $97` pointing to `/checkout?tier={slug}`. Secondary = "Need deeper analysis? Case Decoder — $197" pointing to `/start`
+5. When charge selected: Primary CTA = `[Charge] Defense Playbook, $97` pointing to `/checkout?tier={slug}`. Secondary = "Need deeper analysis? Case Decoder, $197" pointing to `/start`
 6. Upgrade credit line always visible below CTAs
 
-**H1 stays:** "Your Case File Has Answers. We Find Them. You Ask." — already charge-neutral.
+**H1 stays:** "Your Case File Has Answers. We Find Them. You Ask.", already charge-neutral.
 
 **Subheadline changes from:**
 > "26 questions built from 40+ defense attorneys' methods"
 
 **To:**
-> "Case-specific research and accountability questions for criminal defendants — built from 40+ defense attorneys' documented methods."
+> "Case-specific research and accountability questions for criminal defendants, built from 40+ defense attorneys' documented methods."
 
 ### C3: Fix value anchor card (DUI to charge-neutral)
 
-**File:** `src/app/page.tsx` — Value anchor section (lines ~528-579)
+**File:** `src/app/page.tsx`, Value anchor section (lines ~528-579)
 
 **Current third card:**
 ```
@@ -148,7 +148,7 @@ $197 / Case Decoder. 48 hours.
 
 ### C4: Fix urgency bar (remove DUI parenthetical)
 
-**File:** `src/app/page.tsx` — Urgency bar (lines ~300-309)
+**File:** `src/app/page.tsx`, Urgency bar (lines ~300-309)
 
 **Current:** "DMV administrative hearing (DUI): 7-10 days from arrest"
 
@@ -157,70 +157,70 @@ $197 / Case Decoder. 48 hours.
 
 ### C5: Fix lead capture upsell (DUI to Case Decoder)
 
-**File:** `src/app/page.tsx` — Lead capture section (lines ~726-729)
+**File:** `src/app/page.tsx`, Lead capture section (lines ~726-729)
 
 **Current:**
 ```tsx
 successUpsellHref="/checkout?tier=dui-first-offense"
-successUpsellLabel="Ready to go deeper? Get Your DUI Defense Playbook — $97"
+successUpsellLabel="Ready to go deeper? Get Your DUI Defense Playbook, $97"
 ```
 
 **New:**
 ```tsx
 successUpsellHref="/start"
-successUpsellLabel="Ready to go deeper? Get your Case Decoder — $197"
+successUpsellLabel="Ready to go deeper? Get your Case Decoder, $197"
 successUpsellDescription="Case-specific research with 10-15 targeted questions. 48-hour delivery. Every dollar credited toward higher tiers."
 ```
 
 ### C6: Fix final CTA (DUI to charge-neutral)
 
-**File:** `src/app/page.tsx` — Final CTA section (lines ~759-790)
+**File:** `src/app/page.tsx`, Final CTA section (lines ~759-790)
 
 Change to Case Decoder CTA (charge-neutral, always correct):
 ```tsx
 <Link href="/start">
-  Start Your Case Research — $197 →
+  Start Your Case Research, $197 →
 </Link>
 ```
 
-The final CTA doesn't need charge-type awareness — by this point the visitor has scrolled the entire page and is ready for the general entry point.
+The final CTA doesn't need charge-type awareness, by this point the visitor has scrolled the entire page and is ready for the general entry point.
 
 ### C7: Fix meta description
 
-**File:** `src/app/page.tsx` — metadata (lines ~50-62)
+**File:** `src/app/page.tsx`, metadata (lines ~50-62)
 
 **Current:** mentions "DUI Defense Playbook $97"
 
 **New:**
 ```
 Your attorney hasn't called back. Your court date is approaching. We research your charges
-and hand you the exact questions — Case Decoder $197, 48-hour delivery.
+and hand you the exact questions, Case Decoder $197, 48-hour delivery.
 ```
 
 ---
 
-## 4. Changes — Phase 2 (New Section)
+## 4. Changes, Phase 2 (New Section)
 
 ### C8: Add Playbook Catalog grid
 
-**File:** `src/app/page.tsx` — New section between testimonials and pricing
+**File:** `src/app/page.tsx`, New section between testimonials and pricing
 
 **Purpose:** 8 charge-type cards for SEO visitors and charge-type routing. Each card:
 - Charge type name
 - One specific discovery finding (from playbook-configs.ts proof section)
-- "$97 — Instant Download" badge
+- "$97, Instant Download" badge
 - Direct CTA pointing to `/checkout?tier={slug}`
 
 **Layout:** 2-column mobile, 4-column desktop grid.
 
-**Data source:** Import from `playbook-configs.ts` — use each config's `hero.eyebrow` and first `proof.methods[0].insight` for the discovery finding.
+**Data source:** Import from `playbook-configs.ts`, use each config's `hero.eyebrow` and first `proof.methods[0].insight` for the discovery finding.
 
 **Section headline:** "Defense Playbooks by Charge Type"
-**Subtext:** "Charge-specific questions and research — instant download, $97 each."
+**Subtext:** "Charge-specific questions and research, instant download, $97 each."
 
 ### C9: Schema markup update
 
-**File:** `src/app/page.tsx` — LegalService schema (lines ~153-208)
+**File:** `src/app/page.tsx`, LegalService schema (lines ~153-208)
 
 Add `knowsAbout` entries for all 8 charge types so Google and AI systems can extract what charges are served:
 
@@ -234,11 +234,11 @@ Add `knowsAbout` entries for all 8 charge types so Google and AI systems can ext
 
 ---
 
-## 5. Changes — Phase 3 (Polish)
+## 5. Changes, Phase 3 (Polish)
 
 ### C10: Testimonial charge-type diversity
 
-**File:** `src/app/page.tsx` — Both TestimonialSection instances
+**File:** `src/app/page.tsx`, Both TestimonialSection instances
 
 Ensure testimonials cover at least 4 different charge types. Current inline testimonials: Drug Possession + DUI. Current grid: Federal Drug, White Collar, Drug Possession, DUI. Add: Probation Violation, Sex Offense, or Self-Defense testimonial to replace one DUI duplicate.
 
@@ -265,8 +265,8 @@ At least one testimonial from the "family member doing research" segment (alread
 ## 7. What Stays Untouched (Expert Consensus: Working)
 
 These sections are charge-neutral and converting. Do not modify:
-- Backstory (founder story — no charge-type dependency)
-- Pain points (VoC verbatim — all charge types)
+- Backstory (founder story, no charge-type dependency)
+- Pain points (VoC verbatim, all charge types)
 - Bridge identity statement
 - How it works (3-step process)
 - What we look for (6 investigation methods)
@@ -283,14 +283,14 @@ These sections are charge-neutral and converting. Do not modify:
 3. Zero DUI-specific hardcodes remain in hero, final CTA, value anchor, or lead capture
 4. Meta description and schema markup reference the full service range
 5. Playbook Catalog grid provides direct checkout paths for all 8 charge types
-6. Homepage retains its existing conversion structure — no sections removed
+6. Homepage retains its existing conversion structure, no sections removed
 
 ---
 
 ## 9. Review Process
 
 After implementation:
-1. **Peep Laja CRO audit** — conversion flow, CTA clarity, cognitive load
-2. **Chris Dreyer SEO review** — schema markup, internal linking, entity coverage
-3. **Reality Checker** — evidence-based sign-off, no fantasy approvals
-4. **frontend-design skill** — visual execution quality
+1. **Peep Laja CRO audit**, conversion flow, CTA clarity, cognitive load
+2. **Chris Dreyer SEO review**, schema markup, internal linking, entity coverage
+3. **Reality Checker**, evidence-based sign-off, no fantasy approvals
+4. **frontend-design skill**, visual execution quality

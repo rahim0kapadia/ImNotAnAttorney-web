@@ -1,6 +1,6 @@
 /**
- * Partner Earnings — commission tier, progress bar, stat cards, payout history.
- * Server-compatible (no hooks) — all data passed as props.
+ * Partner Earnings, commission tier, progress bar, stat cards, payout history.
+ * Server-compatible (no hooks), all data passed as props.
  */
 
 import { formatCents, formatDate } from "@/lib/format";

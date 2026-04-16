@@ -1,4 +1,4 @@
-# Reddit Response Pipeline — Automated Monitoring + Draft + Notify
+# Reddit Response Pipeline, Automated Monitoring + Draft + Notify
 
 **Date:** 2026-04-10
 **Tier:** FEATURE
@@ -11,7 +11,7 @@
 | Field | Value |
 |-------|-------|
 | **Problem** | Scared defendants post on Reddit at 3AM asking for help. We have 10 comment templates ready to deploy but no system to detect threads and draft responses. |
-| **Account** | Rahim's personal Reddit account — 4 years old, real history. No warmup needed. |
+| **Account** | Rahim's personal Reddit account, 4 years old, real history. No warmup needed. |
 | **Existing infra** | `fetchRedditSignals()` in `src/lib/demand/fetch-signals.ts` already monitors Reddit via API. Cron job #7452824 runs daily at 06:00 UTC. Telegram @BorisLegalBot already wired for notifications. |
 | **Comment templates** | 10 templates at `content/queue/reddit/pending/01-10*.md`. Anti-hallucination audited 2026-04-10. |
 | **Blog posts** | 59 posts, 59/59 safety gates pass. Each template maps to a specific blog URL. |
@@ -46,7 +46,7 @@
 From `content/queue/reddit/reddit-sop.md`:
 
 | Subreddit | Priority | Reason |
-|-----------|----------|--------|
+|---------, |----------|------, |
 | r/dui | Tier 1 | Highest-intent defendants. Templates 03, 10 match. |
 | r/legaladvice | Tier 1 | 2.4M members. Templates 01-10 all apply. |
 | r/probation | Tier 2 | Templates 04, 09 match. |
@@ -56,7 +56,7 @@ From `content/queue/reddit/reddit-sop.md`:
 ## Trigger Keywords → Template Mapping
 
 | Template | Trigger Keywords | Blog URL |
-|----------|-----------------|----------|
+|----------|---------------, |----------|
 | 01 - Attorney not calling | `attorney not calling`, `lawyer won't respond`, `can't reach my lawyer` | /blog/attorney-not-returning-calls |
 | 02 - Plea deal pressure | `plea deal`, `should I take the plea`, `prosecutor offering` | /blog/should-you-take-the-plea-deal |
 | 03 - DUI arrest panic | `just got DUI`, `first DUI`, `DUI arrest`, `DUI what do I do` | /blog/dui-first-72-hours-what-to-do |
@@ -84,7 +84,7 @@ create table reddit_response_queue (
   matched_template text not null,
   blog_url text not null,
   draft_response text not null,
-  status text not null default 'pending', -- pending | notified | posted | skipped
+  status text not null default 'pending',, pending | notified | posted | skipped
   created_at timestamptz not null default now(),
   notified_at timestamptz,
   posted_at timestamptz
@@ -108,12 +108,12 @@ create table reddit_response_queue (
 The Telegram message must be **copy-paste ready on mobile**. Format:
 
 ```
-🔴 NEW MATCH — r/dui
+🔴 NEW MATCH, r/dui
 
 📌 "Just got my first DUI in Texas last night"
 🔗 https://reddit.com/r/dui/comments/abc123
 
-⚠️ EDIT before posting — rephrase the opening in your own words. Do NOT paste verbatim.
+⚠️ EDIT before posting, rephrase the opening in your own words. Do NOT paste verbatim.
 
 --- DRAFT (edit before posting) ---
 
@@ -134,8 +134,8 @@ https://imnotanattorney.com/blog/dui-first-72-hours-what-to-do
 
 Key requirements:
 - Direct thread URL (tap to open in Reddit app)
-- Draft text between markers — Rahim EDITS before posting (Simmonds: paste-and-post triggers AI review)
-- Blog URL shown for reference but NOT in the draft (Simmonds: "they don't want a link" — earn it first)
+- Draft text between markers, Rahim EDITS before posting (Simmonds: paste-and-post triggers AI review)
+- Blog URL shown for reference but NOT in the draft (Simmonds: "they don't want a link", earn it first)
 - Blog link goes in a self-reply 30+ min later, or only if someone asks
 - State detection shown so Rahim can verify customization
 - No extra formatting that breaks when pasted into Reddit
@@ -158,22 +158,22 @@ Register on cron-job.org:
   - State detection: regex for state names/abbreviations → inject state-specific DMV deadlines
   - Charge detection: DUI vs drug vs felony → adjust tone
 
-## Expert Review — Ross Simmonds (Distribution.ai, "Create Once Distribute Forever")
+## Expert Review, Ross Simmonds (Distribution.ai, "Create Once Distribute Forever")
 
 Source: [BuzzStream podcast 2026](https://www.buzzstream.com/blog/reddit-marketing-podcast/), [SEO Week 2025](https://ipullrank.com/seo-week-2025-ross-simmonds)
 
 Simmonds' Lurk-Listen-Leap framework validates this pipeline but adds three critical constraints:
 
-### 1. NEVER paste verbatim — Reddit flags paste-and-post
+### 1. NEVER paste verbatim, Reddit flags paste-and-post
 > "If you paste in content and post it quickly...not written natively...triggering an AI review."
 
 The Telegram draft is a STARTING POINT. Rahim must edit/retype parts of it before posting. The Telegram notification should include:
 ```
-⚠️ EDIT before posting — don't paste verbatim.
+⚠️ EDIT before posting, don't paste verbatim.
 Rephrase at least the opening line in your own words.
 ```
 
-### 2. NO link in the initial comment — earn it first
+### 2. NO link in the initial comment, earn it first
 > "Research top posts...likely that they don't want a link."
 
 The blog URL should NOT be in the draft response. Post the helpful answer standalone. Only add the link:
@@ -187,10 +187,10 @@ The Telegram message shows the blog URL for Rahim's reference, but it's NOT in t
 
 Rahim's personal account is the ONLY account. Never create alt accounts. Never have anyone else post INAA links. If the brand gets blocked from a subreddit, it's permanent.
 
-### 4. Additional Simmonds insight — LLM citation tracking
+### 4. Additional Simmonds insight, LLM citation tracking
 > "Monitor which Reddit threads are being cited in ChatGPT, Claude, and Perplexity."
 
-FUTURE PHASE: Track which of our Reddit comments get picked up by AI search. These become the highest-ROI threads — a single comment cited by Perplexity reaches more defendants than 100 Reddit views.
+FUTURE PHASE: Track which of our Reddit comments get picked up by AI search. These become the highest-ROI threads, a single comment cited by Perplexity reaches more defendants than 100 Reddit views.
 
 ### 5. Daily cadence, value-first warmup
 > "Go in aggressively around one concept: add as much value in the comments as possible."
@@ -209,7 +209,7 @@ First 2 weeks: comment on 2-3 threads/day in r/dui and r/legaladvice with NO lin
 - [ ] Cron runs every 30 min without error
 - [ ] Detects new posts matching at least 3 of the 10 keyword sets
 - [ ] Sends Telegram notification with: subreddit, thread title, thread URL, draft response, blog link
-- [ ] Deduplicates — never notifies on same thread twice
+- [ ] Deduplicates, never notifies on same thread twice
 - [ ] Template customization works for state-specific details
 - [ ] Zero hallucinated legal data in any draft response
 

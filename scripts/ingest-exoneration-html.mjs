@@ -1,5 +1,5 @@
 /**
- * National Registry of Exonerations — HTML cache → exoneration_patterns
+ * National Registry of Exonerations, HTML cache → exoneration_patterns
  *
  * Parses the cached HTML table from the NRE "Explore Exonerations" page.
  * Unlike the CSV variant (ingest-exoneration-registry.mjs), the HTML table
@@ -73,11 +73,11 @@ function loadEnv() {
 }
 loadEnv();
 
-// ── Helpers — NO REGEX (hook enforced) ────────────────────────────────────────
+// ── Helpers, NO REGEX (hook enforced) ────────────────────────────────────────
 
 /**
  * Normalize a string: lowercase, keep a-z, 0-9, space, and slash only.
- * Char-code loop — no regex on file contents.
+ * Char-code loop, no regex on file contents.
  */
 function normalize(name) {
   if (!name) return "";
@@ -110,7 +110,7 @@ function normalize(name) {
   return result.slice(start, end + 1).join("");
 }
 
-/** SQL escape — single-quote doubling, no regex. */
+/** SQL escape, single-quote doubling, no regex. */
 function esc(str) {
   if (str === null || str === undefined) return "NULL";
   const s = String(str);
@@ -129,7 +129,7 @@ function fmtFloat2(n) {
 }
 
 /**
- * Extract text content from a cheerio element — strips whitespace.
+ * Extract text content from a cheerio element, strips whitespace.
  * Uses cheerio .text() which is char-safe.
  */
 function cellText($, td) {
@@ -155,7 +155,7 @@ function cellText($, td) {
 
 /**
  * Parse "Years lost" value. Can be integer or decimal (e.g. "14.2", "0").
- * Returns float or null. Char-code loop — no regex.
+ * Returns float or null. Char-code loop, no regex.
  */
 function parseYearsLost(raw) {
   if (!raw) return null;
@@ -334,16 +334,16 @@ async function main() {
       "VALUES (\n" +
       "  " + esc(offenseType) + ",\n" +
       "  " + n + ",\n" +
-      "  NULL,\n" +   // false_confession_pct — not in HTML
-      "  NULL,\n" +   // mistaken_id_pct — not in HTML
-      "  NULL,\n" +   // perjury_pct — not in HTML
-      "  NULL,\n" +   // official_misconduct_pct — not in HTML
-      "  NULL,\n" +   // inadequate_defense_pct — not in HTML
-      "  NULL,\n" +   // forensic_error_pct — not in HTML
-      "  NULL,\n" +   // false_accusation_pct — not in HTML
+      "  NULL,\n" +   // false_confession_pct, not in HTML
+      "  NULL,\n" +   // mistaken_id_pct, not in HTML
+      "  NULL,\n" +   // perjury_pct, not in HTML
+      "  NULL,\n" +   // official_misconduct_pct, not in HTML
+      "  NULL,\n" +   // inadequate_defense_pct, not in HTML
+      "  NULL,\n" +   // forensic_error_pct, not in HTML
+      "  NULL,\n" +   // false_accusation_pct, not in HTML
       "  " + fmtFloat2(avgYearsServed) + ",\n" +
-      "  NULL,\n" +   // top_factor — not in HTML
-      "  NULL,\n" +   // top_factor_pct — not in HTML
+      "  NULL,\n" +   // top_factor, not in HTML
+      "  NULL,\n" +   // top_factor_pct, not in HTML
       "  ARRAY[" + esc(SOURCE_URL) + "],\n" +
       "  now()\n" +
       ")\n" +

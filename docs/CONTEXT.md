@@ -1,4 +1,4 @@
-# Context — ImNotAnAttorney Web
+# Context, ImNotAnAttorney Web
 
 > Updated: 2026-04-09. Current state of the web repo.
 

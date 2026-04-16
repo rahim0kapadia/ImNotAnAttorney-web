@@ -23,7 +23,7 @@ No code changes. No component changes. No schema changes.
 - TLDRBox component at top (structure matches `content/blog/am-i-eligible-for-expungement.mdx`)
 - Inline CTA to `/services/fst-review`
 - Free `/score` CTA at bottom
-- UPL-safe: "may be challenged", "questions to ask" — no legal advice
+- UPL-safe: "may be challenged", "questions to ask", no legal advice
 - NHTSA-accurate numbers: HGN ~77%, Walk-and-Turn ~68%, One-Leg Stand ~65%, combined ~91% under ideal conditions only
 - Voice: scene-hook open (2 AM gravel shoulder), short-long-short sentences, single-sentence paragraphs for emphasis, "Here's what nobody tells you:" / "Here's the dirty truth about..."
 - No emojis, no corporate filler, no speed selling, no third-person

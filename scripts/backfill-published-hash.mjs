@@ -25,7 +25,7 @@ for (const file of sidecars) {
   }
 
   const mdxContent = fs.readFileSync(mdxPath, 'utf8');
-  // MD5 for change detection only — not cryptographic. Used by editorial
+  // MD5 for change detection only, not cryptographic. Used by editorial
   // flywheel to detect post-publish edits by comparing current hash vs stored.
   sidecar.published_hash = crypto.createHash('md5').update(mdxContent).digest('hex');
   fs.writeFileSync(sidecarPath, JSON.stringify(sidecar, null, 2) + '\n');

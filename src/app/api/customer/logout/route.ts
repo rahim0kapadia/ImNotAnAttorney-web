@@ -1,5 +1,5 @@
 /**
- * POST /api/customer/logout — Destroy customer session.
+ * POST /api/customer/logout, Destroy customer session.
  *
  * Deletes session from DB and clears session cookie.
  */

@@ -1,6 +1,6 @@
 /**
- * GET /api/admin/demand/gaps — content gaps sorted by gap_score
- * PATCH /api/admin/demand/gaps — update gap status
+ * GET /api/admin/demand/gaps, content gaps sorted by gap_score
+ * PATCH /api/admin/demand/gaps, update gap status
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";

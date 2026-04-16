@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/demand-classify — Demand classifier ENQUEUER
+ * @file /api/cron/demand-classify, Demand classifier ENQUEUER
  *
  * As of 2026-04-09 (blog engine port), this route enqueues a single
  * processing_jobs row for the engine's demand_classify worker. The worker
@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
     }
 
     // ── Enqueue a single demand_classify job ──
-    // No target_id — the worker discovers its own ambiguous posts from
+    // No target_id, the worker discovers its own ambiguous posts from
     // reddit_signals. case_id is null (nullable since migration 20260409e).
     const { data: inserted, error: insertError } = await supabase
       .from("processing_jobs")

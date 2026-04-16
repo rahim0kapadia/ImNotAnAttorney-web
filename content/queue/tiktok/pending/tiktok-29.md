@@ -1,9 +1,9 @@
 # TikTok Script #29: The FBI Was Investigating You Before They Knocked on Your Door
 
-**Topic:** Federal investigations -- by the time you know, it's been months
+**Topic:** Federal investigations, by the time you know, it's been months
 **Format:** talking head + timeline reveal + text overlay
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + ominous, slow-building ambient
+**Trending sound suggestion:** Original audio, voiceover + ominous, slow-building ambient
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -17,22 +17,22 @@
 
 ## Body
 [SECOND 3-12]
-**Visual**: Timeline building backward from "KNOCK ON DOOR" -- 14 months earlier, then stations: "Bank records subpoenaed," "Emails obtained," "Associates interviewed," "Grand jury convened," "Target letter sent."
+**Visual**: Timeline building backward from "KNOCK ON DOOR", 14 months earlier, then stations: "Bank records subpoenaed," "Emails obtained," "Associates interviewed," "Grand jury convened," "Target letter sent."
 **Audio/Voiceover**: "Federal investigations are slow, methodical, and comprehensive. They've already pulled your bank records. They've subpoenaed your emails. They've talked to your associates. They may have been monitoring your communications. They've built a timeline. When they knock, they want you to fill in the gaps. To say the one thing that ties the bow on their case."
 **Text overlay**: "They already have: bank records, emails, associate interviews, surveillance. They want YOU to fill the gaps."
 
 [SECOND 12-20]
-**Visual**: A mouth opening to speak -- then a STOP sign slams over it.
-**Audio/Voiceover**: "This is NOT the time to talk. Not to explain. Not to clarify. Not to 'set the record straight.' Anything you say becomes evidence. Anything you say to agents can be used against you -- even casual conversation. Even things you think are helpful. The ONLY words you need: 'I want to speak with my attorney before answering any questions.'"
+**Visual**: A mouth opening to speak, then a STOP sign slams over it.
+**Audio/Voiceover**: "This is NOT the time to talk. Not to explain. Not to clarify. Not to 'set the record straight.' Anything you say becomes evidence. Anything you say to agents can be used against you, even casual conversation. Even things you think are helpful. The ONLY words you need: 'I want to speak with my attorney before answering any questions.'"
 **Text overlay**: "ONLY SAY: 'I want to speak with my attorney before answering any questions.'"
 
 [SECOND 20-27]
-**Visual**: The three DOJ categories appearing on screen: WITNESS -- SUBJECT -- TARGET. Target is highlighted in red.
+**Visual**: The three DOJ categories appearing on screen: WITNESS, SUBJECT, TARGET. Target is highlighted in red.
 **Audio/Voiceover**: "If you received a target letter, the government is telling you: we're coming. Federal prosecutors don't send target letters casually. It means a prosecutor has reviewed the evidence and concluded there's enough to move forward. You are not a witness. You are the person they're building a case against."
 **Text overlay**: "TARGET LETTER = 'We're coming.' Not a bluff."
 
 [SECOND 27-30]
-**Visual**: The front door from the opening -- but now it's closed. Locked. Through the peephole: the agents are still there. A phone is visible inside, dialing "ATTORNEY."
+**Visual**: The front door from the opening, but now it's closed. Locked. Through the peephole: the agents are still there. A phone is visible inside, dialing "ATTORNEY."
 **Text overlay**: "Don't open your mouth. Open your phone. Call an attorney. imnotanattorney.com"
 **Audio**: Door lock clicking. Phone dialing. Silence.
 
@@ -48,7 +48,7 @@ If you're under federal investigation, get the questions that matter at imnotana
 - 0:27 "Don't open your mouth. Open your phone."
 
 ## Caption
-By the time the FBI knocks on your door, the investigation has been running for months. They've already pulled your bank records, subpoenaed your emails, and interviewed your associates. They're not investigating -- they're confirming. Say one thing: "I want to speak with my attorney." Then stop talking.
+By the time the FBI knocks on your door, the investigation has been running for months. They've already pulled your bank records, subpoenaed your emails, and interviewed your associates. They're not investigating, they're confirming. Say one thing: "I want to speak with my attorney." Then stop talking.
 
 ## Hashtags
 #federalinvestigation #FBI #targetletter #federalcharges #whitecollar #knowyourrights

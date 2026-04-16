@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Full Pipeline Runner — Load, Verify, Classify
+ * Full Pipeline Runner, Load, Verify, Classify
  *
  * Runs the complete charge taxonomy + case law pipeline outside of Claude Code.
  * Zero Claude/Anthropic tokens consumed. Uses only:
@@ -44,7 +44,7 @@ function run(label, cmd) {
       stdio: "inherit",
       env: { ...process.env },
     });
-    console.log(`\n  OK: ${label} — COMPLETE (${new Date().toISOString()})`);
+    console.log(`\n  OK: ${label}, COMPLETE (${new Date().toISOString()})`);
     return true;
   } catch (err) {
     console.error(`\n  FAIL: ${label} (exit code ${err.status})`);
@@ -55,7 +55,7 @@ function run(label, cmd) {
 
 async function main() {
   console.log("============================================================");
-  console.log("  INAA Full Pipeline — Load, Verify, Classify");
+  console.log("  INAA Full Pipeline, Load, Verify, Classify");
   console.log("  Zero Claude/Anthropic tokens. CourtListener + Supabase");
   console.log("============================================================");
   console.log(`\nStarted: ${new Date().toISOString()}`);

@@ -31,12 +31,12 @@ When a prosecutor puts a deal on the table, they are not doing you a favor. They
 "This offer expires Friday."
 "You really don't want to go to trial."
 
-These are negotiation tactics. They might sound like legal wisdom, but they are pressure -- designed to close the case fast.
+These are negotiation tactics. They might sound like legal wisdom, but they are pressure, designed to close the case fast.
 
 Here is what changes the negotiation:
 
 - Discovery review. When your attorney has read every page and found inconsistencies, the prosecution knows they have a fight on their hands.
-- Motion filing. A suppression motion -- even one that gets denied -- tells the prosecution you are not going quietly.
+- Motion filing. A suppression motion, even one that gets denied, tells the prosecution you are not going quietly.
 - Witness investigation. When the defense has looked into the credibility of the State's witnesses, the dynamic shifts.
 
 The prosecution makes their best offers when they believe going to trial will cost them time, money, and uncertainty. If your attorney has not done any of the above, the prosecution has no reason to improve the offer.
@@ -51,7 +51,7 @@ The question to ask: "What work have you done that led you to recommend this ple
 
 ### Visual Direction
 
-Colored text background -- burnt orange. The "read that again" pattern creates emphasis. The negotiation framing (prosecution as car dealer) is intentionally provocative and memorable. No image.
+Colored text background, burnt orange. The "read that again" pattern creates emphasis. The negotiation framing (prosecution as car dealer) is intentionally provocative and memorable. No image.
 
 ### Link Strategy
 
@@ -63,10 +63,10 @@ This post will generate strong reactions from people who accepted first offers a
 
 ### UPL Compliance Note
 
-Do NOT tell anyone to reject their plea offer. Do NOT say first offers are always bad. Note explicitly in the post (as written above) that there are times when the first offer is the right move -- when the attorney has done the work. Frame it as: make an informed decision, not a pressured one.
+Do NOT tell anyone to reject their plea offer. Do NOT say first offers are always bad. Note explicitly in the post (as written above) that there are times when the first offer is the right move, when the attorney has done the work. Frame it as: make an informed decision, not a pressured one.
 
 ---
 
 **Share trigger**: A defendant who is currently being pressured to take a plea sends this to their family: "This is what I've been trying to say." A family member sends it to the defendant: "Don't sign anything until your lawyer answers that last question."
-**Context**: Plea pressure is the highest-anxiety moment in any criminal case. This post validates the instinct to push back while also acknowledging that pleas can be the right choice -- when earned through investigation. The balanced framing builds credibility.
+**Context**: Plea pressure is the highest-anxiety moment in any criminal case. This post validates the instinct to push back while also acknowledging that pleas can be the right choice, when earned through investigation. The balanced framing builds credibility.
 **KPI target**: Saves (reference material for active plea negotiations) + Messenger shares + comments from people sharing plea experiences

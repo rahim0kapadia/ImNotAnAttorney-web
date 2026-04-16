@@ -1,16 +1,16 @@
 /**
- * JUSTFAIR Ingestion Script — Federal Sentencing Intelligence
+ * JUSTFAIR Ingestion Script, Federal Sentencing Intelligence
  *
  * Streams 595,851 federal sentencing records from JUSTFAIR (Federal Judicial
  * Sentencing To Advance Inclusivity and Reduce Disparities) and aggregates into:
  *
- *   1. judge_sentencing_patterns — per-judge sentencing stats (upsert with USSC data)
- *   2. sentencing_distributions  — district-level charge sentencing percentiles
- *   3. judge_demographics        — judge biographical data (gender, race, appointing president)
- *   4. judge_sentencing_demographics — per-judge sentencing by defendant race (disparity analysis)
+ *   1. judge_sentencing_patterns, per-judge sentencing stats (upsert with USSC data)
+ *   2. sentencing_distributions , district-level charge sentencing percentiles
+ *   3. judge_demographics       , judge biographical data (gender, race, appointing president)
+ *   4. judge_sentencing_demographics, per-judge sentencing by defendant race (disparity analysis)
  *
  * Source: https://osf.io/nseh5/
- * Data: FinalDataset.csv — 1.3GB, 400+ columns, FY2001–FY2018
+ * Data: FinalDataset.csv, 1.3GB, 400+ columns, FY2001–FY2018
  *
  * Prerequisites:
  *   - data/external-intel/justfair/FinalDataset.csv
@@ -19,7 +19,7 @@
  *   - Migration 20260414f_justfair_demographics.sql applied
  *
  * Usage:
- *   node scripts/ingest-justfair.mjs                  # Dry run — stats only
+ *   node scripts/ingest-justfair.mjs                  # Dry run, stats only
  *   node scripts/ingest-justfair.mjs --apply          # Generate SQL + apply to Supabase
  *   node scripts/ingest-justfair.mjs --limit 1000     # Test with first N rows
  *   node scripts/ingest-justfair.mjs --migrate        # Apply migration SQL first, then ingest
@@ -61,7 +61,7 @@ const RACE_MAP = {
 };
 
 // ════════════════════════════════════════════════════════════════════════════
-// DISPOSITION CODES (USSC codebook — DISPOSIT variable)
+// DISPOSITION CODES (USSC codebook, DISPOSIT variable)
 // ════════════════════════════════════════════════════════════════════════════
 // 1 = Guilty plea, 2 = Nolo contendere, 3 = Jury trial, 4 = Bench trial,
 // 5 = Guilty plea + trial (mixed), 6 = Nolo contendere + trial
@@ -76,7 +76,7 @@ const DISPOSITION_LABELS = {
 };
 
 // ════════════════════════════════════════════════════════════════════════════
-// DRUG TYPE CODES (USSC codebook — DRUGTYP1)
+// DRUG TYPE CODES (USSC codebook, DRUGTYP1)
 // ════════════════════════════════════════════════════════════════════════════
 
 const DRUG_LABELS = {
@@ -89,7 +89,7 @@ const DRUG_LABELS = {
 };
 
 // ════════════════════════════════════════════════════════════════════════════
-// CRIMINAL HISTORY CATEGORY (USSC — CRIMHIST, I–VI)
+// CRIMINAL HISTORY CATEGORY (USSC, CRIMHIST, I–VI)
 // ════════════════════════════════════════════════════════════════════════════
 
 const CRIMHIST_LABELS = {
@@ -280,13 +280,13 @@ async function applyBatch(tableName, stmts) {
       applied += batch.length;
       const elapsed = (Date.now() - applyStart) / 1000;
       const rate = elapsed > 0 ? (applied / elapsed).toFixed(0) : "---";
-      process.stdout.write("    Batch " + batchNum + "/" + totalBatches + ": " + batch.length + " stmts — " + rate + "/sec\n");
+      process.stdout.write("    Batch " + batchNum + "/" + totalBatches + ": " + batch.length + " stmts, " + rate + "/sec\n");
     } catch (e) {
       errors++;
       console.error("    Batch " + batchNum + " ERROR: " + e.message.slice(0, 300));
       // Retry on rate limit
       if (e.message.indexOf("429") >= 0) {
-        console.log("    Rate limited — waiting 10s...");
+        console.log("    Rate limited, waiting 10s...");
         await sleep(10000);
         try {
           await supabaseQuery(batch.join("\n"));
@@ -310,7 +310,7 @@ async function applyBatch(tableName, stmts) {
 // ════════════════════════════════════════════════════════════════════════════
 
 const MIGRATION_SQL = [
-  "-- JUSTFAIR Demographics — judge biographical + defendant-race sentencing disparity tables",
+  "-- JUSTFAIR Demographics, judge biographical + defendant-race sentencing disparity tables",
   "-- Source: JUSTFAIR (Federal Judicial Sentencing To Advance Inclusivity and Reduce Disparities)",
   "-- OSF: https://osf.io/nseh5/",
   "-- 595,851 federal sentencing records, FY2001-FY2018",
@@ -382,7 +382,7 @@ const MIGRATION_SQL = [
 ].join("\n");
 
 // ════════════════════════════════════════════════════════════════════════════
-// STREAMING AGGREGATION — accumulator Maps
+// STREAMING AGGREGATION, accumulator Maps
 // ════════════════════════════════════════════════════════════════════════════
 
 // Key: "judgeNorm|district" -> sentencing accum
@@ -470,7 +470,7 @@ function extractLawSchool(record) {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// STREAMING PHASE — Single pass over 1.3GB CSV
+// STREAMING PHASE, Single pass over 1.3GB CSV
 // ════════════════════════════════════════════════════════════════════════════
 
 async function streamCSV() {
@@ -834,7 +834,7 @@ function generateSQL() {
 
 async function main() {
   console.log("==============================================================");
-  console.log("  JUSTFAIR Ingestion — Federal Sentencing Intelligence");
+  console.log("  JUSTFAIR Ingestion, Federal Sentencing Intelligence");
   console.log("  595,851 records x 400+ columns -> 4 target tables");
   console.log("==============================================================\n");
 

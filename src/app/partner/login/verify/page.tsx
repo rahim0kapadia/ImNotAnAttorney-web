@@ -1,9 +1,9 @@
 "use client";
 /**
- * /partner/login/verify#token=xxx — Magic link verification page.
+ * /partner/login/verify#token=xxx, Magic link verification page.
  *
  * Client-rendered page that calls the verify API via fetch (same origin).
- * Token is read from the URL fragment (hash) — fragments are never sent to
+ * Token is read from the URL fragment (hash), fragments are never sent to
  * servers, don't appear in logs, and aren't included in Referer headers.
  */
 

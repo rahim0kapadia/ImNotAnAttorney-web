@@ -1,6 +1,6 @@
 "use client";
 /**
- * /admin/demand — Legal Demand Intelligence Dashboard
+ * /admin/demand, Legal Demand Intelligence Dashboard
  *
  * Sections: Quadrant Map, Demand Leaderboard, Content Gaps,
  * Emerging Topics, Content Performance, Discovered Subreddits.

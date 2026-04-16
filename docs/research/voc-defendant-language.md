@@ -17,10 +17,10 @@ These are exact or near-exact phrases pulled from defendant posts, questions, re
 3. "I feel like this lawyer doesn't want to do anything to help me out cuz I'm not a paying customer or something"
 4. "I feel like he has lost interest and forgotten about me"
 5. "My lawyer is not listening to me and won't fight for me or respond to my questions"
-6. "I feel like my lawyer is not fighting hard enough for me — this is my LIFE!"
+6. "I feel like my lawyer is not fighting hard enough for me, this is my LIFE!"
 7. "What can I do if I feel my attorney doesn't care about my case?"
 8. "My lawyer won't return phone calls or communicate with me for an extended period"
-9. "I lied to and didn't deliver what he promised — I can't even get him or anyone in his office to respond nor answer my calls or texts"
+9. "I lied to and didn't deliver what he promised, I can't even get him or anyone in his office to respond nor answer my calls or texts"
 10. "Months of delays without any contact"
 
 ### About Feeling Ripped Off / Money Wasted
@@ -30,7 +30,7 @@ These are exact or near-exact phrases pulled from defendant posts, questions, re
 13. "A complete waste of money"
 14. "Take your money, fail to investigate, and let the prosecution decide your fate"
 15. "I broke out the checkbook" (upon hearing false promises)
-16. "Spending more money than I should have — resulting in a longer federal prison sentence"
+16. "Spending more money than I should have, resulting in a longer federal prison sentence"
 17. "Dumping a bad lawyer can be expensive"
 18. "Lost money because of how your lawyer handled your case"
 
@@ -42,7 +42,7 @@ These are exact or near-exact phrases pulled from defendant posts, questions, re
 22. "I was misled and lied to from the jump"
 23. "This is not happening, this is not happening, this is not happening"
 24. "I am very lonely and depressed all of the time"
-25. "He was told he would not have to register by the judge, my lawyer, and DA" — then was forced to register anyway
+25. "He was told he would not have to register by the judge, my lawyer, and DA", then was forced to register anyway
 26. "When I met [my attorney], I was frantic, scared and misinformed about the legalities of my case"
 27. "The lucky ones got five minutes of his time"
 28. "I was freaked out. I was scared to death. I didn't know what to do."
@@ -126,7 +126,7 @@ These are real questions posted on forums. Each one is a potential headline, blo
 - "How can you get ahold of a public defender who doesn't return your calls?"
 - "Can a defense attorney simply sit and say nothing during their client's criminal trial?"
 - "Why is my defense attorney telling me they still haven't heard back from the prosecutor?"
-- "I feel like my lawyer is not fighting hard enough for me — what do I do?"
+- "I feel like my lawyer is not fighting hard enough for me, what do I do?"
 - "I don't think my court-appointed attorney is defending me as well as he could/should be. How do I ask for a new one?"
 - "Do criminal lawyers really care about the outcome of the case? It seems to me whether their client goes free or gets put in jail, either way the lawyer makes the same amount of money and goes on with life no matter the consequences for their client."
 - "If my lawyer betrays me what can I do?"
@@ -151,22 +151,22 @@ These are real questions posted on forums. Each one is a potential headline, blo
 ## 4. Common Objections to Paying for Legal Help
 
 ### "I already have a lawyer / public defender"
-- "I have a public defender — why would I pay for anything else?"
+- "I have a public defender, why would I pay for anything else?"
 - Defendants don't realize the difference between legal representation (what their PD does) and legal empowerment (knowing what questions to ask)
-- Average PD has 7 minutes per case (New Orleans data) — defendants need supplemental knowledge
+- Average PD has 7 minutes per case (New Orleans data), defendants need supplemental knowledge
 
 ### "Lawyers are a scam / waste of money"
 - "A complete waste of money"
 - "Took my money and did nothing"
 - "I paid my lawyer and he didn't do anything"
 - Prior bad experience with paid attorneys makes them skeptical of ANY paid legal product
-- "Dumping a bad lawyer can be expensive" — fear of throwing good money after bad
+- "Dumping a bad lawyer can be expensive", fear of throwing good money after bad
 
 ### "I can't afford it"
 - "What happens if I can't afford a lawyer?"
 - "What are my options?"
-- DUI total costs run $5,000-$10,000+ (fines, fees, insurance) — an information product at $47-$197 is a fraction of that
-- Defendants conflate ALL legal spending — they see our product as "another legal bill"
+- DUI total costs run $5,000-$10,000+ (fines, fees, insurance), an information product at $47-$197 is a fraction of that
+- Defendants conflate ALL legal spending, they see our product as "another legal bill"
 
 ### "I don't trust anyone in the legal system"
 - "The system is rigged"
@@ -175,14 +175,14 @@ These are real questions posted on forums. Each one is a potential headline, blo
 - Deep distrust of anyone connected to the legal world
 - **Counter:** We're NOT lawyers. We're not part of the system. We research. You ask.
 
-### "I don't need help — my lawyer will handle it"
+### "I don't need help, my lawyer will handle it"
 - Blind trust in attorney competence despite no communication
-- "Is it okay for my public defender to not speak to me until my pre trial hearing?" — they normalize being ignored
-- Defendants don't know what they don't know — they can't evaluate attorney performance without knowing what motions should be filed, what questions to ask, what the discovery should contain
+- "Is it okay for my public defender to not speak to me until my pre trial hearing?", they normalize being ignored
+- Defendants don't know what they don't know, they can't evaluate attorney performance without knowing what motions should be filed, what questions to ask, what the discovery should contain
 
 ### "Free information is available online"
 - "I can Google it myself"
-- But defendants don't know WHAT to Google — they search symptoms ("am I going to jail?") not strategies ("motion to suppress evidence")
+- But defendants don't know WHAT to Google, they search symptoms ("am I going to jail?") not strategies ("motion to suppress evidence")
 - Free info is generic; our product is charge-specific and action-oriented
 
 ---
@@ -196,7 +196,7 @@ These are real questions posted on forums. Each one is a potential headline, blo
 - "I've never been arrested before"
 - "Am I going to lose my license?"
 - "Am I going to lose my job?"
-- "This is my first offense — what happens now?"
+- "This is my first offense, what happens now?"
 - "Will a DUI ruin my life?"
 - "I made one mistake"
 - "I'm not a criminal"
@@ -228,13 +228,13 @@ These are real questions posted on forums. Each one is a potential headline, blo
 - "Conspiracy charge"
 
 **Key fears (in priority order):**
-1. Prison time — mandatory minimums are terrifying and non-negotiable-sounding
-2. Snitch pressure — cooperating feels life-threatening
+1. Prison time, mandatory minimums are terrifying and non-negotiable-sounding
+2. Snitch pressure, cooperating feels life-threatening
 3. Conspiracy charges sweeping in people on the periphery
 4. Asset forfeiture / financial destruction
 5. Family separation ("empty chairs at family dinners, missed milestones")
 
-**Unique drug pattern:** These defendants often feel the charges are disproportionate to their involvement. Language is "this isn't fair" and "I wasn't the one dealing." They feel caught in a system designed to punish them maximally. High distrust of everyone — lawyers, prosecutors, cooperating witnesses.
+**Unique drug pattern:** These defendants often feel the charges are disproportionate to their involvement. Language is "this isn't fair" and "I wasn't the one dealing." They feel caught in a system designed to punish them maximally. High distrust of everyone, lawyers, prosecutors, cooperating witnesses.
 
 **Attorney frustration specific to drugs:** Lawyers not explaining the difference between possession and distribution charges, not challenging the weight calculations, not exploring safety valve provisions. "Nobody explained what a mandatory minimum actually means for ME."
 
@@ -254,13 +254,13 @@ These are real questions posted on forums. Each one is a potential headline, blo
 - Stunned by sentencing recommendations despite cooperation
 
 **Key fears (in priority order):**
-1. Reputation destruction (these are usually professionals — doctors, accountants, executives)
+1. Reputation destruction (these are usually professionals, doctors, accountants, executives)
 2. Professional license revocation / disbarment
 3. Financial ruin from legal fees + restitution
-4. Prison (unprecedented for them — "never been involved with the criminal justice system")
+4. Prison (unprecedented for them, "never been involved with the criminal justice system")
 5. Media exposure / public humiliation
 
-**Unique white collar pattern:** These defendants are outwardly sophisticated but completely naive about criminal law. They believe cooperation guarantees leniency (it often doesn't). They overspend on flashy attorneys who promise results. Language centers on disbelief: "This can't be happening to ME." They are ashamed to reveal facts to their own lawyers. Bill shock is extreme — they're used to paying professionals but not at criminal defense rates with retainers disappearing fast.
+**Unique white collar pattern:** These defendants are outwardly sophisticated but completely naive about criminal law. They believe cooperation guarantees leniency (it often doesn't). They overspend on flashy attorneys who promise results. Language centers on disbelief: "This can't be happening to ME." They are ashamed to reveal facts to their own lawyers. Bill shock is extreme, they're used to paying professionals but not at criminal defense rates with retainers disappearing fast.
 
 **Attorney frustration specific to white collar:** Lawyers who don't understand the underlying business/financial transactions. "His lawyer barely knew the facts and didn't understand how the business ran before things went wrong." Defendants feel their attorney can't translate between the legal world and the business world.
 
@@ -281,13 +281,13 @@ These are real questions posted on forums. Each one is a potential headline, blo
 - "The destruction of a family"
 
 **Key fears (in priority order):**
-1. Sex offender registry (lifetime label — cannot escape)
+1. Sex offender registry (lifetime label, cannot escape)
 2. Social death (housing restrictions, job loss, community exile)
 3. Family destruction (relationships, custody, divorce)
 4. Prison (and the specific dangers sex offense inmates face inside)
 5. Media exposure / permanent Google footprint
 
-**Unique sex offense pattern:** The emotional intensity is 10x any other charge type. These defendants and their families describe total life destruction. Language is existential — not "will I go to jail?" but "is my life over?" Trust in attorneys is lowest here because the stakes are highest and the system seems most punitive. Families are often more vocal than defendants themselves (spouses, parents posting on behalf).
+**Unique sex offense pattern:** The emotional intensity is 10x any other charge type. These defendants and their families describe total life destruction. Language is existential, not "will I go to jail?" but "is my life over?" Trust in attorneys is lowest here because the stakes are highest and the system seems most punitive. Families are often more vocal than defendants themselves (spouses, parents posting on behalf).
 
 **Attorney frustration specific to sex offenses:** Attorneys who don't explain registry consequences before advising a plea. Being told "you won't have to register" then being forced to register. Retroactive changes to registry requirements. "Challenging registry requirements is extremely complicated and expensive, with few attorneys having the experience to do this correctly."
 
@@ -304,7 +304,7 @@ These are real questions posted on forums. Each one is a potential headline, blo
 - "How can I be the one getting charged?"
 
 **Key fears (in priority order):**
-1. Injustice — they believe they did nothing wrong
+1. Injustice, they believe they did nothing wrong
 2. Criminal record for protecting themselves
 3. The other party's narrative being believed over theirs
 4. Losing self-defense claim at trial
@@ -321,10 +321,10 @@ These are real questions posted on forums. Each one is a potential headline, blo
 - "Most people are confused and scared of the federal criminal court procedure"
 - "It is intimidating to most people and even lawyers"
 - "I've never been in trouble before"
-- "The word 'Arraignment' — I didn't even know what that meant"
+- "The word 'Arraignment', I didn't even know what that meant"
 - "Federal mandatory minimum"
 
-**Unique federal pattern:** The federal system is alien even to people familiar with state courts. Conviction rates above 90% are terrifying. Sentencing guidelines feel like a math formula determining your life. These defendants need a translator — someone to explain the process in plain English.
+**Unique federal pattern:** The federal system is alien even to people familiar with state courts. Conviction rates above 90% are terrifying. Sentencing guidelines feel like a math formula determining your life. These defendants need a translator, someone to explain the process in plain English.
 
 ---
 
@@ -343,7 +343,7 @@ These are real questions posted on forums. Each one is a potential headline, blo
 ### CTA Candidates (addressing the exact moment of need)
 - "Don't know if your lawyer is doing their job? We'll show you what they SHOULD be doing."
 - "Your attorney won't call you back? Here are the questions that force a response."
-- "Feeling like just a number? Know exactly what your attorney should be filing — and when."
+- "Feeling like just a number? Know exactly what your attorney should be filing, and when."
 - "Scared and confused? Get the exact questions to ask at your next court date."
 - "The system won't explain itself. We will."
 
@@ -359,11 +359,11 @@ These are real questions posted on forums. Each one is a potential headline, blo
 
 ### The Core Emotional Journey
 1. **Arrest/Charge:** Shock, disbelief, panic ("This is not happening")
-2. **Hiring/Assignment:** Relief (temporary) — someone is going to handle this
+2. **Hiring/Assignment:** Relief (temporary), someone is going to handle this
 3. **The Silence:** Weeks/months of no communication, growing anxiety
 4. **The Awakening:** Realization that their lawyer isn't fighting for them
 5. **The Desperation:** Searching forums at 2am for answers
-6. **The Need:** They don't need another lawyer — they need KNOWLEDGE and QUESTIONS
+6. **The Need:** They don't need another lawyer, they need KNOWLEDGE and QUESTIONS
 
 ### What Defendants Actually Want
 - Not legal advice. Not another lawyer. They want:
@@ -376,9 +376,9 @@ These are real questions posted on forums. Each one is a potential headline, blo
 ### Language to Use in Our Copy
 - Mirror their language: "scared," "confused," "nobody explains anything," "feel like just a number"
 - Avoid legal jargon unless immediately translated
-- Use "your" not "the defendant" — speak directly to them
+- Use "your" not "the defendant", speak directly to them
 - Acknowledge the emotion FIRST, then offer the tool
-- Position questions as WEAPONS — "arm yourself," "force a response," "hold them accountable"
+- Position questions as WEAPONS, "arm yourself," "force a response," "hold them accountable"
 
 ### Language to AVOID
 - "Legal advice" (UPL risk)
@@ -392,10 +392,10 @@ These are real questions posted on forums. Each one is a potential headline, blo
 ## Sources
 
 - [Avvo: Public defender won't contact me back](https://www.avvo.com/legal-answers/my-appointed-public-defender-won-t-contact-me-back-2178427.html)
-- [Avvo: I feel like my lawyer is not fighting hard enough](https://www.avvo.com/legal-answers/i-feel-like-my-lawyer-is-not-fighting-hard-enough--1661636.html)
+- [Avvo: I feel like my lawyer is not fighting hard enough](https://www.avvo.com/legal-answers/i-feel-like-my-lawyer-is-not-fighting-hard-enough, 1661636.html)
 - [Avvo: What can I do if I feel my attorney doesn't care](https://www.avvo.com/legal-answers/what-can-i-do-if-i-feel-my-attorney-doesn-t-care-a-3033083.html)
-- [Avvo: If my lawyer betrays me](https://www.avvo.com/legal-answers/if-my-lawyer-betrays-me-what-can-i-do--1282732.html)
-- [Avvo: I am scared am I going to jail](https://www.avvo.com/legal-answers/i-am-scared-am-i-going-to-jail--4974741.html)
+- [Avvo: If my lawyer betrays me](https://www.avvo.com/legal-answers/if-my-lawyer-betrays-me-what-can-i-do, 1282732.html)
+- [Avvo: I am scared am I going to jail](https://www.avvo.com/legal-answers/i-am-scared-am-i-going-to-jail, 4974741.html)
 - [Quora: Do criminal lawyers really care about the outcome](https://www.quora.com/Do-criminal-lawyers-really-care-about-the-outcome-of-case-It-seems-to-me-whether-their-client-goes-free-or-gets-put-in-jail-either-way-the-lawyer-makes-the-same-amount-of-money-and-goes-on-with-life-no-matter-the)
 - [Quora: Attorney working against you / sabotaging your case](https://www.quora.com/What-can-you-do-if-your-attorney-is-working-against-you-or-making-agreements-with-the-opposing-team-and-sabatoshing-your-case-My-account-was-hacked-and-my-original-question-was-changed-to-something-very-odd)
 - [Quora: Lawyer takes your money and doesn't do anything](https://www.quora.com/What-can-you-do-if-a-lawyer-takes-your-money-and-doesnt-do-anything)

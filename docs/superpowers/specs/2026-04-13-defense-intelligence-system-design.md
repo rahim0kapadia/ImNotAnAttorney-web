@@ -1,4 +1,4 @@
-# Defense Intelligence System — Design Spec
+# Defense Intelligence System, Design Spec
 
 **Date:** 2026-04-13
 **Status:** Draft
@@ -9,7 +9,7 @@
 
 ## 1. Vision
 
-An attorney knows 200 cases. We have millions of data points. The value isn't organizing them — it's connecting everything to everything and surfacing the patterns that no single attorney, no matter how experienced, would ever find.
+An attorney knows 200 cases. We have millions of data points. The value isn't organizing them, it's connecting everything to everything and surfacing the patterns that no single attorney, no matter how experienced, would ever find.
 
 This system connects case law, judges, prosecutors, officers, charges, motions, defense theories, sentencing, and appeal outcomes into one intelligence network. Then it runs pattern detection across every combination to find insights like:
 
@@ -19,9 +19,9 @@ This system connects case law, judges, prosecutors, officers, charges, motions, 
 - "When this prosecutor faces this judge, plea offers come 2 weeks earlier"
 - "DUI defendants with officer reliability scores below 40 get dismissed 4x more often"
 
-No product on the market does this. CoCounsel does case research. Pre/Dicta does judge prediction. Lex Machina does litigation analytics. None of them connect ALL dimensions and find cross-cutting patterns — and none of them serve defendants.
+No product on the market does this. CoCounsel does case research. Pre/Dicta does judge prediction. Lex Machina does litigation analytics. None of them connect ALL dimensions and find cross-cutting patterns, and none of them serve defendants.
 
-**North star:** A defendant pays $197 for a Judge Report Card and receives insights that would take an attorney 40 hours of research to discover — insights the attorney wouldn't know to look for because they don't have the data connected.
+**North star:** A defendant pays $197 for a Judge Report Card and receives insights that would take an attorney 40 hours of research to discover, insights the attorney wouldn't know to look for because they don't have the data connected.
 
 ---
 
@@ -34,20 +34,20 @@ Everything in the system is an entity with attributes. Entities connect to each 
 The atomic unit. Every court opinion that touches criminal defense. Classified opinions are stored in the `classified_opinions` table (see Section 3 for verification requirements and schema). Every field in this table is either sourced from CL metadata or mechanically extracted by deterministic scripts (with Haiku assisting on bulk text extraction only).
 
 | Attribute | Source | Description |
-|-----------|--------|-------------|
+|---------, |------, |-------------|
 | cluster_id | CourtListener | Unique identifier |
 | case_name | CL opinion text | e.g., "State v. Rodriguez" |
 | court | CL metadata | Which court issued it |
 | jurisdiction | Derived from court | State or federal |
 | decision_date | CL metadata | When decided |
-| opinion_type | **Structural classification (see Section 5.2)** | 'full', 'memorandum', 'pca', 'order' — determines which extraction steps run and weighting in aggregates |
-| charge_types[] | **Mechanical extraction (see Section 3)** | Haiku extracts statute citations (§ numbers) from opinion text → match against jurisdiction_statutes table (4,699 rows) scoped to the opinion's jurisdiction (derived from CL court metadata) → charge_slug. Fallback: CL nature_of_suit code from docket metadata. NOT free-text — constrained to taxonomy values. Unmatched statutes flagged for taxonomy review. Statutes found in the first 15% of opinion text (case caption, charges section) receive `is_primary = true`; others receive `is_primary = false`. Array ordered: primary citations first. |
+| opinion_type | **Structural classification (see Section 5.2)** | 'full', 'memorandum', 'pca', 'order', determines which extraction steps run and weighting in aggregates |
+| charge_types[] | **Mechanical extraction (see Section 3)** | Haiku extracts statute citations (§ numbers) from opinion text → match against jurisdiction_statutes table (4,699 rows) scoped to the opinion's jurisdiction (derived from CL court metadata) → charge_slug. Fallback: CL nature_of_suit code from docket metadata. NOT free-text, constrained to taxonomy values. Unmatched statutes flagged for taxonomy review. Statutes found in the first 15% of opinion text (case caption, charges section) receive `is_primary = true`; others receive `is_primary = false`. Array ordered: primary citations first. |
 | motion_types[] | **Mechanical extraction (see Section 3)** | Keyword match against 53 motion type names from engine's motion taxonomy. Scan opinion text + CL docket entries for literal motion names ("Motion to Suppress", "Motion to Dismiss", etc.). Negation window applied (see Section 3.4). |
-| defense_theories[] | **Mechanical extraction (see Section 3)** | Derived from motion_type × charge_type constrained mapping (see `charge_defense_theories` table, Section 9 Phase 0). Each charge type has 5-15 known defense theories. Plus keyword detection: "Fourth Amendment", "Miranda", "chain of custody", "probable cause", "breathalyzer", etc. — literal string matching, not interpretation. Negation window applied (see Section 3.4). |
+| defense_theories[] | **Mechanical extraction (see Section 3)** | Derived from motion_type × charge_type constrained mapping (see `charge_defense_theories` table, Section 9 Phase 0). Each charge type has 5-15 known defense theories. Plus keyword detection: "Fourth Amendment", "Miranda", "chain of custody", "probable cause", "breathalyzer", etc., literal string matching, not interpretation. Negation window applied (see Section 3.4). |
 | motion_outcomes | **Mechanical extraction (see Section 3)** | JSONB array mapping each motion to its outcome. E.g., `[{"motion_type": "suppress_evidence", "outcome": "granted"}, {"motion_type": "dismiss_charges", "outcome": "denied"}]`. Outcome extraction targets the last 20% of opinion text. Keywords GRANTED/DENIED/DISMISSED are only counted when they appear in this window. If none found in last 20%, expand to last 40%. If still none, the opinion gets outcome = NULL for that motion (not classified). Per curiam affirmances and orders use simplified extraction (see Section 5.2). Negation window NOT applied to outcome keywords (see Section 3.4). |
-| motion_favorability | **Computed — NO LLM (see Section 3)** | JSONB array of per-motion favorability scores. E.g., `[{"motion_type": "suppress_evidence", "favorability": 85}]`. Each score is 0-100, derived from verified motion outcome + CL citation treatment + ruling language keywords. |
-| case_favorability | **Computed — NO LLM (see Section 3)** | 0-100 integer. Overall case result: derived from case outcome (acquitted/dismissed vs convicted/plea) + CL citation treatment (positively cited by defense-win cases, using CL's algorithmically-determined treatment data — NOT this pipeline's own classifications, see Section 3.5) + overruled prosecution-favorable precedent (CL treatment data). |
-| holding_text | **Mechanical extraction (see Section 3)** | Extract sentences from last 20% of opinion containing ruling keywords ("hold that", "find that", "conclude", "order", "grant", "deny", "it is hereby"). Before scanning for ruling keywords, strip text within quotation marks (both double quotes and block quotes indicated by indentation patterns) — this prevents extracting holdings from CITED cases rather than the court's own ruling. Stripped text can still be used for other extraction (statute citations, keyword matching). Haiku can assist with sentence boundary detection if needed. Actual opinion text, NOT a summary. |
+| motion_favorability | **Computed, NO LLM (see Section 3)** | JSONB array of per-motion favorability scores. E.g., `[{"motion_type": "suppress_evidence", "favorability": 85}]`. Each score is 0-100, derived from verified motion outcome + CL citation treatment + ruling language keywords. |
+| case_favorability | **Computed, NO LLM (see Section 3)** | 0-100 integer. Overall case result: derived from case outcome (acquitted/dismissed vs convicted/plea) + CL citation treatment (positively cited by defense-win cases, using CL's algorithmically-determined treatment data, NOT this pipeline's own classifications, see Section 3.5) + overruled prosecution-favorable precedent (CL treatment data). |
+| holding_text | **Mechanical extraction (see Section 3)** | Extract sentences from last 20% of opinion containing ruling keywords ("hold that", "find that", "conclude", "order", "grant", "deny", "it is hereby"). Before scanning for ruling keywords, strip text within quotation marks (both double quotes and block quotes indicated by indentation patterns), this prevents extracting holdings from CITED cases rather than the court's own ruling. Stripped text can still be used for other extraction (statute citations, keyword matching). Haiku can assist with sentence boundary detection if needed. Actual opinion text, NOT a summary. |
 | authority_score | CL citation data | How much weight this opinion carries |
 | is_good_law | CL citation data | Not overruled |
 | citing_count | CL citation data | How many other cases cite this one |
@@ -60,12 +60,12 @@ The atomic unit. Every court opinion that touches criminal defense. Classified o
 Already rich: 15,613 profiles, 119,506 quotes.
 
 | Attribute | Source | Current Status |
-|-----------|--------|---------------|
+|---------, |------, |---------------|
 | full_name | CL | 15,613 populated |
 | jurisdiction | CL/derived | 15,386 populated (227 missing) |
 | cl_person_id | CL | 15,613 populated |
 | aba_rating | CL ABA endpoint | 0 populated (pipeline exists, running) |
-| quotes[] | CL bulk extraction | 119,506 total (108,058 unlinked — linking is Phase 1 priority) |
+| quotes[] | CL bulk extraction | 119,506 total (108,058 unlinked, linking is Phase 1 priority) |
 | sentencing_patterns | USSC data | 94 rows |
 | bench_jury_rates | USSC data | 141 rows |
 
@@ -74,7 +74,7 @@ Already rich: 15,613 profiles, 119,506 quotes.
 Currently only names in pairings. Need entity promotion.
 
 | Attribute | Source | Current Status |
-|-----------|--------|---------------|
+|---------, |------, |---------------|
 | name | CL docket parties | 5,253 pairing rows |
 | jurisdiction | Derived from court | Available via pairing docket |
 | office | CL firm field | Available from search API |
@@ -85,20 +85,20 @@ Currently only names in pairings. Need entity promotion.
 ### 2.4 Officers
 
 | Attribute | Source | Current Status |
-|-----------|--------|---------------|
+|---------, |------, |---------------|
 | name | CL opinion text | 13,342 reliability rows |
 | jurisdiction | Backfilled | All populated |
 | reliability_score | Cross-case analysis | 13,342 populated |
-| brady_status | Brady/Giglio | 0 (blocked — no open data) |
+| brady_status | Brady/Giglio | 0 (blocked, no open data) |
 | testimony_count | CL opinion mining | Populated |
 | discredited_count | CL opinion mining | Populated |
 
 ### 2.5 Charges
 
-Our taxonomy — the demand side. What defendants are actually charged with.
+Our taxonomy, the demand side. What defendants are actually charged with.
 
 | Attribute | Source | Current Status |
-|-----------|--------|---------------|
+|---------, |------, |---------------|
 | charge_slug | charge-taxonomy.ts | 50+ types |
 | statutes[] | jurisdiction_statutes | 4,699 across 52 jurisdictions |
 | common_defenses[] | **To be derived** from classified opinions |
@@ -111,7 +111,7 @@ Our taxonomy — the demand side. What defendants are actually charged with.
 Currently implicit. Need explicit entity.
 
 | Attribute | Source | Description |
-|-----------|--------|-------------|
+|---------, |------, |-------------|
 | motion_type | Engine's 53 types + Trap Track | e.g., "suppress_evidence", "dismiss_charges" |
 | legal_basis | Classified from opinions | 4th Amendment, 5th Amendment, Brady, etc. |
 | typical_timing | Derived from docket data | When in case lifecycle this motion usually files |
@@ -121,7 +121,7 @@ Currently implicit. Need explicit entity.
 Currently implicit in case law. Need explicit entity.
 
 | Attribute | Source | Description |
-|-----------|--------|-------------|
+|---------, |------, |-------------|
 | theory_name | Classified from opinions | e.g., "improper vehicle stop", "chain of custody break" |
 | applies_to_charges[] | Cross-reference | Which charge types this theory works for |
 | success_rate | Derived from outcomes | How often this theory wins |
@@ -129,16 +129,16 @@ Currently implicit in case law. Need explicit entity.
 
 ---
 
-## 3. Verification Architecture — Nothing Enters on LLM Judgment Alone
+## 3. Verification Architecture, Nothing Enters on LLM Judgment Alone
 
 ### 3.1 Hard Rule
 
 Every field in the classified opinion corpus is either:
 
 - **(a) Sourced from CL metadata** (authoritative)
-- **(b) Mechanically extracted from opinion text** (verifiable — literal string presence, keyword match, lookup table)
+- **(b) Mechanically extracted from opinion text** (verifiable, literal string presence, keyword match, lookup table)
 
-Nothing enters the system on LLM judgment alone. LLMs do NOT classify — deterministic scripts do. No exceptions.
+Nothing enters the system on LLM judgment alone. LLMs do NOT classify, deterministic scripts do. No exceptions.
 
 ### 3.2 Model Hierarchy
 
@@ -159,7 +159,7 @@ Not all cross-validation signals are independent. Two signals derived from the s
 - jurisdiction_statutes lookup result (our curated table)
 - CL author/assigned_to person data
 
-**Same-source signals (derived from same text — count as ONE signal):**
+**Same-source signals (derived from same text, count as ONE signal):**
 - Keyword match in opinion text + same keyword in docket entry (when the docket entry IS the opinion filing)
 
 **Cross-validation rule:** 2+ TRULY INDEPENDENT signals must agree. Two same-source signals count as 1. If only same-source signals exist, the opinion enters as `low_confidence`.
@@ -171,27 +171,27 @@ Before accepting any keyword match, scan the 5 words preceding the match for neg
 ### 3.5 Per-Field Verification Matrix
 
 | Field | Source Type | Signal Independence | How Verified |
-|-------|-----------|---------------------|--------------|
+|-------|---------, |---------------------|------------, |
 | cluster_id | CL metadata | Independent | Authoritative |
 | case_name | CL metadata | Independent | Authoritative |
 | court | CL metadata | Independent | Authoritative |
 | jurisdiction | Derived from court | Independent | Authoritative |
 | decision_date | CL metadata | Independent | Authoritative |
-| opinion_type | Structural classification | Independent (word count + structural markers) | Mechanical — word count thresholds + 'PER CURIAM' detection + structural analysis |
+| opinion_type | Structural classification | Independent (word count + structural markers) | Mechanical, word count thresholds + 'PER CURIAM' detection + structural analysis |
 | charge_types[] | Mechanical extraction | statute citation (same-source w/ opinion text) + CL nature_of_suit (independent) + jurisdiction_statutes lookup (independent) | Haiku extracts statute citations → script matches against jurisdiction_statutes (4,699 rows, SCOPED to opinion's jurisdiction) → charge_slug. Cross-validated: statute citation AND CL docket charge data must agree (independent signals). Fallback: CL nature_of_suit code. Primary/secondary tagging based on position (first 15% = primary). Negation window applied. |
 | motion_types[] | Mechanical extraction | opinion text keyword (same-source w/ docket if same doc) + docket entry (independent if separate filing) | Script keyword-matches against 53 motion type names in opinion text + CL docket entries. Cross-validated with signal independence check: if docket entry is a separate filing from the opinion, counts as 2 independent signals; if same document, counts as 1. Negation window applied. |
-| defense_theories[] | Mechanical extraction | constrained mapping (independent — derived from taxonomy, not text) + keyword presence (same-source as opinion text) | Script derives from motion_type × charge_type constrained mapping (from `charge_defense_theories` table) + keyword detection ("Fourth Amendment", "Miranda", "chain of custody", etc.). Cross-validated: constrained mapping (independent signal) AND keyword presence must agree. Negation window applied. |
-| motion_outcomes | Mechanical extraction | CL docket entries (independent if separate filing) + opinion keyword scan (same-source) + case trajectory (independent) | CL docket entries + opinion ORDER/GRANTED/DENIED keyword scan (last 20-40% of text only) + case trajectory analysis. Case trajectory = progression of case events in CL docket data. If the docket shows a dismissal entry following a suppression hearing, this corroborates the suppression motion being granted. If the docket shows trial proceedings following a motion to dismiss, this corroborates the dismissal motion being denied. Available only for opinions with linked CL docket data (~30-50% of corpus). Per-motion extraction — each motion gets its own outcome. Cross-validated with signal independence rules. Negation window NOT applied to outcome keywords (see Section 3.4). |
-| motion_favorability | Computed — NO LLM | N/A (derived from verified fields) | Per-motion: derived from verified motion outcome + CL citation treatment (independent external signal, NOT this pipeline's own classifications) + ruling language keywords. |
-| case_favorability | Computed — NO LLM | N/A (derived from verified fields) | Overall: derived from case outcome (acquitted/dismissed vs convicted/plea) + CL citation treatment (independent external signal, NOT this pipeline's own classifications) + overruled prosecution-favorable precedent (CL treatment data). |
-| holding_text | Mechanical extraction | N/A | Script extracts sentences from last 20% of opinion containing ruling keywords ("hold that", "find that", "conclude", "order", "grant", "deny", "it is hereby"). Quoted text stripped before ruling keyword scan to avoid extracting holdings from cited cases. Haiku assists with sentence boundary detection. NOT a summary — actual opinion text. |
+| defense_theories[] | Mechanical extraction | constrained mapping (independent, derived from taxonomy, not text) + keyword presence (same-source as opinion text) | Script derives from motion_type × charge_type constrained mapping (from `charge_defense_theories` table) + keyword detection ("Fourth Amendment", "Miranda", "chain of custody", etc.). Cross-validated: constrained mapping (independent signal) AND keyword presence must agree. Negation window applied. |
+| motion_outcomes | Mechanical extraction | CL docket entries (independent if separate filing) + opinion keyword scan (same-source) + case trajectory (independent) | CL docket entries + opinion ORDER/GRANTED/DENIED keyword scan (last 20-40% of text only) + case trajectory analysis. Case trajectory = progression of case events in CL docket data. If the docket shows a dismissal entry following a suppression hearing, this corroborates the suppression motion being granted. If the docket shows trial proceedings following a motion to dismiss, this corroborates the dismissal motion being denied. Available only for opinions with linked CL docket data (~30-50% of corpus). Per-motion extraction, each motion gets its own outcome. Cross-validated with signal independence rules. Negation window NOT applied to outcome keywords (see Section 3.4). |
+| motion_favorability | Computed, NO LLM | N/A (derived from verified fields) | Per-motion: derived from verified motion outcome + CL citation treatment (independent external signal, NOT this pipeline's own classifications) + ruling language keywords. |
+| case_favorability | Computed, NO LLM | N/A (derived from verified fields) | Overall: derived from case outcome (acquitted/dismissed vs convicted/plea) + CL citation treatment (independent external signal, NOT this pipeline's own classifications) + overruled prosecution-favorable precedent (CL treatment data). |
+| holding_text | Mechanical extraction | N/A | Script extracts sentences from last 20% of opinion containing ruling keywords ("hold that", "find that", "conclude", "order", "grant", "deny", "it is hereby"). Quoted text stripped before ruling keyword scan to avoid extracting holdings from cited cases. Haiku assists with sentence boundary detection. NOT a summary, actual opinion text. |
 | authority_score | CL citation data | Independent | Authoritative |
 | is_good_law | CL citation data | Independent | Authoritative |
 | citing_count | CL citation data | Independent | Authoritative |
 
 ### 3.6 Validation Pipeline (per opinion)
 
-1. **Structural classification:** Classify opinion by type (full/memorandum/pca/order) — see Section 5.2 Step 0. This determines which extraction steps run.
+1. **Structural classification:** Classify opinion by type (full/memorandum/pca/order), see Section 5.2 Step 0. This determines which extraction steps run.
 2. **Scripts extract all mechanical signals:** statute citations (via Haiku text extraction), keyword phrases (with negation window check), docket entries, motion names, ruling language
 3. **Scripts classify** using lookup tables + constrained mappings (from `charge_defense_theories` table) + keyword matching (negation-aware)
 4. **Statute lookup scoped to jurisdiction:** All statute matches are scoped to the opinion's jurisdiction (from CL court metadata). Cross-jurisdiction matches are IGNORED.
@@ -203,31 +203,31 @@ Before accepting any keyword match, scan the 5 words preceding the match for neg
 
 ### 3.7 Classified Opinions Table Schema
 
-New table — NOT extending `case_law` or `statute_case_law`. Avoids the third-universe problem (web has `statute_case_law`, engine has `case_law_references` — these don't join). `classified_opinions` is a purpose-built, verification-first table.
+New table, NOT extending `case_law` or `statute_case_law`. Avoids the third-universe problem (web has `statute_case_law`, engine has `case_law_references`, these don't join). `classified_opinions` is a purpose-built, verification-first table.
 
 ```sql
 CREATE TABLE classified_opinions (
-  cluster_id text PRIMARY KEY,  -- CL cluster ID (authoritative)
+  cluster_id text PRIMARY KEY, , CL cluster ID (authoritative)
   case_name text NOT NULL,
   court text NOT NULL,
   jurisdiction text NOT NULL,
   decision_date date,
-  opinion_type text NOT NULL DEFAULT 'full',  -- 'full', 'memorandum', 'pca', 'order'
-  charge_types text[] NOT NULL DEFAULT '{}',  -- mapped to charge_slug taxonomy, ordered primary-first
-  motion_types text[] NOT NULL DEFAULT '{}',  -- mapped to engine's 53 motion types
+  opinion_type text NOT NULL DEFAULT 'full', , 'full', 'memorandum', 'pca', 'order'
+  charge_types text[] NOT NULL DEFAULT '{}', , mapped to charge_slug taxonomy, ordered primary-first
+  motion_types text[] NOT NULL DEFAULT '{}', , mapped to engine's 53 motion types
   defense_theories text[] NOT NULL DEFAULT '{}',
-  motion_outcomes jsonb,  -- per-motion: [{"motion_type": "suppress_evidence", "outcome": "granted"}, ...]
-  motion_favorability jsonb,  -- per-motion: [{"motion_type": "suppress_evidence", "favorability": 85}, ...]
-  case_favorability integer,  -- overall: 0-100, computed from case outcome + CL citation treatment
-  holding_text text,  -- verbatim opinion text (quoted text stripped during extraction), NOT a summary
-  authority_score integer,  -- from citation_authority
+  motion_outcomes jsonb, , per-motion: [{"motion_type": "suppress_evidence", "outcome": "granted"}, ...]
+  motion_favorability jsonb, , per-motion: [{"motion_type": "suppress_evidence", "favorability": 85}, ...]
+  case_favorability integer, , overall: 0-100, computed from case outcome + CL citation treatment
+  holding_text text, , verbatim opinion text (quoted text stripped during extraction), NOT a summary
+  authority_score integer, , from citation_authority
   is_good_law boolean DEFAULT true,
   citing_count integer DEFAULT 0,
-  classification_confidence text NOT NULL DEFAULT 'verified',  -- verified/low_confidence
-  cross_validation_signals jsonb,  -- which signals agreed/disagreed, tagged as independent/same-source
+  classification_confidence text NOT NULL DEFAULT 'verified', , verified/low_confidence
+  cross_validation_signals jsonb, , which signals agreed/disagreed, tagged as independent/same-source
   classified_at timestamptz DEFAULT now(),
-  classified_by text DEFAULT 'mechanical_pipeline',  -- deterministic scripts
-  source_urls text[] NOT NULL DEFAULT '{}',  -- CL verification URL(s). source_urls[1] is the primary CL opinion URL.
+  classified_by text DEFAULT 'mechanical_pipeline', , deterministic scripts
+  source_urls text[] NOT NULL DEFAULT '{}', , CL verification URL(s). source_urls[1] is the primary CL opinion URL.
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
 );
@@ -274,11 +274,11 @@ This is where the intelligence lives. Every connection between entities carries 
 "Judge Smith authored this opinion granting a suppression motion."
 
 | Relationship data | Source |
-|-------------------|--------|
+|-------------------|------, |
 | judge_id | CL opinion author / preamble extraction |
 | role | authoring judge, concurring, dissenting |
 
-**Multi-judge panels:** Only the authoring judge is attributed in `judge_behavior_patterns` aggregation. Concurring and dissenting judges are recorded in the relationship data (role field) but excluded from behavior pattern computation. For per curiam opinions (opinion_type='pca'), no individual judge is attributed to behavior patterns — these opinions are already weighted at 0.3 in aggregates and contribute to jurisdiction-level statistics only, not judge-level.
+**Multi-judge panels:** Only the authoring judge is attributed in `judge_behavior_patterns` aggregation. Concurring and dissenting judges are recorded in the relationship data (role field) but excluded from behavior pattern computation. For per curiam opinions (opinion_type='pca'), no individual judge is attributed to behavior patterns, these opinions are already weighted at 0.3 in aggregates and contribute to jurisdiction-level statistics only, not judge-level.
 
 **Insight unlock:** "This judge has authored 14 opinions granting suppression motions for DUI. Here's what they wrote."
 
@@ -287,7 +287,7 @@ This is where the intelligence lives. Every connection between entities carries 
 "This opinion involves a DUI charge."
 
 | Relationship data | Source |
-|-------------------|--------|
+|-------------------|------, |
 | charge_slug | Mechanical extraction from opinion text (cross-validated per Section 3, scoped to opinion's jurisdiction) |
 | is_primary | Whether this was the main charge at issue (based on position in first 15% of text) |
 
@@ -298,9 +298,9 @@ This is where the intelligence lives. Every connection between entities carries 
 "This opinion grants/denies a motion to suppress evidence."
 
 | Relationship data | Source |
-|-------------------|--------|
+|-------------------|------, |
 | motion_type | Mechanical extraction (cross-validated per Section 3) |
-| outcome | granted / denied / partial (from `motion_outcomes` JSONB — per-motion, not per-opinion) |
+| outcome | granted / denied / partial (from `motion_outcomes` JSONB, per-motion, not per-opinion) |
 | reasoning_summary | Holding text extraction |
 
 **Insight unlock:** "Suppression motions based on improper stop succeed 62% in FL but only 34% in TX."
@@ -310,18 +310,18 @@ This is where the intelligence lives. Every connection between entities carries 
 "The defense argued improper vehicle stop in this case."
 
 | Relationship data | Source |
-|-------------------|--------|
+|-------------------|------, |
 | theory_name | Mechanical extraction (cross-validated per Section 3) |
 | was_successful | Did this theory contribute to a favorable outcome (per-motion from `motion_outcomes`) |
 
-**Insight unlock:** "The 'rising blood alcohol' defense has been tried 847 times. It succeeds 23% of the time — but 71% when combined with a motion to suppress the field sobriety test."
+**Insight unlock:** "The 'rising blood alcohol' defense has been tried 847 times. It succeeds 23% of the time, but 71% when combined with a motion to suppress the field sobriety test."
 
 ### 4.5 Opinion → Officer ("involves officer")
 
 "Officer Davis is named in this opinion."
 
 | Relationship data | Source |
-|-------------------|--------|
+|-------------------|------, |
 | officer_name | NER from opinion text |
 | role | arresting officer, testifying officer, investigating officer |
 | was_challenged | Whether officer's conduct/testimony was at issue |
@@ -334,7 +334,7 @@ This is where the intelligence lives. Every connection between entities carries 
 "Judge Smith and ADA Martinez were on the same case."
 
 | Relationship data | Source |
-|-------------------|--------|
+|-------------------|------, |
 | docket_count | How many cases together |
 | motion_grant_rate | When this prosecutor opposes, how often does this judge still grant (computed from per-motion outcomes) |
 | plea_timing | How quickly plea offers come in this pairing |
@@ -346,7 +346,7 @@ This is where the intelligence lives. Every connection between entities carries 
 "This opinion cites Brady v. Maryland."
 
 | Relationship data | Source |
-|-------------------|--------|
+|-------------------|------, |
 | citing_opinion_id | CL citation map (522MB local) |
 | cited_opinion_id | CL citation map |
 | treatment | positive / negative / distinguishing |
@@ -359,7 +359,7 @@ This is where the intelligence lives. Every connection between entities carries 
 "This trial court decision was affirmed/reversed on appeal."
 
 | Relationship data | Source |
-|-------------------|--------|
+|-------------------|------, |
 | appellate_opinion_id | CL citation chain |
 | outcome | affirmed / reversed / remanded |
 | grounds | What the appeal was about |
@@ -371,13 +371,13 @@ This is where the intelligence lives. Every connection between entities carries 
 "DUI first offense in FL: median 6 months probation."
 
 | Relationship data | Source |
-|-------------------|--------|
+|-------------------|------, |
 | jurisdiction | State |
 | sentence_type | prison / probation / fine / community service |
 | median_months | Statistical |
 | plea_vs_trial_penalty | How much worse trial sentences are |
 
-**Insight unlock:** "In FL, DUI defendants who go to trial get sentences 340% longer than plea. But defendants who file suppression motions AND go to trial get only 120% longer — the motion itself changes the plea leverage."
+**Insight unlock:** "In FL, DUI defendants who go to trial get sentences 340% longer than plea. But defendants who file suppression motions AND go to trial get only 120% longer, the motion itself changes the plea leverage."
 
 ---
 
@@ -386,9 +386,9 @@ This is where the intelligence lives. Every connection between entities carries 
 ### 5.1 What We Already Have (Day 0)
 
 | Data | Rows | Usable Now |
-|------|------|-----------|
+|------|------|---------, |
 | judge_profiles | 15,613 | Yes |
-| judge_quotes | 119,506 | 90% unlinked to judges — link first |
+| judge_quotes | 119,506 | 90% unlinked to judges, link first |
 | judge_prosecutor_pairings | 5,253 | Yes |
 | case_feature_vectors | 39,959 | Yes |
 | officer_reliability | 13,342 | Yes |
@@ -407,22 +407,22 @@ This is where the intelligence lives. Every connection between entities carries 
 
 ### 5.2 What We Need to Build
 
-**Priority 1 — Link existing data (weeks, not months)**
+**Priority 1, Link existing data (weeks, not months)**
 
 1. **Link 108K judge quotes to judge_profiles.** Each quote has a cluster_id → opinion → author → judge. Script needed. Transforms Judge Report Card overnight.
 
 2. **Classify the 3,407 existing case_law opinions via mechanical extraction pipeline.** Run statute citation extraction + keyword matching + constrained mapping to add charge_type, motion_type, defense_theory, motion_outcomes, motion_favorability, case_favorability. Cross-validate per Section 3. ~$1 Haiku extraction.
 
-3. **Expand citation_authority to full case_law corpus.** Run `enrich-cl-citation-depth.mjs --limit 3500 --apply`. Gets us authority scores for every opinion we have.
+3. **Expand citation_authority to full case_law corpus.** Run `enrich-cl-citation-depth.mjs,limit 3500,apply`. Gets us authority scores for every opinion we have.
 
-4. **Run ABA ratings enrichment.** `enrich-cl-aba-ratings.mjs --apply`. Adds judicial qualification data.
+4. **Run ABA ratings enrichment.** `enrich-cl-aba-ratings.mjs,apply`. Adds judicial qualification data.
 
-**Priority 2 — Build the classified corpus (weeks)**
+**Priority 2, Build the classified corpus (weeks)**
 
 5. **Filter 50GB CL opinions to criminal defense subset.** The criminal opinion filtering pipeline:
    1. Haiku extracts court ID from each row → filter to criminal-jurisdiction courts (CL court metadata)
    2. Keyword presence scan (mechanical, not LLM): opinion text must contain 2+ from a criminal-law keyword list (arrest, defendant, prosecution, guilty, sentence, plea, indictment, charge, felony, misdemeanor, etc.)
-   3. Exclude known civil-only patterns (wrongful death, breach of contract, tort, negligence — unless combined with criminal keywords)
+   3. Exclude known civil-only patterns (wrongful death, breach of contract, tort, negligence, unless combined with criminal keywords)
    4. Result: estimated 500K-2M criminal opinions from 10M+ total
    5. False positive rate target: <5% civil contamination
 
@@ -434,12 +434,12 @@ This is where the intelligence lives. Every connection between entities carries 
    - Per curiam affirmance (<500 words OR contains 'PER CURIAM' + 'Affirmed' with no analysis): extract outcome only (affirmed). Skip motion/theory/holding extraction. Tag as 'pca' in opinion_type column.
    - Order (<200 words): extract outcome from ORDER language only. Tag as 'order'.
 
-   a. Haiku extracts statute citations (§ numbers, U.S.C. references, state code references) — ~$60 for 500K opinions
+   a. Haiku extracts statute citations (§ numbers, U.S.C. references, state code references), ~$60 for 500K opinions
    b. Script matches extracted statutes against jurisdiction_statutes table → charge_slugs. **Statute citation lookup is ALWAYS scoped to the opinion's jurisdiction** (derived from CL court metadata, which is authoritative). Query: `WHERE jurisdiction = opinion.jurisdiction AND statute_number = extracted_citation`. If no match in the opinion's jurisdiction, the citation is IGNORED (not matched against other jurisdictions). Statutes in the first 15% of text tagged `is_primary = true`.
    c. Script scans for motion type keywords against 53-type taxonomy → motion_types[]. Negation window applied.
    d. Script derives defense theories from motion_type × charge_type constrained mapping (from `charge_defense_theories` table) + keyword detection. Negation window applied.
    e. Script extracts per-motion outcomes from docket entries + ORDER/GRANTED/DENIED keyword matching **in the last 20% of opinion text** (consistent with holding_text extraction). If no outcome keyword found in last 20%, expand to last 40%. If still none, motion gets outcome = NULL (not classified). Results stored in `motion_outcomes` JSONB. Per curiam affirmances: extract outcome 'affirmed' only; orders: extract from ORDER language only.
-   f. Script computes `motion_favorability` per-motion from outcome + CL citation treatment + ruling language. Script computes `case_favorability` from overall case outcome + CL citation treatment (external signal, NOT pipeline's own classifications — see Section 3.5).
+   f. Script computes `motion_favorability` per-motion from outcome + CL citation treatment + ruling language. Script computes `case_favorability` from overall case outcome + CL citation treatment (external signal, NOT pipeline's own classifications, see Section 3.5).
    g. Script extracts holding sentences (ruling keywords in last 20% of opinion). Quoted text stripped before ruling keyword scan.
    h. Cross-validation: 2+ TRULY INDEPENDENT signals must agree per field (per Section 3.3). Same-source disagreements handled per signal independence rules.
    
@@ -451,7 +451,7 @@ This is where the intelligence lives. Every connection between entities carries 
 
 8. **Extract officers from opinion text.** NER on criminal opinions to find officer names. Connect to officer_reliability. Builds the Opinion → Officer relationship.
 
-**Priority 3 — Pattern detection engine (months)**
+**Priority 3, Pattern detection engine (months)**
 
 9. **Build cross-dimensional pattern queries.** Pre-computed statistical patterns across entity combinations:
    - charge x motion x motion_outcome → motion success rates per charge
@@ -468,14 +468,14 @@ This is where the intelligence lives. Every connection between entities carries 
 
 11. **Insight generation.** For each customer's case profile (charge + jurisdiction + judge + officer), query all pattern tables and rank insights by relevance x surprise x actionability.
 
-**Priority 4 — Product integration (ongoing)**
+**Priority 4, Product integration (ongoing)**
 
 12. **Wire insights into every product tier.** Per Section 7 below.
 
 ### 5.3 Population Cadence
 
 | Action | Frequency | Why |
-|--------|-----------|-----|
+|------, |---------, |---, |
 | Classify new CL opinions (mechanical pipeline + Haiku extraction) | Weekly | CL publishes new opinions continuously |
 | Refresh citation authority | Monthly | Citation counts and treatment change slowly |
 | Re-run pattern detection | Weekly after new opinions | Patterns shift as new data arrives |
@@ -487,7 +487,7 @@ This is where the intelligence lives. Every connection between entities carries 
 
 ## 6. Pattern Detection Engine
 
-This is the core differentiator. Not a query system — a discovery system.
+This is the core differentiator. Not a query system, a discovery system.
 
 ### 6.1 Pre-Computed Pattern Tables
 
@@ -504,19 +504,19 @@ All pattern tables include a `data_source_note text` column defaulting to: 'Publ
 charge_slug x defense_theory x jurisdiction → {
   attempts: int,
   successes: int,
-  motion_success_rate: float,  -- motion-level: how often the motion was granted
-  case_success_rate: float,  -- case-level: how often the defendant was acquitted/case dismissed
+  motion_success_rate: float, , motion-level: how often the motion was granted
+  case_success_rate: float, , case-level: how often the defendant was acquitted/case dismissed
   avg_sentence_reduction_pct: float,
   best_combined_motion: text,
   sample_source_urls: text[],
-  data_source_note: text,  -- appellate bias disclosure
+  data_source_note: text, , appellate bias disclosure
   computed_at: timestamptz
 }
 ```
 
 **Table: `motion_success_patterns`**
 
-Measures **motion-level outcomes only**, not case disposition. "Grant rate" means the motion itself was granted — it does not indicate case outcome.
+Measures **motion-level outcomes only**, not case disposition. "Grant rate" means the motion itself was granted, it does not indicate case outcome.
 
 ```
 motion_type x charge_slug x jurisdiction x judge_id (nullable) → {
@@ -527,7 +527,7 @@ motion_type x charge_slug x jurisdiction x judge_id (nullable) → {
   avg_days_to_ruling: float,
   most_cited_opinion_id: text,
   sample_source_urls: text[],
-  data_source_note: text,  -- appellate bias disclosure
+  data_source_note: text, , appellate bias disclosure
   computed_at: timestamptz
 }
 ```
@@ -541,7 +541,7 @@ judge_id x dimension (motion_type | charge_slug | defense_theory) x dimension_va
   deviation_from_jurisdiction_avg: float,
   notable_quotes: text[],
   sample_source_urls: text[],
-  data_source_note: text,  -- appellate bias disclosure
+  data_source_note: text, , appellate bias disclosure
   computed_at: timestamptz
 }
 ```
@@ -557,7 +557,7 @@ prosecutor_name x judge_id x dimension → {
   motion_opposition_rate: float,
   opposition_success_rate: float,
   sample_source_urls: text[],
-  data_source_note: text,  -- appellate bias disclosure
+  data_source_note: text, , appellate bias disclosure
   computed_at: timestamptz
 }
 ```
@@ -571,7 +571,7 @@ officer_name x challenge_type x jurisdiction → {
   correlated_dismissal_rate: float,
   related_officers: text[] (officers frequently co-occurring),
   sample_source_urls: text[],
-  data_source_note: text,  -- appellate bias disclosure
+  data_source_note: text, , appellate bias disclosure
   computed_at: timestamptz
 }
 ```
@@ -584,7 +584,7 @@ opinion_ids[] (sorted set) x motion_type → {
   vs_individual_success_rate: float,
   synergy_score: float (combined - individual),
   sample_source_urls: text[],
-  data_source_note: text,  -- appellate bias disclosure
+  data_source_note: text, , appellate bias disclosure
   computed_at: timestamptz
 }
 ```
@@ -600,7 +600,7 @@ action_type (motion_filing | plea_offer | discovery_demand) x charge_slug x days
   optimal_window_end: int (days),
   sample_size: int,
   sample_source_urls: text[],
-  data_source_note: text,  -- appellate bias disclosure
+  data_source_note: text, , appellate bias disclosure
   computed_at: timestamptz
 }
 ```
@@ -618,7 +618,7 @@ entity_type x entity_id x anomaly_type → {
   description: text,
   affected_charge_types: text[],
   sample_source_urls: text[],
-  data_source_note: text,  -- appellate bias disclosure
+  data_source_note: text, , appellate bias disclosure
   detected_at: timestamptz
 }
 ```
@@ -626,11 +626,11 @@ entity_type x entity_id x anomaly_type → {
 **Table: `pipeline_accuracy_log`**
 ```
 evaluation_date date,
-evaluation_type text,  -- 'monthly_sample' or 'quarterly_gold_set'
+evaluation_type text, , 'monthly_sample' or 'quarterly_gold_set'
 sample_size int,
-per_field_accuracy jsonb,  -- {"charge_types": 0.93, "motion_types": 0.91, ...}
+per_field_accuracy jsonb, , {"charge_types": 0.93, "motion_types": 0.91, ...}
 overall_accuracy float,
-flagged_fields text[],  -- fields below 85% accuracy
+flagged_fields text[], , fields below 85% accuracy
 notes text,
 evaluated_by text,
 created_at timestamptz DEFAULT now()
@@ -646,11 +646,11 @@ created_at timestamptz DEFAULT now()
 
 Example: opinion has `defense_theories: ['improper_stop']` and `motion_outcomes: [{'motion_type': 'suppress_evidence', 'outcome': 'granted'}, {'motion_type': 'dismiss_charges', 'outcome': 'denied'}]`. The `charge_defense_theories` table maps `improper_stop -> motion_types: ['suppress_evidence']`. So only the suppress_evidence outcome counts toward improper_stop's motion_success_rate.
 
-**Many-to-many acknowledgment:** When a theory maps to multiple motions, each motion outcome counts separately. When multiple theories share a motion type, the outcome counts for all applicable theories. This is an approximation — exact theory-to-motion attribution would require court-specific docket parsing beyond what mechanical extraction provides.
+**Many-to-many acknowledgment:** When a theory maps to multiple motions, each motion outcome counts separately. When multiple theories share a motion type, the outcome counts for all applicable theories. This is an approximation, exact theory-to-motion attribution would require court-specific docket parsing beyond what mechanical extraction provides.
 
 **NULL outcome handling:** Motions with outcome=NULL are EXCLUDED from pattern table aggregation entirely. They are not counted in filed_count, granted_count, or denied_count. They remain in classified_opinions for audit and potential future reclassification. Rationale: unknown outcomes should not dilute known statistics.
 
-**Multi-charge attribution:** When an opinion involves multiple charges, motion outcomes are attributed to all charges listed in the opinion for aggregation purposes. This is an approximation — per-charge motion attribution would require court-specific docket parsing that is not reliably mechanical. The approximation is acceptable because: (a) most published opinions focus on one primary charge, (b) the `is_primary` flag on charge_types prioritizes the main charge in aggregations.
+**Multi-charge attribution:** When an opinion involves multiple charges, motion outcomes are attributed to all charges listed in the opinion for aggregation purposes. This is an approximation, per-charge motion attribution would require court-specific docket parsing that is not reliably mechanical. The approximation is acceptable because: (a) most published opinions focus on one primary charge, (b) the `is_primary` flag on charge_types prioritizes the main charge in aggregations.
 
 **Empty motion_types edge case:** Theories with empty `motion_types[]` in `charge_defense_theories` are excluded from `motion_success_rate` computation (no motion-level data to aggregate). They may still appear in `case_success_rate` computation if the opinion's `case_favorability` is available. This ensures no theory claims motion success rates without supporting motion-level evidence.
 
@@ -721,18 +721,18 @@ Weighted toward relevance (must match the customer's situation) with surprise as
 ### 6.5 Pattern Recompute Cadence
 
 | Action | Trigger | Why |
-|--------|---------|-----|
+|------, |---------|---, |
 | Pattern tables recompute | Every Sunday 2AM UTC | Weekly batch after new opinions classified |
 | Anomaly detection | Immediately after pattern recompute | Depends on fresh patterns |
 | War Room weekly updates | Monday 8AM UTC (after pattern refresh) | Customer gets freshest data at start of week |
-| Active case re-query | At next scheduled update only | Never mid-week — prevents inconsistent snapshots |
+| Active case re-query | At next scheduled update only | Never mid-week, prevents inconsistent snapshots |
 
 ### 6.6 Pipeline Monitoring
 
 Automated checks run after every pattern recompute:
 
 | Check | Alert Condition | Why |
-|-------|----------------|-----|
+|-------|----------------|---, |
 | Row count delta | `classified_opinions` drops by >5% between runs | Accidental deletion, bad filter, corpus corruption |
 | Classification distribution | >30% of opinions classified as same defense_theory | Extraction rule degeneration, taxonomy collapse |
 | Source URL integrity | Any rows where `source_urls[]` is empty | Breaks the no-hallucinated-legal-data rule |
@@ -772,16 +772,16 @@ judge_quote.cluster_id → classified_opinion.cluster_id → opinion.motion_type
 
 This enables: "Judge Smith said '[quote]' in a case where they GRANTED a suppression motion for DUI." The quote gains context from the opinion's classification.
 
-**New column on judge_quotes:** `opinion_context jsonb` — populated during Phase 1 linking. Contains: `{ motion_types[], motion_outcomes, charge_types[], case_favorability }` copied from the classified opinion. Denormalized for query speed.
+**New column on judge_quotes:** `opinion_context jsonb`, populated during Phase 1 linking. Contains: `{ motion_types[], motion_outcomes, charge_types[], case_favorability }` copied from the classified opinion. Denormalized for query speed.
 
 ### 6.9 Officer Universe Reconciliation
 
 Two officer data sources exist and serve different purposes:
 
-- `officer_reliability` (13,342 rows) — cross-case reliability metrics mined from CL opinion text. Officer names extracted by keyword matching in existing bulk scripts.
-- Phase 2 NER extraction — extracts officer names from the NEWLY classified 500K opinion corpus. Catches officers missed by keyword matching (which only finds officers explicitly named in testimony/evidence sections).
+- `officer_reliability` (13,342 rows), cross-case reliability metrics mined from CL opinion text. Officer names extracted by keyword matching in existing bulk scripts.
+- Phase 2 NER extraction, extracts officer names from the NEWLY classified 500K opinion corpus. Catches officers missed by keyword matching (which only finds officers explicitly named in testimony/evidence sections).
 
-Phase 2 NER results MERGE into `officer_reliability` via name + jurisdiction dedup. Not a replacement — an expansion.
+Phase 2 NER results MERGE into `officer_reliability` via name + jurisdiction dedup. Not a replacement, an expansion.
 
 ### 6.10 Below-Threshold Behavior
 
@@ -812,7 +812,7 @@ When intelligence data EXISTS but falls below the tier's confidence threshold:
 
 7. **Motion-level vs case-level clarity.** Products must present both `motion_success_rate` and `case_success_rate` with clear labels when both are available. "This motion was granted in X% of cases" (motion-level) vs "Defendants who used this defense theory were acquitted in Y% of cases" (case-level). Never conflate the two.
 
-8. **Appellate bias framing.** Every customer-facing statistic derived from the classified opinion corpus includes the data source note. Products present statistics as "Based on N published court opinions" — never as overall success rates.
+8. **Appellate bias framing.** Every customer-facing statistic derived from the classified opinion corpus includes the data source note. Products present statistics as "Based on N published court opinions", never as overall success rates.
 
 **Migration path for `tier9-reports/query.ts`:**
 - Phase 1-2: `defense-intelligence/query.ts` wraps and extends `tier9-reports/query.ts`. No breaking changes. Tier 9 SKUs continue working through existing query surface.
@@ -877,7 +877,7 @@ After: Engine Phase 5 workers get intelligence context.
 Workers receiving intelligence context (5-8 workers):
 
 | Worker | Intelligence Feed |
-|--------|-------------------|
+|------, |-------------------|
 | `legal-research.mjs` | Pre-classified case law from corpus instead of ad-hoc CL search. Already scored, already verified. |
 | `trap-track-assignment.mjs` | `motion_success_patterns` for each S1/S2/S3 motion → expected success rate + supporting citations (motion-level) |
 | `motion-recommendation.mjs` | `judge_behavior_patterns` → motions ranked by THIS judge's history, not generic |
@@ -888,12 +888,12 @@ Confidence threshold: composite >= 40 (operator reviews everything).
 
 ---
 
-**War Room ($4,997) — X-Ray + 12-15 Intelligence Workers**
+**War Room ($4,997), X-Ray + 12-15 Intelligence Workers**
 
 Everything X-Ray gets, PLUS:
 
 | Worker | Intelligence Feed |
-|--------|-------------------|
+|------, |-------------------|
 | `motion_generation` | Cites specific precedent from classified corpus. "This Court previously granted this motion in [Case], finding [holding]." All citations verified. |
 | `motion_judge_scoring` | `prosecutor_dynamics` → how THIS prosecutor's opposition affects grant rate before THIS judge (motion-level) |
 | `adversarial_prosecution_sim` | Prosecution-favorable case law from corpus → "Prosecution will cite [Case]. Counter with [Defense Case]." |
@@ -906,12 +906,12 @@ Confidence threshold: composite >= 30 (operator reviews, ongoing relationship).
 
 ---
 
-**Situation Room ($9,997) — War Room + 17-20 Intelligence Workers**
+**Situation Room ($9,997), War Room + 17-20 Intelligence Workers**
 
 Everything War Room gets, PLUS:
 
 | Worker | Intelligence Feed |
-|--------|-------------------|
+|------, |-------------------|
 | `attorney_perspective_analysis` | Each of 9 attorney personas receives full intelligence context. Prosecution-minded attorney sees `prosecutor_dynamics`. Motion specialist sees `motion_success_patterns`. Appeal strategist sees appeal outcome correlations. |
 | `attack_intelligence` | `officer_vulnerability_patterns` → every attack vector cross-referenced with case law where it succeeded |
 | `cross_case_aggregator` | `defense_theory_outcomes` + `citation_combination_outcomes` → similar defense strategies that worked, including which citation combinations had synergy |
@@ -928,7 +928,7 @@ Current: Query pre-computed Tier 9 stats.
 After: Stats + intelligence insights + anomalies.
 
 | SKU | Intelligence Feed |
-|-----|-------------------|
+|---, |-------------------|
 | Judge Report Card ($197) | `judge_behavior_patterns` + `prosecutor_dynamics` + anomalies + linked quotes with case law context. Not just "quotes" but "this judge cited State v. Rodriguez 14 times when granting suppression." |
 | Officer Background ($97) | `officer_vulnerability_patterns` + actual case citations where officer was challenged. "Officer Davis: challenged in 7 hearings, defense won 5. Key case: [Citation]." |
 | Similar Cases Analyzer ($297) | `defense_theory_outcomes` + `citation_combination_outcomes` + `timing_correlations`. Not just "similar cases" but "similar defense strategies that worked, and when to deploy them." Motion-level and case-level success rates presented separately. |
@@ -937,7 +937,7 @@ Confidence threshold: composite >= 40 (instant delivery, no operator gate).
 
 ---
 
-**Court Case Port — Waves 2-4**
+**Court Case Port, Waves 2-4**
 
 | Wave | Intelligence Feed |
 |------|-------------------|
@@ -947,12 +947,12 @@ Confidence threshold: composite >= 40 (instant delivery, no operator gate).
 
 ---
 
-**New Standalone SKUs (Phase 4+ only — NOT in scope for Phases 1-3)**
+**New Standalone SKUs (Phase 4+ only, NOT in scope for Phases 1-3)**
 
 These products become possible once the intelligence system is mature. They are listed here to show what the system enables, not as Phase 1-3 deliverables. Each needs its own product spec, pricing validation, and market fit assessment before building.
 
 | SKU | Price | What It Delivers |
-|-----|-------|-----------------|
+|---, |-------|---------------, |
 | Motion Strategy Report | $197 | Top 5 motions for YOUR charge + judge + jurisdiction. Motion-level success rates, citations, prosecutor-specific dynamics. |
 | Defense Theory Analyzer | $147 | Every defense theory tried for YOUR charge. Ranked by motion success rate and case success rate. The cases that won. |
 | Prosecution Playbook Decoder | $97 | How prosecution approaches YOUR charge. Strongest arguments. Weakest points. Cases that beat them. |
@@ -976,7 +976,7 @@ Every product works with zero intelligence data. Enhanced prompts use conditiona
 if (insights.length > 0) {
   // Rich prompt with intelligence context
 } else {
-  // Standard prompt — intake only, works like today
+  // Standard prompt, intake only, works like today
 }
 ```
 
@@ -984,14 +984,14 @@ E2E tests run both paths.
 
 ### 8.3 Source URL Chain
 
-Every insight returned by `query.ts` includes `source_urls[]`. TypeScript interface enforces this — compilation fails if provenance is missing. Extends the existing no-hallucinated-legal-data rule to intelligence data.
+Every insight returned by `query.ts` includes `source_urls[]`. TypeScript interface enforces this, compilation fails if provenance is missing. Extends the existing no-hallucinated-legal-data rule to intelligence data.
 
 ### 8.4 Confidence Thresholds
 
 Each pattern result carries a confidence composite:
 
 | Signal | Weight |
-|--------|--------|
+|------, |------, |
 | Sample size (min 3) | 30% |
 | Authority score (min 30) | 25% |
 | Good law verification | 25% |
@@ -1022,7 +1022,7 @@ All templates are factual, third-party attributed, and information-only. The `ev
 
 ### 8.7 Appellate Bias Disclosure
 
-Published opinions skew toward certain outcomes — prosecutors rarely appeal acquittals, and many cases end in unpublished plea agreements or dispositions not captured in our corpus. Statistics derived from published opinions may overstate defense success rates.
+Published opinions skew toward certain outcomes, prosecutors rarely appeal acquittals, and many cases end in unpublished plea agreements or dispositions not captured in our corpus. Statistics derived from published opinions may overstate defense success rates.
 
 **Mandatory disclosures:**
 1. Every customer-facing statistic derived from the classified opinion corpus MUST include the data source: "Based on N published court opinions."
@@ -1033,12 +1033,12 @@ Published opinions skew toward certain outcomes — prosecutors rarely appeal ac
 
 ### 8.8 Staged Rollout
 
-1. **Tier 9 standalone SKUs** — lowest risk, already query DB, extend queries
-2. **Intelligence Brief** — highest impact, operator-reviewed
-3. **X-Ray** — engine workers, operator-reviewed
-4. **Playbooks / Case Decoder** — mass products, conservative thresholds
-5. **War Room / Situation Room** — most complex, multiple workers, weekly updates
-6. **Court Case Port Waves 2-4** — depends on all above stable
+1. **Tier 9 standalone SKUs**, lowest risk, already query DB, extend queries
+2. **Intelligence Brief**, highest impact, operator-reviewed
+3. **X-Ray**, engine workers, operator-reviewed
+4. **Playbooks / Case Decoder**, mass products, conservative thresholds
+5. **War Room / Situation Room**, most complex, multiple workers, weekly updates
+6. **Court Case Port Waves 2-4**, depends on all above stable
 
 Each stage: integrate → E2E test (both paths) → operator test with real case → 2-week soak → next stage.
 
@@ -1048,7 +1048,7 @@ Active cases (War Room/Situation Room with weekly updates) pin to a `graph_versi
 
 ### 8.10 UPL Compliance
 
-Intelligence data is factual (case citations, statistics, outcomes). It is NOT legal advice. All product prompts maintain the existing UPL boundary: "Here's what the data shows" — never "Here's what you should do." The `evaluate-report` Edge Function (Sonnet, temp 0) continues to gate every customer-facing output. Intelligence context makes UPL compliance easier, not harder — citing real cases is information, not advice.
+Intelligence data is factual (case citations, statistics, outcomes). It is NOT legal advice. All product prompts maintain the existing UPL boundary: "Here's what the data shows", never "Here's what you should do." The `evaluate-report` Edge Function (Sonnet, temp 0) continues to gate every customer-facing output. Intelligence context makes UPL compliance easier, not harder, citing real cases is information, not advice.
 
 ---
 
@@ -1060,7 +1060,7 @@ REQUIRED before any batch classification. Validates the entire verification arch
 
 **Phase 0A (weeks 1-2): Build the `charge_defense_theories` constrained mapping.**
 
-This mapping is the FOUNDATION — Phase 1 cannot begin until it passes validation.
+This mapping is the FOUNDATION, Phase 1 cannot begin until it passes validation.
 
 a. For each of the 50+ charge types in `charge-taxonomy.ts`, manually enumerate known defense theories (5-15 per charge). Source: criminal defense textbooks, NACDL practice guides, existing engine motion taxonomy (53 types).
 b. Store as `charge_defense_theories` table:
@@ -1100,9 +1100,9 @@ Zero new data acquisition. Maximum ROI from what we already have.
 3. Expand citation_authority (full run on case_law corpus)
 4. Run ABA ratings enrichment
 5. Build `defense_theory_outcomes` and `motion_success_patterns` from classified case_law (aggregating from per-motion `motion_outcomes`)
-6. Wire `defense-intelligence/query.ts` module (wraps and extends `tier9-reports/query.ts` — no breaking changes)
+6. Wire `defense-intelligence/query.ts` module (wraps and extends `tier9-reports/query.ts`, no breaking changes)
 7. Integrate into Tier 9 standalone SKUs (first product touchpoint)
-8. E2E verification (both paths — with intelligence, without intelligence)
+8. E2E verification (both paths, with intelligence, without intelligence)
 
 **Deliverable:** Tier 9 products dramatically richer. Judge Report Card shows actual case law the judge relies on. Similar Cases Analyzer shows defense theory success rates (motion-level and case-level).
 
@@ -1114,7 +1114,7 @@ Scale from 3,407 to 100K+ classified opinions.
 2. Classify via mechanical extraction pipeline + Haiku text extraction (~$60 for 500K). Structural classification first (full/memorandum/pca/order), then extraction per opinion type.
 3. Process 522MB citation map → build opinion-to-opinion relationships
 4. Extract officers from opinion text (NER) → connect to officer_reliability
-5. Compute all pattern tables (Section 6.1) — aggregate from per-motion data, weighted by opinion_type
+5. Compute all pattern tables (Section 6.1), aggregate from per-motion data, weighted by opinion_type
 6. Run anomaly detection (Section 6.2)
 7. Build insight ranking system (Section 6.4)
 8. Integrate into Intelligence Brief (second product touchpoint)
@@ -1126,7 +1126,7 @@ Scale from 3,407 to 100K+ classified opinions.
 
 ### Phase 3: Engine Integration (2-4 weeks)
 
-Wire intelligence into engine workers for X-Ray / War Room / Situation Room. Deprecate `tier9-reports/query.ts` — all callers migrate to `defense-intelligence/query.ts`.
+Wire intelligence into engine workers for X-Ray / War Room / Situation Room. Deprecate `tier9-reports/query.ts`, all callers migrate to `defense-intelligence/query.ts`.
 
 1. Add intelligence context injection to Phase 5 workers (legal-research, trap-track, motion-recommendation, judge-intelligence)
 2. Add War Room-specific intelligence (motion-generation, motion-judge-scoring, adversarial-prosecution-sim)
@@ -1135,7 +1135,7 @@ Wire intelligence into engine workers for X-Ray / War Room / Situation Room. Dep
 5. E2E verification + operator test with real case
 6. 2-week soak period
 
-**Backfill strategy for existing customers:** Existing War Room/Situation Room customers receive intelligence data in their next weekly update after Phase 3 ships. No retroactive report regeneration. Weekly update email notes: "New intelligence data now available for your case." This is a feature upgrade, not a correction — the original reports were complete as delivered.
+**Backfill strategy for existing customers:** Existing War Room/Situation Room customers receive intelligence data in their next weekly update after Phase 3 ships. No retroactive report regeneration. Weekly update email notes: "New intelligence data now available for your case." This is a feature upgrade, not a correction, the original reports were complete as delivered.
 
 **Deliverable:** Premium tiers deliver intelligence no attorney can match. Motion drafts cite real precedent. Strategy grounded in actual outcome data.
 
@@ -1157,26 +1157,26 @@ Wire intelligence into engine workers for X-Ray / War Room / Situation Room. Dep
 
 | Item | One-Time | Monthly |
 |------|----------|---------|
-| Haiku bulk text extraction (500K opinions) | ~$60 | — |
-| Opus spot-check (200 gold-set + edge cases) | ~$20 | — |
+| Haiku bulk text extraction (500K opinions) | ~$60 |, |
+| Opus spot-check (200 gold-set + edge cases) | ~$20 |, |
 | Classification scripts (mechanical) | $0 | $0 |
-| Weekly new opinion processing (~5K/week) | — | ~$5 (Haiku extraction) |
+| Weekly new opinion processing (~5K/week) |, | ~$5 (Haiku extraction) |
 | Pattern computation (SQL aggregates) | $0 | $0 |
 | CL bulk data download (quarterly) | $0 | $0 |
 | Citation authority enrichment (CL API) | $0 (rate-limited) | $0 |
-| Supabase storage (new tables) | — | ~$0 (within existing plan) |
-| Monthly accuracy monitoring (50 samples) | — | ~$2 (Opus spot-check) |
+| Supabase storage (new tables) |, | ~$0 (within existing plan) |
+| Monthly accuracy monitoring (50 samples) |, | ~$2 (Opus spot-check) |
 
 **Total estimated cost: ~$80 one-time, ~$12/month ongoing.**
 
-One Case Decoder sale ($197) covers 16 months of pipeline costs. One Intelligence Brief sale ($997) covers 7 years. The ROI math is trivially favorable — the question is accuracy, not affordability. And because classification is mechanical (deterministic scripts, not LLM inference), costs stay flat regardless of corpus size growth.
+One Case Decoder sale ($197) covers 16 months of pipeline costs. One Intelligence Brief sale ($997) covers 7 years. The ROI math is trivially favorable, the question is accuracy, not affordability. And because classification is mechanical (deterministic scripts, not LLM inference), costs stay flat regardless of corpus size growth.
 
 ---
 
 ## 11. Success Metrics
 
 | Metric | Target |
-|--------|--------|
+|------, |------, |
 | Phase 0 mechanical accuracy vs human | >= 90% field-level agreement |
 | Phase 0 `charge_defense_theories` coverage | 50+ charge types, 5-15 theories each |
 | Cross-validation agreement rate (truly independent signals) | >= 85% of opinions have 2+ agreeing independent signals |
@@ -1192,7 +1192,7 @@ One Case Decoder sale ($197) covers 16 months of pipeline costs. One Intelligenc
 | Civil contamination in classified corpus | < 5% |
 | Monthly accuracy monitoring (per-field) | >= 85% sustained |
 | Quarterly gold-set accuracy | >= 90% field-level agreement |
-| Customer insight: "I didn't know to ask that" | Qualitative — track in post-delivery survey |
+| Customer insight: "I didn't know to ask that" | Qualitative, track in post-delivery survey |
 
 ---
 
@@ -1201,7 +1201,7 @@ One Case Decoder sale ($197) covers 16 months of pipeline costs. One Intelligenc
 ```
 OPINION ──→ JUDGE (authored by)
 OPINION ──→ CHARGE (involves)
-OPINION ──→ MOTION (decides — per-motion outcomes)
+OPINION ──→ MOTION (decides, per-motion outcomes)
 OPINION ──→ DEFENSE THEORY (applies)
 OPINION ──→ OFFICER (names)
 OPINION ──→ OPINION (cites)
@@ -1223,16 +1223,16 @@ Every edge carries data. Every intersection is a potential insight.
 **Decision:** Mechanical scripts classify, cross-refs validate (with signal independence checks), Opus spot-checks. Nothing enters on LLM judgment alone. LLMs assist with text extraction (Haiku) and quality validation (Opus), but all classification decisions are made by deterministic, auditable scripts.
 
 **Alternatives considered:**
-1. *LLM classification (Opus classifies, cross-refs validate)* — rejected. Expensive (~$3,750+ for 500K opinions), non-deterministic (same opinion can classify differently on re-run), impossible to fully audit (classification reasoning is a black box). Monthly ongoing cost ~$160 vs ~$10.
-2. *Mechanical only, no LLM involvement at all* — considered but impractical for initial text extraction. Finding statute citations (§ numbers, U.S.C. references) in 50GB of unstructured legal text benefits from Haiku's ability to locate citation positions. But Haiku extracts, scripts decide.
-3. *Hybrid LLM + mechanical (Opus reviews edge cases)* — selected for the <5% of opinions where mechanical signals are ambiguous. Opus reviews edge cases as a quality gate, not a production classifier. Estimated cost: ~$5/month for edge case review.
-4. *Human-only classification* — gold standard but does not scale to 500K opinions. Used in Phase 0 gold-set (200 opinions) as the benchmark that both mechanical and Opus are measured against.
+1. *LLM classification (Opus classifies, cross-refs validate)*, rejected. Expensive (~$3,750+ for 500K opinions), non-deterministic (same opinion can classify differently on re-run), impossible to fully audit (classification reasoning is a black box). Monthly ongoing cost ~$160 vs ~$10.
+2. *Mechanical only, no LLM involvement at all*, considered but impractical for initial text extraction. Finding statute citations (§ numbers, U.S.C. references) in 50GB of unstructured legal text benefits from Haiku's ability to locate citation positions. But Haiku extracts, scripts decide.
+3. *Hybrid LLM + mechanical (Opus reviews edge cases)*, selected for the <5% of opinions where mechanical signals are ambiguous. Opus reviews edge cases as a quality gate, not a production classifier. Estimated cost: ~$5/month for edge case review.
+4. *Human-only classification*, gold standard but does not scale to 500K opinions. Used in Phase 0 gold-set (200 opinions) as the benchmark that both mechanical and Opus are measured against.
 
-**Why this approach:** Mechanical scripts are deterministic (same input always produces same output), auditable (every classification decision traces to a specific keyword match or lookup table hit), and essentially free ($0 compute). The tradeoff is they miss nuance — a keyword like "Fourth Amendment" appears in an opinion discussing why the Fourth Amendment does NOT apply. Multiple defenses address this: (1) negation window scanning (Section 3.4) catches explicit negations; (2) cross-validation requiring 2+ truly independent signals (Section 3.3) compensates for remaining false positives — if the keyword match says "Fourth Amendment defense" but the docket entry shows no suppression motion filed, the signals disagree and the opinion enters as low_confidence or excluded; (3) ongoing accuracy monitoring (Section 6.7) catches drift before it affects products. The Phase 0 gold-set measures whether this tradeoff is acceptable (target: 90%+ agreement with human labels).
+**Why this approach:** Mechanical scripts are deterministic (same input always produces same output), auditable (every classification decision traces to a specific keyword match or lookup table hit), and essentially free ($0 compute). The tradeoff is they miss nuance, a keyword like "Fourth Amendment" appears in an opinion discussing why the Fourth Amendment does NOT apply. Multiple defenses address this: (1) negation window scanning (Section 3.4) catches explicit negations; (2) cross-validation requiring 2+ truly independent signals (Section 3.3) compensates for remaining false positives, if the keyword match says "Fourth Amendment defense" but the docket entry shows no suppression motion filed, the signals disagree and the opinion enters as low_confidence or excluded; (3) ongoing accuracy monitoring (Section 6.7) catches drift before it affects products. The Phase 0 gold-set measures whether this tradeoff is acceptable (target: 90%+ agreement with human labels).
 
 ## Appendix C: Circularity Prevention
 
-The `case_favorability` and `motion_favorability` fields use CL's algorithmically-determined citation treatment data (positive/negative/distinguishing) — NOT this pipeline's own outcome classifications. CL's treatment analysis is an independent, external signal computed by CourtListener's infrastructure. This prevents circular validation where our classifications validate our own classifications.
+The `case_favorability` and `motion_favorability` fields use CL's algorithmically-determined citation treatment data (positive/negative/distinguishing), NOT this pipeline's own outcome classifications. CL's treatment analysis is an independent, external signal computed by CourtListener's infrastructure. This prevents circular validation where our classifications validate our own classifications.
 
 Specifically:
 - "Positively cited by defense-win cases" uses CL's `treatment` field from the citation map, not our `motion_outcomes` or `case_favorability` fields.

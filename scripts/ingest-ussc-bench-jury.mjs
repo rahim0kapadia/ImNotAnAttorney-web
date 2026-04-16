@@ -198,7 +198,7 @@ function mean(arr) {
   return sum / arr.length;
 }
 
-// ── SQL helpers (no regex — hook enforced) ──────────────────────────────────
+// ── SQL helpers (no regex, hook enforced) ──────────────────────────────────
 
 function esc(val) {
   if (val === null || val === undefined) return "NULL";
@@ -271,8 +271,8 @@ function findCsvInDir(dir) {
 }
 
 // USSC URL patterns vary by year:
-// FY24: opafy24nid_csv.zip (CSV) — only year with CSV
-// FY18-FY23: opafy{YY}nid.zip (SAS/SPSS) — need Python conversion
+// FY24: opafy24nid_csv.zip (CSV), only year with CSV
+// FY18-FY23: opafy{YY}nid.zip (SAS/SPSS), need Python conversion
 // FY16-FY17: opafy{YY}-nid.zip (SAS/SPSS, hyphenated)
 // FY15: opafy15nid.zip (SAS/SPSS)
 function sasZipUrl(yy) {
@@ -343,7 +343,7 @@ async function downloadYear(yy) {
     const stats = fs.statSync(sasZipPath);
     console.log("  FY" + yy + ": downloaded " + (stats.size / 1024 / 1024).toFixed(1) + " MB");
   } catch (e) {
-    console.log("  FY" + yy + ": download FAILED — " + e.message);
+    console.log("  FY" + yy + ": download FAILED, " + e.message);
     return null;
   }
 
@@ -354,7 +354,7 @@ async function downloadYear(yy) {
       { timeout: 120000, stdio: "pipe" }
     );
   } catch (e) {
-    console.log("  FY" + yy + ": extract FAILED — " + (e.message || "").slice(0, 100));
+    console.log("  FY" + yy + ": extract FAILED, " + (e.message || "").slice(0, 100));
     return null;
   }
 
@@ -390,7 +390,7 @@ async function downloadYear(yy) {
         return csvOut;
       } catch {}
     }
-    console.log("  FY" + yy + ": conversion FAILED — " + (e.message || "").slice(0, 150));
+    console.log("  FY" + yy + ": conversion FAILED, " + (e.message || "").slice(0, 150));
     return null;
   }
 }
@@ -415,7 +415,7 @@ function discoverLocalCsvs() {
 }
 
 // ── CSV Parsing via readline (csv-parse chokes on 27K columns) ──────────────
-// USSC values are all numeric — no embedded commas — simple split is safe.
+// USSC values are all numeric, no embedded commas, simple split is safe.
 // One file at a time per OOM gotcha.
 
 async function parseUSSCCsv(csvPath, fyLabel, groups, stats) {
@@ -430,7 +430,7 @@ async function parseUSSCCsv(csvPath, fyLabel, groups, stats) {
 
   for await (const line of rl) {
     if (!headerMap) {
-      // First line = header — build index for needed columns
+      // First line = header, build index for needed columns
       const fields = line.split(",");
       headerMap = {};
       for (let i = 0; i < fields.length; i++) {
@@ -467,7 +467,7 @@ async function parseUSSCCsv(csvPath, fyLabel, groups, stats) {
     if (disposit !== "1" && disposit !== "2" && disposit !== "3" && disposit !== "4") continue;
     if (!distCode) continue;
 
-    // Sentence months — prefer SENSPLT0, fall back to SENTTOT
+    // Sentence months, prefer SENSPLT0, fall back to SENTTOT
     const sentRaw = headerMap.SENSPLT0 !== undefined ? (fields[headerMap.SENSPLT0] || "") : "";
     const sentFallback = headerMap.SENTTOT !== undefined ? (fields[headerMap.SENTTOT] || "") : "";
     const sentMonths = parseFloat(sentRaw || sentFallback);
@@ -729,7 +729,7 @@ async function main() {
   );
 
   if (res.ok) {
-    console.log("Applied successfully — " + results.length + " rows inserted.");
+    console.log("Applied successfully, " + results.length + " rows inserted.");
   } else {
     const body = await res.text();
     console.error("Apply failed (" + res.status + "): " + body.slice(0, 500));

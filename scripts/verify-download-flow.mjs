@@ -1,5 +1,5 @@
 /**
- * Verify Download Flow — Tests the full download pipeline for all 8 playbooks
+ * Verify Download Flow, Tests the full download pipeline for all 8 playbooks
  *
  * For each tier:
  *   1. Creates a test order with download_token + 72h expiry
@@ -225,7 +225,7 @@ async function cleanup() {
 
 async function run() {
   console.log("╔══════════════════════════════════════════════════════════╗");
-  console.log("║   Verify Download Flow — All 8 Playbooks               ║");
+  console.log("║   Verify Download Flow, All 8 Playbooks               ║");
   console.log("╚══════════════════════════════════════════════════════════╝");
   console.log(`  Site URL: ${SITE_URL}`);
   console.log(`  Skip API: ${skipApi}`);
@@ -243,7 +243,7 @@ async function run() {
   console.log(`  Total: ${totalPass} passed, ${totalFail} failed`);
 
   if (totalFail > 0) {
-    console.log("\n  ✗ SOME TESTS FAILED — see details above");
+    console.log("\n  ✗ SOME TESTS FAILED, see details above");
     process.exitCode = 1;
   } else {
     console.log("\n  ✓ ALL DOWNLOAD FLOWS VERIFIED");

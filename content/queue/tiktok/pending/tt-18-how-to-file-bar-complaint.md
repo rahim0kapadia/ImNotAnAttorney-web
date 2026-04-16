@@ -10,7 +10,7 @@ topic: How to file a bar complaint
 blog_slug: how-to-file-bar-complaint-against-attorney
 estimated_duration: 45s
 format: Standard (screen recording + voiceover)
-suggested_sound: "Original audio — authoritative voiceover + subtle power beat"
+suggested_sound: "Original audio, authoritative voiceover + subtle power beat"
 suggested_posting_time: "Thursday 7:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Thursday 7:00 PM EST"
 
 **Format**: Standard
 **Duration**: 45 seconds
-**Suggested sound**: Original audio — authoritative voiceover + subtle power beat
+**Suggested sound**: Original audio, authoritative voiceover + subtle power beat
 **Suggested posting time**: Thursday 7:00 PM EST
 
 ---
@@ -35,17 +35,17 @@ suggested_posting_time: "Thursday 7:00 PM EST"
 
 [SECOND 3-12]
 **Visual**: Screen recording showing a Google search for "[state] bar complaint form." Landing on a state bar website. Filing page visible.
-**Audio/Voiceover**: "Step one — Google your state bar complaint form. Every state has one. It's free. You can file it online in most states. You can file it while your case is still active."
+**Audio/Voiceover**: "Step one, Google your state bar complaint form. Every state has one. It's free. You can file it online in most states. You can file it while your case is still active."
 **Text overlay**: "Step 1: Google '[your state] bar complaint form.' Free. Online. Active case OK."
 
 [SECOND 12-20]
 **Visual**: Close-up of complaint form fields being filled out (generic, nothing identifying).
-**Audio/Voiceover**: "Step two — document everything. Dates you called. Dates they didn't respond. Deadlines they missed. Terms they agreed to without your consent. The more specific, the stronger the complaint."
+**Audio/Voiceover**: "Step two, document everything. Dates you called. Dates they didn't respond. Deadlines they missed. Terms they agreed to without your consent. The more specific, the stronger the complaint."
 **Text overlay**: "Step 2: Document dates, calls, missed deadlines. Specific = strong."
 
 [SECOND 20-28]
 **Visual**: Form submitted. Confirmation screen.
-**Audio/Voiceover**: "Step three — submit. The bar investigates. This isn't a quick fix — investigations take months. But here's the real power: the act of filing, and your attorney knowing you filed, changes the dynamic immediately."
+**Audio/Voiceover**: "Step three, submit. The bar investigates. This isn't a quick fix, investigations take months. But here's the real power: the act of filing, and your attorney knowing you filed, changes the dynamic immediately."
 **Text overlay**: "Step 3: Submit. The real power = your attorney KNOWING you filed."
 
 [SECOND 28-38]
@@ -72,5 +72,5 @@ State bar complaint form visible on a laptop screen. Text: "The Option Nobody Te
 ---
 
 **Context**: Bar complaints are the ultimate accountability tool for defendants, but most don't know the process. This video is deeply empowering and positions INNA as the resource that arms defendants with knowledge.
-**Loop strategy**: Opens feeling stuck, ends feeling empowered — the emotional shift invites rewatching.
+**Loop strategy**: Opens feeling stuck, ends feeling empowered, the emotional shift invites rewatching.
 **KPI target**: Saves (defendants will bookmark this for reference)

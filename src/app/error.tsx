@@ -31,7 +31,7 @@ export default function Error({
         </div>
         <h1 className="text-2xl font-bold text-white">Something went wrong</h1>
         <p className="mt-3 max-w-md text-zinc-400">
-          We hit an unexpected error. This isn&apos;t your fault — try
+          We hit an unexpected error. This isn&apos;t your fault, try
           refreshing, or head back to the homepage.
         </p>
         <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">

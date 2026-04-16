@@ -1,5 +1,5 @@
 /**
- * "Why Defendants Buy" section — shared between /partners and /partners/bondsman.
+ * "Why Defendants Buy" section, shared between /partners and /partners/bondsman.
  */
 
 const REASONS = [

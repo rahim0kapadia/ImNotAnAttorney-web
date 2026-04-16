@@ -1,9 +1,9 @@
 /**
- * Shared Score Results Page — /score/results/[token]
+ * Shared Score Results Page, /score/results/[token]
  *
  * Public page displaying a shared Defense Milestone Score. Fetched server-side
  * from Supabase by token. Shows score arc, observations, and CTA to take the
- * quiz. No auth required — anyone with the link can view.
+ * quiz. No auth required, anyone with the link can view.
  *
  * If token is invalid or expired, shows a "Take the quiz yourself" fallback.
  */
@@ -33,7 +33,7 @@ async function getScoreResult(token: string): Promise<ScoreResultRow | null> {
 
   if (error || !data) return null;
 
-  // view_count tracking deferred — column exists, can be populated via
+  // view_count tracking deferred, column exists, can be populated via
   // a lightweight API endpoint or cron later. Skipping here to avoid
   // non-atomic read-then-write race condition.
 
@@ -49,22 +49,22 @@ export async function generateMetadata({
   const result = await getScoreResult(token);
   if (!result) {
     return {
-      title: "Score Expired — ImNotAnAttorney",
-      description: "This Defense Milestone Score has expired. Take the quiz yourself — free, 60 seconds, no email required.",
+      title: "Score Expired, ImNotAnAttorney",
+      description: "This Defense Milestone Score has expired. Take the quiz yourself, free, 60 seconds, no email required.",
     };
   }
   return {
-    title: `Defense Milestone Score: ${result.score_band} — ImNotAnAttorney`,
-    description: "Someone shared their criminal defense readiness score. Check yours — free, 60 seconds, no email required.",
+    title: `Defense Milestone Score: ${result.score_band}, ImNotAnAttorney`,
+    description: "Someone shared their criminal defense readiness score. Check yours, free, 60 seconds, no email required.",
     openGraph: {
       title: `Defense Milestone Score: ${result.score_band}`,
-      description: "Check your criminal defense readiness — free, 60 seconds, no email required.",
+      description: "Check your criminal defense readiness, free, 60 seconds, no email required.",
       url: `https://imnotanattorney.com/score/results/${token}`,
     },
     twitter: {
       card: "summary_large_image",
       title: `Defense Milestone Score: ${result.score_band}`,
-      description: "Check your criminal defense readiness — free, 60 seconds, no email required.",
+      description: "Check your criminal defense readiness, free, 60 seconds, no email required.",
     },
   };
 }

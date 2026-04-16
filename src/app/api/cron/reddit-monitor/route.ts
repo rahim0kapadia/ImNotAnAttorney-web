@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/reddit-monitor — Reddit Response Pipeline
+ * @file /api/cron/reddit-monitor, Reddit Response Pipeline
  *
  * Schedule: Every 30 minutes via cron-job.org.
  * Protected by CRON_AUTH_TOKEN bearer token.
@@ -29,7 +29,7 @@ export const maxDuration = 60;
 const TARGET_SUBREDDITS = ['dui', 'legaladvice', 'probation', 'Felons', 'publicdefenders'];
 const USER_AGENT = 'ImNotAnAttorneyBot/1.0 (legal information monitoring)';
 const POSTS_PER_SUB = 25;
-const POST_AGE_LIMIT_MS = 24 * 60 * 60 * 1000; // 24h window — dedup guard prevents duplicate notifications
+const POST_AGE_LIMIT_MS = 24 * 60 * 60 * 1000; // 24h window, dedup guard prevents duplicate notifications
 const DELAY_BETWEEN_SUBS_MS = 1200; // Rate limit courtesy delay between subreddit fetches
 
 // ── Template content cache ────────────────────────────────────
@@ -147,7 +147,7 @@ async function sendTelegramNotification(
 
   // Message 1: Thread link (tap to open, read the post)
   const linkMessage = [
-    `🔴 r/${subreddit} — ${templateName}${stateLabel ? ` | ${stateLabel}` : ''}`,
+    `🔴 r/${subreddit}, ${templateName}${stateLabel ? ` | ${stateLabel}` : ''}`,
     '',
     `📌 "${threadTitle.slice(0, 200)}"`,
     '',
@@ -176,12 +176,12 @@ async function sendTelegramNotification(
 
     if (!res1.ok) {
       const body = await res1.text();
-      console.error(`[reddit-monitor] Telegram API error (link): ${res1.status} — ${body}`);
+      console.error(`[reddit-monitor] Telegram API error (link): ${res1.status}, ${body}`);
       return false;
     }
 
     // Send reply draft as separate message (copy-paste ready).
-    // Retry once on failure — msg 1 already sent, so Rahim has the link.
+    // Retry once on failure, msg 1 already sent, so Rahim has the link.
     // Without retry, dedup would skip this thread forever and the draft is lost.
     const replyBody = JSON.stringify({
       chat_id: chatId,
@@ -207,7 +207,7 @@ async function sendTelegramNotification(
 
     if (!res2.ok) {
       const body = await res2.text();
-      console.error(`[reddit-monitor] Telegram reply failed after retry: ${res2.status} — ${body}`);
+      console.error(`[reddit-monitor] Telegram reply failed after retry: ${res2.status}, ${body}`);
       return false;
     }
 
@@ -221,11 +221,11 @@ async function sendTelegramNotification(
 // ── Route handler ─────────────────────────────────────────────
 
 export async function GET(req: NextRequest) {
-  // Auth guard — validates Bearer token against CRON_AUTH_TOKEN
+  // Auth guard, validates Bearer token against CRON_AUTH_TOKEN
   const auth = requireCron(req);
   if (!auth.authorized) return auth.error;
 
-  // Idempotency guard — 25 minute window prevents overlapping runs
+  // Idempotency guard, 25 minute window prevents overlapping runs
   const lock = await acquireCronLock("reddit-monitor", 25 * 60 * 1000);
   if (!lock.shouldRun) {
     return NextResponse.json({ skipped: true, reason: lock.reason });
@@ -250,7 +250,7 @@ export async function GET(req: NextRequest) {
         const match = matchTemplate(post.title, post.selftext || '', sub);
         if (!match) continue;
 
-        // Dedup check — skip if we already have this thread in the queue
+        // Dedup check, skip if we already have this thread in the queue
         const { data: existing } = await supabase
           .from('reddit_response_queue')
           .select('id')
@@ -327,7 +327,7 @@ export async function GET(req: NextRequest) {
         }
       }
 
-      // Rate limit courtesy — pause between subreddit fetches
+      // Rate limit courtesy, pause between subreddit fetches
       if (sub !== TARGET_SUBREDDITS[TARGET_SUBREDDITS.length - 1]) {
         await sleep(DELAY_BETWEEN_SUBS_MS);
       }

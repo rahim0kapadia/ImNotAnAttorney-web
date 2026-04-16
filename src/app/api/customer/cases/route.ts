@@ -1,5 +1,5 @@
 /**
- * GET /api/customer/cases — Customer dashboard data.
+ * GET /api/customer/cases, Customer dashboard data.
  *
  * Returns the customer's orders and cases.
  * Auth: session cookie validated via requireCustomerAuth().

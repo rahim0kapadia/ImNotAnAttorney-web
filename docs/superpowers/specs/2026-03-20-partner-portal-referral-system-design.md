@@ -1,7 +1,7 @@
-# Partner Portal & Referral System — Design Spec + Plan
+# Partner Portal & Referral System, Design Spec + Plan
 
 **Date:** 2026-03-20
-**Status:** Draft — pending user review
+**Status:** Draft, pending user review
 **Triage:** FEATURE (5-8 new files, 3-5 modified files)
 
 ---
@@ -9,23 +9,23 @@
 ## Context
 
 - **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web`
-- **Problem:** Partners (bondsmen, affiliates, anyone) can apply and get approved, but have zero self-service access. The FAQ promises "see your running total anytime" — that page doesn't exist. The referral flow sends customers directly to the main site with no warm-up, losing ~30% conversion potential. The system is branded exclusively for bondsmen but should be open to anyone.
+- **Problem:** Partners (bondsmen, affiliates, anyone) can apply and get approved, but have zero self-service access. The FAQ promises "see your running total anytime", that page doesn't exist. The referral flow sends customers directly to the main site with no warm-up, losing ~30% conversion potential. The system is branded exclusively for bondsmen but should be open to anyone.
 - **Key files to read first:**
-  - `src/app/partners/page.tsx` — current public partner signup page
-  - `src/app/admin/partners/page.tsx` — admin partner dashboard
-  - `src/app/api/admin/partners/route.ts` — partner CRUD API
-  - `src/app/api/admin/partners/[id]/route.ts` — partner detail/update/payout API
-  - `src/lib/referral.ts` — Stripe promo code creation + commission logic
-  - `supabase/migrations/013-referral-system.sql` — DB schema (partners, referrals, partner_applications)
-  - `src/middleware.ts` — auth patterns (admin password, operator secret, cron secret)
-  - `src/app/score/page.tsx` — existing Defense Milestone Score quiz
-  - `src/app/my-case/[token]/page.tsx` — existing customer portal
+  - `src/app/partners/page.tsx`, current public partner signup page
+  - `src/app/admin/partners/page.tsx`, admin partner dashboard
+  - `src/app/api/admin/partners/route.ts`, partner CRUD API
+  - `src/app/api/admin/partners/[id]/route.ts`, partner detail/update/payout API
+  - `src/lib/referral.ts`, Stripe promo code creation + commission logic
+  - `supabase/migrations/013-referral-system.sql`, DB schema (partners, referrals, partner_applications)
+  - `src/middleware.ts`, auth patterns (admin password, operator secret, cron secret)
+  - `src/app/score/page.tsx`, existing Defense Milestone Score quiz
+  - `src/app/my-case/[token]/page.tsx`, existing customer portal
 - **Tech stack:** Next.js 15 (App Router), Tailwind CSS, Supabase, Stripe, Resend, Vercel
 - **Key decisions:**
-  - Magic link auth for partners (email + SMS via Twilio) — no passwords
-  - Flat partner structure — every partner is an individual, no hierarchy
+  - Magic link auth for partners (email + SMS via Twilio), no passwords
+  - Flat partner structure, every partner is an individual, no hierarchy
   - Company is a text label only (bridge page display + admin filtering). Not a relational table.
-  - Partners only see their own data — never other partners' data
+  - Partners only see their own data, never other partners' data
   - One commission tier: 10% discount to customer, 10% commission to partner
   - Three payment methods: Zelle, Venmo, check (with mailing address)
   - Referral flow uses bridge page + guided quiz, not a pricing table
@@ -38,7 +38,7 @@
 
 ## 1. Partner Portal
 
-### 1.1 Authentication — Magic Link
+### 1.1 Authentication, Magic Link
 
 Partners log in via magic link sent to email and (optionally) SMS.
 
@@ -82,9 +82,9 @@ CREATE INDEX idx_partner_sessions_token ON partner_sessions(session_token);
 CREATE TABLE partner_payouts (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   partner_id uuid NOT NULL REFERENCES partners(id),
-  amount integer NOT NULL,          -- cents
-  payment_method text NOT NULL,     -- 'zelle' | 'venmo' | 'check'
-  referral_ids uuid[] NOT NULL,     -- which referrals were included
+  amount integer NOT NULL,         , cents
+  payment_method text NOT NULL,    , 'zelle' | 'venmo' | 'check'
+  referral_ids uuid[] NOT NULL,    , which referrals were included
   notes text,
   created_at timestamptz DEFAULT now()
 );
@@ -93,15 +93,15 @@ CREATE INDEX idx_partner_payouts_partner ON partner_payouts(partner_id);
 
 **New DB columns on `partners`:**
 ```sql
-ALTER TABLE partners ADD COLUMN preferred_payment_method text; -- 'zelle' | 'venmo' | 'check'
-ALTER TABLE partners ADD COLUMN payment_zelle text;           -- email or phone
-ALTER TABLE partners ADD COLUMN payment_venmo text;           -- venmo handle
-ALTER TABLE partners ADD COLUMN payment_check_address text;   -- mailing address for checks
+ALTER TABLE partners ADD COLUMN preferred_payment_method text;, 'zelle' | 'venmo' | 'check'
+ALTER TABLE partners ADD COLUMN payment_zelle text;          , email or phone
+ALTER TABLE partners ADD COLUMN payment_venmo text;          , venmo handle
+ALTER TABLE partners ADD COLUMN payment_check_address text;  , mailing address for checks
 ```
 
 **New DB column on `partner_applications`:**
 ```sql
-ALTER TABLE partner_applications ADD COLUMN source text;      -- 'bondsman' | 'generic' | null
+ALTER TABLE partner_applications ADD COLUMN source text;     , 'bondsman' | 'generic' | null
 ```
 
 **Security:**
@@ -110,10 +110,10 @@ ALTER TABLE partner_applications ADD COLUMN source text;      -- 'bondsman' | 'g
 - Multi-device sessions via `partner_sessions` table (each login creates a new session row, no single-slot limitation)
 - 30-day session cookie, httpOnly + secure flags
 - Rate limit: 3 magic link requests per email per hour (use existing `checkRateLimit()` from `src/lib/rate-limit.ts`, key: `partner-magic:${email}`)
-- Middleware: `/api/partner/*` routes check session cookie — MUST be inserted BEFORE the CSP block in `src/middleware.ts` (after cron auth, before line 84) to prevent fall-through
+- Middleware: `/api/partner/*` routes check session cookie, MUST be inserted BEFORE the CSP block in `src/middleware.ts` (after cron auth, before line 84) to prevent fall-through
 - Cleanup cron: delete expired/used magic link tokens and expired sessions periodically
 
-### 1.2 Dashboard — Tools First
+### 1.2 Dashboard, Tools First
 
 Post-login, the dashboard leads with action items. The partner wants to grab their tools and get back in the field.
 
@@ -127,12 +127,12 @@ Post-login, the dashboard leads with action items. The partner wants to grab the
 
 **Section 2: Ready-to-Send Messages** (pre-written text templates)
 - 3-4 templates with partner's code and URL pre-filled:
-  - **Check-in pitch:** "Hey [name], checking in. Quick tip — a lot of my clients use this service to get the right questions to ask their attorney. Helped a few people catch things their lawyer missed. Use my code [CODE] for 10% off: [URL]"
+  - **Check-in pitch:** "Hey [name], checking in. Quick tip, a lot of my clients use this service to get the right questions to ask their attorney. Helped a few people catch things their lawyer missed. Use my code [CODE] for 10% off: [URL]"
   - **Right after bonding out:** "Hey [name], you're going to have a lot of questions about your case. This service researches your charges and gives you the exact questions to ask your attorney. Use my code [CODE] for 10% off: [URL]"
-  - **Follow-up nudge:** "Hey [name], still dealing with your case? The people I've sent here say it helped them feel way more prepared for their attorney meetings. [URL] — my code [CODE] saves you 10%."
+  - **Follow-up nudge:** "Hey [name], still dealing with your case? The people I've sent here say it helped them feel way more prepared for their attorney meetings. [URL], my code [CODE] saves you 10%."
   - **General share:** "If you or someone you know is dealing with criminal charges, this service helps you hold your attorney accountable. Code [CODE] for 10% off: [URL]"
 - Each template has a one-tap "Copy" button
-- Templates use `[name]` placeholder — partner fills in the defendant's name when pasting
+- Templates use `[name]` placeholder, partner fills in the defendant's name when pasting
 
 **Section 3: Your Earnings**
 - Total earned (all time)
@@ -142,7 +142,7 @@ Post-login, the dashboard leads with action items. The partner wants to grab the
 
 **Section 4: Recent Activity**
 - List of recent referrals (date, tier purchased, commission earned)
-- No customer names or PII — just: "Mar 18 — Case Decoder — $17.73 earned"
+- No customer names or PII, just: "Mar 18, Case Decoder, $17.73 earned"
 
 **Section 5: Payment Settings**
 - Preferred payment method selector (Zelle / Venmo / Check)
@@ -153,7 +153,7 @@ Post-login, the dashboard leads with action items. The partner wants to grab the
 - Save button -> PATCH to `/api/partner/settings`
 
 **Section 6: Profile**
-- Name, email, phone, company (display only — contact admin to change)
+- Name, email, phone, company (display only, contact admin to change)
 - "Need help? Email support@imnotanattorney.com"
 
 ### 1.3 Partner API Routes
@@ -161,7 +161,7 @@ Post-login, the dashboard leads with action items. The partner wants to grab the
 All routes under `/api/partner/*`, authenticated via session cookie.
 
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | POST | `/api/partner/magic-link` | Request magic link (public, rate-limited) |
 | GET | `/api/partner/magic-link/verify` | Verify token, set session cookie |
 | GET | `/api/partner/dashboard` | Return partner data + recent referrals |
@@ -178,7 +178,7 @@ A short redirect route that captures the partner's promo code and routes to the 
 
 `imnotanattorney.com/r/MIKE10` -> renders bridge page with partner context.
 
-**Implementation:** Next.js dynamic route at `src/app/r/[code]/page.tsx`. Server-side: looks up partner by `promo_code` WHERE `status = 'approved'`. If partner not found or suspended/pending, show a generic fallback page ("This referral link isn't active") with a CTA to the main site — no broken state. Passes partner name + company to the bridge page component. Also sets a cookie `ref=MIKE10` (30-day expiry, `httpOnly: false` — the checkout page is client-rendered and needs to read this cookie via JS) so the code persists through the entire flow to checkout.
+**Implementation:** Next.js dynamic route at `src/app/r/[code]/page.tsx`. Server-side: looks up partner by `promo_code` WHERE `status = 'approved'`. If partner not found or suspended/pending, show a generic fallback page ("This referral link isn't active") with a CTA to the main site, no broken state. Passes partner name + company to the bridge page component. Also sets a cookie `ref=MIKE10` (30-day expiry, `httpOnly: false`, the checkout page is client-rendered and needs to read this cookie via JS) so the code persists through the entire flow to checkout.
 
 **Edge cases:**
 - Partner suspended → generic fallback, no partner name shown
@@ -188,7 +188,7 @@ A short redirect route that captures the partner's promo code and routes to the 
 
 ### 2.2 Bridge Page
 
-A short, warm interstitial that transfers trust from the partner to the service. Per Russell Brunson's bridge page framework — warm traffic from a trusted source, so the bridge is short and personal.
+A short, warm interstitial that transfers trust from the partner to the service. Per Russell Brunson's bridge page framework, warm traffic from a trusted source, so the bridge is short and personal.
 
 **Copy:**
 
@@ -206,7 +206,7 @@ A short, warm interstitial that transfers trust from the partner to the service.
 
 **Dynamic elements:**
 - Partner name from DB (`Mike`)
-- Company name from DB (`ABC Bail Bonds`) — if no company, just shows name
+- Company name from DB (`ABC Bail Bonds`), if no company, just shows name
 - Promo code from URL
 - Copy uses gender-neutral "their/they" throughout: "They see a lot of people go through what you're going through." / "Their code MIKE10 saves you 10%."
 
@@ -214,7 +214,7 @@ A short, warm interstitial that transfers trust from the partner to the service.
 
 After the bridge page, the flow uses Ryan Levesque's ASK Method to guide the customer to the right product without showing a pricing table.
 
-**Step 1 — SMIQ (Single Most Important Question):**
+**Step 1, SMIQ (Single Most Important Question):**
 Full-screen, one question: "What are you charged with?"
 - DUI / DWI → `dui-first-offense`
 - Drug possession → `drug-possession`
@@ -226,9 +226,9 @@ Full-screen, one question: "What are you charged with?"
 - Self-defense claim → `self-defense`
 - Other criminal charges → routes to `case-decoder` (no charge-specific playbook)
 
-These map directly to charge-type-specific playbook slugs in `TIER_CORE`. Every SMIQ option maps to an actual existing slug — no non-existent tiers. The "Other" bucket routes to Case Decoder ($197) since there's no generic playbook.
+These map directly to charge-type-specific playbook slugs in `TIER_CORE`. Every SMIQ option maps to an actual existing slug, no non-existent tiers. The "Other" bucket routes to Case Decoder ($197) since there's no generic playbook.
 
-**Step 2 — Micro-commitment follow-ups (2-3 questions):**
+**Step 2, Micro-commitment follow-ups (2-3 questions):**
 Based on SMIQ answer, 2-3 tailored follow-up questions. Examples:
 - "Do you have an attorney yet?" (Yes / No / Public defender)
 - "How long ago were you charged?" (This week / This month / Months ago)
@@ -236,17 +236,17 @@ Based on SMIQ answer, 2-3 tailored follow-up questions. Examples:
 
 Each question one per screen, micro-commitment style. Progress bar at top.
 
-**Step 3 — Personalized recommendation:**
+**Step 3, Personalized recommendation:**
 Based on answers, recommend ONE tier from actual `TIER_CORE` slugs with empowerment framing. The recommendation engine maps answers to tiers:
 
 | Situation | Recommended Tier | Price | Slug |
-|-----------|-----------------|-------|------|
+|---------, |---------------, |-------|------|
 | Has attorney, wants quick prep | Charge-specific Playbook | $97 | `dui-first-offense`, `drug-possession`, etc. |
 | Has attorney, not communicating | Case Decoder | $197 | `case-decoder` |
 | Complex charges, needs full picture | Intelligence Brief | $997 | `intelligence-brief` |
 | Federal/serious, has discovery docs | X-Ray | $2,497 | `x-ray` |
 
-Note: Intelligence Brief is $997 (not $497). All prices come from `TIER_CORE` — never hardcoded in the quiz.
+Note: Intelligence Brief is $997 (not $497). All prices come from `TIER_CORE`, never hardcoded in the quiz.
 
 **Display:** Recommendation card with:
 - What it does (empowerment framing, not feature list)
@@ -267,7 +267,7 @@ The current checkout API (`src/app/api/checkout/route.ts`) uses `allow_promotion
 2. If `ref` cookie exists, checkout page sends `promoCode` field in the POST to `/api/checkout`
 3. Checkout API looks up the partner's `stripe_promo_code_id` from the `partners` table
 4. Creates Stripe session with `discounts: [{ promotion_code: stripePromoCodeId }]` instead of `allow_promotion_codes: true`
-5. If no referral cookie, behavior is unchanged (`allow_promotion_codes: true` — customer can still manually type a code)
+5. If no referral cookie, behavior is unchanged (`allow_promotion_codes: true`, customer can still manually type a code)
 
 **Conflict with upgrade credits:** Stripe Checkout in `mode: "payment"` only allows ONE entry in the `discounts` array. The "both referral + upgrade credit" case cannot use two separate discount entries.
 
@@ -276,7 +276,7 @@ The current checkout API (`src/app/api/checkout/route.ts`) uses `allow_promotion
 2. Add the upgrade credit amount (e.g., $97 from prior purchase)
 3. Create a one-time `amount_off` coupon via Stripe API: `amount_off = referral_discount + upgrade_credit` in cents
 4. Apply that single coupon: `discounts: [{ coupon: combinedCouponId }]`
-5. Track referral attribution via `metadata` on the Stripe session (not the discount): `metadata: { partner_id, partner_promo_code }` — the webhook reads this for partner credit
+5. Track referral attribution via `metadata` on the Stripe session (not the discount): `metadata: { partner_id, partner_promo_code }`, the webhook reads this for partner credit
 
 **The 4-way conditional:**
 ```
@@ -287,10 +287,10 @@ if (hasReferral && !hasUpgradeCredit):
 if (!hasReferral && hasUpgradeCredit):
   → discounts: [{ coupon: upgradeCreditCouponId }]  (existing behavior)
 if (!hasReferral && !hasUpgradeCredit):
-  → allow_promotion_codes: true  (existing behavior — customer can manually type a code)
+  → allow_promotion_codes: true  (existing behavior, customer can manually type a code)
 ```
 
-Note: `allow_promotion_codes` must be `false` when using `discounts` array — this is by Stripe design.
+Note: `allow_promotion_codes` must be `false` when using `discounts` array, this is by Stripe design.
 
 **Attribution flow:**
 1. Cookie carries the promo code through to checkout
@@ -350,7 +350,7 @@ Upgrade `/my-case/[token]` from a status/delivery page to a permanent home base.
 
 If customer came through a partner referral:
 - Show: "Your bondsman's code **MIKE10** saved you 10% on your purchase."
-- Subtle, non-intrusive — makes the bondsman look good
+- Subtle, non-intrusive, makes the bondsman look good
 
 ### 4.3 Future: Chatbot (Out of Scope)
 
@@ -385,17 +385,17 @@ Update `src/middleware.ts`:
 
 **Matcher config:** Add `"/api/partner/:path*"` to the explicit matcher array (alongside `/api/admin/:path*`, etc.) for consistency.
 
-**Auth approach — route-level, NOT middleware-level:** The existing middleware runs in Edge Runtime and only checks headers/env vars — no DB calls. Adding a Supabase query to middleware would add latency and a failure point to every partner API request. Instead:
+**Auth approach, route-level, NOT middleware-level:** The existing middleware runs in Edge Runtime and only checks headers/env vars, no DB calls. Adding a Supabase query to middleware would add latency and a failure point to every partner API request. Instead:
 
 - Middleware: for `/api/partner/*` routes, check if path is an exempt public route first. Pseudocode:
   ```
   if (pathname.startsWith("/api/partner")) {
-    // Public routes — no auth needed
+    // Public routes, no auth needed
     if (pathname === "/api/partner/magic-link" ||
         pathname === "/api/partner/magic-link/verify") {
       return NextResponse.next();
     }
-    // All other partner routes — check cookie exists (no DB call)
+    // All other partner routes, check cookie exists (no DB call)
     const session = req.cookies.get("partner-session");
     if (!session?.value) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -446,13 +446,13 @@ Used by: payout handler (task 1: `total_paid_out`), webhook (task 2: `total_refe
 ## 6. Design Principles (Expert-Sourced)
 
 | Principle | Source | Application |
-|-----------|--------|-------------|
+|---------, |------, |-------------|
 | Trust transfer | Cialdini, Unity Principle (*Pre-Suasion*) | Bridge page carries partner's name + company. "Mike from ABC Bail Bonds referred you. Here's why." |
-| Bridge page | Brunson, Bridge Funnel (*DotCom Secrets*) | Short interstitial — acknowledge referrer, one CTA. Warm traffic = short bridge. |
+| Bridge page | Brunson, Bridge Funnel (*DotCom Secrets*) | Short interstitial, acknowledge referrer, one CTA. Warm traffic = short bridge. |
 | SMIQ-first quiz | Levesque, ASK Method (*Ask*) | First question: "What are you charged with?" Buckets before follow-ups. |
 | Micro-commitments | Levesque, ASK Method (*Ask*) | One question per screen, progress bar, each answer builds understanding. |
 | No pricing table | Hormozi, Value Equation (*$100M Offers*) | Guided recommendation of ONE tier. No menu, no comparison. |
-| Empowerment framing | Crisis purchasing psychology (PMC/Frontiers) | "Take back control of your case" — not "buy our research." Defendants buy to regain control. |
+| Empowerment framing | Crisis purchasing psychology (PMC/Frontiers) | "Take back control of your case", not "buy our research." Defendants buy to regain control. |
 | Bridge +30% conversion | ClickBank affiliate research 2025 | Bridge pages convert ~30% higher than direct linking. |
 
 ---
@@ -460,12 +460,12 @@ Used by: payout handler (task 1: `total_paid_out`), webhook (task 2: `total_refe
 ## 7. Out of Scope
 
 - Chatbot for customer portal (future project)
-- Partner notifications (new referral, payout) — fast follow
-- Company aggregate views — explicitly rejected (no partner sees another's data)
-- Partner invite system — future
-- Custom commission UI — DB supports it, UI doesn't expose it
-- A/B testing bridge vs direct — can add later
-- Twilio for partner notifications — only magic links in v1
+- Partner notifications (new referral, payout), fast follow
+- Company aggregate views, explicitly rejected (no partner sees another's data)
+- Partner invite system, future
+- Custom commission UI, DB supports it, UI doesn't expose it
+- A/B testing bridge vs direct, can add later
+- Twilio for partner notifications, only magic links in v1
 
 ---
 
@@ -494,7 +494,7 @@ Used by: payout handler (task 1: `total_paid_out`), webhook (task 2: `total_refe
 ## 9. Files to Modify
 
 | # | File | Change |
-|---|------|--------|
+|---|------|------, |
 | 1 | `src/middleware.ts` | Add `/api/partner/:path*` to matcher + cookie-exists check (no DB call in Edge) |
 | 2 | `src/app/partners/page.tsx` | Rewrite to generic affiliate language, derive commission table from TIER_CORE |
 | 3 | `src/app/my-case/[token]/page.tsx` | Add tier-aware content, always-on sections, referral attribution |
@@ -512,14 +512,14 @@ Used by: payout handler (task 1: `total_paid_out`), webhook (task 2: `total_refe
 1. Fix race condition in payout: atomic increment on `total_paid_out` in `src/app/api/admin/partners/[id]/route.ts` (use Supabase RPC or raw SQL `total_paid_out = total_paid_out + $amount`)
 2. Fix race condition in webhook: atomic increment on `total_referrals` and `total_commission` in `src/app/api/webhooks/stripe/route.ts`
 3. Fix promo code generation in `src/app/api/admin/partners/route.ts`: add DB uniqueness check + randomized suffix for collision avoidance
-4. Fix timing-safe compare in `src/middleware.ts`: replace current XOR approach with HMAC-SHA256 comparison (hash both values with a fixed key, then compare fixed-length hashes — eliminates length oracle entirely). Edge Runtime supports `crypto.subtle.importKey` + `crypto.subtle.sign` for HMAC.
+4. Fix timing-safe compare in `src/middleware.ts`: replace current XOR approach with HMAC-SHA256 comparison (hash both values with a fixed key, then compare fixed-length hashes, eliminates length oracle entirely). Edge Runtime supports `crypto.subtle.importKey` + `crypto.subtle.sign` for HMAC.
 5. Add error handling to `toggleStatus` and `markPayout` in `src/app/admin/partners/page.tsx`
 
 ### Phase 1: Foundation
 6. Write + run migration `014-partner-portal.sql` (includes UNIQUE constraint on `promo_code`)
-7. Create `src/lib/twilio.ts` — SMS utility
-8. Create `src/lib/partner-auth.ts` — magic link + session logic + `validatePartnerSession()` helper
-9. Update `src/middleware.ts` — add `/api/partner/:path*` to matcher + cookie-exists check (no DB in Edge)
+7. Create `src/lib/twilio.ts`, SMS utility
+8. Create `src/lib/partner-auth.ts`, magic link + session logic + `validatePartnerSession()` helper
+9. Update `src/middleware.ts`, add `/api/partner/:path*` to matcher + cookie-exists check (no DB in Edge)
 
 ### Phase 2: Partner Portal
 10. Create `/partner/login` page + `/api/partner/magic-link` API
@@ -543,4 +543,4 @@ Used by: payout handler (task 1: `total_paid_out`), webhook (task 2: `total_refe
 24. Update payout POST handler: create `partner_payouts` record with method + batch info
 
 ### Phase 5: Customer Portal
-25. Upgrade `/my-case/[token]` — tier-aware content, always-on, referral attribution (extract sub-components to keep under 1000 lines)
+25. Upgrade `/my-case/[token]`, tier-aware content, always-on, referral attribution (extract sub-components to keep under 1000 lines)

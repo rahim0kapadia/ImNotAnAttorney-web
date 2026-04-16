@@ -1,26 +1,26 @@
-# Data Intelligence Platform — Phase 0 + Phase 1 Implementation Plan
+# Data Intelligence Platform, Phase 0 + Phase 1 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Populate 6 empty Tier 9 tables (Phase 0), then deploy 8 new external intelligence tables + 7 ingestion scripts + product integration extensions (Phase 1) to make Officer Background Check, Judge Report Card, and Similar Cases Analyzer production-ready.
 
-**Architecture:** Phase 0 applies existing fixed SQL files via the Supabase Management API to unblock Tier 9 products. Phase 1 adds a Shared Intelligence Layer (external data tables) and ingestion scripts following the established `scripts/bulk-*.mjs` pattern — stream-based, `--dry-run`/`--apply` modes, source URLs tracked per row. Product code (query.ts, render.ts, variables.ts) extended to read from new tables.
+**Architecture:** Phase 0 applies existing fixed SQL files via the Supabase Management API to unblock Tier 9 products. Phase 1 adds a Shared Intelligence Layer (external data tables) and ingestion scripts following the established `scripts/bulk-*.mjs` pattern, stream-based, `, dry-run`/`, apply` modes, source URLs tracked per row. Product code (query.ts, render.ts, variables.ts) extended to read from new tables.
 
 **Tech Stack:** Next.js 15, Supabase (Management API for schema, PostgREST for data), Node.js ESM scripts, CourtListener API v4, USSC bulk data, Brady/Giglio List, National Police Index.
 
 **Spec:** `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\specs\2026-04-11-data-intelligence-platform-design.md`
 
 **Review notes from spec audit (2026-04-11):**
-- pg_trgm extension ordering — FIXED in spec (moved before GIN indexes)
-- CHECK constraint — FIXED (cardinality() instead of array_length())
-- Daubert table naming — FIXED (standardized to `daubert_challenge_corpus`)
-- RLS policies — use IF NOT EXISTS guard pattern (matching existing Tier 9 migration)
-- Ingestion scripts — must UPSERT on UNIQUE constraints, not plain INSERT
-- bench_jury_divergence — re-run with lower threshold (bench >= 1 AND jury >= 1)
+- pg_trgm extension ordering, FIXED in spec (moved before GIN indexes)
+- CHECK constraint, FIXED (cardinality() instead of array_length())
+- Daubert table naming, FIXED (standardized to `daubert_challenge_corpus`)
+- RLS policies, use IF NOT EXISTS guard pattern (matching existing Tier 9 migration)
+- Ingestion scripts, must UPSERT on UNIQUE constraints, not plain INSERT
+- bench_jury_divergence, re-run with lower threshold (bench >= 1 AND jury >= 1)
 
 ---
 
-## Phase 0 — Unblock Existing Data
+## Phase 0, Unblock Existing Data
 
 ### Task 1: Apply officer_reliability fixed SQL
 
@@ -44,7 +44,7 @@ SUPABASE_ACCESS_TOKEN=$(grep SUPABASE_ACCESS_TOKEN C:/Users/email/projects/ImNot
   node scripts/apply-pending-sql.mjs data/bulk-verify/master-extractor-updates/officer_reliability-updates-fixed.sql
 ```
 
-Expected: "SQL applied successfully" — ~5,909 rows inserted
+Expected: "SQL applied successfully", ~5,909 rows inserted
 
 - [ ] **Step 3: Verify row count**
 
@@ -70,7 +70,7 @@ SUPABASE_ACCESS_TOKEN=$(grep SUPABASE_ACCESS_TOKEN C:/Users/email/projects/ImNot
   node scripts/apply-pending-sql.mjs data/bulk-verify/master-extractor-updates/judge_prosecutor_pairings-updates-fixed.sql
 ```
 
-Expected: "SQL applied successfully" — ~205 rows inserted
+Expected: "SQL applied successfully", ~205 rows inserted
 
 - [ ] **Step 2: Verify row count**
 
@@ -96,7 +96,7 @@ SUPABASE_ACCESS_TOKEN=$(grep SUPABASE_ACCESS_TOKEN C:/Users/email/projects/ImNot
   node scripts/apply-pending-sql.mjs data/bulk-verify/master-extractor-updates/sentencing_distributions-updates.sql
 ```
 
-Expected: "SQL applied successfully" — ~122 rows inserted
+Expected: "SQL applied successfully", ~122 rows inserted
 
 - [ ] **Step 2: Verify row count**
 
@@ -122,7 +122,7 @@ SUPABASE_ACCESS_TOKEN=$(grep SUPABASE_ACCESS_TOKEN C:/Users/email/projects/ImNot
   node scripts/apply-pending-sql.mjs data/bulk-verify/master-extractor-updates/appellate_trends-updates.sql
 ```
 
-Expected: "SQL applied successfully" — ~1,011 rows inserted
+Expected: "SQL applied successfully", ~1,011 rows inserted
 
 - [ ] **Step 2: Verify row count**
 
@@ -140,7 +140,7 @@ Expected: 1,011+ rows
 **Files:**
 - Modify: `scripts/classify-case-law.mjs:350-354` and `:418-422`
 
-The script grabs `opUrls[0]` blindly — could cite a dissent instead of the majority opinion. Fix: request `type` field and filter for majority/lead opinions.
+The script grabs `opUrls[0]` blindly, could cite a dissent instead of the majority opinion. Fix: request `type` field and filter for majority/lead opinions.
 
 - [ ] **Step 1: Fix first occurrence (~line 350)**
 
@@ -166,7 +166,7 @@ let opPath;
 if (opUrls.length === 1) {
   opPath = opUrls[0].replace("https://www.courtlistener.com", "");
 } else {
-  // Check opinion types — prefer "010combined" or "015lead", skip "040dissent"
+  // Check opinion types, prefer "010combined" or "015lead", skip "040dissent"
   let majorityUrl = null;
   for (const url of opUrls) {
     const checkPath = url.replace("https://www.courtlistener.com", "");
@@ -202,7 +202,7 @@ const cluster = await clFetch(`/api/rest/v4/clusters/${clId}/?fields=sub_opinion
 const opUrls = cluster.sub_opinions || [];
 
 if (opUrls.length > 0) {
-  // Select majority/lead opinion — avoid citing dissents
+  // Select majority/lead opinion, avoid citing dissents
   let opPath;
   if (opUrls.length === 1) {
     opPath = opUrls[0].replace("https://www.courtlistener.com", "");
@@ -252,7 +252,7 @@ if (bench_sample >= 1 && jury_sample >= 1) {
 - [ ] **Step 2: Re-run in dry-run mode to check output**
 
 ```bash
-node scripts/bulk-bench-jury-divergence.mjs --dry-run
+node scripts/bulk-bench-jury-divergence.mjs,dry-run
 ```
 
 Expected: Stats showing N divergence records found (should be 50-200 with lower threshold)
@@ -342,7 +342,7 @@ console.log('isEmpty:', data.isEmpty);
 
 ```bash
 git add -A
-git commit -m "feat(tier9): Phase 0 complete — all 9 Tier 9 tables populated
+git commit -m "feat(tier9): Phase 0 complete, all 9 Tier 9 tables populated
 
 Applied fixed SQL for officer_reliability (5,909), judge_prosecutor_pairings (205),
 sentencing_distributions (122), appellate_trends (1,011+).
@@ -352,9 +352,9 @@ Fixed sub_opinions[0] bug to select majority opinion."
 
 ---
 
-## Phase 1 — Core External Sources
+## Phase 1, Core External Sources
 
-### Task 8: Apply schema migration — 8 new external intelligence tables
+### Task 8: Apply schema migration, 8 new external intelligence tables
 
 **Files:**
 - Create: `supabase/migrations/20260411_external_intelligence_layer.sql`
@@ -365,20 +365,20 @@ Fixed sub_opinions[0] bug to select majority opinion."
 Create `supabase/migrations/20260411_external_intelligence_layer.sql` with the full SQL from the spec (Section 4.2), incorporating review fixes:
 
 ```sql
--- External Intelligence Layer — 8 new tables for the Shared Intelligence Layer
--- Part of Data Intelligence Platform Phase 1.
--- See: docs/superpowers/specs/2026-04-11-data-intelligence-platform-design.md
---
--- Tables: officer_external_intel, judge_sentencing_patterns, prosecution_profiles,
---         outcome_benchmarks, exoneration_patterns, forensic_lab_profiles,
---         citation_authority, data_source_freshness
---
--- Applied via Supabase Management API.
+, External Intelligence Layer, 8 new tables for the Shared Intelligence Layer
+, Part of Data Intelligence Platform Phase 1.
+, See: docs/superpowers/specs/2026-04-11-data-intelligence-platform-design.md
+, 
+, Tables: officer_external_intel, judge_sentencing_patterns, prosecution_profiles,
+,         outcome_benchmarks, exoneration_patterns, forensic_lab_profiles,
+,         citation_authority, data_source_freshness
+, 
+, Applied via Supabase Management API.
 
--- Extensions first (required by GIN trgm indexes below)
+, Extensions first (required by GIN trgm indexes below)
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
--- ── officer_external_intel ──────────────────────────────────────────────────
+, ── officer_external_intel ──────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS officer_external_intel (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   officer_name text NOT NULL,
@@ -410,7 +410,7 @@ CREATE INDEX IF NOT EXISTS idx_officer_ext_name ON officer_external_intel
   USING gin (officer_name_normalized gin_trgm_ops);
 CREATE INDEX IF NOT EXISTS idx_officer_ext_state ON officer_external_intel (state);
 
--- ── judge_sentencing_patterns ───────────────────────────────────────────────
+, ── judge_sentencing_patterns ───────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS judge_sentencing_patterns (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   judge_name text NOT NULL,
@@ -448,7 +448,7 @@ CREATE INDEX IF NOT EXISTS idx_judge_sent_name ON judge_sentencing_patterns
 CREATE INDEX IF NOT EXISTS idx_judge_sent_district ON judge_sentencing_patterns (district);
 CREATE INDEX IF NOT EXISTS idx_judge_sent_state ON judge_sentencing_patterns (state);
 
--- ── prosecution_profiles ────────────────────────────────────────────────────
+, ── prosecution_profiles ────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS prosecution_profiles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   office_name text NOT NULL,
@@ -477,7 +477,7 @@ CREATE TABLE IF NOT EXISTS prosecution_profiles (
 CREATE INDEX IF NOT EXISTS idx_prosecution_state ON prosecution_profiles (state);
 CREATE INDEX IF NOT EXISTS idx_prosecution_district ON prosecution_profiles (district);
 
--- ── outcome_benchmarks ──────────────────────────────────────────────────────
+, ── outcome_benchmarks ──────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS outcome_benchmarks (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   jurisdiction_level text NOT NULL,
@@ -514,7 +514,7 @@ CREATE INDEX IF NOT EXISTS idx_outcome_jurisdiction ON outcome_benchmarks (juris
 CREATE INDEX IF NOT EXISTS idx_outcome_offense ON outcome_benchmarks (offense_type);
 CREATE INDEX IF NOT EXISTS idx_outcome_state ON outcome_benchmarks (state);
 
--- ── exoneration_patterns ────────────────────────────────────────────────────
+, ── exoneration_patterns ────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS exoneration_patterns (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   offense_type text NOT NULL,
@@ -540,7 +540,7 @@ CREATE TABLE IF NOT EXISTS exoneration_patterns (
 
 CREATE INDEX IF NOT EXISTS idx_exoneration_offense ON exoneration_patterns (offense_type);
 
--- ── forensic_lab_profiles ───────────────────────────────────────────────────
+, ── forensic_lab_profiles ───────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS forensic_lab_profiles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   lab_name text NOT NULL,
@@ -566,7 +566,7 @@ CREATE TABLE IF NOT EXISTS forensic_lab_profiles (
 
 CREATE INDEX IF NOT EXISTS idx_forensic_lab_state ON forensic_lab_profiles (state);
 
--- ── citation_authority ──────────────────────────────────────────────────────
+, ── citation_authority ──────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS citation_authority (
   cluster_id text PRIMARY KEY,
   case_name text,
@@ -584,7 +584,7 @@ CREATE TABLE IF NOT EXISTS citation_authority (
   updated_at timestamptz DEFAULT now()
 );
 
--- ── data_source_freshness ───────────────────────────────────────────────────
+, ── data_source_freshness ───────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS data_source_freshness (
   source_key text PRIMARY KEY,
   source_name text NOT NULL,
@@ -599,7 +599,7 @@ CREATE TABLE IF NOT EXISTS data_source_freshness (
   updated_at timestamptz DEFAULT now()
 );
 
--- ── Extensions to existing tables ───────────────────────────────────────────
+, ── Extensions to existing tables ───────────────────────────────────────────
 
 ALTER TABLE statute_case_law
   ADD COLUMN IF NOT EXISTS citation_depth integer,
@@ -610,7 +610,7 @@ ALTER TABLE officer_reliability
   ADD COLUMN IF NOT EXISTS brady_status text,
   ADD COLUMN IF NOT EXISTS decertified boolean DEFAULT false;
 
--- ── RLS policies (idempotent, matching existing Tier 9 pattern) ─────────────
+, ── RLS policies (idempotent, matching existing Tier 9 pattern) ─────────────
 
 ALTER TABLE officer_external_intel ENABLE ROW LEVEL SECURITY;
 ALTER TABLE judge_sentencing_patterns ENABLE ROW LEVEL SECURITY;
@@ -708,7 +708,7 @@ VALUES
   ('cl_api_opinions_cited', 'CourtListener Opinions-Cited API', 'https://www.courtlistener.com/api/rest/v4/opinions-cited/', 365, 'on-demand', 'Citation depth scoring'),
   ('ussc_individual_datafiles', 'USSC Individual Sentencing Datafiles', 'https://www.ussc.gov/research/datafiles/commission-datafiles', 400, 'annual (fall 2026)', 'SAS/SPSS format, FY2002-FY2025'),
   ('bjs_felony_sentences', 'BJS Felony Sentences in State Courts', 'https://bjs.ojp.gov/topics/courts', 400, 'biennial', 'National plea vs trial outcomes'),
-  ('brady_giglio_list', 'Brady/Giglio List', 'https://giglio-bradylist.com/', 45, 'monthly scrape', 'No API — web scraper'),
+  ('brady_giglio_list', 'Brady/Giglio List', 'https://giglio-bradylist.com/', 45, 'monthly scrape', 'No API, web scraper'),
   ('national_police_index', 'National Police Index (Invisible Institute)', 'https://invisible.institute/national-police-index', 120, 'quarterly dataset release', 'Downloadable dataset')
 ON CONFLICT (source_key) DO NOTHING;
 SQL
@@ -736,7 +736,7 @@ Create `scripts/ingest-ussc-sentencing.mjs`:
  * Aggregates sentencing statistics per judge per offense type.
  *
  * Data format: Fixed-width ASCII files from ussc.gov.
- * Download separately — this script processes already-downloaded files.
+ * Download separately, this script processes already-downloaded files.
  *
  * Prerequisites:
  *   - Download USSC ASCII files to data/external/ussc/
@@ -744,8 +744,8 @@ Create `scripts/ingest-ussc-sentencing.mjs`:
  *
  * Usage:
  *   node scripts/ingest-ussc-sentencing.mjs                    # Dry-run (generate SQL)
- *   node scripts/ingest-ussc-sentencing.mjs --apply            # Generate + apply
- *   node scripts/ingest-ussc-sentencing.mjs --limit 1000       # Process first N cases
+ *   node scripts/ingest-ussc-sentencing.mjs,apply            # Generate + apply
+ *   node scripts/ingest-ussc-sentencing.mjs,limit 1000       # Process first N cases
  */
 import fs from "fs";
 import path from "path";
@@ -759,8 +759,8 @@ const USSC_DIR = path.join(PROJECT_ROOT, "data", "external", "ussc");
 const OUTPUT_DIR = path.join(PROJECT_ROOT, "data", "bulk-verify", "external-intel");
 
 const args = process.argv.slice(2);
-const dryRun = !args.includes("--apply");
-const limitIdx = args.indexOf("--limit");
+const dryRun = !args.includes(", apply");
+const limitIdx = args.indexOf(", limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 
 // Ensure output directory exists
@@ -768,7 +768,7 @@ fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
 // ── USSC column positions (from USSC codebook) ─────────────────────────────
 // These map fixed-width positions to field names for the opafy*.dat files.
-// Positions vary by fiscal year — this covers FY2016+ format.
+// Positions vary by fiscal year, this covers FY2016+ format.
 // For earlier years, adjust positions or use the SAS/SPSS reader approach.
 const USSC_COLUMNS = {
   USSCIDN: { start: 0, end: 7 },        // case ID
@@ -785,7 +785,7 @@ const USSC_COLUMNS = {
   DISPOSIT: { start: 56, end: 57 },      // disposition (plea/trial)
 };
 // NOTE: Actual positions MUST be verified against the codebook for each FY file.
-// The above is illustrative — implementer must download codebook PDF from ussc.gov.
+// The above is illustrative, implementer must download codebook PDF from ussc.gov.
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -835,7 +835,7 @@ async function main() {
     for await (const line of rl) {
       if (totalCases >= limit) break;
 
-      // Parse fields — adapt parsing based on file format (.dat vs .csv)
+      // Parse fields, adapt parsing based on file format (.dat vs .csv)
       let fields;
       if (file.endsWith(".csv")) {
         fields = parseCSVLine(line);
@@ -1037,7 +1037,7 @@ function parseCSVLine(line) {
 main().catch(err => { console.error(err); process.exit(1); });
 ```
 
-**Important note for implementer:** The `parseFixedWidth()` and `parseCSVLine()` functions are stubs — the USSC codebook defines exact column positions that vary by fiscal year. Download the codebook from https://www.ussc.gov/research/datafiles/commission-datafiles and implement the parser based on the actual file format received. The aggregation and SQL generation logic above is complete.
+**Important note for implementer:** The `parseFixedWidth()` and `parseCSVLine()` functions are stubs, the USSC codebook defines exact column positions that vary by fiscal year. Download the codebook from https://www.ussc.gov/research/datafiles/commission-datafiles and implement the parser based on the actual file format received. The aggregation and SQL generation logic above is complete.
 
 - [ ] **Step 2: Commit**
 
@@ -1057,7 +1057,7 @@ BJS data comes as downloadable datasets (CSV/fixed-width). This script parses na
 
 - [ ] **Step 1: Create the script**
 
-Create `scripts/ingest-bjs-felony-sentences.mjs` following the same pattern as Task 10 but simpler — BJS provides pre-aggregated national and state-level data. Key differences:
+Create `scripts/ingest-bjs-felony-sentences.mjs` following the same pattern as Task 10 but simpler, BJS provides pre-aggregated national and state-level data. Key differences:
 - Input: `data/external/bjs/` directory
 - Output table: `outcome_benchmarks` only
 - Jurisdiction level: 'national' or 'state'
@@ -1074,7 +1074,7 @@ Create `scripts/ingest-bjs-felony-sentences.mjs` following the same pattern as T
  *
  * Usage:
  *   node scripts/ingest-bjs-felony-sentences.mjs                 # Dry-run
- *   node scripts/ingest-bjs-felony-sentences.mjs --apply         # Apply to DB
+ *   node scripts/ingest-bjs-felony-sentences.mjs,apply         # Apply to DB
  */
 import fs from "fs";
 import path from "path";
@@ -1088,7 +1088,7 @@ const BJS_DIR = path.join(PROJECT_ROOT, "data", "external", "bjs");
 const OUTPUT_DIR = path.join(PROJECT_ROOT, "data", "bulk-verify", "external-intel");
 
 const args = process.argv.slice(2);
-const dryRun = !args.includes("--apply");
+const dryRun = !args.includes(", apply");
 
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
@@ -1126,7 +1126,7 @@ async function main() {
       const values = line.split(/[,\t]/).map(v => v.trim());
       const row = Object.fromEntries(headers.map((h, i) => [h, values[i]]));
 
-      // Map BJS fields to our schema — field names vary by BJS publication
+      // Map BJS fields to our schema, field names vary by BJS publication
       // Implementer: adjust mappings based on actual BJS CSV column headers
       const jurisdiction = row.state || row.jurisdiction || "US";
       const level = jurisdiction === "US" ? "national" : "state";
@@ -1201,12 +1201,12 @@ Calls `/api/rest/v4/aba-ratings/` for each judge in `judge_profiles` and writes 
  * Fetches ABA judicial ratings for judges in our database.
  *
  * CL endpoint: GET /api/rest/v4/aba-ratings/?person={person_id}
- * Rate limit: 5K queries/hour — we have ~400 judges, well within limit.
+ * Rate limit: 5K queries/hour, we have ~400 judges, well within limit.
  *
  * Usage:
  *   node scripts/enrich-cl-aba-ratings.mjs                # Dry-run
- *   node scripts/enrich-cl-aba-ratings.mjs --apply        # Apply
- *   node scripts/enrich-cl-aba-ratings.mjs --limit 10     # Test with 10 judges
+ *   node scripts/enrich-cl-aba-ratings.mjs,apply        # Apply
+ *   node scripts/enrich-cl-aba-ratings.mjs,limit 10     # Test with 10 judges
  */
 import fs from "fs";
 import path from "path";
@@ -1224,8 +1224,8 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const SUPABASE_URL = `https://${PROJECT_REF}.supabase.co`;
 
 const args = process.argv.slice(2);
-const dryRun = !args.includes("--apply");
-const limitIdx = args.indexOf("--limit");
+const dryRun = !args.includes(", apply");
+const limitIdx = args.indexOf(", limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
@@ -1382,7 +1382,7 @@ git commit -m "feat: add CL citation depth enrichment for citation_authority tab
 
 ---
 
-### Task 15: Extend query.ts — Officer Background Check + external intel
+### Task 15: Extend query.ts, Officer Background Check + external intel
 
 **Files:**
 - Modify: `src/lib/tier9-reports/query.ts:63-75` (OfficerBackgroundData interface)
@@ -1472,7 +1472,7 @@ git commit -m "feat: extend queryOfficerBackground with external intel (Brady, N
 
 ---
 
-### Task 16: Extend query.ts — Judge Report Card + USSC patterns
+### Task 16: Extend query.ts, Judge Report Card + USSC patterns
 
 **Files:**
 - Modify: `src/lib/tier9-reports/query.ts:13-61` (JudgeReportCardData interface)
@@ -1532,7 +1532,7 @@ git commit -m "feat: extend queryJudgeReportCard with USSC sentencing patterns +
 
 ---
 
-### Task 17: Extend query.ts — Similar Cases + outcome benchmarks
+### Task 17: Extend query.ts, Similar Cases + outcome benchmarks
 
 **Files:**
 - Modify: `src/lib/tier9-reports/query.ts:77-109` (SimilarCasesData interface)
@@ -1587,7 +1587,7 @@ git commit -m "feat: extend querySimilarCases with outcome benchmarks (plea vs t
 
 ---
 
-### Task 18: Extend render.ts — Officer Background with external intel sections
+### Task 18: Extend render.ts, Officer Background with external intel sections
 
 **Files:**
 - Modify: `src/lib/tier9-reports/render.ts:292-365` (renderOfficerBackground function)
@@ -1597,7 +1597,7 @@ git commit -m "feat: extend querySimilarCases with outcome benchmarks (plea vs t
 After the existing officer loop in `renderOfficerBackground`, add rendering for `data.externalIntel`:
 
 ```typescript
-// External Intelligence section — after the existing officer loop
+// External Intelligence section, after the existing officer loop
 if (data.externalIntel.length > 0) {
   body += sectionHeader("External Intelligence Records");
   body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
@@ -1641,16 +1641,16 @@ if (data.externalIntel.length > 0) {
         </tr></thead><tbody>`;
       for (const job of intel.npi_employment_history as Array<Record<string, string>>) {
         body += `<tr style="border-bottom: 1px solid #1C1917;">
-          <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(job.agency || "—")}</td>
-          <td style="padding: 8px 12px; color: #D4D4D8;">${job.start || "?"} — ${job.end || "present"}</td>
-          <td style="padding: 8px 12px; color: ${job.separation_reason?.includes("fired") || job.separation_reason?.includes("terminated") ? "#EF4444" : "#A1A1AA"};">${escapeHtml(job.separation_reason || "—")}</td>
+          <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(job.agency || ", ")}</td>
+          <td style="padding: 8px 12px; color: #D4D4D8;">${job.start || "?"}, ${job.end || "present"}</td>
+          <td style="padding: 8px 12px; color: ${job.separation_reason?.includes("fired") || job.separation_reason?.includes("terminated") ? "#EF4444" : "#A1A1AA"};">${escapeHtml(job.separation_reason || ", ")}</td>
         </tr>`;
       }
       body += `</tbody></table>`;
 
       if (intel.npi_is_wandering_officer) {
         body += `<p style="color: #EF4444; font-weight: bold; margin: 0 0 16px;">
-          This officer was terminated from 2+ agencies — classified as a "wandering officer."
+          This officer was terminated from 2+ agencies, classified as a "wandering officer."
         </p>`;
       }
     }
@@ -1676,7 +1676,7 @@ if (data.externalIntel.length > 0) {
     }
 
     body += `<p style="color: #52525B; font-size: 11px; margin: 0 0 24px;">
-      Sources: ${intel.sources?.join(", ") || "—"} ${sourceLinks(intel.source_urls)}
+      Sources: ${intel.sources?.join(", ") || ", "} ${sourceLinks(intel.source_urls)}
     </p>`;
   }
 }
@@ -1691,7 +1691,7 @@ git commit -m "feat: render external officer intel (Brady, NPI, decertification,
 
 ---
 
-### Task 19: Extend render.ts — Judge Report Card with USSC patterns
+### Task 19: Extend render.ts, Judge Report Card with USSC patterns
 
 **Files:**
 - Modify: `src/lib/tier9-reports/render.ts:88-286` (renderJudgeReportCard function)
@@ -1716,9 +1716,9 @@ if (data.usscPatterns) {
     <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total Federal Cases</td>
         <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; font-weight: bold;">${p.total_cases}</td></tr>
     <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Median Sentence</td>
-        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${p.median_sentence_months != null ? `${Number(p.median_sentence_months).toFixed(1)} months` : "—"}</td></tr>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${p.median_sentence_months != null ? `${Number(p.median_sentence_months).toFixed(1)} months` : ", "}</td></tr>
     <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Sentence Range (25th-75th %ile)</td>
-        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${p.p25_sentence_months != null && p.p75_sentence_months != null ? `${Number(p.p25_sentence_months).toFixed(1)} — ${Number(p.p75_sentence_months).toFixed(1)} months` : "—"}</td></tr>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${p.p25_sentence_months != null && p.p75_sentence_months != null ? `${Number(p.p25_sentence_months).toFixed(1)}, ${Number(p.p75_sentence_months).toFixed(1)} months` : ", "}</td></tr>
     ${p.downward_departure_rate != null ? `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Downward Departure Rate</td>
         <td style="padding: 8px 16px; color: #4ADE80; border-bottom: 1px solid #1C1917;">${(Number(p.downward_departure_rate) * 100).toFixed(1)}%</td></tr>` : ""}
     ${p.upward_departure_rate != null ? `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Upward Departure Rate</td>
@@ -1738,8 +1738,8 @@ if (data.usscPatterns) {
       </tr></thead><tbody>`;
     for (const re of p.retention_elections as Array<Record<string, unknown>>) {
       body += `<tr style="border-bottom: 1px solid #1C1917;">
-        <td style="padding: 8px 12px; color: #D4D4D8;">${re.year ?? "—"}</td>
-        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${re.vote_pct != null ? `${Number(re.vote_pct).toFixed(1)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: #D4D4D8;">${re.year ?? ", "}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${re.vote_pct != null ? `${Number(re.vote_pct).toFixed(1)}%` : ", "}</td>
         <td style="padding: 8px 12px; text-align: center; color: ${re.retained ? "#4ADE80" : "#EF4444"};">${re.retained ? "Yes" : "No"}</td>
       </tr>`;
     }
@@ -1761,7 +1761,7 @@ git commit -m "feat: render USSC sentencing patterns + ABA rating + retention el
 
 ---
 
-### Task 20: Extend render.ts — Similar Cases with outcome benchmarks
+### Task 20: Extend render.ts, Similar Cases with outcome benchmarks
 
 **Files:**
 - Modify: `src/lib/tier9-reports/render.ts:371-503` (renderSimilarCases function)
@@ -1792,11 +1792,11 @@ if (data.outcomeBenchmarks.length > 0) {
     totalSources += countSources(row.source_urls);
     body += `<tr style="border-bottom: 1px solid #1C1917;">
       <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.jurisdiction_name)} (${escapeHtml(row.jurisdiction_level)})</td>
-      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.total_cases ?? "—"}</td>
-      <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.conviction_rate != null ? `${(Number(row.conviction_rate) * 100).toFixed(1)}%` : "—"}</td>
-      <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${row.dismissal_rate != null ? `${(Number(row.dismissal_rate) * 100).toFixed(1)}%` : "—"}</td>
-      <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.plea_rate != null ? `${(Number(row.plea_rate) * 100).toFixed(1)}%` : "—"}</td>
-      <td style="padding: 8px 12px; color: ${row.plea_trial_penalty_pct && Number(row.plea_trial_penalty_pct) > 0 ? "#EF4444" : "#A1A1AA"}; text-align: right;">${row.plea_trial_penalty_pct != null ? `+${Number(row.plea_trial_penalty_pct).toFixed(0)}%` : "—"}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.total_cases ?? ", "}</td>
+      <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.conviction_rate != null ? `${(Number(row.conviction_rate) * 100).toFixed(1)}%` : ", "}</td>
+      <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${row.dismissal_rate != null ? `${(Number(row.dismissal_rate) * 100).toFixed(1)}%` : ", "}</td>
+      <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.plea_rate != null ? `${(Number(row.plea_rate) * 100).toFixed(1)}%` : ", "}</td>
+      <td style="padding: 8px 12px; color: ${row.plea_trial_penalty_pct && Number(row.plea_trial_penalty_pct) > 0 ? "#EF4444" : "#A1A1AA"}; text-align: right;">${row.plea_trial_penalty_pct != null ? `+${Number(row.plea_trial_penalty_pct).toFixed(0)}%` : ", "}</td>
       <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
     </tr>`;
   }
@@ -1820,7 +1820,7 @@ git commit -m "feat: render outcome benchmarks (conviction rates, trial penalty)
 
 ---
 
-### Task 21: Extend IBVariables — add outcome_benchmarks fields
+### Task 21: Extend IBVariables, add outcome_benchmarks fields
 
 **Files:**
 - Modify: `src/lib/intelligence-brief/variables.ts:157-172` (IBVariables interface)
@@ -1830,7 +1830,7 @@ git commit -m "feat: render outcome benchmarks (conviction rates, trial penalty)
 After the existing Tier 9 fields (around line 172), add:
 
 ```typescript
-  // External Intelligence Layer — Phase 1
+  // External Intelligence Layer, Phase 1
   outcome_benchmarks_summary?: string;    // National/state conviction, plea, trial penalty rates
   sentencing_range_context?: string;      // p25/median/p75 for this charge from USSC/BJS
 ```
@@ -1892,7 +1892,7 @@ Expected: 11 source entries
 - [ ] **Step 3: Verify extended query functions compile**
 
 ```bash
-npx tsc --noEmit src/lib/tier9-reports/query.ts src/lib/tier9-reports/render.ts src/lib/intelligence-brief/variables.ts
+npx tsc,noEmit src/lib/tier9-reports/query.ts src/lib/tier9-reports/render.ts src/lib/intelligence-brief/variables.ts
 ```
 
 Expected: No type errors
@@ -1910,14 +1910,14 @@ Expected: 3 new columns listed
 
 ```bash
 git add -A
-git commit -m "feat: Phase 1 complete — 8 external intelligence tables + 7 ingestion scripts + product extensions
+git commit -m "feat: Phase 1 complete, 8 external intelligence tables + 7 ingestion scripts + product extensions
 
 External Intelligence Layer deployed:
 - 8 new Supabase tables (officer_external_intel, judge_sentencing_patterns,
   prosecution_profiles, outcome_benchmarks, exoneration_patterns,
   forensic_lab_profiles, citation_authority, data_source_freshness)
 - 4 ingestion scripts (USSC, BJS, CL ABA ratings, CL retention events)
-- 3 enrichment scripts (CL citation depth, NPI, Brady — to be run after data download)
+- 3 enrichment scripts (CL citation depth, NPI, Brady, to be run after data download)
 - query.ts extended: Officer BG + external intel, Judge RC + USSC patterns, Similar Cases + benchmarks
 - render.ts extended: Brady alerts, employment history, USSC departure rates, outcome benchmarks
 - IBVariables extended with outcome_benchmarks_summary, sentencing_range_context"
@@ -1930,15 +1930,15 @@ External Intelligence Layer deployed:
 ### Scripts NOT included in this plan (require manual data download first)
 
 These Phase 1 scripts need data files downloaded before they can be built:
-- `scripts/ingest-brady-list.mjs` — Requires reverse-engineering giglio-bradylist.com (no public API). Build a web scraper after analyzing the site structure.
-- `scripts/ingest-national-police-index.mjs` — Download NPI dataset from https://invisible.institute/national-police-index first, then build parser.
+- `scripts/ingest-brady-list.mjs`, Requires reverse-engineering giglio-bradylist.com (no public API). Build a web scraper after analyzing the site structure.
+- `scripts/ingest-national-police-index.mjs`, Download NPI dataset from https://invisible.institute/national-police-index first, then build parser.
 
-Both scripts should follow the exact pattern established in Tasks 10-14: stream-based, `--dry-run`/`--apply` modes, UPSERT on UNIQUE constraint, source_urls tracked, freshness table updated.
+Both scripts should follow the exact pattern established in Tasks 10-14: stream-based, `, dry-run`/`, apply` modes, UPSERT on UNIQUE constraint, source_urls tracked, freshness table updated.
 
 ### Data download checklist (pre-requisites for ingestion scripts)
 
 | Source | Download URL | Destination | Format |
-|--------|-------------|-------------|--------|
+|------, |-------------|-------------|------, |
 | USSC Individual Datafiles | https://www.ussc.gov/research/datafiles/commission-datafiles | `data/external/ussc/` | ASCII/SAS |
 | BJS Felony Sentences | https://bjs.ojp.gov/topics/courts | `data/external/bjs/` | CSV |
 | National Police Index | https://invisible.institute/national-police-index | `data/external/npi/` | CSV |
@@ -1954,4 +1954,4 @@ Original spec estimated $37-65 total. Based on review:
 
 ### Storage budget check
 
-After Phase 1, estimated Supabase storage: ~166 MB (well within 500 MB free tier). Harvard CAP vectors (Phase 2) must store locally or use a separate vector DB — Supabase storage won't fit 6.7M case vectors.
+After Phase 1, estimated Supabase storage: ~166 MB (well within 500 MB free tier). Harvard CAP vectors (Phase 2) must store locally or use a separate vector DB, Supabase storage won't fit 6.7M case vectors.

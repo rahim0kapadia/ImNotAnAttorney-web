@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * AvailabilityChecker — pre-purchase data availability gate for Tier 9 standalone SKUs.
+ * AvailabilityChecker, pre-purchase data availability gate for Tier 9 standalone SKUs.
  *
  * Checks whether we have enough data to generate a report for the user's
  * specific judge/officer/charge + state combination. If unavailable, captures
@@ -62,8 +62,8 @@ const CHARGE_GROUPS = [
     label: 'DUI & Driving Offenses',
     options: [
       { value: 'dui', label: 'DUI / DWI' },
-      { value: 'dui-first', label: 'DUI — First Offense' },
-      { value: 'dui-repeat', label: 'DUI — Repeat Offense' },
+      { value: 'dui-first', label: 'DUI, First Offense' },
+      { value: 'dui-repeat', label: 'DUI, Repeat Offense' },
       { value: 'hit-and-run', label: 'Hit and Run / Fleeing' },
     ],
   },
@@ -99,8 +99,8 @@ const CHARGE_GROUPS = [
     label: 'Sex Offenses',
     options: [
       { value: 'sex-offense', label: 'Sex Offense' },
-      { value: 'sex-offense-contact', label: 'Sex Offense — Contact' },
-      { value: 'sex-offense-digital', label: 'Sex Offense — Digital / Possession' },
+      { value: 'sex-offense-contact', label: 'Sex Offense, Contact' },
+      { value: 'sex-offense-digital', label: 'Sex Offense, Digital / Possession' },
     ],
   },
   {
@@ -375,7 +375,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
             'focus:ring-offset-zinc-950 leading-[3rem]'
           }
         >
-          Get Your {productName} — {priceDisplay}
+          Get Your {productName}, {priceDisplay}
         </a>
 
         <button
@@ -451,7 +451,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
         <p className="text-zinc-400 text-sm mb-6">
           We do not have enough records to generate a reliable {productName} for
           this search yet. Enter your email and we will notify you as soon as we
-          do — no charge until then.
+          do, no charge until then.
         </p>
 
         <form onSubmit={handleWaitlist} aria-label={`Join waitlist for ${productName}`} className="space-y-4">

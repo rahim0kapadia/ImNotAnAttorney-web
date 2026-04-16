@@ -1,9 +1,9 @@
 /**
  * District Court Intelligence landing page (/district-court-intelligence)
  *
- * Standalone Tier 9 data product — $97, instant delivery.
+ * Standalone Tier 9 data product, $97, instant delivery.
  * Federal district-level sentencing intelligence from 595,851 JUSTFAIR records.
- * Server component — AvailabilityChecker is a client island.
+ * Server component, AvailabilityChecker is a client island.
  */
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
@@ -15,13 +15,13 @@ import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 export function generateMetadata(): Metadata {
   return {
-    title: `District Court Intelligence — ${TIER_CORE["district-court-intelligence"].priceDisplay} | ImNotAnAttorney`,
+    title: `District Court Intelligence, ${TIER_CORE["district-court-intelligence"].priceDisplay} | ImNotAnAttorney`,
     description:
       "Federal district-level sentencing patterns, conviction rates, plea rates, motion outcomes, and judge demographics. 595,851 JUSTFAIR sentencing records with source URLs.",
     alternates: { canonical: `${SITE_URL}/district-court-intelligence` },
     openGraph: {
       title:
-        "District Court Intelligence — Know Your Court Before Your First Hearing",
+        "District Court Intelligence, Know Your Court Before Your First Hearing",
       description:
         "Aggregate sentencing patterns, outcome benchmarks, prosecution patterns, and judge demographics for your federal district. Verified data with source URLs.",
       url: `${SITE_URL}/district-court-intelligence`,

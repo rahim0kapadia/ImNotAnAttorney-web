@@ -1,5 +1,5 @@
 /**
- * Bulk Classify from Opinions CSV — proper csv-parse streaming
+ * Bulk Classify from Opinions CSV, proper csv-parse streaming
  *
  * Plan: docs/plans/2026-04-09-bulk-classify-from-opinions.md
  *
@@ -126,7 +126,7 @@ function classifyText(text, court) {
   let application = "";
   if (partySide === "DEFENSE") application = "Defense-favorable: " + (outcome || "trial court ruling reversed/vacated");
   else if (partySide === "PROSECUTION") application = "Prosecution-favorable: " + (outcome || "conviction/ruling affirmed");
-  else if (partySide === "NEUTRAL") application = "Mixed signals — review holding for specific applicability";
+  else if (partySide === "NEUTRAL") application = "Mixed signals, review holding for specific applicability";
 
   return { partySide, outcome, keyQuote, holdingExcerpt, isBinding, application };
 }
@@ -192,7 +192,7 @@ async function main() {
 
   const dump = JSON.parse(fs.readFileSync(DUMP_FILE, "utf8"));
   const targetClusters = new Set();
-  // Target ALL clusters with a cluster_id — not just unclassified ones.
+  // Target ALL clusters with a cluster_id, not just unclassified ones.
   // Even already-classified cases benefit from additional text-source verification.
   // The UPDATE WHERE clause prevents overwriting existing classifications unless
   // the new source provides stronger signals.
@@ -297,7 +297,7 @@ async function main() {
     try {
       await supabaseQuery(batch.join("\n"));
       applied += batch.length;
-      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} clusters — ${(applied / ((Date.now() - applyStart) / 1000)).toFixed(0)}/sec\n`);
+      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} clusters, ${(applied / ((Date.now() - applyStart) / 1000)).toFixed(0)}/sec\n`);
     } catch (e) {
       errors++;
       console.error(`  Batch ${batchNum}: ${e.message.slice(0, 200)}`);

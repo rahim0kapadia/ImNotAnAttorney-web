@@ -1,4 +1,4 @@
-// qa-upl.mjs — UPL (Unauthorized Practice of Law) compliance gate.
+// qa-upl.mjs, UPL (Unauthorized Practice of Law) compliance gate.
 //
 // Ported from ImNotAnAttorney-web/src/lib/blog-generation/qa-upl.ts (2026-04-09
 // blog engine port). Same 15 criteria, same prompt text, same zero-tolerance
@@ -17,13 +17,13 @@ THE 15 UPL CRITERIA:
 
 U1 NO DIRECTIVES: The post must not give direct legal instructions that function as legal advice (e.g., "you must file X", "you should plead Y", "do not sign Z"). It can describe what typically happens or what questions to ask an attorney. FAIL if any directive is phrased as a command the reader should follow without attorney guidance.
 
-U2 ATTORNEY REDIRECT: Every section that involves a legal decision or action must include a statement directing the reader to consult an attorney. The redirect must be proximate — within the same section, not only in a disclaimer footer. FAIL if a decision-action section has no attorney redirect.
+U2 ATTORNEY REDIRECT: Every section that involves a legal decision or action must include a statement directing the reader to consult an attorney. The redirect must be proximate, within the same section, not only in a disclaimer footer. FAIL if a decision-action section has no attorney redirect.
 
 U3 NO ATTORNEY EVALUATION: The post must not evaluate the reader's specific legal situation ("your case is strong," "you likely have a defense," "you probably won't be convicted"). It can explain legal concepts generally. FAIL if any passage renders a judgment about the reader's specific circumstances.
 
 U4 NO MOTION RECOMMENDATIONS: The post must not recommend filing specific motions or taking specific procedural steps (e.g., "file a motion to suppress," "request a continuance," "subpoena the records yourself"). It can explain what these procedures are. FAIL if any motion or procedural step is recommended as something the reader should do.
 
-U5 IMMIGRATION REDIRECT: Any content touching immigration consequences (deportation, visa status, DACA, green card) must explicitly state that the reader should consult an immigration attorney — not just any attorney. FAIL if immigration consequences are discussed without an immigration-specific attorney redirect.
+U5 IMMIGRATION REDIRECT: Any content touching immigration consequences (deportation, visa status, DACA, green card) must explicitly state that the reader should consult an immigration attorney, not just any attorney. FAIL if immigration consequences are discussed without an immigration-specific attorney redirect.
 
 U6 SOURCED COLLATERAL CONSEQUENCES: Every collateral consequence mentioned (loss of professional license, housing restrictions, firearm rights, voting rights, student loan eligibility) must be attributed to a specific statute, regulation, or official government source. FAIL if collateral consequences appear as unsourced assertions.
 
@@ -33,17 +33,17 @@ U8 NO "WE RECOMMEND": The post must not use first-person plural ("we recommend,"
 
 U9 SCENARIO HEADERS: Any hypothetical scenario used to illustrate a legal concept must be clearly labeled as hypothetical ("Example scenario:", "Hypothetical:", "For instance, imagine..."). FAIL if a scenario could be mistaken for actual legal facts or a real case.
 
-U10 SELF-EFFICACY FRAMING: Content must frame legal knowledge as empowering the reader to ask better questions and understand their situation — not as enabling the reader to handle legal matters without an attorney. FAIL if the post implies the reader can manage their legal matter themselves using only this information.
+U10 SELF-EFFICACY FRAMING: Content must frame legal knowledge as empowering the reader to ask better questions and understand their situation, not as enabling the reader to handle legal matters without an attorney. FAIL if the post implies the reader can manage their legal matter themselves using only this information.
 
 U11 INFORMATION FRAMING: All legal information must be framed as general educational content, not as applying to the reader's specific situation. Phrases like "in general," "typically," "in most jurisdictions," or "your attorney will advise you about your specific situation" must appear in sections discussing legal rules. FAIL if legal rules are stated as certainties that apply to the reader without qualification.
 
 U12 NO OUTCOME GUARANTEES: The post must not imply or state that following the information will lead to a specific legal outcome ("if you do X, your charges may be reduced," "this approach gets cases dismissed," "attorneys use this to win"). FAIL if outcome language appears without clear qualification that results vary by jurisdiction and circumstances.
 
-U13 EXPERT ATTRIBUTION: Any legal strategy, tactic, or legal argument described in the post must be attributed to a named source (a case, statute, legal scholar, or attorney) — not presented as the blog's own legal opinion. FAIL if legal strategies are presented as the blog's original legal positions. IMPORTANT: Practical process advice (documenting requests in writing, asking specific questions, tracking dates, keeping copies, comparing evidence lists) is NOT a legal strategy — it is general organizational advice that does not require attribution. Only flag claims that assert how the legal system works or recommend legal tactics (e.g., "file a motion to compel," "challenge the evidence chain of custody"). Attribution to "bar association checklists" or "experienced defense attorneys" satisfies this criterion.
+U13 EXPERT ATTRIBUTION: Any legal strategy, tactic, or legal argument described in the post must be attributed to a named source (a case, statute, legal scholar, or attorney), not presented as the blog's own legal opinion. FAIL if legal strategies are presented as the blog's original legal positions. IMPORTANT: Practical process advice (documenting requests in writing, asking specific questions, tracking dates, keeping copies, comparing evidence lists) is NOT a legal strategy, it is general organizational advice that does not require attribution. Only flag claims that assert how the legal system works or recommend legal tactics (e.g., "file a motion to compel," "challenge the evidence chain of custody"). Attribution to "bar association checklists" or "experienced defense attorneys" satisfies this criterion.
 
 U14 NO CONTRADICTING CLAIMS: The post must not make factual claims about law that contradict each other within the same post (e.g., stating both that a charge is a misdemeanor and a felony without explaining the distinction). FAIL if contradictory legal statements appear without reconciliation.
 
-U15 PRODUCTS AS RESEARCH TOOLS: Any mention of ImNotAnAttorney.com products (Case Decoder, Intelligence Brief, etc.) must frame them explicitly as research and preparation tools — not as substitutes for legal representation. FAIL if a product is described or implied as replacing attorney advice.
+U15 PRODUCTS AS RESEARCH TOOLS: Any mention of ImNotAnAttorney.com products (Case Decoder, Intelligence Brief, etc.) must frame them explicitly as research and preparation tools, not as substitutes for legal representation. FAIL if a product is described or implied as replacing attorney advice.
 
 BLOG POST TO EVALUATE:
 ---
@@ -140,7 +140,7 @@ ${failureLines}
 
 REWRITE RULES:
 - U1 violations: Convert directives ("you must file X") to questions ("ask your attorney whether filing X makes sense in your situation").
-- U2 violations: Add proximate attorney redirects — within the same section, not just the footer.
+- U2 violations: Add proximate attorney redirects, within the same section, not just the footer.
 - U3 violations: Remove any passage that evaluates the reader's specific case strength or outcome likelihood.
 - U4 violations: Replace motion/procedural recommendations with explanations of what those procedures are and why an attorney might use them.
 - U5 violations: Add explicit "consult an immigration attorney" language adjacent to immigration consequence content.
@@ -153,7 +153,7 @@ REWRITE RULES:
 - U12 violations: Remove outcome guarantees; add "results vary by jurisdiction and circumstances."
 - U13 violations: Attribute legal strategies to named sources (cases, statutes, legal scholars).
 - U14 violations: Reconcile contradictory legal claims with a clear explanation of the distinction.
-- U15 violations: Add "research and preparation tool — not a substitute for legal representation" framing to product mentions.
+- U15 violations: Add "research and preparation tool, not a substitute for legal representation" framing to product mentions.
 
 IMPORTANT: Preserve the post's voice, structure, word count, and all factual content. Change only what is necessary to fix the listed violations. Do not add new sections or significantly expand the post.
 

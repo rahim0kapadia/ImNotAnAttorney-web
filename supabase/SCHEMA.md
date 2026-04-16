@@ -1,7 +1,7 @@
 # Database Schema Reference
 
 **Extracted from:** deprecated `docs/ARCHITECTURE.md` (deleted 2026-04-07)
-**Status:** Schema snapshot as of migration ~012. Tables added by later migrations (referral-system, partner-portal, feature-flags, customer-portal, batch-id, charge-taxonomy, cron-executions, research-columns, blog-drafts, score-results, acquire-cron-lock-rpc, report-token-hash, guarantee_invocations, standalone_products, calculator_email_rpc, case-law-verification, phase0_feature_flags, enrichment-and-case-law-data) are NOT documented here — audit `supabase/migrations/20250101000012*.sql` onward to complete.
+**Status:** Schema snapshot as of migration ~012. Tables added by later migrations (referral-system, partner-portal, feature-flags, customer-portal, batch-id, charge-taxonomy, cron-executions, research-columns, blog-drafts, score-results, acquire-cron-lock-rpc, report-token-hash, guarantee_invocations, standalone_products, calculator_email_rpc, case-law-verification, phase0_feature_flags, enrichment-and-case-law-data) are NOT documented here, audit `supabase/migrations/20250101000012*.sql` onward to complete.
 **Source of truth:** Actual migrations in `supabase/migrations/*.sql`. This file is a reference snapshot; always verify against current migrations for new work.
 
 ## Tables
@@ -11,7 +11,7 @@
 #### `orders`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | email | text | Customer email (lowercased) |
 | tier | text | Product tier slug |
@@ -33,7 +33,7 @@
 #### `cases`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Set by webhook (crypto.randomUUID) |
 | order_id | uuid (FK) | Links to orders table |
 | email | text | Customer email |
@@ -88,7 +88,7 @@
 #### `intakes`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | email | text | Customer email (lowercased, trimmed) |
 | first_name | text | Customer's first name |
@@ -101,7 +101,7 @@
 #### `subscribers`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | email | text (unique) | Subscriber email |
 | source | text | How they subscribed (`blog`, `checkout`, `score`, `lead-capture`, `dui-72-hours`, `score-page`, `resources`) |
@@ -114,13 +114,13 @@
 #### `drip_emails`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | subscriber_id | uuid (FK) | Links to subscribers |
 | email_key | text | Unique key per email template |
 | created_at | timestamptz | When sent |
 | **Unique constraint** | `(subscriber_id, email_key)` | Prevents duplicate sends |
 
-### Reference Data Tables (12 tables — Migration 004)
+### Reference Data Tables (12 tables, Migration 004)
 
 Source of truth for structured data previously scattered across 10+ markdown files. Seeded via `scripts/seed/run-all-seeds.mjs`.
 
@@ -145,10 +145,10 @@ All reference tables have `created_at`, `updated_at` (auto-trigger), and `active
 
 #### `email_log` (Migration 005)
 
-Tracks all email send calls. Fire-and-forget logging — insert failures never crash the calling route.
+Tracks all email send calls. Fire-and-forget logging, insert failures never crash the calling route.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | email_type | text | Category (`payment-confirmation`, `drip-nurture`, `operator-alert`) |
 | recipient | text | Email address |
@@ -165,7 +165,7 @@ Tracks all email send calls. Fire-and-forget logging — insert failures never c
 #### `audit_runs` (Migration 004)
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | report_source | text | Source identifier (file path or persona name) |
 | charge_type | text | Charge type evaluated |
@@ -179,7 +179,7 @@ Tracks all email send calls. Fire-and-forget logging — insert failures never c
 #### `cron_runs`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | started_at | timestamptz | When cron started |
 | completed_at | timestamptz | When cron finished |
@@ -189,7 +189,7 @@ Tracks all email send calls. Fire-and-forget logging — insert failures never c
 #### `rate_limits` (Migration 004)
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | key | text (PK) | Rate limit identifier (e.g., `checkout:192.168.1.1`) |
 | window_start | timestamptz | Current window start |
 | request_count | integer | Requests in current window |
@@ -199,7 +199,7 @@ Tracks all email send calls. Fire-and-forget logging — insert failures never c
 Generic atomic counter infrastructure for the Defense Accountability Index.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | text (PK) | Counter identifier (e.g., `score_completions`) |
 | value | bigint | Current count |
 | updated_at | timestamptz | Last increment time |
@@ -209,7 +209,7 @@ Generic atomic counter infrastructure for the Defense Accountability Index.
 Anonymous aggregate tracking from Defense Milestone Score. NO individual answers stored.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | charge_type | text (PK part) | Charge category |
 | metric | text (PK part) | What's being counted |
 | count | bigint | Aggregate count |
@@ -221,7 +221,7 @@ Anonymous aggregate tracking from Defense Milestone Score. NO individual answers
 Court docket data from external sources (CourtListener, JudyRecords, clerk portals).
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | case_id | uuid (FK) | Links to cases table |
 | entry_date | date | When filed |
@@ -240,7 +240,7 @@ Court docket data from external sources (CourtListener, JudyRecords, clerk porta
 #### `charge_packs` (Migration 006)
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | tier_slug | text | Links to tier (e.g., `dui-first-offense`) |
 | file_path | text | Storage path in `charge-packs` bucket |
@@ -254,7 +254,7 @@ Court docket data from external sources (CourtListener, JudyRecords, clerk porta
 #### `discovery_documents`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | case_id | uuid (FK) | Links to cases |
 | file_name | text | Original filename |
@@ -271,7 +271,7 @@ Court docket data from external sources (CourtListener, JudyRecords, clerk porta
 Extracted timeline from discovery documents.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | event_date | date | When the event occurred |
 | event_text | text | Description |
@@ -284,7 +284,7 @@ Extracted timeline from discovery documents.
 X-Ray analysis output.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | discrepancies | jsonb | Contradictions found |
 | red_flags | jsonb | Prosecution weaknesses |
@@ -294,7 +294,7 @@ X-Ray analysis output.
 #### `case_witnesses`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | name | text | Witness name |
 | type | text | Witness type |
@@ -309,7 +309,7 @@ X-Ray analysis output.
 Categorized findings: 4 types x 5 categories x 4 severity levels.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | title | text | Finding title |
 | type | text | Finding type |
@@ -329,7 +329,7 @@ Chain of custody tracking with gap detection.
 #### `case_law_references`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | case_name | text | Case citation name |
 | citation | text | Legal citation |
@@ -341,7 +341,7 @@ Chain of custody tracking with gap detection.
 #### `motion_recommendations`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | motion_type | text | Type of motion |
 | motion_name | text | Display name |
@@ -354,7 +354,7 @@ Chain of custody tracking with gap detection.
 Situation Room trial prep documents.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | material_type | text | Type of material |
 | content | text | Material content |
@@ -364,7 +364,7 @@ Situation Room trial prep documents.
 Background job queue for discovery pipeline.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | case_id | uuid (FK) | Links to cases |
 | job_type | text | `ocr`, `classify`, `extract`, `analyze`, `timeline`, `witness`, `citation`, `motion`, `report` |
@@ -381,7 +381,7 @@ Background job queue for discovery pipeline.
 #### `operator_tasks` (Migration 007)
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | case_id | uuid (FK) | Links to cases |
 | title | text | Task description |
@@ -399,7 +399,7 @@ Background job queue for discovery pipeline.
 Resend inbound webhook storage.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | from_email | text | Sender |
 | subject | text | Subject line |
@@ -411,7 +411,7 @@ Resend inbound webhook storage.
 #### `emerging_topics`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | topic | text | Topic phrase |
 | post_count | integer | Number of posts detected |
@@ -423,7 +423,7 @@ Resend inbound webhook storage.
 #### `content_gaps`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | slug | text | Suggested URL slug |
 | suggested_title | text | Article title |
@@ -435,7 +435,7 @@ Resend inbound webhook storage.
 #### `demand_scores`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | charge_type | text | Charge or pain point |
 | dimension | text | `charge_type` or `pain_point` |
 | window | text | `7d`, `30d`, `90d` |
@@ -445,7 +445,7 @@ Resend inbound webhook storage.
 #### `content_performance`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | blog_slug | text | Blog post identifier |
 | subscriber_signups | integer | Attributed signups |
 | orders_attributed | integer | Attributed orders |
@@ -454,7 +454,7 @@ Resend inbound webhook storage.
 #### `discovered_subreddits`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | subreddit | text | Subreddit name |
 | subscriber_count | integer | Subreddit subscribers |
 | relevance_score | integer | Relevance to business |
@@ -463,14 +463,14 @@ Resend inbound webhook storage.
 
 ## Tier 9: Data-Driven Defense Intelligence (Migration TBD)
 
-Nine tables supporting the data-driven defense intelligence layer — judge profiles, officer reliability, sentencing distributions, appellate trends, and case feature engineering. All tables have Row Level Security enabled with `service_all` policy.
+Nine tables supporting the data-driven defense intelligence layer, judge profiles, officer reliability, sentencing distributions, appellate trends, and case feature engineering. All tables have Row Level Security enabled with `service_all` policy.
 
-**Critical:** All columns with `source_urls` must comply with the no-hallucinated-legal-data safety rule — verification URLs MUST be stored alongside any legal claim (case law, statute, precedent, sentencing data).
+**Critical:** All columns with `source_urls` must comply with the no-hallucinated-legal-data safety rule, verification URLs MUST be stored alongside any legal claim (case law, statute, precedent, sentencing data).
 
 #### `judge_prosecutor_pairings`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | judge_id | uuid (FK) | Links to judge_profiles |
 | prosecutor_name | text (NOT NULL) | Named prosecutor |
@@ -484,7 +484,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 #### `case_feature_vectors`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | cluster_id | text (PK) | CourtListener cluster ID |
 | features | jsonb | Numeric feature vector for ML prediction (default: `{}`) |
 | jurisdiction | text | State jurisdiction (nullable) |
@@ -494,7 +494,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 #### `officer_reliability`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | officer_name | text (NOT NULL) | Named law enforcement officer |
 | court | text | Court jurisdiction (nullable) |
@@ -509,7 +509,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 #### `judge_quotes`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | judge_id | uuid (FK) | Links to judge_profiles |
 | quote | text (NOT NULL) | Extracted quote from opinion or ruling |
@@ -522,7 +522,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 #### `sentencing_distributions`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | judge_id | uuid (FK) | Links to judge_profiles |
 | jurisdiction | text | State jurisdiction (nullable) |
@@ -537,7 +537,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 #### `bench_jury_divergence`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | judge_id | uuid (FK) | Links to judge_profiles (NULL for district/locality-level aggregate data) |
 | charge_slug | text | Charge/offense category (nullable) |
@@ -562,7 +562,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 #### `appellate_trends`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | argument_type | text | Type of appeal (e.g., `sentencing`, `conviction`, `procedure`) |
 | jurisdiction | text | State jurisdiction (nullable) |
@@ -576,7 +576,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 #### `co_defendant_analysis`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | primary_case_id | text | Case ID for primary defendant (nullable) |
 | co_defendant_case_id | text | Case ID for co-defendant (nullable) |
@@ -588,7 +588,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 #### `plea_discount_curves`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | jurisdiction | text | State jurisdiction (nullable) |
 | charge_slug | text | Charge category (e.g., `dui-first-offense`) |
@@ -604,7 +604,7 @@ Nine tables supporting the data-driven defense intelligence layer — judge prof
 The `judge_profiles` table receives five new columns to surface Tier 9 intelligence:
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | jurisdiction | text | 2-letter state code (e.g., "FL") derived from positions JSONB court_id. "FEDERAL" for circuit/SCOTUS/tax courts. Indexed. Backfilled via `scripts/backfill-judge-jurisdiction.mjs`. |
 | sentencing_distributions | jsonb | Per-charge sentencing percentiles aggregated from `sentencing_distributions` table (nullable) |
 | judicial_quotes | jsonb | Notable holding quotes by topic, aggregated from `judge_quotes` (nullable) |
@@ -633,7 +633,7 @@ Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):
 ## RPCs
 
 | RPC | Purpose |
-|-----|---------|
+|---, |---------|
 | `increment_counter(p_id TEXT)` | Atomic counter increment with upsert, returns new value |
 | `increment_score_aggregate(p_charge_type TEXT, p_metric TEXT)` | Atomic aggregate increment with upsert |
 | `check_rate_limit(p_key TEXT, p_max_requests INT, p_window_seconds INT)` | Sliding window rate limiter, returns boolean (true = allowed) |
@@ -645,7 +645,7 @@ Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):
 ## Indexes
 
 | Index | Table(Column) | Purpose |
-|-------|--------------|---------|
+|-------|------------, |---------|
 | `idx_orders_stripe_payment_intent` | orders(stripe_payment_intent_id) | Refund webhook matching |
 | `idx_cases_court_lookup` | cases(court_case_number, court_state) | Cross-email identity matching |
 | `idx_email_log_type` | email_log(email_type) | Email audit queries |
@@ -672,13 +672,13 @@ Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):
 | `idx_subscribers_email` | subscribers(email) UNIQUE | Dedup lookups |
 | `idx_drip_dedup` | drip_emails(subscriber_id, email_key) UNIQUE | Prevent duplicate sends |
 
-### External Intelligence Layer (Phase 1 — migration 20260411f)
+### External Intelligence Layer (Phase 1, migration 20260411f)
 
 #### `officer_external_intel`
 Brady/Giglio + National Police Index data for officers. Populated by `ingest-brady-giglio.mjs` and `ingest-npi.mjs`.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | officer_name | text | Original name |
 | officer_name_normalized | text | Lowercase, alpha-only (trgm indexed) |
@@ -702,7 +702,7 @@ Brady/Giglio + National Police Index data for officers. Populated by `ingest-bra
 USSC sentencing data aggregated by district. Populated by `ingest-ussc-sentencing.mjs`.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | judge_name | text | District name (USSC is anonymized) |
 | judge_name_normalized | text | Lowercase (trgm indexed) |
@@ -729,7 +729,7 @@ USSC sentencing data aggregated by district. Populated by `ingest-ussc-sentencin
 Prosecution office statistics. Deferred to Phase 2 (no free national dataset).
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | office_name | text | Prosecutor's office |
 | office_type | text | Type (SA, DA, USAO) |
@@ -744,7 +744,7 @@ Prosecution office statistics. Deferred to Phase 2 (no free national dataset).
 National/state outcome statistics by offense type. Populated by `ingest-bjs-outcomes.mjs`.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | jurisdiction_level | text | 'national' or 'state' |
 | jurisdiction_name | text | State name or 'United States' |
@@ -761,7 +761,7 @@ National/state outcome statistics by offense type. Populated by `ingest-bjs-outc
 Exoneration statistics by offense type. Populated by `ingest-exoneration-registry.mjs`.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | offense_type | text | Crime category |
 | total_exonerations | integer | Count |
@@ -779,7 +779,7 @@ Exoneration statistics by offense type. Populated by `ingest-exoneration-registr
 Forensic lab accreditation/quality data. Deferred to Phase 2 (state-by-state FOIA).
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | lab_name | text | Lab name |
 | state | text | State code |
@@ -792,7 +792,7 @@ Forensic lab accreditation/quality data. Deferred to Phase 2 (state-by-state FOI
 Opinion authority scores from CourtListener citation depth analysis. Populated by `enrich-cl-citation-depth.mjs`.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | cluster_id | text (PK) | CourtListener cluster ID |
 | case_name | text | Case name |
 | total_citing_opinions | integer | How many opinions cite this one |
@@ -803,7 +803,7 @@ Opinion authority scores from CourtListener citation depth analysis. Populated b
 Tracks ingestion recency for all external data sources.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | source_key | text (PK) | e.g. 'brady_giglio_list' |
 | source_name | text | Human-readable name |
 | source_url | text | Download/API URL |
@@ -816,7 +816,7 @@ Tracks ingestion recency for all external data sources.
 Federal judge biographical data from JUSTFAIR (QSIDE Institute). 1,126 federal judges. Migration `20260414f_justfair_demographics.sql`.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | judge_name | text | Original judge name |
 | judge_name_normalized | text | Lowercased for matching (GIN trigram index) |
@@ -840,7 +840,7 @@ Unique constraint: `(judge_name_normalized, district)`. Indexes: GIN trigram on 
 Per-judge sentencing patterns broken down by defendant race. JUSTFAIR source. Migration `20260414f_justfair_demographics.sql`.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | judge_name_normalized | text | Lowercased judge name (GIN trigram index) |
 | district | text | Federal district |
@@ -859,7 +859,7 @@ Unique constraint: `(judge_name_normalized, district, defendant_race)`. Indexes:
 Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | primary_case_id | text | Primary case cluster ID |
 | co_defendant_case_id | text | Co-defendant case cluster ID |
@@ -868,12 +868,12 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | source_urls | text[] | Verification URLs |
 
 ## Partner & Reminder Tables
-*(Added by migrations post-012 — not in original snapshot)*
+*(Added by migrations post-012, not in original snapshot)*
 
 #### `court_reminders`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | token | text | Unsubscribe/opt-in token |
 | first_name | text | Client first name |
@@ -891,14 +891,14 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | order_id | uuid | Linked order (FK) |
 | indemnitor_name | text | Bondsman indemnitor name |
 | indemnitor_email | text | Bondsman indemnitor email |
-| phone | text | Client phone (E.164) — added migration 20260414a |
-| sms_consent_at | timestamptz | 10DLC consent timestamp — added migration 20260414a |
-| notification_prefs | jsonb | Channel preference overrides (JSONB) — added migration 20260414a |
+| phone | text | Client phone (E.164), added migration 20260414a |
+| sms_consent_at | timestamptz | 10DLC consent timestamp, added migration 20260414a |
+| notification_prefs | jsonb | Channel preference overrides (JSONB), added migration 20260414a |
 
 #### `partners`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | name | text | Partner display name |
 | email | text | Partner email (unique) |
@@ -916,7 +916,7 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | total_referrals | integer | Lifetime referral count |
 | total_commission | numeric | Lifetime commission earned (cents) |
 | total_paid_out | numeric | Lifetime commission paid out (cents) |
-| notification_prefs | jsonb | Channel preference overrides (JSONB) — added migration 20260414a |
+| notification_prefs | jsonb | Channel preference overrides (JSONB), added migration 20260414a |
 | city | text | Partner city (from application) |
 | region | text | Partner region/state (from application) |
 | source | text | Partner type: `bondsman`, `attorney`, `generic`, or null |
@@ -925,20 +925,20 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 #### `referrals`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | partner_id | uuid (FK) | Referring partner |
 | order_id | uuid (FK) | Linked order |
 | commission_amount | numeric | Commission earned (cents) |
 | status | text | `pending` / `paid` / `refunded` |
 | created_at | timestamptz | Row creation timestamp |
-| locked_at | timestamptz | Commission lock timestamp (45-day holdback) — added migration 20260414a |
+| locked_at | timestamptz | Commission lock timestamp (45-day holdback), added migration 20260414a |
 
 #### `sms_log`
 SMS delivery audit log. Mirrors `email_log` pattern. Service-role write only via `createAdminClient()`.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | recipient | text (indexed) | E.164 phone number |
 | body | text | Message body |
@@ -954,6 +954,6 @@ RLS: enabled. Policy `sms_log_deny_all` denies all anon/authenticated access.
 
 ## Triggers
 
-- `update_cases_updated_at` — Auto-sets `updated_at = now()` on every cases row update
-- `update_docket_entries_updated_at` — Same for docket_entries
-- `update_<table>_updated_at` — All 12 reference tables have `moddatetime` triggers
+- `update_cases_updated_at`, Auto-sets `updated_at = now()` on every cases row update
+- `update_docket_entries_updated_at`, Same for docket_entries
+- `update_<table>_updated_at`, All 12 reference tables have `moddatetime` triggers

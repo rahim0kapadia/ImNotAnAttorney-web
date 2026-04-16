@@ -1,5 +1,5 @@
 /**
- * Gold-Set Evaluation — Phase 0B
+ * Gold-Set Evaluation, Phase 0B
  *
  * Selects 200 opinions from the existing case_law table, runs the mechanical
  * extraction pipeline, and compares against human-labeled ground truth.
@@ -144,7 +144,7 @@ function computeFieldAccuracy(predicted, actual, fieldName) {
 
 async function main() {
   console.log("=".repeat(60));
-  console.log("DEFENSE INTELLIGENCE — GOLD-SET EVALUATION (Phase 0B)");
+  console.log("DEFENSE INTELLIGENCE, GOLD-SET EVALUATION (Phase 0B)");
   console.log("Sample size: " + sampleSize);
   console.log("=".repeat(60));
 
@@ -243,7 +243,7 @@ async function main() {
     if (allAccuracies.length > 0) {
       const overall = allAccuracies.reduce((a, b) => a + b, 0) / allAccuracies.length;
       console.log("\nOverall accuracy: " + (overall * 100).toFixed(1) + "%");
-      console.log(overall >= 0.9 ? "GO — Pipeline passes 90% threshold" : "NO-GO — Below 90% threshold. Debug extraction rules before Phase 1.");
+      console.log(overall >= 0.9 ? "GO, Pipeline passes 90% threshold" : "NO-GO, Below 90% threshold. Debug extraction rules before Phase 1.");
     }
   } else {
     console.log("\nNo gold-set labels provided. Run with --load-labels <file> to compute accuracy.");
@@ -259,7 +259,7 @@ async function main() {
     "'" + JSON.stringify(fieldAccuracies).split("'").join("''") + "'::jsonb, " +
     "NULL, " +
     "'mechanical_pipeline', " +
-    "'Phase 0B evaluation — " + (goldLabels ? "with labels" : "structure only") + "'" +
+    "'Phase 0B evaluation, " + (goldLabels ? "with labels" : "structure only") + "'" +
     ");";
 
   try {

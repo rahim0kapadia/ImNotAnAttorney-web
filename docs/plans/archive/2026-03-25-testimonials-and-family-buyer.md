@@ -10,7 +10,7 @@
 
 ## Component Reference
 
-`src/components/TestimonialSection.tsx` — Two variants: `inline` and `grid`.
+`src/components/TestimonialSection.tsx`, Two variants: `inline` and `grid`.
 - Props: `{ testimonials: { quote, name, charge, outcome }[], variant: "inline" | "grid" }`
 - Homepage uses both variants. Inline is better for single testimonials on secondary pages.
 - Disclaimer pattern: `<p className="mt-4 text-center text-xs text-zinc-600">*Based on real defendant experiences. Names changed for privacy.</p>`
@@ -73,7 +73,7 @@
 - Insert AFTER the feltExperience paragraph, before the payment option block:
   ```
   <p className="mt-1 text-xs text-zinc-500 italic">
-    Buying this for someone you love? Everything works the same — the questions, the templates, the action plan. You're giving them a real advantage.
+    Buying this for someone you love? Everything works the same, the questions, the templates, the action plan. You're giving them a real advantage.
   </p>
   ```
 

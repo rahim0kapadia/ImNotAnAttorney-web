@@ -63,7 +63,7 @@ function httpDownload(url, destPath, maxRedirects = 5) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 1. FJC IDB — Criminal defendants data
+// 1. FJC IDB, Criminal defendants data
 // ─────────────────────────────────────────────────────────────────────────────
 async function downloadFJC(browser) {
   console.log("\n=== 1. FJC Integrated Database ===");
@@ -272,7 +272,7 @@ async function downloadFJC(browser) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 2. MPV — Already downloaded
+// 2. MPV, Already downloaded
 // ─────────────────────────────────────────────────────────────────────────────
 async function downloadMPV() {
   console.log("\n=== 2. Mapping Police Violence ===");
@@ -294,7 +294,7 @@ async function downloadMPV() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 3. FBI CDE — Nebular nb-select dropdowns
+// 3. FBI CDE, Nebular nb-select dropdowns
 // ─────────────────────────────────────────────────────────────────────────────
 async function downloadFBI(browser) {
   console.log("\n=== 3. FBI Crime Data Explorer ===");
@@ -612,7 +612,7 @@ async function main() {
   for (const [k, d] of Object.entries(DIRS)) {
     const files = fs.readdirSync(d);
     const data = files.filter(f => !f.endsWith(".png"));
-    console.log(`\n  ${k}/ — ${data.length} data files`);
+    console.log(`\n  ${k}/, ${data.length} data files`);
     for (const f of data) {
       const stat = fs.statSync(path.join(d, f));
       console.log(`  >> ${f} (${(stat.size / 1024).toFixed(1)} KB)`);

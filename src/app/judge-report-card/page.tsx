@@ -1,9 +1,9 @@
 /**
  * Judge Report Card landing page (/judge-report-card)
  *
- * Standalone Tier 9 data product — $197, instant delivery.
+ * Standalone Tier 9 data product, $197, instant delivery.
  * Presents verified judge sentencing data from Tier 9 tables.
- * Server component — no client-side interactivity needed.
+ * Server component, no client-side interactivity needed.
  */
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
@@ -15,12 +15,12 @@ import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Judge Report Card — ${TIER_CORE["judge-report-card"].priceDisplay} | ImNotAnAttorney`,
+    title: `Judge Report Card, ${TIER_CORE["judge-report-card"].priceDisplay} | ImNotAnAttorney`,
     description:
       "Know your judge's sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library. Every data point sourced from verified court records.",
     alternates: { canonical: `${SITE_URL}/judge-report-card` },
     openGraph: {
-      title: "Judge Report Card — Know Your Judge Before Your First Hearing",
+      title: "Judge Report Card, Know Your Judge Before Your First Hearing",
       description:
         "Sentencing patterns, prosecutor pairing data, bench vs jury divergence. Verified court records with source URLs.",
       url: `${SITE_URL}/judge-report-card`,

@@ -1,5 +1,5 @@
 /**
- * TLDRBox — Amber-bordered callout for AI-extractable direct answers.
+ * TLDRBox, Amber-bordered callout for AI-extractable direct answers.
  *
  * Used in MDX blog posts via <TLDRBox> tags. Provides a structured,
  * visually distinct summary that AI assistants can extract as a

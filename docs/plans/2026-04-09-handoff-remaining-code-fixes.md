@@ -10,9 +10,9 @@ Status: READY TO EXECUTE
 
 ### Task 1: Enhance IB delivery email instructions
 **File:** `src/app/api/deliver/route.ts` (lines 512-527)
-**Problem:** IB-specific instructions exist but are thin for a $997 product. They reference 48-Hour Priority List, Case Progress Score, Appendix D questions, and Meeting Ready Sheet — but omit the key IB differentiators: jurisdiction intelligence (Section 3), motion landscape (Section 4), life impact map (Section 5), and the 14-day plan (Section 6).
+**Problem:** IB-specific instructions exist but are thin for a $997 product. They reference 48-Hour Priority List, Case Progress Score, Appendix D questions, and Meeting Ready Sheet, but omit the key IB differentiators: jurisdiction intelligence (Section 3), motion landscape (Section 4), life impact map (Section 5), and the 14-day plan (Section 6).
 **Fix:** Expand the 4-item instruction list to 6 items covering all major IB sections. Add reassurance note about 25-30 page length.
-**Research:** Read IB prompts.ts to verify section names/numbers match. Done — Section 3 (Case Intelligence), Section 4 (Legal Options & Deadlines), Section 5 (Protecting Your Case and Life), Section 6 (Your Plan with Meeting Ready Sheet + 14-day plan), Appendix D (10-15 questions), 48-Hour Priority List.
+**Research:** Read IB prompts.ts to verify section names/numbers match. Done, Section 3 (Case Intelligence), Section 4 (Legal Options & Deadlines), Section 5 (Protecting Your Case and Life), Section 6 (Your Plan with Meeting Ready Sheet + 14-day plan), Appendix D (10-15 questions), 48-Hour Priority List.
 
 ### Task 2: Fix SCHEMA.md documentation gaps
 **File:** `supabase/SCHEMA.md`
@@ -25,8 +25,8 @@ Status: READY TO EXECUTE
 **Fix:** Update comment to reflect reality.
 
 ## Files to modify
-1. `src/app/api/deliver/route.ts` — IB instructions block
-2. `supabase/SCHEMA.md` — column documentation
+1. `src/app/api/deliver/route.ts`, IB instructions block
+2. `supabase/SCHEMA.md`, column documentation
 3. Edge Function file (TBD which one has the stale comment)
 
 ## Files to create

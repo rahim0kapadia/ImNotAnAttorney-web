@@ -15,13 +15,13 @@ target_length: 10-12 minutes
 **Target length:** 10-12 minutes
 **Content type:** educational / diagnostic
 
-## Title Options (3 versions -- A/B testable)
+## Title Options (3 versions, A/B testable)
 1. 7 Signs Your Criminal Defense Attorney Isn't Working Your Case (58 chars)
 2. Is Your Lawyer Actually Fighting for You? 7 Warning Signs (57 chars)
 3. How to Know If Your Criminal Defense Attorney Is Coasting (57 chars)
 
 ## Description (full, SEO-optimized)
-You paid thousands. It's been months. You have no idea what's happening. Is your attorney actually working your case -- or just waiting for the plea offer?
+You paid thousands. It's been months. You have no idea what's happening. Is your attorney actually working your case, or just waiting for the plea offer?
 
 This video covers the 7 red flags that tell you whether your criminal defense attorney is genuinely defending you, including what a working attorney actually does in the first 2 weeks, 30 days, and beyond. Plus: what "good" looks like, when to fire your lawyer, and how to do it without hurting your case.
 
@@ -48,7 +48,7 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 
 ## Thumbnail Concept
 **Text:** "7 SIGNS" in bold red
-**Visual:** Split frame -- left side shows a polished attorney smiling with "TRUST ME" in green. Right side shows an empty desk with dust, cobwebs, and an unanswered phone with "MISSED CALLS (17)" on screen. Red border separating the two halves.
+**Visual:** Split frame, left side shows a polished attorney smiling with "TRUST ME" in green. Right side shows an empty desk with dust, cobwebs, and an unanswered phone with "MISSED CALLS (17)" on screen. Red border separating the two halves.
 **Color scheme:** Red/green contrast on dark background. Face showing skeptical expression in bottom right corner.
 
 ## Full Script
@@ -61,12 +61,12 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 "Fifteen thousand dollars. Four months. Zero motions filed. Zero strategy calls. You call their office and get voicemail. You email and get 'we're working on it.' You show up to court and find out about a continuance you didn't know was happening."
 
 **[0:05-0:15] THE PROMISE**
-"Here's the thing nobody tells you: from where you're sitting, an attorney who's genuinely working hard but bad at communicating, an attorney who took on too many cases, and an attorney who collected your retainer and is coasting until the plea offer lands -- all three look exactly the same."
+"Here's the thing nobody tells you: from where you're sitting, an attorney who's genuinely working hard but bad at communicating, an attorney who took on too many cases, and an attorney who collected your retainer and is coasting until the plea offer lands, all three look exactly the same."
 
 "By the end of this video, you'll know how to tell the difference. Seven red flags. What a working attorney actually does. When to fire your lawyer. And how to do it without hurting your case."
 
 **[0:15-0:30] CREDIBILITY + STAKES**
-"We're ImNotAnAttorney. We don't practice law. We research how defense attorneys actually operate -- the best ones and the ones who coast. We've studied bar complaints, malpractice cases, and attorney disciplinary records. The gap between what defendants expect and what they get is enormous."
+"We're ImNotAnAttorney. We don't practice law. We research how defense attorneys actually operate, the best ones and the ones who coast. We've studied bar complaints, malpractice cases, and attorney disciplinary records. The gap between what defendants expect and what they get is enormous."
 
 [Text on screen: "Know What They Know."]
 "And it starts with knowing what good actually looks like."
@@ -83,15 +83,15 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 **[1:00-1:30] FIRST TWO WEEKS**
 [Text on screen: "Weeks 1-2"]
 [Items appearing on screen]
-"Within the first two weeks of being hired, a working attorney should have obtained discovery from the prosecution -- or filed a demand for it. Reviewed the charging documents. Had an initial strategy conversation with you. Not a vague 'we'll handle it.' A conversation about the charges, possible defenses, and realistic outcomes."
+"Within the first two weeks of being hired, a working attorney should have obtained discovery from the prosecution, or filed a demand for it. Reviewed the charging documents. Had an initial strategy conversation with you. Not a vague 'we'll handle it.' A conversation about the charges, possible defenses, and realistic outcomes."
 
 **[1:30-2:00] FIRST MONTH**
 [Text on screen: "Month 1"]
-"Within the first month: reviewed discovery thoroughly. Not skimmed it -- actually read the police reports, lab results, witness statements. Identified suppression issues -- was the stop legal, was the search valid, were your Miranda rights respected. Communicated a preliminary strategy. Filed any time-sensitive motions."
+"Within the first month: reviewed discovery thoroughly. Not skimmed it, actually read the police reports, lab results, witness statements. Identified suppression issues, was the stop legal, was the search valid, were your Miranda rights respected. Communicated a preliminary strategy. Filed any time-sensitive motions."
 
 **[2:00-2:30] ONGOING**
 [Text on screen: "Ongoing"]
-"Ongoing: filed relevant motions. Investigated independently -- talked to witnesses, visited the scene, reviewed body camera footage. Negotiated with the prosecution. And kept you informed. You should never be surprised by anything that happens in court."
+"Ongoing: filed relevant motions. Investigated independently, talked to witnesses, visited the scene, reviewed body camera footage. Negotiated with the prosecution. And kept you informed. You should never be surprised by anything that happens in court."
 
 "If none of this is happening, you have a problem. Here are the specific signs."
 
@@ -102,19 +102,19 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 **[2:30-3:15] SIGN #1: NO CALLBACK**
 [PATTERN INTERRUPT: phone ringing sound effect, then silence]
 [Text on screen: "#1: You can't get a callback within 48 hours"]
-"Sign number one. You consistently cannot get a callback within 48 business hours. Attorneys are busy -- that's real. But basic professional communication is not optional."
+"Sign number one. You consistently cannot get a callback within 48 business hours. Attorneys are busy, that's real. But basic professional communication is not optional."
 
 "The number one bar complaint in America is attorneys not returning client phone calls. Not malpractice. Not bad strategy. Not communicating."
 
-"ABA Model Rule 1.4 requires attorneys to keep clients reasonably informed and promptly respond to requests for information. If you've documented multiple attempts over weeks with no substantive response -- that's below professional standards."
+"ABA Model Rule 1.4 requires attorneys to keep clients reasonably informed and promptly respond to requests for information. If you've documented multiple attempts over weeks with no substantive response, that's below professional standards."
 
 "The standard isn't 24/7 availability. It's a callback within two business days. Consistently."
 
 **[3:15-4:15] SIGN #2: NO DISCOVERY REVIEW**
 [Text on screen: "#2: They haven't reviewed discovery with you"]
-"Sign number two. They haven't reviewed discovery with you. Not just received it -- reviewed it WITH you."
+"Sign number two. They haven't reviewed discovery with you. Not just received it, reviewed it WITH you."
 
-"You have a constitutional right to see the evidence being used against you. If your attorney says 'don't worry about the paperwork' -- worry about the paperwork."
+"You have a constitutional right to see the evidence being used against you. If your attorney says 'don't worry about the paperwork', worry about the paperwork."
 
 "Here's why this matters: you lived the events. You know what happened. When you read the police report, you might spot that the officer described a red car when yours is blue. You might notice the timeline doesn't match. You might realize a witness they're citing wasn't even there."
 
@@ -128,7 +128,7 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 [Text on screen: "#3: Zero motions filed"]
 "Sign number three. No motions filed. It's been months."
 
-"Motions are the tools of defense. Motion to suppress -- asks the court to throw out evidence obtained illegally. Motion to compel -- forces the prosecution to turn over discovery they're withholding. Motion to dismiss -- argues the charges are legally defective."
+"Motions are the tools of defense. Motion to suppress, asks the court to throw out evidence obtained illegally. Motion to compel, forces the prosecution to turn over discovery they're withholding. Motion to dismiss, argues the charges are legally defective."
 
 "These aren't optional extras. In most criminal cases, the motion stage is where cases are actually won or lost."
 
@@ -142,15 +142,15 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 
 "How to tell the difference. Ask: what specific work will be completed during this additional time? A strategic continuance comes with a specific answer. A scheduling continuance generates a vague one."
 
-"Also ask: what's happened since the LAST continuance? If the answer is 'not much' -- well. That's your answer too."
+"Also ask: what's happened since the LAST continuance? If the answer is 'not much', well. That's your answer too."
 
 **[6:00-6:45] SIGN #5: PLEA PRESSURE**
 [Text on screen: "#5: They push the plea without explaining alternatives"]
 "Sign number five. They recommend a plea deal without explaining what motions could be filed, what weaknesses exist in the prosecution's case, or what alternatives to the plea exist."
 
-"'Just take the deal' is not legal strategy. It's the path of least resistance -- for them."
+"'Just take the deal' is not legal strategy. It's the path of least resistance, for them."
 
-"A good attorney presents the plea AND explains the case for trial and alternative dispositions -- diversion programs, drug court, deferred adjudication -- and lets you decide with full information."
+"A good attorney presents the plea AND explains the case for trial and alternative dispositions, diversion programs, drug court, deferred adjudication, and lets you decide with full information."
 
 **[6:45-7:00] SIGN #6: THEY DON'T KNOW YOUR CASE**
 [Text on screen: "#6: They confuse your facts or don't remember your charges"]
@@ -181,7 +181,7 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 **[8:00-9:00] THE COMMUNICATION STANDARD**
 [Text on screen: "Minimum communication expectations"]
 [On-screen table appearing]
-"Here's the minimum communication standard. After the initial meeting -- you hear from them within one week with a strategy overview. Discovery received -- within two weeks, a summary of what they found. Before any court date -- at least 48 hours notice of what to expect. After any court date -- same day or next day, what happened and next steps. Motion filed or ruled on -- within 24 hours."
+"Here's the minimum communication standard. After the initial meeting, you hear from them within one week with a strategy overview. Discovery received, within two weeks, a summary of what they found. Before any court date, at least 48 hours notice of what to expect. After any court date, same day or next day, what happened and next steps. Motion filed or ruled on, within 24 hours."
 
 "If your attorney isn't hitting these benchmarks, send a structured email. Specific questions. Discovery status. Motions filed. Prosecution communications. Upcoming deadlines. Set a response deadline of five business days. Document everything."
 
@@ -191,7 +191,7 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 
 **[9:00-9:45] WHEN TO FIRE**
 [Text on screen: "When to make the switch"]
-"If you've identified multiple red flags -- here's the honest answer about firing your attorney."
+"If you've identified multiple red flags, here's the honest answer about firing your attorney."
 
 "You can fire your criminal defense attorney at any time. You do not need the court's permission. Judges see attorney substitutions routinely. They do not hold it against you. It only becomes an issue if you switch attorneys multiple times and appear to be using substitutions to delay the case."
 
@@ -205,7 +205,7 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 
 "Step three: review your retainer agreement. Many retainer agreements have provisions about refunds for unearned portions of the fee. Understand what you're entitled to."
 
-"Step four: notify your current attorney in writing -- email, certified letter -- that you are terminating the representation. Keep a copy."
+"Step four: notify your current attorney in writing, email, certified letter, that you are terminating the representation. Keep a copy."
 
 "The fear of switching is almost always worse than the switch itself."
 
@@ -217,23 +217,23 @@ https://imnotanattorney.com/score (Free Defense Milestone Score)
 [Text on screen: "imnotanattorney.com/score"]
 "If you watched this far, something in your case already feels off. Trust that instinct."
 
-"We built a free Defense Milestone Score -- takes five minutes, gives you a clear read on what stage your case is in, what should have happened by now, and what questions to ask next. Link in the description."
+"We built a free Defense Milestone Score, takes five minutes, gives you a clear read on what stage your case is in, what should have happened by now, and what questions to ask next. Link in the description."
 
 **[11:00-11:30] THE SERVICE**
-"If you need more than a score -- if you want us to actually review your case, analyze what your attorney has and hasn't done, and generate the specific questions for your situation -- that's our Case Decoder. Starting at $97. It's what we built this for."
+"If you need more than a score, if you want us to actually review your case, analyze what your attorney has and hasn't done, and generate the specific questions for your situation, that's our Case Decoder. Starting at $97. It's what we built this for."
 
 **[11:30-12:00] CLOSE**
 [Text on screen: "Know What They Know."]
 "We're not your lawyers. But we're on your side."
 
-"Know What They Know. Subscribe -- next week, we're breaking down how to actually read your own discovery documents. The evidence against you is in a file somewhere. You should know what's in it."
+"Know What They Know. Subscribe, next week, we're breaking down how to actually read your own discovery documents. The evidence against you is in a file somewhere. You should know what's in it."
 
 ---
 
 ## Shorts Clip-Outs (2-3 per video)
-- Clip 1: 2:30-3:15 -- "The #1 bar complaint in America" (no callback)
-- Clip 2: 4:15-5:00 -- "Zero motions filed is not strategy" (motions)
-- Clip 3: 7:00-7:15 -- "Missed deadlines may be malpractice" (deadlines)
+- Clip 1: 2:30-3:15, "The #1 bar complaint in America" (no callback)
+- Clip 2: 4:15-5:00, "Zero motions filed is not strategy" (motions)
+- Clip 3: 7:00-7:15, "Missed deadlines may be malpractice" (deadlines)
 
 ## Cards & End Screen
 - Card at 5:15 linking to "How Criminal Cases Actually Work" (the stages video)

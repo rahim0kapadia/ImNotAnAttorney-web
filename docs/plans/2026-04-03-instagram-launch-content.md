@@ -1,6 +1,6 @@
 # Instagram Launch Content Plan
 
-**Spec:** N/A — direct /market command from Rahim
+**Spec:** N/A, direct /market command from Rahim
 **Repo:** ImNotAnAttorney-web
 **Problem:** @im_not_an_attorney has 0 posts. Need 5 seed posts + strategy doc in content queue.
 **Key files:** content/queue/instagram/pending/ (target), content/twitter/ + content/queue/tiktok/ + content/queue/facebook/ (source material)
@@ -11,10 +11,10 @@
 ## Tasks
 
 ### Task 1: Write 00-manychat-dm-sequences.md
-- COMPLETE — written to disk by main session
+- COMPLETE, written to disk by main session
 
 ### Task 2: Write 01-carousel-5-dui-questions.md
-- COMPLETE — written to disk from IG engine staging draft
+- COMPLETE, written to disk from IG engine staging draft
 
 ### Task 3: Write 02-reel-origin-story.md
 - 60s Reel script adapted from content/twitter/thread-01-origin-story.md

@@ -309,7 +309,7 @@ export function renderIntelligenceBriefHtml(
 ): string {
   // Assemble sections in report order
   const sections = [
-    // Personal letter (no heading — sets emotional tone)
+    // Personal letter (no heading, sets emotional tone)
     sectionOutputs["letter-to-you"] || "",
     // Page 2: 48-Hour Priority List (before everything)
     sectionOutputs["48hr-priorities"] || "",
@@ -351,7 +351,7 @@ export function renderIntelligenceBriefHtml(
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Intelligence Brief — ${escapeHtml(meta.firstName)}</title>
+<title>Case Intelligence Brief, ${escapeHtml(meta.firstName)}</title>
 <style>${REPORT_STYLES}</style>
 </head>
 <body>
@@ -375,13 +375,13 @@ export function renderIntelligenceBriefHtml(
   </div>
   ${meta.expertNames ? `<blockquote class="blockquote" style="margin: 20px 0; padding: 12px 16px;">
     <p class="body-text"><strong class="bold-text">METHODOLOGY NOTE</strong></p>
-    <p class="body-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.charges)} cases. Expert attributions appear throughout.</p>
-    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+    <p class="body-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)}, selected for ${escapeHtml(meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </blockquote>` : ""}
   ${bodyHtml}
   <div class="footer-disclaimer">
     <p class="footer-disclaimer-text">
-      <strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.
+      <strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.
     </p>
   </div>
   <div class="copyright-block">
@@ -389,9 +389,9 @@ export function renderIntelligenceBriefHtml(
     <p class="copyright-meta">Report ID: ${escapeHtml(meta.reportId)} | Generated: ${escapeHtml(meta.reportDate)}</p>
   </div>
   <div class="no-print upgrade-cta">
-    <p class="upgrade-cta-text">If you receive discovery evidence and want a deeper analysis, The X-Ray reviews your actual case files — officer recordings, lab reports, chain of custody, witness statements.</p>
-    <a href="/checkout?tier=x-ray" class="upgrade-btn">The X-Ray — ${meta.xrayPriceDisplay || "$2,497"} (${meta.xrayUpgradeCost || "$1,500"} after credit)</a>
-    <p class="upgrade-credit-note">Every dollar you've paid rolls forward. Your ${meta.ibPriceDisplay || "$997"} is fully credited toward any tier — you only pay the difference. Credits valid for 12 months.</p>
+    <p class="upgrade-cta-text">If you receive discovery evidence and want a deeper analysis, The X-Ray reviews your actual case files, officer recordings, lab reports, chain of custody, witness statements.</p>
+    <a href="/checkout?tier=x-ray" class="upgrade-btn">The X-Ray, ${meta.xrayPriceDisplay || "$2,497"} (${meta.xrayUpgradeCost || "$1,500"} after credit)</a>
+    <p class="upgrade-credit-note">Every dollar you've paid rolls forward. Your ${meta.ibPriceDisplay || "$997"} is fully credited toward any tier, you only pay the difference. Credits valid for 12 months.</p>
   </div>
 </div>
 </body>
@@ -405,19 +405,19 @@ export function renderIntelligenceBriefHtml(
 function buildTableOfContents(): string {
   return `## Table of Contents
 
-- **START HERE: Your 48-Hour Priority List** — 3 actions for the next 48 hours
-- **Section 1: Your Case Roadmap** — Where you are, what happens next, the two paths
-- **Section 2: What's Working + What Needs Attention** — Case Progress Score, decoded statements, gaps to clarify
-- **Section 3: Your Case Intelligence** — Outcome map, defense theories, judge profile, prosecution preview
-- **Section 4: Legal Options & Deadlines** — Motion landscape, deadline calendar, plea framework
-- **Section 5: Protecting Your Case and Life** — Case protection, life impact map, pending-case management
-- **Section 6: Your Plan** — Email template, phone script, 14-day plan, meeting prep, difficult conversations
-- **Appendix A: Brady/Giglio Checklist** — Evidence the prosecution must disclose
-- **Appendix B: Next Court Date Prep** — What to expect, wear, bring, and do
-- **Appendix C: Attorney Script Pack** — 5 ready-to-use communication scripts
-- **Appendix D: Questions for Your Attorney** — 10-15 targeted, gap-based questions
-- **Appendix E: Your Rights** — Key rights during criminal proceedings
-- **Appendix F: Data-Driven Defense Intelligence** — Verified court data with source URLs`;
+- **START HERE: Your 48-Hour Priority List**, 3 actions for the next 48 hours
+- **Section 1: Your Case Roadmap**, Where you are, what happens next, the two paths
+- **Section 2: What's Working + What Needs Attention**, Case Progress Score, decoded statements, gaps to clarify
+- **Section 3: Your Case Intelligence**, Outcome map, defense theories, judge profile, prosecution preview
+- **Section 4: Legal Options & Deadlines**, Motion landscape, deadline calendar, plea framework
+- **Section 5: Protecting Your Case and Life**, Case protection, life impact map, pending-case management
+- **Section 6: Your Plan**, Email template, phone script, 14-day plan, meeting prep, difficult conversations
+- **Appendix A: Brady/Giglio Checklist**, Evidence the prosecution must disclose
+- **Appendix B: Next Court Date Prep**, What to expect, wear, bring, and do
+- **Appendix C: Attorney Script Pack**, 5 ready-to-use communication scripts
+- **Appendix D: Questions for Your Attorney**, 10-15 targeted, gap-based questions
+- **Appendix E: Your Rights**, Key rights during criminal proceedings
+- **Appendix F: Data-Driven Defense Intelligence**, Verified court data with source URLs`;
 }
 
 function buildBradyGiglioChecklist(): string {
@@ -465,7 +465,7 @@ A structured phone call framework is in **Section 6c**. Includes what to say, ho
 If your attorney doesn't respond to Script 1 within 5 business days, use the follow-up template in **Section 6e**.
 
 ### Script 4: Difficult Conversation Scripts (Section 6i)
-Real scenarios with word-for-word responses for when conversations get challenging — fee disputes, strategy disagreements, communication breakdowns. See **Section 6i**.
+Real scenarios with word-for-word responses for when conversations get challenging, fee disputes, strategy disagreements, communication breakdowns. See **Section 6i**.
 
 ### Script 5: Self-Advocacy Steps (Section 6j)
 If you've exhausted communication attempts, **Section 6j** provides escalation steps including bar complaints, substitution of counsel, and Marsden/Strickland motions.
@@ -479,15 +479,15 @@ function buildYourRights(state: string): string {
 **These rights exist regardless of your charge, your attorney, or your county.**
 
 ### Constitutional Rights:
-- **Right to remain silent** (5th Amendment) — You cannot be compelled to testify against yourself
-- **Right to an attorney** (6th Amendment) — If you cannot afford one, one will be appointed
-- **Right to a speedy trial** (6th Amendment) — Timelines vary by state and jurisdiction
-- **Right to confront witnesses** (6th Amendment) — You can cross-examine anyone who testifies against you
-- **Right against unreasonable search and seizure** (4th Amendment) — Evidence obtained illegally may be suppressed
-- **Right to a jury trial** (6th Amendment) — For serious offenses, you have the right to be judged by a jury of your peers
-- **Right to due process** (14th Amendment) — Fair procedures must be followed
-- **Right against double jeopardy** (5th Amendment) — You cannot be tried twice for the same offense
-- **Right to be presumed innocent** — The prosecution must prove guilt beyond a reasonable doubt
+- **Right to remain silent** (5th Amendment), You cannot be compelled to testify against yourself
+- **Right to an attorney** (6th Amendment), If you cannot afford one, one will be appointed
+- **Right to a speedy trial** (6th Amendment), Timelines vary by state and jurisdiction
+- **Right to confront witnesses** (6th Amendment), You can cross-examine anyone who testifies against you
+- **Right against unreasonable search and seizure** (4th Amendment), Evidence obtained illegally may be suppressed
+- **Right to a jury trial** (6th Amendment), For serious offenses, you have the right to be judged by a jury of your peers
+- **Right to due process** (14th Amendment), Fair procedures must be followed
+- **Right against double jeopardy** (5th Amendment), You cannot be tried twice for the same offense
+- **Right to be presumed innocent**, The prosecution must prove guilt beyond a reasonable doubt
 
 ### Your Rights With Your Attorney:
 - You have the right to know what is happening in your case at all times

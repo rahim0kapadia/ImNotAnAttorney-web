@@ -1,4 +1,4 @@
-# Bird SMS + Notification Preference System — Implementation Plan v2
+# Bird SMS + Notification Preference System, Implementation Plan v2
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 > 
@@ -13,7 +13,7 @@
 **Spec:** `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\specs\2026-04-13-bird-sms-notification-system-design.md`
 
 **Safety invariants (enforced in code):**
-- `court_reminders` channel: "email" or "both" only — NEVER "sms" alone. Keeps people out of jail.
+- `court_reminders` channel: "email" or "both" only, NEVER "sms" alone. Keeps people out of jail.
 - All client SMS gated on `sms_consent_at` being set (10DLC compliance).
 - All user-supplied strings escaped with `escapeHtml()` before email HTML interpolation.
 - All dynamic SMS bodies capped at 160 chars via `capSMS()`.
@@ -120,7 +120,7 @@ describe("shouldSendEmail / shouldSendSMS", () => {
 });
 
 describe("COURT_REMINDER_SAFE_CHANNELS", () => {
-  it("only allows email or both — never sms alone", () => {
+  it("only allows email or both, never sms alone", () => {
     expect(COURT_REMINDER_SAFE_CHANNELS).toEqual(new Set(["email", "both"]));
   });
 });
@@ -158,7 +158,7 @@ describe("canSendClientSMS", () => {
 - [ ] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run tests/notification-prefs.test.ts`
-Expected: FAIL — module not found
+Expected: FAIL, module not found
 
 - [ ] **Step 3: Implement notification-prefs.ts**
 
@@ -244,7 +244,7 @@ export function shouldSendSMS(pref: Channel): boolean {
   return pref === "sms" || pref === "both";
 }
 
-/** 10DLC consent guard — ALL client SMS must pass through this. */
+/** 10DLC consent guard, ALL client SMS must pass through this. */
 export function canSendClientSMS(
   phone: string | null | undefined,
   smsConsentAt: string | null | undefined
@@ -381,7 +381,7 @@ export async function sendSMS(
   const channelId = process.env.BIRD_CHANNEL_ID;
 
   if (!apiKey || !workspaceId || !channelId) {
-    console.warn("[Bird SMS] Not configured — skipping SMS");
+    console.warn("[Bird SMS] Not configured, skipping SMS");
     return { success: false, error: "SMS not configured" };
   }
 
@@ -450,7 +450,7 @@ export function isValidPhone(phone: string): boolean {
 
 - [ ] **Step 8: Type check + commit**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 
 ```bash
 git add src/lib/sms.ts tests/sms.test.ts src/app/api/partner/magic-link/route.ts src/lib/site.ts
@@ -469,14 +469,14 @@ git commit -m "feat(sms): replace Twilio with Bird API, add capSMS + phone valid
 - [ ] **Step 1: Write migration SQL**
 
 ```sql
--- supabase/migrations/20260414a_sms_notification_prefs.sql
+, supabase/migrations/20260414a_sms_notification_prefs.sql
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS phone text;
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS sms_consent_at timestamptz;
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS notification_prefs jsonb;
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS notification_prefs jsonb;
 ALTER TABLE referrals ADD COLUMN IF NOT EXISTS locked_at timestamptz;
 
--- SMS audit log (mirrors email_log pattern)
+, SMS audit log (mirrors email_log pattern)
 CREATE TABLE IF NOT EXISTS sms_log (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   recipient text NOT NULL,
@@ -491,7 +491,7 @@ CREATE TABLE IF NOT EXISTS sms_log (
 );
 
 ALTER TABLE sms_log ENABLE ROW LEVEL SECURITY;
--- Deny anon/authenticated — only service_role writes via createAdminClient()
+, Deny anon/authenticated, only service_role writes via createAdminClient()
 CREATE POLICY "sms_log_deny_all" ON sms_log FOR ALL USING (false);
 
 CREATE INDEX IF NOT EXISTS idx_sms_log_recipient ON sms_log(recipient);
@@ -528,7 +528,7 @@ partner: { id: string; name: string; phone: string | null; notification_prefs: R
 
 - [ ] **Step 6B: Update `Partner` interface in `src/lib/partner-data.ts`**
 
-Add `notification_prefs` to the `Partner` interface (line 41) — dashboard page imports this type and Task 9's NotificationSettings component needs the field:
+Add `notification_prefs` to the `Partner` interface (line 41), dashboard page imports this type and Task 9's NotificationSettings component needs the field:
 ```typescript
   notification_prefs: Partial<import("./notification-prefs").PartnerNotificationPrefs> | null;
 ```
@@ -723,12 +723,12 @@ Add `phone` to the reminder select query. Render `<PhoneOptIn token={token} hasP
 
 ---
 
-### Task 5: Court Reminder Cron — SMS Path + Partner Alerts
+### Task 5: Court Reminder Cron, SMS Path + Partner Alerts
 
 **Files:**
 - Modify: `src/app/api/cron/court-reminders/route.ts`
 
-This is the most critical path — court reminders keep people out of jail.
+This is the most critical path, court reminders keep people out of jail.
 
 - [ ] **Step 1: Add imports**
 
@@ -792,19 +792,19 @@ for (const interval of REMINDER_INTERVALS) {
       }
 
       const results = await Promise.allSettled(sends);
-      // Gate on at least one successful send — if ALL fail, don't mark sent so cron retries next run
+      // Gate on at least one successful send, if ALL fail, don't mark sent so cron retries next run
       const anySucceeded = results.some(
         (res) => res.status === "fulfilled" && (res.value as { success?: boolean })?.success !== false
       );
       if (!anySucceeded && results.length > 0) {
         console.error(`[Cron] All sends failed for ${interval.key} / ${r.id}`);
         errors++;
-        continue; // skip alreadySent — will retry next cron run
+        continue; // skip alreadySent, will retry next cron run
       }
       alreadySent.add(interval.key);
       sent++;
 
-      // Indemnitor — email only for now
+      // Indemnitor, email only for now
       if (r.indemnitor_email) {
         await sendEmail({
           to: r.indemnitor_email,
@@ -855,13 +855,13 @@ for (const interval of REMINDER_INTERVALS) {
 
 - [ ] **Step 5: Type check + run existing tests**
 
-Run: `npx tsc --noEmit && npx vitest run`
+Run: `npx tsc,noEmit && npx vitest run`
 
 - [ ] **Step 6: Commit**
 
 ```bash
 git add src/app/api/cron/court-reminders/route.ts
-git commit -m "feat(sms): court reminder cron — SMS + partner alerts with consent guards"
+git commit -m "feat(sms): court reminder cron, SMS + partner alerts with consent guards"
 ```
 
 ---
@@ -961,7 +961,7 @@ export async function PATCH(
   // SAFETY: court_reminders must never be "sms" alone
   if (!validateClientPrefs(body)) {
     return NextResponse.json(
-      { error: "Court reminders require email — choose Email or Both." },
+      { error: "Court reminders require email, choose Email or Both." },
       { status: 400 }
     );
   }
@@ -1001,7 +1001,7 @@ On the prep page, below the PhoneOptIn component (only visible if phone is set):
 {reminder.phone && (
   <details className="text-xs text-zinc-500 mt-2">
     <summary className="cursor-pointer hover:text-zinc-400">Notification settings</summary>
-    {/* Minimal inline pref toggles — same pattern as NotificationSettings but for client types */}
+    {/* Minimal inline pref toggles, same pattern as NotificationSettings but for client types */}
   </details>
 )}
 ```
@@ -1047,7 +1047,7 @@ if (canSendClientSMS(reminder.phone, reminder.sms_consent_at)) {
 
 ## Phase 3: Bondsman SMS
 
-### Task 8: Partner Magic Link — Preference-Aware
+### Task 8: Partner Magic Link, Preference-Aware
 
 **Files:**
 - Modify: `src/app/api/partner/magic-link/route.ts`
@@ -1269,7 +1269,7 @@ In `src/app/partner/dashboard/page.tsx`:
 
 ---
 
-### Task 10: Partner Drip — SMS Path
+### Task 10: Partner Drip, SMS Path
 
 **Files:**
 - Modify: `src/app/api/cron/partner-drip/route.ts`
@@ -1346,13 +1346,13 @@ Both the primary path (~line 562) and metadata fallback path (~line 644) query p
 
 - [ ] **Step 2: ADD SMS alongside existing builder (preserve `partnerSaleNotificationEmail`)**
 
-Keep the existing `partnerSaleNotificationEmail` builder — wrap in preference check + add SMS path. Lines 557-580:
+Keep the existing `partnerSaleNotificationEmail` builder, wrap in preference check + add SMS path. Lines 557-580:
 
 ```typescript
 import { sendSMS, capSMS } from "@/lib/sms";
 import { getPartnerPrefs, shouldSendEmail, shouldSendSMS } from "@/lib/notification-prefs";
 
-// Existing builder preserved — only wrapping in pref check + adding SMS
+// Existing builder preserved, only wrapping in pref check + adding SMS
 const { partnerSaleNotificationEmail } = await import("@/lib/partner-emails");
 const { data: partnerDetail } = await supabase
   .from("partners")
@@ -1379,7 +1379,7 @@ if (partnerDetail?.email) {
     });
   }
 
-  // Fire-and-forget SMS — don't await, avoid webhook timeout risk
+  // Fire-and-forget SMS, don't await, avoid webhook timeout risk
   if (shouldSendSMS(partnerPrefs.payout) && partnerDetail.phone) {
     sendSMS(partnerDetail.phone, capSMS(`INAA: You earned $${commissionDollars} from a referral! Confirms ${holdbackDate}.`))
       .catch(e => console.warn("[Webhook] Partner sale SMS failed:", e));
@@ -1387,7 +1387,7 @@ if (partnerDetail?.email) {
 }
 ```
 
-- [ ] **Step 3: Apply same pattern to metadata fallback path** (~lines 641-660) — same wrapper: pref check around existing builder call + SMS path
+- [ ] **Step 3: Apply same pattern to metadata fallback path** (~lines 641-660), same wrapper: pref check around existing builder call + SMS path
 
 - [ ] **Step 4: Type check + commit**
 
@@ -1402,7 +1402,7 @@ if (partnerDetail?.email) {
 
 - [ ] **Step 1: Build cron** (same structure as v1 but with refund filter)
 
-Key query — includes `.gt("commission_amount", 0)` to exclude refunded orders:
+Key query, includes `.gt("commission_amount", 0)` to exclude refunded orders:
 
 ```typescript
 const { data: referrals, error: fetchErr } = await supabase
@@ -1414,7 +1414,7 @@ const { data: referrals, error: fetchErr } = await supabase
   .limit(200);
 ```
 
-Full cron implementation (DO NOT reference v1 — table name was wrong there):
+Full cron implementation (DO NOT reference v1, table name was wrong there):
 
 ```typescript
 // src/app/api/cron/lock-commissions/route.ts
@@ -1547,17 +1547,17 @@ Register daily at 06:00 UTC: `https://imnotanattorney.com/api/cron/lock-commissi
 ### Task 13: Update ARCHITECTURE.md + Clean Up Stale Twilio References
 
 - [ ] **Step 1: Document SMS + notification system, Bird env vars, consent requirements, commission holdback**
-- [ ] **Step 2: Update `src/lib/CONTEXT.md`** — replace `twilio.ts` reference (line 100) with `sms.ts` and update description from "Twilio SMS" to "Bird SMS (court reminders, magic links, partner notifications)"
+- [ ] **Step 2: Update `src/lib/CONTEXT.md`**, replace `twilio.ts` reference (line 100) with `sms.ts` and update description from "Twilio SMS" to "Bird SMS (court reminders, magic links, partner notifications)"
 - [ ] **Step 3: Commit**
 
 ---
 
 ### Task 14: Final Verification
 
-- [ ] **Step 1:** `npx tsc --noEmit` — 0 errors
-- [ ] **Step 2:** `npx vitest run` — all tests pass
-- [ ] **Step 3:** CV: `node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends`
-- [ ] **Step 4:** Verify no Twilio refs: `grep -r "twilio\|TWILIO" src/ --include="*.ts" --include="*.tsx"` — no matches
+- [ ] **Step 1:** `npx tsc,noEmit`, 0 errors
+- [ ] **Step 2:** `npx vitest run`, all tests pass
+- [ ] **Step 3:** CV: `node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends`
+- [ ] **Step 4:** Verify no Twilio refs: `grep -r "twilio\|TWILIO" src/,include="*.ts",include="*.tsx"`, no matches
 - [ ] **Step 5:** Final commit if needed
 
 ---
@@ -1589,43 +1589,43 @@ All fixes from the v1 code review are merged inline above. For reference:
 - **Reuse:** `normalizePhone`/`isValidPhone` in site.ts (Task 2 Step 7)
 - **Reuse:** `escapeHtml()` on all user strings in email HTML
 - **Efficiency:** Email+SMS parallel via `Promise.allSettled` per reminder (Task 5)
-- **Efficiency:** `generateMagicLink` select extended — no extra query (Task 3 Step 6, Task 8)
+- **Efficiency:** `generateMagicLink` select extended, no extra query (Task 3 Step 6, Task 8)
 - **Quality:** Env vars read inside function, not module scope (Task 2)
 - **Quality:** PII not logged in "not configured" warning (Task 2)
 - **Quality:** Import types from notification-prefs.ts, not redefined locally (Task 9)
 
-## Review Fix Changelog (v2.1 — pre-execution code review)
+## Review Fix Changelog (v2.1, pre-execution code review)
 
 All fixes below are patched inline above:
 - **C1-v2:** `Promise.allSettled` in court reminder cron now gates `alreadySent.add` on at least one successful send. Prevents silent swallowing of transient failures. (Task 5 Step 3)
 - **C2-v2:** Partner drip preserves `EmailLogContext` second arg to `sendEmail()` and gates `last_activation_email_key` update on ANY channel succeeding, not just email. Prevents drip sequence infinite loop when pref is SMS-only. (Task 10 Step 2)
-- **W1-v2:** Removed `escapeHtml()` from indemnitor email subject line — subjects are plain text, HTML entities render literally (`O&#39;Brien`). `escapeHtml` reserved for HTML body only. (Task 5 Step 3)
+- **W1-v2:** Removed `escapeHtml()` from indemnitor email subject line, subjects are plain text, HTML entities render literally (`O&#39;Brien`). `escapeHtml` reserved for HTML body only. (Task 5 Step 3)
 - **W2-v2:** `sms_log` table now has `ENABLE ROW LEVEL SECURITY` + deny-all policy. Matches every other table in the project. (Task 3 Step 1)
 - **W3-v2:** `sms_log` FK constraints changed from default `RESTRICT` to `ON DELETE SET NULL`. Audit logs should never block business operations. (Task 3 Step 1)
 - **W4-v2:** Removed dead `escapeHtml` import from `sms.ts`. (Task 2 Step 3)
-- **W5-v2:** Added Step 6B to Task 3: update `Partner` interface in `src/lib/partner-data.ts` with `notification_prefs`. Dashboard imports this type — without it, Task 9's NotificationSettings component would have a type error. (Task 3 Step 6B)
+- **W5-v2:** Added Step 6B to Task 3: update `Partner` interface in `src/lib/partner-data.ts` with `notification_prefs`. Dashboard imports this type, without it, Task 9's NotificationSettings component would have a type error. (Task 3 Step 6B)
 - **W6-v2:** Stripe webhook (Task 11) now preserves existing `partnerSaleNotificationEmail` builder instead of replacing with inline HTML. Keeps partner email template pattern consistent. SMS added alongside, not instead. (Task 11 Step 2)
 - **W7-v2:** Task 13 now includes Step 2 to update `src/lib/CONTEXT.md` Twilio reference → Bird. (Task 13 Step 2)
 
-## Review Fix Changelog (v2.2 — round 2 code review)
+## Review Fix Changelog (v2.2, round 2 code review)
 
 - **C3-v2:** Task 12 inlined full cron code. v1 reference used wrong table `partner_referrals` → corrected to `referrals`. (Task 12 Step 1)
 - **C4-v2:** Task 12 commission locking email: `partner.name` now wrapped in `escapeHtml()` to prevent XSS. (Task 12 Step 1)
-- **W8-v2:** Partner "client reminded" email subject: removed `escapeHtml(r.first_name)` — same W1 class bug in different line. (Task 5 Step 3)
+- **W8-v2:** Partner "client reminded" email subject: removed `escapeHtml(r.first_name)`, same W1 class bug in different line. (Task 5 Step 3)
 - **W9-v2:** Task 3 commit `git add` now includes `src/lib/partner-data.ts`. (Task 3 Step 7)
 - **W10-v2:** Task 9 now has full inline code blocks (API route + NotificationSettings component). No v1 cross-reference needed. (Task 9 Steps 1-3)
-- **W11-v2:** Removed dead code from `sms.ts`: `sendSMSWithRetry`, `dispatchClientNotification`, `dispatchPartnerNotification` — defined but never called by any task. (Task 2 Step 3)
+- **W11-v2:** Removed dead code from `sms.ts`: `sendSMSWithRetry`, `dispatchClientNotification`, `dispatchPartnerNotification`, defined but never called by any task. (Task 2 Step 3)
 - **S1-v2:** Variable shadowing: `results.some((r) =>` renamed to `results.some((res) =>` to avoid shadowing outer `r` loop variable. (Task 5 Step 3)
 - **S2-v2:** All `toLocaleDateString()` calls now use explicit `"en-US"` locale for consistent formatting across Vercel environments. (Tasks 7, 11)
 
-## Review Fix Changelog (v2.3 — round 3 code review)
+## Review Fix Changelog (v2.3, round 3 code review)
 
 - **W12-v2:** Task 4 PhoneOptIn component inlined with `normalizePhone`/`isValidPhone` from `@/lib/site`. No v1 cross-reference needed. (Task 4 Step 2)
 - **S3-v2:** Task 12 commission email now includes `unsubscribeEmail: partner.email` for CAN-SPAM consistency with other partner emails. (Task 12 Step 1)
 - **S4-v2:** Task 12 commission email now includes `EmailLogContext` (`category: "commission-locked"`) for audit trail consistency. (Task 12 Step 1)
 
-## Review Fix Changelog (v2.4 — round 4 code review)
+## Review Fix Changelog (v2.4, round 4 code review)
 
 - **W13-v2:** Partner "client reminded" email (Task 5 Step 3) now includes `unsubscribeEmail` + `EmailLogContext`. Last partner-facing email that was missing both. (Task 5 Step 3)
-- **W14-v2:** Removed `sendSMSLogged`, `logSMSSend`, `SMSLogContext`, and `createAdminClient` import from `sms.ts` — dead code, no task called it. `sms_log` table stays in migration for future use. (Task 2 Step 3)
+- **W14-v2:** Removed `sendSMSLogged`, `logSMSSend`, `SMSLogContext`, and `createAdminClient` import from `sms.ts`, dead code, no task called it. `sms_log` table stays in migration for future use. (Task 2 Step 3)
 - **S5-v2:** Task 12 duplicate `import { sendEmail }` / `import { escapeHtml }` from `@/lib/email` merged into single import. (Task 12 Step 1)

@@ -42,7 +42,7 @@ export function escapeHtml(str: string): string {
 // ============================================================
 
 /**
- * Resend API key — read once at module load.
+ * Resend API key, read once at module load.
  * If missing, sendEmail() gracefully degrades: logs a warning and returns
  * { success: false } instead of crashing. This allows local dev and preview
  * deploys to function without email credentials.
@@ -83,7 +83,7 @@ interface EmailParams {
   };
 }
 
-/** Result returned by sendEmail — always resolves (never throws). */
+/** Result returned by sendEmail, always resolves (never throws). */
 interface EmailResult {
   /** Whether the Resend API accepted the email. */
   success: boolean;
@@ -221,7 +221,7 @@ export async function sendEmail(
             ${params.html}
             <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #27272A; font-size: 12px; color: #71717A; text-align: center;">
               <p style="margin: 0 0 8px;">ImNotAnAttorney</p>
-              <p style="margin: 0;">Legal information and research services — not legal advice.</p>
+              <p style="margin: 0;">Legal information and research services, not legal advice.</p>
               <p style="margin: 4px 0 0; font-size: 11px; color: #52525B;">${PHYSICAL_ADDRESS}</p>
               ${unsubscribeHtml}
             </div>
@@ -278,7 +278,7 @@ export async function sendEmailWithRetry(
   const result = await sendEmail(params, logContext);
   if (result.success) return result;
 
-  // First attempt failed — wait 2s and retry (transient Resend API errors)
+  // First attempt failed, wait 2s and retry (transient Resend API errors)
   await new Promise((resolve) => setTimeout(resolve, 2000));
   const retry = await sendEmail(params, logContext);
   if (!retry.success) {
@@ -318,11 +318,11 @@ export async function sendEmailWithOperatorAlert(
   const retry = await sendEmail(params, logContext);
   if (retry.success) return retry;
 
-  // Both failed — notify operator so they can send manually
+  // Both failed, notify operator so they can send manually
   console.error(`[Email] Failed after retry: ${context}`, retry.error);
   await sendEmail({
     to: OPERATOR_EMAIL,
-    subject: `ALERT: Email delivery failed — ${context}`,
+    subject: `ALERT: Email delivery failed, ${context}`,
     html: `<h1 style="color: #EF4444;">Email Delivery Failed</h1>
       <p><strong>Context:</strong> ${escapeHtml(context)}</p>
       <p><strong>Recipient:</strong> ${escapeHtml(params.to)}</p>
@@ -353,7 +353,7 @@ export async function sendCustomerFailureNotification(opts: {
 }): Promise<void> {
   const dedupKey = `generation_failed_${opts.caseId}`;
 
-  // Check dedup — only send once per case
+  // Check dedup, only send once per case
   const { data: existing } = await opts.supabase
     .from("drip_emails")
     .select("id")
@@ -374,7 +374,7 @@ export async function sendCustomerFailureNotification(opts: {
       <h1 style="color: #F59E0B;">Update on Your Report</h1>
       <p>We hit a technical issue while generating your ${escapeHtml(opts.productName)}. Our team has been notified and is working on it.</p>
       <p><strong style="color: white;">You don't need to do anything.</strong> We'll have your report ready within a revised timeline and will email you as soon as it's available.</p>
-      <p>If you have questions in the meantime, reply to this email — we read every response.</p>
+      <p>If you have questions in the meantime, reply to this email, we read every response.</p>
     `,
   }, `failure notification for ${opts.email} (case ${opts.caseId})`, {
     category: "failure-notification",
@@ -383,7 +383,7 @@ export async function sendCustomerFailureNotification(opts: {
   });
 
   if (result.success) {
-    // Record dedup marker — use subscriber lookup for consistency
+    // Record dedup marker, use subscriber lookup for consistency
     const { data: subscriber } = await opts.supabase
       .from("subscribers")
       .select("id")

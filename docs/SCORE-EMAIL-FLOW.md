@@ -69,15 +69,15 @@ File: `src/app/score/page.tsx` (lines 322-785+)
 
 After calculation, the page renders:
 
-1. **Score Arc** — Animated circle showing band-colored score
-2. **Band Identity** — "Your gut was right. Something is wrong." (validation language)
-3. **Observations** — 3-5 contextual findings from the algorithm
-4. **Urgency Block** — Time-sensitive warnings (for scores ≤55)
-5. **Attorney Email Template** — Charge-specific copy-paste email (if score < 60 + no motions + time >= 1 month)
-6. **Origin Story** — "68.3 grams" trust-building narrative
-7. **Tribe Identity** — Positioning language ("You're a different kind of defendant")
-8. **Email Capture Form** — Band-aware headline + email input
-9. **CTAs** — Playbook or Case Decoder based on live status
+1. **Score Arc**, Animated circle showing band-colored score
+2. **Band Identity**, "Your gut was right. Something is wrong." (validation language)
+3. **Observations**, 3-5 contextual findings from the algorithm
+4. **Urgency Block**, Time-sensitive warnings (for scores ≤55)
+5. **Attorney Email Template**, Charge-specific copy-paste email (if score < 60 + no motions + time >= 1 month)
+6. **Origin Story**, "68.3 grams" trust-building narrative
+7. **Tribe Identity**, Positioning language ("You're a different kind of defendant")
+8. **Email Capture Form**, Band-aware headline + email input
+9. **CTAs**, Playbook or Case Decoder based on live status
 
 ### Email Capture Form
 File: `src/app/score/page.tsx` (lines 544-577)
@@ -171,18 +171,18 @@ if (subData?.id) {
 ```
 
 **Drip Keys Recorded:**
-- `nurture_day0` — Prevents welcome email duplication from cron
-- `score_artifact` — (Score-page subscribers only) Prevents cron from sending second score email
+- `nurture_day0`, Prevents welcome email duplication from cron
+- `score_artifact`, (Score-page subscribers only) Prevents cron from sending second score email
 
 #### Step 4: Band-Aware Welcome Email
 File: `src/app/api/subscribe/route.ts` (lines 146-205)
 
 **IF source="score-page" AND scoreBand AND scoreValue:**
 - Send **Score Artifact Email** (charge-aware, trust-building, no CTA)
-- Subject: `Your Defense Milestone Score: {scoreValue}/100 — what this means for your {chargeLabel} case`
+- Subject: `Your Defense Milestone Score: {scoreValue}/100, what this means for your {chargeLabel} case`
 - HTML includes: score, band label, score disclaimers, save-this-email message
 - Category: `score-artifact`
-- **No follow-up link or CTA** — designed to be saved/forwarded
+- **No follow-up link or CTA**, designed to be saved/forwarded
 
 **ELSE (non-score subscribers):**
 - Send **Discovery Checklist Welcome** (generic lead magnet)
@@ -201,11 +201,11 @@ File: `supabase/migrations/009-subscriber-score-columns.sql`
 CREATE TABLE subscribers (
   id UUID PRIMARY KEY,
   email TEXT NOT NULL UNIQUE,
-  source TEXT NOT NULL DEFAULT 'lead-capture',  -- "score-page" for score captures
-  score_band TEXT,                               -- NULL for non-score subscribers
-  score_value INTEGER,                           -- 0-100 numeric, NULL for non-score
-  charge_type TEXT,                              -- drug/dui/white-collar/etc, NULL for non-score
-  unsubscribed_at TIMESTAMPTZ,                   -- CAN-SPAM unsubscribe tracking
+  source TEXT NOT NULL DEFAULT 'lead-capture', , "score-page" for score captures
+  score_band TEXT,                              , NULL for non-score subscribers
+  score_value INTEGER,                          , 0-100 numeric, NULL for non-score
+  charge_type TEXT,                             , drug/dui/white-collar/etc, NULL for non-score
+  unsubscribed_at TIMESTAMPTZ,                  , CAN-SPAM unsubscribe tracking
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -229,7 +229,7 @@ File: `src/lib/supabase/schema-drip.sql`
 CREATE TABLE drip_emails (
   id UUID PRIMARY KEY,
   subscriber_id UUID NOT NULL REFERENCES subscribers(id),
-  email_key TEXT NOT NULL,  -- "nurture_day0", "score_artifact", etc
+  email_key TEXT NOT NULL, , "nurture_day0", "score_artifact", etc
   sent_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(subscriber_id, email_key)
 );
@@ -239,8 +239,8 @@ CREATE INDEX idx_drip_emails_email_key ON drip_emails(email_key);
 ```
 
 **Dedup Keys for Score Subscribers:**
-- `nurture_day0` — Welcome email (sent immediately)
-- `score_artifact` — Score result email (sent immediately, never re-sent by cron)
+- `nurture_day0`, Welcome email (sent immediately)
+- `score_artifact`, Score result email (sent immediately, never re-sent by cron)
 
 ---
 
@@ -320,11 +320,11 @@ Subscriber ready for drip sequence segmentation
 ### Data Integrity
 - **Validation is strict:** All band, score, and charge values validated before storage
 - **Idempotent:** Resubmitting same email updates row (doesn't create duplicate)
-- **Re-subscription:** Previously unsubscribed users can opt back in — `unsubscribed_at` is cleared
+- **Re-subscription:** Previously unsubscribed users can opt back in, `unsubscribed_at` is cleared
 
 ### Privacy
 - Score page displays: "Your answers are not stored" (page.tsx line 44, score-artifact email line 180)
-- This is **technically accurate:** Quiz answers are NOT stored — only the final score result and charge type are
+- This is **technically accurate:** Quiz answers are NOT stored, only the final score result and charge type are
 - If need full answers, would require schema change + consent
 
 ### Email Delivery

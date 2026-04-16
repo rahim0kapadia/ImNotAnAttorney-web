@@ -1,5 +1,5 @@
 /**
- * @file Feedback Score — computes performance multipliers per charge type
+ * @file Feedback Score, computes performance multipliers per charge type
  * and auto-promotes qualifying emerging topics.
  *
  * Called weekly by /api/cron/demand-feedback-score (Sundays, after demand-performance).
@@ -65,7 +65,7 @@ export async function computeFeedbackScores(
     }
     multipliersUpserted = rows.length;
   } else {
-    console.log("[feedback-score] No attribution data yet — multipliers unchanged");
+    console.log("[feedback-score] No attribution data yet, multipliers unchanged");
   }
 
   // ── Auto-promote emerging topics ──

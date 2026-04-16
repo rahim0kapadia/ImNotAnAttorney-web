@@ -5,7 +5,7 @@
  * Fetches ABA judicial ratings for judges in our database.
  *
  * CL endpoint: GET /api/rest/v4/aba-ratings/?person={person_id}
- * Rate limit: 5K queries/hour — we have ~400 judges, well within limit.
+ * Rate limit: 5K queries/hour, we have ~400 judges, well within limit.
  *
  * Usage:
  *   node scripts/enrich-cl-aba-ratings.mjs                # Dry-run

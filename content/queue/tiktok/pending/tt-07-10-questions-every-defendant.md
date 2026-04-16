@@ -10,7 +10,7 @@ topic: 10 questions every defendant should ask
 blog_slug: 10-questions-every-defendant-should-ask
 estimated_duration: 60s
 format: Standard (rapid-fire text + voiceover)
-suggested_sound: "Original audio — fast-paced voiceover + rhythmic beat that syncs with question reveals"
+suggested_sound: "Original audio, fast-paced voiceover + rhythmic beat that syncs with question reveals"
 suggested_posting_time: "Monday 7:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Monday 7:00 PM EST"
 
 **Format**: Standard
 **Duration**: 60 seconds
-**Suggested sound**: Original audio — fast-paced voiceover + rhythmic beat
+**Suggested sound**: Original audio, fast-paced voiceover + rhythmic beat
 **Suggested posting time**: Monday 7:00 PM EST
 
 ---
@@ -34,22 +34,22 @@ suggested_posting_time: "Monday 7:00 PM EST"
 
 [SECOND 3-9]
 **Visual**: Questions appear on screen one at a time, rapid fire. Clean white text on dark background. Beat drops sync with each question.
-**Audio/Voiceover**: "One — have you received and reviewed ALL discovery? Two — what are the three biggest weaknesses in the State's case? Three — what motions have you filed or considered?"
+**Audio/Voiceover**: "One, have you received and reviewed ALL discovery? Two, what are the three biggest weaknesses in the State's case? Three, what motions have you filed or considered?"
 **Text overlay**: Questions 1-3, each appearing with impact.
 
 [SECOND 9-15]
 **Visual**: Continue question reveals. Cut to different angle on each.
-**Audio/Voiceover**: "Four — what is my REALISTIC sentence exposure? Not the max. The realistic number. Five — what are the collateral consequences of a guilty plea? Six — is there a diversion program I qualify for?"
+**Audio/Voiceover**: "Four, what is my REALISTIC sentence exposure? Not the max. The realistic number. Five, what are the collateral consequences of a guilty plea? Six, is there a diversion program I qualify for?"
 **Text overlay**: Questions 4-6.
 
 [SECOND 15-21]
 **Visual**: Pace maintains. Quick angle changes.
-**Audio/Voiceover**: "Seven — have you investigated the State's witnesses? Eight — if I take this plea, what exactly am I admitting to? Nine — can we counter-offer with different terms?"
+**Audio/Voiceover**: "Seven, have you investigated the State's witnesses? Eight, if I take this plea, what exactly am I admitting to? Nine, can we counter-offer with different terms?"
 **Text overlay**: Questions 7-9.
 
 [SECOND 21-27]
 **Visual**: Slow down. Single question appears on a black screen. Pause for emphasis.
-**Audio/Voiceover**: "And ten — the one that changes everything —"
+**Audio/Voiceover**: "And ten, the one that changes everything,"
 **Text overlay**: Dramatic pause. Then: "What would YOU do if this were your case?"
 
 [SECOND 27-35]
@@ -59,7 +59,7 @@ suggested_posting_time: "Monday 7:00 PM EST"
 
 [SECOND 35-45]
 **Visual**: Phone screen showing all 10 questions typed in a notes app.
-**Audio/Voiceover**: "Write these down. Bring them to your next meeting. Don't just ask — write down the answers. A good attorney welcomes this. A bad one is terrified of it."
+**Audio/Voiceover**: "Write these down. Bring them to your next meeting. Don't just ask, write down the answers. A good attorney welcomes this. A bad one is terrified of it."
 **Text overlay**: "Write the answers down. That changes the dynamic."
 
 [SECOND 45-55]
@@ -84,6 +84,6 @@ Bold text: "10 QUESTIONS" with smaller text: "your attorney hopes you never ask.
 
 ---
 
-**Context**: This is a cornerstone content piece — the definitive "save this" video for INNA. The 10-question format is inherently high-save because it provides an actionable checklist. This is the #1 video for driving traffic to the site.
+**Context**: This is a cornerstone content piece, the definitive "save this" video for INNA. The 10-question format is inherently high-save because it provides an actionable checklist. This is the #1 video for driving traffic to the site.
 **Loop strategy**: The rapid-fire format encourages rewatching to catch all 10 questions. The dramatic pause before #10 creates a "moment" that viewers want to see again.
-**KPI target**: Saves (this is a reference video — designed to be bookmarked)
+**KPI target**: Saves (this is a reference video, designed to be bookmarked)

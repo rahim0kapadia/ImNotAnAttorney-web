@@ -2,7 +2,7 @@
  * @fileoverview Deterministic defendant profile seeding from intake data.
  *
  * Maps intake form fields into structured defendant_profiles rows for the
- * Tier 8A defendant humanization feature. NO Claude/AI calls — pure
+ * Tier 8A defendant humanization feature. NO Claude/AI calls, pure
  * deterministic mapping.
  *
  * Consumed by:
@@ -82,7 +82,7 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
       harvest_consent_status: "pending",
     });
   } else if (EMPLOYED_VARIANTS.has(empStatus)) {
-    // Employed but no industry given — still a work-category fact worth noting.
+    // Employed but no industry given, still a work-category fact worth noting.
     facts.push({
       fact: `Holds steady employment that depends on the outcome of this case`,
       category: "work",
@@ -92,7 +92,7 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
 
   if (empStatus === "student") {
     facts.push({
-      fact: "Currently a student — education continuity at stake",
+      fact: "Currently a student, education continuity at stake",
       category: "work",
       harvest_consent_status: "pending",
     });
@@ -100,7 +100,7 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
 
   if (empStatus === "retired") {
     facts.push({
-      fact: "Retired — years of established community presence",
+      fact: "Retired, years of established community presence",
       category: "community",
       harvest_consent_status: "pending",
     });
@@ -108,7 +108,7 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
 
   if (empStatus === "disabled") {
     facts.push({
-      fact: "Lives with a disability — system interactions carry additional vulnerability",
+      fact: "Lives with a disability, system interactions carry additional vulnerability",
       category: "health",
       harvest_consent_status: "pending",
     });
@@ -116,7 +116,7 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
 
   if (intake.mental_health_relevant === "yes") {
     facts.push({
-      fact: "Mental health is a factor in this case — may affect competency and Miranda analysis",
+      fact: "Mental health is a factor in this case, may affect competency and Miranda analysis",
       category: "health",
       harvest_consent_status: "pending",
     });
@@ -125,7 +125,7 @@ function buildHumanizationFacts(intake: IntakeData): HumanizationFact[] {
   return facts;
 }
 
-// Two intake schemas have shipped — older test data uses bare "none"/"misdemeanor"/
+// Two intake schemas have shipped, older test data uses bare "none"/"misdemeanor"/
 // "felony" and the current intake form uses "first-offense"/"prior-misdemeanor"/
 // "prior-felony"/"unknown". Support both so backfill works on historical rows
 // AND new intakes hit the right facts. "unknown" maps to no fact (no signal).
@@ -192,7 +192,7 @@ export function deriveAutoFindings(intake: IntakeData): string[] {
     findings.push("miranda_waiver_validity");
   }
 
-  // Public defender variants — intake form has shipped multiple values for
+  // Public defender variants, intake form has shipped multiple values for
   // public defenders over time. Match all of them.
   const att = (intake.has_attorney || "").toLowerCase();
   if (att === "public-defender" || att === "public" || att === "yes-public-defender") {
@@ -215,7 +215,7 @@ export function deriveAutoFindings(intake: IntakeData): string[] {
 /**
  * Upserts a defendant_profiles row from intake data.
  *
- * Idempotent — uses upsert on the case_id unique constraint. Safe to call
+ * Idempotent, uses upsert on the case_id unique constraint. Safe to call
  * multiple times for the same case (e.g., intake resubmission, backfill).
  *
  * @param supabase - Admin Supabase client (service role, passed by caller)
@@ -242,7 +242,7 @@ export async function seedDefendantProfile(
     ? "Family actively involved in defense"
     : null;
 
-  // Mental health notes — only if defendant reported it as relevant
+  // Mental health notes, only if defendant reported it as relevant
   const mentalHealthNotes = intake.mental_health_relevant === "yes"
     ? "Defendant reports mental health is relevant to this case"
     : null;

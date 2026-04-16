@@ -10,12 +10,12 @@
  *                              -> mailto:help@imnotanattorney.com (email)
  *
  * Page structure:
- *   1. Email card — help@imnotanattorney.com with 24-hour response time
- *   2. Response time card — 24 hours on business days
- *   3. Mailing address card — 195 Dr MLK Jr St N, St Petersburg, FL 33701
+ *   1. Email card, help@imnotanattorney.com with 24-hour response time
+ *   2. Response time card, 24 hours on business days
+ *   3. Mailing address card, 195 Dr MLK Jr St N, St Petersburg, FL 33701
  *      (required by CAN-SPAM for all commercial email senders)
- *   4. CTA card — "Ready to get started?" with link to /services
- *   5. Legal disclaimer — not a law firm, no attorney-client relationship,
+ *   4. CTA card, "Ready to get started?" with link to /services
+ *   5. Legal disclaimer, not a law firm, no attorney-client relationship,
  *      communications not privileged
  *
  * Note: The mailing address and legal disclaimer are legally required.
@@ -68,7 +68,7 @@ export default function ContactPage() {
         </p>
 
         <div className="mt-10 space-y-8">
-          {/* EMAIL — Primary contact method (includes response time) */}
+          {/* EMAIL, Primary contact method (includes response time) */}
           <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
             <h2 className="text-lg font-semibold text-white">Email</h2>
             <a
@@ -96,7 +96,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* ADDRESS — Physical mailing address (CAN-SPAM compliance requirement) */}
+          {/* ADDRESS, Physical mailing address (CAN-SPAM compliance requirement) */}
           <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
             <h2 className="text-lg font-semibold text-white">Mailing Address</h2>
             <p className="mt-2 text-sm text-zinc-400">
@@ -108,7 +108,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* CTA — Routes to intake form for case-specific engagement */}
+          {/* CTA, Routes to intake form for case-specific engagement */}
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center">
             <p className="text-sm font-semibold text-amber-400">
               Ready to get started?
@@ -126,20 +126,20 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* CONFIDENTIALITY + LEGAL DISCLAIMER — Do not remove without attorney review. */}
+        {/* CONFIDENTIALITY + LEGAL DISCLAIMER, Do not remove without attorney review. */}
         <div className="mt-8 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4 space-y-3">
           <p className="text-xs text-zinc-400">
             Your name, email address, and any information you share with us is
             kept strictly confidential and will never be shared with prosecutors,
             law enforcement, or sold to marketers. We use essential processors
-            (payments, email, hosting) to deliver our service — see our{" "}
+            (payments, email, hosting) to deliver our service, see our{" "}
             <Link href="/privacy" className="underline underline-offset-2 hover:text-zinc-300">
               Privacy Policy
             </Link>{" "}
             for the full list.
           </p>
           <p className="text-xs text-zinc-400">
-            ImNotAnAttorney provides legal information and research — not legal
+            ImNotAnAttorney provides legal information and research, not legal
             advice. We are not a law firm and do not create an attorney-client
             relationship. Communications are not protected by attorney-client
             privilege.

@@ -1,7 +1,7 @@
 /**
  * Tier 9 report generation orchestrator.
  * Flow: fetch order → query DB → render HTML → store → email.
- * No Claude API call — pure data-driven from pre-computed tables.
+ * No Claude API call, pure data-driven from pre-computed tables.
  */
 
 import { randomBytes, createHash } from "crypto";
@@ -53,7 +53,7 @@ function validateIntakeFields(
 
 /**
  * Generate a Tier 9 data-driven report for a given order.
- * Idempotent — skips if report already exists (unless force=true).
+ * Idempotent, skips if report already exists (unless force=true).
  *
  * @param orderId - UUID of the order to generate for.
  * @param force - If true, regenerate even if a report already exists.
@@ -281,7 +281,7 @@ export async function generateTier9Report(
 
 /**
  * Notify customer and operator when insufficient data is available.
- * Does not generate a report — offers refund instead.
+ * Does not generate a report, offers refund instead.
  */
 async function notifyInsufficientData(
   customerEmail: string,
@@ -292,15 +292,15 @@ async function notifyInsufficientData(
   // Customer notification
   await sendEmail({
     to: customerEmail,
-    subject: `${productName} — Limited Data Available`,
+    subject: `${productName}, Limited Data Available`,
     html: `
       <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">${escapeHtml(productName)}</h1>
       <p>We searched our verified court record database but found insufficient data to generate a meaningful report based on the details you provided.</p>
-      <p>We take data accuracy seriously — we will not generate a report with insufficient evidence to back it up.</p>
+      <p>We take data accuracy seriously, we will not generate a report with insufficient evidence to back it up.</p>
       <p style="margin: 20px 0;"><strong style="color: #FAFAF9;">Your options:</strong></p>
       <ul style="padding-left: 20px;">
         <li style="margin-bottom: 8px;">Reply to this email with corrected details (different spelling, full name, etc.) and we will search again</li>
-        <li style="margin-bottom: 8px;">Request a full refund — reply to this email and we will process it immediately</li>
+        <li style="margin-bottom: 8px;">Request a full refund, reply to this email and we will process it immediately</li>
       </ul>
       <p style="color: #A1A1AA; font-size: 13px; margin-top: 24px;">
         Our database covers judges and officers across all 50 states with varying depth.
@@ -312,7 +312,7 @@ async function notifyInsufficientData(
   // Operator alert
   await sendEmail({
     to: OPERATOR_EMAIL,
-    subject: `[ALERT] Insufficient data — ${productName} (${orderId.slice(0, 8)})`,
+    subject: `[ALERT] Insufficient data, ${productName} (${orderId.slice(0, 8)})`,
     html: `
       <p>Tier 9 report generation found no data.</p>
       <p><strong>Product:</strong> ${escapeHtml(productName)}</p>
@@ -335,7 +335,7 @@ async function notifyOperatorFailure(
   const origin = SITE_URL;
   await sendEmail({
     to: OPERATOR_EMAIL,
-    subject: `[ERROR] Tier 9 generation failed — ${slug || "unknown"} (${orderId.slice(0, 8)})`,
+    subject: `[ERROR] Tier 9 generation failed, ${slug || "unknown"} (${orderId.slice(0, 8)})`,
     html: `
       <p>Tier 9 report generation failed.</p>
       <p><strong>Product:</strong> ${escapeHtml(slug || "unknown")}</p>

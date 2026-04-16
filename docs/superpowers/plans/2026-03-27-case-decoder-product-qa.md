@@ -1,8 +1,8 @@
-# Case Decoder Product QA — Implementation Plan
+# Case Decoder Product QA, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Verify the Case Decoder ($197) delivers a report worth its price — every checkout promise fulfilled, UPL-clean, mobile-ready, and positioned correctly against competitors.
+**Goal:** Verify the Case Decoder ($197) delivers a report worth its price, every checkout promise fulfilled, UPL-clean, mobile-ready, and positioned correctly against competitors.
 
 **Architecture:** 7-phase QA: structural promise audit (code-level) → fresh report generation (Opus via worker) → Playwright UX walkthrough (desktop + mobile) → full quality framework review (dev tool) → expert persona assessment (6 parallel agents) → edge cases (conditional) → competitive benchmark (web research). Findings written to a single handoff doc.
 
@@ -17,11 +17,11 @@
 **Goal:** Map every checkout page promise to a report section. Any missing section = CRITICAL.
 
 **Files:**
-- Read: `src/app/checkout/page.tsx` — checkout promises (look for Case Decoder feature bullets)
-- Read: `src/lib/intelligence-brief/render.ts` — HTML renderer (section assembly order)
-- Read: `src/lib/intelligence-brief/prompts.ts` — prompt builders (what sections are generated)
-- Read: `test-reports/persona-a-dui.html` — pre-built test report (verify sections exist in output)
-- Read: `src/app/sample/page.tsx` — sample page (verify alignment with real report)
+- Read: `src/app/checkout/page.tsx`, checkout promises (look for Case Decoder feature bullets)
+- Read: `src/lib/intelligence-brief/render.ts`, HTML renderer (section assembly order)
+- Read: `src/lib/intelligence-brief/prompts.ts`, prompt builders (what sections are generated)
+- Read: `test-reports/persona-a-dui.html`, pre-built test report (verify sections exist in output)
+- Read: `src/app/sample/page.tsx`, sample page (verify alignment with real report)
 
 - [ ] **Step 1: Extract checkout promises**
 
@@ -32,7 +32,7 @@ Read `src/app/checkout/page.tsx`. Find the Case Decoder feature list. Copy every
 Read `src/lib/intelligence-brief/render.ts`. Find the `renderIntelligenceBriefHtml` function (or equivalent for Case Decoder). List every section it assembles, in order. Map each checkout promise to a section:
 
 | # | Checkout Promise (verbatim + line#) | Renderer Section | Present in renderer? |
-|---|-------------------------------------|-----------------|---------------------|
+|---|-------------------------------------|---------------, |---------------------|
 | 1 | ... | ... | YES/NO |
 
 - [ ] **Step 3: Verify sections in pre-built report**
@@ -46,10 +46,10 @@ Read `src/app/sample/page.tsx`. Verify the sample shows representative content f
 - [ ] **Step 5: Check prompt builders for section coverage**
 
 Read `src/lib/intelligence-brief/prompts.ts`. Verify each report section has a corresponding prompt builder. Note which prompts generate which sections. Special attention to:
-- "15 calibrated questions" — is the count enforced in the prompt?
-- "Email template + phone script" — are these separate prompts or part of "your-plan"?
-- "Meeting Ready Sheet" — is this a rendered section or embedded in the 7-day plan?
-- "Scripts for difficult conversations (4 scenarios)" — does the prompt specify 4?
+- "15 calibrated questions", is the count enforced in the prompt?
+- "Email template + phone script", are these separate prompts or part of "your-plan"?
+- "Meeting Ready Sheet", is this a rendered section or embedded in the 7-day plan?
+- "Scripts for difficult conversations (4 scenarios)", does the prompt specify 4?
 
 - [ ] **Step 6: Record findings**
 
@@ -70,9 +70,9 @@ WARN: [list any partial/ambiguous matches]
 **Goal:** Generate a real Case Decoder report via the backup worker for quality assessment.
 
 **Files:**
-- Read: `scripts/generate-worker.mjs` — understand invocation
-- Read: `scripts/test-ib-pipeline.ts` — test fixtures (persona data)
-- Read: `.env.local` — verify ANTHROPIC_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY exist
+- Read: `scripts/generate-worker.mjs`, understand invocation
+- Read: `scripts/test-ib-pipeline.ts`, test fixtures (persona data)
+- Read: `.env.local`, verify ANTHROPIC_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY exist
 
 - [ ] **Step 1: Verify prerequisites**
 
@@ -96,7 +96,7 @@ sb.from('cases').select('id,status,tier,charge_type,created_at').in('status',['i
 "
 ```
 
-If no test cases exist, create one using the test fixture data from `scripts/test-ib-pipeline.ts` (Danielle persona — DUI, Harris County TX). Create both an intake record and a linked case record with `status='intake'`, `tier='case-decoder'`.
+If no test cases exist, create one using the test fixture data from `scripts/test-ib-pipeline.ts` (Danielle persona, DUI, Harris County TX). Create both an intake record and a linked case record with `status='intake'`, `tier='case-decoder'`.
 
 - [ ] **Step 3: Run the worker**
 
@@ -164,7 +164,7 @@ Fallback used: YES/NO (reason)
 
 **Files:**
 - Live site: `https://imnotanattorney.com`
-- Read: `src/app/page.tsx` — homepage structure (for expected elements)
+- Read: `src/app/page.tsx`, homepage structure (for expected elements)
 
 **Playwright MCP tools used:** `browser_navigate`, `browser_snapshot`, `browser_click`, `browser_take_screenshot`, `browser_resize`
 
@@ -176,23 +176,23 @@ browser_navigate: url="https://imnotanattorney.com"
 browser_snapshot (verify page loads)
 ```
 
-- [ ] **Step 2: Homepage — charge type selector**
+- [ ] **Step 2: Homepage, charge type selector**
 
 From the snapshot:
 - Verify 8 charge type buttons are visible
 - Click one charge type (e.g., "DUI")
-- `browser_snapshot` — verify CTA text updates dynamically
-- Click a different charge type — verify CTA changes again
-- Deselect — verify CTA returns to Case Decoder default
+- `browser_snapshot`, verify CTA text updates dynamically
+- Click a different charge type, verify CTA changes again
+- Deselect, verify CTA returns to Case Decoder default
 
-- [ ] **Step 3: Homepage — Playbook Catalog grid**
+- [ ] **Step 3: Homepage, Playbook Catalog grid**
 
 Scroll down or snapshot full page:
 - Verify 8 playbook cards visible
 - Each card has charge name + checkout link
 - Links point to `/checkout?tier=<slug>`
 
-- [ ] **Step 4: Homepage — testimonials**
+- [ ] **Step 4: Homepage, testimonials**
 
 Verify presence of:
 - Linda M. (probation violation)
@@ -261,7 +261,7 @@ Screenshots taken: [list filenames]
 
 ---
 
-### Task 4: Playwright UX Walkthrough (Mobile — 2AM Crisis Test)
+### Task 4: Playwright UX Walkthrough (Mobile, 2AM Crisis Test)
 
 **Goal:** Same flow at 375px. A panicked person on their phone at 2AM must be able to complete this.
 
@@ -309,7 +309,7 @@ Critical checks:
 - Input fields are tall enough for thumb tap
 - Step progress indicator visible
 - "Continue" button reachable without scrolling past last field
-- Count fields per step — if Step 1 has >8 visible fields, that's a HIGH friction finding
+- Count fields per step, if Step 1 has >8 visible fields, that's a HIGH friction finding
 
 - [ ] **Step 5: Measure key message lengths**
 
@@ -340,8 +340,8 @@ Horizontal scroll: YES/NO
 **Goal:** Run the 11-team quality framework against the fresh report.
 
 **Files:**
-- Read: `C:\Users\email\projects\ImNotAnAttorney\system\EVALUATION-TEAM.md` — full framework (660 lines)
-- Read: `supabase/functions/evaluate-report/index.ts` — production eval (2 teams only)
+- Read: `C:\Users\email\projects\ImNotAnAttorney\system\EVALUATION-TEAM.md`, full framework (660 lines)
+- Read: `supabase/functions/evaluate-report/index.ts`, production eval (2 teams only)
 - Read: `test-reports/fresh-qa-report.html` (or `test-reports/persona-a-dui.html` if Phase 2 fell back)
 
 - [ ] **Step 1: Check if evaluate-report.mjs exists**
@@ -355,12 +355,12 @@ If NOT FOUND: the dev tool doesn't exist as a standalone script. Alternative app
 - [ ] **Step 2: Run the dev tool (if it exists)**
 
 ```bash
-node scripts/evaluate-report.mjs --case-id <CASE_ID_FROM_PHASE_2>
+node scripts/evaluate-report.mjs,case-id <CASE_ID_FROM_PHASE_2>
 ```
 
 Or if the tool takes a file path:
 ```bash
-node scripts/evaluate-report.mjs --file test-reports/fresh-qa-report.html
+node scripts/evaluate-report.mjs,file test-reports/fresh-qa-report.html
 ```
 
 Record: which teams ran, pass/fail per team, total score.
@@ -369,24 +369,24 @@ Record: which teams ran, pass/fail per team, total score.
 
 Read `C:\Users\email\projects\ImNotAnAttorney\system\EVALUATION-TEAM.md`. For each GATE team criterion, manually check the fresh report:
 
-**Team 1 (UPL) — spot-check these criteria against the report:**
+**Team 1 (UPL), spot-check these criteria against the report:**
 - U1: No "you should", "we recommend", "we advise" language
 - U2: Attorney redirection present ("discuss with your attorney")
 - U3: No attorney performance scoring
 - U4: Disclaimer present in footer
 - U6: Immigration consequences cite Padilla v. Kentucky (if applicable)
 
-**Team 9 (Positioning) — spot-check:**
+**Team 9 (Positioning), spot-check:**
 - POS1: Pro-defendant tone throughout
 - POS2: Never anti-attorney
 - POS5: Information framing, not advice framing
 
-**Team 10 (CRO) — spot-check:**
+**Team 10 (CRO), spot-check:**
 - CRO1: Urgency without manipulation
 - CRO4: Clear next steps
 - CRO8: Upgrade path mentioned naturally
 
-**Team 11 (Trust) — spot-check:**
+**Team 11 (Trust), spot-check:**
 - T1: Insider knowledge demonstrated
 - T3: Vulnerability coherence
 - ANON1: Anonymous brand trust maintained
@@ -398,10 +398,10 @@ PHASE 4: Quality Framework Review
 Method: dev tool / manual audit
 Teams checked: X of 11
 GATE results:
-  Team 1 (UPL): PASS/FAIL — [details]
-  Team 9 (Positioning): PASS/FAIL — [details]
-  Team 10 (CRO): PASS/FAIL — [details]
-  Team 11 (Trust): PASS/FAIL — [details]
+  Team 1 (UPL): PASS/FAIL, [details]
+  Team 9 (Positioning): PASS/FAIL, [details]
+  Team 10 (CRO): PASS/FAIL, [details]
+  Team 11 (Trust): PASS/FAIL, [details]
 HIGH results:
   Team 2 (Psych): [result]
   Team 3 (Legal): [result]
@@ -418,8 +418,8 @@ Issues: [list with severity]
 
 **Files each agent must read:**
 - `test-reports/fresh-qa-report.html` (or `test-reports/persona-a-dui.html`)
-- `src/app/checkout/page.tsx` (checkout promises — lines containing Case Decoder features)
-- `src/app/intake/page.tsx` (intake form — first 200 lines for structure)
+- `src/app/checkout/page.tsx` (checkout promises, lines containing Case Decoder features)
+- `src/app/intake/page.tsx` (intake form, first 200 lines for structure)
 - `src/lib/drip-emails.ts` (post-purchase email sequence)
 
 - [ ] **Step 1: Prepare the agent prompt template**
@@ -427,7 +427,7 @@ Issues: [list with severity]
 Each agent gets this context block + their persona-specific question:
 
 ```
-You are reviewing the Case Decoder product ($197) from ImNotAnAttorney.com — a legal empowerment brand for criminal defendants. "We Research. You Ask."
+You are reviewing the Case Decoder product ($197) from ImNotAnAttorney.com, a legal empowerment brand for criminal defendants. "We Research. You Ask."
 
 Product: AI-generated case analysis report delivered in 48 hours. Uses Claude Opus with extended thinking to analyze defendant's charges, jurisdiction, attorney situation, and generate:
 - 15 calibrated questions for attorney meetings
@@ -441,9 +441,9 @@ Guarantee: Full refund if report doesn't find a gap attorney hasn't raised
 
 Read these files, then provide your structured assessment:
 1. [fresh report HTML path]
-2. [checkout page path — focus on Case Decoder feature list]
-3. [intake form path — first 200 lines]
-4. [drip emails path — post_case_decoder_* sequences]
+2. [checkout page path, focus on Case Decoder feature list]
+3. [intake form path, first 200 lines]
+4. [drip emails path, post_case_decoder_* sequences]
 
 Return your assessment as:
 - VERDICT: PASS / WARN / FAIL
@@ -457,13 +457,13 @@ Return your assessment as:
 Launch all 6 as background agents with `run_in_background: true`:
 
 | Agent | Type | Persona Question |
-|-------|------|-----------------|
+|-------|------|---------------, |
 | 1 | sabri-suby | "Does the deliverable match every sales promise on the checkout page? Would this convert cold traffic at $197? Where is the offer weakest?" |
 | 2 | alex-hormozi | "Apply the value equation: Dream Outcome x Perceived Likelihood / (Time Delay x Effort). Is $197 a no-brainer against a $500/hr attorney consultation? What increases perceived likelihood?" |
 | 3 | peep-laja | "Map the funnel: homepage → checkout → intake → report → upgrade. Where does it leak? What's the highest-friction point? Use ResearchXL framework." |
 | 4 | russell-brunson | "Is Case Decoder the right entry point for the value ladder? Does the report naturally create desire for the Intelligence Brief ($997)? Where should the bridge be stronger?" |
 | 5 | april-dunford | "Apply the 5-Component Positioning Canvas. Is 'legal research for defendants' clearly differentiated from attorney services? Would a buyer confuse this with hiring a lawyer?" |
-| 6 | seth-godin | "Would a defendant tell another defendant about this? What's the purple cow — the one remarkable thing? Or is this forgettable?" |
+| 6 | seth-godin | "Would a defendant tell another defendant about this? What's the purple cow, the one remarkable thing? Or is this forgettable?" |
 
 - [ ] **Step 3: Collect and synthesize verdicts**
 
@@ -507,7 +507,7 @@ Review findings from Tasks 1-5. Run this task if ANY of:
 - Phase 4 flagged charge-specificity issues
 - Expert personas flagged concerns about non-DUI charge types
 
-If none of the above: skip to Task 8. Record "Phase 6: SKIPPED — no trigger conditions met."
+If none of the above: skip to Task 8. Record "Phase 6: SKIPPED, no trigger conditions met."
 
 - [ ] **Step 2: Minimal intake test (worst-case report)**
 
@@ -546,7 +546,7 @@ Create case with jurisdictionLevel "federal", chargeType "federal-criminal". Ver
 ```
 PHASE 6: Edge Cases
 Status: PASS / FAIL / SKIPPED
-Minimal intake: [result — does it still justify $197?]
+Minimal intake: [result, does it still justify $197?]
 Sex offense: [result]
 Federal: [result]
 Charge-specific adaptation: YES/NO
@@ -577,7 +577,7 @@ Record: any comparable products, their pricing, their scope.
 - [ ] **Step 4: Build comparison table**
 
 | Alternative | Price | What You Get | Delivery Time | Personalization |
-|-------------|-------|-------------|---------------|-----------------|
+|-------------|-------|-------------|---------------|---------------, |
 | Attorney consult | $X/hr | ... | Immediate | High |
 | JustAnswer | $X | ... | ... | ... |
 | Case Decoder | $197 | 15 questions + templates + 7-day plan | 48h | High (Opus) |
@@ -610,7 +610,7 @@ Gather findings from Tasks 1-8 scratch notes. Organize by severity.
 
 Structure:
 ```markdown
-# Case Decoder Product QA — Findings
+# Case Decoder Product QA, Findings
 Date: 2026-03-27
 
 ## Executive Summary
@@ -650,7 +650,7 @@ If CRITICAL findings are QUICK_FIX scope (1-2 files), fix them directly and comm
 
 ```bash
 git add docs/handoff/2026-03-27-case-decoder-product-qa-findings.md
-git commit -m "docs: Case Decoder product QA findings — 7-phase deep assessment"
+git commit -m "docs: Case Decoder product QA findings, 7-phase deep assessment"
 ```
 
 ---

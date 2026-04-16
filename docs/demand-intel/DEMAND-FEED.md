@@ -1,4 +1,4 @@
-# Demand Intelligence Feed — 2026-04-03
+# Demand Intelligence Feed, 2026-04-03
 
 **Data source:** Supabase demand tables (demand_scores, content_gaps, emerging_topics, discovered_subreddits)
 **Window:** Latest 30-day scoring period ending 2026-04-03
@@ -7,11 +7,11 @@
 
 ## Top Gap
 
-**Theft** — gap_score: 10.00 | demand: 7.71 | competition: 7.90 | quadrant: GOLD_MINE
+**Theft**, gap_score: 10.00 | demand: 7.71 | competition: 7.90 | quadrant: GOLD_MINE
 
 - 21 posts in 30d, rising +163% vs prior period
 - Zero blog coverage. Zero content_gaps addressed.
-- Highest avg_score per post (236.76) of any charge type — people engage deeply with theft content.
+- Highest avg_score per post (236.76) of any charge type, people engage deeply with theft content.
 
 **Why Theft over DUI:** DUI has higher volume (457 posts) but Theft has a higher per-post engagement ceiling and identical gap_score. DUI content is already queued (status: "queued" / "in-progress"). Theft has zero pipeline activity.
 
@@ -23,9 +23,9 @@
 |---|---|---|---|---|---|
 | **DUI / DWI** | 7.37 | 7.67 | 7.52 | 457 | +731% rising |
 | **Theft** | 7.71 | 7.90 | 7.80 | 21 | +163% rising |
-| **Domestic Violence** | 6.08 | — | — | 64 | +482% rising |
+| **Domestic Violence** | 6.08 |, |, | 64 | +482% rising |
 
-DUI is the volume king. Theft is the engagement king. Domestic Violence just crossed the 6.0 demand threshold today — watch this one.
+DUI is the volume king. Theft is the engagement king. Domestic Violence just crossed the 6.0 demand threshold today, watch this one.
 
 **Blog coverage for all Gold Mine topics: zero.** Every Gold Mine topic has `has_blog_post: false`.
 
@@ -44,7 +44,7 @@ From `emerging_topics` table (detected via clustering, last 7 days):
 | **"speeding ticket"** | 3 | 2.3 | 0.67 | "PA speeding ticket advice" |
 | **"health issues"** (ADA/medical) | 4 | 1.75 | 0.50 | "Is a Medical/ADA Claim possible?" |
 
-**Signal worth tracking:** "full time" (custody) has 576.7 avg engagement — off the charts. Not criminal defense, but indicates demand for family court empowerment content. "right now" + "story short" both index high urgency (>1.5) — people in active crisis.
+**Signal worth tracking:** "full time" (custody) has 576.7 avg engagement, off the charts. Not criminal defense, but indicates demand for family court empowerment content. "right now" + "story short" both index high urgency (>1.5), people in active crisis.
 
 ---
 
@@ -53,7 +53,7 @@ From `emerging_topics` table (detected via clustering, last 7 days):
 | Charge Type | Demand | Trend (30d) | Notes |
 |---|---|---|---|
 | **White Collar / Fraud** | 5.30 | -28.6% falling | Sustained decline across 3 consecutive scoring windows |
-| **Drug Trafficking** | 2.61 | -50.0% falling | Single data point (Apr 1); recovered to 4.84 by Apr 3 — likely anomaly |
+| **Drug Trafficking** | 2.61 | -50.0% falling | Single data point (Apr 1); recovered to 4.84 by Apr 3, likely anomaly |
 
 White Collar is the only confirmed declining category.
 
@@ -67,7 +67,7 @@ White Collar is the only confirmed declining category.
 
 ## Key Observations
 
-1. **Zero blog coverage across all Gold Mine topics.** DUI has one content_gap row with status "queued" and one "in-progress" — but `has_blog_post` is still false everywhere. The pipeline is moving but hasn't shipped.
+1. **Zero blog coverage across all Gold Mine topics.** DUI has one content_gap row with status "queued" and one "in-progress", but `has_blog_post` is still false everywhere. The pipeline is moving but hasn't shipped.
 
 2. **DUI demand is accelerating.** 7d: +197% (182 posts). 30d: +731% (457 posts). 90d: +5,130% (523 posts). Structural growth in Reddit legal discussion volume.
 

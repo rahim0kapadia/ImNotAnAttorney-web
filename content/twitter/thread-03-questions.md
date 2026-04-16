@@ -16,7 +16,7 @@ Here are 10 questions that change everything (🧵):
 
 1/ "What is your theory of defense?"
 
-Every case needs a story — a framework that explains why you should win.
+Every case needs a story, a framework that explains why you should win.
 
 Good answer: Specific strategy. "We're arguing the stop was illegal."
 
@@ -30,15 +30,15 @@ Discovery is every piece of evidence against you. Your attorney MUST have read i
 
 Follow up: "Can I see it?" You have the right.
 
-If they refuse or dodge — serious problem.
+If they refuse or dodge, serious problem.
 
 ---
 
-3/ "What motions have you filed — or plan to file?"
+3/ "What motions have you filed, or plan to file?"
 
 Motions are how attorneys fight. Suppression motions can throw out evidence. Brady motions force disclosure.
 
-If zero motions exist and they can't explain why each one doesn't apply — they haven't looked.
+If zero motions exist and they can't explain why each one doesn't apply, they haven't looked.
 
 ---
 
@@ -56,7 +56,7 @@ Not theoretical maximums. Not minimums.
 
 REALISTIC numbers based on your facts, your judge, your jurisdiction.
 
-If they can't give you a range — they haven't thought about your case.
+If they can't give you a range, they haven't thought about your case.
 
 ---
 
@@ -66,7 +66,7 @@ The police investigated. The prosecution investigated. What has YOUR attorney do
 
 Scene visits. Witness interviews. Evidence review. Calibration checks.
 
-If the answer is "nothing" — you're defending yourself with only the prosecution's work.
+If the answer is "nothing", you're defending yourself with only the prosecution's work.
 
 ---
 
@@ -74,7 +74,7 @@ If the answer is "nothing" — you're defending yourself with only the prosecuti
 
 Negotiation happens in conversations. Your attorney should be talking to the assigned prosecutor.
 
-If they only see the prosecutor at court dates — they're not negotiating. They're waiting.
+If they only see the prosecutor at court dates, they're not negotiating. They're waiting.
 
 ---
 
@@ -82,7 +82,7 @@ If they only see the prosecutor at court dates — they're not negotiating. They
 
 Every case has weaknesses. Every single one.
 
-If your attorney can't identify a single vulnerability — they haven't looked hard enough.
+If your attorney can't identify a single vulnerability, they haven't looked hard enough.
 
 Push for specifics. Get names, dates, issues.
 
@@ -110,7 +110,7 @@ If your attorney can't give you homework, they're not leading your defense.
 
 **CTA tweet (optional):**
 
-Want all 50 questions tailored to your specific charges? DM "QUESTIONS" for the full list — completely free.
+Want all 50 questions tailored to your specific charges? DM "QUESTIONS" for the full list, completely free.
 
 ---
 

@@ -2,7 +2,7 @@
  * Verify Case Law via Caselaw Access Project (CAP) Static Files
  *
  * Cross-references every statute_case_law row against the Harvard Caselaw
- * Access Project static archive at static.case.law. CAP has 6.7M cases —
+ * Access Project static archive at static.case.law. CAP has 6.7M cases,
  * complete US case law from 1658 to ~2018.
  *
  * For each case in DB:
@@ -14,7 +14,7 @@
  *
  * Per the hard rule: "If we can't verify it, delete it."
  *
- * Safe to run in parallel with the main pipeline — only operates on existing rows.
+ * Safe to run in parallel with the main pipeline, only operates on existing rows.
  *
  * Usage:
  *   node scripts/verify-via-cap.mjs              # Verify all unverified rows
@@ -207,7 +207,7 @@ function parseCitation(citation) {
   const page = parseInt(parts[parts.length - 1], 10);
   if (isNaN(page)) return null;
 
-  // Middle parts are the reporter — try multiple normalizations
+  // Middle parts are the reporter, try multiple normalizations
   const reporterRaw = parts.slice(1, -1).join(" ").toLowerCase();
 
   // Direct lookup
@@ -367,7 +367,7 @@ async function main() {
           }
         }
       } else {
-        console.log("NOT_FOUND (kept — has CL cluster)");
+        console.log("NOT_FOUND (kept, has CL cluster)");
         stats.notFound++;
       }
     }
@@ -375,7 +375,7 @@ async function main() {
 
   console.log("\n=== RESULTS ===");
   console.log(`Verified in CAP   : ${stats.verified}`);
-  console.log(`Not found in CAP  : ${stats.notFound} (kept — has CourtListener cluster)`);
+  console.log(`Not found in CAP  : ${stats.notFound} (kept, has CourtListener cluster)`);
   console.log(`Deleted           : ${stats.deleted} (no CAP, no CourtListener)`);
   console.log(`Parse errors      : ${stats.parseErrors}`);
   console.log(`Fetch errors      : ${stats.fetchErrors}`);

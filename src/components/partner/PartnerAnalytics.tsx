@@ -1,7 +1,7 @@
 "use client";
 /**
- * Partner Analytics — CSS bar chart for monthly earnings + per-tier breakdown.
- * No chart library — pure CSS width bars.
+ * Partner Analytics, CSS bar chart for monthly earnings + per-tier breakdown.
+ * No chart library, pure CSS width bars.
  */
 
 import { formatCents } from "@/lib/format";

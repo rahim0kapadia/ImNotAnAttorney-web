@@ -1,6 +1,6 @@
 "use client";
 /**
- * /admin/partners — Bondsman Partner Management Dashboard
+ * /admin/partners, Bondsman Partner Management Dashboard
  *
  * Create/manage bondsman partners, generate promo codes, view referrals,
  * track payouts. Auth: ADMIN_PASSWORD via sessionStorage + X-Admin-Password header.
@@ -292,20 +292,20 @@ export default function PartnersAdmin() {
                 </div>
                 <div>
                   <p className="text-zinc-400">Phone</p>
-                  <p>{selectedPartner.phone || "—"}</p>
+                  <p>{selectedPartner.phone || ", "}</p>
                 </div>
                 <div>
                   <p className="text-zinc-400">Company</p>
-                  <p>{selectedPartner.company || "—"}</p>
+                  <p>{selectedPartner.company || ", "}</p>
                 </div>
                 <div>
                   <p className="text-zinc-400">Region</p>
-                  <p>{selectedPartner.region || "—"}</p>
+                  <p>{selectedPartner.region || ", "}</p>
                 </div>
                 <div>
                   <p className="text-zinc-400">Promo Code</p>
                   <p className="font-mono text-amber-400">
-                    {selectedPartner.promo_code || "—"}
+                    {selectedPartner.promo_code || ", "}
                   </p>
                 </div>
                 <div>
@@ -616,7 +616,7 @@ export default function PartnersAdmin() {
                     </button>
                   </td>
                   <td className="py-3 pr-4 font-mono text-amber-400">
-                    {p.promo_code || "—"}
+                    {p.promo_code || ", "}
                   </td>
                   <td className="py-3 pr-4">
                     <span

@@ -94,7 +94,7 @@ The VERI persona handles discovery citation verification (matching quotes to sou
 | Verification status tracking (VERIFIED/MISMATCH/NOT_FOUND) | **MISSING** | `case_law_references.verification_url` exists but is never populated. No status enum. |
 | Auto-correction of citations | **N/A** | Engine-only concern. |
 
-**Assessment:** Most VERI functionality is engine-domain. The web pipeline gap is in **case law citation verification** -- the web pipeline inserts citations into `statute_case_law` without any existence/accuracy verification beyond "CourtListener returned it."
+**Assessment:** Most VERI functionality is engine-domain. The web pipeline gap is in **case law citation verification**, the web pipeline inserts citations into `statute_case_law` without any existence/accuracy verification beyond "CourtListener returned it."
 
 ---
 
@@ -119,7 +119,7 @@ COUNT predicts prosecution responses and maintains danger-case databases.
 
 ## What IS Working
 
-Credit where due -- the web pipeline does handle:
+Credit where due, the web pipeline does handle:
 
 1. **Statute verification** (`legal-research-all.mjs`, `legal-research-fl.mjs`): Constructs URLs for FL Online Sunshine, Justia, Cornell LII. HTTP-verifies FL and federal statutes. Tracks `confidence_score`, `verified_at`, `source_urls` on `jurisdiction_statutes`.
 
@@ -127,19 +127,19 @@ Credit where due -- the web pipeline does handle:
 
 3. **Party-side classification** (`classify-case-law.mjs`): Fetches opinion text from CourtListener, classifies DEFENSE/PROSECUTION/NEUTRAL/UNKNOWN using signal-based scoring, extracts outcome, key quote, holding excerpt, binding authority.
 
-4. **Schema support**: DB columns exist for `is_good_law`, `is_binding`, `shepardized_at`, `verification_url`, `confidence_score`. The infrastructure is partially in place -- the logic to populate these fields is what is missing.
+4. **Schema support**: DB columns exist for `is_good_law`, `is_binding`, `shepardized_at`, `verification_url`, `confidence_score`. The infrastructure is partially in place, the logic to populate these fields is what is missing.
 
 ---
 
 ## Priority Gaps (Ranked by Risk to Delivered Reports)
 
-### P0 -- Ship-Blocking (citations in reports may be wrong)
+### P0, Ship-Blocking (citations in reports may be wrong)
 
 1. **Good law verification**: No script checks whether cited cases have been overruled. `is_good_law` defaults to `true` unconditionally. A report could cite overruled law.
 
 2. **Citation existence verification**: Cases are stored from CourtListener search results, which may include tangentially related cases. No verification that the holding actually relates to the charge.
 
-### P1 -- Quality Degradation (reports are weaker than they should be)
+### P1, Quality Degradation (reports are weaker than they should be)
 
 3. **DCA-level binding authority**: All FL DCA opinions marked as binding. Should distinguish 2d DCA (binding in Pinellas) from other DCAs (persuasive only).
 
@@ -147,11 +147,11 @@ Credit where due -- the web pipeline does handle:
 
 5. **No prosecution case anticipation**: Reports cannot anticipate which cases the state will cite or provide distinctions. Intelligence Briefs and higher tiers lose strategic value.
 
-### P2 -- Future Pipeline Requirements
+### P2, Future Pipeline Requirements
 
 6. **Motion type system**: The web pipeline has no concept of motion types. This blocks any applicability scoring or motion-specific case law routing.
 
-7. **Fear Formula scoring**: Would make case law citations in reports dramatically more useful -- "this case will make the judge fear reversal" vs "this case exists."
+7. **Fear Formula scoring**: Would make case law citations in reports dramatically more useful, "this case will make the judge fear reversal" vs "this case exists."
 
 8. **Prosecution counter database**: COUNT's full capability requires a new table and population pipeline.
 
@@ -159,15 +159,15 @@ Credit where due -- the web pipeline does handle:
 
 ## Recommended Implementation Order
 
-1. **Add negative treatment checking to `classify-case-law.mjs`** -- After fetching opinion text, query CourtListener's citing opinions endpoint (`/api/rest/v4/clusters/{id}/citing-opinions/`) and check for negative treatment signals. Set `is_good_law = false` when found. Populate `verified_at` / `shepardized_at` timestamps.
+1. **Add negative treatment checking to `classify-case-law.mjs`**, After fetching opinion text, query CourtListener's citing opinions endpoint (`/api/rest/v4/clusters/{id}/citing-opinions/`) and check for negative treatment signals. Set `is_good_law = false` when found. Populate `verified_at` / `shepardized_at` timestamps.
 
-2. **Fix binding authority granularity** -- Parse DCA district number from court name. Only mark `is_binding = true` for FL Supreme Court and 2d DCA opinions. All other DCAs get `is_binding = false` with a `persuasive_authority = true` flag.
+2. **Fix binding authority granularity**, Parse DCA district number from court name. Only mark `is_binding = true` for FL Supreme Court and 2d DCA opinions. All other DCAs get `is_binding = false` with a `persuasive_authority = true` flag.
 
-3. **Update confidence scores post-classification** -- After the classifier enriches a row, bump `confidence_score` based on signal count, holding quality, and good-law verification status.
+3. **Update confidence scores post-classification**, After the classifier enriches a row, bump `confidence_score` based on signal count, holding quality, and good-law verification status.
 
-4. **Add `is_good_law` filter to report generation** -- In `supabase/functions/generate-report/index.ts`, add `&is_good_law=eq.true` to the `statute_case_law` query (line 2196). This is a one-line safety gate.
+4. **Add `is_good_law` filter to report generation**, In `supabase/functions/generate-report/index.ts`, add `&is_good_law=eq.true` to the `statute_case_law` query (line 2196). This is a one-line safety gate.
 
-5. **Build prosecution case flagging** -- Add `is_danger_case`, `danger_distinction` columns to `statute_case_law`. Populate during classification: cases with `party_side = PROSECUTION` and strong affirmation signals are danger cases.
+5. **Build prosecution case flagging**, Add `is_danger_case`, `danger_distinction` columns to `statute_case_law`. Populate during classification: cases with `party_side = PROSECUTION` and strong affirmation signals are danger cases.
 
 ---
 
@@ -177,14 +177,14 @@ Credit where due -- the web pipeline does handle:
 |---|---|---|---|
 | `case_law.is_good_law` | `case_law_references` | `is_good_law` | DEFAULT true, never set false |
 | `case_law.is_good_law` | `statute_case_law` | `is_good_law` | DEFAULT true, never set false |
-| `case_law.motion_type` | -- | -- | Does not exist |
-| `case_law.is_danger_case` | -- | -- | Does not exist |
+| `case_law.motion_type` |, |, | Does not exist |
+| `case_law.is_danger_case` |, |, | Does not exist |
 | `case_law.is_prosecution_citation` | `statute_case_law` | `party_side` | Partial (classification, not citation flag) |
-| `case_law.our_distinction` | -- | -- | Does not exist |
-| `case_law.web_verified_status` | -- | -- | Does not exist |
+| `case_law.our_distinction` |, |, | Does not exist |
+| `case_law.web_verified_status` |, |, | Does not exist |
 | `case_law_references.shepardized_at` | `case_law_references` | `shepardized_at` | Column exists, never written |
 | `case_law_references.verification_url` | `case_law_references` | `verification_url` | Column exists, never written |
-| `prosecution_counters.*` | -- | -- | Entire table missing |
+| `prosecution_counters.*` |, |, | Entire table missing |
 
 ---
 

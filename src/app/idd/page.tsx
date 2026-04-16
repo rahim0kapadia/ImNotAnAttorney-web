@@ -21,7 +21,7 @@ export default function IddPage() {
           IDD Scholarship Program
         </h1>
         <p className="mt-4 text-lg text-zinc-300">
-          Indigent Defendant Direct — free defense research for defendants who need it most.
+          Indigent Defendant Direct, free defense research for defendants who need it most.
         </p>
       </div>
 
@@ -40,7 +40,7 @@ export default function IddPage() {
           </li>
           <li className="flex gap-3">
             <span aria-hidden="true" className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-500/20 text-sm font-bold text-amber-400">3</span>
-            <span>If approved, you receive the same research our paying customers get — at no cost.</span>
+            <span>If approved, you receive the same research our paying customers get, at no cost.</span>
           </li>
         </ol>
       </section>
@@ -72,7 +72,7 @@ export default function IddPage() {
           <h3 className="font-medium text-zinc-100">How is this funded?</h3>
           <p className="mt-1 text-sm text-zinc-300">
             Every Case Decoder purchase funds 1 scholarship. Every War Room purchase funds 10.
-            No donations, no grants — direct cross-subsidy from paying customers.
+            No donations, no grants, direct cross-subsidy from paying customers.
           </p>
         </div>
         <div>

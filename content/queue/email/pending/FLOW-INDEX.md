@@ -19,7 +19,7 @@ replace these before sending.
 ## Flow 1: Abandoned Cart (`flow-1-abandoned-cart.html`)
 
 | # | Subject | Delay | Variables |
-|---|---------|-------|-----------|
+|---|---------|-------|---------, |
 | 1 | Your case isn't going to wait | 1 hour | `{{TIER_NAME}}`, `{{TIER_PRICE}}`, `{{TIER_SLUG}}` |
 | 2 | The question your attorney hopes you never ask | 24 hours | `{{TIER_NAME}}`, `{{TIER_PRICE}}`, `{{TIER_SLUG}}` |
 | 3 | Your cart expires at midnight | 48 hours | `{{TIER_NAME}}`, `{{TIER_PRICE}}`, `{{TIER_SLUG}}`, `{{TIER_DELIVERY}}` |
@@ -33,7 +33,7 @@ replace these before sending.
 ## Flow 2: Win-Back Cold Subscribers (`flow-2-winback-cold-subscribers.html`)
 
 | # | Subject | Delay | Variables |
-|---|---------|-------|-----------|
+|---|---------|-------|---------, |
 | 1 | Did something happen with your case? | Day 0 | (none) |
 | 2 | Is your attorney actually working your case? | Day 3 | (none) |
 | 3 | We built something new since you've been gone | Day 7 | (none) |
@@ -49,8 +49,8 @@ replace these before sending.
 ## Flow 3: Score Quiz Re-engagement (`flow-3-score-quiz-reengagement.html`)
 
 | # | Subject | Delay | Variables |
-|---|---------|-------|-----------|
-| 1 | Your case scored {{SCORE}}/100 — here's what that means | Immediate | `{{SCORE}}`, `{{BAND}}`, `{{BAND_COLOR}}`, `{{OBSERVATIONS}}` |
+|---|---------|-------|---------, |
+| 1 | Your case scored {{SCORE}}/100, here's what that means | Immediate | `{{SCORE}}`, `{{BAND}}`, `{{BAND_COLOR}}`, `{{OBSERVATIONS}}` |
 | 2 | The 3 things dragging your score down | 24 hours | `{{SCORE}}` |
 | 3 | How {{CHARGE_LABEL}} cases with your score usually play out | 3 days | `{{SCORE}}`, `{{CHARGE_LABEL}}`, charge-specific variant |
 | 4 | One question that could change everything | 7 days | `{{SCORE}}`, `{{CHARGE_LABEL}}` |
@@ -65,7 +65,7 @@ replace these before sending.
 ## Flow 4: Score Quiz Abandonment (`abandoned-score-{1-3}.md`)
 
 | # | Subject | Delay | Variables |
-|---|---------|-------|-----------|
+|---|---------|-------|---------, |
 | 1 | You left something unfinished | 2 hours | (none) |
 | 2 | The #1 thing defendants don't check (but should) | 26 hours | (none) |
 | 3 | The cost of not knowing | ~4 days | (none) |
@@ -80,7 +80,7 @@ replace these before sending.
 ## Flow 5: Win-Back 60-Day Cold (`winback-{1-5}.md`)
 
 | # | Subject | Delay | Variables |
-|---|---------|-------|-----------|
+|---|---------|-------|---------, |
 | 1 | Still fighting? | Day 0 | (none) |
 | 2 | What 500 pages of drug trafficking discovery actually contained | Day 3 | (none) |
 | 3 | 247 defendants asked this question last month | Day 7 | (none) |
@@ -97,7 +97,7 @@ replace these before sending.
 ## Flow 6: Score Re-engagement Extended (`score-reengage-{1-4}.md`)
 
 | # | Subject | Delay | Variables |
-|---|---------|-------|-----------|
+|---|---------|-------|---------, |
 | 1 | Your defense score was {{SCORE}}. Here's what changed since then. | Day 7 | `{{SCORE}}` |
 | 2 | The one thing {{CHARGE_LABEL}} defendants always miss | Day 14 | `{{SCORE}}`, `{{CHARGE_LABEL}}`, `{{CHARGE_TYPE}}`, charge-specific variant |
 | 3 | A defendant with a similar score asked 5 questions. Here's what happened. | Day 21 | `{{SCORE}}`, `{{CHARGE_LABEL}}` |
@@ -121,7 +121,7 @@ replace these before sending.
 3. **Exit conditions** must be checked before each send. If the subscriber has
    purchased or re-engaged, suppress the remaining emails in the flow.
 
-4. **CAN-SPAM compliance** is handled by `sendEmail()` — these templates should
+4. **CAN-SPAM compliance** is handled by `sendEmail()`, these templates should
    NOT include their own unsubscribe links or physical addresses.
 
 5. **A/B testing**: Each email includes a Subject Line B variant. Test with 20%

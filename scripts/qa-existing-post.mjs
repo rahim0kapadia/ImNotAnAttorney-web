@@ -2,7 +2,7 @@
 // DEPRECATED: LLM gates now run session-native via /blog-pipeline skill.
 // This script is retained for humanizer-only mode (pre-commit hook outside CC session).
 //
-// qa-existing-post.mjs — Humanizer-only QA runner for existing blog posts.
+// qa-existing-post.mjs, Humanizer-only QA runner for existing blog posts.
 //
 // Runs the humanizer gate (pure JS) against a .mdx file (or every .mdx file
 // with --all) and writes the outcome to a sidecar JSON at
@@ -62,7 +62,7 @@ function parseArgs(argv) {
 }
 
 // ── Gate runners ─────────────────────────────────────────────────────────────
-// LLM gates (anti-hallucination, slop, UPL, DNA) removed — now run
+// LLM gates (anti-hallucination, slop, UPL, DNA) removed, now run
 // session-native via /blog-pipeline skill. Only humanizer (pure JS) remains.
 
 const GATE_ORDER = ["humanizer"];
@@ -202,7 +202,7 @@ async function main() {
     targets = [abs];
   }
 
-  console.log(`QA runner — ${targets.length} target(s), gate=${args.gate ?? "all"}, skipLlm=${args.skipLlm}, onlyStale=${args.onlyStale}`);
+  console.log(`QA runner, ${targets.length} target(s), gate=${args.gate ?? "all"}, skipLlm=${args.skipLlm}, onlyStale=${args.onlyStale}`);
 
   let passCount = 0;
   let failCount = 0;

@@ -1,5 +1,5 @@
 /**
- * GET /api/admin/demand/performance — content performance metrics
+ * GET /api/admin/demand/performance, content performance metrics
  * Query params: window (7d|30d|all-time)
  */
 import { NextRequest, NextResponse } from "next/server";

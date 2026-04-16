@@ -93,7 +93,7 @@ if (updErr) {
   pass = false;
 }
 
-// Step 4: idempotency — should NOT match now
+// Step 4: idempotency, should NOT match now
 const { data: recheck } = await s
   .from('court_reminders')
   .select('id')

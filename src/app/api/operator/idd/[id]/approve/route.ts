@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/idd/[id]/approve — Approve an IDD scholarship application
+ * @file /api/operator/idd/[id]/approve, Approve an IDD scholarship application
  *
  * POST: Creates a $0 order with the granted product slug, links it to the
  *       application, and sends an intake-link email to the applicant.
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
     );
   }
 
-  // Create $0 order — uses the same standalone intake pipeline as paid orders
+  // Create $0 order, uses the same standalone intake pipeline as paid orders
   const intakeToken = randomUUID();
   const { data: order, error: orderErr } = await supabase
     .from("orders")
@@ -106,7 +106,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
   if (updateErr || !updated || updated.length === 0) {
     // Race condition: another operator already approved/declined. Clean up orphan order.
     console.error(
-      "[Operator/IDD/Approve] Application update failed (likely race) — cleaning up order:",
+      "[Operator/IDD/Approve] Application update failed (likely race), cleaning up order:",
       order.id,
       "app:",
       id,
@@ -119,7 +119,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
     );
   }
 
-  // Increment fulfilled counter (fire-and-forget — non-critical)
+  // Increment fulfilled counter (fire-and-forget, non-critical)
   supabase
     .rpc("increment_counter", { counter_key: "scholarships_fulfilled", amount: 1 })
     .then(({ error: rpcErr }) => {
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
   await sendEmailWithOperatorAlert(
     {
       to: app.email,
-      subject: `Your IDD Scholarship Has Been Approved — ${product.name}`,
+      subject: `Your IDD Scholarship Has Been Approved, ${product.name}`,
       html: `
         <h1 style="font-size: 22px; color: #FAFAF9; margin-bottom: 16px;">Your Scholarship Has Been Approved</h1>
         <p>Hi ${escapeHtml(app.first_name)},</p>
@@ -145,7 +145,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
           </a>
         </p>
         <p style="color: #A8A29E; font-size: 14px;">This link is unique to you. Once you submit your information, our research team will begin your analysis.</p>
-        <p>— The ImNotAnAttorney Research Team</p>
+        <p>, The ImNotAnAttorney Research Team</p>
       `,
     },
     `IDD scholarship approval email for ${app.email} (app ${id})`,

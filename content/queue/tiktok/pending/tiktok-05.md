@@ -3,7 +3,7 @@
 **Topic:** Weight discrepancy in drug trafficking case
 **Format:** storytime + text overlay + dramatic reveal
 **Duration:** 60s
-**Trending sound suggestion:** Original audio -- voiceover + dark, suspenseful beat building to reveal
+**Trending sound suggestion:** Original audio, voiceover + dark, suspenseful beat building to reveal
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -17,17 +17,17 @@
 
 ## Body
 [SECOND 3-15]
-**Visual**: Stack of papers -- 500 pages visible. Person flipping through them at a table late at night.
+**Visual**: Stack of papers, 500 pages visible. Person flipping through them at a table late at night.
 **Audio/Voiceover**: "He'd paid his attorney thousands. No motions filed. Calls weren't returned. One night, he decided to read his own 500-page discovery file. No legal training. Just a defendant who was tired of being in the dark. Within a week, he found four problems his attorney had never mentioned."
 **Text overlay**: "500 pages. Zero legal training. 4 problems the attorney missed."
 
 [SECOND 15-25]
 **Visual**: Scale graphic returns. "93.9g at scene" on left. "25.59g at lab" on right. Red arrow between them: "73% DISCREPANCY"
-**Audio/Voiceover**: "Problem one: the officers weighed the substance at 93.9 grams at the scene. The lab weighed it at 25.59 grams. That's 68 grams missing -- a 73% discrepancy. In a trafficking case, weight determines everything. It's the difference between a possession charge with probation and a trafficking charge with mandatory prison. His attorney had never mentioned it."
+**Audio/Voiceover**: "Problem one: the officers weighed the substance at 93.9 grams at the scene. The lab weighed it at 25.59 grams. That's 68 grams missing, a 73% discrepancy. In a trafficking case, weight determines everything. It's the difference between a possession charge with probation and a trafficking charge with mandatory prison. His attorney had never mentioned it."
 **Text overlay**: "73% WEIGHT DISCREPANCY. Attorney said nothing."
 
 [SECOND 25-35]
-**Visual**: Phone screen showing two phone numbers -- one labeled "Confidential Informant" and one labeled "Defendant." They're the same number.
+**Visual**: Phone screen showing two phone numbers, one labeled "Confidential Informant" and one labeled "Defendant." They're the same number.
 **Audio/Voiceover**: "Problem two: a phone number in the discovery was attributed to both the confidential informant AND the defendant. Same number. Two different people. That's either sloppy police work or something worse. His attorney hadn't flagged it."
 **Text overlay**: "Same phone number. Two different people. Attorney missed it."
 
@@ -65,13 +65,13 @@ If you're facing drug charges, take the free Defense Milestone Score at imnotana
 - 0:55 "YOUR QUESTIONS MATTER"
 
 ## Caption
-A defendant read his own 500-page discovery file and found four problems his attorney never mentioned. 73% weight discrepancy. A phone number assigned to two people. Wrong drug on the charges. 21 fingerprints -- none were his. He had no legal training. Just questions. You have the right to read your own discovery.
+A defendant read his own 500-page discovery file and found four problems his attorney never mentioned. 73% weight discrepancy. A phone number assigned to two people. Wrong drug on the charges. 21 fingerprints, none were his. He had no legal training. Just questions. You have the right to read your own discovery.
 
 ## Hashtags
 #drugcharges #trafficking #discovery #criminaldefense #knowyourrights #weightdiscrepancy
 
 ---
 
-**Context**: Sourced directly from what-500-pages-of-drug-trafficking-discovery-contained. This is INNA's most powerful story -- a real case with real numbers that validates the entire business model. Every finding is specific and verifiable. This is the kind of content that defines a TikTok account.
-**Loop strategy**: Opens with the scale showing the discrepancy, closes with the scale showing "YOUR QUESTIONS MATTER." The 4-finding format is too dense to absorb in one viewing -- guarantees rewatches.
+**Context**: Sourced directly from what-500-pages-of-drug-trafficking-discovery-contained. This is INNA's most powerful story, a real case with real numbers that validates the entire business model. Every finding is specific and verifiable. This is the kind of content that defines a TikTok account.
+**Loop strategy**: Opens with the scale showing the discrepancy, closes with the scale showing "YOUR QUESTIONS MATTER." The 4-finding format is too dense to absorb in one viewing, guarantees rewatches.
 **KPI target**: Shares + Profile visits (this is a flagship video that drives account follows)

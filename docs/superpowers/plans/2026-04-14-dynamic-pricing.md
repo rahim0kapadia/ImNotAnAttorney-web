@@ -1,10 +1,10 @@
-# Dynamic Pricing Architecture — Implementation Plan
+# Dynamic Pricing Architecture, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Eliminate all hardcoded prices across the codebase so changing a price means updating one line in `tiers.ts` or `products.ts`.
 
-**Architecture:** Three-layer system — dynamic imports for mechanical prices (CTAs, metadata, labels), intentional marketing anchors for value stacks (Hormozi 10x+), template functions for prose copy. Automated staleness detector as pre-commit hook validates value-stack anchors stay above product price.
+**Architecture:** Three-layer system, dynamic imports for mechanical prices (CTAs, metadata, labels), intentional marketing anchors for value stacks (Hormozi 10x+), template functions for prose copy. Automated staleness detector as pre-commit hook validates value-stack anchors stay above product price.
 
 **Tech Stack:** Next.js 15, TypeScript, `tiers.ts` (TIER_CORE), `products.ts` (STANDALONE_PRODUCTS)
 
@@ -55,12 +55,12 @@ employment: (() => {
   return {
     slug: "employment-impact",
     price: p?.priceDisplay ?? "$197",
-    primaryLabel: `Get Your Employment Impact Assessment — ${p?.priceDisplay ?? "$197"}`,
+    primaryLabel: `Get Your Employment Impact Assessment, ${p?.priceDisplay ?? "$197"}`,
   };
 })(),
 ```
 
-Note: Read the file first — the exact structure may differ. The goal is to pull the price from `getProduct` instead of hardcoding.
+Note: Read the file first, the exact structure may differ. The goal is to pull the price from `getProduct` instead of hardcoding.
 
 - [ ] **Step 4: Replace hardcoded price in DiscoveryReveal.tsx**
 
@@ -76,7 +76,7 @@ Get Your Case Analyzed &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
 
 - [ ] **Step 5: Type-check**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: No new errors in the three modified files.
 
 - [ ] **Step 6: Commit**
@@ -116,9 +116,9 @@ Add `import { TIER_CORE } from "@/lib/tiers"`.
 
 Replace line 242 CTA text:
 ```tsx
-// Before: Get Your Case Decoder — $197
+// Before: Get Your Case Decoder, $197
 // After:
-Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay}
+Get Your Case Decoder, {TIER_CORE["case-decoder"].priceDisplay}
 ```
 
 - [ ] **Step 4: Fix plea-analyzer/page.tsx**
@@ -132,11 +132,11 @@ Replace line 104:
 ({TIER_CORE["case-decoder"].priceDisplay}) maps your complete defense landscape.
 ```
 
-Note: This is inside JSX — verify whether it's a template literal or JSX text and use the appropriate interpolation syntax.
+Note: This is inside JSX, verify whether it's a template literal or JSX text and use the appropriate interpolation syntax.
 
 - [ ] **Step 5: Type-check**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: No new errors.
 
 - [ ] **Step 6: Commit**
@@ -170,14 +170,14 @@ Convert metadata:
 ```typescript
 // Before:
 export const metadata: Metadata = {
-  title: "Officer Background Check — $97 | ImNotAnAttorney",
+  title: "Officer Background Check, $97 | ImNotAnAttorney",
   // other fields
 };
 
 // After:
 export function generateMetadata(): Metadata {
   return {
-    title: `Officer Background Check — ${TIER_CORE["officer-background-check"].priceDisplay} | ImNotAnAttorney`,
+    title: `Officer Background Check, ${TIER_CORE["officer-background-check"].priceDisplay} | ImNotAnAttorney`,
     // other fields unchanged (copy them over exactly)
   };
 }
@@ -210,7 +210,7 @@ Replace AvailabilityChecker prop (line 128) with `priceDisplay={TIER_CORE["judge
 Same pattern. Add `import { TIER_CORE } from "@/lib/tiers"`.
 
 Convert metadata to `generateMetadata()` with `TIER_CORE["similar-cases-analyzer"].priceDisplay`.
-Replace hero price (line 195), AvailabilityChecker prop (line 206), CTA text (lines 401, 410) — all five instances with `TIER_CORE["similar-cases-analyzer"].priceDisplay`.
+Replace hero price (line 195), AvailabilityChecker prop (line 206), CTA text (lines 401, 410), all five instances with `TIER_CORE["similar-cases-analyzer"].priceDisplay`.
 
 - [ ] **Step 5: Fix start/layout.tsx**
 
@@ -227,8 +227,8 @@ description: `Case Decoder from ${TIER_CORE["case-decoder"].priceDisplay}. The X
 
 - [ ] **Step 6: Type-check**
 
-Run: `npx tsc --noEmit --skipLibCheck`
-Expected: No new errors. Watch for metadata type issues — `generateMetadata` return type must be `Metadata` (import from `next`).
+Run: `npx tsc,noEmit,skipLibCheck`
+Expected: No new errors. Watch for metadata type issues, `generateMetadata` return type must be `Metadata` (import from `next`).
 
 - [ ] **Step 7: Commit**
 
@@ -252,28 +252,28 @@ Read `report-renderer.ts` lines 180-195.
 
 - [ ] **Step 2: Fix checkout/success/page.tsx fallbacks**
 
-The file already imports `TIER_CORE`. The primary path uses `TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay` which is correct. The `?? "$97"` fallback only fires for unknown/unrecognized tier slugs. Replace with empty string — if the tier is unrecognized, showing a wrong price is worse than showing no price:
+The file already imports `TIER_CORE`. The primary path uses `TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay` which is correct. The `?? "$97"` fallback only fires for unknown/unrecognized tier slugs. Replace with empty string, if the tier is unrecognized, showing a wrong price is worse than showing no price:
 
 ```typescript
-// Line 490 — before: ?? "$97"
+// Line 490, before: ?? "$97"
 // After:
 ?? ""
 
-// Line 511 — before: ?? "$97"
+// Line 511, before: ?? "$97"
 // After:
 ?? ""
 ```
 
-Note: Do NOT use `TIER_CORE["dui-first-offense"].priceDisplay` as fallback — the fallback covers ALL tiers including $147 premium playbooks, so hardcoding any specific tier's price is wrong.
+Note: Do NOT use `TIER_CORE["dui-first-offense"].priceDisplay` as fallback, the fallback covers ALL tiers including $147 premium playbooks, so hardcoding any specific tier's price is wrong.
 
 - [ ] **Step 3: Fix checkout/success/page.tsx upsell copy**
 
 ```typescript
-// Line 583 — before: "You have already paid $997."
+// Line 583, before: "You have already paid $997."
 // After:
 `You have already paid ${TIER_CORE["intelligence-brief"].priceDisplay}.`
 
-// Line 619 — before: "You have already paid $2,497."
+// Line 619, before: "You have already paid $2,497."
 // After:
 `You have already paid ${TIER_CORE["x-ray"].priceDisplay}.`
 ```
@@ -290,17 +290,17 @@ import { TIER_CORE, upgradeCostBetween } from "@/lib/tiers";
 Replace lines 185-186 in the HTML template literal:
 ```typescript
 // Before:
-// Case Intelligence Brief — $997 ($800 after credit)
+// Case Intelligence Brief, $997 ($800 after credit)
 // Your $197 is fully credited toward any tier within 12 months.
 
 // After:
-// Case Intelligence Brief — ${TIER_CORE["intelligence-brief"].priceDisplay} (${upgradeCostBetween("case-decoder", "intelligence-brief")} after credit)
+// Case Intelligence Brief, ${TIER_CORE["intelligence-brief"].priceDisplay} (${upgradeCostBetween("case-decoder", "intelligence-brief")} after credit)
 // Your ${TIER_CORE["case-decoder"].priceDisplay} is fully credited toward any tier within 12 months.
 ```
 
 - [ ] **Step 5: Type-check**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: No new errors.
 
 - [ ] **Step 6: Commit**
@@ -335,19 +335,19 @@ import { TIER_CORE, tierDisplayName, tierPriceNum } from "@/lib/tiers";
 
 Replace each hardcoded `tierLabel`:
 ```typescript
-// Line 340 — before: tierLabel: "Case Decoder ($197)",
+// Line 340, before: tierLabel: "Case Decoder ($197)",
 tierLabel: `${tierDisplayName("case-decoder")} (${TIER_CORE["case-decoder"].priceDisplay})`,
 
-// Line 355 — before: tierLabel: "Intelligence Brief ($997)",
+// Line 355, before: tierLabel: "Intelligence Brief ($997)",
 tierLabel: `${tierDisplayName("intelligence-brief")} (${TIER_CORE["intelligence-brief"].priceDisplay})`,
 
-// Line 370 — before: tierLabel: "X-Ray ($2,497)",
+// Line 370, before: tierLabel: "X-Ray ($2,497)",
 tierLabel: `${tierDisplayName("x-ray")} (${TIER_CORE["x-ray"].priceDisplay})`,
 
-// Line 398 — before: tierLabel: "War Room ($4,997)",
+// Line 398, before: tierLabel: "War Room ($4,997)",
 tierLabel: `${tierDisplayName("war-room")} (${TIER_CORE["war-room"].priceDisplay})`,
 
-// Line 426 — before: tierLabel: "Situation Room ($9,997)",
+// Line 426, before: tierLabel: "Situation Room ($9,997)",
 tierLabel: `${tierDisplayName("situation-room")} (${TIER_CORE["situation-room"].priceDisplay})`,
 ```
 
@@ -369,16 +369,16 @@ Verify this is inside a template literal. If not, convert the string to a templa
 `TIER_CORE` is already imported. Replace four hardcoded prices:
 
 ```typescript
-// Line 1215 — before: $2,497  — after:
+// Line 1215, before: $2,497 , after:
 ${TIER_CORE["x-ray"].priceDisplay}
 
-// Line 1219 — before: $4,997  — after:
+// Line 1219, before: $4,997 , after:
 ${TIER_CORE["war-room"].priceDisplay}
 
-// Line 1230 — before: $9,997  — after:
+// Line 1230, before: $9,997 , after:
 ${TIER_CORE["situation-room"].priceDisplay}
 
-// Line 1245 — before: $2,497  — after:
+// Line 1245, before: $2,497 , after:
 ${TIER_CORE["x-ray"].priceDisplay}
 ```
 
@@ -389,7 +389,7 @@ Add import:
 import { TIER_CORE, upgradeCostBetween } from "@/lib/tiers";
 ```
 
-Line 651 — replace three prices in the prompt template:
+Line 651, replace three prices in the prompt template:
 ```typescript
 // Before: "The X-Ray, $2,497"
 // After:  "The X-Ray, ${TIER_CORE["x-ray"].priceDisplay}"
@@ -421,7 +421,7 @@ Also update the comment on line 28 if it references "$197".
 
 - [ ] **Step 7: Type-check**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: No new errors.
 
 - [ ] **Step 8: Commit**
@@ -433,4 +433,4 @@ git commit -m "refactor(pricing): dynamic prices in monitoring, webhooks, drip e
 
 ---
 
-**Continued in `2026-04-14-dynamic-pricing-part2.md` — Tasks 6-10 (value-stack anchors, prose template functions, staleness detector, documentation, verification sweep).**
+**Continued in `2026-04-14-dynamic-pricing-part2.md`, Tasks 6-10 (value-stack anchors, prose template functions, staleness detector, documentation, verification sweep).**

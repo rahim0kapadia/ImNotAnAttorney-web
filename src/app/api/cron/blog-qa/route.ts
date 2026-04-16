@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/blog-qa — Blog draft QA pipeline ENQUEUER
+ * @file /api/cron/blog-qa, Blog draft QA pipeline ENQUEUER
  *
  * As of 2026-04-09 (blog engine port), this route no longer runs the 5 QA
  * gates inline. It selects eligible drafts and inserts processing_jobs rows

@@ -1,5 +1,5 @@
 /**
- * POST /api/partner/logout — Destroy partner session.
+ * POST /api/partner/logout, Destroy partner session.
  *
  * Deletes session from DB and clears session cookie.
  */
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       await destroyPartnerSession(sessionToken);
     } catch (err) {
       console.error("[partner/logout] Failed to destroy session:", err);
-      // Continue — clear the cookie regardless so the user is logged out client-side
+      // Continue, clear the cookie regardless so the user is logged out client-side
     }
   }
 

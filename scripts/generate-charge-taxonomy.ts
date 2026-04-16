@@ -15,7 +15,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-// Claude Code session wrapper — runs under local `claude -p` CLI, no API credits.
+// Claude Code session wrapper, runs under local `claude -p` CLI, no API credits.
 import { callClaude } from "./lib/blog-gen/claude-client.mjs";
 
 // ── Setup ────────────────────────────────────────────────────────────────────
@@ -157,7 +157,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "dui-first-offense",
-    label: "DUI — First Offense",
+    label: "DUI, First Offense",
     categorySlug: "dui-driving",
     ncicCode: "5404",
     description: "First-time DUI/DWI with no prior convictions",
@@ -169,7 +169,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "dui-repeat-offense",
-    label: "DUI — Repeat Offense",
+    label: "DUI, Repeat Offense",
     categorySlug: "dui-driving",
     ncicCode: "5404",
     description: "DUI/DWI with prior DUI conviction(s)",
@@ -181,7 +181,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "dui-drugs",
-    label: "DUI — Drugs (DUID)",
+    label: "DUI, Drugs (DUID)",
     categorySlug: "dui-driving",
     ncicCode: "5404",
     description: "Driving under the influence of controlled substances",
@@ -315,7 +315,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "drug-possession-marijuana",
-    label: "Drug Possession — Marijuana",
+    label: "Drug Possession, Marijuana",
     categorySlug: "drug-offenses",
     ncicCode: "3562",
     description: "Unlawful possession of marijuana/cannabis",
@@ -327,7 +327,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "drug-possession-cocaine",
-    label: "Drug Possession — Cocaine",
+    label: "Drug Possession, Cocaine",
     categorySlug: "drug-offenses",
     ncicCode: "3563",
     description: "Unlawful possession of cocaine or crack cocaine",
@@ -339,7 +339,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "drug-possession-meth",
-    label: "Drug Possession — Methamphetamine",
+    label: "Drug Possession, Methamphetamine",
     categorySlug: "drug-offenses",
     ncicCode: "3564",
     description: "Unlawful possession of methamphetamine",
@@ -351,7 +351,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "drug-possession-opioids",
-    label: "Drug Possession — Opioids",
+    label: "Drug Possession, Opioids",
     categorySlug: "drug-offenses",
     ncicCode: "3565",
     description: "Unlawful possession of heroin, fentanyl, or other opioids",
@@ -363,7 +363,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "drug-possession-prescription",
-    label: "Drug Possession — Prescription (Without Rx)",
+    label: "Drug Possession, Prescription (Without Rx)",
     categorySlug: "drug-offenses",
     ncicCode: "3566",
     description: "Possession of prescription drugs without a valid prescription",
@@ -449,7 +449,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   // ── Violent Crimes (violent-crimes) ───────────────────────────────────────
   {
     slug: "murder-first-degree",
-    label: "Murder — First Degree",
+    label: "Murder, First Degree",
     categorySlug: "violent-crimes",
     ncicCode: "0902",
     description: "Premeditated and deliberate killing of another person",
@@ -461,7 +461,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "murder-second-degree",
-    label: "Murder — Second Degree",
+    label: "Murder, Second Degree",
     categorySlug: "violent-crimes",
     ncicCode: "0903",
     description: "Non-premeditated intentional killing of another person",
@@ -1107,7 +1107,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   // ── Sex Offenses (sex-offenses) ────────────────────────────────────────────
   {
     slug: "sex-offense-contact",
-    label: "Sexual Offense — Contact",
+    label: "Sexual Offense, Contact",
     categorySlug: "sex-offenses",
     ncicCode: "1101",
     description: "Unlawful physical sexual contact without consent",
@@ -1167,7 +1167,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "sex-offense-digital",
-    label: "Sexual Offense — Digital / Online",
+    label: "Sexual Offense, Digital / Online",
     categorySlug: "sex-offenses",
     ncicCode: "1105",
     description: "Online sexual offense including solicitation or distribution of sexual content",
@@ -1363,7 +1363,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "probation-violation-technical",
-    label: "Probation Violation — Technical",
+    label: "Probation Violation, Technical",
     categorySlug: "probation-parole",
     ncicCode: "4899",
     description: "Non-criminal violation of probation conditions (e.g., missed check-in)",
@@ -1375,7 +1375,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "probation-violation-substantive",
-    label: "Probation Violation — Substantive (New Crime)",
+    label: "Probation Violation, Substantive (New Crime)",
     categorySlug: "probation-parole",
     ncicCode: "4899",
     description: "Probation violation resulting from commission of a new criminal offense",
@@ -1437,7 +1437,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "rico",
-    label: "RICO — Racketeering",
+    label: "RICO, Racketeering",
     categorySlug: "federal-specific",
     ncicCode: "4898",
     description: "Organized crime prosecution under the Racketeer Influenced and Corrupt Organizations Act",
@@ -1573,7 +1573,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   // ── Expansion: DUI & Driving variants ─────────────────────────────────────
   {
     slug: "dui-second-offense",
-    label: "DUI — Second Offense",
+    label: "DUI, Second Offense",
     categorySlug: "dui-driving",
     ncicCode: "5404",
     description: "Second DUI/DWI conviction with enhanced penalties",
@@ -1585,7 +1585,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "dui-third-offense",
-    label: "DUI — Third Offense",
+    label: "DUI, Third Offense",
     categorySlug: "dui-driving",
     ncicCode: "5404",
     description: "Third or subsequent DUI/DWI with felony-level penalties",
@@ -1923,7 +1923,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   // ── Expansion: Sex Offenses ───────────────────────────────────────────────
   {
     slug: "csc-first-degree",
-    label: "Criminal Sexual Conduct — 1st Degree",
+    label: "Criminal Sexual Conduct, 1st Degree",
     categorySlug: "sex-offenses",
     ncicCode: "1110",
     description: "Most serious sexual offense involving penetration with aggravating factors",
@@ -1935,7 +1935,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "csc-second-degree",
-    label: "Criminal Sexual Conduct — 2nd Degree",
+    label: "Criminal Sexual Conduct, 2nd Degree",
     categorySlug: "sex-offenses",
     ncicCode: "1111",
     description: "Sexual contact with aggravating factors (no penetration)",
@@ -1947,7 +1947,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "csc-third-degree",
-    label: "Criminal Sexual Conduct — 3rd Degree",
+    label: "Criminal Sexual Conduct, 3rd Degree",
     categorySlug: "sex-offenses",
     ncicCode: "1112",
     description: "Sexual penetration under circumstances without highest aggravating factors",
@@ -1959,7 +1959,7 @@ export const COMMON_CHARGES: readonly CommonChargeDefinition[] = [
   },
   {
     slug: "csc-fourth-degree",
-    label: "Criminal Sexual Conduct — 4th Degree",
+    label: "Criminal Sexual Conduct, 4th Degree",
     categorySlug: "sex-offenses",
     ncicCode: "1113",
     description: "Sexual contact under circumstances without highest aggravating factors",
@@ -2553,9 +2553,9 @@ const EXISTING_QUESTIONS: Readonly<Record<string, ChargeQuestion[]>> = {
       answer_type: "single",
       options: [
         { value: "no", label: "No, I have no restrictions" },
-        { value: "felony", label: "Yes — prior felony conviction" },
-        { value: "dv", label: "Yes — domestic violence conviction or order" },
-        { value: "mental", label: "Yes — mental health adjudication" },
+        { value: "felony", label: "Yes, prior felony conviction" },
+        { value: "dv", label: "Yes, domestic violence conviction or order" },
+        { value: "mental", label: "Yes, mental health adjudication" },
         { value: "unsure", label: "I'm not sure of my status" },
       ],
       sort_order: 3,
@@ -2571,7 +2571,7 @@ const EXISTING_QUESTIONS: Readonly<Record<string, ChargeQuestion[]>> = {
         { value: "yes", label: "Yes, I was defending myself" },
         { value: "yes-other", label: "Yes, I was defending someone else" },
         { value: "no", label: "No" },
-        { value: "partial", label: "Partially — the situation was mutual" },
+        { value: "partial", label: "Partially, the situation was mutual" },
       ],
       sort_order: 0,
     },
@@ -2594,7 +2594,7 @@ const EXISTING_QUESTIONS: Readonly<Record<string, ChargeQuestion[]>> = {
       question_text: "What level of force was used?",
       answer_type: "single",
       options: [
-        { value: "verbal", label: "Verbal only — no physical contact" },
+        { value: "verbal", label: "Verbal only, no physical contact" },
         { value: "minor", label: "Minor physical contact (push, grab)" },
         { value: "significant", label: "Significant physical contact" },
         { value: "weapon", label: "A weapon was involved" },
@@ -2803,7 +2803,7 @@ const EXISTING_QUESTIONS: Readonly<Record<string, ChargeQuestion[]>> = {
       options: [
         { value: "trace", label: "Trace amount (residue only)" },
         { value: "personal-use", label: "Personal use amount" },
-        { value: "ambiguous", label: "Ambiguous — could be personal use or distribution" },
+        { value: "ambiguous", label: "Ambiguous, could be personal use or distribution" },
         { value: "distribution", label: "Distribution-level quantity" },
         { value: "unknown", label: "Unknown or disputed" },
       ],
@@ -2931,9 +2931,9 @@ const EXISTING_QUESTIONS: Readonly<Record<string, ChargeQuestion[]>> = {
       question_text: "How is your relationship with your probation officer?",
       answer_type: "single",
       options: [
-        { value: "good", label: "Good — no prior issues" },
+        { value: "good", label: "Good, no prior issues" },
         { value: "neutral", label: "Neutral" },
-        { value: "strained", label: "Strained — previous warnings" },
+        { value: "strained", label: "Strained, previous warnings" },
         { value: "adversarial", label: "Adversarial" },
       ],
       sort_order: 2,
@@ -2973,9 +2973,9 @@ const EXISTING_QUESTIONS: Readonly<Record<string, ChargeQuestion[]>> = {
       question_text: "Was a weapon used during the incident?",
       answer_type: "single",
       options: [
-        { value: "firearm", label: "Yes — firearm" },
-        { value: "other-weapon", label: "Yes — other weapon (knife, bat, etc.)" },
-        { value: "no", label: "No weapon — hands only" },
+        { value: "firearm", label: "Yes, firearm" },
+        { value: "other-weapon", label: "Yes, other weapon (knife, bat, etc.)" },
+        { value: "no", label: "No weapon, hands only" },
       ],
       sort_order: 1,
     },
@@ -3116,7 +3116,7 @@ For each charge, return a JSON object with:
 
 OMIT any charge that does not exist as a distinct offense in this jurisdiction.
 
-Return ONLY valid JSON — an array of objects. No markdown, no explanation.
+Return ONLY valid JSON, an array of objects. No markdown, no explanation.
 
 Common charges to map:
 ${chargeList}`;
@@ -3127,7 +3127,7 @@ function buildQuestionsPrompt(uncoveredSlugs: string[]): string {
     .map((slug) => {
       const charge = COMMON_CHARGES.find((c) => c.slug === slug);
       return charge
-        ? `- ${slug}: ${charge.label} — ${charge.description}`
+        ? `- ${slug}: ${charge.label}, ${charge.description}`
         : `- ${slug}`;
     })
     .join("\n");
@@ -3222,7 +3222,7 @@ async function generateAllJurisdictions(dryRun: boolean): Promise<void> {
   const toGenerate = JURISDICTIONS.filter(({ code }) => {
     const filepath = jurisdictionFilePath(code);
     if (fs.existsSync(filepath)) {
-      console.log(`Skipping ${code} — JSON already exists`);
+      console.log(`Skipping ${code}, JSON already exists`);
       return false;
     }
     return true;
@@ -3361,7 +3361,7 @@ function validateOutput(): void {
     const slugsSeen = new Set<string>();
     for (const statute of statutes) {
       if (slugsSeen.has(statute.common_charge_slug)) {
-        console.error(`  ${code}: Duplicate slug — ${statute.common_charge_slug}`);
+        console.error(`  ${code}: Duplicate slug, ${statute.common_charge_slug}`);
         totalErrors++;
       }
       slugsSeen.add(statute.common_charge_slug);
@@ -3375,7 +3375,7 @@ function validateOutput(): void {
           (Array.isArray(val) && val.length === 0)
         ) {
           console.error(
-            `  ${code}/${statute.common_charge_slug}: Missing required field — ${field}`
+            `  ${code}/${statute.common_charge_slug}: Missing required field, ${field}`
           );
           totalErrors++;
         }
@@ -3447,7 +3447,7 @@ Charge Taxonomy Data Generator
 ===============================
 Usage:
   npx tsx scripts/generate-charge-taxonomy.ts --all
-    Generate all ${JURISDICTIONS.length} jurisdictions + questions (Task 3 — do NOT run here)
+    Generate all ${JURISDICTIONS.length} jurisdictions + questions (Task 3, do NOT run here)
 
   npx tsx scripts/generate-charge-taxonomy.ts --jurisdiction FL
     Generate a single jurisdiction

@@ -1,4 +1,4 @@
-# Plea Analyzer — Charge Lookup Widget
+# Plea Analyzer, Charge Lookup Widget
 
 **Goal:** Reduce friction on the free plea analyzer form by letting defendants look up their specific charge and auto-fill sentencing exposure from our jurisdiction_statutes data (4,699 statutes across 52 jurisdictions).
 
@@ -28,7 +28,7 @@ None.
 - [ ] **Task 3:** Add "Look up what you're facing" button + inline results panel below sentencing exposure field. Shows when state + chargeType are both selected. Fetches from `/api/charge-taxonomy/charges?category=<mapped>&jurisdiction=<state>`.
 - [ ] **Task 4:** Render charge cards showing label, statute number, offense class, penalty range. On click: auto-fill sentencing exposure with formatted penalty string.
 - [ ] **Task 5:** Accessibility: labels, aria-live for results, keyboard navigation for charge cards, focus management.
-- [ ] **Task 6:** Verify TypeScript compiles clean (`npx tsc --noEmit`)
+- [ ] **Task 6:** Verify TypeScript compiles clean (`npx tsc,noEmit`)
 
 ## Accessibility Notes
 

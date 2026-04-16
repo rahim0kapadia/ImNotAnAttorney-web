@@ -230,7 +230,7 @@ function CaseListContent() {
                     <StatusBadge status={c.status} />
                   </td>
                   <td className="px-4 py-3 text-zinc-400">
-                    {c.phase ?? "—"}
+                    {c.phase ?? ", "}
                   </td>
                   <td className="px-4 py-3 text-right text-zinc-400">
                     {c.document_count}
@@ -241,10 +241,10 @@ function CaseListContent() {
                   <td className="px-4 py-3 text-right text-zinc-400">
                     {c.discovery_health_score != null
                       ? `${c.discovery_health_score}%`
-                      : "—"}
+                      : ", "}
                   </td>
                   <td className="px-4 py-3 text-zinc-400">
-                    {c.delivery_due_at ? formatDate(c.delivery_due_at) : "—"}
+                    {c.delivery_due_at ? formatDate(c.delivery_due_at) : ", "}
                   </td>
                   <td className="px-4 py-3 text-zinc-400">
                     {formatDate(c.created_at)}

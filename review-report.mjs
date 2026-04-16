@@ -102,7 +102,7 @@ function renderReportHtml(
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Decoder Report — ${escapeHtml(meta.firstName)}</title>
+<title>Case Decoder Report, ${escapeHtml(meta.firstName)}</title>
 <style>
   @media print {
     body { background: white !important; color: #1a1a1a !important; }
@@ -135,13 +135,13 @@ function renderReportHtml(
   </div>
   ${meta.expertNames ? `<blockquote style="border-left: 3px solid #F59E0B; padding: 16px; margin: 24px 0; background: #1C1917; border-radius: 0 8px 8px 0;">
     <p style="margin: 0 0 12px; color: #F59E0B; font-weight: bold;">METHODOLOGY NOTE</p>
-    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
-    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)}, selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </blockquote>` : ""}
   ${html}
   <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
     <p style="margin: 0; font-size: 13px; color: #71717A;">
-      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them — and why it matters.
+      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions, not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them, and why it matters.
     </p>
   </div>
   <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
@@ -150,8 +150,8 @@ function renderReportHtml(
   </div>
   <div class="print-hidden" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
-    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $997 ($800 after credit)</a>
-    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
+    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief, $997 ($800 after credit)</a>
+    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure, decide after your meeting.</p>
   </div>
 </div>
 </body>
@@ -162,7 +162,7 @@ function renderReportHtml(
 // --- CLI ---
 
 const META = {
-  firstName: "TestUser", charges: "DUI — First Offense",
+  firstName: "TestUser", charges: "DUI, First Offense",
   jurisdiction: "Pinellas County, FL", reportDate: new Date().toISOString().split("T")[0],
   reportId: "TEST-" + randomUUID().slice(0, 8).toUpperCase(),
   caseNumber: "24-00001-CT", courtDate: "2026-04-15", daysSinceArrest: 45,

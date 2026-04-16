@@ -1,9 +1,9 @@
 "use client";
 /**
- * Referral Quiz — SMIQ + micro-commitment follow-ups + personalized recommendation.
+ * Referral Quiz, SMIQ + micro-commitment follow-ups + personalized recommendation.
  *
  * Ryan Levesque ASK Method: Single Most Important Question first, then 2-3
- * tailored follow-ups, then ONE recommendation (Hormozi — no pricing table).
+ * tailored follow-ups, then ONE recommendation (Hormozi, no pricing table).
  * Empowerment framing per crisis purchasing psychology research.
  */
 
@@ -57,7 +57,7 @@ const FOLLOW_UPS = [
   },
 ];
 
-// Fallback tier slugs — validated at compile time via satisfies
+// Fallback tier slugs, validated at compile time via satisfies
 const FALLBACK_XRAY: TierSlug = "x-ray" satisfies TierSlug;
 const FALLBACK_INTEL: TierSlug = "intelligence-brief" satisfies TierSlug;
 const FALLBACK_DECODER: TierSlug = "case-decoder" satisfies TierSlug;
@@ -74,7 +74,7 @@ function getRecommendation(
   concern: string,
 ): RecommendedTier {
   // Private attorney + no communication + months in → X-Ray upsell
-  // Situation warrants forensic-level analysis — they're paying for an attorney
+  // Situation warrants forensic-level analysis, they're paying for an attorney
   // who isn't delivering, so full discovery + judge intel + 35-50 questions
   if (
     attorney === "private" &&
@@ -130,7 +130,7 @@ function getRecommendation(
   if (chargeSlug !== "other" && isValidTier(chargeSlug)) {
     return {
       slug: chargeSlug,
-      reason: "You have an attorney. This gives you the specific questions they hope you never ask — tailored to your exact charge type.",
+      reason: "You have an attorney. This gives you the specific questions they hope you never ask, tailored to your exact charge type.",
     };
   }
 
@@ -247,7 +247,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
           </div>
 
           <p className="text-center text-zinc-400 text-xs mt-6">
-            ImNotAnAttorney provides legal information — not legal advice.
+            ImNotAnAttorney provides legal information, not legal advice.
           </p>
         </div>
       </div>
@@ -294,7 +294,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
   // Follow-up steps (1-3)
   const followUp = FOLLOW_UPS[step - 1];
   if (!followUp) {
-    // Safety fallback — render null; recommendation check above handles step === totalSteps
+    // Safety fallback, render null; recommendation check above handles step === totalSteps
     return null;
   }
 

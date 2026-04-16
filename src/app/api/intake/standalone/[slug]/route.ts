@@ -1,12 +1,12 @@
 /**
- * @file POST /api/intake/standalone/[slug] — Standalone product intake handler.
+ * @file POST /api/intake/standalone/[slug], Standalone product intake handler.
  *
  * Receives intake data after purchase, validates the intake token (from webhook
  * email), stores sanitized intake data on the order, and fires the generation
  * Edge Function.
  *
  * Security:
- *   - (C5 + W6) Auth via SHA-256 hash of standalone_intake_token — the plaintext
+ *   - (C5 + W6) Auth via SHA-256 hash of standalone_intake_token, the plaintext
  *     token lives only in the customer's email; the DB stores only the hash
  *   - (C6) All fields validated: enums against allowlists, text sanitized
  *   - (W6) Rate limited: 5 requests per 60 seconds per IP
@@ -23,7 +23,7 @@ import { hashToken } from "@/lib/site";
 import { isTier9Slug } from "@/lib/tier9-reports/constants";
 import { generateTier9Report } from "@/lib/tier9-reports/generate";
 
-// (C6) Allowlists for enum fields — prevents prompt injection
+// (C6) Allowlists for enum fields, prevents prompt injection
 const VALID_EMPLOYER_TYPES = new Set([
   "government-federal",
   "government-state",
@@ -43,7 +43,7 @@ const VALID_STATES = new Set([
   "DC",
 ]);
 
-// Wave 1 court case port — case stage allowlist for motion-opportunity-scan
+// Wave 1 court case port, case stage allowlist for motion-opportunity-scan
 const VALID_CASE_STAGES = new Set([
   "pre-arraignment",
   "post-arraignment",
@@ -53,7 +53,7 @@ const VALID_CASE_STAGES = new Set([
   "post-trial",
 ]);
 
-// Product stamping — enum allowlists for new product intake fields
+// Product stamping, enum allowlists for new product intake fields
 const VALID_LICENSE_TYPES = new Set([
   "nursing", "cdl", "teaching", "real-estate", "financial-advisor",
   "attorney", "physician", "pharmacy", "engineering", "accounting",
@@ -120,7 +120,7 @@ const VALID_VIOLATION_TYPES = new Set([
 ]);
 
 // appealGrounds, issuesIdentified, relationshipToDefendant,
-// proximityToContraband, ownershipOfLocation are free-text fields —
+// proximityToContraband, ownershipOfLocation are free-text fields,
 // no allowlist needed. Validated via sanitizeText.
 
 // Fields that may be optional (not strictly required) on a per-product basis.
@@ -139,19 +139,19 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   "appeal-viability": new Set(["trialIssues"]),
   "immigration-impact": new Set(["yearsInUS"]),
   "security-clearance": new Set(["agency", "lastInvestigation"]),
-  // Court case port — Wave 2+3 SKUs (ship dark)
+  // Court case port, Wave 2+3 SKUs (ship dark)
   "trial-prep-package": new Set(["trialDate", "caseTheme"]),
   "case-law-intelligence": new Set(["motionFocus"]),
   "expert-witness-challenge": new Set(["expertField"]),
   "discovery-demand-letter": new Set(["arrestDate", "discoveryReceivedSoFar"]),
-  // Priority B — Critical 7 worker standalone products
+  // Priority B, Critical 7 worker standalone products
   "plea-analyzer": new Set(["sentencingExposure"]),
   "ach-matrix": new Set(["alternativeExplanations"]),
   "adversarial-prosecution-sim": new Set(["prosecutionTheory"]),
   "sentencing-intelligence": new Set(["priorConvictions", "currentSentencingRange"]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
-  // Bundles — product-specific fields are optional since users may not have all data
+  // Bundles, product-specific fields are optional since users may not have all data
   "first-72-hours": new Set(["flightRiskFactors", "currentBailAmount"]),
   "defense-preparation": new Set([
     "medicalConditions", "timeBetweenStopAndTest", "weather", "footwear",
@@ -175,9 +175,9 @@ const LONG_TEXT_FIELDS = new Set([
   "communityTies", "flightRiskFactors", "reportDetails",
   "probationConditions", "probationOfficerIssue", "discoveryContents",
   "locationDescription",
-  // Court case port — Wave 2+3 SKUs
+  // Court case port, Wave 2+3 SKUs
   "discoveryReceivedSoFar",
-  // Priority B — Critical 7 worker standalone products
+  // Priority B, Critical 7 worker standalone products
   "pleaOfferDetails", "knownEvidence", "alternativeExplanations",
   "defenseStrategy", "prosecutionTheory", "expertMethodology",
   "incidentDescription", "defenseTheory",
@@ -236,7 +236,7 @@ export async function POST(
 
   const { token, ...intakeData } = body;
 
-  // (C5) Token required — prevents unauthorized intake submission
+  // (C5) Token required, prevents unauthorized intake submission
   if (!token || typeof token !== "string") {
     return NextResponse.json(
       {
@@ -249,7 +249,7 @@ export async function POST(
 
   const supabase = createAdminClient();
 
-  // (C5 + W6) Find order by intake token HASH — never plaintext. The plaintext
+  // (C5 + W6) Find order by intake token HASH, never plaintext. The plaintext
   // token travels only via the customer's email; the DB stores only its SHA-256
   // hash. This matches the standalone_report_token_hash pattern.
   const tokenHash = hashToken(token);
@@ -321,7 +321,7 @@ export async function POST(
     if (field === "immigrationStatus" && !VALID_IMMIGRATION_STATUS.has(String(raw))) {
       return NextResponse.json({ error: "Invalid immigration status" }, { status: 400 });
     }
-    // otherParentAwareness is now a boolean field (line 323) — no string validation needed
+    // otherParentAwareness is now a boolean field (line 323), no string validation needed
     if (field === "clearanceLevel" && !VALID_CLEARANCE_LEVELS.has(String(raw))) {
       return NextResponse.json({ error: "Invalid clearance level" }, { status: 400 });
     }
@@ -407,7 +407,7 @@ export async function POST(
   }
 
   // Tier 9 data-driven products: generate inline (DB queries only, <5s).
-  // No Edge Function needed — queries pre-computed tables and renders HTML.
+  // No Edge Function needed, queries pre-computed tables and renders HTML.
   if (isTier9Slug(slug)) {
     after(async () => {
       try {
@@ -424,7 +424,7 @@ export async function POST(
     });
   }
 
-  // (C9/C10) Fire-and-forget to Supabase Edge Function — non-Tier-9 products
+  // (C9/C10) Fire-and-forget to Supabase Edge Function, non-Tier-9 products
   fetch(`${SUPABASE_URL}/functions/v1/generate-standalone`, {
     method: "POST",
     headers: {

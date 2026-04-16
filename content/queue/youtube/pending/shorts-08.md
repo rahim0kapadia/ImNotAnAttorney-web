@@ -34,7 +34,7 @@ imnotanattorney.com
 
 [0:04-0:16] THE FLIP:
 [TEXT ON SCREEN: "THE INCENTIVE FLIP"]
-"Before you hired them, every hour they spent on your case — the consultation, the follow-up call, reviewing your arrest report — was an investment in landing your business. After you hired them? After the retainer is paid? Every hour they spend on your case is an hour they can't spend acquiring or serving a new client. The economic incentive flips. Completely."
+"Before you hired them, every hour they spent on your case, the consultation, the follow-up call, reviewing your arrest report, was an investment in landing your business. After you hired them? After the retainer is paid? Every hour they spend on your case is an hour they can't spend acquiring or serving a new client. The economic incentive flips. Completely."
 
 [0:16-0:27] THE MATH:
 [TEXT ON SCREEN: "Quick plea = profitable. 3-month fight = expensive."]
@@ -42,11 +42,11 @@ imnotanattorney.com
 
 [0:27-0:38] THE NUANCE:
 [TEXT ON SCREEN: "This does NOT mean they'll sell you out."]
-"This does NOT mean your attorney will deliberately sell you out. Most won't. But the pressure toward early resolution — toward the plea — is built into the math. And if you don't understand the math, you can't evaluate whether the plea recommendation is in YOUR best interest or in your attorney's best interest."
+"This does NOT mean your attorney will deliberately sell you out. Most won't. But the pressure toward early resolution, toward the plea, is built into the math. And if you don't understand the math, you can't evaluate whether the plea recommendation is in YOUR best interest or in your attorney's best interest."
 
 [0:38-0:48] THE QUESTION:
 [TEXT ON SCREEN: "One question to ask"]
-"One question. After your attorney recommends the plea, ask: 'What motions did you file or consider filing before reaching this recommendation?' If the answer involves actual work — suppression motions, discovery challenges, investigation — that's an informed recommendation. If it doesn't, it might be convenience."
+"One question. After your attorney recommends the plea, ask: 'What motions did you file or consider filing before reaching this recommendation?' If the answer involves actual work, suppression motions, discovery challenges, investigation, that's an informed recommendation. If it doesn't, it might be convenience."
 
 [0:48-0:56] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]

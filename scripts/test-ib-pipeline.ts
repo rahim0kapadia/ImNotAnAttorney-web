@@ -1,15 +1,15 @@
 /**
- * Intelligence Brief — End-to-End Test Pipeline
+ * Intelligence Brief, End-to-End Test Pipeline
  *
  * Phase 1 (current): Generate IB sections in-session (free), render HTML,
  * push to Supabase, review via operator flow, iterate via fix loop.
  *
  * Commands:
- *   npx tsx scripts/test-ib-pipeline.ts render     — Render sections → HTML → browser
- *   npx tsx scripts/test-ib-pipeline.ts validate   — Local validation (banned phrases, structure)
- *   npx tsx scripts/test-ib-pipeline.ts push       — Create order+case in Supabase
- *   npx tsx scripts/test-ib-pipeline.ts update [section-key]  — Re-render + re-push
- *   npx tsx scripts/test-ib-pipeline.ts cleanup    — Mark test data as refunded
+ *   npx tsx scripts/test-ib-pipeline.ts render    , Render sections → HTML → browser
+ *   npx tsx scripts/test-ib-pipeline.ts validate  , Local validation (banned phrases, structure)
+ *   npx tsx scripts/test-ib-pipeline.ts push      , Create order+case in Supabase
+ *   npx tsx scripts/test-ib-pipeline.ts update [section-key] , Re-render + re-push
+ *   npx tsx scripts/test-ib-pipeline.ts cleanup   , Mark test data as refunded
  *
  * Run from ImNotAnAttorney-web root:
  *   npx tsx scripts/test-ib-pipeline.ts <command>
@@ -129,7 +129,7 @@ const TEST_PHASE2: Phase2Data = {
   what_attorney_told:
     "He said the BAC is borderline and we might have options, but he hasn't explained what those are.",
   biggest_concern:
-    "Losing my nursing license — I'm the sole provider for my two kids",
+    "Losing my nursing license, I'm the sole provider for my two kids",
   employment: "Registered Nurse, Memorial Hermann Hospital",
   dependents: "Two children (ages 4 and 7)",
   immigration_status: "US citizen",
@@ -154,7 +154,7 @@ const IB_SECTION_KEYS = [
 ] as const;
 
 // ================================================================
-// CHARGE CONTEXT (same as CD pipeline — hardcoded DUI for test persona)
+// CHARGE CONTEXT (same as CD pipeline, hardcoded DUI for test persona)
 // ================================================================
 
 function getChargeContext(intake: IntakeRecord): string {
@@ -166,11 +166,11 @@ function getChargeContext(intake: IntakeRecord): string {
     ? `\nCHARGE-SPECIFIC INTAKE DATA:\n${csEntries}`
     : "";
 
-  return `\nCHARGE-SPECIFIC CONTEXT — DUI/DWI (STATE):
-GOD MODE EXPERTS (triangulated — use their methodology):
-1. Lawrence Taylor — Wrote Drunk Driving Defense (9th Ed), cited by SCOTUS in Missouri v. McNeely, NCDD co-founder. Methodology: systematic challenge of every procedural step from stop to test.
-2. William "Bubba" Head — Voted Best DUI Attorney in America (NCDD), 48+ years. Methodology: SFST administration error exploitation, officer training gaps.
-3. Justin McShane — First attorney designated "Forensic Lawyer Scientist" by American Chemical Society. Methodology: instrument precision challenges, scientific reliability attacks.
+  return `\nCHARGE-SPECIFIC CONTEXT, DUI/DWI (STATE):
+GOD MODE EXPERTS (triangulated, use their methodology):
+1. Lawrence Taylor, Wrote Drunk Driving Defense (9th Ed), cited by SCOTUS in Missouri v. McNeely, NCDD co-founder. Methodology: systematic challenge of every procedural step from stop to test.
+2. William "Bubba" Head, Voted Best DUI Attorney in America (NCDD), 48+ years. Methodology: SFST administration error exploitation, officer training gaps.
+3. Justin McShane, First attorney designated "Forensic Lawyer Scientist" by American Chemical Society. Methodology: instrument precision challenges, scientific reliability attacks.
 
 Focus: BAC methodology challenge, field sobriety test validity, rising BAC defense, implied consent, calibration records, medical conditions (diabetes, GERD).${csBlock}`;
 }
@@ -203,7 +203,7 @@ function stepPass(
   details = ""
 ): void {
   const elapsed = ((Date.now() - step.start) / 1000).toFixed(1);
-  console.log(`  PASS (${elapsed}s)${details ? ` — ${details}` : ""}`);
+  console.log(`  PASS (${elapsed}s)${details ? `, ${details}` : ""}`);
   results.push({ step: step.name, status: "PASS", elapsed });
 }
 
@@ -212,7 +212,7 @@ function stepFail(
   reason: string
 ): void {
   const elapsed = ((Date.now() - step.start) / 1000).toFixed(1);
-  console.log(`  FAIL (${elapsed}s) — ${reason}`);
+  console.log(`  FAIL (${elapsed}s), ${reason}`);
   results.push({ step: step.name, status: "FAIL", elapsed, reason });
 }
 
@@ -246,7 +246,7 @@ function buildMeta(sections: Record<string, string>): IBReportMeta {
     TEST_PHASE2,
     null,
     getChargeContext(TEST_INTAKE),
-    "Judge research pending — use general patterns with appropriate caveats",
+    "Judge research pending, use general patterns with appropriate caveats",
     sections
   );
 
@@ -282,7 +282,7 @@ function signToken(caseId: string): string {
 
 function cmdValidate(): void {
   console.log("═══════════════════════════════════════════════════════");
-  console.log("  INTELLIGENCE BRIEF — LOCAL VALIDATION");
+  console.log("  INTELLIGENCE BRIEF, LOCAL VALIDATION");
   console.log("═══════════════════════════════════════════════════════\n");
 
   const sections = readSections();
@@ -306,7 +306,7 @@ function cmdValidate(): void {
 
   const allText = Object.values(sections).join("\n");
 
-  // 1. Structure — all 9 section keys present and non-empty
+  // 1. Structure, all 9 section keys present and non-empty
   check("All 9 sections present", () => {
     const missing = IB_SECTION_KEYS.filter(
       (k) => !sections[k] || sections[k].trim().length === 0
@@ -340,7 +340,7 @@ function cmdValidate(): void {
         // Find context
         const idx = allText.toLowerCase().indexOf(phrase.toLowerCase());
         const ctx = allText.slice(Math.max(0, idx - 30), idx + phrase.length + 30).replace(/\n/g, " ");
-        found.push(`"${phrase}" — ...${ctx}...`);
+        found.push(`"${phrase}", ...${ctx}...`);
       }
     }
     return found.length === 0
@@ -348,7 +348,7 @@ function cmdValidate(): void {
       : { pass: false, detail: found.join("\n        ") };
   });
 
-  // 3. Anti-hallucination — percentages in outcome map
+  // 3. Anti-hallucination, percentages in outcome map
   check("No percentages in outcome map", () => {
     const ciSection = sections["case-intelligence"] || "";
     const pctMatches = ciSection.match(/\d+%|\d+-\d+%/g);
@@ -359,7 +359,7 @@ function cmdValidate(): void {
     };
   });
 
-  // 4. Anti-hallucination — immigration definitive deportation language
+  // 4. Anti-hallucination, immigration definitive deportation language
   check("No definitive deportation language", () => {
     const protSection = sections["protection"] || "";
     const badPatterns = [
@@ -376,7 +376,7 @@ function cmdValidate(): void {
       : { pass: false, detail: `Found: ${found.join(", ")}` };
   });
 
-  // 5. Anti-hallucination — outdated FAFSA claims
+  // 5. Anti-hallucination, outdated FAFSA claims
   check("No unqualified FAFSA claims", () => {
     if (/FAFSA/i.test(allText) && !/disclaimer|check current|verify/i.test(allText.slice(allText.toLowerCase().indexOf("fafsa") - 100, allText.toLowerCase().indexOf("fafsa") + 200))) {
       return { pass: false, detail: "FAFSA mentioned without disclaimer" };
@@ -488,7 +488,7 @@ function cmdValidate(): void {
       : { pass: false, detail: `Found ${count} questions (target: 10-15)` };
   });
 
-  // 12. 48hr priorities — exactly 3, ends with "everything else can wait"
+  // 12. 48hr priorities, exactly 3, ends with "everything else can wait"
   check("48hr priorities structure", () => {
     const p = sections["48hr-priorities"] || "";
     const errors: string[] = [];
@@ -505,7 +505,7 @@ function cmdValidate(): void {
       : { pass: false, detail: errors.join("; ") };
   });
 
-  // 13. Meeting Ready Sheet in your-plan — 5 questions, Q1 = Golden
+  // 13. Meeting Ready Sheet in your-plan, 5 questions, Q1 = Golden
   check("Meeting Ready Sheet structure", () => {
     const yp = sections["your-plan"] || "";
     const errors: string[] = [];
@@ -537,7 +537,7 @@ function cmdValidate(): void {
 
 function cmdRender(): void {
   console.log("═══════════════════════════════════════════════════════");
-  console.log("  INTELLIGENCE BRIEF — RENDER");
+  console.log("  INTELLIGENCE BRIEF, RENDER");
   console.log("═══════════════════════════════════════════════════════\n");
 
   const sections = readSections();
@@ -554,7 +554,7 @@ function cmdRender(): void {
     execSync(`start "" "${REPORT_HTML_PATH}"`, { stdio: "ignore" });
     console.log("  Opened in browser.");
   } catch {
-    console.log("  Could not auto-open — open the file manually.");
+    console.log("  Could not auto-open, open the file manually.");
   }
 }
 
@@ -564,7 +564,7 @@ function cmdRender(): void {
 
 async function cmdPush(): Promise<void> {
   console.log("═══════════════════════════════════════════════════════");
-  console.log("  INTELLIGENCE BRIEF — PUSH TO SUPABASE");
+  console.log("  INTELLIGENCE BRIEF, PUSH TO SUPABASE");
   console.log("═══════════════════════════════════════════════════════\n");
 
   if (!STRIPE_SECRET || !SUPABASE_URL || !SUPABASE_SERVICE_KEY || !OPERATOR_SECRET) {
@@ -788,7 +788,7 @@ async function cmdPush(): Promise<void> {
   console.log(`${"═".repeat(55)}\n`);
   for (const r of results) {
     const symbol = r.status === "PASS" ? "PASS" : "FAIL";
-    const detail = r.reason ? ` — ${r.reason}` : "";
+    const detail = r.reason ? `, ${r.reason}` : "";
     console.log(`  ${symbol}: ${r.step}${detail}`);
   }
   const failed = results.filter((r) => r.status === "FAIL").length;
@@ -804,7 +804,7 @@ async function cmdPush(): Promise<void> {
 
 async function cmdUpdate(sectionKey?: string): Promise<void> {
   console.log("═══════════════════════════════════════════════════════");
-  console.log("  INTELLIGENCE BRIEF — UPDATE");
+  console.log("  INTELLIGENCE BRIEF, UPDATE");
   console.log("═══════════════════════════════════════════════════════\n");
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
@@ -860,7 +860,7 @@ async function cmdUpdate(sectionKey?: string): Promise<void> {
 
 async function cmdCleanup(): Promise<void> {
   console.log("═══════════════════════════════════════════════════════");
-  console.log("  INTELLIGENCE BRIEF — CLEANUP");
+  console.log("  INTELLIGENCE BRIEF, CLEANUP");
   console.log("═══════════════════════════════════════════════════════\n");
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
@@ -897,7 +897,7 @@ async function cmdCleanup(): Promise<void> {
   }
   log(`Case ${pushState.caseId}: status → refunded`);
 
-  // Delete intake (now safe — FK unlinked)
+  // Delete intake (now safe, FK unlinked)
   if (pushState.intakeId) {
     const { error: intakeErr } = await supabase
       .from("intakes")

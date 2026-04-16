@@ -1,8 +1,8 @@
 /**
- * @file /api/intake — Intake form submission handler
+ * @file /api/intake, Intake form submission handler
  *
  * Pipeline position: Receives case details from the intake form on the frontend.
- * Can be submitted BEFORE or AFTER payment — the handler adapts to both flows.
+ * Can be submitted BEFORE or AFTER payment, the handler adapts to both flows.
  *
  * Two customer flows converge here:
  *
@@ -31,7 +31,7 @@
  *     (drug-possession, dui-first, etc.) and legacy free-form values from
  *     older intake forms (drug, dui, etc.) for backward compatibility.
  *
- * Security: No auth required — this is a public form endpoint.
+ * Security: No auth required, this is a public form endpoint.
  * All user input is escaped via escapeHtml before inclusion in emails.
  */
 
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
     // Strip control characters from firstName (prevent email header injection)
     const sanitizedFirstName = firstName.replace(/[\r\n]/g, "").slice(0, 100);
 
-    // Validate email format (basic regex — not exhaustive, but catches typos)
+    // Validate email format (basic regex, not exhaustive, but catches typos)
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
         { error: "Invalid email format" },
@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate charge type against allowlist — reject unknown values to prevent prompt injection.
+    // Validate charge type against allowlist, reject unknown values to prevent prompt injection.
     if (!(ALLOWED_CHARGE_TYPES as readonly string[]).includes(chargeType)) {
       return NextResponse.json(
         { error: "Invalid charge type" },
@@ -372,10 +372,10 @@ export async function POST(req: NextRequest) {
         <h2 style="color: white; font-size: 18px;">What Happens Next</h2>
         <ol style="color: #D4D4D8; padding-left: 20px;">
           <li style="margin-bottom: 8px;">Browse our <a href="${SITE_URL}/services" style="color: #F59E0B;">services page</a> to find the right tier for your case</li>
-          <li style="margin-bottom: 8px;">Purchase your chosen service — 100% of what you pay is credited if you upgrade later</li>
+          <li style="margin-bottom: 8px;">Purchase your chosen service, 100% of what you pay is credited if you upgrade later</li>
           <li style="margin-bottom: 8px;">We'll analyze your case and deliver your report within the guaranteed timeframe</li>
         </ol>
-        <p style="color: #A1A1AA;">Not sure where to start? For <strong style="color: white;">${escapeHtml(chargeType.replace(/-/g, " "))}</strong> cases, the <a href="${SITE_URL}/checkout?tier=case-decoder" style="color: #F59E0B;">${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay})</a> covers the essentials — and every dollar counts toward an upgrade.</p>
+        <p style="color: #A1A1AA;">Not sure where to start? For <strong style="color: white;">${escapeHtml(chargeType.replace(/-/g, " "))}</strong> cases, the <a href="${SITE_URL}/checkout?tier=case-decoder" style="color: #F59E0B;">${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay})</a> covers the essentials, and every dollar counts toward an upgrade.</p>
       `;
 
     await sendEmail({
@@ -396,7 +396,7 @@ export async function POST(req: NextRequest) {
     // customer's #1 specific question and situation narrative if provided.
     await sendEmail({
       to: OPERATOR_EMAIL,
-      subject: `New Intake: ${chargeType} — ${sanitizedFirstName}`,
+      subject: `New Intake: ${chargeType}, ${sanitizedFirstName}`,
       html: `
         <h1 style="color: #F59E0B;">New Intake Submission</h1>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
@@ -422,7 +422,7 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Evidence Types:</strong> ${(body.evidenceType || []).filter((s: unknown) => typeof s === "string").map((s: string) => escapeHtml(s)).join(", ") || "Not specified"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Services:</strong> ${(body.services || []).filter((s: unknown) => typeof s === "string").map((s: string) => escapeHtml(s)).join(", ") || "None selected"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Criminal History:</strong> ${escapeHtml(body.criminalHistory || "Not provided")}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Employment:</strong> ${escapeHtml(body.employmentStatus || "Not provided")}${body.employmentIndustry ? ` — ${escapeHtml(body.employmentIndustry)}` : ""}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Employment:</strong> ${escapeHtml(body.employmentStatus || "Not provided")}${body.employmentIndustry ? `, ${escapeHtml(body.employmentIndustry)}` : ""}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case Stage:</strong> ${escapeHtml(body.caseStage || "Not provided")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Filled Out By:</strong> ${escapeHtml(body.filledOutBy || "Self")}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Mental Health Relevant:</strong> ${escapeHtml(body.mentalHealthRelevant || "Not provided")}</p>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 /**
- * ChargeTypeSelector — Homepage charge-type router
+ * ChargeTypeSelector, Homepage charge-type router
  *
  * Twelve category buttons matching all charge_categories in the DB. When a
  * category is selected, fires onSelect with the category slug so the parent

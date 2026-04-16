@@ -1,5 +1,5 @@
 /**
- * @file POST /api/plea-analyzer — Free Plea Deal Analyzer intake + generation.
+ * @file POST /api/plea-analyzer, Free Plea Deal Analyzer intake + generation.
  *
  * This is the free acquisition wedge: defendants with active plea offers submit
  * their details (no payment, no credit card) and receive a Claude-generated
@@ -7,10 +7,10 @@
  *
  * Flow:
  *   1. Validate + sanitize all intake fields + email
- *   2. Rate limit per IP (3 per 60s — tighter than paid, prevents abuse)
+ *   2. Rate limit per IP (3 per 60s, tighter than paid, prevents abuse)
  *   3. Create a $0 order with standalone_product_slug="plea-analyzer"
  *   4. Store sanitized intake data on the order (same column as paid flow)
- *   5. Fire the Supabase Edge Function (generate-standalone) — reuses the
+ *   5. Fire the Supabase Edge Function (generate-standalone), reuses the
  *      existing plea-analyzer prompt case
  *   6. Subscribe email to the lead-capture list (for Defense Gap Report drip)
  *   7. Return 200 with generating status
@@ -49,7 +49,7 @@ function sanitizeText(value: unknown, maxLength = 200): string {
     .slice(0, maxLength);
 }
 
-/** Basic email format check — not RFC 5322 strict, just catches obvious junk. */
+/** Basic email format check, not RFC 5322 strict, just catches obvious junk. */
 function isValidEmail(email: unknown): email is string {
   if (typeof email !== "string") return false;
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
@@ -171,9 +171,9 @@ export async function POST(req: NextRequest) {
     const parts: string[] = [];
     if (s) parts.push(`District median for ${sanitized.chargeType}: ${(s.median_months as number)?.toFixed(1) ?? "N/A"} months (P25: ${(s.p25 as number)?.toFixed(1) ?? "N/A"}, P75: ${(s.p75 as number)?.toFixed(1) ?? "N/A"}, N=${s.sample_size ?? 0})`);
     if (ob) parts.push(`National plea rate: ${ob.plea_rate ? ((ob.plea_rate as number) * 100).toFixed(1) + "%" : "94%"} (BJS)`);
-    if (parts.length > 0) sentencingContext = parts.join(". ") + ". Source: JUSTFAIR + BJS. Federal courts — state courts may differ.";
+    if (parts.length > 0) sentencingContext = parts.join(". ") + ". Source: JUSTFAIR + BJS. Federal courts, state courts may differ.";
   } catch {
-    // Non-fatal — plea analyzer works without sentencing context
+    // Non-fatal, plea analyzer works without sentencing context
   }
 
   // Generate intake token for report delivery (same pattern as paid flow)

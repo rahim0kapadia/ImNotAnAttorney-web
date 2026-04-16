@@ -35,7 +35,7 @@ export function getETDate(now?: Date): string {
 /**
  * Convert an ET date string to midnight ET expressed as a UTC Date.
  *
- * Probes at 05:00 UTC, which is always midnight-1am ET — before the 2am DST
+ * Probes at 05:00 UTC, which is always midnight-1am ET, before the 2am DST
  * transition point. This ensures the offset reflects midnight's timezone, not a
  * post-transition timezone. Works correctly on spring-forward and fall-back dates.
  */
@@ -64,7 +64,7 @@ export function formatDaysDisplay(days: string[] | null): string {
 
 /**
  * Count scheduled check-in days between two dates (inclusive).
- * O(1) arithmetic — full weeks × days/week + remainder scan (max 6 iterations).
+ * O(1) arithmetic, full weeks × days/week + remainder scan (max 6 iterations).
  */
 export function countScheduledDays(
   checkInDays: string[] | null,
@@ -82,7 +82,7 @@ export function countScheduledDays(
   const remainder = totalDays % 7;
   let count = fullWeeks * checkInDays.length;
 
-  // getUTCDay() is equivalent here — T12:00:00Z anchor means
+  // getUTCDay() is equivalent here, T12:00:00Z anchor means
   // UTC day always matches ET calendar day (noon UTC = 7-8am ET).
   const DOW_MAP = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
   const startIdx = start.getUTCDay();

@@ -13,7 +13,7 @@ target_length: 14-15 minutes
 
 **Format**: Long-form (16:9)
 **Target length**: 14-15 minutes
-**Target audience**: First-time defendants or family members of defendants who have zero understanding of the criminal justice process — scared, confused, need the full picture
+**Target audience**: First-time defendants or family members of defendants who have zero understanding of the criminal justice process, scared, confused, need the full picture
 
 ---
 
@@ -27,10 +27,10 @@ target_length: 14-15 minutes
 ### Thumbnail Concept
 **Version A**: A visual timeline/flowchart running left to right: ARREST (red) -> ARRAIGNMENT (orange) -> DISCOVERY (yellow) -> MOTIONS (green) -> PLEA/TRIAL (blue). Arrow pointing at MOTIONS with text: "WHERE CASES ARE WON." Clean, infographic style on dark background.
 
-**Version B**: Split image — left side shows confused person with question marks around their head, right side shows a clear roadmap/GPS navigation screen. Text: "THE MAP." White on dark blue. Conveys "confusion -> clarity" transformation.
+**Version B**: Split image, left side shows confused person with question marks around their head, right side shows a clear roadmap/GPS navigation screen. Text: "THE MAP." White on dark blue. Conveys "confusion -> clarity" transformation.
 
 ### Description
-Nobody gives defendants a map. The police don't. The court doesn't. Your attorney might — if they have time.
+Nobody gives defendants a map. The police don't. The court doesn't. Your attorney might, if they have time.
 
 This is that map. Stage by stage: arrest, booking, first appearance, arraignment, discovery, motions, plea negotiations, trial, sentencing, and appeals. What actually happens at each stage, how long it takes, and where cases are actually won and lost (spoiler: it's almost never at trial).
 
@@ -64,10 +64,10 @@ how criminal cases work, criminal case process, criminal justice system explaine
 "Ninety-seven percent of federal criminal cases never see a jury. So where are they actually decided? Most defendants have no idea. Because nobody gives them the map."
 
 **[0:05-0:15] THE PROMISE**
-"This video is that map. I'm going to walk you through every stage of a criminal case — from the moment you're arrested to the final resolution — in plain English. What happens at each stage, how long it takes, what questions to ask, and most importantly — where cases are actually won and lost."
+"This video is that map. I'm going to walk you through every stage of a criminal case, from the moment you're arrested to the final resolution, in plain English. What happens at each stage, how long it takes, what questions to ask, and most importantly, where cases are actually won and lost."
 
 **[0:15-0:30] CREDIBILITY + STAKES**
-"We're ImNotAnAttorney. We don't practice law. We research how the criminal justice system actually works — studying the best defense attorneys, published legal research, and documented case data — so defendants can ask the right questions."
+"We're ImNotAnAttorney. We don't practice law. We research how the criminal justice system actually works, studying the best defense attorneys, published legal research, and documented case data, so defendants can ask the right questions."
 
 [Text on screen: "The map nobody gives you."]
 "If you're facing charges, or someone you love is, this is the most important fifteen minutes you'll spend today. Let's start at the beginning."
@@ -76,7 +76,7 @@ how criminal cases work, criminal case process, criminal justice system explaine
 
 **[0:30-1:00] SETUP: WHY THIS MAP DOESN'T EXIST**
 [B-roll: courthouse exterior, hallway, empty courtroom]
-"The criminal justice system has no instruction manual for defendants. The police don't hand you one at booking. The court doesn't mail you one. Your attorney might walk you through some of it — if they have the time and the inclination. Most don't have either."
+"The criminal justice system has no instruction manual for defendants. The police don't hand you one at booking. The court doesn't mail you one. Your attorney might walk you through some of it, if they have the time and the inclination. Most don't have either."
 
 "What follows is nine stages. Every criminal case moves through some version of these stages. Understanding them won't make the experience less stressful. But it will make you less lost."
 
@@ -90,7 +90,7 @@ how criminal cases work, criminal case process, criminal justice system explaine
 "Here's the rule that matters more than anything else in this entire video."
 
 [Text on screen in red: "SAY NOTHING."]
-"Say nothing. Not to the officers. Not to anyone in holding. You have the right to remain silent — that's not a formality. Anything you say can and will be used against you. Officers are trained to keep conversations going even after you've been read your rights. It feels like small talk. It isn't."
+"Say nothing. Not to the officers. Not to anyone in holding. You have the right to remain silent, that's not a formality. Anything you say can and will be used against you. Officers are trained to keep conversations going even after you've been read your rights. It feels like small talk. It isn't."
 
 "The only words you need: 'I want an attorney before I answer any questions.' That sentence stops the questioning."
 
@@ -101,12 +101,12 @@ how criminal cases work, criminal case process, criminal justice system explaine
 
 **[2:15-3:30] STAGE 2: FIRST APPEARANCE / BOND HEARING**
 [Text on screen: "STAGE 2: BOND HEARING"]
-"Within 24 to 72 hours of arrest, you appear before a judge. The court formally informs you of the charges. Bail is set — or you're released on your own recognizance, or you're held without bail."
+"Within 24 to 72 hours of arrest, you appear before a judge. The court formally informs you of the charges. Bail is set, or you're released on your own recognizance, or you're held without bail."
 
 "The hearing itself is 10 to 30 minutes. But what happens here has enormous consequences."
 
 [Text on screen: "Pretrial detention changes outcomes."]
-"If you can't make bail, you sit in jail while your case proceeds — which can last months or years. And here's the documented reality: detained defendants accept plea deals at higher rates. Partly because jail is miserable. Partly because a plea might mean going home."
+"If you can't make bail, you sit in jail while your case proceeds, which can last months or years. And here's the documented reality: detained defendants accept plea deals at higher rates. Partly because jail is miserable. Partly because a plea might mean going home."
 
 "Understanding that pressure is part of understanding the system. Ask your attorney: is there a basis to challenge the bail amount? What would it take to get a lower bond?"
 
@@ -117,7 +117,7 @@ how criminal cases work, criminal case process, criminal justice system explaine
 [Text on screen: "STAGE 3: ARRAIGNMENT"]
 "Weeks after arrest, you appear before a judge and formally enter a plea. Almost always not guilty. Even if you think you're guilty. Even if you think the evidence is overwhelming."
 
-"Pleading not guilty at arraignment is standard procedure. It preserves your options while your attorney reviews the evidence. It is not a statement about what happened — it's a legal position that keeps your defense alive."
+"Pleading not guilty at arraignment is standard procedure. It preserves your options while your attorney reviews the evidence. It is not a statement about what happened, it's a legal position that keeps your defense alive."
 
 "The hearing takes 5 to 15 minutes. Then you walk out and wonder what just happened."
 
@@ -151,23 +151,23 @@ how criminal cases work, criminal case process, criminal justice system explaine
 [Direct to camera, leaning forward]
 "This is the stage most defendants don't understand. And it's the most important one."
 
-"Motions are formal written arguments asking the court to rule on specific legal issues before trial. The most important type: the motion to suppress — a request to exclude evidence because it was obtained illegally."
+"Motions are formal written arguments asking the court to rule on specific legal issues before trial. The most important type: the motion to suppress, a request to exclude evidence because it was obtained illegally."
 
-"If the evidence against you was obtained through an unlawful stop, an invalid search, a coerced confession, or a defective warrant — a successful suppression motion can gut the prosecution's case."
+"If the evidence against you was obtained through an unlawful stop, an invalid search, a coerced confession, or a defective warrant, a successful suppression motion can gut the prosecution's case."
 
 [Text on screen: "Drugs suppressed = case often dismissed."]
 "A drug case where the drugs are suppressed often ends in dismissal. A DUI case where the blood test is excluded often ends in reduced charges or acquittal. This is where the real defense happens."
 
 "Common motions:"
 [On-screen list appearing one at a time]
-"Motion to suppress — exclude unconstitutional evidence."
-"Motion to dismiss — charges are legally defective."
-"Brady motion — force prosecution to turn over favorable evidence."
-"Speedy trial motion — assert your right to timely resolution."
-"Daubert or Frye motion — challenge expert testimony reliability."
+"Motion to suppress, exclude unconstitutional evidence."
+"Motion to dismiss, charges are legally defective."
+"Brady motion, force prosecution to turn over favorable evidence."
+"Speedy trial motion, assert your right to timely resolution."
+"Daubert or Frye motion, challenge expert testimony reliability."
 
 [Direct to camera]
-"If your attorney has filed no motions and can't explain why — that is a significant red flag. Period."
+"If your attorney has filed no motions and can't explain why, that is a significant red flag. Period."
 
 ---
 
@@ -178,14 +178,14 @@ how criminal cases work, criminal case process, criminal justice system explaine
 "For most defendants, the plea negotiation is the case. Not the trial. The negotiation."
 
 [Text on screen: "What drives plea outcomes:"]
-"What determines whether you get a good deal? The strength of the prosecution's evidence. Suppression motions — a successful motion gives you massive leverage. Your attorney's credibility with the prosecutor. And whether you're genuinely prepared to go to trial."
+"What determines whether you get a good deal? The strength of the prosecution's evidence. Suppression motions, a successful motion gives you massive leverage. Your attorney's credibility with the prosecutor. And whether you're genuinely prepared to go to trial."
 
 "That last point matters enormously. Attorneys who actually prepare for trial get better plea offers. Prosecutors know which attorneys will actually take a case to jury. And they know which ones never do."
 
 [Text on screen: "THE TRIAL PENALTY"]
 "There's also something the system doesn't advertise: the trial penalty. Defendants who go to trial and lose receive significantly harsher sentences than those who took a deal. In federal cases, three to six times longer. This is documented. This is real."
 
-"The trial penalty creates enormous pressure to plead — even when you have a viable defense. Understanding this pressure is part of making an informed decision."
+"The trial penalty creates enormous pressure to plead, even when you have a viable defense. Understanding this pressure is part of making an informed decision."
 
 "Ask your attorney: what are the exact terms? What rights am I waiving? What are the collateral consequences? What do you estimate my chances at trial? Is this offer likely to improve as we continue building our defense?"
 
@@ -194,7 +194,7 @@ how criminal cases work, criminal case process, criminal justice system explaine
 **[10:00-11:30] STAGE 7: TRIAL**
 [PATTERN INTERRUPT: courtroom drama-style music sting, then silence]
 [Text on screen: "STAGE 7: TRIAL (THE 3-10% CASE)"]
-"If your case goes to trial — and most don't — here's what you need to know."
+"If your case goes to trial, and most don't, here's what you need to know."
 
 "Trial is not like television. The surprise witness moment doesn't happen. Cases are decided by preparation: the motions filed beforehand, the witnesses located beforehand, the cross-examinations prepared beforehand."
 
@@ -208,7 +208,7 @@ how criminal cases work, criminal case process, criminal justice system explaine
 
 **[11:30-12:30] STAGE 8: SENTENCING**
 [Text on screen: "STAGE 8: SENTENCING"]
-"If you're convicted — at trial or through a plea — a presentence investigation report is prepared. This document contains your criminal history, personal background, and a sentencing recommendation."
+"If you're convicted, at trial or through a plea, a presentence investigation report is prepared. This document contains your criminal history, personal background, and a sentencing recommendation."
 
 "Your attorney should review this thoroughly and challenge any errors. Mistakes in the PSI can directly affect your sentence."
 
@@ -220,7 +220,7 @@ how criminal cases work, criminal case process, criminal justice system explaine
 [Text on screen: "STAGE 9: APPEALS"]
 "If legal errors affected your case, you may have the right to appeal. But here's the critical thing: many constitutional issues that aren't properly raised during the trial are waived on appeal."
 
-"If your attorney didn't file the right motion, didn't object at the right moment, didn't preserve the issue — you may have lost the right to argue it later. This is why motions and objections during the case matter even when they're denied. Each one is partly about winning now, and partly about preserving your options later."
+"If your attorney didn't file the right motion, didn't object at the right moment, didn't preserve the issue, you may have lost the right to argue it later. This is why motions and objections during the case matter even when they're denied. Each one is partly about winning now, and partly about preserving your options later."
 
 "Ask your attorney early: are you preserving appellate issues as we go?"
 
@@ -233,9 +233,9 @@ how criminal cases work, criminal case process, criminal justice system explaine
 "Discovery: identifying evidence that was obtained illegally or that contradicts the prosecution."
 "Motions: suppressing evidence, dismissing charges, establishing constitutional violations."
 "Plea negotiations: leveraging motion success into better deals."
-"Trial: preparation, cross-examination, narrative — for the 3 to 10 percent that get there."
+"Trial: preparation, cross-examination, narrative, for the 3 to 10 percent that get there."
 
-"The defendants who do best are those whose attorneys actually file motions, actually challenge evidence, and actually prepare for trial — whether or not trial ever happens."
+"The defendants who do best are those whose attorneys actually file motions, actually challenge evidence, and actually prepare for trial, whether or not trial ever happens."
 
 ---
 
@@ -245,9 +245,9 @@ how criminal cases work, criminal case process, criminal justice system explaine
 
 "We built a free Case Progress Score that tells you in five minutes. What stage you're in, what should have happened by now, and what questions to ask next. Link in the description."
 
-"And if you want the full picture — a complete analysis of your case with specific questions for your specific attorney — that's our Case Decoder. It's what we built this for."
+"And if you want the full picture, a complete analysis of your case with specific questions for your specific attorney, that's our Case Decoder. It's what we built this for."
 
-"Know What They Know. Subscribe — next video, we're breaking down DUI defense: everything your attorney should be doing and probably isn't."
+"Know What They Know. Subscribe, next video, we're breaking down DUI defense: everything your attorney should be doing and probably isn't."
 
 ---
 
@@ -265,12 +265,12 @@ how criminal cases work, criminal case process, criminal justice system explaine
 
 **[0:20-0:30]** "Then plea negotiations. A successful motion gives you massive leverage. Prosecutors know which attorneys will actually fight. They offer better deals to those attorneys."
 
-**[0:30-0:40]** "If your attorney hasn't filed a single motion in your case — and can't explain why — that's a red flag. The defense happens in the motions. The deal happens after."
+**[0:30-0:40]** "If your attorney hasn't filed a single motion in your case, and can't explain why, that's a red flag. The defense happens in the motions. The deal happens after."
 
-**[0:40-0:50]** "Know What They Know. Full breakdown — link in bio."
+**[0:40-0:50]** "Know What They Know. Full breakdown, link in bio."
 
 ---
 
-**Context**: This is the educational cornerstone of the channel — the video you point every new subscriber to. Maps directly to the "how-criminal-cases-actually-work" blog post. Every stage and stat comes from existing INNA content. This video establishes authority and drives awareness of the service across the entire funnel.
-**Retention strategy**: Nine-stage structure creates inherent forward momentum ("what comes next?"). Pattern interrupts at Stage 4 (discovery), Stage 5 (motions — "where cases are actually won"), and Stage 7 (trial). The discovery and motions sections are deliberately the longest because that's where cases are decided and where INNA's value proposition lives.
-**KPI target**: CTR > 7%. AVD > 50% (15 minutes is long — need strong retention). This video should be the #1 traffic driver to the Case Progress Score. Target > 500 score completions in first 60 days.
+**Context**: This is the educational cornerstone of the channel, the video you point every new subscriber to. Maps directly to the "how-criminal-cases-actually-work" blog post. Every stage and stat comes from existing INNA content. This video establishes authority and drives awareness of the service across the entire funnel.
+**Retention strategy**: Nine-stage structure creates inherent forward momentum ("what comes next?"). Pattern interrupts at Stage 4 (discovery), Stage 5 (motions, "where cases are actually won"), and Stage 7 (trial). The discovery and motions sections are deliberately the longest because that's where cases are decided and where INNA's value proposition lives.
+**KPI target**: CTR > 7%. AVD > 50% (15 minutes is long, need strong retention). This video should be the #1 traffic driver to the Case Progress Score. Target > 500 score completions in first 60 days.

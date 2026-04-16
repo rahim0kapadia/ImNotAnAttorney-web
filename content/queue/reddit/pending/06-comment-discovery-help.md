@@ -22,15 +22,15 @@ Here's a basic guide to what you should be looking for when you read it:
 
 **Start with the police report.** Look at three things:
 
-The reason for contact -- how did police encounter you? The legality of that initial contact determines whether everything after it is admissible. If the stop was illegal, the evidence may be suppressible.
+The reason for contact, how did police encounter you? The legality of that initial contact determines whether everything after it is admissible. If the stop was illegal, the evidence may be suppressible.
 
-The timeline -- write down every time mentioned in the report. Gaps are gold. If the officer says he arrived at 10:15 and the arrest was at 10:18, was that really enough time for everything he claims happened?
+The timeline, write down every time mentioned in the report. Gaps are gold. If the officer says he arrived at 10:15 and the arrest was at 10:18, was that really enough time for everything he claims happened?
 
-What you allegedly said -- did you actually say what they claim? Were you Mirandized first? Were you in custody at the time?
+What you allegedly said, did you actually say what they claim? Were you Mirandized first? Were you in custody at the time?
 
 **Then check for inconsistencies across documents.** If there are reports from multiple officers, do their accounts match? Do witness statements match the police report? Does the physical evidence (photos, video) match the written descriptions?
 
-**Lab results:** In drug cases, check the weight carefully -- does it include packaging? That can be the difference between possession and trafficking. Was the substance confirmed by a crime lab, or just field-tested? Field tests are unreliable.
+**Lab results:** In drug cases, check the weight carefully, does it include packaging? That can be the difference between possession and trafficking. Was the substance confirmed by a crime lab, or just field-tested? Field tests are unreliable.
 
 **Body camera footage** is often the most important evidence. The officer's written report and the camera footage frequently tell different stories. If your attorney hasn't obtained and reviewed dashcam/bodycam footage, that needs to happen.
 

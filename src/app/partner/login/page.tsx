@@ -1,9 +1,9 @@
 "use client";
 /**
- * /partner/login — Partner magic link login page.
+ * /partner/login, Partner magic link login page.
  *
  * Partner enters email, receives a magic link via email + SMS.
- * No password, no signup — approved partners only.
+ * No password, no signup, approved partners only.
  */
 
 import { useState, useRef, useEffect } from "react";

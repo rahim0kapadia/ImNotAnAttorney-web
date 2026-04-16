@@ -10,19 +10,19 @@
  *   /checkout/success (fallback link) -> THIS PAGE
  *
  * Query parameters:
- *   ?case=<caseId> — Required. The Supabase case ID for file association.
+ *   ?case=<caseId>, Required. The Supabase case ID for file association.
  *     If missing, shows "Missing case reference" error with link home.
- *   ?email=... — Optional. Pre-fills the email field for ownership verification.
+ *   ?email=..., Optional. Pre-fills the email field for ownership verification.
  *
  * Page structure:
- *   1. Missing case guard — Error state if ?case param is absent
- *   2. Success state — Shows file count + "analysis in progress" after finalize
+ *   1. Missing case guard, Error state if ?case param is absent
+ *   2. Success state, Shows file count + "analysis in progress" after finalize
  *   3. Upload form:
- *      a. "What to upload" guidance — Police reports, lab results, statements, etc.
- *      b. Email field — Must match checkout email (case ownership verification)
- *      c. FileUpload component — Drag-and-drop with accepted types:
+ *      a. "What to upload" guidance, Police reports, lab results, statements, etc.
+ *      b. Email field, Must match checkout email (case ownership verification)
+ *      c. FileUpload component, Drag-and-drop with accepted types:
  *         PDF, Word, images, audio, video. 50MB per file limit.
- *      d. Finalize button — Appears after files are uploaded (fileCount > 0)
+ *      d. Finalize button, Appears after files are uploaded (fileCount > 0)
  *         Calls /api/upload/finalize with caseId + email
  *         Includes confirm() dialog: "Submit X documents for analysis? This cannot be undone."
  *      e. Legal disclaimer + document security notice
@@ -44,7 +44,7 @@ import { FileUpload } from "@/components/FileUpload";
 import Link from "next/link";
 
 /**
- * UploadContent — client component handling case ID validation, file upload
+ * UploadContent, client component handling case ID validation, file upload
  * tracking, and the finalize submission flow.
  */
 function UploadContent() {
@@ -57,7 +57,7 @@ function UploadContent() {
   const [fileCount, setFileCount] = useState(0);
   const [email, setEmail] = useState(prefillEmail);
 
-  // Guard: case ID is required — without it, we can't associate uploads
+  // Guard: case ID is required, without it, we can't associate uploads
   if (!caseId) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
@@ -157,7 +157,7 @@ function UploadContent() {
           />
         </div>
 
-        {/* FINALIZE BUTTON — Only appears after at least 1 file uploaded.   */}
+        {/* FINALIZE BUTTON, Only appears after at least 1 file uploaded.   */}
         {/* Includes a confirm() dialog to prevent accidental submission.    */}
         {/* POSTs to /api/upload/finalize which verifies email ownership,   */}
         {/* updates case status, and notifies the operator.                  */}
@@ -203,7 +203,7 @@ function UploadContent() {
 
         <div className="mt-8 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
-            ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created.
+            ImNotAnAttorney provides legal information and research, not legal advice. No attorney-client relationship is created.
           </p>
           <p className="mt-2 text-xs text-zinc-400">
             Your documents are encrypted and stored securely. We use them only

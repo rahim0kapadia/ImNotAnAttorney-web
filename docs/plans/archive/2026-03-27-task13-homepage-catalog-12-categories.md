@@ -6,7 +6,7 @@
 - Problem: Catalog section currently renders 8 playbook slugs from `allPlaybookSlugs()`. We need 12 fixed charge categories with two CTA variants: playbook link ($97) or /start link ($197).
 - Key files: `src/app/page.tsx` (only file modified)
 - Tech stack: Next.js 15, Tailwind CSS
-- Classification: QUICK_FIX — 2 edits in 1 file
+- Classification: QUICK_FIX, 2 edits in 1 file
 
 ## Files to Modify
 - `src/app/page.tsx`
@@ -19,5 +19,5 @@
 ## Numbered Tasks
 1. Update `knowsAbout` in the LegalService JSON-LD schema (lines 169-178)
 2. Replace catalog section (lines 583-621): add `CHARGE_CATEGORIES` const + new grid render
-3. Run `npx next build` — fix any TypeScript/JSX errors
+3. Run `npx next build`, fix any TypeScript/JSX errors
 4. Commit

@@ -10,7 +10,7 @@ suggested_time: "Thursday 7:30 PM ET"
 target_groups: ["Know Your Rights Community Groups", "Drug Charge Support Groups", "Innocence Project Groups"]
 ---
 
-## Facebook Post: Story -- The Body Camera vs. The Report
+## Facebook Post: Story, The Body Camera vs. The Report
 
 **Type**: Text post (long-form)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -29,7 +29,7 @@ He was pulled over for a wide turn. According to the police report, the officer 
 
 His attorney read the report and said: "They had consent. Not much we can do there."
 
-But his brother -- who had been reading about defense strategies -- asked one question that changed the trajectory of the case:
+But his brother, who had been reading about defense strategies, asked one question that changed the trajectory of the case:
 
 "Is there body camera footage? And does it match the report?"
 
@@ -45,7 +45,7 @@ The motion was granted. The evidence was suppressed. The case collapsed.
 
 Three things to take from this:
 
-1. Police reports are written by the officer. Body cameras record what actually happened. When these two sources conflict -- it matters.
+1. Police reports are written by the officer. Body cameras record what actually happened. When these two sources conflict, it matters.
 
 2. Body camera footage is discoverable. Your attorney can and should request it. If they have not, ask: "Have you requested all available body camera and dashcam footage?"
 

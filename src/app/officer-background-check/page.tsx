@@ -1,9 +1,9 @@
 /**
  * Officer Background Check landing page (/officer-background-check)
  *
- * Standalone Tier 9 data product — $97, instant delivery.
+ * Standalone Tier 9 data product, $97, instant delivery.
  * Presents verified officer reliability data from Tier 9 tables.
- * Server component — AvailabilityChecker is a client island.
+ * Server component, AvailabilityChecker is a client island.
  */
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
@@ -15,13 +15,13 @@ import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Officer Background Check — ${TIER_CORE["officer-background-check"].priceDisplay} | ImNotAnAttorney`,
+    title: `Officer Background Check, ${TIER_CORE["officer-background-check"].priceDisplay} | ImNotAnAttorney`,
     description:
       "Cross-case officer reliability analysis. Has your arresting officer been discredited in other cases? Verified court records with source URLs.",
     alternates: { canonical: `${SITE_URL}/officer-background-check` },
     openGraph: {
       title:
-        "Officer Background Check — Know Your Arresting Officer's Track Record",
+        "Officer Background Check, Know Your Arresting Officer's Track Record",
       description:
         "Cross-case reliability analysis from verified court records. Every finding includes a source URL.",
       url: `${SITE_URL}/officer-background-check`,
@@ -38,7 +38,7 @@ const FEATURES = [
   "Discreditation history from other cases",
   "Testimony challenge patterns",
   "Procedural compliance track record",
-  "Employment history timeline (NPI — 3 states: AZ, CA, GA)",
+  "Employment history timeline (NPI, 3 states: AZ, CA, GA)",
   "Wandering officer detection (terminated → rehired pattern)",
   "Agency incident data from Fatal Encounters database",
   "Prior complaints and disciplinary actions from court records",

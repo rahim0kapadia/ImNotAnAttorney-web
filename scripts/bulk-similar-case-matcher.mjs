@@ -51,7 +51,7 @@ const limitIdx = args.indexOf("--limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 
 // ── Charge slug resolution ─────────────────────────────────────────────────
-// ALLOWED_CHARGE_TYPES from src/lib/charge-types.ts — values the intake form accepts.
+// ALLOWED_CHARGE_TYPES from src/lib/charge-types.ts, values the intake form accepts.
 const ALLOWED_CHARGE_TYPES = new Set([
   "drug-possession", "drug-trafficking", "dui", "dui-first", "dui-repeat",
   "assault", "domestic-violence", "theft", "sex-offense", "sex-offense-contact",
@@ -114,7 +114,7 @@ function esc(val) {
 function escJsonb(obj) {
   if (!obj) return "NULL";
   const json = JSON.stringify(obj);
-  // Only escape single quotes for SQL — JSON backslashes are already
+  // Only escape single quotes for SQL, JSON backslashes are already
   // correct from JSON.stringify. Double-escaping them corrupts the JSON
   // and causes "invalid input syntax for type json" errors.
   return "'" + json.split("'").join("''") + "'::jsonb";
@@ -446,11 +446,11 @@ async function main() {
 
     for (const row of dumpRows) {
       // Filter: must have cluster_id. All cases are valid for factual
-      // similarity matching — is_good_law only matters for legal citations,
+      // similarity matching, is_good_law only matters for legal citations,
       // not for "what happened in cases like yours" (outcomes, patterns).
       if (!row.courtlistener_cluster_id) continue;
 
-      // Deduplicate by cluster_id — a single opinion can be cited by
+      // Deduplicate by cluster_id, a single opinion can be cited by
       // multiple statutes. Keep first occurrence (preserves is_good_law
       // priority since those appear first in the dump).
       const cid = String(row.courtlistener_cluster_id);
@@ -475,7 +475,7 @@ async function main() {
     }
   } else {
     console.log(`  WARNING: Dump file not found at ${DUMP_FILE}`);
-    console.log(`  Cannot load cases — aborting.`);
+    console.log(`  Cannot load cases, aborting.`);
     return;
   }
 
@@ -603,7 +603,7 @@ ON CONFLICT (cluster_id) DO UPDATE SET
       await supabaseQuery(batch.join("\n\n"));
       applied += batch.length;
       const rate = (applied / ((Date.now() - applyStart) / 1000)).toFixed(0);
-      console.log(`  Batch ${batchNum}/${totalBatches}: ${batch.length} cases — ${rate}/sec`);
+      console.log(`  Batch ${batchNum}/${totalBatches}: ${batch.length} cases, ${rate}/sec`);
     } catch (e) {
       errors++;
       console.error(`  Batch ${batchNum}: ${e.message.slice(0, 200)}`);

@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/blog-publish — Publishes up to 3 qa-passed blog drafts per run.
+ * @file /api/cron/blog-publish, Publishes up to 3 qa-passed blog drafts per run.
  *
  * For each draft:
  *   1. Resolves slug conflicts

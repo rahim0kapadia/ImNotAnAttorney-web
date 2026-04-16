@@ -40,13 +40,13 @@ Here is what matters more than the plea: the questions you ask AFTER the arraign
 "What is our initial strategy?"
 "When will I hear from you next?"
 
-That last one -- set the communication expectation now. Not after two months of silence.
+That last one, set the communication expectation now. Not after two months of silence.
 
 (This is information, not legal advice. Court procedures vary by state.)
 
 ### Visual Direction
 
-Colored text background -- dark green. The "it does NOT mean..." opening is the hook that corrects a near-universal misconception. No image.
+Colored text background, dark green. The "it does NOT mean..." opening is the hook that corrects a near-universal misconception. No image.
 
 ### Link Strategy
 
@@ -58,7 +58,7 @@ This post will surface two groups: people with upcoming arraignments who are ter
 
 ### UPL Compliance Note
 
-This post explains a universally standard legal procedure. It does not advise anyone to plead a specific way. If someone asks "should I plead not guilty?" respond with: "Your attorney will recommend the appropriate plea based on your situation. In the overwhelming majority of cases, 'not guilty' at arraignment is standard procedure -- but that's a conversation for you and your attorney."
+This post explains a universally standard legal procedure. It does not advise anyone to plead a specific way. If someone asks "should I plead not guilty?" respond with: "Your attorney will recommend the appropriate plea based on your situation. In the overwhelming majority of cases, 'not guilty' at arraignment is standard procedure, but that's a conversation for you and your attorney."
 
 ---
 

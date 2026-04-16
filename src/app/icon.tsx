@@ -1,5 +1,5 @@
 /**
- * icon.tsx — Dynamic favicon for browser tabs.
+ * icon.tsx, Dynamic favicon for browser tabs.
  *
  * Generates a 32x32 PNG with the INAA brand mark:
  * Amber "I" on dark background with rounded corners.

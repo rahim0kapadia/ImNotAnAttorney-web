@@ -1,5 +1,5 @@
 /**
- * BlogInlineCapture — Inline content card for blog posts.
+ * BlogInlineCapture, Inline content card for blog posts.
  *
  * Previously an email-gated lead capture form. Now shows category-specific
  * checklist info directly (ungated) with a /score CTA link.
@@ -15,7 +15,7 @@ const CHECKLIST_BY_CATEGORY: Record<string, { title: string; hook: string }> = {
   },
   "drug-cases": {
     title: "Drug Case Discovery Checklist",
-    hook: "7 evidence problems real drug cases hide — and the questions that expose them.",
+    hook: "7 evidence problems real drug cases hide, and the questions that expose them.",
   },
   "white-collar": {
     title: "Federal Case Checklist",
@@ -44,7 +44,7 @@ export function BlogInlineCapture({ category = "general-defense", slug }: BlogIn
           href={slug ? `/score?ref=blog-${slug}` : "/score"}
           className="inline-block rounded-md bg-amber-500 px-4 py-2 text-xs font-semibold text-black transition-all hover:scale-[1.01] focus-visible:scale-[1.01] hover:bg-amber-400"
         >
-          Take the Defense Milestone Score — Free
+          Take the Defense Milestone Score, Free
         </Link>
       </div>
       <p className="mt-2 text-xs text-zinc-400">

@@ -9,7 +9,7 @@
 **File:** `supabase/migrations/20260407_case-law-verification-columns.sql`
 
 Added to `statute_case_law`:
-- `party_side text` (DEFENSE/PROSECUTION/NEUTRAL/UNKNOWN — CHECK constraint)
+- `party_side text` (DEFENSE/PROSECUTION/NEUTRAL/UNKNOWN, CHECK constraint)
 - `outcome text`
 - `holding_excerpt text`
 - `key_quote text`
@@ -17,13 +17,13 @@ Added to `statute_case_law`:
 - `is_binding boolean DEFAULT false`
 - `negative_treatment text`
 - `negative_treatment_checked_at timestamptz`
-- `validation_level text` (VALID_STRONG/MODERATE/WEAK/REVIEW/INVALID/NOT_IN_DB — CHECK constraint)
+- `validation_level text` (VALID_STRONG/MODERATE/WEAK/REVIEW/INVALID/NOT_IN_DB, CHECK constraint)
 
-Made `is_good_law` nullable (was DEFAULT true NOT NULL — falsely claimed verification).
+Made `is_good_law` nullable (was DEFAULT true NOT NULL, falsely claimed verification).
 Reset all unverified rows to `is_good_law = NULL`.
 Added 5 indexes.
 
-**Why critical:** Before this migration, `classify-case-law.mjs` was writing to columns that didn't exist on `statute_case_law` — every UPDATE silently no-op'd. The classifier has been broken since migration 030 shipped.
+**Why critical:** Before this migration, `classify-case-law.mjs` was writing to columns that didn't exist on `statute_case_law`, every UPDATE silently no-op'd. The classifier has been broken since migration 030 shipped.
 
 ### 2. Negative Treatment Verification (REAL good law check)
 **File:** `scripts/classify-case-law.mjs`
@@ -53,7 +53,7 @@ Removed lie: "All citations are automatically verified against CourtListener's l
 
 Replaced with truth: "There is NO automated post-generation citation verification at runtime. You are the only safety check."
 
-**Why:** The model was relying on the promised safety net to relax its own anti-hallucination guards. Same lie was in `docs/ARCHITECTURE.md:269-278` — also fixed.
+**Why:** The model was relying on the promised safety net to relax its own anti-hallucination guards. Same lie was in `docs/ARCHITECTURE.md:269-278`, also fixed.
 
 ### 5. Legal-research-all.mjs Hardening
 **File:** `scripts/legal-research-all.mjs`
@@ -61,8 +61,8 @@ Replaced with truth: "There is NO automated post-generation citation verificatio
 `storeCaseLaw()` now inserts with `is_good_law = NULL` explicitly. Forces every newly-found case to go through the verification pipeline before any code can cite it.
 
 ### 6. Idaho + South Carolina Statute Files
-- `data/charge-taxonomy/ID.json` — 155 charges, real Idaho Code citations
-- `data/charge-taxonomy/SC.json` — 158 charges, real SC Code citations
+- `data/charge-taxonomy/ID.json`, 155 charges, real Idaho Code citations
+- `data/charge-taxonomy/SC.json`, 158 charges, real SC Code citations
 
 **ALL 52 jurisdictions now have statute data.** Total 4,699 statutes.
 
@@ -75,22 +75,22 @@ Replaced with truth: "There is NO automated post-generation citation verificatio
 **File:** `scripts/generate-case-law-enrichment.ts`
 
 - Removed all case law generation code
-- `--case-law` mode now redirects to verified pipeline (`legal-research-all.mjs` + `classify-case-law.mjs`)
+- `, case-law` mode now redirects to verified pipeline (`legal-research-all.mjs` + `classify-case-law.mjs`)
 - `buildMigration()` no longer inserts case law from local files
-- `--stats` warns if case-law/ dir is non-empty (should always be empty)
+- `, stats` warns if case-law/ dir is non-empty (should always be empty)
 
 ## Hallucinated Files Cleaned Up
 
 Wave-1 enrichment agents (dispatched before the safety rule) wrote case law files:
-- batch-6 wrote 1,053 fabricated case entries for MA/MI/MN/MS — DELETED
-- batch-6 created `scripts/generate-enrichment-caselaw.mjs` (fabrication generator) — DELETED
+- batch-6 wrote 1,053 fabricated case entries for MA/MI/MN/MS, DELETED
+- batch-6 created `scripts/generate-enrichment-caselaw.mjs` (fabrication generator), DELETED
 - A 1-hour watcher (`bew5i0455`) is running, deleting any case-law/*.json or fabrication script as it appears
 
 ## Current State
 
 **Statute data:** 52/52 jurisdictions, 4,699 statutes total
 **Enrichment data:** 23/52 jurisdictions complete, 2,042 entries (in flight)
-**Case law data:** 0 (correct — only populated via verified CourtListener pipeline)
+**Case law data:** 0 (correct, only populated via verified CourtListener pipeline)
 
 ### Enrichment files complete (23):
 CA, CO, FL, KY, LA, MA, MI, MN, MO, MS, NC, NH, NJ, OH, OR, PA, SD, TN, VA, VT, WA, WI, WY
@@ -106,26 +106,26 @@ The API-based verification scripts work but are slow (6-12 hours) and hit rate l
 
 ### Bulk Download + Local Verification (build this FIRST)
 
-1. **Dump DB once** — one Supabase query exports all ~16,000+ `statute_case_law` citations to local JSON
-2. **Download CAP volumes we need** — parse our citations, identify the ~30-40 reporter volumes (so3d, a2d, ne2d, p3d, etc.), download zips from `https://static.case.law/<reporter>/<vol>.zip` (~2-5GB total)
-3. **Download CourtListener bulk opinions** — monthly dump from `https://www.courtlistener.com/api/bulk-data/` filtered by our jurisdictions
-4. **Verify locally** — match each DB citation against local CAP + CourtListener files. Zero API calls. Finishes in minutes.
-5. **Build one SQL file** — all UPDATEs for source_urls[], confidence_score, is_good_law
-6. **Apply in batches** — same pattern as enrichment migration (batches of 100 via `apply-enrichment-batches.mjs`)
+1. **Dump DB once**, one Supabase query exports all ~16,000+ `statute_case_law` citations to local JSON
+2. **Download CAP volumes we need**, parse our citations, identify the ~30-40 reporter volumes (so3d, a2d, ne2d, p3d, etc.), download zips from `https://static.case.law/<reporter>/<vol>.zip` (~2-5GB total)
+3. **Download CourtListener bulk opinions**, monthly dump from `https://www.courtlistener.com/api/bulk-data/` filtered by our jurisdictions
+4. **Verify locally**, match each DB citation against local CAP + CourtListener files. Zero API calls. Finishes in minutes.
+5. **Build one SQL file**, all UPDATEs for source_urls[], confidence_score, is_good_law
+6. **Apply in batches**, same pattern as enrichment migration (batches of 100 via `apply-enrichment-batches.mjs`)
 
 **Time: ~30 min download + ~5 min local processing + ~5 min DB upload vs 6-12 hours of API calls.**
 
 ### CAP Static File Structure (discovered this session)
-- `https://static.case.law/<reporter>/<volume>/CasesMetadata.json` — every case in that volume
+- `https://static.case.law/<reporter>/<volume>/CasesMetadata.json`, every case in that volume
 - Each case has: `name`, `name_abbreviation`, `citations[].cite`, `court`, `jurisdiction`, `decision_date`, `cites_to[]`
 - Tested and confirmed working. Example: `https://static.case.law/so3d/100/CasesMetadata.json` has 477 Florida cases.
 
 ### API Scripts (keep as FALLBACK for fresh cases not in bulk data)
-- `scripts/verify-via-cap.mjs` — verified working, tested 10 cases (5 confirmed)
-- `scripts/verify-via-cornell-scotus.mjs` — verified working, 4/25 SCOTUS cases confirmed (Cornell doesn't have post-2019 volumes)
-- `scripts/verify-via-courtlistener-citation.mjs` — built, not yet tested (shares CourtListener rate limit)
-- `scripts/add-reference-urls.mjs` — builds Justia/Google Scholar/FindLaw/CourtListener search URLs (no HTTP)
-- `scripts/verify-statutes-openstates.mjs` — needs free API key from openstates.org
+- `scripts/verify-via-cap.mjs`, verified working, tested 10 cases (5 confirmed)
+- `scripts/verify-via-cornell-scotus.mjs`, verified working, 4/25 SCOTUS cases confirmed (Cornell doesn't have post-2019 volumes)
+- `scripts/verify-via-courtlistener-citation.mjs`, built, not yet tested (shares CourtListener rate limit)
+- `scripts/add-reference-urls.mjs`, builds Justia/Google Scholar/FindLaw/CourtListener search URLs (no HTTP)
+- `scripts/verify-statutes-openstates.mjs`, needs free API key from openstates.org
 
 ### Supabase Rate Limit Discovery
 Running 3+ scripts simultaneously causes Supabase Management API 429 errors. The scripts all share `api.supabase.com` as their DB gateway. Limit concurrent scripts to 2, or better: dump locally + batch upload.
@@ -145,7 +145,7 @@ If less than 52, wave-2 agents may still be running. If they've stalled, dispatc
 ### Step 2: Build the enrichment migration
 ```bash
 cd C:/Users/email/projects/ImNotAnAttorney-web
-npx tsx scripts/generate-case-law-enrichment.ts --build-migration
+npx tsx scripts/generate-case-law-enrichment.ts,build-migration
 ```
 
 This generates a migration adding 3 columns to `jurisdiction_statutes` (`prosecution_strengths text[]`, `defense_opportunities text[]`, `common_defenses text[]`) and ~4,680 UPDATE statements.
@@ -157,7 +157,7 @@ node scripts/apply-pending-sql.mjs supabase/migrations/<new-file>.sql
 
 ### Step 4: Load taxonomy data into Supabase
 ```bash
-node scripts/load-jurisdiction-data.mjs --all
+node scripts/load-jurisdiction-data.mjs,all
 ```
 
 This loads any missing `jurisdiction_statutes` rows from the JSON files. The enrichment columns will be populated by the migration in Step 3.
@@ -178,14 +178,14 @@ node scripts/classify-case-law.mjs
 
 For each case, fetches opinion text + checks citing opinions for negative treatment. Updates `is_good_law` to true/false based on real verification. Updates `party_side`, `outcome`, `holding_excerpt`, etc.
 
-Estimated: ~23,000 cases × ~3 API calls each (cluster fetch + 1 opinion + N citing checks) at 750ms delay = several hours. Run in batches with `--limit 500`.
+Estimated: ~23,000 cases × ~3 API calls each (cluster fetch + 1 opinion + N citing checks) at 750ms delay = several hours. Run in batches with `, limit 500`.
 
 ## Outstanding Work (Future Sessions)
 
 ### Phantom tables (from audit-schema-gaps.md)
 4 case-law tables are referenced in code, only 2 have CREATE TABLE migrations:
-- `verified_case_law` — engine writes, no migration → silent failures
-- `case_law` — second flavor, no migration → silent failures
+- `verified_case_law`, engine writes, no migration → silent failures
+- `case_law`, second flavor, no migration → silent failures
 
 **Next migration needed:** Create `verified_case_law` table per engine's expectations + add 21+ missing columns to `case_law_references`.
 

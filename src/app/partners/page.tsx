@@ -1,7 +1,7 @@
 /**
- * /partners — Public Partner Signup Page (Generic)
+ * /partners, Public Partner Signup Page (Generic)
  *
- * Landing page for all partner types — bondsmen, paralegals, content creators,
+ * Landing page for all partner types, bondsmen, paralegals, content creators,
  * community advocates, anyone. Commission table derived from TIER_CORE.
  */
 
@@ -57,11 +57,11 @@ export default function PartnersPage() {
             <span className="text-amber-400">Defendant Uses Your Code</span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-4">
-            Your referrals get free court prep — date reminders and hearing guidance.
+            Your referrals get free court prep, date reminders and hearing guidance.
             You earn up to 20% on every product they purchase. No selling required.
           </p>
           <p className="text-sm text-zinc-500 mb-8">
-            Bondsmen, paralegals, content creators, advocates — anyone can partner.
+            Bondsmen, paralegals, content creators, advocates, anyone can partner.
           </p>
           <a
             href="#apply"
@@ -120,7 +120,7 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      {/* Data Depth — Trust Signal */}
+      {/* Data Depth, Trust Signal */}
       <section className="py-16">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <FadeInUp>
@@ -156,7 +156,7 @@ export default function PartnersPage() {
         <div className="mx-auto max-w-4xl px-4 text-center">
           <FadeInUp>
             <h2 className="font-display text-3xl font-bold mb-4">Your Partner Toolkit</h2>
-            <p className="text-zinc-400 mb-12">Everything you need to start earning — no selling required</p>
+            <p className="text-zinc-400 mb-12">Everything you need to start earning, no selling required</p>
           </FadeInUp>
           <StaggerContainer className="grid md:grid-cols-3 gap-6">
             {[
@@ -199,7 +199,7 @@ export default function PartnersPage() {
               Apply Now
             </h2>
             <p className="text-center text-zinc-400 mb-8">
-              Takes 60 seconds. Instant approval — check your email.
+              Takes 60 seconds. Instant approval, check your email.
             </p>
           </FadeInUp>
           <PartnerApplicationForm source="generic" />

@@ -13,13 +13,13 @@ describe("interpolateScoreVars", () => {
   const baseEmail: DripEmail = {
     key: "test",
     delayDays: 1,
-    subject: "Your case scored {{SCORE}}/100 — {{CHARGE_LABEL}} defense",
+    subject: "Your case scored {{SCORE}}/100, {{CHARGE_LABEL}} defense",
     html: "<p>Score: {{SCORE}}. Charge: {{CHARGE_LABEL}}.</p>",
   };
 
   it("replaces {{SCORE}} and {{CHARGE_LABEL}} with provided values", () => {
     const result = interpolateScoreVars(baseEmail, 42, "dui");
-    expect(result.subject).toBe("Your case scored 42/100 — DUI/DWI defense");
+    expect(result.subject).toBe("Your case scored 42/100, DUI/DWI defense");
     expect(result.html).toContain("Score: 42.");
     expect(result.html).toContain("Charge: DUI/DWI.");
   });
@@ -39,7 +39,7 @@ describe("interpolateScoreVars", () => {
   it("uses fallbacks for both null values", () => {
     const result = interpolateScoreVars(baseEmail, null, null);
     expect(result.subject).toBe(
-      "Your case scored your score/100 — criminal defense"
+      "Your case scored your score/100, criminal defense"
     );
   });
 

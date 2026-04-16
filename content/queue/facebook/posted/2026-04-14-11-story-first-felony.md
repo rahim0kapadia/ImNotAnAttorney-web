@@ -11,7 +11,7 @@ suggested_time: "Saturday 8:00 PM ET"
 target_groups: ["Second Chance Groups", "Wrongfully Accused Groups", "Know Your Rights Community Groups"]
 ---
 
-## Facebook Post: Story — First Felony
+## Facebook Post: Story, First Felony
 
 **Type**: Text post (long-form)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -32,7 +32,7 @@ They found a small amount in the center console. Not hers. But it was her car. T
 
 She had never been arrested before. She had never been inside a courtroom. She Googled her charges that night and read sentences measured in years. She couldn't eat. She couldn't sleep. She kept looking at her kids and thinking: what happens to them?
 
-Her court-appointed attorney met her for the first time at arraignment. In the hallway. For four minutes. He told her to plead not guilty — standard — and that he would be in touch.
+Her court-appointed attorney met her for the first time at arraignment. In the hallway. For four minutes. He told her to plead not guilty, standard, and that he would be in touch.
 
 He wasn't. Not for six weeks.
 
@@ -46,7 +46,7 @@ She wrote an email to her attorney with five direct questions: Have you received
 
 He called her back the next day. First time in weeks.
 
-When they met, she brought her list. He seemed surprised that she knew what to ask. They actually talked about her case — for real, for the first time.
+When they met, she brought her list. He seemed surprised that she knew what to ask. They actually talked about her case, for real, for the first time.
 
 Turns out the field test on the substance was never confirmed by a lab test. The officer's report had inconsistencies about the timeline of the stop. Her attorney filed a motion to suppress. The charges were eventually reduced to a misdemeanor. She completed a diversion program. Her record was cleared.
 

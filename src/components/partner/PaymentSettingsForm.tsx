@@ -1,6 +1,6 @@
 "use client";
 /**
- * Partner Payment Settings form — Zelle, Venmo, PayPal, Check.
+ * Partner Payment Settings form, Zelle, Venmo, PayPal, Check.
  * Extracted from dashboard page. Manages its own form state.
  */
 

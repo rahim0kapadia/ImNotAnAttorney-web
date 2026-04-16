@@ -1,4 +1,4 @@
-# Flow: Score Quiz Abandonment — Email 2 of 3
+# Flow: Score Quiz Abandonment, Email 2 of 3
 
 **Trigger:** Email 1 sent, user still hasn't completed the quiz or purchased
 **Timing:** 24 hours after Email 1 (26 hours after abandonment)
@@ -14,7 +14,7 @@ We looked at hundreds of scores. One pattern keeps showing up.
 
 ## Email Body
 
-<!--
+<!, 
   Flow: Score Quiz Abandonment
   Position: Email 2 of 3
   Trigger: Email 1 sent, no quiz completion or purchase
@@ -26,7 +26,7 @@ We looked at hundreds of scores. One pattern keeps showing up.
   Subject line B: 73% of defendants who score below 50 have this in common
   Subject line C: Your attorney filed zero motions. Would you even know?
   Preview text: We looked at hundreds of scores. One pattern keeps showing up.
--->
+, >
 
 <h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">Here's What We Keep Seeing.</h1>
 
@@ -34,7 +34,7 @@ We looked at hundreds of scores. One pattern keeps showing up.
 
 <p><strong style="color: white;">Most defendants don't know whether their attorney has filed any motions.</strong></p>
 
-<p>Not "they're not sure what kind of motions." They don't know if <em>any</em> motions have been filed at all. Suppression motions. Motions to compel discovery. Motions to dismiss. The single most powerful tool in criminal defense — and most defendants can't tell you whether it's been used.</p>
+<p>Not "they're not sure what kind of motions." They don't know if <em>any</em> motions have been filed at all. Suppression motions. Motions to compel discovery. Motions to dismiss. The single most powerful tool in criminal defense, and most defendants can't tell you whether it's been used.</p>
 
 <p>That's not their fault. Nobody explains this stuff.</p>
 
@@ -46,16 +46,16 @@ We looked at hundreds of scores. One pattern keeps showing up.
   <p style="margin: 8px 0 0; font-size: 13px; color: #A1A1AA;">You don't need to buy anything to ask this. Send it in an email to your attorney today.</p>
 </div>
 
-<p>The Defense Milestone Score checks for this — and 9 other benchmarks that tell you whether your defense is on track. 60 seconds. No email required.</p>
+<p>The Defense Milestone Score checks for this, and 9 other benchmarks that tell you whether your defense is on track. 60 seconds. No email required.</p>
 
-<a href="https://imnotanattorney.com/score" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Take the Score — See Where You Stand</a>
+<a href="https://imnotanattorney.com/score" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 15px;">Take the Score, See Where You Stand</a>
 
 <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
-  <strong style="color: white;">P.S.</strong> We gave you a free question in this email. Use it. If your attorney can't answer it clearly, that tells you something. And if you want to know what else they should be doing — that's what the score is for. <a href="https://imnotanattorney.com/score" style="color: #F59E0B; text-decoration: underline;">60 seconds, no sign-up</a>.
+  <strong style="color: white;">P.S.</strong> We gave you a free question in this email. Use it. If your attorney can't answer it clearly, that tells you something. And if you want to know what else they should be doing, that's what the score is for. <a href="https://imnotanattorney.com/score" style="color: #F59E0B; text-decoration: underline;">60 seconds, no sign-up</a>.
 </p>
 
 ## CTA Button
-**Text:** Take the Score — See Where You Stand
+**Text:** Take the Score, See Where You Stand
 **URL:** https://imnotanattorney.com/score
 
 ## Segmentation Notes

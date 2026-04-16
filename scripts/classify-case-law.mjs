@@ -1,5 +1,5 @@
 /**
- * Case Law Classifier — Defense vs Prosecution
+ * Case Law Classifier, Defense vs Prosecution
  *
  * Aligns with INAA source-of-truth schema (case_law_references + verified_case_law).
  * Uses CASE persona framework: "Can you USE this case in THIS motion?"
@@ -120,7 +120,7 @@ function clFetch(urlPath) {
 }
 
 /**
- * Strip HTML tags using split/join — no regex on content.
+ * Strip HTML tags using split/join, no regex on content.
  * Splits on '<', takes text after '>' from each chunk.
  */
 function stripHtml(html) {
@@ -139,7 +139,7 @@ function stripHtml(html) {
   return textParts.join("").trim();
 }
 
-// ── Classification Engine (string .includes() only — no regex) ──────────
+// ── Classification Engine (string .includes() only, no regex) ──────────
 
 const DEFENSE_SIGNALS = [
   "reversed", "vacated", "quashed", "remanded",
@@ -185,7 +185,7 @@ function classifyOpinion(plainText, court) {
     if (lower.includes(signal)) prosecutionScore++;
   }
 
-  // Extract outcome — find conclusion sentence using .includes()
+  // Extract outcome, find conclusion sentence using .includes()
   let outcome = "";
   const sentences = plainText.split(".");
   for (let i = sentences.length - 1; i >= Math.max(0, sentences.length - 30); i--) {
@@ -201,7 +201,7 @@ function classifyOpinion(plainText, court) {
     }
   }
 
-  // Extract key quote — first sentence with "we hold" or "we conclude"
+  // Extract key quote, first sentence with "we hold" or "we conclude"
   let keyQuote = "";
   for (let i = 0; i < sentences.length; i++) {
     const sLower = sentences[i].toLowerCase().trim();
@@ -212,7 +212,7 @@ function classifyOpinion(plainText, court) {
     }
   }
 
-  // Extract holding excerpt — first substantive paragraph (>150 chars, not header)
+  // Extract holding excerpt, first substantive paragraph (>150 chars, not header)
   let holdingExcerpt = "";
   const paragraphs = plainText.split("\n");
   for (const p of paragraphs) {
@@ -230,7 +230,7 @@ function classifyOpinion(plainText, court) {
   } else if (prosecutionScore > 0 && defenseScore === 0) {
     partySide = "PROSECUTION";
   } else if (defenseScore > 0 && prosecutionScore > 0) {
-    // Mixed — check conclusion
+    // Mixed, check conclusion
     const outLower = outcome.toLowerCase();
     if (outLower.includes("reverse") || outLower.includes("vacate") ||
         outLower.includes("quash") || outLower.includes("remand")) {
@@ -252,14 +252,14 @@ function classifyOpinion(plainText, court) {
     }
   }
 
-  // Application text — how this case can be used (matches case_law_references.application)
+  // Application text, how this case can be used (matches case_law_references.application)
   let application = "";
   if (partySide === "DEFENSE") {
     application = "Defense-favorable: " + (outcome || "trial court ruling reversed/vacated");
   } else if (partySide === "PROSECUTION") {
     application = "Prosecution-favorable: " + (outcome || "conviction/ruling affirmed");
   } else if (partySide === "NEUTRAL") {
-    application = "Mixed signals — review holding for specific applicability";
+    application = "Mixed signals, review holding for specific applicability";
   }
 
   return { partySide, outcome, holdingExcerpt, keyQuote, isBinding, application };
@@ -273,7 +273,7 @@ function classifyFromName(caseName) {
     return {
       partySide: "NEUTRAL", outcome: "Procedural/administrative",
       holdingExcerpt: "", keyQuote: "", isBinding: false,
-      application: "Procedural — not directly applicable to defense or prosecution arguments",
+      application: "Procedural, not directly applicable to defense or prosecution arguments",
     };
   }
   return {
@@ -311,9 +311,9 @@ const NEGATIVE_TREATMENT_SIGNALS = [
  * Returns { isGoodLaw, treatment, citingClusterId, checkedUrls }.
  *
  * isGoodLaw values:
- *   true  — checked, no negative treatment found
- *   false — checked, negative treatment found
- *   null  — could not check (no citing opinions or API error)
+ *   true , checked, no negative treatment found
+ *   false, checked, negative treatment found
+ *   null , could not check (no citing opinions or API error)
  *
  * checkedUrls: every CourtListener URL that was fetched during verification.
  * Per hard rule: no verification URL = unverified = does not exist in the system.
@@ -335,7 +335,7 @@ async function checkNegativeTreatment(clusterId) {
     const citingOps = result.results || [];
 
     if (citingOps.length === 0) {
-      // No citing opinions found — cannot verify negative treatment
+      // No citing opinions found, cannot verify negative treatment
       return { isGoodLaw: null, treatment: null, citingClusterId: null, checkedUrls };
     }
 
@@ -351,7 +351,7 @@ async function checkNegativeTreatment(clusterId) {
         const opUrls = cluster.sub_opinions || [];
         if (opUrls.length === 0) continue;
 
-        // Select majority/lead opinion — avoid citing dissents
+        // Select majority/lead opinion, avoid citing dissents
         let opPath;
         if (opUrls.length === 1) {
           opPath = opUrls[0].replace("https://www.courtlistener.com", "");
@@ -434,7 +434,7 @@ async function main() {
         const opUrls = cluster.sub_opinions || [];
 
         if (opUrls.length > 0) {
-          // Step 2: Fetch opinion text — select majority/lead opinion, avoid citing dissents
+          // Step 2: Fetch opinion text, select majority/lead opinion, avoid citing dissents
           let opPath;
           if (opUrls.length === 1) {
             opPath = opUrls[0].replace("https://www.courtlistener.com", "");
@@ -466,7 +466,7 @@ async function main() {
 
         await sleep(CL_DELAY_MS);
 
-        // Step 3: Good Law Verification — check negative treatment via citing opinions
+        // Step 3: Good Law Verification, check negative treatment via citing opinions
         // Per CASE persona: every cited case must be verified not overruled
         process.stdout.write(" [checking good law...]");
         goodLawResult = await checkNegativeTreatment(clId);
@@ -506,7 +506,7 @@ async function main() {
               ? "true"
               : "false";
 
-        // Build verification URLs array — merge existing source_urls with
+        // Build verification URLs array, merge existing source_urls with
         // all URLs checked during classification + negative treatment verification.
         // Per hard rule: no verification URL = unverified = does not exist.
         const verificationUrls = [];

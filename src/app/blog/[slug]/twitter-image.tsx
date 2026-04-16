@@ -5,7 +5,7 @@
 import { ImageResponse } from "next/og";
 import { getPostBySlug } from "@/lib/blog";
 
-export const alt = "ImNotAnAttorney — Criminal Defense Research Blog";
+export const alt = "ImNotAnAttorney, Criminal Defense Research Blog";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

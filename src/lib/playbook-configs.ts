@@ -1,5 +1,5 @@
 /**
- * Playbook sales page configurations — one per charge type.
+ * Playbook sales page configurations, one per charge type.
  *
  * Each config contains ALL charge-specific copy for the PlaybookSalesPage component.
  * Pricing and tier data comes from tiers.ts (single source of truth).
@@ -13,7 +13,7 @@
 import type { TierSlug } from "./tiers";
 
 export interface PlaybookConfig {
-  /** Tier slug — must match tiers.ts key */
+  /** Tier slug, must match tiers.ts key */
   slug: TierSlug;
 
   /** SEO title (browser tab) */
@@ -28,13 +28,13 @@ export interface PlaybookConfig {
     coverImage?: string;
     /** Eyebrow text above headline */
     eyebrow: string;
-    /** Main headline — bold, attention-grabbing */
+    /** Main headline, bold, attention-grabbing */
     headline: string;
-    /** Subheadline — what's included */
+    /** Subheadline, what's included */
     subheadline: string;
   };
 
-  /** Agitate section — pain points */
+  /** Agitate section, pain points */
   agitate: {
     /** Section headline */
     headline: string;
@@ -44,13 +44,13 @@ export interface PlaybookConfig {
     cards: Array<{ title: string; text: string }>;
   };
 
-  /** Proof section — methodology cards */
+  /** Proof section, methodology cards */
   proof: {
     headline: string;
     methods: Array<{ name: string; title: string; insight: string }>;
   };
 
-  /** Value stack — what's inside */
+  /** Value stack, what's inside */
   valueStack: {
     sections: Array<{ title: string; desc: string; value: string }>;
     /** Total strikethrough value (e.g., "$785") */
@@ -69,7 +69,7 @@ export interface PlaybookConfig {
     notForYou: string[];
   };
 
-  /** Methodology disclosure — charge-specific wording */
+  /** Methodology disclosure, charge-specific wording */
   methodologyText: string;
 
   /** Urgency deadlines */
@@ -81,7 +81,7 @@ export interface PlaybookConfig {
   /** FAQ items */
   faq: Array<{ q: string; a: string }>;
 
-  /** Final CTA — comparison line (e.g., "A 30-minute attorney consultation costs $150-$250.") */
+  /** Final CTA, comparison line (e.g., "A 30-minute attorney consultation costs $150-$250.") */
   comparisonLine: string;
 
   /** Summary line for final CTA (e.g., "Two books, instant download. 26 questions. 12 red flags.") */
@@ -622,13 +622,13 @@ const WHITE_COLLAR: PlaybookConfig = {
         name: "Exhaustive Case Analysis",
         title: "Foundation of every defense strategy",
         insight:
-          "A thorough approach that challenges evidence, legal theories, and procedural issues from day one — across every front at once.",
+          "A thorough approach that challenges evidence, legal theories, and procedural issues from day one, across every front at once.",
       },
       {
         name: "Asset Forfeiture Defense",
         title: "Protecting what the government wants to seize",
         insight:
-          "Proven forfeiture defense methods — innocent owner claims, challenges to excessive seizures, asset tracing disputes, and procedural protections under federal law.",
+          "Proven forfeiture defense methods, innocent owner claims, challenges to excessive seizures, asset tracing disputes, and procedural protections under federal law.",
       },
       {
         name: "Cross-Examination Methodology",
@@ -799,7 +799,7 @@ const SEX_OFFENSE: PlaybookConfig = {
         name: "Full Consequence Mapping",
         title: "Beyond the courtroom sentence",
         insight:
-          "Registration length, where you can live, employment limits, custody impact, immigration consequences, travel restrictions, and involuntary commitment risk — every consequence mapped before any plea decision.",
+          "Registration length, where you can live, employment limits, custody impact, immigration consequences, travel restrictions, and involuntary commitment risk, every consequence mapped before any plea decision.",
       },
     ],
   },
@@ -952,7 +952,7 @@ const FEDERAL_CRIMINAL: PlaybookConfig = {
         name: "Sentencing Guidelines Analysis",
         title: "Foundation of the outcome assessment section",
         insight:
-          "Independent sentencing guideline calculation — challenging offense severity scores, conduct scope, and criminal history points. Sentencing forecasts built from 1.6 million federal case outcomes.",
+          "Independent sentencing guideline calculation, challenging offense severity scores, conduct scope, and criminal history points. Sentencing forecasts built from 1.6 million federal case outcomes.",
       },
       {
         name: "Government Evidence Verification",
@@ -964,7 +964,7 @@ const FEDERAL_CRIMINAL: PlaybookConfig = {
         name: "Federal Consequence Mapping",
         title: "Beyond the prison sentence",
         insight:
-          "Prison facility assignment, drug treatment program eligibility, early release credits, supervised release, restitution, asset seizure, immigration impact, and professional license effects — every consequence mapped before any plea decision.",
+          "Prison facility assignment, drug treatment program eligibility, early release credits, supervised release, restitution, asset seizure, immigration impact, and professional license effects, every consequence mapped before any plea decision.",
       },
     ],
   },
@@ -1411,7 +1411,7 @@ const SELF_DEFENSE: PlaybookConfig = {
 };
 
 // ---------------------------------------------------------------------------
-// Registry — add new configs here
+// Registry, add new configs here
 // ---------------------------------------------------------------------------
 
 const PLAYBOOK_CONFIGS: Record<string, PlaybookConfig> = {

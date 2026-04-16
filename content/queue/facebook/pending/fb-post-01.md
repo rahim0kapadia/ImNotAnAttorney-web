@@ -39,7 +39,7 @@ What's yours?
 
 ### Visual Direction
 
-Colored text background -- deep navy or dark blue-black. The question format with a personal-feeling opening creates the illusion of a conversation, not a brand post. No image needed. The colored background forces brevity and visual standout in the feed.
+Colored text background, deep navy or dark blue-black. The question format with a personal-feeling opening creates the illusion of a conversation, not a brand post. No image needed. The colored background forces brevity and visual standout in the feed.
 
 ### Link Strategy
 
@@ -47,7 +47,7 @@ No link. Pure engagement post. The goal is generating a long comment thread of p
 
 ### Engagement Strategy
 
-Reply to every comment with genuine acknowledgment: "That's a huge one" or "I hear that -- nobody talks about that part." Ask follow-up questions to keep threads going. Do NOT redirect to products. Let the thread build organically. The algorithm rewards posts with multi-comment threads.
+Reply to every comment with genuine acknowledgment: "That's a huge one" or "I hear that, nobody talks about that part." Ask follow-up questions to keep threads going. Do NOT redirect to products. Let the thread build organically. The algorithm rewards posts with multi-comment threads.
 
 ### UPL Compliance Note
 
@@ -57,4 +57,4 @@ This post asks for personal reflections, not legal questions. If someone turns t
 
 **Share trigger**: Someone who has been through the system reads this thread and sends it to a friend or family member who has a court date coming up: "Read the comments on this. Especially the one about [specific comment]."
 **Context**: First court dates are pure terror for people who have never been in the system. This post normalizes the experience and creates a community knowledge base in the comments.
-**KPI target**: Comments (primary -- aim for 50+ personal stories) + Messenger shares of the post to people with upcoming court dates
+**KPI target**: Comments (primary, aim for 50+ personal stories) + Messenger shares of the post to people with upcoming court dates

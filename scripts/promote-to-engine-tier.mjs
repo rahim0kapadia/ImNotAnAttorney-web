@@ -1,5 +1,5 @@
 /**
- * Promote to Engine Tier — Copy statute_case_law → case_law + case_law_references
+ * Promote to Engine Tier, Copy statute_case_law → case_law + case_law_references
  *
  * Copies verified good-law cases from web-tier statute_case_law into engine-tier
  * tables (case_law, case_law_references, verified_case_law) for X-Ray+ tiers.
@@ -187,7 +187,7 @@ async function main() {
 
     caseInserts.push({
       id: row.id, // Reuse statute_case_law ID as case_law ID for FK stability
-      case_id: null, // No case_id — this is a reference case, not tied to a specific case
+      case_id: null, // No case_id, this is a reference case, not tied to a specific case
       case_name: row.case_name,
       citation: row.citation,
       court: row.court,

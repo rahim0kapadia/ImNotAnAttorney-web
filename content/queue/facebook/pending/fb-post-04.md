@@ -5,7 +5,7 @@ project: inna
 status: pending
 created: 2026-03-13T10:00:00-04:00
 agent: social-facebook-engine
-title: "Question #4: Family Members -- What Is the Hardest Part of Supporting Someone Through a Criminal Case?"
+title: "Question #4: Family Members, What Is the Hardest Part of Supporting Someone Through a Criminal Case?"
 suggested_time: "Sunday 6:00 PM ET"
 target_groups: ["Strong Prison Wives", "Incarcerated Loved Ones", "Women with Incarcerated Partners"]
 ---
@@ -37,7 +37,7 @@ Is it the money? The bail. The retainer. The commissary. The phone calls.
 
 Is it trying to be strong for everyone else when you are falling apart?
 
-Nobody talks about what the family goes through. But if you are here, in this group, at this hour, reading this post -- you are already doing more than most people ever do.
+Nobody talks about what the family goes through. But if you are here, in this group, at this hour, reading this post, you are already doing more than most people ever do.
 
 You are not helpless. The research you are doing matters. The questions you are bringing to the attorney matter. You showing up to court dates matters. Your presence changes the dynamic.
 
@@ -47,7 +47,7 @@ What has been the hardest part for you?
 
 ### Visual Direction
 
-Colored text background -- deep maroon or wine red. This is an emotionally resonant post targeting the family member audience that dominates Facebook criminal defense groups. No image.
+Colored text background, deep maroon or wine red. This is an emotionally resonant post targeting the family member audience that dominates Facebook criminal defense groups. No image.
 
 ### Link Strategy
 
@@ -59,10 +59,10 @@ This post will generate deeply personal responses. Respond to every comment with
 
 ### UPL Compliance Note
 
-If someone describes a legal situation and asks for advice, redirect gently: "I can hear how hard this is. That sounds like a question for the attorney -- and one worth putting in writing so there's a paper trail. You deserve an answer."
+If someone describes a legal situation and asks for advice, redirect gently: "I can hear how hard this is. That sounds like a question for the attorney, and one worth putting in writing so there's a paper trail. You deserve an answer."
 
 ---
 
 **Share trigger**: A family member shares this post to their personal timeline or family group chat because the comments validate what they have been going through alone. A partner sends it to another family member: "Read the comments. Other people are going through this too."
-**Context**: Criminal justice groups on Facebook are dominated by family members, not defendants. This post speaks directly to them and creates the emotional foundation for all future content engagement. The algorithm rewards posts that generate long, personal comments -- this post is designed to produce exactly that.
+**Context**: Criminal justice groups on Facebook are dominated by family members, not defendants. This post speaks directly to them and creates the emotional foundation for all future content engagement. The algorithm rewards posts that generate long, personal comments, this post is designed to produce exactly that.
 **KPI target**: Comments (expect 100+ deeply personal responses) + reactions + Messenger shares to personal contacts

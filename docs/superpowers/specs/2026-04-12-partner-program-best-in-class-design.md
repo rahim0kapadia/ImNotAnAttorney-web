@@ -1,4 +1,4 @@
-# Partner Program: Best-in-Class Upgrade — Design Spec
+# Partner Program: Best-in-Class Upgrade, Design Spec
 
 **Date:** 2026-04-12
 **Status:** Approved
@@ -6,7 +6,7 @@
 
 ## Context
 
-The partner system infrastructure is solid — 8 routes, 6 DB tables, 4 atomic RPCs, Stripe dual-mode promo codes, bridge page with SMIQ quiz, QR codes, magic link auth. But the program is invisible (zero nav links), activation is broken (no lifecycle emails), and retention levers are missing (flat commission, no notifications, no payout schedule).
+The partner system infrastructure is solid, 8 routes, 6 DB tables, 4 atomic RPCs, Stripe dual-mode promo codes, bridge page with SMIQ quiz, QR codes, magic link auth. But the program is invisible (zero nav links), activation is broken (no lifecycle emails), and retention levers are missing (flat commission, no notifications, no payout schedule).
 
 **Research sources:** Dustin Howes (affiliate activation), GoHighLevel/FirstPromoter (signup friction), ClickFunnels (tiered commissions), ThriveCart (tracking flexibility), FTC 2026 enforcement guidelines, Performance Marketing Association industry study.
 
@@ -14,22 +14,22 @@ The partner system infrastructure is solid — 8 routes, 6 DB tables, 4 atomic R
 
 ## Terminology
 
-**"Partner"** — not "affiliate." Bondsmen are old-school relationship people. "Affiliate" is internet marketing jargon they don't know. All UI copy, emails, and docs use "partner" exclusively.
+**"Partner"**, not "affiliate." Bondsmen are old-school relationship people. "Affiliate" is internet marketing jargon they don't know. All UI copy, emails, and docs use "partner" exclusively.
 
 ---
 
 ## Phase 0: Pre-Upgrade Cleanup
 
-Before adding new features, fix structural issues that would compound during implementation. These are NOT refactors for their own sake — each directly unblocks or de-risks a specific upgrade section.
+Before adding new features, fix structural issues that would compound during implementation. These are NOT refactors for their own sake, each directly unblocks or de-risks a specific upgrade section.
 
 ### 0a. Extract Dashboard Page Sections
 
-**Problem:** `src/app/partner/dashboard/page.tsx` is 452 lines with 10+ useState calls. The upgrade adds 4 new sections — without extraction, it balloons to 700+ lines.
+**Problem:** `src/app/partner/dashboard/page.tsx` is 452 lines with 10+ useState calls. The upgrade adds 4 new sections, without extraction, it balloons to 700+ lines.
 
 **Extract into:**
-- `src/components/partner/PaymentSettingsForm.tsx` — payment method form (currently lines 342-419)
-- `src/components/partner/EarningsSection.tsx` — earnings cards + payout history (currently lines 261-315)
-- `src/components/partner/ToolkitSection.tsx` — promo code, referral URL, QR code (currently lines 201-249)
+- `src/components/partner/PaymentSettingsForm.tsx`, payment method form (currently lines 342-419)
+- `src/components/partner/EarningsSection.tsx`, earnings cards + payout history (currently lines 261-315)
+- `src/components/partner/ToolkitSection.tsx`, promo code, referral URL, QR code (currently lines 201-249)
 
 ### 0b. Consolidate Partner Lookup by Promo Code
 
@@ -65,16 +65,16 @@ Before adding new features, fix structural issues that would compound during imp
 
 ---
 
-## 1. Discovery — Footer Link
+## 1. Discovery, Footer Link
 
 **Problem:** `/partners` page exists but has zero inbound navigation anywhere on the site.
 
 **Fix:** Add "Become a Partner" link in the Footer's Explore column, between "About" and "Get Started →".
 
 **Files:**
-- `src/components/Footer.tsx` — add one `<Link>` element
+- `src/components/Footer.tsx`, add one `<Link>` element
 
-**No header change** — primary nav is for defendants. Partner discovery belongs in the footer (matches GoHighLevel, ClickFunnels pattern for secondary audiences).
+**No header change**, primary nav is for defendants. Partner discovery belongs in the footer (matches GoHighLevel, ClickFunnels pattern for secondary audiences).
 
 ---
 
@@ -85,16 +85,16 @@ Before adding new features, fix structural issues that would compound during imp
 **New flow:**
 1. Application form adds UPL compliance checkbox + Partner Terms link (both required)
 2. `/api/partners/apply` validates compliance, checks for existing partner email
-3. **Duplicate email handling (CRITICAL — `partners.email` has UNIQUE constraint):**
+3. **Duplicate email handling (CRITICAL, `partners.email` has UNIQUE constraint):**
    - Email exists + `status: "approved"` → return "You're already a partner! Check your email for your dashboard link" + send fresh magic link
    - Email exists + `status: "suspended"` → insert into `partner_applications` only (admin review), return generic "Application received" (no info leakage)
    - Email exists + `status: "pending"` → update existing record, generate promo code, approve
    - Email doesn't exist → create new partner row
 4. Auto-creates `partners` row with `status: "approved"`
 5. Generates Stripe promo code via `createPartnerPromoCode()` (uses extracted `sanitizePromoCode` from Phase 0c)
-6. **Promo code activation gate (SECURITY — prevents code farming):** Promo code created on Stripe with `active: false`. Welcome email magic link, when clicked, activates the code via a new `activatePartnerPromoCode()` in `referral.ts`. Without email verification, an attacker could farm 10% discount codes with fake emails. Rate limit (3/IP/hr) is trivially bypassable with VPN.
+6. **Promo code activation gate (SECURITY, prevents code farming):** Promo code created on Stripe with `active: false`. Welcome email magic link, when clicked, activates the code via a new `activatePartnerPromoCode()` in `referral.ts`. Without email verification, an attacker could farm 10% discount codes with fake emails. Rate limit (3/IP/hr) is trivially bypassable with VPN.
 7. Sends welcome email immediately with magic link (Email 1 of activation sequence)
-8. Admin gets notification (can suspend later — approve-first, moderate-after model)
+8. Admin gets notification (can suspend later, approve-first, moderate-after model)
 9. Partner clicks magic link → promo code activates → lands on dashboard within 60 seconds
 
 **Success message update:** Current form shows "We'll review your application and email you within 24 hours." Change to: "You're in! Check your email for your partner code and dashboard link."
@@ -105,12 +105,12 @@ Before adding new features, fix structural issues that would compound during imp
 **Why approve-first with email gate:** Bondsmen are pre-qualified by profession. UPL risk mitigated by compliance agreement. Email verification via magic link click prevents discount code farming while keeping the partner experience instant (code arrives in their inbox immediately).
 
 **Files:**
-- `src/app/api/partners/apply/route.ts` — auto-create partner + promo code (inactive) + send welcome email
-- `src/app/api/partner/magic-link/verify/route.ts` — add promo code activation after token verification
-- `src/components/partner/PartnerApplicationForm.tsx` — add compliance checkbox + terms link + updated success message
-- `src/lib/referral.ts` — reuse `createPartnerPromoCode()`, add `activatePartnerPromoCode()`, use extracted `sanitizePromoCode`
+- `src/app/api/partners/apply/route.ts`, auto-create partner + promo code (inactive) + send welcome email
+- `src/app/api/partner/magic-link/verify/route.ts`, add promo code activation after token verification
+- `src/components/partner/PartnerApplicationForm.tsx`, add compliance checkbox + terms link + updated success message
+- `src/lib/referral.ts`, reuse `createPartnerPromoCode()`, add `activatePartnerPromoCode()`, use extracted `sanitizePromoCode`
 
-**DB changes:** None — `partners` table already has all required columns. `partner_applications` table still records the application for audit trail.
+**DB changes:** None, `partners` table already has all required columns. `partner_applications` table still records the application for audit trail.
 
 ---
 
@@ -119,8 +119,8 @@ Before adding new features, fix structural issues that would compound during imp
 ### 3a. Activation Sequence (5 emails)
 
 | # | Key | Timing | Subject | Content | Goal |
-|---|-----|--------|---------|---------|------|
-| 1 | `partner_welcome` | Instant (Day 0) | "Welcome — your partner code is {CODE}" | Promo code, dashboard magic link, first message template, commission table | Dashboard visit |
+|---|---, |------, |---------|---------|------|
+| 1 | `partner_welcome` | Instant (Day 0) | "Welcome, your partner code is {CODE}" | Promo code, dashboard magic link, first message template, commission table | Dashboard visit |
 | 2 | `partner_first_share` | Day 1 | "Send this to your next client (copy-paste)" | Pre-written message + QR code download + "takes 30 seconds" | First share in 48h |
 | 3 | `partner_the_math` | Day 3 | "5 referrals = ${monthly_amount}/month" | Commission calculator per tier, real dollar amounts | Motivation |
 | 4 | `partner_social_proof` | Day 7 | "How partners are using this" | 3 sharing scenarios (in-person, text, email) | Legitimacy |
@@ -146,14 +146,14 @@ Triggered when a sale pushes partner across a tier threshold:
 - Body: New rate, what changed, earnings projection at new rate
 
 **Files:**
-- `src/lib/partner-emails.ts` — NEW file: all partner email templates (activation + notifications)
-- `src/app/api/cron/partner-drip/route.ts` — NEW: cron handler for Day 1/3/7/14 activation emails
-- `src/app/api/webhooks/stripe/route.ts` — add sale notification send after `track_referral`
-- `src/app/api/admin/partners/[id]/route.ts` — add payout notification send after `process_partner_payout`
+- `src/lib/partner-emails.ts`, NEW file: all partner email templates (activation + notifications)
+- `src/app/api/cron/partner-drip/route.ts`, NEW: cron handler for Day 1/3/7/14 activation emails
+- `src/app/api/webhooks/stripe/route.ts`, add sale notification send after `track_referral`
+- `src/app/api/admin/partners/[id]/route.ts`, add payout notification send after `process_partner_payout`
 
-**Cron registration:** `POST https://api.cron-job.org/jobs` — runs every 6 hours, hits `/api/cron/partner-drip`.
+**Cron registration:** `POST https://api.cron-job.org/jobs`, runs every 6 hours, hits `/api/cron/partner-drip`.
 
-**Email style:** Matches existing drip emails — dark bg (`#0C0A09`), zinc text (`#D4D4D8`), amber accent (`#F59E0B`). CAN-SPAM footer added by `sendEmail()`.
+**Email style:** Matches existing drip emails, dark bg (`#0C0A09`), zinc text (`#D4D4D8`), amber accent (`#F59E0B`). CAN-SPAM footer added by `sendEmail()`.
 
 ---
 
@@ -166,7 +166,7 @@ Triggered when a sale pushes partner across a tier threshold:
 **Research basis:** GoHighLevel uses 90 days. For high-ticket + long-consideration products, 90 days captures the tail of the conversion curve. Cookie duration research shows 30-day captures ~98% for typical products, but criminal defense has abnormally long decision windows (arrest → trial can be months).
 
 **Files:**
-- `src/app/r/[code]/page.tsx` — one constant change
+- `src/app/r/[code]/page.tsx`, one constant change
 
 ---
 
@@ -175,12 +175,12 @@ Triggered when a sale pushes partner across a tier threshold:
 **Structure (ClickFunnels model adapted for one-time high-ticket):**
 
 | Tier | Threshold | Rate | Display Name |
-|------|-----------|------|--------------|
+|------|---------, |------|------------, |
 | Partner | 0-4 lifetime sales | 10% | Partner |
 | Silver | 5-14 lifetime sales | 15% | Silver Partner |
 | Gold | 15+ lifetime sales | 20% | Gold Partner |
 
-**Why lifetime thresholds (not monthly):** Bondsmen refer sporadically. Monthly resets are demoralizing. Lifetime creates permanent progression — once Gold, always Gold. This matches ClickFunnels' approach for non-SaaS products.
+**Why lifetime thresholds (not monthly):** Bondsmen refer sporadically. Monthly resets are demoralizing. Lifetime creates permanent progression, once Gold, always Gold. This matches ClickFunnels' approach for non-SaaS products.
 
 **Implementation:**
 - Tier evaluation runs in the Stripe webhook after each `track_referral` call
@@ -193,10 +193,10 @@ Triggered when a sale pushes partner across a tier threshold:
 - Commission rate already exists and is per-partner
 
 **Files:**
-- `src/lib/partner-tiers.ts` — NEW: tier definitions, evaluation logic, threshold constants
-- `src/app/api/webhooks/stripe/route.ts` — add tier evaluation after referral tracking
-- `src/app/partner/dashboard/page.tsx` — display current tier + progress bar
-- `src/lib/partner-data.ts` — update commission table to show tiered rates
+- `src/lib/partner-tiers.ts`, NEW: tier definitions, evaluation logic, threshold constants
+- `src/app/api/webhooks/stripe/route.ts`, add tier evaluation after referral tracking
+- `src/app/partner/dashboard/page.tsx`, display current tier + progress bar
+- `src/lib/partner-data.ts`, update commission table to show tiered rates
 - Migration: add `commission_tier` column
 
 ---
@@ -208,19 +208,19 @@ Triggered when a sale pushes partner across a tier threshold:
 **New route:** `/r/[code]/[product]`
 
 | Deep Link | Redirects To |
-|-----------|-------------|
+|---------, |-------------|
 | `/r/CODE/case-decoder` | `/checkout?tier=case-decoder` |
 | `/r/CODE/intelligence-brief` | `/checkout?tier=intelligence-brief` |
 | `/r/CODE/x-ray` | `/checkout?tier=x-ray` |
 | `/r/CODE/war-room` | `/checkout?tier=war-room` |
 | `/r/CODE/dui` | `/checkout?tier=dui-first-offense` |
 
-**Behavior:** Sets ref cookie (90 days) + redirects to checkout. No bridge page for deep links — the partner already told the client what to buy.
+**Behavior:** Sets ref cookie (90 days) + redirects to checkout. No bridge page for deep links, the partner already told the client what to buy.
 
 **Generic `/r/CODE`** still works (bridge page → quiz → recommendation) for when the partner doesn't know which tier the defendant needs.
 
 **Files:**
-- `src/app/r/[code]/[product]/page.tsx` — NEW: deep link handler (server component, sets cookie, redirects)
+- `src/app/r/[code]/[product]/page.tsx`, NEW: deep link handler (server component, sets cookie, redirects)
 
 ---
 
@@ -240,11 +240,11 @@ Triggered when a sale pushes partner across a tier threshold:
 - Add `sub_id text` column to `referrals` table
 
 **Files:**
-- `src/app/r/[code]/page.tsx` — read `sub` query param, store in cookie
-- `src/app/r/[code]/[product]/page.tsx` — same
-- `src/app/api/checkout/route.ts` — pass `ref_sub` cookie to Stripe metadata
-- `src/app/api/webhooks/stripe/route.ts` — store `sub_id` in referral record
-- `src/app/partner/dashboard/page.tsx` — group by sub-ID in activity table
+- `src/app/r/[code]/page.tsx`, read `sub` query param, store in cookie
+- `src/app/r/[code]/[product]/page.tsx`, same
+- `src/app/api/checkout/route.ts`, pass `ref_sub` cookie to Stripe metadata
+- `src/app/api/webhooks/stripe/route.ts`, store `sub_id` in referral record
+- `src/app/partner/dashboard/page.tsx`, group by sub-ID in activity table
 - Migration: add `sub_id` column
 
 ---
@@ -260,9 +260,9 @@ Triggered when a sale pushes partner across a tier threshold:
 - **FAQ update:** Replace vague "monthly" with specific NET-30 language
 
 **Files:**
-- `src/lib/partner-data.ts` — add `"paypal"` to `VALID_PAYMENT_METHODS`, update FAQ
-- `src/app/api/partner/settings/route.ts` — accept `payment_paypal` field
-- `src/app/partner/dashboard/page.tsx` — show next payout date + PayPal option
+- `src/lib/partner-data.ts`, add `"paypal"` to `VALID_PAYMENT_METHODS`, update FAQ
+- `src/app/api/partner/settings/route.ts`, accept `payment_paypal` field
+- `src/app/partner/dashboard/page.tsx`, show next payout date + PayPal option
 - Migration: add `payment_paypal text` column to `partners`
 
 ---
@@ -287,18 +287,18 @@ Triggered when a sale pushes partner across a tier threshold:
 - No "they're your legal team" / anything implying attorney-client relationship
 
 ### FTC Disclosure Templates
-- **Social:** "Partner link — I earn a commission if you purchase, at no extra cost to you. #ad"
+- **Social:** "Partner link, I earn a commission if you purchase, at no extra cost to you. #ad"
 - **Email:** "Disclosure: I'm a partner of ImNotAnAttorney and earn a commission on purchases made through my link."
-- **Verbal (bondsmen):** "I work with a company that researches cases and helps defendants prepare questions for their attorney. If you use my code, I get a small commission — doesn't cost you any extra."
+- **Verbal (bondsmen):** "I work with a company that researches cases and helps defendants prepare questions for their attorney. If you use my code, I get a small commission, doesn't cost you any extra."
 
 ### Partner Terms of Service
 - Link from application form (separate page at `/partners/terms`)
 - Covers: prohibited methods, brand guidelines, termination clauses, compliance requirements
 
 **Files:**
-- `src/app/partners/terms/page.tsx` — NEW: partner terms of service page
-- `src/components/partner/ComplianceKit.tsx` — NEW: approved/prohibited language + FTC templates (dashboard section)
-- `src/app/partner/dashboard/page.tsx` — add ComplianceKit to toolkit section
+- `src/app/partners/terms/page.tsx`, NEW: partner terms of service page
+- `src/components/partner/ComplianceKit.tsx`, NEW: approved/prohibited language + FTC templates (dashboard section)
+- `src/app/partner/dashboard/page.tsx`, add ComplianceKit to toolkit section
 
 ---
 
@@ -311,14 +311,14 @@ Triggered when a sale pushes partner across a tier threshold:
 | Asset | Type | Description |
 |-------|------|-------------|
 | 3 social posts | Copy-paste text | X post, Facebook post, general social (per-tier variants) |
-| 2 email swipe templates | HTML/text | For partners with email lists — intro + follow-up |
+| 2 email swipe templates | HTML/text | For partners with email lists, intro + follow-up |
 | Verbal script | Text | For bondsmen: what to say when handing out cards |
 | One-pager PDF | Downloadable | Printable summary for office posting |
 
 **Files:**
-- `src/components/partner/CreativeAssets.tsx` — NEW: expanded asset library component
-- `src/app/partner/dashboard/page.tsx` — add CreativeAssets to toolkit section
-- `public/partner-assets/partner-one-pager.pdf` — NEW: downloadable PDF
+- `src/components/partner/CreativeAssets.tsx`, NEW: expanded asset library component
+- `src/app/partner/dashboard/page.tsx`, add CreativeAssets to toolkit section
+- `public/partner-assets/partner-one-pager.pdf`, NEW: downloadable PDF
 
 ---
 
@@ -334,7 +334,7 @@ Triggered when a sale pushes partner across a tier threshold:
 **Cron:** Registered via cron-job.org, runs daily at 3am ET.
 
 **Files:**
-- `src/app/api/cron/partner-cleanup/route.ts` — NEW: cleanup handler
+- `src/app/api/cron/partner-cleanup/route.ts`, NEW: cleanup handler
 - Auth: `CRON_AUTH_TOKEN` header check (matches existing cron pattern)
 
 ---
@@ -349,12 +349,12 @@ Triggered when a sale pushes partner across a tier threshold:
 - **Per-tier breakdown:** Which products earn the most
 - **Commission tier progress:** Visual progress bar to next tier threshold
 
-**Implementation:** All data derivable from existing `referrals` table — no new data collection needed. Chart renders server-side as a simple CSS bar chart (no chart library dependency).
+**Implementation:** All data derivable from existing `referrals` table, no new data collection needed. Chart renders server-side as a simple CSS bar chart (no chart library dependency).
 
 **Files:**
-- `src/components/partner/PartnerAnalytics.tsx` — NEW: analytics component
-- `src/app/api/partner/dashboard/route.ts` — extend to return analytics data (monthly aggregates, tier breakdown)
-- `src/app/partner/dashboard/page.tsx` — add analytics section
+- `src/components/partner/PartnerAnalytics.tsx`, NEW: analytics component
+- `src/app/api/partner/dashboard/route.ts`, extend to return analytics data (monthly aggregates, tier breakdown)
+- `src/app/partner/dashboard/page.tsx`, add analytics section
 
 ---
 
@@ -363,20 +363,20 @@ Triggered when a sale pushes partner across a tier threshold:
 Single migration file with all schema changes:
 
 ```sql
--- Add commission tier display name
+, Add commission tier display name
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS commission_tier text DEFAULT 'partner';
 
--- Add PayPal payment option
+, Add PayPal payment option
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS payment_paypal text;
 
--- Add sub-ID tracking for referrals
+, Add sub-ID tracking for referrals
 ALTER TABLE referrals ADD COLUMN IF NOT EXISTS sub_id text;
 
--- Add partner activation email tracking
+, Add partner activation email tracking
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS activation_email_sent_at timestamptz;
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS last_activation_email_key text;
 
--- Index for partner drip cron efficiency
+, Index for partner drip cron efficiency
 CREATE INDEX IF NOT EXISTS idx_partners_activation_drip
   ON partners (status, activation_email_sent_at)
   WHERE status = 'approved';
@@ -403,7 +403,7 @@ CREATE INDEX IF NOT EXISTS idx_partners_activation_drip
 ## Modified Files Summary
 
 | File | Change |
-|------|--------|
+|------|------, |
 | `src/components/Footer.tsx` | Add "Become a Partner" link |
 | `src/components/partner/PartnerApplicationForm.tsx` | Add compliance checkbox |
 | `src/app/api/partners/apply/route.ts` | Auto-approve flow |
@@ -421,7 +421,7 @@ CREATE INDEX IF NOT EXISTS idx_partners_activation_drip
 ## Cascade Analysis
 
 | Stakeholder | Win |
-|-------------|-----|
+|-------------|---, |
 | **Us** | Higher partner activation → more referral revenue → lower CAC |
 | **Partners (bondsmen)** | Instant onboarding, clear earnings path, professional toolkit, predictable payouts |
 | **Defendants (partner's clients)** | 10% discount, discover a service they need during crisis, better case preparation |
@@ -433,35 +433,35 @@ CREATE INDEX IF NOT EXISTS idx_partners_activation_drip
 
 ## Non-Goals (Explicitly Out of Scope)
 
-- **Stripe Connect migration** — manual payouts work at current scale. Revisit at 50+ active partners.
-- **Multi-tier coupons per partner** — single master coupon with per-partner promo codes is sufficient.
-- **Partner API/webhook** — partners don't need programmatic access yet.
-- **Leaderboard** — nice-to-have, not essential for launch. Add when there are 10+ active partners.
-- **Partner community (Slack/Discord)** — premature at current scale.
+- **Stripe Connect migration**, manual payouts work at current scale. Revisit at 50+ active partners.
+- **Multi-tier coupons per partner**, single master coupon with per-partner promo codes is sufficient.
+- **Partner API/webhook**, partners don't need programmatic access yet.
+- **Leaderboard**, nice-to-have, not essential for launch. Add when there are 10+ active partners.
+- **Partner community (Slack/Discord)**, premature at current scale.
 
 ---
 
-## Review Findings — Amendments (Code Review + Simplify + Gap Analysis)
+## Review Findings, Amendments (Code Review + Simplify + Gap Analysis)
 
 Three parallel reviews ran against this spec + the existing partner codebase. The following amendments incorporate all CRITICAL, HIGH, and select MEDIUM findings.
 
-### Amendment A: Section 3 — Cron + Email Patterns
+### Amendment A: Section 3, Cron + Email Patterns
 
 **Cron pattern (must match existing `drip/route.ts`):**
 - Auth: `requireCron(req)` from `@/lib/auth/guards`
-- Idempotency: `acquireCronLock("partner-drip", 5 * 60 * 60 * 1000)` — 5h lock window for 6h run interval
+- Idempotency: `acquireCronLock("partner-drip", 5 * 60 * 60 * 1000)`, 5h lock window for 6h run interval
 - Task runner: export async function per `CronContext`/`CronResult` types from `@/lib/cron/types`
 - Records run in `cron_runs` table with merged results
 
-**Email function:** Use `sendEmail()` from `@/lib/email` (params: `{ to, subject, html, unsubscribeEmail? }`). Inner HTML only — `sendEmail()` wraps in branded dark template + CAN-SPAM footer. Use `EmailLogContext.category = "partner-activation"` or `"partner-notification"`.
+**Email function:** Use `sendEmail()` from `@/lib/email` (params: `{ to, subject, html, unsubscribeEmail? }`). Inner HTML only, `sendEmail()` wraps in branded dark template + CAN-SPAM footer. Use `EmailLogContext.category = "partner-activation"` or `"partner-notification"`.
 
-**Sale notification placement (HIGH):** The webhook's referral tracking block (lines 483-563) is wrapped in a try-catch that swallows errors. Sale notification email MUST be sent OUTSIDE this try-catch — after referral tracking succeeds but in its own try-catch. Otherwise email failures are silently swallowed and partners never learn about sales.
+**Sale notification placement (HIGH):** The webhook's referral tracking block (lines 483-563) is wrapped in a try-catch that swallows errors. Sale notification email MUST be sent OUTSIDE this try-catch, after referral tracking succeeds but in its own try-catch. Otherwise email failures are silently swallowed and partners never learn about sales.
 
-**Partner drip email tracking:** The spec's `last_activation_email_key` (singular text column) is sufficient for the 5-email linear sequence. The existing subscriber drip uses a `drip_keys_sent` JSONB array because subscribers can enter multiple overlapping sequences. Partners have one linear sequence — single-key tracking works. Query: `WHERE status='approved' AND (last_activation_email_key IS NULL OR last_activation_email_key < target_key)`.
+**Partner drip email tracking:** The spec's `last_activation_email_key` (singular text column) is sufficient for the 5-email linear sequence. The existing subscriber drip uses a `drip_keys_sent` JSONB array because subscribers can enter multiple overlapping sequences. Partners have one linear sequence, single-key tracking works. Query: `WHERE status='approved' AND (last_activation_email_key IS NULL OR last_activation_email_key < target_key)`.
 
-### Amendment B: Section 5 — Tier Evaluation Race Condition (CRITICAL)
+### Amendment B: Section 5, Tier Evaluation Race Condition (CRITICAL)
 
-**Problem:** Spec says tier evaluation runs in webhook "after `track_referral` call." But `track_referral` RPC is atomic (INSERT referral + INCREMENT totals), while the proposed tier evaluation is a SEPARATE read + update. Two concurrent webhook calls for the same partner could race — both read pre-increment `total_referrals`, both evaluate, second overwrites first.
+**Problem:** Spec says tier evaluation runs in webhook "after `track_referral` call." But `track_referral` RPC is atomic (INSERT referral + INCREMENT totals), while the proposed tier evaluation is a SEPARATE read + update. Two concurrent webhook calls for the same partner could race, both read pre-increment `total_referrals`, both evaluate, second overwrites first.
 
 **Fix:** Add tier evaluation INSIDE the `track_referral` RPC itself. The RPC already atomically increments `total_referrals`. After the increment, check thresholds and update `commission_rate` + `commission_tier` in the same transaction. Return the new tier as part of the RPC response so the webhook knows whether to send a tier upgrade email.
 
@@ -471,7 +471,7 @@ CREATE OR REPLACE FUNCTION track_referral(
   p_partner_id uuid, p_order_id uuid, p_tier text,
   p_sale_amount bigint, p_discount_amount bigint,
   p_commission_amount bigint, p_sub_id text DEFAULT NULL
-) RETURNS jsonb  -- was void, now returns { tier_changed: bool, new_tier: text }
+) RETURNS jsonb , was void, now returns { tier_changed: bool, new_tier: text }
 ```
 
 **Tier thresholds hardcoded in SQL** (not application code) to prevent drift:
@@ -483,11 +483,11 @@ CASE
 END
 ```
 
-**Refund policy (HIGH):** Refunded sales DO decrement `total_referrals` (existing `reverse_referral_commission` RPC), but tiers are NEVER downgraded. "Once Gold, always Gold" is the explicit business rule. The `commission_tier` and `commission_rate` are only ever upgraded, never set backwards. This means the counter may show 14 while the tier says Gold — this is intentional and consistent.
+**Refund policy (HIGH):** Refunded sales DO decrement `total_referrals` (existing `reverse_referral_commission` RPC), but tiers are NEVER downgraded. "Once Gold, always Gold" is the explicit business rule. The `commission_tier` and `commission_rate` are only ever upgraded, never set backwards. This means the counter may show 14 while the tier says Gold, this is intentional and consistent.
 
-### Amendment C: Section 7 — Sub-ID RPC + Sanitization (CRITICAL + HIGH)
+### Amendment C: Section 7, Sub-ID RPC + Sanitization (CRITICAL + HIGH)
 
-**RPC change required:** The `track_referral` RPC has a hardcoded INSERT column list. Adding `sub_id` to the `referrals` table without updating the RPC means it's always NULL. Amendment B above adds `p_sub_id text DEFAULT NULL` parameter — this also solves the sub-ID storage.
+**RPC change required:** The `track_referral` RPC has a hardcoded INSERT column list. Adding `sub_id` to the `referrals` table without updating the RPC means it's always NULL. Amendment B above adds `p_sub_id text DEFAULT NULL` parameter, this also solves the sub-ID storage.
 
 **Sub-ID sanitization (HIGH):** The `sub` query param is user-controlled freeform input going into cookie → Stripe metadata → DB. Rules:
 - Max 50 characters (truncate, don't reject)
@@ -497,11 +497,11 @@ END
 
 **Checkout flow clarification:** The checkout API does NOT read cookies directly. The client-side checkout form reads `ref` and `ref_sub` cookies via `document.cookie` and passes them in the POST body. Sub-ID follows the same pattern: `ref_sub` cookie → client reads → includes as `refSub` in POST body → checkout passes to Stripe metadata.
 
-### Amendment D: Section 4 — Cookie Duration Shared Constant
+### Amendment D: Section 4, Cookie Duration Shared Constant
 
 **Already addressed in Phase 0g.** `REFERRAL_COOKIE_MAX_AGE` constant in `src/lib/referral.ts` prevents the deep link page (`/r/[code]/[product]`) from shipping with a different cookie duration than the bridge page.
 
-### Amendment E: Section 11 — Cleanup Audit Trail
+### Amendment E: Section 11, Cleanup Audit Trail
 
 **Change:** Do NOT delete magic links where `used_at IS NOT NULL`. These serve as an audit trail of partner authentication events. Only delete:
 - `partner_magic_links` where `expires_at < now()` AND `used_at IS NULL` (expired, never used)
@@ -509,11 +509,11 @@ END
 
 Used magic links can be purged on a 90-day rolling basis if storage becomes an issue.
 
-### Amendment F: Section 12 — Dashboard Analytics Query
+### Amendment F: Section 12, Dashboard Analytics Query
 
 **Problem:** Current dashboard API fetches referrals with `.limit(50)`. Analytics need full aggregation.
 
-**Fix:** Add a SQL RPC `partner_analytics(p_partner_id uuid)` that returns pre-aggregated data: monthly commission totals, per-tier breakdown, total referral count. This avoids fetching all rows to the application layer. The existing `.limit(50)` query stays for the "Recent Activity" table — analytics uses the new RPC.
+**Fix:** Add a SQL RPC `partner_analytics(p_partner_id uuid)` that returns pre-aggregated data: monthly commission totals, per-tier breakdown, total referral count. This avoids fetching all rows to the application layer. The existing `.limit(50)` query stays for the "Recent Activity" table, analytics uses the new RPC.
 
 ### Amendment G: Hardcoded 10% Commission (from Simplifier)
 
@@ -529,8 +529,8 @@ Used magic links can be purged on a 90-day rolling basis if storage becomes an i
 ### Amendment H: Sitemap
 
 Add to `src/app/sitemap.ts`:
-- `/partners` — priority 0.5, yearly change
-- `/partners/terms` — priority 0.3, yearly change
+- `/partners`, priority 0.5, yearly change
+- `/partners/terms`, priority 0.3, yearly change
 
 Do NOT add: `/r/[code]`, `/r/[code]/[product]` (referral redirects, not content), `/partner/dashboard` or `/partner/login` (auth-protected).
 
@@ -558,7 +558,7 @@ Do NOT add: `/r/[code]`, `/r/[code]/[product]` (referral redirects, not content)
 **Modified files (updated):**
 
 | File | Change |
-|------|--------|
+|------|------, |
 | `src/components/Footer.tsx` | Add "Become a Partner" link |
 | `src/components/partner/PartnerApplicationForm.tsx` | Compliance checkbox + terms link + success message |
 | `src/app/api/partners/apply/route.ts` | Auto-approve flow with duplicate email handling |
@@ -579,28 +579,28 @@ Do NOT add: `/r/[code]`, `/r/[code]/[product]` (referral redirects, not content)
 **Updated migration:**
 
 ```sql
--- Partner program upgrade
--- Migration: 20260412a_partner_program_upgrade.sql
+, Partner program upgrade
+, Migration: 20260412a_partner_program_upgrade.sql
 
--- Commission tier display
+, Commission tier display
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS commission_tier text DEFAULT 'partner';
 
--- PayPal payment option
+, PayPal payment option
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS payment_paypal text;
 
--- Sub-ID tracking
+, Sub-ID tracking
 ALTER TABLE referrals ADD COLUMN IF NOT EXISTS sub_id text;
 
--- Activation email tracking
+, Activation email tracking
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS activation_email_sent_at timestamptz;
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS last_activation_email_key text;
 
--- Drip cron index
+, Drip cron index
 CREATE INDEX IF NOT EXISTS idx_partners_activation_drip
   ON partners (status, activation_email_sent_at)
   WHERE status = 'approved';
 
--- Update track_referral RPC: add sub_id param + atomic tier evaluation
+, Update track_referral RPC: add sub_id param + atomic tier evaluation
 CREATE OR REPLACE FUNCTION track_referral(
   p_partner_id uuid, p_order_id uuid, p_tier text,
   p_sale_amount bigint, p_discount_amount bigint,
@@ -615,19 +615,19 @@ DECLARE
   v_new_tier text;
   v_new_rate integer;
 BEGIN
-  -- Insert referral (idempotent via unique constraint)
+ , Insert referral (idempotent via unique constraint)
   INSERT INTO referrals (partner_id, order_id, tier, sale_amount, discount_amount, commission_amount, sub_id)
   VALUES (p_partner_id, p_order_id, p_tier, p_sale_amount, p_discount_amount, p_commission_amount, p_sub_id)
   ON CONFLICT (order_id, partner_id) DO NOTHING;
 
-  -- Atomic increment
+ , Atomic increment
   UPDATE partners SET
     total_referrals = total_referrals + 1,
     total_commission = total_commission + p_commission_amount
   WHERE id = p_partner_id
   RETURNING total_referrals, commission_tier INTO v_new_total, v_old_tier;
 
-  -- Tier evaluation (only upgrades, never downgrades)
+ , Tier evaluation (only upgrades, never downgrades)
   v_new_tier := CASE
     WHEN v_new_total >= 15 THEN 'gold'
     WHEN v_new_total >= 5 THEN 'silver'
@@ -649,11 +649,11 @@ BEGIN
 END;
 $$;
 
--- Revoke from public, grant to service_role only
+, Revoke from public, grant to service_role only
 REVOKE ALL ON FUNCTION track_referral FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION track_referral TO service_role;
 
--- Partner analytics RPC
+, Partner analytics RPC
 CREATE OR REPLACE FUNCTION partner_analytics(p_partner_id uuid)
 RETURNS jsonb
 LANGUAGE plpgsql SECURITY DEFINER

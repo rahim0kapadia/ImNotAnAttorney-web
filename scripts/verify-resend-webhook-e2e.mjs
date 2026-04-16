@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Layer 2 E2E verification — full signed webhook test + DB state check.
+// Layer 2 E2E verification, full signed webhook test + DB state check.
 //
 // Steps:
 //   1. Query sms_suspensions for existing rows (real traffic signal).
@@ -40,7 +40,7 @@ if (!secret) {
   process.exit(1);
 }
 const endpoint = "https://imnotanattorney.com/api/webhooks/resend";
-// NANP reserved range (555-0100 through 555-0199 — never assigned to real customers),
+// NANP reserved range (555-0100 through 555-0199, never assigned to real customers),
 // so cleanup can't clobber real suspensions even if a concurrent bounce hits.
 const TEST_PHONE = "5555550137";
 
@@ -118,7 +118,7 @@ try {
     process.exit(3);
   }
 
-  console.log("OK: Layer 2 E2E PASS — endpoint, signature verification, DB write all working.");
+  console.log("OK: Layer 2 E2E PASS, endpoint, signature verification, DB write all working.");
   console.log("NOTE: This only proves OUR endpoint works. Separately verify the webhook is");
   console.log("      REGISTERED in the Resend dashboard (https://resend.com/webhooks)");
   console.log("      pointing at", endpoint, "with events email.bounced + email.complained.");

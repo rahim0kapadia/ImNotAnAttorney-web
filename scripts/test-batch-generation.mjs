@@ -61,11 +61,11 @@ const ANTI_HALLUCINATION_BLOCK = indexTs.slice(ahStart + 33, ahEnd);
 const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK;
 console.log(`[test-batch] System prompt: ${fullSystemPrompt.length} chars`);
 
-// ── Test persona (Danielle — DUI first offense) ──
-const testUserPrompt = `DEFENDANT INTAKE — CASE DECODER ($197)
+// ── Test persona (Danielle, DUI first offense) ──
+const testUserPrompt = `DEFENDANT INTAKE, CASE DECODER ($197)
 
 Name: Danielle M.
-Charge(s): DUI — First Offense (BAC 0.11%)
+Charge(s): DUI, First Offense (BAC 0.11%)
 Jurisdiction: Maricopa County, Arizona
 Arrest Date: 2026-03-15
 Next Court Date: 2026-04-10
@@ -178,7 +178,7 @@ while (elapsed < MAX_MS) {
         (rh) => !headings.some((h) => h.toLowerCase().includes(rh.toLowerCase().slice(0, 15)))
       );
       if (missing.length > 0) {
-        console.warn(`\nWARNING — Missing sections: ${missing.join(", ")}`);
+        console.warn(`\nWARNING, Missing sections: ${missing.join(", ")}`);
       } else {
         console.log("\nAll reference sections present.");
       }

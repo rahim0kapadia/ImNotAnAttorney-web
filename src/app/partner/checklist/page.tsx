@@ -1,11 +1,11 @@
 "use client";
 /**
- * /partner/checklist — Printable bail conditions compliance checklist.
+ * /partner/checklist, Printable bail conditions compliance checklist.
  *
  * 8.5×11" document designed for bondsmen to hand defendants at the jail desk.
  * Pen-fillable fields (48pt tall) for jail-desk handwriting.
  * Co-branded with bondsman company. QR code → /r/{code}/reminders.
- * INAA branding minimal — this is the bondsman's document.
+ * INAA branding minimal, this is the bondsman's document.
  *
  * Architecture mirrors /partner/card: screen preview + print-only block,
  * inline styles for print reliability, dynamic QR via qrcode npm package.
@@ -59,7 +59,7 @@ export default function ComplianceChecklist() {
 
   useEffect(() => { fetchPartner(); }, [fetchPartner]);
 
-  // Generate QR code after partner loads — points to /r/{code}/reminders
+  // Generate QR code after partner loads, points to /r/{code}/reminders
   useEffect(() => {
     if (!partner) return;
     (async () => {

@@ -1,4 +1,4 @@
-# Dynamic Pricing Architecture — Implementation Plan (Part 2)
+# Dynamic Pricing Architecture, Implementation Plan (Part 2)
 
 > **Continues from:** `2026-04-14-dynamic-pricing.md` (Tasks 1-5)
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans.
@@ -7,7 +7,7 @@
 
 ---
 
-### Task 6: Value-stack anchors — Hormozi numbers (playbook-configs.ts)
+### Task 6: Value-stack anchors, Hormozi numbers (playbook-configs.ts)
 
 **Files:**
 - Modify: `src/lib/playbook-configs.ts`
@@ -19,12 +19,12 @@ Read the full file. For each of the 8 playbook slugs, identify the `valueStack.s
 
 - [ ] **Step 2: Update $127 standard playbook value stacks (5 slugs)**
 
-For each of `dui-first-offense`, `drug-possession`, `probation-violation`, `sex-offense` (4 slugs — NOT self-defense, handled separately in Step 2b):
+For each of `dui-first-offense`, `drug-possession`, `probation-violation`, `sex-offense` (4 slugs, NOT self-defense, handled separately in Step 2b):
 
 Update the `valueStack.sections[].value` fields using these mappings:
 
 | Component pattern (match by title) | Old value | New value |
-|-------------------------------------|-----------|-----------|
+|-------------------------------------|---------, |---------, |
 | Contains "Emergency" or "Book 1" | `"$97"` | `"$197"` |
 | Contains "Charge Reality" or "Reality Report" | `"$297"` | `"$347"` |
 | Contains "Questions" | `"$197"` | `"$297"` |
@@ -81,7 +81,7 @@ Repeat for all 4 standard playbook slugs (NOT self-defense). Each has a differen
 The `self-defense` playbook has 7 components with unique titles and values (lines 1300-1338). It does NOT follow the standard 6-component pattern. Update using this exact mapping:
 
 | Exact title | Old value | New value |
-|-------------|-----------|-----------|
+|-------------|---------, |---------, |
 | "Emergency Playbook (Book 1)" | `"$97"` | `"$197"` |
 | "26 Attorney Questions" | `"$250"` | `"$297"` |
 | "Five-Element Self-Defense Guide" | `"$150"` | `"$197"` |
@@ -101,7 +101,7 @@ Add `// anchor:self-defense` marker to each `value:` field.
 For each of `white-collar`, `federal-criminal`, `drug-trafficking`:
 
 | Component pattern (match by title) | Old value | New value |
-|-------------------------------------|-----------|-----------|
+|-------------------------------------|---------, |---------, |
 | Contains "Emergency" or "Book 1" | `"$97"` | `"$247"` |
 | Contains "Charge Reality" or "Reality Report" | `"$297"` | `"$497"` |
 | Contains "Questions" | `"$197"` | `"$347"` |
@@ -131,9 +131,9 @@ Manually check all 8 playbook totals:
 - Standard ($127): $197 + $347 + $297 + $197 + $197 + $197 = $1,432 (11.3x)
 - Premium ($147): $247 + $497 + $347 + $247 + $197 + $197 = $1,732 (11.8x)
 
-Grep for any remaining `"$97"` in `playbook-configs.ts` — should only appear in non-value-stack contexts (like `seoDescription` or copy text). No `$97` should remain in any `value:` field.
+Grep for any remaining `"$97"` in `playbook-configs.ts`, should only appear in non-value-stack contexts (like `seoDescription` or copy text). No `$97` should remain in any `value:` field.
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: No new errors.
 
 - [ ] **Step 6: Commit**
@@ -174,7 +174,7 @@ stakes: string | ((price: string) => string);
 
 For every PRODUCT_COPY entry where `stakes` contains a dollar amount matching that product's price, convert from a string to a function.
 
-Pattern for each entry — identify the product's canonical price from `products.ts`, then convert:
+Pattern for each entry, identify the product's canonical price from `products.ts`, then convert:
 
 ```typescript
 // Example: plea-consequences is $97 in products.ts
@@ -221,8 +221,8 @@ If `getProduct` is not already imported, add it. If `product` is not already in 
 
 - [ ] **Step 5: Type-check**
 
-Run: `npx tsc --noEmit --skipLibCheck`
-Expected: No new errors. Watch for type errors on the union type — the `typeof` check should satisfy the compiler.
+Run: `npx tsc,noEmit,skipLibCheck`
+Expected: No new errors. Watch for type errors on the union type, the `typeof` check should satisfy the compiler.
 
 - [ ] **Step 6: Commit**
 
@@ -239,7 +239,7 @@ git commit -m "refactor(pricing): template functions for prose copy in services/
 - Create: `scripts/check-price-staleness.mjs`
 - Modify: `scripts/hooks/pre-commit` (append price check)
 
-**Important:** The project uses `core.hooksPath = scripts/hooks` (set in package.json `prepare` script). There is an existing `scripts/hooks/pre-commit` with a Blog QA safety gate. Do NOT install husky — it would conflict with this setup. Integrate into the existing hook instead.
+**Important:** The project uses `core.hooksPath = scripts/hooks` (set in package.json `prepare` script). There is an existing `scripts/hooks/pre-commit` with a Blog QA safety gate. Do NOT install husky, it would conflict with this setup. Integrate into the existing hook instead.
 
 - [ ] **Step 1: Verify existing hook infrastructure**
 
@@ -342,13 +342,13 @@ console.log("Checking anchors against canonical prices...");
 for (const a of anchors) {
   const canonicalPrice = canonical[a.slug];
   if (!canonicalPrice) {
-    console.log(`  ${a.file}:${a.line} — anchor:${a.slug} WARNING: slug not found in canonical sources`);
+    console.log(`  ${a.file}:${a.line}, anchor:${a.slug} WARNING: slug not found in canonical sources`);
     failures++;
     continue;
   }
   const canonicalNum = parseDollar(canonicalPrice);
   if (a.valueNum < canonicalNum) {
-    console.log(`  ${a.file}:${a.line} — anchor:${a.slug} value ${a.value} < product price ${canonicalPrice} FAIL`);
+    console.log(`  ${a.file}:${a.line}, anchor:${a.slug} value ${a.value} < product price ${canonicalPrice} FAIL`);
     failures++;
   }
 }
@@ -368,7 +368,7 @@ for (const slug of PLAYBOOK_SLUGS) {
     (a) => a.slug === slug && a.file.includes("playbook-configs")
   );
   if (slugAnchors.length === 0) {
-    console.log(`  ${slug}: no anchors found — SKIP`);
+    console.log(`  ${slug}: no anchors found, SKIP`);
     continue;
   }
   const sum = slugAnchors.reduce((acc, a) => acc + a.valueNum, 0);
@@ -380,7 +380,7 @@ for (const slug of PLAYBOOK_SLUGS) {
   );
   if (!totalMatch) {
     // Try finding it by proximity to the slug's anchor markers
-    console.log(`  ${slug}: totalValue not found by slug match — SKIP`);
+    console.log(`  ${slug}: totalValue not found by slug match, SKIP`);
     continue;
   }
   const totalNum = parseDollar(`$${totalMatch[1]}`);
@@ -411,9 +411,9 @@ Read `scripts/hooks/pre-commit` fully. Append this block at the end of the file:
 # ── Price staleness check ──
 # When tiers.ts or products.ts is staged, verify value-stack anchors
 # are still above product prices. Blocks commit on mismatch.
-STAGED_FILES=$(git diff --cached --name-only)
+STAGED_FILES=$(git diff,cached,name-only)
 if echo "$STAGED_FILES" | grep -qE "src/lib/(tiers|products)\.ts$"; then
-  echo "[price-check] tiers.ts or products.ts staged — running staleness detector..."
+  echo "[price-check] tiers.ts or products.ts staged, running staleness detector..."
   node scripts/check-price-staleness.mjs
   if [ $? -ne 0 ]; then
     echo "[price-check] BLOCKED: Price staleness detected. Fix value-stack anchors before committing."
@@ -434,7 +434,7 @@ node scripts/check-price-staleness.mjs
 
 Expected: All markers checked, 0 mismatches.
 
-Then test hook integration — make a trivial whitespace change to `tiers.ts`, stage it, run the hook:
+Then test hook integration, make a trivial whitespace change to `tiers.ts`, stage it, run the hook:
 ```bash
 bash scripts/hooks/pre-commit
 ```
@@ -463,7 +463,7 @@ git commit -m "feat(pricing): add staleness detector integrated into existing pr
 
 - [ ] **Step 1: Create PRICING-ARCHITECTURE.md**
 
-Create `src/lib/PRICING-ARCHITECTURE.md` with the full content from the spec's Layer 5 section. The content is in the detail spec at `2026-04-14-dynamic-pricing-design-layers.md` under "Layer 5: LLM-Facing Documentation — Full Content". Copy the markdown block from within the code fence verbatim.
+Create `src/lib/PRICING-ARCHITECTURE.md` with the full content from the spec's Layer 5 section. The content is in the detail spec at `2026-04-14-dynamic-pricing-design-layers.md` under "Layer 5: LLM-Facing Documentation, Full Content". Copy the markdown block from within the code fence verbatim.
 
 - [ ] **Step 2: Update CLAUDE.md**
 
@@ -487,11 +487,11 @@ git commit -m "docs(pricing): add PRICING-ARCHITECTURE.md and CLAUDE.md pricing 
 
 ### Task 10: Verification sweep
 
-**Files:** None modified — read-only verification.
+**Files:** None modified, read-only verification.
 
 - [ ] **Step 1: Type-check the entire project**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: Only pre-existing errors in `tests/cross-validator.test.ts` and `tests/mechanical-extractor.test.ts`. Zero new errors.
 
 - [ ] **Step 2: Grep for remaining hardcoded prices in src/**
@@ -500,13 +500,13 @@ Run these greps to find any remaining hardcoded prices that should have been con
 
 ```bash
 # Check for $97 in non-comment, non-products.ts, non-tiers.ts files
-grep -rn '"\$97"' src/ --include="*.tsx" --include="*.ts" | grep -v node_modules | grep -v products.ts | grep -v tiers.ts | grep -v playbook-configs.ts | grep -v "// " | grep -v ".test."
+grep -rn '"\$97"' src/,include="*.tsx",include="*.ts" | grep -v node_modules | grep -v products.ts | grep -v tiers.ts | grep -v playbook-configs.ts | grep -v "// " | grep -v ".test."
 
 # Check for $197 outside of canonical sources (allow products.ts, tiers.ts)
-grep -rn '"\$197"' src/ --include="*.tsx" --include="*.ts" | grep -v node_modules | grep -v products.ts | grep -v tiers.ts | grep -v playbook-configs.ts | grep -v "// " | grep -v ".test."
+grep -rn '"\$197"' src/,include="*.tsx",include="*.ts" | grep -v node_modules | grep -v products.ts | grep -v tiers.ts | grep -v playbook-configs.ts | grep -v "// " | grep -v ".test."
 
 # Check for $997, $2,497, $4,997, $9,997 outside canonical sources
-grep -rn '"\$[0-9,]*997"' src/ --include="*.tsx" --include="*.ts" | grep -v node_modules | grep -v tiers.ts | grep -v "// " | grep -v ".test."
+grep -rn '"\$[0-9,]*997"' src/,include="*.tsx",include="*.ts" | grep -v node_modules | grep -v tiers.ts | grep -v "// " | grep -v ".test."
 ```
 
 Expected: Zero results for prices that should be dynamic. Legitimate matches (testimonials, competitor comparisons) are acceptable.
@@ -519,9 +519,9 @@ Expected: All markers checked, 0 mismatches.
 - [ ] **Step 4: Verify excluded items are truly legitimate**
 
 Spot-check these known legitimate hardcodings:
-- Homepage testimonial: "$15,000 I paid my attorney" — verify it's a quote, not a product price
-- PricingTable.tsx: "$197+" — verify it's a threshold description
-- Competitor comparisons in services/[slug] stakes: "$200-400", "$2,000-5,000" — verify these are attorney rate comparisons, not product prices
+- Homepage testimonial: "$15,000 I paid my attorney", verify it's a quote, not a product price
+- PricingTable.tsx: "$197+", verify it's a threshold description
+- Competitor comparisons in services/[slug] stakes: "$200-400", "$2,000-5,000", verify these are attorney rate comparisons, not product prices
 
 - [ ] **Step 5: Push to deploy**
 
@@ -530,12 +530,12 @@ git push origin master
 ```
 
 Post-deploy spot-checks on production:
-1. Homepage charge cards — each shows correct playbook price ($127 or $147)
-2. /playbook/dui-first-offense — value stack shows $1,432 total, no $97 components
-3. /services/plea-consequences — stakes copy shows correct product price
-4. /judge-report-card — hero shows $197
-5. /officer-background-check — hero shows $97
-6. Blog post with PillarCTA — shows correct tier price
+1. Homepage charge cards, each shows correct playbook price ($127 or $147)
+2. /playbook/dui-first-offense, value stack shows $1,432 total, no $97 components
+3. /services/plea-consequences, stakes copy shows correct product price
+4. /judge-report-card, hero shows $197
+5. /officer-background-check, hero shows $97
+6. Blog post with PillarCTA, shows correct tier price
 
 ---
 

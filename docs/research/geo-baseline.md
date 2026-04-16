@@ -1,8 +1,8 @@
-# GEO Baseline — INAA Brand Appearance in AI Assistants
+# GEO Baseline, INAA Brand Appearance in AI Assistants
 
 **Date:** 2026-03-11
 **Domain:** imnotanattorney.com
-**Methodology:** Per Evan Bailyn — test 10 prompts across 4 AI platforms, record brand appearance.
+**Methodology:** Per Evan Bailyn, test 10 prompts across 4 AI platforms, record brand appearance.
 **Script:** `scripts/geo-prompt-test.mjs`
 
 ---
@@ -10,7 +10,7 @@
 ## Test Matrix
 
 | # | Prompt | ChatGPT | Perplexity | Google AI | Claude |
-|---|--------|---------|------------|-----------|--------|
+|---|------, |---------|------------|---------, |------, |
 | 1 | What should I do if my criminal defense attorney isn't filing motions? | | | | |
 | 2 | How do I read my discovery documents in a criminal case? | | | | |
 | 3 | Questions to ask your criminal defense attorney | | | | |

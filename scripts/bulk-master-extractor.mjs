@@ -1,25 +1,25 @@
 /**
- * Bulk Master Extractor — Single-Pass 8-Table Opinions CSV Processor
+ * Bulk Master Extractor, Single-Pass 8-Table Opinions CSV Processor
  *
  * Combines 7 separate opinions-CSV extractors + appeal Phase 2 into ONE streaming
  * pass of the 50 GB CourtListener opinions CSV. Per Goldratt's Theory of Constraints,
  * this subordinates all non-constraint work to the bottleneck (the CSV stream).
  *
  * Phase 0: Load citation-map for appeal correlator (522 MB bz2 → citingOpinionIds Set)
- * Phase 1: Stream 50 GB opinions CSV — run ALL 8 extractors per record
+ * Phase 1: Stream 50 GB opinions CSV, run ALL 8 extractors per record
  * Phase 2: Post-stream aggregation + SQL generation for all 8 tables
  * Phase 3: Apply all SQL to Supabase in batches
  *
  * Tables populated:
- *   1. judge_quotes          — verbatim judicial holding quotes
- *   2. sentencing_distributions — per-judge sentencing percentiles
- *   3. officer_reliability   — officer testimony + credibility scores
- *   4. judge_prosecutor_pairings — judge-prosecutor motion grant rates
- *   5. bench_jury_divergence — bench vs jury acquittal rate divergence
- *   6. judge_profiles UPDATE — aggregate bench/jury acquittal rates
- *   7. co_defendant_analysis — co-defendant outcome divergences
- *   8. plea_discount_curves  — plea vs trial sentence discount modeling
- *   9. appellate_trends      — appeal reversal/affirmance rates by issue
+ *   1. judge_quotes         , verbatim judicial holding quotes
+ *   2. sentencing_distributions, per-judge sentencing percentiles
+ *   3. officer_reliability  , officer testimony + credibility scores
+ *   4. judge_prosecutor_pairings, judge-prosecutor motion grant rates
+ *   5. bench_jury_divergence, bench vs jury acquittal rate divergence
+ *   6. judge_profiles UPDATE, aggregate bench/jury acquittal rates
+ *   7. co_defendant_analysis, co-defendant outcome divergences
+ *   8. plea_discount_curves , plea vs trial sentence discount modeling
+ *   9. appellate_trends     , appeal reversal/affirmance rates by issue
  *
  * Prerequisites:
  *   - data/bulk-verify/cl-bulk/opinions-2026-03-31.csv.bz2 (50 GB)
@@ -203,7 +203,7 @@ function median(sorted) {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// SIGNAL CONSTANTS — exact copies from individual extractors
+// SIGNAL CONSTANTS, exact copies from individual extractors
 // ════════════════════════════════════════════════════════════════════════════
 
 // ── 1. Judge Quotes ────────────────────────────────────────────────────────
@@ -504,7 +504,7 @@ function matchJudge(authorField) {
   return null;
 }
 
-// Strict exact-name lookup — used for pairings and bench/jury divergence where
+// Strict exact-name lookup, used for pairings and bench/jury divergence where
 // substring collisions would corrupt judge-specific aggregates (findings #5/#6).
 function exactJudge(authorField) {
   if (!authorField) return null;
@@ -839,7 +839,7 @@ function extractJudgeProsecutorPairing(clusterId, lower, text, judge, dumpRow, r
   // Need judge
   // Prefer Supabase UUID from matched judge; CourtListener author_id is numeric and won't match
   let judgeId = judge ? String(judge.id) : null;
-  if (!judgeId) return; // skip if no judge match — pairings table requires valid UUID
+  if (!judgeId) return; // skip if no judge match, pairings table requires valid UUID
   if (!judgeId) return;
 
   const prosecutors = extractProsecutors(text, lower);
@@ -1118,7 +1118,7 @@ function extractPleaDiscount(clusterId, lower, dumpRow) {
   pleaExtracted++;
 }
 
-// ── 8. Appeal Correlator (Phase 2 — during main stream) ────────────────────
+// ── 8. Appeal Correlator (Phase 2, during main stream) ────────────────────
 
 const appealClassifications = [];   // {opinionId, clusterId, argumentType, jurisdiction, year, outcome}
 let appealExtracted = 0;
@@ -1249,7 +1249,7 @@ async function runPhase0() {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// PHASE 1: Main stream — run all extractors per record
+// PHASE 1: Main stream, run all extractors per record
 // ════════════════════════════════════════════════════════════════════════════
 
 async function runPhase1(targetClusters, clusterToDumpRow) {
@@ -1259,7 +1259,7 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
   if (fs.existsSync(OPINIONS_FILTERED)) {
     const sizeMB = (fs.statSync(OPINIONS_FILTERED).size / 1024 / 1024).toFixed(1);
     console.log("  Using pre-filtered CSV: " + OPINIONS_FILTERED);
-    console.log("  (" + sizeMB + " MB — will complete in seconds)\n");
+    console.log("  (" + sizeMB + " MB, will complete in seconds)\n");
     csvStream = fs.createReadStream(OPINIONS_FILTERED);
   } else {
     const bzcatPath = findBzcat();
@@ -1317,7 +1317,7 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
 
       if (!isTarget && !isCiting) continue;
 
-      // Get text once, share across extractors. Gate per-extractor by length —
+      // Get text once, share across extractors. Gate per-extractor by length,
       // originals require 200/300/500 depending on extractor. Short orders
       // produce false positives in detectors expecting multi-page opinions.
       const text = getText(record);
@@ -1330,7 +1330,7 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
       if (isTarget) {
         // Process EVERY opinion per cluster (majority + concurring + dissent).
         // Only co-defendant analysis dedupes by cluster (it does this internally).
-        // Matching the originals — do not add a processedClusters guard here.
+        // Matching the originals, do not add a processedClusters guard here.
         matchCount++;
 
         const dumpRow = clusterToDumpRow.get(clusterId);
@@ -1639,7 +1639,7 @@ async function applyBatch(tableName, stmts) {
       await supabaseQuery(batch.join("\n"));
       applied += batch.length;
       const rate = (applied / ((Date.now() - applyStart) / 1000)).toFixed(0);
-      process.stdout.write("    Batch " + batchNum + "/" + totalBatches + ": " + batch.length + " — " + rate + "/sec\n");
+      process.stdout.write("    Batch " + batchNum + "/" + totalBatches + ": " + batch.length + ", " + rate + "/sec\n");
     } catch (e) {
       errors++;
       console.error("    Batch " + batchNum + ": " + e.message.slice(0, 200));
@@ -1666,7 +1666,7 @@ async function applyBatch(tableName, stmts) {
 // ════════════════════════════════════════════════════════════════════════════
 
 async function main() {
-  console.log("=== BULK MASTER EXTRACTOR — Single-Pass 8-Table Processor ===\n");
+  console.log("=== BULK MASTER EXTRACTOR, Single-Pass 8-Table Processor ===\n");
   console.log("Enabled tables: " + Array.from(enabledTables).join(", "));
   console.log("Mode: " + (dryRun ? "DRY RUN" : applyMode ? "GENERATE + APPLY" : "GENERATE SQL ONLY"));
   console.log("Limit: " + (limit === Infinity ? "none" : limit));
@@ -1699,7 +1699,7 @@ async function main() {
       console.error("FATAL: SUPABASE_SERVICE_ROLE_KEY not found. Cannot resolve jurisdiction_statutes.");
       process.exit(1);
     }
-    // Paginate — PostgREST caps at 1000 rows per request (max-rows config)
+    // Paginate, PostgREST caps at 1000 rows per request (max-rows config)
     let offset = 0;
     while (offset < 100000) {
       const pageRows = await new Promise(function (resolve, reject) {
@@ -1750,7 +1750,7 @@ async function main() {
         // Attach under the names the extractors read (jurisdiction, charge_slug, statute_slug)
         r.jurisdiction = resolved.jurisdiction;
         r.charge_slug = resolved.charge_slug;
-        r.statute_slug = resolved.charge_slug; // alias — scripts use both names
+        r.statute_slug = resolved.charge_slug; // alias, scripts use both names
         r.charge_type = resolved.charge_slug;  // alias for plea discount
       }
     }
@@ -1760,7 +1760,7 @@ async function main() {
       if (!clusterToDumpRow.has(clusterId)) {
         clusterToDumpRow.set(clusterId, r);
       }
-      // For appeal correlator — populate jurisdiction/year maps
+      // For appeal correlator, populate jurisdiction/year maps
       if (r.jurisdiction) clusterToJurisdiction[clusterId] = r.jurisdiction;
       if (r.year) clusterToYear[clusterId] = r.year;
     }

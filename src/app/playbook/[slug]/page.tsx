@@ -33,7 +33,7 @@ export async function generateMetadata({
   if (!config) return {};
 
   const tier = TIER_CORE[config.slug as TierSlug];
-  const title = `${tier.name} — ${tier.priceDisplay} Instant Download`;
+  const title = `${tier.name}, ${tier.priceDisplay} Instant Download`;
 
   return {
     title,
@@ -42,7 +42,7 @@ export async function generateMetadata({
       canonical: `${SITE_URL}/playbook/${slug}`,
     },
     openGraph: {
-      title: `${tier.name} — ${tier.priceDisplay} Instant Download`,
+      title: `${tier.name}, ${tier.priceDisplay} Instant Download`,
       description: config.seoDescription,
       url: `${SITE_URL}/playbook/${slug}`,
       type: "website",

@@ -1,5 +1,5 @@
 /**
- * @file Parts 3, 4, 5, 5b, 5c, 6, 6b — Operator alerts
+ * @file Parts 3, 4, 5, 5b, 5c, 6, 6b, Operator alerts
  *
  * Part 3:  Review reminders (48-hour guarantee protection)
  * Part 4:  Stuck intake detection (generation trigger dropped)
@@ -95,8 +95,8 @@ export async function detectStuckIntakes(ctx: CronContext): Promise<CronResult> 
       );
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `ALERT: Case stuck in intake for ${hoursStuck}+ hours — ${stuck.email}`,
-        html: `<h1 style="color: #EF4444;">Case Stuck — Generation May Have Failed</h1>
+        subject: `ALERT: Case stuck in intake for ${hoursStuck}+ hours, ${stuck.email}`,
+        html: `<h1 style="color: #EF4444;">Case Stuck, Generation May Have Failed</h1>
           <p>Case has been in "intake" status for <strong>${hoursStuck} hours</strong>. Report generation may have been silently dropped.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
             <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
@@ -125,7 +125,7 @@ export async function detectStuckIntakes(ctx: CronContext): Promise<CronResult> 
 }
 
 // ============================================================
-// PART 5: STUCK "GENERATING" DETECTION (30min threshold — faster failure detection)
+// PART 5: STUCK "GENERATING" DETECTION (30min threshold, faster failure detection)
 // ============================================================
 
 export async function detectStuckGenerating(ctx: CronContext): Promise<CronResult> {
@@ -150,7 +150,7 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
         : stuck.tier === 'war-room' ? 'war-room'
         : stuck.tier === 'situation-room' ? 'situation-room'
         : 'case-decoder';
-      // Transition state unconditionally — email is FYI, not a gate
+      // Transition state unconditionally, email is FYI, not a gate
       await ctx.supabase
         .from("cases")
         .update({
@@ -161,7 +161,7 @@ export async function detectStuckGenerating(ctx: CronContext): Promise<CronResul
 
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `ALERT: Report generation stuck for ${minutesStuck}+ min — ${stuck.email}`,
+        subject: `ALERT: Report generation stuck for ${minutesStuck}+ min, ${stuck.email}`,
         html: `<h1 style="color: #EF4444;">Report Generation Stuck</h1>
           <p>Case has been in "generating" status for <strong>${minutesStuck} minutes</strong>. The edge function likely crashed or timed out.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -208,7 +208,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
   const twoHoursAgo = new Date(ctx.now);
   twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
 
-  // Stuck auto-generating (Phase A timeout — >2h, accounts for Batch API latency)
+  // Stuck auto-generating (Phase A timeout, >2h, accounts for Batch API latency)
   const { data: stuckAutoGen } = await ctx.supabase
     .from("cases")
     .select("id, email, charge_type, tier, batch_id, updated_at")
@@ -220,7 +220,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       const minutesStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
       );
-      // Transition state unconditionally — email is FYI, not a gate
+      // Transition state unconditionally, email is FYI, not a gate
       await ctx.supabase
         .from("cases")
         .update({ status: "generation-failed", updated_at: ctx.now.toISOString() })
@@ -228,7 +228,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
 
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `ALERT: IB Phase A stuck for ${minutesStuck}+ min — ${stuck.email}`,
+        subject: `ALERT: IB Phase A stuck for ${minutesStuck}+ min, ${stuck.email}`,
         html: `<h1 style="color: #EF4444;">Intelligence Brief Phase A Stuck</h1>
           <p>Case has been in "auto-generating" status for <strong>${minutesStuck} minutes</strong>. Phase A likely crashed or timed out.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -249,7 +249,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
     }
   }
 
-  // Stuck compiling (Phase B timeout — >15min, synchronous so no Batch API latency)
+  // Stuck compiling (Phase B timeout, >15min, synchronous so no Batch API latency)
   // Phase B is a single Edge Function invocation that typically completes in
   // 60-180s. A 15-min threshold is generous but catches truly-stuck cases
   // faster than the old 30-min window. Combined with the hourly cron cadence,
@@ -270,7 +270,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
       const minutesStuck = Math.round(
         (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) / (1000 * 60)
       );
-      // Transition state unconditionally — email is FYI, not a gate
+      // Transition state unconditionally, email is FYI, not a gate
       await ctx.supabase
         .from("cases")
         .update({ status: "generation-failed", updated_at: ctx.now.toISOString() })
@@ -278,7 +278,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
 
       const compileResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `ALERT: IB Phase B stuck for ${minutesStuck}+ min — ${stuck.email}`,
+        subject: `ALERT: IB Phase B stuck for ${minutesStuck}+ min, ${stuck.email}`,
         html: `<h1 style="color: #EF4444;">Intelligence Brief Phase B Stuck</h1>
           <p>Case has been in "compiling" status for <strong>${minutesStuck} minutes</strong>. Phase B likely crashed or timed out.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -298,7 +298,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
     }
   }
 
-  // Stuck researching (waiting for judge research — >24h operator nudge)
+  // Stuck researching (waiting for judge research, >24h operator nudge)
   const researchThreshold = new Date(ctx.now);
   researchThreshold.setHours(researchThreshold.getHours() - 24);
   const { data: stuckResearching } = await ctx.supabase
@@ -340,7 +340,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
 
       const nudgeResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `REMINDER: IB judge research pending for ${hoursStuck}+ hours — ${stuck.email}`,
+        subject: `REMINDER: IB judge research pending for ${hoursStuck}+ hours, ${stuck.email}`,
         html: `<h1 style="color: #F59E0B;">Intelligence Brief Awaiting Judge Research</h1>
           <p>Phase A completed ${hoursStuck} hours ago. Judge research data is needed to proceed with Phase B.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
@@ -369,7 +369,7 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
     }
   }
 
-  // Researching escalation (72h — judge research still not submitted)
+  // Researching escalation (72h, judge research still not submitted)
   const researchEscThreshold = new Date(ctx.now);
   researchEscThreshold.setHours(researchEscThreshold.getHours() - 72);
   const { data: stuckResearching72h } = await ctx.supabase
@@ -394,8 +394,8 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
 
       const escResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `URGENT: Judge research pending ${hoursStuck}+ hours — customer waiting — ${stuck.email}`,
-        html: `<h1 style="color: #EF4444;">Intelligence Brief Blocked — Judge Research Overdue</h1>
+        subject: `URGENT: Judge research pending ${hoursStuck}+ hours, customer waiting, ${stuck.email}`,
+        html: `<h1 style="color: #EF4444;">Intelligence Brief Blocked, Judge Research Overdue</h1>
           <p>Phase A completed <strong>${hoursStuck} hours ago</strong> (${Math.round(hoursStuck / 24)} days). The customer is waiting for their Intelligence Brief but judge research hasn't been submitted.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
             <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
@@ -494,7 +494,7 @@ export async function sendPhase2IntakeReminders(ctx: CronContext): Promise<CronR
         const daysSinceUpdate = Math.round(caseAge / (1000 * 60 * 60 * 24));
         await sendEmail({
           to: ctx.operatorEmail,
-          subject: `URGENT: IB Phase 2 pending ${daysSinceUpdate}+ days — ${ibCase.email}`,
+          subject: `URGENT: IB Phase 2 pending ${daysSinceUpdate}+ days, ${ibCase.email}`,
           html: `<h1 style="color: #EF4444;">Intelligence Brief Waiting for Phase 2</h1>
             <p>Customer received their Case Decoder <strong>${daysSinceUpdate} days ago</strong> but has not submitted their Intelligence Brief details.</p>
             <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -529,7 +529,7 @@ export async function sendPhase2IntakeReminders(ctx: CronContext): Promise<CronR
           },
           html: `
             <h1 style="color: #F59E0B;">Your Intelligence Brief is Waiting on You</h1>
-            <p>Your Case Decoder report was delivered — now we need a few more details to build your full Intelligence Brief.</p>
+            <p>Your Case Decoder report was delivered, now we need a few more details to build your full Intelligence Brief.</p>
             <p>This short form takes about 5 minutes and helps us tailor the analysis to your specific situation:</p>
             <a href="${ctx.siteUrl}/intake/intelligence-brief?case=${ibCase.id}&token=${phase2Token}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
             <p style="color: #A1A1AA;">Once you submit, your Intelligence Brief will be generated within 72 hours.</p>
@@ -599,7 +599,7 @@ export async function sendAwaitingIntakeReminders(ctx: CronContext): Promise<Cro
         unsubscribeEmail: awCase.email,
         html: `
           <h1 style="color: #F59E0B;">We're Waiting on You</h1>
-          <p>You purchased your report — but we still need your case details before we can generate it.</p>
+          <p>You purchased your report, but we still need your case details before we can generate it.</p>
           <p>It only takes 3 minutes:</p>
           <a href="${ctx.siteUrl}/intake?email=${encodeURIComponent(awCase.email)}&tier=${escapeHtml(awCase.tier)}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
           <p style="color: #A1A1AA;">${awCase.tier === "intelligence-brief" ? "Your Case Decoder will be delivered within 48 hours. After that, we&#39;ll send a short follow-up form for your full Intelligence Brief." : "Once you submit, your report will be generated within 48 hours."}</p>
@@ -631,7 +631,7 @@ export async function sendAwaitingIntakeReminders(ctx: CronContext): Promise<Cro
 }
 
 // ============================================================
-// PART 6b: INTAKE ESCALATION — 72h + 7d operator alerts
+// PART 6b: INTAKE ESCALATION, 72h + 7d operator alerts
 // ============================================================
 
 export async function escalateStuckIntakes(ctx: CronContext): Promise<CronResult> {
@@ -683,8 +683,8 @@ export async function escalateStuckIntakes(ctx: CronContext): Promise<CronResult
       await sendEmail({
         to: ctx.operatorEmail,
         subject: isSevenDay
-          ? `URGENT: Customer paid ${daysSincePaid} days ago — no intake (consider refund)`
-          : `ALERT: Customer paid ${daysSincePaid} days ago — still no intake`,
+          ? `URGENT: Customer paid ${daysSincePaid} days ago, no intake (consider refund)`
+          : `ALERT: Customer paid ${daysSincePaid} days ago, still no intake`,
         html: `<h1 style="color: ${isSevenDay ? "#EF4444" : "#F59E0B"};">${isSevenDay ? "Customer May Need Refund" : "Intake Still Missing"}</h1>
           <p>Customer paid <strong>${daysSincePaid} days ago</strong> and has not submitted their intake form.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid ${isSevenDay ? "#EF4444" : "#F59E0B"};">
@@ -755,7 +755,7 @@ export async function detectStuckStandaloneReports(
 
       const sendResult = await sendEmail({
         to: ctx.operatorEmail,
-        subject: `ALERT: Standalone report stuck ${minutesStuck}+ min — ${order.standalone_product_slug}`,
+        subject: `ALERT: Standalone report stuck ${minutesStuck}+ min, ${order.standalone_product_slug}`,
         html: `<h1 style="color: #EF4444;">Standalone Report Not Generated</h1>
           <p>Order has intake data but no report after <strong>${minutesStuck} minutes</strong>. The edge function likely crashed or timed out.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">

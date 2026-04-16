@@ -1,5 +1,5 @@
 /**
- * @fileoverview Partner authentication — magic links + sessions.
+ * @fileoverview Partner authentication, magic links + sessions.
  *
  * Magic link flow:
  *   1. Partner enters email → generateMagicLink() creates a 15-min token
@@ -109,7 +109,7 @@ export async function createPartnerSession(partnerId: string): Promise<string | 
 
 /**
  * Validates a session token. Returns partner data if valid, null otherwise.
- * Used by route handlers for auth (not middleware — keeps DB calls in Node runtime).
+ * Used by route handlers for auth (not middleware, keeps DB calls in Node runtime).
  */
 export async function validatePartnerSession(sessionToken: string): Promise<{
   id: string;

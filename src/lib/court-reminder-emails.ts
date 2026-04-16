@@ -34,7 +34,7 @@ function unsubUrl(token: string) {
 
 function footer(token: string) {
   return `<p style="color: #71717A; font-size: 12px; margin-top: 32px; border-top: 1px solid #27272A; padding-top: 16px;">
-    ImNotAnAttorney provides legal information — not legal advice.<br/>
+    ImNotAnAttorney provides legal information, not legal advice.<br/>
     <a href="${unsubUrl(token)}" style="color: #71717A; text-decoration: underline;">Unsubscribe from reminders</a>
   </p>`;
 }
@@ -48,11 +48,11 @@ export function reminder14d(ctx: ReminderContext): { subject: string; html: stri
   const safeName = escapeHtml(ctx.firstName);
   const chargeName = CHARGE_DISPLAY_NAMES[ctx.chargeType] || "your hearing";
   return {
-    subject: `Your court date is in 2 weeks — ${ctx.countyState}`,
+    subject: `Your court date is in 2 weeks, ${ctx.countyState}`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">${safeName}, your court date is in 2 weeks.</h1>
       <p style="${pStyle}">We know this is stressful. Here's what helps: being prepared.</p>
-      <p style="${pStyle}">Your prep page has everything you need — what to expect at a ${escapeHtml(chargeName)} hearing, what to bring, and how to show up ready.</p>
+      <p style="${pStyle}">Your prep page has everything you need, what to expect at a ${escapeHtml(chargeName)} hearing, what to bring, and how to show up ready.</p>
       <p style="margin: 24px 0;"><a href="${prepUrl(ctx.token)}" style="${btnStyle}">View Your Court Prep</a></p>
       ${partnerBranding(ctx.partnerCompany)}
       ${footer(ctx.token)}
@@ -63,10 +63,10 @@ export function reminder14d(ctx: ReminderContext): { subject: string; html: stri
 export function reminder7d(ctx: ReminderContext): { subject: string; html: string } {
   const safeName = escapeHtml(ctx.firstName);
   return {
-    subject: `1 week until your court date — ${ctx.countyState}`,
+    subject: `1 week until your court date, ${ctx.countyState}`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">1 week, ${safeName}.</h1>
-      <p style="${pStyle}">Your hearing is next week. Now's the time to prepare — review what to expect, plan what to bring, and make sure you know when and where to show up.</p>
+      <p style="${pStyle}">Your hearing is next week. Now's the time to prepare, review what to expect, plan what to bring, and make sure you know when and where to show up.</p>
       <p style="margin: 24px 0;"><a href="${prepUrl(ctx.token)}" style="${btnStyle}">Review Your Court Prep</a></p>
       ${partnerBranding(ctx.partnerCompany)}
       ${footer(ctx.token)}
@@ -79,7 +79,7 @@ export function reminder3d(ctx: ReminderContext): { subject: string; html: strin
   const content = getPrepContent(ctx.chargeType);
   const items = content.whatToBring.map((b) => `<li style="color: ${ZINC}; margin: 4px 0;">${escapeHtml(b)}</li>`).join("");
   return {
-    subject: `3 days — are you prepared?`,
+    subject: `3 days, are you prepared?`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">3 days, ${safeName}.</h1>
       <p style="${pStyle}">Quick checklist:</p>

@@ -42,7 +42,7 @@ export async function POST(
     return NextResponse.json({ error: "Invalid state" }, { status: 400 });
   }
 
-  // Waitlist helper — only runs when body.waitlist === true && body.email is set
+  // Waitlist helper, only runs when body.waitlist === true && body.email is set
   async function handleWaitlist(
     result: CoverageResult,
     searchName: string,

@@ -1,20 +1,20 @@
-# Case Decoder Product QA — Design Spec
+# Case Decoder Product QA, Design Spec
 
 Date: 2026-03-27
 
 ## Context
 
 - **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web`
-- **Problem:** Case Decoder ($197) is LIVE accepting real payments. The technical pipeline passed E2E (117/117) and received 16 audit fixes. But no one has evaluated the ACTUAL PRODUCT — does the report justify $197? Does it deliver on every checkout promise? Can someone at 2AM on their phone complete the flow?
+- **Problem:** Case Decoder ($197) is LIVE accepting real payments. The technical pipeline passed E2E (117/117) and received 16 audit fixes. But no one has evaluated the ACTUAL PRODUCT, does the report justify $197? Does it deliver on every checkout promise? Can someone at 2AM on their phone complete the flow?
 - **Tech stack:** Next.js 15, Supabase, Stripe, Resend, Claude API (Opus 4.6 + Sonnet 4.6)
 - **Key files to read first:**
-  - `src/app/api/intake/route.ts` — intake API (400 lines)
-  - `supabase/functions/generate-report/index.ts` — report generation (~5,000 lines)
-  - `src/lib/intelligence-brief/prompts.ts` — 9 prompt builders (4,500+ lines)
-  - `src/app/checkout/page.tsx` — checkout promises
-  - `test-reports/persona-a-dui.html` — pre-built test report
+  - `src/app/api/intake/route.ts`, intake API (400 lines)
+  - `supabase/functions/generate-report/index.ts`, report generation (~5,000 lines)
+  - `src/lib/intelligence-brief/prompts.ts`, 9 prompt builders (4,500+ lines)
+  - `src/app/checkout/page.tsx`, checkout promises
+  - `test-reports/persona-a-dui.html`, pre-built test report
 - **Key decisions:**
-  - Use `generate-worker.mjs` (not Edge Function) for local report generation — avoids 150s timeout
+  - Use `generate-worker.mjs` (not Edge Function) for local report generation, avoids 150s timeout
   - Run `evaluate-report.mjs` dev tool for full quality review (production only runs 2 of 11 teams)
   - Use pre-built test reports for structural audit, fresh report for quality review
   - KDP cross-sell is OUT OF SCOPE (cross-project boundary)
@@ -61,9 +61,9 @@ Product quality, not pipeline plumbing. Seven phases:
 **Pass criteria:** Every promise (1-11) maps to a real section in the renderer. Missing = CRITICAL finding.
 
 **Files to read:**
-- `src/app/checkout/page.tsx` — the promises
-- `src/lib/intelligence-brief/render.ts` — the renderer (what sections get built)
-- `test-reports/persona-a-dui.html` — verify sections exist in actual output
+- `src/app/checkout/page.tsx`, the promises
+- `src/lib/intelligence-brief/render.ts`, the renderer (what sections get built)
+- `test-reports/persona-a-dui.html`, verify sections exist in actual output
 
 ---
 
@@ -98,7 +98,7 @@ Product quality, not pipeline plumbing. Seven phases:
 3. /start page -> intake flow accessible
 4. /intake page -> form renders, all fields present
 
-**Mobile walkthrough (375px) — the 2AM crisis test:**
+**Mobile walkthrough (375px), the 2AM crisis test:**
 1. Same flow as desktop
 2. Intake form completable on phone screen
 3. Key messages under 27 words (Covello stress rule)
@@ -121,10 +121,10 @@ Product quality, not pipeline plumbing. Seven phases:
 **Method:** Use `evaluate-report.mjs` dev tool (runs all available teams locally, not just the 2 in production).
 
 **GATE teams for Case Decoder:**
-- Team 1 (UPL Compliance): 15 criteria — MUST PASS ALL
-- Team 9 (Positioning): 13 criteria — pro-defendant, never anti-attorney
-- Team 10 (CRO): 17 criteria — crisis-buyer psychology
-- Team 11 (Trust): 10 criteria — anonymous brand trust
+- Team 1 (UPL Compliance): 15 criteria, MUST PASS ALL
+- Team 9 (Positioning): 13 criteria, pro-defendant, never anti-attorney
+- Team 10 (CRO): 17 criteria, crisis-buyer psychology
+- Team 11 (Trust): 10 criteria, anonymous brand trust
 
 **HIGH teams:**
 - Team 2 (Psychological Architecture): 14 criteria
@@ -145,7 +145,7 @@ Product quality, not pipeline plumbing. Seven phases:
 **Method:** 6 parallel Agent subagents. Each reads: fresh report HTML, checkout page code, intake form code, drip email definitions.
 
 | Persona | Agent Type | Key Question |
-|---------|-----------|--------------|
+|---------|---------, |------------, |
 | Sabri Suby | sabri-suby | Does deliverable match every sales promise? Would this convert cold traffic? |
 | Alex Hormozi | alex-hormozi | Value equation: Dream Outcome x Likelihood / (Time x Effort). Is $197 a no-brainer? |
 | Peep Laja | peep-laja | Where does the funnel leak? Friction in intake -> report -> upgrade? |
@@ -162,10 +162,10 @@ Product quality, not pipeline plumbing. Seven phases:
 **Trigger:** Only if Phases 1-4 reveal structural issues with charge-type handling.
 
 **Cases:**
-1. **Minimal intake** — only required fields, no situation narrative. Does report still justify $197?
-2. **Sex offense** — highest sensitivity. SANE kit, registry, victim terminology handled?
-3. **Federal criminal** — different court system. Jurisdiction sections adapt?
-4. **Self-defense** — justification defense. Outcome map makes sense?
+1. **Minimal intake**, only required fields, no situation narrative. Does report still justify $197?
+2. **Sex offense**, highest sensitivity. SANE kit, registry, victim terminology handled?
+3. **Federal criminal**, different court system. Jurisdiction sections adapt?
+4. **Self-defense**, justification defense. Outcome map makes sense?
 
 **Method:** Generate via worker, quick-scan for obvious issues.
 

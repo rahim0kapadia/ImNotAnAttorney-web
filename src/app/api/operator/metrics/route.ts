@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/metrics — Aggregate dashboard statistics
+ * @file /api/operator/metrics, Aggregate dashboard statistics
  *
  * GET: Returns CaseMetrics with counts, breakdowns, revenue, SLA breaches,
  *      and avg delivery time. All queries run in parallel via Promise.all.
@@ -56,13 +56,13 @@ export async function GET(req: NextRequest) {
       .select("id", { count: "exact", head: true })
       .in("tier", [...DISCOVERY_TIERS]),
 
-    // 2. Cases by status (individual count queries — no full table scan)
+    // 2. Cases by status (individual count queries, no full table scan)
     Promise.all(statusCountQueries),
 
-    // 3. Cases by tier (individual count queries — no full table scan)
+    // 3. Cases by tier (individual count queries, no full table scan)
     Promise.all(tierCountQueries),
 
-    // 4. Total revenue from paid orders (atomic RPC — no row limit)
+    // 4. Total revenue from paid orders (atomic RPC, no row limit)
     supabase.rpc("sum_paid_revenue"),
 
     // 5. Active jobs (currently processing)

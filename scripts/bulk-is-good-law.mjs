@@ -1,5 +1,5 @@
 /**
- * Bulk Is-Good-Law — Zero-citation fast path for is_good_law verification
+ * Bulk Is-Good-Law, Zero-citation fast path for is_good_law verification
  *
  * Reads citation_count from the already-downloaded CL clusters CSV.
  * Cases with citation_count = 0 are immediately marked is_good_law = true:
@@ -236,7 +236,7 @@ async function streamCitationCounts(bz2Path, targetClusterIds) {
       lineCount++;
 
       if (lineCount === 1) {
-        // Parse header row — strip surrounding quotes from each column name
+        // Parse header row, strip surrounding quotes from each column name
         const rawHeaders = rawLine.split(",");
         for (let i = 0; i < rawHeaders.length; i++) {
           headerMap[stripQuotes(rawHeaders[i])] = i;
@@ -247,7 +247,7 @@ async function streamCitationCounts(bz2Path, targetClusterIds) {
         console.log(`  citation_count index:      ${citIdx}`);
         console.log(`  precedential_status index: ${precIdx}`);
         if (citIdx === "NOT FOUND") {
-          console.warn(`  WARNING: citation_count column not found — all rows treated as having citations`);
+          console.warn(`  WARNING: citation_count column not found, all rows treated as having citations`);
         }
         return;
       }
@@ -256,7 +256,7 @@ async function streamCitationCounts(bz2Path, targetClusterIds) {
       const firstComma = rawLine.indexOf(",");
       if (firstComma < 0) return;
       let clusterId = rawLine.slice(0, firstComma);
-      // CL clusters CSV wraps IDs in double quotes — strip them
+      // CL clusters CSV wraps IDs in double quotes, strip them
       if (clusterId.length >= 2 && clusterId[0] === '"' && clusterId[clusterId.length - 1] === '"') {
         clusterId = clusterId.slice(1, -1);
       }
@@ -273,7 +273,7 @@ async function streamCitationCounts(bz2Path, targetClusterIds) {
         return;
       }
 
-      // Full parse — only need citation_count + precedential_status
+      // Full parse, only need citation_count + precedential_status
       const values = parseCsvLine(rawLine);
       matchCount++;
 
@@ -328,7 +328,7 @@ async function main() {
 
   if (!fs.existsSync(CLUSTERS_BZ2)) {
     console.error(`ERROR: Clusters CSV not found: ${CLUSTERS_BZ2}`);
-    console.error(`The CSV is downloaded by bulk-classify-cases.mjs — check data/bulk-verify/cl-bulk/`);
+    console.error(`The CSV is downloaded by bulk-classify-cases.mjs, check data/bulk-verify/cl-bulk/`);
     process.exit(1);
   }
 
@@ -337,7 +337,7 @@ async function main() {
 
   const allRows = JSON.parse(fs.readFileSync(inputPath, "utf8"));
 
-  // Filter: has CL cluster ID. Process ALL — even already-verified cases
+  // Filter: has CL cluster ID. Process ALL, even already-verified cases
   // get additional source URLs from this method (citation_count=0 proof).
   const needsVerification = allRows.filter(r => {
     if (!r.courtlistener_cluster_id) return false;
@@ -384,7 +384,7 @@ async function main() {
     const entry = { dbRow, data, clusterId };
 
     if (data.citationCount === null) {
-      // citation_count column not found — can't determine, send to API loop
+      // citation_count column not found, can't determine, send to API loop
       hasCitationRows.push(entry);
     } else if (data.citationCount === 0) {
       zeroCitationRows.push(entry);
@@ -438,7 +438,7 @@ async function main() {
 
   // Generate SQL
   const sqlStatements = [];
-  sqlStatements.push("-- Bulk Is-Good-Law (Zero-Citation Fast Path) — Generated " + new Date().toISOString());
+  sqlStatements.push("-- Bulk Is-Good-Law (Zero-Citation Fast Path), Generated " + new Date().toISOString());
   sqlStatements.push("-- Source: bulk-is-good-law.mjs");
   sqlStatements.push("-- Logic: citation_count = 0 in CL clusters CSV → no opinion can have overruled this case");
   sqlStatements.push(`-- Cases: ${zeroCitationRows.length}`);
@@ -451,7 +451,7 @@ async function main() {
     const clApiUrl = `https://www.courtlistener.com/api/rest/v4/clusters/${clusterId}/`;
     const newUrlsLiteral = escArray([clOpinionUrl, clApiUrl]);
 
-    // PostgreSQL handles array dedup via array_cat — we just append both URLs
+    // PostgreSQL handles array dedup via array_cat, we just append both URLs
     // and let the application layer dedupe later if needed.
     let stmt = `UPDATE statute_case_law SET `;
     stmt += `is_good_law = true, `;
@@ -503,9 +503,9 @@ async function main() {
       process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} applied\n`);
     } catch (e) {
       batchErrors++;
-      console.error(`  Batch ${batchNum}: ERROR — ${e.message}`);
+      console.error(`  Batch ${batchNum}: ERROR, ${e.message}`);
       if (e.message.indexOf("429") >= 0) {
-        console.log("  Rate limited — waiting 10s...");
+        console.log("  Rate limited, waiting 10s...");
         await sleep(10000);
         try {
           await supabaseQuery(batch.join("\n"));

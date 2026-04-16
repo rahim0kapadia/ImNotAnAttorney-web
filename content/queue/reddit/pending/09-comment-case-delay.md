@@ -33,7 +33,7 @@ There's a critical difference between a case that's taking long because work is 
 
 **Here's what I'd do:**
 
-Check the court docket yourself. Most jurisdictions have online case search. Look at what's actually been filed. If the only entries are continuances with no motions, no discovery filings, no defense activity -- that's your answer about what's been happening.
+Check the court docket yourself. Most jurisdictions have online case search. Look at what's actually been filed. If the only entries are continuances with no motions, no discovery filings, no defense activity, that's your answer about what's been happening.
 
 Ask your attorney directly: "What specific work has been done between the last court date and this one?" And: "What specific work will be completed during this additional continuance?"
 
@@ -45,5 +45,5 @@ If your case is far outside those timeline ranges and your attorney can't explai
 
 General information, not legal advice.
 
-**Engagement plan**: Ask poster for timeline details -- how long has case been open, how many continuances, what type of charge. Provide case-type-specific guidance on whether the timeline is normal or a red flag.
+**Engagement plan**: Ask poster for timeline details, how long has case been open, how many continuances, what type of charge. Provide case-type-specific guidance on whether the timeline is normal or a red flag.
 **Culture notes**: The emotional toll of waiting is real and undertreated. Acknowledge it. Don't dismiss it with "be patient." Validate the frustration, then provide actionable steps.

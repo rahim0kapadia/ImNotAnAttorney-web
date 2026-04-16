@@ -1,26 +1,26 @@
 #!/usr/bin/env node
-// fix-humanizer-slop.mjs — Mechanical fixer for the 10 posts that failed the
+// fix-humanizer-slop.mjs, Mechanical fixer for the 10 posts that failed the
 // humanizer gate after the virality retrofit (2026-04-09).
 //
 // Applies only the minimal, deterministic changes needed to drop each post's
 // composite humanizer score below 45. All text manipulation is done with
-// split/indexOf/char-walk — NO regex on file contents (matches the humanizer's
+// split/indexOf/char-walk, NO regex on file contents (matches the humanizer's
 // own approach and the repo-wide anti-regex-on-files rule).
 //
 //   1. Tier 1 vocabulary: replace AI-slop words (leverage, actionable,
 //      landscape, crucial, leveraging, leverages, leveraged, etc.) with plain
-//      alternatives. Word-boundary aware — walks text char by char using the
+//      alternatives. Word-boundary aware, walks text char by char using the
 //      same WORD_SEPARATORS set the humanizer uses.
 //   2. Em-dash density: reduce to below 3 per 1000 words by converting
-//      " — " to ". " (capitalizing the next char) on body text only. Skips
+//      ", " to ". " (capitalizing the next char) on body text only. Skips
 //      fenced code blocks. If density is still above target after that pass,
-//      converts tight em-dashes ("word—word") to ", ".
+//      converts tight em-dashes ("word, word") to ", ".
 //   3. Sycophancy: remove "absolutely" in family-member-arrested post.
 //   4. Vague authority: rewrite unsourced "research shows" claim in
 //      sex-offense-contact post.
 //
 // After writing each file, invokes qa-existing-post.mjs on it to refresh the
-// sidecar and confirm the fix worked. Does NOT touch rule-of-three — that
+// sidecar and confirm the fix worked. Does NOT touch rule-of-three, that
 // only adds 5 points and every post passes without touching it.
 //
 // Usage:
@@ -235,7 +235,7 @@ function countEmDashes(text) {
 
 // ── Em-dash reduction ──
 // Target: fewer than 3 per 1000 words. Replaces the first N occurrences of
-// " — " (space, em-dash, space) with ". " outside fenced code blocks. If
+// ", " (space, em-dash, space) with ". " outside fenced code blocks. If
 // fewer than N safe matches are found, falls back to tight em-dashes.
 
 function buildCodeBlockMask(text) {
@@ -336,7 +336,7 @@ const ALL_FAILING = [
 function fixPost(slug) {
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) {
-    console.error(`  SKIP: ${slug} — file not found`);
+    console.error(`  SKIP: ${slug}, file not found`);
     return false;
   }
 

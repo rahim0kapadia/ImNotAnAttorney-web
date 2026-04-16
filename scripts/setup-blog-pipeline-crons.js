@@ -64,34 +64,34 @@ const BASE_URL = env.NEXT_PUBLIC_SITE_URL || 'https://imnotanattorney.com';
 const CRON_URL = `${BASE_URL}/api/cron`;
 
 // Blog pipeline runs sequentially each day:
-//   10:00 UTC — queue: select articles to generate
-//   10:30 UTC — generate: run AI generation for queued articles
-//   11:00 UTC — qa: score and flag low-quality drafts
-//   11:30 UTC — publish: promote QA-passed drafts to live
+//   10:00 UTC, queue: select articles to generate
+//   10:30 UTC, generate: run AI generation for queued articles
+//   11:00 UTC, qa: score and flag low-quality drafts
+//   11:30 UTC, publish: promote QA-passed drafts to live
 const CRON_JOBS = [
   {
     name: 'blog-generate-queue',
     schedule: { minutes: [0], hours: [10] },
     timeout: 300,
-    description: 'Blog pipeline step 1 — select articles for today\'s generation run',
+    description: 'Blog pipeline step 1, select articles for today\'s generation run',
   },
   {
     name: 'blog-generate',
     schedule: { minutes: [30], hours: [10] },
     timeout: 300,
-    description: 'Blog pipeline step 2 — AI generation for queued articles',
+    description: 'Blog pipeline step 2, AI generation for queued articles',
   },
   {
     name: 'blog-qa',
     schedule: { minutes: [0], hours: [11] },
     timeout: 300,
-    description: 'Blog pipeline step 3 — score and flag low-quality drafts',
+    description: 'Blog pipeline step 3, score and flag low-quality drafts',
   },
   {
     name: 'blog-publish',
     schedule: { minutes: [30], hours: [11] },
     timeout: 300,
-    description: 'Blog pipeline step 4 — promote QA-passed drafts to live',
+    description: 'Blog pipeline step 4, promote QA-passed drafts to live',
   },
 ];
 
@@ -164,7 +164,7 @@ function sleep(ms) {
 
 async function main() {
   console.log('Setting up blog pipeline cron jobs for ImNotAnAttorney');
-  if (DRY_RUN) console.log('*** DRY RUN — no API calls will be made ***');
+  if (DRY_RUN) console.log('*** DRY RUN, no API calls will be made ***');
   console.log('='.repeat(50));
 
   let existingJobs = new Set();
@@ -197,7 +197,7 @@ async function main() {
     const result = await createCronJob(job);
     results.push(result);
 
-    // cron-job.org rate limit: 5 requests/minute — wait 13s between calls
+    // cron-job.org rate limit: 5 requests/minute, wait 13s between calls
     if (i < CRON_JOBS.length - 1) {
       console.log('  (waiting 13s for rate limit...)');
       await sleep(13000);

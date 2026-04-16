@@ -1,11 +1,11 @@
 /**
- * @file /api/intake/intelligence-brief — Phase 2 intake for Intelligence Brief
+ * @file /api/intake/intelligence-brief, Phase 2 intake for Intelligence Brief
  *
  * Receives additional case details from the Phase 2 form after the included
  * Case Decoder has been delivered. This data feeds into the full Intelligence
  * Brief generation.
  *
- * Security: HMAC token verification — the token is sent in the delivery email
+ * Security: HMAC token verification, the token is sent in the delivery email
  * link and ties to a specific case ID. This prevents unauthorized submissions.
  *
  * Flow:
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Tier check — Phase 2 intake is only valid for intelligence-brief cases
+    // Tier check, Phase 2 intake is only valid for intelligence-brief cases
     if (caseData.tier !== "intelligence-brief") {
       return NextResponse.json(
         { error: "This form is only for Intelligence Brief cases." },
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Explicit refund check — customer sees a clear message instead of generic 409
+    // Explicit refund check, customer sees a clear message instead of generic 409
     if (caseData.status === "refunded") {
       return NextResponse.json(
         { error: `This case has been refunded and is no longer active. Contact ${CONTACT_EMAIL} if you have questions.` },
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Store Phase 2 data — either update existing intake or create new one
+    // Store Phase 2 data, either update existing intake or create new one
     // Cap all fields to prevent oversized payloads (matches main intake pattern)
     const cap = (v: unknown, max: number) =>
       typeof v === "string" ? v.slice(0, max) : null;
@@ -179,7 +179,7 @@ export async function POST(req: NextRequest) {
     // Notify operator
     await sendEmail({
       to: OPERATOR_EMAIL,
-      subject: `Phase 2 intake received — ${escapeHtml(caseData.email)} (Intelligence Brief)`,
+      subject: `Phase 2 intake received, ${escapeHtml(caseData.email)} (Intelligence Brief)`,
       html: `<h1 style="color: #F59E0B;">Phase 2 Intake Submitted</h1>
         <p>Customer completed the Intelligence Brief intake form.</p>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">

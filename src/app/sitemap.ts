@@ -47,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
-  // Content guides — dynamic routes under /guides/[slug] driven by the
+  // Content guides, dynamic routes under /guides/[slug] driven by the
   // standalone product catalog. Only active content products are included.
   const guideEntries: MetadataRoute.Sitemap = productsByCategory("content").map(
     (guide) => ({

@@ -1,5 +1,5 @@
 /**
- * PATCH /api/partner/clients/[id]/schedule — Set or clear check-in schedule.
+ * PATCH /api/partner/clients/[id]/schedule, Set or clear check-in schedule.
  *
  * Auth: Partner session (requirePartnerAuth).
  * Body: { check_in_days: string[] | null }
@@ -86,7 +86,7 @@ export async function PATCH(
         to: reminder.email,
         subject: `Check-in reminders set up by ${companyName}`,
         html: `<p style="color:#D4D4D8;font-size:15px;">${escapeHtml(reminder.first_name)}, ${escapeHtml(companyName)} has set up check-in reminders for you on <strong>${daysStr}</strong>.</p>
-               <p style="color:#D4D4D8;font-size:15px;">You'll receive a reminder each scheduled day — tap the link to check in.</p>
+               <p style="color:#D4D4D8;font-size:15px;">You'll receive a reminder each scheduled day, tap the link to check in.</p>
                <a href="${prepUrl}" style="display:inline-block;padding:12px 24px;background:#F59E0B;color:#000;font-weight:bold;border-radius:8px;text-decoration:none;margin-top:16px;">View Your Prep Page</a>`,
       }).catch((e) => console.error("[Schedule Override] Client email failed:", e));
     }
@@ -94,7 +94,7 @@ export async function PATCH(
     if (shouldSendSMS(prefs.check_in) && canSendClientSMS(reminder.phone, reminder.sms_consent_at)) {
       sendSMS(
         reminder.phone!,
-        capSMS(`${reminder.first_name}, ${companyName} set your check-in days: ${daysStr}. Tap here on those days: ${prepUrl} — Do not reply`),
+        capSMS(`${reminder.first_name}, ${companyName} set your check-in days: ${daysStr}. Tap here on those days: ${prepUrl}, Do not reply`),
         { category: "schedule_set_confirmation", court_reminder_id: reminder.id, subject: "Check-In Schedule Set" }
       ).catch((e) => console.warn("[Schedule Override] Client SMS failed:", e));
     }

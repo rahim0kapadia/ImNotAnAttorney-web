@@ -7,9 +7,9 @@
  * Flow: Purchase -> Webhook email with intake link -> THIS PAGE -> Generation
  *
  * Security: Token required (notFound without it). Token validates server-side
- * in the intake API route, not here — this page just passes it along.
+ * in the intake API route, not here, this page just passes it along.
  *
- * SEO: robots noindex — intake forms must not appear in search engines.
+ * SEO: robots noindex, intake forms must not appear in search engines.
  */
 import { notFound } from "next/navigation";
 import { getProduct, isValidProduct } from "@/lib/products";
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = getProduct(slug);
   if (!product) return {};
   return {
-    title: `Complete Your Details — ${product.name} | ImNotAnAttorney`,
+    title: `Complete Your Details, ${product.name} | ImNotAnAttorney`,
     robots: { index: false },
   };
 }

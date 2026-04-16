@@ -11,7 +11,7 @@ export default function JailVisitationContent() {
         <p className="mt-4">
           Every facility is different. Some allow in-person visits. Many have
           moved to video-only visits, especially since 2020. Most require
-          scheduling in advance — walk-in visits are increasingly rare.
+          scheduling in advance, walk-in visits are increasingly rare.
         </p>
         <p className="mt-3">
           Typical visiting hours are limited to specific days and time blocks.
@@ -30,7 +30,7 @@ export default function JailVisitationContent() {
         <ul className="mt-4 space-y-3 pl-5 list-disc marker:text-amber-400">
           <li>
             <span className="font-semibold text-zinc-50">
-              Valid government-issued photo ID — required.
+              Valid government-issued photo ID, required.
             </span>{" "}
             No ID, no visit. Expired IDs are typically rejected.
           </li>
@@ -43,7 +43,7 @@ export default function JailVisitationContent() {
             medications, food, or anything not specifically permitted. Most
             facilities have lockers but not all.
           </li>
-          <li>Dress conservatively — many facilities have dress codes for visitors. No revealing clothing, no clothing resembling inmate uniforms (typically solid orange, khaki, or red).</li>
+          <li>Dress conservatively, many facilities have dress codes for visitors. No revealing clothing, no clothing resembling inmate uniforms (typically solid orange, khaki, or red).</li>
         </ul>
       </section>
 
@@ -55,7 +55,7 @@ export default function JailVisitationContent() {
           What to Expect
         </h2>
         <ul className="mt-4 space-y-3 pl-5 list-disc marker:text-amber-400">
-          <li>Security screening similar to an airport — metal detector, possible pat-down.</li>
+          <li>Security screening similar to an airport, metal detector, possible pat-down.</li>
           <li>Visits are typically 15 to 30 minutes. Some facilities allow longer visits for certain classifications.</li>
           <li>In-person visits are usually supervised. Conversations can be monitored. No physical contact in most facilities beyond a brief hug at the start and end.</li>
           <li>Video visits happen from a terminal in the facility lobby or remotely from your own device (varies by facility).</li>
@@ -71,7 +71,7 @@ export default function JailVisitationContent() {
         </h2>
         <p className="mt-4">
           Jail phone systems are managed by companies like GTL (now
-          ViaPath) or Securus. Calls are expensive — often several dollars
+          ViaPath) or Securus. Calls are expensive, often several dollars
           per minute. You typically need to set up an account and prepay.
         </p>
         <ul className="mt-3 space-y-3 pl-5 list-disc marker:text-amber-400">
@@ -82,7 +82,7 @@ export default function JailVisitationContent() {
             Never discuss the case on a jail phone. Not strategy, not facts,
             not opinions. The prosecution can and will use those recordings.
           </li>
-          <li>Commissary accounts let you send money so your loved one can purchase food, hygiene items, and phone time. Each facility has its own system — check the facility website or call the front desk.</li>
+          <li>Commissary accounts let you send money so your loved one can purchase food, hygiene items, and phone time. Each facility has its own system, check the facility website or call the front desk.</li>
         </ul>
       </section>
 
@@ -123,7 +123,7 @@ export default function JailVisitationContent() {
         </p>
         <ul className="mt-3 space-y-3 pl-5 list-disc marker:text-amber-400">
           <li>It is normal to feel overwhelmed, angry, sad, or numb. All of those are valid.</li>
-          <li>Your loved one needs you to be steady. That does not mean pretending everything is fine — it means showing up. Consistent family presence affects the defendant&rsquo;s mental state during the most important decisions of their case.</li>
+          <li>Your loved one needs you to be steady. That does not mean pretending everything is fine, it means showing up. Consistent family presence affects the defendant&rsquo;s mental state during the most important decisions of their case.</li>
           <li>
             NAMI (National Alliance on Mental Illness) offers free support
             groups and a helpline at 1-800-950-6264 for families dealing with

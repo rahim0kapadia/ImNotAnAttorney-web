@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/jobs/[id]/retry — Retry a failed processing job
+ * @file /api/operator/jobs/[id]/retry, Retry a failed processing job
  *
  * POST: Resets a failed job back to 'queued' status for re-processing.
  *       Validates the job is actually in 'failed' state and that retry_count
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
     );
   }
 
-  // Atomic conditional update — prevents race condition when two operators retry simultaneously
+  // Atomic conditional update, prevents race condition when two operators retry simultaneously
   const { data: updated, error: updateError } = await supabase
     .from("processing_jobs")
     .update({

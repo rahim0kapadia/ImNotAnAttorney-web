@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/idd/[id]/decline — Decline an IDD scholarship application
+ * @file /api/operator/idd/[id]/decline, Decline an IDD scholarship application
  *
  * POST: Marks the application as declined with an optional reason.
  *       Only transitions from pending status (idempotent guard).
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
   try {
     body = await req.json();
   } catch {
-    // Body is optional — reason defaults to null
+    // Body is optional, reason defaults to null
   }
 
   const supabase = createAdminClient();

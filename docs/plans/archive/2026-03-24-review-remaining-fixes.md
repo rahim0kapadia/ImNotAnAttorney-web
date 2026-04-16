@@ -1,10 +1,10 @@
-# Review Remaining Fixes — Implementation Plan
+# Review Remaining Fixes, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Fix the 5 genuinely remaining issues from the Mar 22 code review passes (9 of the original 15 were already fixed during the 128-issue sprint).
 
-**Architecture:** Two Supabase RPCs (atomic commission reversal + revenue sum), one defensive validation, and three GET parameter allowlists. All fixes are isolated — no cross-dependencies.
+**Architecture:** Two Supabase RPCs (atomic commission reversal + revenue sum), one defensive validation, and three GET parameter allowlists. All fixes are isolated, no cross-dependencies.
 
 **Tech Stack:** Next.js 15, TypeScript, Supabase (PostgreSQL), Stripe
 
@@ -15,11 +15,11 @@
 - **Repo:** `C:/Users/email/projects/ImNotAnAttorney-web/`
 - **Problem:** 15 issues (6 HIGH, 9 MEDIUM) were flagged as unfixed in the Mar 22 handoff. Verification against current code shows 9 are already resolved. The remaining 5 are documented below.
 - **Key files to read first:**
-  - `src/app/api/webhooks/stripe/route.ts` — commission reversal (line 940-974)
-  - `src/app/api/operator/metrics/route.ts` — revenue sum (lines 65-74)
-  - `src/app/api/admin/demand/gaps/route.ts` — GET validation (line 14)
-  - `src/app/api/admin/demand/emerging/route.ts` — GET validation (line 14)
-  - `src/app/api/operator/tasks/route.ts` — GET validation (lines 29-44)
+  - `src/app/api/webhooks/stripe/route.ts`, commission reversal (line 940-974)
+  - `src/app/api/operator/metrics/route.ts`, revenue sum (lines 65-74)
+  - `src/app/api/admin/demand/gaps/route.ts`, GET validation (line 14)
+  - `src/app/api/admin/demand/emerging/route.ts`, GET validation (line 14)
+  - `src/app/api/operator/tasks/route.ts`, GET validation (lines 29-44)
 - **Key decisions:** Create RPCs for atomic operations rather than patching JS-side logic. GET parameter validation uses existing allowlist constants where available.
 
 ---
@@ -29,15 +29,15 @@
 These 9 issues were verified as fixed or non-issues during codebase read:
 
 | Issue | Original Description | Status | Evidence |
-|-------|---------------------|--------|----------|
-| P2-17 | N+1 in pipeline completion | **FIXED** | `pipeline.ts:124-130` — batch-fetch with `.in(case_id, caseIds)` |
-| P2-18 | N+1 in operator-alerts (5 sections) | **FIXED** | `operator-alerts.ts:276-293, 414-438, 536-552, 616-632` — all batch-fetch |
-| P2-19 | N+1 in drip-post-purchase | **FIXED** | `drip-post-purchase.ts:44-121` — 5 batch-fetches |
-| P2-25 | select("*") in operator queries | **FIXED** | `operator/cases/route.ts:16` — uses `CASE_LIST_FIELDS` constant |
-| P2-35 | Reconciliation duplicate orders | **PROTECTED** | `reconciliation.ts:62-72` — upsert with `onConflict: "stripe_session_id"` |
-| P2-36 | Dead-code status filter | **NON-ISSUE** | `drip-post-purchase.ts:32` — intentional filter excluding refunded orders |
-| P2-37 | Discount loop multi-attribution | **PROTECTED** | `stripe/route.ts:303` — `break` prevents double-attribution |
-| P2-43 | Admin emails PATCH id not validated | **FIXED** | `admin/emails/route.ts:51-54` — proper string + boolean type check |
+|-------|---------------------|------, |----------|
+| P2-17 | N+1 in pipeline completion | **FIXED** | `pipeline.ts:124-130`, batch-fetch with `.in(case_id, caseIds)` |
+| P2-18 | N+1 in operator-alerts (5 sections) | **FIXED** | `operator-alerts.ts:276-293, 414-438, 536-552, 616-632`, all batch-fetch |
+| P2-19 | N+1 in drip-post-purchase | **FIXED** | `drip-post-purchase.ts:44-121`, 5 batch-fetches |
+| P2-25 | select("*") in operator queries | **FIXED** | `operator/cases/route.ts:16`, uses `CASE_LIST_FIELDS` constant |
+| P2-35 | Reconciliation duplicate orders | **PROTECTED** | `reconciliation.ts:62-72`, upsert with `onConflict: "stripe_session_id"` |
+| P2-36 | Dead-code status filter | **NON-ISSUE** | `drip-post-purchase.ts:32`, intentional filter excluding refunded orders |
+| P2-37 | Discount loop multi-attribution | **PROTECTED** | `stripe/route.ts:303`, `break` prevents double-attribution |
+| P2-43 | Admin emails PATCH id not validated | **FIXED** | `admin/emails/route.ts:51-54`, proper string + boolean type check |
 | P2-45 | StatusBadge duplicated | **FIXED** | Single component at `components/StatusBadge.tsx`, 14 usages via import |
 
 Additionally, **P2-39 (N+1 webhook tier dedup)** is bounded to 2-6 queries per checkout (max 3 included tiers x 2 checks). At INAA's volume this is negligible.
@@ -60,7 +60,7 @@ Two RPCs: commission reversal (P2-21) + revenue sum (P2-23).
 - [ ] **Step 1: Write the migration**
 
 ```sql
--- P2-21: Atomic commission reversal (eliminates optimistic-locking race condition)
+, P2-21: Atomic commission reversal (eliminates optimistic-locking race condition)
 CREATE OR REPLACE FUNCTION reverse_referral_commission(
   p_referral_id uuid,
   p_partner_id uuid,
@@ -89,7 +89,7 @@ REVOKE ALL ON FUNCTION reverse_referral_commission(uuid, uuid, bigint) FROM publ
 GRANT EXECUTE ON FUNCTION reverse_referral_commission(uuid, uuid, bigint) TO service_role;
 
 
--- P2-23: Sum paid revenue without fetching all rows client-side
+, P2-23: Sum paid revenue without fetching all rows client-side
 CREATE OR REPLACE FUNCTION sum_paid_revenue()
 RETURNS bigint
 LANGUAGE sql
@@ -124,7 +124,7 @@ git commit -m "feat(db): add atomic RPCs for commission reversal + revenue sum"
 At lines 65-74, replace the orders query + TODO comment with:
 
 ```typescript
-    // 4. Total revenue from paid orders (atomic RPC — no row limit)
+    // 4. Total revenue from paid orders (atomic RPC, no row limit)
     supabase.rpc("sum_paid_revenue"),
 ```
 
@@ -141,7 +141,7 @@ const totalRevenue = revenueResult.data ?? 0;
 - [ ] **Step 3: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 4: Commit**
@@ -183,7 +183,7 @@ Replace lines 940-974 with:
 - [ ] **Step 3: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 4: Commit**
@@ -202,7 +202,7 @@ git commit -m "fix: remove non-atomic commission reversal fallback, use RPC only
 - Modify: `src/app/api/admin/demand/emerging/route.ts` (line ~14)
 - Modify: `src/app/api/operator/tasks/route.ts` (lines ~29-44)
 
-- [ ] **Step 1: gaps/route.ts — add status allowlist**
+- [ ] **Step 1: gaps/route.ts, add status allowlist**
 
 ```typescript
 const VALID_STATUSES = ["identified", "queued", "in-progress", "published", "declined"];
@@ -212,7 +212,7 @@ if (!VALID_STATUSES.includes(status)) {
 }
 ```
 
-- [ ] **Step 2: emerging/route.ts — add status allowlist**
+- [ ] **Step 2: emerging/route.ts, add status allowlist**
 
 ```typescript
 const VALID_STATUSES = ["detected", "promoted", "dismissed"];
@@ -222,7 +222,7 @@ if (!VALID_STATUSES.includes(status)) {
 }
 ```
 
-- [ ] **Step 3: tasks/route.ts — validate against existing VALID_TASK_STATUSES**
+- [ ] **Step 3: tasks/route.ts, validate against existing VALID_TASK_STATUSES**
 
 Move `VALID_TASK_STATUSES` to top of file, then in GET handler:
 
@@ -236,7 +236,7 @@ if (statusParam && !VALID_TASK_STATUSES.includes(statusParam)) {
 - [ ] **Step 4: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 5: Commit**
@@ -274,7 +274,7 @@ if (isInstallment && discountAmount > 0) {
 - [ ] **Step 3: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 4: Commit**
@@ -291,7 +291,7 @@ git commit -m "fix: warn on non-once coupon duration in installment subscription
 After all 5 tasks:
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 grep -n "total_commission.*partnerData" src/app/api/webhooks/stripe/route.ts  # Expected: 0
 grep -n "Invalid status" src/app/api/admin/demand/gaps/route.ts src/app/api/admin/demand/emerging/route.ts src/app/api/operator/tasks/route.ts  # Expected: 3
 grep -n "sum_paid_revenue" src/app/api/operator/metrics/route.ts  # Expected: 1

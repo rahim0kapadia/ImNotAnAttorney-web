@@ -1,6 +1,6 @@
 "use client";
 /**
- * /my-cases/login — Customer magic link login page.
+ * /my-cases/login, Customer magic link login page.
  *
  * Customer enters email, receives a magic link via email.
  * Only customers with paid orders can access the portal.

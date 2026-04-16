@@ -50,7 +50,7 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
         </p>
         <p className="text-zinc-400 text-sm mb-4">Then send this to your next client:</p>
         <div className="bg-zinc-800 rounded-lg p-4 text-left text-sm text-zinc-300 mb-4">
-          &ldquo;Hey — I work with a company that researches criminal cases and helps defendants prepare the right questions for their attorney. If you use my code at checkout, you get 10% off. Check it out: imnotanattorney.com&rdquo;
+          &ldquo;Hey, I work with a company that researches criminal cases and helps defendants prepare the right questions for their attorney. If you use my code at checkout, you get 10% off. Check it out: imnotanattorney.com&rdquo;
         </div>
         <p className="text-zinc-500 text-xs">Your promo code activates when you click the link in your email.</p>
       </div>

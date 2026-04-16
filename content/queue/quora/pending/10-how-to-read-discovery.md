@@ -22,13 +22,13 @@ Look for three things:
 
 *The reason for contact.* How did police encounter you? Traffic stop? 911 call? Confidential informant tip? The legality of the initial contact determines whether everything that followed is admissible. If the stop was illegal, the evidence may be suppressible.
 
-*The timeline.* Write down every time mentioned. When did the officer arrive? When was the arrest made? When were Miranda rights read? Gaps in the timeline are gold. If the officer says he arrived at 10:15 PM and the arrest happened at 10:18 PM -- was three minutes enough time for everything he claims happened?
+*The timeline.* Write down every time mentioned. When did the officer arrive? When was the arrest made? When were Miranda rights read? Gaps in the timeline are gold. If the officer says he arrived at 10:15 PM and the arrest happened at 10:18 PM, was three minutes enough time for everything he claims happened?
 
 *What you allegedly said.* Read these very carefully. Did you actually say what they claim? Were you Mirandized before making statements? Were you in custody at the time? Could your words be taken out of context?
 
-**Then check witness statements.** Look for consistency -- do statements match the police report? Do multiple witnesses agree? What's the timing -- taken immediately or days later? And importantly, what did witnesses NOT say? If a witness was supposedly present but doesn't mention key events the officer describes, that's a discrepancy.
+**Then check witness statements.** Look for consistency, do statements match the police report? Do multiple witnesses agree? What's the timing, taken immediately or days later? And importantly, what did witnesses NOT say? If a witness was supposedly present but doesn't mention key events the officer describes, that's a discrepancy.
 
-**Lab results in drug cases:** What substance? What testing method? What was the weight -- and does it include packaging? The difference between actual drug weight and total weight (with packaging, cutting agents, fillers) can be the difference between possession and trafficking.
+**Lab results in drug cases:** What substance? What testing method? What was the weight, and does it include packaging? The difference between actual drug weight and total weight (with packaging, cutting agents, fillers) can be the difference between possession and trafficking.
 
 **Lab results in DUI cases:** What was the BAC? Breath test or blood test? When was it administered relative to driving? Was the equipment calibrated? Who administered it? Are they certified?
 

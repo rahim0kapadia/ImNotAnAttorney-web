@@ -134,7 +134,7 @@ async function main() {
   console.log("Resolved:", resolved, "| Unresolved:", unresolved);
 
   if (!applyMode) {
-    console.log("\nDry run — sample updates:");
+    console.log("\nDry run, sample updates:");
     for (let i = 0; i < Math.min(10, updates.length); i++) {
       const u = updates[i];
       const off = allOfficers.find((o) => o.id === u.id);

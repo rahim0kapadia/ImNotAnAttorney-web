@@ -15,7 +15,7 @@
 ```
 Checkout Page -> Checkout API -> Stripe Checkout -> Webhook -> Verify API -> Success Page
                                                       |                          |
-                                                Download API  <-- <--  Delivery Email
+                                                Download API  <, <,  Delivery Email
 ```
 
 **Webhook** creates order + `download_token` in Supabase `orders` table, sends delivery email with download links.
@@ -26,16 +26,16 @@ Checkout Page -> Checkout API -> Stripe Checkout -> Webhook -> Verify API -> Suc
 ## Issues
 
 | ID | Component | File | Problem |
-|----|-----------|------|---------|
-| A | Webhook | `api/webhooks/stripe/route.ts:131` | Rejects $0 amount — **FIXED** (`645fd13`) |
+|----|---------, |------|---------|
+| A | Webhook | `api/webhooks/stripe/route.ts:131` | Rejects $0 amount, **FIXED** (`645fd13`) |
 | B | Verify API | `api/checkout/verify/route.ts:85` | Rejects `payment_status="no_payment_required"` for $0 sessions |
-| C | Success page | `checkout/success/page.tsx:332-343` | No download button — just says "check email" |
+| C | Success page | `checkout/success/page.tsx:332-343` | No download button, just says "check email" |
 | D | Success page | `checkout/success/page.tsx:413,434` | Upgrade says "$100" without explaining CD is $197 with $97 credited |
 | E | Delivery email | `api/webhooks/stripe/route.ts:435-436` | Same upgrade copy issue as D |
 
 ---
 
-### Task 1: Fix verify API — accept $0 payments and return download URLs
+### Task 1: Fix verify API, accept $0 payments and return download URLs
 
 **Files:**
 - Modify: `src/app/api/checkout/verify/route.ts:82-109`
@@ -58,7 +58,7 @@ with:
 ```typescript
     // Treat "paid" and "no_payment_required" as verified. "no_payment_required"
     // occurs with 100% coupons (e.g., internal QA coupon for E2E testing).
-    // "unpaid" means the customer abandoned — reject that.
+    // "unpaid" means the customer abandoned, reject that.
     if (session.payment_status !== "paid" && session.payment_status !== "no_payment_required") {
       return NextResponse.json({ verified: false });
     }
@@ -70,7 +70,7 @@ After `response` object construction (after line 103, before `return NextRespons
 
 ```typescript
     // For digital products, look up the download token from the order record.
-    // The webhook creates the token async — it may not exist yet if the customer
+    // The webhook creates the token async, it may not exist yet if the customer
     // hits the success page before the webhook fires. Return null gracefully;
     // the success page shows "check email" as fallback.
     const tierSlug = session.metadata?.tier;
@@ -93,7 +93,7 @@ After `response` object construction (after line 103, before `return NextRespons
 
 - [ ] **Step 3: Type check**
 
-Run: `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc --noEmit`
+Run: `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc,noEmit`
 Expected: No new errors
 
 - [ ] **Step 4: Commit**
@@ -140,7 +140,7 @@ Replace lines 332-343 (the `{info.isDigitalProduct ? (` block through its closin
                 {downloadUrl ? (
                   <div className="space-y-3">
                     <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-5">
-                      <p className="text-sm font-semibold text-red-400">Start Here — Emergency Playbook</p>
+                      <p className="text-sm font-semibold text-red-400">Start Here, Emergency Playbook</p>
                       <p className="mt-1 text-xs text-zinc-400">Your First 72 Hours checklist, 5 Priority Questions, and what to do right now.</p>
                       <a
                         href={emergencyDownloadUrl || downloadUrl}
@@ -151,7 +151,7 @@ Replace lines 332-343 (the `{info.isDigitalProduct ? (` block through its closin
                     </div>
                     <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-5">
                       <p className="text-sm font-semibold text-amber-400">Full Defense Playbook</p>
-                      <p className="mt-1 text-xs text-zinc-400">Complete reference — case stage roadmap, red flag checklist, scorecard, all 26 questions.</p>
+                      <p className="mt-1 text-xs text-zinc-400">Complete reference, case stage roadmap, red flag checklist, scorecard, all 26 questions.</p>
                       <a
                         href={downloadUrl}
                         className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
@@ -169,7 +169,7 @@ Replace lines 332-343 (the `{info.isDigitalProduct ? (` block through its closin
                       Your playbook download link has been sent to <span className="text-zinc-300">{customerEmail}</span>
                     </p>
                     <p className="mt-2 text-sm text-zinc-400">
-                      Check your inbox — if you don&apos;t see it in 5 minutes, check spam.
+                      Check your inbox, if you don&apos;t see it in 5 minutes, check spam.
                     </p>
                   </div>
                 )}
@@ -181,7 +181,7 @@ The fallback (no `downloadUrl`) handles the race condition where the webhook has
 
 - [ ] **Step 4: Type check**
 
-Run: `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc --noEmit`
+Run: `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc,noEmit`
 Expected: No new errors
 
 - [ ] **Step 5: Commit**
@@ -193,7 +193,7 @@ git commit -m "feat(success): show download buttons for playbooks on success pag
 
 ---
 
-### Task 3: Fix upgrade copy — success page
+### Task 3: Fix upgrade copy, success page
 
 **Files:**
 - Modify: `src/app/checkout/success/page.tsx:413,434`
@@ -203,13 +203,13 @@ git commit -m "feat(success): show download buttons for playbooks on success pag
 Replace:
 
 ```tsx
-                  Your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? "$97"} is already credited. The Playbook gives you general questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
+                  Your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? "$97"} is already credited. The Playbook gives you general questions, the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
 ```
 
 with:
 
 ```tsx
-                  The Case Decoder is {TIER_CORE["case-decoder"].priceDisplay} — your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? "$97"} playbook purchase is fully credited, so you pay just {upgradeCostBetween(tier as TierSlug, "case-decoder")}. Every dollar moves upward. The Playbook gives you general questions — the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
+                  The Case Decoder is {TIER_CORE["case-decoder"].priceDisplay}, your {TIER_CORE[tier as keyof typeof TIER_CORE]?.priceDisplay ?? "$97"} playbook purchase is fully credited, so you pay just {upgradeCostBetween(tier as TierSlug, "case-decoder")}. Every dollar moves upward. The Playbook gives you general questions, the Case Decoder builds 15 questions from YOUR charges, YOUR state, YOUR stage.
 ```
 
 - [ ] **Step 2: Update upgrade CTA button (line 434)**
@@ -217,7 +217,7 @@ with:
 Replace:
 
 ```tsx
-                  Upgrade to {TIER_CORE["case-decoder"].name} — {upgradeCostBetween(tier as TierSlug, "case-decoder")} &rarr;
+                  Upgrade to {TIER_CORE["case-decoder"].name}, {upgradeCostBetween(tier as TierSlug, "case-decoder")} &rarr;
 ```
 
 with:
@@ -229,14 +229,14 @@ with:
 - [ ] **Step 3: Type check + commit**
 
 ```bash
-npx tsc --noEmit
+npx tsc,noEmit
 git add src/app/checkout/success/page.tsx
 git commit -m "fix(success): explain full price + credit in upgrade copy"
 ```
 
 ---
 
-### Task 4: Fix upgrade copy — delivery email
+### Task 4: Fix upgrade copy, delivery email
 
 **Files:**
 - Modify: `src/app/api/webhooks/stripe/route.ts:435-436`
@@ -252,7 +252,7 @@ Replace:
 with:
 
 ```typescript
-            <p style="margin: 8px 0 0; color: #D4D4D8;">The ${TIER_CORE["case-decoder"].name} is ${TIER_CORE["case-decoder"].priceDisplay} — your ${TIER_CORE[upgradeTierSlug].priceDisplay} is fully credited, so you pay just ${upgradeCost}. Every dollar moves upward. Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;">The ${TIER_CORE["case-decoder"].name} is ${TIER_CORE["case-decoder"].priceDisplay}, your ${TIER_CORE[upgradeTierSlug].priceDisplay} is fully credited, so you pay just ${upgradeCost}. Every dollar moves upward. Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
 ```
 
 - [ ] **Step 2: Update email CTA button (line 436)**
@@ -272,7 +272,7 @@ with:
 - [ ] **Step 3: Type check + commit**
 
 ```bash
-npx tsc --noEmit
+npx tsc,noEmit
 git add src/app/api/webhooks/stripe/route.ts
 git commit -m "fix(email): explain full price + credit in delivery email upgrade CTA"
 ```

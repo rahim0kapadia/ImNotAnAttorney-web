@@ -52,7 +52,7 @@ const STANDALONE_CATEGORY_CTA: Record<
     headlineAccent: "Find out in 48 hours.",
     subhead:
       "Employment Impact Assessment: state-specific background check analysis, employer type rules, and professional license implications for your exact situation. 60-second intake, report delivered in 48 hours. 7-day refund guarantee.",
-    primaryLabel: `Get Your Employment Impact Assessment — ${_employmentPrice}`,
+    primaryLabel: `Get Your Employment Impact Assessment, ${_employmentPrice}`,
     secondaryLabel: "Not sure yet? Take the free Defense Milestone Score",
   },
 };
@@ -64,7 +64,7 @@ export function BlogCTA({ category, slug }: { category?: string; slug?: string }
     return url.includes("?") ? `${url}&${refParam}` : `${url}?${refParam}`;
   };
 
-  // Standalone product branch — employment and any future standalone categories
+  // Standalone product branch, employment and any future standalone categories
   const standalone = category ? STANDALONE_CATEGORY_CTA[category] : undefined;
   if (standalone) {
     return (
@@ -147,13 +147,13 @@ export function BlogCTA({ category, slug }: { category?: string; slug?: string }
                 href={appendRef("/score")}
                 className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-semibold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
-                Take the Defense Milestone Score — Free &rarr;
+                Take the Defense Milestone Score, Free &rarr;
               </Link>
               <Link
                 href={appendRef("/checkout?tier=dui-first-offense")}
                 className="rounded-lg border border-amber-500/50 px-6 py-3 text-center text-sm font-semibold text-amber-400 transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:border-amber-500"
               >
-                DUI Playbook — {TIER_CORE["dui-first-offense"].priceDisplay}
+                DUI Playbook, {TIER_CORE["dui-first-offense"].priceDisplay}
               </Link>
             </div>
           </>

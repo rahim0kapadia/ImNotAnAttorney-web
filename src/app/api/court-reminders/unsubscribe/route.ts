@@ -1,5 +1,5 @@
 /**
- * GET /api/court-reminders/unsubscribe?token=xxx — Unsubscribes a reminder.
+ * GET /api/court-reminders/unsubscribe?token=xxx, Unsubscribes a reminder.
  * Sets status to 'unsubscribed'. Shows a simple confirmation page.
  */
 
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     console.error("[Court Reminders] Unsubscribe error:", error);
   }
 
-  // Always show success (even if token not found — prevent enumeration)
+  // Always show success (even if token not found, prevent enumeration)
   return new NextResponse(
     `<!DOCTYPE html>
     <html lang="en"><head><meta charset="utf-8"><title>Unsubscribed</title>

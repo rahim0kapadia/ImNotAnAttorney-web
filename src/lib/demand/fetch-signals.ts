@@ -1,5 +1,5 @@
 /**
- * Reddit Signal Fetcher — core logic for fetching criminal defense posts.
+ * Reddit Signal Fetcher, core logic for fetching criminal defense posts.
  * Ported from scripts/demand/fetch-reddit-signals.mjs
  *
  * Accepts a Supabase admin client as a parameter so it can run inside
@@ -16,7 +16,7 @@ import {
 } from '@/lib/demand/classify-signal';
 
 const USER_AGENT = 'ImNotAnAttorneyBot/1.0 (legal demand intelligence)';
-const DELAY_MS = 1500;   // 1.5s between requests — well under Reddit's 60/min
+const DELAY_MS = 1500;   // 1.5s between requests, well under Reddit's 60/min
 const LIMIT = 25;        // posts per query (matches original default)
 const TIME_WINDOW = 'week';
 

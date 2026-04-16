@@ -20,7 +20,7 @@ The most common complaint filed with state bar associations across the country i
 
 Here's what I'd do in your position, step by step.
 
-**First, document everything.** Write down every call you've made, every email you've sent, every voicemail you've left. Include dates and times. This isn't about being petty -- it's about building a record in case you need it later for a bar complaint, a substitution of counsel, or an ineffective assistance of counsel claim.
+**First, document everything.** Write down every call you've made, every email you've sent, every voicemail you've left. Include dates and times. This isn't about being petty, it's about building a record in case you need it later for a bar complaint, a substitution of counsel, or an ineffective assistance of counsel claim.
 
 **Second, send a written request.** Email or certified letter. Keep it professional but direct:
 
@@ -28,7 +28,7 @@ Here's what I'd do in your position, step by step.
 
 That email does two things: it creates a paper trail, and it asks specific questions that can't be answered with "we're working on it."
 
-**Third, know your rights.** You have the right to communicate with your attorney about your case. You have the right to be informed of all developments. You have the right to access your case files and discovery materials. And yes -- you have the right to fire your attorney if they're not performing.
+**Third, know your rights.** You have the right to communicate with your attorney about your case. You have the right to be informed of all developments. You have the right to access your case files and discovery materials. And yes, you have the right to fire your attorney if they're not performing.
 
 **Fourth, when they finally call back, don't waste it on frustration.** Ask strategic questions:
 - What motions have been filed since my last court date?
@@ -38,10 +38,10 @@ That email does two things: it creates a paper trail, and it asks specific quest
 
 These force your attorney to show their work. And they signal that you're paying attention, which tends to improve attorney behavior going forward.
 
-**The uncomfortable truth:** an attorney who won't return calls usually isn't doing the behind-the-scenes work either. Communication failures are symptoms of bigger problems -- missed deadlines, unfiled motions, unreviewed discovery.
+**The uncomfortable truth:** an attorney who won't return calls usually isn't doing the behind-the-scenes work either. Communication failures are symptoms of bigger problems, missed deadlines, unfiled motions, unreviewed discovery.
 
 If you've documented repeated failures to communicate, you have options: file a bar complaint, request a substitution of counsel (if you have a public defender), or hire new private counsel.
 
 Don't wait until your court date to find out nothing has been done. Ask the questions now.
 
-**Image direction**: Split image -- phone showing "No Missed Calls" vs. a legal folder gathering dust | **Republish to**: LinkedIn article if 5K+ views
+**Image direction**: Split image, phone showing "No Missed Calls" vs. a legal folder gathering dust | **Republish to**: LinkedIn article if 5K+ views

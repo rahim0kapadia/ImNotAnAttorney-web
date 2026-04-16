@@ -10,7 +10,7 @@ suggested_time: "Sunday 7:30 PM ET"
 target_groups: ["Women with Incarcerated Partners", "Incarcerated Loved Ones", "Strong Prison Wives"]
 ---
 
-## Facebook Post: Story -- The Wife Who Read the Reports
+## Facebook Post: Story, The Wife Who Read the Reports
 
 **Type**: Text post (long-form)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -49,7 +49,7 @@ The attorney filed a motion to challenge the reliability of the State's account.
 
 His wife did not replace the attorney. She prompted the attorney to do what should have been done from the beginning: read every page.
 
-If you are on the outside researching for someone you love -- your eyes matter. You know the person. You know the story. You might see something in those documents that an overworked attorney reading at 11 PM after his fortieth case that day might miss.
+If you are on the outside researching for someone you love, your eyes matter. You know the person. You know the story. You might see something in those documents that an overworked attorney reading at 11 PM after his fortieth case that day might miss.
 
 Request the discovery. Read it. Compare the reports. Look for inconsistencies.
 

@@ -1,7 +1,7 @@
 # ImNotAnAttorney Growth Strategy
 
 **Created:** 2026-03-13
-**Status:** Strategy document -- implementation pending
+**Status:** Strategy document, implementation pending
 **Budget context:** Bootstrapped, lean. $500-$2,000/month paid budget ceiling initially.
 
 ---
@@ -32,7 +32,7 @@
 ```
 AWARENESS                    ENGAGEMENT              CONVERSION           RETENTION/VIRAL
 Blog (SEO) ------>
-Reddit/Quora ---->  Score Page (/score)  -->  Email Capture  -->  Case Decoder ($197)  -->  Referral
+Reddit/Quora ---->  Score Page (/score) ,>  Email Capture ,>  Case Decoder ($197) ,>  Referral
 Social (TikTok) ->  [10 questions,          [band-specific     [charge-specific        [defendant-to-
 Facebook Groups ->   zero friction]          copy, free          report + questions]      defendant sharing]
 Paid (Google) --->                           checklist]
@@ -47,7 +47,7 @@ Paid (Google) --->                           checklist]
 ### Unit Economics Target
 
 | Metric | Target | Why |
-|--------|--------|-----|
+|------, |------, |---, |
 | CAC (organic) | $0-$5 | Content + community investment, no per-acquisition cost |
 | CAC (paid) | $50-$100 | Realistic for legal keywords with long-tail strategy |
 | LTV (Case Decoder) | $197 | Single purchase, but 100% upgrade credit drives upsells |
@@ -83,22 +83,22 @@ Add a share section immediately after the score arc display and before the obser
 **Design:**
 
 ```
-+--------------------------------------------------+
++------------------------------------------------, +
 |  Your score: [72] - Adequate                      |
 |                                                   |
 |  "Know someone facing charges?                    |
-|   Send them this -- 60 seconds, free,             |
+|   Send them this, 60 seconds, free,             |
 |   no email required."                             |
 |                                                   |
 |  [Text] [WhatsApp] [Email] [Copy Link]            |
-+--------------------------------------------------+
++------------------------------------------------, +
 ```
 
 **Share message templates (pre-populated):**
 
-- **Text/SMS:** "I just scored my criminal defense in 60 seconds -- free, no email. Worth checking if you have a case: imnotanattorney.com/score"
+- **Text/SMS:** "I just scored my criminal defense in 60 seconds, free, no email. Worth checking if you have a case: imnotanattorney.com/score"
 - **WhatsApp:** "This free tool scores how prepared your defense is. Took me 60 seconds. No email required: imnotanattorney.com/score"
-- **Email subject:** "Free tool -- scores your criminal defense in 60 seconds"
+- **Email subject:** "Free tool, scores your criminal defense in 60 seconds"
 - **Email body:** "I just used this free tool that checks whether your criminal defense attorney is hitting the right milestones. Takes 60 seconds, no email or account needed. Thought it might help with your case: imnotanattorney.com/score"
 - **Copy link:** imnotanattorney.com/score (with UTM: ?utm_source=share&utm_medium=score&utm_campaign=viral)
 
@@ -106,7 +106,7 @@ Add a share section immediately after the score arc display and before the obser
 
 1. **Identity signaling:** "I'm the kind of person who takes my defense seriously" (the tribe identity section reinforces this)
 2. **Altruism:** Defendants know other defendants. Family members know other family members. The desire to help someone going through the same thing is strong.
-3. **Anxiety processing:** Sharing the tool is a way to process the anxiety of the score result -- "if other people do this too, I'm not alone"
+3. **Anxiety processing:** Sharing the tool is a way to process the anxiety of the score result, "if other people do this too, I'm not alone"
 4. **Practical value:** The score is genuinely useful. People share useful things.
 
 **What makes people NOT share:**
@@ -144,7 +144,7 @@ Generate a short anonymous referral ID (8-char hex) on score completion. If some
 
 Create a dynamic OG image for shared score links that says:
 
-"Defense Milestone Score -- Free, 60 seconds, no email required"
+"Defense Milestone Score, Free, 60 seconds, no email required"
 
 Do NOT include the actual score or band in the OG image (privacy). The image should drive curiosity, not reveal results.
 
@@ -158,18 +158,18 @@ Blog posts have share buttons (SMS, WhatsApp, Email, Twitter/X, Facebook) with "
 
 ### A. Share Button Optimization
 
-**Current share message (SMS):** "Read this -- it might help with your case: [URL]"
+**Current share message (SMS):** "Read this, it might help with your case: [URL]"
 
-**Optimized share message:** "I found this article about [topic] -- it covers questions you should be asking your attorney that most people never think of: [URL]"
+**Optimized share message:** "I found this article about [topic], it covers questions you should be asking your attorney that most people never think of: [URL]"
 
 The optimization adds specificity ("questions you should be asking") and stakes ("that most people never think of"). Generic messages get ignored. Specific ones get opened.
 
 **Per-category share messages:**
 
-- **DUI posts:** "If you or someone you know got a DUI -- this covers the evidence your attorney should be pulling that has time-sensitive deadlines: [URL]"
+- **DUI posts:** "If you or someone you know got a DUI, this covers the evidence your attorney should be pulling that has time-sensitive deadlines: [URL]"
 - **Drug posts:** "This article about drug case discovery is the kind of thing nobody explains to defendants. Worth reading: [URL]"
-- **White collar:** "For anyone dealing with a federal case -- this covers the questions that actually matter, from someone who's been through it: [URL]"
-- **General:** "This might help with your case. It covers what your attorney should be doing -- and what to ask if they're not: [URL]"
+- **White collar:** "For anyone dealing with a federal case, this covers the questions that actually matter, from someone who's been through it: [URL]"
+- **General:** "This might help with your case. It covers what your attorney should be doing, and what to ask if they're not: [URL]"
 
 ### B. "Know Someone" Framing Deep Dive
 
@@ -181,7 +181,7 @@ The current "Know someone facing charges?" framing is powerful because:
 
 **Enhance with specificity:**
 
-- After DUI posts: "Know someone who just got arrested for DUI? The first 10 days are critical -- share this before they miss the DMV deadline."
+- After DUI posts: "Know someone who just got arrested for DUI? The first 10 days are critical, share this before they miss the DMV deadline."
 - After drug posts: "Know someone facing drug charges? This covers the evidence problems their attorney might not be checking."
 - After general posts: "Know someone whose lawyer won't return their calls? This is the article I wish I'd found sooner."
 
@@ -191,9 +191,9 @@ The current "Know someone facing charges?" framing is powerful because:
 
 This reframes sharing from content recommendation to personal empathy. The copy should reflect this:
 
-- "Send this to someone who needs it -- you know what it feels like to be in the dark."
+- "Send this to someone who needs it, you know what it feels like to be in the dark."
 - "The best thing someone did for me was send me information I didn't know I needed."
-- "If someone you know is going through what you went through -- this might be the thing that helps."
+- "If someone you know is going through what you went through, this might be the thing that helps."
 
 ### D. Blog Post Sharing Multiplier
 
@@ -201,7 +201,7 @@ For the 5 highest-traffic blog posts, add an inline share prompt at the most emo
 
 Example placement in "Attorney Not Returning Calls":
 - After the section about documenting contact attempts, before the section about filing a bar complaint
-- Copy: "If this sounds familiar, someone you know is probably going through the same thing right now. Send them this -- it takes 30 seconds."
+- Copy: "If this sounds familiar, someone you know is probably going through the same thing right now. Send them this, it takes 30 seconds."
 
 ---
 
@@ -213,7 +213,7 @@ Referral programs in legal services must account for:
 
 1. **Sensitivity:** Defendants don't want to broadcast their legal situation. The referral must be private (text, email, WhatsApp) not public (social media posts).
 2. **Trust deficit:** Defendants distrust everyone. The referral must come from another defendant, not from the company. Peer-to-peer, not brand-to-consumer.
-3. **Timing:** Defendants share with people who are CURRENTLY going through the system. The referral window is narrow -- they need the tool NOW, not in 6 months.
+3. **Timing:** Defendants share with people who are CURRENTLY going through the system. The referral window is narrow, they need the tool NOW, not in 6 months.
 4. **Incentive calibration:** Cash discounts feel transactional and cheap. Value-based rewards (free upgrades, extended access, bonus content) feel like generosity.
 
 ### Referral Program Design
@@ -223,7 +223,7 @@ Referral programs in legal services must account for:
 **Mechanics:**
 
 | Referrer Action | Referrer Reward | Referee Benefit |
-|----------------|-----------------|-----------------|
+|----------------|---------------, |---------------, |
 | Share score link, referee completes score | Free "Top 10 Questions" PDF (normally email-gated) | N/A (score is already free) |
 | Share score link, referee purchases Case Decoder | $20 credit toward any INAA product | 10% discount on Case Decoder |
 | Share blog post, referee purchases any tier | $20 credit toward any INAA product | 10% discount on first purchase |
@@ -262,7 +262,7 @@ Family members (spouses, parents, siblings) are a critical referral channel. The
 ### Budget Scenarios
 
 | Monthly Budget | Primary Channel | Secondary Channel | Expected Leads/Month |
-|---------------|-----------------|-------------------|---------------------|
+|---------------|---------------, |-------------------|---------------------|
 | $500 | Google Ads (long-tail) | None | 15-25 score completions |
 | $1,000 | Google Ads (long-tail) | Facebook retargeting | 30-50 score completions |
 | $2,000 | Google Ads (long-tail + exact) | Facebook prospecting + retargeting | 60-100 score completions |
@@ -275,12 +275,12 @@ Family members (spouses, parents, siblings) are a critical referral channel. The
 
 **The solution: Long-tail informational keywords.**
 
-INAA is NOT competing with law firms for "hire a lawyer" searches. INAA targets the informational layer BELOW that -- defendants who already have a lawyer but need to know if that lawyer is doing their job.
+INAA is NOT competing with law firms for "hire a lawyer" searches. INAA targets the informational layer BELOW that, defendants who already have a lawyer but need to know if that lawyer is doing their job.
 
 **Target keywords (estimated CPC $2-$15):**
 
 | Keyword | Intent | Landing Page | Est. CPC |
-|---------|--------|-------------|----------|
+|---------|------, |-------------|----------|
 | "what questions to ask criminal defense attorney" | Research | /blog/10-questions-every-defendant-should-ask | $3-$8 |
 | "is my public defender working my case" | Frustration | /blog/is-your-attorney-actually-working-your-case | $2-$5 |
 | "attorney not returning calls what to do" | Crisis | /blog/attorney-not-returning-calls | $3-$7 |
@@ -306,7 +306,7 @@ Headlines should use VoC language (from docs/research/voc-defendant-language.md)
 - "Public Defender Not Responding? | Your Rights Explained"
 
 Descriptions should reference the free score tool:
-- "Free Defense Milestone Score -- 10 questions, 60 seconds, no email required. See if your attorney is hitting the right milestones."
+- "Free Defense Milestone Score, 10 questions, 60 seconds, no email required. See if your attorney is hitting the right milestones."
 
 **Landing page strategy:**
 - Blog posts are the primary landing pages (SEO-optimized, high-quality content)
@@ -336,7 +336,7 @@ Descriptions should reference the free score tool:
 **Targeting strategy (indirect):**
 
 | Audience | Interests/Behaviors | Why |
-|----------|---------------------|-----|
+|----------|---------------------|---, |
 | Family members | Parenting groups, family support, prison reform advocacy | Spouses/parents searching on behalf of defendants |
 | Legal-adjacent | Legal shows (Making a Murderer, etc.), true crime, court TV | People interested in the justice system |
 | Lookalike | 1% lookalike of score completions | Algorithmically similar to people who use the tool |
@@ -348,7 +348,7 @@ Format: Single image or short video (15-30 seconds)
 
 Image ad copy:
 - Headline: "Is Your Attorney Actually Working Your Case?"
-- Primary text: "Most defendants never ask the right questions. This free tool scores your defense in 60 seconds -- no email, no sign-up."
+- Primary text: "Most defendants never ask the right questions. This free tool scores your defense in 60 seconds, no email, no sign-up."
 - CTA button: "Take the Free Score"
 - Link: imnotanattorney.com/score?utm_source=facebook&utm_medium=paid
 
@@ -375,7 +375,7 @@ Once the organic Reddit presence is established (Phase 3-4 of the Reddit SOP), c
 - **Subreddit targeting:** r/legaladvice, r/dui
 - **Format:** Promoted posts that look like organic content
 - **Budget:** $200-$500/month test
-- **Creative:** "Is your criminal defense attorney actually working your case? Free 60-second score -- no email required."
+- **Creative:** "Is your criminal defense attorney actually working your case? Free 60-second score, no email required."
 - **Wait until:** Organic Reddit account has 1000+ karma and established presence
 
 ### What NOT To Do With Paid Ads
@@ -428,7 +428,7 @@ Testimonials + Case Studies -------+
 **Current blog post topics mapped to search intent:**
 
 | Search Intent Cluster | Blog Posts | Target Keywords |
-|----------------------|-----------|-----------------|
+|----------------------|---------, |---------------, |
 | Attorney accountability | attorney-not-returning-calls, is-your-attorney-actually-working-your-case, feels-like-lawyer-working-against-me, how-often-should-attorney-communicate, what-happens-if-attorney-misses-deadline, how-your-attorney-makes-money | "lawyer not returning calls," "is my attorney working my case," "lawyer not fighting for me" |
 | Questions to ask | 10-questions-every-defendant-should-ask, 5-questions-dui-attorney, questions-to-ask-before-hiring-criminal-defense-attorney, wire-fraud-defense-questions | "questions to ask criminal defense attorney," "what to ask DUI lawyer" |
 | Case process | how-criminal-cases-actually-work, what-happens-at-arraignment, first-time-felony-what-actually-happens, why-is-my-criminal-case-taking-so-long | "what happens at arraignment," "first felony charge," "how long does a criminal case take" |
@@ -464,7 +464,7 @@ Each of the 35 blog posts already has:
 ### Missing Topics (High Search Volume, No Current Coverage)
 
 | Topic | Search Intent | Priority | Est. Monthly Searches |
-|-------|--------------|----------|----------------------|
+|-------|------------, |----------|----------------------|
 | "What happens if I violate probation" | Fear/practical | HIGH | 5,000-10,000 |
 | "How to prepare for sentencing" | Preparation | HIGH | 3,000-5,000 |
 | "What is a plea bargain vs plea deal" | Education | MEDIUM | 2,000-4,000 |
@@ -484,18 +484,18 @@ Each of the 35 blog posts already has:
 ### Content Priorities
 
 **Immediate (next 5 posts):**
-1. "What happens if you violate probation" -- high volume, INAA has a probation playbook
-2. "How to prepare for sentencing" -- no current coverage, high stakes moment
-3. "How to get charges reduced" -- directly feeds Case Decoder value prop
-4. "How to help someone in jail" -- opens the family member audience
-5. "Complete drug defense guide" -- pillar page to match DUI and white collar guides
+1. "What happens if you violate probation", high volume, INAA has a probation playbook
+2. "How to prepare for sentencing", no current coverage, high stakes moment
+3. "How to get charges reduced", directly feeds Case Decoder value prop
+4. "How to help someone in jail", opens the family member audience
+5. "Complete drug defense guide", pillar page to match DUI and white collar guides
 
 **Near-term (posts 6-10):**
-6. "What happens at a preliminary hearing" -- process coverage gap
-7. "How to expunge a criminal record" -- post-conviction audience
-8. "What are my rights during a traffic stop" -- upstream from DUI content
-9. "Can I change my plea after pleading guilty" -- high emotional resonance
-10. "How to find a good criminal defense lawyer" -- hiring decision content
+6. "What happens at a preliminary hearing", process coverage gap
+7. "How to expunge a criminal record", post-conviction audience
+8. "What are my rights during a traffic stop", upstream from DUI content
+9. "Can I change my plea after pleading guilty", high emotional resonance
+10. "How to find a good criminal defense lawyer", hiring decision content
 
 ---
 
@@ -506,7 +506,7 @@ Each of the 35 blog posts already has:
 Every blog post should be distributed across 5+ channels:
 
 | Channel | Format | Frequency | Tools |
-|---------|--------|-----------|-------|
+|---------|------, |---------, |-------|
 | Blog (SEO) | Long-form MDX | 2-3 posts/week | Next.js, Vercel |
 | Reddit | Comments + occasional posts | Daily (per SOP) | Manual |
 | Twitter/X | Thread excerpts, single tweets | 2-3x/day | Content bank |
@@ -521,13 +521,13 @@ Every blog post should be distributed across 5+ channels:
 
 For each blog post:
 
-1. **Headline becomes Twitter single tweet** -- post the headline as a standalone tweet with the blog link
-2. **Key insight becomes Twitter thread** -- extract the 5-7 most important points into a numbered thread
-3. **TLDRBox becomes TikTok/Shorts script** -- the summary is already structured for short-form video
-4. **FAQ section becomes Quora answers** -- each FAQ maps to a Quora question
-5. **Statistics/data become Pinterest infographics** -- visual representation of key facts
-6. **Full post becomes Facebook group discussion starter** -- adapted for group posting rules
-7. **Core argument becomes Reddit comment material** -- internalize, don't copy-paste
+1. **Headline becomes Twitter single tweet**, post the headline as a standalone tweet with the blog link
+2. **Key insight becomes Twitter thread**, extract the 5-7 most important points into a numbered thread
+3. **TLDRBox becomes TikTok/Shorts script**, the summary is already structured for short-form video
+4. **FAQ section becomes Quora answers**, each FAQ maps to a Quora question
+5. **Statistics/data become Pinterest infographics**, visual representation of key facts
+6. **Full post becomes Facebook group discussion starter**, adapted for group posting rules
+7. **Core argument becomes Reddit comment material**, internalize, don't copy-paste
 
 ---
 
@@ -536,7 +536,7 @@ For each blog post:
 ### Weekly Dashboard Metrics
 
 | Metric | Current Baseline | 30-Day Target | 90-Day Target |
-|--------|-----------------|---------------|---------------|
+|------, |---------------, |---------------|---------------|
 | Score completions/week | Unknown (need tracking) | 50 | 200 |
 | Email captures/week | Unknown (need tracking) | 20 | 75 |
 | Blog visits/week | Unknown (need tracking) | 500 | 2,000 |
@@ -562,7 +562,7 @@ For each blog post:
 ### Key Ratio Tracking
 
 | Ratio | Target | Why It Matters |
-|-------|--------|---------------|
+|-------|------, |---------------|
 | Viral coefficient (K-factor) | 0.3 (initial), 0.5+ (optimized) | Each user generates 0.3-0.5 additional users through sharing |
 | Score:Purchase ratio | 25:1 | 1 in 25 score completions converts to a purchase |
 | Email:Purchase ratio | 15:1 | 1 in 15 email subscribers purchases within 30 days |
@@ -575,29 +575,29 @@ For each blog post:
 
 Tactics ranked by effort/impact ratio for a bootstrapped business:
 
-### Tier 1 -- Do This Week (Highest ROI, Lowest Effort)
+### Tier 1, Do This Week (Highest ROI, Lowest Effort)
 
 | Tactic | Effort | Expected Impact | Details |
-|--------|--------|-----------------|---------|
+|------, |------, |---------------, |---------|
 | Add share buttons to score page | 2-3 hours dev | 5-10% share rate = viral multiplier | Section 2A |
 | Add score counter ("X people scored this month") | 1-2 hours dev | Social proof, +5-10% completion rate | Section 2C |
 | Start Reddit account (Phase 1) | 30 min/day | Long-term trust-building | Reddit SOP Phase 1 |
 | Set up Vercel Analytics tracking for score/blog | 1 hour | Baseline data for all future decisions | Section 9 |
 
-### Tier 2 -- Do This Month (High ROI, Moderate Effort)
+### Tier 2, Do This Month (High ROI, Moderate Effort)
 
 | Tactic | Effort | Expected Impact | Details |
-|--------|--------|-----------------|---------|
+|------, |------, |---------------, |---------|
 | Write 5 content gap posts (probation, sentencing, charges reduced, family help, drug guide) | 5-8 hours per post | 500-1000 new organic visits/month each | Section 7 |
 | Optimize blog share messages (per-category copy) | 2-3 hours | +20-30% share rate on existing shares | Section 3A |
 | Start Google Ads on 5 long-tail keywords ($500 test) | 3-4 hours setup | 15-25 score completions/month | Section 5A |
 | Reddit Phase 2 (authority comments in legal subs) | 30 min/day | Foundation for Phase 3 organic mentions | Reddit SOP Phase 2 |
 | Create /for-families landing page | 4-6 hours | Opens entire family member audience | Section 4 |
 
-### Tier 3 -- Do This Quarter (Moderate ROI, Higher Effort)
+### Tier 3, Do This Quarter (Moderate ROI, Higher Effort)
 
 | Tactic | Effort | Expected Impact | Details |
-|--------|--------|-----------------|---------|
+|------, |------, |---------------, |---------|
 | Referral program implementation | 8-12 hours dev | 10-15% of new users from referrals | Section 4 |
 | Score benchmarking (aggregate averages) | 4-6 hours dev | +10-15% email capture rate | Section 2B |
 | Facebook ads test ($500, retargeting first) | 3-4 hours setup | 30-50 score completions/month | Section 5B |
@@ -605,10 +605,10 @@ Tactics ranked by effort/impact ratio for a bootstrapped business:
 | YouTube Shorts production | 2-3 hours/video | Brand awareness, SEO complement | Section 8 |
 | Pinterest board setup + 26 pin descriptions | 4-6 hours | Long-tail visual search traffic | Section 8 |
 
-### Tier 4 -- Do Later (Lower Priority or Dependent on Earlier Tiers)
+### Tier 4, Do Later (Lower Priority or Dependent on Earlier Tiers)
 
 | Tactic | Effort | Expected Impact | Details |
-|--------|--------|-----------------|---------|
+|------, |------, |---------------, |---------|
 | Reddit AMA (requires Phase 4 account status) | 4-6 hours prep + 2 hours live | Brand awareness spike, 50-100 score completions | Reddit SOP Phase 4 |
 | Reddit paid ads | $200-500/month + setup | Incremental to organic Reddit | Section 5C |
 | Dynamic score OG images | 3-4 hours dev | Better social sharing CTR | Section 2E |

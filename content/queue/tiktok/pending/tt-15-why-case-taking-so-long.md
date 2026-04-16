@@ -10,7 +10,7 @@ topic: Why is my criminal case taking so long?
 blog_slug: why-is-my-criminal-case-taking-so-long
 estimated_duration: 30s
 format: Standard (talking head + timeline graphic)
-suggested_sound: "Original audio — voiceover + slow clock ambient"
+suggested_sound: "Original audio, voiceover + slow clock ambient"
 suggested_posting_time: "Thursday 12:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Thursday 12:00 PM EST"
 
 **Format**: Standard
 **Duration**: 30 seconds
-**Suggested sound**: Original audio — voiceover + slow clock ambient
+**Suggested sound**: Original audio, voiceover + slow clock ambient
 **Suggested posting time**: Thursday 12:00 PM EST
 
 ---
@@ -48,14 +48,14 @@ suggested_posting_time: "Thursday 12:00 PM EST"
 **Text overlay**: "Every month on hold is a month of your life."
 
 [SECOND 27-30]
-**Visual**: Person checking their phone — opening a court docket lookup.
+**Visual**: Person checking their phone, opening a court docket lookup.
 **Text overlay**: "Check the filings between continuances. That's your answer. imnotanattorney.com"
 **Audio**: Clock stops. Beat resolves.
 
 ---
 
 ### Caption
-14 months. 5 continuances. Zero motions filed. Your attorney says "it's strategy." Ask one question: what work was done between continuances? The answer — or the silence — tells you everything.
+14 months. 5 continuances. Zero motions filed. Your attorney says "it's strategy." Ask one question: what work was done between continuances? The answer, or the silence, tells you everything.
 
 ### Hashtags
 #criminalcase #continuance #caseupdate #criminaldefense #knowyourrights #attorneyaccountability
@@ -66,5 +66,5 @@ Court docket showing 5 "Continued" entries stacked. Text: "14 Months. Zero Motio
 ---
 
 **Context**: "Why is my case taking so long" is one of the highest-frustration queries from defendants. This video validates that frustration and gives them a diagnostic tool. Drives Case Decoder sales.
-**Loop strategy**: Opens with the docket showing delays, ends with the person proactively checking — the shift from passive waiting to active investigation.
+**Loop strategy**: Opens with the docket showing delays, ends with the person proactively checking, the shift from passive waiting to active investigation.
 **KPI target**: Shares (people forward this to family members waiting)

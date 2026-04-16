@@ -185,7 +185,7 @@ export interface CaseMetrics {
 // PORTAL TYPES (customer-facing)
 // ============================================================
 
-/** What the customer sees in their portal — tier-gated. */
+/** What the customer sees in their portal, tier-gated. */
 interface PortalCaseView {
   // Always visible
   status: string;

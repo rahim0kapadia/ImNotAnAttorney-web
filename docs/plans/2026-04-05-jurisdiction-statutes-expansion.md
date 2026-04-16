@@ -5,13 +5,13 @@
 **Triage:** LARGE_BUILD (4 phases, 10+ files, API generation + verification pipeline)
 
 ## Files Touched
-- `scripts/remap-orphan-slugs.mjs` — one-time remap script (Phase 1, DONE)
-- `scripts/generate-charge-taxonomy.ts` — add 59 new COMMON_CHARGES entries (Phase 1)
-- `supabase/migrations/029-seed-charge-taxonomy.sql` — regenerated output (Phase 1)
-- `data/charge-taxonomy/MI.json` — remapped slugs (Phase 1, DONE)
-- `data/charge-taxonomy/NJ.json` — remapped slugs (Phase 1, DONE)
-- `data/charge-taxonomy/{44 new state JSONs}` — generated output (Phase 2)
-- `scripts/legal-research-all.mjs` — new generic verification script (Phase 3)
+- `scripts/remap-orphan-slugs.mjs`, one-time remap script (Phase 1, DONE)
+- `scripts/generate-charge-taxonomy.ts`, add 59 new COMMON_CHARGES entries (Phase 1)
+- `supabase/migrations/029-seed-charge-taxonomy.sql`, regenerated output (Phase 1)
+- `data/charge-taxonomy/MI.json`, remapped slugs (Phase 1, DONE)
+- `data/charge-taxonomy/NJ.json`, remapped slugs (Phase 1, DONE)
+- `data/charge-taxonomy/{44 new state JSONs}`, generated output (Phase 2)
+- `scripts/legal-research-all.mjs`, new generic verification script (Phase 3)
 
 ## Current State
 - jurisdiction_statutes: 510 rows, 5 states (FL:101, GA:106, IL:102, NC:97, PA:104)
@@ -61,9 +61,9 @@ elder exploitation, weapons enhancements, federal-specific offenses, etc.
 
 ## Phase 2: Generate Missing States
 6. Add skip-existing to generateAllJurisdictions
-7. Generate 44 states + DC via --all (~$2-5 API cost)
+7. Generate 44 states + DC via,all (~$2-5 API cost)
 8. Load all new JSONs
-9. Validate via --validate
+9. Validate via,validate
 
 ## Phase 3: Verify Everything
 10. Build legal-research-all.mjs (generic verification)
@@ -74,19 +74,19 @@ elder exploitation, weapons enhancements, federal-specific offenses, etc.
 12. Report per-state verification summary
 
 ## Phase 4: Final Audit
-13. Query: expect ~5,200+ rows across 52 jurisdictions (currently 757 across 8 — generation blocked)
+13. Query: expect ~5,200+ rows across 52 jurisdictions (currently 757 across 8, generation blocked)
 14. Every row: confidence_score >= 0.30
 15. Flag failures for manual review or removal
 
 ## Blockers
 - **Anthropic API credits depleted**: 44 states + DC cannot be generated until credits topped up
-  - Command after top-up: `npx tsx scripts/generate-charge-taxonomy.ts --all`
+  - Command after top-up: `npx tsx scripts/generate-charge-taxonomy.ts,all`
   - Then load: `node scripts/load-jurisdiction-data.mjs`
   - Then verify: `node scripts/legal-research-all.mjs`
 - **Justia Cloudflare**: States other than FL can't be HTTP-verified via Justia. CourtListener case law is the primary confidence booster for non-FL states.
 
 ## Progress
-- Phase 1: DONE — 174 common_charges, 757 jurisdiction_statutes across 8 jurisdictions (FL, GA, IL, MI, NC, NJ, PA, federal)
-- Phase 2: BLOCKED — API credits depleted, 0/44 states generated. Script works.
-- Phase 3: RUNNING — verification in progress on 757 existing rows
-- Phase 4: PENDING — waiting for Phase 3 completion
+- Phase 1: DONE, 174 common_charges, 757 jurisdiction_statutes across 8 jurisdictions (FL, GA, IL, MI, NC, NJ, PA, federal)
+- Phase 2: BLOCKED, API credits depleted, 0/44 states generated. Script works.
+- Phase 3: RUNNING, verification in progress on 757 existing rows
+- Phase 4: PENDING, waiting for Phase 3 completion

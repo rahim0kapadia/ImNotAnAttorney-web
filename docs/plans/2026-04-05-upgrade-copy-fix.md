@@ -1,8 +1,8 @@
-# Upgrade Copy Fix — Success Page + Delivery Email
+# Upgrade Copy Fix, Success Page + Delivery Email
 
 **Date:** 2026-04-05  
 **Tier:** FEATURE (2 files)  
-**Status:** IN PROGRESS — Task 3 done, Task 4 pending
+**Status:** IN PROGRESS, Task 3 done, Task 4 pending
 
 ## Problem
 
@@ -10,20 +10,20 @@ The upgrade CTA shows the net cost ("$100") without explaining the full price ($
 
 ## Fix
 
-Show: "The Case Decoder is $197 — your $97 is credited, so you pay just $100. Every dollar moves upward."
+Show: "The Case Decoder is $197, your $97 is credited, so you pay just $100. Every dollar moves upward."
 
 ## Files
 
-1. `src/app/checkout/success/page.tsx` — playbook OTO upgrade block (DONE)
-2. `src/app/api/webhooks/stripe/route.ts` — delivery email upgrade block (PENDING)
+1. `src/app/checkout/success/page.tsx`, playbook OTO upgrade block (DONE)
+2. `src/app/api/webhooks/stripe/route.ts`, delivery email upgrade block (PENDING)
 
 ## Changes
 
-### Task 3 — success/page.tsx (DONE)
+### Task 3, success/page.tsx (DONE)
 - Explanation text: show full CD price + credit amount + net cost
 - Button text: "Upgrade for $100 (your $97 credited) →"
 
-### Task 4 — webhooks/stripe/route.ts (PENDING)
+### Task 4, webhooks/stripe/route.ts (PENDING)
 - Email explanation: same pattern as above
 - Email CTA button: add credit parenthetical to button text
 

@@ -1,6 +1,6 @@
 "use client";
 /**
- * /admin/inbox — Operator email inbox viewer
+ * /admin/inbox, Operator email inbox viewer
  *
  * Displays inbound emails sent to help@imnotanattorney.com.
  * Auth: ADMIN_PASSWORD entered via login form, stored in sessionStorage.
@@ -424,7 +424,7 @@ function InboxContent() {
                   </div>
                 )}
 
-                {/* Email body — sanitized to prevent XSS from malicious inbound emails */}
+                {/* Email body, sanitized to prevent XSS from malicious inbound emails */}
                 <div className="border-t border-zinc-500 pt-4">
                   {selected.body_html ? (
                     <div

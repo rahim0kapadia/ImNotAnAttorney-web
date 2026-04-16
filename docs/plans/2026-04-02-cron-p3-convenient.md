@@ -3,7 +3,7 @@
 ## Context
 - **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web`
 - **Spec:** `C:\Users\email\projects\ImNotAnAttorney\docs\specs\2026-04-01-cron-review-p3-convenient.md`
-- **Problem:** 16 code quality findings — correctness, naming, validation, cleanup. No active damage.
+- **Problem:** 16 code quality findings, correctness, naming, validation, cleanup. No active damage.
 - **Tech stack:** Next.js 15, Supabase, TypeScript
 - **Pre-done by P2:** P3-05 (ALL_TIME_START constant), P3-06 (named constant), P3-13 (createAdminClient)
 

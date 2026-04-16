@@ -1,4 +1,4 @@
-# FTA Dashboard v1 — P0 Bug Fixes from Code Review
+# FTA Dashboard v1, P0 Bug Fixes from Code Review
 
 Source: Code review of commit f61a3bd (FTA Prevention Dashboard v1)
 

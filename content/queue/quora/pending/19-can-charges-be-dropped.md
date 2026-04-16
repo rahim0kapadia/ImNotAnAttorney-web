@@ -20,7 +20,7 @@ Charges don't get dropped because you're a good person, because it was your firs
 
 **Who has the power:**
 
-The prosecutor -- not the judge, not the police, not the victim -- has almost exclusive power to drop charges. This is called prosecutorial discretion. They can decline to file, drop charges after filing (nolle prosequi), reduce charges, or offer diversion programs.
+The prosecutor, not the judge, not the police, not the victim, has almost exclusive power to drop charges. This is called prosecutorial discretion. They can decline to file, drop charges after filing (nolle prosequi), reduce charges, or offer diversion programs.
 
 The judge can dismiss only for legal reasons: speedy trial violation, successful motion to dismiss, defective indictment, constitutional violation.
 
@@ -34,13 +34,13 @@ Constitutional violations. Illegal search, unlawful stop, Miranda violation, coe
 
 Witness problems. Key witness becomes unavailable, refuses to cooperate, or has devastating credibility issues (prior convictions, cooperating for their own deal, statements that contradict physical evidence).
 
-Diversion programs. Many jurisdictions offer these for first-time offenders. Complete a program -- community service, counseling, treatment -- and charges are dismissed.
+Diversion programs. Many jurisdictions offer these for first-time offenders. Complete a program, community service, counseling, treatment, and charges are dismissed.
 
 Pre-trial intervention. You agree to conditions (no new arrests, community service, restitution) and in exchange, charges drop after a compliance period.
 
 **What does NOT get charges dropped:**
 
-"It was my first offense" -- might affect your sentence, but doesn't automatically mean charges drop. "The victim doesn't want to press charges" -- the prosecutor decides. "I said I was sorry" -- apologies aren't a defense and can actually be used as evidence of guilt.
+"It was my first offense", might affect your sentence, but doesn't automatically mean charges drop. "The victim doesn't want to press charges", the prosecutor decides. "I said I was sorry", apologies aren't a defense and can actually be used as evidence of guilt.
 
 **What you can do:** Make sure your attorney is actively filing motions, investigating witnesses, communicating weaknesses to the prosecutor, exploring diversion options, and building your case for every possible defense. Charges don't drop themselves. Someone has to push.
 

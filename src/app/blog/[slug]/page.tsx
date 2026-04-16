@@ -266,20 +266,20 @@ export default async function BlogPostPage({ params }: PageProps) {
         </div>
         </MDXErrorBoundary>
 
-        {/* Mid-article lead capture — category-specific checklist */}
+        {/* Mid-article lead capture, category-specific checklist */}
         <BlogInlineCapture category={post.category || "general-defense"} slug={slug} />
 
-        {/* Share — growth loop */}
+        {/* Share, growth loop */}
         <ShareButtons url={`/blog/${slug}`} title={post.title} />
 
-        {/* Playbook CTA — shown above BlogCTA for DUI posts */}
+        {/* Playbook CTA, shown above BlogCTA for DUI posts */}
         {post.category === "dui" && (
           <div className="mt-12">
             <PlaybookCTA slug={slug} />
           </div>
         )}
 
-        {/* Service CTA — pillar-aware when available, fallback to generic */}
+        {/* Service CTA, pillar-aware when available, fallback to generic */}
         <div className="mt-12">
           {post.pillarSlug ? (
             <PillarCTA
@@ -294,19 +294,19 @@ export default async function BlogPostPage({ params }: PageProps) {
           )}
         </div>
 
-        {/* Score CTA — Free defense quiz */}
+        {/* Score CTA, Free defense quiz */}
         <div className="mt-8 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 text-center">
           <p className="text-sm font-bold text-white">
             Want to see how your defense measures up?
           </p>
           <p className="mt-1 text-sm text-zinc-400">
-            10 questions. 60 seconds. Free — no email required to start.
+            10 questions. 60 seconds. Free, no email required to start.
           </p>
           <Link
             href={`/score?ref=blog-${slug}`}
             className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
-            Take the Defense Milestone Score — Free
+            Take the Defense Milestone Score, Free
           </Link>
         </div>
 

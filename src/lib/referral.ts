@@ -1,5 +1,5 @@
 /**
- * @fileoverview Bail bondsman referral system — Stripe promo code helpers.
+ * @fileoverview Bail bondsman referral system, Stripe promo code helpers.
  *
  * Creates and manages Stripe Promotion Codes for bondsman partners.
  * Architecture: One master coupon (10% off, forever duration) with unique
@@ -36,19 +36,19 @@ const MASTER_COUPON_ID = "bondsman-referral-10pct";
 
 /**
  * Ensures the master 10%-off coupon exists on a Stripe account.
- * Idempotent — catches "already exists" errors gracefully.
+ * Idempotent, catches "already exists" errors gracefully.
  */
 async function ensureCouponOnClient(client: Stripe): Promise<void> {
   try {
     await client.coupons.retrieve(MASTER_COUPON_ID);
   } catch {
-    // Coupon doesn't exist — create it
+    // Coupon doesn't exist, create it
     try {
       await client.coupons.create({
         id: MASTER_COUPON_ID,
         percent_off: 10,
         duration: "forever",
-        name: "Bondsman Partner — 10% Off",
+        name: "Bondsman Partner, 10% Off",
       });
     } catch (createErr: unknown) {
       // Race condition: another request created it between retrieve and create
@@ -109,7 +109,7 @@ export async function createPartnerPromoCode(
     partnerName
   );
 
-  // Also create on live if available — ignore errors (live might not be set up)
+  // Also create on live if available, ignore errors (live might not be set up)
   if (stripeLive) {
     try {
       await createPromoOnClient(stripeLive, partnerId, code, partnerName);

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * E2E Visual Test — Playbook Purchase Funnel
+ * E2E Visual Test, Playbook Purchase Funnel
  *
  * Validates all playbook sales pages, checkout pages, and service listings
  * render correctly using Playwright. This is a read-only visual validation
- * script — no Stripe calls, no DB writes. Safe to run against production.
+ * script, no Stripe calls, no DB writes. Safe to run against production.
  *
  * Test suites:
  *   1. All 8 playbook sales pages load (/playbook/<slug>)
@@ -74,7 +74,7 @@ async function safeGoto(page, url) {
     await page.goto(url, { waitUntil: "networkidle", timeout: NAV_TIMEOUT });
     return true;
   } catch (err) {
-    console.error(`    ✗ Navigation failed: ${url} — ${err.message}`);
+    console.error(`    ✗ Navigation failed: ${url}, ${err.message}`);
     failed++;
     return false;
   }
@@ -309,7 +309,7 @@ async function testMainTiersCheckout(page) {
 // ================================================================
 
 async function run() {
-  console.log(`\nE2E Visual Test — Playbook Purchase Funnel`);
+  console.log(`\nE2E Visual Test, Playbook Purchase Funnel`);
   console.log(`Target: ${BASE_URL}`);
   console.log(`Time:   ${new Date().toISOString()}\n`);
 

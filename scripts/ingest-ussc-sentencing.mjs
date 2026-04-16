@@ -76,11 +76,11 @@ function loadEnv() {
 }
 loadEnv();
 
-// ── Helpers — NO REGEX (hook enforced) ──────────────────────────────────────
+// ── Helpers, NO REGEX (hook enforced) ──────────────────────────────────────
 
 /**
  * Normalize a string to lowercase alphanumeric + spaces.
- * Char-code loop — no regex.
+ * Char-code loop, no regex.
  */
 function normalize(name) {
   if (!name) return "";
@@ -113,7 +113,7 @@ function normalize(name) {
   return result.slice(start, end + 1).join("");
 }
 
-/** SQL escape — single-quote doubling, no regex. */
+/** SQL escape, single-quote doubling, no regex. */
 function esc(str) {
   if (str === null || str === undefined) return "NULL";
   const s = String(str);
@@ -151,7 +151,7 @@ function percentile(arr, p) {
 }
 
 // ── District label map (USSC district codes → human labels) ─────────────────
-// Partial map — covers the most common districts. Unknown codes keep raw value.
+// Partial map, covers the most common districts. Unknown codes keep raw value.
 const DISTRICT_LABELS = {
   "1": "District of Maine", "2": "District of New Hampshire", "3": "District of Massachusetts",
   "4": "District of Rhode Island", "5": "District of Connecticut", "6": "Southern District of New York",
@@ -228,7 +228,7 @@ function departureType(booteflt, booteftt, sentrnge) {
     if (n === 6) return "upward";
     return "other";
   }
-  // Fallback to SENTRNGE (FY2024 CSV format — post-Booker reporting categories)
+  // Fallback to SENTRNGE (FY2024 CSV format, post-Booker reporting categories)
   if (sentrnge && sentrnge !== "" && sentrnge !== "0") {
     const s = parseInt(sentrnge, 10);
     if (s === 1 || s === 6) return "upward";          // departure + above-range variance
@@ -293,11 +293,11 @@ async function main() {
         r[k.toUpperCase()] = row[k];
       }
 
-      // District code — required
+      // District code, required
       const distCode = (r["DISTRICT"] || "").trim();
       if (!distCode) { skipped++; return; }
 
-      // Sentence months — SENSPLT0 preferred, fall back to SENTTOT
+      // Sentence months, SENSPLT0 preferred, fall back to SENTTOT
       const sentRaw = r["SENSPLT0"] || r["SENTTOT"] || "";
       const sentMonths = parseFloat(sentRaw);
       if (isNaN(sentMonths) || sentMonths < 0) { skipped++; return; }
@@ -308,7 +308,7 @@ async function main() {
       agg.sentences.push(sentMonths);
       agg.total++;
 
-      // Departure type — SENTRNGE fallback for FY2024 CSV (no BOOTEFLT/BOOTEFTT)
+      // Departure type, SENTRNGE fallback for FY2024 CSV (no BOOTEFLT/BOOTEFTT)
       const dep = departureType(r["BOOTEFLT"], r["BOOTEFTT"], r["SENTRNGE"]);
       if (dep === "substantial_assistance") agg.substantial_assistance++;
       else if (dep === "govt_sponsored_below") agg.govt_sponsored_below++;

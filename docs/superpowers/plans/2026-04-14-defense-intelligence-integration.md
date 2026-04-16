@@ -1,8 +1,8 @@
-# Defense Intelligence Data Integration — Implementation Plan (v3)
+# Defense Intelligence Data Integration, Implementation Plan (v3)
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Wire 7 external datasets (JUSTFAIR 595K sentencing, NPI, Fatal Encounters, FBI NIBRS, MPV, BJS, USSC) into every INAA product — transforming existing products and launching new ones.
+**Goal:** Wire 7 external datasets (JUSTFAIR 595K sentencing, NPI, Fatal Encounters, FBI NIBRS, MPV, BJS, USSC) into every INAA product, transforming existing products and launching new ones.
 
 **Architecture:** Mechanical-over-AI. Tier 9 products use query → template → HTML (no Claude API). IB/X-Ray/WR/SR use AI but grounded on richer data context. Free tools are 100% mechanical. All data queries route through `defense-intelligence/query.ts` (designated single query surface). Edge Functions use raw PostgREST fetch (Deno).
 
@@ -17,7 +17,7 @@
 ## File Map
 
 | File | Role | Phases |
-|------|------|--------|
+|------|------|------, |
 | `src/lib/defense-intelligence/query.ts` | All new JUSTFAIR queries live here (designated single query surface) | 1 |
 | `src/lib/tier9-reports/query.ts` | Fix bench_jury bug, add justfair field to JudgeReportCardData | 1 |
 | `src/lib/tier9-reports/render.ts` | New JUSTFAIR HTML sections for Judge Report Card + Officer Background | 1, 3 |
@@ -34,7 +34,7 @@
 | `src/app/tools/[slug]/CalculatorClient.tsx` | New sentencing calculator + judge comparison components | 5 |
 | `src/lib/tiers.ts` | New SKU entries (District Court Intelligence, Arrest Survival Kit) | 6 |
 
-**CRITICAL WARNING — Edge Function duplication:** `supabase/functions/generate-report/index.ts` contains a COPY of `buildIBVariables()` (line ~4433) that mirrors `src/lib/intelligence-brief/variables.ts`. Both must be updated in sync. The Edge Function version returns `Record<string, string>` (untyped), NOT the typed `IBVariables` interface. Any field added to variables.ts MUST also be added to the Edge Function copy.
+**CRITICAL WARNING, Edge Function duplication:** `supabase/functions/generate-report/index.ts` contains a COPY of `buildIBVariables()` (line ~4433) that mirrors `src/lib/intelligence-brief/variables.ts`. Both must be updated in sync. The Edge Function version returns `Record<string, string>` (untyped), NOT the typed `IBVariables` interface. Any field added to variables.ts MUST also be added to the Edge Function copy.
 
 ---
 
@@ -85,8 +85,8 @@ Append after `DefenseIntelligenceData` interface (~line 88):
 ```typescript
 // ============================================================
 // JUSTFAIR TYPES (federal sentencing + judge demographics)
-// Source: osf.io/nseh5 — 595,851 federal sentencing records
-// FEDERAL COURTS ONLY — state court judges return isEmpty=true
+// Source: osf.io/nseh5, 595,851 federal sentencing records
+// FEDERAL COURTS ONLY, state court judges return isEmpty=true
 // ============================================================
 
 export interface JudgeDemographics {
@@ -122,7 +122,7 @@ export interface JustfairJudgeData {
 }
 ```
 
-Note: District-level sentencing comparison uses the EXISTING `usscPatterns` field from `queryJudgeReportCard()`, which already queries `judge_sentencing_patterns` (line 328-332 of query.ts). JUSTFAIR rows are in the same table with `sources @> '{JUSTFAIR}'`. No separate districtSentencing field needed — the existing query already returns JUSTFAIR data.
+Note: District-level sentencing comparison uses the EXISTING `usscPatterns` field from `queryJudgeReportCard()`, which already queries `judge_sentencing_patterns` (line 328-332 of query.ts). JUSTFAIR rows are in the same table with `sources @> '{JUSTFAIR}'`. No separate districtSentencing field needed, the existing query already returns JUSTFAIR data.
 
 - [ ] **Step 3: Add queryJustfairJudge function**
 
@@ -131,7 +131,7 @@ Append after `queryDefenseIntelligence()`:
 ```typescript
 /**
  * Query JUSTFAIR judge demographics + racial disparity data.
- * FEDERAL COURTS ONLY — 1,126 judges in database.
+ * FEDERAL COURTS ONLY, 1,126 judges in database.
  * State court judges will return isEmpty=true.
  */
 export async function queryJustfairJudge(
@@ -198,7 +198,7 @@ const justfairData = await queryJustfairJudge(intake.judgeName);
 data.justfair = justfairData;
 ```
 
-Note: variable is `data` (not `reportCardData`) — verified in generate.ts line ~110.
+Note: variable is `data` (not `reportCardData`), verified in generate.ts line ~110.
 
 - [ ] **Step 3: Add module-level formatting helpers to render.ts**
 
@@ -207,12 +207,12 @@ Near the top of render.ts, after existing helpers like `sourceLink`:
 ```typescript
 /** Format months value for sentencing display */
 function fmtMonths(v: number | null): string {
-  return v !== null ? `${v.toFixed(1)} mo` : "—";
+  return v !== null ? `${v.toFixed(1)} mo` : ", ";
 }
 
 /** Format decimal as percentage */
 function fmtPct(v: number | null): string {
-  return v !== null ? `${(v * 100).toFixed(1)}%` : "—";
+  return v !== null ? `${(v * 100).toFixed(1)}%` : ", ";
 }
 ```
 
@@ -224,7 +224,7 @@ After the existing Judge Profile table, add:
   // JUSTFAIR Judge Background (federal courts only)
   if (data.justfair?.demographics) {
     const d = data.justfair.demographics;
-    body += sectionHeader("Judge Background — Federal Court Intelligence");
+    body += sectionHeader("Judge Background, Federal Court Intelligence");
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Source: JUSTFAIR (QSIDE Institute), USSC FY2001-2023. Federal courts only. <a href="https://osf.io/nseh5/" style="color: #F59E0B;">[source]</a></p>`;
     body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">`;
 
@@ -251,14 +251,14 @@ After the existing Judge Profile table, add:
 
 - [ ] **Step 5: REPLACE existing USSC sentencing section with enhanced version**
 
-render.ts already has a "Federal Sentencing Intelligence (USSC Data)" section at lines ~130-154 that renders `data.usscPatterns`. **REPLACE that section** (do NOT add alongside it — that would duplicate the same data). The new version uses the hoisted `fmtMonths`/`fmtPct` helpers and includes the JUSTFAIR source citation:
+render.ts already has a "Federal Sentencing Intelligence (USSC Data)" section at lines ~130-154 that renders `data.usscPatterns`. **REPLACE that section** (do NOT add alongside it, that would duplicate the same data). The new version uses the hoisted `fmtMonths`/`fmtPct` helpers and includes the JUSTFAIR source citation:
 
 ```typescript
   // REPLACES the existing "Federal Sentencing Intelligence (USSC Data)" section (~lines 130-154)
   // Remove the old section and replace with this enhanced version:
   if (data.usscPatterns) {
     const s = data.usscPatterns;
-    body += sectionHeader("Sentencing Intelligence — 595,851 Federal Cases Analyzed");
+    body += sectionHeader("Sentencing Intelligence, 595,851 Federal Cases Analyzed");
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">This judge's sentencing patterns from USSC/JUSTFAIR data. <a href="https://osf.io/nseh5/" style="color: #F59E0B;">[source]</a></p>`;
 
     body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
@@ -267,7 +267,7 @@ render.ts already has a "Federal Sentencing Intelligence (USSC Data)" section at
         <th style="padding: 8px 16px; color: #F59E0B; border-bottom: 2px solid #292524; text-align: right;">This Judge</th>
       </tr></thead><tbody>`;
 
-    body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total Cases</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${s.total_cases?.toLocaleString() ?? "—"}</td></tr>`;
+    body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total Cases</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${s.total_cases?.toLocaleString() ?? ", "}</td></tr>`;
     body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Median Sentence</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtMonths(s.median_sentence_months)}</td></tr>`;
     body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Range (P25–P75)</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtMonths(s.p25_sentence_months)} – ${fmtMonths(s.p75_sentence_months)}</td></tr>`;
     body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Downward Departures</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtPct(s.downward_departure_rate)}</td></tr>`;
@@ -349,7 +349,7 @@ Add JUSTFAIR demographics check to the EXISTING `Promise.all` array (lines 57-63
     coverage.justfairDemographics >= 1;
 ```
 
-Handle the case where `judgeId` is null (no CL match) — the CL queries will return 0, but the JUSTFAIR query uses the name directly, so it still works.
+Handle the case where `judgeId` is null (no CL match), the CL queries will return 0, but the JUSTFAIR query uses the name directly, so it still works.
 
 - [ ] **Step 2: Update landing page copy**
 
@@ -362,9 +362,9 @@ In `src/app/judge-report-card/page.tsx`, find the "What You Get" feature list. A
 - [ ] **Step 3: Run TypeScript check + commit Phase 1**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 git add src/lib/defense-intelligence/query.ts src/lib/tier9-reports/query.ts src/lib/tier9-reports/generate.ts src/lib/tier9-reports/render.ts src/lib/tier9-reports/coverage.ts src/app/judge-report-card/page.tsx
-git commit -m "feat(tier9): JUSTFAIR integration — Judge Report Card demographics, sentencing, racial disparity"
+git commit -m "feat(tier9): JUSTFAIR integration, Judge Report Card demographics, sentencing, racial disparity"
 ```
 
 - [ ] **Step 4: E2E validation**
@@ -386,7 +386,7 @@ Spot-check: "Amy Berman Jackson" (D.C. District, Obama, Harvard Law, 69% downwar
 **Files:**
 - Modify: `src/lib/intelligence-brief/variables.ts`
 - Modify: `src/lib/intelligence-brief/prompts.ts`
-- Modify: `supabase/functions/generate-report/index.ts` (Deno — raw PostgREST fetch)
+- Modify: `supabase/functions/generate-report/index.ts` (Deno, raw PostgREST fetch)
 
 **CRITICAL:** The Edge Function has a DUPLICATED `buildIBVariables()` at line ~4433 that must be updated IN SYNC with variables.ts. The Edge Function version returns `Record<string, string>` (untyped).
 
@@ -415,7 +415,7 @@ In `variables.ts`, after the existing "External Intelligence Layer" fields (line
 
 - [ ] **Step 3: Add PostgREST queries in Edge Function**
 
-In `supabase/functions/generate-report/index.ts`, in the Phase A handler (~line 4151), add queries using the existing `supabaseSelect()` wrapper (NOT raw fetch — use the wrapper already in the file at line ~107):
+In `supabase/functions/generate-report/index.ts`, in the Phase A handler (~line 4151), add queries using the existing `supabaseSelect()` wrapper (NOT raw fetch, use the wrapper already in the file at line ~107):
 
 ```typescript
 // JUSTFAIR judge demographics
@@ -444,7 +444,7 @@ ${v.judge_racial_disparity ? `<judge_demographic_sentencing>\n${v.judge_racial_d
 - [ ] **Step 5: TypeScript check + commit Phase 2**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 git add src/lib/intelligence-brief/variables.ts src/lib/intelligence-brief/prompts.ts supabase/functions/generate-report/index.ts
 git commit -m "feat(ib): wire JUSTFAIR + BJS data into Intelligence Brief variables and prompts"
 ```
@@ -455,7 +455,7 @@ git commit -m "feat(ib): wire JUSTFAIR + BJS data into Intelligence Brief variab
 
 **Impact:** $97 product goes from thin (32 CL rows) to comprehensive (NPI + Fatal Encounters).
 
-**Note:** NPI V1 covers AZ, CA, GA only (3 states with processed data). Full 24-state needs Invisible Institute bulk data access. Fatal Encounters names agencies, not individual officers — cross-ref is agency-level.
+**Note:** NPI V1 covers AZ, CA, GA only (3 states with processed data). Full 24-state needs Invisible Institute bulk data access. Fatal Encounters names agencies, not individual officers, cross-ref is agency-level.
 
 ### Task 3.1: Build + run NPI ingestion script
 
@@ -482,17 +482,17 @@ Log to `data_source_freshness`: source_key='fatal_encounters', last_ingested_at=
 ### Task 3.3: Update Officer Background Check render
 
 **Files:**
-- Modify: `src/lib/tier9-reports/render.ts` — Add in `renderOfficerBackground()`:
+- Modify: `src/lib/tier9-reports/render.ts`, Add in `renderOfficerBackground()`:
   - Employment History Timeline section (chronological table from NPI data)
   - Wandering Officer Alert (highlighted box if terminated→rehired pattern detected)
   - Agency Fatal Encounter Alert (highlighted box if arresting agency has fatal encounters)
 
-No query.ts changes needed — `queryOfficerBackground()` already queries `officer_external_intel`.
+No query.ts changes needed, `queryOfficerBackground()` already queries `officer_external_intel`.
 
 - [ ] **TypeScript check + commit Phase 3**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 git add scripts/ingest-npi.mjs scripts/ingest-fatal-encounters.mjs src/lib/tier9-reports/render.ts
 git commit -m "feat(tier9): NPI + Fatal Encounters ingestion, Officer Background Check render upgrade"
 ```
@@ -506,20 +506,20 @@ git commit -m "feat(tier9): NPI + Fatal Encounters ingestion, Officer Background
 ### Task 4.1: Case Decoder sentencing context
 
 **Files:**
-- Modify: `supabase/functions/generate-report/index.ts` — In Case Decoder section, query sentencing_distributions for charge + state, inject as `<sentencing_context>` in CD prompt
+- Modify: `supabase/functions/generate-report/index.ts`, In Case Decoder section, query sentencing_distributions for charge + state, inject as `<sentencing_context>` in CD prompt
 
 ### Task 4.2: Plea Analyzer JUSTFAIR grounding
 
 **Files:**
-- Modify: `src/app/api/plea-analyzer/route.ts` — Before calling Edge Function
-- Modify: `supabase/functions/generate-standalone/index.ts` — Plea analyzer prompt case (NOT generate-report — this is a different Edge Function)
+- Modify: `src/app/api/plea-analyzer/route.ts`, Before calling Edge Function
+- Modify: `supabase/functions/generate-standalone/index.ts`, Plea analyzer prompt case (NOT generate-report, this is a different Edge Function)
 
 Query sentencing_distributions + outcome_benchmarks for charge + state. Pass as context string in Edge Function payload. Claude grounds its plea analysis in real district-level numbers.
 
 ### Task 4.3: Score page contextual enrichment
 
 **Files:**
-- Modify: `src/app/score/ScoreClient.tsx` or score API route — After score generation, query sentencing_distributions + outcome_benchmarks, render as data context below the score
+- Modify: `src/app/score/ScoreClient.tsx` or score API route, After score generation, query sentencing_distributions + outcome_benchmarks, render as data context below the score
 
 - [ ] **TypeScript check + commit Phase 4**
 
@@ -532,9 +532,9 @@ Query sentencing_distributions + outcome_benchmarks for charge + state. Pass as 
 ### Task 5.1: Build Sentencing Calculator
 
 **Files:**
-- Modify: `src/lib/products.ts` — Register `sentencing-calculator` with `category: "calculator"` (uses existing `tools/[slug]` dynamic route)
-- Create: New component for sentencing calculator (CalculatorClient.tsx loads by slug — the sentencing calculator needs its own component since it queries DB data unlike the existing rule-lookup calculators)
-- Create: `src/app/api/tools/sentencing-calculator/route.ts` — API route querying JUSTFAIR
+- Modify: `src/lib/products.ts`, Register `sentencing-calculator` with `category: "calculator"` (uses existing `tools/[slug]` dynamic route)
+- Create: New component for sentencing calculator (CalculatorClient.tsx loads by slug, the sentencing calculator needs its own component since it queries DB data unlike the existing rule-lookup calculators)
+- Create: `src/app/api/tools/sentencing-calculator/route.ts`, API route querying JUSTFAIR
 
 API queries `judge_sentencing_patterns` + `sentencing_distributions` by charge + state. If judge name provided, queries `judge_demographics`. Returns structured JSON.
 
@@ -545,7 +545,7 @@ All JUSTFAIR-sourced results must label "Federal Courts" clearly.
 ### Task 5.2: Build Judge Comparison Tool
 
 **Files:**
-- Modify: `src/lib/products.ts` — Register `judge-comparison` with `category: "calculator"`
+- Modify: `src/lib/products.ts`, Register `judge-comparison` with `category: "calculator"`
 - Create: New comparison component
 - Create: `src/app/api/tools/judge-comparison/route.ts`
 
@@ -560,8 +560,8 @@ Two judge names → parallel `queryJustfairJudge()` calls → side-by-side table
 ### Task 6.1: District Court Intelligence ($97)
 
 **Files:**
-- Modify: `src/lib/tiers.ts` — Add "district-court-intelligence"
-- Create: `src/app/district-court-intelligence/page.tsx` — Landing page
+- Modify: `src/lib/tiers.ts`, Add "district-court-intelligence"
+- Create: `src/app/district-court-intelligence/page.tsx`, Landing page
 - Add query + render functions following Tier 9 pattern
 - Add coverage check + AvailabilityChecker
 
@@ -570,7 +570,7 @@ Queries: JUSTFAIR sentencing by district, BJS outcome benchmarks, aggregated jud
 ### Task 6.2: Arrest Survival Kit ($47)
 
 **Files:**
-- Modify: `src/lib/tiers.ts` — Add "arrest-survival-kit"
+- Modify: `src/lib/tiers.ts`, Add "arrest-survival-kit"
 - Create: `src/app/arrest-survival-kit/page.tsx`
 - Query: officer_external_intel for agency-level data
 - Render: rights checklist + agency context + upsell to Officer Background Check
@@ -578,10 +578,10 @@ Queries: JUSTFAIR sentencing by district, BJS outcome benchmarks, aggregated jud
 ### Task 6.3: Update sample report pages
 
 **Files:**
-- Modify: `src/app/sample/` — Sample report should show new JUSTFAIR sections
-- Modify: `src/app/sample-xray/` — Same
+- Modify: `src/app/sample/`, Sample report should show new JUSTFAIR sections
+- Modify: `src/app/sample-xray/`, Same
 
-These pages are trust signals — prospects see what they'll get. Must reflect the new data depth.
+These pages are trust signals, prospects see what they'll get. Must reflect the new data depth.
 
 - [ ] **TypeScript check + commit Phase 6**
 
@@ -594,12 +594,12 @@ These pages are trust signals — prospects see what they'll get. Must reflect t
 ### Task 7.1: Similar Cases Analyzer + Officer Background Check landing page updates
 
 **Files:**
-- Modify: `src/app/similar-cases-analyzer/page.tsx` — Update "What You Get" to reflect richer sentencing_distributions (1,977+ rows) and outcome_benchmarks. "Powered by 595,851 federal sentencing records + BJS national outcome data."
-- Modify: `src/app/officer-background-check/page.tsx` — After Phase 3 ingestion, add employment history, wandering officer detection, agency incident data to feature list.
+- Modify: `src/app/similar-cases-analyzer/page.tsx`, Update "What You Get" to reflect richer sentencing_distributions (1,977+ rows) and outcome_benchmarks. "Powered by 595,851 federal sentencing records + BJS national outcome data."
+- Modify: `src/app/officer-background-check/page.tsx`, After Phase 3 ingestion, add employment history, wandering officer detection, agency incident data to feature list.
 
 ### Task 7.2: Blog content sprint (6 data-driven posts)
 
-Use existing blog pipeline. Aggregate statistics only — no individual names. Each post ends with product CTA.
+Use existing blog pipeline. Aggregate statistics only, no individual names. Each post ends with product CTA.
 
 1. "595,851 Federal Sentences Exposed: What Your Judge Is Really Doing" → Judge Report Card CTA
 2. "The Plea Trap: Why 94% of Defendants Never See a Jury" → Plea Analyzer + Case Decoder CTA
@@ -611,19 +611,19 @@ Use existing blog pipeline. Aggregate statistics only — no individual names. E
 ### Task 7.3: Partner Portal trust signal
 
 **Files:**
-- Modify: `src/app/partners/page.tsx` (NOTE: `/partners/` with an "s", NOT `/partner/`) — Add: "Our reports draw from 595,851 federal sentencing records, 15,386 judge profiles, 24 states of officer employment data, and 30,000+ police encounter records."
+- Modify: `src/app/partners/page.tsx` (NOTE: `/partners/` with an "s", NOT `/partner/`), Add: "Our reports draw from 595,851 federal sentencing records, 15,386 judge profiles, 24 states of officer employment data, and 30,000+ police encounter records."
 
 ### Task 7.4: Update SCHEMA.md with new tables
 
 **Files:**
-- Modify: `supabase/SCHEMA.md` — Add `judge_demographics` and `judge_sentencing_demographics` table definitions (created by migration `20260414f_justfair_demographics.sql` but not yet documented)
+- Modify: `supabase/SCHEMA.md`, Add `judge_demographics` and `judge_sentencing_demographics` table definitions (created by migration `20260414f_justfair_demographics.sql` but not yet documented)
 
 ### Task 7.5: Secondary pages data enrichment sweep
 
 | Route | Action |
-|-------|--------|
-| `/sample/` | **MANDATORY** — Must show new JUSTFAIR sections (prospects see this before buying) |
-| `/sample-xray/` | **MANDATORY** — Must reflect new data depth |
+|-------|------, |
+| `/sample/` | **MANDATORY**, Must show new JUSTFAIR sections (prospects see this before buying) |
+| `/sample-xray/` | **MANDATORY**, Must reflect new data depth |
 | `/dui-checklist`, `/dui-defense` | Add DUI federal sentencing range |
 | `/research/[state]` | Add state-level JUSTFAIR data (federal districts in that state) |
 | `/family/` | Sentencing context for family buyers |
@@ -634,16 +634,16 @@ Use existing blog pipeline. Aggregate statistics only — no individual names. E
 | `/guides/[slug]` | Reference aggregate JUSTFAIR stats where relevant |
 | `/prep/` | Add sentencing ranges for defendant's charge |
 | `/start/` | Data depth as trust signal |
-| `/resources/` | Content hub — link to new free tools |
-| `/playbooks/` | Product listing — add data depth trust signal |
+| `/resources/` | Content hub, link to new free tools |
+| `/playbooks/` | Product listing, add data depth trust signal |
 
 Sample pages mandatory. Everything else: 15-min assessment → implement if value-add, skip if not.
 
 ### Products explicitly excluded from this plan
 
-- **8 Playbooks ($127-$147):** No JUSTFAIR integration — static charge-type guides, not judge/officer specific. Deferred to v2 (dynamic playbooks with district sentencing data).
-- **Extra Witness Intel ($149):** No action needed — witness-focused add-on, not judge/officer data.
-- **Witness Pack ($297):** No action needed — witness-focused standalone, not judge/officer data.
+- **8 Playbooks ($127-$147):** No JUSTFAIR integration, static charge-type guides, not judge/officer specific. Deferred to v2 (dynamic playbooks with district sentencing data).
+- **Extra Witness Intel ($149):** No action needed, witness-focused add-on, not judge/officer data.
+- **Witness Pack ($297):** No action needed, witness-focused standalone, not judge/officer data.
 
 ### Pre-execution verification
 
@@ -660,10 +660,10 @@ If rows exist without `state_code`, the fix from ILIKE→eq will silently drop t
 ## Fix Traceability Matrix
 
 | Fix ID | Description | Task |
-|--------|-------------|------|
-| C1 | sentencing_distributions has no district — use judge_sentencing_patterns | 1.1 (existing usscPatterns already queries it) |
-| C2 | sources is text[] — use .contains() | 1.1 (noted, existing query already returns JUSTFAIR rows) |
-| C3 | Metrics contradiction — Prosecutor Report Card deferred | Spec updated, plan uses District Court Intelligence |
+|------, |-------------|------|
+| C1 | sentencing_distributions has no district, use judge_sentencing_patterns | 1.1 (existing usscPatterns already queries it) |
+| C2 | sources is text[], use .contains() | 1.1 (noted, existing query already returns JUSTFAIR rows) |
+| C3 | Metrics contradiction, Prosecutor Report Card deferred | Spec updated, plan uses District Court Intelligence |
 | I1 | Queries in defense-intelligence/query.ts | 1.1 (all JUSTFAIR queries in DI module) |
 | I2 | Edge Function uses PostgREST fetch | 2.1 (uses existing supabaseSelect wrapper) |
 | I3 | Wire existing IBVariables fields first | 2.1 Step 1 (first action in Phase 2) |

@@ -1,7 +1,7 @@
 /**
  * Resources Page (/resources)
  *
- * Free resources hub — everything ungated. No email required for any content.
+ * Free resources hub, everything ungated. No email required for any content.
  * Email capture happens at /score quiz after value is delivered.
  *
  * User journey:
@@ -10,11 +10,11 @@
  *                                    -> /services (paid service CTA)
  *
  * Page structure:
- *   1. Header — "Free Resources" with empowerment framing
- *   2. Guides & Templates — Two free guides (ungated, inline descriptions)
- *   3. DUI 72-Hour Checklist — Key actions shown directly, no email gate
- *   4. Score CTA — free defense quiz
- *   5. Know Your Rights by Charge Type — Three charge categories
+ *   1. Header, "Free Resources" with empowerment framing
+ *   2. Guides & Templates, Two free guides (ungated, inline descriptions)
+ *   3. DUI 72-Hour Checklist, Key actions shown directly, no email gate
+ *   4. Score CTA, free defense quiz
+ *   5. Know Your Rights by Charge Type, Three charge categories
  *   6. DUI Playbook paid product CTA
  *   7. Services CTA
  */
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
 };
 
-/** Free guides — ungated. No email required. */
+/** Free guides, ungated. No email required. */
 const resources = [
   {
     title: "The Discovery Checklist: 7 Evidence Problems Real Cases Actually Hide",
@@ -60,7 +60,7 @@ const resources = [
 ];
 
 /**
- * Per-charge-type rights guides — NOT email-gated (public information).
+ * Per-charge-type rights guides, NOT email-gated (public information).
  * Builds SEO authority and trust. These are general legal information,
  * not legal advice (disclaimer at bottom of section).
  */
@@ -98,7 +98,7 @@ const rightsGuides = [
 ];
 
 export default function ResourcesPage() {
-  // Active content guides — drives from products.ts so adding a guide is
+  // Active content guides, drives from products.ts so adding a guide is
   // isActive: true + GUIDE_CONTENT entry in /guides/[slug]/page.tsx.
   const contentGuides = productsByCategory("content");
 
@@ -118,19 +118,19 @@ export default function ResourcesPage() {
         }}
       />
       <div className="mx-auto max-w-4xl">
-        {/* HEADER — Empowerment framing: "Knowledge is power" */}
+        {/* HEADER, Empowerment framing: "Knowledge is power" */}
         <FadeInUp>
         <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
           Free Resources
         </h1>
         <p className="mt-3 text-zinc-400">
-          Knowledge is power — especially when your freedom is on the line.
+          Knowledge is power, especially when your freedom is on the line.
           These resources are free because everyone deserves to understand their
           rights.
         </p>
         </FadeInUp>
 
-        {/* FREE GUIDES — Ungated, no email required */}
+        {/* FREE GUIDES, Ungated, no email required */}
         <FadeInUp>
         <section className="mt-12">
           <h2 className="font-display text-xl font-bold text-white">
@@ -167,7 +167,7 @@ export default function ResourcesPage() {
         </section>
         </FadeInUp>
 
-        {/* FREE GUIDES — dynamic content guides sourced from products.ts */}
+        {/* FREE GUIDES, dynamic content guides sourced from products.ts */}
         {contentGuides.length > 0 && (
           <FadeInUp>
           <section className="mt-12" aria-labelledby="free-guides-heading">
@@ -228,19 +228,19 @@ export default function ResourcesPage() {
         </section>
         </FadeInUp>
 
-        {/* DUI 72-HOUR CHECKLIST — Ungated, key actions shown directly */}
+        {/* DUI 72-HOUR CHECKLIST, Ungated, key actions shown directly */}
         <FadeInUp>
         <section className="mt-12">
           <h2 className="font-display text-xl font-bold text-white">
             Arrested for DUI in the Last 48 Hours?
           </h2>
           <p className="mt-1 text-sm text-zinc-400">
-            There are three things worth doing immediately before your window closes — one has a deadline as short as 7 days.
+            There are three things worth doing immediately before your window closes, one has a deadline as short as 7 days.
           </p>
           <div className="mt-6 space-y-3">
             {[
               { n: "1", title: "Check your state\u2019s DMV hearing deadline", desc: "Some states give you as few as 7 days from arrest. Miss the window and your license is automatically suspended." },
-              { n: "2", title: "Document everything while it\u2019s fresh", desc: "What happened before the stop. What the officer said. Whether you were read your rights. Your memory fades — write it down now." },
+              { n: "2", title: "Document everything while it\u2019s fresh", desc: "What happened before the stop. What the officer said. Whether you were read your rights. Your memory fades, write it down now." },
               { n: "3", title: "Know what to ask before you hire an attorney", desc: "6 questions that help you find a DUI specialist who\u2019s the right fit. Ask these before you sign anything." },
             ].map((item) => (
               <div key={item.n} className="flex items-start gap-4 rounded-lg border border-zinc-500 bg-zinc-900/50 p-5">
@@ -257,13 +257,13 @@ export default function ResourcesPage() {
           <p className="mt-4 text-center text-sm text-zinc-400">
             Already know what you need?{" "}
             <Link href="/playbook/dui-first-offense" className="text-amber-400 underline hover:text-amber-300">
-              Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} instant download →
+              Get the DUI Defense Playbook, {TIER_CORE["dui-first-offense"].priceDisplay} instant download →
             </Link>
           </p>
         </section>
         </FadeInUp>
 
-        {/* FREE TOOLS — Sentencing Calculator + Judge Comparison */}
+        {/* FREE TOOLS, Sentencing Calculator + Judge Comparison */}
         <FadeInUp>
         <section className="mt-12">
           <h2 className="font-display text-xl font-bold text-white">
@@ -311,7 +311,7 @@ export default function ResourcesPage() {
         </section>
         </FadeInUp>
 
-        {/* SCORE CTA — Free defense quiz, THE email capture point */}
+        {/* SCORE CTA, Free defense quiz, THE email capture point */}
         <FadeInUp>
         <section className="mt-16 rounded-xl border border-amber-500/30 bg-amber-500/5 p-8 text-center">
           <h2 className="font-display text-2xl font-bold text-white">
@@ -319,18 +319,18 @@ export default function ResourcesPage() {
           </h2>
           <p className="mt-2 text-zinc-400">
             10 questions. 60 seconds. See how your case measures up against
-            the milestones that matter — no email required to start.
+            the milestones that matter, no email required to start.
           </p>
           <Link
             href="/score"
             className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
-            Take the Defense Milestone Score — Free
+            Take the Defense Milestone Score, Free
           </Link>
         </section>
         </FadeInUp>
 
-        {/* KNOW YOUR RIGHTS — Free (no email required) rights guides per     */}
+        {/* KNOW YOUR RIGHTS, Free (no email required) rights guides per     */}
         {/* charge type. Pure educational value for SEO and trust-building.   */}
         <FadeInUp>
         <section className="mt-20">
@@ -377,7 +377,7 @@ export default function ResourcesPage() {
         </section>
         </FadeInUp>
 
-        {/* DUI DEFENSE PLAYBOOK — Paid product, not email-gated */}
+        {/* DUI DEFENSE PLAYBOOK, Paid product, not email-gated */}
         <FadeInUp>
         <section className="mt-16">
           <h2 className="font-display text-2xl font-bold text-white">
@@ -385,7 +385,7 @@ export default function ResourcesPage() {
           </h2>
           <p className="mt-2 text-zinc-400">
             Everything a first-time DUI defendant needs to hold their attorney
-            accountable — in one downloadable PDF.
+            accountable, in one downloadable PDF.
           </p>
           <div className="mt-6 rounded-xl border border-amber-500/30 bg-zinc-900/50 p-6">
             <div className="flex items-start justify-between gap-4">
@@ -431,13 +431,13 @@ export default function ResourcesPage() {
               href="/playbook/dui-first-offense"
               className="mt-6 inline-block rounded-lg bg-amber-500 px-6 py-2.5 text-sm font-bold text-black transition-colors hover:bg-amber-400"
             >
-              Get the {TIER_CORE["dui-first-offense"].name} — {TIER_CORE["dui-first-offense"].priceDisplay}
+              Get the {TIER_CORE["dui-first-offense"].name}, {TIER_CORE["dui-first-offense"].priceDisplay}
             </Link>
           </div>
         </section>
         </FadeInUp>
 
-        {/* CTA — Bridges from free resources to paid case-specific services */}
+        {/* CTA, Bridges from free resources to paid case-specific services */}
         <FadeInUp>
         <section className="mt-16 text-center">
           <h2 className="font-display text-xl font-bold text-white">
@@ -451,7 +451,7 @@ export default function ResourcesPage() {
             href="/checkout?tier=case-decoder"
             className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
           >
-            Get Case-Specific Questions — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+            Get Case-Specific Questions, {TIER_CORE["case-decoder"].priceDisplay} &rarr;
           </Link>
           <div className="mt-6">
             <TrustBadges variant="compact" />

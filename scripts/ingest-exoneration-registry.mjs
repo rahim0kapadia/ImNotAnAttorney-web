@@ -13,7 +13,7 @@
  *   - official_misconduct_pct (OM tag)
  *   - inadequate_defense_pct (ILD tag)
  *   - forensic_error_pct (F/MFE tag)
- *   - false_accusation_pct (FA tag — separate from P/FA when present)
+ *   - false_accusation_pct (FA tag, separate from P/FA when present)
  *   - avg_years_served (Exonerated year - Convicted year)
  *   - top_factor + top_factor_pct (highest-% contributing factor)
  *
@@ -84,11 +84,11 @@ function loadEnv() {
 }
 loadEnv();
 
-// ── Helpers — NO REGEX (hook enforced) ────────────────────────────────────────
+// ── Helpers, NO REGEX (hook enforced) ────────────────────────────────────────
 
 /**
  * Normalize a string: lowercase, keep a-z, 0-9, and space only.
- * Char-code loop — no regex on file contents.
+ * Char-code loop, no regex on file contents.
  */
 function normalize(name) {
   if (!name) return "";
@@ -120,7 +120,7 @@ function normalize(name) {
   return result.slice(start, end + 1).join("");
 }
 
-/** SQL escape — single-quote doubling, no regex. */
+/** SQL escape, single-quote doubling, no regex. */
 function esc(str) {
   if (str === null || str === undefined) return "NULL";
   const s = String(str);
@@ -146,7 +146,7 @@ function fmtFloat2(n) {
 
 /**
  * Find a column value by trying multiple possible header names.
- * NRE CSV schema varies by download year — this handles all known variants.
+ * NRE CSV schema varies by download year, this handles all known variants.
  * Returns the first non-empty match, or null.
  */
 function col(row, candidates) {
@@ -182,7 +182,7 @@ function factorPresent(value) {
 /**
  * Parse a year value from a CSV cell. Returns integer year or null.
  * Handles values like "2003", "2003 ", "ca. 2003", "~2003".
- * Uses char-code loop — no regex.
+ * Uses char-code loop, no regex.
  */
 function parseYear(raw) {
   if (raw === null || raw === undefined) return null;
@@ -211,8 +211,8 @@ function parseYear(raw) {
 
 /**
  * Build a field map from CSV headers to canonical field names.
- * NRE column names have changed across years — this covers all known variants.
- * Uses substring scan — no regex.
+ * NRE column names have changed across years, this covers all known variants.
+ * Uses substring scan, no regex.
  */
 function lcContains(haystack, needle) {
   const h = String(haystack).toLowerCase();
@@ -274,15 +274,15 @@ function buildFieldMap(headers) {
       }
     }
 
-    // Contributing factor columns — exact tag names take priority
-    // FC — False Confession
+    // Contributing factor columns, exact tag names take priority
+    // FC, False Confession
     if (!map.fc) {
       if (lh === "fc" || lh === "false confession" || lcContains(lh, "false confession")) {
         map.fc = h;
       }
     }
 
-    // MWID — Mistaken Witness ID
+    // MWID, Mistaken Witness ID
     if (!map.mwid) {
       if (
         lh === "mwid" || lh === "mistaken witness id" ||
@@ -293,7 +293,7 @@ function buildFieldMap(headers) {
       }
     }
 
-    // P/FA — Perjury or False Accusation (combined column in many NRE versions)
+    // P/FA, Perjury or False Accusation (combined column in many NRE versions)
     if (!map.pfa) {
       if (
         lh === "p/fa" || lh === "perjury/false accusation" ||
@@ -305,7 +305,7 @@ function buildFieldMap(headers) {
       }
     }
 
-    // FA — False Accusation (standalone column, present in some versions)
+    // FA, False Accusation (standalone column, present in some versions)
     if (!map.fa) {
       if (
         lh === "fa" ||
@@ -315,7 +315,7 @@ function buildFieldMap(headers) {
       }
     }
 
-    // OM — Official Misconduct
+    // OM, Official Misconduct
     if (!map.om) {
       if (
         lh === "om" || lh === "official misconduct" ||
@@ -325,7 +325,7 @@ function buildFieldMap(headers) {
       }
     }
 
-    // ILD — Inadequate Legal Defense
+    // ILD, Inadequate Legal Defense
     if (!map.ild) {
       if (
         lh === "ild" || lh === "inadequate legal defense" ||
@@ -335,7 +335,7 @@ function buildFieldMap(headers) {
       }
     }
 
-    // F/MFE — False or Misleading Forensic Evidence
+    // F/MFE, False or Misleading Forensic Evidence
     if (!map.fmfe) {
       if (
         lh === "f/mfe" || lh === "false or misleading forensic evidence" ||
@@ -401,7 +401,7 @@ async function main() {
   }
 
   if (rows.length === 0) {
-    console.error("CSV is empty — nothing to process.");
+    console.error("CSV is empty, nothing to process.");
     process.exit(1);
   }
 

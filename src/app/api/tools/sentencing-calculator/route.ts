@@ -1,5 +1,5 @@
 /**
- * @fileoverview Sentencing Calculator API — queries JUSTFAIR + USSC data.
+ * @fileoverview Sentencing Calculator API, queries JUSTFAIR + USSC data.
  *
  * POST /api/tools/sentencing-calculator
  *
@@ -9,9 +9,9 @@
  * All data sourced from:
  *   - judge_sentencing_patterns (USSC FY2001-2023, 595K records)
  *   - sentencing_distributions (per-charge percentiles)
- *   - judge_demographics (JUSTFAIR — federal judges only)
+ *   - judge_demographics (JUSTFAIR, federal judges only)
  *
- * FEDERAL COURTS ONLY — clearly labeled in response.
+ * FEDERAL COURTS ONLY, clearly labeled in response.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";

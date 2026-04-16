@@ -1,7 +1,7 @@
 /**
  * @fileoverview Supabase Edge Function: Case Decoder report evaluator.
  *
- * Production evaluation gate — runs UPL Compliance and Psychological Architecture
+ * Production evaluation gate, runs UPL Compliance and Psychological Architecture
  * teams against a generated report. Results stored in cases.eval_results JSONB.
  *
  * INVOCATION:
@@ -17,7 +17,7 @@
  *   6. If UPL has any FAIL → send operator alert email
  *
  * ZERO EXTERNAL IMPORTS:
- *   Same pattern as generate-report — raw PostgREST, raw Anthropic API,
+ *   Same pattern as generate-report, raw PostgREST, raw Anthropic API,
  *   raw Resend API. No esm.sh imports to avoid cold start latency.
  *
  * MODEL: claude-sonnet-4-6 (cost-efficient for structured pass/fail evaluation).
@@ -111,7 +111,7 @@ async function sendEmail(params: {
             ${params.html}
             <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #27272A; font-size: 12px; color: #71717A; text-align: center;">
               <p style="margin: 0 0 8px;">ImNotAnAttorney</p>
-              <p style="margin: 0;">Legal information and research services — not legal advice.</p>
+              <p style="margin: 0;">Legal information and research services, not legal advice.</p>
               <p style="margin: 4px 0 0; font-size: 11px; color: #52525B;">${PHYSICAL_ADDRESS}</p>
             </div>
           </div>
@@ -156,14 +156,14 @@ function stripHtml(html: string): string {
 // EVALUATION TEAM PROMPTS
 // ============================================================
 
-const UPL_SYSTEM = `You are Team 1: UPL Compliance — an expert evaluation panel for criminal defendant legal information products.
+const UPL_SYSTEM = `You are Team 1: UPL Compliance, an expert evaluation panel for criminal defendant legal information products.
 
-Your purpose: Ensure every deliverable provides legal INFORMATION and generates QUESTIONS — never legal ADVICE. This is the non-negotiable gate. A deliverable that fails UPL review does not ship.
+Your purpose: Ensure every deliverable provides legal INFORMATION and generates QUESTIONS, never legal ADVICE. This is the non-negotiable gate. A deliverable that fails UPL review does not ship.
 
 Expert grounding:
-- Alan Dershowitz — Rights preservation: what gets waived accidentally when language crosses the line
-- Andrew Branca — Legal boundary precision: the exact line between information and advice
-- Bryan Stevenson — Systemic consequences awareness: collateral consequences must be flagged as information, not directives
+- Alan Dershowitz, Rights preservation: what gets waived accidentally when language crosses the line
+- Andrew Branca, Legal boundary precision: the exact line between information and advice
+- Bryan Stevenson, Systemic consequences awareness: collateral consequences must be flagged as information, not directives
 
 Evaluate the report against EACH criterion below. For each criterion, score PASS / NEEDS_WORK / FAIL with a one-sentence justification. On FAIL, quote the EXACT problematic text from the report.
 
@@ -176,8 +176,8 @@ Respond with ONLY a JSON object (no markdown, no code fences) matching this stru
 }`;
 
 const UPL_CRITERIA = `U1: No advice language
-  Every statement framed as information, never directive. FAIL triggers: "you should," "you need to," "we recommend," "we advise," "your best option," "the best strategy" — in report language to defendant.
-  EXCEPTION: In scenario headers, banned phrases inside quoted attorney dialogue (e.g., "When Your Attorney Says: 'You should take the plea'") are acceptable when clearly attributed as attorney speech — the report is preparing the defendant for a conversation, not giving advice.
+  Every statement framed as information, never directive. FAIL triggers: "you should," "you need to," "we recommend," "we advise," "your best option," "the best strategy", in report language to defendant.
+  EXCEPTION: In scenario headers, banned phrases inside quoted attorney dialogue (e.g., "When Your Attorney Says: 'You should take the plea'") are acceptable when clearly attributed as attorney speech, the report is preparing the defendant for a conversation, not giving advice.
 
 U2: Attorney redirection
   Every section redirects to the defendant's attorney for case-specific decisions. FAIL: Any section that lacks "ask your attorney" or equivalent redirect
@@ -198,7 +198,7 @@ U7: Defense theory framing
   Defense theories presented as landscape to "explore with your attorney," not as strategic recommendations. FAIL: "pursue this defense," "this is your strongest argument"
 
 U8: Advocacy steps bounded
-  Self-advocacy steps limited to information-gathering and communication, with referral to bar association / second opinion — never telling defendant to fire attorney or take legal action. FAIL: Steps that cross into legal strategy
+  Self-advocacy steps limited to information-gathering and communication, with referral to bar association / second opinion, never telling defendant to fire attorney or take legal action. FAIL: Steps that cross into legal strategy
 
 U9: Question framing
   Attorney questions framed as empowering, not pressuring. FAIL: "What to Say" (implies scripting), accusatory phrasing that pressures attorney
@@ -206,18 +206,18 @@ U9: Question framing
 U10: Collateral consequences sourced
   Every collateral consequence cited to statute, regulation, or named database (NICCC). FAIL: Unsourced claims about employment, housing, immigration, or civil rights consequences`;
 
-const PSYCH_SYSTEM = `You are Team 2: Psychological Architecture — an expert evaluation panel for criminal defendant legal information products.
+const PSYCH_SYSTEM = `You are Team 2: Psychological Architecture, an expert evaluation panel for criminal defendant legal information products.
 
 Your purpose: Validate that every deliverable follows trauma-informed design, builds genuine self-efficacy, and never weaponizes fear without pairing it with action.
 
 Expert grounding:
-- Judith Herman — 3-stage trauma recovery (Safety → Remembrance → Reconnection)
-- Albert Bandura — 4 sources of self-efficacy
-- Martin Seligman — Learned helplessness counter (depersonalize, contain, temporalize)
-- Kim Witte — EPPM: every threat MUST be paired with an action
-- BJ Fogg — B=MAP: every action must be Motivated, Able, and Prompted
-- Viktor Frankl — Meaning-making: shift from "this is happening TO me" to "I'm actively navigating"
-- Gary Klein — Under extreme stress, present ONE clear action, not a menu of 10 options
+- Judith Herman, 3-stage trauma recovery (Safety → Remembrance → Reconnection)
+- Albert Bandura, 4 sources of self-efficacy
+- Martin Seligman, Learned helplessness counter (depersonalize, contain, temporalize)
+- Kim Witte, EPPM: every threat MUST be paired with an action
+- BJ Fogg, B=MAP: every action must be Motivated, Able, and Prompted
+- Viktor Frankl, Meaning-making: shift from "this is happening TO me" to "I'm actively navigating"
+- Gary Klein, Under extreme stress, present ONE clear action, not a menu of 10 options
 
 Evaluate the report against EACH criterion below. For each criterion, score PASS / NEEDS_WORK / FAIL with a one-sentence justification. On FAIL, quote the EXACT problematic text from the report.
 
@@ -242,7 +242,7 @@ P4: Self-efficacy engineering (Bandura)
   Deliverable provides at least 2 of: mastery experience (small win), vicarious example, social persuasion (affirmation), emotional state management. FAIL: Report only describes problems without building capability
 
 P5: Action design (Fogg)
-  Every requested action is tiny, specific, and prompted — not vague or overwhelming. FAIL: "Research your legal options" (too big), action lists with 10+ items without prioritization
+  Every requested action is tiny, specific, and prompted, not vague or overwhelming. FAIL: "Research your legal options" (too big), action lists with 10+ items without prioritization
 
 P6: Decision simplicity (Klein)
   High-stakes decisions presented as ONE recommended path with mental simulation, not a menu. FAIL: 7+ options without clear prioritization in critical sections
@@ -257,7 +257,7 @@ P9: Reading level (Rudd)
   Complex legal concepts translated to plain language; jargon always defined on first use. FAIL: Undefined legal terms, sentences over 25 words in critical action sections
 
 P10: Stage-matched tone (Miller/Rollnick)
-  Tone matches likely defendant readiness stage — acknowledging resistance rather than pushing through it. FAIL: Assuming all defendants are ready to act; ignoring denial or anger`;
+  Tone matches likely defendant readiness stage, acknowledging resistance rather than pushing through it. FAIL: Assuming all defendants are ready to act; ignoring denial or anger`;
 
 // ============================================================
 // CLAUDE API CALL
@@ -462,7 +462,7 @@ Deno.serve(async (req: Request) => {
 
         await sendEmail({
           to: operatorEmail,
-          subject: `UPL GATE FAILURE — MANUAL REVIEW REQUIRED — ${escapeHtml(chargeType)} case`,
+          subject: `UPL GATE FAILURE, MANUAL REVIEW REQUIRED, ${escapeHtml(chargeType)} case`,
           html: `
             <div style="background: #7F1D1D; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
               <h1 style="color: #FCA5A5; margin: 0;">UPL GATE FAILED</h1>
@@ -485,7 +485,7 @@ Deno.serve(async (req: Request) => {
 
       // --- Timeout safety: if UPL took >100s, skip Psych ---
       if (uplElapsed > 100_000) {
-        console.log(`[evaluate-report] UPL took ${(uplElapsed / 1000).toFixed(1)}s — skipping Psych eval (timeout safety)`);
+        console.log(`[evaluate-report] UPL took ${(uplElapsed / 1000).toFixed(1)}s, skipping Psych eval (timeout safety)`);
         teamResults.psych = { name: "Psychological Architecture", weight: "HIGH", skipped: true, reason: "UPL exceeded 100s timeout safety" };
       }
     } catch (err) {
@@ -551,7 +551,7 @@ Deno.serve(async (req: Request) => {
       eval_version: "1.0",
       gate_passed: gatePassed,
       teams: teamResults,
-      summary: gatePassed ? "UPL gate passed" : "UPL GATE FAILED — manual review required",
+      summary: gatePassed ? "UPL gate passed" : "UPL GATE FAILED, manual review required",
       cost_usd: Math.round(costUsd * 10000) / 10000,
       duration_ms: totalElapsed,
     };

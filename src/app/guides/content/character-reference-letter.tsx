@@ -10,14 +10,14 @@ export default function CharacterReferenceLetterContent() {
         </h2>
         <p className="mt-4">
           If someone has asked you to write a character reference letter,
-          that request itself is a sign of trust. It can feel daunting —
+          that request itself is a sign of trust. It can feel daunting,
           most people have never written something for a court. That is
           completely normal.
         </p>
         <p className="mt-3">
           Judges take these letters seriously. A well-written character
           reference can meaningfully influence how a judge perceives the
-          defendant as a person — separate from the charge. What you write
+          defendant as a person, separate from the charge. What you write
           matters.
         </p>
       </section>
@@ -45,7 +45,7 @@ export default function CharacterReferenceLetterContent() {
           </li>
           <li>
             <span className="font-semibold text-zinc-50">Responsibility</span>
-            {" "}&mdash; how the defendant handles obligations — work, parenting, financial commitments.
+            {" "}&mdash; how the defendant handles obligations, work, parenting, financial commitments.
           </li>
           <li>
             <span className="font-semibold text-zinc-50">Unique contributions</span>
@@ -98,7 +98,7 @@ export default function CharacterReferenceLetterContent() {
           <li>Be specific. Dates, examples, and details make a letter credible. &ldquo;I have known John for twelve years since our children attended the same school&rdquo; is better than &ldquo;I have known John for a long time.&rdquo;</li>
           <li>Be honest. Judges can tell when a letter is exaggerated. Measured honesty is more persuasive than hyperbole.</li>
           <li>Be respectful of the court. Address the letter to &ldquo;The Honorable Judge [Last Name]&rdquo; or &ldquo;To the Honorable Court.&rdquo;</li>
-          <li>Explain your relationship clearly — the judge has no other context for who you are.</li>
+          <li>Explain your relationship clearly, the judge has no other context for who you are.</li>
           <li>Sign the letter with your full name and contact information.</li>
         </ul>
       </section>

@@ -7,12 +7,12 @@
  * product by product.
  *
  * Required env vars:
- *   STRIPE_SECRET_KEY          — Test mode secret key (sk_test_...)
- *   STRIPE_WEBHOOK_SECRET      — Test mode webhook signing secret
+ *   STRIPE_SECRET_KEY         , Test mode secret key (sk_test_...)
+ *   STRIPE_WEBHOOK_SECRET     , Test mode webhook signing secret
  *
  * Optional env vars (needed when any tier has live=true):
- *   STRIPE_SECRET_KEY_LIVE     — Live mode secret key (sk_live_...)
- *   STRIPE_WEBHOOK_SECRET_LIVE — Live mode webhook signing secret
+ *   STRIPE_SECRET_KEY_LIVE    , Live mode secret key (sk_live_...)
+ *   STRIPE_WEBHOOK_SECRET_LIVE, Live mode webhook signing secret
  *
  * Once ALL tiers are live, you can simplify: remove the test keys and
  * rename the live keys to the non-suffixed names, then remove stripeForTier().
@@ -31,7 +31,7 @@ export { TIER_CORE as TIERS, type TierSlug, isValidTier } from "./tiers";
 const testKey = process.env.STRIPE_SECRET_KEY;
 if (!testKey) {
   throw new Error(
-    "Missing STRIPE_SECRET_KEY env var — Stripe client cannot initialize"
+    "Missing STRIPE_SECRET_KEY env var, Stripe client cannot initialize"
   );
 }
 
@@ -61,7 +61,7 @@ export function stripeForTier(tier: TierSlug): Stripe {
 }
 
 /**
- * Legacy export — used by code that doesn't need per-tier routing
+ * Legacy export, used by code that doesn't need per-tier routing
  * (e.g., webhook signature verification, which handles both modes).
  * Defaults to test client.
  */

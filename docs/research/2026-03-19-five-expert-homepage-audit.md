@@ -1,4 +1,4 @@
-# INAA Homepage — 5-Expert Audit (2026-03-19)
+# INAA Homepage, 5-Expert Audit (2026-03-19)
 
 **Panel:** Sabri Suby (direct response), Russell Brunson (funnel/copy), Andre Chaperon (trust/narrative), Peep Laja (CRO), Chris Dreyer (legal marketing)
 **Target:** `src/app/page.tsx` + all homepage components
@@ -17,7 +17,7 @@ Every expert flagged this. The amber primary button goes to `/sample`. The ghost
 - Suby: "That one structural fix alone could double conversion"
 - Brunson: "Swapping these could measurably move the conversion rate"
 - Laja: "No test needed. Reverse this if your first 30 days show sample has high return-to-purchase"
-- Chaperon: "Seeing a price in the hero CTA before they understand what they're buying is a purchase-intent killer" (counterpoint — keep sample primary for cold traffic)
+- Chaperon: "Seeing a price in the hero CTA before they understand what they're buying is a purchase-intent killer" (counterpoint, keep sample primary for cold traffic)
 - Dreyer: "A crisis buyer at 2AM who is terrified about court Monday does not need to be warmed up"
 
 **Decision needed:** Chaperon has a valid counterpoint. Consider A/B testing, but default to checkout-primary for crisis buyers.
@@ -34,21 +34,21 @@ Currently sits as section 2, right after DiscoveryReveal proof. Four "we do not"
 - Suby: "This section actively suppresses conversion"
 
 **Recommended copy replacement (Chaperon):**
-> "We're researchers, not lawyers. We read your case file the way I read mine — looking for what doesn't add up. We hand you the questions. Your attorney has to answer them. That's where their work begins and ours ends."
+> "We're researchers, not lawyers. We read your case file the way I read mine, looking for what doesn't add up. We hand you the questions. Your attorney has to answer them. That's where their work begins and ours ends."
 
-### 3. ORIGIN STORY NEEDS NARRATIVE ARC (4/5 — Brunson, Chaperon, Suby, Laja)
+### 3. ORIGIN STORY NEEDS NARRATIVE ARC (4/5, Brunson, Chaperon, Suby, Laja)
 
 The 68.3g finding is mentioned as a data point, not told as a story. No backstory, no emotional arc, no "I was in the same chair you're in."
 
 **Brunson's Epiphany Bridge rewrite:**
-> "I was on page 347 of my 500-page discovery file when I found it. 68.3 grams the lab report said was there — but wasn't in the evidence log. A CI phone attributed to two different people on the same case. A drug type that didn't match what I was charged with. My attorney — the one I paid $40,000 — never mentioned any of it. So I built the tool I needed."
+> "I was on page 347 of my 500-page discovery file when I found it. 68.3 grams the lab report said was there, but wasn't in the evidence log. A CI phone attributed to two different people on the same case. A drug type that didn't match what I was charged with. My attorney, the one I paid $40,000, never mentioned any of it. So I built the tool I needed."
 
 **Chaperon's backstory paragraph (new block before or after DiscoveryReveal):**
 > "I hired an attorney the same way you did. Paid the retainer. Waited for the plan. The calls got shorter. Then they stopped. Seven months in, I decided to read the file myself. I didn't know what I was looking for. I found three things that changed everything about my case. My attorney never mentioned any of them."
 
-### 4. FABRICATED TESTIMONIALS ARE AN EXISTENTIAL RISK (4/5 — Suby, Laja, Dreyer, Chaperon)
+### 4. FABRICATED TESTIMONIALS ARE AN EXISTENTIAL RISK (4/5, Suby, Laja, Dreyer, Chaperon)
 
-The company brief acknowledges "Social proof is manufactured until first real customers." The testimonials use first-person quotes with specific names, charges, and outcomes — but none are real.
+The company brief acknowledges "Social proof is manufactured until first real customers." The testimonials use first-person quotes with specific names, charges, and outcomes, but none are real.
 
 **Suby:** "The FTC has a specific rule (16 CFR Part 255). Do not drive paid traffic to this page with fabricated first-person testimonials."
 **Laja:** "One journalist or one skeptical defendant who posts 'these testimonials look fake' on r/legaladvice ends the business's credibility"
@@ -60,7 +60,7 @@ The company brief acknowledges "Social proof is manufactured until first real cu
 - C: Offer 3 free Case Decoders for documented real outcomes before launch
 - D: Use real metrics instead ("4,000 defendants have checked their score")
 
-### 5. GUARANTEE SHOULD APPEAR IN THE HERO (3/5 — Chaperon, Dreyer, Suby)
+### 5. GUARANTEE SHOULD APPEAR IN THE HERO (3/5, Chaperon, Dreyer, Suby)
 
 "Find It or It's Free" is the single most powerful risk-reversal but appears at section 9 of 13. Most visitors never see it.
 
@@ -95,7 +95,7 @@ Options:
 The #1 unspoken objection for someone who already spent $10K-$50K. Not addressed in FAQ.
 
 **Suby's suggested answer:**
-> "That's the exact situation we built this for. You've already spent $10,000 or more. INAA costs $197 — less than one hour of your attorney's billing rate. The guarantee means if we don't find at least one gap, you pay nothing. One question from our report can change what motions your attorney files. The question is not whether $197 is worth it. The question is whether you can afford not to know."
+> "That's the exact situation we built this for. You've already spent $10,000 or more. INAA costs $197, less than one hour of your attorney's billing rate. The guarantee means if we don't find at least one gap, you pay nothing. One question from our report can change what motions your attorney files. The question is not whether $197 is worth it. The question is whether you can afford not to know."
 
 ### 9. PRICING SECTION NEEDS VALUE STACKING (Brunson + Suby)
 
@@ -106,14 +106,14 @@ Current: feature checkboxes. No dollar-value justification.
 
 ---
 
-## UPL COMPLIANCE FLAGS (Dreyer — fix before Stripe goes live)
+## UPL COMPLIANCE FLAGS (Dreyer, fix before Stripe goes live)
 
-### Flag 1 — FAQ attorney retaliation answer (line 90-92)
+### Flag 1, FAQ attorney retaliation answer (line 90-92)
 > "An attorney cannot ethically drop your case simply because you ask informed questions."
 
 States a legal conclusion as fact. Needs: "Under ABA Model Rules of Professional Conduct, an attorney's ability to withdraw is constrained..."
 
-### Flag 2 — Final CTA copy (line 756-757)
+### Flag 2, Final CTA copy (line 756-757)
 > "Their attorney starts filing motions that week."
 
 Implies causal outcome. Add softener: "What happens next is between you and your attorney."
@@ -122,35 +122,35 @@ Implies causal outcome. Add softener: "What happens next is between you and your
 
 ## TECHNICAL/SEO FIXES (Dreyer + Laja)
 
-1. **No Google Business Profile** — zero cost, builds entity signals for AI
-2. **Homepage LegalService schema has no @id** — not linked to Organization entity
-3. **No speakable on homepage** — blog posts have it, homepage doesn't
-4. **No confidentiality trust badge** — "Your case is confidential. We never share with your attorney." replaces "256-bit SSL"
-5. **Lead capture success state has no upsell** — wire `successUpsellHref="/checkout?tier=case-decoder"`
-6. **DiscoveryReveal is 4 full images on mobile** — consider condensing to 2 with "see more" toggle
-7. **FAQ order** — move "Can I get a refund?" from position 6 to position 1-2
-8. **PricingTable mobile** — 8 feature items push CTA button below fold, consider collapsed list
+1. **No Google Business Profile**, zero cost, builds entity signals for AI
+2. **Homepage LegalService schema has no @id**, not linked to Organization entity
+3. **No speakable on homepage**, blog posts have it, homepage doesn't
+4. **No confidentiality trust badge**, "Your case is confidential. We never share with your attorney." replaces "256-bit SSL"
+5. **Lead capture success state has no upsell**, wire `successUpsellHref="/checkout?tier=case-decoder"`
+6. **DiscoveryReveal is 4 full images on mobile**, consider condensing to 2 with "see more" toggle
+7. **FAQ order**, move "Can I get a refund?" from position 6 to position 1-2
+8. **PricingTable mobile**, 8 feature items push CTA button below fold, consider collapsed list
 
 ---
 
 ## UNIQUE INSIGHTS (single expert, high value)
 
 | Expert | Insight |
-|--------|---------|
-| Suby | The lead capture success state is a missed upsell — wire it to checkout |
+|------, |---------|
+| Suby | The lead capture success state is a missed upsell, wire it to checkout |
 | Suby | Add "When is your next court date?" field to homepage for countdown urgency |
-| Suby | The HALO test: Lead is absent — no clear lead offer above the fold |
+| Suby | The HALO test: Lead is absent, no clear lead offer above the fold |
 | Brunson | Value ladder missing $97 Playbook rung between free and $197 |
 | Brunson | "What We Are Not" could be rewritten as identity confirmation, not disclaimer |
 | Brunson | Five false beliefs not addressed (attorney is competent but busy, this is generic, too late for my case, will make things worse, can't afford it) |
 | Chaperon | "Names changed for privacy" does more harm than the testimonials do good |
 | Chaperon | RecentPurchaseNotification reads as generic Shopify popup, breaks the "tiny world" |
 | Chaperon | The page needs "You searched for this at 2am. So did I." not "You're not alone" |
-| Laja | 14 distinct CTA touchpoints — too many competing actions for degraded working memory |
-| Laja | /score lead magnet appears 3x — should be conditional (suppress if already completed) |
-| Laja | ChargeTypeSelector has no default state — majority see zero personalized content |
+| Laja | 14 distinct CTA touchpoints, too many competing actions for degraded working memory |
+| Laja | /score lead magnet appears 3x, should be conditional (suppress if already completed) |
+| Laja | ChargeTypeSelector has no default state, majority see zero personalized content |
 | Dreyer | DoNotPay disarmament should be in hero, not buried in disclaimer box |
-| Dreyer | No phone number or human contact signal — amplifies "abandoned" feeling |
+| Dreyer | No phone number or human contact signal, amplifies "abandoned" feeling |
 | Dreyer | Video of founder would be highest-trust addition ($0 cost, phone-recorded) |
 
 ---

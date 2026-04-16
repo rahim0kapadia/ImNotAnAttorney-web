@@ -1,9 +1,9 @@
-# Bird SMS + Notification Preference System — Design Spec
+# Bird SMS + Notification Preference System, Design Spec
 
 **Date:** 2026-04-13
 **Scope:** Replace Twilio with Bird API, add phone collection, per-notification-type channel preferences for both clients and bondsmen, bondsman client-reminded alerts, commission/payout notifications.
 **Approach:** JSONB overrides with application-level defaults (Approach C from brainstorm).
-**Expert basis:** Wroblewski (gradual engagement for phone collection), Fogg (B=MAP for crisis forms), Covello (mental noise — keep forms lean), Prussakov (45-day holdback, commission locking), Laja (optional phone kills 37% abandonment).
+**Expert basis:** Wroblewski (gradual engagement for phone collection), Fogg (B=MAP for crisis forms), Covello (mental noise, keep forms lean), Prussakov (45-day holdback, commission locking), Laja (optional phone kills 37% abandonment).
 
 ---
 
@@ -11,10 +11,10 @@
 
 Four phases, each ships independently:
 
-1. **Foundation** — Bird API utility, DB schema (phone, notification_prefs, locked_at), 10DLC prep
-2. **Client SMS** — Phone collection on prep page, cron sends SMS, client magic link SMS, check-in SMS
-3. **Bondsman SMS** — "Client reminded" alerts, notification settings on dashboard, payout notifications
-4. **Payout infrastructure** — locked_at cron, payout query, admin payout page, payout notification emails/SMS
+1. **Foundation**, Bird API utility, DB schema (phone, notification_prefs, locked_at), 10DLC prep
+2. **Client SMS**, Phone collection on prep page, cron sends SMS, client magic link SMS, check-in SMS
+3. **Bondsman SMS**, "Client reminded" alerts, notification settings on dashboard, payout notifications
+4. **Payout infrastructure**, locked_at cron, payout query, admin payout page, payout notification emails/SMS
 
 ---
 
@@ -39,9 +39,9 @@ Content-Type: application/json
 ```
 
 Env vars:
-- `BIRD_API_KEY` — API access key
-- `BIRD_WORKSPACE_ID` — workspace identifier
-- `BIRD_CHANNEL_ID` — SMS channel identifier
+- `BIRD_API_KEY`, API access key
+- `BIRD_WORKSPACE_ID`, workspace identifier
+- `BIRD_CHANNEL_ID`, SMS channel identifier
 
 Graceful degradation: if env vars missing, log warning, return `{ success: false, error: "SMS not configured" }`. Same pattern as current Twilio.
 
@@ -52,19 +52,19 @@ Delete `src/lib/twilio.ts` after swap.
 ### 1B. DB Migration
 
 ```sql
--- Add phone to court_reminders (client phone, optional)
+, Add phone to court_reminders (client phone, optional)
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS phone text;
 
--- Add notification_prefs to court_reminders (client prefs, JSONB overrides)
+, Add notification_prefs to court_reminders (client prefs, JSONB overrides)
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS notification_prefs jsonb DEFAULT NULL;
 
--- Add notification_prefs to partners (bondsman prefs, JSONB overrides)
+, Add notification_prefs to partners (bondsman prefs, JSONB overrides)
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS notification_prefs jsonb DEFAULT NULL;
 
--- Add sms_consent_at to court_reminders (10DLC compliance timestamp)
+, Add sms_consent_at to court_reminders (10DLC compliance timestamp)
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS sms_consent_at timestamptz;
 
--- Add locked_at to referrals (45-day holdback for payouts)
+, Add locked_at to referrals (45-day holdback for payouts)
 ALTER TABLE referrals ADD COLUMN IF NOT EXISTS locked_at timestamptz;
 ```
 
@@ -150,13 +150,13 @@ External task (Rahim): Register with Bird for 10DLC compliance.
 
 Per Wroblewski's gradual engagement: client fills out the existing 5-field court reminder form → lands on prep page → prep page shows a phone collection prompt.
 
-Location: `src/app/prep/[token]/page.tsx` — new section after insider tips, before data-driven sections.
+Location: `src/app/prep/[token]/page.tsx`, new section after insider tips, before data-driven sections.
 
 UI: Single phone input + consent checkbox + "Get Text Reminders" button.
 - Input: `tel` type, placeholder "(555) 123-4567"
 - Checkbox (unchecked by default): 26-word 10DLC consent text
 - Button: "Get Text Reminders"
-- On submit: `PATCH /api/court-reminders/[token]/phone` — saves phone, sets sms_consent_at, auto-upgrades notification_prefs.court_reminders to "both"
+- On submit: `PATCH /api/court-reminders/[token]/phone`, saves phone, sets sms_consent_at, auto-upgrades notification_prefs.court_reminders to "both"
 - Success state: checkmark + "You'll get text reminders before your court date."
 
 New API route: `src/app/api/court-reminders/[token]/phone/route.ts`
@@ -170,7 +170,7 @@ Update `src/app/api/cron/court-reminders/route.ts`:
 - If `shouldSendEmail(prefs.court_reminders)` → send email (existing)
 - If `shouldSendSMS(prefs.court_reminders)` AND `r.phone` → send SMS
 - SMS content: short, no HTML. Example for 7d:
-  > "[FirstName], your court date is in 7 days ([date]). Prep page: [url]. — ImNotAnAttorney"
+  > "[FirstName], your court date is in 7 days ([date]). Prep page: [url]., ImNotAnAttorney"
 - Same for indemnitor: if indemnitor has phone (future), send SMS too. For now, indemnitor stays email-only.
 
 ### 2C. Client Magic Link SMS
@@ -178,7 +178,7 @@ Update `src/app/api/cron/court-reminders/route.ts`:
 Update `src/app/api/customer/magic-link/route.ts`:
 - Look up customer's notification_prefs from their most recent court_reminders row (or cases row)
 - If shouldSendSMS(prefs.magic_link) AND phone on file → send SMS with magic link
-- SMS: "ImNotAnAttorney login: [url] — expires in 15 min."
+- SMS: "ImNotAnAttorney login: [url], expires in 15 min."
 
 ### 2D. Check-In Confirmation SMS
 
@@ -192,10 +192,10 @@ Update `src/app/api/check-in/route.ts`:
 Add to prep page: small "Notification settings" link/section.
 - Shows current preference per notification type
 - Toggle between email / sms / both for each
-- **SAFETY RULE: `court_reminders` restricted to "email" or "both" — never "sms" alone.** If phone is dead at 3AM, email is the fallback. This keeps people out of jail. UI does not offer "SMS only" for court reminders. API validates and rejects `court_reminders: "sms"`.
+- **SAFETY RULE: `court_reminders` restricted to "email" or "both", never "sms" alone.** If phone is dead at 3AM, email is the fallback. This keeps people out of jail. UI does not offer "SMS only" for court reminders. API validates and rejects `court_reminders: "sms"`.
 - PATCH `/api/court-reminders/[token]/prefs` to save
 
-Keep it minimal. Most clients won't touch this — defaults handle 95% of cases.
+Keep it minimal. Most clients won't touch this, defaults handle 95% of cases.
 
 ---
 
@@ -217,7 +217,7 @@ New section on partner dashboard (`src/app/partner/dashboard/page.tsx`):
 - Grid: 4 notification types × 3 channel options (email / sms / both)
 - Each row: label + 3-button toggle (email / sms / both)
 - Save via PATCH `/api/partner/notification-prefs`
-- New route: `src/app/api/partner/notification-prefs/route.ts` — requires partner auth, validates prefs shape, updates partners.notification_prefs
+- New route: `src/app/api/partner/notification-prefs/route.ts`, requires partner auth, validates prefs shape, updates partners.notification_prefs
 
 ### 3C. Bondsman Phone Collection
 
@@ -226,7 +226,7 @@ Partners table already has `phone` column. If phone not on file, show a prompt o
 - Same 10DLC consent pattern as client side
 - PATCH `/api/partner/profile` to save phone + sms_consent
 
-### 3D. Partner Magic Link — Already Works
+### 3D. Partner Magic Link, Already Works
 
 `src/app/api/partner/magic-link/route.ts` already sends SMS when `partner.phone` exists. Just update:
 - Read `getPartnerPrefs(partner.notification_prefs).magic_link`
@@ -278,47 +278,47 @@ Admin page or script that runs on the 1st:
 - "Mark Paid" button per partner
 - Creates partner_payouts row, sends "payout sent" notification
 
-### 4D. Partner Dashboard — Earnings Clarity
+### 4D. Partner Dashboard, Earnings Clarity
 
 Update `EarningsSection` to show three states:
-- **Pending** — sale recorded, in 45-day holdback
-- **Confirmed** — holdback passed, eligible for next payout
-- **Paid** — completed payouts
+- **Pending**, sale recorded, in 45-day holdback
+- **Confirmed**, holdback passed, eligible for next payout
+- **Paid**, completed payouts
 
 ---
 
 ## Files Modified/Created (All Phases)
 
 ### New Files
-- `src/lib/sms.ts` — Bird API sendSMS utility
-- `src/lib/notification-prefs.ts` — types, defaults, merge logic, channel helpers
-- `src/app/api/court-reminders/[token]/phone/route.ts` — client phone collection
-- `src/app/api/court-reminders/[token]/prefs/route.ts` — client notification prefs
-- `src/app/api/partner/notification-prefs/route.ts` — bondsman notification prefs
-- `src/app/api/cron/lock-commissions/route.ts` — daily commission locking
-- `src/app/admin/payouts/page.tsx` — admin payout management
-- `supabase/migrations/20260414a_sms_notification_prefs.sql` — Phase 1 migration
+- `src/lib/sms.ts`, Bird API sendSMS utility
+- `src/lib/notification-prefs.ts`, types, defaults, merge logic, channel helpers
+- `src/app/api/court-reminders/[token]/phone/route.ts`, client phone collection
+- `src/app/api/court-reminders/[token]/prefs/route.ts`, client notification prefs
+- `src/app/api/partner/notification-prefs/route.ts`, bondsman notification prefs
+- `src/app/api/cron/lock-commissions/route.ts`, daily commission locking
+- `src/app/admin/payouts/page.tsx`, admin payout management
+- `supabase/migrations/20260414a_sms_notification_prefs.sql`, Phase 1 migration
 
 ### Modified Files
-- `src/lib/twilio.ts` — DELETE after Phase 1
-- `src/app/api/partner/magic-link/route.ts` — import swap, read prefs
-- `src/app/api/customer/magic-link/route.ts` — add SMS path
-- `src/app/api/cron/court-reminders/route.ts` — SMS path, bondsman alerts
-- `src/app/api/cron/partner-drip/route.ts` — SMS path
-- `src/app/api/check-in/route.ts` — SMS confirmation
-- `src/app/api/webhooks/stripe/route.ts` — "sale earned" notification
-- `src/app/prep/[token]/page.tsx` — phone collection section
-- `src/app/partner/dashboard/page.tsx` — notification settings section
-- `src/lib/court-reminders.ts` — phone + notification_prefs on interface
-- `src/components/partner/AddClientModal.tsx` — phone field (secondary flow)
-- `src/app/api/partner/add-client/route.ts` — accept phone
-- `supabase/SCHEMA.md` — document new columns
-- `ARCHITECTURE.md` — document SMS + notification system
+- `src/lib/twilio.ts`, DELETE after Phase 1
+- `src/app/api/partner/magic-link/route.ts`, import swap, read prefs
+- `src/app/api/customer/magic-link/route.ts`, add SMS path
+- `src/app/api/cron/court-reminders/route.ts`, SMS path, bondsman alerts
+- `src/app/api/cron/partner-drip/route.ts`, SMS path
+- `src/app/api/check-in/route.ts`, SMS confirmation
+- `src/app/api/webhooks/stripe/route.ts`, "sale earned" notification
+- `src/app/prep/[token]/page.tsx`, phone collection section
+- `src/app/partner/dashboard/page.tsx`, notification settings section
+- `src/lib/court-reminders.ts`, phone + notification_prefs on interface
+- `src/components/partner/AddClientModal.tsx`, phone field (secondary flow)
+- `src/app/api/partner/add-client/route.ts`, accept phone
+- `supabase/SCHEMA.md`, document new columns
+- `ARCHITECTURE.md`, document SMS + notification system
 
 ### Env Vars (Vercel + .env.local)
-- `BIRD_API_KEY` — Bird API access key
-- `BIRD_WORKSPACE_ID` — Bird workspace ID
-- `BIRD_CHANNEL_ID` — Bird SMS channel ID
+- `BIRD_API_KEY`, Bird API access key
+- `BIRD_WORKSPACE_ID`, Bird workspace ID
+- `BIRD_CHANNEL_ID`, Bird SMS channel ID
 - Remove: `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER`
 
 ---
@@ -338,7 +338,7 @@ Update `EarningsSection` to show three states:
 ## Cascade Analysis
 
 | Node | Win |
-|------|-----|
+|------|---, |
 | **Defendant** | Text reminders at 2AM when they can't sleep. Shows up to court. Keeps freedom. |
 | **Bondsman** | Knows client was reminded without lifting a finger. Bond stays intact. Payout notifications = transparency. |
 | **Indemnitor** | Gets copy of reminder (email for now). Drags defendant to court. |

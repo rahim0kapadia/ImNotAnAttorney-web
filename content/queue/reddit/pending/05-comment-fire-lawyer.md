@@ -20,11 +20,11 @@ The question isn't whether your attorney is perfect. It's whether the pattern yo
 
 **Fire them when:**
 
-Documented, repeated failure to communicate. Not one missed call -- a pattern over weeks with no substantive response to specific written requests.
+Documented, repeated failure to communicate. Not one missed call, a pattern over weeks with no substantive response to specific written requests.
 
 No work product after months. Zero motions filed, zero independent investigation, no strategy discussion, no discovery review with you. If the case has been open for months and the only court filings are appearance entries and continuance requests, that's not defense. That's filing.
 
-Missed a deadline. If a suppression motion deadline, discovery request, or DMV hearing window passed because your attorney dropped the ball -- that may be malpractice and it's definitely grounds for a change.
+Missed a deadline. If a suppression motion deadline, discovery request, or DMV hearing window passed because your attorney dropped the ball, that may be malpractice and it's definitely grounds for a change.
 
 Pressure to plead without explanation. "Just take the deal" with no discussion of why trial isn't viable, what the weaknesses are, or whether alternatives exist (diversion, deferred adjudication, charge reduction).
 

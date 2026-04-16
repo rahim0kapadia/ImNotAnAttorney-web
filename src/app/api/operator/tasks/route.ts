@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/tasks — Operator task list and status updates
+ * @file /api/operator/tasks, Operator task list and status updates
  *
  * GET:   Paginated task list. Defaults to open/in_progress tasks, ordered by
  *        priority_rank ascending (urgent first), then due_at ascending (nulls last).

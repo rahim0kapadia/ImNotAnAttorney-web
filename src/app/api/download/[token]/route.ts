@@ -1,5 +1,5 @@
 /**
- * @file /api/download/[token] — Digital product download endpoint
+ * @file /api/download/[token], Digital product download endpoint
  *
  * Serves signed download URLs for digital products (Defense Playbooks).
  * The token is a UUID stored on the order record at purchase time.
@@ -62,7 +62,7 @@ export async function GET(
     );
   }
 
-  // Check if order was refunded — revoke access
+  // Check if order was refunded, revoke access
   if (order.status === "refunded") {
     return NextResponse.json(
       { error: "This order has been refunded. Download access has been revoked." },
@@ -125,7 +125,7 @@ export async function GET(
     );
   }
 
-  // Increment download count atomically (fire-and-forget — don't block the redirect).
+  // Increment download count atomically (fire-and-forget, don't block the redirect).
   // Uses an RPC that does `download_count + 1` in a single UPDATE statement,
   // eliminating the TOCTOU race of the previous SELECT-then-UPDATE approach.
   void supabase

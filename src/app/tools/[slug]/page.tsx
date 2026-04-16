@@ -50,7 +50,7 @@ export default async function CalculatorPage({ params }: Props) {
         <CalculatorClient slug={slug} product={product} />
         <p className="mt-12 text-xs text-zinc-400 border-t border-zinc-800 pt-6">
           This calculator provides legal INFORMATION based on published
-          state rules — not legal ADVICE. Estimates depend on institutional
+          state rules, not legal ADVICE. Estimates depend on institutional
           behavior, program participation, and classification decisions that
           no external tool can predict.
         </p>

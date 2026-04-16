@@ -1,5 +1,5 @@
 /**
- * DiscoveryGate — Interactive two-button filter for services page.
+ * DiscoveryGate, Interactive two-button filter for services page.
  *
  * Asks: "Have you received police reports or case documents?"
  * - YES: shows Track B tiers (X-Ray, War Room, Situation Room)
@@ -7,7 +7,7 @@
  * - Default (no selection): shows all tiers with Track A/B divider
  *
  * Per Covello Mental Noise Model: uses "police reports / case documents"
- * instead of "discovery" — crisis buyers may not know legal terminology.
+ * instead of "discovery", crisis buyers may not know legal terminology.
  *
  * Per Dunford two-track model: Track A = pre-discovery (intake data only),
  * Track B = post-discovery (case documents required).
@@ -53,7 +53,7 @@ export function DiscoveryGate({ children }: DiscoveryGateProps) {
                   : "border border-zinc-700 text-white hover:border-amber-500/50"
               }`}
             >
-              Yes — I have documents
+              Yes, I have documents
             </button>
             <button
               onClick={() => setFilter(filter === "pre-discovery" ? "all" : "pre-discovery")}
@@ -85,7 +85,7 @@ export function DiscoveryGate({ children }: DiscoveryGateProps) {
 }
 
 /**
- * TrackDivider — Visual separator between Track A and Track B tiers.
+ * TrackDivider, Visual separator between Track A and Track B tiers.
  * Only shown when filter is "all" (no selection made).
  */
 export function TrackDivider({ visible }: { visible: boolean }) {

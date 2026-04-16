@@ -1,10 +1,10 @@
 /**
- * @file Parts 7, 8, 13, 14 — Cleanup / compliance tasks
+ * @file Parts 7, 8, 13, 14, Cleanup / compliance tasks
  *
- * Part 7:  Abandoned intake cleanup (E5) — delete intakes > 90 days with no case
- * Part 8:  Rate limit table cleanup (E7) — remove expired entries
- * Part 13: Drip email send log cleanup (Privacy Policy S6) — purge > 90 days
- * Part 14: Discovery document auto-deletion (Privacy Policy S4) — delete files > 90 days
+ * Part 7:  Abandoned intake cleanup (E5), delete intakes > 90 days with no case
+ * Part 8:  Rate limit table cleanup (E7), remove expired entries
+ * Part 13: Drip email send log cleanup (Privacy Policy S6), purge > 90 days
+ * Part 14: Discovery document auto-deletion (Privacy Policy S4), delete files > 90 days
  */
 
 import type { CronContext, CronResult } from "./types";

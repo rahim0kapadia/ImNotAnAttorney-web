@@ -30,7 +30,7 @@ import { fileURLToPath } from "url";
 // Re-use COMMON_CHARGES and JURISDICTIONS from the existing taxonomy script
 import { COMMON_CHARGES } from "./generate-charge-taxonomy.js";
 import type { CommonChargeDefinition } from "./generate-charge-taxonomy.js";
-// Claude Code session wrapper — runs under local `claude -p` CLI, no API credits.
+// Claude Code session wrapper, runs under local `claude -p` CLI, no API credits.
 import { callClaude } from "./lib/blog-gen/claude-client.mjs";
 
 // ── Setup ────────────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ interface EnrichmentEntry {
   common_defenses: string[];
 }
 
-// CaseLawEntry — read-only type for validation/stats of data produced by
+// CaseLawEntry, read-only type for validation/stats of data produced by
 // the VERIFIED pipeline (legal-research-all.mjs + classify-case-law.mjs).
 // This script NEVER generates case law. See .claude/rules/no-hallucinated-legal-data.md.
 interface CaseLawEntry {
@@ -262,7 +262,7 @@ For each charge, return a JSON object with:
 
 OMIT any charge that does not exist as a distinct offense in this jurisdiction.
 
-Return ONLY valid JSON — an array of objects. No markdown, no explanation.
+Return ONLY valid JSON, an array of objects. No markdown, no explanation.
 
 Common charges to map:
 ${chargeList}`;
@@ -276,7 +276,7 @@ function buildEnrichmentPrompt(
   const statuteList = statutes
     .map(
       (s) =>
-        `- ${s.common_charge_slug}: ${s.statute_title} (${s.statute_number}) — ${s.offense_class}`
+        `- ${s.common_charge_slug}: ${s.statute_title} (${s.statute_number}), ${s.offense_class}`
     )
     .join("\n");
 
@@ -285,12 +285,12 @@ function buildEnrichmentPrompt(
 For each statute below, return a JSON object with:
 - common_charge_slug: the slug from the list
 - prosecution_strengths: array of 3-5 typical prosecution advantages when bringing this charge (e.g., "Mandatory minimum limits plea bargaining leverage", "Multiple elements give prosecution charging flexibility")
-- defense_opportunities: array of 3-5 strategic defense opportunities specific to this charge (e.g., "Elements require proving specific intent — creates reasonable doubt avenue", "Mandatory breath test challenge under implied consent statute")
+- defense_opportunities: array of 3-5 strategic defense opportunities specific to this charge (e.g., "Elements require proving specific intent, creates reasonable doubt avenue", "Mandatory breath test challenge under implied consent statute")
 - common_defenses: array of 3-5 recognized legal defenses for this charge (e.g., "Self-defense under § 776.012", "Lack of specific intent", "Entrapment")
 
 Focus on ${name}-specific law, not generic defenses. Reference specific statutes, case law principles, and procedural rules where applicable. Each item should be a concise but specific statement (1-2 sentences max).
 
-Return ONLY valid JSON — an array of objects. No markdown, no explanation.
+Return ONLY valid JSON, an array of objects. No markdown, no explanation.
 
 Statutes to analyze:
 ${statuteList}`;
@@ -304,7 +304,7 @@ async function generateMissingStates(dryRun: boolean): Promise<void> {
   const toGenerate = MISSING_STATES.filter((code) => {
     const filepath = jurisdictionFilePath(code);
     if (fs.existsSync(filepath)) {
-      console.log(`Skipping ${code} — JSON already exists`);
+      console.log(`Skipping ${code}, JSON already exists`);
       return false;
     }
     return true;
@@ -374,13 +374,13 @@ async function enrichJurisdiction(
 
   const statutePath = jurisdictionFilePath(code);
   if (!fs.existsSync(statutePath)) {
-    console.error(`  Skipping ${code} — no statute data at ${statutePath}`);
+    console.error(`  Skipping ${code}, no statute data at ${statutePath}`);
     return;
   }
 
   const statutes = loadJSON<JurisdictionStatute[]>(statutePath);
   if (!Array.isArray(statutes) || statutes.length === 0) {
-    console.error(`  Skipping ${code} — empty or invalid statute data`);
+    console.error(`  Skipping ${code}, empty or invalid statute data`);
     return;
   }
 
@@ -444,12 +444,12 @@ async function enrichAll(dryRun: boolean): Promise<void> {
   const toProcess = JURISDICTIONS.filter(({ code }) => {
     const filepath = enrichmentFilePath(code);
     if (fs.existsSync(filepath)) {
-      console.log(`Skipping ${code} enrichment — already exists`);
+      console.log(`Skipping ${code} enrichment, already exists`);
       return false;
     }
     // Must have statute data to enrich
     if (!fs.existsSync(jurisdictionFilePath(code))) {
-      console.log(`Skipping ${code} enrichment — no statute data`);
+      console.log(`Skipping ${code} enrichment, no statute data`);
       return false;
     }
     return true;
@@ -595,7 +595,7 @@ function buildMigration(): void {
     try {
       entries = loadJSON<EnrichmentEntry[]>(filepath);
     } catch {
-      console.error(`  Skipping enrichment for ${code} — invalid JSON`);
+      console.error(`  Skipping enrichment for ${code}, invalid JSON`);
       continue;
     }
 
@@ -623,7 +623,7 @@ function buildMigration(): void {
   // SAFETY: Case law is NEVER inserted from local files. Per the
   // no-hallucinated-legal-data rule, case law must come from CourtListener
   // via legal-research-all.mjs + classify-case-law.mjs. This script writes
-  // ONLY enrichment (prosecution/defense strategic analysis) — never citations.
+  // ONLY enrichment (prosecution/defense strategic analysis), never citations.
   lines.push(
     "-- ============================================================"
   );
@@ -906,7 +906,7 @@ function showStats(): void {
   console.log(`  Jurisdictions with cases: ${caseLawFileCount}/52`);
   console.log(`  Total case law entries  : ${totalCaseLaw}`);
   if (caseLawFileCount > 0) {
-    console.log(`  WARNING: case-law/ should be empty — case law belongs in DB only.`);
+    console.log(`  WARNING: case-law/ should be empty, case law belongs in DB only.`);
     console.log(`  Files here may be hallucinated. Run the watcher and delete.`);
   }
 
@@ -1003,7 +1003,7 @@ async function main(): Promise<void> {
         console.log("Step 1/2: Generate missing statute data...");
         await generateMissingStates(dryRun);
       } else {
-        console.log("Step 1/2: Statute data already exists — skipping.");
+        console.log("Step 1/2: Statute data already exists, skipping.");
       }
 
       console.log("\nStep 2/2: Enrichment...");
@@ -1031,7 +1031,7 @@ Usage:
     npx tsx scripts/generate-case-law-enrichment.ts --enrich --jurisdiction FL
     npx tsx scripts/generate-case-law-enrichment.ts --enrich --all
 
-  Case Law (VERIFIED SOURCES ONLY — never generated):
+  Case Law (VERIFIED SOURCES ONLY, never generated):
     node scripts/legal-research-all.mjs          # Verify statutes + find citing cases on CourtListener
     node scripts/classify-case-law.mjs --limit 50 # Fetch+classify real opinions from CourtListener
 

@@ -10,7 +10,7 @@ topic: How criminal cases actually work (the real version)
 blog_slug: how-criminal-cases-actually-work
 estimated_duration: 60s
 format: Standard (animated timeline + voiceover)
-suggested_sound: "Original audio — measured voiceover + progression beat"
+suggested_sound: "Original audio, measured voiceover + progression beat"
 suggested_posting_time: "Sunday 7:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Sunday 7:00 PM EST"
 
 **Format**: Standard
 **Duration**: 60 seconds
-**Suggested sound**: Original audio — measured voiceover + progression beat
+**Suggested sound**: Original audio, measured voiceover + progression beat
 **Suggested posting time**: Sunday 7:00 PM EST
 
 ---
@@ -35,32 +35,32 @@ suggested_posting_time: "Sunday 7:00 PM EST"
 
 [SECOND 3-12]
 **Visual**: Timeline starts building. Stage 1 lights up.
-**Audio/Voiceover**: "Stage 1 — Arrest. The only rule that matters: do NOT talk to police without an attorney. Don't explain. Don't clarify. Don't chat. Say five words: 'I want an attorney present.' Then stop talking. Most defendants damage their cases here."
+**Audio/Voiceover**: "Stage 1, Arrest. The only rule that matters: do NOT talk to police without an attorney. Don't explain. Don't clarify. Don't chat. Say five words: 'I want an attorney present.' Then stop talking. Most defendants damage their cases here."
 **Text overlay**: "ARREST: 5 words. 'I want an attorney present.' Then STOP."
 
 [SECOND 12-18]
 **Visual**: Stage 2 lights up. Stage 3 lights up.
-**Audio/Voiceover**: "Stage 2 — Bond hearing. Fight for bail or ROR. Stage 3 — Arraignment. Plead not guilty. This is a formality. The real case hasn't started yet."
+**Audio/Voiceover**: "Stage 2, Bond hearing. Fight for bail or ROR. Stage 3, Arraignment. Plead not guilty. This is a formality. The real case hasn't started yet."
 **Text overlay**: "BOND HEARING > ARRAIGNMENT (plead not guilty, always)"
 
 [SECOND 18-28]
-**Visual**: Stage 4 lights up — BIGGER than the others. Pulsing.
-**Audio/Voiceover**: "Stage 4 — Discovery. THIS is where your case starts. The prosecution has to show you their evidence. Police reports. Witness statements. Lab results. Body cam. Your attorney should be reading every page. So should you. The inconsistencies, the gaps, the things that don't match — that's your defense."
+**Visual**: Stage 4 lights up, BIGGER than the others. Pulsing.
+**Audio/Voiceover**: "Stage 4, Discovery. THIS is where your case starts. The prosecution has to show you their evidence. Police reports. Witness statements. Lab results. Body cam. Your attorney should be reading every page. So should you. The inconsistencies, the gaps, the things that don't match, that's your defense."
 **Text overlay**: "DISCOVERY: Where your defense is born. Read every page."
 
 [SECOND 28-38]
-**Visual**: Stage 5 lights up — EVEN BIGGER. Glowing.
-**Audio/Voiceover**: "Stage 5 — Motions. THIS is where cases are actually won. Motion to suppress illegally obtained evidence. Brady motions for evidence the prosecution is hiding. Motion to dismiss defective charges. If your attorney isn't filing motions, they're not fighting."
+**Visual**: Stage 5 lights up, EVEN BIGGER. Glowing.
+**Audio/Voiceover**: "Stage 5, Motions. THIS is where cases are actually won. Motion to suppress illegally obtained evidence. Brady motions for evidence the prosecution is hiding. Motion to dismiss defective charges. If your attorney isn't filing motions, they're not fighting."
 **Text overlay**: "MOTIONS: Where cases are actually won. Suppress. Brady. Dismiss."
 
 [SECOND 38-48]
 **Visual**: Stage 6 lights up.
-**Audio/Voiceover**: "Stage 6 — Plea negotiations. 97% of cases end here. The first offer is never the best. Attorneys who prepare for trial get better deals. Attorneys who always settle get the worst offers, because prosecutors know they'll never go to trial."
+**Audio/Voiceover**: "Stage 6, Plea negotiations. 97% of cases end here. The first offer is never the best. Attorneys who prepare for trial get better deals. Attorneys who always settle get the worst offers, because prosecutors know they'll never go to trial."
 **Text overlay**: "PLEA: 97% end here. Trial prep = better deals."
 
 [SECOND 48-55]
 **Visual**: Stages 7-8 light up.
-**Audio/Voiceover**: "Stage 7 — Trial. Only 3 to 10% of cases get here. Preparation is the defense. Stage 8 — Sentencing. Review the presentence report. Challenge every error. Letters from family matter."
+**Audio/Voiceover**: "Stage 7, Trial. Only 3 to 10% of cases get here. Preparation is the defense. Stage 8, Sentencing. Review the presentence report. Challenge every error. Letters from family matter."
 **Text overlay**: "TRIAL: 3-10% of cases. SENTENCING: Challenge every error in the PSI."
 
 [SECOND 55-60]
@@ -81,6 +81,6 @@ Timeline graphic showing all 8 stages. "MOTIONS" stage glowing brightest. Text: 
 
 ---
 
-**Context**: Based on INNA's most comprehensive blog post. This is educational cornerstone content — the definitive "how does a criminal case work" TikTok. Extremely high search volume. Drives all product sales by showing defendants exactly where professional help matters most.
-**Loop strategy**: The timeline builds progressively — viewers loop to absorb each stage and figure out where they are in their own case.
+**Context**: Based on INNA's most comprehensive blog post. This is educational cornerstone content, the definitive "how does a criminal case work" TikTok. Extremely high search volume. Drives all product sales by showing defendants exactly where professional help matters most.
+**Loop strategy**: The timeline builds progressively, viewers loop to absorb each stage and figure out where they are in their own case.
 **KPI target**: Saves (this is a reference map that gets bookmarked)

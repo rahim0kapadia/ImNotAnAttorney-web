@@ -156,7 +156,7 @@ async function main() {
       result = await clCitationLookup(row.citation);
     } catch (err) {
       if (err.message === "RATE_LIMIT") {
-        console.log("RATE LIMIT — stopping");
+        console.log("RATE LIMIT, stopping");
         break;
       }
       console.log(`ERR: ${err.message}`);
@@ -211,7 +211,7 @@ async function main() {
           }
         }
       } else {
-        console.log("NOT_FOUND (kept — has other sources)");
+        console.log("NOT_FOUND (kept, has other sources)");
         stats.notFound++;
       }
     }

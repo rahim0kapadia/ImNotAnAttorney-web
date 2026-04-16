@@ -1,6 +1,6 @@
 "use client";
 /**
- * /partner/compliance-report — Print-optimized compliance report for surety
+ * /partner/compliance-report, Print-optimized compliance report for surety
  * audits.
  *
  * Auth: client-side via /api/partner/compliance-report (cookie-based).
@@ -38,7 +38,7 @@ export default function ComplianceReportPage() {
       setData(json);
     } catch (err) {
       console.error("[compliance-report] Network error:", err);
-      setError("Connection error — please try again.");
+      setError("Connection error, please try again.");
     } finally {
       setLoading(false);
     }

@@ -5,7 +5,7 @@ project: inna
 status: pending
 created: 2026-03-11T12:00:00.000Z
 agent: claude-opus
-title: "5 Idea Pin Sequences — Multi-Page Educational Content"
+title: "5 Idea Pin Sequences, Multi-Page Educational Content"
 ---
 
 # 5 Idea Pin Sequences for ImNotAnAttorney
@@ -30,7 +30,7 @@ IMPORTANT: Idea Pins do NOT have outbound links. Their purpose is brand awarenes
 
 ---
 
-### Slide 1 — Hook
+### Slide 1, Hook
 
 **Visual**: Black background. Large bold white text centered: "5 Questions Your Attorney Hopes You Never Ask." Below in smaller amber text: "Save this before your next meeting." Bottom: small ImNotAnAttorney logo in white.
 
@@ -39,52 +39,52 @@ IMPORTANT: Idea Pins do NOT have outbound links. Their purpose is brand awarenes
 
 ---
 
-### Slide 2 — Question 1
+### Slide 2, Question 1
 
-**Visual**: Black background. Large amber "1" in top-left corner. White text: "What is your actual strategy for my case?" Below in smaller gray text: "'Wait for the plea offer' is not a strategy. A real defense examines every angle — the stop, the evidence, the witnesses, the procedure." Bottom-left: small amber line accent.
+**Visual**: Black background. Large amber "1" in top-left corner. White text: "What is your actual strategy for my case?" Below in smaller gray text: "'Wait for the plea offer' is not a strategy. A real defense examines every angle, the stop, the evidence, the witnesses, the procedure." Bottom-left: small amber line accent.
 
 **Text overlay**: Question + brief context
 **Purpose**: Deliver immediate value. This is the question most defendants never think to ask.
 
 ---
 
-### Slide 3 — Question 2
+### Slide 3, Question 2
 
 **Visual**: Black background. Large amber "2" in top-left. White text: "Have you reviewed ALL the evidence against me?" Below in gray: "Discovery includes police reports, lab results, witness statements, and video. If your attorney hasn't shared it with you, ask why. You have the right to see everything." Amber underline on "everything."
 
 **Text overlay**: Question + context
-**Purpose**: Educate about discovery rights. High save value — people bookmark this for later.
+**Purpose**: Educate about discovery rights. High save value, people bookmark this for later.
 
 ---
 
-### Slide 4 — Question 3
+### Slide 4, Question 3
 
-**Visual**: Black background. Large amber "3" in top-left. White text: "What motions have you filed — or plan to file?" Below in gray: "Motion to suppress. Motion to dismiss. Motion to compel discovery. These are the tools of defense. If your attorney hasn't filed any, you need to know whether that's strategy or neglect." Amber highlight on "strategy or neglect."
+**Visual**: Black background. Large amber "3" in top-left. White text: "What motions have you filed, or plan to file?" Below in gray: "Motion to suppress. Motion to dismiss. Motion to compel discovery. These are the tools of defense. If your attorney hasn't filed any, you need to know whether that's strategy or neglect." Amber highlight on "strategy or neglect."
 
 **Text overlay**: Question + context
 **Purpose**: Introduce motion filing as an accountability benchmark.
 
 ---
 
-### Slide 5 — Question 4
+### Slide 5, Question 4
 
-**Visual**: Black background. Large amber "4" in top-left. White text: "What's the realistic timeline for my case?" Below in gray: "Criminal cases can take months or years. Some delays are normal. Some aren't. Your attorney should be able to explain what's happening and why — without hiding behind 'these things take time.'" Amber highlight on final phrase.
+**Visual**: Black background. Large amber "4" in top-left. White text: "What's the realistic timeline for my case?" Below in gray: "Criminal cases can take months or years. Some delays are normal. Some aren't. Your attorney should be able to explain what's happening and why, without hiding behind 'these things take time.'" Amber highlight on final phrase.
 
 **Text overlay**: Question + context
 **Purpose**: Address the anxiety of waiting. Highly relatable.
 
 ---
 
-### Slide 6 — Question 5
+### Slide 6, Question 5
 
-**Visual**: Black background. Large amber "5" in top-left. White text: "What happens if we go to trial and lose?" Below in gray: "The trial penalty is real. Sentences after a trial loss are often significantly harsher than plea deals. Your attorney should give you an honest comparison — not pressure you either way." Amber highlight on "honest comparison."
+**Visual**: Black background. Large amber "5" in top-left. White text: "What happens if we go to trial and lose?" Below in gray: "The trial penalty is real. Sentences after a trial loss are often significantly harsher than plea deals. Your attorney should give you an honest comparison, not pressure you either way." Amber highlight on "honest comparison."
 
 **Text overlay**: Question + context
 **Purpose**: Introduce the trial penalty concept. Most defendants have never heard of this.
 
 ---
 
-### Slide 7 — CTA
+### Slide 7, CTA
 
 **Visual**: Black background. Centered amber text: "Know What They Know." Below in white: "Follow @ImNotAnAttorney for more questions your attorney hopes you never think of." Small logo at bottom. Clean, no clutter.
 
@@ -96,16 +96,16 @@ IMPORTANT: Idea Pins do NOT have outbound links. Their purpose is brand awarenes
 **Context**: This Idea Pin targets the massive search volume for "questions to ask attorney" and "criminal defense questions." Each slide delivers standalone value (people screenshot individual slides), while the sequence builds a complete preparation framework. High save potential because people will want this before their next attorney meeting.
 
 **KPI Target**: Saves (primary), Follower growth (secondary)
-**Seasonal relevance**: Evergreen — no seasonality
-**Estimated reach**: High — question-format content consistently outperforms on Pinterest in the legal information niche
+**Seasonal relevance**: Evergreen, no seasonality
+**Estimated reach**: High, question-format content consistently outperforms on Pinterest in the legal information niche
 
 ---
 ---
 
 ## Idea Pin 2: "Your Rights During a Traffic Stop"
 
-**Board**: Know Your Rights — Criminal Defendant Resources
-**Title**: Your Rights During a Traffic Stop — What You Can (and Can't) Do
+**Board**: Know Your Rights, Criminal Defendant Resources
+**Title**: Your Rights During a Traffic Stop, What You Can (and Can't) Do
 **Description**: Getting pulled over is stressful. Knowing your rights makes it less scary. What you're required to do, what you can decline, and the one thing that protects you no matter what. Save this before you need it. #trafficstop #knowyourrights #policestop #driverrights #criminaldefense
 **Alt Text**: Multi-page educational pin explaining constitutional rights during a traffic stop, including what drivers must do, what they can refuse, and how to invoke their rights properly.
 
@@ -116,7 +116,7 @@ IMPORTANT: Idea Pins do NOT have outbound links. Their purpose is brand awarenes
 
 ---
 
-### Slide 1 — Hook
+### Slide 1, Hook
 
 **Visual**: Black background. Bold white text: "Your Rights During a Traffic Stop." Below in amber: "Save this. You'll need it." Simple icon of a car silhouette with red/blue light reflection at top. Bottom: ImNotAnAttorney logo.
 
@@ -125,7 +125,7 @@ IMPORTANT: Idea Pins do NOT have outbound links. Their purpose is brand awarenes
 
 ---
 
-### Slide 2 — What You MUST Do
+### Slide 2, What You MUST Do
 
 **Visual**: Black background. Amber header: "WHAT YOU MUST DO." Below in white, 3 items with checkmark icons:
 - "Pull over safely and promptly"
@@ -135,11 +135,11 @@ IMPORTANT: Idea Pins do NOT have outbound links. Their purpose is brand awarenes
 Clean, readable. Each item on its own line with breathing room.
 
 **Text overlay**: 3 required actions
-**Purpose**: Start with compliance — builds credibility. This isn't an anti-police pin. It's an education pin.
+**Purpose**: Start with compliance, builds credibility. This isn't an anti-police pin. It's an education pin.
 
 ---
 
-### Slide 3 — What You CAN Decline
+### Slide 3, What You CAN Decline
 
 **Visual**: Black background. Amber header: "WHAT YOU CAN DECLINE." Below in white, 3 items with X icons:
 - "You can decline to answer questions beyond identification"
@@ -153,7 +153,7 @@ Gray footnote at bottom: "Declining has consequences. Know your state's laws."
 
 ---
 
-### Slide 4 — The Magic Words
+### Slide 4, The Magic Words
 
 **Visual**: Black background. Large amber quotation marks at top. White text centered: "I am invoking my right to remain silent. I do not consent to a search. Am I free to go?" Below in gray: "Say it calmly. Say it respectfully. Say it clearly. These words protect you." Amber underline on "protect you."
 
@@ -162,7 +162,7 @@ Gray footnote at bottom: "Declining has consequences. Know your state's laws."
 
 ---
 
-### Slide 5 — CTA
+### Slide 5, CTA
 
 **Visual**: Black background. Amber text: "Know What They Know." White text: "Follow @ImNotAnAttorney for more rights guides and defendant resources." Small logo. Clean.
 
@@ -171,19 +171,19 @@ Gray footnote at bottom: "Declining has consequences. Know your state's laws."
 
 ---
 
-**Context**: "Rights during traffic stop" is a massive Pinterest search term with year-round demand. This Idea Pin captures top-of-funnel awareness — people who aren't defendants yet but want to be informed. These followers convert later if they or someone they know faces charges. Extremely high save and share potential.
+**Context**: "Rights during traffic stop" is a massive Pinterest search term with year-round demand. This Idea Pin captures top-of-funnel awareness, people who aren't defendants yet but want to be informed. These followers convert later if they or someone they know faces charges. Extremely high save and share potential.
 
 **KPI Target**: Saves (primary), Impressions (secondary)
 **Seasonal relevance**: Peaks slightly during summer (more driving, more stops) but strong year-round
-**Estimated reach**: Very high — broad appeal beyond just defendants
+**Estimated reach**: Very high, broad appeal beyond just defendants
 
 ---
 ---
 
 ## Idea Pin 3: "How to Read Your Discovery Documents"
 
-**Board**: Legal Documents Explained — Discovery, Motions & Evidence
-**Title**: How to Read Your Discovery Documents — A Non-Lawyer's Guide
+**Board**: Legal Documents Explained, Discovery, Motions & Evidence
+**Title**: How to Read Your Discovery Documents, A Non-Lawyer's Guide
 **Description**: Your discovery is every piece of evidence the prosecution has against you. Most defendants never read it. This 6-slide guide teaches you what to look for in police reports, witness statements, lab results, and more. Your freedom depends on understanding these documents. #discovery #criminaldefense #evidencereview #defendantrights #criminalcase
 **Alt Text**: Six-page educational guide teaching criminal defendants how to read and understand discovery documents including police reports, witness statements, lab results, and video evidence.
 
@@ -194,7 +194,7 @@ Gray footnote at bottom: "Declining has consequences. Know your state's laws."
 
 ---
 
-### Slide 1 — Hook
+### Slide 1, Hook
 
 **Visual**: Black background. Bold white text: "How to Read Your Discovery." Below in amber: "The documents that determine your future." Visual: simplified document stack icon with a magnifying glass over it, amber outline. Bottom: logo.
 
@@ -203,7 +203,7 @@ Gray footnote at bottom: "Declining has consequences. Know your state's laws."
 
 ---
 
-### Slide 2 — What Is Discovery?
+### Slide 2, What Is Discovery?
 
 **Visual**: Black background. Amber header: "WHAT IS DISCOVERY?" White text: "Discovery is every piece of evidence the prosecution has gathered and is required to share with the defense. It includes:" Below, bullet list with small icons:
 - Police reports
@@ -219,24 +219,24 @@ Gray text at bottom: "You have the right to see ALL of it."
 
 ---
 
-### Slide 3 — The Police Report
+### Slide 3, The Police Report
 
 **Visual**: Black background. Amber header: "START WITH THE POLICE REPORT." White text: "The police report is the prosecution's narrative of what happened. It's written by someone whose job is to justify the arrest." Below, amber subheader: "What to look for:" Then 3 items:
-- "Timeline gaps — do the times add up?"
-- "Vague language — 'appeared intoxicated' vs. specific observations"
-- "Missing details — what's NOT in the report?"
+- "Timeline gaps, do the times add up?"
+- "Vague language, 'appeared intoxicated' vs. specific observations"
+- "Missing details, what's NOT in the report?"
 
 **Text overlay**: How to read a police report
 **Purpose**: Practical, actionable. Teaches a skill most defendants don't have.
 
 ---
 
-### Slide 4 — Witness Statements
+### Slide 4, Witness Statements
 
 **Visual**: Black background. Amber header: "WITNESS STATEMENTS." White text: "Compare every witness statement to the police report. Look for:" Below, 3 items:
-- "Contradictions — do witnesses agree with the officer's version?"
-- "Timing — when was each statement taken? Same day or weeks later?"
-- "Pressure — did the officer suggest what the witness should say?"
+- "Contradictions, do witnesses agree with the officer's version?"
+- "Timing, when was each statement taken? Same day or weeks later?"
+- "Pressure, did the officer suggest what the witness should say?"
 
 Gray text: "Inconsistencies are your attorney's ammunition."
 
@@ -245,12 +245,12 @@ Gray text: "Inconsistencies are your attorney's ammunition."
 
 ---
 
-### Slide 5 — Lab Results & Physical Evidence
+### Slide 5, Lab Results & Physical Evidence
 
 **Visual**: Black background. Amber header: "LAB RESULTS & EVIDENCE." White text: "If your case involves drugs, DUI, DNA, or forensics, lab results are critical." Below, 3 items:
-- "Chain of custody — who handled the evidence and when?"
-- "Testing method — field test vs. confirmed lab test (they're different)"
-- "Analyst qualifications — is the lab tech certified?"
+- "Chain of custody, who handled the evidence and when?"
+- "Testing method, field test vs. confirmed lab test (they're different)"
+- "Analyst qualifications, is the lab tech certified?"
 
 Gray text: "Bad evidence can be challenged. But someone has to look."
 
@@ -259,7 +259,7 @@ Gray text: "Bad evidence can be challenged. But someone has to look."
 
 ---
 
-### Slide 6 — What To Do With What You Find
+### Slide 6, What To Do With What You Find
 
 **Visual**: Black background. Amber header: "NOW WHAT?" White text: "You've read your discovery. You've found inconsistencies, gaps, or problems. Here's what to do:" Below, numbered list:
 - "1. Write down every question and concern"
@@ -273,7 +273,7 @@ Amber text at bottom: "Know What They Know."
 
 ---
 
-### Slide 7 — CTA
+### Slide 7, CTA
 
 **Visual**: Black background. Centered: "Your discovery is the roadmap of the prosecution's case." Below: "Follow @ImNotAnAttorney for more guides on understanding your criminal case." Logo at bottom.
 
@@ -282,18 +282,18 @@ Amber text at bottom: "Know What They Know."
 
 ---
 
-**Context**: "How to read discovery" is a high-intent, underserved search query. People searching this are actively involved in a case and trying to take control. This Idea Pin delivers genuine educational value — the kind that gets saved, referenced, and shared with others facing charges. It positions ImNotAnAttorney as the go-to resource for defendants who want to understand their case.
+**Context**: "How to read discovery" is a high-intent, underserved search query. People searching this are actively involved in a case and trying to take control. This Idea Pin delivers genuine educational value, the kind that gets saved, referenced, and shared with others facing charges. It positions ImNotAnAttorney as the go-to resource for defendants who want to understand their case.
 
-**KPI Target**: Saves (primary — people will save individual slides for reference)
+**KPI Target**: Saves (primary, people will save individual slides for reference)
 **Seasonal relevance**: Evergreen
-**Estimated reach**: Medium-high — niche but high-intent
+**Estimated reach**: Medium-high, niche but high-intent
 
 ---
 ---
 
 ## Idea Pin 4: "Signs Your Attorney Isn't Prepared"
 
-**Board**: Attorney Accountability — Is Your Lawyer Actually Working?
+**Board**: Attorney Accountability, Is Your Lawyer Actually Working?
 **Title**: 5 Signs Your Criminal Defense Attorney Isn't Prepared
 **Description**: You're paying thousands of dollars. Your freedom is at stake. But is your attorney actually preparing your defense? These 5 signs separate a prepared attorney from one who's winging it. Save this before your next court date. #attorneyaccountability #criminaldefense #defendantrights #lawyerproblems #criminalcase
 **Alt Text**: Five-slide educational pin showing warning signs that a criminal defense attorney is not adequately prepared for their client's case, including failure to review evidence and inability to explain strategy.
@@ -305,7 +305,7 @@ Amber text at bottom: "Know What They Know."
 
 ---
 
-### Slide 1 — Hook
+### Slide 1, Hook
 
 **Visual**: Black background. Bold white text: "5 Signs Your Attorney Isn't Prepared." Below in amber: "Number 3 is the one most defendants ignore." Bottom: logo. Simple, clean, curiosity-driven.
 
@@ -314,25 +314,25 @@ Amber text at bottom: "Know What They Know."
 
 ---
 
-### Slide 2 — Sign 1
+### Slide 2, Sign 1
 
-**Visual**: Black background. Large amber "1" top-left. Red warning bar at top. White text: "They Can't Summarize Your Case in 60 Seconds." Below in gray: "If your attorney hesitates, fumbles details, or confuses your case with someone else's — they haven't reviewed your file recently. A prepared attorney knows your facts cold. Test them: ask 'Can you walk me through my case right now?'"
+**Visual**: Black background. Large amber "1" top-left. Red warning bar at top. White text: "They Can't Summarize Your Case in 60 Seconds." Below in gray: "If your attorney hesitates, fumbles details, or confuses your case with someone else's, they haven't reviewed your file recently. A prepared attorney knows your facts cold. Test them: ask 'Can you walk me through my case right now?'"
 
 **Text overlay**: Warning sign + test question
 **Purpose**: Gives defendants a specific, testable action. Empowering.
 
 ---
 
-### Slide 3 — Sign 2
+### Slide 3, Sign 2
 
-**Visual**: Black background. Large amber "2" top-left. White text: "They Haven't Read Your Discovery." Below in gray: "Your discovery is the evidence file. If your attorney can't tell you what's in the police report, what the witness statements say, or what lab results show — they haven't done the basic work. Ask: 'What did you find in the discovery that helps or hurts us?'"
+**Visual**: Black background. Large amber "2" top-left. White text: "They Haven't Read Your Discovery." Below in gray: "Your discovery is the evidence file. If your attorney can't tell you what's in the police report, what the witness statements say, or what lab results show, they haven't done the basic work. Ask: 'What did you find in the discovery that helps or hurts us?'"
 
 **Text overlay**: Sign + diagnostic question
 **Purpose**: Builds on the discovery education from other content. Reinforces its importance.
 
 ---
 
-### Slide 4 — Sign 3 (the one they promised)
+### Slide 4, Sign 3 (the one they promised)
 
 **Visual**: Black background. Large amber "3" top-left. Slight amber glow/highlight to draw attention (this is the slide they teased). White text: "They Have No Strategy Beyond 'Let's See What They Offer.'" Below in gray: "Waiting for a plea offer is not a defense strategy. A prepared attorney has investigated angles: suppression motions, witness credibility, procedural errors, evidence problems. Ask: 'What's your plan if we don't take a plea?'"
 
@@ -341,7 +341,7 @@ Amber text at bottom: "Know What They Know."
 
 ---
 
-### Slide 5 — Sign 4
+### Slide 5, Sign 4
 
 **Visual**: Black background. Large amber "4" top-left. White text: "They Can't Explain What Motions They've Filed (or Why Not)." Below in gray: "Motions are how defense attorneys fight before trial. Motion to suppress, motion to dismiss, motion to compel. If your attorney has filed none and can't explain why, ask: 'What is the legal basis for not filing any motions in my case?'"
 
@@ -350,16 +350,16 @@ Amber text at bottom: "Know What They Know."
 
 ---
 
-### Slide 6 — Sign 5
+### Slide 6, Sign 5
 
-**Visual**: Black background. Large amber "5" top-left. White text: "They Seem Surprised by Things That Happen in Court." Below in gray: "A prepared attorney anticipates what the prosecutor will say, what the judge will ask, and what happens next. If your attorney seems caught off guard in the courtroom, that's a preparation problem. Preparation happens before court — not during it."
+**Visual**: Black background. Large amber "5" top-left. White text: "They Seem Surprised by Things That Happen in Court." Below in gray: "A prepared attorney anticipates what the prosecutor will say, what the judge will ask, and what happens next. If your attorney seems caught off guard in the courtroom, that's a preparation problem. Preparation happens before court, not during it."
 
 **Text overlay**: Sign + context
-**Purpose**: Observational — gives defendants something to watch for at their next hearing.
+**Purpose**: Observational, gives defendants something to watch for at their next hearing.
 
 ---
 
-### Slide 7 — CTA
+### Slide 7, CTA
 
 **Visual**: Black background. Amber text: "Your attorney works for you." White text: "Hold them accountable." Below: "Follow @ImNotAnAttorney for more." Logo.
 
@@ -368,20 +368,20 @@ Amber text at bottom: "Know What They Know."
 
 ---
 
-**Context**: Attorney accountability is INNA's core brand territory. This Idea Pin directly targets the frustration and anxiety that drives defendants to search Pinterest for help. The "Number 3" curiosity hook in slide 1 creates a strong scroll-through incentive. Each sign pairs with a specific question to ask — maintaining the "Know What They Know." brand promise.
+**Context**: Attorney accountability is INNA's core brand territory. This Idea Pin directly targets the frustration and anxiety that drives defendants to search Pinterest for help. The "Number 3" curiosity hook in slide 1 creates a strong scroll-through incentive. Each sign pairs with a specific question to ask, maintaining the "Know What They Know." brand promise.
 
 **KPI Target**: Saves (primary), Follower growth (secondary)
 **Seasonal relevance**: Evergreen
-**Estimated reach**: High — attorney accountability content resonates beyond just defendants (family members, friends who are researching on behalf of someone)
+**Estimated reach**: High, attorney accountability content resonates beyond just defendants (family members, friends who are researching on behalf of someone)
 
 ---
 ---
 
 ## Idea Pin 5: "What Actually Happens at Arraignment"
 
-**Board**: Court Preparation — What to Wear, Bring & Expect
-**Title**: What Actually Happens at Arraignment — Step by Step
-**Description**: Your first court date is probably the least dramatic event in your entire case. But not knowing what to expect makes it terrifying. This visual guide walks you through exactly what happens at an arraignment — where to go, what to wear, what the judge says, and what you say back. #arraignment #courtdate #criminaldefense #courtprep #whattoexpect
+**Board**: Court Preparation, What to Wear, Bring & Expect
+**Title**: What Actually Happens at Arraignment, Step by Step
+**Description**: Your first court date is probably the least dramatic event in your entire case. But not knowing what to expect makes it terrifying. This visual guide walks you through exactly what happens at an arraignment, where to go, what to wear, what the judge says, and what you say back. #arraignment #courtdate #criminaldefense #courtprep #whattoexpect
 **Alt Text**: Five-page visual guide showing what happens at a criminal arraignment step by step, including courtroom procedures, what to wear, what to say, and what happens after.
 
 **Keywords Targeted**:
@@ -391,7 +391,7 @@ Amber text at bottom: "Know What They Know."
 
 ---
 
-### Slide 1 — Hook
+### Slide 1, Hook
 
 **Visual**: Black background. Bold white text: "What Actually Happens at Your Arraignment." Below in amber: "It's less scary than you think." Courthouse silhouette icon at top, minimal line drawing style in amber. Logo at bottom.
 
@@ -400,17 +400,17 @@ Amber text at bottom: "Know What They Know."
 
 ---
 
-### Slide 2 — Before You Go
+### Slide 2, Before You Go
 
 **Visual**: Black background. Amber header: "BEFORE YOU GO." Two-column layout:
 
-Left column — "BRING:" (with check icons)
+Left column, "BRING:" (with check icons)
 - Photo ID
 - Case number / paperwork
 - Attorney contact info
 - Pen and paper
 
-Right column — "DON'T BRING:" (with X icons)
+Right column, "DON'T BRING:" (with X icons)
 - Weapons of any kind
 - Phone (or keep it SILENT)
 - An attitude
@@ -422,9 +422,9 @@ Gray text at bottom: "Arrive 30 minutes early. Courthouses have security lines."
 
 ---
 
-### Slide 3 — What to Wear
+### Slide 3, What to Wear
 
-**Visual**: Black background. Amber header: "WHAT TO WEAR." Simple outfit silhouettes (not photos — avoiding stock imagery per brand rules):
+**Visual**: Black background. Amber header: "WHAT TO WEAR." Simple outfit silhouettes (not photos, avoiding stock imagery per brand rules):
 
 DO column: button-down shirt, slacks, closed-toe shoes
 DON'T column: graphic tees, hats/sunglasses, flip-flops
@@ -437,7 +437,7 @@ Amber text: "You don't need a suit. You need to look like you take this seriousl
 
 ---
 
-### Slide 4 — What Happens in the Courtroom
+### Slide 4, What Happens in the Courtroom
 
 **Visual**: Black background. Amber header: "IN THE COURTROOM." Numbered vertical steps with amber circles:
 
@@ -454,7 +454,7 @@ Gray text: "The whole thing often takes less than 5 minutes at the bench."
 
 ---
 
-### Slide 5 — After Your Arraignment
+### Slide 5, After Your Arraignment
 
 **Visual**: Black background. Amber header: "AFTER YOUR ARRAIGNMENT." White text, 3 action items:
 
@@ -471,11 +471,11 @@ Below: "Know What They Know." + "Follow @ImNotAnAttorney for more court prep gui
 
 ---
 
-**Context**: "What happens at arraignment" is one of the highest-volume search terms in criminal defense on Pinterest. People search this in a state of anxiety, usually days before their first court date. This Idea Pin provides genuine reassurance and practical preparation. The tone is calm and empowering — not fearmongering. Every slide delivers standalone value (screenshot-worthy), and the sequence builds confidence. This is the pin most likely to be shared by a defendant to a family member or friend also facing charges.
+**Context**: "What happens at arraignment" is one of the highest-volume search terms in criminal defense on Pinterest. People search this in a state of anxiety, usually days before their first court date. This Idea Pin provides genuine reassurance and practical preparation. The tone is calm and empowering, not fearmongering. Every slide delivers standalone value (screenshot-worthy), and the sequence builds confidence. This is the pin most likely to be shared by a defendant to a family member or friend also facing charges.
 
-**KPI Target**: Saves (primary — people save this days/weeks before their court date), Impressions (secondary)
-**Seasonal relevance**: Evergreen — arraignments happen every day
-**Estimated reach**: Very high — one of the broadest, highest-intent search terms in the criminal defense niche
+**KPI Target**: Saves (primary, people save this days/weeks before their court date), Impressions (secondary)
+**Seasonal relevance**: Evergreen, arraignments happen every day
+**Estimated reach**: Very high, one of the broadest, highest-intent search terms in the criminal defense niche
 
 ---
 
@@ -485,7 +485,7 @@ Below: "Know What They Know." + "Follow @ImNotAnAttorney for more court prep gui
 - Publish 1 Idea Pin per week
 - Best days: Tuesday through Thursday (legal searches peak mid-week when people are preparing for upcoming court dates)
 - Best time: 7:00-9:00 PM EST (evening research hours)
-- Suggested order: Pin 5 (Arraignment) first — broadest appeal, then Pin 2 (Traffic Stop), then Pin 1 (Questions), Pin 4 (Attorney Signs), Pin 3 (Discovery)
+- Suggested order: Pin 5 (Arraignment) first, broadest appeal, then Pin 2 (Traffic Stop), then Pin 1 (Questions), Pin 4 (Attorney Signs), Pin 3 (Discovery)
 
 ### Tagging
 - Tag each Idea Pin with relevant topic tags in Pinterest's creator tools

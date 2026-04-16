@@ -1,12 +1,12 @@
 /**
- * @fileoverview Good Time Credit Calculator — pure computation logic.
+ * @fileoverview Good Time Credit Calculator, pure computation logic.
  *
  * Pattern: identical to score.ts. Pure functions, no API/DB dependencies.
  * Takes form inputs + loaded state rules → computed result.
  *
  * The rules data is loaded from system-data/good-time-rules.json at build
  * time (imported as JSON). The source of truth for that file lives in the
- * ImNotAnAttorney business repo at system/data/good-time-rules.json — the
+ * ImNotAnAttorney business repo at system/data/good-time-rules.json, the
  * web repo keeps a committed mirror so Vercel builds can resolve the import
  * without needing the sibling repo.
  */
@@ -23,7 +23,7 @@ export interface GoodTimeInput {
   sentenceMonths: number; // total sentence in months
   custodyCredits: number; // days already served (jail time credit)
   prisonType: string; // "state" | "federal" | "county"
-  offenseDate: string; // ISO date — determines which rules apply
+  offenseDate: string; // ISO date, determines which rules apply
 }
 
 export interface ValidationResult {
@@ -139,7 +139,7 @@ export function calculateGoodTime(input: GoodTimeInput): GoodTimeResult {
   const servePercent = parseServePercent(rule.credit_rate);
 
   if (servePercent === null) {
-    // Unparseable rate — never silently default. Treat as unsupported.
+    // Unparseable rate, never silently default. Treat as unsupported.
     return {
       supported: false,
       custodyCreditDays: input.custodyCredits ?? 0,
@@ -172,15 +172,15 @@ export function calculateGoodTime(input: GoodTimeInput): GoodTimeResult {
   }
   if (estimatedCreditMonths > 0) {
     observations.push(
-      `Maximum potential good time reduction: approximately ${estimatedCreditMonths} months — and only if every credit-earning requirement is met.`,
+      `Maximum potential good time reduction: approximately ${estimatedCreditMonths} months, and only if every credit-earning requirement is met.`,
     );
   } else {
     observations.push(
-      `This jurisdiction provides little or no good time credit for the applicable rule. Understanding this early helps you and your attorney focus on other strategies — sentence modification, alternative programs, or other paths that may be available for your situation.`,
+      `This jurisdiction provides little or no good time credit for the applicable rule. Understanding this early helps you and your attorney focus on other strategies, sentence modification, alternative programs, or other paths that may be available for your situation.`,
     );
   }
   observations.push(
-    "This is an estimate based on published state rules. Actual release dates depend on institutional behavior, program participation, and classification decisions — and this is legal INFORMATION, not legal ADVICE.",
+    "This is an estimate based on published state rules. Actual release dates depend on institutional behavior, program participation, and classification decisions, and this is legal INFORMATION, not legal ADVICE.",
   );
 
   return {
@@ -242,7 +242,7 @@ export interface DiversionResult {
   fallbackMessage?: string;
 }
 
-// ─── Diversion — supported states ─────────────────────────────
+// ─── Diversion, supported states ─────────────────────────────
 
 interface DiversionProgram {
   name: string;
@@ -274,7 +274,7 @@ const DIVERSION_SUPPORTED_STATES = new Set(
   Object.keys(DIVERSION_RULES).filter((k) => k !== "_metadata"),
 );
 
-// ─── Diversion — validation ──────────────────────────────────
+// ─── Diversion, validation ──────────────────────────────────
 
 export function validateDiversionInput(
   input: DiversionInput,
@@ -303,7 +303,7 @@ export function validateDiversionInput(
   return { valid: errors.length === 0, errors };
 }
 
-// ─── Diversion — per-program eligibility evaluators ──────────
+// ─── Diversion, per-program eligibility evaluators ──────────
 
 function evaluatePTIFelony(input: DiversionInput): DiversionProgramAssessment {
   const reasons: string[] = [];
@@ -312,7 +312,7 @@ function evaluatePTIFelony(input: DiversionInput): DiversionProgramAssessment {
 
   if (input.chargeCategory !== "felony") {
     return {
-      programName: "Pretrial Intervention Program (PTI) — Felony",
+      programName: "Pretrial Intervention Program (PTI), Felony",
       programKey: "pretrial_intervention_felony",
       statute: "F.S. § 948.08",
       eligibility: "NOT_APPLICABLE",
@@ -350,7 +350,7 @@ function evaluatePTIFelony(input: DiversionInput): DiversionProgramAssessment {
   }
   if (input.chargeType === "dui") {
     eligibility = "LIKELY_INELIGIBLE";
-    reasons.push("DUI has a separate diversion process — not standard PTI.");
+    reasons.push("DUI has a separate diversion process, not standard PTI.");
   }
   if (
     input.chargeInvolves === "violence" ||
@@ -358,7 +358,7 @@ function evaluatePTIFelony(input: DiversionInput): DiversionProgramAssessment {
   ) {
     if (eligibility === "LIKELY_ELIGIBLE") eligibility = "POSSIBLY_ELIGIBLE";
     reasons.push(
-      `Charges involving ${input.chargeInvolves} may be evaluated differently by the State Attorney's office — eligibility varies by judicial circuit.`,
+      `Charges involving ${input.chargeInvolves} may be evaluated differently by the State Attorney's office, eligibility varies by judicial circuit.`,
     );
   }
 
@@ -369,7 +369,7 @@ function evaluatePTIFelony(input: DiversionInput): DiversionProgramAssessment {
   }
 
   return {
-    programName: "Pretrial Intervention Program (PTI) — Felony",
+    programName: "Pretrial Intervention Program (PTI), Felony",
     programKey: "pretrial_intervention_felony",
     statute: "F.S. § 948.08",
     eligibility,
@@ -452,14 +452,14 @@ function evaluateDrugCourt(input: DiversionInput): DiversionProgramAssessment {
         "Intensive treatment program as alternative to incarceration for substance abuse-related offenses.",
       typicalDuration: "12-18 months",
       completionResult:
-        "Varies by circuit — may result in charges dismissed, reduced charges, or reduced sentence",
+        "Varies by circuit, may result in charges dismissed, reduced charges, or reduced sentence",
     };
   }
 
   if (input.chargeType === "drug-trafficking") {
     eligibility = "LIKELY_INELIGIBLE";
     reasons.push(
-      "Drug trafficking charges are generally NOT eligible — trafficking penalties are statutory mandatory minimums.",
+      "Drug trafficking charges are generally NOT eligible, trafficking penalties are statutory mandatory minimums.",
     );
   }
   if (input.chargeInvolves === "violence") {
@@ -493,7 +493,7 @@ function evaluateDrugCourt(input: DiversionInput): DiversionProgramAssessment {
       "Intensive treatment program as alternative to incarceration for substance abuse-related offenses.",
     typicalDuration: "12-18 months",
     completionResult:
-      "Varies by circuit — may result in charges dismissed, reduced charges, or reduced sentence",
+      "Varies by circuit, may result in charges dismissed, reduced charges, or reduced sentence",
   };
 }
 
@@ -517,7 +517,7 @@ function evaluateVeteransCourt(
         "Specialized court for veterans with service-connected mental health or substance abuse issues.",
       typicalDuration: null,
       completionResult:
-        "Varies — may include charge dismissal, reduced charges, or alternative sentencing",
+        "Varies, may include charge dismissal, reduced charges, or alternative sentencing",
     };
   }
 
@@ -527,7 +527,7 @@ function evaluateVeteransCourt(
   ) {
     if (eligibility === "LIKELY_ELIGIBLE") eligibility = "POSSIBLY_ELIGIBLE";
     reasons.push(
-      `Charges involving ${input.chargeInvolves} may limit veterans court eligibility — varies by judicial circuit.`,
+      `Charges involving ${input.chargeInvolves} may limit veterans court eligibility, varies by judicial circuit.`,
     );
   }
 
@@ -547,7 +547,7 @@ function evaluateVeteransCourt(
       "Specialized court for veterans with service-connected mental health or substance abuse issues.",
     typicalDuration: null,
     completionResult:
-      "Varies — may include charge dismissal, reduced charges, or alternative sentencing",
+      "Varies, may include charge dismissal, reduced charges, or alternative sentencing",
   };
 }
 
@@ -580,7 +580,7 @@ function evaluateMentalHealthCourt(
   ) {
     if (eligibility === "LIKELY_ELIGIBLE") eligibility = "POSSIBLY_ELIGIBLE";
     reasons.push(
-      `Charges involving ${input.chargeInvolves} may affect eligibility — varies by judicial circuit.`,
+      `Charges involving ${input.chargeInvolves} may affect eligibility, varies by judicial circuit.`,
     );
   }
 
@@ -642,7 +642,7 @@ function evaluateDUIDiversion(
   if (eligibility === "LIKELY_ELIGIBLE") {
     eligibility = "POSSIBLY_ELIGIBLE";
     reasons.push(
-      "DUI diversion is NOT available in all Florida counties. Many circuits do NOT offer DUI diversion — county-specific availability must be confirmed.",
+      "DUI diversion is NOT available in all Florida counties. Many circuits do NOT offer DUI diversion, county-specific availability must be confirmed.",
     );
   }
   if (reasons.length === 0) {
@@ -665,7 +665,7 @@ function evaluateDUIDiversion(
   };
 }
 
-// ─── Diversion — question generation ─────────────────────────
+// ─── Diversion, question generation ─────────────────────────
 
 function generateDiversionQuestions(
   programs: DiversionProgramAssessment[],
@@ -720,56 +720,56 @@ function generateDiversionQuestions(
   return questions;
 }
 
-// ─── Diversion — disqualifier collection ─────────────────────
+// ─── Diversion, disqualifier collection ─────────────────────
 
 function collectDisqualifiers(input: DiversionInput): string[] {
   const disqualifiers: string[] = [];
 
   if (input.priorConvictions === "felony") {
     disqualifiers.push(
-      "Prior felony conviction — may disqualify from standard PTI and limit other program options.",
+      "Prior felony conviction, may disqualify from standard PTI and limit other program options.",
     );
   } else if (input.priorConvictions === "multiple") {
     disqualifiers.push(
-      "Multiple prior convictions — significantly limits diversion eligibility across most programs.",
+      "Multiple prior convictions, significantly limits diversion eligibility across most programs.",
     );
   } else if (input.priorConvictions === "misdemeanor") {
     disqualifiers.push(
-      "Prior misdemeanor conviction — may affect misdemeanor PTI eligibility (typically requires no prior convictions).",
+      "Prior misdemeanor conviction, may affect misdemeanor PTI eligibility (typically requires no prior convictions).",
     );
   }
 
   if (input.priorDiversion === "yes") {
     disqualifiers.push(
-      "Prior diversion participation — most programs limit participation to once.",
+      "Prior diversion participation, most programs limit participation to once.",
     );
   }
 
   if (input.chargeInvolves === "violence") {
     disqualifiers.push(
-      "Charge involves violence — many diversion programs exclude or restrict violent offenses.",
+      "Charge involves violence, many diversion programs exclude or restrict violent offenses.",
     );
   } else if (input.chargeInvolves === "firearms") {
     disqualifiers.push(
-      "Charge involves firearms — some circuits exclude firearm offenses from PTI.",
+      "Charge involves firearms, some circuits exclude firearm offenses from PTI.",
     );
   } else if (input.chargeInvolves === "sexual") {
     disqualifiers.push(
-      "Charge involves a sexual offense — generally excluded from all diversion programs.",
+      "Charge involves a sexual offense, generally excluded from all diversion programs.",
     );
   } else if (input.chargeInvolves === "trafficking") {
     disqualifiers.push(
-      "Trafficking charge — generally ineligible for diversion. Statutory mandatory minimums apply unless the State files a substantial assistance motion.",
+      "Trafficking charge, generally ineligible for diversion. Statutory mandatory minimums apply unless the State files a substantial assistance motion.",
     );
   }
 
   return disqualifiers;
 }
 
-// ─── Diversion — main calculation ────────────────────────────
+// ─── Diversion, main calculation ────────────────────────────
 
 const DIVERSION_UNSUPPORTED = (stateCode: string): string =>
-  `Diversion program eligibility data for ${stateCode} is not yet in our database. Diversion programs vary significantly by state and county — this is a question worth raising with your attorney.`;
+  `Diversion program eligibility data for ${stateCode} is not yet in our database. Diversion programs vary significantly by state and county, this is a question worth raising with your attorney.`;
 
 export function calculateDiversion(input: DiversionInput): DiversionResult {
   const stateCode = (input.state || "").toUpperCase();
@@ -803,7 +803,7 @@ export function calculateDiversion(input: DiversionInput): DiversionResult {
   const disqualifiersIdentified = collectDisqualifiers(input);
   const questions = generateDiversionQuestions(programs);
 
-  const countyNote = `This gives you a starting point for an informed conversation with your attorney about diversion options in ${input.county} County. Program availability varies by county and State Attorney's office in ${stateData.state_name} — your county may have additional programs or different requirements beyond the published state criteria above.`;
+  const countyNote = `This gives you a starting point for an informed conversation with your attorney about diversion options in ${input.county} County. Program availability varies by county and State Attorney's office in ${stateData.state_name}, your county may have additional programs or different requirements beyond the published state criteria above.`;
 
   return {
     supported: true,
@@ -851,7 +851,7 @@ export interface VeteransCourtResult {
   fallbackMessage?: string;
 }
 
-// ─── Veterans Court — data types ─────────────────────────────
+// ─── Veterans Court, data types ─────────────────────────────
 
 interface VCDischargeTypes {
   honorable?: string;
@@ -900,7 +900,7 @@ const VC_SUPPORTED_STATES = new Set(
   Object.keys(VC_RULES).filter((k) => k !== "_metadata"),
 );
 
-// ─── Veterans Court — validation ─────────────────────────────
+// ─── Veterans Court, validation ─────────────────────────────
 
 export function validateVeteransCourtInput(
   input: VeteransCourtInput,
@@ -916,7 +916,7 @@ export function validateVeteransCourtInput(
   return { valid: errors.length === 0, errors };
 }
 
-// ─── Veterans Court — county lookup ──────────────────────────
+// ─── Veterans Court, county lookup ──────────────────────────
 
 function countyHasCourt(
   counties: string[] | Record<string, string[]>,
@@ -936,7 +936,7 @@ function countyHasCourt(
   return { available: false };
 }
 
-// ─── Veterans Court — discharge eligibility ──────────────────
+// ─── Veterans Court, discharge eligibility ──────────────────
 
 const DISCHARGE_MAP: Record<string, keyof VCDischargeTypes> = {
   honorable: "honorable",
@@ -957,10 +957,10 @@ function evaluateDischarge(
   return types[key]!;
 }
 
-// ─── Veterans Court — main calculation ───────────────────────
+// ─── Veterans Court, main calculation ───────────────────────
 
 const VC_UNSUPPORTED = (stateCode: string): string =>
-  `Veterans treatment court data for ${stateCode} is not yet in our database. Veterans treatment court availability varies by state and county — contact your local VA Veterans Justice Outreach specialist for current program details.`;
+  `Veterans treatment court data for ${stateCode} is not yet in our database. Veterans treatment court availability varies by state and county, contact your local VA Veterans Justice Outreach specialist for current program details.`;
 
 export function calculateVeteransCourt(
   input: VeteransCourtInput,
@@ -998,7 +998,7 @@ export function calculateVeteransCourt(
       ? `A veterans treatment court is available in ${input.county} County (${countyResult.circuit.replace(/_/g, " ")}).`
       : `A veterans treatment court is available in ${input.county} County.`;
   } else {
-    courtAvailableDetail = `No veterans treatment court was found in ${input.county} County based on our data. ${stateData.statewide_program ? "However, " + stateData.state_name + " mandates statewide availability — contact your local court." : "Check with the county court or your local VA Veterans Justice Outreach specialist for current availability."}`;
+    courtAvailableDetail = `No veterans treatment court was found in ${input.county} County based on our data. ${stateData.statewide_program ? "However, " + stateData.state_name + " mandates statewide availability, contact your local court." : "Check with the county court or your local VA Veterans Justice Outreach specialist for current availability."}`;
   }
 
   // Discharge eligibility
@@ -1017,7 +1017,7 @@ export function calculateVeteransCourt(
   const serviceConnectionDetail = stateData.eligibility
     .service_connection_required
     ? serviceConditionProvided
-      ? `${stateData.state_name} requires a service-connected condition. Your reported condition may satisfy this requirement — specific documentation standards vary by court.`
+      ? `${stateData.state_name} requires a service-connected condition. Your reported condition may satisfy this requirement, specific documentation standards vary by court.`
       : `${stateData.state_name} requires a service-connected condition (PTSD, TBI, substance abuse, mental health, or MST). Without a documented service connection, eligibility may be limited.`
     : `${stateData.state_name} does not require service connection at the statute level, though individual courts may consider it.`;
 
@@ -1048,7 +1048,7 @@ export function calculateVeteransCourt(
     "What is the typical timeline from application to admission?",
     "Is there a Veterans Justice Outreach (VJO) specialist assigned to this court?",
     "What treatment providers does the court work with, and are VA services accepted?",
-    "What happens if I do not complete the program — is the original charge reinstated?",
+    "What happens if I do not complete the program, is the original charge reinstated?",
     "Can my criminal defense attorney coordinate with the VTC team during the application process?",
   ];
 
@@ -1075,8 +1075,8 @@ export function calculateVeteransCourt(
 
 /**
  * Extracts the minimum serve percentage from a credit_rate description.
- * Returns null if unparseable — caller MUST treat as unsupported rather than
- * silently defaulting (states vary from 50% to 100% — a wrong default is worse
+ * Returns null if unparseable, caller MUST treat as unsupported rather than
+ * silently defaulting (states vary from 50% to 100%, a wrong default is worse
  * than an honest "we don't know").
  *
  * The JSON is authored so the serve percentage is the FIRST percentage in the

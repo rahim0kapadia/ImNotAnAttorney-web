@@ -1,5 +1,5 @@
 /**
- * @file Content Performance Tracker — correlates blog posts → subscribers → orders.
+ * @file Content Performance Tracker, correlates blog posts → subscribers → orders.
  *
  * Ported from scripts/demand/track-content-performance.mjs.
  * Called weekly (Sundays) by /api/cron/demand-performance.
@@ -213,7 +213,7 @@ function aggregateOrdersInMemory(
  *   - current demand score for the post's charge type
  *
  * Uses two bulk DB queries (all subscribers, all paid orders) and resolves
- * attribution in memory — replacing the prior pattern of 9 queries per post.
+ * attribution in memory, replacing the prior pattern of 9 queries per post.
  *
  * Upserts to content_performance table, keyed on (blog_slug, window_label, window_start).
  *

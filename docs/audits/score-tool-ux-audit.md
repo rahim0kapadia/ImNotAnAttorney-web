@@ -1,8 +1,8 @@
-# INAA Defense Milestone Score Tool — Complete UX & Question Audit
+# INAA Defense Milestone Score Tool, Complete UX & Question Audit
 
 **Date:** 2026-03-30
 **Scope:** All score tool files (frontend, backend, algorithm, tests)
-**Verdict:** PRODUCTION-READY — no critical issues found
+**Verdict:** PRODUCTION-READY, no critical issues found
 
 ---
 
@@ -22,7 +22,7 @@ The Defense Milestone Score tool is a free, no-email-required questionnaire that
 
 ---
 
-## 1. The 10 Questions — Clarity Assessment
+## 1. The 10 Questions, Clarity Assessment
 
 ### Q1: Charge Type (CLEAR ✓)
 **File:** `src/app/score/page.tsx:64-80`
@@ -71,7 +71,7 @@ The Defense Milestone Score tool is a free, no-email-required questionnaire that
 
 3 options: yes-detail, briefly, no
 
-**Assessment:** EXCELLENT. Granular — distinguishes depth of engagement (+10 vs +2 vs -12).
+**Assessment:** EXCELLENT. Granular, distinguishes depth of engagement (+10 vs +2 vs -12).
 
 ### Q8: Criminal History (CLEAR ✓)
 **File:** `src/app/score/page.tsx:139-148`
@@ -87,14 +87,14 @@ The Defense Milestone Score tool is a free, no-email-required questionnaire that
 
 7 stages: pre-arrest, arrested, arraigned, pre-trial, trial-prep, sentencing, post-conviction
 
-**Assessment:** STRONG. Full lifecycle coverage. Potential confusion: "Arraignment" vs "Pre-trial" — some defendants may not know which applies. Mitigation: observation logic handles confusion gracefully (stage is context, not direct score driver).
+**Assessment:** STRONG. Full lifecycle coverage. Potential confusion: "Arraignment" vs "Pre-trial", some defendants may not know which applies. Mitigation: observation logic handles confusion gracefully (stage is context, not direct score driver).
 
 ### Q10: Licensed Profession (CLEAR ✓)
 **File:** `src/app/score/page.tsx:162-171`
 
 4 options: licensed profession, other employment, not employed, student
 
-**Help text:** "Licensed professionals and students face separate collateral consequences — your score flags this if relevant."
+**Help text:** "Licensed professionals and students face separate collateral consequences, your score flags this if relevant."
 
 **Assessment:** EXCELLENT. Captures collateral career consequences. Student option includes FAFSA warning for drug offenses.
 
@@ -285,7 +285,7 @@ The Defense Milestone Score tool is a free, no-email-required questionnaire that
 ## 11. Minor Friction Points (Handled)
 
 ### Case Stage Ambiguity (Q9)
-- **Issue:** "Arraignment" vs "Pre-trial" — some defendants may not know which applies
+- **Issue:** "Arraignment" vs "Pre-trial", some defendants may not know which applies
 - **Mitigation:** Observation logic handles confusion. Stage is context, not direct score driver.
 - **Verdict:** ACCEPTABLE
 

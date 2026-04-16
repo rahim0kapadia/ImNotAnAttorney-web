@@ -1,5 +1,5 @@
 /**
- * POST /api/partner/add-client — Partner adds a client manually.
+ * POST /api/partner/add-client, Partner adds a client manually.
  *
  * Creates a court_reminders row attributed to the partner.
  * Sends the client a sign-up confirmation email with their prep page link.
@@ -91,9 +91,9 @@ export async function POST(req: NextRequest) {
       html: `
         <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Your court prep is set up, ${safeName}.</h1>
         <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">${safeCompany} set this up for you. We'll send you reminders before your court date so you don't miss anything.</p>
-        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">Your personalized prep page — what to expect, what to bring, and how to prepare:</p>
+        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">Your personalized prep page, what to expect, what to bring, and how to prepare:</p>
         <p style="margin: 24px 0;"><a href="${prepUrl}" style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 700;">View Your Court Prep</a></p>
-        <p style="color: #71717A; font-size: 13px;">Bookmark this link — it's yours. We'll also include it in every reminder email.</p>
+        <p style="color: #71717A; font-size: 13px;">Bookmark this link, it's yours. We'll also include it in every reminder email.</p>
       `,
     });
   } catch (e) {
@@ -110,7 +110,7 @@ export async function POST(req: NextRequest) {
         html: `
           <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Court date reminders are set up.</h1>
           <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">${safeCompany} set up court date reminders for ${safeName}.${safeIndemnitorName ? ` ${safeIndemnitorName}, you` : " You"}'ll receive reminder emails before their court date on ${escapeHtml(court_date)}.</p>
-          <p style="color: #71717A; font-size: 13px;">ImNotAnAttorney provides legal information — not legal advice.</p>
+          <p style="color: #71717A; font-size: 13px;">ImNotAnAttorney provides legal information, not legal advice.</p>
         `,
       });
     } catch (e) {

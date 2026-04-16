@@ -13,7 +13,7 @@ target_length: 11-13 minutes
 
 **Format**: Long-form (16:9)
 **Target length**: 11-13 minutes
-**Target audience**: Defendants facing an active plea offer — terrified, uncertain, being told to "just take the deal" by attorneys or family, want to make the most important decision of their life with actual information
+**Target audience**: Defendants facing an active plea offer, terrified, uncertain, being told to "just take the deal" by attorneys or family, want to make the most important decision of their life with actual information
 
 ---
 
@@ -27,7 +27,7 @@ target_length: 11-13 minutes
 ### Thumbnail Concept
 **Version A**: A hand hovering over a document with "GUILTY" printed on it, pen in hand about to sign. Red "STOP" text overlaid. Second text: "WATCH THIS FIRST." Dark, dramatic lighting. The moment of decision captured visually.
 
-**Version B**: Two paths diverging — one labeled "PLEA: 3 years probation" in green, one labeled "TRIAL: 15 years prison" in red. Person standing at the fork. Text: "THE TRAP." Conveys the impossible-feeling choice defendants face.
+**Version B**: Two paths diverging, one labeled "PLEA: 3 years probation" in green, one labeled "TRIAL: 15 years prison" in red. Person standing at the fork. Text: "THE TRAP." Conveys the impossible-feeling choice defendants face.
 
 ### Description
 Your attorney says take the plea. The prosecutor calls it a "limited-time offer." Three years probation instead of fifteen years in prison.
@@ -41,7 +41,7 @@ This video changes that. The trial penalty. The investigation that should happen
 This is legal information, not legal advice. We are not attorneys.
 
 00:00 - The worst decision of your life, made in the dark
-01:15 - "Greet 'em, meet 'em, plead 'em" — the assembly line
+01:15 - "Greet 'em, meet 'em, plead 'em", the assembly line
 02:30 - The trial penalty (the pressure nobody talks about)
 04:00 - The 5 things your attorney should do BEFORE recommending a plea
 06:00 - When the plea IS the smart move
@@ -119,7 +119,7 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 "The numbers are stark. In federal cases, defendants who go to trial and are convicted typically receive sentences three to six times longer than defendants who accepted a plea. In some charge categories, the difference is even more extreme."
 
 [Direct to camera, slower pace]
-"Think about what that means. Exercising a constitutional right — the right to a trial — comes with a penalty measured in years of your freedom. Many defendants with viable defenses plead guilty because the downside risk of losing at trial is simply too severe."
+"Think about what that means. Exercising a constitutional right, the right to a trial, comes with a penalty measured in years of your freedom. Many defendants with viable defenses plead guilty because the downside risk of losing at trial is simply too severe."
 
 "This pressure is real. This pressure is documented. And understanding it is not optional for anyone making a plea decision."
 
@@ -137,22 +137,22 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 
 "Number two: identify the weaknesses in the prosecution's case."
 [Text on screen: "2. Identify case weaknesses"]
-"Every case has weaknesses. Every single one. If your attorney recommends a plea and can't tell you the three biggest weaknesses in the prosecution's case — they haven't done the analysis required to give you an informed recommendation."
+"Every case has weaknesses. Every single one. If your attorney recommends a plea and can't tell you the three biggest weaknesses in the prosecution's case, they haven't done the analysis required to give you an informed recommendation."
 
 "Number three: file relevant motions."
 [PATTERN INTERRUPT: emphasis shift]
 [Text on screen: "3. File motions"]
-"If evidence was obtained through a potentially illegal stop, search, or seizure — a suppression motion should be filed BEFORE any plea discussion. A successful motion changes everything. It can collapse the case entirely. At minimum, it creates leverage for a better deal."
+"If evidence was obtained through a potentially illegal stop, search, or seizure, a suppression motion should be filed BEFORE any plea discussion. A successful motion changes everything. It can collapse the case entirely. At minimum, it creates leverage for a better deal."
 
 "Number four: investigate independently."
 [Text on screen: "4. Independent investigation"]
 "Has your attorney talked to witnesses? Visited the scene? Reviewed body camera footage frame by frame? Hired an expert if needed? Investigation is how you find the facts that change the negotiation."
 
-"Number five: explain the full picture — including alternatives to the plea."
+"Number five: explain the full picture, including alternatives to the plea."
 [Text on screen: "5. Full picture including alternatives"]
 "A plea is one option. But is there a diversion program? Drug court? Deferred adjudication? Charge reduction? Withhold of adjudication? These alternatives exist, and a good attorney explores all of them before recommending you plead guilty."
 
-"If your attorney has done all five of these things and then recommends the plea — that's an informed recommendation. If they haven't — it's not."
+"If your attorney has done all five of these things and then recommends the plea, that's an informed recommendation. If they haven't, it's not."
 
 ---
 
@@ -161,11 +161,11 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 [Text on screen: "When to take the deal:"]
 "I'm not here to tell you never take a plea. Sometimes it's the right call."
 
-"The evidence is overwhelming — and your attorney can explain specifically WHY it's overwhelming, not just that it is."
+"The evidence is overwhelming, and your attorney can explain specifically WHY it's overwhelming, not just that it is."
 
-"The offer is significantly below sentencing guidelines — a genuine discount that you wouldn't get at trial."
+"The offer is significantly below sentencing guidelines, a genuine discount that you wouldn't get at trial."
 
-"The plea preserves important things — avoiding a felony record, avoiding prison, keeping a professional license."
+"The plea preserves important things, avoiding a felony record, avoiding prison, keeping a professional license."
 
 "Your attorney has done the work. Reviewed discovery. Filed motions. Investigated. And THEN concluded that the plea is the best path forward."
 
@@ -179,9 +179,9 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 "A guilty plea doesn't just mean the sentence. It means everything that comes after the sentence."
 
 [Items appear on screen]
-"Employment. Many employers run background checks. A felony conviction — and many misdemeanors — will show up."
+"Employment. Many employers run background checks. A felony conviction, and many misdemeanors, will show up."
 "Housing. Landlords check records. Public housing may be denied."
-"Professional licenses. Medical, legal, nursing, teaching, real estate — all can be revoked or denied."
+"Professional licenses. Medical, legal, nursing, teaching, real estate, all can be revoked or denied."
 "Immigration. For non-citizens, certain convictions trigger mandatory deportation. Not possible deportation. Mandatory."
 "Financial aid. Federal student aid eligibility can be affected by drug convictions."
 "Voting rights. In many states, felony convictions result in loss of voting rights."
@@ -189,7 +189,7 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 "Child custody. Criminal convictions can be used against you in custody proceedings."
 
 [Direct to camera]
-"Your attorney should be walking you through EVERY one of these before you sign anything. If they're not — you're making a decision without understanding what you're agreeing to."
+"Your attorney should be walking you through EVERY one of these before you sign anything. If they're not, you're making a decision without understanding what you're agreeing to."
 
 [Text on screen: "Ask: What are ALL the collateral consequences of this plea?"]
 
@@ -199,9 +199,9 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 [Text on screen: "THE FIRST OFFER IS AN OPENING POSITION"]
 "This is critical. The first plea offer from the prosecution is not a final offer. It is an opening position in a negotiation."
 
-"Prosecutors adjust offers based on what's happening in the case. An attorney who files aggressive motions, who demonstrates they're prepared for trial, who has credibility with the prosecutor's office — that attorney gets better deals."
+"Prosecutors adjust offers based on what's happening in the case. An attorney who files aggressive motions, who demonstrates they're prepared for trial, who has credibility with the prosecutor's office, that attorney gets better deals."
 
-"Early plea offers are often the weakest. As the prosecution commits more resources, as witnesses become harder to manage, as trial approaches — the calculus changes."
+"Early plea offers are often the weakest. As the prosecution commits more resources, as witnesses become harder to manage, as trial approaches, the calculus changes."
 
 "'Limited-time offer' is a negotiation tactic. Not a legal deadline."
 
@@ -210,8 +210,8 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 ---
 
 **[9:30-11:00] THE 10 QUESTIONS THAT CHANGE THE CONVERSATION**
-[Text on screen: "THE 10 QUESTIONS — Write these down."]
-[Direct to camera, deliberate pace — each question gets its own beat]
+[Text on screen: "THE 10 QUESTIONS, Write these down."]
+[Direct to camera, deliberate pace, each question gets its own beat]
 
 "Here are ten questions to bring to your next meeting. Write them down. Take notes on the answers."
 
@@ -221,9 +221,9 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 
 "Three: What motions have you filed or considered filing?"
 
-"Four: What is my REALISTIC sentence exposure — not the maximum, the realistic number given my history and circumstances?"
+"Four: What is my REALISTIC sentence exposure, not the maximum, the realistic number given my history and circumstances?"
 
-"Five: What are the collateral consequences of this plea — employment, housing, immigration, licensing, everything?"
+"Five: What are the collateral consequences of this plea, employment, housing, immigration, licensing, everything?"
 
 "Six: Is there a diversion program or deferred adjudication option?"
 
@@ -249,22 +249,22 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 
 "You deserve to know the weaknesses in the case against you. You deserve to know what motions could be filed. You deserve to know the full consequences of what you're agreeing to. And you deserve an attorney who has done the work before asking you to decide."
 
-"If you have that — if your attorney has done the investigation, filed the motions, explored the alternatives, and is now giving you an informed recommendation — then you're in a position to make this decision with real information."
+"If you have that, if your attorney has done the investigation, filed the motions, explored the alternatives, and is now giving you an informed recommendation, then you're in a position to make this decision with real information."
 
-"If you don't have that — if you're being rushed, pressured, or kept in the dark — then you need to slow this process down and get the information you're entitled to."
+"If you don't have that, if you're being rushed, pressured, or kept in the dark, then you need to slow this process down and get the information you're entitled to."
 
 ---
 
 **[12:00-13:00] CTA**
 [Text on screen: "imnotanattorney.com"]
-"The plea deal decision is the biggest decision most defendants ever face. We built the Case Decoder specifically for this moment — a personalized analysis of your case that tells you where things stand, what's been done, what's been missed, and the exact questions for your specific situation. Link in the description."
+"The plea deal decision is the biggest decision most defendants ever face. We built the Case Decoder specifically for this moment, a personalized analysis of your case that tells you where things stand, what's been done, what's been missed, and the exact questions for your specific situation. Link in the description."
 
 "If you're earlier in the process, start with the free Case Progress Score. Five minutes. Clear answers."
 
 "Know What They Know."
 
 [Text on screen: "Know What They Know."]
-"Subscribe — this channel exists because every defendant deserves to make this decision with information, not fear."
+"Subscribe, this channel exists because every defendant deserves to make this decision with information, not fear."
 
 ---
 
@@ -284,10 +284,10 @@ plea deal, should I take plea deal, plea bargain, criminal plea deal, trial pena
 
 **[0:35-0:44]** "Your attorney should tell you: what is the realistic sentencing difference between the plea and losing at trial? Not the maximum. The realistic number."
 
-**[0:44-0:52]** "If they can't give you a specific answer — they haven't done the analysis. Know What They Know. Link in bio."
+**[0:44-0:52]** "If they can't give you a specific answer, they haven't done the analysis. Know What They Know. Link in bio."
 
 ---
 
 **Context**: This is the highest-conversion video in the set. Defendants actively facing a plea decision are the most likely to purchase Case Decoder ($197) or Intelligence Brief ($997). Maps directly to "should-you-take-the-plea-deal" blog post, with additions from "7-things-criminal-justice-wont-tell-you" (trial penalty section). Every stat and framework comes from existing INNA content. The 10 questions are the identical set from the blog post.
-**Retention strategy**: Opens with the visceral emotional experience of receiving a plea offer (stomach drops, hands shake) — this is the most emotional hook in the set. The trial penalty section at 2:30 is a revelation for most viewers. The collateral consequences list at 7:15 is a rapid-fire pattern interrupt that re-engages viewers who might be drifting. The 10 questions at 9:30 are the clear payoff.
+**Retention strategy**: Opens with the visceral emotional experience of receiving a plea offer (stomach drops, hands shake), this is the most emotional hook in the set. The trial penalty section at 2:30 is a revelation for most viewers. The collateral consequences list at 7:15 is a rapid-fire pattern interrupt that re-engages viewers who might be drifting. The 10 questions at 9:30 are the clear payoff.
 **KPI target**: CTR > 10% (highest urgency topic). AVD > 55%. Case Decoder conversions > 25 units in first 30 days. This should be the #1 revenue-generating video on the channel.

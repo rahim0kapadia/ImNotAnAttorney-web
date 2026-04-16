@@ -37,7 +37,7 @@ const MOCKUPS = [
       .footer p { color:#52525b; font-size:12px; }
     </style></head><body>
       <div class="header">
-        <h1>Case Decoder Report — Attorney Accountability Questions</h1>
+        <h1>Case Decoder Report, Attorney Accountability Questions</h1>
         <p>ImNotAnAttorney</p>
       </div>
       <div class="label">Questions for Your Attorney</div>
@@ -105,7 +105,7 @@ const MOCKUPS = [
           <div class="desc">Chain of custody, informant credibility, lab methodology, statutory element mismatch, procedural violations, witness inconsistencies.</div>
         </div>
       </div>
-      <div class="footer"><p>ImNotAnAttorney — Know What They Know. This is legal information, not legal advice.</p></div>
+      <div class="footer"><p>ImNotAnAttorney, Know What They Know. This is legal information, not legal advice.</p></div>
     </body></html>`
   }
 ];
@@ -127,9 +127,9 @@ const MOCKUPS = [
       await page.close();
 
       const stats = fs.statSync(outPath);
-      console.log(`OK: ${shot.name} — ${(stats.size / 1024).toFixed(0)}KB`);
+      console.log(`OK: ${shot.name}, ${(stats.size / 1024).toFixed(0)}KB`);
     } catch (err) {
-      console.log(`FAIL: ${shot.name} — ${err.message}`);
+      console.log(`FAIL: ${shot.name}, ${err.message}`);
     }
   }
 
@@ -147,9 +147,9 @@ const MOCKUPS = [
       await page.close();
 
       const stats = fs.statSync(outPath);
-      console.log(`OK: ${mockup.name} — ${(stats.size / 1024).toFixed(0)}KB`);
+      console.log(`OK: ${mockup.name}, ${(stats.size / 1024).toFixed(0)}KB`);
     } catch (err) {
-      console.log(`FAIL: ${mockup.name} — ${err.message}`);
+      console.log(`FAIL: ${mockup.name}, ${err.message}`);
     }
   }
 

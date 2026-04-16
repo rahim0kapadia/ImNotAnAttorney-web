@@ -1,6 +1,6 @@
 /**
  * Lightweight coverage checks for Tier 9 data availability.
- * Returns counts per section — used by /api/check-availability/[slug]
+ * Returns counts per section, used by /api/check-availability/[slug]
  * to gate purchases before checkout.
  */
 
@@ -24,7 +24,7 @@ export async function checkJudgeCoverage(
   const supabase = createAdminClient();
   const safeName = escapeIlike(judgeName);
 
-  // Find judge — try with jurisdiction first, fall back to name only
+  // Find judge, try with jurisdiction first, fall back to name only
   let judges;
   ({ data: judges } = await supabase
     .from("judge_profiles")
@@ -182,7 +182,7 @@ export async function checkArrestKitCoverage(
     officers: officers.count ?? 0,
   };
 
-  // Always available — rights checklist is universal
+  // Always available, rights checklist is universal
   return {
     available: true,
     coverage,

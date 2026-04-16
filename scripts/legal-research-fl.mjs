@@ -1,5 +1,5 @@
 /**
- * Legal Research Skill — Level 1: FL Statute Verification + Case Law
+ * Legal Research Skill, Level 1: FL Statute Verification + Case Law
  *
  * For each jurisdiction_statute row in FL:
  *   1. Constructs FL Online Sunshine URL from statute_number
@@ -183,7 +183,7 @@ async function verifyFLStatute(statute) {
   let confidenceScore = 0;
   const notes = [];
 
-  console.log(`\n  [${common_charge_slug}] §${statute_number || "unknown"} — ${statute_title || "?"}`);
+  console.log(`\n  [${common_charge_slug}] §${statute_number || "unknown"}, ${statute_title || "?"}`);
 
   // 1. FL Online Sunshine
   const flURL = buildFLStatuteURL(statute_number);
@@ -222,16 +222,16 @@ async function verifyFLStatute(statute) {
           console.log(`    ✗ FL Online Sunshine: HTTP ${res.status}`);
         }
       } catch (e) {
-        notes.push(`FL Online Sunshine: fetch error — ${e.message}`);
+        notes.push(`FL Online Sunshine: fetch error, ${e.message}`);
         console.log(`    ✗ FL Online Sunshine: ${e.message}`);
       }
     }
   } else {
     notes.push("No FL statute URL constructable from statute_number");
-    console.log(`    — No FL URL constructable`);
+    console.log(`   , No FL URL constructable`);
   }
 
-  // 2. Justia verification URL (just construct, don't fetch — respect rate limits)
+  // 2. Justia verification URL (just construct, don't fetch, respect rate limits)
   const justiaURL = buildJustiaURL(statute_number);
   if (justiaURL) {
     sourceUrls.push(justiaURL);
@@ -272,7 +272,7 @@ async function verifyFLStatute(statute) {
 
 async function searchCaseLaw(statuteNumber, jurisdictionStatuteId) {
   if (!courtlistenerToken) {
-    console.log(`    — CourtListener: no token, skipping case law search`);
+    console.log(`   , CourtListener: no token, skipping case law search`);
     return [];
   }
 
@@ -327,12 +327,12 @@ async function storeCaseLaw(cases, jurisdictionStatuteId) {
     const caseName = c.caseName || "Unknown";
     // citation is a string array like ["468 So. 2d 936", "10 Fla. L. Weekly 201"]
     // Use the first citation as primary, store all in source_urls
-    // citation is a string array — first non-empty string wins, fallback to ""
+    // citation is a string array, first non-empty string wins, fallback to ""
     const citationRaw = Array.isArray(c.citation) ? c.citation.filter((x) => typeof x === "string" && x.length > 0) : [];
     const citation = citationRaw.length > 0 ? citationRaw[0] : "";
     const court = c.court || "";
     const year = c.dateFiled ? new Date(c.dateFiled).getFullYear() : null;
-    // CourtListener search results don't have snippet — use syllabus or posture
+    // CourtListener search results don't have snippet, use syllabus or posture
     const holding = (c.syllabus || c.posture || "").slice(0, 500);
     const clusterUrl = c.absolute_url ? `https://www.courtlistener.com${c.absolute_url}` : "";
     const allCitationUrls = [clusterUrl, ...(c.citation || []).slice(1)].filter(Boolean);
@@ -354,9 +354,9 @@ async function storeCaseLaw(cases, jurisdictionStatuteId) {
 // ── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log("=== INAA Legal Research — Level 1 ===");
+  console.log("=== INAA Legal Research, Level 1 ===");
   console.log(`Jurisdiction: ${JURISDICTION}`);
-  console.log(`CourtListener: ${courtlistenerToken ? "token found" : "NO token — case law search disabled"}`);
+  console.log(`CourtListener: ${courtlistenerToken ? "token found" : "NO token, case law search disabled"}`);
   console.log(`Mode: ${dryRun ? "DRY RUN" : "LIVE"}`);
   if (targetSlug) console.log(`Target: ${targetSlug}`);
 

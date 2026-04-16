@@ -11,7 +11,7 @@ suggested_time: "Friday 7:30 PM ET"
 target_groups: ["Federal Defendant Support Groups", "FAMM Community", "Criminal Justice Reform Groups"]
 ---
 
-## Facebook Post: Story — Plea Deal Pressure
+## Facebook Post: Story, Plea Deal Pressure
 
 **Type**: Text post (long-form)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -24,7 +24,7 @@ target_groups: ["Federal Defendant Support Groups", "FAMM Community", "Criminal 
 
 "Sign here. Decide by Friday."
 
-He had been out on bail for four months. His attorney had requested three continuances. They had met twice — both times in a courthouse hallway for less than ten minutes.
+He had been out on bail for four months. His attorney had requested three continuances. They had met twice, both times in a courthouse hallway for less than ten minutes.
 
 Then one day his attorney called and said the prosecution was offering a deal. Three years probation instead of up to five years in prison. Plead to one felony instead of three. Sign by Friday or the offer goes away.
 
@@ -54,7 +54,7 @@ He brought this to his attorney. His attorney looked into it. Turns out the inco
 
 His attorney filed a motion to suppress. The motion was granted. The prosecution's case weakened substantially. The new plea offer was one misdemeanor charge with community service. No felony. No probation reporting. No prison.
 
-He almost signed on Friday. He almost took a felony that would have followed him for the rest of his life — on a job application, on a background check, on a housing application, every single time.
+He almost signed on Friday. He almost took a felony that would have followed him for the rest of his life, on a job application, on a background check, on a housing application, every single time.
 
 Because nobody told him he could read his own discovery.
 

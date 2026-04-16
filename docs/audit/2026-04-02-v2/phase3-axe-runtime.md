@@ -4,7 +4,7 @@
 **Site:** https://imnotanattorney.com
 **Standards:** WCAG 2.1 Level AA (wcag2a, wcag2aa, wcag21a, wcag21aa, best-practices)
 **Tool:** axe-core 4.8.4 via Playwright MCP
-**Context:** Post-fix verification — commits 8017e39 and f45536a fixed 13 issues
+**Context:** Post-fix verification, commits 8017e39 and f45536a fixed 13 issues
 
 ## Pages Scanned
 1. / (Homepage)
@@ -31,7 +31,7 @@
 
 ## Per-Page Results
 
-<!-- Results appended below as each page is scanned -->
+<!, Results appended below as each page is scanned,>
 
 ---
 
@@ -281,7 +281,7 @@ No violations found.
 ### Page Summary Table
 
 | Page | Violations | Passes | Status |
-|------|-----------|--------|--------|
+|------|---------, |------, |------, |
 | `/` | 0 | 41 | CLEAN |
 | `/services` | 3 | 38 | MODERATE |
 | `/playbooks` | 3 | 34 | MODERATE |
@@ -298,10 +298,10 @@ No violations found.
 
 ### Specific Fix Verification
 
-- [x] **Zero text-zinc-500/zinc-600 contrast violations** — CONFIRMED: no color-contrast violations found
-- [ ] **No duplicate main landmark on homepage** — FAILED: still present on /services, /playbooks, /score, /start
-- [x] **Form labels associated (partner application)** — CONFIRMED: no label association violations
-- [x] **Radio semantics on IntakeChargeQuestions** — CONFIRMED: no radiogroup/aria-role violations detected
+- [x] **Zero text-zinc-500/zinc-600 contrast violations**, CONFIRMED: no color-contrast violations found
+- [ ] **No duplicate main landmark on homepage**, FAILED: still present on /services, /playbooks, /score, /start
+- [x] **Form labels associated (partner application)**, CONFIRMED: no label association violations
+- [x] **Radio semantics on IntakeChargeQuestions**, CONFIRMED: no radiogroup/aria-role violations detected
 
 ### Consolidated Findings (All Pages, by Severity)
 

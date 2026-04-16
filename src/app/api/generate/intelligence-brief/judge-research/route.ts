@@ -1,11 +1,11 @@
 /**
- * @file /api/generate/intelligence-brief/judge-research — Optional judge research enrichment
+ * @file /api/generate/intelligence-brief/judge-research, Optional judge research enrichment
  *
  * v4 CHANGE: This endpoint is NO LONGER a mandatory pipeline gate.
  * Phase A now auto-triggers Phase B without waiting for operator judge research.
  * IB uses jurisdiction-level intelligence patterns instead of specific judge data.
  *
- * This endpoint is now OPTIONAL — operators can submit judge research to enrich
+ * This endpoint is now OPTIONAL, operators can submit judge research to enrich
  * the report if they have it. If Phase B hasn't run yet, this saves the data
  * and triggers Phase B. If Phase B already ran, use force:true to re-trigger
  * with the judge data included.
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
       .eq("id", caseId)
       .single();
     if (existing?.judge_research_data && Object.keys(existing.judge_research_data).length > 0) {
-      console.log("[Judge-Research] Empty {} received but case already has research data — skipping save");
+      console.log("[Judge-Research] Empty {} received but case already has research data, skipping save");
     } else {
       return NextResponse.json(
         { error: "judgeResearch is empty and no existing data found on case" },
@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
   // ── ATOMIC GUARD ───────────────────────────────────────────
   // v4: Accepts both "researching" (legacy) and "compiling" (auto Phase B flow).
   // Phase A now auto-triggers Phase B, so the typical state is "compiling".
-  // This endpoint is optional enrichment — use force:true to re-trigger if needed.
+  // This endpoint is optional enrichment, use force:true to re-trigger if needed.
   let guardQuery = supabase
     .from("cases")
     .update({ status: "compiling", updated_at: new Date().toISOString() })

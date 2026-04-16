@@ -1,5 +1,5 @@
 /**
- * POST /api/customer/magic-link — Request a magic link for customer login.
+ * POST /api/customer/magic-link, Request a magic link for customer login.
  *
  * Public route (no auth). Rate-limited to 3 requests per email per hour + 10 per IP per hour.
  * Sends magic link via Resend (email).

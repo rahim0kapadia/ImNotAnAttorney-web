@@ -18,7 +18,7 @@ export function ScholarshipCounter({ className = '' }: { className?: string }) {
     fetch('/api/scholarships/counter')
       .then((r) => r.json())
       .then(setData)
-      .catch(() => {}); // Silent fail — counter is progressive enhancement
+      .catch(() => {}); // Silent fail, counter is progressive enhancement
   }, []);
 
   // Reserve layout space even when hidden to prevent CLS

@@ -10,7 +10,7 @@ suggested_time: "Saturday 8:00 PM ET"
 target_groups: ["Strong Prison Wives", "Wrongfully Accused Groups", "Criminal Justice Reform Groups"]
 ---
 
-## Facebook Post: Story -- The $12,000 Hallway
+## Facebook Post: Story, The $12,000 Hallway
 
 **Type**: Text post (long-form)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -45,19 +45,19 @@ Six weeks later, she called his office eight times. She got the receptionist eve
 
 She emailed. She texted. She sent a certified letter.
 
-Finally, three months in, she found out something that changed everything. She looked up her case on the clerk of court website. She could see the docket -- every document filed in her case.
+Finally, three months in, she found out something that changed everything. She looked up her case on the clerk of court website. She could see the docket, every document filed in her case.
 
 There were four entries. An appearance filing. Three continuances. That was it. No motions. No discovery demands. No defense activity whatsoever.
 
 $12,000. Three continuances. Zero work.
 
-She brought this to her next meeting -- which she got by showing up at his office unannounced. She put the docket printout on his desk and said: "Explain this."
+She brought this to her next meeting, which she got by showing up at his office unannounced. She put the docket printout on his desk and said: "Explain this."
 
 He could not.
 
 She fired him that week. The new attorney filed two suppression motions within thirty days. The case outcome changed dramatically.
 
-$12,000 bought her a hallway conversation and three delays. The information that something was wrong cost her nothing -- just the knowledge that she could check her own court docket.
+$12,000 bought her a hallway conversation and three delays. The information that something was wrong cost her nothing, just the knowledge that she could check her own court docket.
 
 You can check yours too. Search "[your county] clerk of court" and look up your case number. See what has been filed. Or what has not.
 
@@ -65,7 +65,7 @@ You can check yours too. Search "[your county] clerk of court" and look up your 
 
 ### Visual Direction
 
-No image. Text only. Long-form story format. The "$12,000" figure in the opening line is the hook -- it signals financial pain that every defendant or family member relates to. Let the text stand alone.
+No image. Text only. Long-form story format. The "$12,000" figure in the opening line is the hook, it signals financial pain that every defendant or family member relates to. Let the text stand alone.
 
 ### Link Strategy
 
@@ -77,7 +77,7 @@ This story will generate outrage and identification. Many commenters will share 
 
 ### UPL Compliance Note
 
-This post describes a common experience and provides a factual action step (checking the court docket -- which is public record). It does not advise anyone to fire their attorney or take specific legal action.
+This post describes a common experience and provides a factual action step (checking the court docket, which is public record). It does not advise anyone to fire their attorney or take specific legal action.
 
 ---
 

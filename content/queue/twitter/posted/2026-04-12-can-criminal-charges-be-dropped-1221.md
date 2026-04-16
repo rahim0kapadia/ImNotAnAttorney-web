@@ -22,12 +22,12 @@ Reason 2: Constitutional violations
 
 Illegal search? Unlawful stop? Miranda violation? If the evidence was obtained through a constitutional violation, a motion to suppress can get it excluded.
 ===TWEET===
-Without that evidence, the prosecution may not have enough to proceed — and the charges get dropped.
+Without that evidence, the prosecution may not have enough to proceed, and the charges get dropped.
 ===TWEET===
 What does NOT get charges dropped:
 
 ✗ "It was my first offense" (affects sentencing, not charges)
-✗ "The victim doesn't want to press charges" (the STATE brings charges, not the victim — this is a TV myth)
+✗ "The victim doesn't want to press charges" (the STATE brings charges, not the victim, this is a TV myth)
 ✗ "I said I was sorry" (can actually be used as evidence of guilt)
 ✗ "I h…
 ===TWEET===
@@ -42,6 +42,6 @@ The earlier the better.
 ===TWEET===
 Once a case goes to trial, dismissal becomes much harder.
 ===TWEET===
-All 6 reasons charges actually get dropped — and the questions to ask your attorney about each one:
+All 6 reasons charges actually get dropped, and the questions to ask your attorney about each one:
 
 → https://imnotanattorney.com/blog/can-criminal-charges-be-dropped?utm_source=twitter&utm_medium=thread&utm_campaign=charges-dropped

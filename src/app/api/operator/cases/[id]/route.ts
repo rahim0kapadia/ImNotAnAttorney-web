@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/cases/[id] — Full case detail with all related data
+ * @file /api/operator/cases/[id], Full case detail with all related data
  *
  * GET:   Fetches the case and all related entities (order, intake, documents,
  *        findings, witnesses, jobs, tasks, timeline count, evidence stats,
@@ -186,7 +186,7 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
     operator_notes: caseData.notes ?? null,
     data_retention_until: caseData.data_retention_until,
     upgrade_order_ids: caseData.upgrade_order_ids,
-    // Joined data — gracefully handle missing sub-queries
+    // Joined data, gracefully handle missing sub-queries
     order: orderResult.error ? null : orderResult.data,
     intake: intakeResult.error ? null : intakeResult.data,
     documents: docsResult.data ?? [],
@@ -230,7 +230,7 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
 
   const supabase = createAdminClient();
 
-  // DB column is "notes" — the type alias "operator_notes" is a display-layer concern
+  // DB column is "notes", the type alias "operator_notes" is a display-layer concern
   const { error } = await supabase
     .from("cases")
     .update({ notes: body.notes })

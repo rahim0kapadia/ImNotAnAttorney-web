@@ -1,5 +1,5 @@
 /**
- * @file Parts 10, 11 — Customer lifecycle emails
+ * @file Parts 10, 11, Customer lifecycle emails
  *
  * Part 10: Report expiry warnings (30-day warning before 12-month expiry)
  * Part 11: Abandoned checkout recovery (2-email sequence: 24h empathy + 48h urgency)
@@ -105,8 +105,8 @@ export async function sendAbandonedCheckoutEmails(ctx: CronContext): Promise<Cro
   const result = emptyResult();
 
   // Two-email sequence:
-  // Email 1: 24-48h after checkout abandonment — empathy + value
-  // Email 2: 48-72h after checkout abandonment — information gap + finality
+  // Email 1: 24-48h after checkout abandonment, empathy + value
+  // Email 2: 48-72h after checkout abandonment, information gap + finality
   const windowStart = new Date(ctx.now);
   windowStart.setHours(windowStart.getHours() - 72);
   const windowEnd = new Date(ctx.now);

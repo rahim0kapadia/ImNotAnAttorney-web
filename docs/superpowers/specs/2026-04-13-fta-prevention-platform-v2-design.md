@@ -1,4 +1,4 @@
-# FTA Prevention Platform v2 — Data-Driven Prep + Compliance Reports
+# FTA Prevention Platform v2, Data-Driven Prep + Compliance Reports
 
 ## Problem
 
@@ -25,7 +25,7 @@ Transform the prep page from generic logistics into a data-driven defendant brie
 - **Defendant:** Gets actually useful prep content + someone actively tracking their court date + data-driven context for their charge
 - **Surety company:** Better visibility into agent management practices, reduced FTA risk
 - **Us:** Distribution channel + conversion funnel + defendant behavior data
-- **Future-us:** Network effects — more bondsmen = more defendants = more conversion data
+- **Future-us:** Network effects, more bondsmen = more defendants = more conversion data
 
 ---
 
@@ -40,37 +40,37 @@ Replace the generic `CourtPrepContent` (currently 4-5 sentences per section) wit
 **Section: "The Reality of Your Hearing"** (replaces "What to Expect")
 Insider tips sourced from criminal defense attorney blogs, academic research, and court self-help guides:
 - The cattle call: "Your summons says 9 AM. You'll sit for 2-4 hours while 40+ other cases go first. Bring something to read."
-- Meeting your attorney: "If you have a public defender, you'll likely meet them for the first time minutes before your hearing. This is normal — they're assigned at arraignment."
+- Meeting your attorney: "If you have a public defender, you'll likely meet them for the first time minutes before your hearing. This is normal, they're assigned at arraignment."
 - The sequence: Charges read → plea entered (almost always 'not guilty' at arraignment) → bail addressed → next date set. Your part takes 5-10 minutes.
 - What NOT to do: "Do NOT 'explain what happened' to the judge. This is how people accidentally confess on the record. Your first appearance is about not hurting yourself, not proving innocence."
-- Demeanor research: "Judges observe everything from the moment you walk in. Duke University research shows in-court demeanor is the #1 factor judges can't quantify. Don't cry — judges view it as manipulative. Don't make excuses. Quiet composure signals you take it seriously."
+- Demeanor research: "Judges observe everything from the moment you walk in. Duke University research shows in-court demeanor is the #1 factor judges can't quantify. Don't cry, judges view it as manipulative. Don't make excuses. Quiet composure signals you take it seriously."
 
 **Section: "What Can Get You Arrested at the Courthouse"** (replaces "What to Wear")
-- Showing up under the influence or smelling like alcohol — clients have been taken into custody on the spot
-- Anything illegal through security (metal detectors, bag search — TSA-style)
-- Don't bring children — not allowed in courtroom, no childcare
+- Showing up under the influence or smelling like alcohol, clients have been taken into custody on the spot
+- Anything illegal through security (metal detectors, bag search, TSA-style)
+- Don't bring children, not allowed in courtroom, no childcare
 - Don't bring food or beverages
-- Dress: business casual or better. Courts notice. Not for fashion — it signals you take the process seriously.
+- Dress: business casual or better. Courts notice. Not for fashion, it signals you take the process seriously.
 
 **Section: "Before You Go"** (replaces "What to Bring")
 - Government-issued photo ID
 - Bond paperwork
 - Any documents your attorney asked for
-- Pen and notepad — you WILL want to write things down
-- Charge your phone but check county rules — some courtrooms ban phones entirely
-- Arrange childcare and clear your entire day — you may wait until afternoon
+- Pen and notepad, you WILL want to write things down
+- Charge your phone but check county rules, some courtrooms ban phones entirely
+- Arrange childcare and clear your entire day, you may wait until afternoon
 - Do NOT post about your case on social media. Prosecutors scour Facebook, Instagram, YouTube. Posts are permanent evidence.
 
-**Section: "Your Charge in [State]"** (NEW — data-driven)
+**Section: "Your Charge in [State]"** (NEW, data-driven)
 Queries `jurisdiction_statutes` by `charge_type` + parsed state code from `county_state`:
-- Statute: [statute_number] — [statute_title]
+- Statute: [statute_number], [statute_title]
 - Offense class: [offense_class]
 - Penalty range: [penalty_min] to [penalty_max]
 - Fine: up to $[fine_max]
 - Mandatory minimum: [yes/no + details]
 - Elements the prosecution must prove: [elements array, bulleted]
 
-**Section: "What Typically Happens in Cases Like Yours"** (NEW — data-driven)
+**Section: "What Typically Happens in Cases Like Yours"** (NEW, data-driven)
 Queries `outcome_benchmarks` by offense type + `sentencing_distributions` by charge+jurisdiction:
 - [X]% of [charge_type] cases result in a plea deal
 - [X]% result in dismissal
@@ -78,25 +78,25 @@ Queries `outcome_benchmarks` by offense type + `sentencing_distributions` by cha
 - Median sentence: [X] months [probation/incarceration]
 - Bench vs. jury: [bench_acquittal_rate]% vs [jury_acquittal_rate]% acquittal rate (from `bench_jury_divergence`, district-level USSC data)
 
-Framing: "These are aggregate statistics from public court records — not a prediction for your case. Every case is different. But knowing what typically happens helps you have informed conversations with your attorney."
+Framing: "These are aggregate statistics from public court records, not a prediction for your case. Every case is different. But knowing what typically happens helps you have informed conversations with your attorney."
 
-**Section: "Common Defense Approaches"** (NEW — data-driven)
+**Section: "Common Defense Approaches"** (NEW, data-driven)
 Queries `jurisdiction_statutes.common_defenses` + `jurisdiction_statutes.defense_opportunities`:
 - Bulleted list of defense categories (e.g., "Challenging the traffic stop," "Rising blood alcohol defense," "Testing procedure errors")
 - NO case-specific application. NO "you should do X." Just: "These are the defense categories attorneys commonly explore for this charge type."
 - Framing: "Ask your attorney which of these apply to your situation."
 
-**Section: "Questions to Ask Your Attorney"** (NEW — general, not case-specific)
+**Section: "Questions to Ask Your Attorney"** (NEW, general, not case-specific)
 5-7 universal questions sourced from Gideon's Soldiers and criminal defense attorney guides:
 - How much experience do you have with [charge_type] cases?
-- What is your strategy — are we looking at a plea or going to trial?
+- What is your strategy, are we looking at a plea or going to trial?
 - What discovery have you received from the prosecution?
 - What motions do you plan to file, and on what timeline?
 - What's the realistic range of outcomes for my case?
 - When is the next court date and what will happen?
-- The Supreme Court requires attorneys communicate ALL plea offers — have any been made?
+- The Supreme Court requires attorneys communicate ALL plea offers, have any been made?
 
-**Section: "What Happens Next"** (NEW — educational)
+**Section: "What Happens Next"** (NEW, educational)
 - Arraignment → Pretrial conferences (discovery, plea negotiations) → Preliminary hearing (felonies only) → Trial → Sentencing
 - "Most cases are NOT resolved at the first hearing. Expect multiple court dates over several months. This is normal."
 - "Cases set for trial may be continued (rescheduled) multiple times. Nationally, pending criminal cases jumped from 383,879 (2019) to 546,727 (2021)."
@@ -104,10 +104,10 @@ Queries `jurisdiction_statutes.common_defenses` + `jurisdiction_statutes.defense
 ### Data query architecture
 
 The prep page (`src/app/prep/[token]/page.tsx`) is a Server Component. It already queries `court_reminders` by token. Add queries to:
-- `jurisdiction_statutes` — filter by `common_charge_slug` matching `charge_type` + `jurisdiction` matching parsed state code
-- `outcome_benchmarks` — filter by `offense_type` matching charge category
-- `sentencing_distributions` — filter by `charge_slug` + `jurisdiction`, WHERE `judge_id IS NULL` (aggregate, not judge-specific)
-- `bench_jury_divergence` — filter by district/jurisdiction, use USSC-level data only (not judge-specific)
+- `jurisdiction_statutes`, filter by `common_charge_slug` matching `charge_type` + `jurisdiction` matching parsed state code
+- `outcome_benchmarks`, filter by `offense_type` matching charge category
+- `sentencing_distributions`, filter by `charge_slug` + `jurisdiction`, WHERE `judge_id IS NULL` (aggregate, not judge-specific)
+- `bench_jury_divergence`, filter by district/jurisdiction, use USSC-level data only (not judge-specific)
 
 **Parsing state from `county_state`:** The field stores "Pinellas County, FL". Parse state code: `county_state.split(',').pop().trim()` → "FL". Map to full jurisdiction code if needed.
 
@@ -123,10 +123,10 @@ The prep page (`src/app/prep/[token]/page.tsx`) is a Server Component. It alread
 
 ### Files affected
 
-- `src/lib/court-reminders.ts` — rewrite `CourtPrepContent` interface + content. Add data-driven section types.
-- `src/app/prep/[token]/page.tsx` — add Supabase queries for aggregate data. Render new sections.
-- New: `src/lib/prep-content.ts` — insider tips content (separated from court-reminders.ts to keep it focused). Static content arrays for the non-data-driven sections.
-- New: `src/lib/prep-data.ts` — query functions for aggregate data (jurisdiction_statutes, outcome_benchmarks, sentencing_distributions, bench_jury_divergence). Handles graceful degradation.
+- `src/lib/court-reminders.ts`, rewrite `CourtPrepContent` interface + content. Add data-driven section types.
+- `src/app/prep/[token]/page.tsx`, add Supabase queries for aggregate data. Render new sections.
+- New: `src/lib/prep-content.ts`, insider tips content (separated from court-reminders.ts to keep it focused). Static content arrays for the non-data-driven sections.
+- New: `src/lib/prep-data.ts`, query functions for aggregate data (jurisdiction_statutes, outcome_benchmarks, sentencing_distributions, bench_jury_divergence). Handles graceful degradation.
 
 ---
 
@@ -144,10 +144,10 @@ The prep page (`src/app/prep/[token]/page.tsx`) is a Server Component. It alread
 
 - **Default:** "Check In" button (amber, prominent)
 - **Requesting location:** "Locating..." spinner (browser permission prompt appears)
-- **Permission denied:** "Check-in recorded (no location)" — still records timestamp + IP
+- **Permission denied:** "Check-in recorded (no location)", still records timestamp + IP
 - **Success:** "Checked in at [time]" with green checkmark, button disabled for 12 hours
 - **Already checked in today:** Show last check-in time, button disabled
-- **Error:** "Check-in failed — try again" with retry
+- **Error:** "Check-in failed, try again" with retry
 
 ### Schema
 
@@ -159,14 +159,14 @@ CREATE TABLE client_check_ins (
   latitude double precision,
   longitude double precision,
   accuracy_meters double precision,
-  method text NOT NULL DEFAULT 'web', -- 'web' for now, 'sms' later
+  method text NOT NULL DEFAULT 'web',, 'web' for now, 'sms' later
   created_at timestamptz DEFAULT now()
 );
 
 CREATE INDEX idx_check_ins_reminder ON client_check_ins(court_reminder_id);
 ```
 
-No IP address or user agent storage — unnecessary for compliance purposes and raises privacy concerns.
+No IP address or user agent storage, unnecessary for compliance purposes and raises privacy concerns.
 
 ### Check-in frequency
 
@@ -174,11 +174,11 @@ Bondsman doesn't configure this. Default: one check-in allowed per 12-hour windo
 
 ### Files
 
-- New: `src/components/partner/CheckInButton.tsx` — client component (~80 lines)
-- New: `src/app/api/check-in/route.ts` — POST endpoint, validates token, records check-in (~50 lines)
-- Modified: `src/app/prep/[token]/page.tsx` — import + render CheckInButton
-- Modified: `src/components/partner/ClientTracker.tsx` — show last check-in date + count per client
-- Modified: `src/app/api/partner/dashboard/route.ts` — join check-in data (last check-in date, total count)
+- New: `src/components/partner/CheckInButton.tsx`, client component (~80 lines)
+- New: `src/app/api/check-in/route.ts`, POST endpoint, validates token, records check-in (~50 lines)
+- Modified: `src/app/prep/[token]/page.tsx`, import + render CheckInButton
+- Modified: `src/components/partner/ClientTracker.tsx`, show last check-in date + count per client
+- Modified: `src/app/api/partner/dashboard/route.ts`, join check-in data (last check-in date, total count)
 - Migration: `supabase/migrations/2026XXXX_client_check_ins.sql`
 
 ---
@@ -207,10 +207,10 @@ For v1: same email template, just swap "Your court date" → "Your co-signer [fi
 
 ### Files
 
-- Modified: `src/components/partner/AddClientModal.tsx` — add 2 optional fields (indemnitor name, indemnitor email)
-- Modified: `src/app/api/partner/add-client/route.ts` — accept + insert indemnitor fields
-- Modified: `src/app/api/cron/court-reminders/route.ts` — add second `sendEmail()` when indemnitor_email present
-- Modified: `src/lib/court-reminders.ts` — update CourtReminder interface
+- Modified: `src/components/partner/AddClientModal.tsx`, add 2 optional fields (indemnitor name, indemnitor email)
+- Modified: `src/app/api/partner/add-client/route.ts`, accept + insert indemnitor fields
+- Modified: `src/app/api/cron/court-reminders/route.ts`, add second `sendEmail()` when indemnitor_email present
+- Modified: `src/lib/court-reminders.ts`, update CourtReminder interface
 - Migration: `supabase/migrations/2026XXXX_indemnitor_fields.sql`
 
 ---
@@ -227,7 +227,7 @@ A print-optimized HTML page (no new dependencies) at `/partner/compliance-report
 - Partner company name + agent name
 - Report period (selectable: last 30 days, last 90 days, Q1/Q2/Q3/Q4, custom range)
 - Generated date
-- "Defendant Management Report — [Period]"
+- "Defendant Management Report, [Period]"
 
 **Summary stats:**
 - Total defendants under management: [N]
@@ -242,8 +242,8 @@ A print-optimized HTML page (no new dependencies) at `/partner/compliance-report
 **Per-defendant table:**
 
 | Name | Charge | Court Date | Status | Reminders Sent | Check-Ins | Last Check-In |
-|------|--------|------------|--------|---------------|-----------|---------------|
-| (first_name only — no last name stored) | DUI | May 15, 2026 | Active | 3/4 | 5 | Apr 12, 2026 |
+|------|------, |------------|------, |---------------|---------, |---------------|
+| (first_name only, no last name stored) | DUI | May 15, 2026 | Active | 3/4 | 5 | Apr 12, 2026 |
 
 **Footer:**
 - "Report generated by ImNotAnAttorney Court Prep Platform"
@@ -266,9 +266,9 @@ Same `requirePartnerAuth()` used by the dashboard. Session cookie validates the 
 
 ### Files
 
-- New: `src/app/partner/compliance-report/page.tsx` — server component, queries data, renders print-optimized HTML (~150 lines)
-- New: `src/components/partner/ComplianceReportButton.tsx` — link/button on dashboard (~15 lines)
-- Modified: `src/app/partner/dashboard/page.tsx` — add ComplianceReportButton
+- New: `src/app/partner/compliance-report/page.tsx`, server component, queries data, renders print-optimized HTML (~150 lines)
+- New: `src/components/partner/ComplianceReportButton.tsx`, link/button on dashboard (~15 lines)
+- Modified: `src/app/partner/dashboard/page.tsx`, add ComplianceReportButton
 
 ---
 
@@ -276,7 +276,7 @@ Same `requirePartnerAuth()` used by the dashboard. Session cookie validates the 
 
 ### What changes
 
-The prep page already shows "Court prep provided by {company} — powered by ImNotAnAttorney" (added in the FTA dashboard build). Enhance this to feel more like the bondsman's own tool:
+The prep page already shows "Court prep provided by {company}, powered by ImNotAnAttorney" (added in the FTA dashboard build). Enhance this to feel more like the bondsman's own tool:
 
 - Move branding from small text to a proper header bar
 - Show partner company name prominently
@@ -285,8 +285,8 @@ The prep page already shows "Court prep provided by {company} — powered by ImN
 
 ### Files
 
-- Modified: `src/app/prep/[token]/page.tsx` — upgrade branding section
-- Modified: `src/lib/court-reminder-emails.ts` — add partner company name to email templates (query partners table when partner_promo_code present)
+- Modified: `src/app/prep/[token]/page.tsx`, upgrade branding section
+- Modified: `src/lib/court-reminder-emails.ts`, add partner company name to email templates (query partners table when partner_promo_code present)
 
 ---
 
@@ -295,7 +295,7 @@ The prep page already shows "Court prep provided by {company} — powered by ImN
 One migration file:
 
 ```sql
--- 1. Client check-ins table
+, 1. Client check-ins table
 CREATE TABLE client_check_ins (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   court_reminder_id uuid NOT NULL REFERENCES court_reminders(id),
@@ -308,37 +308,37 @@ CREATE TABLE client_check_ins (
 );
 CREATE INDEX idx_check_ins_reminder ON client_check_ins(court_reminder_id);
 
--- 2. Indemnitor fields
+, 2. Indemnitor fields
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS indemnitor_name text;
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS indemnitor_email text;
 
--- 3. Last name for future re-arrest monitoring (backlog)
+, 3. Last name for future re-arrest monitoring (backlog)
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 ```
 
-Adding `last_name` now (optional field) even though re-arrest monitoring is backlogged — avoids a future migration and lets the AddClientModal collect it.
+Adding `last_name` now (optional field) even though re-arrest monitoring is backlogged, avoids a future migration and lets the AddClientModal collect it.
 
 ---
 
 ## Files Summary
 
 | Category | File | Action |
-|----------|------|--------|
-| Prep content | `src/lib/prep-content.ts` | NEW — insider tips static content |
-| Prep data | `src/lib/prep-data.ts` | NEW — aggregate data query functions |
-| Prep page | `src/app/prep/[token]/page.tsx` | MODIFY — new content sections + data queries + enhanced branding |
-| Court reminders | `src/lib/court-reminders.ts` | MODIFY — update interface, simplify (move content to prep-content.ts) |
+|----------|------|------, |
+| Prep content | `src/lib/prep-content.ts` | NEW, insider tips static content |
+| Prep data | `src/lib/prep-data.ts` | NEW, aggregate data query functions |
+| Prep page | `src/app/prep/[token]/page.tsx` | MODIFY, new content sections + data queries + enhanced branding |
+| Court reminders | `src/lib/court-reminders.ts` | MODIFY, update interface, simplify (move content to prep-content.ts) |
 | Check-in button | `src/components/partner/CheckInButton.tsx` | NEW |
 | Check-in API | `src/app/api/check-in/route.ts` | NEW |
 | Compliance report | `src/app/partner/compliance-report/page.tsx` | NEW |
 | Report button | `src/components/partner/ComplianceReportButton.tsx` | NEW |
-| Add client modal | `src/components/partner/AddClientModal.tsx` | MODIFY — add indemnitor + last_name fields |
-| Add client API | `src/app/api/partner/add-client/route.ts` | MODIFY — accept new fields |
-| Client tracker | `src/components/partner/ClientTracker.tsx` | MODIFY — check-in status column |
-| Dashboard API | `src/app/api/partner/dashboard/route.ts` | MODIFY — join check-in data |
-| Dashboard page | `src/app/partner/dashboard/page.tsx` | MODIFY — add compliance report button |
-| Reminder cron | `src/app/api/cron/court-reminders/route.ts` | MODIFY — indemnitor emails + partner branding |
-| Reminder emails | `src/lib/court-reminder-emails.ts` | MODIFY — partner branding in email templates |
+| Add client modal | `src/components/partner/AddClientModal.tsx` | MODIFY, add indemnitor + last_name fields |
+| Add client API | `src/app/api/partner/add-client/route.ts` | MODIFY, accept new fields |
+| Client tracker | `src/components/partner/ClientTracker.tsx` | MODIFY, check-in status column |
+| Dashboard API | `src/app/api/partner/dashboard/route.ts` | MODIFY, join check-in data |
+| Dashboard page | `src/app/partner/dashboard/page.tsx` | MODIFY, add compliance report button |
+| Reminder cron | `src/app/api/cron/court-reminders/route.ts` | MODIFY, indemnitor emails + partner branding |
+| Reminder emails | `src/lib/court-reminder-emails.ts` | MODIFY, partner branding in email templates |
 | Migration | `supabase/migrations/2026XXXX_fta_platform_v2.sql` | NEW |
 
 **Total: 7 new files, 9 modified files, 1 migration**
@@ -347,25 +347,25 @@ Adding `last_name` now (optional field) even though re-arrest monitoring is back
 
 ## NOT in scope
 
-- Re-arrest monitoring (backlogged — CL state court coverage gap)
-- SMS notifications (Phase 2 — needs Twilio, separate scope)
+- Re-arrest monitoring (backlogged, CL state court coverage gap)
+- SMS notifications (Phase 2, needs Twilio, separate scope)
 - Standalone /reminders page for non-partner defendants (separate scope)
 - Court record lookup (Phase 2)
-- Geofencing or facial recognition (never — that's Captira's lane)
+- Geofencing or facial recognition (never, that's Captira's lane)
 - Any case-specific data on the free page (that's our paid products)
 
 ---
 
 ## Research Sources
 
-- [Duke Judicature — Sentencing Colloquy](https://judicature.duke.edu/articles/conversations-of-a-lifetime-the-power-of-the-sentencing-colloquy-and-how-to-make-it-matter/)
-- [Fishman Firm — Five Deadly Mistakes](https://www.thefishmanfirm.com/top-five-biggest-mistakes-of-the-criminal-defendant/)
-- [Gideon's Soldiers — Questions for Your PD](https://gideonssoldiers.com/questions-to-ask-your-public-defender/)
-- [AIA Surety — Audit Proof Your Business](https://www.aiasurety.com/bail/audit-proof-your-bail-bond-business/)
-- [Washington DOL — Bail Bond Audits](https://dol.wa.gov/professional-licenses/bail-bond-agency/audits-and-recordkeeping-bail-bonds)
-- [Reynolds Defense — Court Etiquette](https://www.reynoldsdefensefirm.com/client-guide-rdf-client-guide-court-etiquette/)
+- [Duke Judicature, Sentencing Colloquy](https://judicature.duke.edu/articles/conversations-of-a-lifetime-the-power-of-the-sentencing-colloquy-and-how-to-make-it-matter/)
+- [Fishman Firm, Five Deadly Mistakes](https://www.thefishmanfirm.com/top-five-biggest-mistakes-of-the-criminal-defendant/)
+- [Gideon's Soldiers, Questions for Your PD](https://gideonssoldiers.com/questions-to-ask-your-public-defender/)
+- [AIA Surety, Audit Proof Your Business](https://www.aiasurety.com/bail/audit-proof-your-bail-bond-business/)
+- [Washington DOL, Bail Bond Audits](https://dol.wa.gov/professional-licenses/bail-bond-agency/audits-and-recordkeeping-bail-bonds)
+- [Reynolds Defense, Court Etiquette](https://www.reynoldsdefensefirm.com/client-guide-rdf-client-guide-court-etiquette/)
 - [California Courts Self-Help](https://selfhelp.courts.ca.gov/criminal-court/overview/pretrial)
-- [DOJ Justice 101 — Plea Bargaining](https://www.justice.gov/usao/justice-101/pleabargaining)
-- [NOLO — Continuances](https://www.nolo.com/legal-encyclopedia/continuances-criminal-cases.html)
+- [DOJ Justice 101, Plea Bargaining](https://www.justice.gov/usao/justice-101/pleabargaining)
+- [NOLO, Continuances](https://www.nolo.com/legal-encyclopedia/continuances-criminal-cases.html)
 - [AIA VisionPRO](https://www.aiasurety.com/bail/aia-launches-new-software-program-visionpro/)
 - [Captira Features](https://www.captira.com/pages/bail-software)

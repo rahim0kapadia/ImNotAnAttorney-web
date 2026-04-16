@@ -5,14 +5,14 @@
  * License Risk, etc.). Customers receive the link via email after generation.
  *
  * Security:
- *   - Token is hashed (SHA-256) before DB lookup — raw token never stored
+ *   - Token is hashed (SHA-256) before DB lookup, raw token never stored
  *   - Refunded orders return 404 (report revoked)
  *   - Expired tokens show contact message
  *   - HTML fetched from Supabase Storage and sanitized before rendering
  *
- * SEO: robots noindex/nofollow — reports must not appear in search engines.
+ * SEO: robots noindex/nofollow, reports must not appear in search engines.
  *
- * A11y: No <main> element — root layout provides it. Uses <div> wrappers.
+ * A11y: No <main> element, root layout provides it. Uses <div> wrappers.
  * Disclaimer uses text-zinc-600 for 7:1 contrast on white. Upsell link is
  * self-describing. Waiting state has role="status" and refresh guidance.
  */
@@ -168,7 +168,7 @@ export default async function StandaloneReportPage({ params }: Props) {
         )}
 
         <p className="mt-8 text-xs text-zinc-600 border-t border-zinc-100 pt-6">
-          This report provides legal INFORMATION — not legal ADVICE. The
+          This report provides legal INFORMATION, not legal ADVICE. The
           analysis draws on methods developed by elite defense attorneys, applied
           specifically to your case details. Your attorney remains the final
           authority on strategy decisions.

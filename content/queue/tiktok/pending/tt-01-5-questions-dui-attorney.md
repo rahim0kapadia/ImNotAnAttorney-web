@@ -10,7 +10,7 @@ topic: 5 questions to ask your DUI attorney
 blog_slug: 5-questions-dui-attorney
 estimated_duration: 45s
 format: Standard (talking head + text overlays)
-suggested_sound: "Original audio — calm, authoritative voiceover + low tension background beat"
+suggested_sound: "Original audio, calm, authoritative voiceover + low tension background beat"
 suggested_posting_time: "Tuesday 7:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Tuesday 7:00 PM EST"
 
 **Format**: Standard
 **Duration**: 45 seconds
-**Suggested sound**: Original audio — calm, authoritative voiceover with low-tension beat
+**Suggested sound**: Original audio, calm, authoritative voiceover with low-tension beat
 **Suggested posting time**: Tuesday 7:00 PM EST
 
 ---
@@ -40,12 +40,12 @@ suggested_posting_time: "Tuesday 7:00 PM EST"
 
 [SECOND 10-17]
 **Visual**: Cut to a different angle. B-roll of a breathalyzer machine (stock or illustrated).
-**Audio/Voiceover**: "Number two: Was the field sobriety test administered on a flat, well-lit surface — per NHTSA standards?"
+**Audio/Voiceover**: "Number two: Was the field sobriety test administered on a flat, well-lit surface, per NHTSA standards?"
 **Text overlay**: "2. Was the SFST done per NHTSA standards?"
 
 [SECOND 17-24]
 **Visual**: Quick cut back to speaker, closer shot.
-**Audio/Voiceover**: "Number three: What was the officer's stated reason for the stop — and does the dashcam support it?"
+**Audio/Voiceover**: "Number three: What was the officer's stated reason for the stop, and does the dashcam support it?"
 **Text overlay**: "3. Does the dashcam support the reason for the stop?"
 
 [SECOND 24-31]
@@ -77,5 +77,5 @@ Dark background. White text: "5 DUI Questions Your Attorney Hopes You Never Ask.
 ---
 
 **Context**: DUI is one of the most-searched criminal defense topics on TikTok. This targets defendants who feel pressured to take a plea without investigation. Drives traffic to the DUI Defense Playbook ($97).
-**Loop strategy**: The opening shot of the phone face-down matches the closing shot of the phone being picked up — viewers who rewatch catch the visual contrast between passivity and action.
+**Loop strategy**: The opening shot of the phone face-down matches the closing shot of the phone being picked up, viewers who rewatch catch the visual contrast between passivity and action.
 **KPI target**: Saves (defendants will screenshot/save the questions list)

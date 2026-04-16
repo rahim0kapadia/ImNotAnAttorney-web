@@ -8,7 +8,7 @@ queued_by: content-scheduler
 ---
 The criminal justice system has no instruction manual for defendants.
 
-These 7 things are routinely hidden in plain sight — each one documented by researchers and attorneys who've spent careers inside the system.
+These 7 things are routinely hidden in plain sight, each one documented by researchers and attorneys who've spent careers inside the system.
 
 Each also comes with a question you can ask your attorney today:
 ===TWEET===
@@ -32,16 +32,16 @@ Question: "What specific work will be completed during this additional time that
 ===TWEET===
 #4: First plea offers are almost always the worst
 
-The first offer you receive is an opening position in a negotiation. Attorneys who are credibly preparing for trial — filing motions, engaging experts, reviewing discovery — consistently extract better offers.
+The first offer you receive is an opening position in a negotiation. Attorneys who are credibly preparing for trial, filing motions, engaging experts, reviewing discovery, consistently extract better offers.
 ===TWEET===
 The prosecution knows who will actually go to trial. Question: "Is this offer likely to change as we continue building our defense? "
 ===TWEET===
 #5-7:
 
-**Judge patterns are public. ** Which judges grant suppression motions. Which impose guideline sentences. Your attorney should know — and it should shape your strategy. **Discovery is a battlefield**, not a one-time file delivery.
+**Judge patterns are public. ** Which judges grant suppression motions. Which impose guideline sentences. Your attorney should know, and it should shape your strategy. **Discovery is a battlefield**, not a one-time file delivery.
 ===TWEET===
-What's missing is often as important as what's there. **Bar complaints are available. ** Most defendants don't know they can file one — or that the notification alone often changes attorney behavior.
+What's missing is often as important as what's there. **Bar complaints are available. ** Most defendants don't know they can file one, or that the notification alone often changes attorney behavior.
 ===TWEET===
-All 7 system truths — with the documented research behind each one and the specific question to ask your attorney today:
+All 7 system truths, with the documented research behind each one and the specific question to ask your attorney today:
 
 → https://imnotanattorney.com/blog/7-things-criminal-justice-wont-tell-you?utm_source=twitter&utm_medium=thread&utm_campaign=7-system-truths

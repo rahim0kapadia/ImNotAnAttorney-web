@@ -6,7 +6,7 @@ interface Step {
 export function PartnerHowItWorks({ steps }: { steps: Step[] }) {
   return (
     <div className="grid md:grid-cols-3 gap-8 relative">
-      {/* Connecting line between steps — desktop only */}
+      {/* Connecting line between steps, desktop only */}
       <div className="hidden md:block absolute top-7 left-[16.67%] right-[16.67%] h-px bg-zinc-700" aria-hidden="true" />
       {steps.map((step, i) => (
         <div key={i} className="text-center relative">

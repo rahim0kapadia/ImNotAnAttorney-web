@@ -11,18 +11,18 @@ Three-Layer Hierarchy (Approach B) selected after brainstorming with expert tria
 - **Margaret Hagan** (Stanford Legal Design Lab): amplify legal capability, off-ramps at hard questions
 - **Paul Robinson** (UPenn Law) + NCIC/SEARCH: NCIC codes as national backbone, 52 independent criminal codes
 
-Data generated via Anthropic Batch API for all jurisdictions — no phasing. Statute data always included at every tier.
+Data generated via Anthropic Batch API for all jurisdictions, no phasing. Statute data always included at every tier.
 
 Rejected: Flat Statute Import (overwhelming UX), Search-First (poor for 2AM panic users).
 
 ## Files Created This Session
-- `C:\Users\email\projects\ImNotAnAttorney-web\docs\specs\2026-03-27-charge-taxonomy-expansion.md` — full design spec (approved)
-- `C:\Users\email\projects\ImNotAnAttorney-web\docs\plans\2026-03-27-charge-taxonomy-expansion.md` — 14-task implementation plan across 3 phases
+- `C:\Users\email\projects\ImNotAnAttorney-web\docs\specs\2026-03-27-charge-taxonomy-expansion.md`, full design spec (approved)
+- `C:\Users\email\projects\ImNotAnAttorney-web\docs\plans\2026-03-27-charge-taxonomy-expansion.md`, 14-task implementation plan across 3 phases
 
 ## What Didn't Work
-- Triage scope path got mangled on first attempt (backslashes eaten in JSON) — fixed with `path.resolve()` approach
-- `docs/superpowers/specs/` is NOT in the hooks whitelist — used `docs/specs/` instead
-- Research agent outputs were too large to read (74K+ tokens) — had to extract findings from the first agent's structured summary
+- Triage scope path got mangled on first attempt (backslashes eaten in JSON), fixed with `path.resolve()` approach
+- `docs/superpowers/specs/` is NOT in the hooks whitelist, used `docs/specs/` instead
+- Research agent outputs were too large to read (74K+ tokens), had to extract findings from the first agent's structured summary
 
 ## Remaining Steps
 Execute the 14-task implementation plan:
@@ -49,8 +49,8 @@ Execute the 14-task implementation plan:
 ### Task 14: E2E verification
 
 ## Verification
-- `cd C:\Users\email\projects\ImNotAnAttorney-web && npx next build` — production build
-- `node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends` — CV probes
+- `cd C:\Users\email\projects\ImNotAnAttorney-web && npx next build`, production build
+- `node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends`, CV probes
 
 ## Copy-Paste Prompt for Next Session
 ```

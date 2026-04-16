@@ -1,5 +1,5 @@
 /**
- * Shared partner page data — commission table, FAQs, computed values, constants.
+ * Shared partner page data, commission table, FAQs, computed values, constants.
  * Used by both /partners and /partners/bondsman pages, and partner API routes.
  */
 
@@ -37,7 +37,7 @@ export function getNextTier(tierKey: string) {
   return idx < COMMISSION_TIERS_CONFIG.length - 1 ? COMMISSION_TIERS_CONFIG[idx + 1] : null;
 }
 
-/** Shared partner shape — used by dashboard page and auth helpers. */
+/** Shared partner shape, used by dashboard page and auth helpers. */
 export interface Partner {
   id: string;
   name: string;
@@ -84,7 +84,7 @@ export const xRayFiveMonthly = xRayRow
 export const PARTNER_FAQS = [
   {
     question: "What does ImNotAnAttorney do?",
-    answer: "We research criminal cases and generate specific questions defendants can bring to their attorneys. We provide legal INFORMATION and questions — never legal advice. Think of us as a research team that helps defendants hold their attorneys accountable.",
+    answer: "We research criminal cases and generate specific questions defendants can bring to their attorneys. We provide legal INFORMATION and questions, never legal advice. Think of us as a research team that helps defendants hold their attorneys accountable.",
   },
   {
     question: "How does the referral work?",
@@ -92,18 +92,18 @@ export const PARTNER_FAQS = [
   },
   {
     question: "When do I get paid?",
-    answer: "Commissions are tracked in real time. Payouts are processed on the 1st of each month (NET-30) via PayPal, Venmo, Zelle, or check — your choice. You can see your running total and referral history anytime in your partner dashboard.",
+    answer: "Commissions are tracked in real time. Payouts are processed on the 1st of each month (NET-30) via PayPal, Venmo, Zelle, or check, your choice. You can see your running total and referral history anytime in your partner dashboard.",
   },
   {
     question: "What do I need to do?",
-    answer: "Literally just hand out your promo code. We handle everything else — the research, the questions, the delivery. You don't need to explain the product. The defendants are already looking for help.",
+    answer: "Literally just hand out your promo code. We handle everything else, the research, the questions, the delivery. You don't need to explain the product. The defendants are already looking for help.",
   },
   {
     question: "Is this legal?",
-    answer: "Yes. We provide legal information and generate questions — we do not provide legal advice. This is the same as recommending a book or resource. Your referral is simply introducing defendants to a research service.",
+    answer: "Yes. We provide legal information and generate questions, we do not provide legal advice. This is the same as recommending a book or resource. Your referral is simply introducing defendants to a research service.",
   },
   {
     question: "What if the defendant doesn't buy immediately?",
-    answer: "The promo code doesn't expire. Defendants typically purchase within 7 days of arrest (the crisis window), but the code works anytime. If they enter your code at checkout — even months later — you get the commission.",
+    answer: "The promo code doesn't expire. Defendants typically purchase within 7 days of arrest (the crisis window), but the code works anytime. If they enter your code at checkout, even months later, you get the commission.",
   },
 ];

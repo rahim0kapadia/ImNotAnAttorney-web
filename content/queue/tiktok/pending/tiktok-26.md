@@ -1,9 +1,9 @@
 # TikTok Script #26: How the System Processes You Like a Package
 
-**Topic:** Assembly-line justice -- how the criminal justice system prioritizes efficiency over individual attention
+**Topic:** Assembly-line justice, how the criminal justice system prioritizes efficiency over individual attention
 **Format:** talking head + visual metaphor + text overlay
 **Duration:** 45s
-**Trending sound suggestion:** Original audio -- voiceover + conveyor belt industrial sounds transitioning to human beat
+**Trending sound suggestion:** Original audio, voiceover + conveyor belt industrial sounds transitioning to human beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -18,7 +18,7 @@
 ## Body
 [SECOND 3-15]
 **Visual**: The conveyor belt continues. Stats appearing at each station.
-**Audio/Voiceover**: "The system is designed for efficiency, not individual justice. Arrest -- you're processed in hours. Arraignment -- your public defender gets 4 minutes with your file. Plea negotiation -- the first offer comes before discovery is reviewed. Sentencing -- guidelines calculate your future like a spreadsheet formula. At no point does the system stop and ask: have you understood everything? Are you making an informed decision?"
+**Audio/Voiceover**: "The system is designed for efficiency, not individual justice. Arrest, you're processed in hours. Arraignment, your public defender gets 4 minutes with your file. Plea negotiation, the first offer comes before discovery is reviewed. Sentencing, guidelines calculate your future like a spreadsheet formula. At no point does the system stop and ask: have you understood everything? Are you making an informed decision?"
 **Text overlay**: "Arrest: hours. Arraignment: 4 minutes. Plea: before discovery. No one asks if you understand."
 
 [SECOND 15-25]
@@ -32,17 +32,17 @@
 **Text overlay**: "5 questions that take you off the conveyor belt."
 
 [SECOND 35-42]
-**Visual**: The conveyor belt from the opening -- but now one case number is missing from the line. The spot is empty. The person is standing to the side, prepared, notebook in hand.
+**Visual**: The conveyor belt from the opening, but now one case number is missing from the line. The spot is empty. The person is standing to the side, prepared, notebook in hand.
 **Audio/Voiceover**: "The system doesn't come with an instruction manual. We built the questions."
 **Text overlay**: "Know What They Know."
 
 [SECOND 42-45]
 **Visual**: Clean black screen.
-**Text overlay**: "imnotanattorney.com/score -- free Defense Milestone Score"
+**Text overlay**: "imnotanattorney.com/score, free Defense Milestone Score"
 **Audio**: Factory sounds fade. Human beat resolves.
 
 ## CTA
-Take the free Defense Milestone Score -- see where you stand.
+Take the free Defense Milestone Score, see where you stand.
 
 ## On-Screen Text
 - 0:00 "This is how the system sees your case."
@@ -54,7 +54,7 @@ Take the free Defense Milestone Score -- see where you stand.
 - 0:42 "imnotanattorney.com/score"
 
 ## Caption
-The criminal justice system is designed for efficiency, not individual justice. You're processed like a package on a conveyor belt -- arrest, arraignment, plea, sentence. At no point does the system stop to ask if you understand. The only way off the belt is questions. Here are 5 that force the system to treat you like a person.
+The criminal justice system is designed for efficiency, not individual justice. You're processed like a package on a conveyor belt, arrest, arraignment, plea, sentence. At no point does the system stop to ask if you understand. The only way off the belt is questions. Here are 5 that force the system to treat you like a person.
 
 ## Hashtags
 #criminaljustice #massincarceration #criminaldefense #assemblylinejustice #knowyourrights #systemexposed

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * check-tiers.mjs — Verifies tier names and prices in markdown docs
+ * check-tiers.mjs, Verifies tier names and prices in markdown docs
  * match the single source of truth in src/lib/tiers.ts.
  *
  * Usage: node scripts/check-tiers.mjs
@@ -78,7 +78,7 @@ for (const doc of docsToCheck) {
 
       if (hasWrongPrice && !hasCorrectPrice) {
         console.log(
-          `MISMATCH: ${doc.label}:${i + 1} — "${tier.name}" has ${dollarMatches.join(", ")} but expected ${tier.price}`
+          `MISMATCH: ${doc.label}:${i + 1}, "${tier.name}" has ${dollarMatches.join(", ")} but expected ${tier.price}`
         );
         issues++;
       }

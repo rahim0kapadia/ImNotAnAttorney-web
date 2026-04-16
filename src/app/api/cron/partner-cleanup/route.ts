@@ -1,5 +1,5 @@
 /**
- * GET /api/cron/partner-cleanup — Clean expired magic links and sessions.
+ * GET /api/cron/partner-cleanup, Clean expired magic links and sessions.
  * Runs daily at 3am ET via cron-job.org.
  */
 

@@ -10,7 +10,7 @@ suggested_time: "Sunday 6:30 PM ET"
 target_groups: ["Second Chance Groups", "FAMM Community", "Mass Incarceration Awareness Groups"]
 ---
 
-## Facebook Post: Story -- The Consequences Nobody Mentioned
+## Facebook Post: Story, The Consequences Nobody Mentioned
 
 **Type**: Text post (long-form)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -35,15 +35,15 @@ Her attorney never mentioned housing.
 
 He also never mentioned that her conviction would show up on the background check her daughter's school runs for parent volunteers. She found out when she tried to chaperone a field trip and was told she could not.
 
-He never mentioned that certain professional licenses in her state require disclosure of any criminal conviction -- including misdemeanors. She had been studying for a real estate license. She is still studying. She does not know if she will qualify.
+He never mentioned that certain professional licenses in her state require disclosure of any criminal conviction, including misdemeanors. She had been studying for a real estate license. She is still studying. She does not know if she will qualify.
 
-He never mentioned any of these things. Because he was focused on the sentence -- six months of probation, a fine -- and not on the life that comes after.
+He never mentioned any of these things. Because he was focused on the sentence, six months of probation, a fine, and not on the life that comes after.
 
 These are called "collateral consequences." The hidden effects of a criminal conviction that go beyond the sentence itself. Housing. Employment. Professional licenses. Custody. Immigration status. Voting rights. Student financial aid. Gun ownership. Military service. The list goes on.
 
 Every defendant who is considering a plea deal deserves answers to one question:
 
-"What are the collateral consequences of this plea? Walk me through every area of my life this will affect -- not just the sentence."
+"What are the collateral consequences of this plea? Walk me through every area of my life this will affect, not just the sentence."
 
 If your attorney cannot answer that question in detail, they have not done the analysis. And you are the one who will live with the gaps in their work.
 
@@ -53,7 +53,7 @@ For the rest of your life.
 
 ### Visual Direction
 
-No image. Text only. The "three years later" framing shifts the timeline from the courtroom to the future -- which is where collateral consequences live. The school field trip detail is the emotional punch that makes this shareable.
+No image. Text only. The "three years later" framing shifts the timeline from the courtroom to the future, which is where collateral consequences live. The school field trip detail is the emotional punch that makes this shareable.
 
 ### Link Strategy
 
@@ -70,5 +70,5 @@ The post does not advise anyone to reject a plea. It advises asking a question a
 ---
 
 **Share trigger**: Someone who took a plea without understanding the consequences shares this broadly: "Nobody told me. I wish someone had." A family member sends it to a defendant currently considering a plea: "Read this before you sign. Ask the question."
-**Context**: Collateral consequences are the most underreported story in criminal justice. Attorneys routinely fail to discuss them. This story makes the abstract concrete -- the school field trip denial is the detail that gets shared. It creates urgency without selling.
+**Context**: Collateral consequences are the most underreported story in criminal justice. Attorneys routinely fail to discuss them. This story makes the abstract concrete, the school field trip denial is the detail that gets shared. It creates urgency without selling.
 **KPI target**: Messenger shares (highest viral potential in the batch) + comments sharing personal collateral consequence experiences + saves

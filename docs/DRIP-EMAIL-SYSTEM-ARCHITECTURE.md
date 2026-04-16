@@ -23,8 +23,8 @@ The drip email system is a **multi-sequence orchestration engine** that sends te
 | File | Purpose | Lines | Contains |
 |------|---------|-------|----------|
 | `src/lib/drip-emails.ts` | Email template definitions + routing functions | 1,900+ | NURTURE_EMAILS, SCORE_CRISIS_EMAILS, SCORE_ADEQUATE_EMAILS, SCORE_REENGAGE_EMAILS, DUI_72_HOUR_EMAILS, ABANDONED_SCORE_EMAILS, WINBACK_EMAILS, POST_PURCHASE_EMAILS, getNextScoreEmail(), getPostPurchaseEmails() |
-| `src/lib/cron/drip-nurture.ts` | Part 1 of cron: sends nurture + score + DUI + abandoned + winback emails | 170 | sendNurtureEmails() — routes by source_band |
-| `src/lib/cron/drip-post-purchase.ts` | Part 2 of cron: sends tier-specific post-purchase emails | 365 | sendPostPurchaseEmails() — routes by tier + timing mode |
+| `src/lib/cron/drip-nurture.ts` | Part 1 of cron: sends nurture + score + DUI + abandoned + winback emails | 170 | sendNurtureEmails(), routes by source_band |
+| `src/lib/cron/drip-post-purchase.ts` | Part 2 of cron: sends tier-specific post-purchase emails | 365 | sendPostPurchaseEmails(), routes by tier + timing mode |
 | `src/app/api/cron/drip/route.ts` | Cron orchestrator (runs daily 9 AM EST) | 153 | Task registry, idempotency lock, error isolation |
 
 ---
@@ -125,7 +125,7 @@ The drip email system is a **multi-sequence orchestration engine** that sends te
 
 **Score Variables:** None interpolated (SPEC GAP)
 
-**Charge Type Variants:** None (SPEC GAP) — Day 14 should be "The one thing {{CHARGE_LABEL}} defendants always miss" with 5 variants (DUI, Drug, White Collar, Other Felony, Other Misdemeanor)
+**Charge Type Variants:** None (SPEC GAP), Day 14 should be "The one thing {{CHARGE_LABEL}} defendants always miss" with 5 variants (DUI, Drug, White Collar, Other Felony, Other Misdemeanor)
 
 ---
 
@@ -143,7 +143,7 @@ The drip email system is a **multi-sequence orchestration engine** that sends te
   - Action: Call attorney + ask DMV status
   - CTA: Get DUI Defense Playbook $97 (instant download)
 
-- Day 3: "The Two Types of DUI — And Why It Matters for Your Defense"
+- Day 3: "The Two Types of DUI, And Why It Matters for Your Defense"
   - Education: Per se (BAC over .08) vs Impairment DUI
   - Defense angles: Breathalyzer calibration vulnerability for per se
   - CTA: Get DUI Defense Playbook $97
@@ -184,7 +184,7 @@ The drip email system is a **multi-sequence orchestration engine** that sends te
 - Day 2: "The #1 Thing Defendants Don't Check (But Should)"
   - Education: Motion filing deadlines
   - Free question they can ask attorney today
-  - CTA: Take the Score — See Where You Stand
+  - CTA: Take the Score, See Where You Stand
 
 - Day 5 (LAST): "The Cost of Not Knowing"
   - Framing: Defendants who know where they stand get better outcomes
@@ -206,7 +206,7 @@ The drip email system is a **multi-sequence orchestration engine** that sends te
   - Acknowledge time passed
   - Reframe: "If you're still in it, we're still here"
   - Free offer: Check My Defense Score (60 seconds)
-  - CTA: Check My Defense Score — Free, 60 Seconds
+  - CTA: Check My Defense Score, Free, 60 Seconds
 
 - Day 78: "What 500 Pages of Drug Trafficking Discovery Actually Contained"
   - Real case: 93.9g → 25.59g (73% missing weight)
@@ -258,7 +258,7 @@ The drip email system is a **multi-sequence orchestration engine** that sends te
 4. **Day 3 (relative to delivery):** "How to Prepare for Your Attorney Meeting"
    - Meeting Ready Sheet + email template
    - Practice: Read questions aloud
-5. **Day 4 (relative to delivery):** "Your questions are good — but there's context they're missing"
+5. **Day 4 (relative to delivery):** "Your questions are good, but there's context they're missing"
 6. **Day 5 (relative to delivery):** Story harvest
 7. **Day 7:** Upsell to Intelligence Brief
 8. **Day 14:** Referral request
@@ -321,7 +321,7 @@ The drip email system is a **multi-sequence orchestration engine** that sends te
 ```typescript
 if (sub.source === "dui-72-hours") {
   nextEmail = getNextDui72hEmail(daysSinceSubscribe, sentKeys);
-  // NO FALLTHROUGH — crisis buyers who haven't converted by Day 7 are gone
+  // NO FALLTHROUGH, crisis buyers who haven't converted by Day 7 are gone
 } else if (sub.source === "score-abandoned") {
   nextEmail = getNextAbandonedScoreEmail(daysSinceSubscribe, sentKeys);
   if (!nextEmail && daysSinceSubscribe >= 7) {
@@ -450,7 +450,7 @@ threadingHeaders: {
 ### Source + Score Band → Email Sequence
 
 | Source | Score Band | Sequence | Days | Fallthrough | Notes |
-|--------|-----------|----------|------|-------------|-------|
+|------, |---------, |----------|------|-------------|-------|
 | `dui-72-hours` | (none) | DUI_72_HOUR_EMAILS | 1,3,5,7 | **NONE** | Crisis buyers, no standard nurture |
 | `score-abandoned` | (any) | ABANDONED_SCORE_EMAILS | 1,2,5 | NURTURE at Day 7+ (offset=7) | Re-engage quiz |
 | `score-page` | Critical/Concerning | SCORE_CRISIS_EMAILS | 1,2,5 | NURTURE at Day 7+ (offset=7) | Crisis band |
@@ -626,8 +626,8 @@ All emails sent via cron run **daily at 9 AM EST** (14:00 UTC), meaning timing i
 ### Gaps (from FLOW-INDEX spec)
 
 1. **Charge-Type Variants Not Implemented:**
-   - Flow 3 Email 3: "How {{CHARGE_LABEL}} cases with your score usually play out" — Missing entirely
-   - Flow 6 Email 2: "The one thing {{CHARGE_LABEL}} defendants always miss" — Single generic template
+   - Flow 3 Email 3: "How {{CHARGE_LABEL}} cases with your score usually play out", Missing entirely
+   - Flow 6 Email 2: "The one thing {{CHARGE_LABEL}} defendants always miss", Single generic template
 
 2. **Score Value Not Interpolated:**
    - All score emails should use {{SCORE}} variable (e.g., "Your score: 42/100")
@@ -659,11 +659,11 @@ CREATE TABLE subscribers (
   id UUID PRIMARY KEY,
   email VARCHAR(255) UNIQUE,
   created_at TIMESTAMP,
-  unsubscribed_at TIMESTAMP,           -- CAN-SPAM: if set, skip all sends
-  source VARCHAR(50),                  -- dui-72-hours, score-abandoned, score-page, purchase-{tier}
-  score_band VARCHAR(20),              -- Critical, Concerning, Adequate, Excellent
-  charge_type VARCHAR(50),             -- MISSING: need to add
-  score_value INT,                     -- MISSING: need to add (42, 67, etc.)
+  unsubscribed_at TIMESTAMP,          , CAN-SPAM: if set, skip all sends
+  source VARCHAR(50),                 , dui-72-hours, score-abandoned, score-page, purchase-{tier}
+  score_band VARCHAR(20),             , Critical, Concerning, Adequate, Excellent
+  charge_type VARCHAR(50),            , MISSING: need to add
+  score_value INT,                    , MISSING: need to add (42, 67, etc.)
 );
 ```
 
@@ -673,7 +673,7 @@ CREATE TABLE subscribers (
 CREATE TABLE drip_emails (
   id UUID PRIMARY KEY,
   subscriber_id UUID REFERENCES subscribers(id),
-  email_key VARCHAR(100),              -- nurture_day1, score_crisis_day1, etc.
+  email_key VARCHAR(100),             , nurture_day1, score_crisis_day1, etc.
   sent_at TIMESTAMP DEFAULT NOW(),
   UNIQUE(subscriber_id, email_key)
 );
@@ -684,7 +684,7 @@ CREATE TABLE drip_emails (
 ```sql
 CREATE TABLE cron_runs (
   id UUID PRIMARY KEY,
-  result JSONB,                        -- { sent, skipped, errors, cleaned, failedTasks }
+  result JSONB,                       , { sent, skipped, errors, cleaned, failedTasks }
   ran_at TIMESTAMP DEFAULT NOW()
 );
 ```

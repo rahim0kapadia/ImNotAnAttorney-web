@@ -1,4 +1,4 @@
-# FTA Prevention Platform v2 — Implementation Plan
+# FTA Prevention Platform v2, Implementation Plan
 
 **Spec:** `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\specs\2026-04-13-fta-prevention-platform-v2-design.md`
 **Tech stack:** Next.js 15 App Router, Supabase, Tailwind CSS, Resend email
@@ -17,23 +17,23 @@ The current prep page (`/prep/[token]`) shows generic content: "dress nice, arri
 
 ## Key Decisions
 
-1. **Single migration file** — all schema changes (check-ins table, indemnitor columns, last_name column) ship in one migration. Simpler rollback, no ordering issues.
+1. **Single migration file**, all schema changes (check-ins table, indemnitor columns, last_name column) ship in one migration. Simpler rollback, no ordering issues.
 
-2. **Content split: prep-content.ts vs prep-data.ts** — static insider tips go in `prep-content.ts` (no imports, pure content arrays). Database query functions go in `prep-data.ts` (mirrors `src/lib/tier9-reports/query.ts` pattern: typed results, `isEmpty` flag, graceful degradation). This separation means the prep page always renders something useful even if every query returns empty.
+2. **Content split: prep-content.ts vs prep-data.ts**, static insider tips go in `prep-content.ts` (no imports, pure content arrays). Database query functions go in `prep-data.ts` (mirrors `src/lib/tier9-reports/query.ts` pattern: typed results, `isEmpty` flag, graceful degradation). This separation means the prep page always renders something useful even if every query returns empty.
 
-3. **State code parsing** — `county_state` stores "Pinellas County, FL". Parse via `county_state.split(',').pop()?.trim()` to get "FL". This becomes the `jurisdiction` filter for `jurisdiction_statutes` and the ILIKE seed for `bench_jury_divergence` district lookups (same `STATE_NAMES` map from `query.ts`).
+3. **State code parsing**, `county_state` stores "Pinellas County, FL". Parse via `county_state.split(',').pop()?.trim()` to get "FL". This becomes the `jurisdiction` filter for `jurisdiction_statutes` and the ILIKE seed for `bench_jury_divergence` district lookups (same `STATE_NAMES` map from `query.ts`).
 
-4. **Charge slug mapping** — `court_reminders.charge_type` uses slugs like `dui-first-offense`. `jurisdiction_statutes.common_charge_slug` uses the taxonomy slugs (e.g., `dui-dwi`). Need a mapping constant in `prep-data.ts`. The `COURT_PREP_CONTENT` keys in `court-reminders.ts` show the charge types: `dui-first-offense`, `drug-possession`, `drug-trafficking`, `white-collar`, `federal-criminal`, `probation-violation`, `sex-offense`, `self-defense`, `other`. The `common_charges` taxonomy slugs (from seed migration) include `dui-dwi`, `drug-possession`, `drug-trafficking`, `theft-larceny`, etc. Build a `CHARGE_TO_TAXONOMY_SLUG` map.
+4. **Charge slug mapping**, `court_reminders.charge_type` uses slugs like `dui-first-offense`. `jurisdiction_statutes.common_charge_slug` uses the taxonomy slugs (e.g., `dui-dwi`). Need a mapping constant in `prep-data.ts`. The `COURT_PREP_CONTENT` keys in `court-reminders.ts` show the charge types: `dui-first-offense`, `drug-possession`, `drug-trafficking`, `white-collar`, `federal-criminal`, `probation-violation`, `sex-offense`, `self-defense`, `other`. The `common_charges` taxonomy slugs (from seed migration) include `dui-dwi`, `drug-possession`, `drug-trafficking`, `theft-larceny`, etc. Build a `CHARGE_TO_TAXONOMY_SLUG` map.
 
-5. **outcome_benchmarks query** — The spec says query by `offense_type`. The table has `offense_type text NOT NULL` + `jurisdiction_level` (national/state). The spec references `plea_rate` and `trial_rate` but `outcome_benchmarks` doesn't have those columns directly; it has `plea_conviction_rate`, `trial_conviction_rate`, `conviction_rate`, `dismissal_rate`. We can derive approximate plea/trial/dismissal percentages from `conviction_rate`, `dismissal_rate`, and the available rates. Query both `national` and `state` level rows.
+5. **outcome_benchmarks query**, The spec says query by `offense_type`. The table has `offense_type text NOT NULL` + `jurisdiction_level` (national/state). The spec references `plea_rate` and `trial_rate` but `outcome_benchmarks` doesn't have those columns directly; it has `plea_conviction_rate`, `trial_conviction_rate`, `conviction_rate`, `dismissal_rate`. We can derive approximate plea/trial/dismissal percentages from `conviction_rate`, `dismissal_rate`, and the available rates. Query both `national` and `state` level rows.
 
-6. **bench_jury_divergence query** — Same pattern as `query.ts`: ILIKE on `district` with state name, filter `judge_id IS NULL` for aggregate USSC data only.
+6. **bench_jury_divergence query**, Same pattern as `query.ts`: ILIKE on `district` with state name, filter `judge_id IS NULL` for aggregate USSC data only.
 
-7. **Check-in 12-hour cooldown** — Enforced server-side in the POST endpoint. Query last check-in for the `court_reminder_id`, reject if < 12 hours ago. Client shows disabled state based on response or last check-in timestamp passed from server.
+7. **Check-in 12-hour cooldown**, Enforced server-side in the POST endpoint. Query last check-in for the `court_reminder_id`, reject if < 12 hours ago. Client shows disabled state based on response or last check-in timestamp passed from server.
 
-8. **Compliance report** — Server component at `/partner/compliance-report` with `requirePartnerAuth()` pattern adapted for page routes (read session cookie from `cookies()`). Date range filtering happens client-side on pre-fetched data (no query params needed). Print CSS only, zero dependencies.
+8. **Compliance report**, Server component at `/partner/compliance-report` with `requirePartnerAuth()` pattern adapted for page routes (read session cookie from `cookies()`). Date range filtering happens client-side on pre-fetched data (no query params needed). Print CSS only, zero dependencies.
 
-9. **Indemnitor email** — Reuse the same `EMAIL_BUILDERS` structure from the cron. When `indemnitor_email` is present, call the same builder but swap the greeting copy. Small helper function, not a full parallel template system.
+9. **Indemnitor email**, Reuse the same `EMAIL_BUILDERS` structure from the cron. When `indemnitor_email` is present, call the same builder but swap the greeting copy. Small helper function, not a full parallel template system.
 
 ---
 
@@ -62,16 +62,16 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 ```
 
 ### Existing tables queried (read-only)
-- `jurisdiction_statutes` — `common_charge_slug`, `jurisdiction`, `statute_number`, `statute_title`, `offense_class`, `penalty_min`, `penalty_max`, `fine_max`, `elements`, `mandatory_minimum`, `common_defenses`, `defense_opportunities`, `source_urls`
-- `outcome_benchmarks` — `offense_type`, `jurisdiction_level`, `jurisdiction_name`, `conviction_rate`, `dismissal_rate`, `median_sentence_months`, `plea_conviction_rate`, `trial_conviction_rate`, `source_urls`, `data_period`
-- `sentencing_distributions` — `charge_slug`, `jurisdiction`, `judge_id` (filter IS NULL), `median_months`, `p25`, `p75`, `sample_size`, `source_urls`
-- `bench_jury_divergence` — `district` (ILIKE state name), `judge_id` (filter IS NULL), `bench_acquittal_rate`, `jury_acquittal_rate`, `bench_median_sentence`, `jury_median_sentence`, `trial_penalty_pct`, `offense_category`, `fiscal_year_range`, `source_urls`
+- `jurisdiction_statutes`, `common_charge_slug`, `jurisdiction`, `statute_number`, `statute_title`, `offense_class`, `penalty_min`, `penalty_max`, `fine_max`, `elements`, `mandatory_minimum`, `common_defenses`, `defense_opportunities`, `source_urls`
+- `outcome_benchmarks`, `offense_type`, `jurisdiction_level`, `jurisdiction_name`, `conviction_rate`, `dismissal_rate`, `median_sentence_months`, `plea_conviction_rate`, `trial_conviction_rate`, `source_urls`, `data_period`
+- `sentencing_distributions`, `charge_slug`, `jurisdiction`, `judge_id` (filter IS NULL), `median_months`, `p25`, `p75`, `sample_size`, `source_urls`
+- `bench_jury_divergence`, `district` (ILIKE state name), `judge_id` (filter IS NULL), `bench_acquittal_rate`, `jury_acquittal_rate`, `bench_median_sentence`, `jury_median_sentence`, `trial_penalty_pct`, `offense_category`, `fiscal_year_range`, `source_urls`
 
 ---
 
 ## Phase 1: Migration + Content + Data Layer
 
-**Goal:** Schema changes applied, new content and query modules ready. No UI changes yet — everything compiles and passes type checks but isn't wired to the page.
+**Goal:** Schema changes applied, new content and query modules ready. No UI changes yet, everything compiles and passes type checks but isn't wired to the page.
 
 ### Task 1.1: Create migration file
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\supabase\migrations\20260413a_fta_platform_v2.sql` (NEW)
@@ -100,7 +100,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\prep-data.ts` (NEW)
 **What to do:**
 - Import `createAdminClient` from `@/lib/supabase/admin`
-- Export `STATE_NAMES` map (copy from `src/lib/tier9-reports/query.ts` — or better, extract to a shared `src/lib/us-states.ts` if the implementing agent prefers DRY. But the simpler path is to duplicate the ~55-line map since it's static data, not logic.)
+- Export `STATE_NAMES` map (copy from `src/lib/tier9-reports/query.ts`, or better, extract to a shared `src/lib/us-states.ts` if the implementing agent prefers DRY. But the simpler path is to duplicate the ~55-line map since it's static data, not logic.)
 - Export `CHARGE_TO_TAXONOMY_SLUG` map:
   ```ts
   const CHARGE_TO_TAXONOMY_SLUG: Record<string, string> = {
@@ -115,22 +115,22 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
     other: "other",
   };
   ```
-- Export `parseStateCode(countyState: string): string | null` — `countyState.split(',').pop()?.trim() || null`
+- Export `parseStateCode(countyState: string): string | null`, `countyState.split(',').pop()?.trim() || null`
 - Export typed interfaces:
-  - `StatuteData` — statute_number, statute_title, offense_class, penalty_min, penalty_max, fine_max, elements, mandatory_minimum, common_defenses, defense_opportunities, source_urls
-  - `OutcomeData` — conviction_rate, dismissal_rate, median_sentence_months, plea_conviction_rate, trial_conviction_rate, source_urls, data_period, jurisdiction_level
-  - `SentencingData` — median_months, p25, p75, sample_size, source_urls
-  - `BenchJuryData` — bench_acquittal_rate, jury_acquittal_rate, bench_median_sentence, jury_median_sentence, trial_penalty_pct, offense_category, fiscal_year_range, source_urls
-  - `PrepAggregateData` — `{ statute: StatuteData | null, outcomes: OutcomeData[], sentencing: SentencingData | null, benchJury: BenchJuryData | null, isEmpty: boolean }`
+  - `StatuteData`, statute_number, statute_title, offense_class, penalty_min, penalty_max, fine_max, elements, mandatory_minimum, common_defenses, defense_opportunities, source_urls
+  - `OutcomeData`, conviction_rate, dismissal_rate, median_sentence_months, plea_conviction_rate, trial_conviction_rate, source_urls, data_period, jurisdiction_level
+  - `SentencingData`, median_months, p25, p75, sample_size, source_urls
+  - `BenchJuryData`, bench_acquittal_rate, jury_acquittal_rate, bench_median_sentence, jury_median_sentence, trial_penalty_pct, offense_category, fiscal_year_range, source_urls
+  - `PrepAggregateData`, `{ statute: StatuteData | null, outcomes: OutcomeData[], sentencing: SentencingData | null, benchJury: BenchJuryData | null, isEmpty: boolean }`
 - Export `async function queryPrepData(chargeType: string, countyState: string): Promise<PrepAggregateData>`
   - Parse state code from countyState
   - Map chargeType to taxonomy slug
   - If state code is null, return empty result with `isEmpty: true`
   - Run 4 parallel Supabase queries (same pattern as `queryJudgeReportCard` in `query.ts`):
-    1. `jurisdiction_statutes` — `.eq("common_charge_slug", taxonomySlug).eq("jurisdiction", stateCode).maybeSingle()`
-    2. `outcome_benchmarks` — `.eq("offense_type", taxonomySlug).in("jurisdiction_level", ["national", "state"]).limit(5)`
-    3. `sentencing_distributions` — `.eq("charge_slug", taxonomySlug).eq("jurisdiction", stateCode).is("judge_id", null).order("sample_size", { ascending: false }).limit(1)`
-    4. `bench_jury_divergence` — `.ilike("district", `%${escapeIlike(stateName)}%`).is("judge_id", null).order("jury_sample", { ascending: false }).limit(5)`
+    1. `jurisdiction_statutes`, `.eq("common_charge_slug", taxonomySlug).eq("jurisdiction", stateCode).maybeSingle()`
+    2. `outcome_benchmarks`, `.eq("offense_type", taxonomySlug).in("jurisdiction_level", ["national", "state"]).limit(5)`
+    3. `sentencing_distributions`, `.eq("charge_slug", taxonomySlug).eq("jurisdiction", stateCode).is("judge_id", null).order("sample_size", { ascending: false }).limit(1)`
+    4. `bench_jury_divergence`, `.ilike("district", `%${escapeIlike(stateName)}%`).is("judge_id", null).order("jury_sample", { ascending: false }).limit(5)`
   - Use `escapeIlike()` helper (copy from query.ts or extract to shared)
   - Return typed result with `isEmpty` flag based on whether any data came back
 - All queries use `createAdminClient()` (server-side only, no RLS)
@@ -140,11 +140,11 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\court-reminders.ts` (MODIFY)
 **What to do:**
 - Add 3 optional fields to the `CourtReminder` interface: `indemnitor_name?: string | null`, `indemnitor_email?: string | null`, `last_name?: string | null`
-- Do NOT remove existing `CourtPrepContent` or `getPrepContent()` yet — they're still used by the email templates (`court-reminder-emails.ts` uses `getPrepContent` in `reminder3d`). They will be deprecated later but removing them now would break emails.
+- Do NOT remove existing `CourtPrepContent` or `getPrepContent()` yet, they're still used by the email templates (`court-reminder-emails.ts` uses `getPrepContent` in `reminder3d`). They will be deprecated later but removing them now would break emails.
 **Dependencies:** Task 1.1
 
-### Test strategy — Phase 1
-- Type check: `npx tsc --noEmit` passes
+### Test strategy, Phase 1
+- Type check: `npx tsc,noEmit` passes
 - Unit: `queryPrepData("dui-first-offense", "Pinellas County, FL")` returns data (run against prod Supabase, which has FL statutes populated)
 - Unit: `parseStateCode("Pinellas County, FL")` returns `"FL"`
 - Unit: `parseStateCode("Cook County, IL")` returns `"IL"`
@@ -168,19 +168,19 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 - Replace "What to Wear" section with the "What Can Get You Arrested" section from insider tips.
 - Remove "Day-Of Tips" section (content is now distributed across the new sections).
 - Add data-driven sections AFTER insider tips, each conditional on data availability:
-  - **"Your Charge in [State]"** — renders only if `prepData.statute` is not null. Shows statute number, title, offense class, penalty range, fine, mandatory minimum, elements (bulleted). Framing text from spec.
-  - **"What Typically Happens in Cases Like Yours"** — renders only if `prepData.outcomes.length > 0` or `prepData.sentencing` is not null. Show rates (conviction, dismissal, median sentence) from outcomes. Show bench vs jury from benchJury. Include the disclaimer framing from spec.
-  - **"Common Defense Approaches"** — renders only if `prepData.statute?.common_defenses?.length > 0` or `prepData.statute?.defense_opportunities?.length > 0`. Bulleted list. Include "Ask your attorney" framing.
-- Add "Questions to Ask Your Attorney" section — always renders (from `getAttorneyQuestions(chargeName)`).
-- Add "What Happens Next" section — always renders (from `getWhatHappensNext()`).
+  - **"Your Charge in [State]"**, renders only if `prepData.statute` is not null. Shows statute number, title, offense class, penalty range, fine, mandatory minimum, elements (bulleted). Framing text from spec.
+  - **"What Typically Happens in Cases Like Yours"**, renders only if `prepData.outcomes.length > 0` or `prepData.sentencing` is not null. Show rates (conviction, dismissal, median sentence) from outcomes. Show bench vs jury from benchJury. Include the disclaimer framing from spec.
+  - **"Common Defense Approaches"**, renders only if `prepData.statute?.common_defenses?.length > 0` or `prepData.statute?.defense_opportunities?.length > 0`. Bulleted list. Include "Ask your attorney" framing.
+- Add "Questions to Ask Your Attorney" section, always renders (from `getAttorneyQuestions(chargeName)`).
+- Add "What Happens Next" section, always renders (from `getWhatHappensNext()`).
 - Keep the product recommendation section (Section D) and footer (Section E) unchanged.
 - Keep the partner branding section as-is for now (Phase 6 upgrades it).
 - Section ordering: Countdown -> Insider tips (3 sections) -> Data-driven sections (3, conditional) -> Attorney questions -> What happens next -> Product recommendation -> Footer
 **Dependencies:** Tasks 1.2, 1.3, 1.4
 
-### Test strategy — Phase 2
-- Visual: Load `/prep/[token]` for a FL DUI reminder — verify data-driven sections render with real statute data
-- Visual: Load `/prep/[token]` for a reminder in a state with no data (e.g., Wyoming) — verify graceful degradation (insider tips render, data sections hidden)
+### Test strategy, Phase 2
+- Visual: Load `/prep/[token]` for a FL DUI reminder, verify data-driven sections render with real statute data
+- Visual: Load `/prep/[token]` for a reminder in a state with no data (e.g., Wyoming), verify graceful degradation (insider tips render, data sections hidden)
 - Verify: No "undefined" or "null" text appears in any section
 - Verify: Page still works for expired reminders (shows expiry message)
 - Verify: Product recommendation still renders correctly
@@ -201,7 +201,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 - If last check-in was < 12 hours ago, return `{ error: "Already checked in", lastCheckIn: <timestamp> }` with 429 status
 - Insert into `client_check_ins`: `court_reminder_id`, `latitude`, `longitude`, `accuracy_meters`, `method: 'web'`
 - Return `{ success: true, checkedInAt: <timestamp> }`
-- No auth required (token IS the auth — same as prep page access)
+- No auth required (token IS the auth, same as prep page access)
 **Dependencies:** Task 1.1 (migration)
 
 ### Task 3.2: Create CheckInButton component
@@ -268,7 +268,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 **What to do:**
 - Add `checkInSummary` to props: `checkInSummary: Record<string, { count: number; lastCheckIn: string | null }>`
 - Add "Check-Ins" column to table header (after "Reminders")
-- In each row, show: `{count}` check-ins, with last check-in date. If no check-ins, show "—"
+- In each row, show: `{count}` check-ins, with last check-in date. If no check-ins, show ", "
 - Add to summary stats grid: a 4th stat card "Check-Ins" showing total check-ins across all clients
 - Update the grid from `grid-cols-3` to `grid-cols-4`
 **Dependencies:** Task 3.4
@@ -281,7 +281,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 - Pass `checkInSummary` prop to `<ClientTracker>`
 **Dependencies:** Tasks 3.4, 3.5
 
-### Test strategy — Phase 3
+### Test strategy, Phase 3
 - Functional: Visit prep page -> click Check In -> verify check-in recorded (check API response)
 - Functional: Click Check In again within 12 hours -> verify rejection (429)
 - Functional: Deny geolocation -> verify check-in still records (no location)
@@ -316,7 +316,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 - If `indemnitor_email` is provided, send a separate welcome email to the indemnitor:
   - Subject: "Court date reminder set up for [first_name]"
   - Copy: "[Company] set up court date reminders for [first_name]. You'll receive reminder emails before their court date on [date]."
-  - No prep page link for indemnitor (they don't need it — just reminders)
+  - No prep page link for indemnitor (they don't need it, just reminders)
 **Dependencies:** Task 1.1, Task 4.1
 
 ### Task 4.3: Add indemnitor emails to reminder cron
@@ -334,7 +334,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 - Also send indemnitor version of the post-court email if applicable
 **Dependencies:** Task 1.1
 
-### Test strategy — Phase 4
+### Test strategy, Phase 4
 - Functional: Add client with indemnitor fields via modal -> verify `court_reminders` row has indemnitor columns populated
 - Functional: Trigger reminder cron (or manually test the email builder) -> verify indemnitor receives a separate email
 - Functional: Add client WITHOUT indemnitor -> verify no errors, no extra emails
@@ -366,13 +366,13 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
   ```
 - Compute summary stats: total clients, active, completed, total reminders sent (sum of `reminders_sent.length`), total check-ins, compliance rate (clients with 1+ check-in / total), conversions
 - Render HTML with `@media print` CSS:
-  - `@media print` — white background, black text, no buttons, proper page breaks
-  - `@media screen` — dark theme matching the rest of the site
+  - `@media print`, white background, black text, no buttons, proper page breaks
+  - `@media screen`, dark theme matching the rest of the site
 - Header: partner company name, agent name, report period (client-side date range picker), generated date
 - Summary stats grid
 - Per-defendant table: Name (first_name + last_name initial if available), Charge, Court Date, Status, Reminders Sent (X/4), Check-Ins count, Last Check-In date
 - Footer: "Report generated by ImNotAnAttorney Court Prep Platform", partner promo code
-- Include a client-side `PrintButton` at the top (same pattern as `src/app/report/[token]/PrintButton.tsx` — `"use client"` component with `window.print()`)
+- Include a client-side `PrintButton` at the top (same pattern as `src/app/report/[token]/PrintButton.tsx`, `"use client"` component with `window.print()`)
 - Date range filtering: wrap the table + stats in a client component that accepts all data as props and filters by date range. Use `"use client"` wrapper for the filter, keep the data fetch server-side.
 **Dependencies:** Phase 3 (check-ins exist)
 
@@ -396,7 +396,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
   ```
 **Dependencies:** Task 5.2
 
-### Test strategy — Phase 5
+### Test strategy, Phase 5
 - Visual: Navigate to `/partner/compliance-report` -> verify page renders with correct data
 - Functional: Click "Download as PDF" -> verify browser print dialog opens with clean layout
 - Visual: Print preview shows white background, no buttons, proper table formatting
@@ -416,7 +416,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
   ```tsx
   {partnerCompany && (
     <p className="text-zinc-500 text-sm text-center mb-6">
-      Court prep provided by {partnerCompany} — powered by ImNotAnAttorney
+      Court prep provided by {partnerCompany}, powered by ImNotAnAttorney
     </p>
   )}
   ```
@@ -468,7 +468,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 - This is the same route already modified in Phase 4 (Task 4.3) for indemnitor emails. Both changes go into the same file.
 **Dependencies:** Phase 4 (cron already modified)
 
-### Test strategy — Phase 6
+### Test strategy, Phase 6
 - Visual: Prep page with partner attribution shows prominent branded header bar
 - Visual: Prep page without partner shows no branding (no "undefined" or empty bar)
 - Functional: Trigger reminder email for a partner-attributed reminder -> verify partner company name appears in email
@@ -479,7 +479,7 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 ## File Summary
 
 | Phase | File | Action | Lines (est.) |
-|-------|------|--------|-------------|
+|-------|------|------, |-------------|
 | 1 | `supabase/migrations/20260413a_fta_platform_v2.sql` | NEW | ~20 |
 | 1 | `src/lib/prep-content.ts` | NEW | ~100 |
 | 1 | `src/lib/prep-data.ts` | NEW | ~120 |
@@ -508,26 +508,26 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_name text;
 ## Execution Order
 
 Phases are independent once Phase 1 (migration + data layer) is done. Recommended order:
-1. Phase 1 (foundation — everything depends on it)
-2. Phase 2 (highest user impact — dramatically better prep page)
-3. Phase 3 (check-ins — new functionality)
-4. Phase 4 (indemnitor — extends existing flow)
-5. Phase 5 (compliance report — new page, no dependencies on Phase 3/4 check-in data to render, but better if Phase 3 is done first)
-6. Phase 6 (branding polish — builds on Phase 4's cron modifications)
+1. Phase 1 (foundation, everything depends on it)
+2. Phase 2 (highest user impact, dramatically better prep page)
+3. Phase 3 (check-ins, new functionality)
+4. Phase 4 (indemnitor, extends existing flow)
+5. Phase 5 (compliance report, new page, no dependencies on Phase 3/4 check-in data to render, but better if Phase 3 is done first)
+6. Phase 6 (branding polish, builds on Phase 4's cron modifications)
 
-Phases 3 and 4 can run in parallel if different agents handle them, since they touch different files (except the cron route, which Phase 4 and Phase 6 both modify — Phase 6 must follow Phase 4).
+Phases 3 and 4 can run in parallel if different agents handle them, since they touch different files (except the cron route, which Phase 4 and Phase 6 both modify, Phase 6 must follow Phase 4).
 
 ---
 
 ## Gotchas for Implementers
 
-1. **`outcome_benchmarks` does not have `plea_rate` or `trial_rate` columns.** It has `plea_conviction_rate` and `trial_conviction_rate` (conviction rates within pleas/trials, not overall rates). The spec's "X% result in a plea deal" language needs to be adapted — use `conviction_rate` + `dismissal_rate` and note the remainder goes to trial/other dispositions. Or use the `prosecution_profiles` table which has `plea_rate` and `trial_rate` but scoped to prosecution offices, not offense types.
+1. **`outcome_benchmarks` does not have `plea_rate` or `trial_rate` columns.** It has `plea_conviction_rate` and `trial_conviction_rate` (conviction rates within pleas/trials, not overall rates). The spec's "X% result in a plea deal" language needs to be adapted, use `conviction_rate` + `dismissal_rate` and note the remainder goes to trial/other dispositions. Or use the `prosecution_profiles` table which has `plea_rate` and `trial_rate` but scoped to prosecution offices, not offense types.
 
 2. **`jurisdiction_statutes` doesn't have `source_urls` in the original schema.** It was added by migration `20250101000030_research-columns-and-case-law.sql`. It exists in production. The data IS there.
 
 3. **Charge slug mismatch:** `court_reminders.charge_type` uses `dui-first-offense` but `jurisdiction_statutes.common_charge_slug` uses `dui-dwi`. The `CHARGE_TO_TAXONOMY_SLUG` map in `prep-data.ts` handles this. Verify the mapping against `common_charges` table slugs.
 
-4. **`court-reminder-emails.ts` references `getPrepContent` in `reminder3d`** (for the what-to-bring checklist). Don't remove `COURT_PREP_CONTENT` from `court-reminders.ts` — it's still used. Future cleanup can update the email to use `prep-content.ts` instead, but that's out of scope.
+4. **`court-reminder-emails.ts` references `getPrepContent` in `reminder3d`** (for the what-to-bring checklist). Don't remove `COURT_PREP_CONTENT` from `court-reminders.ts`, it's still used. Future cleanup can update the email to use `prep-content.ts` instead, but that's out of scope.
 
 5. **Partner auth for compliance report page:** The dashboard uses client-side fetch to `/api/partner/dashboard` which checks the session cookie. The compliance report is a server component that needs to read the cookie directly. Use `cookies()` from `next/headers` + `validatePartnerSession()` from `@/lib/partner-auth`. Import `PARTNER_SESSION_COOKIE` for the cookie name.
 

@@ -11,7 +11,7 @@ interface QRCodeProps {
   size?: number;
 }
 
-// Simple QR code generator using canvas — encodes URL as a QR-like visual
+// Simple QR code generator using canvas, encodes URL as a QR-like visual
 // For production, consider using the `qrcode` npm package. This is a lightweight
 // fallback that generates a scannable QR code using the browser's built-in APIs.
 export function QRCode({ url, size = 200 }: QRCodeProps) {
@@ -37,7 +37,7 @@ export function QRCode({ url, size = 200 }: QRCodeProps) {
         setLoading(false);
       }
     } catch {
-      // qrcode package not installed — draw a placeholder on canvas
+      // qrcode package not installed, draw a placeholder on canvas
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext("2d");

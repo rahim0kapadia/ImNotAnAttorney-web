@@ -271,7 +271,7 @@ async function main() {
         stats.apiCalls++;
       } catch (e) {
         if (e.message === "CL_RATE_LIMIT") {
-          console.log("  Rate limited — waiting 15s...");
+          console.log("  Rate limited, waiting 15s...");
           await sleep(15000);
           try { data = await clSearch(params); stats.apiCalls++; }
           catch { stats.errors++; break; }
@@ -338,7 +338,7 @@ async function main() {
           // Since we have both prosecution AND defense firms in the same case,
           // and we can't link them, take a conservative approach:
           // only record the pairing, don't distinguish. The high volume
-          // will average out — prosecutors appear more often with specific judges.
+          // will average out, prosecutors appear more often with specific judges.
           const key = judgeUuid + "|" + attyName;
           if (!pairingsMap.has(key)) {
             pairingsMap.set(key, { judge_id: judgeUuid, prosecutor_name: attyName, urls: new Set(), count: 0 });
@@ -435,7 +435,7 @@ async function main() {
 
   // Step 6: Apply
   if (!supabaseToken) {
-    console.error("Missing SUPABASE_ACCESS_TOKEN — cannot apply.");
+    console.error("Missing SUPABASE_ACCESS_TOKEN, cannot apply.");
     process.exit(1);
   }
 
@@ -462,7 +462,7 @@ async function main() {
       console.error("  Batch " + batchNum + "/" + totalBatches + " failed: " + err.slice(0, 200));
       applyErrors++;
       if (res.status === 429) {
-        console.log("  Rate limited — waiting 10s...");
+        console.log("  Rate limited, waiting 10s...");
         await sleep(10000);
         const retry = await fetch("https://api.supabase.com/v1/projects/" + PROJECT_REF + "/database/query", {
           method: "POST",

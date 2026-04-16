@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * schedule-social-slow.mjs — Schedules just ONE post per platform per run.
+ * schedule-social-slow.mjs, Schedules just ONE post per platform per run.
  * Designed to run hourly via Task Scheduler to stay under Postiz 30 req/hour limit.
  *
  * Usage:

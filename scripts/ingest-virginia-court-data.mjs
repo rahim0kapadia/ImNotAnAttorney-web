@@ -1,15 +1,15 @@
 /**
- * Virginia Circuit Criminal Court — Bench vs Jury Divergence Pipeline
+ * Virginia Circuit Criminal Court, Bench vs Jury Divergence Pipeline
  *
  * Ingests Virginia circuit criminal court data (2024) into bench_jury_divergence table.
- * Data source: virginiacourtdata.org — anonymized circuit criminal case records.
+ * Data source: virginiacourtdata.org, anonymized circuit criminal case records.
  *
  * ConcludedBy values:
  *   "Trial - Judge With Witness" = bench trial
  *   "Trial - Jury"              = jury trial
  *   "Guilty Plea"               = plea deal
  *
- * SentenceTime is in DAYS — convert to months via / 30.44.
+ * SentenceTime is in DAYS, convert to months via / 30.44.
  *
  * Groups by Virginia FIPS locality code (mapped to county/city name) + ChargeType.
  * Produces per locality + offense type:
@@ -58,7 +58,7 @@ const applyMode = args.includes("--apply");
 const limitIdx = args.indexOf("--limit");
 const rowLimit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 
-// Minimum sample thresholds — Virginia jury trials are rare (~1,856 across 274K rows)
+// Minimum sample thresholds, Virginia jury trials are rare (~1,856 across 274K rows)
 const MIN_BENCH_AGGREGATE = 2;
 const MIN_JURY_AGGREGATE = 2;
 const MIN_BENCH_PER_TYPE = 3;
@@ -128,7 +128,7 @@ function fipsLabel(code) {
   return VA_FIPS[String(code).trim()] || ("VA FIPS " + code);
 }
 
-// ── CSV field splitter (respects quoted fields — addresses have commas) ─────
+// ── CSV field splitter (respects quoted fields, addresses have commas) ─────
 
 function splitCsvLine(line) {
   const fields = [];
@@ -165,7 +165,7 @@ function mean(arr) {
   return sum / arr.length;
 }
 
-// ── SQL helpers (no regex — hook enforced) ──────────────────────────────────
+// ── SQL helpers (no regex, hook enforced) ──────────────────────────────────
 
 function esc(val) {
   if (val === null || val === undefined) return "NULL";
@@ -200,7 +200,7 @@ function loadToken() {
   return null;
 }
 
-// ── CSV Parsing — one file at a time per OOM gotcha ─────────────────────────
+// ── CSV Parsing, one file at a time per OOM gotcha ─────────────────────────
 
 const NEEDED_HEADERS = ["ConcludedBy", "SentenceTime", "fips", "ChargeType", "Class"];
 
@@ -259,7 +259,7 @@ async function parseVirginiaCsv(csvPath, label, groups, stats) {
       // Parse sentence days → months
       const sentDays = parseFloat(sentRaw);
       if (isNaN(sentDays) || sentDays < 0) continue;
-      // Filter extreme values (>100 years = 36500 days — likely data error)
+      // Filter extreme values (>100 years = 36500 days, likely data error)
       if (sentDays > 36500) continue;
 
       const sentMonths = sentDays / DAYS_PER_MONTH;
@@ -424,7 +424,7 @@ async function main() {
 
   const sqlLines = [];
 
-  // Clear existing Virginia data (idempotent rebuild) — scoped to state_code = 'VA'
+  // Clear existing Virginia data (idempotent rebuild), scoped to state_code = 'VA'
   sqlLines.push("DELETE FROM bench_jury_divergence WHERE state_code = 'VA';");
   sqlLines.push("");
 
@@ -486,7 +486,7 @@ async function main() {
   );
 
   if (res.ok) {
-    console.log("Applied successfully — " + results.length + " rows inserted.");
+    console.log("Applied successfully, " + results.length + " rows inserted.");
   } else {
     const body = await res.text();
     console.error("Apply failed (" + res.status + "): " + body.slice(0, 500));

@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/idd — IDD scholarship application queue
+ * @file /api/operator/idd, IDD scholarship application queue
  *
  * GET: List applications filtered by status (default: pending).
  *      Returns up to 50, ordered oldest-first so operators work FIFO.

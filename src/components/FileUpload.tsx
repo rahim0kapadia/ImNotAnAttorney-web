@@ -81,7 +81,7 @@ export function FileUpload({ caseId, email, onUploadComplete }: FileUploadProps)
         }
 
         if (!ACCEPTED_TYPES.includes(file.type)) {
-          setError(`${file.name} — unsupported file type`);
+          setError(`${file.name}, unsupported file type`);
           continue;
         }
 
@@ -139,7 +139,7 @@ export function FileUpload({ caseId, email, onUploadComplete }: FileUploadProps)
           }
         }}
         role="region"
-        aria-label="File drop zone — or use the Browse Files button below"
+        aria-label="File drop zone, or use the Browse Files button below"
         className={`rounded-xl border-2 border-dashed p-8 text-center transition-colors ${
           dragOver
             ? "border-amber-500 bg-amber-500/5"
@@ -152,7 +152,7 @@ export function FileUpload({ caseId, email, onUploadComplete }: FileUploadProps)
             : "Drag and drop your discovery documents here"}
         </p>
         <p className="mt-1 text-xs text-zinc-400">
-          PDF, DOCX, images, audio, video — max 50MB per file
+          PDF, DOCX, images, audio, video, max 50MB per file
         </p>
         <label className="mt-4 inline-block cursor-pointer rounded-lg border border-zinc-700 px-6 py-2 text-sm font-semibold text-white transition-colors hover:border-zinc-500">
           Browse Files

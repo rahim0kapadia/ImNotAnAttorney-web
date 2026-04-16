@@ -1,17 +1,17 @@
 # Deep Code Review: Pass 2
 **Date:** 2026-03-22
-**Scope:** Full site — focused on remaining MEDIUM/LOW from Pass 1 + regressions
+**Scope:** Full site, focused on remaining MEDIUM/LOW from Pass 1 + regressions
 **Agents:** 6 parallel reviewers (payments, auth, cron, admin, public, frontend)
 **Raw findings:** 97 issues across all agents (deduplicated below)
 
 ---
 
-## CRITICAL — 8 issues
+## CRITICAL, 8 issues
 
 ### P2-1. XSS in unsubscribe confirmation page
 **File:** `src/app/api/unsubscribe/route.ts:106`
 **Bug:** `emailParam` interpolated unescaped in HTML `value` attribute. Crafted base64 can break out of attribute context.
-**Impact:** Reflected XSS on imnotanattorney.com — attacker crafts malicious unsubscribe URL.
+**Impact:** Reflected XSS on imnotanattorney.com, attacker crafts malicious unsubscribe URL.
 **Fix:** HTML-escape `emailParam` before interpolation, or validate base64 charset.
 
 ### P2-2. Advisory lock via Supabase REST is broken
@@ -22,19 +22,19 @@
 
 ### P2-3. Lock-not-acquired returns 200 OK
 **File:** `src/app/api/cron/drip/route.ts:87`
-**Bug:** When lock fails, returns 200. Vercel Cron treats as success — no retry, no alerting.
+**Bug:** When lock fails, returns 200. Vercel Cron treats as success, no retry, no alerting.
 **Impact:** Entire daily cron cycle silently lost. No nurture emails, no stuck-case detection for 24+ hours.
 **Fix:** Return 409 or 503 so Vercel logs it as failure.
 
 ### P2-4. Week number dedup key missing year component
 **File:** `src/lib/cron/monitoring.ts:107`
-**Bug:** Key is `weekly-progress-${id}-w${weekNumber}` — no year. Week 1 of 2027 collides with week 1 of 2026.
+**Bug:** Key is `weekly-progress-${id}-w${weekNumber}`, no year. Week 1 of 2027 collides with week 1 of 2026.
 **Impact:** Highest-paying customers (War Room/Situation Room) miss weekly progress emails at year boundaries.
 **Fix:** Add `${ctx.now.getFullYear()}` to key.
 
 ### P2-5. Non-constant-time webhook signature comparison (2 files)
 **Files:** `src/app/api/webhooks/resend/route.ts:54`, `resend-inbound/route.ts:52`
-**Bug:** `signatures.includes(expectedSig)` uses standard string comparison — timing side-channel attack.
+**Bug:** `signatures.includes(expectedSig)` uses standard string comparison, timing side-channel attack.
 **Impact:** Attacker can forge Resend webhook payloads, triggering false unsubscriptions or injecting data.
 **Fix:** Use `crypto.timingSafeEqual` on fixed-length buffers.
 
@@ -57,7 +57,7 @@
 
 ---
 
-## HIGH — 18 issues (deduplicated)
+## HIGH, 18 issues (deduplicated)
 
 ### P2-9. Inbound email HTML stored without sanitization
 **File:** `src/app/api/webhooks/resend-inbound/route.ts:109`
@@ -77,7 +77,7 @@
 
 ### P2-13. Fire-and-forget fetch drops report generation triggers
 **Files:** `src/app/api/intake/route.ts:253`, `intake/intelligence-brief/route.ts:204`
-**Impact:** Case stays in `intake` forever — cron only detects stuck `generating`.
+**Impact:** Case stays in `intake` forever, cron only detects stuck `generating`.
 
 ### P2-14. Unbounded query for purchase suppression
 **File:** `src/lib/cron/drip-nurture.ts:68-74`
@@ -87,7 +87,7 @@
 **File:** `src/lib/cron/reconciliation.ts:37-41,125-129`
 **Impact:** Up to 50 sequential queries per cron run.
 
-### P2-16. N+1 queries in monitoring — SLA breach + weekly progress
+### P2-16. N+1 queries in monitoring, SLA breach + weekly progress
 **Files:** `src/lib/cron/monitoring.ts:31-37,110-132`
 **Impact:** N+1 for SLA breach tasks + 3N queries for weekly progress emails.
 
@@ -113,7 +113,7 @@
 
 ### P2-22. Original upgrade coupon ALWAYS orphaned in combined-discount path
 **File:** `src/app/api/checkout/route.ts:428-450`
-**Impact:** 100% hit rate — every combined-discount checkout leaks a coupon.
+**Impact:** 100% hit rate, every combined-discount checkout leaks a coupon.
 
 ### P2-23. Metrics endpoint full table scans in JavaScript
 **File:** `src/app/api/operator/metrics/route.ts:42-50`
@@ -133,49 +133,49 @@
 
 ---
 
-## MEDIUM — 24 issues (deduplicated)
+## MEDIUM, 24 issues (deduplicated)
 
 ### P2-27. IP extraction inconsistency (2 files use raw header)
-`customer/logout/route.ts:14`, `upload/finalize/route.ts:47` — use `x-forwarded-for` instead of `getClientIp()`
+`customer/logout/route.ts:14`, `upload/finalize/route.ts:47`, use `x-forwarded-for` instead of `getClientIp()`
 
 ### P2-28. No rate limiting on partner logout
-`partner/logout/route.ts` — no rate limiting
+`partner/logout/route.ts`, no rate limiting
 
 ### P2-29. No rate limiting on unsubscribe
-`unsubscribe/route.ts` — no rate limiting on POST
+`unsubscribe/route.ts`, no rate limiting on POST
 
 ### P2-30. Hardcoded HMAC key in middleware
-`middleware.ts:21` — `"inna-middleware-hmac-key"` hardcoded
+`middleware.ts:21`, `"inna-middleware-hmac-key"` hardcoded
 
 ### P2-31. Non-subscriber customers get duplicate lifecycle emails
-`customer-lifecycle.ts:37-52` — no dedup record written when subscriber record missing
+`customer-lifecycle.ts:37-52`, no dedup record written when subscriber record missing
 
 ### P2-32. Awaiting-intake reminder dedup fails for non-subscribers
-`operator-alerts.ts:507-543` — same pattern as P2-31
+`operator-alerts.ts:507-543`, same pattern as P2-31
 
 ### P2-33. Intake escalation dedup fails for non-subscribers
-`operator-alerts.ts:576-614` — same pattern as P2-31
+`operator-alerts.ts:576-614`, same pattern as P2-31
 
 ### P2-34. Redundant subscriber query in weekly progress
-`monitoring.ts:110-132` — queries subscribers twice for same email
+`monitoring.ts:110-132`, queries subscribers twice for same email
 
 ### P2-35. Reconciliation can create duplicate orders (no upsert guard)
-`reconciliation.ts:50-62` — no unique constraint guard on INSERT
+`reconciliation.ts:50-62`, no unique constraint guard on INSERT
 
 ### P2-36. Dead-code status filter in drip-post-purchase
 `drip-post-purchase.ts:147-152`
 
 ### P2-37. Discount loop can attribute order to multiple partners
-`webhooks/stripe/route.ts:253-301` — no break after first match
+`webhooks/stripe/route.ts:253-301`, no break after first match
 
 ### P2-38. One-time coupon on subscription only discounts first installment
 `checkout/route.ts:469-506`
 
 ### P2-39. N+1 in webhook included-tier dedup
-`webhooks/stripe/route.ts:558-643` — 8-12 queries for situation-room
+`webhooks/stripe/route.ts:558-643`, 8-12 queries for situation-room
 
 ### P2-40. Admin demand routes missing input validation
-`demand/gaps/route.ts`, `emerging/route.ts`, `subreddits/route.ts` — no type/length on id, notes
+`demand/gaps/route.ts`, `emerging/route.ts`, `subreddits/route.ts`, no type/length on id, notes
 
 ### P2-41. Admin demand performance missing window validation
 `demand/performance/route.ts:14`
@@ -193,23 +193,23 @@
 Operator pages + my-cases page
 
 ### P2-46. Email subject header injection via firstName
-`intake/route.ts:321-322,336` — `\r\n` in firstName
+`intake/route.ts:321-322,336`, `\r\n` in firstName
 
 ### P2-47. firstName not validated as string (type confusion)
-`intake/route.ts:72,79,164` — non-string passes truthiness check
+`intake/route.ts:72,79,164`, non-string passes truthiness check
 
 ### P2-48. caseId not validated as string across generate/evaluate routes
-5 files — truthiness only, no type check
+5 files, truthiness only, no type check
 
 ### P2-49. Score route docs contradict implementation
 `score/route.ts:24-28` claims no data stored but stores aggregates
 
 ### P2-50. Footer Situation Room link bypasses application gate
-`Footer.tsx:145` — links to `/checkout?tier=situation-room` instead of `/intake`
+`Footer.tsx:145`, links to `/checkout?tier=situation-room` instead of `/intake`
 
 ---
 
-## LOW — 16 issues (deduplicated)
+## LOW, 16 issues (deduplicated)
 
 ### P2-51. No rate limiting on score/count endpoint
 ### P2-52. RIFF magic bytes overlap (WebP/WAV)

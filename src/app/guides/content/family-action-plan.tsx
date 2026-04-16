@@ -1,29 +1,29 @@
 /**
- * @fileoverview Post-Arrest Family Action Plan — content component.
+ * @fileoverview Post-Arrest Family Action Plan, content component.
  *
  * Rendered by `src/app/guides/[slug]/page.tsx` via dynamic import when the
  * URL resolves to `/guides/family-action-plan`.
  *
  * Target audience: family members (spouse, parent, sibling, partner) whose
  * loved one was just arrested. This is a DIFFERENT audience from
- * defendants — they are in shock, they feel helpless, and they need
+ * defendants, they are in shock, they feel helpless, and they need
  * practical steps they can take RIGHT NOW.
  *
  * Accessibility posture (reviewed before write):
  *   - No inner <main>. The root layout already emits
  *     <main id="main-content">, so we render into the parent <article>.
  *   - All sections use aria-labelledby with matching heading ids.
- *   - Heading hierarchy: h2 > h3 — never skips levels.
+ *   - Heading hierarchy: h2 > h3, never skips levels.
  *   - List markers use text-amber-400 for decorative color with
  *     sufficient text contrast on list item content.
  *   - Body text is text-zinc-200 for WCAG AAA-level contrast on
- *     bg-background (#0a0a0a — see globals.css).
+ *     bg-background (#0a0a0a, see globals.css).
  *   - No interactive elements that require additional ARIA.
  *
  * Contract enforced by `src/app/guides/[slug]/page.tsx`:
  *   - Start headings at h2 (page owns the h1).
  *   - Wrap thematic groups in `<section aria-labelledby="{id}">`.
- *   - Stay UPL-safe: "consider", "one option", "questions to explore" —
+ *   - Stay UPL-safe: "consider", "one option", "questions to explore",
  *     never "you should", "we recommend", "your best option".
  *
  * Styling:

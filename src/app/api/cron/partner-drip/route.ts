@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/partner-drip — Partner activation email drip
+ * @file /api/cron/partner-drip, Partner activation email drip
  *
  * Schedule: Every 6 hours via cron-job.org.
  * Protected by CRON_AUTH_TOKEN bearer token.
@@ -150,7 +150,7 @@ export async function GET(req: NextRequest) {
         let nextStep: DripStep | null = null;
 
         if (!lastKey) {
-          // Never sent any activation email — start at step 0
+          // Never sent any activation email, start at step 0
           nextStep = DRIP_SEQUENCE[0];
         } else {
           const lastIdx = KEY_ORDER.indexOf(lastKey);

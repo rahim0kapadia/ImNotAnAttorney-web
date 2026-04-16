@@ -32,7 +32,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const startTime = Date.now();
 
 // ============================================================
-// ENV LOADING (manual line parsing — no dotenv dependency)
+// ENV LOADING (manual line parsing, no dotenv dependency)
 // Pattern from test-report-quality.mjs
 // ============================================================
 
@@ -106,7 +106,7 @@ try {
   SYSTEM_PROMPT = indexTs.slice(sysStart + 22, sysEnd);
   console.log(`[worker] Extracted SYSTEM_PROMPT (${SYSTEM_PROMPT.length} chars)`);
 
-  // Extract ANTI_HALLUCINATION_BLOCK (was missing — bug fix)
+  // Extract ANTI_HALLUCINATION_BLOCK (was missing, bug fix)
   const ahStart = indexTs.indexOf("const ANTI_HALLUCINATION_BLOCK = `");
   if (ahStart === -1) throw new Error("Could not find ANTI_HALLUCINATION_BLOCK in index.ts");
   const ahEnd = indexTs.indexOf("`;", ahStart + 33);
@@ -170,7 +170,7 @@ async function sendEmail({ to, subject, html }) {
             ${html}
             <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #27272A; font-size: 12px; color: #71717A; text-align: center;">
               <p style="margin: 0 0 8px;">ImNotAnAttorney</p>
-              <p style="margin: 0;">Legal information and research services — not legal advice.</p>
+              <p style="margin: 0;">Legal information and research services, not legal advice.</p>
               <p style="margin: 4px 0 0; font-size: 11px; color: #52525B;">195 Dr MLK Jr St N, St Petersburg, FL 33701</p>
             </div>
           </div>
@@ -189,7 +189,7 @@ async function sendEmail({ to, subject, html }) {
 }
 
 // ============================================================
-// CHARGE CONTEXT — Dynamic from DB with hardcoded fallback
+// CHARGE CONTEXT, Dynamic from DB with hardcoded fallback
 // Replicates getChargeContext() from index.ts
 // ============================================================
 
@@ -233,7 +233,7 @@ function formatChargeSpecificData(chargeSpecificData) {
 }
 
 /**
- * Dynamic getChargeContext — queries charge_types + experts from Supabase.
+ * Dynamic getChargeContext, queries charge_types + experts from Supabase.
  * Falls back to getChargeContextFallback() on any DB error.
  */
 async function getChargeContext(chargeType, jurisdictionLevel, chargeSpecificData) {
@@ -275,12 +275,12 @@ async function getChargeContext(chargeType, jurisdictionLevel, chargeSpecificDat
 
     // Step 3: Format the same output string as the production version
     const expertLines = sorted
-      .map((e, i) => `${i + 1}. ${e.name} — ${e.why_elite}. Methodology: ${e.key_framework}.`)
+      .map((e, i) => `${i + 1}. ${e.name}, ${e.why_elite}. Methodology: ${e.key_framework}.`)
       .join("\n");
 
     const focusLine = ct.focus_areas ? `\nFocus: ${ct.focus_areas}` : "";
 
-    return `\nCHARGE-SPECIFIC CONTEXT — ${ct.prompt_label} (${jur}):\nGOD MODE EXPERTS (triangulated — use their methodology):\n${expertLines}\n${focusLine}${csBlock}`;
+    return `\nCHARGE-SPECIFIC CONTEXT, ${ct.prompt_label} (${jur}):\nGOD MODE EXPERTS (triangulated, use their methodology):\n${expertLines}\n${focusLine}${csBlock}`;
   } catch (err) {
     console.error("[worker] Dynamic getChargeContext failed, using fallback:", err.message || err);
     return getChargeContextFallback(chargeType, jurisdictionLevel, chargeSpecificData);
@@ -297,23 +297,23 @@ function getChargeContextFallback(chargeType, jurisdictionLevel, chargeSpecificD
   const jur = jurisdictionLevel === "federal" ? "FEDERAL" : jurisdictionLevel === "state" ? "STATE" : "UNKNOWN JURISDICTION";
 
   if (ct.includes("dui") || ct.includes("dwi")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DUI/DWI (${jur}):\nGOD MODE EXPERTS (triangulated — use their methodology):\n1. Lawrence Taylor — Wrote Drunk Driving Defense (9th Ed), cited by SCOTUS in Missouri v. McNeely, NCDD co-founder. Methodology: systematic challenge of every procedural step from stop to test.\n2. William "Bubba" Head — Voted Best DUI Attorney in America (NCDD), 48+ years. Methodology: SFST administration error exploitation, officer training gaps.\n3. Justin McShane — First attorney designated "Forensic Lawyer Scientist" by American Chemical Society. Methodology: instrument precision challenges, scientific reliability attacks.\n\nFocus: BAC methodology challenge, field sobriety test validity, rising BAC defense, implied consent, calibration records, medical conditions (diabetes, GERD).${csBlock}`;
+    return `\nCHARGE-SPECIFIC CONTEXT, DUI/DWI (${jur}):\nGOD MODE EXPERTS (triangulated, use their methodology):\n1. Lawrence Taylor, Wrote Drunk Driving Defense (9th Ed), cited by SCOTUS in Missouri v. McNeely, NCDD co-founder. Methodology: systematic challenge of every procedural step from stop to test.\n2. William "Bubba" Head, Voted Best DUI Attorney in America (NCDD), 48+ years. Methodology: SFST administration error exploitation, officer training gaps.\n3. Justin McShane, First attorney designated "Forensic Lawyer Scientist" by American Chemical Society. Methodology: instrument precision challenges, scientific reliability attacks.\n\nFocus: BAC methodology challenge, field sobriety test validity, rising BAC defense, implied consent, calibration records, medical conditions (diabetes, GERD).${csBlock}`;
   }
 
   if (ct.includes("drug")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DRUG CASE (${jur}):\nGOD MODE EXPERTS (triangulated — use their methodology):\n1. Jeffrey Lichtman — El Chapo defense; 3 Gotti mistrials. Methodology: 7-Pillar CI Destruction Protocol.\n2. Ron Chapman II — Multiple federal acquittals including Rule 29 mid-trial wins. Methodology: forensic substance analysis challenge, prosecution system exploitation.\n3. Michael Levine — 25-year DEA veteran; 500+ expert witness appearances. Methodology: government case construction deconstruction, CI handling procedure critique.\n\nFocus: constructive vs actual possession, weight threshold analysis, mandatory minimum exposure, CI reliability, entrapment, search legality.${csBlock}`;
+    return `\nCHARGE-SPECIFIC CONTEXT, DRUG CASE (${jur}):\nGOD MODE EXPERTS (triangulated, use their methodology):\n1. Jeffrey Lichtman, El Chapo defense; 3 Gotti mistrials. Methodology: 7-Pillar CI Destruction Protocol.\n2. Ron Chapman II, Multiple federal acquittals including Rule 29 mid-trial wins. Methodology: forensic substance analysis challenge, prosecution system exploitation.\n3. Michael Levine, 25-year DEA veteran; 500+ expert witness appearances. Methodology: government case construction deconstruction, CI handling procedure critique.\n\nFocus: constructive vs actual possession, weight threshold analysis, mandatory minimum exposure, CI reliability, entrapment, search legality.${csBlock}`;
   }
 
   if (ct.includes("white") || ct.includes("fraud")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — WHITE COLLAR/FRAUD (${jur}):\nGOD MODE EXPERTS (triangulated — use their methodology):\n1. Martin G. Weinberg — NACDL 2022 Lifetime Achievement; Varsity Blues acquittals. Methodology: good faith reliance on counsel as intent defense, constitutional rights challenges.\n2. Cristina C. Arguedas — Trial Lawyers Hall of Fame; U.S. v. FedEx "factually innocent." Methodology: pre-indictment intervention, professional advice documentation.\n3. David B. Smith — Prosecution and Defense of Forfeiture Cases (Matthew Bender). Methodology: early asset restraint challenge, right to counsel preservation.\n\nFocus: document privilege, cooperation strategy, parallel proceedings, loss calculation, asset forfeiture, professional reliance defense.${csBlock}`;
+    return `\nCHARGE-SPECIFIC CONTEXT, WHITE COLLAR/FRAUD (${jur}):\nGOD MODE EXPERTS (triangulated, use their methodology):\n1. Martin G. Weinberg, NACDL 2022 Lifetime Achievement; Varsity Blues acquittals. Methodology: good faith reliance on counsel as intent defense, constitutional rights challenges.\n2. Cristina C. Arguedas, Trial Lawyers Hall of Fame; U.S. v. FedEx "factually innocent." Methodology: pre-indictment intervention, professional advice documentation.\n3. David B. Smith, Prosecution and Defense of Forfeiture Cases (Matthew Bender). Methodology: early asset restraint challenge, right to counsel preservation.\n\nFocus: document privilege, cooperation strategy, parallel proceedings, loss calculation, asset forfeiture, professional reliance defense.${csBlock}`;
   }
 
   if (ct.includes("probation") || ct.includes("violation") || ct.includes("supervised release")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — PROBATION/PAROLE/SUPERVISED RELEASE VIOLATION (${jur}):\nGOD MODE EXPERTS (triangulated):\n1. Fiona Doherty — Yale Law School; leading probation reform scholar; "Obey All Laws and Be Good" (Georgetown Law Journal). Methodology: graduated sanctions framework, proportionality analysis.\n2. Vincent Schiraldi — Former NYC Probation Commissioner; Columbia Justice Lab. Methodology: evidence-based supervision, technical violation diversion.\n3. Adam Foss — Former prosecutor; Prosecutor Impact founder; TED Talk on prosecutorial reform. Methodology: compliance-positive defense, constructive probation narrative.\n\nFocus: violation classification (technical vs substantive), graduated sanctions, compliance documentation, PO relationship management, original sentence exposure, hearing preparation, revocation alternatives.${csBlock}`;
+    return `\nCHARGE-SPECIFIC CONTEXT, PROBATION/PAROLE/SUPERVISED RELEASE VIOLATION (${jur}):\nGOD MODE EXPERTS (triangulated):\n1. Fiona Doherty, Yale Law School; leading probation reform scholar; "Obey All Laws and Be Good" (Georgetown Law Journal). Methodology: graduated sanctions framework, proportionality analysis.\n2. Vincent Schiraldi, Former NYC Probation Commissioner; Columbia Justice Lab. Methodology: evidence-based supervision, technical violation diversion.\n3. Adam Foss, Former prosecutor; Prosecutor Impact founder; TED Talk on prosecutorial reform. Methodology: compliance-positive defense, constructive probation narrative.\n\nFocus: violation classification (technical vs substantive), graduated sanctions, compliance documentation, PO relationship management, original sentence exposure, hearing preparation, revocation alternatives.${csBlock}`;
   }
 
   if (ct.includes("self-defense") || ct.includes("self defense") || ct.includes("justifiable")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — SELF-DEFENSE / JUSTIFIABLE FORCE (${jur}):\nGOD MODE EXPERTS (triangulated):\n1. Andrew F. Branca — The Law of Self Defense (3rd Ed); Five Elements framework. Methodology: element-by-element self-defense analysis.\n2. Massad Ayoob — Deadly Force; AOJ Triad; 45+ years expert witness. Methodology: use-of-force assessment, threat perception analysis.\n3. Don West — Co-counsel in Zimmerman acquittal; 35+ years Board Certified. Methodology: self-defense narrative construction, SYG immunity hearing strategy.\n\nFocus: Stand Your Ground vs Duty to Retreat, Castle Doctrine, proportionality, initial aggressor analysis, SYG immunity hearing, 911 caller advantage, civil liability exposure.${csBlock}`;
+    return `\nCHARGE-SPECIFIC CONTEXT, SELF-DEFENSE / JUSTIFIABLE FORCE (${jur}):\nGOD MODE EXPERTS (triangulated):\n1. Andrew F. Branca, The Law of Self Defense (3rd Ed); Five Elements framework. Methodology: element-by-element self-defense analysis.\n2. Massad Ayoob, Deadly Force; AOJ Triad; 45+ years expert witness. Methodology: use-of-force assessment, threat perception analysis.\n3. Don West, Co-counsel in Zimmerman acquittal; 35+ years Board Certified. Methodology: self-defense narrative construction, SYG immunity hearing strategy.\n\nFocus: Stand Your Ground vs Duty to Retreat, Castle Doctrine, proportionality, initial aggressor analysis, SYG immunity hearing, 911 caller advantage, civil liability exposure.${csBlock}`;
   }
 
   // Fallback for unknown charge types
@@ -331,22 +331,22 @@ function getEvidenceContext(types) {
   for (const et of types) {
     const e = et.toLowerCase();
     if (e.includes("confidential informant") || e.includes("ci"))
-      blocks.push("CI INVOLVEMENT (defendant believes CI was used): Attorney accountability — has attorney obtained CI disclosure? Challenged CI reliability? Lichtman 7-Pillar questions: criminal history, payment, reliability, supervision, motive to fabricate, corroboration, constitutional issues.");
+      blocks.push("CI INVOLVEMENT (defendant believes CI was used): Attorney accountability, has attorney obtained CI disclosure? Challenged CI reliability? Lichtman 7-Pillar questions: criminal history, payment, reliability, supervision, motive to fabricate, corroboration, constitutional issues.");
     if (e.includes("forensic"))
-      blocks.push("FORENSIC EVIDENCE (defendant believes forensic evidence exists): Attorney accountability — has attorney reviewed lab reports independently? Challenged testing methodology? Scheck methodology: lab analyst error rate, controls/blanks, accreditation, contamination history.");
+      blocks.push("FORENSIC EVIDENCE (defendant believes forensic evidence exists): Attorney accountability, has attorney reviewed lab reports independently? Challenged testing methodology? Scheck methodology: lab analyst error rate, controls/blanks, accreditation, contamination history.");
     if (e.includes("body cam"))
-      blocks.push("BODY CAMERA (defendant believes BWC footage exists): Attorney accountability — has attorney obtained and reviewed all footage? Identified gaps? Compared to police narrative?");
+      blocks.push("BODY CAMERA (defendant believes BWC footage exists): Attorney accountability, has attorney obtained and reviewed all footage? Identified gaps? Compared to police narrative?");
     if (e.includes("dna"))
-      blocks.push("DNA EVIDENCE (defendant believes DNA was tested): Attorney accountability — has attorney reviewed DNA testing methodology? Type of testing (STR, mitochondrial, touch DNA)? Statistical weight? Mixture analysis? Lab contamination history?");
+      blocks.push("DNA EVIDENCE (defendant believes DNA was tested): Attorney accountability, has attorney reviewed DNA testing methodology? Type of testing (STR, mitochondrial, touch DNA)? Statistical weight? Mixture analysis? Lab contamination history?");
     if (e.includes("digital") || e.includes("phone"))
-      blocks.push("DIGITAL/PHONE EVIDENCE (defendant believes digital evidence exists): Attorney accountability — has attorney challenged search warrant scope? Reviewed forensic extraction report? Verified full vs selective data disclosure?");
+      blocks.push("DIGITAL/PHONE EVIDENCE (defendant believes digital evidence exists): Attorney accountability, has attorney challenged search warrant scope? Reviewed forensic extraction report? Verified full vs selective data disclosure?");
     if (e.includes("confession") || e.includes("statement"))
-      blocks.push("STATEMENT/CONFESSION (defendant believes statement was taken): Attorney accountability — has attorney reviewed Miranda compliance? Recording existence? Interrogation duration and conditions? Promises or threats made?");
+      blocks.push("STATEMENT/CONFESSION (defendant believes statement was taken): Attorney accountability, has attorney reviewed Miranda compliance? Recording existence? Interrogation duration and conditions? Promises or threats made?");
     if (e.includes("witness") || e.includes("eyewitness"))
-      blocks.push("EYEWITNESS ID (defendant believes eyewitness identification was made): Attorney accountability — has attorney challenged identification procedure? Wells methodology: lineup type, blind administrator, time elapsed, certainty documentation.");
+      blocks.push("EYEWITNESS ID (defendant believes eyewitness identification was made): Attorney accountability, has attorney challenged identification procedure? Wells methodology: lineup type, blind administrator, time elapsed, certainty documentation.");
   }
   if (blocks.length === 0) return "";
-  return "\n\nEVIDENCE ACCOUNTABILITY CONTEXT (defendant's beliefs about evidence — not confirmed):\n" + blocks.join("\n");
+  return "\n\nEVIDENCE ACCOUNTABILITY CONTEXT (defendant's beliefs about evidence, not confirmed):\n" + blocks.join("\n");
 }
 
 // ============================================================
@@ -413,7 +413,7 @@ async function buildUserPrompt(intake) {
 - Next Court Date: ${intake.court_date || "Not provided"}
 - Time Since Arrest: ${intake.time_since_arrest || "Not provided"}
 - Criminal History: ${intake.criminal_history || "Not provided"}
-- Employment: ${intake.employment_status || "Not provided"}${intake.employment_industry ? ` — ${intake.employment_industry}` : ""}
+- Employment: ${intake.employment_status || "Not provided"}${intake.employment_industry ? `, ${intake.employment_industry}` : ""}
 - Case Stage: ${intake.case_stage || "Not provided"}
 - Filled Out By: ${intake.filled_out_by && intake.filled_out_by !== "self" ? intake.filled_out_by : "Self (defendant)"}
 - Mental Health Relevant: ${intake.mental_health_relevant || "Not provided"}
@@ -425,13 +425,13 @@ ${conditionalInstructions.join("")}
 **GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
 
 <section id="letter" title="A Letter to You" max_words="150">
-Use ONLY the section title as the heading — never prefix with internal id.
-Quote their "Primary Frustration" and "Specific Question" directly. Validate their instinct: "the fact that you're doing this research tells us something important." If they asked a specific question, tell them which section addresses it (by name, e.g., "Questions for Your Attorney"). Normalize: "you're not alone in this." NO blaming the attorney — frame gaps as things to clarify. Use client first name. This is NOT generic — write it TO THIS defendant.
-Include "Do NOT show this report to your attorney" WITH this explanation: "If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment. You want their unfiltered answers first. The questions are appropriate for any client — the analysis is for your eyes only."
+Use ONLY the section title as the heading, never prefix with internal id.
+Quote their "Primary Frustration" and "Specific Question" directly. Validate their instinct: "the fact that you're doing this research tells us something important." If they asked a specific question, tell them which section addresses it (by name, e.g., "Questions for Your Attorney"). Normalize: "you're not alone in this." NO blaming the attorney, frame gaps as things to clarify. Use client first name. This is NOT generic, write it TO THIS defendant.
+Include "Do NOT show this report to your attorney" WITH this explanation: "If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment. You want their unfiltered answers first. The questions are appropriate for any client, the analysis is for your eyes only."
 </section>
 
 <section id="s1" title="Where Things Stand" max_words="400">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 4-area diagnostic table. NO aggregate score (no X/100). Each row:
 
 | Area | What You Told Us | What to Ask About | Priority Questions |
@@ -442,69 +442,69 @@ Use ONLY the section title as the heading — never prefix with internal id.
 | Filing Activity | "You shared [specific intake answer]..." | "[Specific thing to ask]" | -> Q[N], Q[N] |
 
 EVERY row must use warm language: "You told us..." / "You said..." / "You mentioned..." / "You shared..."
-NEVER use "You indicated" / "You reported" / "You selected" — these sound clinical.
+NEVER use "You indicated" / "You reported" / "You selected", these sound clinical.
 NEVER blame the attorney. Frame gaps as things to CLARIFY.
 End with: "This is not a grade on your attorney or your case. It's a map of what you know and don't know."
 </section>
 
 <section id="s2" title="Understanding Your Charges" max_words="400">
-Use ONLY the section title as the heading — never prefix with internal id.
-Elements table with "Question for Your Attorney" column — NOT difficulty ratings:
+Use ONLY the section title as the heading, never prefix with internal id.
+Elements table with "Question for Your Attorney" column, NOT difficulty ratings:
 
 | Element Prosecution Must Prove | Plain English | Question for Your Attorney |
 |-------------------------------|---------------|---------------------------|
 | [Element] | [Plain English explanation] | "[What to ask]" |
 
 Penalty range with statutory citation. Charge-specific intake data reflected: "You told us your substance was [X]..."
-BRIDGING — MANDATORY after penalty range: "These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for YOUR case."
+BRIDGING, MANDATORY after penalty range: "These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for YOUR case."
 "Your Rights in This Process" box with ${jurisdictionLevel === "federal" ? "federal" : intake.state}-specific citations.
 </section>
 
 ${includeCaseClock ? `<section id="c1" title="Time and Deadlines" max_words="100">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 Based on arrest date of ${intake.arrest_date} and ${jurisdictionLevel === "federal" ? "federal Speedy Trial Act" : `${intake.state} speedy trial rules`}. NO "URGENT" red box. Informational + question. ALWAYS caveat waivers/continuances/tolling.
 </section>` : "<!-- Time and Deadlines: OMITTED -->"}
 
 <section id="s3" title="Exactly What to Say" max_words="500">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 Ready-to-send email template. Opening script. Follow-up template. 8-Level Escalation Ladder with pacing note ("5-7 business days per level").
-Include "Do NOT show this report to your attorney" with explanation: "If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment. The Meeting Ready Sheet in Your Next 7 Days is designed to be safe if your attorney sees it — it contains only questions, not analysis."
+Include "Do NOT show this report to your attorney" with explanation: "If your attorney sees this analysis, they may anchor their responses to it rather than giving you their independent assessment. The Meeting Ready Sheet in Your Next 7 Days is designed to be safe if your attorney sees it, it contains only questions, not analysis."
 </section>
 
 <section id="s4" title="Questions for Your Attorney" max_words="750" question_count="15">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 EXACTLY 15 questions. Callout box: verify 5 intake facts. Q1-Q5 PRIORITY from intake. Q6-Q15 additional.
-QUESTION TONE: Questions sound like a CLIENT asking for help — conversational, respectful. Keep legal jargon in "Why it matters" only. No yes/no questions — every question must require a substantive answer.
+QUESTION TONE: Questions sound like a CLIENT asking for help, conversational, respectful. Keep legal jargon in "Why it matters" only. No yes/no questions, every question must require a substantive answer.
 Each with 5 parts using "You told us..." (not "You indicated"). Count and verify = 15.
 </section>
 
 <section id="s5" title="Things Worth Asking About" max_words="350">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 5-6 items max. Labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT. Two categories: "Based on What You Told Us" + "Things You Told Us You Don't Know."
 Use "You told us..." / "You mentioned..." (not "You reported"). Link to sections by name (Questions for Your Attorney, Exactly What to Say). Never blame attorney.
 </section>
 
 ${includePleaLandscape ? `<section id="c2" title="What a Plea Really Means" max_words="300">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 Attorney is discussing a plea. Educational, NOT evaluative. NO ratings. Collateral consequences.
-BRIDGING — MANDATORY after collateral consequences table: "Every consequence above applies only to a guilty plea conviction. The questions below determine whether a plea is the right path — or whether alternatives exist."
+BRIDGING, MANDATORY after collateral consequences table: "Every consequence above applies only to a guilty plea conviction. The questions below determine whether a plea is the right path, or whether alternatives exist."
 Alternatives. 3 questions before signing.
 </section>` : "<!-- What a Plea Really Means: OMITTED -->"}
 
 <section id="s6" title="Is There Something We Missed?" max_words="100">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 Short, warm, non-transactional. Open channel. NO upgrade pitch.
 </section>
 
 <section id="closing" title="What Only Your Attorney Can Tell You" max_words="100">
-Use ONLY the section title as the heading — never prefix with internal id.
-Redirect, not deflation. Attorney has info we don't — which is why the questions matter. Honest limitations.
+Use ONLY the section title as the heading, never prefix with internal id.
+Redirect, not deflation. Attorney has info we don't, which is why the questions matter. Honest limitations.
 "If anything contradicts what your attorney tells you, your attorney's judgment should take priority."
 </section>
 
 <section id="s7" title="Your Next 7 Days" max_words="300">
-Use ONLY the section title as the heading — never prefix with internal id.
-EMOTIONAL CLIMAX — report ends here on determination, not disclaimers.
+Use ONLY the section title as the heading, never prefix with internal id.
+EMOTIONAL CLIMAX, report ends here on determination, not disclaimers.
 7-day plan referencing Exactly What to Say (not S3). Meeting Ready Sheet (safe for attorney) with questions from Questions for Your Attorney (not S4).
 Future pacing using name: "In two weeks, ${intake.first_name}, you will be the most prepared defendant your attorney has ever worked with."
 </section>
@@ -525,7 +525,7 @@ function validateReportContent(markdown) {
   const violations = [];
   const lower = markdown.toLowerCase();
 
-  // 1. Banned phrases — with informational-context exemptions
+  // 1. Banned phrases, with informational-context exemptions
   const bannedPhrases = [
     { phrase: "fire your attorney", exemptions: [] },
     { phrase: "publicly available", exemptions: [] },
@@ -557,7 +557,7 @@ function validateReportContent(markdown) {
     }
   }
 
-  // 2. Unsourced collateral claims — exempts "Good answer:" example sections
+  // 2. Unsourced collateral claims, exempts "Good answer:" example sections
   const collateralTopics = [
     "employment", "housing", "immigration", "financial aid",
     "background check", "voting", "firearms",
@@ -593,7 +593,7 @@ function stripModelMethodologyNote(markdown) {
 }
 
 function extractExpertNames(chargeContextBlock) {
-  const namePattern = /^\d+\.\s+([^—–\-]+)\s*[—–\-]/gm;
+  const namePattern = /^\d+\.\s+([^, –\-]+)\s*[, –\-]/gm;
   const names = [];
   let match;
   while ((match = namePattern.exec(chargeContextBlock)) !== null) {
@@ -640,7 +640,7 @@ function renderReportHtml(markdown, meta) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Decoder Report — ${escapeHtml(meta.firstName)}</title>
+<title>Case Decoder Report, ${escapeHtml(meta.firstName)}</title>
 <style>
   @media print {
     body { background: white !important; color: #1a1a1a !important; }
@@ -673,13 +673,13 @@ function renderReportHtml(markdown, meta) {
   </div>
   ${meta.expertNames ? `<blockquote style="border-left: 3px solid #F59E0B; padding: 16px; margin: 24px 0; background: #1C1917; border-radius: 0 8px 8px 0;">
     <p style="margin: 0 0 12px; color: #F59E0B; font-weight: bold;">METHODOLOGY NOTE</p>
-    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
-    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)}, selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </blockquote>` : ""}
   ${html}
   <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
     <p style="margin: 0; font-size: 13px; color: #71717A;">
-      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them — and why it matters.
+      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions, not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them, and why it matters.
     </p>
   </div>
   <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
@@ -688,8 +688,8 @@ function renderReportHtml(markdown, meta) {
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
-    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $997 ($800 after credit)</a>
-    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
+    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief, $997 ($800 after credit)</a>
+    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure, decide after your meeting.</p>
   </div>
 </div>
 </body>
@@ -776,7 +776,7 @@ async function main() {
 
   console.log(`[worker] Intake found (${intake.id}), building prompt...`);
 
-  // Step 3: Build user prompt (async — awaits dynamic charge context from DB)
+  // Step 3: Build user prompt (async, awaits dynamic charge context from DB)
   const userPrompt = await buildUserPrompt(intake);
   console.log(`[worker] Prompt built (${userPrompt.length} chars), calling Claude API...`);
 
@@ -852,7 +852,7 @@ async function main() {
     }
   }
 
-  // Step 5: Save batch_id and exit — cron poller handles result processing
+  // Step 5: Save batch_id and exit, cron poller handles result processing
   await supabase
     .from("cases")
     .update({ batch_id: batchId, updated_at: new Date().toISOString() })

@@ -1,4 +1,4 @@
-# Handoff: Code Review Loop — Pass 2 (continued)
+# Handoff: Code Review Loop, Pass 2 (continued)
 Date: 2026-03-22 07:30
 
 ## Task
@@ -6,7 +6,7 @@ Continue autonomous code review loop on ImNotAnAttorney-web. Pass 2 review found
 
 ## What Was Done (Pass 2 Fixes)
 
-### Commit `aec58d9` — 28 issues across 27 files
+### Commit `aec58d9`, 28 issues across 27 files
 **Security CRITICALs:**
 - XSS in unsubscribe page: HTML-escape emailParam in hidden input
 - Constant-time webhook signature comparison (resend + resend-inbound)
@@ -34,31 +34,31 @@ Continue autonomous code review loop on ImNotAnAttorney-web. Pass 2 review found
 - Update score route docs to reflect aggregate writes
 - Footer Situation Room link to /intake
 
-### Commit `8925fd3` — 8 issues
+### Commit `8925fd3`, 8 issues
 - customer-lifecycle: upsert subscriber for dedup (non-subscriber duplicate emails)
 - operator-alerts: same fix for awaiting-intake + escalation emails
 - Both intake routes: wrap req.json() in try/catch returning 400
 - intake: sanitize firstName (strip \r\n for header injection)
 
-### Commit `a0ea922` — 6 issues (N+1 batch)
+### Commit `a0ea922`, 6 issues (N+1 batch)
 - reconciliation: batch-fetch existing orders by session IDs
 - customer-lifecycle: batch-fetch paid orders + dedup for abandoned checkout
 - monitoring: batch subscribers + dedup for weekly progress (3N to 2 queries)
 
 ## Full Review Report
-`docs/reviews/2026-03-22-pass2-review.md` — 66 issues (P2-1 through P2-66)
+`docs/reviews/2026-03-22-pass2-review.md`, 66 issues (P2-1 through P2-66)
 
 ## Remaining Issues (24 unfixed)
 
-### HIGH — N+1 queries still open
+### HIGH, N+1 queries still open
 - **P2-17:** N+1 in pipeline completion check (`pipeline.ts:123-126`)
-- **P2-18:** N+1 in operator-alerts — 5 sections (`operator-alerts.ts:281-580`)
+- **P2-18:** N+1 in operator-alerts, 5 sections (`operator-alerts.ts:281-580`)
 - **P2-19:** N+1 in drip-post-purchase (`drip-post-purchase.ts:123-132,208-213`)
-- **P2-21:** Commission reversal race condition — non-atomic read-then-write (`stripe/route.ts:936-963`)
+- **P2-21:** Commission reversal race condition, non-atomic read-then-write (`stripe/route.ts:936-963`)
 - **P2-23:** Metrics full table scans in JavaScript (`operator/metrics/route.ts:42-50`)
-- **P2-25:** select("*") across 5 operator queries (partially done — report_html removed)
+- **P2-25:** select("*") across 5 operator queries (partially done, report_html removed)
 
-### MEDIUM — still open
+### MEDIUM, still open
 - **P2-35:** Reconciliation can create duplicate orders (no upsert guard)
 - **P2-36:** Dead-code status filter in drip-post-purchase
 - **P2-37:** Discount loop can attribute order to multiple partners (no break)
@@ -69,12 +69,12 @@ Continue autonomous code review loop on ImNotAnAttorney-web. Pass 2 review found
 - **P2-43:** Admin emails PATCH id not validated
 - **P2-45:** StatusBadge duplicated across 4-5 files
 
-### LOW — skip or quick fix
+### LOW, skip or quick fix
 - P2-51 through P2-66 (rate limiting, ARIA, code duplication, minor cleanup)
 
 ## Verification
-- `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc --noEmit --skipLibCheck` — compiles clean
-- `cd C:/Users/email/projects/ImNotAnAttorney-web && git log --oneline -5` — verify commits
+- `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc,noEmit,skipLibCheck`, compiles clean
+- `cd C:/Users/email/projects/ImNotAnAttorney-web && git log,oneline -5`, verify commits
 
 ## Recommended Next Steps
 1. Continue fixing remaining HIGHs (N+1 queries, metrics full-scan, commission race)

@@ -16,7 +16,7 @@
  *   2. Get key from https://openstates.org/account/profile/
  *   3. Add to .env.local: OPENSTATES_API_KEY=your-key-here
  *
- * Free tier: 500 req/day. We have 1,682 unverified statutes — runs in 4 days.
+ * Free tier: 500 req/day. We have 1,682 unverified statutes, runs in 4 days.
  *
  * Usage:
  *   node scripts/verify-statutes-openstates.mjs              # Verify all unverified
@@ -241,7 +241,7 @@ async function main() {
       result = await searchOpenStates(row.jurisdiction, row.statute_title || row.common_charge_slug);
     } catch (err) {
       if (err.message === "RATE_LIMIT") {
-        console.log("RATE LIMIT — stopping");
+        console.log("RATE LIMIT, stopping");
         break;
       }
       console.log(`ERR: ${err.message}`);

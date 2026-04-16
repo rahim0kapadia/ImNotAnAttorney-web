@@ -1,5 +1,5 @@
 /**
- * /r/[code]/reminders — Court reminder sign-up page.
+ * /r/[code]/reminders, Court reminder sign-up page.
  *
  * Server component: looks up partner, sets ref cookie, renders form.
  * Accepts ?charge= and ?rec= query params from the quiz.
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Free Court Prep | ImNotAnAttorney",
     description:
-      "Court date reminders, what to expect at your hearing, and how to prepare. Free — no account needed.",
+      "Court date reminders, what to expect at your hearing, and how to prepare. Free, no account needed.",
     openGraph: {
       title: "Free Court Prep",
       description: "Court date reminders + what to expect at your hearing.",
@@ -48,7 +48,7 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
     redirect("/");
   }
 
-  // Referral cookie is set by middleware (Next.js 16 — cookies().set() not allowed in Server Components)
+  // Referral cookie is set by middleware (Next.js 16, cookies().set() not allowed in Server Components)
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col">

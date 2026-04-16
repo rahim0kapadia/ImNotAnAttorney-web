@@ -30,7 +30,7 @@ export async function generateMetadata({
   const data = getStateDuiData(state);
   if (!data) return {};
 
-  const title = `${data.name} DUI Defense — BAC Limits, Penalties & What to Do`;
+  const title = `${data.name} DUI Defense, BAC Limits, Penalties & What to Do`;
   const description = `${data.name} DUI laws: BAC limit ${data.bac}, first offense penalties up to ${data.firstJail} jail and ${data.firstFine} fine. Know your rights and the questions to ask your attorney.`;
 
   return {
@@ -92,7 +92,7 @@ export default async function StateDuiPage({ params }: PageProps) {
           </h1>
           <p className="mt-4 text-lg text-zinc-400">
             What you&apos;re facing, what the deadlines are, and the questions
-            your attorney needs to answer — specific to {data.name} ({data.abbr}) law.
+            your attorney needs to answer, specific to {data.name} ({data.abbr}) law.
           </p>
         </section>
       </FadeInUp>
@@ -149,7 +149,7 @@ export default async function StateDuiPage({ params }: PageProps) {
                     In {data.name}, you have <strong className="text-white">{data.dmvDeadline} days</strong> from
                     your arrest to request an administrative DMV hearing. Miss this
                     deadline and your license suspension goes into effect automatically
-                    — even if the criminal case is later dismissed.
+                   , even if the criminal case is later dismissed.
                   </p>
                 </div>
               </div>
@@ -194,7 +194,7 @@ export default async function StateDuiPage({ params }: PageProps) {
             Implied Consent &amp; Test Refusal
           </h2>
           <p className="mt-4 text-sm text-zinc-400">
-            Like all 50 states, {data.name} has an implied consent law — by driving
+            Like all 50 states, {data.name} has an implied consent law, by driving
             on {data.name} roads, you&apos;ve already agreed to submit to a chemical
             test (breath, blood, or urine) if an officer has probable cause to believe
             you&apos;re impaired.
@@ -220,7 +220,7 @@ export default async function StateDuiPage({ params }: PageProps) {
         </section>
       </FadeInUp>
 
-      {/* CTA — SCORE QUIZ */}
+      {/* CTA, SCORE QUIZ */}
       <FadeInUp>
         <section className="mt-16 text-center">
           <h2 className="text-2xl font-bold text-white">
@@ -239,7 +239,7 @@ export default async function StateDuiPage({ params }: PageProps) {
         </section>
       </FadeInUp>
 
-      {/* CTA — DUI PLAYBOOK */}
+      {/* CTA, DUI PLAYBOOK */}
       <section className="mt-12">
         <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
           <p className="text-xs font-semibold text-amber-400">
@@ -274,7 +274,7 @@ export default async function StateDuiPage({ params }: PageProps) {
             <strong>Important:</strong> This page provides general legal information
             about {data.name} DUI laws as of the date of publication. Laws change
             frequently. This is not legal advice. For guidance specific to your case,
-            speaking with a {data.name}-licensed attorney is one option — or take the free Defense Milestone Score to see where your case stands.
+            speaking with a {data.name}-licensed attorney is one option, or take the free Defense Milestone Score to see where your case stands.
           </p>
         </div>
       </section>

@@ -8,7 +8,7 @@ import { TIER_CORE } from "@/lib/tiers";
 import type { TierSlug } from "@/lib/tiers";
 
 /**
- * HomepageHero — Dynamic hero with charge-type routing
+ * HomepageHero, Dynamic hero with charge-type routing
  *
  * Extracted from page.tsx (Server Component) so the ChargeTypeSelector
  * can drive CTA state. When no charge is selected, defaults to Case Decoder
@@ -65,7 +65,7 @@ export function HomepageHero() {
             </p>
           </FadeInUp>
 
-          {/* Charge Type Selector — drives CTA below */}
+          {/* Charge Type Selector, drives CTA below */}
           <FadeInUp delay={0.15}>
             <ChargeTypeSelector onSelect={setSelectedSlug} />
           </FadeInUp>

@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    // Reject test-mode sessions in production — test sessions are trivially
+    // Reject test-mode sessions in production, test sessions are trivially
     // created with test card numbers and should never verify as paid.
     if (process.env.NODE_ENV === "production" && !session.livemode) {
       return NextResponse.json({ verified: false });
@@ -81,7 +81,7 @@ export async function GET(req: NextRequest) {
 
     // Treat "paid" and "no_payment_required" as verified. "no_payment_required"
     // occurs with 100% coupons (e.g., internal QA coupon for E2E testing).
-    // "unpaid" means the customer abandoned — reject that.
+    // "unpaid" means the customer abandoned, reject that.
     if (session.payment_status !== "paid" && session.payment_status !== "no_payment_required") {
       return NextResponse.json({ verified: false });
     }
@@ -103,7 +103,7 @@ export async function GET(req: NextRequest) {
     };
 
     // For digital products, look up the download token from the order record.
-    // The webhook creates the token async — it may not exist yet if the customer
+    // The webhook creates the token async, it may not exist yet if the customer
     // hits the success page before the webhook fires. Return null gracefully;
     // the success page shows "check email" as fallback.
     const tierSlug = session.metadata?.tier;
@@ -125,7 +125,7 @@ export async function GET(req: NextRequest) {
 
     // (W6) For standalone research products, identify the product but DO NOT
     // reconstruct the intake URL. Intake tokens are stored as SHA-256 hashes
-    // in the orders table (standalone_intake_token_hash) — the plaintext token
+    // in the orders table (standalone_intake_token_hash), the plaintext token
     // exists only in the customer's email. The checkout success page falls
     // through to "A link has been sent to your email" messaging when
     // intakeUrl is absent. This prevents token exposure on any compromised

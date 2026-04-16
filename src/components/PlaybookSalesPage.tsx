@@ -348,7 +348,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           <span className="text-amber-400">{tier.priceDisplay}</span>.
         </p>
         <p className="mt-2 text-sm text-zinc-400">{config.summaryLine}</p>
-        {/* MONEY-BACK GUARANTEE BADGE — placed above CTA for risk removal */}
+        {/* MONEY-BACK GUARANTEE BADGE, placed above CTA for risk removal */}
         <div className="mt-6 inline-flex items-start gap-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-5 py-3 text-left max-w-md">
           <svg
             className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400"
@@ -421,7 +421,7 @@ export default function PlaybookSalesPage({ config }: Props) {
         </section>
       )}
 
-      {/* EXIT CAPTURE — Free checklist for non-buyers (DUI only) */}
+      {/* EXIT CAPTURE, Free checklist for non-buyers (DUI only) */}
       {config.slug === "dui-first-offense" && (
         <section className="mt-16">
           <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-6">
@@ -430,10 +430,10 @@ export default function PlaybookSalesPage({ config }: Props) {
             </p>
             <LeadCapture
               source="dui-72-hours"
-              title="First 72 Hours After a DUI Arrest — Emergency Checklist"
+              title="First 72 Hours After a DUI Arrest, Emergency Checklist"
               description="The 3 things to do tonight, the DMV deadline that could cost you your license, and the 6 questions to ask at your attorney consultation. Free. Printable."
               buttonText="Send Me the Free Checklist"
-              successTitle="Your checklist is ready — download it now."
+              successTitle="Your checklist is ready, download it now."
               successDescription="Handle the 3 urgent items tonight. Then prepare for your attorney meeting:"
               downloadHref="/guides/dui-first-72-hours-checklist.pdf"
               downloadLabel="Download 72-Hour Checklist →"

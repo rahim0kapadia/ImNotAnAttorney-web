@@ -19,7 +19,7 @@ target_length: 58s
 What Actually Happens at Arraignment (Nobody Tells You This)
 
 ## Description
-Your first court date is coming and you're terrified. Here's what arraignment actually looks like — step by step. Spoiler: it's 5 minutes and way less dramatic than you think.
+Your first court date is coming and you're terrified. Here's what arraignment actually looks like, step by step. Spoiler: it's 5 minutes and way less dramatic than you think.
 
 This is legal information, not legal advice. We are not attorneys.
 
@@ -34,7 +34,7 @@ imnotanattorney.com
 
 [0:05-0:13] THE REALITY:
 [TEXT ON SCREEN: "Arraignment = 5 minutes"]
-"The whole thing takes about five minutes once your name is called. You will wait — possibly for hours — in a courtroom with other defendants. Then your name gets called. You walk up. And it's over faster than you expect."
+"The whole thing takes about five minutes once your name is called. You will wait, possibly for hours, in a courtroom with other defendants. Then your name gets called. You walk up. And it's over faster than you expect."
 
 [0:13-0:22] STEP 1:
 [TEXT ON SCREEN: "Step 1: Charges read out loud"]
@@ -50,11 +50,11 @@ imnotanattorney.com
 
 [0:39-0:50] WHAT MATTERS MORE:
 [TEXT ON SCREEN: "What you do AFTER matters more"]
-"Here's what nobody tells you: what happens AFTER arraignment matters a hundred times more than what happens during it. Within days, ask your attorney: when will you get discovery? What's our initial strategy? When should I expect to hear from you next? Set expectations NOW — not after months of silence."
+"Here's what nobody tells you: what happens AFTER arraignment matters a hundred times more than what happens during it. Within days, ask your attorney: when will you get discovery? What's our initial strategy? When should I expect to hear from you next? Set expectations NOW, not after months of silence."
 
 [0:50-0:58] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]
-"Biggest mistake at arraignment? Talking to police or prosecutors without your attorney present. Before, during, or after court — say nothing to anyone about your case. Know What They Know. Link in bio."
+"Biggest mistake at arraignment? Talking to police or prosecutors without your attorney present. Before, during, or after court, say nothing to anyone about your case. Know What They Know. Link in bio."
 
 ## On-Screen Text
 - [0:00] "YOUR FIRST COURT DATE"

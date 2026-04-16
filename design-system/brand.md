@@ -1,20 +1,20 @@
-﻿# ImNotAnAttorney — Brand Identity
+﻿# ImNotAnAttorney, Brand Identity
 
 ## Category
-Legal Services — Criminal Defense Empowerment
+Legal Services, Criminal Defense Empowerment
 
 ## Target User
 Crisis buyer, post-arrest, Googling at 2AM. Highest-intent buyer on Earth.
 
 ## Brand Voice
-Authoritative but empowering. Not a law firm — a legal intelligence brand. "Know What They Know."
+Authoritative but empowering. Not a law firm, a legal intelligence brand. "Know What They Know."
 
 ## Theme
-Dark mode ONLY. No light mode. No theme toggle. The 2AM crisis buyer is in the dark — dark mode is a UX decision, not aesthetic.
+Dark mode ONLY. No light mode. No theme toggle. The 2AM crisis buyer is in the dark, dark mode is a UX decision, not aesthetic.
 
 ## Colors
 | Role | Hex | Tailwind |
-|------|-----|----------|
+|------|---, |----------|
 | Background | #0a0a0a | bg-zinc-950 |
 | Surface | #18181b | bg-zinc-900 |
 | Primary (Amber) | #f59e0b | text-amber-500 |
@@ -35,10 +35,10 @@ Dark mode ONLY. No light mode. No theme toggle. The 2AM crisis buyer is in the d
 **Why Lato:** Warm, readable for legal content. Replaces Geist (developer font).
 
 ## Icons
-Lucide React — project standard. No emojis.
+Lucide React, project standard. No emojis.
 
 ## Anti-Patterns
 - No light backgrounds
 - No AI purple/pink gradients
 - No Geist font
-- No hardcoded hex values — use Tailwind classes
+- No hardcoded hex values, use Tailwind classes

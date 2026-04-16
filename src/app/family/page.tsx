@@ -2,7 +2,7 @@
  * Family Landing Page (/family)
  *
  * Dedicated landing page for family members of criminal defendants.
- * Conversion-focused — CTAs point to the Defense Milestone Score quiz
+ * Conversion-focused, CTAs point to the Defense Milestone Score quiz
  * (family can take it on behalf of the defendant).
  *
  * Target queries: "how to help family member criminal case",
@@ -17,14 +17,14 @@ import { TIER_CORE } from "@/lib/tiers";
 import { TestimonialSection } from "@/components/TestimonialSection";
 
 export const metadata: Metadata = {
-  title: "Your Family Member Was Arrested — Here's How You Can Help",
+  title: "Your Family Member Was Arrested, Here's How You Can Help",
   description:
-    "When someone you love faces criminal charges, you feel helpless. Take the free Defense Milestone Score on their behalf to find the gaps in their defense — in 2 minutes.",
+    "When someone you love faces criminal charges, you feel helpless. Take the free Defense Milestone Score on their behalf to find the gaps in their defense, in 2 minutes.",
   alternates: {
     canonical: `${SITE_URL}/family`,
   },
   openGraph: {
-    title: "Your Family Member Was Arrested — Here's How You Can Help",
+    title: "Your Family Member Was Arrested, Here's How You Can Help",
     description:
       "Take the free Defense Milestone Score on their behalf. Find the gaps in their defense in 2 minutes.",
     url: `${SITE_URL}/family`,
@@ -119,12 +119,12 @@ export default function FamilyPage() {
               {
                 num: "4",
                 title: "Write character reference letters",
-                text: "When sentencing arrives, character letters from family carry weight. Describe their positive qualities, community ties, and support system. Our sentencing calculator — backed by 595,851 federal records — can show you what judges in their district have done in similar cases.",
+                text: "When sentencing arrives, character letters from family carry weight. Describe their positive qualities, community ties, and support system. Our sentencing calculator, backed by 595,851 federal records, can show you what judges in their district have done in similar cases.",
               },
               {
                 num: "5",
                 title: "Handle the practical stuff",
-                text: "Bills, childcare, employment communication, mail, pets — every practical burden you lift is one less thing pulling their focus from the case.",
+                text: "Bills, childcare, employment communication, mail, pets, every practical burden you lift is one less thing pulling their focus from the case.",
               },
             ].map((item) => (
               <StaggerItem
@@ -154,7 +154,7 @@ export default function FamilyPage() {
             {[
               "Social media posts about the case can be used as evidence by prosecutors",
               "Contact with witnesses or alleged victims can result in additional charges",
-              "Pressuring someone to accept or reject a plea can backfire — that decision belongs to the defendant and their attorney",
+              "Pressuring someone to accept or reject a plea can backfire, that decision belongs to the defendant and their attorney",
               "Jail phone calls are recorded and can be used by prosecutors",
             ].map((item) => (
               <div
@@ -219,7 +219,7 @@ export default function FamilyPage() {
         </section>
       </FadeInUp>
 
-      {/* PAID CTA — Case Decoder */}
+      {/* PAID CTA, Case Decoder */}
       <FadeInUp>
         <div className="mt-8 rounded-xl border border-amber-500/20 bg-zinc-900 p-6 text-center">
           <h3 className="text-lg font-semibold text-white">
@@ -272,7 +272,7 @@ export default function FamilyPage() {
             "@type": "WebPage",
             name: "How Family Members Can Help With a Criminal Case",
             description:
-              "Guide for family members of criminal defendants — what to do, what not to do, and how to take the Defense Milestone Score on their behalf.",
+              "Guide for family members of criminal defendants, what to do, what not to do, and how to take the Defense Milestone Score on their behalf.",
             url: `${SITE_URL}/family`,
             isPartOf: { "@id": `${SITE_URL}/#website` },
             breadcrumb: {

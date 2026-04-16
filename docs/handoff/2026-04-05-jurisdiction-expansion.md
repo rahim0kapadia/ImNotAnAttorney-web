@@ -16,7 +16,7 @@ Date: 2026-04-05
 ### Phase 2: Generate 44 Missing States + DC (BLOCKED)
 - Script `generate-charge-taxonomy.ts` updated with skip-existing logic (won't regenerate existing JSONs)
 - **All 44 state generations failed**: Anthropic API credits depleted
-- Script confirmed working — just needs funded API key
+- Script confirmed working, just needs funded API key
 
 ### Phase 3: All-State Verification Script (BUILT + RUNNING)
 - **New script: `scripts/legal-research-all.mjs`**
@@ -36,15 +36,15 @@ Date: 2026-04-05
 ## Files Modified/Created
 
 ### Modified
-- `scripts/generate-charge-taxonomy.ts` — 59 new COMMON_CHARGES entries + skip-existing in --all mode
-- `data/charge-taxonomy/MI.json` — 19 slugs remapped, 1 duplicate dropped
-- `data/charge-taxonomy/NJ.json` — 19 slugs remapped
-- `supabase/migrations/029-seed-charge-taxonomy.sql` — rebuilt with 174 charges
-- `scripts/CONTEXT.md` — documented new verification script
-- `docs/plans/2026-04-05-jurisdiction-statutes-expansion.md` — execution plan
+- `scripts/generate-charge-taxonomy.ts`, 59 new COMMON_CHARGES entries + skip-existing in,all mode
+- `data/charge-taxonomy/MI.json`, 19 slugs remapped, 1 duplicate dropped
+- `data/charge-taxonomy/NJ.json`, 19 slugs remapped
+- `supabase/migrations/029-seed-charge-taxonomy.sql`, rebuilt with 174 charges
+- `scripts/CONTEXT.md`, documented new verification script
+- `docs/plans/2026-04-05-jurisdiction-statutes-expansion.md`, execution plan
 
 ### Created
-- `scripts/legal-research-all.mjs` — all-state verification + case law
+- `scripts/legal-research-all.mjs`, all-state verification + case law
 
 ### DB State
 | Jurisdiction | Rows | Confidence |
@@ -74,15 +74,15 @@ Top up at: https://console.anthropic.com (Plans & Billing)
 ### Immediate (resume when API credits available)
 ```
 cd C:\Users\email\projects\ImNotAnAttorney-web
-npx tsx scripts/generate-charge-taxonomy.ts --all       # Generate 44 states + DC
+npx tsx scripts/generate-charge-taxonomy.ts,all       # Generate 44 states + DC
 node scripts/load-jurisdiction-data.mjs                 # Load all into DB
-npx tsx scripts/generate-charge-taxonomy.ts --validate   # Validate output
+npx tsx scripts/generate-charge-taxonomy.ts,validate   # Validate output
 node scripts/legal-research-all.mjs                     # Verify all new statutes
 ```
 
 ### After verification completes (this session or next)
 ```
-node scripts/legal-research-all.mjs --summary           # Show confidence distribution
+node scripts/legal-research-all.mjs,summary           # Show confidence distribution
 ```
 
 ### Future improvements
@@ -100,7 +100,7 @@ Phase 3: Verification script built at scripts/legal-research-all.mjs. Check if p
 Phase 4: Run final audit.
 
 After API credits topped up:
-  npx tsx scripts/generate-charge-taxonomy.ts --all
+  npx tsx scripts/generate-charge-taxonomy.ts,all
   node scripts/load-jurisdiction-data.mjs
   node scripts/legal-research-all.mjs
 ```

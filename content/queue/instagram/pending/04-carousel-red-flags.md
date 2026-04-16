@@ -34,7 +34,7 @@ Same design system as Post 01:
 
 ---
 
-### Slide 1 -- THE HOOK
+### Slide 1, THE HOOK
 
 **Headline**: 7 red flags your criminal defense attorney isn't working your case.
 
@@ -46,7 +46,7 @@ Same design system as Post 01:
 
 ---
 
-### Slide 2 -- RED FLAG 1
+### Slide 2, RED FLAG 1
 
 **Headline**: They don't return calls or emails for days.
 
@@ -56,52 +56,52 @@ Same design system as Post 01:
 
 ---
 
-### Slide 3 -- RED FLAG 2
+### Slide 3, RED FLAG 2
 
 **Headline**: They can't explain their theory of defense.
 
-**Body**: "We'll see what they offer" is not a theory of defense. A prepared attorney can articulate -- in plain English -- why you should win, or at minimum, where the prosecution's case is weakest. If they can't, they haven't done the analysis.
+**Body**: "We'll see what they offer" is not a theory of defense. A prepared attorney can articulate, in plain English, why you should win, or at minimum, where the prosecution's case is weakest. If they can't, they haven't done the analysis.
 
 **Design**: Amber warning triangle. "We'll see what they offer" in amber italics.
 
 ---
 
-### Slide 4 -- RED FLAG 3
+### Slide 4, RED FLAG 3
 
 **Headline**: Zero motions have been filed.
 
-**Body**: Motions are the primary tool of defense. Motion to suppress evidence. Motion to dismiss. Motion to compel discovery. If months have passed and nothing has been filed, ask exactly why not -- and write down the answer.
+**Body**: Motions are the primary tool of defense. Motion to suppress evidence. Motion to dismiss. Motion to compel discovery. If months have passed and nothing has been filed, ask exactly why not, and write down the answer.
 
 **Design**: Amber warning triangle. "Zero motions" in amber.
 
 ---
 
-### Slide 5 -- RED FLAG 4
+### Slide 5, RED FLAG 4
 
 **Headline**: They push you to plead without reviewing discovery.
 
-**Body**: If your attorney is recommending a plea deal and hasn't thoroughly reviewed the evidence against you, they're guessing. A plea should be a strategic decision made after full evaluation -- not a shortcut because they haven't done the work.
+**Body**: If your attorney is recommending a plea deal and hasn't thoroughly reviewed the evidence against you, they're guessing. A plea should be a strategic decision made after full evaluation, not a shortcut because they haven't done the work.
 
 **Design**: Amber warning triangle. "they're guessing" in amber.
 
 ---
 
-### Slide 6 -- RED FLAG 5
+### Slide 6, RED FLAG 5
 
 **Headline**: They don't know your case details when you ask.
 
-**Body**: You ask about a specific witness statement. They fumble. You mention a date from your discovery. Blank stare. If your attorney can't discuss the specifics of YOUR case without checking their file, someone else is doing the work -- or nobody is.
+**Body**: You ask about a specific witness statement. They fumble. You mention a date from your discovery. Blank stare. If your attorney can't discuss the specifics of YOUR case without checking their file, someone else is doing the work, or nobody is.
 
 **Design**: Amber warning triangle. "or nobody is" in amber.
 
 ---
 
-### Slide 7 -- RED FLAG 6 + 7
+### Slide 7, RED FLAG 6 + 7
 
 **Headline**: Two more to watch for:
 
 **Body**:
-6. They delegate everything to associates or paralegals you've never met -- but you're paying partner rates.
+6. They delegate everything to associates or paralegals you've never met, but you're paying partner rates.
 
 7. They set continuances without explaining why. Every continuance is time. Time you're living under the weight of pending charges. If they can't tell you WHY the delay benefits your defense, the delay benefits them, not you.
 
@@ -109,11 +109,11 @@ Same design system as Post 01:
 
 ---
 
-### Slide 8 -- CTA
+### Slide 8, CTA
 
 **Top**: How many did you recognize?
 
-**Middle**: Take the free Defense Milestone Score -- 7 questions, tells you where your case defense stands right now. Link in bio.
+**Middle**: Take the free Defense Milestone Score, 7 questions, tells you where your case defense stands right now. Link in bio.
 
 **Bottom**: DM "HELP" and I'll send you the first thing to do.
 
@@ -132,7 +132,7 @@ This isn't about having a bad attorney. It's about knowing the difference betwee
 
 I learned these the hard way. Paid $20,000. Got silence, deflection, and "trust the process" for three months before I started asking the right questions.
 
-Here's the uncomfortable truth: most defendants have no framework for evaluating whether their attorney is actually preparing a defense. You trust them because you have to. Because the alternative -- that the person you're paying isn't working -- is terrifying.
+Here's the uncomfortable truth: most defendants have no framework for evaluating whether their attorney is actually preparing a defense. You trust them because you have to. Because the alternative, that the person you're paying isn't working, is terrifying.
 
 These red flags aren't accusations. They're checkpoints. A good attorney will address every one of them directly. A bad one will get defensive.
 

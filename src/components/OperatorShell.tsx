@@ -1,6 +1,6 @@
 "use client";
 /**
- * OperatorShell — shared wrapper for all /operator/* pages.
+ * OperatorShell, shared wrapper for all /operator/* pages.
  *
  * Handles:
  *   1. Login form (stores admin-password in sessionStorage)
@@ -8,7 +8,7 @@
  *   3. Content area (renders children)
  *   4. Logout
  *
- * Auth approach: matches existing admin pages — sessionStorage + X-Admin-Password header.
+ * Auth approach: matches existing admin pages, sessionStorage + X-Admin-Password header.
  * The key name "admin-password" matches the demand page pattern.
  */
 
@@ -55,7 +55,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
       return;
     }
     if (!res.ok) {
-      setError("Server error — try again");
+      setError("Server error, try again");
       return;
     }
 
@@ -171,7 +171,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
 }
 
 // ============================================================
-// Auth context — children use this to get the password for API calls
+// Auth context, children use this to get the password for API calls
 // ============================================================
 import { createContext, useContext } from "react";
 

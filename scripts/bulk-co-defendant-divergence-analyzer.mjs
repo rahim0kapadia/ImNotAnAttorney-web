@@ -4,9 +4,9 @@
  * Streams the 50 GB opinions CSV using csv-parse (with escape: "\\" for CL's
  * backslash-escaped quotes). For each opinion matching our cluster IDs,
  * scans plain_text for co-defendant signals and outcome divergences:
- *   1. co_defendant_signal detection — "co-defendant", "jointly charged", etc.
- *   2. outcome_diff extraction — one acquitted, other convicted, etc.
- *   3. divergence_factors — JSONB with primary/co-defendant outcomes + legal issues
+ *   1. co_defendant_signal detection, "co-defendant", "jointly charged", etc.
+ *   2. outcome_diff extraction, one acquitted, other convicted, etc.
+ *   3. divergence_factors, JSONB with primary/co-defendant outcomes + legal issues
  *
  * Stores verification source URL in source_urls[] per safety rule.
  *
@@ -395,7 +395,7 @@ async function main() {
       await supabaseQuery(batch.join("\n"));
       applied += batch.length;
       const rate = (applied / ((Date.now() - applyStart) / 1000)).toFixed(0);
-      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} inserts — ${rate}/sec\n`);
+      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} inserts, ${rate}/sec\n`);
     } catch (e) {
       errors++;
       console.error(`  Batch ${batchNum}: ${e.message.slice(0, 200)}`);

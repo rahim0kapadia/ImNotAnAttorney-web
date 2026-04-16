@@ -3,9 +3,9 @@
  *
  * Populates defendant_profiles rows for all cases that have an intake_id but
  * don't yet have a profile. Replicates the deterministic mapping logic from
- * src/lib/defendant-profile.ts (pure JS — no TypeScript imports).
+ * src/lib/defendant-profile.ts (pure JS, no TypeScript imports).
  *
- * Idempotent — safe to run multiple times. Uses upsert with onConflict: "case_id".
+ * Idempotent, safe to run multiple times. Uses upsert with onConflict: "case_id".
  *
  * Usage:
  *   node scripts/backfill-defendant-profiles.mjs
@@ -16,7 +16,7 @@ import { createClient } from "@supabase/supabase-js";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 
-// Parse .env.local manually (project convention — no dotenv dependency)
+// Parse .env.local manually (project convention, no dotenv dependency)
 const envPath = resolve(import.meta.dirname, "../.env.local");
 const envContent = readFileSync(envPath, "utf8");
 function env(key) {
@@ -47,7 +47,7 @@ const BATCH_DELAY_MS = 100;
 // Mapping helpers (replicated from src/lib/defendant-profile.ts)
 // ---------------------------------------------------------------------------
 
-// Intake form value variants — see src/lib/defendant-profile.ts for the
+// Intake form value variants, see src/lib/defendant-profile.ts for the
 // canonical mapper. Both files MUST stay in sync. The bug fixed here
 // (matching only "employed" instead of the actual "employed-full-time" /
 // "employed-part-time" / "self-employed" values) caused the original
@@ -86,7 +86,7 @@ function buildHumanizationFacts(intake) {
 
   if (empStatus === "student") {
     facts.push({
-      fact: "Currently a student — education continuity at stake",
+      fact: "Currently a student, education continuity at stake",
       category: "work",
       harvest_consent_status: "pending",
     });
@@ -94,7 +94,7 @@ function buildHumanizationFacts(intake) {
 
   if (empStatus === "retired") {
     facts.push({
-      fact: "Retired — years of established community presence",
+      fact: "Retired, years of established community presence",
       category: "community",
       harvest_consent_status: "pending",
     });
@@ -102,7 +102,7 @@ function buildHumanizationFacts(intake) {
 
   if (empStatus === "disabled") {
     facts.push({
-      fact: "Lives with a disability — system interactions carry additional vulnerability",
+      fact: "Lives with a disability, system interactions carry additional vulnerability",
       category: "health",
       harvest_consent_status: "pending",
     });
@@ -110,7 +110,7 @@ function buildHumanizationFacts(intake) {
 
   if (intake.mental_health_relevant === "yes") {
     facts.push({
-      fact: "Mental health is a factor in this case — may affect competency and Miranda analysis",
+      fact: "Mental health is a factor in this case, may affect competency and Miranda analysis",
       category: "health",
       harvest_consent_status: "pending",
     });
@@ -293,7 +293,7 @@ async function main() {
     console.log(`[Backfill] --force enabled: re-processing ${alreadyHasProfile.length} existing rows`);
   } else {
     for (const c of alreadyHasProfile) {
-      console.log(`[Backfill] Skipped case ${c.id} — profile already exists`);
+      console.log(`[Backfill] Skipped case ${c.id}, profile already exists`);
     }
   }
 

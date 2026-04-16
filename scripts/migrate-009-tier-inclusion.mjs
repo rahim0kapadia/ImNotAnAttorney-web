@@ -34,7 +34,7 @@ async function runMigration() {
   });
 
   if (colErr) {
-    // exec_sql RPC doesn't exist — use Supabase Management API instead
+    // exec_sql RPC doesn't exist, use Supabase Management API instead
     console.log("exec_sql RPC not available, using Management API...");
     await runViaManagementAPI();
     return;

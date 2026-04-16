@@ -7,15 +7,15 @@ Apply migration 011 (jurisdiction_profiles, judge_profiles), build the Level 1 l
 ## What Was Accomplished
 
 ### Migration 011 Applied (to production Supabase)
-- `jurisdiction_profiles` table created (one per case — court metadata, speedy trial, statute text)
-- `judge_profiles` table created (cached, reusable across cases — CourtListener People API target)
+- `jurisdiction_profiles` table created (one per case, court metadata, speedy trial, statute text)
+- `judge_profiles` table created (cached, reusable across cases, CourtListener People API target)
 - `case_monitoring` table created (docket alerts, RSS monitors)
 - `verified_case_law` enhanced with citation_count, is_landmark, treatment_score, full_opinion_text
 - `case_law_references` enhanced with research_source column
 
 ### Migration 030 Applied (to production Supabase)
 - `jurisdiction_statutes` enhanced with: source_urls text[], verified_at timestamptz, confidence_score numeric, verification_notes text, statute_url text, statute_source text
-- `statute_case_law` table created — links case law citations to specific jurisdiction_statutes
+- `statute_case_law` table created, links case law citations to specific jurisdiction_statutes
 
 ### Data Loaded: 510 Jurisdiction Statute Rows
 - **FL**: 101 statutes (all verified)
@@ -23,7 +23,7 @@ Apply migration 011 (jurisdiction_profiles, judge_profiles), build the Level 1 l
 - **IL**: 102 statutes
 - **NC**: 97 statutes
 - **PA**: 104 statutes
-- **3 failed**: federal (healthcare-fraud slug missing), MI + NJ (dui-second-offense slug missing) — orphan slugs not in common_charges
+- **3 failed**: federal (healthcare-fraud slug missing), MI + NJ (dui-second-offense slug missing), orphan slugs not in common_charges
 - Script: `C:\Users\email\projects\ImNotAnAttorney-web\scripts\load-jurisdiction-data.mjs`
 
 ### FL Verification: 101/101 Statutes Verified
@@ -49,20 +49,20 @@ Apply migration 011 (jurisdiction_profiles, judge_profiles), build the Level 1 l
 ## Files Modified
 
 ### Source files (committed cafc9ab)
-- `supabase/functions/generate-report/index.ts` — STATE_TO_CODE mapping + jurisdiction_statutes query in getChargeContext()
-- `docs/PIPELINE-ARCHITECTURE.md` — status updates for items 4-9, 12, 16
+- `supabase/functions/generate-report/index.ts`, STATE_TO_CODE mapping + jurisdiction_statutes query in getChargeContext()
+- `docs/PIPELINE-ARCHITECTURE.md`, status updates for items 4-9, 12, 16
 
 ### New files (committed cafc9ab)
-- `supabase/migrations/030-research-columns-and-case-law.sql` — research columns + statute_case_law table
-- `scripts/load-jurisdiction-data.mjs` — loads jurisdiction JSON files into Supabase
-- `scripts/legal-research-fl.mjs` — FL statute verification + CourtListener case law search
+- `supabase/migrations/030-research-columns-and-case-law.sql`, research columns + statute_case_law table
+- `scripts/load-jurisdiction-data.mjs`, loads jurisdiction JSON files into Supabase
+- `scripts/legal-research-fl.mjs`, FL statute verification + CourtListener case law search
 
 ### Applied to DB (not in code)
 - Migration 011 from `C:\Users\email\projects\ImNotAnAttorney\supabase\migrations\011-legal-source-maximization.sql`
 
 ## What Didn't Work
-- federal.json, MI.json, NJ.json have orphan charge slugs not in common_charges. Minor — need to add missing slugs to COMMON_CHARGES array.
-- No CourtListener API token yet — case law search ready but disabled.
+- federal.json, MI.json, NJ.json have orphan charge slugs not in common_charges. Minor, need to add missing slugs to COMMON_CHARGES array.
+- No CourtListener API token yet, case law search ready but disabled.
 
 ## Remaining Steps
 
@@ -94,9 +94,9 @@ Run the research skill for GA, IL, NC, PA (need to adapt URL construction for ea
 - Items 19-24: Enrichment layer (diversion programs, collateral consequences, etc.)
 
 ## Verification
-- `npx tsc --noEmit --skipLibCheck` — TypeScript clean
+- `npx tsc,noEmit,skipLibCheck`, TypeScript clean
 - FL verification: 101/101 statutes confirmed at 0.50 confidence
-- `git push origin master` — deployed (commit cafc9ab)
+- `git push origin master`, deployed (commit cafc9ab)
 
 ## Copy-Paste Prompt for Next Session
 ```

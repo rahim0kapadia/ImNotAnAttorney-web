@@ -1,17 +1,17 @@
-# Homepage Multi-Charge Redesign — Implementation Plan
+# Homepage Multi-Charge Redesign, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Make the homepage represent all 8 charge types instead of only DUI — wire the ChargeTypeSelector to control the CTA, remove 6 DUI hardcodes, add a Playbook Catalog grid, diversify testimonials.
+**Goal:** Make the homepage represent all 8 charge types instead of only DUI, wire the ChargeTypeSelector to control the CTA, remove 6 DUI hardcodes, add a Playbook Catalog grid, diversify testimonials.
 
-**Architecture:** Surgical edit to existing homepage. Extract hero + selector + CTA into a new Client Component (`HomepageHero.tsx`) so selector state can drive CTA dynamically. Rewrite `ChargeTypeSelector` from 4 static buttons to 8 with an `onSelect` callback. All other page sections stay untouched — they're already charge-neutral.
+**Architecture:** Surgical edit to existing homepage. Extract hero + selector + CTA into a new Client Component (`HomepageHero.tsx`) so selector state can drive CTA dynamically. Rewrite `ChargeTypeSelector` from 4 static buttons to 8 with an `onSelect` callback. All other page sections stay untouched, they're already charge-neutral.
 
 **Tech Stack:** Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion
 
 **Spec:** `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\specs\2026-03-26-homepage-multi-charge-redesign.md`
 
 **Key files to read first:**
-- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\page.tsx` (homepage — 797 lines)
+- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\page.tsx` (homepage, 797 lines)
 - `C:\Users\email\projects\ImNotAnAttorney-web\src\components\ChargeTypeSelector.tsx` (current 4-button selector)
 - `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\tiers.ts` (TIER_CORE with all 8 playbook slugs + TierSlug type)
 - `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\playbook-configs.ts` (8 PlaybookConfig objects + PLAYBOOK_CONFIGS registry)
@@ -22,7 +22,7 @@
 ## File Map
 
 | File | Action | Responsibility |
-|------|--------|----------------|
+|------|------, |----------------|
 | `src/components/ChargeTypeSelector.tsx` | Rewrite | 8 charge types, `onSelect` callback, responsive grid |
 | `src/components/HomepageHero.tsx` | Create | Client component: H1 + selector + dynamic CTA |
 | `src/app/page.tsx` | Edit | Swap hero section for `<HomepageHero />`, fix 5 DUI hardcodes, update meta, add Playbook Catalog grid, update schema, diversify testimonials |
@@ -51,7 +51,7 @@ import { useState } from "react";
 import type { TierSlug } from "@/lib/tiers";
 
 /**
- * ChargeTypeSelector — Homepage charge-type router
+ * ChargeTypeSelector, Homepage charge-type router
  *
  * Eight buttons matching all playbook configs. When a charge is selected,
  * fires onSelect with the tier slug so the parent can update CTAs.
@@ -182,7 +182,7 @@ export function ChargeTypeSelector({ onSelect }: ChargeTypeSelectorProps) {
 
 - [ ] **Step 3: Verify the file compiles**
 
-Run: `cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc --noEmit src/components/ChargeTypeSelector.tsx 2>&1 | head -20`
+Run: `cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc,noEmit src/components/ChargeTypeSelector.tsx 2>&1 | head -20`
 
 Expected: No errors (or only unrelated errors from other files). The component should compile cleanly since `TierSlug` is exported from `@/lib/tiers`.
 
@@ -190,7 +190,7 @@ Expected: No errors (or only unrelated errors from other files). The component s
 
 ```bash
 git add src/components/ChargeTypeSelector.tsx
-git commit -m "feat(homepage): rewrite ChargeTypeSelector — 8 charge types with onSelect callback"
+git commit -m "feat(homepage): rewrite ChargeTypeSelector, 8 charge types with onSelect callback"
 ```
 
 ---
@@ -217,7 +217,7 @@ import { TIER_CORE } from "@/lib/tiers";
 import type { TierSlug } from "@/lib/tiers";
 
 /**
- * HomepageHero — Dynamic hero with charge-type routing
+ * HomepageHero, Dynamic hero with charge-type routing
  *
  * Extracted from page.tsx (Server Component) so the ChargeTypeSelector
  * can drive CTA state. When no charge is selected, defaults to Case Decoder
@@ -261,7 +261,7 @@ export function HomepageHero() {
             </p>
           </FadeInUp>
 
-          {/* Charge Type Selector — drives CTA below */}
+          {/* Charge Type Selector, drives CTA below */}
           <FadeInUp delay={0.15}>
             <ChargeTypeSelector onSelect={setSelectedSlug} />
           </FadeInUp>
@@ -315,7 +315,7 @@ export function HomepageHero() {
 
 - [ ] **Step 3: Verify it compiles**
 
-Run: `cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc --noEmit src/components/HomepageHero.tsx 2>&1 | head -20`
+Run: `cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc,noEmit src/components/HomepageHero.tsx 2>&1 | head -20`
 
 Expected: No errors.
 
@@ -323,7 +323,7 @@ Expected: No errors.
 
 ```bash
 git add src/components/HomepageHero.tsx
-git commit -m "feat(homepage): create HomepageHero — dynamic CTA driven by charge selector"
+git commit -m "feat(homepage): create HomepageHero, dynamic CTA driven by charge selector"
 ```
 
 ---
@@ -333,7 +333,7 @@ git commit -m "feat(homepage): create HomepageHero — dynamic CTA driven by cha
 **Files:**
 - Modify: `src/app/page.tsx`
 
-This is the biggest task — 7 edits to one file. Read the file first, then make each edit sequentially.
+This is the biggest task, 7 edits to one file. Read the file first, then make each edit sequentially.
 
 - [ ] **Step 1: Read the full page.tsx**
 
@@ -353,7 +353,7 @@ Remove:
 import { ChargeTypeSelector } from "@/components/ChargeTypeSelector";
 ```
 
-(FadeInUp stays — it's used in other sections.)
+(FadeInUp stays, it's used in other sections.)
 
 - [ ] **Step 3: Fix meta description (C7)**
 
@@ -362,20 +362,20 @@ Replace the `description` field in the `metadata` export (line ~53):
 **Old:**
 ```tsx
 description:
-    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions — DUI Defense Playbook ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download.`,
+    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions, DUI Defense Playbook ${TIER_CORE["dui-first-offense"].priceDisplay}, instant download.`,
 ```
 
 **New:**
 ```tsx
 description:
-    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions — Case Decoder ${TIER_CORE["case-decoder"].priceDisplay}, 48-hour delivery.`,
+    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions, Case Decoder ${TIER_CORE["case-decoder"].priceDisplay}, 48-hour delivery.`,
 ```
 
 - [ ] **Step 4: Replace hero sections with HomepageHero (C2)**
 
 Replace these three sections (the hero section from `<section className="px-4 pb-16 pt-24 text-center md:pt-32">` through the credibility tagline section ending `</section>`, AND the ChargeTypeSelector section) with a single component:
 
-**Old (approximately lines 220-269):** The hero `<section>`, the credibility tagline `<section>`, and the ChargeTypeSelector `<section>` — all three.
+**Old (approximately lines 220-269):** The hero `<section>`, the credibility tagline `<section>`, and the ChargeTypeSelector `<section>`, all three.
 
 **New:**
 ```tsx
@@ -467,7 +467,7 @@ Replace the final CTA Link:
     href="/checkout?tier=dui-first-offense"
     className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
 >
-    Get Your DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} &rarr;
+    Get Your DUI Defense Playbook, {TIER_CORE["dui-first-offense"].priceDisplay} &rarr;
 </Link>
 ```
 
@@ -505,7 +505,7 @@ git commit -m "feat(homepage): swap hero to HomepageHero, fix 6 DUI hardcodes, u
 
 - [ ] **Step 1: Read playbook-configs.ts to get the proof data**
 
-Read `src/lib/playbook-configs.ts` — specifically the `hero.eyebrow` and `proof.methods[0].insight` for each of the 8 configs. These provide the charge-type name and discovery finding for the catalog cards.
+Read `src/lib/playbook-configs.ts`, specifically the `hero.eyebrow` and `proof.methods[0].insight` for each of the 8 configs. These provide the charge-type name and discovery finding for the catalog cards.
 
 - [ ] **Step 2: Add imports at top of page.tsx**
 
@@ -520,7 +520,7 @@ import { getPlaybookConfig, allPlaybookSlugs } from "@/lib/playbook-configs";
 Insert this new section in `src/app/page.tsx` AFTER the grid testimonials section (after the `<TestimonialSection variant="grid"` section's closing `</section>`) and BEFORE the "Who we are" section:
 
 ```tsx
-      {/* PLAYBOOK CATALOG — 8 charge-type cards for SEO + routing */}
+      {/* PLAYBOOK CATALOG, 8 charge-type cards for SEO + routing */}
       <section className="border-t border-zinc-800 px-4 py-20 section-alt">
         <div className="mx-auto max-w-5xl">
           <FadeInUp>
@@ -645,7 +645,7 @@ Expected: Build succeeds.
 
 ```bash
 git add src/app/page.tsx
-git commit -m "feat(homepage): diversify testimonials — add probation violation + family buyer"
+git commit -m "feat(homepage): diversify testimonials, add probation violation + family buyer"
 ```
 
 ---
@@ -702,5 +702,5 @@ Expected: Build succeeds with no errors.
 - [ ] Meta description references Case Decoder, not DUI playbook
 - [ ] Playbook Catalog grid provides direct checkout for all 8 charge types
 - [ ] Schema markup includes `knowsAbout` for all 8 charge types
-- [ ] Homepage retains existing conversion structure — no sections removed
+- [ ] Homepage retains existing conversion structure, no sections removed
 - [ ] Testimonials cover 5+ charge types including family buyer segment

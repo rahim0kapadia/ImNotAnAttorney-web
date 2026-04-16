@@ -1,4 +1,4 @@
-# Case Decoder Product QA — Findings
+# Case Decoder Product QA, Findings
 
 Date: 2026-03-27
 Spec: `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\specs\2026-03-27-case-decoder-product-qa-design.md`
@@ -7,11 +7,11 @@ Plan: `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\plans\2026-0
 ## Executive Summary
 
 | Phase | Status | Key Finding |
-|-------|--------|-------------|
+|-------|------, |-------------|
 | 1. Structural Promise Audit | **PARTIAL FAIL** | "8-step" on checkout, report delivers 5 (HARD STOP) |
 | 2. Fresh Report Generation | FALLBACK | Anthropic API credits depleted; used pre-built DUI report (58.9KB) |
 | 3. Desktop UX Walkthrough | PASS | All pages render, content complete, charge selector works |
-| 4. Mobile Crisis UX | PASS with 1 HIGH | Intake Step 1 shows ~12 fields + 7 checkboxes — too many for 2AM crisis buyer |
+| 4. Mobile Crisis UX | PASS with 1 HIGH | Intake Step 1 shows ~12 fields + 7 checkboxes, too many for 2AM crisis buyer |
 | 5. Quality Framework Review | PASS | Zero GATE failures. 3 UPL warnings, 1 D25 fail (family buyer). Shippable. |
 | 6. Expert Persona Assessment | SHIP WITH FIXES | 3 PASS, 3 WARN. Consensus: drip sequence is the #1 fix priority |
 | 7. Edge Cases | SKIPPED | No trigger conditions met |
@@ -19,7 +19,7 @@ Plan: `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\plans\2026-0
 
 **Overall verdict: SHIP WITH FIXES**
 
-The Case Decoder report itself is genuinely excellent — personalization depth, UPL compliance, legal citation density, psychological architecture, and positioning are all at a high level. The product justifies $197 and is arguably underpriced.
+The Case Decoder report itself is genuinely excellent, personalization depth, UPL compliance, legal citation density, psychological architecture, and positioning are all at a high level. The product justifies $197 and is arguably underpriced.
 
 The fixes are concentrated in 3 areas:
 1. **Checkout copy** (1 CRITICAL mismatch)
@@ -30,22 +30,22 @@ The fixes are concentrated in 3 areas:
 
 ## CRITICAL Findings (must fix before significant volume)
 
-### C1. "8-step communication playbook" — checkout promises 8, report delivers 5
+### C1. "8-step communication playbook", checkout promises 8, report delivers 5
 
-**Severity:** CRITICAL — refund trigger, trust destroyer
+**Severity:** CRITICAL, refund trigger, trust destroyer
 **Where it appears:**
-- `src/app/checkout/page.tsx` line 390: "Your Advocacy Steps — 8-step communication playbook"
+- `src/app/checkout/page.tsx` line 390: "Your Advocacy Steps, 8-step communication playbook"
 - `src/app/page.tsx` (homepage pricing section, ref=e338): same text
 - `src/app/sample/page.tsx` line 122: "Your full report includes a phone script, follow-up template, and 8-step communication playbook"
 
-**What the report delivers:** Exactly 5 advocacy steps. The system prompt in `supabase/functions/generate-report/index.ts` line 943 says: "EXACTLY 5 steps, NO MORE" with "HARD STOP — Steps 6, 7, 8 DO NOT EXIST."
+**What the report delivers:** Exactly 5 advocacy steps. The system prompt in `supabase/functions/generate-report/index.ts` line 943 says: "EXACTLY 5 steps, NO MORE" with "HARD STOP, Steps 6, 7, 8 DO NOT EXIST."
 
-**Fix:** Change "8-step" to "5-step" in all 3 files. The prompt HARD STOP is deliberate — the product decision was to simplify from 8 to 5. The copy was never updated.
+**Fix:** Change "8-step" to "5-step" in all 3 files. The prompt HARD STOP is deliberate, the product decision was to simplify from 8 to 5. The copy was never updated.
 
 **Files to edit:**
-- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\checkout\page.tsx` — line 390
-- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\page.tsx` — homepage pricing section
-- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\sample\page.tsx` — line 122
+- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\checkout\page.tsx`, line 390
+- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\page.tsx`, homepage pricing section
+- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\sample\page.tsx`, line 122
 
 ---
 
@@ -53,35 +53,35 @@ The fixes are concentrated in 3 areas:
 
 ### H1. Drip sequence Days 4-7 push X-Ray ($2,497) instead of Intelligence Brief ($997)
 
-**Severity:** HIGH — funnel incoherence, skips value ladder rung
+**Severity:** HIGH, funnel incoherence, skips value ladder rung
 **Flagged by:** Laja, Brunson, Suby (3/6 experts)
 **Evidence:** The report's "What Comes Next" section and the checkout `nudge` field both point to Intelligence Brief ($997). But `post_case_decoder_discovery_question` (Day 4) and `post_case_decoder_upsell` (Day 7) in `src/lib/drip-emails.ts` both push X-Ray ($2,497).
 **Impact:** A $197 buyer is not psychologically ready for a $2,300 jump. The IB at $800 after credit is the natural next rung.
 **Fix:** Align Day 4-7 emails to pitch Intelligence Brief. Reserve X-Ray for Day 30+ (when discovery has arrived) or for IB buyers.
-**File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\drip-emails.ts` — keys `post_case_decoder_discovery_question`, `post_case_decoder_upsell`
+**File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\drip-emails.ts`, keys `post_case_decoder_discovery_question`, `post_case_decoder_upsell`
 
-### H2. "Section 10" reference in Day 3 email — report has no numbered sections
+### H2. "Section 10" reference in Day 3 email, report has no numbered sections
 
-**Severity:** HIGH — immediate user confusion
+**Severity:** HIGH, immediate user confusion
 **Flagged by:** Laja (unique insight)
-**Evidence:** `post_case_decoder_meeting_prep` (Day 3) says "Print the Meeting Ready Sheet — it's in Section 10 of your report." Report uses heading titles, not numbered sections. Meeting Ready Sheet is in "Your Next 7 Days."
+**Evidence:** `post_case_decoder_meeting_prep` (Day 3) says "Print the Meeting Ready Sheet, it's in Section 10 of your report." Report uses heading titles, not numbered sections. Meeting Ready Sheet is in "Your Next 7 Days."
 **Fix:** Change "Section 10 of your report" to "the 'Your Next 7 Days' section of your report."
-**File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\drip-emails.ts` — key `post_case_decoder_meeting_prep`
+**File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\drip-emails.ts`, key `post_case_decoder_meeting_prep`
 
 ### H3. Intake Step 1: ~12 fields + 7 checkboxes visible at once on mobile
 
-**Severity:** HIGH — 2AM crisis friction
+**Severity:** HIGH, 2AM crisis friction
 **Evidence:** Playwright mobile snapshot (375px) shows Step 1 of 3 with all fields visible simultaneously. Only 6 are required (firstName, email, jurisdiction, state, caseNumber, arrestDate). The other 6+ fields and 7 checkboxes are optional but create a wall of fields.
 **Impact:** Covello's stress rule: 80% reduced processing under crisis. A panicked defendant at 2AM sees a wall of form fields and may bounce.
-**Fix:** Consider progressive disclosure — show required fields first, reveal optional fields after required are filled. Or split Step 1 into two sub-steps. Note: this is a UX change that should be brainstormed separately.
+**Fix:** Consider progressive disclosure, show required fields first, reveal optional fields after required are filled. Or split Step 1 into two sub-steps. Note: this is a UX change that should be brainstormed separately.
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\intake\page.tsx`
 
-### H4. "do not show this report to your attorney" — directive language
+### H4. "do not show this report to your attorney", directive language
 
 **Severity:** HIGH (UPL warning)
 **Evidence:** Report lines 52 and 113 use imperative "do not" directed at the defendant. While justified (prevent anchoring), the instruction format edges toward U1 territory.
 **Fix:** Reframe as informational: "Defendants who review the analysis privately first typically get more candid attorney responses, because..."
-**File:** `C:\Users\email\projects\ImNotAnAttorney-web\supabase\functions\generate-report\index.ts` — system prompt
+**File:** `C:\Users\email\projects\ImNotAnAttorney-web\supabase\functions\generate-report\index.ts`, system prompt
 
 ### H5. Anthropic API credits depleted
 
@@ -110,7 +110,7 @@ The fixes are concentrated in 3 areas:
 ### M3. Credit anchor buried in narrative paragraph
 
 **Flagged by:** Hormozi, Laja
-**Evidence:** "$197 already credited — Intelligence Brief is $800, not $997" appears as inline text in "What Comes Next." Should be a visual callout block.
+**Evidence:** "$197 already credited, Intelligence Brief is $800, not $997" appears as inline text in "What Comes Next." Should be a visual callout block.
 **Fix:** Wrap credit mention in a styled callout in the system prompt or render template.
 **File:** System prompt in `supabase/functions/generate-report/index.ts`
 
@@ -118,7 +118,7 @@ The fixes are concentrated in 3 areas:
 
 **Flagged by:** Quality Framework (Team 4 FAIL on D25)
 **Evidence:** Entire report addresses "Danielle" directly. No sentence for the spouse/parent who may be reading on behalf of the defendant.
-**Fix:** Add one sentence in the opening letter: "If you're reading this for someone you love rather than yourself — everything here works the same way."
+**Fix:** Add one sentence in the opening letter: "If you're reading this for someone you love rather than yourself, everything here works the same way."
 **File:** System prompt in `supabase/functions/generate-report/index.ts`
 
 ### M5. No state-data WARNING box before penalty tables (U15)
@@ -137,12 +137,12 @@ The fixes are concentrated in 3 areas:
 
 **Flagged by:** Quality Framework (D3 warning)
 **Evidence:** Danielle's nurse license is her stated #1 concern. Q6 addresses it. But the pre-written email template only includes Q1-Q5.
-**Fix:** Add Q6 to email template or add note after template: "Q6 (nursing license) is your highest-stakes question — consider adding it."
+**Fix:** Add Q6 to email template or add note after template: "Q6 (nursing license) is your highest-stakes question, consider adding it."
 **File:** System prompt in `supabase/functions/generate-report/index.ts`
 
 ### M8. Charge selector CTA doesn't update dynamically
 
-**Evidence:** Playwright desktop test: clicking DUI in charge selector doesn't change CTA text or href. CTA stays "Start Your Case Research — $197 →" → /start. Previous QA (2026-03-27-homepage-redesign-qa.md) reported dynamic CTA as passing.
+**Evidence:** Playwright desktop test: clicking DUI in charge selector doesn't change CTA text or href. CTA stays "Start Your Case Research, $197 →" → /start. Previous QA (2026-03-27-homepage-redesign-qa.md) reported dynamic CTA as passing.
 **Possible cause:** HomepageHero component was replaced or the onSelect callback is no longer wired.
 **Fix:** Investigate whether this is a regression or deliberate simplification.
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\components\HomepageHero.tsx`
@@ -193,7 +193,7 @@ Massive underpromise/overdeliver. Consider marketing the additional sections.
 ## Competitive Position
 
 | Alternative | Price | Delivery | Personalization |
-|-------------|-------|----------|-----------------|
+|-------------|-------|----------|---------------, |
 | Attorney initial consult | Free-$150 | Immediate | Very high |
 | Attorney hourly | $150-500/hr | Ongoing | Very high |
 | Attorney second opinion | $150-1,500 | Days-weeks | High |
@@ -209,7 +209,7 @@ Massive underpromise/overdeliver. Consider marketing the additional sections.
 ## Quality Framework Scores
 
 | Team | Weight | Verdict | Notes |
-|------|--------|---------|-------|
+|------|------, |---------|-------|
 | 1 UPL | GATE | **PASS** | 3 warnings (directive tone, state-data boxes). Zero FAIL. |
 | 2 Psych | HIGH | **PASS** | Safety-first sequencing correct. Minor density warning. |
 | 4 Defendant XP | HIGH | **PASS** | 1 FAIL (D25 family buyer). 2 warnings. Above threshold. |
@@ -223,7 +223,7 @@ Massive underpromise/overdeliver. Consider marketing the additional sections.
 ## Recommended Fix Priority
 
 | # | Fix | Severity | Effort | Files |
-|---|-----|----------|--------|-------|
+|---|---, |----------|------, |-------|
 | 1 | "8-step" → "5-step" on checkout, homepage, sample | CRITICAL | 5 min | 3 files |
 | 2 | Day 3 email "Section 10" → "Your Next 7 Days" | HIGH | 2 min | drip-emails.ts |
 | 3 | Days 4-7 emails: X-Ray → Intelligence Brief | HIGH | 15 min | drip-emails.ts |
@@ -235,13 +235,13 @@ Massive underpromise/overdeliver. Consider marketing the additional sections.
 | 9 | Family buyer sentence in opening letter | MEDIUM | 5 min | generate-report system prompt |
 | 10 | State-data WARNING box | MEDIUM | 5 min | generate-report system prompt |
 
-Fixes 1-3 are the highest priority — they affect what buyers see RIGHT NOW on the live site and in post-purchase emails.
+Fixes 1-3 are the highest priority, they affect what buyers see RIGHT NOW on the live site and in post-purchase emails.
 
 ---
 
 ## What Was NOT Tested
 
-- Fresh report generation (API credits depleted — used pre-built fallback)
+- Fresh report generation (API credits depleted, used pre-built fallback)
 - Edge case charge types (no trigger conditions met)
 - Intelligence Brief / X-Ray / War Room reports (test mode tiers)
 - KDP book alignment (cross-project boundary)

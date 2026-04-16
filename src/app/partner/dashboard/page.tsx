@@ -1,6 +1,6 @@
 "use client";
 /**
- * /partner/dashboard — Partner self-service dashboard.
+ * /partner/dashboard, Partner self-service dashboard.
  *
  * 9 sections: Toolkit, Ready-to-Send Messages, Creative Assets, Compliance Kit,
  * Earnings, Analytics, Recent Activity, Payment Settings, Profile.
@@ -168,7 +168,7 @@ export default function PartnerDashboard() {
           </div>
         )}
 
-        {/* Client Tracker — FTA Prevention Dashboard */}
+        {/* Client Tracker, FTA Prevention Dashboard */}
         <ClientTracker
           clients={courtClients}
           onAddClient={() => setShowAddClient(true)}
@@ -193,7 +193,7 @@ export default function PartnerDashboard() {
         {/* 1. Toolkit */}
         <ToolkitSection partner={partner} referralUrl={referralUrl} />
 
-        {/* Bail Packet Insert / Compliance Checklist — conditional on partner type */}
+        {/* Bail Packet Insert / Compliance Checklist, conditional on partner type */}
         {partner.source === "bondsman" ? (
           <Link
             href="/partner/checklist"
@@ -227,7 +227,7 @@ export default function PartnerDashboard() {
           <h3 className="font-bold text-amber-400 mb-2">How your link works</h3>
           <p className="text-sm text-zinc-300">
             When clients use your link, they take a quick quiz and get a product recommendation.
-            They can also set up free court prep — date reminders + what to expect at their hearing.
+            They can also set up free court prep, date reminders + what to expect at their hearing.
             You earn commission whether they buy now or later through a reminder.
           </p>
         </div>
@@ -311,11 +311,11 @@ export default function PartnerDashboard() {
             </div>
             <div>
               <p className="text-zinc-400">Phone</p>
-              <p>{partner.phone || "—"}</p>
+              <p>{partner.phone || ", "}</p>
             </div>
             <div>
               <p className="text-zinc-400">Company</p>
-              <p>{partner.company || "—"}</p>
+              <p>{partner.company || ", "}</p>
             </div>
           </div>
           <p className="text-zinc-400 text-sm mt-4">

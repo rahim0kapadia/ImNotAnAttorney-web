@@ -5,23 +5,23 @@
  * 25-second function timeout, which is insufficient for Claude API calls
  * (typically 40-90 seconds). Supabase Edge Functions have a 150-second
  * timeout. The legacy `src/lib/claude.ts` has been deleted (nothing
- * imported from it — report pages read pre-rendered HTML from Supabase).
+ * imported from it, report pages read pre-rendered HTML from Supabase).
  *
  * INVOCATION:
  *   Called by Vercel /api/generate/case-decoder via HTTP POST (fire-and-forget).
  *   The Vercel route returns 202 immediately; this function runs async.
  *
- * FLOW (Case Decoder — Batch API):
+ * FLOW (Case Decoder, Batch API):
  *   1. Fetch case record from Supabase (with idempotency check)
  *   2. Find linked intake record (by intake_id or email fallback)
  *   3. Submit Batch API request to Anthropic (returns batch_id in <1s)
  *   4. Save batch_id to case record
- *   5. Return immediately — cron poller handles result processing
+ *   5. Return immediately, cron poller handles result processing
  *   (Rendering, validation, save, eval, and operator email are handled
  *   by the batch poller in /api/cron/batch-poller)
  *
- * FLOW (Intelligence Brief — synchronous, Phase B):
- *   Uses callClaudeAPI() directly — synchronous generation path preserved
+ * FLOW (Intelligence Brief, synchronous, Phase B):
+ *   Uses callClaudeAPI() directly, synchronous generation path preserved
  *
  * ZERO EXTERNAL IMPORTS:
  *   This function has NO npm/esm.sh imports. Why: importing
@@ -34,17 +34,17 @@
  * CODE DUPLICATION (intentional):
  *   The following are duplicated from Next.js modules because Deno
  *   cannot import from the Next.js codebase:
- *     - escapeHtml() — duplicated from src/lib/email.ts
- *     - sendEmail() — duplicated from src/lib/email.ts (simplified, no unsubscribe)
- *     - PHYSICAL_ADDRESS — duplicated from src/lib/site.ts
+ *     - escapeHtml(), duplicated from src/lib/email.ts
+ *     - sendEmail(), duplicated from src/lib/email.ts (simplified, no unsubscribe)
+ *     - PHYSICAL_ADDRESS, duplicated from src/lib/site.ts
  *   renderReportHtml() and SYSTEM_PROMPT are now ONLY in this file
  *   (the legacy src/lib/claude.ts has been deleted).
- *   This edge function is fully self-contained — no cross-runtime imports.
+ *   This edge function is fully self-contained, no cross-runtime imports.
  *
- * MODEL CHOICE — claude-opus-4-6 with extended thinking (budget_tokens: 16000):
+ * MODEL CHOICE, claude-opus-4-6 with extended thinking (budget_tokens: 16000):
  *   Upgraded from Sonnet 4.6 to Opus 4.6 for emotional intelligence.
  *   Sonnet produced structurally correct reports but with mechanical emotional
- *   calibration — every defendant got the same warm-language cadence regardless
+ *   calibration, every defendant got the same warm-language cadence regardless
  *   of their actual emotional state. Opus with thinking uses the thinking budget
  *   to build an 8-dimension emotional profile (PRIMARY FEAR, EMOTIONAL STANCE,
  *   ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT,
@@ -54,12 +54,12 @@
  *   {effort:"high"}. Temperature is NOT set (incompatible with thinking).
  *   Adaptive thinking lets the model allocate its own thinking budget per section.
  *   Cost: ~$0.40-0.60/report, still negligible vs $197 price.
- *   Timing: 60-294s. Supabase Free tier has 150s hard kill — Opus sometimes
+ *   Timing: 60-294s. Supabase Free tier has 150s hard kill, Opus sometimes
  *   exceeds this (250-294s for complex cases). This Edge Function is the PRIMARY
  *   generation path. A GitHub Actions backup worker (scripts/generate-worker.mjs)
  *   picks up cases that time out here (status still "generating" after 3 min).
  *
- * CHARGE CONTEXT — dynamic from Supabase:
+ * CHARGE CONTEXT, dynamic from Supabase:
  *   getChargeContext() queries the charge_types + experts tables for expert data
  *   instead of hardcoding it. Falls back to getChargeContextFallback() on DB error.
  *   Single source of truth: change expert data in the DB, not in this code.
@@ -76,7 +76,7 @@
 
 // ============================================================
 // SUPABASE REST HELPERS
-// Raw PostgREST fetch calls — no SDK import needed.
+// Raw PostgREST fetch calls, no SDK import needed.
 // These replace @supabase/supabase-js to avoid esm.sh cold start.
 // ============================================================
 
@@ -119,7 +119,7 @@ async function supabaseSelect(
 
 /**
  * Performs a PATCH (update) against a Supabase table via PostgREST.
- * Logs errors but does not throw — update failures are non-fatal
+ * Logs errors but does not throw, update failures are non-fatal
  * (the report may already be saved; we don't want to lose it).
  *
  * @param url - Supabase project URL.
@@ -147,7 +147,7 @@ async function supabaseUpdate(
 }
 
 // ============================================================
-// HELPERS (duplicated from Next.js modules — see file header for why)
+// HELPERS (duplicated from Next.js modules, see file header for why)
 // ============================================================
 
 /**
@@ -169,7 +169,7 @@ function escapeHtml(str: string): string {
 /**
  * Generates an HMAC-signed operator token for email links (Deno Web Crypto API).
  * Mirrors signOperatorToken() from src/lib/site.ts but uses Web Crypto instead of Node.
- * Token format: {timestamp}.{hmac} — same as the Next.js version.
+ * Token format: {timestamp}.{hmac}, same as the Next.js version.
  *
  * @param caseId - The case this token authorizes action on.
  * @param secret - The OPERATOR_SECRET used as HMAC key.
@@ -202,7 +202,7 @@ const PHYSICAL_ADDRESS = "195 Dr MLK Jr St N, St Petersburg, FL 33701";
 /**
  * Sends an email via the Resend API.
  *
- * Simplified version of the sendEmail in src/lib/email.ts — no unsubscribe
+ * Simplified version of the sendEmail in src/lib/email.ts, no unsubscribe
  * headers because this only sends operator notification emails (not customer-
  * facing). Includes the branded dark-theme wrapper and CAN-SPAM footer.
  *
@@ -234,7 +234,7 @@ async function sendEmail(params: {
             ${params.html}
             <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #27272A; font-size: 12px; color: #71717A; text-align: center;">
               <p style="margin: 0 0 8px;">ImNotAnAttorney</p>
-              <p style="margin: 0;">Legal information and research services — not legal advice.</p>
+              <p style="margin: 0;">Legal information and research services, not legal advice.</p>
               <p style="margin: 4px 0 0; font-size: 11px; color: #52525B;">${PHYSICAL_ADDRESS}</p>
             </div>
           </div>
@@ -259,7 +259,7 @@ async function sendEmail(params: {
 }
 
 // ============================================================
-// CLAUDE API — SYSTEM PROMPT + CHARGE FRAMEWORKS
+// CLAUDE API, SYSTEM PROMPT + CHARGE FRAMEWORKS
 // CANONICAL charge context builder (legacy src/lib/claude.ts deleted).
 // Keeping them here avoids cross-runtime import dependencies.
 // ============================================================
@@ -275,11 +275,11 @@ async function sendEmail(params: {
  *   5. Per-section word budgets + conditional section rules (C1/C2)
  *   6. Self-verification checklist (no ratings, no scores, no blame)
  */
-// Universal anti-hallucination rules — injected into EVERY Claude call (CD + IB).
+// Universal anti-hallucination rules, injected into EVERY Claude call (CD + IB).
 // Domain-specific rules (outcome map, plea framework, immigration, etc.) stay in buildIBPrompt().
 const ANTI_HALLUCINATION_BLOCK = `
 
-ANTI-HALLUCINATION RULES (MANDATORY — violations invalidate entire output):
+ANTI-HALLUCINATION RULES (MANDATORY, violations invalidate entire output):
 
 1. CASE LAW: Only cite cases you are CERTAIN exist. Include full citation (case name, volume, reporter, page, year). If uncertain, describe the legal principle WITHOUT a case name. NEVER fabricate.
 2. STATUTES: Only cite statute numbers you are CERTAIN are correct for the jurisdiction specified. If unsure, cite chapter/title and add [VERIFY].
@@ -293,64 +293,64 @@ You are the only safety check. If you cite a fabricated case, it will reach the
 defendant. Cite ONLY cases you are certain exist. If unsure: describe the legal
 principle without a case name. Use [VERIFY] for any claim below 90% confidence.
 The downstream pipeline only filters cases that have been independently verified
-in our database (statute_case_law.is_good_law=true) — your output is consumed
+in our database (statute_case_law.is_good_law=true), your output is consumed
 verbatim except for that filter.`;
 
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
-CRITICAL CONTEXT — WHAT YOU HAVE AND DON'T HAVE:
+CRITICAL CONTEXT, WHAT YOU HAVE AND DON'T HAVE:
 This is a $197 Case Decoder. You have ONLY the defendant's intake answers.
 You have NOT seen evidence, police reports, lab results, or discovery.
-This report is an EMPOWERMENT AND COMMUNICATION TOOLKIT — not a case
+This report is an EMPOWERMENT AND COMMUNICATION TOOLKIT, not a case
 analysis tool. It gives the defendant the right questions, communication
 tools, and a clear picture of what they know vs. what they need to ask about.
 
-CORE DESIGN PRINCIPLE — EMPOWER, DON'T BLAME:
+CORE DESIGN PRINCIPLE, EMPOWER, DON'T BLAME:
 The report NEVER blames the attorney. The defendant still needs that
-attorney — turning them against each other hurts the defense. Instead:
-- Gaps are framed as THINGS TO CLARIFY ("Communication gaps are common but not acceptable —
+attorney, turning them against each other hurts the defense. Instead:
+- Gaps are framed as THINGS TO CLARIFY ("Communication gaps are common but not acceptable,
   you're entitled to understand what's happening in your case")
-- The QUESTIONS are the tool — they let the defendant discover the
+- The QUESTIONS are the tool, they let the defendant discover the
   truth through dialogue
 - "Don't know" answers are NORMALIZED ("Most defendants aren't told
-  proactively — that's why we ask")
+  proactively, that's why we ask")
 - The goal is a BETTER-INFORMED CLIENT who walks into their next
   meeting prepared, not adversarial
 
-THE DEFENDANT'S CORE PAIN — BEING UNHEARD:
+THE DEFENDANT'S CORE PAIN, BEING UNHEARD:
 The defendant paying for this report feels IGNORED by their attorney.
 This report must do what their attorney is NOT doing: LISTEN to every
 detail they shared and respond to each one.
 
-MANDATORY — REFLECT EVERY INTAKE ANSWER:
+MANDATORY, REFLECT EVERY INTAKE ANSWER:
 Every piece of data the defendant provided MUST appear somewhere in the
 report, connected to expert methodology and why it matters.
 
 Rules for reflecting intake data:
 1. ALWAYS attribute data source: "You told us..." / "You said..." /
-   "You mentioned..." / "You shared..." — never present intake data
-   as our assessment. NEVER use "You indicated" — it sounds like a
+   "You mentioned..." / "You shared...", never present intake data
+   as our assessment. NEVER use "You indicated", it sounds like a
    deposition transcript, not a conversation.
 2. EXPLAIN WHY IT MATTERS: connect to expert methodology.
 3. VALIDATE OR CONTEXTUALIZE gently. Never alarm. Never blame.
 4. FREE TEXT FIELDS (situation, specific_question) are the defendant's
    own voice. QUOTE their words and respond directly.
 5. "DON'T KNOW" ANSWERS are normalized: "Most defendants aren't told
-   proactively — that's why we ask." Each becomes a question to ask.
+   proactively, that's why we ask." Each becomes a question to ask.
 6. CONNECT each answer to a specific question in Questions for Your Attorney.
 
-CROSS-CUTTING FRAMEWORKS — Apply to EVERY section:
+CROSS-CUTTING FRAMEWORKS, Apply to EVERY section:
 
 1. WITTE EPPM (Extended Parallel Process Model):
    If perceived efficacy > perceived threat → rational action.
    If perceived threat > perceived efficacy → denial/avoidance.
    RULE: Every section maintains 2:1 efficacy-to-threat ratio.
    After every penalty range, deadline, or consequence → immediate action.
-   No section ends on threat — always ends on action or reassurance.
+   No section ends on threat, always ends on action or reassurance.
 
 2. FOGG B=MAP (Behavior = Motivation × Ability × Prompt):
    Scared defendants have high motivation but near-zero ability.
-   Don't increase motivation — increase ability by making every action
+   Don't increase motivation, increase ability by making every action
    tiny, pre-filled, and sequenced. One action at a time.
    "If overwhelmed, start here" = ONE action, 30 seconds.
 
@@ -361,7 +361,7 @@ CROSS-CUTTING FRAMEWORKS — Apply to EVERY section:
    NEVER: oversight framing, watchdog framing, catching the attorney.
    ALWAYS: preparation enables precision, being prepared = being heard.
 
-BANNED TERMINOLOGY — ENFORCED:
+BANNED TERMINOLOGY, ENFORCED:
 NEVER use: "red flag," "warning sign," "escalation ladder," "you need to,"
 "you should," "you indicated," "you reported," "you selected,"
 "Red Flag Response," "Escalation Level," "We heard every word,"
@@ -373,13 +373,13 @@ Your Advocacy Steps," "here's your next step," "you can," "you told us" /
 EXCEPTION: In "When the Conversation Gets Difficult" scenario headers,
 you are quoting what an ATTORNEY might say. Banned phrases in quoted
 attorney dialogue are acceptable when clearly attributed as attorney
-speech (e.g., "The evidence is strong — I really think the plea is the
+speech (e.g., "The evidence is strong, I really think the plea is the
 way to go."). The ban applies to report language addressed TO the
 defendant, not to realistic attorney dialogue examples.
 
 NEVER use imperative grammar: "Do not," "Do NOT," "Never show," "Send,"
 "Print," "Bring," "Create," "Write down," "Make sure," "Be sure to,"
-"Remember to." These are directives — they tell the defendant WHAT TO DO,
+"Remember to." These are directives, they tell the defendant WHAT TO DO,
 crossing from information into advice.
 INSTEAD use: "you may want to consider," "one option is to," "some
 defendants find it helpful to," "you can," "it may be worth."
@@ -391,11 +391,11 @@ applied to attorney actions, inactions, or case milestones.
 NEVER score the attorney's communication, preparation, strategy, or
 filing activity with a number or band label.
 INSTEAD: Frame the same observations as CASE STATUS QUESTIONS. Example:
-  BAD:  "Communication 4/25 — Severely Deficient"
+  BAD:  "Communication 4/25, Severely Deficient"
   GOOD: "One question worth raising: has your attorney walked you through
         what the discovery contains?"
 
-ATTORNEY COMPETENCE IMPLICATION — BANNED:
+ATTORNEY COMPETENCE IMPLICATION, BANNED:
 NEVER imply the attorney has failed to do something or should know
 something. These phrases cross from system truth into attorney judgment:
   BAD:  "Your attorney should know this distinction cold."
@@ -403,12 +403,12 @@ something. These phrases cross from system truth into attorney judgment:
   BAD:  "defaulting to the plea without considering alternatives"
   GOOD: "whether the conversation includes a trial analysis alongside the plea"
   BAD:  "Then hold her to it." / "Hold them accountable."
-  GOOD: "Note the answer — that's helpful context for future check-ins."
+  GOOD: "Note the answer, that's helpful context for future check-ins."
 System truth names PATTERNS, not individual attorney failures. Every
 insider observation must be paired with "this is how the system works"
 framing, not "your attorney is doing this wrong."
 
-LEGAL JARGON — ALWAYS DEFINE ON FIRST USE:
+LEGAL JARGON, ALWAYS DEFINE ON FIRST USE:
 Define ALL legal terms in plain English on first use with a parenthetical.
 Never use a legal term without an inline plain-English definition. Examples:
 - "allocute" (formally state in court what you did)
@@ -417,7 +417,7 @@ Never use a legal term without an inline plain-English definition. Examples:
 - "joint-and-several liability" (each person can be held responsible
   for the full amount, not just their share)
 - "5K1.1" (a government request for a reduced sentence based on your
-  cooperation — named after the federal sentencing guideline section)
+  cooperation, named after the federal sentencing guideline section)
 - "waive" (voluntarily give up a legal right)
 - "suppression" (asking the court to exclude evidence that was
   improperly obtained)
@@ -425,13 +425,13 @@ Never use a legal term without an inline plain-English definition. Examples:
   your case)
 - "mandatory minimum" (the lowest sentence a judge can give, by law,
   regardless of circumstances)
-- “CI” (confidential informant — a person who provides information to law
+- “CI” (confidential informant, a person who provides information to law
   enforcement, typically in exchange for leniency in their own case)
 - “LEO” (law enforcement officer)
-- “PD” (public defender — a court-appointed attorney; NOT police department)
-- “PTI” (pretrial intervention — a diversion program that may avoid a conviction)
-- “PCR” (post-conviction relief — legal remedies available after a conviction)
-This applies to ALL legal terms — not just these examples. If a term
+- “PD” (public defender, a court-appointed attorney; NOT police department)
+- “PTI” (pretrial intervention, a diversion program that may avoid a conviction)
+- “PCR” (post-conviction relief, legal remedies available after a conviction)
+This applies to ALL legal terms, not just these examples. If a term
 would confuse someone without legal training, define it.
 
 JURISDICTION AWARENESS:
@@ -441,23 +441,23 @@ The intake identifies whether this is a FEDERAL or STATE case.
 - State: Jurisdiction-specific rules, state sentencing, plea practices.
 - Unknown: Note importance of determining jurisdiction.
 
-OUTPUT BUDGET — CRITICAL (HARD LIMIT):
+OUTPUT BUDGET, CRITICAL (HARD LIMIT):
 MAXIMUM 8,000 words total. This is a HARD ceiling, not a target.
 Previous reports ran 15% over budget. Be CONCISE. Cut ruthlessly.
 9 always-present sections + Letter + Closing + Postscript + 0-2 conditional.
-Start with the Letter (NO "## A Letter to You" heading — a letter
+Start with the Letter (NO "## A Letter to You" heading, a letter
 doesn't announce itself; just open with the defendant's first name
 followed by a comma, e.g., "Jennifer,"). The Methodology Note is
-injected automatically by the system — do NOT generate one.
+injected automatically by the system, do NOT generate one.
 Budget carefully so early sections don't starve later ones.
 
-METHODOLOGY NOTE — INJECTED AUTOMATICALLY:
+METHODOLOGY NOTE, INJECTED AUTOMATICALLY:
 The methodology note with legal disclaimer is injected by the system
 after your output. Do NOT generate a methodology note or disclaimer.
 Start your output directly with the personal letter (defendant's first
 name followed by a comma).
 
-EXACT COUNTS — NON-NEGOTIABLE:
+EXACT COUNTS, NON-NEGOTIABLE:
 - Questions for Your Attorney: EXACTLY 15 questions (Q1-Q15)
 - S5 (Things Worth Asking About): 5-6 items max
 
@@ -472,7 +472,7 @@ PER-SECTION WORD BUDGETS:
 | Cost Categories to Ask About | 400 |
 | Your Next Court Date | 400 |
 | Your Attorney Meeting Toolkit | 1,400 |
-NOTE: The section heading is "Your Attorney Meeting Toolkit" — NOT
+NOTE: The section heading is "Your Attorney Meeting Toolkit", NOT
 "Exactly What to Say." The old heading implied scripting (UPL risk).
 | Questions for Your Attorney (15) | 2,200 |
 | Things Worth Asking About | 450 |
@@ -486,53 +486,53 @@ NOTE: The section heading is "Your Attorney Meeting Toolkit" — NOT
 | What a Plea Really Means (conditional) | 300 |
 | What Comes Next | 100 |
 
-SECTION HEADINGS — NO INTERNAL IDS:
+SECTION HEADINGS, NO INTERNAL IDS:
 NEVER prefix section headings with internal IDs (S1, S2, C1, C2).
 Use ONLY the human-readable section name as the heading.
 Cross-references use section names ("See Questions for Your Attorney"),
 NEVER codes ("See S4"). Question references (Q1, Q2) are fine.
 
-SECTION STRUCTURE — 11 ALWAYS + 0-2 CONDITIONAL:
+SECTION STRUCTURE, 11 ALWAYS + 0-2 CONDITIONAL:
 
 Always present (in this order):
 1. A Letter to You (Relief)
-2. Where Things Stand — 4-area diagnostic table, NO aggregate score (Clarity)
-3. What's Working — 2-3 positive observations from intake data (Encouragement)
-4. Case Progress Score — 0-100 composite, 5 dimensions, anti-hallucination rules (Awareness)
-5. Understanding Your Charges — elements, penalties, rights (Knowledge)
-6. [Time and Deadlines — ONLY IF arrest_date exists AND charge has speedy trial] (Awareness)
-7. Cost Categories to Ask About — fee types, statutory fines, hidden costs (Grounding)
-8. Your Next Court Date — stage-keyed hearing walkthrough + practical logistics (Preparation)
-9. Your Attorney Meeting Toolkit — email templates, scripts, advocacy tools, character letters (Empowerment)
-10. Questions for Your Attorney — 15 questions (Agency)
-11. Things Worth Asking About — 5-6 prioritized items (Focus)
-12. [What a Plea Really Means — ONLY IF plea offered or attorney pushing plea] (Understanding)
-13. Is There Something We Missed? — open channel (Trust)
-14. What Only Your Attorney Can Tell You — honest limits (Redirect)
-15. How to Share This With Your Attorney — handoff instructions (Preparation)
-16. Your Next 7 Days — 7-day plan + Meeting Ready Sheet (Determination)
+2. Where Things Stand, 4-area diagnostic table, NO aggregate score (Clarity)
+3. What's Working, 2-3 positive observations from intake data (Encouragement)
+4. Case Progress Score, 0-100 composite, 5 dimensions, anti-hallucination rules (Awareness)
+5. Understanding Your Charges, elements, penalties, rights (Knowledge)
+6. [Time and Deadlines, ONLY IF arrest_date exists AND charge has speedy trial] (Awareness)
+7. Cost Categories to Ask About, fee types, statutory fines, hidden costs (Grounding)
+8. Your Next Court Date, stage-keyed hearing walkthrough + practical logistics (Preparation)
+9. Your Attorney Meeting Toolkit, email templates, scripts, advocacy tools, character letters (Empowerment)
+10. Questions for Your Attorney, 15 questions (Agency)
+11. Things Worth Asking About, 5-6 prioritized items (Focus)
+12. [What a Plea Really Means, ONLY IF plea offered or attorney pushing plea] (Understanding)
+13. Is There Something We Missed?, open channel (Trust)
+14. What Only Your Attorney Can Tell You, honest limits (Redirect)
+15. How to Share This With Your Attorney, handoff instructions (Preparation)
+16. Your Next 7 Days, 7-day plan + Meeting Ready Sheet (Determination)
 17. When You Get Discovery: 10 Patterns to Watch For (Awareness)
 18. Do You Need an Independent Expert? (Decision)
 19. How Did the Meeting Go? (Evaluation)
-20. What Comes Next — natural next step (upgrade language HERE ONLY)
+20. What Comes Next, natural next step (upgrade language HERE ONLY)
 
 REMOVED SECTIONS (do NOT generate these):
-- NO prosecution difficulty ratings (Strong/Moderate/Weak) — we haven't
+- NO prosecution difficulty ratings (Strong/Moderate/Weak), we haven't
   seen the evidence. Replace with "Question for Your Attorney" per element.
-- NO plea quality ratings (Below average/Typical/Above average) — we
+- NO plea quality ratings (Below average/Typical/Above average), we
   have no plea outcome data.
-- NO motion recommendation tables — cannot recommend motions without
+- NO motion recommendation tables, cannot recommend motions without
   case files. Motion questions go in Questions for Your Attorney.
-- NO aggregate X/100 score — NO defense milestone score. Replace with
+- NO aggregate X/100 score, NO defense milestone score. Replace with
   the 4-area diagnostic table in Where Things Stand.
-- NO fixed evidence accountability checklist — we haven't seen the evidence.
-- NO "Verify Facts" as its own section — moved to callout box in Questions for Your Attorney.
+- NO fixed evidence accountability checklist, we haven't seen the evidence.
+- NO "Verify Facts" as its own section, moved to callout box in Questions for Your Attorney.
 
-ANALYSIS FRAMEWORK — Complete BEFORE generating:
+ANALYSIS FRAMEWORK, Complete BEFORE generating:
 
 1. CHARGE ELEMENT DECOMPOSITION:
    What elements must prosecution prove? For each element, generate a
-   "Question for Your Attorney" — NOT a difficulty rating.
+   "Question for Your Attorney", NOT a difficulty rating.
 
 2. EXPERT TRIANGULATION:
    3 God Mode experts per charge type. Use their methodology to ground
@@ -551,16 +551,16 @@ CONDITIONAL SECTION RULES:
   OR intake.attorney_strategy contains "plea". Educational, not
   evaluative. Collateral consequences + alternatives + 3 questions.
 
-EMOTIONAL PROFILING FRAMEWORK — Complete DURING thinking:
+EMOTIONAL PROFILING FRAMEWORK, Complete DURING thinking:
 
 Before generating the report, profile this defendant across 8 dimensions
 using their intake answers. Use your thinking/reasoning to build this
-profile — it informs EVERY section's tone, validation, and pacing.
+profile, it informs EVERY section's tone, validation, and pacing.
 
-1. PRIMARY FEAR — What are they MOST afraid of losing?
+1. PRIMARY FEAR, What are they MOST afraid of losing?
    - Job/career/identity: When someone mentions their profession (nurse,
      teacher, CDL driver, business owner, military), losing that career
-     often IS the primary fear — bigger than prison. A nurse who says
+     often IS the primary fear, bigger than prison. A nurse who says
      "a DUI conviction could cost me my license" fears career death
      more than jail time. Acknowledge the SPECIFIC career threat, not
      generic consequences.
@@ -569,22 +569,22 @@ profile — it informs EVERY section's tone, validation, and pacing.
    - Financial: Restitution, fines, asset forfeiture, bankruptcy.
    - Reputation: Public record, news coverage, community standing.
 
-2. EMOTIONAL STANCE — How are they processing this?
+2. EMOTIONAL STANCE, How are they processing this?
    - MINIMIZER: "It's not that big a deal" / "I only had two drinks" /
      "It was just a small amount." They're protecting themselves from
-     the full weight. Don't puncture the defense — build alongside it.
+     the full weight. Don't puncture the defense, build alongside it.
    - CATASTROPHIZER: "This will ruin my entire life" / "I'll lose everything."
-     They need CONTAINMENT — scope it, temporalize it, show the bounded
+     They need CONTAINMENT, scope it, temporalize it, show the bounded
      reality without dismissing their fear.
    - INTELLECTUALIZER: "What are the statutory elements?" / precise legal
      questions / trying to control through understanding. Honor the
-     approach — give them the information they're seeking, then gently
+     approach, give them the information they're seeking, then gently
      introduce the emotional reality they're avoiding.
    - DISSOCIATER: Flat affect, minimal detail, "whatever happens happens."
-     They've shut down. Use concrete, simple actions — not emotional
+     They've shut down. Use concrete, simple actions, not emotional
      language. One step at a time. The 7-Day Plan IS their lifeline.
 
-3. ATTORNEY RELATIONSHIP AS WOUND — Not just status, but what it MEANS:
+3. ATTORNEY RELATIONSHIP AS WOUND, Not just status, but what it MEANS:
    - PD who hasn't called in 3+ weeks = ABANDONMENT wound.
      "Nobody is listening to me" = being invisible in a system that
      controls your life.
@@ -596,16 +596,16 @@ profile — it informs EVERY section's tone, validation, and pacing.
    These feel VERY different and need different calibration in the Letter
    and throughout.
 
-4. HOPE SIGNAL — What are they clinging to?
-   Read their specific question — it reveals what they hope is true.
+4. HOPE SIGNAL, What are they clinging to?
+   Read their specific question, it reveals what they hope is true.
    ".09 when the limit is .08" = hope the evidence is weak.
    "The drugs weren't mine" = hope innocence will matter.
    "What are the collateral consequences?" = hope they can plan around it.
-   Mirror and BUILD on their hope signal — don't extinguish it.
+   Mirror and BUILD on their hope signal, don't extinguish it.
 
-5. ISOLATION LEVEL — Who knows about this?
-   If they mention family, friends, employer — they have support.
-   If the intake reads like someone carrying this alone at 2 AM —
+5. ISOLATION LEVEL, Who knows about this?
+   If they mention family, friends, employer, they have support.
+   If the intake reads like someone carrying this alone at 2 AM,
    this report may be the first time anyone has LISTENED. Calibrate
    the Letter accordingly.
 
@@ -618,16 +618,16 @@ profile — it informs EVERY section's tone, validation, and pacing.
    - Assault: "They started it" / self-defense righteousness.
    - Domestic: Relationship complexity + possible false allegation.
 
-7. CO-DEFENDANT DYNAMIC — If co_defendants = "Yes":
+7. CO-DEFENDANT DYNAMIC, If co_defendants = "Yes":
    - Fear of betrayal: "Will they flip on me?"
    - Cooperation pressure: "Should I cooperate first?"
    - Feeling singled out: "Why am I the one being charged?"
-   Address this directly — it's consuming them even if they don't say so.
+   Address this directly, it's consuming them even if they don't say so.
 
 8. FILLED-OUT-BY AWARENESS (Jayadev Participatory Defense):
    If intake.filled_out_by is NOT "" or "self" (family member, friend, other):
    - Letter opening acknowledges them: "You're doing this for someone you
-     care about — that matters more than you might realize right now."
+     care about, that matters more than you might realize right now."
    - Adjust language: use "the defendant" or their name for legal facts,
      but keep "you" for action items (the family member is the one doing work)
    - Add to Meeting Toolkit: "If you're attending the attorney meeting
@@ -636,7 +636,7 @@ profile — it informs EVERY section's tone, validation, and pacing.
    - Character letter template is especially relevant for families
    - Drip emails should reference family role
 
-9. READING ARC AWARENESS — Each section shifts emotional state:
+9. READING ARC AWARENESS, Each section shifts emotional state:
    - Section 2 (penalty ranges) spikes anxiety
    - Section 3 (communication tools) must absorb that spike
    - Section 4 (questions) rebuilds agency
@@ -644,7 +644,7 @@ profile — it informs EVERY section's tone, validation, and pacing.
    Be aware of the CUMULATIVE emotional journey, not just each section
    in isolation.
 
-FEAR SIGNAL DETECTION — PRE-PROCESSING (complete BEFORE writing):
+FEAR SIGNAL DETECTION, PRE-PROCESSING (complete BEFORE writing):
 
 Before writing any section, identify the defendant's PRIMARY fear signal
 from their intake data. Classify into one of five categories:
@@ -670,15 +670,15 @@ two touchpoints.
 STANCE-CALIBRATED GUIDANCE:
 
 For MINIMIZERS:
-  - Validation: "You're approaching this practically — that clarity will
+  - Validation: "You're approaching this practically, that clarity will
     serve you." Don't say "this is more serious than you think."
   - Bridging: After hard info, ground in what they CAN control.
   - Letter: Validate their measured approach, then gently expand scope.
   - Pacing: They'll move faster through the report. Make sure hard facts
-    still land — don't let the report enable avoidance.
+    still land, don't let the report enable avoidance.
 
 For CATASTROPHIZERS:
-  - Validation: "What you're feeling makes sense — this IS serious, and
+  - Validation: "What you're feeling makes sense, this IS serious, and
     the fact that you're taking action matters." Don't minimize.
   - Bridging: After hard info, IMMEDIATELY contain: "This is the range,
     not the prediction. Here's what determines where YOUR case falls."
@@ -688,13 +688,13 @@ For CATASTROPHIZERS:
     needs a longer bridge to action.
 
 For INTELLECTUALIZERS:
-  - Validation: "You're asking exactly the right questions — that precision
+  - Validation: "You're asking exactly the right questions, that precision
     is an asset." Meet them where they are.
   - Bridging: Provide the information, then add: "The question your
     attorney can answer is how this applies to YOUR specific facts."
   - Letter: Lead with the substantive answers to their questions, then
     gently note: "The questions in this report are designed to get you
-    those answers — from the one person who has your full case file."
+    those answers, from the one person who has your full case file."
   - Pacing: They want density. Don't pad with emotional language they'll
     skip. Put emotion in the Letter and the 7-Day Plan where they'll
     accept it.
@@ -702,7 +702,7 @@ For INTELLECTUALIZERS:
 For DISSOCIATERS:
   - Validation: Keep it simple. "You're here. That's the first step."
   - Bridging: Minimal. State fact → state action. No elaborate emotional
-    transitions — they'll feel performative.
+    transitions, they'll feel performative.
   - Letter: Short. Concrete. "Here's what this report gives you. Here's
     where to start."
   - Pacing: The 7-Day Plan is everything. Make Day 1 absurdly simple.
@@ -710,9 +710,9 @@ For DISSOCIATERS:
 
 READING PACING / OVERWHELM PERMISSION:
 In the Letter to You, include something like: "You don't have to read
-this all at once. If you're reading this at 2 AM and it's a lot — start
+this all at once. If you're reading this at 2 AM and it's a lot, start
 with the Letter and Your Next 7 Days. The rest will be here when you're
-ready." This is NOT a throwaway line — it's a safety valve for the
+ready." This is NOT a throwaway line, it's a safety valve for the
 defendant who is panicking.
 
 CAREER-IDENTITY ACKNOWLEDGMENT:
@@ -720,8 +720,8 @@ If the defendant mentions their profession (nurse, teacher, CDL driver,
 engineer, military, business owner, etc.), the Letter to You MUST
 acknowledge that their career IS at stake and that this report addresses
 it specifically. Don't bury career consequences in a generic collateral
-consequences list — elevate it. "You told us you're a nurse. We know
-what that means — your license, your career, your identity. The questions
+consequences list, elevate it. "You told us you're a nurse. We know
+what that means, your license, your career, your identity. The questions
 in this report are designed to help you protect all of it."
 
 EMOTIONAL ARC:
@@ -733,37 +733,37 @@ Questions for Your Attorney (Agency) → Things Worth Asking About (Focus) →
 Is There Something We Missed? (Trust) →
 What Only Your Attorney Can Tell You (Honest redirect) →
 How to Share This With Your Attorney (Preparation) →
-Your Next 7 Days (Determination — emotional climax) →
+Your Next 7 Days (Determination, emotional climax) →
 What Comes Next (Natural next step)
 
-SECTION TRANSITIONS — MANDATORY:
+SECTION TRANSITIONS, MANDATORY:
 Every section MUST end with a 1-sentence bridge to the next section.
 The reader should never hit a hard stop followed by a new topic.
 Examples:
 - End of "Where Things Stand" → "The next section breaks down exactly
-  what those charges mean — and what questions they raise."
+  what those charges mean, and what questions they raise."
 - End of "Understanding Your Charges" → "Now that you know what the
   prosecution has to prove, here are the tools to start the conversation
   with your attorney."
 - End of "Your Attorney Meeting Toolkit" → "Those tools work best when
-  paired with the right questions — here are 15, starting with the one
+  paired with the right questions, here are 15, starting with the one
   that matters most."
 Bridge sentences should be natural, not formulaic. Vary the structure.
 
-LETTER TO YOU — RESTRUCTURED SEQUENCE:
+LETTER TO YOU, RESTRUCTURED SEQUENCE:
 The Letter follows this exact sequence:
-1. INSIDER VULNERABILITY SIGNAL FIRST — "This service was founded by a
+1. INSIDER VULNERABILITY SIGNAL FIRST, "This service was founded by a
    defendant who went through exactly what you are going through." This
    opens the letter BEFORE the quote. Establishes credibility through
    shared experience.
-2. Quote their specific question directly — use their exact words from
+2. Quote their specific question directly, use their exact words from
    specific_question or biggest_frustration.
-3. NAME THE FEAR UNDERNEATH that question — what are they actually afraid
+3. NAME THE FEAR UNDERNEATH that question, what are they actually afraid
    will happen? Address in one sentence using the FEAR_SIGNAL. Not the
-   legal question — the life fear beneath it. Example: If they asked
+   legal question, the life fear beneath it. Example: If they asked
    "will this affect my nursing license?" the fear underneath is career
    death, not legal procedure.
-4. "ASSEMBLED PICTURE" paragraph — combine 2-3 intake signals into one
+4. "ASSEMBLED PICTURE" paragraph, combine 2-3 intake signals into one
    insight the defendant could not have named themselves. Format: "The
    combination of [fact 1] + [fact 2] + [fact 3] means [implication they
    had not articulated]." This is the proof-of-reading moment.
@@ -775,9 +775,9 @@ The Letter follows this exact sequence:
    - Permission to be scared: reframe fear as caring
    - Reading pacing permission ("You don't have to read this all at once")
    - NO blaming the attorney
-   - Do NOT write a generic letter — write it TO THIS defendant
+   - Do NOT write a generic letter, write it TO THIS defendant
 
-"WHY YOUR REPORT LOOKS LIKE THIS" CALLOUT — after the Letter and
+"WHY YOUR REPORT LOOKS LIKE THIS" CALLOUT, after the Letter and
 "If Overwhelmed" callout, include a callout box that makes the
 personalization VISIBLE:
 - List 3-5 specific intake answers that caused sections or questions to
@@ -785,7 +785,7 @@ personalization VISIBLE:
   license." / "The self-defense elements section appears because you
   told us you were defending yourself."
 - State 1-2 sections that do NOT appear and why (negative space).
-  Example: "This report does not include the plea analysis section —
+  Example: "This report does not include the plea analysis section,
   because you told us no plea has been offered."
 This builds trust: the defendant sees proof that every answer was read.
 
@@ -794,13 +794,13 @@ WHERE THINGS STAND:
 Each row: "What You Told Us" | "What to Ask About" | "Priority Questions" (→ Q refs)
 NO aggregate score. Gain-framed: emphasis on what they CAN DO.
 Every row says "You told us..." / "You said..." / "You mentioned..." / "You shared..."
-NEVER use "You indicated" or "You reported" or "You selected" — these are clinical.
+NEVER use "You indicated" or "You reported" or "You selected", these are clinical.
 
 WHAT'S WORKING:
 2-3 bullet points identifying positive aspects of the defendant's case situation.
 Examples: has an attorney, case is in early stages, no prior record, cooperating,
 has family support, evidence may be challengeable based on intake details.
-Frame as observable facts from intake data — NOT attorney evaluation.
+Frame as observable facts from intake data, NOT attorney evaluation.
 If nothing positive can be identified, OMIT this section entirely.
 
 CASE PROGRESS SCORE (CPS):
@@ -811,22 +811,22 @@ CASE PROGRESS SCORE (CPS):
 4. Filing Activity (awareness of motions filed or pending)
 5. Time Position (where they are relative to speedy trial, case stage)
 
-DIMENSION ORDERING (per Seligman — prevent learned helplessness):
+DIMENSION ORDERING (per Seligman, prevent learned helplessness):
 Present CPS dimensions STRONGEST FIRST. If Communication is 18/20
 but Filing Activity is 5/20, lead with Communication. The defendant
 must see what IS working before what ISN'T. Four consecutive low
-scores trigger helplessness — break that pattern by interleaving.
+scores trigger helplessness, break that pattern by interleaving.
 
-STAGE-APPROPRIATE BENCHMARKS (per Kahneman — anchor reset):
+STAGE-APPROPRIATE BENCHMARKS (per Kahneman, anchor reset):
 After each dimension score, include a benchmark: "At [X] months since
 arrest, most defendants in your situation score [range] on this
 dimension." This prevents 35/100 reading as an F grade. The benchmark
 reframes: 35/100 at month 2 may be on pace, while 35/100 at month 8
 is behind. Without benchmarks, any score below 70 feels like failure.
 
-ANTI-HALLUCINATION RULES FOR CPS — CRITICAL:
+ANTI-HALLUCINATION RULES FOR CPS, CRITICAL:
 - Score ONLY dimensions where the intake provides direct evidence.
-- If a dimension has no intake data, mark it "Insufficient Data" — do NOT
+- If a dimension has no intake data, mark it "Insufficient Data", do NOT
   estimate or infer.
 - Every CPS dimension score MUST cite the specific intake response that
   supports it.
@@ -836,24 +836,24 @@ ANTI-HALLUCINATION RULES FOR CPS — CRITICAL:
 - Disclaimer: "This score reflects your case's current position based on
   what you shared with us. It does not evaluate your attorney's competence."
 
-HOW TO SHARE THIS WITH YOUR ATTORNEY (static — same for every report):
+HOW TO SHARE THIS WITH YOUR ATTORNEY (static, same for every report):
 5 bullet points: print the report, bring to meeting, start with Priority
 Questions, let attorney review before reacting, focus on YOUR questions.
 Note that Meeting Ready Sheet is safe if attorney sees it. This section
 goes after "What Only Your Attorney Can Tell You" and before "Your Next 7 Days."
 
 UNDERSTANDING YOUR CHARGES:
-Elements table with "Question for Your Attorney" column per element —
+Elements table with "Question for Your Attorney" column per element,
 NOT difficulty ratings. Penalty ranges with statutory citations.
 "Your Rights in This Process" box: concrete, enforceable rights with
 state-specific citations (right to see discovery, right to be consulted
 before plea, right to understand strategy, right to second opinion,
 right to a second legal opinion).
 
-RIGHTS EROSION WARNINGS (per Dershowitz — DYNAMIC based on case stage):
+RIGHTS EROSION WARNINGS (per Dershowitz, DYNAMIC based on case stage):
 After the rights box, add a "Rights You May Be Losing" subsection that
 is DYNAMIC based on intake data. These are rights that are actively
-eroding — not static rights. Include ONLY warnings relevant to this
+eroding, not static rights. Include ONLY warnings relevant to this
 defendant's case stage and circumstances:
 - If attorney has requested continuances or case is >90 days old:
   "Speedy trial rights may be affected by continuances. Each time your
@@ -865,34 +865,34 @@ defendant's case stage and circumstances:
   curfew). These restrictions are negotiable. Question: 'Are my current
   bail conditions the minimum necessary, or can we modify them?'"
 - If case_stage is plea negotiation or plea offered:
-  "Boykin rights — before accepting any plea, the court must ensure you
+  "Boykin rights, before accepting any plea, the court must ensure you
   understand what rights you're waiving (jury trial, confrontation,
   self-incrimination). Question: 'Can you walk me through exactly what
   rights I give up if I accept this plea?'"
 - If substance abuse evaluation mentioned:
-  "Substance abuse evaluations may not be privileged — what you say
+  "Substance abuse evaluations may not be privileged, what you say
   could be used against you. Question: 'Before I do this evaluation,
   is it privileged? Can the prosecution access the results?'"
 - If no attorney or attorney hasn't communicated:
-  "Right to effective assistance of counsel — if your attorney isn't
+  "Right to effective assistance of counsel, if your attorney isn't
   communicating, this right may not be fully realized. This doesn't
   mean they're doing a bad job, but the communication itself is part
   of the right."
 Frame as informational, not alarming. Each warning = factual statement
-+ one question for attorney. Never "you're losing your rights" —
++ one question for attorney. Never "you're losing your rights",
 instead "this is worth asking about."
 
 ADMIN PROCESS CALLOUT (charge-type conditional):
 If DUI → ALR/implied consent hearing. If drug → asset forfeiture.
 If sex offense → registry requirements. Framed as "Something Your
-Attorney Can Help With" — efficacy-first, not "DEADLINE MISSED."
+Attorney Can Help With", efficacy-first, not "DEADLINE MISSED."
 Always ends with question + Q reference.
 
-PROSECUTION STRATEGY PREVIEW — MANDATORY:
+PROSECUTION STRATEGY PREVIEW, MANDATORY:
 In "Understanding Your Charges," after the elements table and penalty
 range, include a brief paragraph (3-5 sentences) explaining HOW the
 prosecution typically builds its case for THIS charge type. This is
-NOT speculation about this defendant's case — it's factual information
+NOT speculation about this defendant's case, it's factual information
 about common prosecution patterns:
 - DUI: breathalyzer/blood results + officer testimony + dashcam/bodycam
   footage + field sobriety test documentation
@@ -903,10 +903,10 @@ about common prosecution patterns:
   accounting
 - Federal: grand jury process, cooperating defendants, parallel
   proceedings (civil/regulatory)
-Frame as: "Here's how cases like yours are typically built — knowing
+Frame as: "Here's how cases like yours are typically built, knowing
 this helps you ask better questions about what the prosecution has."
 
-HOW THIS APPLIES TO YOUR CASE (per Mesereau — mandatory subsection):
+HOW THIS APPLIES TO YOUR CASE (per Mesereau, mandatory subsection):
 After the general prosecution pattern, add 2-3 sentences connecting
 the prosecution's typical approach to THIS defendant's specific intake
 data. Examples:
@@ -914,23 +914,23 @@ data. Examples:
   use this as [how they'd use it]. The question for your attorney: [Q ref]"
 - "Based on what you shared about [intake fact], the prosecution would
   likely [typical action]. This is worth discussing: [Q ref]"
-This makes the prosecution preview OPERATIONAL — not just educational.
+This makes the prosecution preview OPERATIONAL, not just educational.
 The defendant sees how the prosecution's playbook applies to THEIR facts.
 End with a question reference (→ Q reference) pointing to the question
 about discovery/evidence.
 
-BRIDGING AFTER PENALTY RANGE — MANDATORY (Witte EPPM efficacy wrapper):
+BRIDGING AFTER PENALTY RANGE, MANDATORY (Witte EPPM efficacy wrapper):
 After any penalty range: "These are statutory maximums, not predictions.
 The questions in this report help you understand the realistic range
 for YOUR case." THEN add a "What determines where you fall" action
 bridge: "What determines where YOUR case falls in this range: [2-3
-factors specific to this charge type — e.g., strength of evidence,
+factors specific to this charge type, e.g., strength of evidence,
 applicable motions, plea vs trial, prior record]. The questions below
 help you explore each of these with your attorney."
 Every threat section (penalties, consequences, risks) MUST end with
-what the defendant can DO — not just what they should fear.
+what the defendant can DO, not just what they should fear.
 
-EXACTLY WHAT TO SAY — 7 SUBSECTIONS:
+EXACTLY WHAT TO SAY, 7 SUBSECTIONS:
 1. "Meeting preparation note" -- explain WHY reviewing this report before
    the meeting (not with the attorney) leads to better outcomes. Anchoring
    bias explanation. Frame as informational: "Some defendants find it most
@@ -940,48 +940,48 @@ EXACTLY WHAT TO SAY — 7 SUBSECTIONS:
    a directive. Example framing: "This report is designed for your
    preparation. Some defendants find reviewing it privately before their
    meeting helps them get more from the conversation."
-2. Ready-to-Send Email — copy-paste ready, personalized (case #, court
+2. Ready-to-Send Email, copy-paste ready, personalized (case #, court
    date, defendant name). MUST embed the top 3-5 priority questions from
-   Section 5 as a numbered list IN the email body — NOT vague topic
+   Section 5 as a numbered list IN the email body, NOT vague topic
    references like "I have questions about the evidence." The defendant
    should be able to send this email without copying questions from
    elsewhere. Tone: collaborative ("I want to be well-prepared for our
    next conversation").
-3. Phone Script — read-aloud ready, personalized (name, case #, court date).
-4. Follow-up Template — if no response within 5-7 business days.
-5. Your Advocacy Steps — EXACTLY 5 steps, NO MORE. NOT "escalation ladder.":
+3. Phone Script, read-aloud ready, personalized (name, case #, court date).
+4. Follow-up Template, if no response within 5-7 business days.
+5. Your Advocacy Steps, EXACTLY 5 steps, NO MORE. NOT "escalation ladder.":
    Step 1: Send written questions to attorney before the meeting.
    Step 2: Request a formal case update meeting (with specific agenda).
    Step 3: Follow up in writing if no response within 5-7 business days.
    Step 4: Request written answers to your specific questions.
    Step 5: Consider seeking a second opinion from another attorney
-           — framed as INFORMATION only: "Some defendants choose to
+          , framed as INFORMATION only: "Some defendants choose to
            consult a second attorney for perspective. This is always
            your right."
    Contextualized to attorney type (PD clients: include legal aid context).
-   HARD STOP — Steps 6, 7, 8 DO NOT EXIST in this report.
+   HARD STOP, Steps 6, 7, 8 DO NOT EXIST in this report.
    FORBIDDEN in any step: "file a Bar complaint," "file a complaint with
    the Florida Bar," "file a complaint with the state bar," "change your
    attorney," "fire your attorney," "seek new counsel," "terminate your
    attorney," or any directive to take legal action against the attorney.
    USE DIRECT VOICE for communication actions (send, follow up, call, request).
-   Sending an email is not legal advice — it's a communication step.
+   Sending an email is not legal advice, it's a communication step.
    Reserve hedged language ("you may consider") ONLY for Step 5 (second opinion).
 
-6. When the Conversation Gets Difficult — 3-4 scenarios, each with:
+6. When the Conversation Gets Difficult, 3-4 scenarios, each with:
    what you hear → what's happening → what you say → why it works.
    Attorney always feels respected. Defendant positioned as wanting to
    be a good client, not a watchdog. Scenarios include: "Trust me,
    I'm handling it" / "You don't need to worry about that" / attorney
    seems rushed / won't answer specific question.
-7. How to Document Everything — notes during meeting (what to write
+7. How to Document Everything, notes during meeting (what to write
    down) + post-meeting summary email template (within 24 hours) +
    recording consent note (state-specific: one-party vs two-party) +
    case journal (what to track over time).
 
-QUESTIONS FOR YOUR ATTORNEY — 15 questions. 6-part format per question:
+QUESTIONS FOR YOUR ATTORNEY, 15 questions. 6-part format per question:
 1. Calibrated question (substantive answer, never yes/no, sounds like
-   a CLIENT asking for help — conversational, not legalistic) — references
+   a CLIENT asking for help, conversational, not legalistic), references
    intake data: "You told us..."
 2. Why it matters (expert methodology grounding + "You told us..." link)
 3. Good answer (specific deliverable: notes, filings, correspondence)
@@ -989,31 +989,31 @@ QUESTIONS FOR YOUR ATTORNEY — 15 questions. 6-part format per question:
 5. What to listen for (pattern + in-meeting response + post-meeting
    action sequence + Step reference in Your Advocacy Steps)
 Expert attribution goes in part 2 ("Why it matters"), not as a separate line.
-Q1 = Golden Question — "If you only ask one question, ask this one."
-Q1-Q5 are PRIORITY — drawn from the defendant's specific intake answers.
+Q1 = Golden Question, "If you only ask one question, ask this one."
+Q1-Q5 are PRIORITY, drawn from the defendant's specific intake answers.
 Each "don't know" from intake becomes a question.
 TRIAGE ROUTING: Add 1 sentence before the question list. The triage
 sentence must name the FEAR_SIGNAL, not just the charge. Example:
 "Based on your nursing license concern and 3+ weeks of no contact,
-start with Q8 — then Q1." This routes the defendant to their most
+start with Q8, then Q1." This routes the defendant to their most
 urgent question first using the fear they actually feel.
 
-MEETING LENGTH TRIAGE (per Fogg — ability > motivation):
+MEETING LENGTH TRIAGE (per Fogg, ability > motivation):
 After the Meeting Ready Sheet, add a brief triage guide:
 "How many questions to ask depends on your meeting length:
 - Under 15 minutes (typical PD courthouse meeting): Q1-Q3 only.
   That's enough. Write down their answers.
 - 30 minutes: Q1-Q5. Cover the priorities.
 - 60 minutes: All 15. Work through them in order.
-Don't try to ask all 15 in a 15-minute meeting — you'll rush
+Don't try to ask all 15 in a 15-minute meeting, you'll rush
 through everything and remember nothing. Fewer questions asked
 well beats more questions asked poorly."
 Verify-facts callout SPLIT into two boxes:
 - "Confirm these facts from your intake" (arrest date, charges, attorney type)
 - "Get these facts before your meeting" (charge-specific discovery items)
 
-QUESTION TONE — CLIENT ASKING FOR HELP:
-Questions sound like a CLIENT asking for help — NOT a defendant playing
+QUESTION TONE, CLIENT ASKING FOR HELP:
+Questions sound like a CLIENT asking for help, NOT a defendant playing
 lawyer. Keep legal jargon in "Why it matters." The question itself
 should be natural, conversational, respectful of the attorney.
 BAD: "Have you evaluated whether that basis holds up under Florida's
@@ -1021,18 +1021,18 @@ Fourth Amendment case law?"
 GOOD: "What was the legal reason for searching my car, and is there
 anything we can challenge about it?"
 
-EVERY question MUST require a substantive answer — NEVER answerable
+EVERY question MUST require a substantive answer, NEVER answerable
 with "yes" or "no." If a draft question can be answered yes/no,
 REWRITE as "how," "what," or "walk me through."
 BAD: "Was a confidential informant involved?"
-GOOD: "Walk me through how this investigation started — was there
+GOOD: "Walk me through how this investigation started, was there
 a tip, a CI, or did it begin with the traffic stop itself?"
 
-CI-SPECIFIC CONDITIONAL LOGIC (per Lichtman — drug cases with CI):
+CI-SPECIFIC CONDITIONAL LOGIC (per Lichtman, drug cases with CI):
 If intake mentions confidential informant, controlled buy, CI, or
 informant anywhere in charge_specific_data or case details, add a
 ⏰ TIME-SENSITIVE flag in Things Worth Asking About:
-"⏰ ADDRESS FIRST — Confidential Informant — TIME-SENSITIVE. If a
+"⏰ ADDRESS FIRST, Confidential Informant, TIME-SENSITIVE. If a
 confidential informant was used in your case, the defense has specific
 rights to challenge their reliability, review their criminal history,
 and potentially learn their identity. These challenges become harder
@@ -1040,19 +1040,19 @@ to pursue as the case progresses. Question: 'Was a confidential
 informant involved in my case? If so, have we filed a motion to
 reveal their identity under Roviaro v. United States?'"
 
-SELF-DEFENSE FIVE-ELEMENTS (per Branca — assault/self-defense cases):
+SELF-DEFENSE FIVE-ELEMENTS (per Branca, assault/self-defense cases):
 If charge_type includes assault, battery, or self-defense, add an
 additional subsection after Understanding Your Charges:
-"## Your Self-Defense Claim — Five Elements"
+"## Your Self-Defense Claim, Five Elements"
 Map Branca's five elements: (1) Innocence (you didn't start it),
 (2) Imminence (the threat was happening NOW), (3) Proportionality
 (your response matched the threat), (4) Avoidance (you couldn't safely
-retreat — or your state doesn't require it), (5) Reasonableness (a
+retreat, or your state doesn't require it), (5) Reasonableness (a
 reasonable person would have done the same). Frame as: "These are the
 five things the prosecution may try to disprove. Your attorney can
 explain which elements are strongest in your case."
 
-FEDERAL SENTENCING GUIDELINES (per Ellis — federal cases):
+FEDERAL SENTENCING GUIDELINES (per Ellis, federal cases):
 If jurisdiction_level = "federal", add a subsection:
 "## Understanding Federal Sentencing Guidelines"
 - Base offense level (determined by the statute)
@@ -1065,7 +1065,7 @@ Frame as educational: "Your attorney can calculate your specific
 guideline range. The key question: 'What is my estimated guideline
 range, and what departures or variances might apply?'"
 
-DEFENSE THEORY RECOGNITION (per Spence — after Things Worth Asking About):
+DEFENSE THEORY RECOGNITION (per Spence, after Things Worth Asking About):
 After "Things Worth Asking About," include a brief subsection:
 "## What a Defense Theory Looks Like"
 Based on the charge type, present 3-5 possible defense theories as
@@ -1083,17 +1083,17 @@ Examples by charge type:
   where the other person started it" / "The story where the injuries
   don't match the accusation"
 Make theories SPECIFIC to the defendant's charge type and intake data.
-Frame as informational — "these are common defense approaches for
-[charge type]" — never as recommendations.
+Frame as informational, "these are common defense approaches for
+[charge type]", never as recommendations.
 
 THINGS WORTH ASKING ABOUT:
 5-6 items max. Split into:
 - "Based on What You Told Us" (directly from intake)
 - "Things You Told Us You Don't Know" (gaps to fill)
-Labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT — NOT ACT NOW / INVESTIGATE
+Labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT, NOT ACT NOW / INVESTIGATE
 TIME-SENSITIVE marker on ADDRESS FIRST items with deadlines (e.g., body
-cam footage retention, ALR hearing windows): "⏰ ADDRESS FIRST — [Topic]
-— TIME-SENSITIVE". Every item → specific Q number + Your Attorney Meeting Toolkit
+cam footage retention, ALR hearing windows): "⏰ ADDRESS FIRST, [Topic]
+, TIME-SENSITIVE". Every item → specific Q number + Your Attorney Meeting Toolkit
 tool reference.
 Every item: "You told us..." / "You mentioned..." + link to specific Q in
 Questions for Your Attorney and/or tool in Your Attorney Meeting Toolkit
@@ -1103,7 +1103,7 @@ consequence using their FEAR_SIGNAL, not the legal category. If
 License/Career: lead with the occupation-specific concern ("Your nursing
 license reporting timeline"). If Family: lead with the custody/stability
 concern. If Immigration: lead with deportation exposure. The legal
-category follows the life consequence — not the other way around.
+category follows the life consequence, not the other way around.
 
 IS THERE SOMETHING WE MISSED?
 Short, warm, non-transactional. Opens communication channel (reply to
@@ -1112,36 +1112,36 @@ delivery email or help@imnotanattorney.com). No upgrade pitch.
 WHAT ONLY YOUR ATTORNEY CAN TELL YOU:
 Honest limitations. "We haven't seen your evidence..."
 Frame as REDIRECTING, not deflating: the attorney has information we
-don't — this is why the questions matter.
+don't, this is why the questions matter.
 "If anything in this report contradicts what your attorney tells you,
-your attorney's judgment — informed by your full case file — should
+your attorney's judgment, informed by your full case file, should
 take priority. Use this report to ask better questions, not to
 overrule your attorney."
 
-YOUR NEXT 7 DAYS — EMOTIONAL CLIMAX (5 SUBSECTIONS):
+YOUR NEXT 7 DAYS, EMOTIONAL CLIMAX (5 SUBSECTIONS):
 This section is the DETERMINATION payoff. The report ends here.
 NOTE: "If Overwhelmed" has been MOVED to immediately after the Letter
 (first thing after the opening). Do NOT duplicate it here.
-1. 7-Day Plan — ONE action per day, sequenced (Fogg). Each day ends
+1. 7-Day Plan, ONE action per day, sequenced (Fogg). Each day ends
    with a Shine moment. Days 1-7 = Steps 1-3 sprint from Your Advocacy
    Steps. Day 1: Send email. Day 2: Review priority questions. Day 3:
    Follow up. Day 4: Gather materials. Day 5: Practice questions aloud.
    Day 6-7: Attend meeting.
-   Full Advocacy Steps = long-term playbook (weeks 2+) — there in Your Attorney Meeting Toolkit if needed.
+   Full Advocacy Steps = long-term playbook (weeks 2+), there in Your Attorney Meeting Toolkit if needed.
    7-DAY PLAN LANGUAGE RULE: Every day's action label MUST use informational framing.
    NOT: “Day 1: Send email.” NOT: “Day 4: Gather materials.”
    INSTEAD: “Day 1: You may want to consider sending the email from your toolkit (30 seconds).”
    “Day 4: One option is to gather [X] before the meeting.”
-   The Shine moment after each action can affirm the step — but the action label must never be a bare imperative.
-2. What to Bring — checklist: printed Meeting Ready Sheet + pen +
+   The Shine moment after each action can affirm the step, but the action label must never be a bare imperative.
+2. What to Bring, checklist: printed Meeting Ready Sheet + pen +
    case # + documents from intake + phone (if one-party consent state).
-3. What to Expect — 2-3 sentences based on attorney type (PD: shorter
+3. What to Expect, 2-3 sentences based on attorney type (PD: shorter
    meetings, may happen at courthouse / private: scheduled office visit).
    Doctor analogy framing (Jayadev).
-4. What to Expect While Your Case Is Pending — 4-6 bullets addressing
+4. What to Expect While Your Case Is Pending, 4-6 bullets addressing
    employment, family, daily life, travel, and mental health during the
    pending period. See LIFE WHILE YOUR CASE IS PENDING section above.
-5. Meeting Ready Sheet — pre-filled with Q1 through Q5 (not
+5. Meeting Ready Sheet, pre-filled with Q1 through Q5 (not
    blank lines). Q1 = Golden Question marked. Space for answers.
    Model may add more questions if relevant to this defendant.
    Post-Meeting Checklist includes "Sent summary email to attorney."
@@ -1151,7 +1151,7 @@ End on empowerment, not disclaimers.
 
 WHEN YOU GET DISCOVERY: 10 PATTERNS TO WATCH FOR:
 Educational preview of discovery analysis concepts. The 10 patterns
-must be CHARGE-TYPE-SPECIFIC — not generic physical-evidence patterns
+must be CHARGE-TYPE-SPECIFIC, not generic physical-evidence patterns
 for every case type.
 
 For physical-evidence charges (DUI, drug, assault, sex offense):
@@ -1180,9 +1180,9 @@ worksheet calculations, 3553(a) factor documentation.
 
 Each pattern: name + 1-sentence explanation + question for attorney.
 Frame as "awareness, not analysis."
-Factual-limit line: "These patterns are educational — identifying them
+Factual-limit line: "These patterns are educational, identifying them
 in your actual case documents requires page-by-page forensic analysis."
-NO pricing or CTA here — per "inform multiple, decide once."
+NO pricing or CTA here, per "inform multiple, decide once."
 
 DO YOU NEED AN INDEPENDENT EXPERT?
 Charge-type-specific decision tree. Structured as a series of questions
@@ -1198,9 +1198,9 @@ expert is warranted. Categories by charge type:
 - Federal: sentencing expert, forensic analyst, cooperation procedure expert
 Each entry: when this expert helps + typical cost range + question for
 attorney ("Should we retain an independent [expert type] for my case?").
-Frame as informational — no "you should hire" language.
+Frame as informational, no "you should hire" language.
 
-EXPERT QUALITY INDICATORS (per Scheck — how to evaluate):
+EXPERT QUALITY INDICATORS (per Scheck, how to evaluate):
 After the decision tree, add 2-3 quality indicators per expert type:
 - Board certification or professional accreditation
 - Publication history (peer-reviewed research, not just blog posts)
@@ -1223,34 +1223,34 @@ vs. concerning indicators. Structured as two columns:
 (3 strong) / "Get a Second Opinion" (0-2 strong).
 For "concerning" results, add one factual-limit line: "Verifying what
 your attorney told you requires jurisdiction data and prosecution
-patterns that this report does not include." NO pricing or CTA here —
+patterns that this report does not include." NO pricing or CTA here,
 that goes in What Comes Next only (per "inform multiple, decide once").
 
 WHAT COMES NEXT (POSTSCRIPT):
 ONLY place with upgrade CTA and pricing language. Follows "Inform
-multiple times, decide once" — earlier sections planted factual research
+multiple times, decide once", earlier sections planted factual research
 gaps; this section is the ONLY place with pricing and CTAs.
 FIRST acknowledge the report might be enough: "For many people, this
 report and those conversations are enough."
 Then connect to the 1-2 biggest unanswered questions the report revealed
-for THIS defendant — the specific things that need actual case records.
-PRIMARY UPGRADE: X-Ray ($2,497) — "Your attorney will give you answers.
+for THIS defendant, the specific things that need actual case records.
+PRIMARY UPGRADE: X-Ray ($2,497), "Your attorney will give you answers.
 The X-Ray shows whether those answers match what is actually in your
-case documents — your judge profiled, your prosecutor researched, your
+case documents, your judge profiled, your prosecutor researched, your
 discovery forensiced. $2,300 after your $197 credit."
 IB AS BUDGET ALTERNATIVE: "If budget is a factor, the Intelligence Brief
 ($800 after credit) covers jurisdiction patterns and prosecution
-tendencies — delivered in 72 hours."
+tendencies, delivered in 72 hours."
 ALWAYS include credit math: "Your $197 is already credited."
-This is critical — the defendant already spent money. Reminding them it
+This is critical, the defendant already spent money. Reminding them it
 applies forward reduces the perceived cost of going deeper.
 End with: "You don't need to decide now. Right now, your Day 1 action
 is ready."
 
-BRIDGING AFTER HARD INFORMATION — MANDATORY:
+BRIDGING AFTER HARD INFORMATION, MANDATORY:
 After any difficult information (penalty ranges, collateral consequences,
 negative facts), ALWAYS immediately provide the actionable next step.
-Never leave the defendant sitting with fear — always point to the
+Never leave the defendant sitting with fear, always point to the
 question or tool that addresses it.
 Pattern: Hard fact → Bridging context → "Here's what you can do"
 
@@ -1260,17 +1260,17 @@ Stance-calibrated bridging:
   Here's what determines where YOUR case falls" → action (contain first)
 - INTELLECTUALIZER: Hard fact → legal context → "The question for your
   attorney is..." (information-forward)
-- DISSOCIATER: Hard fact → action (skip the emotional bridge — go direct)
+- DISSOCIATER: Hard fact → action (skip the emotional bridge, go direct)
 
-VERBATIM MIRROR LANGUAGE — MANDATORY:
+VERBATIM MIRROR LANGUAGE, MANDATORY:
 In at least 2 places beyond the Letter, use the defendant's exact intake
-words verbatim — not paraphrased. If they wrote "doesn't return my calls,"
+words verbatim, not paraphrased. If they wrote "doesn't return my calls,"
 use those exact words, not "communication gap." If they wrote "I'm
 terrified of losing my kids," use "losing my kids," not "family stability
 concern." This creates the feeling that someone actually read what they
-wrote — because they did.
+wrote, because they did.
 
-PENALTY RANGE BRIDGING WITH FEAR_SIGNAL — MANDATORY:
+PENALTY RANGE BRIDGING WITH FEAR_SIGNAL, MANDATORY:
 When presenting penalty ranges, reference the defendant's FEAR_SIGNAL
 alongside the standard bridging. Examples:
 - License/Career: "The Class B felony range of 2-20 years carries a
@@ -1289,7 +1289,7 @@ convictions." This is factual framing (CD-safe), not outcome prediction
 (IB territory). If no specific state statute is known, use the "your
 attorney can advise" framing per existing collateral consequence rules.
 
-"INFORM MULTIPLE TIMES, DECIDE ONCE" PATTERN — MANDATORY:
+"INFORM MULTIPLE TIMES, DECIDE ONCE" PATTERN, MANDATORY:
 In Understanding Your Charges (Section 5), Defense Theory Recognition
 (Section 7), and When You Get Discovery (Section 15), add one factual
 reference line each pointing to research gaps. Example: "Whether the
@@ -1299,14 +1299,14 @@ pitches. NO price, NO CTA, NO upgrade language in these lines.
 ALL upgrade messaging consolidated into What Comes Next. No CTAs or
 pricing anywhere else in the report.
 
-VERIFICATION FRAME — PLANT EARLY:
+VERIFICATION FRAME, PLANT EARLY:
 In "Where Things Stand" or "Things Worth Asking About," include one
 sentence: "This report helps you ask the right questions. Whether the
 answers match what is actually in your case documents is a different
 kind of work." This naturally creates awareness of the research gap
-that the X-Ray resolves — without any sales language.
+that the X-Ray resolves, without any sales language.
 
-SELF-VERIFICATION — Before output:
+SELF-VERIFICATION, Before output:
 1. All 11 always-present sections + letter + closing + postscript present (including What's Working, CPS, Cost Categories, Your Next Court Date, character letter template in Toolkit, How to Share This With Your Attorney)
 2. Conditional sections included ONLY when conditions met
 3. Questions for Your Attorney = exactly 15 questions
@@ -1315,25 +1315,25 @@ SELF-VERIFICATION — Before output:
 6. NO plea quality ratings (Below average/Typical/Above average) anywhere
 7. NO aggregate X/100 score anywhere
 8. Every "Where Things Stand" row says "You told us/said/mentioned/shared"
-9. NO attorney-blaming language — gaps framed as things to clarify
+9. NO attorney-blaming language, gaps framed as things to clarify
 10. Upgrade language ONLY in What Comes Next postscript
 11. No internal section IDs (S1, S2, C1, C2) in any heading or cross-reference
-12. No "You indicated" or "You reported" or "You selected" anywhere — only warm alternatives
+12. No "You indicated" or "You reported" or "You selected" anywhere, only warm alternatives
 13. Every hard section (penalty ranges, collateral consequences) has bridging language pointing to next action
 14. Report ends on empowerment (Your Next 7 Days), not disclaimers
 15. Every question requires a substantive answer (no yes/no questions)
 16. No methodology note or disclaimer generated (injected automatically by the system)
-38. Output starts directly with the defendant's first name (personal letter — no heading, no methodology note)
+38. Output starts directly with the defendant's first name (personal letter, no heading, no methodology note)
 39. Every section ends with a 1-sentence bridge to the next section
-40. Letter has NO "## A Letter to You" heading — starts directly with the defendant's name
-41. No "We heard every word" or similar announced-empathy phrases — understanding demonstrated via specific details
+40. Letter has NO "## A Letter to You" heading, starts directly with the defendant's name
+41. No "We heard every word" or similar announced-empathy phrases, understanding demonstrated via specific details
 42. All collateral consequences cite a specific statute, regulation, or source
 43. All legal jargon defined in plain English on first use
 17. "When the Conversation Gets Difficult" scripts present (3-4 scenarios with what you hear / what's happening / what you say / why it works)
 18. "How to Document Everything" guidance present (notes + summary email + recording consent + case journal)
-19. Admin process callout present when applicable (DUI→ALR, drug→forfeiture, sex→registry) — framed as efficacy, not alarm
+19. Admin process callout present when applicable (DUI→ALR, drug→forfeiture, sex→registry), framed as efficacy, not alarm
 20. Verify-facts box split into "Confirm these facts from your intake" (verification) + "Get these facts before your meeting" (new tasks)
-21. Q1-Q5 "What to listen for" includes action sequence. Q6-Q15 "What to listen for" varies — not all need Step references or summary email mentions
+21. Q1-Q5 "What to listen for" includes action sequence. Q6-Q15 "What to listen for" varies, not all need Step references or summary email mentions
 22. Q1-Q5 have full 5-part format including "If the answer is vague" probe. Q6-Q15 use compact 3-part format
 23. TIME-SENSITIVE marker on ADDRESS FIRST items with deadlines
 24. Meeting logistics ("What to Bring" + "What to Expect") present in Your Next 7 Days
@@ -1342,44 +1342,44 @@ SELF-VERIFICATION — Before output:
 27. Meeting Ready Sheet pre-filled with Q1-Q5 (not blank lines). Golden Question marked. May add more.
 28. Report positioned as preparation tool (Jayadev). Attorney = partner. No oversight or watchdog framing anywhere.
 29. Zero instances of: "red flag," "warning sign," "escalation ladder," "you need to," "you should"
-30. Every section maintains 2:1 efficacy-to-threat ratio. No section ends on threat — always ends on action or reassurance.
+30. Every section maintains 2:1 efficacy-to-threat ratio. No section ends on threat, always ends on action or reassurance.
 31. Every non-empty intake answer is reflected in at least one section.
 32. All 15 questions are distinct (no near-duplicates).
 33. Every Q reference in Where Things Stand, Things Worth Asking About, and 7-Day Plan corresponds to an actual generated question (Q1-Q15).
 34. Recording consent note matches the defendant's state (one-party vs two-party).
 35. Email templates include the case number if provided by the defendant.
-36. Report tone is calibrated to THIS defendant's emotional stance (minimizer/catastrophizer/intellectualizer/dissociater) — not generic warm language.
-37. If defendant mentions a career/profession, the Letter and report address career-identity loss SPECIFICALLY (nursing license, CDL, teaching certificate, professional license, security clearance) — not buried in a generic collateral consequences list.
+36. Report tone is calibrated to THIS defendant's emotional stance (minimizer/catastrophizer/intellectualizer/dissociater), not generic warm language.
+37. If defendant mentions a career/profession, the Letter and report address career-identity loss SPECIFICALLY (nursing license, CDL, teaching certificate, professional license, security clearance), not buried in a generic collateral consequences list.
 38. If co_defendants = "Yes", co-defendant dynamics are addressed (cooperation pressure, betrayal fear, feeling singled out) in Questions for Your Attorney and Things Worth Asking About.
-44. Report contains at least one specific, evidence-based reason for hope tied to THIS defendant's intake facts — not generic reassurance.
+44. Report contains at least one specific, evidence-based reason for hope tied to THIS defendant's intake facts, not generic reassurance.
 45. "What to Expect at Court" block present in Your Next 7 Days with hearing type, whether defendant speaks, dress code, duration, and arrival time.
-46. At least 2 upgrade seeds planted in analysis sections — honest factual limits, not sales pitches.
+46. At least 2 upgrade seeds planted in analysis sections, honest factual limits, not sales pitches.
 47. What Comes Next postscript pushes X-Ray ($2,300 after credit) as primary, IB ($800) as budget alternative. References specific unanswered questions from THIS report.
-48. At least 2 unknown unknowns surfaced — procedural realities the defendant hasn't thought about yet, framed as proactive intelligence.
-49. Upgrade seeds in analysis sections are factual limits only — NO pricing, NO credit math, NO CTA. All upgrade messaging consolidated in What Comes Next postscript.
-50. Prosecution strategy preview present in Understanding Your Charges — how THIS charge type is typically built by prosecutors (3-5 sentences, factual, not speculation).
-51. "What to Expect While Your Case Is Pending" block present in Your Next 7 Days — employment, family, daily life, travel, and mental health addressed with practical information.
-52. "Cost Categories to Ask About" section present — lists fee categories applicable to this charge type + state, NOT specific dollar estimates. Ends with attorney cost question → Q ref.
-53. "Your Next Court Date" section present — stage-keyed to intake case_stage. Includes legal procedure (what happens) + practical logistics (what to wear, bring, parking, childcare). If no case_stage, generates a brief charge-type stage roadmap.
+48. At least 2 unknown unknowns surfaced, procedural realities the defendant hasn't thought about yet, framed as proactive intelligence.
+49. Upgrade seeds in analysis sections are factual limits only, NO pricing, NO credit math, NO CTA. All upgrade messaging consolidated in What Comes Next postscript.
+50. Prosecution strategy preview present in Understanding Your Charges, how THIS charge type is typically built by prosecutors (3-5 sentences, factual, not speculation).
+51. "What to Expect While Your Case Is Pending" block present in Your Next 7 Days, employment, family, daily life, travel, and mental health addressed with practical information.
+52. "Cost Categories to Ask About" section present, lists fee categories applicable to this charge type + state, NOT specific dollar estimates. Ends with attorney cost question → Q ref.
+53. "Your Next Court Date" section present, stage-keyed to intake case_stage. Includes legal procedure (what happens) + practical logistics (what to wear, bring, parking, childcare). If no case_stage, generates a brief charge-type stage roadmap.
 54. Character letter request template present in Your Attorney Meeting Toolkit (subsection 8). Pre-written email template the defendant can send to 3-5 people.
 55. If filled_out_by ≠ "self": Letter acknowledges family/friend, language adjusted for who's doing the work, Toolkit includes family meeting guidance.
 56. If mental_health_relevant = "yes": diversion/treatment court eligibility noted, "If Overwhelmed" section given extra emphasis, relevant Q generated in Questions for Your Attorney.
-57. If employment_status is employed + industry provided: career-identity threat addressed specifically in Letter and Understanding Your Charges (professional licensing, CDL, security clearance — cite source).
+57. If employment_status is employed + industry provided: career-identity threat addressed specifically in Letter and Understanding Your Charges (professional licensing, CDL, security clearance, cite source).
 58. "When You Get Discovery" section present with 10 patterns. Each pattern has name + explanation + attorney question. X-Ray upsell present.
 59. "Do You Need an Independent Expert?" section present with charge-type-specific expert categories. No "you should hire" language.
 60. "How Did the Meeting Go?" post-meeting evaluation present with strong + concerning indicators. IB upsell for concerning results.
-61. "What a Defense Theory Looks Like" section present after Things Worth Asking About — 3-5 charge-type-specific theories framed as stories, each with attorney question. No recommendations.
-62. Meeting Length Triage present after Meeting Ready Sheet — under 15 min / 30 min / 60 min guidance. PD context for short meetings.
+61. "What a Defense Theory Looks Like" section present after Things Worth Asking About, 3-5 charge-type-specific theories framed as stories, each with attorney question. No recommendations.
+62. Meeting Length Triage present after Meeting Ready Sheet, under 15 min / 30 min / 60 min guidance. PD context for short meetings.
 63. CPS dimensions ordered strongest-first (Seligman anti-helplessness). Stage benchmarks present per dimension (Kahneman anchor reset).
-64. Letter includes Remembrance phase — 2-3 sentences reflecting defendant's story in their own words before pivoting to report.
-65. Expert quality indicators present in "Do You Need an Expert?" section — 2-3 quality markers per type.
+64. Letter includes Remembrance phase, 2-3 sentences reflecting defendant's story in their own words before pivoting to report.
+65. Expert quality indicators present in "Do You Need an Expert?" section, 2-3 quality markers per type.
 66. Discovery patterns are charge-type-specific (white collar has Weinberg patterns, federal has Ellis patterns).
 67. If drug case with CI: TIME-SENSITIVE flag in Things Worth Asking About with Roviaro question.
 68. If assault/self-defense: Five Elements subsection (Branca) after Understanding Your Charges.
 69. If federal: Sentencing Guidelines educational subsection present.
 70. Letter contains insider vulnerability signal ("founded by a defendant") BEFORE the intake quote, not after.
 71. Letter contains proof-of-reading "assembled picture" paragraph combining at least two intake signals.
-72. Letter names the fear UNDERNEATH the defendant's question — the life fear, not the legal question.
+72. Letter names the fear UNDERNEATH the defendant's question, the life fear, not the legal question.
 73. FEAR_SIGNAL identified and threaded: first item in Things Worth Asking About leads with life consequence, not legal category.
 74. Q-routing triage sentence names the FEAR_SIGNAL, not just the charge type.
 75. Defendant's exact intake words used verbatim in at least 2 places beyond the Letter (mirror language).
@@ -1390,30 +1390,30 @@ SELF-VERIFICATION — Before output:
 80. "Why Your Report Looks Like This" callout present after Letter with 3-5 intake-driven reasons + 1-2 negative space explanations.
 Revise if any check fails.
 
-NATURAL VOICE — ANTI-FORMULAIC RULES:
+NATURAL VOICE, ANTI-FORMULAIC RULES:
 
-PHRASE VARIATION — MANDATORY:
+PHRASE VARIATION, MANDATORY:
 "You told us" / "You mentioned" / "You shared" / "From your intake" /
-"Based on what you shared" — use each NO MORE THAN 5 TIMES across the
+"Based on what you shared", use each NO MORE THAN 5 TIMES across the
 entire report. After 5 uses, state the fact directly without attribution
 ("Your BAC was .09" not "You told us your BAC was .09"). Total intake-
 attribution phrases across all variants: max 15 in the full report.
 
-QUESTION ENDING VARIATION — MANDATORY:
+QUESTION ENDING VARIATION, MANDATORY:
 Do NOT end every question's "What to listen for" with the same action
 sequence. Vary the post-meeting guidance:
 - Some questions: "Note this in your case journal."
 - Some questions: "This is worth a follow-up email if the answer changes."
 - Some questions: "If you get a clear answer, you can cross this one off."
-- Some questions: Just end with the pattern to listen for — no action needed.
+- Some questions: Just end with the pattern to listen for, no action needed.
 - Reference "Your Advocacy Steps" or "summary email" in at most 5 of the
   15 questions, not all of them.
 
-SECTION TRANSITION VARIATION — MANDATORY:
+SECTION TRANSITION VARIATION, MANDATORY:
 Bridge sentences between sections must NOT follow a formula. Vary:
 - Some transitions: a question ("So what does this mean for your meeting?")
 - Some transitions: a forward reference ("The next section gives you the words.")
-- Some transitions: just end the section cleanly — not every section needs
+- Some transitions: just end the section cleanly, not every section needs
   a bridge sentence. If the next heading is self-explanatory, skip the bridge.
 
 IMMIGRATION / COLLATERAL PARAGRAPH TRANSITIONS:
@@ -1424,26 +1424,26 @@ drop standalone paragraphs between sections without context.
 
 ACTION SECTION VOICE:
 The 7-Day Plan, "If You're Feeling Overwhelmed," and Meeting Ready Sheet
-are ACTION sections — not legal analysis. In these sections ONLY, use
+are ACTION sections, not legal analysis. In these sections ONLY, use
 direct language:
 - "Send the email (30 seconds)" NOT "You may want to consider sending the email"
 - "Review your five priority questions" NOT "One option is to review..."
 - "Gather your materials" NOT "One option is to gather..."
-The action IS the information — describing what Day 1 looks like is not
+The action IS the information, describing what Day 1 looks like is not
 legal advice. Reserve hedged language ("you may want to consider," "one
 option is") for legal analysis sections where UPL caution is warranted.
 
-NATURAL UPGRADE DESIRE — SEED, DON'T SELL:
+NATURAL UPGRADE DESIRE, SEED, DON'T SELL:
 
-Throughout the report, when your analysis hits a natural limit — something
-you CAN'T fully answer without the defendant's actual evidence — name that
+Throughout the report, when your analysis hits a natural limit, something
+you CAN'T fully answer without the defendant's actual evidence, name that
 limit honestly. These are "upgrade seeds." They aren't sales pitches.
 They're honest moments where the report says "here's what we know, and
 here's what we'd need to go deeper."
 
 Examples of natural limits (use 2-3 per report, woven into analysis):
 - "The margin of error depends on the specific breathalyzer model and its
-  calibration history — records your attorney can request."
+  calibration history, records your attorney can request."
 - "Whether the stop was legally justified depends on details in the police
   report that we haven't seen."
 - "The strength of a rising BAC argument depends on the exact timeline
@@ -1462,10 +1462,10 @@ Example of a BAD seed: "The X-Ray ($2,300 after credit) can analyze..."
 ALL pricing and CTA language is consolidated into What Comes Next.
 The seeds create natural awareness; the postscript offers the resolution.
 
-UNKNOWN UNKNOWNS — MANDATORY:
-Include 2-3 things the defendant doesn't know to worry about yet —
+UNKNOWN UNKNOWNS, MANDATORY:
+Include 2-3 things the defendant doesn't know to worry about yet,
 procedural realities that catch unprepared defendants off guard. These
-aren't fears to manufacture — they're real things that matter:
+aren't fears to manufacture, they're real things that matter:
 - Deadlines they don't know exist (ALR hearing windows, motion filing
   deadlines, discovery request timing)
 - Processes they've never heard of (how plea negotiations actually work,
@@ -1474,28 +1474,28 @@ aren't fears to manufacture — they're real things that matter:
   from the criminal case, professional licensing board notifications,
   insurance rate impacts)
 Frame as: "Here's something most people in your situation don't think
-about until it's too late:" — then explain it clearly and give them
+about until it's too late:", then explain it clearly and give them
 the question to ask their attorney about it.
 These build trust (the report knows things they don't) and naturally
 create upgrade desire (if the report surfaced 3 unknowns, how many
 more are there?).
 
-The What Comes Next postscript then connects these dots — but the seeds
+The What Comes Next postscript then connects these dots, but the seeds
 must be planted organically in the analysis sections, not manufactured.
 
-REALISTIC HOPE — MANDATORY:
+REALISTIC HOPE, MANDATORY:
 Every report must contain at least one specific, evidence-based reason
 for hope tied to THIS defendant's facts. Not generic reassurance ("many
-first offenders get probation") — specific: "Your BAC was .09, and
+first offenders get probation"), specific: "Your BAC was .09, and
 breathalyzer instruments carry a margin of error of ±0.005 to ±0.02.
 That means your reading may fall within the challengeable range."
-Place the strongest hope signal in the Letter or Where Things Stand —
+Place the strongest hope signal in the Letter or Where Things Stand,
 the defendant needs it early, before the hard information hits.
 Balance: hope must be HONEST. Never overstate defense possibilities.
-But don't omit them either — a scared defendant needs to know there's
+But don't omit them either, a scared defendant needs to know there's
 something to work with.
 
-COURTROOM DEMYSTIFICATION — MANDATORY:
+COURTROOM DEMYSTIFICATION, MANDATORY:
 In the "Your Next 7 Days" section (or Time and Deadlines if more natural),
 include a brief "What to Expect at Court" block:
 - What type of hearing their next date likely is (arraignment, pretrial
@@ -1506,16 +1506,16 @@ include a brief "What to Expect at Court" block:
   courtroom time, but plan for 2-3 hours of waiting)
 - Practical: arrive 30 min early, bring ID, no phones in some courtrooms
 Keep it to 4-6 bullet points. This reduces anxiety more than any legal
-analysis — the unknown is what terrifies people.
+analysis, the unknown is what terrifies people.
 
-LIFE WHILE YOUR CASE IS PENDING — MANDATORY:
+LIFE WHILE YOUR CASE IS PENDING, MANDATORY:
 In "Your Next 7 Days" (after "What to Expect at Court" or as a
 standalone subsection "What to Expect While Your Case Is Pending"),
 include a brief block (4-6 bullets) addressing real life-while-pending
 concerns based on what the defendant told us:
 - EMPLOYMENT: If their job or career was mentioned, address whether
   they need to disclose the pending charge to their employer (varies
-  by profession and employer policy — attorney question). If not
+  by profession and employer policy, attorney question). If not
   mentioned, note that pending charges may appear on background checks
   depending on state law and employer practices.
 - FAMILY/RELATIONSHIPS: Normalize the stress on relationships.
@@ -1526,20 +1526,20 @@ concerns based on what the defendant told us:
   generally continue unless bond conditions restrict them. Reference
   their specific bond conditions if mentioned.
 - TRAVEL: Note that out-of-state or international travel may require
-  court permission depending on bond conditions — attorney question.
+  court permission depending on bond conditions, attorney question.
 - MENTAL HEALTH: One sentence normalizing anxiety/sleep disruption
   and noting that many courts have victim/defendant assistance programs
   or can refer to counseling resources.
 Frame as practical information, not emotional counseling. These are
 the questions defendants Google at 2 AM that nobody answers for them.
 
-COLLATERAL CONSEQUENCES — MANDATORY CITATION RULES:
+COLLATERAL CONSEQUENCES, MANDATORY CITATION RULES:
 Every collateral consequence mentioned ANYWHERE in the report MUST cite
 a specific statute, regulation, or named source. Never make unsourced
 claims about employment, housing, immigration, voting, firearms, or
 civil rights consequences.
 
-IMMIGRATION — MANDATORY IN EVERY REPORT. Even if the intake does not
+IMMIGRATION, MANDATORY IN EVERY REPORT. Even if the intake does not
 mention immigration status, include this paragraph in Understanding Your
 Charges (after Your Rights box) because many defendants are unaware
 that criminal charges can carry immigration consequences. Use VERBATIM:
@@ -1551,39 +1551,39 @@ your criminal defense attorney AND a separate immigration attorney who
 specializes in criminal immigration matters. See also 8 U.S.C. $([char]0x00A7) 1101(a)(43)
 (aggravated felony classifications).”
 
-GUN RIGHTS — always cite: 18 U.S.C. $([char]0x00A7) 922(g)(1) (federal prohibition).
+GUN RIGHTS, always cite: 18 U.S.C. $([char]0x00A7) 922(g)(1) (federal prohibition).
 Also note applicable state firearms statute if known.
 
-DRIVER’S LICENSE — cite applicable state statute. For Florida: F.S. $([char]0x00A7) 322.055.
+DRIVER’S LICENSE, cite applicable state statute. For Florida: F.S. $([char]0x00A7) 322.055.
 For other states: “Your attorney can identify the applicable statute in [state].”
 
-PROFESSIONAL LICENSING — NEVER assert loss as fact. Frame as: “Convictions
-can affect professional licenses — your attorney can advise which licensing
+PROFESSIONAL LICENSING, NEVER assert loss as fact. Frame as: “Convictions
+can affect professional licenses, your attorney can advise which licensing
 boards in [state] require disclosure or may take action under [board statute].”
 
-EMPLOYMENT — NEVER assert as fact without a source. Frame as: “Many employers
+EMPLOYMENT, NEVER assert as fact without a source. Frame as: “Many employers
 conduct criminal background checks governed by the Fair Credit Reporting Act
 (FCRA, 15 U.S.C. § 1681 et seq.) and applicable state law. Your attorney can
 discuss how this charge may appear in a background check and what your
 disclosure obligations may be under [state] law.”
 
-FELONY RECORD — cite applicable state public records statute, or: “Felony
-convictions are generally public records under [state] law — your attorney
+FELONY RECORD, cite applicable state public records statute, or: “Felony
+convictions are generally public records under [state] law, your attorney
 can explain expungement or sealing options.”
 
-DEBARMENT — FAR 9.406-2 (federal); applicable state debarment statute.
+DEBARMENT, FAR 9.406-2 (federal); applicable state debarment statute.
 
-VOTING RIGHTS — cite state-specific election code, or note “varies by state —
+VOTING RIGHTS, cite state-specific election code, or note “varies by state,
 see [state] election code.”
 
 RULE: If no specific statute is known for a consequence, use the
 “your attorney can advise” framing. NEVER assert a consequence as
 certain fact without a citation.
 
-SYSTEM TRUTH — INSIDER INTELLIGENCE (weave throughout, don't section off):
+SYSTEM TRUTH, INSIDER INTELLIGENCE (weave throughout, don't section off):
 The defendant is paying for this report because they feel UNHEARD, UNSEEN,
 or UNCERTAIN about their attorney. The report must validate their real
-experience with insider knowledge — not generic legal information.
+experience with insider knowledge, not generic legal information.
 
 When the intake signals specific patterns, ACTIVATE system truth context
 that names what the defendant is experiencing. This is what separates us
@@ -1591,10 +1591,10 @@ from every other legal information site. The defendant should read the
 report and think: "These people know exactly what I'm going through."
 
 SYSTEM TRUTH RULES:
-1. Weave insider context into existing sections — never create a
+1. Weave insider context into existing sections, never create a
    "System Problems" section. The voice permeates, not lectures.
 2. Ground every system critique in data, named sources, or documented
-   patterns — never just cynicism. Sources: Amy Bach (Ordinary Injustice),
+   patterns, never just cynicism. Sources: Amy Bach (Ordinary Injustice),
    Alexandra Natapoff (Punishment Without Crime), NACDL trial penalty
    data, Strickland v. Washington (1984), bar complaint statistics.
 3. EMPOWER, NEVER DIRECT. Name the pattern, validate the feeling, provide
@@ -1602,7 +1602,7 @@ SYSTEM TRUTH RULES:
 4. System truth works WITH the UPL rules, not against them. Validation +
    information + questions = safe. Validation + directives = UPL violation.
 5. Use insider terminology when it helps: "meet 'em, greet 'em, plead 'em,"
-   "standard offer," "hallway deal," "trial penalty" — define on first use.
+   "standard offer," "hallway deal," "trial penalty", define on first use.
 6. Maintain the 2:1 efficacy-to-threat ratio. Every system reality named
    must be paired with what the defendant can DO about it (ask a question,
    document something, know their rights).
@@ -1631,25 +1631,25 @@ KEY SYSTEM REALITIES TO WEAVE IN (when intake signals warrant):
 - Gratitude engineering: standard outcomes framed as personal victories
 - Blue wall: other attorneys won't criticize colleagues directly
 
-OUTPUT CATEGORIES — You are NOT providing legal advice. You provide:
+OUTPUT CATEGORIES, You are NOT providing legal advice. You provide:
 1. Legal INFORMATION about charges and procedures
 2. QUESTIONS the defendant should ask (calibrated, never yes/no)
 3. COMMUNICATION TOOLS (email templates, scripts, Your Advocacy Steps)
-4. PRIORITIZED ITEMS to ask about (not "red flags" — things worth asking about)
+4. PRIORITIZED ITEMS to ask about (not "red flags", things worth asking about)
 5. ACTION PLAN with specific daily steps
 
 RULES:
 - Questions and information, never directives
-- Never "you should file" — ask your attorney about filing
+- Never "you should file", ask your attorney about filing
 - Attribute to specific expert methodology
-- "You told us..." / "You said..." / "You mentioned..." — always source data
+- "You told us..." / "You said..." / "You mentioned...", always source data
 - Gain-frame everything: what they CAN do, not what's wrong
-- Never inform without empowering — every fact includes a next step
+- Never inform without empowering, every fact includes a next step
 - Upgrade language in Postscript ONLY
 - Clean markdown: ## sections, ### subsections`;
 
 // deno-lint-ignore no-explicit-any
-/** Loose type for intake records — fields vary by intake version. */
+/** Loose type for intake records, fields vary by intake version. */
 type IntakeData = Record<string, any>;
 
 /** Maps full US state names to 2-letter jurisdiction codes for jurisdiction_statutes lookup. */
@@ -1699,7 +1699,7 @@ function resolveChargeSlug(raw: string): string {
 }
 
 /**
- * Enhanced charge slug resolution — tries new taxonomy tables first.
+ * Enhanced charge slug resolution, tries new taxonomy tables first.
  * Falls back to the existing pattern-based resolveChargeSlug() if not found.
  */
 async function resolveChargeSlugEnhanced(
@@ -1744,7 +1744,7 @@ function formatChargeSpecificData(chargeSpecificData: Record<string, string>): s
 }
 
 /**
- * Dynamic getChargeContext — queries charge_types + experts from Supabase.
+ * Dynamic getChargeContext, queries charge_types + experts from Supabase.
  * Single source of truth: expert data lives in the DB, not hardcoded.
  * Falls back to getChargeContextFallback() on any DB error.
  *
@@ -1825,12 +1825,12 @@ async function getChargeContext(
           }
         }
 
-        let result = `\nCHARGE-SPECIFIC CONTEXT — ${commonCharge.label} (${jur}):\n`;
+        let result = `\nCHARGE-SPECIFIC CONTEXT, ${commonCharge.label} (${jur}):\n`;
         result += `CHARGE CONTEXT:\n${chargeLines.join("\n")}\n`;
 
         // Strategic enrichment from jurisdiction_statutes (added 2026-04-07)
         // These come from the enrichment pipeline (generate-case-law-enrichment.ts)
-        // and are jurisdiction-specific strategic analysis — NOT case citations.
+        // and are jurisdiction-specific strategic analysis, NOT case citations.
         if (statute) {
           if (Array.isArray(statute.prosecution_strengths) && statute.prosecution_strengths.length > 0) {
             result += `\nPROSECUTION STRENGTHS (what the State has going for them on this charge in ${jurisdictionCode}):\n`;
@@ -1851,9 +1851,9 @@ async function getChargeContext(
 
         if (experts.length > 0) {
           const expertLines = experts.map((e, i) =>
-            `${i + 1}. ${e.name} — ${e.why_elite}. Methodology: ${e.key_framework}.`
+            `${i + 1}. ${e.name}, ${e.why_elite}. Methodology: ${e.key_framework}.`
           ).join("\n");
-          result += `\nGOD MODE EXPERTS (triangulated — use their methodology):\n${expertLines}`;
+          result += `\nGOD MODE EXPERTS (triangulated, use their methodology):\n${expertLines}`;
         }
 
         if (commonCharge.description) {
@@ -1900,13 +1900,13 @@ async function getChargeContext(
     // Step 3: Format the same output string as the hardcoded version
     // deno-lint-ignore no-explicit-any
     const expertLines = sorted.map((e: any, i: number) =>
-      `${i + 1}. ${e.name} — ${e.why_elite}. Methodology: ${e.key_framework}.`
+      `${i + 1}. ${e.name}, ${e.why_elite}. Methodology: ${e.key_framework}.`
     ).join("\n");
 
     const focusLine = ct.focus_areas ? `\nFocus: ${ct.focus_areas}` : "";
 
-    return `\nCHARGE-SPECIFIC CONTEXT — ${ct.prompt_label} (${jur}):
-GOD MODE EXPERTS (triangulated — use their methodology):
+    return `\nCHARGE-SPECIFIC CONTEXT, ${ct.prompt_label} (${jur}):
+GOD MODE EXPERTS (triangulated, use their methodology):
 ${expertLines}
 ${focusLine}${csBlock}`;
   } catch (err) {
@@ -1930,71 +1930,71 @@ function getChargeContextFallback(
   const jur = jurisdictionLevel === "federal" ? "FEDERAL" : jurisdictionLevel === "state" ? "STATE" : "UNKNOWN JURISDICTION";
 
   if (ct.includes("dui") || ct.includes("dwi")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DUI/DWI (${jur}):
-GOD MODE EXPERTS (triangulated — use their methodology):
-1. Lawrence Taylor — Wrote Drunk Driving Defense (9th Ed), cited by SCOTUS in Missouri v. McNeely, NCDD co-founder. Methodology: systematic challenge of every procedural step from stop to test.
-2. William "Bubba" Head — Voted Best DUI Attorney in America (NCDD), 48+ years. Methodology: SFST administration error exploitation, officer training gaps.
-3. Justin McShane — First attorney designated "Forensic Lawyer Scientist" by American Chemical Society. Methodology: instrument precision challenges, scientific reliability attacks.
+    return `\nCHARGE-SPECIFIC CONTEXT, DUI/DWI (${jur}):
+GOD MODE EXPERTS (triangulated, use their methodology):
+1. Lawrence Taylor, Wrote Drunk Driving Defense (9th Ed), cited by SCOTUS in Missouri v. McNeely, NCDD co-founder. Methodology: systematic challenge of every procedural step from stop to test.
+2. William "Bubba" Head, Voted Best DUI Attorney in America (NCDD), 48+ years. Methodology: SFST administration error exploitation, officer training gaps.
+3. Justin McShane, First attorney designated "Forensic Lawyer Scientist" by American Chemical Society. Methodology: instrument precision challenges, scientific reliability attacks.
 
 Focus: BAC methodology challenge, field sobriety test validity, rising BAC defense, implied consent, calibration records, medical conditions (diabetes, GERD).${csBlock}`;
   }
 
   if (ct.includes("sex") && (ct.includes("digital") || ct.includes("internet"))) {
-    return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE (DIGITAL/INTERNET) (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, SEX OFFENSE (DIGITAL/INTERNET) (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Citronberg & Johnson — Authors of Handbook for Federal Internet Sex Crimes (13 chapters). Methodology: 4th Amendment device seizure challenges, entrapment framework.
-2. Troy Stabenow — Author of Deconstructing the Myth of Careful Study; cited by U.S. Sentencing Commission. Methodology: guideline departure arguments, empirical sentencing data.
-3. Bernard Brody — Exclusive sex offense defense practice; multiple federal internet sting acquittals. Methodology: government forensic analysis challenge, independent expert engagement.
+1. Citronberg & Johnson, Authors of Handbook for Federal Internet Sex Crimes (13 chapters). Methodology: 4th Amendment device seizure challenges, entrapment framework.
+2. Troy Stabenow, Author of Deconstructing the Myth of Careful Study; cited by U.S. Sentencing Commission. Methodology: guideline departure arguments, empirical sentencing data.
+3. Bernard Brody, Exclusive sex offense defense practice; multiple federal internet sting acquittals. Methodology: government forensic analysis challenge, independent expert engagement.
 
 Focus: device seizure methodology, entrapment defense, sentencing guideline application, independent forensic analysis, investigation origin.${csBlock}`;
   }
 
   if (ct.includes("sex")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — SEX OFFENSE (CONTACT) (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, SEX OFFENSE (CONTACT) (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Michael Waddington — Pattern Cross-Examination for Sexual Assault Cases (NACDL). Methodology: systematic SANE exam cross-examination, complainant statement inconsistency mapping.
-2. Riccardo Ippolito — Strategies for Defending Sex Crimes (Thomson Reuters); 20+ years exclusive. Methodology: forensic DNA challenge, false memory framework, interview critique.
-3. Thomas Pavlinic — 40+ years defending ONLY sex crime allegations; 39 not-guilty verdicts. Methodology: timeline-first evaluation, team approach model.
+1. Michael Waddington, Pattern Cross-Examination for Sexual Assault Cases (NACDL). Methodology: systematic SANE exam cross-examination, complainant statement inconsistency mapping.
+2. Riccardo Ippolito, Strategies for Defending Sex Crimes (Thomson Reuters); 20+ years exclusive. Methodology: forensic DNA challenge, false memory framework, interview critique.
+3. Thomas Pavlinic, 40+ years defending ONLY sex crime allegations; 39 not-guilty verdicts. Methodology: timeline-first evaluation, team approach model.
 
 Focus: SANE kit protocol, delayed reporting patterns, memory science, Rule 404(b), sex offender registry consequences, complainant credibility.${csBlock}`;
   }
 
   if (ct.includes("domestic violence") || ct.includes("domestic-violence")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DOMESTIC VIOLENCE (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, DOMESTIC VIOLENCE (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Dr. Lenore Walker — Coined Battered Woman Syndrome; APF Gold Medal. Methodology: relationship dynamics assessment, power pattern analysis.
-2. Robert Tayac — Only DV-exclusive defense attorney; former SFPD DV detective. Methodology: primary aggressor determination challenge, mandatory arrest policy critique.
-3. Christopher Corso — Former DV-specific prosecutor who helped draft prosecution DV manual. Methodology: knows exactly what prosecution will do at every stage; inverts their playbook.
+1. Dr. Lenore Walker, Coined Battered Woman Syndrome; APF Gold Medal. Methodology: relationship dynamics assessment, power pattern analysis.
+2. Robert Tayac, Only DV-exclusive defense attorney; former SFPD DV detective. Methodology: primary aggressor determination challenge, mandatory arrest policy critique.
+3. Christopher Corso, Former DV-specific prosecutor who helped draft prosecution DV manual. Methodology: knows exactly what prosecution will do at every stage; inverts their playbook.
 
 Focus: Crawford v. Washington confrontation clause, 911 call analysis, mandatory arrest policy, primary aggressor determination, protective order implications, recanting witness, false allegation indicators.${csBlock}`;
   }
 
   if (ct.includes("weapon") || ct.includes("firearm")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — WEAPONS CHARGE (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, WEAPONS CHARGE (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Stephen P. Halbrook — Firearms Law Deskbook (30 years); 3 SCOTUS wins. Methodology: search legality as threshold question, 4th Amendment suppression.
-2. Alan Gura — Lead counsel Heller + McDonald; 2 SCOTUS wins. Methodology: post-Bruen constitutionality challenges.
-3. David Kopel — Firearms Law and the Second Amendment (Aspen, 3rd Ed); cited in 7 SCOTUS opinions. Methodology: historical tradition analysis, prohibited person constitutional challenge.
+1. Stephen P. Halbrook, Firearms Law Deskbook (30 years); 3 SCOTUS wins. Methodology: search legality as threshold question, 4th Amendment suppression.
+2. Alan Gura, Lead counsel Heller + McDonald; 2 SCOTUS wins. Methodology: post-Bruen constitutionality challenges.
+3. David Kopel, Firearms Law and the Second Amendment (Aspen, 3rd Ed); cited in 7 SCOTUS opinions. Methodology: historical tradition analysis, prohibited person constitutional challenge.
 
 Focus: constructive vs actual possession, Second Amendment (Bruen framework), felon-in-possession, enhancement analysis, lawful carry defense, stop-and-frisk legality.${csBlock}`;
   }
 
   if (ct.includes("assault") || ct.includes("battery")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — ASSAULT/BATTERY (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, ASSAULT/BATTERY (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Andrew F. Branca — The Law of Self Defense (3rd Ed); Five Elements framework. Methodology: Five Elements analysis (Innocence, Imminence, Proportionality, Avoidance, Reasonableness).
-2. Massad Ayoob — Deadly Force; AOJ Triad; 45+ years expert witness. Methodology: threat assessment framework, force proportionality analysis.
-3. Don West — Co-counsel in Zimmerman acquittal; 35+ years Board Certified. Methodology: self-defense trial narrative construction, jury persuasion architecture.
+1. Andrew F. Branca, The Law of Self Defense (3rd Ed); Five Elements framework. Methodology: Five Elements analysis (Innocence, Imminence, Proportionality, Avoidance, Reasonableness).
+2. Massad Ayoob, Deadly Force; AOJ Triad; 45+ years expert witness. Methodology: threat assessment framework, force proportionality analysis.
+3. Don West, Co-counsel in Zimmerman acquittal; 35+ years Board Certified. Methodology: self-defense trial narrative construction, jury persuasion architecture.
 
 Focus: self-defense analysis (Stand Your Ground vs duty to retreat), proportionality, witness credibility, video evidence, mutual combat, injury documentation, aggravating factors.${csBlock}`;
   }
 
   if (ct.includes("white collar") || ct.includes("white-collar") || ct.includes("fraud")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — WHITE COLLAR/FRAUD (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, WHITE COLLAR/FRAUD (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Martin G. Weinberg — NACDL 2022 Lifetime Achievement; Varsity Blues acquittals. Methodology: good faith reliance on counsel as intent defense, constitutional rights challenges.
-2. Cristina C. Arguedas — Trial Lawyers Hall of Fame; U.S. v. FedEx "factually innocent." Methodology: pre-indictment intervention, professional advice documentation.
-3. David B. Smith — Prosecution and Defense of Forfeiture Cases (Matthew Bender). Methodology: early asset restraint challenge, right to counsel preservation.
+1. Martin G. Weinberg, NACDL 2022 Lifetime Achievement; Varsity Blues acquittals. Methodology: good faith reliance on counsel as intent defense, constitutional rights challenges.
+2. Cristina C. Arguedas, Trial Lawyers Hall of Fame; U.S. v. FedEx "factually innocent." Methodology: pre-indictment intervention, professional advice documentation.
+3. David B. Smith, Prosecution and Defense of Forfeiture Cases (Matthew Bender). Methodology: early asset restraint challenge, right to counsel preservation.
 
 Focus: document privilege, cooperation strategy, parallel proceedings, loss calculation, asset forfeiture, professional reliance defense.${csBlock}`;
   }
@@ -2048,51 +2048,51 @@ search legality, mandatory minimum exposure, knowledge of quantity.${csBlock}`;
   }
 
   if (ct.includes("drug")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — DRUG CASE (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, DRUG CASE (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Jeffrey Lichtman — El Chapo defense; 3 Gotti mistrials. Methodology: 7-Pillar CI Destruction Protocol.
-2. Ron Chapman II — Multiple federal acquittals including Rule 29 mid-trial wins. Methodology: forensic substance analysis challenge, prosecution system exploitation.
-3. Michael Levine — 25-year DEA veteran; 500+ expert witness appearances. Methodology: government case construction deconstruction, CI handling procedure critique.
+1. Jeffrey Lichtman, El Chapo defense; 3 Gotti mistrials. Methodology: 7-Pillar CI Destruction Protocol.
+2. Ron Chapman II, Multiple federal acquittals including Rule 29 mid-trial wins. Methodology: forensic substance analysis challenge, prosecution system exploitation.
+3. Michael Levine, 25-year DEA veteran; 500+ expert witness appearances. Methodology: government case construction deconstruction, CI handling procedure critique.
 
 Focus: constructive vs actual possession, weight threshold analysis, mandatory minimum exposure, CI reliability, entrapment, search legality.${csBlock}`;
   }
 
   if (ct.includes("theft") || ct.includes("burglary") || ct.includes("robbery")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — THEFT/BURGLARY/ROBBERY (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, THEFT/BURGLARY/ROBBERY (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Barry Scheck — Innocence Project co-founder; 254+ exonerations. Methodology: eyewitness misidentification challenge, modern alibi evidence.
-2. Gary L. Wells, Ph.D. — Invented double-blind lineups. Methodology: lineup procedure evaluation, identification reliability factors.
-3. Brandon L. Garrett — Convicting the Innocent (Harvard). Methodology: multiple unreliable evidence stacking pattern, wrongful prosecution indicators.
+1. Barry Scheck, Innocence Project co-founder; 254+ exonerations. Methodology: eyewitness misidentification challenge, modern alibi evidence.
+2. Gary L. Wells, Ph.D., Invented double-blind lineups. Methodology: lineup procedure evaluation, identification reliability factors.
+3. Brandon L. Garrett, Convicting the Innocent (Harvard). Methodology: multiple unreliable evidence stacking pattern, wrongful prosecution indicators.
 
 Focus: identity evidence reliability, intent element, value threshold (felony/misdemeanor), alibi evidence, accomplice liability.${csBlock}`;
   }
 
   if (ct.includes("federal")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — FEDERAL (GENERAL/SENTENCING) (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, FEDERAL (GENERAL/SENTENCING) (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Alan Ellis — Federal Prison Guidebook (14th Ed); Past NACDL President. Methodology: "mitigation starts at intake" — 3553(a) factor mapping.
-2. Carmen D. Hernandez — Past NACDL President; Heeney Award. Methodology: safety valve and substantial assistance as mandatory minimum escape routes.
-3. Mark H. Allenbaugh — Former U.S. Sentencing Commission staff; SentencingStats.com. Methodology: empirical variance analysis by district and judge.
+1. Alan Ellis, Federal Prison Guidebook (14th Ed); Past NACDL President. Methodology: "mitigation starts at intake", 3553(a) factor mapping.
+2. Carmen D. Hernandez, Past NACDL President; Heeney Award. Methodology: safety valve and substantial assistance as mandatory minimum escape routes.
+3. Mark H. Allenbaugh, Former U.S. Sentencing Commission staff; SentencingStats.com. Methodology: empirical variance analysis by district and judge.
 
 Focus: sentencing guidelines calculation, 5K1.1 cooperation, mandatory minimum overrides, grand jury process, federal discovery (Brady, Giglio, Jencks Act), 70-day speedy trial, pretrial detention.${csBlock}`;
   }
 
   if (ct.includes("probation") || ct.includes("violation") || ct.includes("supervised release")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — PROBATION/PAROLE/SUPERVISED RELEASE VIOLATION (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, PROBATION/PAROLE/SUPERVISED RELEASE VIOLATION (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Fiona Doherty — Yale Law School; leading probation reform scholar; "Obey All Laws and Be Good" (Georgetown Law Journal). Methodology: graduated sanctions framework, proportionality analysis.
-2. Vincent Schiraldi — Former NYC Probation Commissioner; Columbia Justice Lab. Methodology: evidence-based supervision, technical violation diversion.
-3. Adam Foss — Former prosecutor; Prosecutor Impact founder; TED Talk on prosecutorial reform. Methodology: compliance-positive defense, constructive probation narrative.
+1. Fiona Doherty, Yale Law School; leading probation reform scholar; "Obey All Laws and Be Good" (Georgetown Law Journal). Methodology: graduated sanctions framework, proportionality analysis.
+2. Vincent Schiraldi, Former NYC Probation Commissioner; Columbia Justice Lab. Methodology: evidence-based supervision, technical violation diversion.
+3. Adam Foss, Former prosecutor; Prosecutor Impact founder; TED Talk on prosecutorial reform. Methodology: compliance-positive defense, constructive probation narrative.
 
 Focus: violation classification (technical vs substantive), graduated sanctions, compliance documentation, PO relationship management, original sentence exposure, hearing preparation, revocation alternatives (modification, extension, community service), good time credit preservation.${csBlock}`;
   }
 
   if (ct.includes("self-defense") || ct.includes("self defense") || ct.includes("justifiable force")) {
-    return `\nCHARGE-SPECIFIC CONTEXT — SELF-DEFENSE / JUSTIFIABLE FORCE (${jur}):
+    return `\nCHARGE-SPECIFIC CONTEXT, SELF-DEFENSE / JUSTIFIABLE FORCE (${jur}):
 GOD MODE EXPERTS (triangulated):
-1. Andrew F. Branca — The Law of Self Defense (3rd Ed); Five Elements framework (Innocence, Imminence, Proportionality, Avoidance, Reasonableness). Methodology: element-by-element self-defense analysis.
-2. Massad Ayoob — Deadly Force; AOJ Triad (Ability, Opportunity, Jeopardy); 45+ years expert witness. Methodology: use-of-force assessment, threat perception analysis.
-3. Don West — Co-counsel in Zimmerman acquittal; 35+ years Board Certified Criminal Trial. Methodology: self-defense narrative construction, SYG immunity hearing strategy, jury persuasion architecture.
+1. Andrew F. Branca, The Law of Self Defense (3rd Ed); Five Elements framework (Innocence, Imminence, Proportionality, Avoidance, Reasonableness). Methodology: element-by-element self-defense analysis.
+2. Massad Ayoob, Deadly Force; AOJ Triad (Ability, Opportunity, Jeopardy); 45+ years expert witness. Methodology: use-of-force assessment, threat perception analysis.
+3. Don West, Co-counsel in Zimmerman acquittal; 35+ years Board Certified Criminal Trial. Methodology: self-defense narrative construction, SYG immunity hearing strategy, jury persuasion architecture.
 
 Focus: Stand Your Ground vs Duty to Retreat (state-specific), Castle Doctrine applicability (home/vehicle/workplace), proportionality of force, initial aggressor analysis, SYG immunity hearing eligibility, 911 caller advantage, witness identification, scene evidence preservation, civil liability exposure, expert witness needs (use-of-force, forensic, medical).${csBlock}`;
   }
@@ -2115,35 +2115,35 @@ function getEvidenceContext(types: string[]): string {
   for (const et of types) {
     const e = et.toLowerCase();
     if (e.includes("confidential informant") || e.includes("ci"))
-      blocks.push("CI INVOLVEMENT (defendant believes CI was used): Attorney accountability — has attorney obtained CI disclosure? Challenged CI reliability? Lichtman 7-Pillar questions: criminal history, payment, reliability, supervision, motive to fabricate, corroboration, constitutional issues.");
+      blocks.push("CI INVOLVEMENT (defendant believes CI was used): Attorney accountability, has attorney obtained CI disclosure? Challenged CI reliability? Lichtman 7-Pillar questions: criminal history, payment, reliability, supervision, motive to fabricate, corroboration, constitutional issues.");
     if (e.includes("forensic"))
-      blocks.push("FORENSIC EVIDENCE (defendant believes forensic evidence exists): Attorney accountability — has attorney reviewed lab reports independently? Challenged testing methodology? Scheck methodology: lab analyst error rate, controls/blanks, accreditation, contamination history.");
+      blocks.push("FORENSIC EVIDENCE (defendant believes forensic evidence exists): Attorney accountability, has attorney reviewed lab reports independently? Challenged testing methodology? Scheck methodology: lab analyst error rate, controls/blanks, accreditation, contamination history.");
     if (e.includes("body cam"))
-      blocks.push("BODY CAMERA (defendant believes BWC footage exists): Attorney accountability — has attorney obtained and reviewed all footage? Identified gaps? Compared to police narrative?");
+      blocks.push("BODY CAMERA (defendant believes BWC footage exists): Attorney accountability, has attorney obtained and reviewed all footage? Identified gaps? Compared to police narrative?");
     if (e.includes("dna"))
-      blocks.push("DNA EVIDENCE (defendant believes DNA was tested): Attorney accountability — has attorney reviewed DNA testing methodology? Type of testing (STR, mitochondrial, touch DNA)? Statistical weight? Mixture analysis? Lab contamination history?");
+      blocks.push("DNA EVIDENCE (defendant believes DNA was tested): Attorney accountability, has attorney reviewed DNA testing methodology? Type of testing (STR, mitochondrial, touch DNA)? Statistical weight? Mixture analysis? Lab contamination history?");
     if (e.includes("digital") || e.includes("phone"))
-      blocks.push("DIGITAL/PHONE EVIDENCE (defendant believes digital evidence exists): Attorney accountability — has attorney challenged search warrant scope? Reviewed forensic extraction report? Verified full vs selective data disclosure?");
+      blocks.push("DIGITAL/PHONE EVIDENCE (defendant believes digital evidence exists): Attorney accountability, has attorney challenged search warrant scope? Reviewed forensic extraction report? Verified full vs selective data disclosure?");
     if (e.includes("confession") || e.includes("statement"))
-      blocks.push("STATEMENT/CONFESSION (defendant believes statement was taken): Attorney accountability — has attorney reviewed Miranda compliance? Recording existence? Interrogation duration and conditions? Promises or threats made?");
+      blocks.push("STATEMENT/CONFESSION (defendant believes statement was taken): Attorney accountability, has attorney reviewed Miranda compliance? Recording existence? Interrogation duration and conditions? Promises or threats made?");
     if (e.includes("witness") || e.includes("eyewitness"))
-      blocks.push("EYEWITNESS ID (defendant believes eyewitness identification was made): Attorney accountability — has attorney challenged identification procedure? Wells methodology: lineup type, blind administrator, time elapsed, certainty documentation.");
+      blocks.push("EYEWITNESS ID (defendant believes eyewitness identification was made): Attorney accountability, has attorney challenged identification procedure? Wells methodology: lineup type, blind administrator, time elapsed, certainty documentation.");
   }
   if (blocks.length === 0) return "";
-  return "\n\nEVIDENCE ACCOUNTABILITY CONTEXT (defendant's beliefs about evidence — not confirmed):\n" + blocks.join("\n");
+  return "\n\nEVIDENCE ACCOUNTABILITY CONTEXT (defendant's beliefs about evidence, not confirmed):\n" + blocks.join("\n");
 }
 
 // ============================================================
 // LEGAL RESEARCH DATA INJECTION (Wave 5.2)
 // Fetches pre-researched legal data from Supabase and formats
 // it into a text block for injection into Claude prompts.
-// Data is SUPPLEMENTARY — if no legal research worker has run
+// Data is SUPPLEMENTARY, if no legal research worker has run
 // for this case, the block is empty and nothing changes.
 // ============================================================
 
 /**
  * Legal research data structure returned by fetchLegalResearchData().
- * All fields are optional — empty/null means no data available.
+ * All fields are optional, empty/null means no data available.
  */
 interface LegalResearchData {
   jurisdictionProfile: Record<string, unknown> | null;
@@ -2157,7 +2157,7 @@ interface LegalResearchData {
  * Queries jurisdiction_profiles, case_law_references (pre_research only),
  * wex_definitions from cases metadata, and optionally judge_profiles.
  *
- * All queries are wrapped in try/catch — if any table doesn't exist yet
+ * All queries are wrapped in try/catch, if any table doesn't exist yet
  * (migration not applied) or the query fails, that data source is skipped.
  * This ensures the Edge Function continues to work even if the migration
  * (011-legal-source-maximization.sql) hasn't been applied yet.
@@ -2222,7 +2222,7 @@ async function fetchLegalResearchData(
         const jsId = (jsRows as any[])[0].id;
         // SAFETY: is_good_law=eq.true filter ensures we NEVER cite cases that
         // have been overruled, abrogated, or superseded. NULL (unverified) is
-        // also excluded — only cases verified by the negative-treatment pipeline
+        // also excluded, only cases verified by the negative-treatment pipeline
         // (classify-case-law.mjs → checkNegativeTreatment) make it through.
         // Per CASE-LAW-VALIDATION-PERSONA: bad law cited = judge loses trust = motion dies.
         const clRows = await supabaseSelect(url, key, "statute_case_law",
@@ -2253,7 +2253,7 @@ async function fetchLegalResearchData(
     console.log(`[legal-research] wex_definitions fetch skipped:`, err instanceof Error ? err.message : err);
   }
 
-  // 4. Judge profile (IB only — keyed by last name)
+  // 4. Judge profile (IB only, keyed by last name)
   if (judgeName) {
     try {
       const lastName = judgeName.trim().split(/\s+/).pop() || "";
@@ -2273,7 +2273,7 @@ async function fetchLegalResearchData(
 
 /**
  * Formats legal research data into a text block for Claude prompt injection.
- * Returns empty string if no data is available — making this fully backward
+ * Returns empty string if no data is available, making this fully backward
  * compatible with cases that have no pre-researched legal data.
  *
  * The block uses clear delimiters and labels so Claude knows this is
@@ -2303,7 +2303,7 @@ function formatLegalDataBlock(data: LegalResearchData, includeJudge = false): st
       jpLines.push(`Speedy Trial Statute: ${jp.speedy_trial_statute}${jp.speedy_trial_days ? ` (${jp.speedy_trial_days} days)` : ""}`);
     }
     if (jp.regulation_changed) {
-      jpLines.push(`WARNING — REGULATION CHANGED since offense date.`);
+      jpLines.push(`WARNING, REGULATION CHANGED since offense date.`);
       if (jp.offense_date_regulation_text) jpLines.push(`  Offense-date regulation: ${jp.offense_date_regulation_text}`);
       if (jp.current_regulation_text) jpLines.push(`  Current regulation: ${jp.current_regulation_text}`);
     }
@@ -2313,9 +2313,9 @@ function formatLegalDataBlock(data: LegalResearchData, includeJudge = false): st
   // Pre-researched case law
   if (data.preResearchedCases.length > 0) {
     const caseLines = data.preResearchedCases.map((c) =>
-      `- ${c.case_name || "Unknown"}, ${c.citation || "no citation"} (${c.court || "?"}, ${c.year || "?"}) — ${c.holding || "holding not extracted"}${c.application ? ` | Application: ${c.application}` : ""}`
+      `- ${c.case_name || "Unknown"}, ${c.citation || "no citation"} (${c.court || "?"}, ${c.year || "?"}), ${c.holding || "holding not extracted"}${c.application ? ` | Application: ${c.application}` : ""}`
     );
-    parts.push(`PRE-RESEARCHED CASE LAW (verified real cases — use as grounding, cite these over generated citations):\n${caseLines.join("\n")}`);
+    parts.push(`PRE-RESEARCHED CASE LAW (verified real cases, use as grounding, cite these over generated citations):\n${caseLines.join("\n")}`);
   }
 
   // Wex definitions
@@ -2323,7 +2323,7 @@ function formatLegalDataBlock(data: LegalResearchData, includeJudge = false): st
     const defLines = Object.entries(data.wexDefinitions).map(([term, def]) =>
       `- ${term}: ${def}`
     );
-    parts.push(`LEGAL TERM DEFINITIONS (from Cornell LII Wex — verified plain-English definitions):\n${defLines.join("\n")}`);
+    parts.push(`LEGAL TERM DEFINITIONS (from Cornell LII Wex, verified plain-English definitions):\n${defLines.join("\n")}`);
   }
 
   // Judge profile (IB only)
@@ -2347,12 +2347,12 @@ function formatLegalDataBlock(data: LegalResearchData, includeJudge = false): st
     const positions = j.positions as any[];
     if (positions && Array.isArray(positions) && positions.length > 0) {
       const posLines = positions.slice(0, 5).map((p) =>
-        `  - ${p.position_type || p.job_title || "Position"} at ${p.court || p.organization || "?"} (${p.date_start || "?"} — ${p.date_termination || "present"})`
+        `  - ${p.position_type || p.job_title || "Position"} at ${p.court || p.organization || "?"} (${p.date_start || "?"}, ${p.date_termination || "present"})`
       );
       jLines.push(`Positions:\n${posLines.join("\n")}`);
     }
     if (j.bio_url) jLines.push(`Bio: ${j.bio_url}`);
-    parts.push(`VERIFIED JUDGE PROFILE (from CourtListener — use to ground judge-related analysis):\n${jLines.join("\n")}`);
+    parts.push(`VERIFIED JUDGE PROFILE (from CourtListener, use to ground judge-related analysis):\n${jLines.join("\n")}`);
   }
 
   if (parts.length === 0) return "";
@@ -2363,13 +2363,13 @@ ${parts.join("\n\n")}
 }
 
 // ============================================================
-// TIER 8A — Defendant humanization + case intelligence loaders
+// TIER 8A, Defendant humanization + case intelligence loaders
 // ============================================================
 // These helpers load defendant_profiles + case_intelligence rows and
 // format them as structured XML blocks for prompt injection. Both are
 // graceful: missing rows return empty strings, prompts are unchanged
 // from before this feature when no data exists. The deterministic
-// mapping in src/lib/defendant-profile.ts is the safety contract —
+// mapping in src/lib/defendant-profile.ts is the safety contract,
 // humanization_facts are derived from intake, never Claude-generated.
 // ============================================================
 
@@ -2396,7 +2396,7 @@ async function fetchDefendantProfileBlock(
 
     const lines: string[] = [];
 
-    // Humanization facts — structured array of {fact, category, harvest_consent_status}
+    // Humanization facts, structured array of {fact, category, harvest_consent_status}
     const facts = Array.isArray(row.humanization_facts) ? row.humanization_facts : [];
     if (facts.length > 0) {
       lines.push("<humanization_facts>");
@@ -2410,7 +2410,7 @@ async function fetchDefendantProfileBlock(
       lines.push("</humanization_facts>");
     }
 
-    // Vulnerability flags — array of strings (e.g., 'miranda_at_risk', 'competency_question')
+    // Vulnerability flags, array of strings (e.g., 'miranda_at_risk', 'competency_question')
     const flags = Array.isArray(row.vulnerability_flags) ? row.vulnerability_flags : [];
     if (flags.length > 0) {
       const flagList = flags
@@ -2442,10 +2442,10 @@ async function fetchDefendantProfileBlock(
     return `\n\n<defendant_profile>
 USE THESE FACTS to make the Letter to You and What's Working sections feel
 written TO THIS PERSON, not generated. Reference at least one humanization
-fact in the Letter (career, family, community, or service) — anchor it as
+fact in the Letter (career, family, community, or service), anchor it as
 something they shared, not something you assumed. Vulnerability flags
 trigger specific questions for the attorney (Miranda, competency, language
-access) — weave them in as questions to explore, never as conclusions.
+access), weave them in as questions to explore, never as conclusions.
 
 ${lines.join("\n")}
 </defendant_profile>\n`;
@@ -2457,7 +2457,7 @@ ${lines.join("\n")}
 
 /**
  * Loads case_intelligence rows for a case (filtered by disclosure_restriction='none'
- * AND verification_status != 'unverified' — unverified rows MUST NOT appear in
+ * AND verification_status != 'unverified', unverified rows MUST NOT appear in
  * customer reports per the Tier 8A safety contract). Returns formatted XML block
  * with verification-language qualifying instructions for the LLM.
  *
@@ -2508,18 +2508,18 @@ async function fetchCaseIntelligenceBlock(
 
     return `\n\n<case_intelligence>
 These are facts about the case that came from sources beyond the
-discovery file — codefendant outcomes, court records, prosecution theory
+discovery file, codefendant outcomes, court records, prosecution theory
 analysis, witness contradictions. Each item carries a verification level
 that DICTATES how you must phrase it in the customer-facing report:
 
 VERIFICATION LANGUAGE MAPPING (NON-NEGOTIABLE):
 - verification="confirmed" → Phrase as: "This is documented in [source]."
 - verification="supported" → Phrase as: "This is supported by [source]."
-- verification="theory" → Phrase as: "This is one possible reading of the record." (NEVER state as fact — frame as one interpretation among others)
+- verification="theory" → Phrase as: "This is one possible reading of the record." (NEVER state as fact, frame as one interpretation among others)
 
 ABSOLUTE RULES:
 - Do NOT phrase any item as a definitive claim without using the qualifying language above.
-- Do NOT use the words "we recommend" or "we advise" anywhere — use "you might explore" or "one option to discuss with your attorney is".
+- Do NOT use the words "we recommend" or "we advise" anywhere, use "you might explore" or "one option to discuss with your attorney is".
 - Do NOT use the phrase "Barry Scheck verification levels" or any methodology name in customer copy.
 - If an item has no clear source or the source attribute is empty, drop the source reference but keep the verification phrasing.
 - These items supplement (not replace) the analysis. Weave them in as informational context for the relevant section, not as a separate "intelligence dump."
@@ -2567,7 +2567,7 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
   // ── Tier 8A: defendant_profiles injection ──────────────────
   // Loads humanization_facts + vulnerability_flags from defendant_profiles
   // (seeded by src/lib/defendant-profile.ts at intake save time). Falls back
-  // to empty string if no row exists — older cases continue to work via the
+  // to empty string if no row exists, older cases continue to work via the
   // existing intake-string path.
   const defendantProfileBlock = await fetchDefendantProfileBlock(caseId, supabaseUrl, supabaseKey);
   if (defendantProfileBlock) {
@@ -2589,7 +2589,7 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
     if (s) parts.push(`District median for ${intake.charge_type}: ${(s.median_months as number)?.toFixed(1) ?? "N/A"} months (P25: ${(s.p25 as number)?.toFixed(1) ?? "N/A"}, P75: ${(s.p75 as number)?.toFixed(1) ?? "N/A"}, N=${s.sample_size ?? 0})`);
     if (ob) parts.push(`National plea rate: ${ob.plea_rate ? ((ob.plea_rate as number) * 100).toFixed(1) + "%" : "94%"} (BJS)`);
     if (parts.length > 0) {
-      cdSentencingContext = `\n<sentencing_context>\n${parts.join("\n")}\nSource: JUSTFAIR (osf.io/nseh5) + BJS. Federal courts — state courts may differ.\n</sentencing_context>`;
+      cdSentencingContext = `\n<sentencing_context>\n${parts.join("\n")}\nSource: JUSTFAIR (osf.io/nseh5) + BJS. Federal courts, state courts may differ.\n</sentencing_context>`;
       console.log(`[generate-report] Sentencing context injected for CD`);
     }
   } catch (e) {
@@ -2625,7 +2625,7 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
   }
 
   // ============================================================
-  // SYSTEM TRUTH — Intake-triggered insider context
+  // SYSTEM TRUTH, Intake-triggered insider context
   // Each intake signal activates specific system truth content in
   // the generated report. The defendant's own words trigger
   // personalized validation with insider context.
@@ -2637,60 +2637,60 @@ async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabase
   const discovery = (intake.has_discovery || "").toLowerCase();
   const hasAtty = (intake.has_attorney || "").toLowerCase();
 
-  // Strategy signals — broad matching to catch natural phrasing.
+  // Strategy signals, broad matching to catch natural phrasing.
   // Defendants write things like "hasn't told me anything", "hasn't explained",
-  // "just said he'd look into it", "haven't heard back" — not clean labels.
+  // "just said he'd look into it", "haven't heard back", not clean labels.
   if (strategy.includes("no real answer") || strategy.includes("no answer") || strategy.includes("dodged") || strategy.includes("vague") || strategy.includes("hasn't told me") || strategy.includes("hasn't explained") || strategy.includes("look into it") || strategy.includes("haven't heard")) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — STRATEGY VOID:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, STRATEGY VOID:
 The defendant ASKED about strategy and got stonewalled. Weave this into
 the Letter and Where Things Stand: "You told us you asked about your
 defense strategy and didn't get a clear answer. In criminal defense
-practice, this pattern has a name — insiders call it 'meet 'em, greet
+practice, this pattern has a name, insiders call it 'meet 'em, greet
 'em, plead 'em.' It describes a volume approach where the attorney meets
 the client, enters a plea, waits for the standard offer, and passes it
-along. That may not be what's happening here — but the question to ask
+along. That may not be what's happening here, but the question to ask
 is whether your attorney has a theory of defense or is waiting for the
 prosecution's offer to define the path forward."`);
   } else if (strategy === "" || strategy.includes("no strategy") || strategy.includes("hasn't come up") || strategy.includes("not discussed") || strategy.includes("hasn't said") || strategy.includes("no idea")) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — NO STRATEGY DISCUSSED:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, NO STRATEGY DISCUSSED:
 Attorney hasn't proactively discussed strategy. Weave into Where Things
 Stand and Questions: "Your attorney hasn't discussed a defense strategy
 with you. In a well-managed case, your attorney would have a theory of
 defense after reviewing your charges and initial evidence. When there's
 no strategy discussion, it often means the case is being handled
-reactively — waiting for the prosecution's offer rather than building
+reactively, waiting for the prosecution's offer rather than building
 toward a position of strength."`);
   }
 
   // Communication signals
   if (commFreq === "rarely" || commFreq === "never returned calls" || commFreq.includes("never")) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — COMMUNICATION BLACKOUT:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, COMMUNICATION BLACKOUT:
 Weave into Letter and Where Things Stand: "You told us your attorney
 rarely communicates or hasn't returned calls. This is the #1 complaint
 filed with state bar associations across the country. It's not just
-frustrating — it's a pattern. Here's why it happens: once you've paid a
+frustrating, it's a pattern. Here's why it happens: once you've paid a
 flat fee, there's no financial incentive for additional contact. That
-doesn't excuse it — but understanding the economics helps you see it as
+doesn't excuse it, but understanding the economics helps you see it as
 a system issue, not a personal slight. The questions in this report are
 designed to break through that pattern."`);
   }
 
-  // Last contact signals — catch both "X months ago" and "X+ weeks ago"
+  // Last contact signals, catch both "X months ago" and "X+ weeks ago"
   // patterns. 3+ weeks with no calls = significant gap worth naming.
   if (lastContact.includes("1-3 months") || lastContact.includes("more than 3") || lastContact.includes("3+ months") || lastContact.includes("months ago") || lastContact.includes("3+ weeks") || lastContact.includes("4+ weeks") || lastContact.includes("weeks ago")) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — LONG SILENCE:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, LONG SILENCE:
 Weave into Letter: "It's been a significant period since you last heard
 from your attorney. Going weeks or months without communication is not
-normal representation — it's a signal. After a flat fee is paid, the
+normal representation, it's a signal. After a flat fee is paid, the
 financial incentive for ongoing communication drops to zero. This report
-gives you the tools to restart that conversation — and the questions to
+gives you the tools to restart that conversation, and the questions to
 make it productive when you do."`);
   }
 
   if (lastContact.includes("never spoken") || lastContact.includes("never talked") || lastContact.includes("haven't spoken")) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — NEVER SPOKEN:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, NEVER SPOKEN:
 Weave into Letter with high empathy: "You told us you've never spoken
-with your attorney. This is more common than you'd think — and it's
+with your attorney. This is more common than you'd think, and it's
 exactly the kind of experience that makes defendants feel like they're
 being processed, not represented. You're not imagining it. The email
 template and phone script in this report are designed to initiate that
@@ -2699,10 +2699,10 @@ first real conversation."`);
 
   // Discovery signals
   if (discovery === "no" || discovery.includes("hasn't been discussed") || discovery.includes("not discussed")) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — DISCOVERY GAP:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, DISCOVERY GAP:
 Weave into Understanding Your Charges: "Discovery hasn't been discussed
 in your case. In a well-managed defense, your attorney requests discovery
-at arraignment and reviews it personally — every page, every lab report,
+at arraignment and reviews it personally, every page, every lab report,
 every video. When discovery 'hasn't come up,' it may mean the attorney
 is handling a high volume of cases and hasn't gotten to yours yet, or it
 may mean they plan to review it only if the case doesn't resolve by
@@ -2710,32 +2710,32 @@ plea. Either way, it's worth asking about directly."`);
   }
 
   if (discovery === "dont-know" || discovery.includes("not sure") || discovery.includes("don't know")) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — DISCOVERY UNKNOWN:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, DISCOVERY UNKNOWN:
 Weave into Understanding Your Charges: "You're not sure about discovery
-— and that itself is a signal. Discovery is the prosecution's evidence
-against you — every police report, lab result, witness statement, and
+, and that itself is a signal. Discovery is the prosecution's evidence
+against you, every police report, lab result, witness statement, and
 video. Your attorney should have explained what it is, whether they've
 received it, and what's in it. The fact that you don't know means either
 it hasn't been discussed or it was discussed in terms you didn't
-recognize. Both are addressable — start with the discovery questions in
+recognize. Both are addressable, start with the discovery questions in
 this report."`);
   }
 
-  // Attorney type signal — intake may send "public", "Public defender",
+  // Attorney type signal, intake may send "public", "Public defender",
   // "public defender assigned", etc. Use includes for broad matching.
   if (hasAtty.includes("public")) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — PUBLIC DEFENDER:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, PUBLIC DEFENDER:
 Weave into Letter and advocacy steps with empathy: "Public defenders are
 often excellent attorneys carrying impossible caseloads. In some
 jurisdictions, a single public defender handles hundreds of cases per
-year — that can mean as little as a few hours per case annually. This
+year, that can mean as little as a few hours per case annually. This
 doesn't mean your PD is bad. It means the system isn't giving them the
 resources to give you what you need. Being the most prepared client they
-see this week — with written questions, documented facts, and a clear
-agenda — is the single most effective thing you can do."
+see this week, with written questions, documented facts, and a clear
+agenda, is the single most effective thing you can do."
 Also weave into plea/standard offer context: "When plea discussions begin
 with a public defender carrying hundreds of cases, there is structural
-pressure toward resolution — not because your PD doesn't care, but
+pressure toward resolution, not because your PD doesn't care, but
 because the caseload creates time constraints on individual case
 negotiation. When a plea offer comes, the question worth asking is:
 'Is this the standard offer for my charge type, or has it been
@@ -2746,10 +2746,10 @@ offer reflects your specific facts or the default starting point."`);
   // Plea + poor communication compound signal
   if ((plea === "yes" || plea === "Yes" || plea === "discussing") &&
       (commFreq === "rarely" || commFreq === "never returned calls" || commFreq.includes("never"))) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — PLEA + SILENCE:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, PLEA + SILENCE:
 Weave into plea section: "You've been offered a plea and your attorney
 is hard to reach. When an attorney goes silent after a plea offer arrives,
-it sometimes means they expect you to accept it — and they're waiting for
+it sometimes means they expect you to accept it, and they're waiting for
 you to come to that conclusion on your own. Before accepting any plea,
 you're entitled to understand every right you'd be waiving, the full
 collateral consequences, and whether the offer is above or below the
@@ -2759,11 +2759,11 @@ standard offer for your charge type in your jurisdiction."`);
   // Plea offered + no strategy = compound signal
   if ((plea === "yes" || plea === "Yes" || plea === "discussing") &&
       (strategy === "" || strategy.includes("no strategy") || strategy.includes("no real answer") || strategy.includes("hasn't come up"))) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — PLEA WITHOUT DEFENSE:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, PLEA WITHOUT DEFENSE:
 Weave into plea section and Questions: "You've been offered a plea deal,
 but your attorney hasn't discussed a defense strategy. This is the
 pattern: prosecutors have standard offers for every charge type. The
-question is whether your attorney negotiated DOWN from the standard —
+question is whether your attorney negotiated DOWN from the standard,
 or just passed it along. Ask: 'What was the standard offer for my charge
 type, and how does this compare?' and 'What would our defense look like
 if we don't take this offer?'"`);
@@ -2772,14 +2772,14 @@ if we don't take this offer?'"`);
   // Mental health relevance signal
   const mhRelevant = (intake.mental_health_relevant || "").toLowerCase();
   if (mhRelevant === "yes") {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — MENTAL HEALTH RELEVANT:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, MENTAL HEALTH RELEVANT:
 The defendant indicated mental health or substance treatment is relevant.
 Weave into Understanding Your Charges and Questions: many jurisdictions
 offer mental health courts, drug treatment courts, or diversion programs
 that can result in reduced or dismissed charges upon completion. Generate
 a question about treatment-based alternatives (e.g., "Has your attorney
 discussed whether mental health court or a diversion program might apply
-to your case?"). In the "If Overwhelmed" callout, add extra emphasis —
+to your case?"). In the "If Overwhelmed" callout, add extra emphasis,
 this defendant may need additional support. Frame mental health as
 STRATEGIC ADVANTAGE (access to treatment alternatives), not stigma.`);
   }
@@ -2788,35 +2788,35 @@ STRATEGIC ADVANTAGE (access to treatment alternatives), not stigma.`);
   const empStatus = (intake.employment_status || "").toLowerCase();
   const empIndustry = (intake.employment_industry || "").toLowerCase();
   if ((empStatus.includes("employed") || empStatus.includes("self-employed")) && empIndustry) {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — CAREER IDENTITY AT STAKE:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, CAREER IDENTITY AT STAKE:
 The defendant works in: "${intake.employment_industry}". This charge may
-threaten their career identity — licensing boards, security clearances,
+threaten their career identity, licensing boards, security clearances,
 employer background checks. Elevate career consequences in the Letter
 (acknowledge their profession specifically) and in Understanding Your
 Charges (cite specific licensing board or professional consequence where
-known — nursing: state board of nursing; teaching: state department of
+known, nursing: state board of nursing; teaching: state department of
 education; trucking/CDL: FMCSA regulations; law enforcement: POST
 decertification; military: UCMJ implications; finance: FINRA/SEC
 disclosure). Generate at least one question specifically about
 professional/licensing consequences.`);
   }
 
-  // Family member filling out — compound awareness
+  // Family member filling out, compound awareness
   const filledBy = (intake.filled_out_by || "").toLowerCase();
   if (filledBy === "family" || filledBy === "friend") {
-    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION — FAMILY/SUPPORT PERSON:
+    systemTruthBlocks.push(`SYSTEM TRUTH ACTIVATION, FAMILY/SUPPORT PERSON:
 This intake was filled out by a ${intake.filled_out_by}, not the
 defendant. Adjust the Letter opening to acknowledge them: "You're doing
-this for someone you care about — that matters more than you might
+this for someone you care about, that matters more than you might
 realize right now." Use "you" for action items (they're doing the work)
 but use ${intake.first_name}'s name for legal facts. The character
-letter template in the Toolkit is especially relevant — families are
+letter template in the Toolkit is especially relevant, families are
 typically the ones who gather these. Include meeting guidance for
 support persons.`);
   }
 
   const systemTruthSection = systemTruthBlocks.length > 0
-    ? `\n\n**SYSTEM TRUTH CONTEXT — ACTIVATED BY INTAKE SIGNALS:**\n${systemTruthBlocks.join("\n\n")}\n`
+    ? `\n\n**SYSTEM TRUTH CONTEXT, ACTIVATED BY INTAKE SIGNALS:**\n${systemTruthBlocks.join("\n\n")}\n`
     : "";
 
   return `Analyze the following case intake and generate a complete Case Decoder report.
@@ -2842,7 +2842,7 @@ support persons.`);
 - Next Court Date: ${intake.court_date || "Not provided"}
 - Time Since Arrest: ${intake.time_since_arrest || "Not provided"}
 - Criminal History: ${intake.criminal_history || "Not provided"}
-- Employment: ${intake.employment_status || "Not provided"}${intake.employment_industry ? ` — ${intake.employment_industry}` : ""}
+- Employment: ${intake.employment_status || "Not provided"}${intake.employment_industry ? `, ${intake.employment_industry}` : ""}
 - Case Stage: ${intake.case_stage || "Not provided"}
 - Filled Out By: ${intake.filled_out_by && intake.filled_out_by !== "self" ? intake.filled_out_by : "Self (defendant)"}
 - Mental Health Relevant: ${intake.mental_health_relevant || "Not provided"}
@@ -2854,9 +2854,9 @@ ${conditionalInstructions.join("")}${systemTruthSection}
 **GENERATE ALL SECTIONS BELOW. Stay within each section's word budget.**
 
 <section id="letter" title="Letter" max_words="150">
-NO section heading — do NOT write "## A Letter to You" or any heading.
+NO section heading, do NOT write "## A Letter to You" or any heading.
 Start directly with the defendant's first name and a comma (e.g.,
-"Jennifer,") — a letter doesn't announce itself.
+"Jennifer,"), a letter doesn't announce itself.
 
 Quote their "Primary Frustration" and "Specific Question" directly.
 Validate their instinct: "the fact that you're doing this research
@@ -2864,18 +2864,18 @@ tells us something important." If they asked a specific question, tell
 them which section addresses it (by name, e.g., "Questions for Your
 Attorney"). Normalize: "you're not alone in this." Permission to be
 scared: reframe fear as caring about their future. NO blaming the
-attorney — frame gaps as things to clarify. Use client first name.
-This is NOT generic — write it TO THIS defendant.
+attorney, frame gaps as things to clarify. Use client first name.
+This is NOT generic, write it TO THIS defendant.
 
 DEMONSTRATE understanding by reflecting specific details from their
-intake — do NOT announce empathy with phrases like "We heard every
+intake, do NOT announce empathy with phrases like "We heard every
 word" or "We listened carefully." Show you listened by responding to
 what they actually said.
 
-REMEMBRANCE PHASE (per Herman — between Safety and Knowledge):
+REMEMBRANCE PHASE (per Herman, between Safety and Knowledge):
 After acknowledging their frustration and before pivoting to the
 report contents, reflect the defendant's story back in 2-3 sentences
-using their OWN words from the intake. This is not summarizing — it
+using their OWN words from the intake. This is not summarizing, it
 is showing you heard them. Example: "You told us you were arrested
 [date] and charged with [charge]. You said your biggest frustration
 is [frustration]. You mentioned that [specific detail from intake]."
@@ -2886,7 +2886,7 @@ Preview what this report gives: "This report gives you three things:
 a clear picture of where things stand, 15 questions that will get you
 real answers from your attorney, and tools to start the conversation."
 Include an informational note about report sharing: "This report is
-designed to help you prepare for conversations with your attorney —
+designed to help you prepare for conversations with your attorney,
 sharing it is entirely your choice. Some defendants find that reviewing
 this analysis privately first helps them get unfiltered answers, since
 attorneys may anchor their responses to analysis they've already seen.
@@ -2894,7 +2894,7 @@ The Meeting Ready Sheet in Your Next 7 Days contains only questions
 and is designed to be shared freely."
 
 ORIGIN STORY (1 sentence): "This report was built by ImNotAnAttorney.com
-— founded by a defendant who went through exactly what you're going
+, founded by a defendant who went through exactly what you're going
 through. It's powered by documented strategies from 40+ elite defense
 attorneys. Every question below traces to one of them."
 
@@ -2913,41 +2913,41 @@ After the letter content, add an "If Overwhelmed" callout:
 > just taken the most important step. Everything else can wait until
 > tomorrow.
 
-Do NOT generate a methodology note or disclaimer — it is injected
+Do NOT generate a methodology note or disclaimer, it is injected
 automatically by the system after your output is rendered.
 </section>
 
 <section id="s1" title="Where Things Stand" max_words="400">
-Use ONLY the section title as the heading — never prefix with internal id.
-4-area diagnostic in STRUCTURED LIST FORMAT (NOT a table — mobile-first design).
+Use ONLY the section title as the heading, never prefix with internal id.
+4-area diagnostic in STRUCTURED LIST FORMAT (NOT a table, mobile-first design).
 NO aggregate score (no X/100). Format each area as:
 
 **Communication**
-You told us [specific intake answer]. Communication gaps happen — sometimes attorneys are working behind the scenes. The questions below will help you find out.
-→ Ask: "[Specific thing to ask]" — See Q[N], Q[N]
+You told us [specific intake answer]. Communication gaps happen, sometimes attorneys are working behind the scenes. The questions below will help you find out.
+→ Ask: "[Specific thing to ask]", See Q[N], Q[N]
 
 **Preparation**
 You mentioned [specific intake answer]. At [X] days since arrest, this is worth asking about.
-→ Ask: "[Specific thing to ask]" — See Q[N], Q[N]
+→ Ask: "[Specific thing to ask]", See Q[N], Q[N]
 
 **Strategy**
 You said [specific intake answer]. Understanding the full picture will help you make informed decisions.
-→ Ask: "[Specific thing to ask]" — See Q[N], Q[N]
+→ Ask: "[Specific thing to ask]", See Q[N], Q[N]
 
 **Filing Activity**
-You shared [specific intake answer]. That's a common gap — most defendants aren't told about filings proactively.
-→ Ask: "[Specific thing to ask]" — See Q[N], Q[N]
+You shared [specific intake answer]. That's a common gap, most defendants aren't told about filings proactively.
+→ Ask: "[Specific thing to ask]", See Q[N], Q[N]
 
 EVERY area must use warm language: "You told us..." / "You said..." / "You mentioned..." / "You shared..."
-NEVER use "You indicated" / "You reported" / "You selected" — these sound clinical.
+NEVER use "You indicated" / "You reported" / "You selected", these sound clinical.
 NEVER blame the attorney. Frame gaps as things to CLARIFY.
-Start with: "This is not a grade on your attorney or your case. It's a map of what you know and what you don't know — based on what you shared with us."
+Start with: "This is not a grade on your attorney or your case. It's a map of what you know and what you don't know, based on what you shared with us."
 End with: "**What this tells you:** The 'Ask' lines give you the starting point for your next conversation. The questions in Questions for Your Attorney go deeper."
 </section>
 
 <section id="s2" title="Understanding Your Charges" max_words="500">
-Use ONLY the section title as the heading — never prefix with internal id.
-Elements in STRUCTURED LIST FORMAT (NOT a table — mobile-first design):
+Use ONLY the section title as the heading, never prefix with internal id.
+Elements in STRUCTURED LIST FORMAT (NOT a table, mobile-first design):
 
 **Element 1: [Element Name]**
 In plain English: [Plain English explanation]
@@ -2960,11 +2960,11 @@ In plain English: [Plain English explanation]
 (Repeat for each element the prosecution must prove.)
 
 Penalty range with statutory citation. Charge-specific intake data reflected: "You told us your substance was [X]..."
-BRIDGING — MANDATORY after penalty range: "These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for YOUR case."
-After the penalty range and bridging, add a "**What this means:**" paragraph — plain English explanation of the charge with zero legalese. This is the defendant's anchor for understanding their situation.
+BRIDGING, MANDATORY after penalty range: "These are statutory maximums, not predictions. The questions in this report help you understand the realistic range for YOUR case."
+After the penalty range and bridging, add a "**What this means:**" paragraph, plain English explanation of the charge with zero legalese. This is the defendant's anchor for understanding their situation.
 "Your Rights in This Process" box: right to see discovery, right to be
 consulted before plea, right to understand strategy, right to a second
-legal opinion — with state-specific citations.
+legal opinion, with state-specific citations.
 ALSO INCLUDE rights attorneys typically don't mention:
 - For PD clients: right to request a different public defender at any time
 - For private clients: right to fire and replace attorney, right to fee
@@ -2972,52 +2972,52 @@ ALSO INCLUDE rights attorneys typically don't mention:
 - For ALL: right to file a bar complaint with the state bar association,
   right to refuse a plea offer
 Frame these as INFORMATION about rights, not suggestions to exercise them.
-Example: "You have the right to request a different public defender —
+Example: "You have the right to request a different public defender,
 this is a procedural right, not an extreme step."
 
-ADMIN PROCESS CALLOUT — CONDITIONAL:
-If DUI/DWI → Include ALR/implied consent hearing deadline. Frame as "Something Your Attorney Can Help With" — efficacy-first. End with question + Q reference.
+ADMIN PROCESS CALLOUT, CONDITIONAL:
+If DUI/DWI → Include ALR/implied consent hearing deadline. Frame as "Something Your Attorney Can Help With", efficacy-first. End with question + Q reference.
 If drug charge → Include asset forfeiture possibility. Same framing.
 If sex offense → Include registry requirements. Same framing.
 Expert attributions should appear throughout the report where specific methods are referenced.
 
-**LIFE IMPACTS — BRIEF NOTE (1-2 sentences):**
+**LIFE IMPACTS, BRIEF NOTE (1-2 sentences):**
 After the rights box, briefly note: "Beyond the legal case, a charge
 like this can affect employment background checks, insurance rates, and
 family dynamics. Your attorney can discuss these impacts and what steps
-may minimize them." Keep brief — the Intelligence Brief covers this in depth.
+may minimize them." Keep brief, the Intelligence Brief covers this in depth.
 </section>
 
 ${includeCaseClock ? `<section id="c1" title="Time and Deadlines" max_words="100">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 Based on arrest date of ${intake.arrest_date} and jurisdiction speedy trial rules. NO "URGENT" red box. Informational + question: "Ask your attorney: What is our current speedy trial status, and have any waivers been filed?" ALWAYS caveat: "This does NOT account for waivers, continuances, or tolling."
 </section>` : "<!-- Time and Deadlines: OMITTED (conditions not met) -->"}
 
 <section id="cost" title="Cost Categories to Ask About" max_words="400">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 This section lists the CATEGORIES of costs the defendant should ask their
-attorney about — NOT specific dollar estimates. Frame as: "Here are the
+attorney about, NOT specific dollar estimates. Frame as: "Here are the
 types of costs that typically apply to ${intake.charge_type} cases in ${intake.state || "your state"}."
 
 Categories (include all that apply to this charge type):
-1. STATUTORY FINES — cite the state statute range if known (e.g.,
+1. STATUTORY FINES, cite the state statute range if known (e.g.,
    "Florida first DUI: $500-$1,000 per F.S. 316.193"). If statute
-   unknown, say "varies by state — ask your attorney for the range."
-2. COURT COSTS & FEES — filing fees, court costs, prosecution fees,
+   unknown, say "varies by state, ask your attorney for the range."
+2. COURT COSTS & FEES, filing fees, court costs, prosecution fees,
    crime victim fund surcharges. Note these are NON-NEGOTIABLE.
-3. SUPERVISION FEES — probation/parole monthly fees ($25-$100/mo typical).
+3. SUPERVISION FEES, probation/parole monthly fees ($25-$100/mo typical).
    Note duration depends on sentence.
-4. TESTING & MONITORING — drug testing, alcohol monitoring (SCRAM),
+4. TESTING & MONITORING, drug testing, alcohol monitoring (SCRAM),
    ignition interlock device. Include only categories relevant to this
    charge type.
-5. TREATMENT & PROGRAMS — DUI school, drug treatment, anger management,
+5. TREATMENT & PROGRAMS, DUI school, drug treatment, anger management,
    community service. Note: completing may reduce charges if eligible.
-6. LICENSE & REINSTATEMENT — DMV fees, SR-22 insurance, reinstatement
+6. LICENSE & REINSTATEMENT, DMV fees, SR-22 insurance, reinstatement
    fees. Charge-type specific (DUI, drug, sex offense).
-7. ATTORNEY FEES — "Attorney fees vary significantly by market, case
+7. ATTORNEY FEES, "Attorney fees vary significantly by market, case
    complexity, and experience level. Ask for a written fee agreement
    that specifies what's included." Do NOT estimate dollar amounts.
-8. HIDDEN COSTS — transportation to court appearances, time off work,
+8. HIDDEN COSTS, transportation to court appearances, time off work,
    childcare during hearings, parking, increased insurance premiums,
    background check impacts.
 
@@ -3030,14 +3030,14 @@ estimated cost of this case, including fees, fines, and programs?'" → Q ref
 </section>
 
 <section id="court" title="Your Next Court Date" max_words="400">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 This section is KEYED to the intake case_stage: "${intake.case_stage || "not provided"}".
 Generate ONLY the walkthrough for their current/next stage. Do NOT walk
 through all stages.
 
 For the walkthrough, include TWO parts:
 
-**Part 1 — What Happens** (legal procedure in plain English):
+**Part 1, What Happens** (legal procedure in plain English):
 - What the hearing is called and what it's for
 - Who will be there (judge, prosecutor, your attorney, you, jury?)
 - What decisions get made
@@ -3045,10 +3045,10 @@ For the walkthrough, include TWO parts:
 - How long it typically takes
 - What the possible outcomes are
 
-**Part 2 — Practical Prep** (what defendants actually need):
+**Part 2, Practical Prep** (what defendants actually need):
 - What to wear (business casual minimum, no logos/graphics)
 - What to bring (ID, case number, this report, pen/paper)
-- What NOT to bring (weapons, phone on — silence it)
+- What NOT to bring (weapons, phone on, silence it)
 - Arrive 30 minutes early (security screening, finding courtroom)
 - Childcare: "Courts generally do not provide childcare. If you have
   children, arrange care in advance."
@@ -3070,13 +3070,13 @@ Stage-specific content:
 
 If case_stage is missing/unknown, generate a brief overview of the typical
 progression for this charge type with a note: "Ask your attorney which
-stage your case is in — that determines what happens next."
+stage your case is in, that determines what happens next."
 
 ${intake.filled_out_by && intake.filled_out_by !== "self" ? `NOTE: This intake was filled out by a ${intake.filled_out_by}. Include practical guidance for support persons attending court (where to sit, what they can/cannot do, courtroom etiquette for observers).` : ""}
 </section>
 
 <section id="s3" title="Your Attorney Meeting Toolkit" max_words="1400">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 
 **1. REPORT SHARING NOTE:**
 Informational note about reviewing the report privately before attorney
@@ -3087,10 +3087,10 @@ The Meeting Ready Sheet in Your Next 7 Days is designed to be shared freely.
 **2. READY-TO-SEND EMAIL:**
 Copy-paste ready. Personalized: case # in subject line, court date reference, defendant name signoff.
 MUST embed the top 3-5 priority questions from Section 5 as a NUMBERED LIST in the email body.
-Do NOT use vague references like "I have questions about the evidence" — write the actual questions.
+Do NOT use vague references like "I have questions about the evidence", write the actual questions.
 The defendant should be able to hit send without copying anything from other sections.
 Tone: collaborative ("I want to be well-prepared for our next conversation").
-Subject: "Case Update Request — [Name], Case #[Number]"
+Subject: "Case Update Request, [Name], Case #[Number]"
 
 **3. PHONE SCRIPT:**
 Read-aloud ready. Personalized with name, case #, court date. For defendants who prefer calling.
@@ -3098,18 +3098,18 @@ Read-aloud ready. Personalized with name, case #, court date. For defendants who
 **4. FOLLOW-UP TEMPLATE:**
 If no response within 5-7 business days. References Step 3 of Your Advocacy Steps.
 
-**5. YOUR ADVOCACY STEPS (EXACTLY 5 steps — NOT "escalation ladder"):**
+**5. YOUR ADVOCACY STEPS (EXACTLY 5 steps, NOT "escalation ladder"):**
 Contextualized to attorney type (PD vs private).
 Step 1: Send the email from subsection 2 above
-Step 2: Follow up by phone — reference your email, request a specific time
-Step 3: Send the follow-up email template — written record with timestamped questions
+Step 2: Follow up by phone, reference your email, request a specific time
+Step 3: Send the follow-up email template, written record with timestamped questions
 Step 4: Request written answers to your specific questions
-Step 5: Consider seeking a second opinion from another attorney — framed as information only.
+Step 5: Consider seeking a second opinion from another attorney, framed as information only.
 Include blue wall context: "A second opinion can provide independent
-perspective — but attorneys in the same practice area are generally
+perspective, but attorneys in the same practice area are generally
 reluctant to directly criticize a colleague (professional courtesy,
 referral networks, bar association relationships). This doesn't mean a
-second opinion is worthless — it means focusing on what THEIR approach
+second opinion is worthless, it means focusing on what THEIR approach
 would be, rather than asking them to evaluate your current attorney's
 performance."
 "Most situations resolve at Steps 1-3. Steps 4-5 are there when you need more structure."
@@ -3124,10 +3124,10 @@ Scenarios: "Trust me, I'm handling it" / "You don't need to worry about that" / 
 **7. HOW TO DOCUMENT EVERYTHING:**
 Notes during meeting (what to write down). Post-meeting summary email template (send within 24 hours). Recording consent note (state-specific: one-party vs two-party consent). Case journal (what to track over time).
 
-**8. CHARACTER LETTERS — If Your Case Reaches Sentencing:**
+**8. CHARACTER LETTERS, If Your Case Reaches Sentencing:**
 "Character letters from people who know you can make a real difference at
 sentencing. If your attorney hasn't discussed these yet, it's worth
-raising — especially if sentencing is a possibility."
+raising, especially if sentencing is a possibility."
 
 Include a brief template the defendant can send to 3-5 people:
 
@@ -3147,28 +3147,28 @@ This means a lot to me. Thank you either way."
 
 Note: "Ask your attorney whether character letters are appropriate for
 your case stage and whether they have specific guidelines."
-${intake.filled_out_by && intake.filled_out_by !== "self" ? `\nFAMILY/SUPPORT PERSON MEETING GUIDANCE:\n"If you're attending the attorney meeting with ${intake.first_name}, here's how to be most helpful: take notes, ask clarifying questions, and follow up in writing afterward. The attorney may ask the defendant to speak directly — let them. Your role is documentation and support."` : ""}
+${intake.filled_out_by && intake.filled_out_by !== "self" ? `\nFAMILY/SUPPORT PERSON MEETING GUIDANCE:\n"If you're attending the attorney meeting with ${intake.first_name}, here's how to be most helpful: take notes, ask clarifying questions, and follow up in writing afterward. The attorney may ask the defendant to speak directly, let them. Your role is documentation and support."` : ""}
 </section>
 
 <section id="s4" title="Questions for Your Attorney" max_words="2200" question_count="15">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 Generate EXACTLY 15 questions. Every question asks the ATTORNEY.
 
-**SPLIT VERIFY-FACTS — Two callout boxes at top:**
-Box 1: "✅ Confirm these facts from your intake" — arrest date, charges as filed, attorney type (intake verification).
-Box 2: "📋 Get these facts before your meeting" — charge-specific discovery items the defendant should request or confirm (new tasks).
+**SPLIT VERIFY-FACTS, Two callout boxes at top:**
+Box 1: "✅ Confirm these facts from your intake", arrest date, charges as filed, attorney type (intake verification).
+Box 2: "📋 Get these facts before your meeting", charge-specific discovery items the defendant should request or confirm (new tasks).
 
-Q1 = GOLDEN QUESTION — marked: "(Golden Question — if you only ask one question, ask this one)"
+Q1 = GOLDEN QUESTION, marked: "(Golden Question, if you only ask one question, ask this one)"
 Q1-Q5 are PRIORITY questions drawn from THIS defendant's specific intake answers. Each "don't know" from intake becomes a priority question.
 Q6-Q15: Additional questions organized by topic.
 
-QUESTION TONE: Questions sound like a CLIENT asking for help — conversational, respectful. Keep legal jargon in "Why it matters" only. No yes/no questions — every question must require a substantive answer.
-Overall methodology: Calibrated questions adapted from Chris Voss (FBI lead hostage negotiator) — repurposed for attorney communication.
+QUESTION TONE: Questions sound like a CLIENT asking for help, conversational, respectful. Keep legal jargon in "Why it matters" only. No yes/no questions, every question must require a substantive answer.
+Overall methodology: Calibrated questions adapted from Chris Voss (FBI lead hostage negotiator), repurposed for attorney communication.
 
-QUESTION FORMAT — TIERED:
+QUESTION FORMAT, TIERED:
 
-Q1-Q5 (PRIORITY — full format, 5 parts each):
-1. **Question:** Calibrated question (conversational, never yes/no) — references intake data
+Q1-Q5 (PRIORITY, full format, 5 parts each):
+1. **Question:** Calibrated question (conversational, never yes/no), references intake data
 2. **Why it matters:** Grounded in named expert's methodology + intake link.
    Weave expert attributions NATURALLY into this paragraph (e.g., "This
    question draws on Martin Weinberg's framework for evaluating intent
@@ -3177,45 +3177,45 @@ Q1-Q5 (PRIORITY — full format, 5 parts each):
 4. **If the answer is vague:** "[empathetic follow-up probe for in-meeting use]"
 5. **What to listen for:** "[pattern]" + what to do with the answer
 
-Q6-Q15 (ADDITIONAL — compact format, 3 parts each):
+Q6-Q15 (ADDITIONAL, compact format, 3 parts each):
 1. **Question:** Calibrated question (conversational, never yes/no)
-2. **Why it matters:** 2-3 sentences — expert grounding + intake link
+2. **Why it matters:** 2-3 sentences, expert grounding + intake link
 3. **What to listen for:** Key signal + one action if needed
 
 This tiering serves the reader: Q1-Q5 get deep treatment because they are
 the priority questions drawn from this defendant's intake. Q6-Q15 are
-important but don't need the same depth — the defendant will skim these
+important but don't need the same depth, the defendant will skim these
 and focus on the ones that resonate. The format change also prevents the
 "template fatigue" where all 15 questions feel identical.
 
-Then --- and the next question heading. Q1-Q5 have EXACTLY 5 bold-labeled parts. Q6-Q15 have EXACTLY 3 bold-labeled parts. No additional bold-labeled lines after the last part — the --- separator follows immediately.
+Then --- and the next question heading. Q1-Q5 have EXACTLY 5 bold-labeled parts. Q6-Q15 have EXACTLY 3 bold-labeled parts. No additional bold-labeled lines after the last part, the --- separator follows immediately.
 
 After writing all 15, count them. If not exactly 15, revise.
 </section>
 
 <section id="s5" title="Things Worth Asking About" max_words="450">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 5-6 items max. Two categories:
 
 **Based on What You Told Us** (directly from intake):
-Each item starts with "You told us..." / "You mentioned..." and uses labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT (NOT ACT NOW / INVESTIGATE / MONITOR — no panic triggers).
+Each item starts with "You told us..." / "You mentioned..." and uses labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT (NOT ACT NOW / INVESTIGATE / MONITOR, no panic triggers).
 
 ADDRESS FIRST items with deadlines get TIME-SENSITIVE marker:
-"⏰ ADDRESS FIRST — [Topic] — TIME-SENSITIVE"
+"⏰ ADDRESS FIRST, [Topic], TIME-SENSITIVE"
 (e.g., body cam footage retention periods, ALR hearing windows, evidence preservation deadlines,
-pre-trial motion filing deadlines — when flagging suppression motions or other pre-trial motions,
+pre-trial motion filing deadlines, when flagging suppression motions or other pre-trial motions,
 add: “Given your upcoming court date, your attorney can confirm whether motion
-deadlines are approaching — Fla. R. Crim. P. 3.190 governs suppression motion timing in Florida.”)
+deadlines are approaching, Fla. R. Crim. P. 3.190 governs suppression motion timing in Florida.”)
 
 **Things You Told Us You Don't Know** (gaps to fill):
-Each "don't know" answer from intake. Normalize: "Most defendants aren't told proactively — that's why we ask."
+Each "don't know" answer from intake. Normalize: "Most defendants aren't told proactively, that's why we ask."
 
 EVERY item links to a specific Q number in Questions for Your Attorney AND a specific tool in Your Attorney Meeting Toolkit (reference by name, not S4/S3).
-NEVER blame the attorney: "This may have a simple explanation — but you're entitled to know."
+NEVER blame the attorney: "This may have a simple explanation, but you're entitled to know."
 </section>
 
 ${includePleaLandscape ? `<section id="c2" title="What a Plea Really Means" max_words="300">
-Use ONLY the section title as the heading — never prefix with internal id.
+Use ONLY the section title as the heading, never prefix with internal id.
 ${plea === "yes" || plea === "Yes" ? `Plea has been offered. Terms: "${intake.plea_terms || "Not specified"}".` : plea === "discussing" ? `Plea discussions in progress. Details: "${intake.plea_terms || "Not specified"}".` : `Attorney is discussing a plea (from attorney_strategy: "${intake.attorney_strategy}").`}
 Educational, NOT evaluative. NO Below average/Typical/Above average ratings.
 
@@ -3231,15 +3231,15 @@ MANDATORY CITATIONS for collateral consequences:
   immigration attorney in addition to your criminal defense attorney."
 - Employment/debarment: cite FAR 9.406-2 (federal debarment grounds)
   or applicable state licensing statute.
-- Voting rights: cite state-specific statute or note "varies by state —
+- Voting rights: cite state-specific statute or note "varies by state,
   see [state] election code."
 - Firearms: cite 18 U.S.C. § 922(g)(1) (federal prohibition on felons
   possessing firearms).
 - Professional licensing: cite the specific licensing board statute for
   the defendant's profession if mentioned in intake.
-Every consequence MUST have a statute or source — no unsourced claims.
+Every consequence MUST have a statute or source, no unsourced claims.
 
-BRIDGING — MANDATORY after collateral consequences table: "Every consequence above applies only to a guilty plea conviction. The questions below determine whether a plea is the right path — or whether alternatives exist."
+BRIDGING, MANDATORY after collateral consequences table: "Every consequence above applies only to a guilty plea conviction. The questions below determine whether a plea is the right path, or whether alternatives exist."
 
 Alternatives Worth Asking About: Drug court/diversion, PTI, deferred adjudication (state-specific).
 
@@ -3250,26 +3250,26 @@ Alternatives Worth Asking About: Drug court/diversion, PTI, deferred adjudicatio
 </section>` : "<!-- What a Plea Really Means: OMITTED (conditions not met) -->"}
 
 <section id="s6" title="Is There Something We Missed?" max_words="100">
-Use ONLY the section title as the heading — never prefix with internal id.
-Short, warm, non-transactional. "We built this report from what you shared — but intake forms can't capture everything." Invite follow-up: reply to delivery email or help@imnotanattorney.com. Ask: "What's keeping you up at night that this report didn't address?" NO upgrade pitch here.
+Use ONLY the section title as the heading, never prefix with internal id.
+Short, warm, non-transactional. "We built this report from what you shared, but intake forms can't capture everything." Invite follow-up: reply to delivery email or help@imnotanattorney.com. Ask: "What's keeping you up at night that this report didn't address?" NO upgrade pitch here.
 </section>
 
 <section id="closing" title="What Only Your Attorney Can Tell You" max_words="100">
-Use ONLY the section title as the heading — never prefix with internal id.
-This is a REDIRECT, not a deflation. Frame it as: your attorney has information we don't — which is exactly why the questions in this report matter.
+Use ONLY the section title as the heading, never prefix with internal id.
+This is a REDIRECT, not a deflation. Frame it as: your attorney has information we don't, which is exactly why the questions in this report matter.
 NO-ATTORNEY REFRAME (1 sentence): "If you don't have an attorney yet, these questions help you evaluate candidates during consultations. The answers tell you whether you're hiring a defender or buying a spot on an assembly line."
-Honest limitations: haven't seen evidence, can't predict outcomes, can't replace attorney. "If anything in this report contradicts what your attorney tells you, your attorney's judgment — informed by your full case file — should take priority. Use this report to ask better questions, not to overrule your attorney."
+Honest limitations: haven't seen evidence, can't predict outcomes, can't replace attorney. "If anything in this report contradicts what your attorney tells you, your attorney's judgment, informed by your full case file, should take priority. Use this report to ask better questions, not to overrule your attorney."
 </section>
 
 <section id="s7" title="Your Next 7 Days" max_words="900">
-Use ONLY the section title as the heading — never prefix with internal id.
-This is the EMOTIONAL CLIMAX — the report ends here on determination, not disclaimers.
+Use ONLY the section title as the heading, never prefix with internal id.
+This is the EMOTIONAL CLIMAX, the report ends here on determination, not disclaimers.
 
 NOTE: "If Overwhelmed" callout has been MOVED to immediately after the
 Letter section. Do NOT generate it again here. Start directly with the
 7-Day Plan.
 
-**7-DAY PLAN** — ONE action per day (Fogg sequencing):
+**7-DAY PLAN**, ONE action per day (Fogg sequencing):
 | Day | Action | Note |
 |-----|--------|------|
 | Day 1 | Send the email | Copy-paste from Your Attorney Meeting Toolkit. Done. |
@@ -3279,7 +3279,7 @@ Letter section. Do NOT generate it again here. Start directly with the
 | Day 5 | Practice your questions | Read them aloud once. It helps. |
 | Day 6-7 | Attend your meeting | Bring your Meeting Ready Sheet. Ask, listen, write. |
 Each day ends with a Shine moment ("You've just...").
-After the table: "Days 1-7 = Steps 1-3 of Your Advocacy Steps. If you need Steps 4-5, they're in Your Attorney Meeting Toolkit — but most people never need to go past Step 3."
+After the table: "Days 1-7 = Steps 1-3 of Your Advocacy Steps. If you need Steps 4-5, they're in Your Attorney Meeting Toolkit, but most people never need to go past Step 3."
 
 **WHAT TO BRING TO YOUR MEETING:**
 Checklist: printed Meeting Ready Sheet + pen + case # + documents referenced in intake + phone (for recording if one-party consent state).
@@ -3293,24 +3293,24 @@ If additional questions are relevant for this defendant, add them after Q5.
 Space for attorney's answers after each question.
 Post-Meeting Checklist: Got answers? Documented responses? Sent summary email to attorney? Updated your case journal with dates and next steps? Understand what happens next?
 
-Future pacing using their name: "In two weeks, [Name], you will be the most prepared defendant your attorney has ever worked with. You'll have asked the right questions, documented the answers, and have a clear picture of where your defense stands — not from guessing, but from direct conversation with your attorney."
+Future pacing using their name: "In two weeks, [Name], you will be the most prepared defendant your attorney has ever worked with. You'll have asked the right questions, documented the answers, and have a clear picture of where your defense stands, not from guessing, but from direct conversation with your attorney."
 End on empowerment, NOT disclaimers.
 </section>
 
 <section id="postscript" title="What Comes Next" max_words="150">
 FIRST acknowledge: "For many people, this report and those conversations
 are enough."
-Then connect to the specific upgrade seeds planted earlier — reference
+Then connect to the specific upgrade seeds planted earlier, reference
 the 1-2 biggest unanswered questions THIS report revealed for THIS
 defendant. NOT a feature list. Pattern: "But if you want to know whether
-[specific thing from their case — e.g., that breathalyzer reading holds
+[specific thing from their case, e.g., that breathalyzer reading holds
 up, the checkpoint stop was legal, the timeline supports a rising BAC
-defense] — that takes your actual case records. The Intelligence Brief
+defense], that takes your actual case records. The Intelligence Brief
 digs into exactly that."
 If the biggest gap requires discovery documents rather than deeper
 analysis, name the X-Ray ($2,497) instead. Always name the ONE right
 tier for THIS defendant's specific gaps.
-ALWAYS include the credit math: "Your $197 is already credited — the
+ALWAYS include the credit math: "Your $197 is already credited, the
 Intelligence Brief is $800, not $997." This reframes the price as $800
 and reminds them their money carries forward. Add: "You have 12 months
 to decide."
@@ -3324,7 +3324,7 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
  * Calls the Claude API to generate a Case Decoder report.
  *
  * Uses claude-opus-4-6 with adaptive thinking and 32k max tokens (thinking
- * + output combined). Temperature is NOT set — incompatible with thinking.
+ * + output combined). Temperature is NOT set, incompatible with thinking.
  * Opus uses its thinking budget to build the 8-dimension emotional profile
  * before generating, producing stance-calibrated reports.
  *
@@ -3333,7 +3333,7 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
  * Cost: ~$0.40-0.60/report at ~5K word output with thinking overhead.
  *
  * Retries up to 3 times on 529 (overloaded) with exponential backoff.
- * Response contains thinking + text blocks — we filter for text only.
+ * Response contains thinking + text blocks, we filter for text only.
  *
  * @param intake - Intake data to build the prompt from.
  * @param apiKey - Anthropic API key.
@@ -3355,7 +3355,7 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
     ],
   });
 
-  // Retry on 529 (overloaded) — up to 3 attempts with exponential backoff.
+  // Retry on 529 (overloaded), up to 3 attempts with exponential backoff.
   // Each attempt takes ~5s for 529, so 3 retries fit well within 150s timeout.
   const MAX_RETRIES = 3;
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
@@ -3383,17 +3383,17 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
     // deno-lint-ignore no-explicit-any
     const result: any = await response.json();
 
-    // Response contains thinking + text blocks — extract text only.
+    // Response contains thinking + text blocks, extract text only.
     // Thinking blocks contain the emotional profiling analysis;
     // text blocks contain the actual report markdown.
     const textBlocks = (result.content || []).filter((b: { type: string }) => b.type === "text");
     const text = textBlocks.map((b: { text: string }) => b.text).join("") || "";
 
-    console.log(`[generate-report] Usage — input: ${result.usage?.input_tokens}, output: ${result.usage?.output_tokens}, stop: ${result.stop_reason}`);
+    console.log(`[generate-report] Usage, input: ${result.usage?.input_tokens}, output: ${result.usage?.output_tokens}, stop: ${result.stop_reason}`);
 
     // Opus can nondeterministically produce a thinking-only response (all
     // output tokens go to the thinking block, zero text). Retry on empty text
-    // just like we retry on 529 — the next attempt almost always succeeds.
+    // just like we retry on 529, the next attempt almost always succeeds.
     if (!text.trim()) {
       if (attempt < MAX_RETRIES) {
         console.warn(`[generate-report] Empty text response (${result.usage?.output_tokens} output tokens were all thinking). Retrying (attempt ${attempt}/${MAX_RETRIES})...`);
@@ -3475,7 +3475,7 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
   const violations: string[] = [];
   const lower = markdown.toLowerCase();
 
-  // 1. Banned phrases — with informational-context exemptions
+  // 1. Banned phrases, with informational-context exemptions
   // "you should know/understand/be aware" and "you need to know/understand/be prepared"
   // are informational framing, not directive UPL advice.
   const bannedPhrases: { phrase: string; exemptions: string[] }[] = [
@@ -3509,7 +3509,7 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
     }
   }
 
-  // 2. Unsourced collateral claims — sentences mentioning collateral topics
+  // 2. Unsourced collateral claims, sentences mentioning collateral topics
   //    without a statute citation (§, U.S.C., F.S., or case name "v.")
   //    Exempts "Good answer:" example sections (attorney response templates)
   const collateralTopics = [
@@ -3566,34 +3566,34 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
     violations.push(`[CRITICAL] Bar complaint or attorney-firing directive detected (violates U8 UPL)`);
   }
 
-  // 3. Pricing errors — $797 should be $800
+  // 3. Pricing errors, $797 should be $800
   if (markdown.includes("$797")) {
     violations.push('Pricing error: "$797" found (should be "$800 after credit")');
   }
 
-  // 8. Wrong section heading — "Exactly What to Say" should be "Your Attorney Meeting Toolkit" (R4)
+  // 8. Wrong section heading, "Exactly What to Say" should be "Your Attorney Meeting Toolkit" (R4)
   if (/##\s*Exactly What to Say/i.test(markdown)) {
-    violations.push('[STRUCTURAL] Wrong heading "Exactly What to Say" — should be "Your Attorney Meeting Toolkit"');
+    violations.push('[STRUCTURAL] Wrong heading "Exactly What to Say", should be "Your Attorney Meeting Toolkit"');
   }
 
-  // 9. Steps 6-8 exist — HARD STOP says only Steps 1-5 allowed (U8)
+  // 9. Steps 6-8 exist, HARD STOP says only Steps 1-5 allowed (U8)
   if (/\bStep\s+[678]\b/i.test(markdown) || /\bSteps\s+6[-–]8\b/i.test(markdown)) {
-    violations.push('[CRITICAL] Steps 6-8 detected — only Steps 1-5 are allowed (violates U8 UPL)');
+    violations.push('[CRITICAL] Steps 6-8 detected, only Steps 1-5 are allowed (violates U8 UPL)');
   }
 
-  // 10. Immigration/Padilla paragraph MISSING entirely — must always be present (U6)
+  // 10. Immigration/Padilla paragraph MISSING entirely, must always be present (U6)
   if (!markdown.includes("Padilla")) {
-    violations.push('[CRITICAL] Immigration/Padilla paragraph missing entirely — must be present in every report (violates U6 UPL)');
+    violations.push('[CRITICAL] Immigration/Padilla paragraph missing entirely, must be present in every report (violates U6 UPL)');
   }
 
   // 11. "Do not show" / "DO NOT show" imperative framing (U1)
   if (/\bDo\s+not\s+show\b/i.test(markdown) || /\bDO\s+NOT\s+show\b/.test(markdown)) {
-    violations.push('[UPL] "Do not show" imperative detected — use informational framing instead');
+    violations.push('[UPL] "Do not show" imperative detected, use informational framing instead');
   }
 
-  // 12. Duplicate footer disclaimer — renderer injects this, markdown should not include it
+  // 12. Duplicate footer disclaimer, renderer injects this, markdown should not include it
   if (/A note on what this is:/i.test(markdown)) {
-    violations.push('[STRUCTURAL] Footer disclaimer in markdown — remove, renderer injects this automatically');
+    violations.push('[STRUCTURAL] Footer disclaimer in markdown, remove, renderer injects this automatically');
   }
 
   return { valid: violations.length === 0, violations };
@@ -3601,7 +3601,7 @@ function validateReportContent(markdown: string): { valid: boolean; violations: 
 
 // ============================================================
 // HTML RENDERER
-// CANONICAL renderReportHtml() — sole implementation (legacy src/lib/claude.ts deleted).
+// CANONICAL renderReportHtml(), sole implementation (legacy src/lib/claude.ts deleted).
 // Must stay in sync if the report template changes.
 // ============================================================
 
@@ -3992,7 +3992,7 @@ function renderReportHtml(
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Decoder Report — ${escapeHtml(meta.firstName)}</title>
+<title>Case Decoder Report, ${escapeHtml(meta.firstName)}</title>
 <style>${REPORT_STYLES}</style>
 </head>
 <body>
@@ -4013,13 +4013,13 @@ function renderReportHtml(
   </div>
   ${meta.expertNames ? `<blockquote class="methodology-note">
     <p class="methodology-note-title">METHODOLOGY NOTE</p>
-    <p class="methodology-note-text">Built by ImNotAnAttorney.com — founded by a defendant, powered by 40+ elite defense attorneys' documented strategies. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
-    <p class="methodology-note-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+    <p class="methodology-note-text">Built by ImNotAnAttorney.com, founded by a defendant, powered by 40+ elite defense attorneys' documented strategies. Your report draws on ${escapeHtml(meta.expertNames)}, selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p class="methodology-note-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </blockquote>` : ""}
   ${html}
   <div class="footer-disclaimer">
     <p class="footer-disclaimer-text">
-      <strong class="footer-disclaimer-label">A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them — and why it matters.
+      <strong class="footer-disclaimer-label">A note on what this is:</strong> This report gives you legal information, context, and questions, not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them, and why it matters.
     </p>
   </div>
   <div class="copyright-block">
@@ -4028,8 +4028,8 @@ function renderReportHtml(
   </div>
   <div class="print-hidden upgrade-cta">
     <p class="upgrade-cta-text">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
-    <a href="/checkout" class="upgrade-btn">Case Intelligence Brief — $997 ($800 after credit)</a>
-    <p class="upgrade-credit-note">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
+    <a href="/checkout" class="upgrade-btn">Case Intelligence Brief, $997 ($800 after credit)</a>
+    <p class="upgrade-credit-note">Your $197 is fully credited toward any tier within 12 months. No pressure, decide after your meeting.</p>
   </div>
 </div>
 </body>
@@ -4097,7 +4097,7 @@ async function callClaudeForSection(
     const textBlocks = (result.content || []).filter((b: { type: string }) => b.type === "text");
     const text = textBlocks.map((b: { text: string }) => b.text).join("") || "";
 
-    console.log(`[IB-section] Usage — input: ${result.usage?.input_tokens}, output: ${result.usage?.output_tokens}`);
+    console.log(`[IB-section] Usage, input: ${result.usage?.input_tokens}, output: ${result.usage?.output_tokens}`);
 
     if (!text.trim() && attempt < MAX_RETRIES) {
       console.warn(`[IB-section] Empty response, retrying...`);
@@ -4138,7 +4138,7 @@ async function handleIBPhaseA(
   // Fetch phase2_data from intake
   const phase2 = intake.phase2_data || null;
   if (!phase2 || !phase2.judge_name) {
-    return new Response(JSON.stringify({ error: "Phase 2 data missing — customer must complete Phase 2 form" }), { status: 400, headers });
+    return new Response(JSON.stringify({ error: "Phase 2 data missing, customer must complete Phase 2 form" }), { status: 400, headers });
   }
 
   // Fetch prior CD context if available
@@ -4306,14 +4306,14 @@ async function handleIBPhaseA(
   const batch = await batchResponse.json();
   console.log(`[IB-Phase-A] Batch submitted: ${batch.id} (${phaseASections.length} sections)`);
 
-  // Save batch_id — cron poller handles result processing + Phase B trigger
+  // Save batch_id, cron poller handles result processing + Phase B trigger
   await supabaseUpdate(supabaseUrl, supabaseKey, "cases", `id=eq.${caseId}`, {
     batch_id: batch.id,
     updated_at: new Date().toISOString(),
   });
 
   return new Response(
-    JSON.stringify({ success: true, batchId: batch.id, phase: "A", message: "Phase A batch submitted — poller will process results" }),
+    JSON.stringify({ success: true, batchId: batch.id, phase: "A", message: "Phase A batch submitted, poller will process results" }),
     { status: 200, headers }
   );
 }
@@ -4348,7 +4348,7 @@ async function handleIBPhaseB(
   // Load Phase A section outputs
   const phaseAOutputs: Record<string, string> = caseData.section_outputs || {};
   if (Object.keys(phaseAOutputs).length === 0) {
-    return new Response(JSON.stringify({ error: "Phase A outputs missing — run Phase A first" }), { status: 400, headers });
+    return new Response(JSON.stringify({ error: "Phase A outputs missing, run Phase A first" }), { status: 400, headers });
   }
 
   // Get judge research data
@@ -4399,7 +4399,7 @@ async function handleIBPhaseB(
   if (ibBDefendantProfileBlock) console.log(`[IB-Phase-B] Defendant profile injected for case ${caseId}`);
   if (ibBCaseIntelligenceBlock) console.log(`[IB-Phase-B] Case intelligence injected for case ${caseId}`);
 
-  // ── JUSTFAIR judge intelligence (federal courts) — same queries as Phase A ──
+  // ── JUSTFAIR judge intelligence (federal courts), same queries as Phase A ──
   const bJudgeNameNorm = encodeURIComponent((phase2.judge_name || "").toLowerCase());
   let bJustfairDemo = "", bJustfairRacial = "", bSentCtx = "", bOutcomeBench = "";
   try {
@@ -4459,7 +4459,7 @@ async function handleIBPhaseB(
     console.log(`[IB-Phase-B] Defense intelligence injected: ${defenseIntelB.theories.length} theories, ${defenseIntelB.motions.length} motions`);
   }
 
-  // Phase B sections (sequential — each may depend on prior outputs)
+  // Phase B sections (sequential, each may depend on prior outputs)
   const phaseBSections = [
     { key: "letter-to-you", system: buildIBPrompt("letter-to-you", v).system, user: buildIBPrompt("letter-to-you", v).user, model: "claude-sonnet-4-6", temp: 0.4, max: 800 },
     { key: "case-intelligence", system: buildIBPrompt("case-intelligence", v).system, user: buildIBPrompt("case-intelligence", v).user, model: "claude-sonnet-4-6", temp: 0.3, max: 3500 },
@@ -4495,7 +4495,7 @@ async function handleIBPhaseB(
     allOutputs[key] = stripIBMethodologyNotes(allOutputs[key]);
   }
 
-  // Mechanical render — bypasses Claude for Appendix F
+  // Mechanical render, bypasses Claude for Appendix F
   if (!defenseIntelB.isEmpty) {
     allOutputs["tier9-data-appendix"] = renderDefenseMatrix(defenseIntelB, intake.charge_type, intake.state);
     console.log(`[IB-Phase-B] Defense matrix rendered (mechanical, no Claude)`);
@@ -4543,7 +4543,7 @@ async function handleIBPhaseB(
   if (resendKey) {
     await sendEmail({
       to: operatorEmail,
-      subject: `Review Intelligence Brief: ${escapeHtml(intake.charge_type)} — ${escapeHtml(intake.first_name)}`,
+      subject: `Review Intelligence Brief: ${escapeHtml(intake.charge_type)}, ${escapeHtml(intake.first_name)}`,
       html: `<h1 style="color: #F59E0B;">Intelligence Brief Ready for Review</h1>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #F59E0B;">
           <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(intake.first_name)} ${escapeHtml(intake.last_name || "")}</p>
@@ -4622,11 +4622,11 @@ function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, 
     case_number: p2.case_number || intake.case_number || "Not provided",
     case_stage: deriveCaseStageDeno(p2.hearing_type || "", p2.next_court_date || intake.court_date || "", plea, intake.has_discovery || ""),
     arrest_date: intake.arrest_date || "Not provided",
-    arraignment_date: "Not yet identified — ask your attorney",
+    arraignment_date: "Not yet identified, ask your attorney",
     months_since_arrest: monthsSinceArrest,
     next_court_date: p2.next_court_date || intake.court_date || "Not provided",
     next_hearing_type: p2.hearing_type || "Not specified",
-    motion_deadlines: "Not yet identified — ask your attorney about applicable motion deadlines",
+    motion_deadlines: "Not yet identified, ask your attorney about applicable motion deadlines",
     attorney_type: attorneyType,
     attorney_name: p2.attorney_name || "Not provided",
     attorney_firm: p2.attorney_firm || "",
@@ -4649,7 +4649,7 @@ function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, 
     key_dates: [intake.arrest_date ? `Arrest: ${intake.arrest_date}` : "", p2.next_court_date || intake.court_date ? `Next Court: ${p2.next_court_date || intake.court_date}` : ""].filter(Boolean).join(" | ") || "No dates provided",
     prior_section_outputs_xml: priorXml,
     judge_name: p2.judge_name || "Not provided",
-    judge_research_data: judgeResearch || "Judge research pending — use general patterns with appropriate caveats",
+    judge_research_data: judgeResearch || "Judge research pending, use general patterns with appropriate caveats",
     gaps_from_section_2: so["whats-working"] || "Pending Phase A",
     progress_score: "See Section 2",
     most_likely_outcome: so["case-intelligence"] || "Pending Phase B",
@@ -4680,10 +4680,10 @@ function buildIBVariables(intake: IntakeData, phase2: any, priorCdHtml: string, 
     is_family_buyer: (intake.filled_out_by === "family" || intake.filled_out_by === "friend") ? "yes" : "no",
     mental_health_relevant: intake.mental_health_relevant || "Not provided",
 
-    // Legal research data (Wave 5.2) — injected into prompts if available
+    // Legal research data (Wave 5.2), injected into prompts if available
     legal_research_data: legalDataBlock || "",
 
-    // Tier 8A — defendant humanization + case intelligence (injected if data present)
+    // Tier 8A, defendant humanization + case intelligence (injected if data present)
     defendant_profile_block: defendantProfileBlock || "",
     case_intelligence_block: caseIntelligenceBlock || "",
   };
@@ -4717,7 +4717,7 @@ function deriveCriminalHistoryLabelDeno(raw: string): string {
 function buildEmploymentDetailDeno(status: string, industry: string): string {
   if (!status || status === "Not provided") return "Not provided";
   const base = status.replace(/-/g, " ");
-  return industry ? `${base} — ${industry}` : base;
+  return industry ? `${base}, ${industry}` : base;
 }
 
 // ============================================================
@@ -4771,7 +4771,7 @@ function formatDefenseIntelBlock(data: { theories: any[]; motions: any[]; isEmpt
       parts.push(`- ${(t.defense_theory || "").replace(/_/g, " ")}: ${rate} success (${t.attempts} attempts)`);
     }
   }
-  return `\n<defense_intelligence context="IB tier — jurisdiction-level, verified court data. DO NOT fabricate statistics.">\n${parts.join("\n")}\n\nRULES: Reference specific rates when presenting legal information. Never invent statistics beyond what is provided here. If this block is empty, do not fabricate rates.\n</defense_intelligence>`;
+  return `\n<defense_intelligence context="IB tier, jurisdiction-level, verified court data. DO NOT fabricate statistics.">\n${parts.join("\n")}\n\nRULES: Reference specific rates when presenting legal information. Never invent statistics beyond what is provided here. If this block is empty, do not fabricate rates.\n</defense_intelligence>`;
 }
 
 // deno-lint-ignore no-explicit-any
@@ -4813,64 +4813,64 @@ function renderDefenseMatrix(data: { theories: any[]; motions: any[]; isEmpty: b
   return html;
 }
 
-// Inline prompt builder — generates system + user prompt for a given section key
+// Inline prompt builder, generates system + user prompt for a given section key
 // This duplicates the TypeScript prompt builders for Deno. Enriched with expert grounding,
 // anti-hallucination blocks, and buyer state awareness from source-of-truth templates.
 function buildIBPrompt(sectionKey: string, v: Record<string, string>): { system: string; user: string } {
   const BANNED = `\nABSOLUTE BANNED PHRASES (single occurrence invalidates section): "you should", "you need to", "we recommend", "we advise", "your best option", "the best strategy", "red flag", "warning sign", "escalation ladder".`;
-  const WARM_LANG = `\nWarm language: "You told us" / "You said" / "You mentioned" — NEVER "You indicated" / "You reported" / "You selected".`;
+  const WARM_LANG = `\nWarm language: "You told us" / "You said" / "You mentioned", NEVER "You indicated" / "You reported" / "You selected".`;
   const EFFICACY = `\n2:1 efficacy-to-threat ratio. After every hard fact → immediate context or action. No section ends on fear.`;
-  const NO_DISCLAIMER = `\nDO NOT generate any methodology note, disclaimer, or "Important" block at the end of this section. The report renderer adds disclaimers automatically — LLM-generated disclaimers cause duplication. If you feel the urge to add one, STOP. End the section with substantive content.`;
+  const NO_DISCLAIMER = `\nDO NOT generate any methodology note, disclaimer, or "Important" block at the end of this section. The report renderer adds disclaimers automatically, LLM-generated disclaimers cause duplication. If you feel the urge to add one, STOP. End the section with substantive content.`;
 
-  const REALISTIC_HOPE = `\nREALISTIC HOPE — MANDATORY:
+  const REALISTIC_HOPE = `\nREALISTIC HOPE, MANDATORY:
 Include at least one specific, evidence-based reason for hope tied to THIS
 defendant's intake facts. Not generic reassurance ("many first offenders get
-probation") — specific to their charge type, facts, and jurisdiction.
-Place the strongest hope signal early — the defendant needs it before the
-hard information hits. Hope must be HONEST — grounded in real defense
-possibilities. But don't omit them — a scared defendant needs to know
+probation"), specific to their charge type, facts, and jurisdiction.
+Place the strongest hope signal early, the defendant needs it before the
+hard information hits. Hope must be HONEST, grounded in real defense
+possibilities. But don't omit them, a scared defendant needs to know
 there's something to work with.`;
 
-  const UPGRADE_SEEDS = `\nUPGRADE SEEDS — HIGH-VALUE, ZERO-PRESSURE (use 1-2 per section where natural):
-When your analysis hits a natural limit — something you CAN'T fully answer
-without the defendant's actual discovery evidence — name that limit honestly
+  const UPGRADE_SEEDS = `\nUPGRADE SEEDS, HIGH-VALUE, ZERO-PRESSURE (use 1-2 per section where natural):
+When your analysis hits a natural limit, something you CAN'T fully answer
+without the defendant's actual discovery evidence, name that limit honestly
 and tell them exactly what the next tier does about it.
 
 PATTERN: "Whether [specific question] holds up depends on [specific evidence
-type]. That's what The X-Ray ($2,497) examines — your $997 is already
+type]. That's what The X-Ray ($2,497) examines, your $997 is already
 credited, so it's $1,500. Every dollar rolls forward."
 
-CREDIT LADDER — every dollar rolls forward, 12-month window:
+CREDIT LADDER, every dollar rolls forward, 12-month window:
 - IB ($997) → X-Ray ($2,497) = $1,500 after credit
 - IB ($997) → War Room ($4,997) = $4,000 after credit
 - IB ($997) → Situation Room ($9,997) = $9,000 after credit (requires War Room)
-Name the ONE tier that answers THIS specific gap — don't list all tiers.
+Name the ONE tier that answers THIS specific gap, don't list all tiers.
 
 ADDRESS HESITATION THROUGH VALUE (not pressure):
 Every defendant considering the next tier has 5 hesitations. Address them
 with information, not sales tactics:
 
-1. "IS IT WORTH IT?" — Show exactly what the next tier analyzes that THIS
+1. "IS IT WORTH IT?", Show exactly what the next tier analyzes that THIS
    report can't. Be specific: "The X-Ray reviews your actual body camera
    footage frame by frame" not "get deeper analysis." Specificity IS the
    value proposition.
 
-2. "CAN I AFFORD IT?" — Always mention the credit: "Your $997 is fully
-   credited — you only pay the difference ($1,500)." The credit ladder
+2. "CAN I AFFORD IT?", Always mention the credit: "Your $997 is fully
+   credited, you only pay the difference ($1,500)." The credit ladder
    makes the math obvious. Every dollar they already spent reduces the
    next step.
 
-3. "DO I NEED IT NOW?" — Only cite REAL deadlines (evidence retention
+3. "DO I NEED IT NOW?", Only cite REAL deadlines (evidence retention
    policies, motion filing windows, court dates). Never manufacture
-   urgency. If there's no deadline, say "No rush — see how the meeting
+   urgency. If there's no deadline, say "No rush, see how the meeting
    goes first" or "this is available whenever you're ready."
 
-4. "WILL IT ACTUALLY HELP?" — This report just demonstrated value. The
+4. "WILL IT ACTUALLY HELP?", This report just demonstrated value. The
    next tier uses the same methodology on their actual evidence. Frame
    as: "This report analyzed what you told us. The X-Ray analyzes what
    the prosecution has."
 
-5. "MY ATTORNEY SHOULD HANDLE THIS" — Never undermine the attorney.
+5. "MY ATTORNEY SHOULD HANDLE THIS", Never undermine the attorney.
    Frame as complementary: "If your attorney has already reviewed the
    discovery, this confirms their analysis. If they haven't gotten to
    it yet, this fills the gap."
@@ -4893,30 +4893,30 @@ RULES:
 - Table cells under 30 words. If a cell needs more, split into two sentences or move detail to a note below the table.
 - Key actions not buried in middle of dense paragraphs. Critical deadlines and actions get bold callouts, not paragraph endings.
 - Paragraphs in action-adjacent sections: max 50 words. Break longer paragraphs into bullets or add bold lead-ins.
-- If inserting immigration or collateral consequence content mid-section, add a 1-sentence contextual lead-in — no cold drops between unrelated topics.
+- If inserting immigration or collateral consequence content mid-section, add a 1-sentence contextual lead-in, no cold drops between unrelated topics.
 - Vary structural patterns: if using repeated blocks (questions, action items, bullet lists), vary length and format so the reader can't predict the exact shape of every remaining item after seeing 2-3.
 - CROSS-SECTION AWARENESS: Prior sections already established the defendant's facts. Do NOT re-state "0.09 BAC in Harris County" or the full charge in every section. After Section 1, use short references ("the reading," "the current offer") instead of restating the complete fact. The reader has already read the prior sections.
-- PHRASE CAPS (whole document): Court date (e.g. "April 15") max 12x total — after the case table and email template, use "the hearing," "your court date," "the pre-trial date" instead of repeating the specific date. "your attorney" max 12x total — after first use in a section, switch to "he," "him," "Torres," "your defender," or just "the attorney." "borderline" max 10x total — vary with "near-limit," "margin-range," "close to the threshold," "within instrument margin." "your case" max 10x total — vary with "the matter," "your situation," "this," or drop it entirely when context is clear.
-- CHARGE-AGNOSTIC KEY-TERM CAPS: Every charge type has 2-3 central terms the LLM will over-repeat (e.g. DUI: "BAC"/"borderline"; Drug: "consent search"/"body camera footage"; White Collar: "wire transfer"/"financial records"). ANY case-specific key term max 12x total across the whole document. After establishing the term in Section 1, vary with: pronouns ("it," "the evidence"), shorter references ("the search," "the footage," "the recording," "the stop"), or category references ("the evidence," "the incident," "the interaction"). Diversion program names (PTI, deferred adjudication, drug court) max 15x combined — after first use, vary with "the program," "diversion," "the alternative," or just "it." Do NOT repeat the full formal name in every mention.
+- PHRASE CAPS (whole document): Court date (e.g. "April 15") max 12x total, after the case table and email template, use "the hearing," "your court date," "the pre-trial date" instead of repeating the specific date. "your attorney" max 12x total, after first use in a section, switch to "he," "him," "Torres," "your defender," or just "the attorney." "borderline" max 10x total, vary with "near-limit," "margin-range," "close to the threshold," "within instrument margin." "your case" max 10x total, vary with "the matter," "your situation," "this," or drop it entirely when context is clear.
+- CHARGE-AGNOSTIC KEY-TERM CAPS: Every charge type has 2-3 central terms the LLM will over-repeat (e.g. DUI: "BAC"/"borderline"; Drug: "consent search"/"body camera footage"; White Collar: "wire transfer"/"financial records"). ANY case-specific key term max 12x total across the whole document. After establishing the term in Section 1, vary with: pronouns ("it," "the evidence"), shorter references ("the search," "the footage," "the recording," "the stop"), or category references ("the evidence," "the incident," "the interaction"). Diversion program names (PTI, deferred adjudication, drug court) max 15x combined, after first use, vary with "the program," "diversion," "the alternative," or just "it." Do NOT repeat the full formal name in every mention.
 - ACRONYM EXPANSION: Expand every acronym on first use in the section. Common examples: BAC (blood alcohol concentration), SFST (standardized field sobriety test), NHTSA (National Highway Traffic Safety Administration), ALR (Administrative License Revocation), SR-22 (certificate of financial responsibility), PTI (pre-trial intervention), PTD (pre-trial diversion). After first expansion, use the acronym alone.
 - SENTENCE LENGTH: In action sections (priorities, plans, email templates, advocacy steps), max 25 words per sentence. In legal analysis sections, max 30 words. Split longer sentences at the dash or comma.`;
 
-  const EMOTIONAL_DEPTH = `\nEMOTIONAL PROFILING — Read intake to detect and calibrate:
-- PRIMARY FEAR: career/freedom/family/financial/reputation — what are they MOST afraid of losing?
+  const EMOTIONAL_DEPTH = `\nEMOTIONAL PROFILING, Read intake to detect and calibrate:
+- PRIMARY FEAR: career/freedom/family/financial/reputation, what are they MOST afraid of losing?
 - EMOTIONAL STANCE: Minimizer ("not that big a deal") → validate practical approach, build alongside. Catastrophizer ("life is ruined") → contain scope, temporalize, show bounded reality. Intellectualizer (precise legal questions) → honor the approach, provide info, gently bridge to emotion. Dissociater (flat affect, minimal detail) → concrete simple actions, skip emotional language.
-- ATTORNEY WOUND: Abandonment (PD won't call back), Betrayal (pushing unwanted plea), or Kept in Dark (won't explain). These feel very different — calibrate tone accordingly.
+- ATTORNEY WOUND: Abandonment (PD won't call back), Betrayal (pushing unwanted plea), or Kept in Dark (won't explain). These feel very different, calibrate tone accordingly.
 - HOPE SIGNAL: What their specific question or frustration reveals about what they hope is true. Mirror and build on it.
-Calibrate section tone to THIS defendant's stance — not generic warm language.`;
+Calibrate section tone to THIS defendant's stance, not generic warm language.`;
 
   const ACTION_VOICE = `\nACTION SECTION VOICE (D14):
-Action sections (plans, priorities, email templates, "if overwhelmed") use direct language — the action IS the information: "Send the email (30 seconds)" NOT "You may want to consider sending the email." Reserve hedged language ("one option is," "you may want to consider") for legal analysis sections where UPL caution applies.`;
+Action sections (plans, priorities, email templates, "if overwhelmed") use direct language, the action IS the information: "Send the email (30 seconds)" NOT "You may want to consider sending the email." Reserve hedged language ("one option is," "you may want to consider") for legal analysis sections where UPL caution applies.`;
 
   const COLLATERAL_CITATIONS = `\nCOLLATERAL CONSEQUENCE CITATIONS (L7/U10):
 Every collateral consequence MUST cite a specific statute, regulation, or named source.
-- Immigration: cite Padilla v. Kentucky, 559 U.S. 356 (2010) + 8 U.S.C. § 1101(a)(43). Include immigration attorney referral. ALWAYS add a plain-language gloss after the Padilla citation — e.g., "a Supreme Court ruling requiring criminal defense to include immigration consequence analysis." Bare case citations without explanation fail the reading level audit (P9).
+- Immigration: cite Padilla v. Kentucky, 559 U.S. 356 (2010) + 8 U.S.C. § 1101(a)(43). Include immigration attorney referral. ALWAYS add a plain-language gloss after the Padilla citation, e.g., "a Supreme Court ruling requiring criminal defense to include immigration consequence analysis." Bare case citations without explanation fail the reading level audit (P9).
 - Gun rights: cite 18 U.S.C. § 922(g)(1) + applicable state firearms statute.
 - Driver's license: cite applicable state statute (FL: F.S. § 322.055).
-- Professional licensing: NEVER assert loss as fact — frame as "may affect" + cite licensing board statute.
+- Professional licensing: NEVER assert loss as fact, frame as "may affect" + cite licensing board statute.
 - Background checks / expunction: Texas expunction law was reorganized in 2023 (HB 1540). Cite Tex. Code Crim. Proc. Ch. 55A (NOT the old Art. 55.01).
 Unsourced claims about employment, housing, immigration, voting, firearms, or civil rights consequences are audit failures.`;
 
@@ -4927,41 +4927,41 @@ Unsourced claims about employment, housing, immigration, voting, firearms, or ci
 Write a warm, specific, personal letter that makes the defendant feel seen. Maximum 200 words.
 
 RULES:
-1. NO heading — start directly with the defendant's first name and a comma.
-2. Reference specific facts from intake — charge type, situation, what they told us.
+1. NO heading, start directly with the defendant's first name and a comma.
+2. Reference specific facts from intake, charge type, situation, what they told us.
 3. Include overwhelm permission: "You don't have to read this all at once. Start with the 48-Hour Priority List on the next page."
 4. Insider vulnerability signal: "This service was founded by a defendant who went through exactly what you are going through."
 5. If they mentioned their profession, acknowledge that their career IS at stake.
 6. If a family member filled this out, address both the defendant and support person.
-7. End with forward momentum — evidence that preparation matters, not sympathy.${BANNED}${WARM_LANG}
+7. End with forward momentum, evidence that preparation matters, not sympathy.${BANNED}${WARM_LANG}
 
 TONE: Direct warmth. Like someone who's been through the system talking to someone going through it now.
 
 SEQUENCE: (1) Insider vulnerability (1-2 sentences) (2) Specific acknowledgment of THEIR situation (2-3 sentences) (3) What this report gives them (1-2 sentences) (4) Overwhelm permission (1 sentence) (5) Forward momentum close (1 sentence)${NO_DISCLAIMER}`,
-      user: `Write the personal letter.\n\n<intake>\nFirst name: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Attorney: ${v.attorney_type} — ${v.attorney_name} | Last communication: ${v.last_communication} | Frustration: ${v.frustration_level} | Biggest concern: ${v.biggest_concern} | Employment: ${v.employment_detail} | Plea status: ${v.plea_status} | Filled out by: ${v.filled_out_by} | Family buyer: ${v.is_family_buyer} | Mental health: ${v.mental_health_relevant} | Case stage: ${v.case_stage_raw}\n</intake>${v.defendant_profile_block}\n\nRemember: NO heading. Start with "${v.first_name}," — just the name and comma.`,
+      user: `Write the personal letter.\n\n<intake>\nFirst name: ${v.first_name} | Charges: ${v.charges} | State: ${v.state} | County: ${v.county} | Attorney: ${v.attorney_type}, ${v.attorney_name} | Last communication: ${v.last_communication} | Frustration: ${v.frustration_level} | Biggest concern: ${v.biggest_concern} | Employment: ${v.employment_detail} | Plea status: ${v.plea_status} | Filled out by: ${v.filled_out_by} | Family buyer: ${v.is_family_buyer} | Mental health: ${v.mental_health_relevant} | Case stage: ${v.case_stage_raw}\n</intake>${v.defendant_profile_block}\n\nRemember: NO heading. Start with "${v.first_name},", just the name and comma.`,
     },
     "case-roadmap": {
       system: `You are an elite criminal defense research analyst generating Section 1: Your Case Roadmap for a Case Intelligence Brief.
 
-Provide a personalized GPS from current position to resolution. County-specific, charge-specific. County name ≥3 times. Charge type in every timeline entry. Months since arrest included. Two Paths (plea vs trial) presented neutrally — NO recommendation. Bottom Line: 1 sentence + 1 action.${BANNED}${WARM_LANG}${EFFICACY}
+Provide a personalized GPS from current position to resolution. County-specific, charge-specific. County name ≥3 times. Charge type in every timeline entry. Months since arrest included. Two Paths (plea vs trial) presented neutrally, NO recommendation. Bottom Line: 1 sentence + 1 action.${BANNED}${WARM_LANG}${EFFICACY}
 
 EXPERT GROUNDING:
-- Mesereau: phase framework — defense must understand where the case is in the prosecution's timeline
-- Shapiro: plea negotiation timing asymmetry — prosecution wants resolution early, defense benefits from investigation time
-- Spence: humanization — defendant is a person navigating a process, not a case number
+- Mesereau: phase framework, defense must understand where the case is in the prosecution's timeline
+- Shapiro: plea negotiation timing asymmetry, prosecution wants resolution early, defense benefits from investigation time
+- Spence: humanization, defendant is a person navigating a process, not a case number
 - BJ Fogg B=MAP: each stage maps to one action with a clear trigger
 ${NO_DISCLAIMER}${REALISTIC_HOPE}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
-CASE STAGE CALIBRATION (Hagan — Stanford Legal Design):
+CASE STAGE CALIBRATION (Hagan, Stanford Legal Design):
 If case_stage_raw differs from derived case_stage, note both and explain the discrepancy.
 Stage-specific content: pre-arrest → rights-focused, arraigned → discovery timeline,
 trial-prep → jury selection prep, sentencing → mitigation focus, post-conviction → appeal windows.
 
 CRIMINAL HISTORY (Steinberg + Uptrust):
-If priors: present as prosecution context — "This is what the prosecution will see. Here's
+If priors: present as prosecution context, "This is what the prosecution will see. Here's
 what your attorney can do with it." Timeline changes: recidivism enhancements, habitual
 offender risk. Pair every negative shift with an attorney question.
-If no priors: note as strategic advantage — first-offender programs, diversion eligibility.
+If no priors: note as strategic advantage, first-offender programs, diversion eligibility.
 
 Output: ## Section 1: Your Case Roadmap
 ### 1a. Where You Are Now (timeline table, ~250w)
@@ -4974,7 +4974,7 @@ Word budget: ~1,050.`,
     "whats-working": {
       system: `You are an elite criminal defense research analyst generating Section 2: What's Working + What Needs Attention.
 
-Assess what attorney has done RIGHT first. Decode statements. Gaps = "CLARIFY" never "failure". Case Progress Score 0-100 — reflects the defendant's reported experience across 6 dimensions: Communication 25%, Case Review 15%, Discovery 20%, Motion Activity 15%, Strategy 15%, Court Prep 10%. Frame as "where your case stands based on what you've told us" — NOT a judgment of attorney competence.${BANNED}${WARM_LANG}${EFFICACY}
+Assess what attorney has done RIGHT first. Decode statements. Gaps = "CLARIFY" never "failure". Case Progress Score 0-100, reflects the defendant's reported experience across 6 dimensions: Communication 25%, Case Review 15%, Discovery 20%, Motion Activity 15%, Strategy 15%, Court Prep 10%. Frame as "where your case stands based on what you've told us", NOT a judgment of attorney competence.${BANNED}${WARM_LANG}${EFFICACY}
 
 BUYER STATE AWARENESS: Read frustration, last_communication, attorney_statements to detect WHY they purchased.
 - Long communication gap → provide info directly THEN tools to re-establish communication
@@ -4988,7 +4988,7 @@ EXPERT GROUNDING:
 - George Lakoff: decode the frames attorneys use (what they say vs what they mean)
 ${NO_DISCLAIMER}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
-FAMILY BUYER (Jayadev — Participatory Defense):
+FAMILY BUYER (Jayadev, Participatory Defense):
 If filled_out_by is "family" or "friend": reader is a support person. Use defendant's first name
 for legal facts. Use "you" for action items (the family member is doing the work). Frame
 Case Progress Score actions as "Here's what you can do to help."
@@ -5004,14 +5004,14 @@ Word budget: ~1,550.`,
     "legal-options": {
       system: `You are an elite criminal defense research analyst generating Section 4: Legal Options & Deadlines.
 
-Map every applicable motion, deadline, plea framework. NO recommendations — present options + attorney questions. Deadline calendar: 30/60/90-day view. Plea Framework conditional on plea_status.${BANNED}${WARM_LANG}${EFFICACY}
+Map every applicable motion, deadline, plea framework. NO recommendations, present options + attorney questions. Deadline calendar: 30/60/90-day view. Plea Framework conditional on plea_status.${BANNED}${WARM_LANG}${EFFICACY}
 
-ANTI-HALLUCINATION — PLEA FRAMEWORK:
+ANTI-HALLUCINATION, PLEA FRAMEWORK:
 NO conviction/acquittal/suppression percentages from training data. Convert to attorney questions: "Ask your attorney: 'What is the typical conviction rate for [charge] cases in this county?'" Use qualitative framing only. Operator-researched data with cited sources is acceptable.
 
 EXPERT GROUNDING:
 - Master Strategy 12 Principles (systematic motion architecture)
-- Dershowitz: appellate preservation — protect the record from day one
+- Dershowitz: appellate preservation, protect the record from day one
 - Taleb: asymmetric motion design (upside, no downside)
 - Kahneman/Tversky: loss aversion + anchoring (plea evaluation)
 - Voss: naming pressure tactics to defuse them
@@ -5030,7 +5030,7 @@ Output: ## Section 4
 ### 4a. Motion Landscape (~700w)
 ### 4b. Deadline Calendar (~300w)
 ### 4c-4d. Plea Framework (conditional depth: full if plea offered/discussed, condensed if not)
-### 4e. Prosecution Pressure Tactics Decoder (ALWAYS PRESENT ~200w — overcharging, bail conditions, continuances, discovery delay, informal plea signals. Name and defuse. Chris Voss: "When you name a tactic, it loses most of its power.")
+### 4e. Prosecution Pressure Tactics Decoder (ALWAYS PRESENT ~200w, overcharging, bail conditions, continuances, discovery delay, informal plea signals. Name and defuse. Chris Voss: "When you name a tactic, it loses most of its power.")
 ### 4f-4g. (If plea active: Before You Sign + Decision Checklist)
 ### Bottom Line (~50w)
 Word budget: ~2,400.`,
@@ -5039,20 +5039,20 @@ Word budget: ~2,400.`,
     "protection": {
       system: `You are an elite criminal defense research analyst generating Section 5: Protecting Your Case and Life.
 
-Every threat → immediately followed by protective action. No paragraph ends on fear. Life Impact Map: 8 domains, charge-specific + state-specific. Immigration: ALWAYS include — for non-citizens: CRITICAL expanded Padilla v. Kentucky analysis, immigration attorney referral, plea impact warning. For US citizens: brief paragraph noting criminal convictions can affect immigration sponsorship of family members, future naturalization petitions by family, and international travel (some countries deny entry for certain convictions). Cite Padilla v. Kentucky, 559 U.S. 356 (2010) as establishing that immigration consequences are a critical part of any criminal defense analysis. Include: "If anyone in your household has immigration status concerns, consult an immigration attorney before any plea decision." Family & Custody: ALWAYS present. Children section ONLY if has_children = true.${BANNED}${WARM_LANG}${EFFICACY}
+Every threat → immediately followed by protective action. No paragraph ends on fear. Life Impact Map: 8 domains, charge-specific + state-specific. Immigration: ALWAYS include, for non-citizens: CRITICAL expanded Padilla v. Kentucky analysis, immigration attorney referral, plea impact warning. For US citizens: brief paragraph noting criminal convictions can affect immigration sponsorship of family members, future naturalization petitions by family, and international travel (some countries deny entry for certain convictions). Cite Padilla v. Kentucky, 559 U.S. 356 (2010) as establishing that immigration consequences are a critical part of any criminal defense analysis. Include: "If anyone in your household has immigration status concerns, consult an immigration attorney before any plea decision." Family & Custody: ALWAYS present. Children section ONLY if has_children = true.${BANNED}${WARM_LANG}${EFFICACY}
 
-ANTI-HALLUCINATION — IMMIGRATION:
+ANTI-HALLUCINATION, IMMIGRATION:
 NEVER state definitive deportation conclusions (e.g., "mandatory deportation with no waiver"). Use: "Certain convictions may have serious immigration consequences. The specific impact depends on exact charge, plea, and immigration history. Immigration attorney consultation is essential before any plea decision."
 
-ANTI-HALLUCINATION — REGULATORY:
+ANTI-HALLUCINATION, REGULATORY:
 FAFSA, licensing, regulatory consequences change over time (FAFSA Simplification Act 2021). Include: "Check current rules at [official source]." Outdated claims are audit failures.
 
 EXPERT GROUNDING:
-- Spence: "The biggest threat to any defendant isn't the prosecution — it's the defendant themselves"
+- Spence: "The biggest threat to any defendant isn't the prosecution, it's the defendant themselves"
 - Dershowitz: rights preservation (what gets waived accidentally)
 - NICCC database: National Inventory of Collateral Consequences of Conviction
-- Jayadev: participatory defense — community resources per jurisdiction
-- Seligman: temporalizing — "Your case is at month X of a Y-Z month process. This phase ends."
+- Jayadev: participatory defense, community resources per jurisdiction
+- Seligman: temporalizing, "Your case is at month X of a Y-Z month process. This phase ends."
 ${NO_DISCLAIMER}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${COLLATERAL_CITATIONS}
 
 EMPLOYMENT CONSEQUENCE SPECIFICITY (Steinberg):
@@ -5067,7 +5067,7 @@ If mental_health_relevant = "yes": add treatment access as Life Impact Map domai
 opening doors: "Treatment-based alternatives can lead to reduced or dismissed charges."
 
 LIFE IMPACT MAP TABLE FORMAT (D16):
-Each table cell MUST be under 30 words. If a consequence needs more explanation, put a brief summary in the cell and add detail in a note BELOW the table. Immigration goes below the table as a standalone paragraph (not a table row) — it's too complex for a cell.
+Each table cell MUST be under 30 words. If a consequence needs more explanation, put a brief summary in the cell and add detail in a note BELOW the table. Immigration goes below the table as a standalone paragraph (not a table row), it's too complex for a cell.
 
 Output: ## Section 5
 ### 5a. Protecting Your Case (~400w)
@@ -5083,11 +5083,11 @@ Word budget: ~1,750.`,
 Hearing-type-specific preparation guide. Practical (dress, arrive, park). Step-by-step walkthrough. If hearing type unknown: general guide. PD-specific vs private-specific guidance for "If Attorney Isn't There."${BANNED}${WARM_LANG}
 
 EXPERT GROUNDING:
-- Jayadev: participatory defense — preparation reduces power imbalance
+- Jayadev: participatory defense, preparation reduces power imbalance
 - BJ Fogg: preparation = ability, reduces anxiety = motivation barrier
 ${ANTI_FORMULAIC}
 
-If is_family_buyer = "yes": include "For Support Persons" subsection — where to sit (gallery),
+If is_family_buyer = "yes": include "For Support Persons" subsection, where to sit (gallery),
 courtroom etiquette for observers, how to be helpful without disrupting proceedings.
 
 Output: ## Appendix B
@@ -5105,32 +5105,32 @@ Word budget: ~850.`,
 
 Outcome map (5 scenarios, qualitative NOT percentages), defense theories (attributed to named experts), judge intelligence (from operator data), prosecution strategy (FRAME analysis), jurisdiction profile. All county-specific.${BANNED}${WARM_LANG}${EFFICACY}
 
-ANTI-HALLUCINATION — OUTCOME MAP:
+ANTI-HALLUCINATION, OUTCOME MAP:
 "How Common in [County]" column: ONLY qualitative (Low, Moderate, Common, Rare) with caveats, or operator-researched data with sources. NEVER specific percentages from training data. If no data: "Your attorney can assess this based on their experience in [county]."
 
-ANTI-HALLUCINATION — DA OFFICE PATTERNS:
+ANTI-HALLUCINATION, DA OFFICE PATTERNS:
 DA behavior must come from operator research or be qualified as "general patterns" with caveat: "Your attorney's direct experience with this prosecutor's office is the most reliable source."
 
-ANTI-HALLUCINATION — JUDGE INTELLIGENCE:
+ANTI-HALLUCINATION, JUDGE INTELLIGENCE:
 If judge_research data is empty or minimal:
 - DO NOT fabricate judge tendencies, sentencing patterns, or reputation.
-- State clearly: "Jurisdiction-specific data on Judge [name]'s [charge type] case tendencies is not available for this report. The most reliable source for [his/her] courtroom patterns is your attorney's direct experience — use the questions below to extract that intelligence."
+- State clearly: "Jurisdiction-specific data on Judge [name]'s [charge type] case tendencies is not available for this report. The most reliable source for [his/her] courtroom patterns is your attorney's direct experience, use the questions below to extract that intelligence."
 - Provide a FRAMEWORK of what matters: (1) sentencing range tendencies for this charge type, (2) motion grant/deny patterns, (3) trial vs plea preferences, (4) courtroom demeanor. Frame each as a question for the attorney: "Ask your attorney: 'How does Judge [name] typically handle [charge type] cases?'"
-- This turns a data gap into actionable attorney questions — which IS the product.
+- This turns a data gap into actionable attorney questions, which IS the product.
 If judge_research data IS provided: use it directly, cite the source, and compare to county/state averages where available.
 
 EXPERT GROUNDING:
-- Spence: defense narrative — never try a case without an affirmative defense theory
-- Mesereau: reverse-engineering prosecution — understand their case before they present it
-- Lichtman: 7-Pillar CI Destruction (drug cases — challenge reliability, motivation, supervision, corroboration)
-- Kahneman: anchoring — outcome matrix resets expectations from fear to data
-- Klein: pre-mortem — translate judge patterns into "if X, then Y" predictions
+- Spence: defense narrative, never try a case without an affirmative defense theory
+- Mesereau: reverse-engineering prosecution, understand their case before they present it
+- Lichtman: 7-Pillar CI Destruction (drug cases, challenge reliability, motivation, supervision, corroboration)
+- Kahneman: anchoring, outcome matrix resets expectations from fear to data
+- Klein: pre-mortem, translate judge patterns into "if X, then Y" predictions
 - Lakoff: decode prosecution's framing strategy
-- Seligman: 3 P's — every negative outcome must depersonalize, contain, temporalize
+- Seligman: 3 P's, every negative outcome must depersonalize, contain, temporalize
 ${NO_DISCLAIMER}${UPGRADE_SEEDS}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}
 
 CRIMINAL HISTORY IN OUTCOME MAPPING:
-Priors change the outcome landscape — sentencing guidelines, habitual offender enhancements,
+Priors change the outcome landscape, sentencing guidelines, habitual offender enhancements,
 diversion eligibility. Adjust outcome map probabilities. Present as data with attorney questions.
 No priors: explicitly note diversion eligibility and first-offender advantages.
 
@@ -5150,7 +5150,7 @@ Word budget: ~2,250.`,
     "your-plan": {
       system: `You are an elite criminal defense research analyst generating Section 6: Your Plan.
 
-Convert everything into action. Email template fully personalized (case #, attorney name, court date, EXACTLY 5 numbered questions — these MUST match the 5 questions on the Meeting Ready Sheet word-for-word, including statutory cites and personal context like "sole provider for two children"). Phone script read-aloud ready. 14-day plan: 1 action/day, each day ends with encouragement. Meeting Ready Sheet: 5 PRE-FILLED questions (Q1 = Golden). ZERO "[fill in]" placeholders requiring legal knowledge. The email and MRS must be in sync — a defendant who only sends the email still asks every question on the MRS. EXACT MATCH means identical wording AND punctuation (including quotation marks around quoted words). Difficult Conversations: 3-4 scenarios, attorney always respected — use "What you can say:" (not "What to say:") to frame responses as options, not scripts. Advocacy Steps: 5 collaborative + referral note.${BANNED}${WARM_LANG}${EFFICACY}
+Convert everything into action. Email template fully personalized (case #, attorney name, court date, EXACTLY 5 numbered questions, these MUST match the 5 questions on the Meeting Ready Sheet word-for-word, including statutory cites and personal context like "sole provider for two children"). Phone script read-aloud ready. 14-day plan: 1 action/day, each day ends with encouragement. Meeting Ready Sheet: 5 PRE-FILLED questions (Q1 = Golden). ZERO "[fill in]" placeholders requiring legal knowledge. The email and MRS must be in sync, a defendant who only sends the email still asks every question on the MRS. EXACT MATCH means identical wording AND punctuation (including quotation marks around quoted words). Difficult Conversations: 3-4 scenarios, attorney always respected, use "What you can say:" (not "What to say:") to frame responses as options, not scripts. Advocacy Steps: 5 collaborative + referral note.${BANNED}${WARM_LANG}${EFFICACY}
 
 BUYER STATE AWARENESS:
 - Attorney non-responsive → 14-day plan delivers value independent of attorney response
@@ -5159,9 +5159,9 @@ BUYER STATE AWARENESS:
 
 EXPERT GROUNDING:
 - BJ Fogg B=MAP: one action per day, ability > motivation, tiny habits compound
-- Voss: difficult conversation scripts — tactical empathy, calibrated questions
-- Bandura: 4 sources of self-efficacy — mastery (Day 1 email = small win), vicarious learning, social persuasion, emotional state management
-- Klein: pre-mortem for meeting prep — imagine it went badly, prepare to prevent each failure mode
+- Voss: difficult conversation scripts, tactical empathy, calibrated questions
+- Bandura: 4 sources of self-efficacy, mastery (Day 1 email = small win), vicarious learning, social persuasion, emotional state management
+- Klein: pre-mortem for meeting prep, imagine it went badly, prepare to prevent each failure mode
 ${NO_DISCLAIMER}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}${ACTION_VOICE}
 
 FAMILY BUYER PLAN (Jayadev + Steinberg):
@@ -5197,16 +5197,16 @@ Word budget: ~2,075.`,
 
 Gap-based questions, quality over quantity. ZERO duplicates with Section 6g. Min 8, target 10-15.
 
-STRUCTURAL VARIATION — MANDATORY (D13):
+STRUCTURAL VARIATION, MANDATORY (D13):
 Do NOT use an identical scaffold for all questions. Vary the format:
 - The Golden Question (Q1): full 6-part treatment (question, why it matters, good answer, if vague, what to listen for, expert source).
 - High-priority questions (Q2-Q5): use 4-5 parts but VARY the labels. Instead of always "Why it matters:" use alternatives like "Background:", "Why this is urgent:", "Context:". Instead of always "Good answer:" use "What you want to hear:", "A strong response:", "The answer that means they've done the work:". Instead of "If vague:" use "If he deflects:", "If he seems unsure:", "Follow-up probe:". Instead of "What to listen for:" use "The key signal:", "Pay attention to:", weave it into the explanation.
 - Lower-priority questions (Q6-Q10): MUST use at least 3 different formats across these 5 questions. Options: (a) question + single integrated paragraph, (b) question + "Red flag / Green flag" two-line comparison, (c) two related questions grouped under one number with shared context, (d) question + "If yes → ... / If no → ..." conditional fork. Do NOT default to identical short paragraphs for all 5.
-- Final questions (Q11-Q15): vary freely — one as a blockquote callout, one as question-only with single-line context, one grouped pair. At least 3 visually distinct shapes across Q11-Q15.
+- Final questions (Q11-Q15): vary freely, one as a blockquote callout, one as question-only with single-line context, one grouped pair. At least 3 visually distinct shapes across Q11-Q15.
 MINIMUM 6 distinct structural formats across Q1-Q15. If an auditor can describe Q6-Q15 as "all short paragraphs," you have failed this requirement.${BANNED}${WARM_LANG}
 
 EXPERT GROUNDING:
-- Voss: calibrated question design — open-ended, forces substantive response
+- Voss: calibrated question design, open-ended, forces substantive response
 - Irving Younger: cross-examination precision adapted for client-attorney communication
 - Pozner: pointed questions impossible to dodge
 - MacCarthy: question sequencing for maximum information extraction
@@ -5247,8 +5247,8 @@ OVERRIDE RULES:
 - case_stage_raw = "post-conviction" → P1 = "Confirm appeal deadline with attorney"
 
 EXPERT GROUNDING:
-- Seligman: temporalizing — P3 includes temporal anchor: "Before [date], this phase will have progressed to [next stage]"
-- Bandura: mastery experience — P1 must be completable in under 5 minutes. The feeling of completion IS the intervention.${REALISTIC_HOPE}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}${ACTION_VOICE}`,
+- Seligman: temporalizing, P3 includes temporal anchor: "Before [date], this phase will have progressed to [next stage]"
+- Bandura: mastery experience, P1 must be completable in under 5 minutes. The feeling of completion IS the intervention.${REALISTIC_HOPE}${ANTI_FORMULAIC}${EMOTIONAL_DEPTH}${ACTION_VOICE}`,
       user: `Generate 48-Hour Priority List.\n\n<intake>\nName: ${v.first_name} | Charges: ${v.charges} | County: ${v.state_county} | Court: ${v.next_court_date} | Immigration: ${v.immigration_status} | Attorney: ${v.attorney_name} | Family buyer: ${v.is_family_buyer} | Mental health: ${v.mental_health_relevant} | Case stage (raw): ${v.case_stage_raw}\n</intake>\n\n<all_sections>\n<s1>${v.case_roadmap_output}</s1>\n<s2>${v.whats_working_output}</s2>\n<s3>${v.case_intelligence_output}</s3>\n<s4>${v.legal_options_output}</s4>\n<s5>${v.protection_output}</s5>\n<s6>${v.your_plan_output}</s6>\n</all_sections>`,
     },
   };
@@ -5268,7 +5268,7 @@ EXPERT GROUNDING:
 
 /**
  * Strip LLM-generated methodology disclaimers from IB section output.
- * The renderer injects exactly 2 disclaimers (header + footer) — any per-section
+ * The renderer injects exactly 2 disclaimers (header + footer), any per-section
  * disclaimers are duplicates. Catches blockquote, italic, plain text, heading formats.
  * Safety net for the ~5% of the time LLMs ignore the NO_DISCLAIMER instruction.
  */
@@ -5297,18 +5297,18 @@ function stripIBMethodologyNotes(text: string): string {
 function buildTableOfContents(): string {
   return `## Table of Contents
 
-- **START HERE: Your 48-Hour Priority List** — 3 actions for the next 48 hours
-- **Section 1: Your Case Roadmap** — Where you are, what happens next, the two paths
-- **Section 2: What's Working + What Needs Attention** — Case Progress Score, decoded statements, gaps to clarify
-- **Section 3: Your Case Intelligence** — Outcome map, defense theories, judge profile, prosecution preview
-- **Section 4: Legal Options & Deadlines** — Motion landscape, deadline calendar, plea framework
-- **Section 5: Protecting Your Case and Life** — Case protection, life impact map, pending-case management
-- **Section 6: Your Plan** — Email template, phone script, 14-day plan, meeting prep, difficult conversations
-- **Appendix A: Brady/Giglio Checklist** — Evidence the prosecution must disclose
-- **Appendix B: Next Court Date Prep** — What to expect, wear, bring, and do
-- **Appendix C: Attorney Script Pack** — 5 ready-to-use communication scripts
-- **Appendix D: Questions for Your Attorney** — 10-15 targeted, gap-based questions
-- **Appendix E: Your Rights** — Key rights during criminal proceedings`;
+- **START HERE: Your 48-Hour Priority List**, 3 actions for the next 48 hours
+- **Section 1: Your Case Roadmap**, Where you are, what happens next, the two paths
+- **Section 2: What's Working + What Needs Attention**, Case Progress Score, decoded statements, gaps to clarify
+- **Section 3: Your Case Intelligence**, Outcome map, defense theories, judge profile, prosecution preview
+- **Section 4: Legal Options & Deadlines**, Motion landscape, deadline calendar, plea framework
+- **Section 5: Protecting Your Case and Life**, Case protection, life impact map, pending-case management
+- **Section 6: Your Plan**, Email template, phone script, 14-day plan, meeting prep, difficult conversations
+- **Appendix A: Brady/Giglio Checklist**, Evidence the prosecution must disclose
+- **Appendix B: Next Court Date Prep**, What to expect, wear, bring, and do
+- **Appendix C: Attorney Script Pack**, 5 ready-to-use communication scripts
+- **Appendix D: Questions for Your Attorney**, 10-15 targeted, gap-based questions
+- **Appendix E: Your Rights**, Key rights during criminal proceedings`;
 }
 
 function buildBradyGiglioChecklist(): string {
@@ -5356,7 +5356,7 @@ A structured phone call framework is in **Section 6c**. Includes what to say, ho
 If your attorney doesn't respond to Script 1 within 5 business days, use the follow-up template in **Section 6e**.
 
 ### Script 4: Difficult Conversation Scripts (Section 6i)
-Real scenarios with word-for-word responses for when conversations get challenging — fee disputes, strategy disagreements, communication breakdowns. See **Section 6i**.
+Real scenarios with word-for-word responses for when conversations get challenging, fee disputes, strategy disagreements, communication breakdowns. See **Section 6i**.
 
 ### Script 5: Self-Advocacy Steps (Section 6j)
 If you've exhausted communication attempts, **Section 6j** provides escalation steps including bar complaints, substitution of counsel, and Marsden/Strickland motions.
@@ -5370,15 +5370,15 @@ function buildYourRights(state: string): string {
 **These rights exist regardless of your charge, your attorney, or your county.**
 
 ### Constitutional Rights:
-- **Right to remain silent** (5th Amendment) — You cannot be compelled to testify against yourself
-- **Right to an attorney** (6th Amendment) — If you cannot afford one, one will be appointed
-- **Right to a speedy trial** (6th Amendment) — Timelines vary by state and jurisdiction
-- **Right to confront witnesses** (6th Amendment) — You can cross-examine anyone who testifies against you
-- **Right against unreasonable search and seizure** (4th Amendment) — Evidence obtained illegally may be suppressed
-- **Right to a jury trial** (6th Amendment) — For serious offenses, you have the right to be judged by a jury of your peers
-- **Right to due process** (14th Amendment) — Fair procedures must be followed
-- **Right against double jeopardy** (5th Amendment) — You cannot be tried twice for the same offense
-- **Right to be presumed innocent** — The prosecution must prove guilt beyond a reasonable doubt
+- **Right to remain silent** (5th Amendment), You cannot be compelled to testify against yourself
+- **Right to an attorney** (6th Amendment), If you cannot afford one, one will be appointed
+- **Right to a speedy trial** (6th Amendment), Timelines vary by state and jurisdiction
+- **Right to confront witnesses** (6th Amendment), You can cross-examine anyone who testifies against you
+- **Right against unreasonable search and seizure** (4th Amendment), Evidence obtained illegally may be suppressed
+- **Right to a jury trial** (6th Amendment), For serious offenses, you have the right to be judged by a jury of your peers
+- **Right to due process** (14th Amendment), Fair procedures must be followed
+- **Right against double jeopardy** (5th Amendment), You cannot be tried twice for the same offense
+- **Right to be presumed innocent**, The prosecution must prove guilt beyond a reasonable doubt
 
 ### Your Rights With Your Attorney:
 - You have the right to know what is happening in your case at all times
@@ -5502,7 +5502,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Intelligence Brief — ${escapeHtml(meta.firstName)}</title>
+<title>Case Intelligence Brief, ${escapeHtml(meta.firstName)}</title>
 <style>${REPORT_STYLES}</style>
 </head>
 <body>
@@ -5525,7 +5525,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
   </div>
   ${sections}
   <div class="footer-disclaimer">
-    <p class="footer-disclaimer-text"><strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+    <p class="footer-disclaimer-text"><strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </div>
   <div class="copyright-block">
     <p class="copyright-text">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
@@ -5533,7 +5533,7 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
   </div>
   <div class="print-hidden upgrade-cta">
     <p class="upgrade-cta-text">When you get discovery evidence, we can go even deeper:</p>
-    <a href="/checkout?tier=x-ray${meta.email ? `&email=${encodeURIComponent(meta.email)}` : ""}" class="upgrade-btn">The X-Ray — $2,497 ($1,500 after credit)</a>
+    <a href="/checkout?tier=x-ray${meta.email ? `&email=${encodeURIComponent(meta.email)}` : ""}" class="upgrade-btn">The X-Ray, $2,497 ($1,500 after credit)</a>
     <p class="upgrade-credit-note">Your $997 is fully credited toward any tier within 12 months.</p>
   </div>
 </div>
@@ -5667,7 +5667,7 @@ Deno.serve(async (req: Request) => {
 
     console.log(`[generate-report] Intake found, submitting CD batch...`);
 
-    // --- Submit batch and exit — cron poller handles result processing ---
+    // --- Submit batch and exit, cron poller handles result processing ---
     // Batch submission takes <1s (vs 60-294s synchronous), eliminating the
     // 150s timeout constraint entirely. The cron poller (Task 4) picks up
     // completed batches and runs rendering, validation, save, and eval.
@@ -5683,7 +5683,7 @@ Deno.serve(async (req: Request) => {
       console.log(`[generate-report] Batch ${batchId} submitted for case ${caseId}, returning immediately`);
 
       return new Response(
-        JSON.stringify({ success: true, batchId, message: "Batch submitted — poller will process results" }),
+        JSON.stringify({ success: true, batchId, message: "Batch submitted, poller will process results" }),
         { status: 200, headers }
       );
     } catch (err) {

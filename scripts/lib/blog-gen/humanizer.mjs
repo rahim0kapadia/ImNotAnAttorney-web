@@ -1,4 +1,4 @@
-// humanizer.mjs — Humanizer QA gate. Pure logic, no external API calls.
+// humanizer.mjs, Humanizer QA gate. Pure logic, no external API calls.
 //
 // Ported verbatim from ImNotAnAttorney-web/src/lib/blog-generation/qa-humanizer.ts
 // (2026-04-09 blog engine port). Only change: TypeScript annotations and type
@@ -10,9 +10,9 @@
 //
 // 2026-04-10: Added Detector 14 (repeated_structural_transition).
 //
-// NO regex on content — all text processing uses split/includes/indexOf/startsWith.
+// NO regex on content, all text processing uses split/includes/indexOf/startsWith.
 
-// ── Tier 1 vocabulary — hallmarks of AI-generated prose ──
+// ── Tier 1 vocabulary, hallmarks of AI-generated prose ──
 const TIER1_WORDS = [
   "delve", "tapestry", "vibrant", "crucial", "meticulous", "seamless",
   "groundbreaking", "landscape", "paradigm", "synergy", "robust", "leverage",
@@ -20,7 +20,7 @@ const TIER1_WORDS = [
   "holistic", "impactful", "actionable",
 ];
 
-// ── Tier 2 density words — common but suspicious at high density ──
+// ── Tier 2 density words, common but suspicious at high density ──
 const TIER2_WORDS = [
   "furthermore", "moreover", "additionally", "consequently", "nevertheless",
   "comprehensive", "facilitate", "implement", "optimize", "enhance",
@@ -369,7 +369,7 @@ export function runHumanizerCheck(mdxContent, options = {}) {
     }
   }
 
-  // ── Detector 4: Em dash — zero tolerance ──
+  // ── Detector 4: Em dash, zero tolerance ──
   // Em dashes are a top AI writing tell. Human writers use commas, colons,
   // parentheses, or separate sentences. Any em dash (Unicode or --) = hard fail.
   // Ignores --- (frontmatter/hr) and markdown table separators (|---|).
@@ -396,7 +396,7 @@ export function runHumanizerCheck(mdxContent, options = {}) {
         detector: "em_dash_zero_tolerance",
         severity: "hard_fail",
         count: emDashCount,
-        matches: [`${emDashCount} em dashes in ${wordCount} words — all must be removed`],
+        matches: [`${emDashCount} em dashes in ${wordCount} words, all must be removed`],
         points_added: 65,
       });
     }

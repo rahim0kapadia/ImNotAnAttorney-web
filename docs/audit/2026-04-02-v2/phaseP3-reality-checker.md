@@ -9,61 +9,61 @@
 
 ## Challenged PASS Ratings
 
-### 1. Phase P1-P2 (CRO): Trust criteria T1-T5 -- all 5 rated PASS
+### 1. Phase P1-P2 (CRO): Trust criteria T1-T5, all 5 rated PASS
 
 - **Evidence provided:** Quotes from homepage copy, pain points, backstory narrative, guarantee text. All compelling but entirely text-based analysis of copy quality.
-- **Challenge:** Every trust criterion was rated PASS with zero NEEDS WORK. For an anonymous brand selling legal research to crisis buyers at prices up to $9,997, a 100% trust pass requires more than copy analysis. No user testing evidence. No conversion data. No heatmap or session recording analysis. No comparison to competitor trust implementations. No evidence that the anonymous brand model actually builds trust with the target demographic (defendants who are already trust-broken). The CRO report says "the anonymity itself is a trust signal" -- this is an assertion, not evidence. The 68.3g story is compelling, but the report treats compelling copy as proof of trust. Copy quality is necessary but not sufficient.
+- **Challenge:** Every trust criterion was rated PASS with zero NEEDS WORK. For an anonymous brand selling legal research to crisis buyers at prices up to $9,997, a 100% trust pass requires more than copy analysis. No user testing evidence. No conversion data. No heatmap or session recording analysis. No comparison to competitor trust implementations. No evidence that the anonymous brand model actually builds trust with the target demographic (defendants who are already trust-broken). The CRO report says "the anonymity itself is a trust signal", this is an assertion, not evidence. The 68.3g story is compelling, but the report treats compelling copy as proof of trust. Copy quality is necessary but not sufficient.
 - **Verdict:** DOWNGRADE T1-T5 to CONDITIONAL PASS. The copy analysis is thorough and the trust architecture is well-designed, but without conversion data or user testing, a definitive PASS on trust for a $9,997 anonymous product is premature. The design is sound in theory; whether it works in practice with this audience is unproven.
 
-### 2. Phase 9-10 (Lighthouse): Accessibility 100/100 on all pages -- rated as "exceptional"
+### 2. Phase 9-10 (Lighthouse): Accessibility 100/100 on all pages, rated as "exceptional"
 
 - **Evidence provided:** Lighthouse scores of 100 on a11y for all 4 pages tested.
-- **Challenge:** Phase 3 (axe-core) found 5 unique violations including 2 SERIOUS across 13 pages. Phase 7 (jsx-a11y) found 21 real issues including 14 SERIOUS. Phase 8 confirmed these findings with root-cause analysis. Lighthouse a11y score of 100 means the automated checks Lighthouse runs passed -- but Lighthouse a11y checks are a subset of axe-core's full ruleset, and neither catches everything. The Phase 9-10 report calls this "exceptional" without cross-referencing the Phase 3 and Phase 7 findings that are still open. 5 violations on 5 of 13 pages is not "exceptional." It is "passing with known gaps."
+- **Challenge:** Phase 3 (axe-core) found 5 unique violations including 2 SERIOUS across 13 pages. Phase 7 (jsx-a11y) found 21 real issues including 14 SERIOUS. Phase 8 confirmed these findings with root-cause analysis. Lighthouse a11y score of 100 means the automated checks Lighthouse runs passed, but Lighthouse a11y checks are a subset of axe-core's full ruleset, and neither catches everything. The Phase 9-10 report calls this "exceptional" without cross-referencing the Phase 3 and Phase 7 findings that are still open. 5 violations on 5 of 13 pages is not "exceptional." It is "passing with known gaps."
 - **Verdict:** DOWNGRADE. Lighthouse 100 is a lab score that does not account for the 21 jsx-a11y issues and 5 axe-core violations documented in sibling reports. The Phase 9-10 report should have noted the discrepancy. Accessibility status is NEEDS WORK until the Phase 14 autofix patches are applied and verified.
 
-### 3. Phase 6 (Security): File upload security -- rated "one of the strongest implementations I have reviewed"
+### 3. Phase 6 (Security): File upload security, rated "one of the strongest implementations I have reviewed"
 
 - **Evidence provided:** 10-point checklist of upload security controls (UUID validation, ownership verification, MIME allowlist, magic byte validation, size limit, filename sanitization, private bucket, rate limiting, atomic append, tier guard).
-- **Challenge:** The analysis is thorough and the implementation does appear genuinely strong. However, the same report identifies S-6 (report tokens stored unhashed in database) as SERIOUS, meaning a database compromise exposes every delivered report containing sensitive criminal case analysis. The upload channel is hardened, but the delivery channel stores access tokens in plaintext. The praise for upload security creates an inflated impression of overall data protection posture when the report token finding undermines it. The security report also describes the overall posture as "above-average" in the executive summary -- this language is unjustified when 2 SERIOUS findings remain open, one of which (S-5, npm vulnerabilities including Next.js CSRF bypass) is a known CVE against the production framework version.
+- **Challenge:** The analysis is thorough and the implementation does appear genuinely strong. However, the same report identifies S-6 (report tokens stored unhashed in database) as SERIOUS, meaning a database compromise exposes every delivered report containing sensitive criminal case analysis. The upload channel is hardened, but the delivery channel stores access tokens in plaintext. The praise for upload security creates an inflated impression of overall data protection posture when the report token finding undermines it. The security report also describes the overall posture as "above-average" in the executive summary, this language is unjustified when 2 SERIOUS findings remain open, one of which (S-5, npm vulnerabilities including Next.js CSRF bypass) is a known CVE against the production framework version.
 - **Verdict:** UPHELD for the upload security section specifically. DOWNGRADE the "above-average security posture" framing in the executive summary. A site with 2 SERIOUS security findings (one a known CVE, one a plaintext token storage issue for criminal defense reports) is not "above-average." It has strong foundations with critical gaps.
 
-### 4. Phase 17 (UPL): Overall assessment -- "strong UPL compliance posture"
+### 4. Phase 17 (UPL): Overall assessment, "strong UPL compliance posture"
 
 - **Evidence provided:** Zero critical violations (U6-U15). Comprehensive scan of 50+ files across 7 categories. Previous fixes verified. Detailed analysis of borderline cases.
-- **Challenge:** The UPL scan was genuinely thorough and the methodology is sound. However, FLAG B4 (`attorney-not-returning-calls.mdx` line 194: "you need to take immediate action. That means exploring new counsel, contacting the bar, or filing a motion for substitution of counsel") is characterized as the "clearest U4 instance in the blog content" -- yet the overall verdict is still "strong compliance posture." For a YMYL legal site where UPL is existential risk, ONE clear U4 violation in published blog content should make the overall assessment "NEEDS WORK until B4 is fixed." Additionally, FLAG B3 (the "fire your lawyer" article) is described as sitting in a "gray zone" where a regulator could focus on whether the site is telling defendants what legal action to take. A gray zone on UPL for a YMYL site is not "strong posture" -- it is "acceptable with known risks."
+- **Challenge:** The UPL scan was genuinely thorough and the methodology is sound. However, FLAG B4 (`attorney-not-returning-calls.mdx` line 194: "you need to take immediate action. That means exploring new counsel, contacting the bar, or filing a motion for substitution of counsel") is characterized as the "clearest U4 instance in the blog content", yet the overall verdict is still "strong compliance posture." For a YMYL legal site where UPL is existential risk, ONE clear U4 violation in published blog content should make the overall assessment "NEEDS WORK until B4 is fixed." Additionally, FLAG B3 (the "fire your lawyer" article) is described as sitting in a "gray zone" where a regulator could focus on whether the site is telling defendants what legal action to take. A gray zone on UPL for a YMYL site is not "strong posture", it is "acceptable with known risks."
 - **Verdict:** DOWNGRADE to CONDITIONAL PASS. The UPL compliance infrastructure is genuinely strong (prompts engine has self-governance, disclaimers are everywhere, previous fixes verified). But the blog content has one clear U4 violation (B4) and one gray zone (B3) that must be fixed before the posture can be called "strong." Fix B4 first, B3 second, then the assessment becomes valid.
 
-### 5. Phase 9-10 (Lighthouse): SEO 100/100 on all pages -- rated perfect
+### 5. Phase 9-10 (Lighthouse): SEO 100/100 on all pages, rated perfect
 
 - **Evidence provided:** Lighthouse SEO score of 100 across all 4 tested pages.
 - **Challenge:** Phase 16 (SEO/GEO) found 23 issues including 3 CRITICAL (title tag overruns up to 92 chars, broken SearchAction schema, 5 dead DefinedTermSet URLs). The Lighthouse SEO check verifies basic meta tag presence, mobile viewport, and a few other baseline checks. It does not check title length against SERP display limits, schema URL validity, or sitemap completeness. Phase 16 found that `/blog` title with template = 83 chars, `/services` = 92 chars, and 5 of 8 glossary URLs are dead. Lighthouse's 100 gives a false sense of completeness when the detailed SEO audit reveals significant gaps.
 - **Verdict:** DOWNGRADE. Lighthouse SEO 100 is a baseline pass, not a comprehensive assessment. The Phase 16 findings (3 CRITICAL, 7 HIGH) demonstrate that SEO is NEEDS WORK despite the Lighthouse score. The Phase 9-10 report should have noted Lighthouse's limited SEO scope.
 
-### 6. Phase P1-P2 (CRO): CRO6 "Guarantee visible before checkout" -- PASS
+### 6. Phase P1-P2 (CRO): CRO6 "Guarantee visible before checkout", PASS
 
 - **Evidence provided:** "Find It or It's Free" section on homepage, guarantee before CTA on playbook pages, guarantee placed before features on checkout per Brunson principle.
-- **Challenge:** The guarantee copy is strong and well-placed. However, Phase 4 (Design/UX) found that ALL guarantee copy renders at `text-sm` (14px) on mobile -- the same finding that affects testimonials, FAQ answers, and pricing features. A guarantee that renders at 14px on mobile for a 3AM crisis buyer with 80% reduced cognitive processing (Covello) is not functionally "visible before checkout." It is technically present but practically undersized.
+- **Challenge:** The guarantee copy is strong and well-placed. However, Phase 4 (Design/UX) found that ALL guarantee copy renders at `text-sm` (14px) on mobile, the same finding that affects testimonials, FAQ answers, and pricing features. A guarantee that renders at 14px on mobile for a 3AM crisis buyer with 80% reduced cognitive processing (Covello) is not functionally "visible before checkout." It is technically present but practically undersized.
 - **Verdict:** UPHELD with reservation. The guarantee architecture is correct and the placement is right. The sizing issue is a Design finding (Phase 4), not a CRO finding. But the cross-reference matters: the CRO PASS is technically correct, but the guarantee's effectiveness is undermined by the text-sm finding that Phase 4 flagged.
 
-### 7. Phase 13-21 (Readability): /start page -- rated PASS (FK Grade ~7)
+### 7. Phase 13-21 (Readability): /start page, rated PASS (FK Grade ~7)
 
 - **Evidence provided:** "Best-performing page in the audit." Short sentences, explicit Covello implementation, good FK grade.
 - **Challenge:** This PASS is deserved and well-supported. The /start page genuinely implements crisis UX better than any other page. No downgrade warranted.
 - **Verdict:** UPHELD. This is one of the few PASS ratings with overwhelming evidence.
 
-### 8. Phase 18-20 (Privacy): Terms of Service UPL disclaimers -- rated "PASS -- strong UPL protection"
+### 8. Phase 18-20 (Privacy): Terms of Service UPL disclaimers, rated "PASS, strong UPL protection"
 
 - **Evidence provided:** Section 3 analysis showing explicit disclaimers about not being a law firm, listing what is and is not provided, no attorney-client relationship language.
-- **Challenge:** The Terms are genuinely well-written. However, Phase 18-20 also found C1: the privacy policy claims "Our website does not use tracking cookies or third-party analytics cookies" while GA4 is live and setting `_ga`/`_ga_*` cookies. A privacy policy that is factually incorrect undermines the credibility of ALL legal pages on the site, including the Terms of Service. For a site serving "a legally-sophisticated audience (defendants and attorneys)" (the report's own words), a factually incorrect privacy policy is not just a compliance gap -- it is a trust hazard.
+- **Challenge:** The Terms are genuinely well-written. However, Phase 18-20 also found C1: the privacy policy claims "Our website does not use tracking cookies or third-party analytics cookies" while GA4 is live and setting `_ga`/`_ga_*` cookies. A privacy policy that is factually incorrect undermines the credibility of ALL legal pages on the site, including the Terms of Service. For a site serving "a legally-sophisticated audience (defendants and attorneys)" (the report's own words), a factually incorrect privacy policy is not just a compliance gap, it is a trust hazard.
 - **Verdict:** UPHELD for the Terms specifically. But the Privacy/Compliance area overall should be NEEDS WORK due to the C1 GA4 disclosure mismatch. A site cannot have "strong" legal compliance when its privacy policy contains a false statement about tracking cookies.
 
-### 9. Phase 4 (Design/UX): Crisis UX -- rated 6/7
+### 9. Phase 4 (Design/UX): Crisis UX, rated 6/7
 
 - **Evidence provided:** Covello implementation, crisis mode auto-detection, binary routing, StickyMobileCTA, charge-specific urgency blocks.
-- **Challenge:** 6/7 is a fair rating. The crisis UX architecture is genuinely the site's strongest design area. The deductions (text-xs dismiss button, no hover feedback on "go back" buttons) are real but minor. However, the Phase 4 report does not cross-reference the Phase 13 readability finding that 7 of ~20 score observations exceed the Covello 27-word limit. The score observations ARE crisis UX delivery -- they are the first substantive content a defendant reads after completing the quiz. A crisis UX rating of 6/7 that ignores the readability of the score output is incomplete.
+- **Challenge:** 6/7 is a fair rating. The crisis UX architecture is genuinely the site's strongest design area. The deductions (text-xs dismiss button, no hover feedback on "go back" buttons) are real but minor. However, the Phase 4 report does not cross-reference the Phase 13 readability finding that 7 of ~20 score observations exceed the Covello 27-word limit. The score observations ARE crisis UX delivery, they are the first substantive content a defendant reads after completing the quiz. A crisis UX rating of 6/7 that ignores the readability of the score output is incomplete.
 - **Verdict:** DOWNGRADE to 5.5/7. The infrastructure is strong, but the output (score observations) fails the readability standard that the input (quiz interface) passes. The crisis UX rating should account for the full user journey, not just the entry path.
 
-### 10. Phase P1-P2 (CRO): CRO17 "Crisis buyer fast-path exists" -- PASS
+### 10. Phase P1-P2 (CRO): CRO17 "Crisis buyer fast-path exists", PASS
 
 - **Evidence provided:** CrisisHero component, auto-detected 10PM-6AM, single CTA, Covello Mental Noise Model.
 - **Challenge:** This PASS is well-supported. The crisis mode is genuinely implemented with time-of-day detection, parameterized override, and stripped UI. The implementation exceeds what most competitors offer.
@@ -83,14 +83,14 @@
 ### Contradiction 2: Phase 6 "above-average security posture" vs. 2 SERIOUS findings
 
 - **Phase 6 executive summary says:** "above-average security posture"
-- **Phase 6 findings say:** S-5 (SERIOUS: npm vulnerabilities including Next.js CSRF bypass), S-6 (SERIOUS: report tokens stored unhashed -- criminal defense data exposed in database breach)
-- **Resolution:** The security foundations (timing-safe auth, HMAC, rate limiting, input allowlisting, magic byte validation) ARE above-average. But the active posture with 2 SERIOUS open findings is not "above-average" -- it is "strong foundations with critical gaps that must be addressed before the posture claim is valid." The executive summary conflates architectural quality with current risk level.
+- **Phase 6 findings say:** S-5 (SERIOUS: npm vulnerabilities including Next.js CSRF bypass), S-6 (SERIOUS: report tokens stored unhashed, criminal defense data exposed in database breach)
+- **Resolution:** The security foundations (timing-safe auth, HMAC, rate limiting, input allowlisting, magic byte validation) ARE above-average. But the active posture with 2 SERIOUS open findings is not "above-average", it is "strong foundations with critical gaps that must be addressed before the posture claim is valid." The executive summary conflates architectural quality with current risk level.
 
 ### Contradiction 3: Phase 13-21 readability PASS on drip emails vs. jargon density
 
 - **Phase 13-21 says:** Drip emails (NURTURE sequence) rated PASS (FK ~7-8).
 - **Phase 13-21 also says:** Attorney email templates contain undefined acronyms: SORNA, USSG, Rule 16, CI, Franks v. Delaware.
-- **Resolution:** The NURTURE emails and attorney email templates are different sequences serving different purposes. The NURTURE emails deserve the PASS. The attorney email templates have a legitimate higher register (defendants sending to attorneys), but defendants need to understand what they are sending. The finding is correctly rated as "templates MARGINAL" but the summary table says "PASS (templates MARGINAL)" -- this notation is too forgiving. Templates should be a separate rating: NEEDS WORK.
+- **Resolution:** The NURTURE emails and attorney email templates are different sequences serving different purposes. The NURTURE emails deserve the PASS. The attorney email templates have a legitimate higher register (defendants sending to attorneys), but defendants need to understand what they are sending. The finding is correctly rated as "templates MARGINAL" but the summary table says "PASS (templates MARGINAL)", this notation is too forgiving. Templates should be a separate rating: NEEDS WORK.
 
 ### Contradiction 4: Privacy policy "no tracking cookies" claim vs. GA4 being live
 
@@ -108,7 +108,7 @@
 
 ## 5 Weakest PASS Ratings
 
-### 1. Phase P1-P2: Trust T1-T5 (5/5 PASS -- all trust criteria perfect)
+### 1. Phase P1-P2: Trust T1-T5 (5/5 PASS, all trust criteria perfect)
 
 **Why this is weak:** Zero NEEDS WORK on trust for an anonymous brand selling legal research to crisis-buyers at $97-$9,997. The analysis is pure copy review with no user testing, no conversion data, no competitor benchmarking, and no evidence the anonymous model works with this demographic. Trust theory is not trust evidence. This is the most overconfident PASS in the entire audit.
 
@@ -122,7 +122,7 @@
 
 ### 4. Phase P1-P2: Anonymous Brand ANON1-ANON5 (5/5 PASS)
 
-**Why this is weak:** Same issue as Trust T1-T5. The analysis is sound as a copy/architecture review but contains no evidence that the anonymous model performs with the target audience. The assertion "the anonymity itself is a trust signal for this market" is a hypothesis, not a finding. This is the kind of claim that should be tagged "PLAUSIBLE -- needs validation" not "PASS."
+**Why this is weak:** Same issue as Trust T1-T5. The analysis is sound as a copy/architecture review but contains no evidence that the anonymous model performs with the target audience. The assertion "the anonymity itself is a trust signal for this market" is a hypothesis, not a finding. This is the kind of claim that should be tagged "PLAUSIBLE, needs validation" not "PASS."
 
 ### 5. Phase 17 (UPL): Overall "strong compliance posture"
 
@@ -146,11 +146,11 @@ The drip email system has 22 parts. The readability audit reviewed the copy. No 
 
 ### 4. Mobile Safari and real-device testing
 
-All testing used headless Chrome (Lighthouse, axe-core, Playwright). No report tested on real iOS Safari, which has unique rendering behaviors (safe area insets, 100vh vs 100dvh handling, input zoom on focus below 16px). Phase 4 flags `text-sm` (14px) body text -- on iOS Safari, inputs with `font-size < 16px` trigger auto-zoom on focus, which could disrupt the checkout flow.
+All testing used headless Chrome (Lighthouse, axe-core, Playwright). No report tested on real iOS Safari, which has unique rendering behaviors (safe area insets, 100vh vs 100dvh handling, input zoom on focus below 16px). Phase 4 flags `text-sm` (14px) body text, on iOS Safari, inputs with `font-size < 16px` trigger auto-zoom on focus, which could disrupt the checkout flow.
 
 ### 5. Actual load testing under concurrent users
 
-Lighthouse scores are single-user lab measurements. The rate limiting is database-backed with in-memory fallback -- but no report tested what happens when 50 users hit `/api/checkout` simultaneously during a marketing push. The serverless cold-start behavior on Vercel and the PostgreSQL connection pool under load are untested.
+Lighthouse scores are single-user lab measurements. The rate limiting is database-backed with in-memory fallback, but no report tested what happens when 50 users hit `/api/checkout` simultaneously during a marketing push. The serverless cold-start behavior on Vercel and the PostgreSQL connection pool under load are untested.
 
 ### 6. Stripe webhook reliability and retry handling
 
@@ -190,11 +190,11 @@ The intake form accepts free-text fields for charges, situations, and specific q
 - **Phase 19:** Uses custom scale (CRITICAL, HIGH, MEDIUM, LOW).
 - **Phase P1-P2:** Uses PASS / NEEDS WORK / FAIL.
 
-No unified severity scale was established before the audit began. This makes cross-phase prioritization difficult. Is a Phase 3 SERIOUS (axe-core link-in-text-block, 7 nodes) worse or better than a Phase 16 HIGH (ClaudeBot not in robots.ts)? The answer depends on whether you value accessibility compliance or GEO signal -- but the severity labels don't communicate this.
+No unified severity scale was established before the audit began. This makes cross-phase prioritization difficult. Is a Phase 3 SERIOUS (axe-core link-in-text-block, 7 nodes) worse or better than a Phase 16 HIGH (ClaudeBot not in robots.ts)? The answer depends on whether you value accessibility compliance or GEO signal, but the severity labels don't communicate this.
 
 ### Missing severity: Phase 4 Design has no severity scale
 
-Phase 4 uses a 1-7 rating scale per category and P0/P1/P2 priority labels for individual findings. The P0 label (fix immediately) includes both `text-sm` on substantive content (affects every page, every user) and `text-xs` crisis dismiss button (affects /start page only, crisis mode only). These are not the same severity -- the text-sm finding is systemic while the text-xs finding is localized.
+Phase 4 uses a 1-7 rating scale per category and P0/P1/P2 priority labels for individual findings. The P0 label (fix immediately) includes both `text-sm` on substantive content (affects every page, every user) and `text-xs` crisis dismiss button (affects /start page only, crisis mode only). These are not the same severity, the text-sm finding is systemic while the text-xs finding is localized.
 
 ### Severity agreement: Where reports align
 
@@ -241,7 +241,7 @@ Phase 4 uses a 1-7 rating scale per category and P0/P1/P2 priority labels for in
 
 6. **Apply the Phase 14 a11y autofix patches** (19 patches across 12 files). ~100 minutes total. Eliminates all known axe-core and jsx-a11y violations.
 
-7. **Upgrade Next.js to fix CSRF bypass CVE** (Phase 6 S-5). `npm install next@16.2.2` -- the CSRF bypass allows null Origin to bypass Server Actions checks.
+7. **Upgrade Next.js to fix CSRF bypass CVE** (Phase 6 S-5). `npm install next@16.2.2`, the CSRF bypass allows null Origin to bypass Server Actions checks.
 
 8. **Hash report tokens in database** (Phase 6 S-6). Criminal defense reports are the most sensitive data on the platform. Plaintext tokens in the database are a breach away from full exposure.
 

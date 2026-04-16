@@ -1,29 +1,29 @@
 /**
- * @file /api/webhooks/stripe — Stripe webhook handler
+ * @file /api/webhooks/stripe, Stripe webhook handler
  *
  * Pipeline position: Entry point for all payment events. This is where
  * paid cases are born and refunded cases are terminated.
  *
  * Handles these event types:
  *
- * 1. `checkout.session.completed` — Customer just paid
+ * 1. `checkout.session.completed`, Customer just paid
  *    Flow: Create order → Create case → Link intake (if exists) → Trigger generation (case-decoder)
  *    Status assignments:
- *      - "intake"           — Intake exists + non-discovery tier → ready for generation
- *      - "awaiting-intake"  — No intake found → email customer to fill intake form
- *      - "pending"          — Intake exists + discovery tier → waiting for document upload
+ *      - "intake"          , Intake exists + non-discovery tier → ready for generation
+ *      - "awaiting-intake" , No intake found → email customer to fill intake form
+ *      - "pending"         , Intake exists + discovery tier → waiting for document upload
  *
- * 2. `charge.refunded` — Stripe processed a refund (full or partial)
+ * 2. `charge.refunded`, Stripe processed a refund (full or partial)
  *    Flow: Update order status → Update case status → Notify operator
  *    Business rules:
  *      - Full refund: order.status → "refunded", case.status → "refunded", report access revoked
  *      - Partial refund: order stays "paid", only refunded_at timestamp logged for audit
  *      - Commission reversal: referral commission zeroed + partner totals decremented
  *
- * 3. `charge.refund.updated` — Refund bounce detection
+ * 3. `charge.refund.updated`, Refund bounce detection
  *    Flow: Alert operator when refund fails or requires action
  *
- * 4. `invoice.payment_failed` — Installment payment failure
+ * 4. `invoice.payment_failed`, Installment payment failure
  *    Flow: Alert operator when a subscription invoice payment fails (e.g., second installment)
  *
  * Key patterns:
@@ -94,8 +94,8 @@ async function notifyPartnerOfSale(
       });
     }
 
-    // Fire-and-forget SMS — don't await, avoid webhook timeout risk.
-    // total_referrals is read post-increment from the same primary — safe for first-sale detection.
+    // Fire-and-forget SMS, don't await, avoid webhook timeout risk.
+    // total_referrals is read post-increment from the same primary, safe for first-sale detection.
     // Theoretical concurrent race results in missed celebration (not duplicate), which is acceptable.
     if (shouldSendSMS(partnerPrefs.commission_earned) && partnerDetail.phone) {
       const smsText = buildCommissionSMS({
@@ -164,7 +164,7 @@ export async function POST(req: NextRequest) {
   // EVENT: checkout.session.completed
   // ================================================================
   // Fires when a customer completes payment through Stripe Checkout.
-  // This is the primary order creation path — every paid customer
+  // This is the primary order creation path, every paid customer
   // flows through here.
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
@@ -183,7 +183,7 @@ export async function POST(req: NextRequest) {
         console.error(`[Webhook] Unknown standalone product: ${standaloneSlug}`);
         await sendEmail({
           to: OPERATOR_EMAIL,
-          subject: `[ERROR] Standalone webhook — unknown product ${escapeHtml(standaloneSlug)}`,
+          subject: `[ERROR] Standalone webhook, unknown product ${escapeHtml(standaloneSlug)}`,
           html: `<p>Session: ${escapeHtml(session.id)}</p><p>Slug: ${escapeHtml(standaloneSlug)}</p>`,
         });
         return NextResponse.json({ error: "Unknown product" }, { status: 400 });
@@ -201,7 +201,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Missing email" }, { status: 500 });
       }
 
-      // Cryptographic intake token — only the customer gets this via email.
+      // Cryptographic intake token, only the customer gets this via email.
       // The plaintext token is NEVER stored in the DB; only its SHA-256 hash.
       // Matches the pattern already used for standalone_report_token_hash.
       const intakeToken = randomBytes(24).toString("base64url");
@@ -238,7 +238,7 @@ export async function POST(req: NextRequest) {
         );
         await sendEmail({
           to: OPERATOR_EMAIL,
-          subject: `[ERROR] Standalone order insert failed — ${standaloneSlug}`,
+          subject: `[ERROR] Standalone order insert failed, ${standaloneSlug}`,
           html: `<p>Payment collected but order record failed.</p>
                  <p>Email: ${escapeHtml(customerStandaloneEmail)}</p>
                  <p>Product: ${escapeHtml(standaloneSlug)}</p>
@@ -273,7 +273,7 @@ export async function POST(req: NextRequest) {
           intake = { chargeType: preChargeType, state: preState };
         }
 
-        // Write intake directly — same fields the intake API route would set
+        // Write intake directly, same fields the intake API route would set
         const standaloneSupabaseUpdate = createAdminClient();
         await standaloneSupabaseUpdate.from("orders")
           .update({ standalone_intake: intake })
@@ -286,7 +286,7 @@ export async function POST(req: NextRequest) {
           .single();
 
         if (orderForGen) {
-          // Fire-and-forget — cron Part 5e catches stuck reports
+          // Fire-and-forget, cron Part 5e catches stuck reports
           const { generateTier9Report } = await import("@/lib/tier9-reports/generate");
           generateTier9Report(orderForGen.id).catch((err: unknown) => {
             console.error("[Webhook] Tier9 pre-populated generation error:", err);
@@ -296,7 +296,7 @@ export async function POST(req: NextRequest) {
         // Operator sale notification (includes "pre-populated" flag)
         await sendEmail({
           to: OPERATOR_EMAIL,
-          subject: `[SALE] ${product.name} — $${((session.amount_total || 0) / 100).toFixed(2)} (instant)`,
+          subject: `[SALE] ${product.name}, $${((session.amount_total || 0) / 100).toFixed(2)} (instant)`,
           html: `<p>New standalone purchase (pre-populated intake, instant generation): ${escapeHtml(product.name)} by ${escapeHtml(customerStandaloneEmail)}</p>`,
         });
 
@@ -309,7 +309,7 @@ export async function POST(req: NextRequest) {
       await sendEmailWithOperatorAlert(
         {
           to: customerStandaloneEmail,
-          subject: `Your ${product.name} — Complete Your Details`,
+          subject: `Your ${product.name}, Complete Your Details`,
           html: `
             <p>Thank you for your purchase.</p>
             <p>To generate your personalized ${escapeHtml(product.name)}, we need a few details about your situation.</p>
@@ -331,7 +331,7 @@ export async function POST(req: NextRequest) {
 
       await sendEmail({
         to: OPERATOR_EMAIL,
-        subject: `[SALE] ${product.name} — $${((session.amount_total || 0) / 100).toFixed(2)}`,
+        subject: `[SALE] ${product.name}, $${((session.amount_total || 0) / 100).toFixed(2)}`,
         html: `<p>New standalone purchase: ${escapeHtml(product.name)} by ${escapeHtml(customerStandaloneEmail)}</p>`,
       });
 
@@ -343,7 +343,7 @@ export async function POST(req: NextRequest) {
     // ──────────────────────────────────────────────────────────────
     // `tier` is set in checkout session metadata when creating the session.
     // Email normalization (lowercase + trim) ensures consistent lookup
-    // across intakes, subscribers, and cases — prevents "User@Gmail.com"
+    // across intakes, subscribers, and cases, prevents "User@Gmail.com"
     // and "user@gmail.com" from being treated as different customers.
     const tier = session.metadata?.tier;
     const rawEmail = session.customer_email || session.customer_details?.email;
@@ -354,7 +354,7 @@ export async function POST(req: NextRequest) {
       const parsedAmount = parseInt(session.metadata.full_price, 10);
       if (isNaN(parsedAmount) || parsedAmount <= 0) {
         console.error("[Webhook] Invalid full_price in installment metadata:", session.metadata?.full_price);
-        // Don't block the webhook — fall back to session.amount_total
+        // Don't block the webhook, fall back to session.amount_total
         // (which is the first installment amount, better than NaN)
       }
       amount = isNaN(parsedAmount) || parsedAmount <= 0 ? (session.amount_total || 0) : parsedAmount;
@@ -368,7 +368,7 @@ export async function POST(req: NextRequest) {
       console.error("[Stripe Webhook] Missing metadata:", { tier, email, amount });
       await sendEmail({
         to: OPERATOR_EMAIL,
-        subject: `ALERT: Missing metadata in Stripe webhook — ${session.id}`,
+        subject: `ALERT: Missing metadata in Stripe webhook, ${session.id}`,
         html: `<h1 style="color: #EF4444;">Missing Metadata in Stripe Webhook</h1>
           <p>A checkout.session.completed event arrived with missing metadata. The order was NOT created.</p>
           <p><strong>Session ID:</strong> ${escapeHtml(session.id)}</p>
@@ -431,11 +431,11 @@ export async function POST(req: NextRequest) {
       // stripe_session_id causes a 23505 error on duplicate INSERTs.
       // Instead of returning 200 immediately, look up the existing order
       // and check if a case was created. If no case exists, fall through
-      // to case creation — this handles the retry scenario where the order
+      // to case creation, this handles the retry scenario where the order
       // was created but case creation failed (returned 500).
       const isDuplicate = orderError.code === "23505" || orderError.message?.includes("duplicate");
       if (isDuplicate) {
-        console.log(`[Webhook] Order already exists for session ${session.id} — checking for case`);
+        console.log(`[Webhook] Order already exists for session ${session.id}, checking for case`);
         const { data: existingOrder } = await supabase
           .from("orders")
           .select("id")
@@ -443,7 +443,7 @@ export async function POST(req: NextRequest) {
           .single();
 
         if (!existingOrder) {
-          // Can't find the order that triggered the unique violation — bail
+          // Can't find the order that triggered the unique violation, bail
           return NextResponse.json({ received: true });
         }
 
@@ -456,18 +456,18 @@ export async function POST(req: NextRequest) {
           .maybeSingle();
 
         if (existingCase) {
-          // Both order and case exist — true duplicate, safe to return
-          console.log(`[Webhook] Order and case both exist for session ${session.id} — true duplicate`);
+          // Both order and case exist, true duplicate, safe to return
+          console.log(`[Webhook] Order and case both exist for session ${session.id}, true duplicate`);
           return NextResponse.json({ received: true });
         }
 
-        // Order exists but case doesn't — fall through to case creation
-        console.log(`[Webhook] Order exists but case missing for session ${session.id} — reattempting case creation`);
+        // Order exists but case doesn't, fall through to case creation
+        console.log(`[Webhook] Order exists but case missing for session ${session.id}, reattempting case creation`);
         orderData = existingOrder;
       }
 
       // ── GENUINE ORDER INSERT FAILURE ──
-      // Payment was collected but we couldn't record it. This is critical —
+      // Payment was collected but we couldn't record it. This is critical,
       // operator must manually create the order in Supabase.
       if (!orderData) {
         console.error("[Stripe Webhook] Order insert error:", orderError);
@@ -483,7 +483,7 @@ export async function POST(req: NextRequest) {
             <p><strong>Error:</strong> ${escapeHtml(orderError.message)}</p>
             <p><strong>Action:</strong> Manually create order record in Supabase.</p>`,
           }, { category: "operator-alert", metadata: { reason: "order-insert-failed", tier, amount } });
-        // Return 500 so Stripe retries — transient DB failures can recover on retry
+        // Return 500 so Stripe retries, transient DB failures can recover on retry
         return NextResponse.json({ error: "Order insert failed" }, { status: 500 });
       }
     } else {
@@ -493,7 +493,7 @@ export async function POST(req: NextRequest) {
     // ──────────────────────────────────────────────────────────────
     // SCHOLARSHIP COUNTER INCREMENT
     // ──────────────────────────────────────────────────────────────
-    // Non-blocking — counter failures must never crash the webhook.
+    // Non-blocking, counter failures must never crash the webhook.
     // Tier purchases: add whole scholarship count immediately.
     // Playbook purchases: accumulate half-credits; every 2 halves = 1 scholarship.
     if (orderData) {
@@ -513,7 +513,7 @@ export async function POST(req: NextRequest) {
           await supabase.rpc("rollover_scholarship_half_credits", { month_key: monthKey });
         }
       } catch (scholarshipErr) {
-        // Log but do not bubble — a counter failure must not block order processing
+        // Log but do not bubble, a counter failure must not block order processing
         console.error("[Webhook] Scholarship counter increment failed:", scholarshipErr);
       }
     }
@@ -570,13 +570,13 @@ export async function POST(req: NextRequest) {
               const promoObj = await tierStripe.promotionCodes.retrieve(promoCodeId);
               partner = await getPartnerByPromoCode(promoObj.code);
             } catch {
-              // Promo code might be from the other Stripe account — skip
+              // Promo code might be from the other Stripe account, skip
             }
           }
 
           if (!partner || partner.status !== "approved") continue;
 
-          const discountAmount = item.amount; // cents — total discount (duration:"once" = applied to first invoice only)
+          const discountAmount = item.amount; // cents, total discount (duration:"once" = applied to first invoice only)
 
           // Defensive: warn if non-once coupon used on installment subscription
           if (isInstallment && discountAmount > 0) {
@@ -608,7 +608,7 @@ export async function POST(req: NextRequest) {
           });
 
           if (refError) {
-            // 23505 = duplicate (order_id, partner_id) — already tracked, skip
+            // 23505 = duplicate (order_id, partner_id), already tracked, skip
             if (refError.code === "23505") {
               console.log(`[Webhook] Referral already tracked for order=${orderData.id}, partner=${partner.id}`);
             } else {
@@ -656,11 +656,11 @@ export async function POST(req: NextRequest) {
               }
             }
           }
-          // Only attribute to the first matching partner — prevent double-attribution
+          // Only attribute to the first matching partner, prevent double-attribution
           break;
         }
       } catch (refTrackErr) {
-        // Non-blocking — referral tracking failure should not break order processing
+        // Non-blocking, referral tracking failure should not break order processing
         console.error("[Webhook] Referral tracking error:", refTrackErr);
       }
     }
@@ -759,7 +759,7 @@ export async function POST(req: NextRequest) {
     }
 
     // ──────────────────────────────────────────────────────────────
-    // TIER 9 DATA-DRIVEN PRODUCTS — INTAKE THEN GENERATE
+    // TIER 9 DATA-DRIVEN PRODUCTS, INTAKE THEN GENERATE
     // ──────────────────────────────────────────────────────────────
     // Tier 9 products (Judge Report Card, Officer Background Check,
     // Similar Cases Analyzer) are isDigitalProduct tiers that need
@@ -790,7 +790,7 @@ export async function POST(req: NextRequest) {
       await sendEmailWithOperatorAlert(
         {
           to: email,
-          subject: `Your ${tier9ProductName} — Complete Your Details`,
+          subject: `Your ${tier9ProductName}, Complete Your Details`,
           html: `
             <p>Thank you for your purchase.</p>
             <p>To generate your personalized ${escapeHtml(tier9ProductName)}, we need a few details about your situation.</p>
@@ -813,7 +813,7 @@ export async function POST(req: NextRequest) {
       // Operator sale notification
       await sendEmail({
         to: OPERATOR_EMAIL,
-        subject: `[SALE] ${tier9ProductName} — $${(amount / 100).toFixed(2)}`,
+        subject: `[SALE] ${tier9ProductName}, $${(amount / 100).toFixed(2)}`,
         html: `<p>New Tier 9 purchase: ${escapeHtml(tier9ProductName)} by ${escapeHtml(email)}</p>`,
       });
 
@@ -854,47 +854,47 @@ export async function POST(req: NextRequest) {
       // Send delivery email with download link(s)
       // Per-playbook delivery email step 2 (charge-specific action)
       const playbookStep2: Record<string, string> = {
-        "dui-first-offense": "Check your state's DMV hearing deadline NOW (page 2). In most states, you have 10 days or fewer — miss it and your license is automatically suspended.",
-        "drug-possession": "Read the \"What Makes Your Case Unique\" section. Drug cases turn on specific facts — substance type, weight, how it was found. Know YOUR facts before your next conversation.",
-        "probation-violation": "Read the \"Two Types of Violations\" section. Whether yours is technical or substantive matters significantly. Knowing which type you're facing helps you ask the right questions. Gather every document that proves compliance — receipts, certificates, sign-in sheets, communication with your PO. Compliance documentation is often central to revocation hearings.",
-        "white-collar": "Read the \"Document Preservation\" section immediately. White collar cases live and die on documentation — know what to preserve and what questions to raise before your next meeting.",
-        "sex-offense": "Read the \"Collateral Consequences\" section. Sex offense cases carry registration requirements and restrictions that go far beyond sentencing — know the full picture before making any decisions.",
-        "federal-criminal": "Read the \"Federal vs. State\" differences section. Federal cases operate on a completely different timeline with different rules — mandatory minimums, sentencing guidelines, and cooperation agreements all work differently.",
-        "drug-trafficking": "Read the \"Conspiracy Exposure\" section. Trafficking cases often involve conspiracy charges that can make you responsible for others' conduct — understand your exposure before your next attorney conversation.",
-        "self-defense": "Read the \"Force Proportionality\" section. Self-defense cases hinge on whether your response was proportional to the threat — know what standard your state uses before discussing strategy with your attorney.",
+        "dui-first-offense": "Check your state's DMV hearing deadline NOW (page 2). In most states, you have 10 days or fewer, miss it and your license is automatically suspended.",
+        "drug-possession": "Read the \"What Makes Your Case Unique\" section. Drug cases turn on specific facts, substance type, weight, how it was found. Know YOUR facts before your next conversation.",
+        "probation-violation": "Read the \"Two Types of Violations\" section. Whether yours is technical or substantive matters significantly. Knowing which type you're facing helps you ask the right questions. Gather every document that proves compliance, receipts, certificates, sign-in sheets, communication with your PO. Compliance documentation is often central to revocation hearings.",
+        "white-collar": "Read the \"Document Preservation\" section immediately. White collar cases live and die on documentation, know what to preserve and what questions to raise before your next meeting.",
+        "sex-offense": "Read the \"Collateral Consequences\" section. Sex offense cases carry registration requirements and restrictions that go far beyond sentencing, know the full picture before making any decisions.",
+        "federal-criminal": "Read the \"Federal vs. State\" differences section. Federal cases operate on a completely different timeline with different rules, mandatory minimums, sentencing guidelines, and cooperation agreements all work differently.",
+        "drug-trafficking": "Read the \"Conspiracy Exposure\" section. Trafficking cases often involve conspiracy charges that can make you responsible for others' conduct, understand your exposure before your next attorney conversation.",
+        "self-defense": "Read the \"Force Proportionality\" section. Self-defense cases hinge on whether your response was proportional to the threat, know what standard your state uses before discussing strategy with your attorney.",
       };
-      const step2 = playbookStep2[tier] || "Review the charge-specific details section. Every case has facts that matter more than others — know yours.";
+      const step2 = playbookStep2[tier] || "Review the charge-specific details section. Every case has facts that matter more than others, know yours.";
 
       const upgradeTierSlug = tier as TierSlug;
       const upgradeCost = upgradeCostBetween(upgradeTierSlug, "case-decoder");
 
-      // Build download buttons — two-document layout if emergency exists
+      // Build download buttons, two-document layout if emergency exists
       const downloadButtons = hasEmergency
         ? `<div style="margin: 24px 0;">
-            <p style="color: #D4D4D8; margin: 0 0 12px; font-size: 14px;">Your purchase includes <strong style="color: white;">two books</strong> — start with the Emergency Playbook.</p>
+            <p style="color: #D4D4D8; margin: 0 0 12px; font-size: 14px;">Your purchase includes <strong style="color: white;">two books</strong>, start with the Emergency Playbook.</p>
             <a href="${emergencyDownloadUrl}" style="display: inline-block; padding: 14px 28px; background: #EF4444; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Emergency Playbook</a>
-            <p style="color: #A1A1AA; font-size: 13px; margin: 8px 0 0;">Start here — your First 72 Hours checklist, 5 Priority Questions, and what to do right now.</p>
+            <p style="color: #A1A1AA; font-size: 13px; margin: 8px 0 0;">Start here, your First 72 Hours checklist, 5 Priority Questions, and what to do right now.</p>
           </div>
           <div style="margin: 24px 0;">
             <a href="${downloadUrl}" style="display: inline-block; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Full Defense Playbook</a>
-            <p style="color: #A1A1AA; font-size: 13px; margin: 8px 0 0;">The complete reference — case stage roadmap, red flag checklist, scorecard, all 26 questions, and more.</p>
+            <p style="color: #A1A1AA; font-size: 13px; margin: 8px 0 0;">The complete reference, case stage roadmap, red flag checklist, scorecard, all 26 questions, and more.</p>
           </div>`
         : `<a href="${downloadUrl}" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Download Your Playbook</a>`;
 
       await sendEmailWithOperatorAlert({
         to: email,
-        subject: `Your ${escapeHtml(productName)} is ready — download now`,
+        subject: `Your ${escapeHtml(productName)} is ready, download now`,
         unsubscribeEmail: email,
         html: `
           <h1 style="color: #F59E0B;">Your ${escapeHtml(productName)} Is Ready</h1>
-          <p>${hasEmergency ? "Two books are inside — an Emergency Playbook for right now, and the Full Defense Playbook for everything else." : `Your ${escapeHtml(productName)} is inside. Click below to download your PDF.`}</p>
+          <p>${hasEmergency ? "Two books are inside, an Emergency Playbook for right now, and the Full Defense Playbook for everything else." : `Your ${escapeHtml(productName)} is inside. Click below to download your PDF.`}</p>
           ${downloadButtons}
-          <p><strong style="color: white;">Step 1:</strong> ${hasEmergency ? "Open the <strong style=\"color: #EF4444;\">Emergency Playbook</strong> and read the First 72 Hours checklist. These are the actions that matter most right now." : "Open the playbook and read page 2 — your <strong style=\"color: #F59E0B;\">First 72 Hours</strong> checklist. These are the actions that matter most right now."}</p>
+          <p><strong style="color: white;">Step 1:</strong> ${hasEmergency ? "Open the <strong style=\"color: #EF4444;\">Emergency Playbook</strong> and read the First 72 Hours checklist. These are the actions that matter most right now." : "Open the playbook and read page 2, your <strong style=\"color: #F59E0B;\">First 72 Hours</strong> checklist. These are the actions that matter most right now."}</p>
           <p><strong style="color: white;">Step 2:</strong> ${step2}</p>
           <p><strong style="color: white;">Step 3:</strong> Read the 5 Priority Questions before your next attorney conversation. Most people can only answer 1 or 2. The blanks are what your next meeting is for.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
             <p style="margin: 0; color: white; font-weight: bold;">Want case-specific questions?</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;">The ${TIER_CORE["case-decoder"].name} is ${TIER_CORE["case-decoder"].priceDisplay} — your ${TIER_CORE[upgradeTierSlug].priceDisplay} is fully credited, so you pay just ${upgradeCost}. Every dollar moves upward. Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;">The ${TIER_CORE["case-decoder"].name} is ${TIER_CORE["case-decoder"].priceDisplay}, your ${TIER_CORE[upgradeTierSlug].priceDisplay} is fully credited, so you pay just ${upgradeCost}. Every dollar moves upward. Get 15 questions built from YOUR charges, YOUR state, YOUR stage.</p>
             <a href="${origin}/checkout?tier=case-decoder" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: transparent; color: #F59E0B; font-weight: bold; text-decoration: none; border: 1px solid #F59E0B; border-radius: 8px;">${upgradeCost ? `Upgrade for ${upgradeCost} (your ${TIER_CORE[upgradeTierSlug].priceDisplay} credited) →` : "Upgrade to Case Decoder →"}</a>
           </div>
           <p style="color: #A1A1AA;">These download links expire in 72 hours. Reply to this email if you have questions.</p>
@@ -904,7 +904,7 @@ export async function POST(req: NextRequest) {
       // Simplified operator notification for digital products
       await sendEmailWithOperatorAlert({
         to: OPERATOR_EMAIL,
-        subject: `New Playbook Sale: ${escapeHtml(productName)} — $${(amount / 100).toFixed(2)}`,
+        subject: `New Playbook Sale: ${escapeHtml(productName)}, $${(amount / 100).toFixed(2)}`,
         html: `
           <h1 style="color: #F59E0B;">New Digital Product Sale</h1>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
@@ -918,7 +918,7 @@ export async function POST(req: NextRequest) {
         `,
       }, `operator notification for playbook sale ${email}`, { category: "operator-new-order", order_id: orderData.id, metadata: { tier, product_type: "digital-product", amount } });
 
-      // Return early — skip case creation, intake linking, generation
+      // Return early, skip case creation, intake linking, generation
       return NextResponse.json({ received: true });
     }
 
@@ -964,7 +964,7 @@ export async function POST(req: NextRequest) {
         : "awaiting-intake";
 
       // Generate report_token at purchase time so customer can track progress
-      // from the moment they pay — even before generation completes.
+      // from the moment they pay, even before generation completes.
       const reportToken = crypto.randomUUID();
       const reportTokenExpiry = new Date();
       reportTokenExpiry.setFullYear(reportTokenExpiry.getFullYear() + 1);
@@ -999,7 +999,7 @@ export async function POST(req: NextRequest) {
       });
 
       if (caseError) {
-        // Case creation failed — return 500 so Stripe retries the webhook.
+        // Case creation failed, return 500 so Stripe retries the webhook.
         // The 23505 handler above will find the existing order and reattempt
         // case creation on the next delivery attempt.
         console.error("[Stripe Webhook] Case insert error:", caseError);
@@ -1015,7 +1015,7 @@ export async function POST(req: NextRequest) {
             <p><strong>Error:</strong> ${escapeHtml(caseError.message)}</p>
             <p><strong>Action:</strong> Stripe will retry automatically. If retries exhaust, manually create case.</p>`,
         }, { category: "operator-alert", order_id: orderData.id, metadata: { reason: "case-insert-failed", tier } });
-        // Return 500 so Stripe retries — the 23505 handler above will find the
+        // Return 500 so Stripe retries, the 23505 handler above will find the
         // existing order and reattempt case creation
         return NextResponse.json({ error: "Case creation failed, will retry" }, { status: 500 });
       }
@@ -1045,7 +1045,7 @@ export async function POST(req: NextRequest) {
             .eq("id", caseId);
           console.log(`[Webhook] Linked add-on ${tier} case ${caseId} to parent case ${parentCase.id}`);
         } else {
-          console.warn(`[Webhook] Add-on ${tier} for ${email} — no active discovery case found to link`);
+          console.warn(`[Webhook] Add-on ${tier} for ${email}, no active discovery case found to link`);
         }
       }
 
@@ -1061,7 +1061,7 @@ export async function POST(req: NextRequest) {
           .update({ priority: 1 })
           .eq("id", caseId);
         if (priorityError) {
-          // Non-blocking — priority is an operational convenience, not business-critical
+          // Non-blocking, priority is an operational convenience, not business-critical
           console.error("[Webhook] Failed to set situation-room priority:", priorityError);
         } else {
           console.log(`[Webhook] Set priority=1 on situation-room case ${caseId}`);
@@ -1079,16 +1079,16 @@ export async function POST(req: NextRequest) {
       //
       // Upgrade dedup: If the customer already has a delivered case
       // for an included tier (matched by email OR court case number),
-      // skip creating a duplicate — link to the existing one instead.
+      // skip creating a duplicate, link to the existing one instead.
       const existingCaseNumber = session.metadata?.existing_case_number;
       const existingCaseState = session.metadata?.existing_case_state;
 
-      // Track if CD was skipped due to upgrade dedup — if so, send Phase 2
+      // Track if CD was skipped due to upgrade dedup, if so, send Phase 2
       // intake email immediately (no CD delivery to trigger it later).
       if (caseId && tierConfig?.includesTiers && tierConfig.includesTiers.length > 0) {
         for (const includedTier of tierConfig.includesTiers) {
           // Check if customer already has an active case for this tier (by email).
-          // Checks all non-terminal statuses — not just "delivered" — to prevent
+          // Checks all non-terminal statuses, not just "delivered", to prevent
           // duplicates when a prior case is still in-progress (review, processing, etc.).
           const { data: existingCase } = await supabase
             .from("cases")
@@ -1100,7 +1100,7 @@ export async function POST(req: NextRequest) {
             .maybeSingle();
 
           if (existingCase) {
-            console.log(`[Webhook] Skipping included ${includedTier} — customer already has active case ${existingCase.id} (email match)`);
+            console.log(`[Webhook] Skipping included ${includedTier}, customer already has active case ${existingCase.id} (email match)`);
             if (includedTier === "case-decoder") cdSkippedDueToDedup = true;
             continue;
           }
@@ -1118,7 +1118,7 @@ export async function POST(req: NextRequest) {
               .maybeSingle();
 
             if (caseNumberMatch) {
-              console.log(`[Webhook] Skipping included ${includedTier} — customer already has active case ${caseNumberMatch.id} (case number match)`);
+              console.log(`[Webhook] Skipping included ${includedTier}, customer already has active case ${caseNumberMatch.id} (case number match)`);
               if (includedTier === "case-decoder") cdSkippedDueToDedup = true;
               continue;
             }
@@ -1149,7 +1149,7 @@ export async function POST(req: NextRequest) {
             console.error(`[Webhook] Included case insert error (${includedTier}):`, includedCaseError);
             sendEmail({
               to: OPERATOR_EMAIL,
-              subject: `URGENT: Included case creation failed — ${escapeHtml(includedTier)} for ${escapeHtml(email)}`,
+              subject: `URGENT: Included case creation failed, ${escapeHtml(includedTier)} for ${escapeHtml(email)}`,
               html: `<h1 style="color: #EF4444;">Included Case Creation Failed</h1>
                 <p>A case record for an included deliverable could not be inserted. The customer will NOT receive this tier automatically.</p>
                 <p><strong>Customer:</strong> ${escapeHtml(email)}</p>
@@ -1281,7 +1281,7 @@ export async function POST(req: NextRequest) {
       if (caseId && tier !== "case-decoder" && tierConfig?.includesTiers && tierConfig.includesTiers.length > 0 && !hasIntake) {
         await sendEmailWithOperatorAlert({
           to: email,
-          subject: `Complete Your Case Details — Your ${escapeHtml(productName)} Package`,
+          subject: `Complete Your Case Details, Your ${escapeHtml(productName)} Package`,
           unsubscribeEmail: email,
           threadingHeaders: {
             inReplyTo: caseThreadId(caseId),
@@ -1323,7 +1323,7 @@ export async function POST(req: NextRequest) {
     //   - Unsubscribe link (CAN-SPAM compliance)
     await sendEmailWithOperatorAlert({
       to: email,
-      subject: `Payment Confirmed — Your ${escapeHtml(productName)} is Being Prepared`,
+      subject: `Payment Confirmed, Your ${escapeHtml(productName)} is Being Prepared`,
       unsubscribeEmail: email,
       html: `
         <h1 style="color: #F59E0B;">Payment Received</h1>
@@ -1342,13 +1342,13 @@ export async function POST(req: NextRequest) {
     // DRIP: Upsert subscriber record at purchase time
     // ──────────────────────────────────────────────────────────────
     // We upsert a subscriber record here so the drip cron can track
-    // dedup state for this customer. We do NOT record any drip key —
+    // dedup state for this customer. We do NOT record any drip key,
     // that would cause the actual delivery email to be skipped later.
     // The delivery drip key (post_{tier}_delivery) is recorded in
     // /api/webhooks/engine/delivery after the report reaches the customer.
     //
     // Without this upsert, drip cron sends all emails but cannot record
-    // "sent" state — causing duplicate emails on re-runs.
+    // "sent" state, causing duplicate emails on re-runs.
     if (orderData) {
       try {
         await supabase
@@ -1358,7 +1358,7 @@ export async function POST(req: NextRequest) {
             { onConflict: "email" }
           );
       } catch (dripUpsertErr) {
-        // Non-critical — log but do not block the webhook response
+        // Non-critical, log but do not block the webhook response
         console.error("[Webhook] Subscriber upsert for drip failed:", dripUpsertErr);
       }
     }
@@ -1370,7 +1370,7 @@ export async function POST(req: NextRequest) {
     // This is the operator's primary awareness mechanism for new orders.
     await sendEmailWithOperatorAlert({
       to: OPERATOR_EMAIL,
-      subject: `New Order: ${escapeHtml(productName)} — $${(amount / 100).toFixed(2)}`,
+      subject: `New Order: ${escapeHtml(productName)}, $${(amount / 100).toFixed(2)}`,
       html: `
         <h1 style="color: #F59E0B;">New Order Received</h1>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
@@ -1382,8 +1382,8 @@ export async function POST(req: NextRequest) {
           ${caseId ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${caseId}</p>` : ""}
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Requires Discovery:</strong> ${requiresDiscovery ? "Yes" : "No"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Intake Found:</strong> ${caseId ? (requiresDiscovery ? "N/A (discovery tier)" : "Check case status") : "Case creation failed"}</p>
-          ${tierConfig?.includesTiers && tierConfig.includesTiers.length > 0 ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Included tiers:</strong> ${tierConfig.includesTiers.join(", ")}${cdSkippedDueToDedup ? " (CD skipped — upgrade)" : ""}</p>` : ""}
-          ${session.metadata?.prerequisite_skipped === "true" ? '<p style="margin: 8px 0 0; color: #EF4444;"><strong>WARNING: War Room prerequisite NOT confirmed — customer may not have completed War Room.</strong></p>' : ""}
+          ${tierConfig?.includesTiers && tierConfig.includesTiers.length > 0 ? `<p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Included tiers:</strong> ${tierConfig.includesTiers.join(", ")}${cdSkippedDueToDedup ? " (CD skipped, upgrade)" : ""}</p>` : ""}
+          ${session.metadata?.prerequisite_skipped === "true" ? '<p style="margin: 8px 0 0; color: #EF4444;"><strong>WARNING: War Room prerequisite NOT confirmed, customer may not have completed War Room.</strong></p>' : ""}
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
         </div>
       `,
@@ -1409,7 +1409,7 @@ export async function POST(req: NextRequest) {
   //
   // Business rationale: Partial refunds are typically goodwill gestures
   // (e.g., late delivery). Revoking access would damage the relationship.
-  // Full refunds indicate a complete cancellation — access must be revoked
+  // Full refunds indicate a complete cancellation, access must be revoked
   // and the drip cron (Part 2) will skip refunded orders.
   if (event.type === "charge.refunded") {
     const charge = event.data.object;
@@ -1426,7 +1426,7 @@ export async function POST(req: NextRequest) {
       const isFullRefund = charge.amount_refunded === charge.amount;
 
       if (isFullRefund) {
-        // ── FULL REFUND: Atomic RPC — order + cases + commission in one transaction ──
+        // ── FULL REFUND: Atomic RPC, order + cases + commission in one transaction ──
         // Eliminates race condition where order could be marked "refunded" but
         // case stays active (report access remains open) if a step fails mid-way.
         const { data: refundResult, error: refundError } = await supabase
@@ -1436,7 +1436,7 @@ export async function POST(req: NextRequest) {
           console.error("[Stripe Webhook] Atomic refund failed:", refundError);
           await sendEmail({
             to: OPERATOR_EMAIL,
-            subject: `URGENT: Refund processing failed — PI ${paymentIntentId}`,
+            subject: `URGENT: Refund processing failed, PI ${paymentIntentId}`,
             html: `<p>Stripe processed a full refund but the atomic refund RPC failed.</p>
                    <p><strong>payment_intent_id:</strong> ${escapeHtml(paymentIntentId || "unknown")}</p>
                    <p><strong>Error:</strong> ${escapeHtml(refundError.message || "unknown")}</p>`,
@@ -1458,7 +1458,7 @@ export async function POST(req: NextRequest) {
         const fullRefundAmount = (charge.amount_refunded / 100).toFixed(2);
         await sendEmailWithOperatorAlert({
           to: refundResult.email,
-          subject: `Your Refund Has Been Processed — $${fullRefundAmount}`,
+          subject: `Your Refund Has Been Processed, $${fullRefundAmount}`,
           unsubscribeEmail: refundResult.email,
           html: `
             <h1 style="color: #F59E0B;">Refund Processed</h1>
@@ -1472,7 +1472,7 @@ export async function POST(req: NextRequest) {
         const fullRefundTotal = ((refundResult.amount || 0) / 100).toFixed(2);
         await sendEmail({
           to: OPERATOR_EMAIL,
-          subject: `Full Refund: ${escapeHtml(refundResult.tier)} — $${fullRefundAmount}`,
+          subject: `Full Refund: ${escapeHtml(refundResult.tier)}, $${fullRefundAmount}`,
           html: `<h1 style="color: #EF4444;">Full Refund Processed</h1>
             <p><strong>Customer:</strong> ${escapeHtml(refundResult.email)}</p>
             <p><strong>Tier:</strong> ${escapeHtml(refundResult.tier)}</p>
@@ -1500,7 +1500,7 @@ export async function POST(req: NextRequest) {
           const partialRefundAmount = (charge.amount_refunded / 100).toFixed(2);
           await sendEmailWithOperatorAlert({
             to: refundedOrder.email,
-            subject: `Partial Refund Processed — $${partialRefundAmount}`,
+            subject: `Partial Refund Processed, $${partialRefundAmount}`,
             unsubscribeEmail: refundedOrder.email,
             html: `
               <h1 style="color: #F59E0B;">Partial Refund Issued</h1>
@@ -1514,12 +1514,12 @@ export async function POST(req: NextRequest) {
           const partialRefundTotal = ((refundedOrder.amount || 0) / 100).toFixed(2);
           await sendEmail({
             to: OPERATOR_EMAIL,
-            subject: `Partial Refund: ${escapeHtml(refundedOrder.tier)} — $${partialRefundAmount}`,
+            subject: `Partial Refund: ${escapeHtml(refundedOrder.tier)}, $${partialRefundAmount}`,
             html: `<h1 style="color: #EF4444;">Partial Refund Processed</h1>
               <p><strong>Customer:</strong> ${escapeHtml(refundedOrder.email)}</p>
               <p><strong>Tier:</strong> ${escapeHtml(refundedOrder.tier)}</p>
               <p><strong>Refunded:</strong> $${partialRefundAmount} of $${partialRefundTotal}</p>
-              <p><strong>Note:</strong> Partial refund — order remains 'paid'. Upgrade credits and report access preserved.</p>`,
+              <p><strong>Note:</strong> Partial refund, order remains 'paid'. Upgrade credits and report access preserved.</p>`,
           }, { category: "operator-alert", order_id: refundedOrder.id, metadata: { reason: "refund", tier: refundedOrder.tier, amount: charge.amount_refunded } });
         }
       }
@@ -1527,7 +1527,7 @@ export async function POST(req: NextRequest) {
   }
 
   // ================================================================
-  // EVENT: charge.refund.updated — Refund bounce detection (E10)
+  // EVENT: charge.refund.updated, Refund bounce detection (E10)
   // ================================================================
   // Fires when a refund's status changes. If it fails or requires action,
   // alert the operator so they can resolve it manually via Stripe dashboard.
@@ -1536,7 +1536,7 @@ export async function POST(req: NextRequest) {
     if (refund.status === "failed" || refund.status === "requires_action") {
       await sendEmail({
         to: OPERATOR_EMAIL,
-        subject: `ALERT: Refund ${refund.status} — ${escapeHtml(refund.id)}`,
+        subject: `ALERT: Refund ${refund.status}, ${escapeHtml(refund.id)}`,
         html: `<h1 style="color: #EF4444;">Refund ${escapeHtml(refund.status)}</h1>
           <p>A refund has ${refund.status === "failed" ? "failed" : "stalled and requires action"}.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -1550,7 +1550,7 @@ export async function POST(req: NextRequest) {
   }
 
   // ================================================================
-  // EVENT: invoice.payment_failed — Installment payment failure
+  // EVENT: invoice.payment_failed, Installment payment failure
   // ================================================================
   // Fires when a subscription invoice payment fails (e.g., card declined
   // on the second installment). Alerts the operator to follow up with

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Compliance Report — ImNotAnAttorney Partner",
+  title: "Compliance Report, ImNotAnAttorney Partner",
 };
 
 export default function ComplianceReportLayout({

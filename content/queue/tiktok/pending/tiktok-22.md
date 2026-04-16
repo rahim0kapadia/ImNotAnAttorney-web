@@ -3,7 +3,7 @@
 **Topic:** What "free consultations" actually are and what to ask
 **Format:** talking head + text overlay + myth-busting
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + confident, slightly provocative beat
+**Trending sound suggestion:** Original audio, voiceover + confident, slightly provocative beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -18,21 +18,21 @@
 ## Body
 [SECOND 3-12]
 **Visual**: Split screen. Left: what the attorney is evaluating ("Can this person pay? Is this case easy?"). Right: what YOU should be evaluating ("Can this person fight? Will they work my case?").
-**Audio/Voiceover**: "The attorney is using the consultation to decide if your case is worth taking. You should be using it to decide if they're worth hiring. It's a two-way evaluation. Most defendants don't treat it that way -- they're so desperate for help that they sign the retainer before asking a single hard question."
+**Audio/Voiceover**: "The attorney is using the consultation to decide if your case is worth taking. You should be using it to decide if they're worth hiring. It's a two-way evaluation. Most defendants don't treat it that way, they're so desperate for help that they sign the retainer before asking a single hard question."
 **Text overlay**: "They're evaluating you. YOU should be evaluating THEM."
 
 [SECOND 12-20]
 **Visual**: Questions appearing on screen, rapid-fire.
-**Audio/Voiceover**: "In those 15 minutes, ask: who specifically handles my case -- you or a junior associate? What is your trial record with cases like mine? How many active cases are you carrying right now? What does the retainer cover versus what costs extra? And if this goes to trial, what's the additional cost?"
+**Audio/Voiceover**: "In those 15 minutes, ask: who specifically handles my case, you or a junior associate? What is your trial record with cases like mine? How many active cases are you carrying right now? What does the retainer cover versus what costs extra? And if this goes to trial, what's the additional cost?"
 **Text overlay**: "Who works my case? Trial record? Active caseload? What's included? Trial cost?"
 
 [SECOND 20-27]
 **Visual**: Warning sign appearing.
-**Audio/Voiceover**: "If the attorney can't answer these during the consultation, or gets defensive, or says 'we can discuss that after you retain us' -- that tells you everything. You don't owe them a retainer for basic transparency."
+**Audio/Voiceover**: "If the attorney can't answer these during the consultation, or gets defensive, or says 'we can discuss that after you retain us', that tells you everything. You don't owe them a retainer for basic transparency."
 **Text overlay**: "'We'll discuss that after you pay' = walk away."
 
 [SECOND 27-30]
-**Visual**: The website from the opening -- but now the green button reads "YOUR INTERVIEW" instead of "FREE CONSULTATION."
+**Visual**: The website from the opening, but now the green button reads "YOUR INTERVIEW" instead of "FREE CONSULTATION."
 **Text overlay**: "Interview them like your freedom depends on it. imnotanattorney.com"
 **Audio**: Clean confident beat.
 

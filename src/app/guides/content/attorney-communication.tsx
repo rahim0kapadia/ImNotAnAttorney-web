@@ -12,7 +12,7 @@ export default function AttorneyCommunicationContent() {
           If you feel like your attorney is not communicating enough, you
           are not alone. Poor communication is the number one complaint
           defendants have about their legal representation. It does not
-          necessarily mean your attorney is not working — but it does mean
+          necessarily mean your attorney is not working, but it does mean
           you deserve better information flow.
         </p>
         <p className="mt-3">
@@ -141,7 +141,7 @@ export default function AttorneyCommunicationContent() {
             <ol className="list-decimal pl-5 space-y-1 mt-2">
               <li>What are the specific terms of the offer?</li>
               <li>What are the long-term consequences of accepting (employment, housing, immigration, professional licenses)?</li>
-              <li>What happens if I decline — what is the likely path forward?</li>
+              <li>What happens if I decline, what is the likely path forward?</li>
               <li>Is this the best offer we can expect, or is there room for negotiation?</li>
               <li>What is your professional assessment of the strength of their case versus ours?</li>
             </ol>

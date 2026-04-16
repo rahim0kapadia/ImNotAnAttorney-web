@@ -49,19 +49,19 @@ const tiers: TierCard[] = [
     ],
     description: "Charge analysis + 15 targeted questions. No discovery needed. Delivered in 48 hours.",
     features: [
-      "Plain-English charge breakdown — the equivalent of a $500 consultation, in writing",
-      "15 calibrated questions for your attorney (6-part format) — $200+ if scripted by a paralegal",
+      "Plain-English charge breakdown, the equivalent of a $500 consultation, in writing",
+      "15 calibrated questions for your attorney (6-part format), $200+ if scripted by a paralegal",
       "Ready-to-send email template + phone script + follow-up template",
-      "Your Advocacy Steps — 5-step communication playbook",
-      "Where Things Stand — 4-area diagnostic",
-      "Your Next 7 Days — one action per day with Meeting Ready Sheet",
+      "Your Advocacy Steps, 5-step communication playbook",
+      "Where Things Stand, 4-area diagnostic",
+      "Your Next 7 Days, one action per day with Meeting Ready Sheet",
       "Expert methodology from elite defense attorneys",
       "Included: Difficult Conversation scripts for 4 common scenarios",
     ],
     cta: "Get Your Case Decoder",
     featured: true,
     tier: "case-decoder",
-    bestFor: "Just arrested — need to understand your charges and what to ask",
+    bestFor: "Just arrested, need to understand your charges and what to ask",
     priorityAvailable: `Priority: ${TIER_CORE["case-decoder"].priorityDelivery} (+$${TIER_CORE["case-decoder"].priorityPrice! / 100})`,
   },
   {
@@ -85,7 +85,7 @@ const tiers: TierCard[] = [
       "Case preservation protocol",
       "10-15 targeted questions",
       "Prosecution Pattern Summary",
-      "Jurisdiction Intelligence Summary — local patterns and tendencies",
+      "Jurisdiction Intelligence Summary, local patterns and tendencies",
       "Plea Decision Checklist",
       "7-Day Follow-Up Window",
       "Attorney Script Pack (5 scripts)",
@@ -134,7 +134,7 @@ const tiers: TierCard[] = [
     price: TIER_CORE["war-room"].priceDisplay,
     anchor: "Less than 10% of most retainers",
     description:
-      "Full-case intelligence operation — judge dossiers, witness analysis, case law, weekly updates. Initial delivery: 25-28 days.",
+      "Full-case intelligence operation, judge dossiers, witness analysis, case law, weekly updates. Initial delivery: 25-28 days.",
     features: [
       "Everything in The X-Ray",
       "Judge & prosecution dossiers",
@@ -157,17 +157,17 @@ const tiers: TierCard[] = [
     price: TIER_CORE["situation-room"].priceDisplay,
     anchor: "Trial Intelligence Operations. Requires War Room.",
     description:
-      "Full trial intelligence cycle — evening debrief + morning prep brief every trial day. Priority turnaround: 24-48 hours.",
+      "Full trial intelligence cycle, evening debrief + morning prep brief every trial day. Priority turnaround: 24-48 hours.",
     features: [
       "Everything in The War Room",
-      "Trial Intelligence Operations — daily trial prep cycle",
+      "Trial Intelligence Operations, daily trial prep cycle",
       "Research on all witness backgrounds and credibility questions for your attorney",
       "Research summaries your attorney can use when drafting reply briefs",
       "Witness impeachment research packages",
       "Research-based questions about jury selection and trial strategy for your attorney",
-      "JOA research brief — every applicable standard, formatted for your attorney",
+      "JOA research brief, every applicable standard, formatted for your attorney",
       "Trial morning cheat sheets",
-      "Priority Response Line — 2hr during trial prep, 4hr during trial",
+      "Priority Response Line, 2hr during trial prep, 4hr during trial",
       "Direct access channel",
       "All scored deliverables from lower tiers",
     ],
@@ -423,9 +423,9 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
       <div className="mt-6 rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 text-center">
         <p className="text-lg font-bold text-white">Deliverable Guarantee</p>
         <p className="mt-2 text-base text-zinc-400">
-          Delivery Guarantee: On time with the stated question count — or a
-          full cash refund. Satisfaction Guarantee: Defense Playbooks — 100%
-          credit toward Case Decoder within 30 days. Service tiers ($197+) —
+          Delivery Guarantee: On time with the stated question count, or a
+          full cash refund. Satisfaction Guarantee: Defense Playbooks, 100%
+          credit toward Case Decoder within 30 days. Service tiers ($197+),
           100% credit toward any higher tier, valid 12 months.
         </p>
         <p className="mt-2 text-xs text-zinc-400">

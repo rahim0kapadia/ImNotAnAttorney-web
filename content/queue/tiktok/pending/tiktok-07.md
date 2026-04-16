@@ -3,7 +3,7 @@
 **Topic:** Red flags that your attorney isn't doing their job
 **Format:** talking head + text overlay + warning sign visuals
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + alarm-style ambient beat
+**Trending sound suggestion:** Original audio, voiceover + alarm-style ambient beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -28,7 +28,7 @@
 
 [SECOND 17-24]
 **Visual**: Red flag #3 drops in.
-**Audio/Voiceover**: "They can't remember the details of YOUR case. If they have to check the file to remember your charges, confuse you with another client, or ask questions they should already know -- you're not being represented. You're being processed."
+**Audio/Voiceover**: "They can't remember the details of YOUR case. If they have to check the file to remember your charges, confuse you with another client, or ask questions they should already know, you're not being represented. You're being processed."
 **Text overlay**: "RED FLAG: Confuses your case details or charges"
 
 [SECOND 24-30]
@@ -38,7 +38,7 @@
 **Audio**: Alert sound transitions to confident beat.
 
 ## CTA
-Take the free Defense Milestone Score -- imnotanattorney.com/score
+Take the free Defense Milestone Score, imnotanattorney.com/score
 
 ## On-Screen Text
 - 0:00 "If your attorney says this, that's a red flag."
@@ -48,7 +48,7 @@ Take the free Defense Milestone Score -- imnotanattorney.com/score
 - 0:24 "Replace red flags with real questions."
 
 ## Caption
-"Trust me, I've been doing this for 20 years." Experience is not an answer. An answer is an answer. 3 red flags that mean your attorney isn't doing the work -- and the questions to ask instead.
+"Trust me, I've been doing this for 20 years." Experience is not an answer. An answer is an answer. 3 red flags that mean your attorney isn't doing the work, and the questions to ask instead.
 
 ## Hashtags
 #lawyerredflags #badlawyer #criminaldefense #attorneyaccountability #knowyourrights

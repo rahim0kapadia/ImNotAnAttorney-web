@@ -3,7 +3,7 @@
 **Topic:** ABA communication standards for attorney-client relationship
 **Format:** talking head + text overlay + escalation framework
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + measured, authoritative beat
+**Trending sound suggestion:** Original audio, voiceover + measured, authoritative beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -22,8 +22,8 @@
 **Text overlay**: "ABA Rule 1.4: Attorneys MUST keep clients informed. This is not optional."
 
 [SECOND 12-20]
-**Visual**: Escalation ladder appearing -- step by step.
-**Audio/Voiceover**: "Here's the escalation. Step one: documented voicemail with specific questions and a response deadline. Step two: email repeating those questions -- paper trail. Step three: certified letter requesting a case status update within 48 hours. Step four: state bar complaint for communication failure."
+**Visual**: Escalation ladder appearing, step by step.
+**Audio/Voiceover**: "Here's the escalation. Step one: documented voicemail with specific questions and a response deadline. Step two: email repeating those questions, paper trail. Step three: certified letter requesting a case status update within 48 hours. Step four: state bar complaint for communication failure."
 **Text overlay**: "1. Voicemail with deadline. 2. Email (paper trail). 3. Certified letter. 4. Bar complaint."
 
 [SECOND 20-27]
@@ -32,7 +32,7 @@
 **Text overlay**: "'I'm documenting all communications for my file.' Say this."
 
 [SECOND 27-30]
-**Visual**: Call log from the opening -- but now showing an incoming call from "Attorney's Office" with a green answer button.
+**Visual**: Call log from the opening, but now showing an incoming call from "Attorney's Office" with a green answer button.
 **Text overlay**: "You have more power than you think. imnotanattorney.com"
 **Audio**: Phone rings. Confident beat.
 
@@ -48,13 +48,13 @@ Follow for the words that actually get your attorney to call back.
 - 0:27 "You have more power than you think."
 
 ## Caption
-12 calls. 3 weeks. Zero callbacks. Your attorney has a professional obligation to communicate with you -- ABA Rule 1.4. It's not a favor. Here's the 4-step escalation and the one sentence that changes the entire dynamic. Save this.
+12 calls. 3 weeks. Zero callbacks. Your attorney has a professional obligation to communicate with you, ABA Rule 1.4. It's not a favor. Here's the 4-step escalation and the one sentence that changes the entire dynamic. Save this.
 
 ## Hashtags
 #attorneynotcallingback #lawyercommunication #ABA #criminaldefense #attorneyaccountability #knowyourrights
 
 ---
 
-**Context**: Sourced from attorney-not-returning-calls and how-often-should-attorney-communicate. This addresses the VoC phrase "My public defender won't return my calls" directly. The "one sentence that changes everything" format is proven on TikTok -- it gives viewers a specific tool they can use today.
+**Context**: Sourced from attorney-not-returning-calls and how-often-should-attorney-communicate. This addresses the VoC phrase "My public defender won't return my calls" directly. The "one sentence that changes everything" format is proven on TikTok, it gives viewers a specific tool they can use today.
 **Loop strategy**: Opens with unanswered calls, closes with an incoming call from the attorney. The before/after on the call log is deeply satisfying to rewatch.
 **KPI target**: Saves (defendants will screenshot the escalation framework and the key sentence)

@@ -4,7 +4,7 @@
 
 **Goal:** Ship co-branded referral pages (OG meta, event tracking, city), commission SMS enhancements (first-sale, milestones, monthly summary), and conversion analytics funnel (RPC, dashboard component).
 
-**Architecture:** Single migration creates `partner_events` table, `city` column on `partners`, `referrals(partner_id, created_at)` index, and `partner_conversion_funnel` RPC. Three subsystems are independent — S1 touches referral pages, S2 touches webhook + SMS + cron, S3 touches dashboard. Shared touchpoint: webhook fires both S1 purchase events and S2 commission SMS.
+**Architecture:** Single migration creates `partner_events` table, `city` column on `partners`, `referrals(partner_id, created_at)` index, and `partner_conversion_funnel` RPC. Three subsystems are independent, S1 touches referral pages, S2 touches webhook + SMS + cron, S3 touches dashboard. Shared touchpoint: webhook fires both S1 purchase events and S2 commission SMS.
 
 **Tech Stack:** Next.js 15 (App Router), Supabase (PostgREST + RPCs), Tailwind CSS, text.email SMS gateway.
 
@@ -41,7 +41,7 @@
 
 ### Test Files
 | File | What It Tests |
-|------|--------------|
+|------|------------, |
 | `src/lib/__tests__/partner-sms.test.ts` | buildCommissionSMS, buildMonthlySummarySMS, getMilestoneMessage, buildTierProgress |
 | `src/components/partner/__tests__/ConversionFunnel.test.tsx` | Rendering, bar widths, zero-division guard, empty state, time toggle |
 
@@ -55,9 +55,9 @@
 - [ ] **Step 1: Write the migration SQL**
 
 ```sql
--- Partner Growth Upgrades: event tracking, city, referrals index, conversion funnel RPC
+, Partner Growth Upgrades: event tracking, city, referrals index, conversion funnel RPC
 
--- 1. partner_events table
+, 1. partner_events table
 CREATE TABLE IF NOT EXISTS partner_events (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   partner_id uuid NOT NULL REFERENCES partners(id),
@@ -70,16 +70,16 @@ CREATE INDEX IF NOT EXISTS idx_partner_events_funnel
   ON partner_events(partner_id, event_type, created_at);
 
 ALTER TABLE partner_events ENABLE ROW LEVEL SECURITY;
--- No public policies — accessed only via service_role (admin client)
+, No public policies, accessed only via service_role (admin client)
 
--- 2. City column on partners
+, 2. City column on partners
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS city text;
 
--- 3. Referrals index for monthly summary cron date queries (errata W4)
+, 3. Referrals index for monthly summary cron date queries (errata W4)
 CREATE INDEX IF NOT EXISTS idx_referrals_partner_date
   ON referrals(partner_id, created_at);
 
--- 4. Conversion funnel RPC (single scan with conditional aggregation)
+, 4. Conversion funnel RPC (single scan with conditional aggregation)
 CREATE OR REPLACE FUNCTION partner_conversion_funnel(p_partner_id uuid)
 RETURNS jsonb
 LANGUAGE plpgsql SECURITY DEFINER
@@ -126,7 +126,7 @@ Run a quick Supabase query to confirm `partner_events` table exists, `partners.c
 
 ```bash
 git add supabase/migrations/20260414a_partner_growth_upgrades.sql
-git commit -m "feat(partner): migration -- partner_events, city column, referrals index, conversion funnel RPC"
+git commit -m "feat(partner): migration, partner_events, city column, referrals index, conversion funnel RPC"
 ```
 
 ---
@@ -137,7 +137,7 @@ git commit -m "feat(partner): migration -- partner_events, city column, referral
 - Create: `src/lib/partner-sms.ts`
 - Create: `src/lib/__tests__/partner-sms.test.ts`
 
-This task is pure logic with zero external dependencies -- build and test first.
+This task is pure logic with zero external dependencies, build and test first.
 
 - [ ] **Step 1: Write failing tests**
 
@@ -247,7 +247,7 @@ describe("buildMonthlySummarySMS", () => {
 - [ ] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run src/lib/__tests__/partner-sms.test.ts`
-Expected: All tests FAIL -- module not found.
+Expected: All tests FAIL, module not found.
 
 - [ ] **Step 3: Implement partner-sms.ts**
 
@@ -304,10 +304,10 @@ interface CommissionSMSOpts {
 export function buildCommissionSMS(opts: CommissionSMSOpts): string {
   const amount = (opts.amountCents / 100).toFixed(2);
 
-  // First sale -- distinct celebration message
+  // First sale, distinct celebration message
   if (opts.totalReferrals === 1) {
     return capSMS(
-      `INAA: Your FIRST referral just purchased a ${opts.tierName}! You earned $${amount}. Code ${opts.promoCode} is working -- keep those cards in the bail packets.`
+      `INAA: Your FIRST referral just purchased a ${opts.tierName}! You earned $${amount}. Code ${opts.promoCode} is working, keep those cards in the bail packets.`
     );
   }
 
@@ -345,12 +345,12 @@ Expected: All tests PASS.
 
 ```bash
 git add src/lib/partner-sms.ts src/lib/__tests__/partner-sms.test.ts
-git commit -m "feat(partner): SMS message builders with TDD -- first-sale, milestones, tier progress, monthly summary"
+git commit -m "feat(partner): SMS message builders with TDD, first-sale, milestones, tier progress, monthly summary"
 ```
 
 ---
 
-## Task 2: Notification Prefs -- Add commission_earned Channel
+## Task 2: Notification Prefs, Add commission_earned Channel
 
 **Files:**
 - Modify: `src/lib/notification-prefs.ts`
@@ -398,11 +398,11 @@ const LABELS: Record<keyof PartnerNotificationPrefs, string> = {
 };
 ```
 
-No other changes needed -- the component already iterates `Object.keys(LABELS)` to render rows, so the new key renders automatically.
+No other changes needed, the component already iterates `Object.keys(LABELS)` to render rows, so the new key renders automatically.
 
 - [ ] **Step 3: Verify build compiles**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: No TypeScript errors from notification-prefs usage.
 
 - [ ] **Step 4: Commit**
@@ -414,7 +414,7 @@ git commit -m "feat(partner): add commission_earned notification pref channel, d
 
 ---
 
-## Task 3: S1 -- Co-Branded Referral Page (OG Meta + Link Click Event)
+## Task 3: S1, Co-Branded Referral Page (OG Meta + Link Click Event)
 
 **Files:**
 - Modify: `src/app/r/[code]/page.tsx`
@@ -431,7 +431,7 @@ Replace the full contents of `src/app/r/[code]/page.tsx`:
 
 ```typescript
 /**
- * /r/[code] -- Referral URL -> bridge page.
+ * /r/[code], Referral URL -> bridge page.
  *
  * Server component: looks up partner by promo code, sets ref cookie,
  * renders bridge page with partner context. If partner not found or
@@ -445,7 +445,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
 import { BridgePage } from "@/components/BridgePage";
 
-/** Shared partner query -- React.cache() deduplicates within a single request. */
+/** Shared partner query, React.cache() deduplicates within a single request. */
 const getPartnerByCode = cache(async (code: string) => {
   const supabase = createAdminClient();
   const { data } = await supabase
@@ -468,7 +468,7 @@ export async function generateMetadata({
 
   if (partner) {
     const referrer = partner.company || partner.name;
-    const title = `Court Prep for Your Case -- Referred by ${referrer}`;
+    const title = `Court Prep for Your Case, Referred by ${referrer}`;
     const description = `${partner.name} from ${partner.company || "a trusted referral partner"} trusts this service. Understand your charges and get the right questions for your attorney.`;
     return {
       title: `${title} | ImNotAnAttorney`,
@@ -482,7 +482,7 @@ export async function generateMetadata({
   const defaultDescription = "Understand your charges. Get the right questions for your attorney.";
   return {
     title: `${defaultTitle} | ImNotAnAttorney`,
-    description: `${defaultDescription} Legal information -- not legal advice.`,
+    description: `${defaultDescription} Legal information, not legal advice.`,
     openGraph: { title: defaultTitle, description: defaultDescription, type: "website" },
     twitter: { card: "summary" as const, title: defaultTitle, description: defaultDescription },
   };
@@ -524,7 +524,7 @@ export default async function ReferralPage({ params }: PageProps) {
   const headersList = await headers();
   const referrerUrl = headersList.get("referer") || null;
 
-  // Fire-and-forget link_click event -- runs after response is sent
+  // Fire-and-forget link_click event, runs after response is sent
   after(async () => {
     try {
       const supabase = createAdminClient();
@@ -538,7 +538,7 @@ export default async function ReferralPage({ params }: PageProps) {
     }
   });
 
-  // Referral cookie is set by middleware (Next.js 16 -- cookies().set() not allowed in Server Components)
+  // Referral cookie is set by middleware (Next.js 16, cookies().set() not allowed in Server Components)
 
   return (
     <BridgePage
@@ -551,9 +551,9 @@ export default async function ReferralPage({ params }: PageProps) {
 }
 ```
 
-- [ ] **Step 2: Verify TypeScript compiles (will fail until BridgePage accepts city -- that's Task 5)**
+- [ ] **Step 2: Verify TypeScript compiles (will fail until BridgePage accepts city, that's Task 5)**
 
-This step will produce a TS error for `city` prop on BridgePage. That's expected -- Task 5 fixes it. If running tasks sequentially, skip this check and verify after Task 5.
+This step will produce a TS error for `city` prop on BridgePage. That's expected, Task 5 fixes it. If running tasks sequentially, skip this check and verify after Task 5.
 
 - [ ] **Step 3: Commit**
 
@@ -564,7 +564,7 @@ git commit -m "feat(partner): co-branded OG meta, React.cache() query helper, li
 
 ---
 
-## Task 4: S1 -- Quiz Start Event Tracking
+## Task 4: S1, Quiz Start Event Tracking
 
 **Files:**
 - Modify: `src/app/r/[code]/quiz/page.tsx`
@@ -575,7 +575,7 @@ Replace `src/app/r/[code]/quiz/page.tsx`:
 
 ```typescript
 /**
- * /r/[code]/quiz -- Referral quiz (SMIQ -> micro-commitments -> recommendation).
+ * /r/[code]/quiz, Referral quiz (SMIQ -> micro-commitments -> recommendation).
  *
  * Server component wrapping the client-side quiz. Looks up partner for context.
  */
@@ -605,7 +605,7 @@ export default async function ReferralQuizPage({ params }: PageProps) {
     redirect("/");
   }
 
-  // Fire-and-forget quiz_start event -- runs after response is sent
+  // Fire-and-forget quiz_start event, runs after response is sent
   after(async () => {
     try {
       const supabase = createAdminClient();
@@ -637,7 +637,7 @@ git commit -m "feat(partner): quiz_start event tracking via after()"
 
 ---
 
-## Task 5: S1 -- BridgePage City Display + Application Form City Field
+## Task 5: S1, BridgePage City Display + Application Form City Field
 
 **Files:**
 - Modify: `src/components/BridgePage.tsx`
@@ -761,19 +761,19 @@ Add `city` to the new partner insert (line 273-283):
 
 - [ ] **Step 4: Verify build compiles**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: No errors.
 
 - [ ] **Step 5: Commit**
 
 ```bash
 git add src/components/BridgePage.tsx src/components/partner/PartnerApplicationForm.tsx src/app/api/partners/apply/route.ts
-git commit -m "feat(partner): city field -- BridgePage display, application form input, apply route storage"
+git commit -m "feat(partner): city field, BridgePage display, application form input, apply route storage"
 ```
 
 ---
 
-## Task 6: S1 -- Track-Event API Endpoint
+## Task 6: S1, Track-Event API Endpoint
 
 **Files:**
 - Create: `src/app/api/partner/track-event/route.ts`
@@ -784,10 +784,10 @@ Create `src/app/api/partner/track-event/route.ts`:
 
 ```typescript
 /**
- * POST /api/partner/track-event -- Lightweight event tracking for client-side components.
+ * POST /api/partner/track-event, Lightweight event tracking for client-side components.
  *
  * Only accepts quiz_complete events (server-side events fire via after()).
- * No auth required -- public endpoint identified by promo code.
+ * No auth required, public endpoint identified by promo code.
  * Rate limited: 10 events per IP per minute + 10 per promo code per minute.
  */
 
@@ -872,7 +872,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid partner code" }, { status: 400 });
   }
 
-  // Insert event -- no PII, only whitelisted metadata
+  // Insert event, no PII, only whitelisted metadata
   const { error } = await supabase.from("partner_events").insert({
     partner_id: partner.id,
     event_type,
@@ -892,12 +892,12 @@ export async function POST(req: NextRequest) {
 
 ```bash
 git add src/app/api/partner/track-event/route.ts
-git commit -m "feat(partner): POST /api/partner/track-event -- client-side quiz_complete event tracking"
+git commit -m "feat(partner): POST /api/partner/track-event, client-side quiz_complete event tracking"
 ```
 
 ---
 
-## Task 7: S1 -- Quiz Complete Event in ReferralQuiz
+## Task 7: S1, Quiz Complete Event in ReferralQuiz
 
 **Files:**
 - Modify: `src/components/ReferralQuiz.tsx`
@@ -929,17 +929,17 @@ Add a ref to track whether the event has fired, and a useEffect **before** the r
           metadata: { charge_type: chargeSlug },
         }),
       }).catch(() => {
-        // Fire-and-forget -- don't block UI on tracking failure
+        // Fire-and-forget, don't block UI on tracking failure
       });
     }
   }, [step, promoCode, chargeSlug]);
 ```
 
-**Critical placement note:** This `useEffect` MUST be placed before `if (step === totalSteps) { ... return ... }` at line 164. React hooks cannot be after an early return -- and the early return means hooks placed after it would never execute.
+**Critical placement note:** This `useEffect` MUST be placed before `if (step === totalSteps) { ... return ... }` at line 164. React hooks cannot be after an early return, and the early return means hooks placed after it would never execute.
 
 - [ ] **Step 2: Verify build compiles**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: No errors.
 
 - [ ] **Step 3: Commit**
@@ -951,7 +951,7 @@ git commit -m "feat(partner): quiz_complete event fires on recommendation step r
 
 ---
 
-## Task 8: S2 -- Webhook SMS Upgrade + Purchase Event
+## Task 8: S2, Webhook SMS Upgrade + Purchase Event
 
 **Files:**
 - Modify: `src/app/api/webhooks/stripe/route.ts`
@@ -1057,19 +1057,19 @@ Add purchase event INSERT with `.catch()` after the notification try-catch block
 
 - [ ] **Step 4: Verify build compiles**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: No errors.
 
 - [ ] **Step 5: Commit**
 
 ```bash
 git add src/app/api/webhooks/stripe/route.ts
-git commit -m "feat(partner): webhook -- buildCommissionSMS, purchase events, expanded SELECT, commission_earned pref"
+git commit -m "feat(partner): webhook, buildCommissionSMS, purchase events, expanded SELECT, commission_earned pref"
 ```
 
 ---
 
-## Task 9: S2 -- Monthly Summary Cron
+## Task 9: S2, Monthly Summary Cron
 
 **Files:**
 - Create: `src/app/api/cron/partner-monthly-summary/route.ts`
@@ -1080,7 +1080,7 @@ Create `src/app/api/cron/partner-monthly-summary/route.ts`:
 
 ```typescript
 /**
- * GET /api/cron/partner-monthly-summary -- Monthly earning summary for active partners.
+ * GET /api/cron/partner-monthly-summary, Monthly earning summary for active partners.
  *
  * Schedule: 1st of each month, 2PM UTC (10AM ET) via cron-job.org.
  * Protected by CRON_AUTH_TOKEN bearer token.
@@ -1208,15 +1208,15 @@ export async function GET(req: NextRequest) {
             .join("");
 
           const progressLine = nextTier
-            ? `<p style="color:#D4D4D8;">Current tier: <strong style="color:white;">${escapeHtml(tierInfo.label)} (${tierInfo.rate}%)</strong> -- ${partner.total_referrals || 0}/${nextTier.threshold} to ${escapeHtml(nextTier.label)} (${nextTier.rate}%)</p>`
-            : `<p style="color:#D4D4D8;">Current tier: <strong style="color:#F59E0B;">${escapeHtml(tierInfo.label)} (${tierInfo.rate}%)</strong> -- Max tier reached</p>`;
+            ? `<p style="color:#D4D4D8;">Current tier: <strong style="color:white;">${escapeHtml(tierInfo.label)} (${tierInfo.rate}%)</strong>, ${partner.total_referrals || 0}/${nextTier.threshold} to ${escapeHtml(nextTier.label)} (${nextTier.rate}%)</p>`
+            : `<p style="color:#D4D4D8;">Current tier: <strong style="color:#F59E0B;">${escapeHtml(tierInfo.label)} (${tierInfo.rate}%)</strong>, Max tier reached</p>`;
 
           const firstName = escapeHtml((partner.name || "").split(" ")[0]);
 
           await sendEmail(
             {
               to: partner.email,
-              subject: `Your ${monthName} Partner Summary -- ImNotAnAttorney`,
+              subject: `Your ${monthName} Partner Summary, ImNotAnAttorney`,
               html: `
                 <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;">
                   <h2 style="color:#F59E0B;">${escapeHtml(monthName)} Summary</h2>
@@ -1270,12 +1270,12 @@ export async function GET(req: NextRequest) {
 
 ```bash
 git add src/app/api/cron/partner-monthly-summary/route.ts
-git commit -m "feat(partner): monthly summary cron -- SMS + email for earning partners"
+git commit -m "feat(partner): monthly summary cron, SMS + email for earning partners"
 ```
 
 ---
 
-## Task 10: S3 -- ConversionFunnel Component
+## Task 10: S3, ConversionFunnel Component
 
 **Files:**
 - Create: `src/components/partner/ConversionFunnel.tsx`
@@ -1334,7 +1334,7 @@ describe("ConversionFunnel", () => {
 - [ ] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run src/components/partner/__tests__/ConversionFunnel.test.tsx`
-Expected: FAIL -- module not found.
+Expected: FAIL, module not found.
 
 - [ ] **Step 3: Implement ConversionFunnel.tsx**
 
@@ -1482,12 +1482,12 @@ Expected: All tests PASS.
 
 ```bash
 git add src/components/partner/ConversionFunnel.tsx src/components/partner/__tests__/ConversionFunnel.test.tsx
-git commit -m "feat(partner): ConversionFunnel component with TDD -- funnel bars, time toggle, zero-division guard"
+git commit -m "feat(partner): ConversionFunnel component with TDD, funnel bars, time toggle, zero-division guard"
 ```
 
 ---
 
-## Task 11: S3 -- Dashboard Integration
+## Task 11: S3, Dashboard Integration
 
 **Files:**
 - Modify: `src/app/api/partner/dashboard/route.ts`
@@ -1546,14 +1546,14 @@ Render ConversionFunnel between PartnerAnalytics and Recent Activity (after line
 
 - [ ] **Step 3: Verify build compiles**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: No errors.
 
 - [ ] **Step 4: Commit**
 
 ```bash
 git add src/app/api/partner/dashboard/route.ts src/app/partner/dashboard/page.tsx
-git commit -m "feat(partner): dashboard -- conversion funnel RPC integration + component render"
+git commit -m "feat(partner): dashboard, conversion funnel RPC integration + component render"
 ```
 
 ---
@@ -1580,7 +1580,7 @@ Query cron-job.org API to confirm the job exists with correct schedule, URL, and
 
 - [ ] **Step 1: TypeScript check**
 
-Run: `npx tsc --noEmit`
+Run: `npx tsc,noEmit`
 Expected: No errors.
 
 - [ ] **Step 2: Run all tests**
@@ -1599,7 +1599,7 @@ Run `npm run dev` and verify:
 
 ```bash
 git add -A
-git commit -m "fix(partner): build verification -- lint and type fixes"
+git commit -m "fix(partner): build verification, lint and type fixes"
 ```
 
 ---
@@ -1636,13 +1636,13 @@ git commit -m "fix(partner): build verification -- lint and type fixes"
 ## Review Fixes Applied
 
 | Finding | Fix |
-|---------|-----|
+|---------|---, |
 | C1: useEffect after early return | Moved before `if (step === totalSteps)`, added placement note |
 | C2: HTML injection in cron email | Added `escapeHtml()` on partner.name, tier, monthName |
 | C3: Unbounded metadata | Whitelist keys, cap 1KB, validate type |
 | C4: 200 on error path | Success response inside try, 500 in catch |
 | W1: commission_earned default "both" | Changed to "email" |
-| W2: Em-dash in SMS | Replaced with `--` (GSM-7 safe) |
+| W2: Em-dash in SMS | Replaced with `, ` (GSM-7 safe) |
 | W3: No .catch() on purchase INSERT | Added .catch() |
 | W4: Rate limit by promo only | Added IP-based rate limit |
 | W5: No limit on partners query | Added .limit(500) with warning log |

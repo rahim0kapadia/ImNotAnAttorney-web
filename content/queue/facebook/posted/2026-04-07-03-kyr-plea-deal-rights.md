@@ -11,7 +11,7 @@ suggested_time: "Saturday 6:00 PM ET"
 target_groups: ["Federal Defendant Support Groups", "Wrongfully Accused Groups", "Criminal Justice Reform Groups"]
 ---
 
-## Facebook Post: Know Your Rights — Plea Deals
+## Facebook Post: Know Your Rights, Plea Deals
 
 **Type**: Image post (4:5 ratio)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -28,19 +28,19 @@ That means almost every federal defendant faces this moment: an attorney or pros
 
 Here is what you need to know before you sign anything:
 
-A plea deal is a NEGOTIATION. The first offer is almost never the best offer. "Limited-time offer" and "take it before it gets worse" are negotiation tactics — the same ones a car dealer uses.
+A plea deal is a NEGOTIATION. The first offer is almost never the best offer. "Limited-time offer" and "take it before it gets worse" are negotiation tactics, the same ones a car dealer uses.
 
 Before you accept any plea deal, your attorney should be able to answer ALL of these questions clearly:
 
 1. Have you received and reviewed ALL discovery?
 2. What are the three biggest weaknesses in the prosecution's case?
-3. What motions have you filed — or could file?
-4. What is my REALISTIC sentence exposure if we go to trial? Not the maximum — the realistic range.
+3. What motions have you filed, or could file?
+4. What is my REALISTIC sentence exposure if we go to trial? Not the maximum, the realistic range.
 5. What are the collateral consequences of this plea? (employment, housing, voting, custody, immigration)
 6. Is there a diversion program or deferred adjudication option?
 7. Can we counter-offer with different terms?
 
-If your attorney cannot answer these questions — or rushes past them — they may not have done the work. A plea recommendation should come AFTER investigation, not before it.
+If your attorney cannot answer these questions, or rushes past them, they may not have done the work. A plea recommendation should come AFTER investigation, not before it.
 
 You are the one who lives with this decision. Make it with full information.
 

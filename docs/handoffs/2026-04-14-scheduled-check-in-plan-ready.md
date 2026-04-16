@@ -1,4 +1,4 @@
-# Handoff: Scheduled Check-In System — Plan Ready
+# Handoff: Scheduled Check-In System, Plan Ready
 
 Date: 2026-04-14 21:30
 
@@ -19,7 +19,7 @@ Date: 2026-04-14 21:30
 - Round 2 review found 4 more → fixed
 - Total: 32 code review findings resolved
 
-### 3. Scheduled Check-In System — spec + plan (brainstormed, designed, reviewed)
+### 3. Scheduled Check-In System, spec + plan (brainstormed, designed, reviewed)
 
 **The feature:** Bail bondsmen set check-in days (e.g., Mon/Fri) for clients. Daily cron sends prompts. Next-morning batch alerts bondsmen about misses. Compliance report tracks rate for surety insurance.
 
@@ -31,14 +31,14 @@ Both pushed and committed.
 ## Status: READY TO IMPLEMENT
 
 Plan has 9 tasks:
-1. Migration — schema + indexes + atomic RPC
-2. Shared helpers — validation, ET timezone, compliance math
+1. Migration, schema + indexes + atomic RPC
+2. Shared helpers, validation, ET timezone, compliance math
 3. Notification prefs + SMS subject override
-4. Client signup — day picker + bondsman fallback
-5. Cron — daily prompt + missed alert (dual-lock)
-6. Dashboard — schedule override API
-7. Dashboard UI — status indicators + day picker
-8. Compliance report — rate + schedule columns
+4. Client signup, day picker + bondsman fallback
+5. Cron, daily prompt + missed alert (dual-lock)
+6. Dashboard, schedule override API
+7. Dashboard UI, status indicators + day picker
+8. Compliance report, rate + schedule columns
 9. E2E verification + cleanup
 
 ## Ready-to-Paste Prompt

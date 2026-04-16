@@ -2,9 +2,9 @@
  * Next.js Middleware
  *
  * Two responsibilities:
- *   1. Nonce-based CSP — generates a per-request nonce for Content-Security-Policy,
+ *   1. Nonce-based CSP, generates a per-request nonce for Content-Security-Policy,
  *      replacing 'unsafe-inline'/'unsafe-eval' in script-src with nonce-based policy.
- *   2. Centralized auth — timing-safe password check for /api/admin/* and /api/generate/*.
+ *   2. Centralized auth, timing-safe password check for /api/admin/* and /api/generate/*.
  *
  * Individual route handlers still have their own auth checks as defense-in-depth,
  * but this middleware provides a single enforcement point.
@@ -96,7 +96,7 @@ export async function middleware(req: NextRequest) {
   // Cookie-exists check only (no DB call in Edge). Route handlers do the
   // actual session validation via validatePartnerSession() in Node runtime.
   if (pathname.startsWith("/api/partner/") || pathname.startsWith("/api/partners/")) {
-    // Public routes — no auth needed
+    // Public routes, no auth needed
     if (
       pathname === "/api/partner/magic-link" ||
       pathname === "/api/partner/magic-link/verify" ||
@@ -106,8 +106,8 @@ export async function middleware(req: NextRequest) {
     ) {
       return NextResponse.next();
     }
-    // All other partner routes — check cookie exists
-    // Must match PARTNER_SESSION_COOKIE in src/lib/partner-auth.ts (can't import — Edge Runtime)
+    // All other partner routes, check cookie exists
+    // Must match PARTNER_SESSION_COOKIE in src/lib/partner-auth.ts (can't import, Edge Runtime)
     const session = req.cookies.get("partner-session");
     if (!session?.value) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -119,7 +119,7 @@ export async function middleware(req: NextRequest) {
   // Cookie-exists check only (no DB call in Edge). Route handlers do the
   // actual session validation via validateCustomerSession() in Node runtime.
   if (pathname.startsWith("/api/customer/")) {
-    // Public routes — no auth needed
+    // Public routes, no auth needed
     if (
       pathname === "/api/customer/magic-link" ||
       pathname === "/api/customer/magic-link/verify" ||
@@ -127,8 +127,8 @@ export async function middleware(req: NextRequest) {
     ) {
       return NextResponse.next();
     }
-    // All other customer routes — check cookie exists
-    // Must match CUSTOMER_SESSION_COOKIE in src/lib/customer-auth.ts (can't import — Edge Runtime)
+    // All other customer routes, check cookie exists
+    // Must match CUSTOMER_SESSION_COOKIE in src/lib/customer-auth.ts (can't import, Edge Runtime)
     const session = req.cookies.get("customer-session");
     if (!session?.value) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -166,7 +166,7 @@ export async function middleware(req: NextRequest) {
           });
         }
       }
-      // Still need CSP nonce — add it to this response
+      // Still need CSP nonce, add it to this response
       const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
       const supabaseConnectSrc = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://*.supabase.co";
       const cspHeader = [
@@ -214,7 +214,7 @@ export async function middleware(req: NextRequest) {
 
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-nonce", nonce);
-  // CSP must be on REQUEST headers too — Next.js parses the nonce from it during SSR
+  // CSP must be on REQUEST headers too, Next.js parses the nonce from it during SSR
   requestHeaders.set("Content-Security-Policy", cspHeader);
 
   const response = NextResponse.next({ request: { headers: requestHeaders } });

@@ -1,5 +1,5 @@
 /**
- * Tier 9 database queries — one function per SKU.
+ * Tier 9 database queries, one function per SKU.
  * Queries pre-computed tables populated by bulk extraction scripts.
  * Returns typed results + isEmpty flag for data availability checks.
  */
@@ -268,7 +268,7 @@ export async function queryJudgeReportCard(
   const [sentencing, pairings, divergence, districtDivergence, quotes, appellate, usscData] =
     await Promise.all([
       // Sentencing distributions: try judge-specific first, fall back to charge-level
-      // (current data has judge_id=NULL on all rows — charge-level aggregates)
+      // (current data has judge_id=NULL on all rows, charge-level aggregates)
       supabase
         .from("sentencing_distributions")
         .select("charge_slug, median_months, p25, p75, sample_size, source_urls")
@@ -284,14 +284,14 @@ export async function queryJudgeReportCard(
         .order("sample_size", { ascending: false })
         .limit(50),
 
-      // Judge-specific bench/jury data (from CL opinion mining — currently empty)
+      // Judge-specific bench/jury data (from CL opinion mining, currently empty)
       supabase
         .from("bench_jury_divergence")
         .select(BENCH_JURY_SELECT)
         .eq("judge_id", judge.id)
         .limit(20),
 
-      // District-level bench/jury data (from USSC — fallback when no judge-level data)
+      // District-level bench/jury data (from USSC, fallback when no judge-level data)
       supabase
         .from("bench_jury_divergence")
         .select(BENCH_JURY_SELECT)
@@ -364,7 +364,7 @@ export async function queryOfficerBackground(
       .limit(20);
   }
 
-  // External intel has proper state column — no fallback needed
+  // External intel has proper state column, no fallback needed
   const external = await supabase
     .from("officer_external_intel")
     .select("officer_name, officer_name_normalized, state, agency, brady_status, brady_reason, npi_employment_history, npi_is_wandering_officer, decertified, decertification_reason, complaint_count, use_of_force_count, sustained_complaints, credibility_risk_score, source_urls, sources")

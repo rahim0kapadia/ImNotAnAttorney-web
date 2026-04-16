@@ -1,5 +1,5 @@
 /**
- * Legal Research — Generic All-State Statute Verification + Case Law
+ * Legal Research, Generic All-State Statute Verification + Case Law
  *
  * For each jurisdiction_statute row:
  *   1. Constructs Justia URL from statute_number + jurisdiction
@@ -200,7 +200,7 @@ function buildJustiaSearchURL(jurisdiction, statuteNumber) {
 
 /**
  * Build a Justia direct statute URL per state's known format.
- * Returns null if unable to construct — caller falls back to search URL.
+ * Returns null if unable to construct, caller falls back to search URL.
  */
 function buildJustiaStatuteURL(jurisdiction, statuteNumber) {
   if (!statuteNumber || jurisdiction === "federal") return null;
@@ -399,7 +399,7 @@ async function verifyStatute(statute) {
       }
     }
   } else {
-    // All other states → Justia URL as reference (no HTTP fetch — Cloudflare blocks it).
+    // All other states → Justia URL as reference (no HTTP fetch, Cloudflare blocks it).
     // Justia URL gives LOW confidence (0.15). CourtListener case law boosts it to MEDIUM.
     const justiaURL = buildJustiaStatuteURL(jurisdiction, statute_number);
     if (justiaURL) {
@@ -526,7 +526,7 @@ async function storeCaseLaw(cases, jurisdictionStatuteId) {
 
     // SAFETY: is_good_law explicitly NULL on insert. Must be verified by
     // classify-case-law.mjs (negative treatment check) before any code can
-    // cite this case. Per CASE persona — never assume good law.
+    // cite this case. Per CASE persona, never assume good law.
     const sql = `INSERT INTO statute_case_law
       (jurisdiction_statute_id, case_name, citation, court, year, holding, source_urls, courtlistener_cluster_id, confidence_score, is_good_law)
     VALUES
@@ -544,8 +544,8 @@ async function storeCaseLaw(cases, jurisdictionStatuteId) {
 // ── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log("=== INAA Legal Research — All-State Verification ===");
-  console.log(`CourtListener: ${courtlistenerToken ? "token found" : "NO token — case law disabled"}`);
+  console.log("=== INAA Legal Research, All-State Verification ===");
+  console.log(`CourtListener: ${courtlistenerToken ? "token found" : "NO token, case law disabled"}`);
   console.log(`Mode: ${dryRun ? "DRY RUN" : summaryOnly ? "SUMMARY ONLY" : "LIVE"}`);
   if (targetJurisdiction) console.log(`Target: ${targetJurisdiction}${targetSlug ? " / " + targetSlug : ""}`);
 
@@ -614,7 +614,7 @@ async function main() {
         if (!dryRun) process.stdout.write(`  [${i + 1}/${statutes.length}] ${result.slug}: UNVERIFIED\n`);
       }
 
-      // Case law search — boosts confidence when courts cite the statute
+      // Case law search, boosts confidence when courts cite the statute
       if (courtlistenerToken && statute.statute_number && !dryRun) {
         const cases = await searchCaseLaw(statute.statute_number, statute.id, statute.jurisdiction);
         if (cases.length > 0) {
@@ -645,7 +645,7 @@ async function main() {
     } catch (e) {
       jr.failed++;
       results.totalFailed++;
-      console.error(`  [${i + 1}/${statutes.length}] ${statute.common_charge_slug}: ERROR — ${e.message}`);
+      console.error(`  [${i + 1}/${statutes.length}] ${statute.common_charge_slug}: ERROR, ${e.message}`);
     }
   }
 

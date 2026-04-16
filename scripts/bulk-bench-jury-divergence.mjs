@@ -102,7 +102,7 @@ const DISMISSAL_SIGNALS = [
 // author_id/author_str = appellate judge who WROTE the opinion (wrong for us).
 // We need the trial judge whose bench/jury behavior is being reviewed.
 
-// Patterns by jurisdiction (priority order — most specific first):
+// Patterns by jurisdiction (priority order, most specific first):
 // FL:  "Appeal from the Circuit Court for Broward County; N. Hunter Davis, Judge;"
 // FL:  "Barbara K. Hobbs, Judge." (standalone line)
 // NY:  "(Christopher J. Burns, J.)" or "(Burns, J.)"
@@ -111,10 +111,10 @@ const DISMISSAL_SIGNALS = [
 // General: "trial court judge [Name]" / "trial judge [Name]"
 
 function extractTrialJudge(text) {
-  // Only scan preamble — body text mentions many judges, causing false positives
+  // Only scan preamble, body text mentions many judges, causing false positives
   const preamble = text.slice(0, 1500).toLowerCase();
 
-  // Pattern 1: FL-style — "County; [Name], Judge;" or "[Name], Judge."
+  // Pattern 1: FL-style, "County; [Name], Judge;" or "[Name], Judge."
   // Match "Name, Judge" where Name is 2-4 capitalized words before ", judge"
   const flMatch = preamble.match(/([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){1,4}),\s*judge[.;\s]/i);
   if (flMatch) {
@@ -125,7 +125,7 @@ function extractTrialJudge(text) {
     }
   }
 
-  // Pattern 2: NY-style — "(Name, J.)" parenthetical
+  // Pattern 2: NY-style, "(Name, J.)" parenthetical
   const nyMatch = preamble.match(/\(([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,3}),\s*j\.\)/i);
   if (nyMatch) {
     const name = nyMatch[1].trim();
@@ -134,7 +134,7 @@ function extractTrialJudge(text) {
     }
   }
 
-  // Pattern 3: "the honorable [Name]" — very common across states
+  // Pattern 3: "the honorable [Name]", very common across states
   const honMatch = preamble.match(/(?:the\s+)?honorable\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){1,4})/i);
   if (honMatch) {
     const name = honMatch[1].trim();
@@ -154,7 +154,7 @@ function extractTrialJudge(text) {
     if (cleaned.length > 3) return cleaned;
   }
 
-  // Pattern 5: "judge [Name] presiding" — common in many states
+  // Pattern 5: "judge [Name] presiding", common in many states
   const presidingMatch = preamble.match(/judge\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,4})\s+presiding/i);
   if (presidingMatch) {
     const name = presidingMatch[1].trim();
@@ -162,7 +162,7 @@ function extractTrialJudge(text) {
     if (!cleaned.match(/circuit|county|district|court/i) && cleaned.length > 3) return cleaned;
   }
 
-  // Pattern 6: "the trial court, Judge [Name]," — inline mention
+  // Pattern 6: "the trial court, Judge [Name],", inline mention
   const inlineMatch = preamble.match(/(?:the\s+)?trial\s+court,?\s+judge\s+([a-z][a-z.''-]+(?:\s+[a-z][a-z.''-]+){0,4})/i);
   if (inlineMatch) {
     const name = inlineMatch[1].trim();
@@ -328,7 +328,7 @@ async function loadJudgeProfiles() {
           if (res.statusCode >= 400 && res.statusCode !== 416) {
             reject(new Error(`Judge load ${res.statusCode}: ${data.slice(0, 200)}`));
           } else if (res.statusCode === 416) {
-            // Range not satisfiable — no more rows
+            // Range not satisfiable, no more rows
             resolve([]);
           } else {
             try { resolve(JSON.parse(data)); } catch (e) { reject(e); }
@@ -450,7 +450,7 @@ async function main() {
       // STRATEGY: Cast a wide net, filter later. Three tiers:
       // 1. Regex-extract trial judge name from preamble (most precise)
       // 2. Scan preamble for ANY judge last name from our DB (flexible, catches more)
-      // 3. Fallback to author_id/author_str (appellate judge — rarely useful)
+      // 3. Fallback to author_id/author_str (appellate judge, rarely useful)
       let judgeId = null;
 
       // Tier 1: Regex extraction (structured patterns like "Name, Judge.")
@@ -472,7 +472,7 @@ async function main() {
       if (!judgeId) {
         const preamble = text.slice(0, 1500).toLowerCase();
         for (const [lastName, candidates] of judgeByLastName) {
-          if (lastName.length < 4) continue; // skip short names (lee, wu) — too many false positives
+          if (lastName.length < 4) continue; // skip short names (lee, wu), too many false positives
           // Require "judge" or "hon" nearby to reduce false positives
           const idx = preamble.indexOf(lastName);
           if (idx < 0) continue;
@@ -484,7 +484,7 @@ async function main() {
               trialJudgeMatches++;
               break;
             }
-            // Multiple judges share this last name — try first+last from preamble
+            // Multiple judges share this last name, try first+last from preamble
             for (const c of candidates) {
               if (preamble.indexOf(c.full) >= 0) {
                 judgeId = c.id;
@@ -522,7 +522,7 @@ async function main() {
       if (classifiedCount >= limit) { bzcat.kill(); break; }
     }
   } catch (parseErr) {
-    // "Quote Not Closed" is fatal in csv-parse — CL opinions CSV has
+    // "Quote Not Closed" is fatal in csv-parse, CL opinions CSV has
     // unescaped quotes in legal opinion text. Proceed with collected data.
     console.log(`\n  CSV parse error at ${(rowCount / 1000000).toFixed(1)}M rows (continuing with collected data): ${parseErr.message.slice(0, 120)}`);
     try { bzcat.kill(); } catch {}
@@ -635,7 +635,7 @@ async function main() {
       await supabaseQuery(batch.join("\n"));
       applied += batch.length;
       const rate = (applied / ((Date.now() - applyStart) / 1000)).toFixed(0);
-      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} statements — ${rate}/sec\n`);
+      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} statements, ${rate}/sec\n`);
     } catch (e) {
       errors++;
       console.error(`  Batch ${batchNum}: ${e.message.slice(0, 200)}`);

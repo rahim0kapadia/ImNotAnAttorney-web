@@ -32,22 +32,22 @@ queued_by: content-scheduler
 
 ---
 
-## Reddit Comment (Reactive — reply to relevant threads)
+## Reddit Comment (Reactive, reply to relevant threads)
 
-One thing that took me by surprise after a DUI arrest: the license suspension is handled through a completely separate process from the criminal case. The DMV has its own hearing, its own deadline (usually 7-15 days depending on the state), and its own outcome — completely independent of how the criminal case goes.
+One thing that took me by surprise after a DUI arrest: the license suspension is handled through a completely separate process from the criminal case. The DMV has its own hearing, its own deadline (usually 7-15 days depending on the state), and its own outcome, completely independent of how the criminal case goes.
 
-Miss that window and the suspension is automatic. Your criminal attorney is focused on the charges — the DMV clock is running separately and a lot of people don't find out until it's already expired.
+Miss that window and the suspension is automatic. Your criminal attorney is focused on the charges, the DMV clock is running separately and a lot of people don't find out until it's already expired.
 
-The thing most people don't know about the DMV hearing: if your attorney actually prepares for it and shows up, it's a chance to cross-examine the arresting officer under oath before trial. Whatever the officer says there is locked in. Any inconsistency at trial later — or even just memory gaps — becomes a defense tool. It's free discovery that most attorneys leave on the table.
+The thing most people don't know about the DMV hearing: if your attorney actually prepares for it and shows up, it's a chance to cross-examine the arresting officer under oath before trial. Whatever the officer says there is locked in. Any inconsistency at trial later, or even just memory gaps, becomes a defense tool. It's free discovery that most attorneys leave on the table.
 
-If you haven't asked your attorney "have you requested the DMV hearing?" — ask today. The window closes fast. I found a detailed breakdown of how this works and what a real DMV defense strategy looks like here: [link]
+If you haven't asked your attorney "have you requested the DMV hearing?", ask today. The window closes fast. I found a detailed breakdown of how this works and what a real DMV defense strategy looks like here: [link]
 
 ---
 
 **Personalization guide:**
 - If they mention their state: include the specific deadline for that state (CA: 10 days, FL: 10 days, TX: 15 days)
-- If they mention the deadline already passed: "In some states there are hardship license options even after the automatic suspension — worth asking your attorney specifically about that"
-- If they mention their attorney hasn't mentioned it: "That's actually more common than it should be — the criminal side and the DMV side are handled differently and some attorneys forget to flag the DMV deadline until it's too late"
+- If they mention the deadline already passed: "In some states there are hardship license options even after the automatic suspension, worth asking your attorney specifically about that"
+- If they mention their attorney hasn't mentioned it: "That's actually more common than it should be, the criminal side and the DMV side are handled differently and some attorneys forget to flag the DMV deadline until it's too late"
 
 **Tone check:**
 - Empathy first? YES
@@ -57,7 +57,7 @@ If you haven't asked your attorney "have you requested the DMV hearing?" — ask
 
 ---
 
-## Reddit Seed Post (Proactive — create new thread)
+## Reddit Seed Post (Proactive, create new thread)
 
 **Target subreddit:** r/dui (primary), r/legaladvice (secondary)
 **Post as:** Someone who's been through it
@@ -65,17 +65,17 @@ If you haven't asked your attorney "have you requested the DMV hearing?" — ask
 
 ### Title Options
 
-- "TIL the DMV suspension after a DUI is a completely separate process from the criminal case — with its own 10-day deadline"
+- "TIL the DMV suspension after a DUI is a completely separate process from the criminal case, with its own 10-day deadline"
 - "What nobody tells you after a DUI arrest: the license and the criminal case are two completely different things"
-- "The DMV hearing after a DUI is actually useful if your attorney knows what they're doing — most don't"
+- "The DMV hearing after a DUI is actually useful if your attorney knows what they're doing, most don't"
 
 ### Post Body
 
-When I was dealing with my DUI case, nobody told me that the license suspension and the criminal case are handled completely separately. The DMV has its own hearing process, its own timeline, and its own outcome — and in most states, you have 7-15 days from the arrest to request that hearing. Miss it and the suspension is automatic.
+When I was dealing with my DUI case, nobody told me that the license suspension and the criminal case are handled completely separately. The DMV has its own hearing process, its own timeline, and its own outcome, and in most states, you have 7-15 days from the arrest to request that hearing. Miss it and the suspension is automatic.
 
-My attorney filed the request, which preserved my driving privileges until the hearing (worth knowing — the request itself buys you time). But what I didn't know at the time was that the DMV hearing can be much more than paperwork.
+My attorney filed the request, which preserved my driving privileges until the hearing (worth knowing, the request itself buys you time). But what I didn't know at the time was that the DMV hearing can be much more than paperwork.
 
-When your attorney actually prepares for it and cross-examines the officer, the officer has to testify under oath months before trial. Whatever they say is on the record. If the officer's story at the DMV hearing is different from what they say at trial — or if they can't remember details they claimed were crystal clear in the arrest report — that inconsistency becomes usable at trial.
+When your attorney actually prepares for it and cross-examines the officer, the officer has to testify under oath months before trial. Whatever they say is on the record. If the officer's story at the DMV hearing is different from what they say at trial, or if they can't remember details they claimed were crystal clear in the arrest report, that inconsistency becomes usable at trial.
 
 It's essentially a free deposition that the prosecution has no idea you're running.
 
@@ -88,5 +88,5 @@ Has anyone else's attorney taken this approach? Curious whether it's common to a
 **Posting notes:**
 - Post 8-10 PM any day (r/dui most active evenings)
 - Drop link in comments after 30+ minutes: "I found a detailed breakdown of the strategy behind the DMV hearing here"
-- Engage with everyone who replies — this topic generates a lot of "wait I didn't know this" responses
+- Engage with everyone who replies, this topic generates a lot of "wait I didn't know this" responses
 - Do NOT use brand name anywhere in the post

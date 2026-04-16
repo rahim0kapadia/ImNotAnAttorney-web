@@ -1,6 +1,6 @@
 "use client";
 /**
- * CheckInButton — Defendant daily check-in with optional geolocation.
+ * CheckInButton, Defendant daily check-in with optional geolocation.
  *
  * Requests location permission on click, then POSTs to /api/check-in.
  * Falls back to check-in without coordinates if permission is denied.
@@ -79,7 +79,7 @@ export function CheckInButton({ token, lastCheckIn }: CheckInButtonProps) {
         });
       },
       () => {
-        // Permission denied or error — check in without location
+        // Permission denied or error, check in without location
         submitCheckIn();
       },
       { timeout: 8000, enableHighAccuracy: false },
@@ -102,7 +102,7 @@ export function CheckInButton({ token, lastCheckIn }: CheckInButtonProps) {
         {state === "requesting-location" && "Requesting location..."}
         {state === "submitting" && "Checking in..."}
         {state === "idle" && "Check In Today"}
-        {state === "error" && "Check-in failed — try again"}
+        {state === "error" && "Check-in failed, try again"}
         {state === "success" && "Checked In"}
         {state === "already-checked-in" && "Checked In"}
       </button>

@@ -1,4 +1,4 @@
-# ImNotAnAttorney — Architecture
+# ImNotAnAttorney, Architecture
 
 ## System Overview
 
@@ -47,21 +47,21 @@ Customer Journey:
   [Public Funnel]
   Landing Page → Blog → Score / DUI 72-Hour Checklist (free lead magnets) → Checkout → Stripe Payment
 
-  [Digital Product Path — Playbooks $97]
+  [Digital Product Path, Playbooks $97]
   Payment → Webhook → download_token (72h) → PDF delivery email → Playbook drip (4 emails)
 
-  [Service Path — Case Decoder $197]
+  [Service Path, Case Decoder $197]
   Payment → Webhook → Case created → Intake form → Auto-generation (Edge Function)
     → Evaluation (UPL + Psych) → Operator review → Delivery email
     → Post-purchase drip → Upgrade path
 
-  [Service Path — Intelligence Brief $997]
+  [Service Path, Intelligence Brief $997]
   Payment → Webhook → Case created + included CD case
     → CD intake → CD auto-generates → CD delivered → Phase 2 intake email
     → IB Phase A (5 parallel sections) → IB Phase B (4 sequential sections)
     → Operator review → Delivery email
 
-  [Service Path — Discovery Tiers $2,497+]
+  [Service Path, Discovery Tiers $2,497+]
   Payment → Webhook → Case created (pending) + included CD + IB cases
     → Document upload → Finalize → OCR + classify + extract + analyze jobs
     → Pipeline completion → Operator review → Delivery email
@@ -71,7 +71,7 @@ Customer Journey:
 ## Tech Stack
 
 | Layer | Technology | Details |
-|-------|-----------|---------|
+|-------|---------, |---------|
 | **Frontend** | Next.js 16.1.6 (App Router) | SSR for SEO, React 19.2.3 for forms, `next-mdx-remote` v6 for blog |
 | **Styling** | Tailwind CSS v4 | PostCSS integration (`@tailwindcss/postcss`), no config file |
 | **Animation** | framer-motion 12.x | 4 motion components, all respect `prefers-reduced-motion` |
@@ -91,20 +91,20 @@ Customer Journey:
 - **Vercel account:** `rahim0kapadia-1967` (personal Hobby plan)
 - **Vercel team:** `rahim-kapadias-projects`
 - **Vercel project:** `imnotanattorney-web` (prj_fgx7OUbudHbS2WrfoaLKb07jJAnB)
-- **Domain:** `imnotanattorney.com` — Cloudflare DNS A records → Vercel (76.76.21.142 / 66.33.60.66). Domain is already configured and routed. Do NOT touch domain settings.
+- **Domain:** `imnotanattorney.com`, Cloudflare DNS A records → Vercel (76.76.21.142 / 66.33.60.66). Domain is already configured and routed. Do NOT touch domain settings.
 - **Deploy method:** GitHub integration auto-deploys on push to `master`. Do NOT use `vercel deploy` CLI.
 - **GitHub:** github.com/rahim0kapadia/ImNotAnAttorney-web
 - **Supabase project:** jxjbjmgdukwkoclydqdr (Kapadia Labs org)
 
 ### Deploy Rules (prevent past incidents)
 
-1. **NEVER deploy to `tastedrops-projects`** — that is TasteDrop's account, completely separate business
-2. **NEVER run `vercel deploy`** — deploys happen via `git push origin master` → GitHub integration
-3. **NEVER run `vercel env pull`** — it overwrites `.env.local` with only the vars in Vercel (missing local-only vars)
-4. **NEVER delete `.vercel/` directory** — it links the CLI to the correct project
-5. **NEVER touch domain settings** — `imnotanattorney.com` is routed via Cloudflare A records, already configured
+1. **NEVER deploy to `tastedrops-projects`**, that is TasteDrop's account, completely separate business
+2. **NEVER run `vercel deploy`**, deploys happen via `git push origin master` → GitHub integration
+3. **NEVER run `vercel env pull`**, it overwrites `.env.local` with only the vars in Vercel (missing local-only vars)
+4. **NEVER delete `.vercel/` directory**, it links the CLI to the correct project
+5. **NEVER touch domain settings**, `imnotanattorney.com` is routed via Cloudflare A records, already configured
 6. **Verify account before any Vercel CLI operation:** `npx vercel whoami` must show `rahim0kapadia-1967`
-7. **Env var changes:** Use `npx vercel env add` for new vars, then redeploy via `git commit --allow-empty -m "chore: trigger redeploy" && git push`
+7. **Env var changes:** Use `npx vercel env add` for new vars, then redeploy via `git commit,allow-empty -m "chore: trigger redeploy" && git push`
 
 ## Environment Variables
 
@@ -131,13 +131,13 @@ The engine is a distributed job queue worker that powers ALL discovery-tier proc
 ### Deployment
 
 - **GitHub Actions cron** (`process-jobs.yml`): Runs every 5 minutes
-- **Entry:** `node src/worker.mjs --once` (process up to 10 jobs per run, then exit)
+- **Entry:** `node src/worker.mjs,once` (process up to 10 jobs per run, then exit)
 - **Continuous mode:** `node src/worker.mjs` (poll loop with 10s interval, for local dev)
 - **Node.js ≥20** required
 
 ### Job Queue Mechanics
 
-1. **Claim:** `claim_next_job()` Postgres RPC — uses `FOR UPDATE SKIP LOCKED` to prevent double-processing across concurrent workers
+1. **Claim:** `claim_next_job()` Postgres RPC, uses `FOR UPDATE SKIP LOCKED` to prevent double-processing across concurrent workers
 2. **Process:** Dynamic import of worker module from registry → `workerModule.default(job)`
 3. **Complete:** `completeJob(job.id, summary, itemsProduced)` → schedules downstream jobs
 4. **Fail:** `failJob(job.id, errorMessage, metadata)` → marks for retry or creates operator task
@@ -147,7 +147,7 @@ The engine is a distributed job queue worker that powers ALL discovery-tier proc
 Exponential backoff: `4^retryCount × 5 minutes`
 
 | Retry | Delay | Cumulative |
-|-------|-------|-----------|
+|-------|-------|---------, |
 | 1st | 20 minutes | 20 min |
 | 2nd | 80 minutes | 100 min |
 | 3rd (max) | 320 minutes | 420 min |
@@ -157,8 +157,8 @@ Failed jobs with `retry_count < max_retries` (default 3) get `status = 'retrying
 ### Worker Registry (27 workers across 6 phases)
 
 | Phase | Job Type | Model | Max Tokens | Purpose |
-|-------|----------|-------|-----------|---------|
-| **1: Document Ingestion** | `ocr` | Haiku | — | PDF/image text extraction (tesseract.js + pdf-parse) |
+|-------|----------|-------|---------, |---------|
+| **1: Document Ingestion** | `ocr` | Haiku |, | PDF/image text extraction (tesseract.js + pdf-parse) |
 | | `document_classification` | Haiku | 2,048 | Categorize documents (police report, lab, warrant, etc.) |
 | | `entity_extraction` | Haiku | 4,096 | Named entity recognition per document |
 | **2: Cross-Document Analysis** | `finding_analysis` | Opus | 32,000 | Case-level findings from all extractions |
@@ -182,10 +182,10 @@ Failed jobs with `retry_count < max_retries` (default 3) get `status = 'retrying
 | | `attack_intelligence` | Opus | 16,000 | Attack vectors + impeachment |
 | **Ongoing** | `update_generation` | Sonnet | 8,192 | War Room weekly updates |
 | **Verification** | `citation_verification` | API-only | 4,096 | Citation verification cascade |
-| **Data Fetch** | `docket_fetch` | API-only | — | Court docket retrieval |
-| | `legal_research` | API-only | — | Pre-generation legal source search |
-| | `jurisdiction_profile` | API-only | — | Jurisdiction context cache |
-| | `docket_monitor` | API-only | — | Ongoing docket alerts (War Room+) |
+| **Data Fetch** | `docket_fetch` | API-only |, | Court docket retrieval |
+| | `legal_research` | API-only |, | Pre-generation legal source search |
+| | `jurisdiction_profile` | API-only |, | Jurisdiction context cache |
+| | `docket_monitor` | API-only |, | Ongoing docket alerts (War Room+) |
 
 **Model summary:** Haiku for Phase 1 (cheap classification), Sonnet for Phase 2 analysis, Opus for Phases 3-6 (deep reasoning + emotional intelligence). API-only workers have placeholder model entries.
 
@@ -250,14 +250,14 @@ Every Claude API call is tracked in `job_cost_tracking` table:
 | `SERPAPI_API_KEY` | No | Google Scholar legal search ($50/mo) |
 | `SYSTEM_ROOT` | No | Path to business docs (defaults to `../ImNotAnAttorney/system`) |
 
-All optional API tokens degrade gracefully — workers skip external verification when tokens are absent.
+All optional API tokens degrade gracefully, workers skip external verification when tokens are absent.
 
 ## External Legal Data Sources
 
 The engine integrates with 7 external legal data APIs for citation verification, docket monitoring, and legal research.
 
 | Source | Module(s) | Purpose | Auth | Rate Limit |
-|--------|-----------|---------|------|-----------|
+|------, |---------, |---------|------|---------, |
 | **CourtListener** | `legal-verifier.mjs`, `docket-fetcher.mjs` | Dockets, opinions, judge profiles, financial disclosures, citation verification | Optional token | Per-domain |
 | **PACER** | `pacer-fetcher.mjs` | Federal court records (NextGen CSO auth, 2hr TTL) | Login/password | $0.10/page |
 | **JudyRecords** | `docket-fetcher.mjs` | State court records | Optional API key | Subscription |
@@ -270,10 +270,10 @@ The engine integrates with 7 external legal data APIs for citation verification,
 
 Citations are verified through a priority cascade:
 
-1. **CourtListener** (primary) — search by case name + citation
-2. **Harvard CAP** — fallback for historical cases
-3. **GovInfo** — for statutory references
-4. **eCFR** — for regulatory references
+1. **CourtListener** (primary), search by case name + citation
+2. **Harvard CAP**, fallback for historical cases
+3. **GovInfo**, for statutory references
+4. **eCFR**, for regulatory references
 
 **Confidence tiers:** STRONG (verified in primary source) → MODERATE (verified in secondary) → WEAK (partial match) → UNVERIFIED (no match found) → FABRICATED (contradicted by source). Claims below 90% confidence are marked `[VERIFY]` in output.
 
@@ -303,12 +303,12 @@ Every Claude API call in the system includes anti-hallucination guardrails. Sour
 
 ### Expert Attribution
 
-Every analytical insight must trace to a verified expert from the Expert Reference System. The `Victor Knapp` incident (March 2026) — a fabricated DUI attorney name that appeared in playbooks, blog posts, and checkout pages — led to the policy: **every expert cited in customer-facing content must exist in EXPERT-REFERENCE.md and be web-verified before first use.**
+Every analytical insight must trace to a verified expert from the Expert Reference System. The `Victor Knapp` incident (March 2026), a fabricated DUI attorney name that appeared in playbooks, blog posts, and checkout pages, led to the policy: **every expert cited in customer-facing content must exist in EXPERT-REFERENCE.md and be web-verified before first use.**
 
 ### Banned Terminology (16 entries)
 
 | Banned | Replacement |
-|--------|-------------|
+|------, |-------------|
 | "red flag" | "what to listen for" |
 | "warning sign" | "what to listen for" |
 | "escalation ladder" | "Your Advocacy Steps" |
@@ -328,7 +328,7 @@ Every analytical insight must trace to a verified expert from the Expert Referen
 ### Expert Categories
 
 | Category | Count | Key Names |
-|----------|-------|-----------|
+|----------|-------|---------, |
 | DUI/DWI Defense | 4 | Lawrence Taylor, William "Bubba" Head, Justin McShane, Steven Oberman |
 | Drug Defense | 4 | Jeffrey Lichtman, Ron Chapman II, Jose Baez, Dick DeGuerin |
 | Sex Offense Defense | 3 | Specialists with 30-40 year track records |
@@ -347,7 +347,7 @@ Every analytical insight must trace to a verified expert from the Expert Referen
 ### Tier-Based Expert Loading
 
 | Tier | Expert Depth | Framework |
-|------|-------------|-----------|
+|------|-------------|---------, |
 | Playbook ($97) | 2-3 expert frameworks visible | Charge-specific |
 | Case Decoder ($197) | Charge-type routing to specific experts | Per-charge expert pair |
 | Intelligence Brief ($997) | 5-7 frameworks | Spence, Mesereau, Younger, Pozner, MacCarthy + charge-specific |
@@ -359,12 +359,12 @@ Every analytical insight must trace to a verified expert from the Expert Referen
 
 8-dimension emotional profiling framework required for report generation. Source: `ImNotAnAttorney/system/EMOTIONAL-INTELLIGENCE.md`.
 
-**Why Opus 4.6 with extended thinking is required:** Sonnet 4.6 produced "mechanical emotional calibration" — correct format but emotionally flat. Opus uses the 16K thinking budget to build the 8-dimension profile internally before writing, producing calibrated emotional tone.
+**Why Opus 4.6 with extended thinking is required:** Sonnet 4.6 produced "mechanical emotional calibration", correct format but emotionally flat. Opus uses the 16K thinking budget to build the 8-dimension profile internally before writing, producing calibrated emotional tone.
 
 ### 8 Emotional Dimensions
 
 | # | Dimension | What It Captures |
-|---|-----------|-----------------|
+|---|---------, |---------------, |
 | 1 | Primary Fear | What they're MOST afraid of losing (career, prison, family, financial, reputation) |
 | 2 | Emotional Stance | Processing style: Minimizer / Catastrophizer / Intellectualizer / Dissociater |
 | 3 | Attorney Relationship as Wound | Abandonment / Betrayal / Kept in Dark |
@@ -377,7 +377,7 @@ Every analytical insight must trace to a verified expert from the Expert Referen
 ### Stance Calibration
 
 | Stance | Signals | Bridging After Hard Info |
-|--------|---------|------------------------|
+|------, |---------|------------------------|
 | **Minimizer** | "Not that big a deal" | Ground in what they CAN control |
 | **Catastrophizer** | "Ruin my life" | "This is RANGE, not prediction" |
 | **Intellectualizer** | Precise legal questions | "Question for attorney is your specific facts" |
@@ -386,8 +386,8 @@ Every analytical insight must trace to a verified expert from the Expert Referen
 ### Psychological Frameworks
 
 | Framework | Author | Application |
-|-----------|--------|------------|
-| EPPM (Extended Parallel Process Model) | Kim Witte | 2:1 efficacy-to-threat ratio — always more "you can" than "you face" |
+|---------, |------, |------------|
+| EPPM (Extended Parallel Process Model) | Kim Witte | 2:1 efficacy-to-threat ratio, always more "you can" than "you face" |
 | B=MAP (Behavior = Motivation × Ability × Prompt) | BJ Fogg | Scared defendants = HIGH motivation + ZERO ability → increase ability |
 | Participatory Defense | Raj Jayadev | Defendant = prepared partner, not passive recipient |
 | Calibrated Questioning | Chris Voss | Questions sound like CLIENT asking for help, not lawyer playing lawyer |
@@ -416,12 +416,12 @@ The report is designed as a cumulative emotional journey, not isolated sections:
 6 active states that drive report framing. Source: `ImNotAnAttorney/system/BUYER-STATES.md`. Evaluation criterion D11 checks buyer state alignment.
 
 | State | Signal | Need | Anti-Pattern |
-|-------|--------|------|-------------|
-| **distrust** — "I Don't Trust My Attorney" | Trust/competence doubts in intake | Independent validation | "Your attorney knows best" (dismisses instinct) |
-| **double-checking** — "I'm Double-Checking What He Said" | Substantive attorney_statements, uncertainty not anger | Context to evaluate | Undermining attorney when they're actually right |
-| **information-vacuum** — "He's Not Telling Me Anything" | Communication gap >2 weeks, ghosting | Fill the information vacuum | "Just keep trying to reach them" without providing info |
-| **no-attorney** — "No Attorney Yet" | attorney_type = "no attorney" | Understand case before hiring | Assuming attorney relationship exists |
-| **just-arrested** — "I Just Got Arrested" | arrest_date < 2 weeks | Orientation + 3 immediate actions | 25 pages of analysis when they need 3 actions |
+|-------|------, |------|-------------|
+| **distrust**, "I Don't Trust My Attorney" | Trust/competence doubts in intake | Independent validation | "Your attorney knows best" (dismisses instinct) |
+| **double-checking**, "I'm Double-Checking What He Said" | Substantive attorney_statements, uncertainty not anger | Context to evaluate | Undermining attorney when they're actually right |
+| **information-vacuum**, "He's Not Telling Me Anything" | Communication gap >2 weeks, ghosting | Fill the information vacuum | "Just keep trying to reach them" without providing info |
+| **no-attorney**, "No Attorney Yet" | attorney_type = "no attorney" | Understand case before hiring | Assuming attorney relationship exists |
+| **just-arrested**, "I Just Got Arrested" | arrest_date < 2 weeks | Orientation + 3 immediate actions | 25 pages of analysis when they need 3 actions |
 | **family-buyer** (future) | filled_out_by = "family" / "friend" | Actionable ways to help | Assuming reader IS defendant |
 
 ## Content Architecture Standard
@@ -429,7 +429,7 @@ The report is designed as a cumulative emotional journey, not isolated sections:
 11 principles every customer-facing deliverable must satisfy. Source: `ImNotAnAttorney/system/CONTENT-ARCHITECTURE-STANDARD.md`.
 
 | # | Principle | Rule |
-|---|-----------|------|
+|---|---------, |------|
 | 1 | Crisis Response First | First thing scared person sees must be actionable, not context |
 | 2 | Origin Story Early | "Built by defendant who went through it" within first page |
 | 3 | Triage Before Depth | 3-5 path decision tree before content (Golden Question, ADDRESS FIRST) |
@@ -451,7 +451,7 @@ Per-tier customer experience timeline. Source: `ImNotAnAttorney/system/CLIENT-JO
 ### Journey Timeline
 
 | Milestone | $197 CD | $997 IB | $2,497 X-Ray | $4,997 War Room | $9,997 Sit Room |
-|-----------|---------|---------|--------------|-----------------|-----------------|
+|---------, |---------|---------|------------, |---------------, |---------------, |
 | Signup → first deliverable | 48 hrs | 48 hrs | 3-5 days | 3-5 days | 24-48 hrs |
 | Full initial package | 48 hrs | 48 hrs | 10 biz days | 25-28 days | 14-21 days |
 | Discovery required? | No | No | Yes | Yes | Yes |
@@ -461,33 +461,33 @@ Per-tier customer experience timeline. Source: `ImNotAnAttorney/system/CLIENT-JO
 
 ### 8 Key Emotional Moments
 
-1. **"Someone finally explained my charges"** — Case Decoder delivery
-2. **"Now I know my judge"** — Intelligence Brief delivery
-3. **"Someone finally organized my case"** — Document index + timeline
-4. **"I didn't know this was in MY OWN discovery"** — Discrepancies + red flags
-5. **"Now I know what to ask"** — Targeted questions for attorney
-6. **"My lawyer was impressed"** — Hand over attorney package
-7. **"I understand what's happening in my case"** — Strategy framework clicks
-8. **"I'm not going in blind"** — Trial prep materials arrive
+1. **"Someone finally explained my charges"**, Case Decoder delivery
+2. **"Now I know my judge"**, Intelligence Brief delivery
+3. **"Someone finally organized my case"**, Document index + timeline
+4. **"I didn't know this was in MY OWN discovery"**, Discrepancies + red flags
+5. **"Now I know what to ask"**, Targeted questions for attorney
+6. **"My lawyer was impressed"**, Hand over attorney package
+7. **"I understand what's happening in my case"**, Strategy framework clicks
+8. **"I'm not going in blind"**, Trial prep materials arrive
 
 ### Dashboard Features by Tier
 
 | Feature | $197 | $997 | $2,497 | $4,997 | $9,997 |
-|---------|------|------|--------|--------|--------|
+|---------|------|------|------, |------, |------, |
 | Download reports | PDF | PDF | Yes | Yes | Yes |
-| Interactive timeline | — | — | — | Yes | Yes |
-| Witness map | — | — | — | Yes | Yes |
-| Motion tracker | — | — | — | Yes | Yes |
-| Trial Intelligence Ops | — | — | — | — | Yes |
-| Priority support | — | — | — | — | Yes |
+| Interactive timeline |, |, |, | Yes | Yes |
+| Witness map |, |, |, | Yes | Yes |
+| Motion tracker |, |, |, | Yes | Yes |
+| Trial Intelligence Ops |, |, |, |, | Yes |
+| Priority support |, |, |, |, | Yes |
 
 ### Upgrade Credit Messaging
 
 Each tier delivery includes upgrade pitch with credit pre-calculated:
-- CD delivery → "Upgrade to Brief — your $197 is applied. Pay only $800."
-- IB delivery → "Upgrade to X-Ray — your $997 is applied. Pay only $1,500."
-- X-Ray delivery → "Upgrade to War Room — your $2,497 is applied. Pay only $2,500."
-- War Room (trial approaching) → "Upgrade to Situation Room — pay only $5,000."
+- CD delivery → "Upgrade to Brief, your $197 is applied. Pay only $800."
+- IB delivery → "Upgrade to X-Ray, your $997 is applied. Pay only $1,500."
+- X-Ray delivery → "Upgrade to War Room, your $2,497 is applied. Pay only $2,500."
+- War Room (trial approaching) → "Upgrade to Situation Room, pay only $5,000."
 
 ## Architecture Patterns
 
@@ -504,11 +504,11 @@ API routes validate + perform atomic state change, then POST to Edge Functions w
 Conditional UPDATE with WHERE clause as database-level mutex. The UPDATE happens BEFORE the email send. Losing request gets zero rows updated, returns early. Prevents duplicate emails from concurrent requests.
 
 ```sql
--- Example: deliver route claims the case atomically
+, Example: deliver route claims the case atomically
 UPDATE cases SET status = 'delivered', delivered_at = now()
 WHERE id = $1 AND status = 'review'
 RETURNING *;
--- If 0 rows returned → another request already delivered → return early
+, If 0 rows returned → another request already delivered → return early
 ```
 
 **Used by:** deliver route, generation triggers, cron parts.
@@ -560,7 +560,7 @@ form-action 'self' https://checkout.stripe.com
 ### Route Protection
 
 | Pattern | Auth Method | Header |
-|---------|-----------|--------|
+|---------|---------, |------, |
 | `/api/admin/*` | Password + timing-safe comparison | `x-admin-password` |
 | `/api/operator/*` | Password + timing-safe comparison | `x-admin-password` |
 | `/api/generate/*` | Bearer token (OPERATOR_SECRET) | `Authorization: Bearer ...` |
@@ -573,7 +573,7 @@ form-action 'self' https://checkout.stripe.com
 PostgreSQL-based via `check_rate_limit()` RPC with `rate_limits` table. TypeScript wrapper in `src/lib/rate-limit.ts` with in-memory fallback if RPC fails (fail closed: 10 req/min).
 
 | Endpoint | Limit | Window |
-|----------|-------|--------|
+|----------|-------|------, |
 | `/api/checkout` | 10 requests | 300s per IP |
 | `/api/score` | 10 requests | 60s per IP |
 | `/api/intake` | 5 requests | 300s per IP |
@@ -581,15 +581,15 @@ PostgreSQL-based via `check_rate_limit()` RPC with `rate_limits` table. TypeScri
 ### Security Headers
 
 Configured in `next.config.ts`:
-- `Strict-Transport-Security` — HSTS with preload
-- `X-Content-Type-Options: nosniff` — Prevent MIME sniffing
-- `X-Frame-Options: DENY` — Prevent clickjacking
-- `Referrer-Policy: strict-origin-when-cross-origin` — Limit referrer leakage
+- `Strict-Transport-Security`, HSTS with preload
+- `X-Content-Type-Options: nosniff`, Prevent MIME sniffing
+- `X-Frame-Options: DENY`, Prevent clickjacking
+- `Referrer-Policy: strict-origin-when-cross-origin`, Limit referrer leakage
 
 ### Storage Buckets
 
 | Bucket | Access | Contents |
-|--------|--------|----------|
+|------, |------, |----------|
 | `charge-packs` | Private | Playbook PDFs (8 tiers), served via signed URLs |
 | `discovery-files` | Private | Customer uploads (X-Ray+), auto-deleted 90 days post-delivery |
 
@@ -611,7 +611,7 @@ Configured in `next.config.ts`:
 #### `orders`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | email | text | Customer email (lowercased) |
 | tier | text | Product tier slug |
@@ -633,7 +633,7 @@ Configured in `next.config.ts`:
 #### `cases`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Set by webhook (crypto.randomUUID) |
 | order_id | uuid (FK) | Links to orders table |
 | email | text | Customer email |
@@ -685,7 +685,7 @@ Configured in `next.config.ts`:
 #### `intakes`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | email | text | Customer email (lowercased, trimmed) |
 | first_name | text | Customer's first name |
@@ -698,7 +698,7 @@ Configured in `next.config.ts`:
 #### `subscribers`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | email | text (unique) | Subscriber email |
 | source | text | How they subscribed (`blog`, `checkout`, `score`, `lead-capture`, `dui-72-hours`, `score-page`, `resources`) |
@@ -711,13 +711,13 @@ Configured in `next.config.ts`:
 #### `drip_emails`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | subscriber_id | uuid (FK) | Links to subscribers |
 | email_key | text | Unique key per email template |
 | created_at | timestamptz | When sent |
 | **Unique constraint** | `(subscriber_id, email_key)` | Prevents duplicate sends |
 
-### Reference Data Tables (12 tables — Migration 004)
+### Reference Data Tables (12 tables, Migration 004)
 
 Source of truth for structured data previously scattered across 10+ markdown files. Seeded via `scripts/seed/run-all-seeds.mjs`.
 
@@ -742,10 +742,10 @@ All reference tables have `created_at`, `updated_at` (auto-trigger), and `active
 
 #### `email_log` (Migration 005)
 
-Tracks all email send calls. Fire-and-forget logging — insert failures never crash the calling route.
+Tracks all email send calls. Fire-and-forget logging, insert failures never crash the calling route.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | email_type | text | Category (`payment-confirmation`, `drip-nurture`, `operator-alert`) |
 | recipient | text | Email address |
@@ -762,7 +762,7 @@ Tracks all email send calls. Fire-and-forget logging — insert failures never c
 #### `audit_runs` (Migration 004)
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | report_source | text | Source identifier (file path or persona name) |
 | charge_type | text | Charge type evaluated |
@@ -776,7 +776,7 @@ Tracks all email send calls. Fire-and-forget logging — insert failures never c
 #### `cron_runs`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | started_at | timestamptz | When cron started |
 | completed_at | timestamptz | When cron finished |
@@ -786,7 +786,7 @@ Tracks all email send calls. Fire-and-forget logging — insert failures never c
 #### `rate_limits` (Migration 004)
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | key | text (PK) | Rate limit identifier (e.g., `checkout:192.168.1.1`) |
 | window_start | timestamptz | Current window start |
 | request_count | integer | Requests in current window |
@@ -796,7 +796,7 @@ Tracks all email send calls. Fire-and-forget logging — insert failures never c
 Generic atomic counter infrastructure for the Defense Accountability Index.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | text (PK) | Counter identifier (e.g., `score_completions`) |
 | value | bigint | Current count |
 | updated_at | timestamptz | Last increment time |
@@ -806,7 +806,7 @@ Generic atomic counter infrastructure for the Defense Accountability Index.
 Anonymous aggregate tracking from Defense Milestone Score. NO individual answers stored.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | charge_type | text (PK part) | Charge category |
 | metric | text (PK part) | What's being counted |
 | count | bigint | Aggregate count |
@@ -818,7 +818,7 @@ Anonymous aggregate tracking from Defense Milestone Score. NO individual answers
 Court docket data from external sources (CourtListener, JudyRecords, clerk portals).
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | case_id | uuid (FK) | Links to cases table |
 | entry_date | date | When filed |
@@ -837,7 +837,7 @@ Court docket data from external sources (CourtListener, JudyRecords, clerk porta
 #### `charge_packs` (Migration 006)
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | tier_slug | text | Links to tier (e.g., `dui-first-offense`) |
 | file_path | text | Storage path in `charge-packs` bucket |
@@ -851,7 +851,7 @@ Court docket data from external sources (CourtListener, JudyRecords, clerk porta
 #### `discovery_documents`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | case_id | uuid (FK) | Links to cases |
 | file_name | text | Original filename |
@@ -868,7 +868,7 @@ Court docket data from external sources (CourtListener, JudyRecords, clerk porta
 Extracted timeline from discovery documents.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | event_date | date | When the event occurred |
 | event_text | text | Description |
@@ -881,7 +881,7 @@ Extracted timeline from discovery documents.
 X-Ray analysis output.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | discrepancies | jsonb | Contradictions found |
 | red_flags | jsonb | Prosecution weaknesses |
@@ -891,7 +891,7 @@ X-Ray analysis output.
 #### `case_witnesses`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | name | text | Witness name |
 | type | text | Witness type |
@@ -906,7 +906,7 @@ X-Ray analysis output.
 Categorized findings: 4 types x 5 categories x 4 severity levels.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | title | text | Finding title |
 | type | text | Finding type |
@@ -926,7 +926,7 @@ Chain of custody tracking with gap detection.
 #### `case_law_references`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | case_name | text | Case citation name |
 | citation | text | Legal citation |
@@ -938,7 +938,7 @@ Chain of custody tracking with gap detection.
 #### `motion_recommendations`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | motion_type | text | Type of motion |
 | motion_name | text | Display name |
@@ -951,7 +951,7 @@ Chain of custody tracking with gap detection.
 Situation Room trial prep documents.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | case_id | uuid (FK) | Links to cases |
 | material_type | text | Type of material |
 | content | text | Material content |
@@ -961,7 +961,7 @@ Situation Room trial prep documents.
 Background job queue for discovery pipeline.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | case_id | uuid (FK) | Links to cases |
 | job_type | text | `ocr`, `classify`, `extract`, `analyze`, `timeline`, `witness`, `citation`, `motion`, `report` |
@@ -977,7 +977,7 @@ Background job queue for discovery pipeline.
 #### `operator_tasks` (Migration 007)
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | case_id | uuid (FK) | Links to cases |
 | title | text | Task description |
@@ -995,7 +995,7 @@ Background job queue for discovery pipeline.
 Resend inbound webhook storage.
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | from_email | text | Sender |
 | subject | text | Subject line |
@@ -1007,7 +1007,7 @@ Resend inbound webhook storage.
 #### `emerging_topics`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | topic | text | Topic phrase |
 | post_count | integer | Number of posts detected |
@@ -1019,7 +1019,7 @@ Resend inbound webhook storage.
 #### `content_gaps`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | id | uuid (PK) | Auto-generated |
 | slug | text | Suggested URL slug |
 | suggested_title | text | Article title |
@@ -1031,7 +1031,7 @@ Resend inbound webhook storage.
 #### `demand_scores`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | charge_type | text | Charge or pain point |
 | dimension | text | `charge_type` or `pain_point` |
 | window | text | `7d`, `30d`, `90d` |
@@ -1041,7 +1041,7 @@ Resend inbound webhook storage.
 #### `content_performance`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | blog_slug | text | Blog post identifier |
 | subscriber_signups | integer | Attributed signups |
 | orders_attributed | integer | Attributed orders |
@@ -1050,7 +1050,7 @@ Resend inbound webhook storage.
 #### `discovered_subreddits`
 
 | Column | Type | Purpose |
-|--------|------|---------|
+|------, |------|---------|
 | subreddit | text | Subreddit name |
 | subscriber_count | integer | Subreddit subscribers |
 | relevance_score | integer | Relevance to business |
@@ -1079,7 +1079,7 @@ Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):
 ### Database RPCs
 
 | RPC | Purpose |
-|-----|---------|
+|---, |---------|
 | `increment_counter(p_id TEXT)` | Atomic counter increment with upsert, returns new value |
 | `increment_score_aggregate(p_charge_type TEXT, p_metric TEXT)` | Atomic aggregate increment with upsert |
 | `check_rate_limit(p_key TEXT, p_max_requests INT, p_window_seconds INT)` | Sliding window rate limiter, returns boolean (true = allowed) |
@@ -1091,7 +1091,7 @@ Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):
 ### Database Indexes
 
 | Index | Table(Column) | Purpose |
-|-------|--------------|---------|
+|-------|------------, |---------|
 | `idx_orders_stripe_payment_intent` | orders(stripe_payment_intent_id) | Refund webhook matching |
 | `idx_cases_court_lookup` | cases(court_case_number, court_state) | Cross-email identity matching |
 | `idx_email_log_type` | email_log(email_type) | Email audit queries |
@@ -1120,9 +1120,9 @@ Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):
 
 ### Database Triggers
 
-- `update_cases_updated_at` — Auto-sets `updated_at = now()` on every cases row update
-- `update_docket_entries_updated_at` — Same for docket_entries
-- `update_<table>_updated_at` — All 12 reference tables have `moddatetime` triggers
+- `update_cases_updated_at`, Auto-sets `updated_at = now()` on every cases row update
+- `update_docket_entries_updated_at`, Same for docket_entries
+- `update_<table>_updated_at`, All 12 reference tables have `moddatetime` triggers
 
 ## Case Status State Machine
 
@@ -1171,7 +1171,7 @@ Tables used by the ImNotAnAttorney-engine worker pipeline (not in web app code):
 ### Status Definitions
 
 | Status | Meaning | Tier(s) | Next Step |
-|--------|---------|---------|-----------|
+|------, |---------|---------|---------, |
 | `awaiting-intake` | Paid but no intake form yet | All services | Customer fills intake |
 | `intake` | Intake linked, ready for processing | CD, IB | Auto-generates report |
 | `generating` | Edge function running (CD) | case-decoder | Wait (30min max) |
@@ -1240,7 +1240,7 @@ Email-only matching is fragile. Court case numbers provide cross-email identity:
 
 15 tiers across 3 categories. Source of truth: `src/lib/tiers.ts`.
 
-### Playbook Tiers (8 tiers — $97, instant digital delivery)
+### Playbook Tiers (8 tiers, $97, instant digital delivery)
 
 | Slug | Name |
 |------|------|
@@ -1255,11 +1255,11 @@ Email-only matching is fragile. Court case numbers provide cross-email identity:
 
 All playbooks: `product_type: "digital-product"`, delivered via download token (72h expiry), stored in `charge-packs` storage bucket.
 
-### Service Tiers (5 tiers — $197-$9,997, case-based)
+### Service Tiers (5 tiers, $197-$9,997, case-based)
 
 | Slug | Price | Delivery | Discovery | Pipeline | Deliverables | Includes |
-|------|-------|----------|-----------|----------|-------------|----------|
-| `case-decoder` | $197 | 48 hours | No | Skills only | 7 | — |
+|------|-------|----------|---------, |----------|-------------|----------|
+| `case-decoder` | $197 | 48 hours | No | Skills only | 7 |, |
 | `intelligence-brief` | $997 | 72 hours | No | Skills + research | 24 (v4) | Case Decoder |
 | `x-ray` | $2,497 | 10 business days | Yes | Stages 01-05 | 26 | CD + IB |
 | `war-room` | $4,997 | 25-28 days + weekly | Yes | Stages 01-11 | 38 | CD + IB + X-Ray |
@@ -1267,13 +1267,13 @@ All playbooks: `product_type: "digital-product"`, delivered via download token (
 
 **Situation Room prerequisite:** Requires prior paid War Room order.
 
-### Deliverables Detail (v4 — March 2026)
+### Deliverables Detail (v4, March 2026)
 
 **Case Decoder ($197):** Plain-English Charge Breakdown, Case Stage Benchmark, Defense Milestone Checklist, 15 Targeted Questions, Red Flags for Stage, Motion Overview, Case Progress Score (0-100).
 
-**Intelligence Brief ($997) — v4 restructure:** 6 sections + 5 appendices. Guarantee: "The Clarity or It's Free." v4 changes: Judge Intelligence Card generalized to Jurisdiction Intelligence Summary (specific judge profiling moved to X-Ray). New deliverables: 8-Domain Life Impact Map, Prosecution Pressure Tactics Decoder, Realistic Outcome Map, Defense Theory Landscape.
+**Intelligence Brief ($997), v4 restructure:** 6 sections + 5 appendices. Guarantee: "The Clarity or It's Free." v4 changes: Judge Intelligence Card generalized to Jurisdiction Intelligence Summary (specific judge profiling moved to X-Ray). New deliverables: 8-Domain Life Impact Map, Prosecution Pressure Tactics Decoder, Realistic Outcome Map, Defense Theory Landscape.
 
-**X-Ray ($2,497) — v4 additions:** Judge Intelligence Profile + Prosecutor Research Profile (data-focused stats/patterns/outcomes, NOT strategy). 35-50 questions (vs 10-15 in IB). Discovery Strength Rating (0-100).
+**X-Ray ($2,497), v4 additions:** Judge Intelligence Profile + Prosecutor Research Profile (data-focused stats/patterns/outcomes, NOT strategy). 35-50 questions (vs 10-15 in IB). Discovery Strength Rating (0-100).
 
 **War Room ($4,997):** Up to 8 witnesses included. Additional witnesses: $149 each. Witness Reliability Rankings: 7-dimension scoring rubric. Dual delivery: CLIENT versions (accessible) + ATTORNEY versions (technical, citation-heavy, filing-ready).
 
@@ -1320,32 +1320,32 @@ Client-Package/
 ### Public Routes
 
 | Route | Method | Rate Limit | Purpose |
-|-------|--------|-----------|---------|
+|-------|------, |---------, |---------|
 | `/api/checkout` | POST | 10/300s/IP | Create Stripe checkout session |
-| `/api/checkout/verify` | POST | — | Verify checkout session status |
+| `/api/checkout/verify` | POST |, | Verify checkout session status |
 | `/api/intake` | POST | 5/300s/IP | Submit intake form |
 | `/api/intake/intelligence-brief` | POST | 5/300s/IP | Submit Phase 2 IB intake |
-| `/api/subscribe` | POST | — | Email subscription |
-| `/api/unsubscribe` | GET | — | CAN-SPAM unsubscribe |
+| `/api/subscribe` | POST |, | Email subscription |
+| `/api/unsubscribe` | GET |, | CAN-SPAM unsubscribe |
 | `/api/score` | POST | 10/60s/IP | Defense Milestone Score calculator |
-| `/api/score/count` | GET | — | Score completion counter (60s cache) |
-| `/api/upload` | POST | — | Upload discovery document |
-| `/api/upload/finalize` | POST | — | Finalize uploaded documents |
-| `/api/download/[token]` | GET | — | Download playbook PDF |
-| `/api/health` | GET | — | Health check (Supabase + 9 env vars) |
+| `/api/score/count` | GET |, | Score completion counter (60s cache) |
+| `/api/upload` | POST |, | Upload discovery document |
+| `/api/upload/finalize` | POST |, | Finalize uploaded documents |
+| `/api/download/[token]` | GET |, | Download playbook PDF |
+| `/api/health` | GET |, | Health check (Supabase + 9 env vars) |
 
 ### Webhook Routes
 
 | Route | Method | Auth | Purpose |
-|-------|--------|------|---------|
+|-------|------, |------|---------|
 | `/api/webhooks/stripe` | POST | Stripe signature | Payment + refund handling |
-| `/api/webhooks/resend` | POST | — | Resend delivery events |
-| `/api/webhooks/resend-inbound` | POST | — | Inbound email storage |
+| `/api/webhooks/resend` | POST |, | Resend delivery events |
+| `/api/webhooks/resend-inbound` | POST |, | Inbound email storage |
 
 ### Operator Routes (auth: x-admin-password)
 
 | Route | Method | Purpose |
-|-------|--------|---------|
+|-------|------, |---------|
 | `/api/operator/cases` | GET | List cases (filters, pagination) |
 | `/api/operator/cases/[id]` | GET | Case detail (13 parallel queries) |
 | `/api/operator/cases/[id]/status` | PATCH | Status transition (atomic guard) |
@@ -1357,7 +1357,7 @@ Client-Package/
 ### Generation Routes (auth: Bearer OPERATOR_SECRET)
 
 | Route | Method | Purpose |
-|-------|--------|---------|
+|-------|------, |---------|
 | `/api/generate/case-decoder` | POST | Dispatch CD generation to Edge Function |
 | `/api/generate/intelligence-brief` | POST | Dispatch IB Phase A+B generation |
 | `/api/generate/intelligence-brief/judge-research` | POST | Optional judge research + Phase B trigger |
@@ -1367,13 +1367,13 @@ Client-Package/
 ### Cron Routes (auth: Bearer CRON_SECRET)
 
 | Route | Method | Purpose |
-|-------|--------|---------|
-| `/api/cron/drip` | GET | Daily cron — 19 parts (see Cron section) |
+|-------|------, |---------|
+| `/api/cron/drip` | GET | Daily cron, 19 parts (see Cron section) |
 
 ### Admin Routes (auth: x-admin-password)
 
 | Route | Method | Purpose |
-|-------|--------|---------|
+|-------|------, |---------|
 | `/api/admin/emails` | GET | Inbound email list |
 | `/api/admin/reply` | POST | Reply to inbound email (threaded) |
 | `/api/admin/demand/emerging` | GET/PATCH | Emerging topics management |
@@ -1390,12 +1390,12 @@ Client-Package/
 
 | Path | Purpose |
 |------|---------|
-| `/` | Landing page — pain points, how it works, pricing, testimonials, CTA |
+| `/` | Landing page, pain points, how it works, pricing, testimonials, CTA |
 | `/about` | Origin story, what we do / what we're NOT |
 | `/services` | Pricing tiers by case type |
 | `/resources` | Free guides, checklists, rights by charge type |
 | `/blog` | Blog index with category filtering (35 posts) |
-| `/blog/[slug]` | Individual post — sharing, CTA, related posts |
+| `/blog/[slug]` | Individual post, sharing, CTA, related posts |
 | `/score` | Defense Milestone Score (free lead magnet) |
 | `/sample` | Sample Case Decoder report preview |
 | `/sample-xray` | Sample X-Ray discovery analysis preview |
@@ -1421,18 +1421,18 @@ Client-Package/
 
 | Path | Purpose |
 |------|---------|
-| `/operator` | Dashboard — action queue, SLA breaches, quick stats |
-| `/operator/cases` | Case list — status/tier/charge filters, email search, pagination |
-| `/operator/cases/[id]` | Case detail — 8 tabs, 13 parallel queries, status transitions |
-| `/operator/jobs` | Job queue — status/type filters, retry, progress bars |
-| `/operator/metrics` | Metrics — revenue, delivery time, SLA compliance, pipeline health |
+| `/operator` | Dashboard, action queue, SLA breaches, quick stats |
+| `/operator/cases` | Case list, status/tier/charge filters, email search, pagination |
+| `/operator/cases/[id]` | Case detail, 8 tabs, 13 parallel queries, status transitions |
+| `/operator/jobs` | Job queue, status/type filters, retry, progress bars |
+| `/operator/metrics` | Metrics, revenue, delivery time, SLA compliance, pipeline health |
 
 ### Admin Pages (auth: sessionStorage password)
 
 | Path | Purpose |
 |------|---------|
-| `/admin/demand` | Demand intelligence — quadrant map, gaps, emerging topics, performance |
-| `/admin/inbox` | Inbound email management — threaded replies, address restriction |
+| `/admin/demand` | Demand intelligence, quadrant map, gaps, emerging topics, performance |
+| `/admin/inbox` | Inbound email management, threaded replies, address restriction |
 
 ## Intelligence Brief Pipeline
 
@@ -1443,21 +1443,21 @@ Major subsystem generating comprehensive case intelligence reports. Source: `src
 Generated simultaneously for speed. Each section is a separate Claude Sonnet 4.6 call (temp 0.3, maxTokens 2000-5000).
 
 | Section | Key | Emotion | Output |
-|---------|-----|---------|--------|
+|---------|---, |---------|------, |
 | Case Roadmap | `case-roadmap` | Orientation ("I can see the road ahead") | Timeline table + stages + two paths (plea/trial) |
 | What's Working | `whats-working` | Grounding ("Some things are on track") | Good news + attorney decoded + gaps as CLARIFY + Case Progress Score |
 | Legal Options | `legal-options` | Empowerment | Motion landscape + deadline calendar + plea framework |
 | Protection | `protection` | Security | Collateral consequences + life impact map |
 | Court Prep | `court-prep` | Readiness | Static appendix template |
 
-**Case Progress Score** (internal to Section 2): 0-100, 6 weighted dimensions — Communication 25%, Case Review 15%, Discovery 20%, Motion Activity 15%, Strategy 15%, Court Prep 10%.
+**Case Progress Score** (internal to Section 2): 0-100, 6 weighted dimensions, Communication 25%, Case Review 15%, Discovery 20%, Motion Activity 15%, Strategy 15%, Court Prep 10%.
 
 ### Phase B (4 sequential sections)
 
 Uses Phase A outputs via regex scanning to extract gaps, scores, deadlines, and applicable motions.
 
 | Section | Key | Depends On | Output |
-|---------|-----|-----------|--------|
+|---------|---, |---------, |------, |
 | Case Intelligence | `case-intelligence` | Sections 1-2 gaps | Outcome map + defense theories + judge profile + prosecution preview |
 | Your Plan | `your-plan` | Sections 1-2 + motions | Email template + phone script + 14-day plan with daily actions |
 | Questions | `questions` | All Phase A | 10-15 targeted questions based on gaps |
@@ -1473,7 +1473,7 @@ Phase A auto-triggers Phase B without waiting for judge data. Judge research can
 - **Model:** Claude Sonnet 4.6 for IB sections (Opus 4.6 with extended thinking for Case Decoder)
 - **Temperature:** 0.3 (factual), up to 0.5 for creative sections
 - **Max tokens:** 1500-4000 per section depending on complexity
-- **Banned phrases:** UPL gate — "you should", "we recommend", "we advise", "your best option", "red flag", "warning sign" (with approved replacements)
+- **Banned phrases:** UPL gate, "you should", "we recommend", "we advise", "your best option", "red flag", "warning sign" (with approved replacements)
 - **Legal accuracy rules:** Texas DWI (not DUI), deferred adjudication exclusions, qualification requirements
 - **Anti-hallucination:** No specific percentages, convert to attorney questions, qualitative language only
 
@@ -1493,7 +1493,7 @@ Phase A auto-triggers Phase B without waiting for judge data. Judge research can
 
 ### Render
 
-Dependency-free Markdown→HTML conversion in `src/lib/intelligence-brief/render.ts` (no npm imports — Deno Edge Function compatible). Dark theme CSS. 11 content sections + 4 static appendices (Brady/Giglio checklist, court prep, state-specific rights, attorney questions).
+Dependency-free Markdown→HTML conversion in `src/lib/intelligence-brief/render.ts` (no npm imports, Deno Edge Function compatible). Dark theme CSS. 11 content sections + 4 static appendices (Brady/Giglio checklist, court prep, state-specific rights, attorney questions).
 
 ### Status Flow
 
@@ -1534,7 +1534,7 @@ Source: `ImNotAnAttorney/system/PIPELINE-MAP.md`. Stages 00-15, not all tiers us
     ├──► 08-Research (deep targeted)
     ├──► 09-Case-Law (citations, Shepardize)
     ├──► 10-Strategy (battle plans, charge maps, appellate preservation)
-    ├──► 11-For-Attorney (PDFs, briefs, battle scripts — dual CLIENT+ATTORNEY versions)
+    ├──► 11-For-Attorney (PDFs, briefs, battle scripts, dual CLIENT+ATTORNEY versions)
     ├──► 12-Reply-Briefs (responses to state opposition)
     ├──► 13-Attack-Intel (contradictions, gaps, evidence vectors)
     └──► 14-Trial (voir dire, opening, closing, narrative, JOA, witness scripts)
@@ -1545,7 +1545,7 @@ Source: `ImNotAnAttorney/system/PIPELINE-MAP.md`. Stages 00-15, not all tiers us
 ### Stage Coverage by Tier
 
 | Tier | Stages | Notes |
-|------|--------|-------|
+|------|------, |-------|
 | Case Decoder ($197) | None | Skills-based generation only (Edge Function) |
 | Intelligence Brief ($997) | None | Skills + optional judge research (Edge Function) |
 | X-Ray ($2,497) | 01-05 | Document pipeline through report generation |
@@ -1568,7 +1568,7 @@ Each has a charge_packs table entry with file_path to PDF in the `charge-packs` 
 
 ### Refund Handling
 
-Refund webhook revokes access — download route returns 403 for refunded orders.
+Refund webhook revokes access, download route returns 403 for refunded orders.
 
 ### Drip Sequence (4 emails)
 
@@ -1610,14 +1610,14 @@ Refund webhook revokes access — download route returns 403 for refunded orders
 
 ## Checkout Flow
 
-`POST /api/checkout` — 10-step process. Source: `src/app/api/checkout/route.ts`.
+`POST /api/checkout`, 10-step process. Source: `src/app/api/checkout/route.ts`.
 
 | Step | Action | Details |
-|------|--------|---------|
-| 1 | Rate limit | `checkRateLimit(ip, "checkout:{ip}", 10, 300)` — 429 if exceeded |
-| 2 | Tier validation | Reject unknown tier slugs against TIERS config — 400 |
-| 3 | Email validation | Regex + normalize (lowercase + trim) — 400 |
-| 4 | Email capture | Upsert to subscribers (source="checkout") — powers abandonment recovery |
+|------|------, |---------|
+| 1 | Rate limit | `checkRateLimit(ip, "checkout:{ip}", 10, 300)`, 429 if exceeded |
+| 2 | Tier validation | Reject unknown tier slugs against TIERS config, 400 |
+| 3 | Email validation | Regex + normalize (lowercase + trim), 400 |
+| 4 | Email capture | Upsert to subscribers (source="checkout"), powers abandonment recovery |
 | 5 | Charge type auto-detect | Lookup most recent intake if not provided |
 | 6 | Refund check | Block if prior refunded order exists (fraud prevention) |
 | 7 | Prerequisite gate | Situation Room requires prior War Room (soft gate) |
@@ -1627,7 +1627,7 @@ Refund webhook revokes access — download route returns 403 for refunded orders
 
 **Stripe Session:** Metadata carries all downstream context (NO re-querying in webhook). Success/cancel URLs use env var origin.
 
-### Checkout Success — OTO System
+### Checkout Success, OTO System
 
 - 24-hour countdown timer (localStorage client, server-side session as source of truth)
 - Per-tier upgrade offers with credit pre-calculated
@@ -1639,14 +1639,14 @@ Source: `src/lib/drip-emails.ts` + cron Parts 1-2.
 
 ### Crisis Buyer Psychology
 
-Defendants are **crisis buyers** with a 7-day decision window, NOT newsletter subscribers. By day 14, they've bought or moved on. Email capture is for follow-up during the decision window (2-3 touches), not list-building. Pre-purchase drip must convert fast (Day 2/4/7). Post-purchase drip works longer (active case, 30-90 day window). This is not a recurring revenue business — each defendant is a one-time buyer on a short clock.
+Defendants are **crisis buyers** with a 7-day decision window, NOT newsletter subscribers. By day 14, they've bought or moved on. Email capture is for follow-up during the decision window (2-3 touches), not list-building. Pre-purchase drip must convert fast (Day 2/4/7). Post-purchase drip works longer (active case, 30-90 day window). This is not a recurring revenue business, each defendant is a one-time buyer on a short clock.
 
 ### Sequence Categories
 
 | Category | Emails | Trigger |
-|----------|--------|---------|
+|----------|------, |---------|
 | Nurture | 6+ emails | Days since subscribe (1, 3, 5, 7, 10, 14) |
-| DUI 72-hour crisis | 3 emails | Days 2, 4, 7 — tighter cadence for DUI defendants in crisis (source: `dui-72-hours`). Falls to standard nurture at Day 10+ |
+| DUI 72-hour crisis | 3 emails | Days 2, 4, 7, tighter cadence for DUI defendants in crisis (source: `dui-72-hours`). Falls to standard nurture at Day 10+ |
 | Score-band nurture | Band-specific | Crisis/Concerning urgency or Adequate/Excellent validation |
 | Post-purchase (CD) | ~6 emails | intake_reminder → delivery → meeting_prep → story_harvest → upsell → referral |
 | Post-purchase (IB) | ~6 emails | phase2_reminder → delivery → meeting_prep → story_harvest → upsell → referral |
@@ -1658,7 +1658,7 @@ Defendants are **crisis buyers** with a 7-day decision window, NOT newsletter su
 ### Timing Models
 
 | Model | Measured From | Used By |
-|-------|--------------|---------|
+|-------|------------, |---------|
 | Standard (default) | `orders.paid_at` | Most post-purchase emails |
 | `relativeToDelivery` | `cases.delivered_at` | Post-delivery follow-ups |
 | `relativeToSubmission` | Case status → "submitted" | Active-wait discovery emails |
@@ -1679,7 +1679,7 @@ Defendants are **crisis buyers** with a 7-day decision window, NOT newsletter su
 3 daily cycle templates for Situation Room ($9,997) trial engagement. Source: `src/lib/trial-ops-emails.ts`. Operator-triggered (not automated drip).
 
 | Template | Timing | Purpose |
-|----------|--------|---------|
+|----------|------, |---------|
 | `trialInputSolicitation` | Evening (after court adjourns) | Asks defendant to report what happened today (7 structured prompts) |
 | `eveningDebriefDelivery` | Evening (within 3 hours of input) | Delivers evening debrief analysis + next day's expected witnesses |
 | `morningBriefDelivery` | Morning (by 7 AM) | Morning brief + printable cheat sheet + questions for attorney |
@@ -1688,12 +1688,12 @@ Each template takes `firstName`, `dayNumber`, `todayDate`, plus template-specifi
 
 ## Cron Jobs
 
-### `/api/cron/drip` — Daily at 14:00 UTC (9:00 AM EST)
+### `/api/cron/drip`, Daily at 14:00 UTC (9:00 AM EST)
 
 22 parts (19 numbered + 3 sub-parts: 5b, 5c, 6b). Heartbeat inserts into `cron_runs` table. Concurrent execution prevented via `acquire_cron_lock(1)` advisory lock.
 
 | Part | What | Threshold / Target | Action |
-|------|------|-------------------|--------|
+|------|------|-------------------|------, |
 | **1** | Nurture emails | Days since subscribe | Send next unsent email (DUI-72h routing → band-routing → standard nurture) |
 | **2** | Post-purchase emails | Days since purchase/delivery/submission | Tier-specific follow-ups (3 timing models, guards for status) |
 | **3** | Review reminders | 12h in "review" | Alert operator (48h guarantee at risk) |
@@ -1716,15 +1716,15 @@ Each template takes `firstName`, `dayNumber`, `todayDate`, plus template-specifi
 | **16** | Pipeline completion check | All jobs done for a case | Transition case to "review", email operator with scores |
 | **17** | SLA breach detection | delivery_due_at passed, not delivered/refunded | Create URGENT operator task (deduped) |
 | **18** | Weekly progress email | War Room + Situation Room active cases | Weekly customer update (week-number dedup) |
-| **19** | Engine heartbeat | processing_jobs "queued" >1 hour | URGENT operator task — engine may be down (daily dedup) |
+| **19** | Engine heartbeat | processing_jobs "queued" >1 hour | URGENT operator task, engine may be down (daily dedup) |
 
 ## Evaluation Pipeline
 
 7-team expert evaluation framework for report quality assurance. DB-driven via `eval_criteria` and `pipeline_eval_weights` tables. **Production Edge Function implements 2 teams (UPL + Psych); full 7-team framework available in CLI tool.**
 
 | Team | Code | Criteria | Weight | Focus | Status |
-|------|------|----------|--------|-------|--------|
-| UPL Compliance | U1-U7 | 7 | GATE | No legal advice, banned phrases — must pass | **Production** (Edge Function) |
+|------|------|----------|------, |-------|------, |
+| UPL Compliance | U1-U7 | 7 | GATE | No legal advice, banned phrases, must pass | **Production** (Edge Function) |
 | Psychological Architecture | P1-P10 | 10 | HIGH | Emotional calibration, buyer state awareness | **Production** (Edge Function) |
 | Legal Substance | L1-L10 | 10 | HIGH | Accuracy, specificity, actionability | CLI tool |
 | Defendant Experience | D1-D26 | 26 | HIGH (15/20+) | Readability, empowerment, trust, buyer state alignment | CLI tool |
@@ -1735,38 +1735,38 @@ Each template takes `firstName`, `dayNumber`, `todayDate`, plus template-specifi
 **Total: 90 criteria across 7 teams.**
 
 **Weight levels:**
-- **GATE** — Must pass ALL criteria. Any FAIL blocks delivery.
-- **HIGH** — Must pass 8/10+ (or 15/20+ for Team 4). 1-2 NEEDS WORK acceptable with justification.
-- **MEDIUM** — Must pass 6/10+. Failures noted but don't block.
-- **LOW** — Advisory only.
+- **GATE**, Must pass ALL criteria. Any FAIL blocks delivery.
+- **HIGH**, Must pass 8/10+ (or 15/20+ for Team 4). 1-2 NEEDS WORK acceptable with justification.
+- **MEDIUM**, Must pass 6/10+. Failures noted but don't block.
+- **LOW**, Advisory only.
 
 **Tier-aware filtering:** Case Decoder runs ~46 applicable criteria; Intelligence Brief+ runs all. Teams 1 & 3 always run (UPL + Legal are existential).
 
-**CLI:** `node evaluate-report.mjs --file <report> --charge-type "<type>" --tier <tier>`
-- `--model sonnet` for budget runs (~$0.25 vs ~$1.25 for Opus)
-- `--teams upl,legal` for specific teams only
-- `--no-db` for offline mode
+**CLI:** `node evaluate-report.mjs,file <report>,charge-type "<type>",tier <tier>`
+- `, model sonnet` for budget runs (~$0.25 vs ~$1.25 for Opus)
+- `, teams upl,legal` for specific teams only
+- `, no-db` for offline mode
 
 ## Score System
 
-Defense Milestone Score — stateless 0-100 scoring engine at `/api/score`. Source: `src/app/api/score/route.ts`.
+Defense Milestone Score, stateless 0-100 scoring engine at `/api/score`. Source: `src/app/api/score/route.ts`.
 
 ### Algorithm
 
 Starts at 50 (neutral baseline). 10 weighted categories:
 
 | Category | Weight | Scoring Logic |
-|----------|--------|--------------|
+|----------|------, |------------, |
 | Time Since Arrest | 30% | Drives timeIndex (0-4) used by other categories as severity multiplier |
 | Attorney Type | 10% | Private +5, Public Defender 0, No Attorney -15, Not Sure -10 |
 | Motions Filed | 20% | Yes +15; No: -20 if timeIndex≥2, -5 if <2; Don't Know -10 |
 | Discovery Received | 15% | Yes +10; No: -15 if timeIndex≥2, -3 if <2; Don't Know -10 |
 | Communication Frequency | 15% | Weekly +10, Monthly 0, Rarely -10, Never -20 |
 | Strategy Discussion | 10% | Yes in Detail +10, Briefly +2, No -12 |
-| Criminal History | — | -2 to -5 (misdemeanor vs felony/multiple) |
-| Case Stage | — | Contextual observations + stage-specific penalties |
-| Licensed Profession | — | Collateral consequence warnings (no score impact) |
-| Charge Type | — | Mandatory charge-specific observation (always included) |
+| Criminal History |, | -2 to -5 (misdemeanor vs felony/multiple) |
+| Case Stage |, | Contextual observations + stage-specific penalties |
+| Licensed Profession |, | Collateral consequence warnings (no score impact) |
+| Charge Type |, | Mandatory charge-specific observation (always included) |
 
 **Compound penalty:** If timeIndex ≥ 3 AND no motions AND no discovery → additional -10.
 
@@ -1784,7 +1784,7 @@ Starts at 50 (neutral baseline). 10 weighted categories:
 
 ### Privacy
 
-- **No data storage** — computed and returned only
+- **No data storage**, computed and returned only
 - Fire-and-forget: increment counters + anonymous aggregates (no individual data)
 - Rate limited: 10/60s/IP
 - Score persistence via `sessionStorage` on client (survives page refresh)
@@ -1807,14 +1807,14 @@ Starts at 50 (neutral baseline). 10 weighted categories:
 
 ### Pages
 
-**Dashboard** (`/operator`): Action queue — SLA breaches alert, cases awaiting review, failed jobs with retry, open tasks, quick stats.
+**Dashboard** (`/operator`): Action queue, SLA breaches alert, cases awaiting review, failed jobs with retry, open tasks, quick stats.
 
 **Cases** (`/operator/cases`): Status/tier/charge filters, email search, paginated table.
 
 **Case Detail** (`/operator/cases/[id]`): 13 parallel Supabase queries. 8 tabs:
 
 | Tab | Contents |
-|-----|----------|
+|---, |----------|
 | Overview | MetricCards (discovery health, documents, findings, witnesses, evidence, custody, timeline, citations) |
 | Documents | Table: name, type, category, size, pages, status, upload date |
 | Findings | Grouped by severity (critical/major/minor/info) with verification status |
@@ -1851,7 +1851,7 @@ Header: email, tier, status, phase, dates, order info, intake summary, operator 
 
 ## My-Case Portal
 
-Token-based customer portal at `/my-case/[token]`. No login required — unguessable UUID with 12-month expiry.
+Token-based customer portal at `/my-case/[token]`. No login required, unguessable UUID with 12-month expiry.
 
 ### Tier-Gated Architecture
 
@@ -1886,7 +1886,7 @@ Token-based customer portal at `/my-case/[token]`. No login required — unguess
 ### UI Components
 
 | Component | Purpose |
-|-----------|---------|
+|---------, |---------|
 | `Header` | Navigation with Get Started CTA |
 | `Footer` | Navigation, CTAs, sitemap link |
 | `PricingTable` | 3-tier pricing display |
@@ -1902,7 +1902,7 @@ Token-based customer portal at `/my-case/[token]`. No login required — unguess
 ### Blog Components
 
 | Component | Purpose |
-|-----------|---------|
+|---------, |---------|
 | `BlogCard` | Post preview card |
 | `BlogCategoryFilter` | Blog index category filter |
 | `BlogCTA` | Upsell to Question Pack on blog posts |
@@ -1912,14 +1912,14 @@ Token-based customer portal at `/my-case/[token]`. No login required — unguess
 ### Form Components
 
 | Component | Purpose |
-|-----------|---------|
+|---------, |---------|
 | `LeadCapture` | Email capture with PDF download (accepts props for source, title, description, download link) |
 | `FileUpload` | Discovery document upload (drag-and-drop) |
 
 ### Product Components
 
 | Component | Purpose |
-|-----------|---------|
+|---------, |---------|
 | `PlaybookSalesPage` | Playbook product sales page |
 | `PlaybookCTA` | Playbook upsell CTA |
 | `OperatorShell` | Operator dashboard shell + auth + nav |
@@ -1929,7 +1929,7 @@ Token-based customer portal at `/my-case/[token]`. No login required — unguess
 All respect `prefers-reduced-motion` media query.
 
 | Component | Purpose |
-|-----------|---------|
+|---------, |---------|
 | `FadeInUp` | Fade-in with upward slide |
 | `StaggerContainer` | Staggered children animation |
 | `AnimatedCounter` | Counting number animation |
@@ -1939,8 +1939,8 @@ All respect `prefers-reduced-motion` media query.
 
 ### Fonts
 
-- **Geist Sans** — Primary body font (Next.js built-in)
-- **Playfair Display** — Heading/accent font
+- **Geist Sans**, Primary body font (Next.js built-in)
+- **Playfair Display**, Heading/accent font
 
 ### Theme
 
@@ -1964,8 +1964,8 @@ Dark mode hardcoded (no toggle). Background: stone-950, text: zinc-200, accent: 
 
 ### Error Pages
 
-- `error.tsx` — Client error boundary with reset/home CTAs
-- `not-found.tsx` — Branded humor: "kind of like the motion your attorney said they'd file last month"
+- `error.tsx`, Client error boundary with reset/home CTAs
+- `not-found.tsx`, Branded humor: "kind of like the motion your attorney said they'd file last month"
 
 ### Health Check
 
@@ -1995,7 +1995,7 @@ Every blog post emits multiple JSON-LD blocks. Schema utilities in `src/lib/sche
 ### .01% Enhancements
 
 | Property | Applied To | Signal |
-|----------|-----------|--------|
+|----------|---------, |------, |
 | `speakable` | All posts (`.tldr-box` CSS selector) | AI-extractable TLDRBox content |
 | `@id` entity binding | Article ↔ FAQPage | Closes disconnected entity graph |
 | `citation` | 4 posts (.gov/.edu links) | "Reference material" classification |
@@ -2006,7 +2006,7 @@ Every blog post emits multiple JSON-LD blocks. Schema utilities in `src/lib/sche
 
 ### Content GEO Features
 
-- **TLDRBoxes:** 20/35 posts (57% coverage) — AI-extractable direct answers
+- **TLDRBoxes:** 20/35 posts (57% coverage), AI-extractable direct answers
 - **Internal linking:** 10 posts cross-linked with semantic anchor text variation
 - **DefinedTerm-ready blocks:** 2 posts (constructive possession, proffer session)
 - **Numbered Q+A format:** `questions-to-ask-before-hiring` has direct-answer paragraphs
@@ -2014,15 +2014,15 @@ Every blog post emits multiple JSON-LD blocks. Schema utilities in `src/lib/sche
 ## Shared Constants
 
 Centralized in `src/lib/site.ts`:
-- `SITE_URL` — All email links, redirects, canonical URLs
-- `CONTACT_EMAIL` — help@imnotanattorney.com
-- `PHYSICAL_ADDRESS` — CAN-SPAM required address
-- `OPERATOR_EMAIL_FALLBACK` — Fallback when env var missing
-- `normalizeEmail()` — Lowercase + trim
-- `isValidEmail()` — Regex validation
-- `signOperatorToken()` / `verifyOperatorToken()` — HMAC token operations
-- `signPhase2Token()` / `verifyPhase2Token()` — 30-day Phase 2 tokens
-- `caseThreadId()` — RFC 2822 Message-ID for email threading
+- `SITE_URL`, All email links, redirects, canonical URLs
+- `CONTACT_EMAIL`, help@imnotanattorney.com
+- `PHYSICAL_ADDRESS`, CAN-SPAM required address
+- `OPERATOR_EMAIL_FALLBACK`, Fallback when env var missing
+- `normalizeEmail()`, Lowercase + trim
+- `isValidEmail()`, Regex validation
+- `signOperatorToken()` / `verifyOperatorToken()`, HMAC token operations
+- `signPhase2Token()` / `verifyPhase2Token()`, 30-day Phase 2 tokens
+- `caseThreadId()`, RFC 2822 Message-ID for email threading
 
 ## Error Handling Strategy
 
@@ -2046,7 +2046,7 @@ The Supabase Edge Function Free tier has a 150-second hard timeout. Claude Opus 
 ### GitHub Actions Secrets
 
 | Secret | Purpose |
-|--------|---------|
+|------, |---------|
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | Full DB access |
 | `ANTHROPIC_API_KEY` | Claude API |
@@ -2058,9 +2058,9 @@ The Supabase Edge Function Free tier has a 150-second hard timeout. Claude Opus 
 
 ## Known Code Duplications (Intentional)
 
-1. **`escapeHtml()` + `sendEmail()` + `PHYSICAL_ADDRESS`** — Duplicated in Supabase Edge Functions (`generate-report/index.ts` and `evaluate-report/index.ts`). Intentional: Edge Functions run in Deno and cannot import from Next.js.
+1. **`escapeHtml()` + `sendEmail()` + `PHYSICAL_ADDRESS`**, Duplicated in Supabase Edge Functions (`generate-report/index.ts` and `evaluate-report/index.ts`). Intentional: Edge Functions run in Deno and cannot import from Next.js.
 
-2. **Tier pricing data** — Canonical source of truth is `src/lib/tiers.ts`. Code-level copies exist in `PricingTable.tsx` and `services/page.tsx` (display). The tiers config must be kept in sync.
+2. **Tier pricing data**, Canonical source of truth is `src/lib/tiers.ts`. Code-level copies exist in `PricingTable.tsx` and `services/page.tsx` (display). The tiers config must be kept in sync.
 
 ## File Organization
 
@@ -2226,7 +2226,7 @@ supabase/
 ## Scripts Reference
 
 | Script | Purpose |
-|--------|---------|
+|------, |---------|
 | `generate-worker.mjs` | Backup worker for timed-out Edge Function CD generation |
 | `check-tiers.mjs` | Validates tier config consistency across code and DB |
 | `setup-storage-and-seed.mjs` | Creates storage buckets + seeds reference data |
@@ -2285,7 +2285,7 @@ ImNotAnAttorney-engine/
       serpapi-legal.mjs      ← SerpAPI Google Scholar search
   .github/
     workflows/
-      process-jobs.yml       ← Cron: every 5 min, node src/worker.mjs --once
+      process-jobs.yml       ← Cron: every 5 min, node src/worker.mjs,once
   package.json               ← 7 dependencies, Node.js ≥20
 ```
 

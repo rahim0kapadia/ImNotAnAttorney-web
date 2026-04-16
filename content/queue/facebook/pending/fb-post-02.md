@@ -38,7 +38,7 @@ When you read your own discovery, you might notice things your attorney missed:
 
 Your attorney has dozens or hundreds of other cases. You have one. Yours.
 
-If you have not requested a copy of your discovery -- you can. It is your right. Ask your attorney: "Can I have a copy of the full discovery to review myself?"
+If you have not requested a copy of your discovery, you can. It is your right. Ask your attorney: "Can I have a copy of the full discovery to review myself?"
 
 Have you read yours? What did you find?
 
@@ -46,7 +46,7 @@ Have you read yours? What did you find?
 
 ### Visual Direction
 
-Colored text background -- dark charcoal or deep gray. The genuine question tone and "you know your life better than your attorney" reframe create engagement. No image.
+Colored text background, dark charcoal or deep gray. The genuine question tone and "you know your life better than your attorney" reframe create engagement. No image.
 
 ### Link Strategy
 
@@ -54,7 +54,7 @@ No link in post. If someone asks how to read discovery or what to look for, repl
 
 ### Engagement Strategy
 
-This post generates two types of comments: (1) people who read their discovery and found something, and (2) people who did not know they could ask for it. Respond to the first group with "That's exactly the kind of thing that matters -- did you bring it to your attorney?" Respond to the second with "You absolutely can request a copy. Ask your attorney this week."
+This post generates two types of comments: (1) people who read their discovery and found something, and (2) people who did not know they could ask for it. Respond to the first group with "That's exactly the kind of thing that matters, did you bring it to your attorney?" Respond to the second with "You absolutely can request a copy. Ask your attorney this week."
 
 ### UPL Compliance Note
 
@@ -63,5 +63,5 @@ If someone shares specific details from their discovery in the comments, do NOT 
 ---
 
 **Share trigger**: A family member sends this to the defendant: "Have you read yours? You need to." A defendant who found something in their discovery shares this with others: "I found a wrong date in my police report because of a post like this."
-**Context**: Most defendants never see their own discovery. This post plants the seed that reading your own evidence is not just allowed -- it is essential. It also generates high-value comment threads where people share what they found, which builds community credibility.
+**Context**: Most defendants never see their own discovery. This post plants the seed that reading your own evidence is not just allowed, it is essential. It also generates high-value comment threads where people share what they found, which builds community credibility.
 **KPI target**: Comments (expect detailed personal stories) + Messenger shares + saves

@@ -10,21 +10,21 @@
  *   Landing page / Blog / Nav -> THIS PAGE -> /checkout?tier=<slug>
  *
  * Page structure:
- *   1. Header — "Services built for your case" with tier count + upgrade credit intro
- *   2. Pricing comparison — Attorney cost vs. our cost (value framing)
- *   3. Upgrade credits callout — 100% credit toward next tier, 12-month expiration
- *   4. Decision guide — "No discovery yet?" vs "You have discovery?" routing
- *   5. Case type sections (Drug, DUI, White Collar) — each with all 5 tiers:
+ *   1. Header, "Services built for your case" with tier count + upgrade credit intro
+ *   2. Pricing comparison, Attorney cost vs. our cost (value framing)
+ *   3. Upgrade credits callout, 100% credit toward next tier, 12-month expiration
+ *   4. Decision guide, "No discovery yet?" vs "You have discovery?" routing
+ *   5. Case type sections (Drug, DUI, White Collar), each with all 5 tiers:
  *      - Top 3 tiers in 3-column grid (Case Decoder, Intelligence Brief, X-Ray)
  *      - Bottom 2 tiers in 2-column grid (War Room, Situation Room)
  *      - Each tier card links to /checkout?tier=<slug>
- *   6. Guarantee section — Delivery + satisfaction guarantees with per-tier details
- *   7. FAQ accordion — 6 service-specific questions with schema markup
- *   8. Lead capture — Email opt-in fallback
+ *   6. Guarantee section, Delivery + satisfaction guarantees with per-tier details
+ *   7. FAQ accordion, 6 service-specific questions with schema markup
+ *   8. Lead capture, Email opt-in fallback
  *
  * Conversion decisions:
- *   - Each tier shows a case-stage label (stageLabel) — "First 30 days", "30-90 days in", etc.
- *   - Situation Room shows "Requires War Room" badge — application gate
+ *   - Each tier shows a case-stage label (stageLabel), "First 30 days", "30-90 days in", etc.
+ *   - Situation Room shows "Requires War Room" badge, application gate
  *   - Case Decoder cards include "View Sample Report" link to /sample
  *
  * SEO: FAQ schema (FAQPage) + ProfessionalService schema for rich snippets.
@@ -45,14 +45,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Defense Intelligence Services",
   description:
-    `Five tiers of defense research — from charge analysis to full trial intelligence. We research your case and give you the questions that change your next attorney meeting. From ${TIER_CORE["case-decoder"].priceDisplay} to ${TIER_CORE["situation-room"].priceDisplay}.`,
+    `Five tiers of defense research, from charge analysis to full trial intelligence. We research your case and give you the questions that change your next attorney meeting. From ${TIER_CORE["case-decoder"].priceDisplay} to ${TIER_CORE["situation-room"].priceDisplay}.`,
   alternates: {
     canonical: `${SITE_URL}/services`,
   },
   openGraph: {
     title: "Defense Intelligence Services",
     description:
-      `Five tiers of defense research — from charge analysis to full trial intelligence. We research your case and give you the questions that change your next attorney meeting. From ${TIER_CORE["case-decoder"].priceDisplay} to ${TIER_CORE["situation-room"].priceDisplay}.`,
+      `Five tiers of defense research, from charge analysis to full trial intelligence. We research your case and give you the questions that change your next attorney meeting. From ${TIER_CORE["case-decoder"].priceDisplay} to ${TIER_CORE["situation-room"].priceDisplay}.`,
     url: `${SITE_URL}/services`,
   },
 };
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
  *   - discovery: true -> shows "Requires discovery documents" note
  *   - capabilities?: optional sub-list of capability bullets rendered beneath the desc
  */
-// COURT CASE PORT — Wave 1 Step 9
+// COURT CASE PORT, Wave 1 Step 9
 // Capability bullets named below depend on feature flags set in Step 8:
 //   x-ray desc references Judge Intelligence Profile + Motion Opportunity Preview
 //     (gated on ff.wave1.judge_intelligence_profile + ff.wave1.motion_wave_strategy)
@@ -97,7 +97,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "How judges in your area sentence drug cases. How your prosecutor handles them. What outcomes are realistic — all researched from public records.",
+        desc: "How judges in your area sentence drug cases. How your prosecutor handles them. What outcomes are realistic, all researched from public records.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -105,9 +105,9 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We analyze every page of your text-based discovery — police reports, lab results, court filings, and spreadsheets — and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each one shows what a good answer looks like — and what a red flag looks like.",
+        desc: "We analyze every page of your text-based discovery, police reports, lab results, court filings, and spreadsheets, and flag what doesn't add up. Missing evidence. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references. Each one shows what a good answer looks like, and what a red flag looks like.",
         capabilities: [
-          "Judge research — how this judge has ruled on motions like yours, when public court records are available",
+          "Judge research, how this judge has ruled on motions like yours, when public court records are available",
           "Motion types that may apply to your case, with general filing deadline windows",
           "Discovery Strength Rating + Prosecution Weakness Analysis",
         ],
@@ -132,11 +132,11 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Everything in War Room, plus priority operator access and an extended 28-day engagement window. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Nightly testimony analysis and morning prep briefs coming Q2 2026. Requires War Room.",
+        desc: "Everything in War Room, plus priority operator access and an extended 28-day engagement window. Priority Response Line, 2-hour response during trial prep, 4-hour during trial. Nightly testimony analysis and morning prep briefs coming Q2 2026. Requires War Room.",
         capabilities: [
           "Everything in War Room, plus:",
           "Background research on every prosecution witness with source URLs your attorney can verify",
-          "The full \"battle intelligence\" package — judge research + cross-examination libraries + witness backgrounds, all keyed to your discovery",
+          "The full \"battle intelligence\" package, judge research + cross-examination libraries + witness backgrounds, all keyed to your discovery",
         ],
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
@@ -162,7 +162,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "How judges in your area handle DUI cases. Jurisdiction-specific procedural rules and deadlines that affect your case. What outcomes are realistic — all researched from public records.",
+        desc: "How judges in your area handle DUI cases. Jurisdiction-specific procedural rules and deadlines that affect your case. What outcomes are realistic, all researched from public records.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -170,9 +170,9 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We analyze every page of your text-based discovery — police reports, lab results, and court filings — and flag what doesn't add up. Breathalyzer calibration logs. Field sobriety test compliance. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
+        desc: "We analyze every page of your text-based discovery, police reports, lab results, and court filings, and flag what doesn't add up. Breathalyzer calibration logs. Field sobriety test compliance. Rights that may have been violated. You get 35-50 questions for your attorney, with page references, each one showing what a good answer looks like and what a red flag looks like.",
         capabilities: [
-          "Judge research — how this judge has ruled on motions like yours, when public court records are available",
+          "Judge research, how this judge has ruled on motions like yours, when public court records are available",
           "Motion types that may apply to your case, with general filing deadline windows",
           "Discovery Strength Rating + Prosecution Weakness Analysis",
         ],
@@ -197,11 +197,11 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Everything in War Room, plus priority operator access and an extended 28-day engagement window. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Nightly testimony analysis and morning prep briefs coming Q2 2026. Requires War Room.",
+        desc: "Everything in War Room, plus priority operator access and an extended 28-day engagement window. Priority Response Line, 2-hour response during trial prep, 4-hour during trial. Nightly testimony analysis and morning prep briefs coming Q2 2026. Requires War Room.",
         capabilities: [
           "Everything in War Room, plus:",
           "Background research on the arresting officer and every prosecution witness with source URLs your attorney can verify",
-          "The full \"battle intelligence\" package — judge research + cross-examination libraries + witness backgrounds, all keyed to your discovery",
+          "The full \"battle intelligence\" package, judge research + cross-examination libraries + witness backgrounds, all keyed to your discovery",
         ],
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
@@ -213,7 +213,7 @@ const caseTypes = [
     title: "White Collar",
     subtitle: "Fraud, embezzlement, federal charges",
     description:
-      "Federal cases are a different game. We review your constitutional rights arguments, jury selection factors, and complex charge structures. Our approaches come from attorneys who have handled the highest-profile federal cases — helping you understand the charges and the factors involved in each strategic decision.",
+      "Federal cases are a different game. We review your constitutional rights arguments, jury selection factors, and complex charge structures. Our approaches come from attorneys who have handled the highest-profile federal cases, helping you understand the charges and the factors involved in each strategic decision.",
     tiers: [
       {
         name: TIER_CORE["case-decoder"].name,
@@ -227,7 +227,7 @@ const caseTypes = [
         name: TIER_CORE["intelligence-brief"].name,
         slug: "intelligence-brief",
         price: TIER_CORE["intelligence-brief"].priceDisplay,
-        desc: "How judges in your area sentence federal cases. Your prosecutor's track record. A review of your sentencing guidelines. Questions to help you think through cooperation decisions — all researched from public records.",
+        desc: "How judges in your area sentence federal cases. Your prosecutor's track record. A review of your sentencing guidelines. Questions to help you think through cooperation decisions, all researched from public records.",
         discovery: TIER_CORE["intelligence-brief"].requiresDiscovery,
         stageLabel: "30-90 days in",
       },
@@ -235,9 +235,9 @@ const caseTypes = [
         name: TIER_CORE["x-ray"].name,
         slug: "x-ray",
         price: TIER_CORE["x-ray"].priceDisplay,
-        desc: "We analyze every page of your text-based discovery — financial records, court filings, and spreadsheets — and flag what doesn't add up. Missing exhibits. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references — each one showing what a good answer looks like and what a red flag looks like.",
+        desc: "We analyze every page of your text-based discovery, financial records, court filings, and spreadsheets, and flag what doesn't add up. Missing exhibits. Documents that contradict each other. Rights that may have been violated. You get 35-50 questions for your attorney, with page references, each one showing what a good answer looks like and what a red flag looks like.",
         capabilities: [
-          "Judge research — how this judge has ruled on motions like yours, when public court records are available",
+          "Judge research, how this judge has ruled on motions like yours, when public court records are available",
           "Motion types that may apply to your case, with general filing deadline windows",
           "Discovery Strength Rating + Prosecution Weakness Analysis",
         ],
@@ -262,11 +262,11 @@ const caseTypes = [
         name: TIER_CORE["situation-room"].name,
         slug: "situation-room",
         price: TIER_CORE["situation-room"].priceDisplay,
-        desc: "Everything in War Room, plus priority operator access and an extended 28-day engagement window. Priority Response Line — 2-hour response during trial prep, 4-hour during trial. Nightly testimony analysis and morning prep briefs coming Q2 2026. Requires War Room.",
+        desc: "Everything in War Room, plus priority operator access and an extended 28-day engagement window. Priority Response Line, 2-hour response during trial prep, 4-hour during trial. Nightly testimony analysis and morning prep briefs coming Q2 2026. Requires War Room.",
         capabilities: [
           "Everything in War Room, plus:",
           "Background research on every prosecution witness and cooperator with source URLs your attorney can verify",
-          "The full \"battle intelligence\" package — judge research + cross-examination libraries + witness backgrounds, all keyed to your discovery",
+          "The full \"battle intelligence\" package, judge research + cross-examination libraries + witness backgrounds, all keyed to your discovery",
         ],
         discovery: TIER_CORE["situation-room"].requiresDiscovery,
         requiresWarRoom: TIER_CORE["situation-room"].requiresWarRoom,
@@ -281,7 +281,7 @@ const faqs = [
   {
     question: "Will this replace my attorney?",
     answer:
-      "No. You need an attorney. We provide legal research and questions — not legal advice. Think of us as a second set of eyes on your case. We research your situation and give you specific questions your attorney needs to answer. You show up to your next meeting prepared — instead of waiting for your attorney to decide what to tell you.",
+      "No. You need an attorney. We provide legal research and questions, not legal advice. Think of us as a second set of eyes on your case. We research your situation and give you specific questions your attorney needs to answer. You show up to your next meeting prepared, instead of waiting for your attorney to decide what to tell you.",
   },
   {
     question: "What exactly do I get in my report?",
@@ -291,7 +291,7 @@ const faqs = [
   {
     question: "Can you guarantee my charges get dropped?",
     answer:
-      "No. We guarantee deliverables — question counts, timeframes, and thorough analysis. We cannot and do not guarantee case outcomes.",
+      "No. We guarantee deliverables, question counts, timeframes, and thorough analysis. We cannot and do not guarantee case outcomes.",
   },
   {
     question: "What if I already bought a lower tier?",
@@ -301,7 +301,7 @@ const faqs = [
   {
     question: "How is this different from a second opinion?",
     answer:
-      "A second opinion from another attorney costs $1,500+ for one hour. We provide ongoing, documented research with specific questions — at a fraction of the cost.",
+      "A second opinion from another attorney costs $1,500+ for one hour. We provide ongoing, documented research with specific questions, at a fraction of the cost.",
   },
 ];
 
@@ -375,7 +375,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["situation-room"].name,
-        description: "Trial Intelligence Operations — priority operator access, extended engagement window, background research on every prosecution witness with source URLs your attorney can verify",
+        description: "Trial Intelligence Operations, priority operator access, extended engagement window, background research on every prosecution witness with source URLs your attorney can verify",
         price: (TIER_CORE["situation-room"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -410,7 +410,7 @@ export default function ServicesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
       <div className="mx-auto max-w-5xl">
-        {/* HEADER — Page title + value proposition */}
+        {/* HEADER, Page title + value proposition */}
         <FadeInUp>
         <div className="text-center">
           <h1 className="font-display text-3xl font-bold text-white md:text-5xl">
@@ -428,15 +428,15 @@ export default function ServicesPage() {
           <h2 className="font-display text-lg font-bold text-white">
             Smart defendants don&apos;t just hire an attorney.{" "}
             <span className="text-amber-400">
-              They get a second set of eyes on their own case — so they&apos;re never the only stranger in the room.
+              They get a second set of eyes on their own case, so they&apos;re never the only stranger in the room.
             </span>
           </h2>
           <p className="mt-2 text-sm text-zinc-400">
             You paid $10K-$100K+ for an attorney. Our services cost a fraction
-            of that — to make sure you understand every decision they&apos;re making, and why.
+            of that, to make sure you understand every decision they&apos;re making, and why.
           </p>
           <StaggerContainer className="mt-6 grid gap-4 md:grid-cols-3">
-            {/* Prices from tiers.ts — update TIER_CORE there if pricing changes */}
+            {/* Prices from tiers.ts, update TIER_CORE there if pricing changes */}
             {[
               { attorney: "$10K", ours: `${TIER_CORE["case-decoder"].priceDisplay}–${TIER_CORE["x-ray"].priceDisplay}`, pct: "2-25%" },
               { attorney: "$30K", ours: `${TIER_CORE["intelligence-brief"].priceDisplay}–${TIER_CORE["war-room"].priceDisplay}`, pct: "3-17%" },
@@ -460,7 +460,7 @@ export default function ServicesPage() {
         </div>
         </FadeInUp>
 
-        {/* UPGRADE CREDITS — Reduces commitment anxiety. 100% of payment     */}
+        {/* UPGRADE CREDITS, Reduces commitment anxiety. 100% of payment     */}
         {/* applies toward next tier. 12-month expiration. This is key for   */}
         {/* getting Case Decoder purchases from people considering X-Ray.    */}
         <div className="mt-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center">
@@ -474,16 +474,16 @@ export default function ServicesPage() {
           </p>
         </div>
         <p className="mt-4 text-center text-sm text-zinc-400">
-          Whether you&apos;re the defendant or the person doing the research for someone you love — every product works the same way.
+          Whether you&apos;re the defendant or the person doing the research for someone you love, every product works the same way.
         </p>
 
-        {/* DISCOVERY GATE — Interactive two-button filter (Covello-compliant). */}
+        {/* DISCOVERY GATE, Interactive two-button filter (Covello-compliant). */}
         {/* Uses "police reports / case documents" not "discovery" per Covello.*/}
         {/* Wraps Instant Products + Case Type sections to control visibility.*/}
         <DiscoveryGate>
         <GateContextCopy />
 
-        {/* INSTANT PRODUCTS — Track A (pre-discovery). Hidden when post-discovery selected. */}
+        {/* INSTANT PRODUCTS, Track A (pre-discovery). Hidden when post-discovery selected. */}
         <TrackA>
         <FadeInUp>
         <section className="mt-12">
@@ -496,7 +496,7 @@ export default function ServicesPage() {
             </p>
             <p className="mt-2 text-zinc-400">
               Charge-specific Defense Playbooks built from elite attorney
-              methodology. Get answers NOW — then upgrade to a personalized
+              methodology. Get answers NOW, then upgrade to a personalized
               service with full credit.
             </p>
           </div>
@@ -688,7 +688,7 @@ export default function ServicesPage() {
         </FadeInUp>
         </TrackA>
 
-        {/* CASE TYPE SECTIONS — Track A (CD, IB) and Track B (X-Ray, WR)    */}
+        {/* CASE TYPE SECTIONS, Track A (CD, IB) and Track B (X-Ray, WR)    */}
         {/* split by a divider. SR in separate section. Filter controls which */}
         {/* track is visible.                                                 */}
         {caseTypes.map((ct) => (
@@ -702,7 +702,7 @@ export default function ServicesPage() {
               <p className="mt-2 text-zinc-400">{ct.description}</p>
             </div>
 
-            {/* Track A — Pre-discovery tiers (Case Decoder, Intelligence Brief) */}
+            {/* Track A, Pre-discovery tiers (Case Decoder, Intelligence Brief) */}
             <TrackA>
             <div className="grid gap-4 md:grid-cols-2">
               {ct.tiers.slice(0, 2).map((tier) => (
@@ -747,10 +747,10 @@ export default function ServicesPage() {
             </div>
             </TrackA>
 
-            {/* Track A/B Divider — only shown when both tracks visible */}
+            {/* Track A/B Divider, only shown when both tracks visible */}
             <FilteredTrackDivider />
 
-            {/* Track B — Post-discovery tiers (X-Ray, War Room) */}
+            {/* Track B, Post-discovery tiers (X-Ray, War Room) */}
             <TrackB>
             <div className="grid gap-4 md:grid-cols-2">
               {ct.tiers.slice(2, 4).map((tier) => (
@@ -795,7 +795,7 @@ export default function ServicesPage() {
                   )}
                   {tier.slug === "war-room" && (
                     <p className="mt-2 text-xs text-amber-400/80">
-                      Includes Case Decoder + Intelligence Brief + X-Ray — everything in one package
+                      Includes Case Decoder + Intelligence Brief + X-Ray, everything in one package
                     </p>
                   )}
                   <TierBundleValue tierSlug={tier.slug} className="mt-4" />
@@ -817,7 +817,7 @@ export default function ServicesPage() {
               ))}
             </div>
 
-            {/* Situation Room — separated from main grid per Dunford */}
+            {/* Situation Room, separated from main grid per Dunford */}
             {ct.tiers[4] && (
             <div className="mt-8">
               <div className="mb-4 text-center">
@@ -830,7 +830,7 @@ export default function ServicesPage() {
                   </span>
                 )}
                 <span className="ml-2 mb-2 inline-block rounded-full bg-zinc-800 px-2 py-0.5 text-xs font-semibold text-zinc-300">
-                  By application — requires War Room
+                  By application, requires War Room
                 </span>
                 <div className="flex items-baseline justify-between">
                   <h3 className="font-semibold text-white">{ct.tiers[4].name}</h3>
@@ -852,7 +852,7 @@ export default function ServicesPage() {
                     const total = (["case-decoder", "intelligence-brief", "x-ray", "war-room", "situation-room"] as const)
                       .reduce((sum, slug) => sum + TIER_CORE[slug].price, 0) / 100;
                     return `$${total.toLocaleString("en-US")}`;
-                  })()} value) — {TIER_CORE["situation-room"].priceDisplay}
+                  })()} value), {TIER_CORE["situation-room"].priceDisplay}
                 </p>
                 {ct.tiers[4].discovery && (
                   <p className="mt-2 text-xs text-zinc-400">
@@ -876,7 +876,7 @@ export default function ServicesPage() {
 
         </DiscoveryGate>
 
-        {/* GUARANTEE — Per-tier delivery commitments with deadlines.          */}
+        {/* GUARANTEE, Per-tier delivery commitments with deadlines.          */}
         {/* Reinforces risk reversal at the point of maximum hesitation.      */}
         <FadeInUp>
         <section className="mt-20 rounded-xl border border-zinc-500 bg-zinc-900/50 p-8 text-center">
@@ -884,29 +884,29 @@ export default function ServicesPage() {
             Our Guarantee
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-zinc-300">
-            Every tier comes with a delivery guarantee. If we miss the stated deadline or question count — full cash refund, no questions asked.
+            Every tier comes with a delivery guarantee. If we miss the stated deadline or question count, full cash refund, no questions asked.
           </p>
 
           {/* X-Ray 3-Layer Guarantee Stack */}
           <div className="mx-auto mt-8 max-w-2xl text-left">
-            <h3 className="text-lg font-bold text-amber-400 mb-4">{TIER_CORE["x-ray"].name} — Three Guarantees. Zero Exceptions.</h3>
+            <h3 className="text-lg font-bold text-amber-400 mb-4">{TIER_CORE["x-ray"].name}, Three Guarantees. Zero Exceptions.</h3>
             <div className="space-y-4">
               <div className="rounded-lg border border-zinc-500 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Discovery Guarantee</p>
                 <p className="text-sm text-zinc-400">
-                  Every piece of discovery we have analyzed has contained at least one discrepancy, gap, or constitutional vulnerability. Every single one. That is not marketing language — it is the nature of police work and prosecutorial preparation. If we analyze your discovery documents and do not identify at least one concrete issue your attorney hasn't raised — a contradiction, a chain of custody gap, a constitutional question, a missing piece of evidence that should be there — you get every dollar back. No forms. No phone calls. No waiting. Just email us and it&apos;s done.
+                  Every piece of discovery we have analyzed has contained at least one discrepancy, gap, or constitutional vulnerability. Every single one. That is not marketing language, it is the nature of police work and prosecutorial preparation. If we analyze your discovery documents and do not identify at least one concrete issue your attorney hasn't raised, a contradiction, a chain of custody gap, a constitutional question, a missing piece of evidence that should be there, you get every dollar back. No forms. No phone calls. No waiting. Just email us and it&apos;s done.
                 </p>
               </div>
               <div className="rounded-lg border border-zinc-500 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Attorney Meeting Guarantee</p>
                 <p className="text-sm text-zinc-400">
-                  Every X-Ray comes with an Attorney Delivery Package — a formatted summary of findings your attorney can read in 10 minutes, with every claim sourced back to a specific page in your discovery. If your attorney reviews our findings and tells you there is nothing there, send us the response and we will add a second round of analysis at no charge.
+                  Every X-Ray comes with an Attorney Delivery Package, a formatted summary of findings your attorney can read in 10 minutes, with every claim sourced back to a specific page in your discovery. If your attorney reviews our findings and tells you there is nothing there, send us the response and we will add a second round of analysis at no charge.
                 </p>
               </div>
               <div className="rounded-lg border border-zinc-500 bg-zinc-950/50 p-5">
                 <p className="font-semibold text-white mb-2">The Delivery Commitment</p>
                 <p className="text-sm text-zinc-400">
-                  Delivered within 10 business days of document receipt or you receive a 20% refund automatically — no request required. Past 15 business days for any reason: full refund. Your case moves on a schedule. So do we.
+                  Delivered within 10 business days of document receipt or you receive a 20% refund automatically, no request required. Past 15 business days for any reason: full refund. Your case moves on a schedule. So do we.
                 </p>
               </div>
             </div>
@@ -929,13 +929,13 @@ export default function ServicesPage() {
                 <span className="font-semibold text-white">
                   {TIER_CORE["war-room"].name} ({TIER_CORE["war-room"].priceDisplay}):
                 </span>{" "}
-                Initial package within 25-28 business days or full refund. Weekly updates thereafter — if any update surfaces zero new findings, that update is free. Priority questions answered within 4 business hours.
+                Initial package within 25-28 business days or full refund. Weekly updates thereafter, if any update surfaces zero new findings, that update is free. Priority questions answered within 4 business hours.
               </p>
               <p>
                 <span className="font-semibold text-white">
                   {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay}):
                 </span>{" "}
-                Full trial intelligence cycle — priority operator access, witness impeachment research, extended 28-day engagement. Nightly testimony analysis and morning prep briefs coming Q2 2026. Priority 24-48hr turnaround.
+                Full trial intelligence cycle, priority operator access, witness impeachment research, extended 28-day engagement. Nightly testimony analysis and morning prep briefs coming Q2 2026. Priority 24-48hr turnaround.
               </p>
             </div>
           </div>
@@ -955,7 +955,7 @@ export default function ServicesPage() {
           </p>
         </div>
 
-        {/* FAQ — Service-specific questions rendered via FAQAccordion.        */}
+        {/* FAQ, Service-specific questions rendered via FAQAccordion.        */}
         <FadeInUp>
         <section className="mt-20">
           <h2 className="font-display mb-8 text-center text-2xl font-bold text-white">
@@ -969,7 +969,7 @@ export default function ServicesPage() {
           <TrustBadges variant="pricing" />
         </div>
 
-        {/* LEAD CAPTURE — Fallback email opt-in for visitors not ready to buy. */}
+        {/* LEAD CAPTURE, Fallback email opt-in for visitors not ready to buy. */}
         <div className="mt-16">
           <LeadCapture ungated />
         </div>

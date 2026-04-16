@@ -2,10 +2,10 @@
 - **Repo:** C:\Users\email\projects\ImNotAnAttorney-web
 - **Problem:** 3 security vulnerabilities in partner portal: TOCTOU race in magic link verification, non-atomic payout with no audit trail on failure, XSS in magic-link email
 - **Key files to read first:**
-  - `src/lib/partner-auth.ts` — verifyMagicLink with TOCTOU race
-  - `src/app/api/admin/partners/[id]/route.ts` — POST handler with non-atomic payout
-  - `src/app/api/partner/magic-link/route.ts` — XSS in email template
-  - `src/lib/email.ts` — escapeHtml utility already exists
+  - `src/lib/partner-auth.ts`, verifyMagicLink with TOCTOU race
+  - `src/app/api/admin/partners/[id]/route.ts`, POST handler with non-atomic payout
+  - `src/app/api/partner/magic-link/route.ts`, XSS in email template
+  - `src/lib/email.ts`, escapeHtml utility already exists
 - **Tech stack:** Next.js 15, Supabase (Postgres RPC), Resend email
 - **Key decisions:** Use existing `consume_magic_link` RPC (migration 015) for atomic verify; reorder payout to create audit record first; use existing `escapeHtml` from email.ts
 - **Setup/prerequisites:** Migration 015 already deployed with `consume_magic_link` RPC

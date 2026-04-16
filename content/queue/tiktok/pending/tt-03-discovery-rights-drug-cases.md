@@ -5,20 +5,20 @@ project: inna
 status: pending
 created: 2026-03-11T10:00:00.000Z
 agent: content-engine
-title: "Your Drug Case Discovery — What's Missing Matters More"
+title: "Your Drug Case Discovery, What's Missing Matters More"
 topic: Discovery rights in drug cases
 blog_slug: discovery-rights-drug-cases
 estimated_duration: 45s
 format: Standard (talking head + screen recordings)
-suggested_sound: "Original audio — voiceover + dark ambient beat"
+suggested_sound: "Original audio, voiceover + dark ambient beat"
 suggested_posting_time: "Wednesday 6:00 PM EST"
 ---
 
-## TikTok Script: Your Drug Case Discovery — What's Missing Matters More
+## TikTok Script: Your Drug Case Discovery, What's Missing Matters More
 
 **Format**: Standard
 **Duration**: 45 seconds
-**Suggested sound**: Original audio — voiceover with dark ambient beat
+**Suggested sound**: Original audio, voiceover with dark ambient beat
 **Suggested posting time**: Wednesday 6:00 PM EST
 
 ---
@@ -34,13 +34,13 @@ suggested_posting_time: "Wednesday 6:00 PM EST"
 **Text overlay**: "What's missing is the defense."
 
 [SECOND 3-10]
-**Visual**: Close-up of documents with red circles drawn around gaps — missing page numbers, missing timestamps.
+**Visual**: Close-up of documents with red circles drawn around gaps, missing page numbers, missing timestamps.
 **Audio/Voiceover**: "In drug cases, discovery is a battlefield. The prosecution gives you the minimum. Your attorney has to fight for the rest. Body cam footage that should exist? Ask where it is."
 **Text overlay**: "Body cam footage should exist. Where is it?"
 
 [SECOND 10-18]
 **Visual**: Cut to person at desk, looking directly at camera. Serious energy.
-**Audio/Voiceover**: "Chain of custody gaps? That's how evidence gets suppressed. The officer said he field-tested the substance — but did the lab test match? In some jurisdictions, field tests have false positive rates above 25%."
+**Audio/Voiceover**: "Chain of custody gaps? That's how evidence gets suppressed. The officer said he field-tested the substance, but did the lab test match? In some jurisdictions, field tests have false positive rates above 25%."
 **Text overlay**: "Field tests: 25%+ false positive rate"
 
 [SECOND 18-28]
@@ -50,7 +50,7 @@ suggested_posting_time: "Wednesday 6:00 PM EST"
 
 [SECOND 28-38]
 **Visual**: B-roll of someone scrolling through documents on a tablet. Red highlights on inconsistencies.
-**Audio/Voiceover**: "You lived this. You were there. Read your own discovery. You'll catch things your attorney won't — because you know what actually happened."
+**Audio/Voiceover**: "You lived this. You were there. Read your own discovery. You'll catch things your attorney won't, because you know what actually happened."
 **Text overlay**: "READ YOUR OWN DISCOVERY."
 
 [SECOND 38-45]
@@ -72,5 +72,5 @@ Manila folder on table with "DISCOVERY" written on it. Red circles on documents 
 ---
 
 **Context**: Drug cases are one of INNA's core product tiers (Drug Defense Playbook, $97). This video targets defendants who feel helpless and shows them that discovery gaps are where cases are won. High search volume for "drug case discovery" and "drug charge defense."
-**Loop strategy**: Opens with discovery folder being slammed down, ends with it being held up — the shift from passive receipt to active examination mirrors the message.
+**Loop strategy**: Opens with discovery folder being slammed down, ends with it being held up, the shift from passive receipt to active examination mirrors the message.
 **KPI target**: Saves (defendants will bookmark this for reference)

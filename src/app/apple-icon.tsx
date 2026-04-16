@@ -1,5 +1,5 @@
 /**
- * apple-icon.tsx — Apple Touch Icon for iOS home screen bookmarks.
+ * apple-icon.tsx, Apple Touch Icon for iOS home screen bookmarks.
  *
  * 180x180 PNG. Larger canvas allows the full "INAA" mark.
  * Dark gradient background with amber text matching brand.md.

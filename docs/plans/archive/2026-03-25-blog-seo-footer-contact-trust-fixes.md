@@ -18,7 +18,7 @@
 - [x] Add prominent contact line with email (mailto link) and 4-hour response time promise above the 5-column grid
 
 ### Task 3: Family Page Trust (family/page.tsx)
-- [x] The "Want the full guide?" section already has a working link -- no change needed
+- [x] The "Want the full guide?" section already has a working link, no change needed
 - [x] Add attorney-anxiety resolution sentence in CTA section
 
 ### Task 4: Contact Page Trust (contact/page.tsx)
@@ -40,4 +40,4 @@
 - No AI/technology disclosure
 - No emojis, no code comments added
 - Match existing voice, formatting, component patterns
-- Minimal changes only -- fix specific issues, no rewrites
+- Minimal changes only, fix specific issues, no rewrites

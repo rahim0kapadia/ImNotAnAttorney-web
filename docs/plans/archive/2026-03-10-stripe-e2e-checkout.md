@@ -1,4 +1,4 @@
-# Stripe E2E Checkout Tests — Real Payments for All Tiers
+# Stripe E2E Checkout Tests, Real Payments for All Tiers
 
 ## Context
 
@@ -13,7 +13,7 @@ The existing `scripts/e2e-all-pipelines.mjs` tests pipelines 1-6 by directly ins
 
 ## Approach
 
-Use Stripe's internal `/v1/payment_pages/{session_id}/confirm` endpoint to programmatically complete payments in test mode. This is what `stripe trigger` uses under the hood — fires REAL webhooks with real session data.
+Use Stripe's internal `/v1/payment_pages/{session_id}/confirm` endpoint to programmatically complete payments in test mode. This is what `stripe trigger` uses under the hood, fires REAL webhooks with real session data.
 
 ### Flow per tier:
 ```
@@ -45,7 +45,7 @@ Per-pipeline unique emails using `+` aliases (all deliver to same catch-all inbo
 
 ## New CLI flag
 
-- `--skip-stripe` — Use direct DB inserts instead of Stripe checkout (old behavior, for fast re-runs)
+- `, skip-stripe`, Use direct DB inserts instead of Stripe checkout (old behavior, for fast re-runs)
 
 ## New Helpers
 
@@ -127,7 +127,7 @@ Stripe test mode sessions/charges don't need cleanup.
 - Import `Stripe` from `stripe`
 - Add `STRIPE_SECRET_KEY` env validation
 - Implement `stripeCheckout()`, `waitForOrder()`, `waitForCases()`
-- Add `--skip-stripe` CLI flag
+- Add `, skip-stripe` CLI flag
 - Update email strategy (per-pipeline emails)
 
 ### Task 2: Update Pipeline 1 (Playbooks)
@@ -151,8 +151,8 @@ Stripe test mode sessions/charges don't need cleanup.
 
 ## Verification
 
-1. `node scripts/e2e-all-pipelines.mjs` — all pipelines pass with real Stripe payments
+1. `node scripts/e2e-all-pipelines.mjs`, all pipelines pass with real Stripe payments
 2. Stripe dashboard (test mode) shows 13+ test charges
 3. Supabase has no leftover test data
 4. Admin email dashboard shows all delivery emails
-5. `--skip-stripe` mode still works (fast re-runs)
+5. `, skip-stripe` mode still works (fast re-runs)

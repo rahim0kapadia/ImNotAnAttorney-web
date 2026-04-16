@@ -1,5 +1,5 @@
 /**
- * Tier 9 report HTML renderers — one function per SKU.
+ * Tier 9 report HTML renderers, one function per SKU.
  * Produces self-contained HTML reports styled in the INAA dark theme.
  * Every data point includes source URL verification links.
  */
@@ -22,7 +22,7 @@ import type {
 
 const UPL_DISCLAIMER = `
   <div style="background: #1C1917; border: 1px solid #422006; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-    <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Legal Information — Not Legal Advice</p>
+    <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Legal Information, Not Legal Advice</p>
     <p style="color: #A1A1AA; font-size: 13px; margin: 0;">
       This report provides verified court record data compiled into a structured format.
       It is legal INFORMATION, not legal ADVICE. Your attorney remains the final authority
@@ -88,12 +88,12 @@ function noDataMessage(subject: string): string {
 
 /** Format months value for sentencing display */
 function fmtMonths(v: number | null): string {
-  return v !== null ? `${Number(v).toFixed(1)} mo` : "—";
+  return v !== null ? `${Number(v).toFixed(1)} mo` : ", ";
 }
 
 /** Format decimal as percentage */
 function fmtPct(v: number | null): string {
-  return v !== null ? `${(Number(v) * 100).toFixed(1)}%` : "—";
+  return v !== null ? `${(Number(v) * 100).toFixed(1)}%` : ", ";
 }
 
 // ============================================================
@@ -122,11 +122,11 @@ export function renderJudgeReportCard(
       </tr>
       <tr>
         <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Court</td>
-        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${judge.court ? escapeHtml(judge.court) : "—"}</td>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${judge.court ? escapeHtml(judge.court) : ", "}</td>
       </tr>
       <tr>
         <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Jurisdiction</td>
-        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${judge.jurisdiction ? escapeHtml(judge.jurisdiction) : "—"}</td>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${judge.jurisdiction ? escapeHtml(judge.jurisdiction) : ", "}</td>
       </tr>
       ${judge.bench_acquittal_rate != null ? `
       <tr>
@@ -144,7 +144,7 @@ export function renderJudgeReportCard(
   // JUSTFAIR Judge Background (federal courts only)
   if (data.justfair?.demographics) {
     const d = data.justfair.demographics;
-    body += sectionHeader("Judge Background — Federal Court Intelligence");
+    body += sectionHeader("Judge Background, Federal Court Intelligence");
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Source: JUSTFAIR (QSIDE Institute), USSC FY2001-2023. Federal courts only. <a href="https://osf.io/nseh5/" style="color: #F59E0B;">[source]</a></p>`;
     body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">`;
 
@@ -168,12 +168,12 @@ export function renderJudgeReportCard(
     totalSources++;
   }
 
-  // Sentencing Intelligence — enhanced with JUSTFAIR source citation
+  // Sentencing Intelligence, enhanced with JUSTFAIR source citation
   if (data.usscPatterns) {
     const s = data.usscPatterns;
     totalSources += countSources(s.source_urls);
 
-    body += sectionHeader("Sentencing Intelligence — 595,851 Federal Cases Analyzed");
+    body += sectionHeader("Sentencing Intelligence, 595,851 Federal Cases Analyzed");
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">This judge's sentencing patterns from USSC/JUSTFAIR data. <a href="https://osf.io/nseh5/" style="color: #F59E0B;">[source]</a></p>`;
 
     body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
@@ -182,7 +182,7 @@ export function renderJudgeReportCard(
         <th style="padding: 8px 16px; color: #F59E0B; border-bottom: 2px solid #292524; text-align: right;">This Judge</th>
       </tr></thead><tbody>`;
 
-    body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total Cases</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${s.total_cases?.toLocaleString() ?? "—"}</td></tr>`;
+    body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total Cases</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${s.total_cases?.toLocaleString() ?? ", "}</td></tr>`;
     body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Median Sentence</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtMonths(s.median_sentence_months)}</td></tr>`;
     body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Range (P25–P75)</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtMonths(s.p25_sentence_months)} – ${fmtMonths(s.p75_sentence_months)}</td></tr>`;
     body += `<tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Downward Departures</td><td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; text-align: right;">${fmtPct(s.downward_departure_rate)}</td></tr>`;
@@ -201,8 +201,8 @@ export function renderJudgeReportCard(
         </tr></thead><tbody>`;
       for (const re of s.retention_elections as Array<Record<string, unknown>>) {
         body += `<tr style="border-bottom: 1px solid #1C1917;">
-          <td style="padding: 8px 12px; color: #D4D4D8;">${re.year ?? "—"}</td>
-          <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${re.vote_pct != null ? `${Number(re.vote_pct).toFixed(1)}%` : "—"}</td>
+          <td style="padding: 8px 12px; color: #D4D4D8;">${re.year ?? ", "}</td>
+          <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${re.vote_pct != null ? `${Number(re.vote_pct).toFixed(1)}%` : ", "}</td>
           <td style="padding: 8px 12px; text-align: center; color: ${re.retained ? "#4ADE80" : "#EF4444"};">${re.retained ? "Yes" : "No"}</td>
         </tr>`;
       }
@@ -262,9 +262,9 @@ export function renderJudgeReportCard(
       body += `
           <tr style="border-bottom: 1px solid #1C1917;">
             <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.charge_slug)}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p25 != null ? `${Number(row.p25).toFixed(1)} mo` : "—"}</td>
-            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${row.median_months != null ? `${Number(row.median_months).toFixed(1)} mo` : "—"}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p75 != null ? `${Number(row.p75).toFixed(1)} mo` : "—"}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p25 != null ? `${Number(row.p25).toFixed(1)} mo` : ", "}</td>
+            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${row.median_months != null ? `${Number(row.median_months).toFixed(1)} mo` : ", "}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p75 != null ? `${Number(row.p75).toFixed(1)} mo` : ", "}</td>
             <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.sample_size}</td>
             <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
           </tr>
@@ -300,7 +300,7 @@ export function renderJudgeReportCard(
           <tr style="border-bottom: 1px solid #1C1917;">
             <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.prosecutor_name)}</td>
             <td style="padding: 8px 12px; color: #D4D4D8;">${row.motion_type ? escapeHtml(row.motion_type) : "All"}</td>
-            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${row.grant_rate != null ? `${Number(row.grant_rate).toFixed(1)}%` : "—"}</td>
+            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${row.grant_rate != null ? `${Number(row.grant_rate).toFixed(1)}%` : ", "}</td>
             <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.sample_size}</td>
             <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
           </tr>
@@ -311,7 +311,7 @@ export function renderJudgeReportCard(
     body += noDataMessage("prosecutor pairing");
   }
 
-  // Bench vs Jury Divergence — auto-detects data type (USSC sentencing vs CL acquittal)
+  // Bench vs Jury Divergence, auto-detects data type (USSC sentencing vs CL acquittal)
   if (data.benchJuryDivergence.length > 0) {
     const hasSentencingData = data.benchJuryDivergence.some((r) => r.bench_median_sentence != null);
     const districtName = data.benchJuryDivergence.find((r) => r.district)?.district ?? "";
@@ -319,7 +319,7 @@ export function renderJudgeReportCard(
     if (hasSentencingData) {
       // Human-readable sentence duration
       const fmtSent = (mo: number | null): string => {
-        if (mo == null) return "—";
+        if (mo == null) return ", ";
         const m = Number(mo);
         if (m <= 0) return "Probation";
         if (m < 12) return `${Math.round(m)} month${Math.round(m) !== 1 ? "s" : ""}`;
@@ -385,7 +385,7 @@ export function renderJudgeReportCard(
                   </td>
                 </tr>
               </table>
-              ${juryMult ? `<p style="color: #A1A1AA; font-size: 12px; margin: 12px 0 0 0; line-height: 1.5;">Defendants who chose jury trial in this district received sentences ${juryMult}. Based on federal sentencing data — state courts may differ. ${sourceLinks(agg.source_urls)}</p>` : ""}
+              ${juryMult ? `<p style="color: #A1A1AA; font-size: 12px; margin: 12px 0 0 0; line-height: 1.5;">Defendants who chose jury trial in this district received sentences ${juryMult}. Based on federal sentencing data, state courts may differ. ${sourceLinks(agg.source_urls)}</p>` : ""}
             </div>
           `;
         }
@@ -422,7 +422,7 @@ export function renderJudgeReportCard(
         }
       }
     } else {
-      // Original acquittal rate view (CL opinion mining — kept for future use)
+      // Original acquittal rate view (CL opinion mining, kept for future use)
       body += sectionHeader("Bench vs Jury Trial Divergence");
       body += `
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
@@ -443,8 +443,8 @@ export function renderJudgeReportCard(
         body += `
             <tr style="border-bottom: 1px solid #1C1917;">
               <td style="padding: 8px 12px; color: #D4D4D8;">${row.charge_slug ? escapeHtml(row.charge_slug) : "All"}</td>
-              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.bench_acquittal_rate != null ? `${Number(row.bench_acquittal_rate).toFixed(1)}%` : "—"}</td>
-              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.jury_acquittal_rate != null ? `${Number(row.jury_acquittal_rate).toFixed(1)}%` : "—"}</td>
+              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.bench_acquittal_rate != null ? `${Number(row.bench_acquittal_rate).toFixed(1)}%` : ", "}</td>
+              <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.jury_acquittal_rate != null ? `${Number(row.jury_acquittal_rate).toFixed(1)}%` : ", "}</td>
               <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.bench_sample}</td>
               <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.jury_sample}</td>
               <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
@@ -464,7 +464,7 @@ export function renderJudgeReportCard(
         <div style="margin-bottom: 16px; padding: 12px 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
           <p style="color: #FAFAF9; font-style: italic; margin: 0 0 6px;">&ldquo;${escapeHtml(q.quote)}&rdquo;</p>
           <p style="color: #71717A; font-size: 12px; margin: 0;">
-            ${q.topic ? `<span style="color: #A1A1AA;">${escapeHtml(q.topic)}</span> — ` : ""}
+            ${q.topic ? `<span style="color: #A1A1AA;">${escapeHtml(q.topic)}</span>, ` : ""}
             ${q.case_cited ? escapeHtml(q.case_cited) : ""}
             ${sourceLink(q.source_url)}
           </p>
@@ -476,7 +476,7 @@ export function renderJudgeReportCard(
   }
 
   // Appellate Trends
-  body += sectionHeader("Appellate Trends — " + (data.judge?.jurisdiction || "Jurisdiction"));
+  body += sectionHeader("Appellate Trends, " + (data.judge?.jurisdiction || "Jurisdiction"));
   if (data.appellateTrends.length > 0) {
     body += `
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
@@ -496,8 +496,8 @@ export function renderJudgeReportCard(
       body += `
           <tr style="border-bottom: 1px solid #1C1917;">
             <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.argument_type)}</td>
-            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.reverse_rate != null ? `${Number(row.reverse_rate).toFixed(1)}%` : "—"}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.affirm_rate != null ? `${Number(row.affirm_rate).toFixed(1)}%` : "—"}</td>
+            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.reverse_rate != null ? `${Number(row.reverse_rate).toFixed(1)}%` : ", "}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.affirm_rate != null ? `${Number(row.affirm_rate).toFixed(1)}%` : ", "}</td>
             <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.sample_size}</td>
             <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
           </tr>
@@ -510,7 +510,7 @@ export function renderJudgeReportCard(
 
   body += intelligence ? renderIntelligenceSection(intelligence) : "";
 
-  return wrapReport(`Judge Report Card — ${judge.name}`, body, totalSources);
+  return wrapReport(`Judge Report Card, ${judge.name}`, body, totalSources);
 }
 
 // ============================================================
@@ -540,11 +540,11 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
         <tr>
           <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Court</td>
-          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${officer.court ? escapeHtml(officer.court) : "—"}</td>
+          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${officer.court ? escapeHtml(officer.court) : ", "}</td>
         </tr>
         <tr>
           <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Jurisdiction</td>
-          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${officer.jurisdiction ? escapeHtml(officer.jurisdiction) : "—"}</td>
+          <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${officer.jurisdiction ? escapeHtml(officer.jurisdiction) : ", "}</td>
         </tr>
         <tr>
           <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Testimony Count</td>
@@ -560,7 +560,7 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
         </tr>
         <tr>
           <td style="padding: 8px 16px; color: #A1A1AA;">Sources</td>
-          <td style="padding: 8px 16px;">${sourceLinks(officer.source_urls) || "—"}</td>
+          <td style="padding: 8px 16px;">${sourceLinks(officer.source_urls) || ", "}</td>
         </tr>
       </table>
     `;
@@ -632,16 +632,16 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
           </tr></thead><tbody>`;
         for (const job of intel.npi_employment_history as Array<Record<string, string>>) {
           body += `<tr style="border-bottom: 1px solid #1C1917;">
-            <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(job.agency || "—")}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8;">${job.start || "?"} — ${job.end || "present"}</td>
-            <td style="padding: 8px 12px; color: ${job.separation_reason?.includes("fired") || job.separation_reason?.includes("terminated") ? "#EF4444" : "#A1A1AA"};">${escapeHtml(job.separation_reason || "—")}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(job.agency || ", ")}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8;">${job.start || "?"}, ${job.end || "present"}</td>
+            <td style="padding: 8px 12px; color: ${job.separation_reason?.includes("fired") || job.separation_reason?.includes("terminated") ? "#EF4444" : "#A1A1AA"};">${escapeHtml(job.separation_reason || ", ")}</td>
           </tr>`;
         }
         body += `</tbody></table>`;
 
         if (intel.npi_is_wandering_officer) {
           body += `<p style="color: #EF4444; font-weight: bold; margin: 0 0 16px;">
-            This officer was terminated from 2+ agencies — classified as a &ldquo;wandering officer.&rdquo;
+            This officer was terminated from 2+ agencies, classified as a &ldquo;wandering officer.&rdquo;
           </p>`;
         }
       }
@@ -667,7 +667,7 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
       }
 
       body += `<p style="color: #52525B; font-size: 11px; margin: 0 0 24px;">
-        Sources: ${intel.sources?.join(", ") || "—"} ${sourceLinks(intel.source_urls)}
+        Sources: ${intel.sources?.join(", ") || ", "} ${sourceLinks(intel.source_urls)}
       </p>`;
     }
   }
@@ -675,7 +675,7 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
   // Agency Fatal Encounter Alerts (from Fatal Encounters dataset)
   if (data.agencyIncidents && data.agencyIncidents.length > 0) {
     body += sectionHeader("Agency Fatal Encounter History");
-    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Fatal encounters involving this officer's agency since 2013. Agency-level data — not specific to this officer. <a href="https://fatalencounters.org/" style="color: #F59E0B;">[source]</a></p>`;
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Fatal encounters involving this officer's agency since 2013. Agency-level data, not specific to this officer. <a href="https://fatalencounters.org/" style="color: #F59E0B;">[source]</a></p>`;
 
     for (const ai of data.agencyIncidents) {
       body += `
@@ -692,7 +692,7 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
   }
 
   const primaryName = data.officers[0]?.officer_name ?? data.externalIntel[0]?.officer_name ?? "Officer";
-  return wrapReport(`Officer Background Check — ${primaryName}`, body, totalSources);
+  return wrapReport(`Officer Background Check, ${primaryName}`, body, totalSources);
 }
 
 // ============================================================
@@ -746,9 +746,9 @@ export function renderSimilarCases(
       body += `
           <tr style="border-bottom: 1px solid #1C1917;">
             <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.charge_slug)}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p25 != null ? `${Number(row.p25).toFixed(1)} mo` : "—"}</td>
-            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${row.median_months != null ? `${Number(row.median_months).toFixed(1)} mo` : "—"}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p75 != null ? `${Number(row.p75).toFixed(1)} mo` : "—"}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p25 != null ? `${Number(row.p25).toFixed(1)} mo` : ", "}</td>
+            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${row.median_months != null ? `${Number(row.median_months).toFixed(1)} mo` : ", "}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p75 != null ? `${Number(row.p75).toFixed(1)} mo` : ", "}</td>
             <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.sample_size}</td>
             <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
           </tr>
@@ -783,10 +783,10 @@ export function renderSimilarCases(
       totalSources += countSources(row.source_urls);
       body += `
           <tr style="border-bottom: 1px solid #1C1917;">
-            <td style="padding: 8px 12px; color: #D4D4D8;">${row.charge_slug ? escapeHtml(row.charge_slug) : "—"}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.base_sentence != null ? `${Number(row.base_sentence).toFixed(1)} mo` : "—"}</td>
-            <td style="padding: 8px 12px; color: #4ADE80; text-align: right; font-weight: bold;">${row.plea_sentence != null ? `${Number(row.plea_sentence).toFixed(1)} mo` : "—"}</td>
-            <td style="padding: 8px 12px; color: #60A5FA; text-align: right;">${row.cooperation_bonus != null ? `-${Number(row.cooperation_bonus).toFixed(1)} mo` : "—"}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8;">${row.charge_slug ? escapeHtml(row.charge_slug) : ", "}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.base_sentence != null ? `${Number(row.base_sentence).toFixed(1)} mo` : ", "}</td>
+            <td style="padding: 8px 12px; color: #4ADE80; text-align: right; font-weight: bold;">${row.plea_sentence != null ? `${Number(row.plea_sentence).toFixed(1)} mo` : ", "}</td>
+            <td style="padding: 8px 12px; color: #60A5FA; text-align: right;">${row.cooperation_bonus != null ? `-${Number(row.cooperation_bonus).toFixed(1)} mo` : ", "}</td>
             <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.sample_size}</td>
             <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
           </tr>
@@ -798,7 +798,7 @@ export function renderSimilarCases(
   }
 
   // Appellate Trends
-  body += sectionHeader("Appellate Trends — " + escapeHtml(intake.state));
+  body += sectionHeader("Appellate Trends, " + escapeHtml(intake.state));
   if (data.appellateTrends.length > 0) {
     body += `
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
@@ -818,8 +818,8 @@ export function renderSimilarCases(
       body += `
           <tr style="border-bottom: 1px solid #1C1917;">
             <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.argument_type)}</td>
-            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.reverse_rate != null ? `${Number(row.reverse_rate).toFixed(1)}%` : "—"}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.affirm_rate != null ? `${Number(row.affirm_rate).toFixed(1)}%` : "—"}</td>
+            <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.reverse_rate != null ? `${Number(row.reverse_rate).toFixed(1)}%` : ", "}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.affirm_rate != null ? `${Number(row.affirm_rate).toFixed(1)}%` : ", "}</td>
             <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.sample_size}</td>
             <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
           </tr>
@@ -851,11 +851,11 @@ export function renderSimilarCases(
       totalSources += countSources(row.source_urls);
       body += `<tr style="border-bottom: 1px solid #1C1917;">
         <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.jurisdiction_name)} (${escapeHtml(row.jurisdiction_level)})</td>
-        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.total_cases ?? "—"}</td>
-        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.conviction_rate != null ? `${(Number(row.conviction_rate) * 100).toFixed(1)}%` : "—"}</td>
-        <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${row.dismissal_rate != null ? `${(Number(row.dismissal_rate) * 100).toFixed(1)}%` : "—"}</td>
-        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.plea_rate != null ? `${(Number(row.plea_rate) * 100).toFixed(1)}%` : "—"}</td>
-        <td style="padding: 8px 12px; color: ${row.plea_trial_penalty_pct && Number(row.plea_trial_penalty_pct) > 0 ? "#EF4444" : "#A1A1AA"}; text-align: right;">${row.plea_trial_penalty_pct != null ? `+${Number(row.plea_trial_penalty_pct).toFixed(0)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.total_cases ?? ", "}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.conviction_rate != null ? `${(Number(row.conviction_rate) * 100).toFixed(1)}%` : ", "}</td>
+        <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${row.dismissal_rate != null ? `${(Number(row.dismissal_rate) * 100).toFixed(1)}%` : ", "}</td>
+        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.plea_rate != null ? `${(Number(row.plea_rate) * 100).toFixed(1)}%` : ", "}</td>
+        <td style="padding: 8px 12px; color: ${row.plea_trial_penalty_pct && Number(row.plea_trial_penalty_pct) > 0 ? "#EF4444" : "#A1A1AA"}; text-align: right;">${row.plea_trial_penalty_pct != null ? `+${Number(row.plea_trial_penalty_pct).toFixed(0)}%` : ", "}</td>
         <td style="padding: 8px 12px; text-align: center;">${sourceLinks(row.source_urls)}</td>
       </tr>`;
     }
@@ -872,7 +872,7 @@ export function renderSimilarCases(
   body += intelligence ? renderIntelligenceSection(intelligence) : "";
 
   return wrapReport(
-    `Similar Cases Analysis — ${intake.chargeType} in ${intake.state}`,
+    `Similar Cases Analysis, ${intake.chargeType} in ${intake.state}`,
     body,
     totalSources
   );
@@ -886,8 +886,8 @@ export function renderDistrictCourtIntel(data: DistrictCourtIntelData): string {
   let totalSources = 0;
   let body = "";
 
-  // District Overview — Judge Demographics Aggregate
-  body += sectionHeader(`Federal Court Overview — ${escapeHtml(data.stateName)}`);
+  // District Overview, Judge Demographics Aggregate
+  body += sectionHeader(`Federal Court Overview, ${escapeHtml(data.stateName)}`);
   if (data.judges.length > 0) {
     const partyCount = new Map<string, number>();
     const genderCount = new Map<string, number>();
@@ -944,10 +944,10 @@ export function renderDistrictCourtIntel(data: DistrictCourtIntelData): string {
       totalSources += countSources(row.source_urls);
       body += `<tr style="border-bottom: 1px solid #1C1917;">
         <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.jurisdiction_name)} (${escapeHtml(row.jurisdiction_level)})</td>
-        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.total_cases?.toLocaleString() ?? "—"}</td>
-        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.conviction_rate != null ? `${(Number(row.conviction_rate) * 100).toFixed(1)}%` : "—"}</td>
-        <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${row.dismissal_rate != null ? `${(Number(row.dismissal_rate) * 100).toFixed(1)}%` : "—"}</td>
-        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.plea_rate != null ? `${(Number(row.plea_rate) * 100).toFixed(1)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.total_cases?.toLocaleString() ?? ", "}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right;">${row.conviction_rate != null ? `${(Number(row.conviction_rate) * 100).toFixed(1)}%` : ", "}</td>
+        <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${row.dismissal_rate != null ? `${(Number(row.dismissal_rate) * 100).toFixed(1)}%` : ", "}</td>
+        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.plea_rate != null ? `${(Number(row.plea_rate) * 100).toFixed(1)}%` : ", "}</td>
       </tr>`;
     }
     body += `</tbody></table>`;
@@ -970,9 +970,9 @@ export function renderDistrictCourtIntel(data: DistrictCourtIntelData): string {
       totalSources += countSources(row.source_urls);
       body += `<tr style="border-bottom: 1px solid #1C1917;">
         <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(row.charge_slug)}</td>
-        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p25 != null ? `${Number(row.p25).toFixed(1)} mo` : "—"}</td>
-        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${row.median_months != null ? `${Number(row.median_months).toFixed(1)} mo` : "—"}</td>
-        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p75 != null ? `${Number(row.p75).toFixed(1)} mo` : "—"}</td>
+        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p25 != null ? `${Number(row.p25).toFixed(1)} mo` : ", "}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${row.median_months != null ? `${Number(row.median_months).toFixed(1)} mo` : ", "}</td>
+        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${row.p75 != null ? `${Number(row.p75).toFixed(1)} mo` : ", "}</td>
         <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${row.sample_size}</td>
       </tr>`;
     }
@@ -982,7 +982,7 @@ export function renderDistrictCourtIntel(data: DistrictCourtIntelData): string {
   }
 
   // Prosecution Patterns (aggregated, no names)
-  body += sectionHeader("Prosecution Patterns — Motion Grant Rates");
+  body += sectionHeader("Prosecution Patterns, Motion Grant Rates");
   if (data.prosecutionPatterns.length > 0) {
     // Aggregate by motion_type
     const byType = new Map<string, { totalGrant: number; totalSize: number }>();
@@ -1010,7 +1010,7 @@ export function renderDistrictCourtIntel(data: DistrictCourtIntelData): string {
       const avgRate = agg.totalSize > 0 ? (agg.totalGrant / agg.totalSize) : null;
       body += `<tr style="border-bottom: 1px solid #1C1917;">
         <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(type)}</td>
-        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${avgRate != null ? `${avgRate.toFixed(1)}%` : "—"}</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${avgRate != null ? `${avgRate.toFixed(1)}%` : ", "}</td>
         <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${agg.totalSize.toLocaleString()}</td>
       </tr>`;
     }
@@ -1019,7 +1019,7 @@ export function renderDistrictCourtIntel(data: DistrictCourtIntelData): string {
     body += noDataMessage("prosecution pattern");
   }
 
-  return wrapReport(`District Court Intelligence — ${data.stateName}`, body, totalSources);
+  return wrapReport(`District Court Intelligence, ${data.stateName}`, body, totalSources);
 }
 
 // ============================================================
@@ -1032,7 +1032,7 @@ const RIGHTS_CHECKLIST = [
   { right: "Right Against Unreasonable Search (4th Amendment)", detail: "Officers generally need a warrant to search you, your car, or your home. Exceptions exist (plain view, consent, search incident to arrest)." },
   { right: "Right to Know the Charges", detail: "You have the right to be informed of the charges against you." },
   { right: "Right to a Phone Call", detail: "After booking, you have the right to make a phone call. Use it to contact an attorney or someone who can arrange bail." },
-  { right: "Right to Refuse Consent to Search", detail: "You can refuse a search. Say clearly: 'I do not consent to a search.' Officers may search anyway — your refusal is on the record." },
+  { right: "Right to Refuse Consent to Search", detail: "You can refuse a search. Say clearly: 'I do not consent to a search.' Officers may search anyway, your refusal is on the record." },
   { right: "Right to Medical Attention", detail: "If you are injured or ill, you have the right to receive medical attention while in custody." },
   { right: "Right to Bail (in most cases)", detail: "For most non-capital offenses, you have the right to bail. Bail amounts are set by a judge at your first appearance." },
 ];
@@ -1066,7 +1066,7 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
   }
 
   // First 48 Hours Timeline
-  body += sectionHeader("The First 48 Hours — What to Do and When");
+  body += sectionHeader("The First 48 Hours, What to Do and When");
   body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
     <thead><tr style="background: #1C1917;">
       <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px; width: 120px;">Timeframe</th>
@@ -1081,7 +1081,7 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
   body += `</tbody></table>`;
 
   // What NOT to Say
-  body += sectionHeader("What NOT to Say — 5 Statements That Hurt Defendants");
+  body += sectionHeader("What NOT to Say, 5 Statements That Hurt Defendants");
   const badStatements = [
     { statement: '"I didn\'t do anything wrong"', why: "Implies you know what 'wrong' means in this context. Say nothing instead." },
     { statement: '"Can I just explain what happened?"', why: "Explanations become confessions. Wait for your attorney." },
@@ -1100,7 +1100,7 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
 
   // Agency Data (if available)
   if (data.agencyIncidents.length > 0) {
-    body += sectionHeader(`Agency Incident Data — ${escapeHtml(data.stateName)}`);
+    body += sectionHeader(`Agency Incident Data, ${escapeHtml(data.stateName)}`);
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
       Fatal encounters involving law enforcement agencies in your state since 2013.
       Agency-level data from Fatal Encounters database.
@@ -1138,17 +1138,17 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
     <div style="background: #1C1917; border: 1px solid #422006; border-radius: 8px; padding: 20px; margin-top: 32px; text-align: center;">
       <p style="color: #F59E0B; font-weight: bold; font-size: 16px; margin: 0 0 8px;">Know Your Arresting Officer</p>
       <p style="color: #A1A1AA; font-size: 14px; margin: 0 0 16px;">
-        Get a full background check on your arresting officer — cross-case reliability, testimony challenges,
+        Get a full background check on your arresting officer, cross-case reliability, testimony challenges,
         Brady violations, and employment history.
       </p>
       <a href="https://imnotanattorney.com/officer-background-check"
          style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
-        Officer Background Check — $97
+        Officer Background Check, $97
       </a>
     </div>
   `;
 
-  return wrapReport(`Arrest Survival Kit — ${data.stateName}`, body, totalSources);
+  return wrapReport(`Arrest Survival Kit, ${data.stateName}`, body, totalSources);
 }
 
 // ============================================================

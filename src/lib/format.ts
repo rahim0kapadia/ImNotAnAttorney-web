@@ -7,7 +7,7 @@ export function formatCents(cents: number): string {
   return "$" + (cents / 100).toFixed(2);
 }
 
-/** Alias for formatCents — used across operator pages. */
+/** Alias for formatCents, used across operator pages. */
 export const formatCurrency = formatCents;
 
 /** Formats an ISO date string as "Mar 20, 2026". */

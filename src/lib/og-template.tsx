@@ -1,5 +1,5 @@
 /**
- * og-template.tsx — Shared OG image template for all pages.
+ * og-template.tsx, Shared OG image template for all pages.
  *
  * Renders a branded 1200x630 PNG with:
  * - Playfair Display custom font for the title
@@ -48,7 +48,7 @@ export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProp
           position: "relative",
         }}
       >
-        {/* Amber accent bar — left edge */}
+        {/* Amber accent bar, left edge */}
         <div
           style={{
             position: "absolute",
@@ -60,7 +60,7 @@ export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProp
           }}
         />
 
-        {/* Logo watermark — right side */}
+        {/* Logo watermark, right side */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="https://imnotanattorney.com/brand/inaa-logo-sm.png"

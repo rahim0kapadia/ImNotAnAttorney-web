@@ -22,7 +22,7 @@ format: "1080x1920px (9:16), 48 seconds"
 ### Reel Script
 
 [SECOND 0-4]
-HOOK — Phone screen showing "Outgoing Call: [Attorney Name] — 2:47" then "Call Ended."
+HOOK, Phone screen showing "Outgoing Call: [Attorney Name], 2:47" then "Call Ended."
 Text overlay: "3 calls. 2 emails. 1 voicemail. Zero callbacks."
 Audio: Phone ringing, then silence.
 
@@ -33,7 +33,7 @@ Audio: Ticking clock sound.
 
 [SECOND 10-18]
 Person facing camera:
-"If this is your experience with your criminal defense attorney — I need you to hear something. This is NOT normal."
+"If this is your experience with your criminal defense attorney, I need you to hear something. This is NOT normal."
 Text overlay: "This is NOT normal."
 
 [SECOND 18-26]
@@ -52,10 +52,10 @@ Text overlay: "#1 complaint. Every state. Every year."
 [SECOND 34-42]
 "Here's what to do. Today."
 Text overlay:
-"1. Send a written email — not a call. Email creates a paper trail."
+"1. Send a written email, not a call. Email creates a paper trail."
 "2. Ask 5 specific questions about your case."
 "3. Give them 5 business days."
-"4. Document the date. Document the response — or lack of one."
+"4. Document the date. Document the response, or lack of one."
 
 [SECOND 42-48]
 Person facing camera:
@@ -67,7 +67,7 @@ Fade to: "Know What They Know." / "imnotanattorney.com"
 
 3 calls. 2 emails. 1 voicemail. Zero callbacks.
 
-If this is your experience with your defense attorney — this is NOT normal.
+If this is your experience with your defense attorney, this is NOT normal.
 
 The #1 bar complaint in every state, every year, is attorneys not returning client calls. You are not being difficult by expecting communication. You are exercising a right.
 

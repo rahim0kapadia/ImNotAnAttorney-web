@@ -2,7 +2,7 @@
 
 **Context:**
 - Repo: ImNotAnAttorney-web (+ sibling repos)
-- Problem: No Vercel API access for env var management — blocked on dashboard
+- Problem: No Vercel API access for env var management, blocked on dashboard
 - Key files: `.env.local` (web, parent), `.env` (engine)
 - Tech stack: N/A (env config only)
 - Key decisions: Project-scoped token (INAA-web only)
@@ -21,7 +21,7 @@ None.
 ### Task 1: Add VERCEL_TOKEN to ImNotAnAttorney-web/.env.local
 Append after QA coupon block:
 ```
-VERCEL_TOKEN=<redacted — see .env.local>
+VERCEL_TOKEN=<redacted, see .env.local>
 VERCEL_PROJECT_ID=prj_fgx7OUbudHbS2WrfoaLKb07jJAnB
 VERCEL_TEAM_ID=team_UEzHXQJJI46GEPEYeFspl1Pq
 ```

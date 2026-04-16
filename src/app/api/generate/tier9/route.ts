@@ -1,5 +1,5 @@
 /**
- * @file POST /api/generate/tier9 — Operator trigger for Tier 9 report generation.
+ * @file POST /api/generate/tier9, Operator trigger for Tier 9 report generation.
  *
  * Same pattern as /api/generate/standalone: validates auth, checks idempotency,
  * then calls generateTier9Report() synchronously (DB queries only, <5s).
@@ -80,13 +80,13 @@ export async function POST(req: NextRequest) {
   // Require intake data
   if (!order.standalone_intake) {
     return NextResponse.json(
-      { error: "No intake data — customer has not completed the form yet" },
+      { error: "No intake data, customer has not completed the form yet" },
       { status: 400 }
     );
   }
 
   // Generate synchronously (DB queries only, <5s).
-  // generateTier9Report handles clearing old token atomically — only
+  // generateTier9Report handles clearing old token atomically, only
   // nullifies the old token AFTER the new report is fully generated.
   try {
     await generateTier9Report(orderId, force);

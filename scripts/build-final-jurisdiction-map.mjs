@@ -7,7 +7,7 @@
  *
  * Memory-efficient: only stores docket_ids we care about (~unique count from clusters).
  *
- * NOTE: This is the authoritative merger — produces cluster-jurisdiction-map.json.
+ * NOTE: This is the authoritative merger, produces cluster-jurisdiction-map.json.
  * extract-docket-courts.mjs --merge produces cluster-jurisdiction-map-v2.json as an
  * alternative path. Both files are kept; neither replaces the other.
  *

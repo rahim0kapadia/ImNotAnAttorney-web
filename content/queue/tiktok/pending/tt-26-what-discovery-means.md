@@ -10,7 +10,7 @@ topic: What "discovery" means and why it matters
 blog_slug: null
 estimated_duration: 45s
 format: Standard (document close-ups + voiceover)
-suggested_sound: "Original audio — investigative voiceover + tense ambient"
+suggested_sound: "Original audio, investigative voiceover + tense ambient"
 suggested_posting_time: "Monday 7:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Monday 7:00 PM EST"
 
 **Format**: Standard
 **Duration**: 45 seconds
-**Suggested sound**: Original audio — investigative voiceover + tense ambient
+**Suggested sound**: Original audio, investigative voiceover + tense ambient
 **Suggested posting time**: Monday 7:00 PM EST
 
 ---
@@ -30,11 +30,11 @@ suggested_posting_time: "Monday 7:00 PM EST"
 
 [SECOND 1-3]
 **Visual**: Cut to person holding a thick stack of papers.
-**Audio/Voiceover**: "Discovery is every piece of evidence the prosecution has against you — and they're legally required to give it to you. But most defendants never see it."
+**Audio/Voiceover**: "Discovery is every piece of evidence the prosecution has against you, and they're legally required to give it to you. But most defendants never see it."
 
 [SECOND 3-12]
 **Visual**: Zooming into different document types, each labeled.
-**Audio/Voiceover**: "Police reports — the officer's version of what happened. Read it. Compare it to what you remember. Witness statements — do they match each other? Do they match the officer's report? Lab results — do the numbers match the field test? Body cam footage — does it show what the report says?"
+**Audio/Voiceover**: "Police reports, the officer's version of what happened. Read it. Compare it to what you remember. Witness statements, do they match each other? Do they match the officer's report? Lab results, do the numbers match the field test? Body cam footage, does it show what the report says?"
 **Text overlay**:
 - "Police reports: their version"
 - "Witness statements: do they match?"
@@ -48,7 +48,7 @@ suggested_posting_time: "Monday 7:00 PM EST"
 
 [SECOND 22-32]
 **Visual**: Cut to person, serious.
-**Audio/Voiceover**: "Your attorney should be doing three things with discovery. One — reading every page, not skimming. Two — filing a Brady demand — a formal request for any evidence that helps your defense. Three — filing a motion to compel if anything is missing. If they're doing none of these, your discovery is sitting in a folder unopened."
+**Audio/Voiceover**: "Your attorney should be doing three things with discovery. One, reading every page, not skimming. Two, filing a Brady demand, a formal request for any evidence that helps your defense. Three, filing a motion to compel if anything is missing. If they're doing none of these, your discovery is sitting in a folder unopened."
 **Text overlay**:
 - "1. Read every page"
 - "2. File Brady demand"
@@ -56,7 +56,7 @@ suggested_posting_time: "Monday 7:00 PM EST"
 
 [SECOND 32-40]
 **Visual**: Hands placing the discovery folder on a desk next to a notebook and pen. Setting up to read.
-**Audio/Voiceover**: "And here's what YOU should be doing — request a copy. Read it yourself. You lived these events. You'll spot things your attorney won't. Write down every question. Bring the list to your next meeting."
+**Audio/Voiceover**: "And here's what YOU should be doing, request a copy. Read it yourself. You lived these events. You'll spot things your attorney won't. Write down every question. Bring the list to your next meeting."
 **Text overlay**: "Request your copy. Read it. Write questions."
 
 [SECOND 40-45]
@@ -78,5 +78,5 @@ Discovery folder open on a desk with documents fanned out. Red pen circles visib
 ---
 
 **Context**: "What is discovery in a court case" is a beginner-level search query that captures defendants at the start of their journey. This educational content positions INNA as the definitive resource for understanding the process.
-**Loop strategy**: Opens with the folder being opened, ends with the folder open and annotated — the visual arc from "received" to "studied" invites rewatching.
+**Loop strategy**: Opens with the folder being opened, ends with the folder open and annotated, the visual arc from "received" to "studied" invites rewatching.
 **KPI target**: Saves (educational reference content)

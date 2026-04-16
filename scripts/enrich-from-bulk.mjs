@@ -1,5 +1,5 @@
 /**
- * Enrich case_feature_vectors from LOCAL BULK CSV files — no API calls.
+ * Enrich case_feature_vectors from LOCAL BULK CSV files, no API calls.
  *
  * Phase 1: Stream opinion-clusters bz2 (2.3GB) → extract case_name_full, posture,
  *          disposition, headmatter for matching cluster_ids → party_side + outcome
@@ -8,9 +8,9 @@
  * Phase 3: Batch-update features jsonb in Supabase
  *
  * Gotchas (from cl-bulk-data-defensive rule):
- *   - CL CSVs quote ALL values — strip quotes before matching
+ *   - CL CSVs quote ALL values, strip quotes before matching
  *   - relax_quotes: true, relax_column_count: true (legal text has unescaped quotes)
- *   - ONE streamer at a time (no concurrent CSV streams — OOM on Windows)
+ *   - ONE streamer at a time (no concurrent CSV streams, OOM on Windows)
  *   - try-catch around for-await to collect partial data on crash
  *
  * Usage:
@@ -237,10 +237,10 @@ async function phase1(targetIds, enrichments) {
   // Prefer decompressed CSV (fast); fall back to bzcat on bz2 (slow)
   const useDecompressed = fs.existsSync(CLUSTERS_CSV);
   const source = useDecompressed ? CLUSTERS_CSV : CLUSTERS_BZ2;
-  console.log(`\n=== PHASE 1: Streaming opinion-clusters (${useDecompressed ? "decompressed CSV" : "bz2 via bzcat — SLOW, decompress first!"}) ===`);
+  console.log(`\n=== PHASE 1: Streaming opinion-clusters (${useDecompressed ? "decompressed CSV" : "bz2 via bzcat, SLOW, decompress first!"}) ===`);
 
   if (!fs.existsSync(source)) {
-    console.error("Missing:", source, "— decompress with: bzcat opinion-clusters-2026-03-31.csv.bz2 > opinion-clusters.csv");
+    console.error("Missing:", source, ", decompress with: bzcat opinion-clusters-2026-03-31.csv.bz2 > opinion-clusters.csv");
     return;
   }
 
@@ -479,12 +479,12 @@ async function main() {
   // Enrichments map: cluster_id → { outcome, party_side, motion_types }
   const enrichments = new Map();
 
-  // Phase 1: Cluster metadata (sequential — one CSV at a time per gotcha rule)
+  // Phase 1: Cluster metadata (sequential, one CSV at a time per gotcha rule)
   if (onlyPhase === 0 || onlyPhase === 1) {
     await phase1(targetIds, enrichments);
   }
 
-  // Phase 2: Opinion text (sequential — after Phase 1 completes)
+  // Phase 2: Opinion text (sequential, after Phase 1 completes)
   if (onlyPhase === 0 || onlyPhase === 2) {
     await phase2(targetIds, enrichments);
   }

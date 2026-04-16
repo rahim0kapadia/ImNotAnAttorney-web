@@ -13,7 +13,7 @@
  * Usage:
  *   node scripts/check-price-staleness.mjs
  *
- * Design note: no file-level regex — uses indexOf loops and string methods
+ * Design note: no file-level regex, uses indexOf loops and string methods
  * to comply with the no-regex-on-files hook.
  */
 
@@ -60,7 +60,7 @@ function collectTsFiles(dir) {
 }
 
 /**
- * Parse a dollar string like "$1,432" or "$197" into an integer (cents * 100 not needed —
+ * Parse a dollar string like "$1,432" or "$197" into an integer (cents * 100 not needed,
  * we compare display strings, so just parse to whole dollars).
  * Returns NaN if unparseable.
  */
@@ -115,7 +115,7 @@ function parseTierPrices(tiersText) {
 
     // Reset slug tracking when we hit the closing brace of a tier block
     // (heuristic: a line that is just `},` at the root level)
-    // This isn't perfect but doesn't need to be — slug resets on next slug line anyway
+    // This isn't perfect but doesn't need to be, slug resets on next slug line anyway
   }
 
   return prices;
@@ -233,7 +233,7 @@ function extractPlaybookTotals(text) {
       }
     }
 
-    // Detect `valueStack: {` — the next totalValue belongs to this slug
+    // Detect `valueStack: {`, the next totalValue belongs to this slug
     if (inSlug && trimmed === "valueStack: {") {
       afterValueStack = true;
     }
@@ -276,8 +276,8 @@ for (const filePath of allTsFiles) {
   for (const { lineNum, slug, valueStr, filePath: fp } of anchors) {
     const productPrice = tierPrices.get(slug);
     if (!productPrice) {
-      // Unknown slug — warn but don't fail (might be intentional)
-      console.warn(`  WARN: ${path.relative(ROOT, fp)}:${lineNum} — anchor:${slug} — slug not found in tiers.ts`);
+      // Unknown slug, warn but don't fail (might be intentional)
+      console.warn(`  WARN: ${path.relative(ROOT, fp)}:${lineNum}, anchor:${slug}, slug not found in tiers.ts`);
       continue;
     }
 
@@ -286,14 +286,14 @@ for (const filePath of allTsFiles) {
 
     if (isNaN(anchorDollars) || isNaN(productDollars)) {
       failures.push(
-        `  ${path.relative(ROOT, fp)}:${lineNum} — anchor:${slug} value ${valueStr} unparseable (product price: ${productPrice})`
+        `  ${path.relative(ROOT, fp)}:${lineNum}, anchor:${slug} value ${valueStr} unparseable (product price: ${productPrice})`
       );
       continue;
     }
 
     if (anchorDollars < productDollars) {
       failures.push(
-        `  ${path.relative(ROOT, fp)}:${lineNum} — anchor:${slug} value ${valueStr} < product price ${productPrice} FAIL`
+        `  ${path.relative(ROOT, fp)}:${lineNum}, anchor:${slug} value ${valueStr} < product price ${productPrice} FAIL`
       );
     }
   }
@@ -311,23 +311,23 @@ for (const slug of PLAYBOOK_SLUGS) {
   const totalValueStr = totalValues.get(slug);
 
   if (anchorSum === undefined) {
-    sumFailures.push(`  playbook ${slug} — no anchor values found`);
+    sumFailures.push(`  playbook ${slug}, no anchor values found`);
     continue;
   }
   if (!totalValueStr) {
-    sumFailures.push(`  playbook ${slug} — no totalValue found`);
+    sumFailures.push(`  playbook ${slug}, no totalValue found`);
     continue;
   }
 
   const totalValueDollars = parseDollar(totalValueStr);
   if (isNaN(totalValueDollars)) {
-    sumFailures.push(`  playbook ${slug} — totalValue ${totalValueStr} unparseable`);
+    sumFailures.push(`  playbook ${slug}, totalValue ${totalValueStr} unparseable`);
     continue;
   }
 
   if (anchorSum !== totalValueDollars) {
     sumFailures.push(
-      `  playbook ${slug} — totalValue ${totalValueStr} ($${totalValueDollars}) != anchor sum $${anchorSum} FAIL`
+      `  playbook ${slug}, totalValue ${totalValueStr} ($${totalValueDollars}) != anchor sum $${anchorSum} FAIL`
     );
   }
 }

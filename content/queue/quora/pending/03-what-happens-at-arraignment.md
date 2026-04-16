@@ -18,14 +18,14 @@ Your first court date is almost certainly an arraignment, not a trial. Confusing
 
 At arraignment, three things happen:
 1. The judge reads the charges against you
-2. You enter a plea (almost always "not guilty" at this stage -- even if you plan to negotiate later)
+2. You enter a plea (almost always "not guilty" at this stage, even if you plan to negotiate later)
 3. The judge sets conditions for release (bail, license restrictions, ignition interlock, etc.)
 
 It typically takes 5-15 minutes. You will probably not testify. You will probably not need to say anything beyond "not guilty, Your Honor."
 
 **Before you go:**
 
-Dress like a job interview, not a nightclub. Khakis and a button-down. Judges notice. Arrive 30 minutes early. Bring your ID, your case number if you have it, a pen, and paper. Leave your phone on silent -- judges have held people in contempt for a ringing phone.
+Dress like a job interview, not a nightclub. Khakis and a button-down. Judges notice. Arrive 30 minutes early. Bring your ID, your case number if you have it, a pen, and paper. Leave your phone on silent, judges have held people in contempt for a ringing phone.
 
 **What actually matters:** whether you have counsel. If you can't afford an attorney, tell the judge you're requesting appointed counsel. Courts are required to provide this under Gideon v. Wainwright. If you haven't spoken to an attorney by that date, you can request a continuance. Courts grant these routinely for first appearances.
 
@@ -40,6 +40,6 @@ Dress like a job interview, not a nightclub. Khakis and a button-down. Judges no
 4. When should I expect to hear from you next?
 5. Is there anything I should be doing? (Character letters, treatment programs, employment documentation)
 
-The biggest mistake defendants make at arraignment is talking to anyone other than their attorney about their case. Before, during, or after court -- say nothing to police, prosecutors, or co-defendants. The only words you need: "I'd like to speak with my attorney."
+The biggest mistake defendants make at arraignment is talking to anyone other than their attorney about their case. Before, during, or after court, say nothing to police, prosecutors, or co-defendants. The only words you need: "I'd like to speak with my attorney."
 
 **Image direction**: Simple courthouse illustration with arrows showing the arraignment flow | **Republish to**: Blog post link in bio

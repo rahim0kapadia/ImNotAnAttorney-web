@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/demand-score — Daily demand scoring pipeline
+ * @file /api/cron/demand-score, Daily demand scoring pipeline
  *
  * Computes demand scores, quadrant classifications (GOLD_MINE / RED_OCEAN /
  * RISKY_BET / DEAD_ZONE), content gaps, and emerging topics from
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
   if (!auth.authorized) return auth.error;
 
   // ── Idempotency guard (prevent duplicate runs within 23h window) ──
-  // staleThresholdMs=180_000 (3min) because maxDuration=120s — gives a 60s buffer over max execution time
+  // staleThresholdMs=180_000 (3min) because maxDuration=120s, gives a 60s buffer over max execution time
   const lock = await acquireCronLock("demand-score", 23 * 60 * 60 * 1000, { staleThresholdMs: 180_000 });
   if (!lock.shouldRun) {
     return NextResponse.json({ skipped: true, reason: lock.reason });

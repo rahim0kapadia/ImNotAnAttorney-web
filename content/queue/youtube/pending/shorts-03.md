@@ -38,7 +38,7 @@ imnotanattorney.com/score
 
 [0:18-0:32] QUESTION 2:
 [TEXT ON SCREEN: "#2: What are the 3 biggest weaknesses in the prosecution's case?"]
-"Number two. What are the three biggest weaknesses in the prosecution's case? Every case has weaknesses. Every single one. If your attorney recommends a plea and can't name three weaknesses in the State's case — they haven't done the analysis required to give you an informed recommendation."
+"Number two. What are the three biggest weaknesses in the prosecution's case? Every case has weaknesses. Every single one. If your attorney recommends a plea and can't name three weaknesses in the State's case, they haven't done the analysis required to give you an informed recommendation."
 
 [0:32-0:46] QUESTION 3:
 [TEXT ON SCREEN: "#3: What are ALL the collateral consequences?"]
@@ -46,7 +46,7 @@ imnotanattorney.com/score
 
 [0:46-0:56] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com/score"]
-"The plea decision is the biggest decision most defendants ever face. Make it with information, not fear. Free Case Progress Score — link in bio. Know What They Know."
+"The plea decision is the biggest decision most defendants ever face. Make it with information, not fear. Free Case Progress Score, link in bio. Know What They Know."
 
 ## On-Screen Text
 - [0:00] "Before you sign ANYTHING"

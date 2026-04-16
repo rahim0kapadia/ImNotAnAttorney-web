@@ -12,7 +12,7 @@ target_groups: ["Bail Bond Support Groups", "DUI Support Groups", "State-Specifi
 blog_link: "/blog/what-happens-at-arraignment"
 ---
 
-## Facebook Post: Resource — Arraignment Guide
+## Facebook Post: Resource, Arraignment Guide
 
 **Type**: Image post (4:5 ratio)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -32,8 +32,8 @@ What actually happens, step by step:
 1. You arrive 30 minutes early. Dress like a job interview.
 2. You check in with the clerk. You sit down. You wait. Possibly for hours.
 3. Your name is called. You walk to the front. Your attorney should be with you.
-4. The charges are read. Listen carefully — make sure they match what you were arrested for.
-5. You enter a plea. Your attorney will almost certainly say "not guilty." This is standard. It does NOT mean you're lying — it means you're preserving your rights.
+4. The charges are read. Listen carefully, make sure they match what you were arrested for.
+5. You enter a plea. Your attorney will almost certainly say "not guilty." This is standard. It does NOT mean you're lying, it means you're preserving your rights.
 6. Bail conditions are discussed or confirmed.
 7. The next court date is set. Write it down.
 8. You leave.
@@ -62,6 +62,6 @@ First comment (pinned): "We wrote a detailed plain-English guide covering everyt
 
 ---
 
-**Share trigger**: Someone who just got arrested or bonded out gets sent this by a friend or family member: "Your court date is next week — read this." A partner of a defendant shares it in a prison wives group: "I wish I had seen this before his first court date."
+**Share trigger**: Someone who just got arrested or bonded out gets sent this by a friend or family member: "Your court date is next week, read this." A partner of a defendant shares it in a prison wives group: "I wish I had seen this before his first court date."
 **Context**: The arraignment is the single most anxiety-inducing event for first-time defendants. This post removes the mystery and gives concrete steps. Peak search/share time is immediately after arrest.
-**KPI target**: Saves (high — people bookmark this for their upcoming date) + Messenger shares to specific people + blog traffic
+**KPI target**: Saves (high, people bookmark this for their upcoming date) + Messenger shares to specific people + blog traffic

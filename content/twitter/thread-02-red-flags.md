@@ -40,7 +40,7 @@ Every case has potential motions. If zero exist, they haven't looked.
 
 Discovery is the evidence. It's your case. You have a RIGHT to see it.
 
-If your attorney says "don't worry about that" or "you don't need to see it" — that's a violation of your right to know.
+If your attorney says "don't worry about that" or "you don't need to see it", that's a violation of your right to know.
 
 Demand access. Read it yourself if needed.
 
@@ -52,13 +52,13 @@ Demand access. Read it yourself if needed.
 
 A good attorney presents the offer, explains the pros and cons, discusses trial risk, and lets YOU decide.
 
-If they pressure you to plead quickly without analysis — they're managing their schedule, not your defense.
+If they pressure you to plead quickly without analysis, they're managing their schedule, not your defense.
 
 ---
 
 5/ Red Flag #5: They don't know basic facts about your case.
 
-If your attorney mixes up your charges, confuses you with another client, or asks you to remind them about key details — they have too many cases.
+If your attorney mixes up your charges, confuses you with another client, or asks you to remind them about key details, they have too many cases.
 
 Your case isn't getting attention. You're getting processed.
 
@@ -66,7 +66,7 @@ Your case isn't getting attention. You're getting processed.
 
 6/ Red Flag #6: Nothing happens between court dates.
 
-The real work happens between appearances — investigation, motion drafting, witness interviews.
+The real work happens between appearances, investigation, motion drafting, witness interviews.
 
 If the only activity on your case is showing up and asking for continuances, nothing is being done.
 
@@ -98,7 +98,7 @@ A good attorney respects your right to know, even when explaining things takes l
 
 Ask: "What's our theory of defense?"
 
-If they stumble, get vague, or say "we'll see what they offer" — they don't have one.
+If they stumble, get vague, or say "we'll see what they offer", they don't have one.
 
 Every case needs a story. If your attorney can't tell you what it is, they're not defending you.
 
@@ -108,7 +108,7 @@ Every case needs a story. If your attorney can't tell you what it is, they're no
 
 Most attorneys aren't evil. Most are just overwhelmed.
 
-But the result is the same — you're paying for a defense you're not getting.
+But the result is the same, you're paying for a defense you're not getting.
 
 The solution?
 

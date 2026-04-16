@@ -1,5 +1,5 @@
 /**
- * @fileoverview Blog post system — reads MDX files from the filesystem.
+ * @fileoverview Blog post system, reads MDX files from the filesystem.
  *
  * Blog posts are stored as MDX files in `content/blog/`. Each file uses
  * YAML frontmatter for metadata (title, date, tags, excerpt, author, category)
@@ -12,7 +12,7 @@
  *   - Looking up individual posts by slug (filename without .mdx)
  *   - Finding related posts by shared category or overlapping tags
  *   - Tiered gate enforcement on .qa-state sidecar files:
- *       SAFETY gates (humanizer, anti-hallucination) block rendering — posts
+ *       SAFETY gates (humanizer, anti-hallucination) block rendering, posts
  *       with fabricated data or AI-pattern detection failures never reach readers.
  *       QUALITY gates (slop, UPL, DNA) are tracked and logged but non-blocking,
  *       enabling progressive quality improvement without killing the blog.
@@ -30,7 +30,7 @@
  * not from __dirname, so it works correctly in both dev and production.
  *
  * QA gate environment variables:
- *   - BLOG_QA_BYPASS=1  Local dev only — allow all posts through without gate
+ *   - BLOG_QA_BYPASS=1  Local dev only, allow all posts through without gate
  *                       enforcement. Logs a loud warning. Never set in prod.
  *
  * LLM gates run session-native via /blog-pipeline skill. Humanizer gate
@@ -65,7 +65,7 @@ const QA_GATE_NAMES = [
 ] as const;
 
 /**
- * Safety gates — must pass for a post to render. These catch content that
+ * Safety gates, must pass for a post to render. These catch content that
  * could directly harm defendants (fabricated legal data, AI-pattern detection).
  *
  * Quality gates (slop, upl, dna) are tracked in the sidecar and logged as
@@ -92,8 +92,8 @@ interface QaGateRecord {
   /** True if the gate returned a definitive pass. */
   passed: boolean;
   /**
-   * `"checked"` — gate actually ran to completion.
-   * `"unchecked"` — gate could not run (error, timeout, parse failure, etc.).
+   * `"checked"`, gate actually ran to completion.
+   * `"unchecked"`, gate could not run (error, timeout, parse failure, etc.).
    * Always paired with a `reason`.
    */
   status?: "checked" | "unchecked";
@@ -157,7 +157,7 @@ function isAllowedUnderQaPolicy(slug: string): boolean {
   if (process.env.BLOG_QA_BYPASS === "1") {
     warnOnce(
       "bypass",
-      "[blog-qa] WARNING: BLOG_QA_BYPASS=1 — every post is rendering without gate enforcement. Dev use only."
+      "[blog-qa] WARNING: BLOG_QA_BYPASS=1, every post is rendering without gate enforcement. Dev use only."
     );
     return true;
   }
@@ -166,15 +166,15 @@ function isAllowedUnderQaPolicy(slug: string): boolean {
   if (!sidecar) {
     warnOnce(
       `missing:${slug}`,
-      `[blog-qa] BLOCKED: ${slug} — no .qa-state sidecar. Run: node scripts/qa-existing-post.mjs content/blog/${slug}.mdx`
+      `[blog-qa] BLOCKED: ${slug}, no .qa-state sidecar. Run: node scripts/qa-existing-post.mjs content/blog/${slug}.mdx`
     );
     return false;
   }
 
-  // All gates pass — no warnings needed.
+  // All gates pass, no warnings needed.
   if (sidecar.all_passed === true) return true;
 
-  // Check safety gates — these block rendering.
+  // Check safety gates, these block rendering.
   const failingSafetyGates = SAFETY_GATES.filter((name) => {
     const g = sidecar.gates[name];
     if (!g) return true;
@@ -190,14 +190,14 @@ function isAllowedUnderQaPolicy(slug: string): boolean {
   if (failingQualityGates.length > 0) {
     warnOnce(
       `quality:${slug}`,
-      `[blog-qa] QUALITY: ${slug} — failing quality gates: ${failingQualityGates.join(", ")} (non-blocking)`
+      `[blog-qa] QUALITY: ${slug}, failing quality gates: ${failingQualityGates.join(", ")} (non-blocking)`
     );
   }
 
   if (failingSafetyGates.length > 0) {
     warnOnce(
       `fail:${slug}`,
-      `[blog-qa] BLOCKED: ${slug} — failing safety gates: ${failingSafetyGates.join(", ")}`
+      `[blog-qa] BLOCKED: ${slug}, failing safety gates: ${failingSafetyGates.join(", ")}`
     );
     return false;
   }
@@ -254,7 +254,7 @@ export interface BlogPost {
  *
  * Reads every .mdx file from the blog directory, parses frontmatter,
  * computes reading time, and sorts descending by date. Posts that have not
- * passed every QA gate are filtered out — see the QA gate environment
+ * passed every QA gate are filtered out, see the QA gate environment
  * variable documentation at the top of this file for override policy.
  * Returns an empty array if the blog directory does not exist (e.g., fresh
  * clone without content).
@@ -281,7 +281,7 @@ export function getAllPosts(): BlogPost[] {
  *
  * Parses the MDX file's frontmatter with gray-matter and computes reading
  * time. Missing frontmatter fields fall back to sensible defaults. Hard-gated
- * on the .qa-state sidecar — returns null for any post that is not allowed
+ * on the .qa-state sidecar, returns null for any post that is not allowed
  * under the current QA policy (see `isAllowedUnderQaPolicy`).
  *
  * @param slug - The URL slug / filename stem (e.g., "motion-deadlines").

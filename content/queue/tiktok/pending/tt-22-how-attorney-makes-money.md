@@ -10,7 +10,7 @@ topic: How your attorney actually makes money off your case
 blog_slug: how-your-attorney-makes-money
 estimated_duration: 60s
 format: Standard (talking head + diagrams)
-suggested_sound: "Original audio — measured voiceover + money-register ambient beat"
+suggested_sound: "Original audio, measured voiceover + money-register ambient beat"
 suggested_posting_time: "Wednesday 8:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Wednesday 8:00 PM EST"
 
 **Format**: Standard
 **Duration**: 60 seconds
-**Suggested sound**: Original audio — measured voiceover + clean beat
+**Suggested sound**: Original audio, measured voiceover + clean beat
 **Suggested posting time**: Wednesday 8:00 PM EST
 
 ---
@@ -34,12 +34,12 @@ suggested_posting_time: "Wednesday 8:00 PM EST"
 
 [SECOND 3-12]
 **Visual**: Split screen. Left: "Public defender." Right: "Private attorney." Graphics build under each.
-**Audio/Voiceover**: "Public defenders — the problem isn't the people. Many are skilled and dedicated. The problem is the math. The ABA recommends a max of 150 felonies per attorney per year. Many carry 300 to 500. Something has to give, and it's usually your case."
+**Audio/Voiceover**: "Public defenders, the problem isn't the people. Many are skilled and dedicated. The problem is the math. The ABA recommends a max of 150 felonies per attorney per year. Many carry 300 to 500. Something has to give, and it's usually your case."
 **Text overlay**: "ABA max: 150 cases. Reality: 300-500 cases."
 
 [SECOND 12-22]
 **Visual**: Right side expands. Private attorney economics.
-**Audio/Voiceover**: "Private attorneys — different math, same problem. You pay a flat retainer — $10,000 to $50,000 for a serious felony. After you pay, every hour they spend on your case is an hour they can't bill someone else. A quick plea is profitable. A six-month motion battle is expensive. Trial? Even more."
+**Audio/Voiceover**: "Private attorneys, different math, same problem. You pay a flat retainer, $10,000 to $50,000 for a serious felony. After you pay, every hour they spend on your case is an hour they can't bill someone else. A quick plea is profitable. A six-month motion battle is expensive. Trial? Even more."
 **Text overlay**: "Quick plea = profitable. Motion battle = expensive. Trial = very expensive."
 
 [SECOND 22-32]
@@ -48,13 +48,13 @@ suggested_posting_time: "Wednesday 8:00 PM EST"
 **Text overlay**: "You hired the partner. You got the associate. Get it in writing."
 
 [SECOND 32-42]
-**Visual**: Cut to person. Tone shifts — acknowledging good attorneys exist.
+**Visual**: Cut to person. Tone shifts, acknowledging good attorneys exist.
 **Audio/Voiceover**: "This isn't about all attorneys being bad. Many are genuinely fighting. But you can't evaluate whether YOUR attorney is fighting unless you understand the economic pressures shaping their behavior. The defendants who do best aren't the ones who hope their attorney is working. They're the ones who know how to verify it."
 **Text overlay**: "Don't hope they're working. Verify it."
 
 [SECOND 42-52]
-**Visual**: Text list appearing — "Signs of aligned interests."
-**Audio/Voiceover**: "What good looks like: they explain the plea AND the case for trial. They file motions even when it costs them time. They share full discovery with you. They're honest about realistic outcomes. And — they return your calls."
+**Visual**: Text list appearing, "Signs of aligned interests."
+**Audio/Voiceover**: "What good looks like: they explain the plea AND the case for trial. They file motions even when it costs them time. They share full discovery with you. They're honest about realistic outcomes. And, they return your calls."
 **Text overlay**:
 - "Explains plea AND trial options"
 - "Files motions"
@@ -62,14 +62,14 @@ suggested_posting_time: "Wednesday 8:00 PM EST"
 - "Returns calls"
 
 [SECOND 52-60]
-**Visual**: Calculator from the opening — but now showing a different equation: "Questions asked x Documentation = Accountability."
+**Visual**: Calculator from the opening, but now showing a different equation: "Questions asked x Documentation = Accountability."
 **Text overlay**: "Understand the economics. Ask the questions. imnotanattorney.com"
 **Audio**: Calculator click. Beat resolves.
 
 ---
 
 ### Caption
-Your public defender gets 7.5 minutes per week on your case. Your private attorney makes more money resolving fast than fighting hard. This isn't cynicism — it's math. Understand the economics, then decide if your attorney's incentives align with yours.
+Your public defender gets 7.5 minutes per week on your case. Your private attorney makes more money resolving fast than fighting hard. This isn't cynicism, it's math. Understand the economics, then decide if your attorney's incentives align with yours.
 
 ### Hashtags
 #criminaldefense #publicdefender #privatevspublic #legalfees #attorneybusiness #defendantrights #knowyourrights
@@ -80,5 +80,5 @@ Calculator showing "7.5 minutes per client." Text: "The Math Your Attorney Won't
 ---
 
 **Context**: This is based directly on INNA's blog post "How Your Attorney Makes Money." The economic analysis is unique to INNA's content strategy and positions the brand as an honest broker of information. Extremely engaging and shareable.
-**Loop strategy**: Opens and closes with the calculator — but the equations change from helpless math to empowered action.
+**Loop strategy**: Opens and closes with the calculator, but the equations change from helpless math to empowered action.
 **KPI target**: Shares (this reframes the entire attorney-client relationship)

@@ -1,7 +1,7 @@
 # Charge Taxonomy: IL/IN/IA/KS Enrichment + Case Law
 
 **Date:** 2026-04-06
-**Status:** Approved by user request — generate ENRICHMENT and CASE LAW data for 4 jurisdictions
+**Status:** Approved by user request, generate ENRICHMENT and CASE LAW data for 4 jurisdictions
 
 ## Goal
 
@@ -32,7 +32,7 @@ Total: 366 charges across 4 jurisdictions.
 
 ## Files to Modify
 
-None — purely additive.
+None, purely additive.
 
 ## Schemas
 

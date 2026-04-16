@@ -25,7 +25,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 // consider Vercel KV or Upstash Redis as a more durable fallback.
 const memoryStore = new Map<string, number[]>();
 const MEMORY_WINDOW_MS = 60_000; // 1 minute
-const MEMORY_MAX_REQUESTS = 3; // conservative — mirrors tightest DB limit (3/hr for magic links)
+const MEMORY_MAX_REQUESTS = 3; // conservative, mirrors tightest DB limit (3/hr for magic links)
 const MEMORY_MAX_KEYS = 10_000; // cap to prevent unbounded growth
 let lastCleanup = Date.now();
 
@@ -78,7 +78,7 @@ export async function checkRateLimit(
   });
 
   if (error) {
-    // Fail closed with in-memory fallback — don't allow unlimited requests
+    // Fail closed with in-memory fallback, don't allow unlimited requests
     console.error("[RateLimit] RPC error, using in-memory fallback:", error.message);
     const isLimited = memoryRateLimit(key);
     return { limited: isLimited };

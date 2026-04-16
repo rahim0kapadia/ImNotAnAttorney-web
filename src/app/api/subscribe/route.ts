@@ -155,7 +155,7 @@ export async function POST(req: NextRequest) {
     }
 
     // =========================================================================
-    // 4. WELCOME EMAIL — BAND-AWARE
+    // 4. WELCOME EMAIL, BAND-AWARE
     // Score-page subscribers with a band get a Score Artifact email (their full
     // score results, designed to be saved/forwarded to family). This replaces
     // the generic welcome for these subscribers.
@@ -164,7 +164,7 @@ export async function POST(req: NextRequest) {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 
     if (source === "score-page" && scoreBand && scoreValue !== null) {
-      // ── SCORE ARTIFACT EMAIL — immediate, trust-building, no CTA ──
+      // ── SCORE ARTIFACT EMAIL, immediate, trust-building, no CTA ──
       const bandLabel = scoreBand;
       const bandColors: Record<string, string> = {
         Critical: "#EF4444",
@@ -183,7 +183,7 @@ export async function POST(req: NextRequest) {
 
       await sendEmail({
         to: normalizedEmail,
-        subject: `Your Defense Milestone Score: ${scoreValue}/100 — what this means for your ${chargeLabel} case`,
+        subject: `Your Defense Milestone Score: ${scoreValue}/100, what this means for your ${chargeLabel} case`,
         unsubscribeEmail: normalizedEmail,
         html: `
           <h1 style="color: ${bandColor};">Your Defense Milestone Score: ${scoreValue}/100</h1>
@@ -201,25 +201,25 @@ export async function POST(req: NextRequest) {
           </div>
 
           <div style="margin: 20px 0; padding: 16px; border: 1px solid #3F3F46; background: #18181B; border-radius: 8px;">
-            <p style="color: #A1A1AA; font-style: italic; margin: 0;">If you're reading this for a spouse, parent, or child — the score page at <a href="${siteUrl}/score" style="color: #F59E0B;">${siteUrl}/score</a> is free, takes 60 seconds, and doesn't require an account. You can score their defense yourself if you know the case details.</p>
+            <p style="color: #A1A1AA; font-style: italic; margin: 0;">If you're reading this for a spouse, parent, or child, the score page at <a href="${siteUrl}/score" style="color: #F59E0B;">${siteUrl}/score</a> is free, takes 60 seconds, and doesn't require an account. You can score their defense yourself if you know the case details.</p>
           </div>
 
-          <p style="margin-top: 24px; color: #A1A1AA;">From here: we'll send you practical information about your case stage, never more than once a week. Unsubscribe any time — one click, no questions.</p>
+          <p style="margin-top: 24px; color: #A1A1AA;">From here: we'll send you practical information about your case stage, never more than once a week. Unsubscribe any time, one click, no questions.</p>
         `,
       }, { category: "score-artifact" });
     } else {
-      // ── GENERIC WELCOME — Discovery Checklist lead magnet ──
+      // ── GENERIC WELCOME, Discovery Checklist lead magnet ──
       await sendEmail({
         to: normalizedEmail,
         subject: "Your Discovery Checklist (Real Case Findings Inside)",
         unsubscribeEmail: normalizedEmail,
         html: `
           <h1 style="color: #F59E0B;">We were in your seat.</h1>
-          <p>One of us was facing trafficking charges in Florida. Paid thousands for an attorney who wouldn't return calls. Opened the discovery one night — found four issues the attorney never mentioned. That's why we built this.</p>
-          <p>Here's your free guide — the same evidence problems I found, turned into a checklist you can use on your case:</p>
+          <p>One of us was facing trafficking charges in Florida. Paid thousands for an attorney who wouldn't return calls. Opened the discovery one night, found four issues the attorney never mentioned. That's why we built this.</p>
+          <p>Here's your free guide, the same evidence problems I found, turned into a checklist you can use on your case:</p>
           <a href="${siteUrl}/resources" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px;">Read Your Discovery Checklist</a>
-          <p style="color: #A1A1AA;">Inside: 7 evidence problems from a real trafficking case — the weight that disappeared, the substance that changed, the fingerprints nobody mentioned, and 4 more. Plus the exact questions that expose each one.</p>
-          <p style="color: #A1A1AA;">Does any of this sound like your situation? If your attorney isn't answering your questions, our <a href="${siteUrl}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder</a> gives you 15 targeted questions built from YOUR case — starting at ${TIER_CORE["case-decoder"].priceDisplay}.</p>
+          <p style="color: #A1A1AA;">Inside: 7 evidence problems from a real trafficking case, the weight that disappeared, the substance that changed, the fingerprints nobody mentioned, and 4 more. Plus the exact questions that expose each one.</p>
+          <p style="color: #A1A1AA;">Does any of this sound like your situation? If your attorney isn't answering your questions, our <a href="${siteUrl}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder</a> gives you 15 targeted questions built from YOUR case, starting at ${TIER_CORE["case-decoder"].priceDisplay}.</p>
         `,
       }, { category: "welcome" });
     }

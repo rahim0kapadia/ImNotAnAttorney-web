@@ -1,5 +1,5 @@
 /**
- * Bulk Classify Cases — Download CL Clusters CSV, classify party_side locally
+ * Bulk Classify Cases, Download CL Clusters CSV, classify party_side locally
  *
  * Downloads the CourtListener opinion-clusters CSV (~2.28 GB bzip2).
  * Stream-parses it via bzcat, extracting syllabus + summary + disposition
@@ -119,7 +119,7 @@ function classifyText(text, court) {
     }
   }
 
-  // Holding excerpt — first substantive paragraph
+  // Holding excerpt, first substantive paragraph
   let holdingExcerpt = "";
   const paragraphs = text.split("\n");
   for (const p of paragraphs) {
@@ -162,7 +162,7 @@ function classifyText(text, court) {
   } else if (partySide === "PROSECUTION") {
     application = "Prosecution-favorable: " + (outcome || "conviction/ruling affirmed");
   } else if (partySide === "NEUTRAL") {
-    application = "Mixed signals — review holding for specific applicability";
+    application = "Mixed signals, review holding for specific applicability";
   }
 
   return { partySide, outcome, keyQuote, holdingExcerpt, isBinding, application };
@@ -265,7 +265,7 @@ function downloadFile(url, destPath) {
             const elapsed = (Date.now() - startTime) / 1000;
             const speed = (totalBytes / (1024 * 1024) / elapsed).toFixed(1);
             const pct = contentLength ? ` (${Math.floor(totalBytes / contentLength * 100)}%)` : "";
-            process.stdout.write(`  ${mb} MB${pct} — ${speed} MB/s\n`);
+            process.stdout.write(`  ${mb} MB${pct}, ${speed} MB/s\n`);
           }
         });
 
@@ -397,7 +397,7 @@ async function streamAndClassify(bz2Path, targetClusterIds, rowMap) {
       const firstComma = rawLine.indexOf(",");
       if (firstComma < 0) return;
       let clusterId = rawLine.slice(0, firstComma);
-      // CL clusters CSV wraps IDs in double quotes — strip them
+      // CL clusters CSV wraps IDs in double quotes, strip them
       if (clusterId.length >= 2 && clusterId[0] === '"' && clusterId[clusterId.length - 1] === '"') {
         clusterId = clusterId.slice(1, -1);
       }
@@ -547,13 +547,13 @@ async function main() {
 
   // Step 4: Generate SQL
   const sqlStatements = [];
-  sqlStatements.push("-- Bulk Classification — Generated " + new Date().toISOString());
+  sqlStatements.push("-- Bulk Classification, Generated " + new Date().toISOString());
   sqlStatements.push("-- Source: bulk-classify-cases.mjs (CL clusters CSV)");
   sqlStatements.push("");
 
   for (const [clusterId, result] of results) {
     // Update by cluster_id (not row id) so ALL statute_case_law rows
-    // sharing this CL opinion get the same classification — properties
+    // sharing this CL opinion get the same classification, properties
     // come from the opinion itself, not the per-statute row.
     let stmt = `UPDATE statute_case_law SET `;
     stmt += `party_side = ${esc(result.partySide)}`;
@@ -606,9 +606,9 @@ async function main() {
       process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} applied\n`);
     } catch (e) {
       batchErrors++;
-      console.error(`  Batch ${batchNum}: ERROR — ${e.message}`);
+      console.error(`  Batch ${batchNum}: ERROR, ${e.message}`);
       if (e.message.indexOf("429") >= 0) {
-        console.log("  Rate limited — waiting 10s...");
+        console.log("  Rate limited, waiting 10s...");
         await sleep(10000);
         try {
           await supabaseQuery(batch.join("\n"));

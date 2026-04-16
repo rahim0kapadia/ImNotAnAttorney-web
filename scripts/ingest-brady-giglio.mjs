@@ -85,7 +85,7 @@ async function main() {
   const $ = cheerio.load(mainHtml);
   const records = [];
 
-  // Parse officer entries from tables — structure varies by site version.
+  // Parse officer entries from tables, structure varies by site version.
   // Look for table rows with officer name, agency, state, reason.
   $("table tr").each((_, row) => {
     const cells = $(row).find("td");
@@ -103,9 +103,9 @@ async function main() {
 
   console.log(`Parsed ${records.length} officer records from Brady/Giglio list`);
   if (records.length === 0) {
-    console.log("No records found — site structure may have changed.");
+    console.log("No records found, site structure may have changed.");
     console.log("Save the HTML to data/bulk-verify/external-intel/brady-giglio-cache.html for manual inspection.");
-    // Don't exit with error — the site structure may need manual adaptation
+    // Don't exit with error, the site structure may need manual adaptation
     process.exit(0);
   }
 

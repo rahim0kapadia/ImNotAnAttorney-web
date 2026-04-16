@@ -10,7 +10,7 @@ topic: What to do when your attorney won't return calls
 blog_slug: attorney-not-returning-calls
 estimated_duration: 30s
 format: Standard (talking head + text overlays)
-suggested_sound: "Original audio — voiceover + subtle ambient tension"
+suggested_sound: "Original audio, voiceover + subtle ambient tension"
 suggested_posting_time: "Monday 12:00 PM EST"
 ---
 
@@ -18,13 +18,13 @@ suggested_posting_time: "Monday 12:00 PM EST"
 
 **Format**: Standard
 **Duration**: 30 seconds
-**Suggested sound**: Original audio — voiceover with ambient tension
+**Suggested sound**: Original audio, voiceover with ambient tension
 **Suggested posting time**: Monday 12:00 PM EST
 
 ---
 
 [SECOND 0-1]
-**Visual**: Close-up of a phone screen showing call log — 12 outgoing calls to "Attorney's Office," all unanswered. Camera slowly pulls back.
+**Visual**: Close-up of a phone screen showing call log, 12 outgoing calls to "Attorney's Office," all unanswered. Camera slowly pulls back.
 **Text overlay**: "Day 6. No callback."
 **Audio**: Phone ringing sound, then voicemail beep.
 
@@ -55,7 +55,7 @@ suggested_posting_time: "Monday 12:00 PM EST"
 ---
 
 ### Caption
-You paid thousands. You can't get a callback. Here's the exact voicemail script that gets attorneys to call back — and the paper trail that protects you if they don't.
+You paid thousands. You can't get a callback. Here's the exact voicemail script that gets attorneys to call back, and the paper trail that protects you if they don't.
 
 ### Hashtags
 #criminaldefense #attorneyproblems #knowyourrights #lawyernotcallingback #defendantrights
@@ -66,5 +66,5 @@ Phone screen showing 12 missed calls. Text overlay: "Day 6. No Callback." Dark, 
 ---
 
 **Context**: "My lawyer won't return my calls" is the most common defendant complaint and a high-search-volume query. This is a pain-point-first video that validates frustration and delivers actionable steps.
-**Loop strategy**: Opens with the phone showing missed calls, ends with the person confidently using the phone — the transformation arc invites rewatching.
+**Loop strategy**: Opens with the phone showing missed calls, ends with the person confidently using the phone, the transformation arc invites rewatching.
 **KPI target**: Shares (defendants will send this to friends/family in similar situations)

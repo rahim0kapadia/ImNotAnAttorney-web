@@ -7,11 +7,11 @@
  *   1. Current intake form values (multi-step form with specific subcategories)
  *   2. Legacy values from older intake forms (broader categories)
  *
- * When adding a new charge type, add it HERE — both routes import from this file.
+ * When adding a new charge type, add it HERE, both routes import from this file.
  */
 /**
  * Map legacy charge slugs to new common_charge slugs.
- * Pure function — no DB needed. Uses hardcoded map from spec.
+ * Pure function, no DB needed. Uses hardcoded map from spec.
  */
 const LEGACY_SLUG_MAP: Record<string, string> = {
   "dui": "dui-dwi",
@@ -70,7 +70,7 @@ export const ALLOWED_CHARGE_TYPES = [
   "probation-violation",
   "self-defense",
   "other",
-  // Tier 9 expansion — new charge categories (2026-04-12)
+  // Tier 9 expansion, new charge categories (2026-04-12)
   "murder",
   "manslaughter",
   "kidnapping",

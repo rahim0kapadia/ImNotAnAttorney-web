@@ -18,12 +18,12 @@
 /**
  * Cross-validate classified opinion fields.
  *
- * @param {object} extracted — output from extractAll()
- * @param {object} clMetadata — CourtListener metadata for this opinion
- * @param {string} clMetadata.nature_of_suit — CL nature_of_suit code
- * @param {string} clMetadata.court — CL court identifier
- * @param {string} clMetadata.jurisdiction — derived from court
- * @param {string[]} clMetadata.docketCharges — charge slugs from CL docket (if available)
+ * @param {object} extracted, output from extractAll()
+ * @param {object} clMetadata, CourtListener metadata for this opinion
+ * @param {string} clMetadata.nature_of_suit, CL nature_of_suit code
+ * @param {string} clMetadata.court, CL court identifier
+ * @param {string} clMetadata.jurisdiction, derived from court
+ * @param {string[]} clMetadata.docketCharges, charge slugs from CL docket (if available)
  * @returns {{ confidence: string, signals: object }}
  */
 export function crossValidate(extracted, clMetadata) {
@@ -41,7 +41,7 @@ export function crossValidate(extracted, clMetadata) {
     signals.charge_types.details.push("statute_citation_extraction");
   }
 
-  // Signal 2: CL nature_of_suit (independent — assigned by court staff)
+  // Signal 2: CL nature_of_suit (independent, assigned by court staff)
   if (clMetadata.nature_of_suit) {
     const nosCriminal = isCriminalNOS(clMetadata.nature_of_suit);
     if (nosCriminal && extracted.charge_types.length > 0) {
@@ -50,7 +50,7 @@ export function crossValidate(extracted, clMetadata) {
     }
   }
 
-  // Signal 3: jurisdiction_statutes lookup matched (independent — our curated table)
+  // Signal 3: jurisdiction_statutes lookup matched (independent, our curated table)
   if (extracted.charge_types.length > 0) {
     // If we got charge_types, that means the statute lookup succeeded
     signals.charge_types.independent++;
@@ -76,7 +76,7 @@ export function crossValidate(extracted, clMetadata) {
   }
 
   // ── Defense theory cross-validation ──
-  // Signal 1: constrained mapping from charge_defense_theories (independent — taxonomy-derived)
+  // Signal 1: constrained mapping from charge_defense_theories (independent, taxonomy-derived)
   // Signal 2: keyword presence in text (same-source)
   // deriveDefenseTheories already requires BOTH, so if we have theories, both signals exist
   if (extracted.defense_theories.length > 0) {

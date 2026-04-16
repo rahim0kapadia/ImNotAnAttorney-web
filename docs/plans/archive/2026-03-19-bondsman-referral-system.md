@@ -1,29 +1,29 @@
 ## Context
 - **Repo:** C:\Users\email\projects\ImNotAnAttorney-web
-- **Problem:** INAA has zero distribution channels. Defendants are CRISIS BUYERS — they don't subscribe to newsletters or follow social accounts before arrest. Traditional launch marketing (email blasts, content calendars, social posting) won't work. The #1 intercept point is bail bondsmen — the first human a defendant talks to after arrest. We need a referral system where bondsmen hand defendants a discount code, bondsmen earn commission, and INAA gets customers at the exact moment of crisis.
+- **Problem:** INAA has zero distribution channels. Defendants are CRISIS BUYERS, they don't subscribe to newsletters or follow social accounts before arrest. Traditional launch marketing (email blasts, content calendars, social posting) won't work. The #1 intercept point is bail bondsmen, the first human a defendant talks to after arrest. We need a referral system where bondsmen hand defendants a discount code, bondsmen earn commission, and INAA gets customers at the exact moment of crisis.
 - **Key files to read first:**
-  - `src/app/api/checkout/route.ts` (463 lines — checkout flow)
+  - `src/app/api/checkout/route.ts` (463 lines, checkout flow)
   - `src/app/api/webhooks/stripe/route.ts` (webhook handler)
-  - `src/lib/tiers.ts` (356 lines — tier definitions)
-  - `src/lib/stripe.ts` (69 lines — Stripe dual-mode clients)
-  - `src/middleware.ts` (133 lines — auth + route protection)
+  - `src/lib/tiers.ts` (356 lines, tier definitions)
+  - `src/lib/stripe.ts` (69 lines, Stripe dual-mode clients)
+  - `src/middleware.ts` (133 lines, auth + route protection)
   - `supabase/migrations/` (existing schema, 12 migrations)
 - **Tech stack:** Next.js 16.1.6, React 19, Tailwind 4, Stripe SDK v20.3.1, Supabase PostgreSQL (52 tables), Resend email, Vercel deployment
 - **Key decisions:**
   - **10% commission** to bondsman (on collected amount after discount)
   - **10% discount** to client (applied via Stripe Promotion Code)
-  - **All tiers** — $97 Playbooks through $9,997 Situation Room
-  - **No Stripe Connect** — track commissions in Supabase, pay out manually (Venmo/Zelle/check) until volume justifies Connect
-  - **Stripe Promotion Codes** (not raw coupons) — one master coupon, unique codes per bondsman with metadata
-  - **Both inbound + outreach** — public partner signup page AND admin ability to create partners manually
-  - **Dashboard** — admin panel to create codes on the fly, see conversions, calculate payouts
+  - **All tiers**, $97 Playbooks through $9,997 Situation Room
+  - **No Stripe Connect**, track commissions in Supabase, pay out manually (Venmo/Zelle/check) until volume justifies Connect
+  - **Stripe Promotion Codes** (not raw coupons), one master coupon, unique codes per bondsman with metadata
+  - **Both inbound + outreach**, public partner signup page AND admin ability to create partners manually
+  - **Dashboard**, admin panel to create codes on the fly, see conversions, calculate payouts
 - **Setup/prerequisites:** Supabase project live (jxjbjmgdukwkoclydqdr), Stripe live keys active for DUI Playbook, existing admin auth via X-Admin-Password header, dual-mode Stripe (test/live)
 
 ---
 
-## Background — Why This Approach
+## Background, Why This Approach
 
-Criminal defendants are crisis buyers with a 7-day decision window. They don't exist as a marketable audience until arrest. No email list, no social following, no newsletter subscribers. The only marketing that works is INTERCEPT marketing — being found at the moment of need.
+Criminal defendants are crisis buyers with a 7-day decision window. They don't exist as a marketable audience until arrest. No email list, no social following, no newsletter subscribers. The only marketing that works is INTERCEPT marketing, being found at the moment of need.
 
 Bail bondsmen are the perfect intercept: they're literally the first person a defendant talks to after arrest. A bondsman handing out a discount code costs zero and puts INAA in front of every defendant at the exact crisis moment.
 
@@ -44,9 +44,9 @@ Commission math (10% to bondsman, 10% discount to client):
 
 A bail bondsman referral system with 3 surfaces:
 
-1. **Partner Signup Page** (`/partners`) — public page where bondsmen apply
-2. **Admin Partner Dashboard** (`/admin/partners`) — create/manage bondsmen, generate codes, view referrals, track payouts
-3. **Checkout + Webhook Integration** — apply promo codes at checkout, track which bondsman referred, calculate commissions
+1. **Partner Signup Page** (`/partners`), public page where bondsmen apply
+2. **Admin Partner Dashboard** (`/admin/partners`), create/manage bondsmen, generate codes, view referrals, track payouts
+3. **Checkout + Webhook Integration**, apply promo codes at checkout, track which bondsman referred, calculate commissions
 
 ---
 
@@ -57,7 +57,7 @@ A bail bondsman referral system with 3 surfaces:
 Create migration `013_referral_system.sql`:
 
 ```sql
--- Bondsman partners
+, Bondsman partners
 CREATE TABLE partners (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE partners (
   email text NOT NULL UNIQUE,
   phone text,
   region text,
-  status text NOT NULL DEFAULT 'pending',  -- pending | approved | suspended
+  status text NOT NULL DEFAULT 'pending', , pending | approved | suspended
   commission_rate integer NOT NULL DEFAULT 10,
   stripe_coupon_id text,
   stripe_promo_code_id text,
@@ -78,7 +78,7 @@ CREATE TABLE partners (
   updated_at timestamptz DEFAULT now()
 );
 
--- Individual referral events
+, Individual referral events
 CREATE TABLE referrals (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   partner_id uuid NOT NULL REFERENCES partners(id),
@@ -92,7 +92,7 @@ CREATE TABLE referrals (
   created_at timestamptz DEFAULT now()
 );
 
--- Partner applications (before approval)
+, Partner applications (before approval)
 CREATE TABLE partner_applications (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
@@ -119,10 +119,10 @@ CREATE INDEX idx_partners_status ON partners(status);
 
 **File:** `src/lib/referral.ts` (NEW)
 
-- `ensureMasterCoupon()` — creates 10%-off coupon if missing (idempotent, ID: `bondsman-referral-10pct`)
-- `createPartnerPromoCode(partnerId, code, metadata)` — creates Stripe Promotion Code per bondsman with metadata
-- `calculateCommission(saleAmount, commissionRate)` — returns commission in cents
-- `getPartnerByPromoCode(stripePromoCodeId)` — Supabase lookup
+- `ensureMasterCoupon()`, creates 10%-off coupon if missing (idempotent, ID: `bondsman-referral-10pct`)
+- `createPartnerPromoCode(partnerId, code, metadata)`, creates Stripe Promotion Code per bondsman with metadata
+- `calculateCommission(saleAmount, commissionRate)`, returns commission in cents
+- `getPartnerByPromoCode(stripePromoCodeId)`, Supabase lookup
 
 ### Task 3: Modify Checkout
 
@@ -149,13 +149,13 @@ After order creation in `checkout.session.completed`:
 ### Task 5: Partner API Routes
 
 **File:** `src/app/api/admin/partners/route.ts` (NEW)
-- `GET` — list all partners with stats
-- `POST` — create partner + generate Stripe promo code on the fly
+- `GET`, list all partners with stats
+- `POST`, create partner + generate Stripe promo code on the fly
 
 **File:** `src/app/api/admin/partners/[id]/route.ts` (NEW)
-- `GET` — partner detail + referral history
-- `PATCH` — update status/notes/commission
-- `POST .../payout` — mark commissions paid
+- `GET`, partner detail + referral history
+- `PATCH`, update status/notes/commission
+- `POST .../payout`, mark commissions paid
 
 ### Task 6: Admin Dashboard Page
 
@@ -188,7 +188,7 @@ Uses existing admin auth pattern (`useOperatorPassword()`). Features:
 
 **File:** `src/app/api/partners/apply/route.ts` (NEW)
 
-- `POST` — public, rate-limited, inserts into partner_applications
+- `POST`, public, rate-limited, inserts into partner_applications
 - Sends operator notification via Resend
 
 ---

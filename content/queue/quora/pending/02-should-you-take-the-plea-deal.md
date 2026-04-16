@@ -16,13 +16,13 @@ suggested_time: "Weekday 10:00 AM EST"
 
 Over 97% of federal criminal cases end in plea bargains. Most defendants make that decision in the dark.
 
-I can't tell you whether to take your specific plea deal -- nobody should without knowing your case. But I can tell you exactly what you should know before signing anything.
+I can't tell you whether to take your specific plea deal, nobody should without knowing your case. But I can tell you exactly what you should know before signing anything.
 
-**The "Greet 'Em, Meet 'Em, Plead 'Em" problem.** There's a phrase in the legal profession that describes attorneys who meet a client once, review nothing carefully, and push whatever plea the State offers. Assembly-line justice. The question isn't whether pleas are inherently bad -- sometimes they're the smartest move. The question is whether you're making this decision with full information, or being rushed into it.
+**The "Greet 'Em, Meet 'Em, Plead 'Em" problem.** There's a phrase in the legal profession that describes attorneys who meet a client once, review nothing carefully, and push whatever plea the State offers. Assembly-line justice. The question isn't whether pleas are inherently bad, sometimes they're the smartest move. The question is whether you're making this decision with full information, or being rushed into it.
 
 **Before accepting any plea, your attorney should have done these things:**
 
-Reviewed ALL discovery. Not skimmed it -- read every page. Many plea deals are offered and accepted before the defense has even received complete discovery. You wouldn't buy a house without an inspection.
+Reviewed ALL discovery. Not skimmed it, read every page. Many plea deals are offered and accepted before the defense has even received complete discovery. You wouldn't buy a house without an inspection.
 
 Identified the weaknesses in the State's case. Every case has them. Every single one. If your attorney can't name three specific weaknesses, they either haven't looked or they don't want to.
 
@@ -35,7 +35,7 @@ Discussed collateral consequences. A guilty plea can affect employment, housing,
 **A plea deal IS the smart move when:**
 - The evidence is overwhelming and your attorney can explain specifically WHY
 - The offer is significantly below sentencing guidelines
-- Your attorney has done the work -- reviewed discovery, filed motions -- and THEN concluded the plea is the best path
+- Your attorney has done the work, reviewed discovery, filed motions, and THEN concluded the plea is the best path
 
 **Push back when:**
 - Your attorney recommends it before reviewing all discovery
@@ -47,7 +47,7 @@ Discussed collateral consequences. A guilty plea can affect employment, housing,
 1. Have you received and reviewed ALL discovery?
 2. What are the three biggest weaknesses in the State's case?
 3. What motions have you filed or considered filing?
-4. What is my realistic sentence exposure -- not the maximum?
+4. What is my realistic sentence exposure, not the maximum?
 5. What are the collateral consequences of this plea?
 6. Is there a diversion program or deferred adjudication option?
 7. Have you investigated the State's witnesses?

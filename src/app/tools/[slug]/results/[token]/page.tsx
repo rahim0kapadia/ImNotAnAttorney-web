@@ -1,5 +1,5 @@
 /**
- * @fileoverview Saved Calculator Results — shareable read-only page.
+ * @fileoverview Saved Calculator Results, shareable read-only page.
  *
  * Each calculator result that was persisted via /api/tools/save-results
  * has a 12-char base64url token. Visiting /tools/{slug}/results/{token}
@@ -36,7 +36,7 @@ export async function generateMetadata({
   const product = getProduct(slug);
   if (!product) return {};
   return {
-    title: `${product.name} — Saved Results | ImNotAnAttorney`,
+    title: `${product.name}, Saved Results | ImNotAnAttorney`,
     description: `Saved results from the ${product.name}.`,
     robots: { index: false, follow: false },
   };
@@ -65,7 +65,7 @@ export default async function CalculatorResultsPage({ params }: Props) {
     <main className="min-h-screen bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-2xl px-4 py-16">
         <h1 className="text-3xl font-bold tracking-tight mb-2">
-          {product.name} — Your Saved Results
+          {product.name}, Your Saved Results
         </h1>
         <p className="text-zinc-300 text-sm mb-8">
           Calculated on {createdDate}
@@ -156,7 +156,7 @@ export default async function CalculatorResultsPage({ params }: Props) {
 
         <p className="mt-12 text-xs text-zinc-400 border-t border-zinc-800 pt-6">
           This calculator provides legal INFORMATION based on published
-          state rules — not legal ADVICE.
+          state rules, not legal ADVICE.
         </p>
       </div>
     </main>

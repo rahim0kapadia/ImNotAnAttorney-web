@@ -1,26 +1,26 @@
-# INAA Blog Content Pipeline — Automated Generation + Quality Gates
+# INAA Blog Content Pipeline, Automated Generation + Quality Gates
 
 ## Context
 - **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web`
 - **Problem:** 41 blog posts exist, all manually written. Demand pipeline (Reddit signals -> scoring -> content_gaps) is fully operational and identifies high-value topics daily. But nothing bridges the gap between "identified opportunity" and "published blog post." The generation step is missing.
 - **Key files:**
-  - `src/lib/demand/score-demand.ts` — demand scoring + content gap computation
-  - `src/app/api/cron/demand-score/route.ts` — daily cron that upserts content_gaps
-  - `src/app/api/admin/demand/gaps/route.ts` — admin API to list/update gaps
-  - `content/blog/*.mdx` — 41 existing blog posts
-  - `src/lib/blog.ts` — blog utilities (getAllPosts, getPostBySlug, getRelatedPosts)
-  - `src/app/blog/[slug]/page.tsx` — blog post renderer with SourceIntelligence + TLDRBox
-  - `supabase/migrations/00001_initial_schema.sql` — content_gaps table (lines 302-321)
-  - `C:\Users\email\projects\ImNotAnAttorney\scripts\audit-a1-slop.mjs` — A1 slop audit (18 checks)
-  - `C:\Users\email\projects\ImNotAnAttorney\system\EVALUATION-TEAM.md` — UPL + Psych criteria
-  - `C:\Users\email\.openclaw\workspace\skills\ai-humanizer\` — humanizer skill (24 detectors)
-  - `.claude/rules/brand-voice.md` — INAA brand voice guide
+  - `src/lib/demand/score-demand.ts`, demand scoring + content gap computation
+  - `src/app/api/cron/demand-score/route.ts`, daily cron that upserts content_gaps
+  - `src/app/api/admin/demand/gaps/route.ts`, admin API to list/update gaps
+  - `content/blog/*.mdx`, 41 existing blog posts
+  - `src/lib/blog.ts`, blog utilities (getAllPosts, getPostBySlug, getRelatedPosts)
+  - `src/app/blog/[slug]/page.tsx`, blog post renderer with SourceIntelligence + TLDRBox
+  - `supabase/migrations/00001_initial_schema.sql`, content_gaps table (lines 302-321)
+  - `C:\Users\email\projects\ImNotAnAttorney\scripts\audit-a1-slop.mjs`, A1 slop audit (18 checks)
+  - `C:\Users\email\projects\ImNotAnAttorney\system\EVALUATION-TEAM.md`, UPL + Psych criteria
+  - `C:\Users\email\.openclaw\workspace\skills\ai-humanizer\`, humanizer skill (24 detectors)
+  - `.claude/rules/brand-voice.md`, INAA brand voice guide
 - **Tech stack:** Next.js 16 + React 19 + Supabase + Vercel + cron-job.org + local claude -p (Max subscription)
 - **Key decisions:**
   - content_gaps.status is the state machine (identified -> queued -> in-progress -> published / declined)
   - Quality gates: AI Humanizer (score < 45) -> A1 Slop Audit (PASS) -> UPL Compliance (PASS all U1-U15) -> Publish
-  - Generation via local claude -p (Max subscription, Opus model) — NOT Anthropic API
-  - QA evaluation via Anthropic API (Sonnet — lightweight, still on Vercel)
+  - Generation via local claude -p (Max subscription, Opus model), NOT Anthropic API
+  - QA evaluation via Anthropic API (Sonnet, lightweight, still on Vercel)
   - All new routes follow existing cron pattern: requireCron(req) auth + acquireCronLock() idempotency
   - Blog posts are MDX files committed to git -> Vercel auto-deploys on push
   - Publishing via GitHub Contents API (serverless-compatible, no local git state)
@@ -40,10 +40,10 @@ content_gaps table (daily feed from demand pipeline)
  |  Picks top gaps by score        |
  |  Caps at 3 per day              |
  |  Status: identified -> queued   |
- +-----------+---------------------+
+ +---------, +---------------------+
              v
  +---------------------------------+
- |  LOCAL: blog-generate-local.js  |  (Task 3 — moved to local scheduled task)
+ |  LOCAL: blog-generate-local.js  |  (Task 3, moved to local scheduled task)
  |  Windows Scheduled Task daily   |
  |  Picks one queued gap           |
  |  Enriches with Reddit signals   |
@@ -51,20 +51,20 @@ content_gaps table (daily feed from demand pipeline)
  |  Stores in blog_drafts table    |
  |  Status: queued -> in-progress  |
  |  (Vercel route = status-only)   |
- +-----------+---------------------+
+ +---------, +---------------------+
              v
  +---------------------------------+
- |  /api/cron/blog-qa              |  (Task 4 — quality gates)
+ |  /api/cron/blog-qa              |  (Task 4, quality gates)
  |  Gate 1: Humanizer score (<45)  |
  |  Gate 2: A1 Slop Audit (PASS)  |
  |  Gate 3: UPL Compliance (PASS)  |
  |  Auto-fix + retry (up to 3x)   |
  |  Status: draft -> qa-passed     |
  |       or draft -> qa-failed     |
- +-----------+---------------------+
+ +---------, +---------------------+
              v
  +---------------------------------+
- |  /api/cron/blog-publish         |  (Task 5 — commit + deploy)
+ |  /api/cron/blog-publish         |  (Task 5, commit + deploy)
  |  GitHub Contents API to create  |
  |  MDX file in content/blog/      |
  |  Vercel auto-deploys on push    |
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS public.blog_drafts (
   generation_model text NOT NULL DEFAULT 'claude-opus-4-6',
   generation_prompt_hash text,
 
-  -- Quality gate results
+ , Quality gate results
   humanizer_score numeric(5,2),
   humanizer_details jsonb,
   a1_result text CHECK (a1_result IN ('PASS', 'FAIL', 'NEEDS_WORK')),
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS public.blog_drafts (
   upl_result text CHECK (upl_result IN ('PASS', 'FAIL', 'NEEDS_WORK')),
   upl_details jsonb,
 
-  -- Lifecycle
+ , Lifecycle
   qa_attempts integer DEFAULT 0,
   qa_passed_at timestamptz,
   published_at timestamptz,
@@ -127,12 +127,12 @@ CREATE INDEX idx_blog_drafts_gap ON blog_drafts(content_gap_id);
 
 ## Tasks
 
-### Task 1: Database Migration — blog_drafts table + content_gaps status extension
+### Task 1: Database Migration, blog_drafts table + content_gaps status extension
 **Files:** `supabase/migrations/030-blog-drafts.sql`
 
 **Full migration SQL:**
 ```sql
--- 1. blog_drafts table
+, 1. blog_drafts table
 CREATE TABLE IF NOT EXISTS public.blog_drafts (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   content_gap_id integer NOT NULL REFERENCES content_gaps(id),
@@ -160,20 +160,20 @@ CREATE TABLE IF NOT EXISTS public.blog_drafts (
 CREATE INDEX idx_blog_drafts_status ON blog_drafts(status);
 CREATE INDEX idx_blog_drafts_gap ON blog_drafts(content_gap_id);
 
--- 2. Auto-update updated_at trigger
+, 2. Auto-update updated_at trigger
 CREATE TRIGGER update_blog_drafts_updated_at
   BEFORE UPDATE ON blog_drafts
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
--- 3. Extend content_gaps.status to include new states
+, 3. Extend content_gaps.status to include new states
 ALTER TABLE content_gaps DROP CONSTRAINT IF EXISTS content_gaps_status_check;
 ALTER TABLE content_gaps ADD CONSTRAINT content_gaps_status_check
   CHECK (status IN ('identified', 'queued', 'in-progress', 'qa-passed', 'qa-failed', 'published', 'declined'));
 
--- 4. Link content_gaps to blog_drafts
+, 4. Link content_gaps to blog_drafts
 ALTER TABLE content_gaps ADD COLUMN IF NOT EXISTS blog_draft_id uuid REFERENCES blog_drafts(id);
 
--- 5. Composite index for queue queries
+, 5. Composite index for queue queries
 CREATE INDEX IF NOT EXISTS idx_content_gaps_queue ON content_gaps(status, gap_score DESC);
 ```
 
@@ -181,14 +181,14 @@ CREATE INDEX IF NOT EXISTS idx_content_gaps_queue ON content_gaps(status, gap_sc
 
 ---
 
-### Task 2: Generation Queue Route — `/api/cron/blog-generate-queue`
+### Task 2: Generation Queue Route, `/api/cron/blog-generate-queue`
 **Files:** `src/app/api/cron/blog-generate-queue/route.ts`
 
 **Purpose:** Selects highest-priority content gaps and transitions them to `queued` status. Runs daily at 6:00 AM ET (after demand pipeline completes at 5:30 AM).
 
 **Complete logic:**
-1. Call `requireCron(req)` — returns 401 if Authorization header missing or invalid
-2. Call `acquireCronLock("blog-generate-queue", 23 * 60 * 60 * 1000)` — prevents duplicate runs within 23 hours
+1. Call `requireCron(req)`, returns 401 if Authorization header missing or invalid
+2. Call `acquireCronLock("blog-generate-queue", 23 * 60 * 60 * 1000)`, prevents duplicate runs within 23 hours
 3. Create Supabase admin client via `createAdminClient()`
 4. Query content_gaps:
    ```sql
@@ -206,20 +206,20 @@ CREATE INDEX IF NOT EXISTS idx_content_gaps_queue ON content_gaps(status, gap_sc
    c. If no existing draft and no existing post: update content_gaps SET status = 'queued', decided_at = now()
 6. Return JSON response: `{ queued: 2, skipped: 1, gaps: [{ id: 15, charge_type_slug: "dui", gap_score: 9.2 }, { id: 22, charge_type_slug: "drug-possession", gap_score: 8.5 }] }`
 
-**Max 3 per day** — prevents flooding. At ~$2-4 per post for generation + QA, this caps daily cost at $6-12.
+**Max 3 per day**, prevents flooding. At ~$2-4 per post for generation + QA, this caps daily cost at $6-12.
 
 **cron-job.org schedule:** Daily 10:00 UTC (6:00 AM ET)
 
 ---
 
-### Task 3: Blog Generation — LOCAL scheduled task (migrated 2026-03-29)
+### Task 3: Blog Generation, LOCAL scheduled task (migrated 2026-03-29)
 **Files:**
-- `C:\Users\email\.claude\scripts\blog-generate-local.js` — local generation script (NEW)
-- `C:\Users\email\.claude\scripts\telegram\prompts\blog-generate.txt` — prompt template (NEW)
-- `src/app/api/cron/blog-generate/route.ts` — Vercel route (NOW status-only, no LLM call)
-- `src/lib/blog-generation/generate-post.ts` — original generation logic (KEPT for reference, unused by local script)
-- `src/lib/blog-generation/prompts.ts` — original prompt templates (ported to blog-generate.txt)
-- `src/lib/blog-generation/topic-research.ts` — original enrichment (ported to blog-generate-local.js)
+- `C:\Users\email\.claude\scripts\blog-generate-local.js`, local generation script (NEW)
+- `C:\Users\email\.claude\scripts\telegram\prompts\blog-generate.txt`, prompt template (NEW)
+- `src/app/api/cron/blog-generate/route.ts`, Vercel route (NOW status-only, no LLM call)
+- `src/lib/blog-generation/generate-post.ts`, original generation logic (KEPT for reference, unused by local script)
+- `src/lib/blog-generation/prompts.ts`, original prompt templates (ported to blog-generate.txt)
+- `src/lib/blog-generation/topic-research.ts`, original enrichment (ported to blog-generate-local.js)
 
 **Migration note (2026-03-29):** Generation moved from Vercel/Anthropic API to local `claude -p` via Max subscription. Saves API credits. Same prompt, same validation, same DB schema. The Vercel route now returns pipeline status counts only. cron-job.org job #7425842 deleted. Windows Scheduled Task "BlogGenerate" runs daily at 6:30 AM ET (10:30 UTC).
 
@@ -243,7 +243,7 @@ export const dynamic = 'force-dynamic';
 // Returns: { pipeline, note, content_gaps: {queued, in-progress, complete}, blog_drafts: {draft, qa-running, qa-passed, ...} }
 ```
 
-**topic-research.ts — `enrichTopic(gap)` function:**
+**topic-research.ts, `enrichTopic(gap)` function:**
 1. Query reddit_signals for top 10 highest-urgency posts matching this charge_type_slug from last 30 days:
    ```sql
    SELECT title, selftext, urgency_score, has_question, emotional_tone, pain_point_slugs
@@ -270,10 +270,10 @@ export const dynamic = 'force-dynamic';
    WHERE category = gap.charge_type_slug
    LIMIT 5
    ```
-   (Or call `getAllPosts()` from blog.ts and filter by category — depends on whether content_posts table is populated)
+   (Or call `getAllPosts()` from blog.ts and filter by category, depends on whether content_posts table is populated)
 5. Return enriched topic object with all fields needed for prompt template
 
-**prompts.ts — charge-type skill mapping:**
+**prompts.ts, charge-type skill mapping:**
 ```typescript
 const CHARGE_TYPE_SKILLS: Record<string, string> = {
   'dui': 'Apply god-mode-trial DUI defense frameworks: field sobriety test challenges (Gerry Spence cross-exam method), breathalyzer calibration science (Barry Scheck forensic protocol), rising blood alcohol defense, DUI checkpoint constitutional requirements.',
@@ -288,7 +288,7 @@ const CHARGE_TYPE_SKILLS: Record<string, string> = {
 };
 ```
 
-**prompts.ts — full generation prompt template:**
+**prompts.ts, full generation prompt template:**
 The prompt is constructed by filling these sections with enrichment data:
 
 ```typescript
@@ -299,11 +299,11 @@ function buildGenerationPrompt(gap: ContentGap, enrichment: TopicEnrichment): st
   const emotions = enrichment.emotionalPatterns.join(', ');
   const trend = enrichment.trendData;
 
-  return `You are writing a blog post for ImNotAnAttorney.com — a legal empowerment brand for criminal defendants.
+  return `You are writing a blog post for ImNotAnAttorney.com, a legal empowerment brand for criminal defendants.
 
 ## VOICE AND STYLE (mandatory)
 - Second person ("you," "your") throughout
-- Bold, irreverent, slightly provocative — like a defendant who has been through the system
+- Bold, irreverent, slightly provocative, like a defendant who has been through the system
 - Conversational with contractions ("you're," "don't," "isn't")
 - Short, varied sentences. Mix 5-word punches with 20-word explanations. Burstiness > 0.5.
 - Specific data over generics: "25% of cases" not "many cases"
@@ -312,7 +312,7 @@ function buildGenerationPrompt(gap: ContentGap, enrichment: TopicEnrichment): st
 - NO: "In today's," "It's worth noting," "Let's explore," "The future looks bright"
 - NO: filler openings, corporate slop, em dash overuse (max 3 per 1000 words)
 
-## LEGAL BOUNDARY (UPL — non-negotiable, zero tolerance)
+## LEGAL BOUNDARY (UPL, non-negotiable, zero tolerance)
 - Frame everything as INFORMATION, never ADVICE
 - NEVER use "you should," "you need to," "we recommend," "our recommendation"
 - Every strategy mention must redirect: "Ask your attorney whether this applies to your case"
@@ -320,9 +320,9 @@ function buildGenerationPrompt(gap: ContentGap, enrichment: TopicEnrichment): st
 - NEVER evaluate attorney competence directly ("your attorney is failing")
 - NEVER present motions as recommendations ("you should file this")
 - Products are RESEARCH TOOLS, not legal services
-- Use "according to," "based on," and "research shows" — not "you must" or "we advise"
+- Use "according to," "based on," and "research shows", not "you must" or "we advise"
 
-## PSYCHOLOGICAL ARCHITECTURE (Witte EPPM — mandatory)
+## PSYCHOLOGICAL ARCHITECTURE (Witte EPPM, mandatory)
 - Establish safety before threats. Always.
 - Every threat or consequence MUST be followed by a specific action within 2 sentences.
 - BAD: "Your case could take 2-3 years. This creates financial hardship and stress."
@@ -344,7 +344,7 @@ function buildGenerationPrompt(gap: ContentGap, enrichment: TopicEnrichment): st
 - 2-4 questions the reader should ask their attorney, embedded naturally in the text (not a separate section)
 - Internal links to existing INAA blog posts (use markdown links):
 ${existingLinks || '  (No existing posts in this category yet)'}
-- CTA: Link to relevant INAA product — Case Decoder ($197) for case analysis, Intelligence Brief ($997) for deep research
+- CTA: Link to relevant INAA product, Case Decoder ($197) for case analysis, Intelligence Brief ($997) for deep research
 - FAQ section at end: 3-5 anticipated questions with 2-3 sentence answers each
 - End with a specific empowering action and a product CTA, NOT a generic conclusion
 
@@ -354,18 +354,18 @@ ${skills}
 ## TOPIC DETAILS
 Charge type: ${gap.charge_type_slug}
 Pain point: ${gap.pain_point_slug || 'general coverage gap'}
-Demand quadrant: ${gap.demand_quadrant} (${gap.demand_quadrant === 'GOLD_MINE' ? 'high demand, low competition' : 'low demand, low competition — emerging opportunity'})
+Demand quadrant: ${gap.demand_quadrant} (${gap.demand_quadrant === 'GOLD_MINE' ? 'high demand, low competition' : 'low demand, low competition, emerging opportunity'})
 Demand score: ${gap.demand_score}/10
 Suggested title: ${gap.suggested_title || 'Generate an SEO-optimized title'}
 
 ## REAL QUESTIONS FROM DEFENDANTS (Reddit data, last 30 days)
-${questions || 'No specific questions found — use general pain points for this charge type'}
+${questions || 'No specific questions found, use general pain points for this charge type'}
 
 ## EMOTIONAL PATTERNS OBSERVED IN TARGET AUDIENCE
 ${emotions || 'Fear, confusion, urgency, price sensitivity'}
 
 ## TREND DATA
-${trend ? `7-day demand score: ${trend.demand_score}, trend: ${trend.trend_pct > 0 ? '+' : ''}${trend.trend_pct}%` : 'No trend data available — treat as evergreen topic'}
+${trend ? `7-day demand score: ${trend.demand_score}, trend: ${trend.trend_pct > 0 ? '+' : ''}${trend.trend_pct}%` : 'No trend data available, treat as evergreen topic'}
 
 ## OUTPUT FORMAT
 Return a complete, valid MDX file. Start with YAML frontmatter delimited by --- lines. Include all required frontmatter fields. The mdx_content after frontmatter should be ready to save directly as a .mdx file.
@@ -380,12 +380,12 @@ Required frontmatter fields:
 - question_count: number (must match actual count of attorney-directed questions in the body)
 - faqs: array of objects with q and a fields (3-5 items)
 
-Do NOT include a SourceIntelligence component — that is injected automatically by the page renderer.
-Do NOT include import statements — TLDRBox is globally available in MDX.`;
+Do NOT include a SourceIntelligence component, that is injected automatically by the page renderer.
+Do NOT include import statements, TLDRBox is globally available in MDX.`;
 }
 ```
 
-**generate-post.ts — `generatePost(gap)` function:**
+**generate-post.ts, `generatePost(gap)` function:**
 1. Call `enrichTopic(gap)` to gather Reddit signals, trend data, related posts
 2. Call `buildGenerationPrompt(gap, enrichment)` to construct the full prompt
 3. Call Anthropic API:
@@ -420,12 +420,12 @@ Do NOT include import statements — TLDRBox is globally available in MDX.`;
 
 ---
 
-### Task 4: Quality Assurance Route — `/api/cron/blog-qa`
+### Task 4: Quality Assurance Route, `/api/cron/blog-qa`
 **Files:**
-- `src/app/api/cron/blog-qa/route.ts` — API route handler
-- `src/lib/blog-generation/qa-humanizer.ts` — humanizer check (in-process, no CLI)
-- `src/lib/blog-generation/qa-slop.ts` — A1 slop audit adapted for blog posts
-- `src/lib/blog-generation/qa-upl.ts` — UPL compliance check via LLM
+- `src/app/api/cron/blog-qa/route.ts`, API route handler
+- `src/lib/blog-generation/qa-humanizer.ts`, humanizer check (in-process, no CLI)
+- `src/lib/blog-generation/qa-slop.ts`, A1 slop audit adapted for blog posts
+- `src/lib/blog-generation/qa-upl.ts`, UPL compliance check via LLM
 
 **Purpose:** Runs 3 quality gates on draft blog posts sequentially. Posts that pass all 3 gates move to qa-passed. Posts that fail get qa-failed and retry up to 3 times with targeted auto-fixes between attempts.
 
@@ -452,16 +452,16 @@ export const dynamic = 'force-dynamic';
 Implementation: in-process pattern detection (no external CLI dependency). The humanizer runs as pure TypeScript functions analyzing the text.
 
 Detectors to implement:
-1. **Tier 1 vocabulary scan** — check for dead-giveaway AI words. List: delve, tapestry, vibrant, crucial, meticulous, seamless, groundbreaking, landscape, paradigm, synergy, robust, leverage, utilize, streamline, innovative, cutting-edge, game-changer, holistic, impactful, actionable. If ANY Tier 1 word found: add 15 points per occurrence (max 60).
-2. **Tier 2 density check** — check for suspicious-in-density words. List: furthermore, moreover, additionally, consequently, nevertheless, comprehensive, facilitate, implement, optimize, enhance, significantly. Count per 1000 words. If density > 3 per 1000: add 10 points.
-3. **Sentence length variance** — compute standard deviation of sentence lengths (in words). If std_dev < 5: add 15 points (too uniform = AI).
-4. **Em dash density** — count em dashes (both — and --) per 1000 words. If > 3: add 10 points.
-5. **Copula avoidance** — ratio of "serves as / acts as / functions as" vs simple "is / are". If avoidance ratio > 0.3: add 10 points.
-6. **Generic conclusions** — check last 200 words for: "the future looks bright," "in conclusion," "time will tell," "only time will tell," "remains to be seen." If any found: add 10 points.
-7. **Hedging density** — percentage of sentences containing "could," "might," "possibly," "potentially," "perhaps," "arguably." If > 15%: add 10 points.
-8. **Filler phrase scan** — count occurrences of: "it's worth noting that," "in order to," "at the end of the day," "when it comes to," "in today's." Each occurrence: add 5 points.
-9. **Sycophancy markers** — check for: "great question," "absolutely," "I hope this helps," "feel free to ask." Each found: add 10 points.
-10. **Rule of three** — detect 3+ consecutive list items of similar word length (within 3 words of each other). If > 2 instances: add 5 points.
+1. **Tier 1 vocabulary scan**, check for dead-giveaway AI words. List: delve, tapestry, vibrant, crucial, meticulous, seamless, groundbreaking, landscape, paradigm, synergy, robust, leverage, utilize, streamline, innovative, cutting-edge, game-changer, holistic, impactful, actionable. If ANY Tier 1 word found: add 15 points per occurrence (max 60).
+2. **Tier 2 density check**, check for suspicious-in-density words. List: furthermore, moreover, additionally, consequently, nevertheless, comprehensive, facilitate, implement, optimize, enhance, significantly. Count per 1000 words. If density > 3 per 1000: add 10 points.
+3. **Sentence length variance**, compute standard deviation of sentence lengths (in words). If std_dev < 5: add 15 points (too uniform = AI).
+4. **Em dash density**, count em dashes (both, and,) per 1000 words. If > 3: add 10 points.
+5. **Copula avoidance**, ratio of "serves as / acts as / functions as" vs simple "is / are". If avoidance ratio > 0.3: add 10 points.
+6. **Generic conclusions**, check last 200 words for: "the future looks bright," "in conclusion," "time will tell," "only time will tell," "remains to be seen." If any found: add 10 points.
+7. **Hedging density**, percentage of sentences containing "could," "might," "possibly," "potentially," "perhaps," "arguably." If > 15%: add 10 points.
+8. **Filler phrase scan**, count occurrences of: "it's worth noting that," "in order to," "at the end of the day," "when it comes to," "in today's." Each occurrence: add 5 points.
+9. **Sycophancy markers**, check for: "great question," "absolutely," "I hope this helps," "feel free to ask." Each found: add 10 points.
+10. **Rule of three**, detect 3+ consecutive list items of similar word length (within 3 words of each other). If > 2 instances: add 5 points.
 
 **Scoring formula:**
 ```typescript
@@ -470,7 +470,7 @@ const uniformityScore = computeUniformityScore(text); // burstiness + type-token
 const compositeScore = patternScore * 0.7 + uniformityScore * 0.3;
 ```
 
-**Threshold: compositeScore < 45** (blog threshold — more lenient than skill's <25 because legal informational content naturally uses some formal language)
+**Threshold: compositeScore < 45** (blog threshold, more lenient than skill's <25 because legal informational content naturally uses some formal language)
 
 If score >= 45: request auto-fix via Anthropic API (Sonnet for cost efficiency):
 ```typescript
@@ -487,7 +487,7 @@ Rules for rewriting:
 - Replace "crucial" with "important" or "key" or "matters because"
 - Replace "comprehensive" with "complete" or "full" or "thorough"
 - Remove filler phrases: "It's worth noting that" -> just state the thing
-- Remove "In today's" openings entirely — start with the actual point
+- Remove "In today's" openings entirely, start with the actual point
 - Vary sentence lengths: add short 3-5 word punchy sentences between longer explanations
 - Use contractions: "you are" -> "you're", "do not" -> "don't"
 - Replace passive voice with active: "was charged" -> "the DA charged"
@@ -514,7 +514,7 @@ THE 14 CHECKS:
 
 1. QUESTION_COUNT: The frontmatter field question_count must match the actual count of questions in the body that are directed at the reader's attorney. Count only questions that tell the reader what to ask their attorney. Tolerance: plus or minus 1. FAIL if off by more than 1.
 
-2. CITATION_SOURCING: Every factual claim (statistics, legal rules, procedural requirements) must have an inline source — a statute number, case name, study citation, or named expert. FAIL if more than 2 unsourced factual claims.
+2. CITATION_SOURCING: Every factual claim (statistics, legal rules, procedural requirements) must have an inline source, a statute number, case name, study citation, or named expert. FAIL if more than 2 unsourced factual claims.
 
 3. READABILITY: Action items and direct instructions must be readable at 10th grade level or below. Explanatory sections can be up to 12th grade. FAIL if action items use complex legal jargon without immediate definition.
 
@@ -528,7 +528,7 @@ THE 14 CHECKS:
 
 8. STRUCTURAL_INTEGRITY: Sections must be logically ordered (problem -> context -> solution -> action). No orphaned paragraphs that don't connect to adjacent sections. FAIL if section order is illogical or paragraphs are disconnected.
 
-9. CTA_CLARITY: The post must have at least one clear next step for the reader — a product link (Case Decoder, Intelligence Brief), an attorney question to ask, or a checklist to follow. FAIL if no actionable CTA exists.
+9. CTA_CLARITY: The post must have at least one clear next step for the reader, a product link (Case Decoder, Intelligence Brief), an attorney question to ask, or a checklist to follow. FAIL if no actionable CTA exists.
 
 10. HEDGING_DENSITY: Count action statements that are hedged with "could," "might," "possibly," "potentially." FAIL if more than 15% of action statements are hedged. Information statements can hedge freely.
 
@@ -551,7 +551,7 @@ Return a JSON array of exactly 14 objects. No other text. Example format:
 
 **Threshold:**
 - Must PASS at least 12 of 14 checks
-- Checks 1 (QUESTION_COUNT), 2 (CITATION_SOURCING), 7 (JARGON_DEFINITION), and 13 (FEAR_ACTION_PAIRING) are HARD GATES — must be PASS or NEEDS_WORK, never FAIL
+- Checks 1 (QUESTION_COUNT), 2 (CITATION_SOURCING), 7 (JARGON_DEFINITION), and 13 (FEAR_ACTION_PAIRING) are HARD GATES, must be PASS or NEEDS_WORK, never FAIL
 - Maximum 2 NEEDS_WORK on non-hard-gate checks
 - Any FAIL on a hard gate check = entire A1 audit FAIL
 
@@ -580,7 +580,7 @@ U9. SCENARIO HEADERS: When presenting hypothetical legal scenarios, use quoted d
 U10. SELF-EFFICACY FRAMING: Language must build the reader's agency. "You can ask your attorney about" is PASS. "You should demand" is FAIL.
 U11. INFORMATION FRAMING: Legal concepts must be framed as information: "This is what a motion to suppress does" is PASS. "You need a motion to suppress" is FAIL.
 U12. NO OUTCOME GUARANTEES: The post must never guarantee or strongly imply a specific case outcome. "Cases have been dismissed when" (historical fact) is PASS. "Your case will be dismissed if" (guarantee) is FAIL.
-U13. EXPERT ATTRIBUTION: Expert opinions must use "according to [Name]'s framework" or "based on [Name]'s research" — not "experts say" or "studies show" without specific attribution.
+U13. EXPERT ATTRIBUTION: Expert opinions must use "according to [Name]'s framework" or "based on [Name]'s research", not "experts say" or "studies show" without specific attribution.
 U14. NO CONTRADICTING CLAIMS: The post must not contain claims that contradict the site-wide disclaimer (that this is information, not legal advice).
 U15. PRODUCTS AS RESEARCH TOOLS: Any mention of INAA products (Case Decoder, Intelligence Brief, etc.) must frame them as research and information tools, not as legal services or attorney substitutes.
 
@@ -636,10 +636,10 @@ If qa_attempts < 3: the draft stays at status='qa-failed'. On the next cron run,
 
 ---
 
-### Task 5: Blog Publish Route — `/api/cron/blog-publish`
+### Task 5: Blog Publish Route, `/api/cron/blog-publish`
 **Files:**
-- `src/app/api/cron/blog-publish/route.ts` — API route handler
-- `src/lib/blog-generation/publish.ts` — GitHub API publish logic
+- `src/app/api/cron/blog-publish/route.ts`, API route handler
+- `src/lib/blog-generation/publish.ts`, GitHub API publish logic
 
 **Purpose:** Takes qa-passed drafts, creates MDX files in the GitHub repo via Contents API, which triggers Vercel auto-deploy. Also submits to IndexNow for search engine indexing.
 
@@ -655,7 +655,7 @@ If qa_attempts < 3: the draft stays at status='qa-failed'. On the next cron run,
    LIMIT 3
    ```
 3. For each draft:
-   a. Verify slug does not conflict with existing blog files — call GitHub Contents API to check if `content/blog/${slug}.mdx` already exists
+   a. Verify slug does not conflict with existing blog files, call GitHub Contents API to check if `content/blog/${slug}.mdx` already exists
    b. If file exists: append a suffix (-2, -3) to slug and update blog_drafts
    c. Create file via GitHub Contents API:
       ```typescript
@@ -688,12 +688,12 @@ If qa_attempts < 3: the draft stays at status='qa-failed'. On the next cron run,
       ```sql
       UPDATE content_gaps SET status = 'published', has_blog_post = true, blog_slug = draft.slug WHERE id = draft.content_gap_id;
       ```
-   g. Submit to IndexNow for fast search engine indexing — call existing `/api/indexnow` route or directly:
+   g. Submit to IndexNow for fast search engine indexing, call existing `/api/indexnow` route or directly:
       ```typescript
       await fetch(`https://api.indexnow.org/indexnow?url=https://imnotanattorney.com/blog/${draft.slug}&key=${process.env.INDEXNOW_KEY}`);
       ```
 
-**New env var needed:** `GITHUB_TOKEN` — personal access token (fine-grained) with `contents:write` scope on the INAA-web repo. Also need `GITHUB_OWNER` and `GITHUB_REPO` constants (or derive from git remote).
+**New env var needed:** `GITHUB_TOKEN`, personal access token (fine-grained) with `contents:write` scope on the INAA-web repo. Also need `GITHUB_OWNER` and `GITHUB_REPO` constants (or derive from git remote).
 
 **Why GitHub API instead of git commands:** This route runs on Vercel (serverless). Vercel functions have a read-only filesystem and no git binary. The GitHub Contents API is the standard pattern for serverless file creation.
 
@@ -701,12 +701,12 @@ If qa_attempts < 3: the draft stays at status='qa-failed'. On the next cron run,
 
 ---
 
-### Task 6: Admin Dashboard API — Blog Pipeline Status
+### Task 6: Admin Dashboard API, Blog Pipeline Status
 **Files:**
-- `src/app/api/admin/blog-pipeline/route.ts` — list drafts + pipeline stats
-- `src/app/api/admin/blog-pipeline/[id]/route.ts` — manage individual drafts
+- `src/app/api/admin/blog-pipeline/route.ts`, list drafts + pipeline stats
+- `src/app/api/admin/blog-pipeline/[id]/route.ts`, manage individual drafts
 
-**GET /api/admin/blog-pipeline** — returns all drafts with their QA results and linked content gap data:
+**GET /api/admin/blog-pipeline**, returns all drafts with their QA results and linked content gap data:
 ```typescript
 // Query:
 const { data: drafts } = await supabase
@@ -731,11 +731,11 @@ const stats = {
 return NextResponse.json({ drafts, stats });
 ```
 
-**PATCH /api/admin/blog-pipeline/[id]** — management actions:
-- `{ "action": "retry-qa" }` — reset draft status to 'draft', reset qa_attempts to 0, clear all QA result fields (humanizer_score, a1_result, upl_result, and their details). This allows re-running QA from scratch after manual edits.
-- `{ "action": "decline" }` — set draft status to 'declined', also update the linked content_gaps row to status = 'declined'
-- `{ "action": "approve-override" }` — force draft to 'qa-passed' status with qa_passed_at = now(). For manual override when a human reviews and approves despite QA flags.
-- `{ "action": "edit", "mdx_content": "updated MDX string here" }` — update the draft's mdx_content, increment version number, reset all QA result fields so QA must re-run on the new content.
+**PATCH /api/admin/blog-pipeline/[id]**, management actions:
+- `{ "action": "retry-qa" }`, reset draft status to 'draft', reset qa_attempts to 0, clear all QA result fields (humanizer_score, a1_result, upl_result, and their details). This allows re-running QA from scratch after manual edits.
+- `{ "action": "decline" }`, set draft status to 'declined', also update the linked content_gaps row to status = 'declined'
+- `{ "action": "approve-override" }`, force draft to 'qa-passed' status with qa_passed_at = now(). For manual override when a human reviews and approves despite QA flags.
+- `{ "action": "edit", "mdx_content": "updated MDX string here" }`, update the draft's mdx_content, increment version number, reset all QA result fields so QA must re-run on the new content.
 
 Auth: Use existing admin auth pattern from `/api/admin/demand/gaps/route.ts` (check for admin session or service role key).
 
@@ -834,8 +834,8 @@ async function createJob(job) {
 
 ### Task 8: TypeScript Types + Shared Utilities
 **Files:**
-- `src/types/blog-pipeline.ts` — all TypeScript interfaces for the blog pipeline
-- `src/lib/blog-generation/index.ts` — barrel export file
+- `src/types/blog-pipeline.ts`, all TypeScript interfaces for the blog pipeline
+- `src/lib/blog-generation/index.ts`, barrel export file
 
 **src/types/blog-pipeline.ts:**
 ```typescript
@@ -975,7 +975,7 @@ Batch 3 (after Batch 2 deployed and verified):
 ## Cost Model
 
 | Component | Per Post | Daily (3 max) | Monthly (90 max) |
-|-----------|----------|---------------|------------------|
+|---------, |----------|---------------|------------------|
 | Generation (Opus) | $1.00-2.00 | $3.00-6.00 | $90-180 |
 | QA - Humanizer | $0 (in-process) | $0 | $0 |
 | QA - A1 Slop (Sonnet) | $0.15-0.30 | $0.45-0.90 | $13.50-27.00 |
@@ -990,13 +990,13 @@ Breakeven: Manual blog post takes 2-3 hours of effort (valued at $50-75). Pipeli
 ## Env Vars Required
 
 | Var | Purpose | Status |
-|-----|---------|--------|
+|---, |---------|------, |
 | CRON_SECRET | Auth for cron routes | Already in .env.local |
 | ANTHROPIC_API_KEY | Claude API for generation + QA | Already in .env.local |
 | SUPABASE_SERVICE_ROLE_KEY | DB access | Already in .env.local |
 | NEXT_PUBLIC_SUPABASE_URL | DB endpoint | Already in .env.local |
 | CRONJOB_API_KEY | cron-job.org registration | Already in .env.local |
-| GITHUB_TOKEN | GitHub Contents API for publishing | NEW — needs creation |
+| GITHUB_TOKEN | GitHub Contents API for publishing | NEW, needs creation |
 | GITHUB_OWNER | GitHub repo owner | Hardcode or derive from git remote |
 | GITHUB_REPO | GitHub repo name | Hardcode or derive from git remote |
 
@@ -1013,7 +1013,7 @@ After each batch deployment:
 
 **Batch 2 verification:**
 - Queue route: `curl -H "Authorization: Bearer CRON_SECRET" https://imnotanattorney.com/api/cron/blog-generate-queue` returns JSON with queued count (or 0 if no identified gaps)
-- Generate (local): `node C:\Users\email\.claude\scripts\blog-generate-local.js` — picks top gap, generates draft, inserts into blog_drafts
+- Generate (local): `node C:\Users\email\.claude\scripts\blog-generate-local.js`, picks top gap, generates draft, inserts into blog_drafts
 - Generate route (status only): `curl -H "Authorization: Bearer CRON_SECRET" https://imnotanattorney.com/api/cron/blog-generate` returns JSON with content_gaps + blog_drafts counts
 - QA route: `curl -H "Authorization: Bearer CRON_SECRET" https://imnotanattorney.com/api/cron/blog-qa` returns JSON with processed count
 - Publish route: `curl -H "Authorization: Bearer CRON_SECRET" https://imnotanattorney.com/api/cron/blog-publish` returns JSON with published count
@@ -1032,12 +1032,12 @@ After each batch deployment:
 ## Risks and Mitigations
 
 | Risk | Impact | Mitigation |
-|------|--------|-----------|
+|------|------, |---------, |
 | Opus generates UPL-violating content | Legal liability | UPL gate is zero-tolerance with 15 criteria; 3-retry limit with auto-decline prevents any UPL-violating content from publishing |
 | Humanizer false positives on legal terminology | Posts rejected unnecessarily | Blog threshold set at 45 (not 25); legal terms like "arraignment" and "continuance" are domain-specific, not AI slop; Tier 1 list excludes legal vocabulary |
 | GitHub API rate limits | Publishing blocked | Max 3 posts/day = 3 API calls; well within GitHub's 5000 requests/hour limit for authenticated requests |
 | Local generation timeout | Generation fails | 10-minute timeout on claude -p; file-based lock (30-min stale threshold) prevents duplicate runs; gap rolls back to queued on failure; Telegram notification sent |
-| ~~Vercel function timeout on Opus generation~~ | ~~RESOLVED~~ | Migrated to local claude -p (2026-03-29) — no Vercel timeout constraint |
+| ~~Vercel function timeout on Opus generation~~ | ~~RESOLVED~~ | Migrated to local claude -p (2026-03-29), no Vercel timeout constraint |
 | Content gap score changes between queue and generate | Stale topic generated | Re-check gap_score at generation time; skip gap if score dropped below 5 since queueing |
 | Duplicate slugs | File overwrite | UNIQUE constraint on blog_drafts.slug; GitHub API returns 422 if file exists; slug suffixing (-2, -3) as fallback |
 | Git merge conflicts on content/blog/ | Deploy blocked | GitHub API creates individual commits with no local state; each publish is an atomic API call, no merge conflicts possible |
@@ -1047,11 +1047,11 @@ After each batch deployment:
 
 ## What This Does NOT Do (Explicit Out of Scope)
 
-1. Social amplification — publishing to Reddit, Twitter, email is a separate pipeline (Mary's domain in marketing-hq)
-2. Performance tracking — existing `/api/cron/demand-performance` already handles this and feeds back into demand scores
-3. Existing post audit — running QA gates on the 41 existing manually-written posts is a separate task
-4. Blog UI changes — the rendering pipeline (components, layout, schema markup) already works and does not need modification
-5. SEO optimization beyond IndexNow — existing blog structure handles meta tags, OG images, and structured data
-6. Content calendar — this pipeline is demand-driven, not calendar-driven; the demand pipeline IS the calendar
-7. Manual editing UI — the admin API supports editing via PATCH, but no frontend for it; use curl or build later
-8. Image generation — blog posts are text-only MDX; hero images and thumbnails are handled by the existing OG image generation
+1. Social amplification, publishing to Reddit, Twitter, email is a separate pipeline (Mary's domain in marketing-hq)
+2. Performance tracking, existing `/api/cron/demand-performance` already handles this and feeds back into demand scores
+3. Existing post audit, running QA gates on the 41 existing manually-written posts is a separate task
+4. Blog UI changes, the rendering pipeline (components, layout, schema markup) already works and does not need modification
+5. SEO optimization beyond IndexNow, existing blog structure handles meta tags, OG images, and structured data
+6. Content calendar, this pipeline is demand-driven, not calendar-driven; the demand pipeline IS the calendar
+7. Manual editing UI, the admin API supports editing via PATCH, but no frontend for it; use curl or build later
+8. Image generation, blog posts are text-only MDX; hero images and thumbnails are handled by the existing OG image generation

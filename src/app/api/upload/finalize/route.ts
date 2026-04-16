@@ -307,7 +307,7 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     await sendEmail({
       to: OPERATOR_EMAIL,
-      subject: `Documents Ready: ${caseRecord.tier} — ${fileCount} file${fileCount !== 1 ? "s" : ""}`,
+      subject: `Documents Ready: ${caseRecord.tier}, ${fileCount} file${fileCount !== 1 ? "s" : ""}`,
       html: `
         <h1 style="color: #F59E0B;">Discovery Documents Submitted</h1>
         <p>A customer has finished uploading their discovery documents and is ready for analysis.</p>
@@ -317,7 +317,7 @@ export async function POST(req: NextRequest) {
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Files Uploaded:</strong> ${fileCount}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${escapeHtml(caseId)}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Time:</strong> ${new Date().toISOString()}</p>
-          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Pipeline:</strong> ${docIds.length} OCR jobs queued${docIds.length > 0 ? " — processing will begin automatically" : " — manual processing required"}</p>
+          <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Pipeline:</strong> ${docIds.length} OCR jobs queued${docIds.length > 0 ? ", processing will begin automatically" : ", manual processing required"}</p>
           <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Due:</strong> ${deliveryDue.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
         </div>
         <p style="color: #A1A1AA;">${docIds.length > 0 ? "The engine pipeline is processing these documents automatically. You'll receive a review notification when the report is ready." : "Log into Supabase to access the uploaded files and begin analysis."}</p>
@@ -333,7 +333,7 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     await sendEmail({
       to: caseRecord.email,
-      subject: "Your Documents Are In — Analysis Begins Now",
+      subject: "Your Documents Are In, Analysis Begins Now",
       unsubscribeEmail: caseRecord.email,
       html: `
         <h1 style="color: #F59E0B;">Analysis Begins</h1>

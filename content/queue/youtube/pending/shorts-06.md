@@ -30,7 +30,7 @@ imnotanattorney.com
 ## Script
 [0:00-0:04] HOOK:
 [Direct to camera, urgent energy]
-"If you got a DUI in the last week and nobody has mentioned the DMV deadline to you — listen carefully. Your license is about to disappear and nobody told you."
+"If you got a DUI in the last week and nobody has mentioned the DMV deadline to you, listen carefully. Your license is about to disappear and nobody told you."
 
 [0:04-0:14] THE DEADLINE:
 [TEXT ON SCREEN: "10 DAYS. No exceptions."]
@@ -38,7 +38,7 @@ imnotanattorney.com
 
 [0:14-0:24] STATE SPECIFICS:
 [TEXT ON SCREEN: "CA: 10 days. FL: 10 days. TX: 15 days."]
-"California — 10 days, or automatic 4-month suspension. Florida — 10 days, or automatic 6-month suspension. Texas — 15 days. There's no 'I didn't know' exception. There's no extension because your attorney was busy."
+"California, 10 days, or automatic 4-month suspension. Florida, 10 days, or automatic 6-month suspension. Texas, 15 days. There's no 'I didn't know' exception. There's no extension because your attorney was busy."
 
 [0:24-0:36] WHY IT MATTERS:
 [TEXT ON SCREEN: "The DMV hearing = free deposition"]
@@ -46,11 +46,11 @@ imnotanattorney.com
 
 [0:36-0:47] THE ACTION:
 [TEXT ON SCREEN: "Ask your attorney TODAY."]
-"If your arrest was more than a week ago and your attorney hasn't mentioned this — call them right now. Not after this video. Now. Ask: have you filed for the DMV administrative hearing? This deadline does not wait."
+"If your arrest was more than a week ago and your attorney hasn't mentioned this, call them right now. Not after this video. Now. Ask: have you filed for the DMV administrative hearing? This deadline does not wait."
 
 [0:47-0:55] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]
-"Know What They Know. Full DUI timeline guide — link in bio."
+"Know What They Know. Full DUI timeline guide, link in bio."
 
 ## On-Screen Text
 - [0:00] "YOUR LICENSE IS DISAPPEARING"

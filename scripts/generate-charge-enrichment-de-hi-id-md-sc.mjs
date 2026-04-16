@@ -25,7 +25,7 @@ const TAX_DIR = path.join(ROOT, 'data/charge-taxonomy');
 const OUT_DIR = path.join(ROOT, 'data/charge-taxonomy/enrichment');
 
 // ============================================================================
-// STATE CONTEXT — only generic, non-citable facts allowed
+// STATE CONTEXT, only generic, non-citable facts allowed
 // ============================================================================
 const CONTEXT = {
   DE: {
@@ -46,7 +46,7 @@ const CONTEXT = {
     short: 'Hawaii',
     duiTerm: 'OVUII',
     quirks: {
-      duiNote: 'Hawaii prosecutes operating a vehicle while under the influence of an intoxicant — covering both alcohol and drug impairment under one charging framework',
+      duiNote: 'Hawaii prosecutes operating a vehicle while under the influence of an intoxicant, covering both alcohol and drug impairment under one charging framework',
       ruralFactor: 'Hawaii enforcement varies dramatically between Honolulu urban density and rural roads on the neighbor islands',
       drugContext: 'Hawaii has historic methamphetamine enforcement priorities and is a recognized port-of-entry interdiction zone for Pacific trafficking routes',
       gunContext: 'Hawaii has among the most restrictive firearms permitting in the country, including registration and discretionary permitting',
@@ -61,7 +61,7 @@ const CONTEXT = {
     quirks: {
       duiNote: 'Idaho recognizes a per se blood alcohol concentration standard at the legal limit and an excessive concentration tier with enhanced penalties at higher levels',
       ruralFactor: 'Idaho is a large rural state where traffic stops on I-15, I-84, and I-90 corridors generate substantial driving prosecutions',
-      drugContext: 'Idaho remains one of the strictest states on marijuana — possession of any usable amount is criminal, and Idaho is a transit state between legal markets in Oregon, Washington, and Colorado',
+      drugContext: 'Idaho remains one of the strictest states on marijuana, possession of any usable amount is criminal, and Idaho is a transit state between legal markets in Oregon, Washington, and Colorado',
       gunContext: 'Idaho is a permitless concealed carry state for residents over 18 inside city limits, creating overlap and confusion with federal restrictions',
       sentencing: 'Idaho uses retained jurisdiction (rider programs) allowing the court to retain control during an evaluation period before final sentencing',
       lookback: 'Idaho uses a ten-year lookback for DUI enhancements, longer than many neighboring states'
@@ -85,7 +85,7 @@ const CONTEXT = {
     short: 'South Carolina',
     duiTerm: 'DUI',
     quirks: {
-      duiNote: 'South Carolina has unique videotaping requirements at the scene of arrest and at the breath testing location — strict compliance is required',
+      duiNote: 'South Carolina has unique videotaping requirements at the scene of arrest and at the breath testing location, strict compliance is required',
       ruralFactor: 'South Carolina enforcement spans the I-95, I-26, and I-85 corridors with significant interstate truck and tourist traffic',
       drugContext: 'South Carolina has aggressive trafficking enhancements with weight-based mandatory minimums and is a known I-95 transit state',
       gunContext: 'South Carolina is a shall-issue concealed carry state with constitutional carry implementation creating ongoing transition issues',
@@ -96,7 +96,7 @@ const CONTEXT = {
 };
 
 // ============================================================================
-// CHARGE BUILDERS — all state-agnostic strategic content
+// CHARGE BUILDERS, all state-agnostic strategic content
 // ============================================================================
 // Each builder takes (code) and returns {prosecution_strengths, defense_opportunities, common_defenses}.
 // Content references state context.quirks where helpful but never statutes,
@@ -119,18 +119,18 @@ BUILDERS['dui-dwi'] = (code) => ({
     `${Q(code).ruralFactor}, generating a steady stream of impairment prosecutions`
   ],
   defense_opportunities: [
-    `Challenge the legality of the initial traffic stop — without reasonable suspicion, all subsequent evidence becomes vulnerable to suppression`,
-    `Examine whether the field sobriety battery was administered according to the standardized federal protocols — deviations are grounds for exclusion`,
+    `Challenge the legality of the initial traffic stop, without reasonable suspicion, all subsequent evidence becomes vulnerable to suppression`,
+    `Examine whether the field sobriety battery was administered according to the standardized federal protocols, deviations are grounds for exclusion`,
     `Demand calibration, maintenance, and operator certification records for the breath testing instrument used`,
-    `Investigate the observation period before breath testing — failures here are common procedural errors that affect reliability`,
-    `Rising blood alcohol theory — the BAC at the time of driving may have been below the legal threshold and only rose between the stop and the test`
+    `Investigate the observation period before breath testing, failures here are common procedural errors that affect reliability`,
+    `Rising blood alcohol theory, the BAC at the time of driving may have been below the legal threshold and only rose between the stop and the test`
   ],
   common_defenses: [
-    `Improper traffic stop — officer lacked reasonable suspicion to initiate the contact`,
-    `Rising blood alcohol — actual BAC at time of driving was below the legal limit`,
-    `Mouth alcohol contamination — recent drinking, dental work, or reflux conditions caused a falsely elevated breath reading`,
-    `Medical condition mimicking impairment — diabetes, neurological conditions, fatigue, or injury explain observed signs`,
-    `No actual physical control — defendant was not operating the vehicle in the legally relevant sense`
+    `Improper traffic stop, officer lacked reasonable suspicion to initiate the contact`,
+    `Rising blood alcohol, actual BAC at time of driving was below the legal limit`,
+    `Mouth alcohol contamination, recent drinking, dental work, or reflux conditions caused a falsely elevated breath reading`,
+    `Medical condition mimicking impairment, diabetes, neurological conditions, fatigue, or injury explain observed signs`,
+    `No actual physical control, defendant was not operating the vehicle in the legally relevant sense`
   ]
 });
 
@@ -142,16 +142,16 @@ BUILDERS['dui-first-offense'] = (code) => ({
     `Mandatory minimum penalties for first offenses cannot be fully suspended in most jurisdictions`
   ],
   defense_opportunities: [
-    `Negotiate a plea reduction to a lesser driving offense — a common first-offense resolution that avoids the most severe DUI consequences`,
+    `Negotiate a plea reduction to a lesser driving offense, a common first-offense resolution that avoids the most severe DUI consequences`,
     `Explore diversion, treatment court, or deferred prosecution options available to first-time offenders`,
     `${Q(code).sentencing}`,
     `Challenge breath test reliability through calibration records and operator certification`
   ],
   common_defenses: [
     `Plea reduction to a lesser driving offense as an alternative resolution`,
-    `Improper field sobriety test administration — deviations from the standardized protocol`,
+    `Improper field sobriety test administration, deviations from the standardized protocol`,
     `Medical condition affecting field sobriety test performance`,
-    `Insufficient evidence of impairment — driving was lawful and observed signs do not establish intoxication`
+    `Insufficient evidence of impairment, driving was lawful and observed signs do not establish intoxication`
   ]
 });
 
@@ -163,14 +163,14 @@ BUILDERS['dui-second-offense'] = (code) => ({
     `Plea negotiation options narrow significantly compared to a first offense`
   ],
   defense_opportunities: [
-    `Challenge the validity of the prior conviction — was the defendant represented by counsel, was the plea knowing and voluntary`,
-    `Examine the lookback window — priors that fall outside the window cannot be used for enhancement`,
+    `Challenge the validity of the prior conviction, was the defendant represented by counsel, was the plea knowing and voluntary`,
+    `Examine the lookback window, priors that fall outside the window cannot be used for enhancement`,
     `Investigate whether the prior was actually a DUI conviction or a plea-reduced lesser offense`,
     `Treatment court and alcohol monitoring programs may provide alternatives to mandatory jail`
   ],
   common_defenses: [
-    `Invalid prior conviction — taken without counsel or with a defective plea`,
-    `Lookback period challenge — prior conviction falls outside the enhancement window`,
+    `Invalid prior conviction, taken without counsel or with a defective plea`,
+    `Lookback period challenge, prior conviction falls outside the enhancement window`,
     `Prior was a reduced charge that does not qualify as a DUI for enhancement purposes`,
     `Chemical test reliability challenge`
   ]
@@ -184,13 +184,13 @@ BUILDERS['dui-third-offense'] = (code) => ({
     `Sentencing enhancements stack with other priors and create exposure that drives plea negotiations`
   ],
   defense_opportunities: [
-    `Challenge the constitutional validity of every prior conviction — any defective prior reduces the charge tier`,
-    `Examine the lookback window carefully — older priors may not qualify for enhancement`,
+    `Challenge the constitutional validity of every prior conviction, any defective prior reduces the charge tier`,
+    `Examine the lookback window carefully, older priors may not qualify for enhancement`,
     `Investigate whether out-of-state priors meet the equivalent-offense standard required for enhancement`,
     `Negotiate for substance abuse treatment court or intensive probation as alternatives to extended incarceration`
   ],
   common_defenses: [
-    `Defective prior convictions — any prior taken without proper procedural protections is invalid for enhancement`,
+    `Defective prior convictions, any prior taken without proper procedural protections is invalid for enhancement`,
     `Out-of-state prior does not meet the equivalent-offense test`,
     `Lookback period challenge`,
     `Constitutional challenge to mandatory minimums as applied to the defendant`
@@ -205,16 +205,16 @@ BUILDERS['dui-repeat-offense'] = (code) => ({
     `${Q(code).lookback}`
   ],
   defense_opportunities: [
-    `Challenge the validity of prior convictions — were procedural rights properly observed`,
-    `Examine the lookback window — priors outside the window should not count for enhancement`,
+    `Challenge the validity of prior convictions, were procedural rights properly observed`,
+    `Examine the lookback window, priors outside the window should not count for enhancement`,
     `Investigate whether prior convictions actually qualify as DUIs versus plea-reduced offenses`,
     `Negotiate for substance abuse treatment court or intensive monitoring as alternatives to incarceration`
   ],
   common_defenses: [
-    `Invalid prior convictions — prior conviction was obtained without counsel or with a defective plea`,
-    `Lookback period challenge — prior conviction falls outside the enhancement window`,
+    `Invalid prior convictions, prior conviction was obtained without counsel or with a defective plea`,
+    `Lookback period challenge, prior conviction falls outside the enhancement window`,
     `Prior conviction was a reduced charge that does not qualify as a DUI for enhancement`,
-    `Independent chemical test denial — defendant requested an independent test and was denied`
+    `Independent chemical test denial, defendant requested an independent test and was denied`
   ]
 });
 
@@ -232,10 +232,10 @@ BUILDERS['dui-drugs'] = (code) => ({
     `Challenge blood or urine collection procedures, chain of custody, and laboratory testing protocols`
   ],
   common_defenses: [
-    `Lawful prescription use — medication taken as directed by a treating physician`,
-    `Drug presence does not equal impairment — chemical detection alone proves nothing about driving ability`,
-    `Drug recognition evaluation was unreliable — protocol not properly followed`,
-    `Chain of custody failure — sample was contaminated, mislabeled, or improperly preserved`
+    `Lawful prescription use, medication taken as directed by a treating physician`,
+    `Drug presence does not equal impairment, chemical detection alone proves nothing about driving ability`,
+    `Drug recognition evaluation was unreliable, protocol not properly followed`,
+    `Chain of custody failure, sample was contaminated, mislabeled, or improperly preserved`
   ]
 });
 
@@ -247,15 +247,15 @@ BUILDERS['dui-felony-injury'] = (code) => ({
     `Sentencing guidelines for felony DUI with injury are typically severe and include mandatory components`
   ],
   defense_opportunities: [
-    `Challenge causation — argue an independent factor (other driver, road condition, victim behavior) caused the injury`,
-    `Contest the bodily injury threshold — minor injuries may not meet the statutory severity requirement`,
+    `Challenge causation, argue an independent factor (other driver, road condition, victim behavior) caused the injury`,
+    `Contest the bodily injury threshold, minor injuries may not meet the statutory severity requirement`,
     `Examine accident reconstruction methodology and assumptions`,
     `Negotiate for a reduced charge where causation is contestable`
   ],
   common_defenses: [
-    `Causation challenge — impairment was not the proximate cause of injury`,
+    `Causation challenge, impairment was not the proximate cause of injury`,
     `Bodily injury did not meet the legal threshold for the felony enhancement`,
-    `Intervening cause — another driver, road defect, or pedestrian conduct caused the collision`,
+    `Intervening cause, another driver, road defect, or pedestrian conduct caused the collision`,
     `Chemical test reliability challenge`
   ]
 });
@@ -268,10 +268,10 @@ BUILDERS['owi-minor-in-vehicle'] = (code) => ({
     `The aggravated tier limits plea negotiation flexibility`
   ],
   defense_opportunities: [
-    `Challenge the underlying DUI charge — if the underlying charge fails, the enhancement falls with it`,
+    `Challenge the underlying DUI charge, if the underlying charge fails, the enhancement falls with it`,
     `Contest the age of the passenger if it was near the statutory cutoff`,
     `Negotiate to dismiss the enhancement in exchange for a plea on the underlying charge`,
-    `Argue mitigating context — short distance, low risk, no actual harm`
+    `Argue mitigating context, short distance, low risk, no actual harm`
   ],
   common_defenses: [
     `Underlying DUI charge fails on suppression or evidentiary grounds`,
@@ -295,8 +295,8 @@ BUILDERS['reckless-driving'] = (code) => ({
     `Question whether the witness account or dashcam footage actually shows the conduct charged`
   ],
   common_defenses: [
-    `Conduct did not rise to the willful or wanton standard — at most ordinary negligence`,
-    `Sudden emergency doctrine — defendant was responding to an unexpected hazard`,
+    `Conduct did not rise to the willful or wanton standard, at most ordinary negligence`,
+    `Sudden emergency doctrine, defendant was responding to an unexpected hazard`,
     `Mechanical failure caused the apparent erratic driving`,
     `Misidentification of the vehicle or driver`
   ]
@@ -310,16 +310,16 @@ BUILDERS['hit-and-run'] = (code) => ({
     `Reporting requirements create multiple layers of statutory liability`
   ],
   defense_opportunities: [
-    `Challenge whether the defendant had actual knowledge that an accident occurred — particularly in low-impact contacts`,
+    `Challenge whether the defendant had actual knowledge that an accident occurred, particularly in low-impact contacts`,
     `Argue the defendant left to seek help, find a safe location, or report from a more secure place`,
     `Contest the identification of the vehicle when based on partial descriptions`,
     `Negotiate for a reduced charge where damage is minimal and no injury occurred`
   ],
   common_defenses: [
-    `Lack of knowledge — defendant did not know an accident occurred`,
+    `Lack of knowledge, defendant did not know an accident occurred`,
     `Seeking help or a safe location to make the report`,
     `Misidentification of the vehicle`,
-    `No actual collision occurred — apparent damage was preexisting`
+    `No actual collision occurred, apparent damage was preexisting`
   ]
 });
 
@@ -331,7 +331,7 @@ BUILDERS['hit-run-injury'] = (code) => ({
     `Failure to render aid is treated as an aggravating factor`
   ],
   defense_opportunities: [
-    `Challenge actual knowledge of injury — knowing there was a collision is different from knowing someone was hurt`,
+    `Challenge actual knowledge of injury, knowing there was a collision is different from knowing someone was hurt`,
     `Contest the severity of injury where it does not clearly meet the statutory threshold`,
     `Argue the defendant left to summon emergency assistance from a safer location`,
     `Investigate whether the defendant returned to the scene, which can mitigate the offense`
@@ -352,15 +352,15 @@ BUILDERS['vehicular-homicide'] = (code) => ({
     `Prior driving record and recent driving conduct amplify the prosecution narrative`
   ],
   defense_opportunities: [
-    `Challenge the causal link between any impairment and the fatal outcome — argue an independent cause`,
+    `Challenge the causal link between any impairment and the fatal outcome, argue an independent cause`,
     `Contest chemical test results through chain of custody, calibration, and timing challenges`,
     `Present accident reconstruction evidence showing the impairment did not cause the collision`,
     `Examine victim conduct that contributed to the collision`
   ],
   common_defenses: [
-    `Intervening cause — other driver negligence, road defect, or weather conditions`,
-    `Causation challenge — impairment was not the proximate cause of death`,
-    `Chemical test unreliability — timing, contamination, or instrument error`,
+    `Intervening cause, other driver negligence, road defect, or weather conditions`,
+    `Causation challenge, impairment was not the proximate cause of death`,
+    `Chemical test unreliability, timing, contamination, or instrument error`,
     `Victim contributory conduct`
   ]
 });
@@ -373,8 +373,8 @@ BUILDERS['vehicular-manslaughter'] = (code) => ({
     `Accident reconstruction creates objective evidence of speed, braking, and positioning`
   ],
   defense_opportunities: [
-    `Distinguish between ordinary negligence (civil) and criminal negligence — the conduct must be a gross deviation from the standard of care`,
-    `Present evidence of unforeseeable circumstances — sudden mechanical failure, weather, or wildlife`,
+    `Distinguish between ordinary negligence (civil) and criminal negligence, the conduct must be a gross deviation from the standard of care`,
+    `Present evidence of unforeseeable circumstances, sudden mechanical failure, weather, or wildlife`,
     `Challenge accident reconstruction methodology and underlying assumptions`,
     `Negotiate for a reduced charge where the negligence was not gross`
   ],
@@ -395,15 +395,15 @@ BUILDERS['driving-on-suspended'] = (code) => ({
   ],
   defense_opportunities: [
     `Challenge whether the defendant had actual knowledge of the suspension, particularly with recent address changes`,
-    `Argue necessity — driving was required for an emergency where no alternative transportation existed`,
+    `Argue necessity, driving was required for an emergency where no alternative transportation existed`,
     `Contest the validity of the underlying suspension`,
     `Negotiate for reinstatement programs that resolve the underlying eligibility issue`
   ],
   common_defenses: [
-    `Lack of knowledge — defendant did not receive notice of suspension`,
-    `Necessity — driving was required for a true emergency`,
+    `Lack of knowledge, defendant did not receive notice of suspension`,
+    `Necessity, driving was required for a true emergency`,
     `Invalid underlying suspension`,
-    `Identity dispute — defendant was not the person driving`
+    `Identity dispute, defendant was not the person driving`
   ]
 });
 
@@ -423,7 +423,7 @@ BUILDERS['fleeing-eluding'] = (code) => ({
   common_defenses: [
     `Lack of awareness of the officer's signal`,
     `Seeking a safe location with witnesses before stopping`,
-    `Mistaken identity — officer pursued the wrong vehicle`,
+    `Mistaken identity, officer pursued the wrong vehicle`,
     `Conduct was not reckless under the statutory standard`
   ]
 });
@@ -436,13 +436,13 @@ BUILDERS['racing-speed-contest'] = (code) => ({
     `Public safety framing makes juries receptive to conviction`
   ],
   defense_opportunities: [
-    `Challenge the coordination element — passing or accelerating is not the same as a contest`,
+    `Challenge the coordination element, passing or accelerating is not the same as a contest`,
     `Contest identification when multiple vehicles were involved`,
     `Negotiate for a reduced reckless driving charge`,
     `Examine whether the conduct occurred on a closed course where racing is lawful`
   ],
   common_defenses: [
-    `No coordination — defendant was driving independently`,
+    `No coordination, defendant was driving independently`,
     `Misidentification of the vehicle`,
     `Conduct did not meet the statutory definition of a contest`,
     `Lawful conduct on private or closed property`
@@ -462,7 +462,7 @@ BUILDERS['open-container'] = (code) => ({
     `Negotiate dismissal in exchange for a plea on a more serious charge`
   ],
   common_defenses: [
-    `Container was sealed — not legally open`,
+    `Container was sealed, not legally open`,
     `Container was in an excluded storage area (trunk, locked compartment)`,
     `Illegal search produced the evidence`,
     `Container belonged to a passenger, not the driver`
@@ -480,11 +480,11 @@ BUILDERS['refusing-breath-test'] = (code) => ({
     `Challenge whether the implied consent advisory was properly given and understood`,
     `Contest whether the defendant actually refused versus being unable to complete the test`,
     `Argue confusion or medical inability to perform the test`,
-    `Examine whether the request was lawful — an unlawful arrest cannot support a valid refusal`
+    `Examine whether the request was lawful, an unlawful arrest cannot support a valid refusal`
   ],
   common_defenses: [
     `Defective implied consent advisory`,
-    `Inability to perform — medical condition or injury prevented compliance`,
+    `Inability to perform, medical condition or injury prevented compliance`,
     `Unlawful arrest invalidates the test request`,
     `Confusion about which test was being requested`
   ]
@@ -506,10 +506,10 @@ BUILDERS['drug-possession'] = (code) => ({
     `Pursue diversion or treatment court alternatives that avoid a conviction record`
   ],
   common_defenses: [
-    `Illegal search and seizure — suppress all evidence obtained unlawfully`,
-    `Lack of knowledge — defendant did not know the substance was present`,
-    `Constructive possession failure — substance belonged to someone else with access`,
-    `Chain of custody break — evidence was contaminated or mislabeled`
+    `Illegal search and seizure, suppress all evidence obtained unlawfully`,
+    `Lack of knowledge, defendant did not know the substance was present`,
+    `Constructive possession failure, substance belonged to someone else with access`,
+    `Chain of custody break, evidence was contaminated or mislabeled`
   ]
 });
 
@@ -530,7 +530,7 @@ BUILDERS['drug-possession-marijuana'] = (code) => {
         `Argue lack of knowledge in shared vehicle or rental car contexts`
       ],
       common_defenses: [
-        `Legal hemp product — substance contained THC below the federal threshold`,
+        `Legal hemp product, substance contained THC below the federal threshold`,
         `Illegal search and seizure`,
         `Lack of knowledge`,
         `Constructive possession in a shared vehicle`
@@ -551,7 +551,7 @@ BUILDERS['drug-possession-marijuana'] = (code) => {
       `Argue constructive possession in shared spaces`
     ],
     common_defenses: [
-      `Legal hemp product — substance contained THC below the federal threshold`,
+      `Legal hemp product, substance contained THC below the federal threshold`,
       `Illegal search and seizure`,
       `Lack of knowledge`,
       `Constructive possession in a shared vehicle or residence`
@@ -576,7 +576,7 @@ BUILDERS['drug-possession-cocaine'] = (code) => ({
     `Illegal search and seizure`,
     `Lack of knowledge`,
     `Constructive possession failure`,
-    `Field test unreliability — laboratory confirmation contradicts field result`
+    `Field test unreliability, laboratory confirmation contradicts field result`
   ]
 });
 
@@ -609,13 +609,13 @@ BUILDERS['drug-possession-opioids'] = (code) => ({
     `Possession alongside paraphernalia or distribution evidence supports trafficking enhancements`
   ],
   defense_opportunities: [
-    `Establish lawful prescription use — present pharmacy and treatment records`,
+    `Establish lawful prescription use, present pharmacy and treatment records`,
     `Challenge the search and seizure`,
     `Pursue treatment court as an alternative to a conviction record`,
     `Contest constructive possession in shared spaces`
   ],
   common_defenses: [
-    `Lawful prescription use — medication was prescribed and taken as directed`,
+    `Lawful prescription use, medication was prescribed and taken as directed`,
     `Illegal search and seizure`,
     `Lack of knowledge`,
     `Constructive possession failure`
@@ -630,7 +630,7 @@ BUILDERS['drug-possession-prescription'] = (code) => ({
     `Laboratory testing identifies specific controlled substances`
   ],
   defense_opportunities: [
-    `Establish lawful prescription — pharmacy records and treating physician testimony`,
+    `Establish lawful prescription, pharmacy records and treating physician testimony`,
     `Challenge the legality of the search`,
     `Argue temporary possession for transport from pharmacy or for a family member`,
     `Pursue diversion or treatment court alternatives`
@@ -652,14 +652,14 @@ BUILDERS['drug-trafficking'] = (code) => ({
   ],
   defense_opportunities: [
     `Challenge highway interdiction stops and the scope of any vehicle search`,
-    `Contest the role of confidential informants — credibility is often vulnerable`,
+    `Contest the role of confidential informants, credibility is often vulnerable`,
     `Argue the defendant was a courier or low-level participant for sentencing mitigation`,
-    `Examine the weight calculation — packaging weight versus pure substance weight`
+    `Examine the weight calculation, packaging weight versus pure substance weight`
   ],
   common_defenses: [
-    `Illegal search and seizure — particularly in highway interdiction contexts`,
+    `Illegal search and seizure, particularly in highway interdiction contexts`,
     `Entrapment by confidential informant`,
-    `Insufficient evidence of intent to deliver — possession was for personal use`,
+    `Insufficient evidence of intent to deliver, possession was for personal use`,
     `Confidential informant unreliability`
   ]
 });
@@ -672,13 +672,13 @@ BUILDERS['drug-distribution'] = (code) => ({
     `Surveillance over multiple buys establishes a pattern that resists single-incident defenses`
   ],
   defense_opportunities: [
-    `Challenge the delivery element — sharing or accommodation may not constitute commercial distribution`,
-    `Contest substance identification — laboratory testing may show different substances than the field test`,
+    `Challenge the delivery element, sharing or accommodation may not constitute commercial distribution`,
+    `Contest substance identification, laboratory testing may show different substances than the field test`,
     `Examine entrapment defenses in informant-driven cases`,
     `Negotiate from delivery to simple possession where evidence is circumstantial`
   ],
   common_defenses: [
-    `Accommodation — sharing rather than commercial distribution`,
+    `Accommodation, sharing rather than commercial distribution`,
     `Entrapment`,
     `Illegal search and seizure`,
     `Misidentification of the substance`
@@ -715,7 +715,7 @@ BUILDERS['drug-paraphernalia'] = (code) => ({
   defense_opportunities: [
     `Challenge whether the item meets the statutory definition of paraphernalia`,
     `Contest the search and seizure`,
-    `Argue lawful purpose — kitchen scales, glass pipes used for tobacco, etc.`,
+    `Argue lawful purpose, kitchen scales, glass pipes used for tobacco, etc.`,
     `Negotiate dismissal in exchange for a plea on a more serious related charge`
   ],
   common_defenses: [
@@ -734,13 +734,13 @@ BUILDERS['prescription-fraud'] = (code) => ({
     `Prescription monitoring programs make patterns easy to prove`
   ],
   defense_opportunities: [
-    `Challenge the intent element — confusion about prescription rules is not fraud`,
+    `Challenge the intent element, confusion about prescription rules is not fraud`,
     `Contest identification when prescriptions were filled by phone or mail`,
     `Argue addiction-driven conduct as a sentencing mitigator`,
     `Pursue treatment court alternatives`
   ],
   common_defenses: [
-    `Lack of fraudulent intent — mistake or confusion about prescription rules`,
+    `Lack of fraudulent intent, mistake or confusion about prescription rules`,
     `Identification dispute`,
     `Insufficient evidence of forgery or misrepresentation`,
     `Addiction-driven conduct supporting treatment alternatives`
@@ -755,13 +755,13 @@ BUILDERS['drug-possession-with-intent'] = (code) => ({
     `Surveillance and controlled buys can supplement the case`
   ],
   defense_opportunities: [
-    `Challenge the intent inference — large quantities may reflect personal use stockpiling`,
+    `Challenge the intent inference, large quantities may reflect personal use stockpiling`,
     `Contest the search and seizure`,
     `Examine the chain of custody for currency and items used as inference evidence`,
     `Negotiate down to simple possession where intent evidence is circumstantial`
   ],
   common_defenses: [
-    `Personal use, not distribution — quantity reflects stockpiling`,
+    `Personal use, not distribution, quantity reflects stockpiling`,
     `Illegal search and seizure`,
     `Lack of knowledge of items implying distribution`,
     `Constructive possession failure`
@@ -776,13 +776,13 @@ BUILDERS['drug-conspiracy'] = (code) => ({
     `Federal cooperation amplifies investigative resources`
   ],
   defense_opportunities: [
-    `Challenge the existence of an agreement — mere association is not conspiracy`,
+    `Challenge the existence of an agreement, mere association is not conspiracy`,
     `Argue withdrawal from the conspiracy before any overt act in furtherance`,
     `Contest the role of confidential informants who may have manufactured the agreement`,
     `Examine the venue and jurisdiction for each alleged overt act`
   ],
   common_defenses: [
-    `No agreement existed — mere presence or association`,
+    `No agreement existed, mere presence or association`,
     `Withdrawal from the conspiracy`,
     `Entrapment by confidential informant`,
     `Insufficient evidence of any overt act`
@@ -799,36 +799,36 @@ BUILDERS['murder-first-degree'] = (code) => ({
     `Prosecutors often have the option of seeking the maximum penalty available under ${N(code)} law`
   ],
   defense_opportunities: [
-    `Challenge premeditation — argue the killing was impulsive, not deliberate`,
+    `Challenge premeditation, argue the killing was impulsive, not deliberate`,
     `Negotiate down to second-degree murder or manslaughter where premeditation is contestable`,
-    `Examine forensic methodology — DNA mixtures, ballistics matching, and digital evidence have known error sources`,
+    `Examine forensic methodology, DNA mixtures, ballistics matching, and digital evidence have known error sources`,
     `Pursue self-defense, defense of others, or imperfect self-defense theories where supported by facts`
   ],
   common_defenses: [
-    `No premeditation — the killing was impulsive or in heat of passion`,
+    `No premeditation, the killing was impulsive or in heat of passion`,
     `Self-defense or defense of others`,
-    `Misidentification — defendant was not the perpetrator`,
+    `Misidentification, defendant was not the perpetrator`,
     `Insanity or diminished capacity where mental health evidence supports it`
   ]
 });
 
 BUILDERS['murder-second-degree'] = (code) => ({
   prosecution_strengths: [
-    `Does not require proof of premeditation — only the intent to kill or extreme indifference`,
+    `Does not require proof of premeditation, only the intent to kill or extreme indifference`,
     `Forensic evidence linking the defendant to the scene is often substantial`,
     `Witness testimony establishes the killing and the defendant's role`,
     `Plea negotiations from first-degree often produce second-degree convictions, normalizing the charge`
   ],
   defense_opportunities: [
     `Argue heat of passion to reduce to voluntary manslaughter`,
-    `Challenge the intent element — accidental or reckless conduct supports a lesser charge`,
+    `Challenge the intent element, accidental or reckless conduct supports a lesser charge`,
     `Pursue self-defense or imperfect self-defense theories`,
     `Examine forensic methodology for error sources`
   ],
   common_defenses: [
-    `Heat of passion — provocation reduces the charge to voluntary manslaughter`,
+    `Heat of passion, provocation reduces the charge to voluntary manslaughter`,
     `Self-defense or imperfect self-defense`,
-    `Accidental killing — no intent to kill`,
+    `Accidental killing, no intent to kill`,
     `Misidentification`
   ]
 });
@@ -842,28 +842,28 @@ BUILDERS['voluntary-manslaughter'] = (code) => ({
   ],
   defense_opportunities: [
     `Argue self-defense or defense of others as a complete defense`,
-    `Challenge the provocation element — was it sufficient to inflame an ordinary person`,
-    `Examine the cooling-off period — was there time to reflect before the killing`,
+    `Challenge the provocation element, was it sufficient to inflame an ordinary person`,
+    `Examine the cooling-off period, was there time to reflect before the killing`,
     `Pursue an accidental death theory to seek further reduction`
   ],
   common_defenses: [
     `Self-defense or defense of others as a complete defense`,
     `Insufficient provocation`,
-    `Accidental killing — no intent`,
+    `Accidental killing, no intent`,
     `Misidentification`
   ]
 });
 
 BUILDERS['involuntary-manslaughter'] = (code) => ({
   prosecution_strengths: [
-    `Does not require intent to kill — only criminal negligence or recklessness`,
+    `Does not require intent to kill, only criminal negligence or recklessness`,
     `Often charged alongside other offenses, creating multiple paths to conviction`,
     `Accident reconstruction and forensic evidence establish the conduct and result`,
     `Lower mens rea makes prosecution easier than higher tiers of homicide`
   ],
   defense_opportunities: [
-    `Distinguish ordinary negligence from criminal negligence — the conduct must be a gross deviation`,
-    `Challenge causation — argue independent causes intervened`,
+    `Distinguish ordinary negligence from criminal negligence, the conduct must be a gross deviation`,
+    `Challenge causation, argue independent causes intervened`,
     `Present evidence of unforeseeable circumstances`,
     `Examine the underlying offense (if charged on a misdemeanor-manslaughter theory)`
   ],
@@ -883,7 +883,7 @@ BUILDERS['attempted-murder'] = (code) => ({
     `Sentencing exposure approaches that of completed murder`
   ],
   defense_opportunities: [
-    `Challenge the specific intent to kill — many violent attacks lack the intent element`,
+    `Challenge the specific intent to kill, many violent attacks lack the intent element`,
     `Argue the conduct was assault or aggravated assault, not attempted murder`,
     `Pursue self-defense theories where the facts support them`,
     `Contest identification`
@@ -906,7 +906,7 @@ BUILDERS['aggravated-assault'] = (code) => ({
   defense_opportunities: [
     `Pursue self-defense, defense of others, or defense of property`,
     `Challenge the injury severity threshold`,
-    `Contest weapon characterization — was the object actually a deadly weapon`,
+    `Contest weapon characterization, was the object actually a deadly weapon`,
     `Examine identification when multiple parties were involved`
   ],
   common_defenses: [
@@ -919,7 +919,7 @@ BUILDERS['aggravated-assault'] = (code) => ({
 
 BUILDERS['simple-assault'] = (code) => ({
   prosecution_strengths: [
-    `Lower threshold than aggravated assault — minor physical contact can suffice`,
+    `Lower threshold than aggravated assault, minor physical contact can suffice`,
     `Witness testimony and body camera footage establish the encounter`,
     `Medical records of even minor injuries support the prosecution`
   ],
@@ -994,7 +994,7 @@ BUILDERS['assault-with-deadly-weapon'] = (code) => ({
   common_defenses: [
     `Self-defense`,
     `Object was not a deadly weapon`,
-    `No threatening use — accidental display`,
+    `No threatening use, accidental display`,
     `Mistaken identity`
   ]
 });
@@ -1007,7 +1007,7 @@ BUILDERS['assault-firearm'] = (code) => ({
     `Sentencing exposure includes both base offense and firearm enhancement`
   ],
   defense_opportunities: [
-    `Pursue self-defense — firearm use in defense can still support a complete defense`,
+    `Pursue self-defense, firearm use in defense can still support a complete defense`,
     `Contest identification`,
     `Challenge whether the firearm was actually displayed or used`,
     `Examine ballistic evidence for methodological flaws`
@@ -1029,13 +1029,13 @@ BUILDERS['assault-police-officer'] = (code) => ({
   ],
   defense_opportunities: [
     `Examine the body camera footage for de-escalation failures or excessive force by the officer`,
-    `Challenge whether the officer was acting lawfully — unlawful arrests undermine the charge`,
+    `Challenge whether the officer was acting lawfully, unlawful arrests undermine the charge`,
     `Argue the contact was reflexive rather than intentional`,
     `Pursue self-defense in cases of excessive force`
   ],
   common_defenses: [
     `Self-defense against excessive force`,
-    `Unlawful arrest — defendant had a right to resist`,
+    `Unlawful arrest, defendant had a right to resist`,
     `Reflexive movement, not intentional assault`,
     `Misidentification in chaotic encounters`
   ]
@@ -1049,15 +1049,15 @@ BUILDERS['robbery'] = (code) => ({
     `Sentencing exposure is substantial across all robbery charges`
   ],
   defense_opportunities: [
-    `Challenge the force or threat element — was force actually used or threatened`,
+    `Challenge the force or threat element, was force actually used or threatened`,
     `Contest identification, particularly in cases relying on stranger eyewitness testimony`,
     `Examine surveillance footage for identification gaps`,
     `Negotiate down to theft where the force element is contestable`
   ],
   common_defenses: [
-    `No force or threat — only theft, not robbery`,
+    `No force or threat, only theft, not robbery`,
     `Mistaken identification`,
-    `Claim of right — defendant believed the property was theirs`,
+    `Claim of right, defendant believed the property was theirs`,
     `Duress`
   ]
 });
@@ -1077,8 +1077,8 @@ BUILDERS['armed-robbery'] = (code) => ({
   ],
   common_defenses: [
     `Mistaken identification`,
-    `No weapon was actually used — simulated weapon defense`,
-    `Defendant had no weapon — accomplice acted alone`,
+    `No weapon was actually used, simulated weapon defense`,
+    `Defendant had no weapon, accomplice acted alone`,
     `Duress`
   ]
 });
@@ -1091,13 +1091,13 @@ BUILDERS['kidnapping'] = (code) => ({
     `Victim testimony is typically compelling at trial`
   ],
   defense_opportunities: [
-    `Challenge the movement or confinement element — was it merely incidental to another crime`,
+    `Challenge the movement or confinement element, was it merely incidental to another crime`,
     `Contest the lack of consent`,
     `Pursue defenses based on mistaken identity`,
     `Negotiate down to false imprisonment if movement was minimal`
   ],
   common_defenses: [
-    `Movement was incidental to another offense — not an independent kidnapping`,
+    `Movement was incidental to another offense, not an independent kidnapping`,
     `Consent of the victim`,
     `Mistaken identity`,
     `No movement or confinement actually occurred`
@@ -1106,7 +1106,7 @@ BUILDERS['kidnapping'] = (code) => ({
 
 BUILDERS['unlawful-imprisonment'] = (code) => ({
   prosecution_strengths: [
-    `Lower threshold than kidnapping — confinement without movement can suffice`,
+    `Lower threshold than kidnapping, confinement without movement can suffice`,
     `Witness testimony and physical evidence establish the confinement`,
     `Often charged alongside domestic violence or assault charges`
   ],
@@ -1117,7 +1117,7 @@ BUILDERS['unlawful-imprisonment'] = (code) => ({
     `Contest identification`
   ],
   common_defenses: [
-    `No actual confinement — victim was free to leave`,
+    `No actual confinement, victim was free to leave`,
     `Consent`,
     `Mistaken identity`,
     `Conduct was incidental to a different alleged offense`
@@ -1139,7 +1139,7 @@ BUILDERS['carjacking'] = (code) => ({
   ],
   common_defenses: [
     `Mistaken identification`,
-    `No force or threat — vehicle was abandoned or voluntarily handed over`,
+    `No force or threat, vehicle was abandoned or voluntarily handed over`,
     `Lack of knowledge of how the vehicle was obtained`,
     `Duress`
   ]
@@ -1153,13 +1153,13 @@ BUILDERS['arson'] = (code) => ({
     `Sentencing exposure scales with damage and risk to human life`
   ],
   defense_opportunities: [
-    `Challenge the fire investigation methodology — many indicators previously considered reliable have been discredited`,
+    `Challenge the fire investigation methodology, many indicators previously considered reliable have been discredited`,
     `Contest the cause and origin determination`,
     `Examine accelerant testing protocols`,
     `Pursue accidental fire theories`
   ],
   common_defenses: [
-    `Accidental fire — not intentionally set`,
+    `Accidental fire, not intentionally set`,
     `Investigation methodology flaws`,
     `Misidentification`,
     `Lack of motive`
@@ -1171,17 +1171,17 @@ BUILDERS['home-invasion'] = (code) => ({
     `Forced entry into an occupied residence creates aggravated charging options`,
     `Surveillance and victim testimony establish the intrusion`,
     `Sentencing exposure is significantly higher than ordinary burglary`,
-    `Multiple charges typically stack — burglary, assault, weapons, and home invasion`
+    `Multiple charges typically stack, burglary, assault, weapons, and home invasion`
   ],
   defense_opportunities: [
     `Challenge whether the residence was actually occupied at the time`,
-    `Contest the forced entry element — invited entry undermines the charge`,
+    `Contest the forced entry element, invited entry undermines the charge`,
     `Pursue identification challenges`,
     `Examine the intent element at time of entry`
   ],
   common_defenses: [
     `Residence was unoccupied`,
-    `Invited entry — no force used`,
+    `Invited entry, no force used`,
     `Mistaken identification`,
     `Lack of intent to commit a crime inside`
   ]
@@ -1195,13 +1195,13 @@ BUILDERS['extortion'] = (code) => ({
   ],
   defense_opportunities: [
     `Challenge whether a threat was actually communicated`,
-    `Argue lawful demand — collecting a legitimate debt is not extortion`,
+    `Argue lawful demand, collecting a legitimate debt is not extortion`,
     `Contest identification when communications were anonymous`,
     `Examine entrapment defenses`
   ],
   common_defenses: [
-    `Lawful demand — pursuing a legitimate debt or claim`,
-    `No threat was made — communications were misinterpreted`,
+    `Lawful demand, pursuing a legitimate debt or claim`,
+    `No threat was made, communications were misinterpreted`,
     `Mistaken identification`,
     `Entrapment`
   ]
@@ -1214,13 +1214,13 @@ BUILDERS['terroristic-threats'] = (code) => ({
     `Schools, government buildings, and public events generate aggressive prosecution`
   ],
   defense_opportunities: [
-    `Challenge the seriousness element — true threat doctrine requires more than hyperbole`,
+    `Challenge the seriousness element, true threat doctrine requires more than hyperbole`,
     `Argue First Amendment protection for protected speech`,
     `Contest the listener's interpretation as objectively unreasonable`,
-    `Examine intent — was the statement meant as a threat or as venting`
+    `Examine intent, was the statement meant as a threat or as venting`
   ],
   common_defenses: [
-    `Hyperbole or venting — not a true threat`,
+    `Hyperbole or venting, not a true threat`,
     `First Amendment protected speech`,
     `Misinterpretation by the listener`,
     `Lack of intent to threaten`
@@ -1237,13 +1237,13 @@ BUILDERS['theft-larceny'] = (code) => ({
     `Value thresholds determine charging tier and provide sentencing leverage`
   ],
   defense_opportunities: [
-    `Challenge intent — taking by mistake or under claim of right is not theft`,
+    `Challenge intent, taking by mistake or under claim of right is not theft`,
     `Contest the value to keep the charge below felony thresholds`,
     `Examine identification`,
     `Negotiate restitution-based diversion for first-time offenders`
   ],
   common_defenses: [
-    `Claim of right — defendant believed the property was theirs`,
+    `Claim of right, defendant believed the property was theirs`,
     `Lack of intent to permanently deprive`,
     `Mistaken identity`,
     `Value below felony threshold`
@@ -1258,7 +1258,7 @@ BUILDERS['grand-theft'] = (code) => ({
     `Multiple-count charging increases overall exposure`
   ],
   defense_opportunities: [
-    `Challenge valuation — argue the items were worth less than the threshold`,
+    `Challenge valuation, argue the items were worth less than the threshold`,
     `Contest aggregation across multiple incidents`,
     `Pursue claim of right or lack of intent defenses`,
     `Negotiate down to misdemeanor theft where value is contestable`
@@ -1278,13 +1278,13 @@ BUILDERS['petty-theft'] = (code) => ({
     `Repeat offenses elevate to felony tiers in most jurisdictions`
   ],
   defense_opportunities: [
-    `Challenge intent — forgetting to pay is not theft`,
+    `Challenge intent, forgetting to pay is not theft`,
     `Contest identification`,
     `Pursue diversion or restitution-based dismissal`,
     `Examine value to ensure misdemeanor treatment`
   ],
   common_defenses: [
-    `Lack of intent to steal — forgetfulness or mistake`,
+    `Lack of intent to steal, forgetfulness or mistake`,
     `Mistaken identification`,
     `Item was paid for or returned`,
     `Diversion or restitution agreement`
@@ -1299,13 +1299,13 @@ BUILDERS['shoplifting'] = (code) => ({
     `Civil demand letters from retailers add financial pressure`
   ],
   defense_opportunities: [
-    `Challenge intent — forgetting to pay is not theft`,
-    `Contest the moment of taking — concealment without exit may not constitute completion`,
+    `Challenge intent, forgetting to pay is not theft`,
+    `Contest the moment of taking, concealment without exit may not constitute completion`,
     `Pursue diversion programs commonly available for first-time offenders`,
     `Examine identification`
   ],
   common_defenses: [
-    `Lack of intent — forgetfulness or distraction`,
+    `Lack of intent, forgetfulness or distraction`,
     `Did not exit the store with the items`,
     `Mistaken identification`,
     `Item was returned or paid for`
@@ -1341,14 +1341,14 @@ BUILDERS['burglary'] = (code) => ({
     `Sentencing exposure scales with the type of structure and time of day`
   ],
   defense_opportunities: [
-    `Challenge the entry element — was the defendant actually inside`,
+    `Challenge the entry element, was the defendant actually inside`,
     `Contest the intent to commit a crime at the moment of entry`,
     `Pursue identification challenges`,
     `Argue lack of knowledge of unauthorized entry`
   ],
   common_defenses: [
     `Lack of intent to commit a crime at entry`,
-    `Authorized entry — invited or permitted`,
+    `Authorized entry, invited or permitted`,
     `Mistaken identification`,
     `No actual entry occurred`
   ]
@@ -1429,7 +1429,7 @@ BUILDERS['receiving-stolen-property'] = (code) => ({
     `Examine constructive possession in shared spaces`
   ],
   common_defenses: [
-    `Lack of knowledge — defendant did not know the property was stolen`,
+    `Lack of knowledge, defendant did not know the property was stolen`,
     `Good faith purchase`,
     `Constructive possession failure`,
     `Value below felony threshold`
@@ -1470,7 +1470,7 @@ BUILDERS['criminal-mischief'] = (code) => ({
   ],
   common_defenses: [
     `Mistaken identification`,
-    `Lack of intent — accidental damage`,
+    `Lack of intent, accidental damage`,
     `Value below the threshold for the charged tier`,
     `Restitution agreement`
   ]
@@ -1489,7 +1489,7 @@ BUILDERS['trespassing'] = (code) => ({
     `Examine the boundary line for the property`
   ],
   common_defenses: [
-    `Lack of notice — no posting or prior warning`,
+    `Lack of notice, no posting or prior warning`,
     `Implied permission`,
     `Public access area`,
     `Mistaken identity`
@@ -1506,7 +1506,7 @@ BUILDERS['domestic-violence'] = (code) => ({
     `Prior incidents and protective orders amplify the prosecution narrative`
   ],
   defense_opportunities: [
-    `Pursue self-defense — domestic violence cases frequently involve mutual conflict`,
+    `Pursue self-defense, domestic violence cases frequently involve mutual conflict`,
     `Challenge witness recantation patterns and prior inconsistent statements`,
     `Contest the relationship element where required for the enhanced charge`,
     `Examine body camera for de-escalation failures`
@@ -1548,7 +1548,7 @@ BUILDERS['child-abuse'] = (code) => ({
     `Sentencing exposure is severe with mandatory reporting requirements`
   ],
   defense_opportunities: [
-    `Challenge medical methodology — many injury indicators have alternative explanations`,
+    `Challenge medical methodology, many injury indicators have alternative explanations`,
     `Contest the intent or recklessness element`,
     `Examine alternative caregivers as potential suspects`,
     `Pursue accidental injury theories supported by medical experts`
@@ -1563,7 +1563,7 @@ BUILDERS['child-abuse'] = (code) => ({
 
 BUILDERS['child-endangerment'] = (code) => ({
   prosecution_strengths: [
-    `Lower threshold than child abuse — risk of harm without actual injury suffices`,
+    `Lower threshold than child abuse, risk of harm without actual injury suffices`,
     `Body camera and witness testimony establish the conduct`,
     `Often charged alongside other offenses to amplify exposure`
   ],
@@ -1588,7 +1588,7 @@ BUILDERS['child-neglect'] = (code) => ({
     `Pattern evidence across time supports the prosecution narrative`
   ],
   defense_opportunities: [
-    `Challenge the standard of care — poverty is not neglect`,
+    `Challenge the standard of care, poverty is not neglect`,
     `Contest the intent element`,
     `Pursue family preservation and treatment alternatives`,
     `Examine cultural and socioeconomic factors`
@@ -1610,15 +1610,15 @@ BUILDERS['violation-protective-order'] = (code) => ({
   ],
   defense_opportunities: [
     `Challenge whether service was actually accomplished`,
-    `Contest the violation — was contact actually made by the defendant`,
+    `Contest the violation, was contact actually made by the defendant`,
     `Argue mutual violation by the protected party`,
     `Examine identification`
   ],
   common_defenses: [
-    `Lack of notice — defendant was not served`,
+    `Lack of notice, defendant was not served`,
     `Contact initiated by the protected party`,
     `Mistaken identification`,
-    `No actual violation — communications were misinterpreted`
+    `No actual violation, communications were misinterpreted`
   ]
 });
 
@@ -1630,13 +1630,13 @@ BUILDERS['stalking'] = (code) => ({
     `Repeat or escalating conduct enhances the charge`
   ],
   defense_opportunities: [
-    `Challenge the course of conduct — isolated incidents may not satisfy the element`,
+    `Challenge the course of conduct, isolated incidents may not satisfy the element`,
     `Contest the reasonable fear element from an objective standpoint`,
     `Examine identification when communications were anonymous`,
     `Argue lawful purpose for the contacts`
   ],
   common_defenses: [
-    `No course of conduct — isolated incidents`,
+    `No course of conduct, isolated incidents`,
     `Lawful purpose for the contacts`,
     `Reasonable fear was not objectively justified`,
     `Mistaken identification`
@@ -1651,13 +1651,13 @@ BUILDERS['aggravated-stalking'] = (code) => ({
     `Sentencing exposure significantly exceeds basic stalking`
   ],
   defense_opportunities: [
-    `Challenge the aggravating element — weapon, threat, or order violation`,
+    `Challenge the aggravating element, weapon, threat, or order violation`,
     `Contest the underlying stalking course of conduct`,
     `Examine identification`,
     `Argue lawful purpose`
   ],
   common_defenses: [
-    `No aggravating element — only basic stalking at most`,
+    `No aggravating element, only basic stalking at most`,
     `No course of conduct`,
     `Lawful purpose`,
     `Mistaken identification`
@@ -1713,7 +1713,7 @@ BUILDERS['elder-abuse'] = (code) => ({
     `Pattern evidence supports the prosecution narrative`
   ],
   defense_opportunities: [
-    `Challenge the abuse element — caregiving disputes are not abuse`,
+    `Challenge the abuse element, caregiving disputes are not abuse`,
     `Contest the intent element`,
     `Examine alternative explanations for injuries or financial transactions`,
     `Argue family financial arrangements were consensual`
@@ -1742,7 +1742,7 @@ BUILDERS['financial-exploitation-elder'] = (code) => ({
   common_defenses: [
     `Consensual financial arrangement`,
     `Authorized power of attorney`,
-    `Capacity dispute — alleged victim consented while capable`,
+    `Capacity dispute, alleged victim consented while capable`,
     `Family financial dispute, not exploitation`
   ]
 });
@@ -1759,7 +1759,7 @@ BUILDERS['weapons-possession'] = (code) => ({
   defense_opportunities: [
     `Challenge the legality of the search that produced the weapon`,
     `Contest constructive possession in shared vehicles or residences`,
-    `Examine the prohibited status — was the defendant actually within a prohibited category`,
+    `Examine the prohibited status, was the defendant actually within a prohibited category`,
     `Argue lack of knowledge of the weapon's presence`
   ],
   common_defenses: [
@@ -1845,7 +1845,7 @@ BUILDERS['unlawful-carry'] = (code) => ({
   ],
   common_defenses: [
     `Illegal search and seizure`,
-    `Permit defense — defendant was actually licensed`,
+    `Permit defense, defendant was actually licensed`,
     `Constructive possession failure`,
     `Location was not within a prohibited zone`
   ]
@@ -1879,8 +1879,8 @@ BUILDERS['felony-firearm'] = (code) => ({
     `Federal cooperation often supplements state prosecutions`
   ],
   defense_opportunities: [
-    `Challenge the underlying felony — if it falls, the enhancement falls`,
-    `Contest the firearm element — was a firearm actually used or merely present`,
+    `Challenge the underlying felony, if it falls, the enhancement falls`,
+    `Contest the firearm element, was a firearm actually used or merely present`,
     `Examine constructive possession`,
     `Negotiate for plea reduction on the underlying offense`
   ],
@@ -1960,13 +1960,13 @@ BUILDERS['weapons-trafficking'] = (code) => ({
     `Sentencing exposure is severe`
   ],
   defense_opportunities: [
-    `Challenge the trafficking element — single sales may not constitute trafficking`,
+    `Challenge the trafficking element, single sales may not constitute trafficking`,
     `Contest the role of confidential informants`,
     `Examine entrapment defenses`,
     `Argue lawful private transfers`
   ],
   common_defenses: [
-    `No pattern of trafficking — isolated transfers`,
+    `No pattern of trafficking, isolated transfers`,
     `Entrapment by confidential informant`,
     `Lawful private transfers`,
     `Illegal search and seizure`
@@ -1984,7 +1984,7 @@ BUILDERS['identity-theft'] = (code) => ({
   ],
   defense_opportunities: [
     `Challenge the attribution of accounts and devices to the defendant`,
-    `Contest the intent element — possession of identifiers is not always identity theft`,
+    `Contest the intent element, possession of identifiers is not always identity theft`,
     `Examine lawful authorization defenses`,
     `Argue family or business relationship that authorized the access`
   ],
@@ -2004,7 +2004,7 @@ BUILDERS['embezzlement'] = (code) => ({
     `Sentencing exposure includes restitution`
   ],
   defense_opportunities: [
-    `Challenge the lack of authorization — implicit permission can be a defense`,
+    `Challenge the lack of authorization, implicit permission can be a defense`,
     `Contest the intent element`,
     `Argue the funds were borrowed with intent to repay`,
     `Examine bookkeeping disputes versus actual theft`
@@ -2064,7 +2064,7 @@ BUILDERS['bad-checks'] = (code) => ({
     `Pattern evidence across multiple checks strengthens the case`
   ],
   defense_opportunities: [
-    `Challenge the intent to defraud — accounting errors are not fraud`,
+    `Challenge the intent to defraud, accounting errors are not fraud`,
     `Argue good faith reliance on expected deposits`,
     `Contest the notice of dishonor`,
     `Pursue restitution-based diversion`
@@ -2124,13 +2124,13 @@ BUILDERS['tax-fraud'] = (code) => ({
     `Sentencing exposure includes restitution and penalties`
   ],
   defense_opportunities: [
-    `Challenge the willfulness element — negligence is not fraud`,
+    `Challenge the willfulness element, negligence is not fraud`,
     `Argue good faith reliance on tax preparer advice`,
     `Contest the calculations underlying the alleged underreporting`,
     `Pursue voluntary disclosure or restitution-based resolutions`
   ],
   common_defenses: [
-    `Lack of willfulness — good faith mistake`,
+    `Lack of willfulness, good faith mistake`,
     `Reliance on tax preparer or advisor`,
     `Calculation dispute`,
     `Negligence rather than fraud`
@@ -2185,7 +2185,7 @@ BUILDERS['fraud-welfare'] = (code) => ({
     `Restitution adds financial pressure for plea agreements`
   ],
   defense_opportunities: [
-    `Challenge the willfulness — bureaucratic confusion is not fraud`,
+    `Challenge the willfulness, bureaucratic confusion is not fraud`,
     `Argue good faith reporting of household composition or income`,
     `Pursue restitution-based diversion`,
     `Examine the timing of changes that should have been reported`
@@ -2206,7 +2206,7 @@ BUILDERS['healthcare-fraud'] = (code) => ({
     `Sentencing exposure includes restitution and exclusion from federal programs`
   ],
   defense_opportunities: [
-    `Challenge the intent — billing errors are not fraud`,
+    `Challenge the intent, billing errors are not fraud`,
     `Argue good faith billing practices`,
     `Contest the medical necessity determination`,
     `Examine reliance on billing staff or coders`
@@ -2271,7 +2271,7 @@ BUILDERS['sexual-assault'] = (code) => ({
   defense_opportunities: [
     `Pursue consent defenses where supported by facts`,
     `Challenge identification`,
-    `Examine forensic methodology — DNA mixtures and contamination are real issues`,
+    `Examine forensic methodology, DNA mixtures and contamination are real issues`,
     `Contest the credibility of witnesses through prior inconsistent statements`
   ],
   common_defenses: [
@@ -2284,7 +2284,7 @@ BUILDERS['sexual-assault'] = (code) => ({
 
 BUILDERS['sex-offense-contact'] = (code) => ({
   prosecution_strengths: [
-    `Lower threshold than penetrative offenses — touching can suffice`,
+    `Lower threshold than penetrative offenses, touching can suffice`,
     `Witness testimony establishes the contact`,
     `Pattern evidence across multiple incidents strengthens the case`
   ],
@@ -2310,14 +2310,14 @@ BUILDERS['sex-offense-digital'] = (code) => ({
   ],
   defense_opportunities: [
     `Challenge the attribution of accounts and devices`,
-    `Contest the knowing element — automatic downloads or shared devices`,
+    `Contest the knowing element, automatic downloads or shared devices`,
     `Examine the chain of custody for digital evidence`,
     `Argue First Amendment protected expression where applicable`
   ],
   common_defenses: [
     `Account or device was not the defendant's`,
-    `Automatic downloads — lack of knowledge`,
-    `Shared device — multiple users with access`,
+    `Automatic downloads, lack of knowledge`,
+    `Shared device, multiple users with access`,
     `Mistaken identification`
   ]
 });
@@ -2534,7 +2534,7 @@ BUILDERS['sex-trafficking'] = (code) => ({
   ],
   defense_opportunities: [
     `Challenge the force, fraud, or coercion element`,
-    `Contest the role of the defendant — was this trafficking or facilitation`,
+    `Contest the role of the defendant, was this trafficking or facilitation`,
     `Examine victim testimony for credibility`,
     `Argue lack of knowledge of the underlying conduct`
   ],
@@ -2629,7 +2629,7 @@ BUILDERS['csc-third-degree'] = (code) => ({
 
 BUILDERS['csc-fourth-degree'] = (code) => ({
   prosecution_strengths: [
-    `Lowest tier of criminal sexual conduct — broad reach`,
+    `Lowest tier of criminal sexual conduct, broad reach`,
     `Witness testimony establishes the contact`,
     `Pattern evidence strengthens the case`
   ],
@@ -2696,7 +2696,7 @@ BUILDERS['resisting-arrest'] = (code) => ({
     `Often charged alongside other offenses to create plea leverage`
   ],
   defense_opportunities: [
-    `Challenge whether the arrest was lawful — unlawful arrests reduce or eliminate the charge in some jurisdictions`,
+    `Challenge whether the arrest was lawful, unlawful arrests reduce or eliminate the charge in some jurisdictions`,
     `Examine excessive force defenses`,
     `Argue passive non-cooperation does not constitute resistance`,
     `Contest the intent element`
@@ -2836,7 +2836,7 @@ BUILDERS['false-report'] = (code) => ({
     `Witness testimony supports the prosecution`
   ],
   defense_opportunities: [
-    `Challenge the intent element — mistaken belief is not a false report`,
+    `Challenge the intent element, mistaken belief is not a false report`,
     `Argue good faith reliance on what was perceived`,
     `Contest the materiality of the alleged falsity`,
     `Examine identification`
@@ -2856,13 +2856,13 @@ BUILDERS['criminal-threat'] = (code) => ({
     `Pattern evidence across communications strengthens the case`
   ],
   defense_opportunities: [
-    `Argue First Amendment protected speech — true threat doctrine requires more than hyperbole`,
+    `Argue First Amendment protected speech, true threat doctrine requires more than hyperbole`,
     `Challenge whether the listener's fear was objectively reasonable`,
     `Contest identification`,
     `Examine intent`
   ],
   common_defenses: [
-    `Hyperbole or venting — not a true threat`,
+    `Hyperbole or venting, not a true threat`,
     `First Amendment protection`,
     `Listener's fear was not objectively reasonable`,
     `Mistaken identification`
@@ -2962,9 +2962,9 @@ BUILDERS['escape-custody'] = (code) => ({
     `Examine the lawfulness of the custody`
   ],
   common_defenses: [
-    `Necessity — escape was required to avoid imminent harm`,
+    `Necessity, escape was required to avoid imminent harm`,
     `Custody was unlawful`,
-    `No actual escape — defendant returned voluntarily`,
+    `No actual escape, defendant returned voluntarily`,
     `Mistaken identification`
   ]
 });
@@ -3016,7 +3016,7 @@ BUILDERS['gang-participation'] = (code) => ({
     `Sentencing enhancements stack on top of base offenses`
   ],
   defense_opportunities: [
-    `Challenge the membership element — association is not membership`,
+    `Challenge the membership element, association is not membership`,
     `Contest the gang's qualification under statutory criteria`,
     `Examine First Amendment association protections`,
     `Argue the underlying offense was not gang-related`
@@ -3044,7 +3044,7 @@ BUILDERS['cyberbullying'] = (code) => ({
   common_defenses: [
     `First Amendment protected speech`,
     `Account was not the defendant's`,
-    `No course of conduct — isolated incidents`,
+    `No course of conduct, isolated incidents`,
     `Lack of intent to harm`
   ]
 });
@@ -3076,13 +3076,13 @@ BUILDERS['bomb-threat'] = (code) => ({
     `Federal cooperation amplifies investigation`
   ],
   defense_opportunities: [
-    `Argue First Amendment — true threat doctrine requires more than hyperbole`,
+    `Argue First Amendment, true threat doctrine requires more than hyperbole`,
     `Challenge identification`,
     `Contest the seriousness of the threat`,
     `Examine intent`
   ],
   common_defenses: [
-    `Hyperbole — not a true threat`,
+    `Hyperbole, not a true threat`,
     `First Amendment protected speech`,
     `Mistaken identification`,
     `Lack of intent`
@@ -3246,7 +3246,7 @@ BUILDERS['aiding-abetting'] = (code) => ({
     `Examine the defendant's actual contribution`
   ],
   common_defenses: [
-    `Mere presence — no actual aid provided`,
+    `Mere presence, no actual aid provided`,
     `Lack of intent to aid the underlying offense`,
     `Underlying offense fails`,
     `Withdrawal before the underlying offense was committed`
@@ -3260,7 +3260,7 @@ BUILDERS['attempt'] = (code) => ({
     `Sentencing exposure approaches that of the completed offense`
   ],
   defense_opportunities: [
-    `Challenge the substantial step element — mere preparation is not attempt`,
+    `Challenge the substantial step element, mere preparation is not attempt`,
     `Argue abandonment before the substantial step`,
     `Contest the intent to commit the underlying offense`,
     `Pursue impossibility defenses where applicable`
@@ -3280,7 +3280,7 @@ BUILDERS['conspiracy'] = (code) => ({
     `Conspiracy adds years of exposure beyond the underlying offense`
   ],
   defense_opportunities: [
-    `Challenge the existence of an agreement — mere association is not conspiracy`,
+    `Challenge the existence of an agreement, mere association is not conspiracy`,
     `Argue withdrawal from the conspiracy before any overt act`,
     `Contest the role of confidential informants`,
     `Examine the venue for each alleged overt act`
@@ -3295,7 +3295,7 @@ BUILDERS['conspiracy'] = (code) => ({
 
 BUILDERS['probation-violation'] = (code) => ({
   prosecution_strengths: [
-    `Lower burden of proof than criminal trial — preponderance of evidence in most jurisdictions`,
+    `Lower burden of proof than criminal trial, preponderance of evidence in most jurisdictions`,
     `Probation officer testimony establishes the violation`,
     `No right to jury trial in violation hearings`
   ],

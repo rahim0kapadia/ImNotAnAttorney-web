@@ -1,5 +1,5 @@
 /**
- * @file Part 1 — Nurture emails (subscribers who haven't bought yet)
+ * @file Part 1, Nurture emails (subscribers who haven't bought yet)
  *
  * Sends the next unsent email in the nurture sequence based on days since signup.
  * Only processes subscribers who haven't unsubscribed (CAN-SPAM).
@@ -91,7 +91,7 @@ export async function sendNurtureEmails(ctx: CronContext): Promise<CronResult> {
 
       if (sub.source === "dui-72-hours") {
         nextEmail = getNextDui72hEmail(daysSinceSubscribe, sentKeys);
-        // No fallthrough — crisis buyers who haven't converted by Day 7 are gone.
+        // No fallthrough, crisis buyers who haven't converted by Day 7 are gone.
       } else if (sub.source === "score-abandoned") {
         nextEmail = getNextAbandonedScoreEmail(daysSinceSubscribe, sentKeys);
         if (!nextEmail) {

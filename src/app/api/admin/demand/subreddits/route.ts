@@ -1,6 +1,6 @@
 /**
- * GET /api/admin/demand/subreddits — discovered subreddits
- * PATCH /api/admin/demand/subreddits — approve or reject a subreddit
+ * GET /api/admin/demand/subreddits, discovered subreddits
+ * PATCH /api/admin/demand/subreddits, approve or reject a subreddit
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";

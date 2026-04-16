@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Duplicate check — same email, pending/approved within 90 days
+  // Duplicate check, same email, pending/approved within 90 days
   const { data: existing } = await supabase
     .from('idd_applications')
     .select('id, status')

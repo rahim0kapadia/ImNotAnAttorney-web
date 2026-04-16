@@ -174,9 +174,9 @@ const HOLDING_KEYWORDS = [
  * Check for negation in a window of N words before a keyword match position.
  * Returns true if a negation term is found within the window.
  *
- * @param {string} lowerText — lowercased full text
- * @param {number} matchPos — position of the keyword match
- * @param {number} windowChars — number of characters to look back (default: ~5 words = 40 chars)
+ * @param {string} lowerText, lowercased full text
+ * @param {number} matchPos, position of the keyword match
+ * @param {number} windowChars, number of characters to look back (default: ~5 words = 40 chars)
  * @returns {boolean}
  */
 export function hasNegation(lowerText, matchPos, windowChars = 40) {
@@ -192,8 +192,8 @@ export function hasNegation(lowerText, matchPos, windowChars = 40) {
  * Extract motion types from opinion text.
  * Keyword matching against MOTION_SIGNALS with negation window.
  *
- * @param {string} text — opinion text (plain text, not HTML)
- * @returns {string[]} — array of canonical motion type names
+ * @param {string} text, opinion text (plain text, not HTML)
+ * @returns {string[]}, array of canonical motion type names
  */
 export function extractMotionTypes(text) {
   if (!text) return [];
@@ -218,8 +218,8 @@ export function extractMotionTypes(text) {
  * Scans lowercased text for multi-word charge-identifying phrases.
  * Returns broad category slugs (our 10 charge families).
  *
- * @param {string} text — opinion text (plain text, not HTML)
- * @returns {string[]} — array of broad charge category slugs
+ * @param {string} text, opinion text (plain text, not HTML)
+ * @returns {string[]}, array of broad charge category slugs
  */
 export function extractChargesFromKeywords(text) {
   if (!text) return [];
@@ -244,9 +244,9 @@ export function extractChargesFromKeywords(text) {
  * Requires 3+ distinct theory keywords for the SAME charge_slug to classify.
  * This high threshold avoids false positives from common legal terms.
  *
- * @param {string} text — opinion text (plain text, not HTML)
+ * @param {string} text, opinion text (plain text, not HTML)
  * @param {Map<string, Array<{theory_name: string, theory_keywords: string[], motion_types: string[]}>>} theoryMap
- * @returns {string[]} — array of charge slugs with strong keyword evidence
+ * @returns {string[]}, array of charge slugs with strong keyword evidence
  */
 export function extractChargesFromTheoryKeywords(text, theoryMap) {
   if (!text || !theoryMap) return [];
@@ -287,7 +287,7 @@ export function extractChargesFromTheoryKeywords(text, theoryMap) {
  *
  * Returns raw citation strings for matching against jurisdiction_statutes.
  *
- * @param {string} text — opinion text
+ * @param {string} text, opinion text
  * @returns {Array<{citation: string, position: number, isPrimary: boolean}>}
  */
 export function extractStatuteCitations(text) {
@@ -394,8 +394,8 @@ function extractNumberAfterPosition(text, start) {
  * Match extracted statute citations against jurisdiction_statutes table.
  *
  * @param {Array<{citation: string, position: number, isPrimary: boolean}>} citations
- * @param {string} jurisdiction — two-letter state code from CL court metadata
- * @param {Map<string, {charge_slug: string, statute_number: string}>} statuteMap — keyed by "jurisdiction:statute_number" (lowercased)
+ * @param {string} jurisdiction, two-letter state code from CL court metadata
+ * @param {Map<string, {charge_slug: string, statute_number: string}>} statuteMap, keyed by "jurisdiction:statute_number" (lowercased)
  * @returns {Array<{charge_slug: string, isPrimary: boolean}>}
  */
 export function matchStatutesToCharges(citations, jurisdiction, statuteMap) {
@@ -450,11 +450,11 @@ function stripSubsection(statuteNum) {
  * the charge_defense_theories constrained mapping.
  * Also checks for keyword presence with negation window.
  *
- * @param {string[]} chargeTypes — charge_slug values
- * @param {string[]} motionTypes — motion type canonical names
- * @param {string} text — opinion text (for keyword check)
- * @param {Map<string, Array<{theory_name: string, theory_keywords: string[], motion_types: string[]}>>} theoryMap — keyed by charge_slug
- * @returns {string[]} — defense theory names
+ * @param {string[]} chargeTypes, charge_slug values
+ * @param {string[]} motionTypes, motion type canonical names
+ * @param {string} text, opinion text (for keyword check)
+ * @param {Map<string, Array<{theory_name: string, theory_keywords: string[], motion_types: string[]}>>} theoryMap, keyed by charge_slug
+ * @returns {string[]}, defense theory names
  */
 export function deriveDefenseTheories(chargeTypes, motionTypes, text, theoryMap) {
   if (!chargeTypes || chargeTypes.length === 0) return [];
@@ -499,8 +499,8 @@ export function deriveDefenseTheories(chargeTypes, motionTypes, text, theoryMap)
  * Outcome keywords: GRANTED/DENIED/DISMISSED in positional window.
  * Negation window NOT applied to outcome keywords (Section 3.4).
  *
- * @param {string[]} motionTypes — motion types found in this opinion
- * @param {string} text — full opinion text
+ * @param {string[]} motionTypes, motion types found in this opinion
+ * @param {string} text, full opinion text
  * @returns {Array<{motion_type: string, outcome: string|null}>}
  */
 export function extractMotionOutcomes(motionTypes, text) {
@@ -559,7 +559,7 @@ export function extractMotionOutcomes(motionTypes, text) {
   }
 
   // For each motion, use the single outcome (we don't have per-motion
-  // docket data to differentiate — that's a Phase 2 enhancement).
+  // docket data to differentiate, that's a Phase 2 enhancement).
   return motionTypes.map(mt => ({ motion_type: mt, outcome }));
 }
 
@@ -568,8 +568,8 @@ export function extractMotionOutcomes(motionTypes, text) {
  * Finds sentences containing ruling keywords.
  * Strips quoted text before scanning for ruling keywords.
  *
- * @param {string} text — full opinion text
- * @returns {string|null} — extracted holding sentences joined, or null
+ * @param {string} text, full opinion text
+ * @returns {string|null}, extracted holding sentences joined, or null
  */
 export function extractHoldingText(text) {
   if (!text) return null;
@@ -661,7 +661,7 @@ export function computeMotionFavorability(motionOutcomes) {
  * 0-100 from case outcome (granted/dismissed vs denied/affirmed).
  *
  * @param {Array<{motion_type: string, outcome: string|null}>} motionOutcomes
- * @param {boolean|null} isGoodLaw — CL citation treatment
+ * @param {boolean|null} isGoodLaw, CL citation treatment
  * @returns {number|null}
  */
 export function computeCaseFavorability(motionOutcomes, isGoodLaw) {
@@ -693,14 +693,14 @@ export function computeCaseFavorability(motionOutcomes, isGoodLaw) {
  * Full mechanical extraction pipeline for a single opinion.
  *
  * @param {object} params
- * @param {string} params.text — plain text of opinion
- * @param {string} params.jurisdiction — two-letter state code
- * @param {string} params.opinionType — from classifyOpinionType
- * @param {object} params.extractionSteps — from getExtractionSteps
- * @param {Map} params.statuteMap — jurisdiction:statute_number → charge info
- * @param {Map} params.theoryMap — charge_slug → theory definitions
- * @param {boolean|null} params.isGoodLaw — CL is_good_law status
- * @returns {object} — classified fields
+ * @param {string} params.text, plain text of opinion
+ * @param {string} params.jurisdiction, two-letter state code
+ * @param {string} params.opinionType, from classifyOpinionType
+ * @param {object} params.extractionSteps, from getExtractionSteps
+ * @param {Map} params.statuteMap, jurisdiction:statute_number → charge info
+ * @param {Map} params.theoryMap, charge_slug → theory definitions
+ * @param {boolean|null} params.isGoodLaw, CL is_good_law status
+ * @returns {object}, classified fields
  */
 export function extractAll(params) {
   const { text, jurisdiction, opinionType, extractionSteps, statuteMap, theoryMap, isGoodLaw } = params;
@@ -715,7 +715,7 @@ export function extractAll(params) {
     holding_text: null,
   };
 
-  // 1. Extract charge types (always runs) — three methods, merged
+  // 1. Extract charge types (always runs), three methods, merged
   if (extractionSteps.extractCharges) {
     const chargeSet = new Set();
 

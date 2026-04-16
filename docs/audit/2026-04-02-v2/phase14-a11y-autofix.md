@@ -1,8 +1,8 @@
-# Phase 14 — A11y Autofix Patches
+# Phase 14, A11y Autofix Patches
 
 **Date:** 2026-04-02
 **Source audits:** phase3-axe-runtime.md, phase7-jsx-a11y-static.md
-**Note:** phase2-accesslint.md was not present in the audit directory at report time. Those findings are not covered here — re-run AccessLint and append findings.
+**Note:** phase2-accesslint.md was not present in the audit directory at report time. Those findings are not covered here, re-run AccessLint and append findings.
 **Standards:** WCAG 2.1 Level AA
 **Scope:** All real violations from Layers 3 and 7. False positives (F-05 checkout wrapping labels) excluded.
 
@@ -12,29 +12,29 @@
 
 | ID | Description | File | Severity | Category | WCAG |
 |----|-------------|------|----------|----------|------|
-| AX-01 | Duplicate `<main>` — services page | `src/app/services/page.tsx:325` | MODERATE | AUTO-FIX | 1.3.6 |
-| AX-02 | Duplicate `<main>` — playbooks page | `src/app/playbooks/page.tsx:120` | MODERATE | AUTO-FIX | 1.3.6 |
-| AX-03 | Duplicate `<main>` — score page | `src/app/score/page.tsx:1037` | MODERATE | AUTO-FIX | 1.3.6 |
-| AX-04 | Duplicate `<main>` — start page (3 instances) | `src/app/start/page.tsx:44,119,364` | MODERATE | AUTO-FIX | 1.3.6 |
+| AX-01 | Duplicate `<main>`, services page | `src/app/services/page.tsx:325` | MODERATE | AUTO-FIX | 1.3.6 |
+| AX-02 | Duplicate `<main>`, playbooks page | `src/app/playbooks/page.tsx:120` | MODERATE | AUTO-FIX | 1.3.6 |
+| AX-03 | Duplicate `<main>`, score page | `src/app/score/page.tsx:1037` | MODERATE | AUTO-FIX | 1.3.6 |
+| AX-04 | Duplicate `<main>`, start page (3 instances) | `src/app/start/page.tsx:44,119,364` | MODERATE | AUTO-FIX | 1.3.6 |
 | AX-05 | Scrollable region not keyboard accessible | `src/app/sample/page.tsx:176,300,607` | SERIOUS | AUTO-FIX | 2.1.1 |
 | AX-06 | Links in text block rely on color only | `src/app/research/defense-score-data/page.tsx` | SERIOUS | AUTO-FIX | 1.4.1 |
-| F01-A | Missing htmlFor/id — my-cases login email | `src/app/my-cases/login/page.tsx:80` | SERIOUS | AUTO-FIX | 1.3.1 |
-| F01-B | Missing htmlFor/id — partner login email | `src/app/partner/login/page.tsx:83` | SERIOUS | AUTO-FIX | 1.3.1 |
-| F01-C | Missing htmlFor/id — intake checkbox group (arrest circumstances) | `src/app/intake/page.tsx:1091` | SERIOUS | AUTO-FIX | 1.3.1 |
-| F01-D | Missing htmlFor/id — intake checkbox group (evidence type) | `src/app/intake/page.tsx:1228` | SERIOUS | AUTO-FIX | 1.3.1 |
-| F01-E | Missing htmlFor/id — admin partner form (7 fields) | `src/app/admin/partners/page.tsx:452–526` | SERIOUS | AUTO-FIX | 1.3.1 |
-| F01-F | Missing htmlFor/id — partner dashboard payment form (3 conditional fields) | `src/app/partner/dashboard/page.tsx:346–401` | SERIOUS | AUTO-FIX | 1.3.1 |
-| F02-A | autoFocus on public login — my-cases | `src/app/my-cases/login/page.tsx:87` | SERIOUS | HUMAN-REVIEW | 3.2.1 |
-| F02-B | autoFocus on public login — partner | `src/app/partner/login/page.tsx:90` | SERIOUS | HUMAN-REVIEW | 3.2.1 |
-| F03-A | autoFocus on admin — demand password gate | `src/app/admin/demand/page.tsx:266` | MODERATE | HUMAN-REVIEW | 3.2.1 |
-| F03-B | autoFocus on admin — inbox password gate | `src/app/admin/inbox/page.tsx:189` | MODERATE | HUMAN-REVIEW | 3.2.1 |
-| F03-C | autoFocus on admin — inbox reply textarea | `src/app/admin/inbox/page.tsx:391` | MODERATE | HUMAN-REVIEW | 3.2.1 |
-| F03-D | autoFocus on admin — OperatorShell password gate | `src/components/OperatorShell.tsx:104` | MODERATE | HUMAN-REVIEW | 3.2.1 |
+| F01-A | Missing htmlFor/id, my-cases login email | `src/app/my-cases/login/page.tsx:80` | SERIOUS | AUTO-FIX | 1.3.1 |
+| F01-B | Missing htmlFor/id, partner login email | `src/app/partner/login/page.tsx:83` | SERIOUS | AUTO-FIX | 1.3.1 |
+| F01-C | Missing htmlFor/id, intake checkbox group (arrest circumstances) | `src/app/intake/page.tsx:1091` | SERIOUS | AUTO-FIX | 1.3.1 |
+| F01-D | Missing htmlFor/id, intake checkbox group (evidence type) | `src/app/intake/page.tsx:1228` | SERIOUS | AUTO-FIX | 1.3.1 |
+| F01-E | Missing htmlFor/id, admin partner form (7 fields) | `src/app/admin/partners/page.tsx:452–526` | SERIOUS | AUTO-FIX | 1.3.1 |
+| F01-F | Missing htmlFor/id, partner dashboard payment form (3 conditional fields) | `src/app/partner/dashboard/page.tsx:346–401` | SERIOUS | AUTO-FIX | 1.3.1 |
+| F02-A | autoFocus on public login, my-cases | `src/app/my-cases/login/page.tsx:87` | SERIOUS | HUMAN-REVIEW | 3.2.1 |
+| F02-B | autoFocus on public login, partner | `src/app/partner/login/page.tsx:90` | SERIOUS | HUMAN-REVIEW | 3.2.1 |
+| F03-A | autoFocus on admin, demand password gate | `src/app/admin/demand/page.tsx:266` | MODERATE | HUMAN-REVIEW | 3.2.1 |
+| F03-B | autoFocus on admin, inbox password gate | `src/app/admin/inbox/page.tsx:189` | MODERATE | HUMAN-REVIEW | 3.2.1 |
+| F03-C | autoFocus on admin, inbox reply textarea | `src/app/admin/inbox/page.tsx:391` | MODERATE | HUMAN-REVIEW | 3.2.1 |
+| F03-D | autoFocus on admin, OperatorShell password gate | `src/components/OperatorShell.tsx:104` | MODERATE | HUMAN-REVIEW | 3.2.1 |
 | F04 | Non-interactive `<span>` with onClick, no keyboard handler | `src/components/IntakeChargeSelector.tsx:171` | MODERATE | AUTO-FIX | 2.1.1 |
 
 ---
 
-## CRITICAL / SERIOUS — Fix First
+## CRITICAL / SERIOUS, Fix First
 
 ---
 
@@ -100,9 +100,9 @@
 **WCAG:** 1.4.1 Use of Color
 **Root cause:** Links styled `className="text-amber-400 hover:underline"` only show underline on hover. When embedded in body-text paragraphs (`<p>` blocks), users who cannot perceive color difference cannot distinguish them from surrounding text at rest. Fix: add `underline` to the static class list. The hover variant can stay for visual polish but the static underline is required.
 
-**Note:** The standalone link at line 169 (`<Link href="/score" className="text-amber-400 hover:underline">Defense Milestone Score</Link>`) sits inside a `<p className="mt-4 text-lg text-zinc-400">` body paragraph — this is the WCAG 1.4.1 trigger. The 5 body-paragraph links below all follow the same pattern.
+**Note:** The standalone link at line 169 (`<Link href="/score" className="text-amber-400 hover:underline">Defense Milestone Score</Link>`) sits inside a `<p className="mt-4 text-lg text-zinc-400">` body paragraph, this is the WCAG 1.4.1 trigger. The 5 body-paragraph links below all follow the same pattern.
 
-**Old (all 5 occurrences — use replace_all):**
+**Old (all 5 occurrences, use replace_all):**
 ```tsx
 className="text-amber-400 hover:underline"
 ```
@@ -116,7 +116,7 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-### Fix F01-A: Missing htmlFor/id — my-cases login email label
+### Fix F01-A: Missing htmlFor/id, my-cases login email label
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\my-cases\login\page.tsx` line 80
 **Category:** AUTO-FIX
@@ -153,7 +153,7 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-### Fix F01-B: Missing htmlFor/id — partner login email label
+### Fix F01-B: Missing htmlFor/id, partner login email label
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\partner\login\page.tsx` line 83
 **Category:** AUTO-FIX
@@ -190,7 +190,7 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-### Fix F01-C: Intake checkbox group — "How did law enforcement get involved?"
+### Fix F01-C: Intake checkbox group, "How did law enforcement get involved?"
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\intake\page.tsx` line 1091
 **Category:** AUTO-FIX
@@ -241,7 +241,7 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-### Fix F01-D: Intake checkbox group — "What kind of evidence is involved?"
+### Fix F01-D: Intake checkbox group, "What kind of evidence is involved?"
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\intake\page.tsx` line 1228
 **Category:** AUTO-FIX
@@ -291,7 +291,7 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-### Fix F01-E: Admin partner create form — 7 unlabeled fields
+### Fix F01-E: Admin partner create form, 7 unlabeled fields
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\admin\partners\page.tsx` lines 452–526
 **Category:** AUTO-FIX
@@ -473,12 +473,12 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-### Fix F01-F: Partner dashboard payment form — 3 conditional fields
+### Fix F01-F: Partner dashboard payment form, 3 conditional fields
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\partner\dashboard\page.tsx` lines 346–401
 **Category:** AUTO-FIX
 **WCAG:** 1.3.1 Info and Relationships, 4.1.2 Name, Role, Value
-**Note:** The payment method `<select>` and all three conditional fields (Zelle, Venmo, Check address) need `htmlFor`/`id` pairs. The conditional fields only render when their `payMethod` value is selected — the `id` is still valid since only one exists in the DOM at a time.
+**Note:** The payment method `<select>` and all three conditional fields (Zelle, Venmo, Check address) need `htmlFor`/`id` pairs. The conditional fields only render when their `payMethod` value is selected, the `id` is still valid since only one exists in the DOM at a time.
 
 **Old:**
 ```tsx
@@ -614,11 +614,11 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-## MODERATE — Fix After Serious
+## MODERATE, Fix After Serious
 
 ---
 
-### Fix AX-01: Duplicate `<main>` landmark — services page
+### Fix AX-01: Duplicate `<main>` landmark, services page
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\services\page.tsx` line 325
 **Category:** AUTO-FIX
@@ -639,7 +639,7 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-### Fix AX-02: Duplicate `<main>` landmark — playbooks page
+### Fix AX-02: Duplicate `<main>` landmark, playbooks page
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\playbooks\page.tsx` line 120
 **Category:** AUTO-FIX
@@ -657,7 +657,7 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-### Fix AX-03: Duplicate `<main>` landmark — score page
+### Fix AX-03: Duplicate `<main>` landmark, score page
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\score\page.tsx` line 1037
 **Category:** AUTO-FIX
@@ -675,14 +675,14 @@ className="text-amber-400 underline hover:no-underline"
 
 ---
 
-### Fix AX-04: Duplicate `<main>` landmarks — start page (3 instances)
+### Fix AX-04: Duplicate `<main>` landmarks, start page (3 instances)
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\start\page.tsx` lines 44, 119, 364
 **Category:** AUTO-FIX
 **WCAG:** 1.3.6 Identify Purpose
 **Note:** Three separate `<main>` elements are in this file: the `CrisisHero` sub-component (line 44), the main page component (line 119), and the Suspense fallback (line 364). All three must be changed to `<div>`.
 
-**Instance 1 (line 44 — CrisisHero):**
+**Instance 1 (line 44, CrisisHero):**
 
 Old:
 ```tsx
@@ -696,7 +696,7 @@ New:
       <section className="flex min-h-[100dvh] flex-col items-center justify-center px-6 py-16">
 ```
 
-**Instance 2 (line 119 — main page return):**
+**Instance 2 (line 119, main page return):**
 
 Old:
 ```tsx
@@ -710,7 +710,7 @@ New:
       {/* ------------------------------------------------------------------ */}
 ```
 
-**Instance 3 (line 364 — Suspense fallback):**
+**Instance 3 (line 364, Suspense fallback):**
 
 Old:
 ```tsx
@@ -775,19 +775,19 @@ New:
 
 ---
 
-## HUMAN-REVIEW — Require Design Judgment Before Applying
+## HUMAN-REVIEW, Require Design Judgment Before Applying
 
 ---
 
-### Fix F02-A: autoFocus on public login — my-cases
+### Fix F02-A: autoFocus on public login, my-cases
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\my-cases\login\page.tsx` line 87
 **Category:** HUMAN-REVIEW
 **WCAG:** 3.2.1 On Focus
 **Issue:** `autoFocus` moves keyboard focus to the email input before the screen reader has announced the page heading ("My Cases") and instructions. Screen reader users may miss the context about what the page is and what magic link authentication means.
-**Decision required:** (a) Remove `autoFocus` entirely — users will Tab to the field naturally since it's the first interactive element. (b) Keep the UX enhancement but implement via `useRef` + `useEffect` so focus fires after the render cycle and screen readers finish the initial page announcement. Option (b) is preferred if the product team wants the focus-on-load behavior retained.
+**Decision required:** (a) Remove `autoFocus` entirely, users will Tab to the field naturally since it's the first interactive element. (b) Keep the UX enhancement but implement via `useRef` + `useEffect` so focus fires after the render cycle and screen readers finish the initial page announcement. Option (b) is preferred if the product team wants the focus-on-load behavior retained.
 
-**Option A — Remove autoFocus:**
+**Option A, Remove autoFocus:**
 ```tsx
             <input
               id="my-cases-email"
@@ -800,7 +800,7 @@ New:
             />
 ```
 
-**Option B — useRef + useEffect (preserves focus-on-load):**
+**Option B, useRef + useEffect (preserves focus-on-load):**
 ```tsx
 // Add at top of component, after existing useState calls:
 const emailRef = useRef<HTMLInputElement>(null);
@@ -821,14 +821,14 @@ useEffect(() => { emailRef.current?.focus(); }, []);
 
 ---
 
-### Fix F02-B: autoFocus on public login — partner
+### Fix F02-B: autoFocus on public login, partner
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\partner\login\page.tsx` line 90
 **Category:** HUMAN-REVIEW
 **WCAG:** 3.2.1 On Focus
 **Same decision as F02-A.** Apply whichever option is chosen for F02-A consistently.
 
-**Option A — Remove autoFocus:**
+**Option A, Remove autoFocus:**
 ```tsx
             <input
               id="partner-login-email"
@@ -841,7 +841,7 @@ useEffect(() => { emailRef.current?.focus(); }, []);
             />
 ```
 
-**Option B — useRef + useEffect:**
+**Option B, useRef + useEffect:**
 ```tsx
 // Add at top of component:
 const emailRef = useRef<HTMLInputElement>(null);
@@ -862,12 +862,12 @@ useEffect(() => { emailRef.current?.focus(); }, []);
 
 ---
 
-### Fix F03-A: autoFocus — admin demand password gate
+### Fix F03-A: autoFocus, admin demand password gate
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\admin\demand\page.tsx` line 266
 **Category:** HUMAN-REVIEW
 **WCAG:** 3.2.1 On Focus
-**Context:** Admin-only page. The password input is the only interactive element on the gate screen. This is the most benign `autoFocus` case — there is no page content before it for a screen reader to miss. The violation is real but low practical impact. Recommend: leave as-is, suppress with a comment, OR convert to `useEffect` focus for consistency.
+**Context:** Admin-only page. The password input is the only interactive element on the gate screen. This is the most benign `autoFocus` case, there is no page content before it for a screen reader to miss. The violation is real but low practical impact. Recommend: leave as-is, suppress with a comment, OR convert to `useEffect` focus for consistency.
 
 **If suppressing (lowest effort):**
 ```tsx
@@ -898,12 +898,12 @@ useEffect(() => { pwRef.current?.focus(); }, []);
 
 ---
 
-### Fix F03-B: autoFocus — admin inbox password gate
+### Fix F03-B: autoFocus, admin inbox password gate
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\admin\inbox\page.tsx` line 189
 **Category:** HUMAN-REVIEW
 **WCAG:** 3.2.1 On Focus
-**Same rationale as F03-A** — admin-only, password-only screen. Same two options apply.
+**Same rationale as F03-A**, admin-only, password-only screen. Same two options apply.
 
 **If converting to useEffect:**
 ```tsx
@@ -924,7 +924,7 @@ useEffect(() => { pwRef.current?.focus(); }, []);
 
 ---
 
-### Fix F03-C: autoFocus — admin inbox reply textarea
+### Fix F03-C: autoFocus, admin inbox reply textarea
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\admin\inbox\page.tsx` line 391
 **Category:** HUMAN-REVIEW
@@ -954,12 +954,12 @@ useEffect(() => {
 
 ---
 
-### Fix F03-D: autoFocus — OperatorShell password gate
+### Fix F03-D: autoFocus, OperatorShell password gate
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\components\OperatorShell.tsx` line 104
 **Category:** HUMAN-REVIEW
 **WCAG:** 3.2.1 On Focus
-**Same rationale as F03-A** — admin-only password gate, single control on screen.
+**Same rationale as F03-A**, admin-only password gate, single control on screen.
 
 **If converting to useEffect:**
 ```tsx
@@ -985,7 +985,7 @@ useEffect(() => { pwRef.current?.focus(); }, []);
 ### F-05: Checkout wrapping labels (false positives)
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\checkout\page.tsx` lines 735, 747, 983
-**Status:** No fix needed. These are wrapping `<label>` elements containing `<input>` + visible text in child `<div>`/`<span>` nodes. ESLint static analysis cannot see inside the child tree. No WCAG violation exists — the label wraps its control correctly.
+**Status:** No fix needed. These are wrapping `<label>` elements containing `<input>` + visible text in child `<div>`/`<span>` nodes. ESLint static analysis cannot see inside the child tree. No WCAG violation exists, the label wraps its control correctly.
 
 Optional suppression if ESLint noise is unwanted:
 ```tsx
@@ -1005,16 +1005,16 @@ Optional suppression if ESLint noise is unwanted:
 
 Apply in this sequence to minimize re-reads and conflict risk:
 
-1. `src/app/my-cases/login/page.tsx` — F01-A (label) + F02-A choice
-2. `src/app/partner/login/page.tsx` — F01-B (label) + F02-B choice
-3. `src/app/intake/page.tsx` — F01-C + F01-D (fieldset/legend)
-4. `src/components/IntakeChargeSelector.tsx` — F04 (span → div)
-5. `src/app/research/defense-score-data/page.tsx` — AX-06 (link underlines)
-6. `src/app/sample/page.tsx` — AX-05 (scrollable region tabIndex)
-7. `src/app/services/page.tsx` — AX-01 (main → div)
-8. `src/app/playbooks/page.tsx` — AX-02 (main → div)
-9. `src/app/score/page.tsx` — AX-03 (main → div)
-10. `src/app/start/page.tsx` — AX-04 (3x main → div)
-11. `src/app/admin/partners/page.tsx` — F01-E (7 field labels)
-12. `src/app/partner/dashboard/page.tsx` — F01-F (payment form labels)
-13. Admin autoFocus (F03-A/B/C/D) — after decision on approach
+1. `src/app/my-cases/login/page.tsx`, F01-A (label) + F02-A choice
+2. `src/app/partner/login/page.tsx`, F01-B (label) + F02-B choice
+3. `src/app/intake/page.tsx`, F01-C + F01-D (fieldset/legend)
+4. `src/components/IntakeChargeSelector.tsx`, F04 (span → div)
+5. `src/app/research/defense-score-data/page.tsx`, AX-06 (link underlines)
+6. `src/app/sample/page.tsx`, AX-05 (scrollable region tabIndex)
+7. `src/app/services/page.tsx`, AX-01 (main → div)
+8. `src/app/playbooks/page.tsx`, AX-02 (main → div)
+9. `src/app/score/page.tsx`, AX-03 (main → div)
+10. `src/app/start/page.tsx`, AX-04 (3x main → div)
+11. `src/app/admin/partners/page.tsx`, F01-E (7 field labels)
+12. `src/app/partner/dashboard/page.tsx`, F01-F (payment form labels)
+13. Admin autoFocus (F03-A/B/C/D), after decision on approach

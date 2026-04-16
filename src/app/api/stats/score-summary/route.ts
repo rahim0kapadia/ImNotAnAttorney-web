@@ -1,5 +1,5 @@
 /**
- * Score Summary Stats — reads anonymous aggregates for DAI display.
+ * Score Summary Stats, reads anonymous aggregates for DAI display.
  * No auth required (public data, no PII).
  * Cached for 5 minutes via Next.js ISR to reduce DB load.
  */

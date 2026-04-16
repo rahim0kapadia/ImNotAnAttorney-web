@@ -506,9 +506,9 @@ async function main() {
       console.log(`  Batch ${batchNum}/${totalBatches}: ${batch.length} applied`);
     } catch (e) {
       errors++;
-      console.error(`  Batch ${batchNum}: ERROR — ${e.message.slice(0, 200)}`);
+      console.error(`  Batch ${batchNum}: ERROR, ${e.message.slice(0, 200)}`);
       if (e.message.indexOf("429") >= 0) {
-        console.log("  Rate limited — waiting 10s...");
+        console.log("  Rate limited, waiting 10s...");
         await sleep(10000);
         try {
           await supabaseQuery(batch.join("\n"));

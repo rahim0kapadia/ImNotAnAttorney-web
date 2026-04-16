@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/demand-feedback-revise — Weekly underperformer flagging + adaptive QA
+ * @file /api/cron/demand-feedback-revise, Weekly underperformer flagging + adaptive QA
  *
  * Schedule: Sundays 9:00 AM ET via cron-job.org (after demand-feedback-patterns at 8:00 AM).
  * Self-gates: only activates when sufficient attribution data exists.

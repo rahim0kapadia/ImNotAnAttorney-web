@@ -1,5 +1,5 @@
 /**
- * @fileoverview First Court Appearance Preparation Guide — content component.
+ * @fileoverview First Court Appearance Preparation Guide, content component.
  *
  * Rendered by `src/app/guides/[slug]/page.tsx` via dynamic import when the
  * URL resolves to `/guides/first-court-appearance`.
@@ -9,13 +9,13 @@
  * processing by ~80%), so the guide is written for scannability first,
  * comprehension second.
  *
- * Voice: warm, specific, insider — someone who has been through the system
+ * Voice: warm, specific, insider, someone who has been through the system
  * talking to someone going through it now. Never performatively helpful.
  *
  * Contract enforced by `src/app/guides/[slug]/page.tsx`:
  *   - Start headings at h2 (page owns the h1).
  *   - Wrap thematic groups in `<section aria-labelledby="{id}">`.
- *   - Stay UPL-safe: "consider", "one option", "questions to explore" — no
+ *   - Stay UPL-safe: "consider", "one option", "questions to explore", no
  *     "you should", "we recommend", "your best option".
  *
  * Styling:
@@ -24,7 +24,7 @@
  *   - Section spacing uses `mt-10` to match the visual rhythm the page
  *     header sets up with `mb-10`.
  *   - Body text is `text-zinc-200` for WCAG AAA-level contrast on
- *     `bg-background` (#0a0a0a — see `globals.css`).
+ *     `bg-background` (#0a0a0a, see `globals.css`).
  */
 export default function FirstCourtAppearanceContent() {
   return (
@@ -37,7 +37,7 @@ export default function FirstCourtAppearanceContent() {
           What Actually Happens at Your First Court Date
         </h2>
         <p className="mt-4">
-          Your first court appearance is usually short — often under ten
+          Your first court appearance is usually short, often under ten
           minutes. The judge confirms who you are, reads the charges, and
           asks how you plead. That is the core of it.
         </p>
@@ -67,14 +67,14 @@ export default function FirstCourtAppearanceContent() {
             <span className="font-semibold text-zinc-50">
               Bring your ID and any paperwork you have received.
             </span>{" "}
-            Bond paperwork, arrest paperwork, attorney contact info — in a
+            Bond paperwork, arrest paperwork, attorney contact info, in a
             folder, not loose.
           </li>
           <li>
             <span className="font-semibold text-zinc-50">
               Turn your phone completely off.
             </span>{" "}
-            Not silent — off. A phone ringing in court can result in a
+            Not silent, off. A phone ringing in court can result in a
             contempt finding on its own.
           </li>
           <li>
@@ -117,7 +117,7 @@ export default function FirstCourtAppearanceContent() {
         <p className="mt-4">
           If the judge asks how you plead and you have an attorney, your
           attorney will answer. If you do not have an attorney yet, one
-          option is to respectfully request time to retain counsel — see the
+          option is to respectfully request time to retain counsel, see the
           next section for how.
         </p>
       </section>
@@ -131,7 +131,7 @@ export default function FirstCourtAppearanceContent() {
         </h2>
         <p className="mt-4">
           You have a right to counsel. If you cannot afford one, the court
-          can appoint a public defender — but you usually have to formally
+          can appoint a public defender, but you usually have to formally
           request one at this hearing.
         </p>
         <p className="mt-3">
@@ -167,7 +167,7 @@ export default function FirstCourtAppearanceContent() {
         </ul>
         <p className="mt-4">
           <span className="font-semibold text-zinc-50">
-            Violating any condition — even accidentally — can result in
+            Violating any condition, even accidentally, can result in
             immediate re-arrest.
           </span>{" "}
           Write down every condition before you leave the courtroom. If a

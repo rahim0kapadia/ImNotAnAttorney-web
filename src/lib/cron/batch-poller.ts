@@ -25,7 +25,7 @@ import { hashToken, signOperatorToken } from "@/lib/site";
  * detection cron picked them up (worst case: 90 min of customer waiting).
  *
  * This is still "best-effort" from the cron loop's perspective (we do not
- * throw on total failure — the stuck detection in operator-alerts.ts is the
+ * throw on total failure, the stuck detection in operator-alerts.ts is the
  * final safety net), but a single retry with a 1-second delay eliminates
  * the vast majority of transient network failures without blocking the
  * cron loop meaningfully.
@@ -66,7 +66,7 @@ async function invokeEdgeFunctionWithRetry(
     }
   }
   console.error(
-    `[batch-poller] ${label} failed after 2 attempts — stuck detection will catch this`
+    `[batch-poller] ${label} failed after 2 attempts, stuck detection will catch this`
   );
 }
 
@@ -132,7 +132,7 @@ async function processCDResult(
     await sendEmail(
       {
         to: ctx.operatorEmail,
-        subject: `BATCH FAILED: Case Decoder — ${row.email}`,
+        subject: `BATCH FAILED: Case Decoder, ${row.email}`,
         html: `<p>Batch error for case ${row.id}: ${reason}</p>
           <p><strong>Retry:</strong></p>
           <code>curl -X POST ${ctx.siteUrl}/api/generate/case-decoder -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${row.id}","force":true}'</code>`,
@@ -140,7 +140,7 @@ async function processCDResult(
       { category: "operator-alert", case_id: row.id }
     );
 
-    // Notify customer so they know we're on it (deduped — one email per case)
+    // Notify customer so they know we're on it (deduped, one email per case)
     await sendCustomerFailureNotification({
       supabase: ctx.supabase,
       caseId: row.id,
@@ -217,7 +217,7 @@ async function processCDResult(
 
   const reportHtml = renderReportHtml(cleaned, meta);
 
-  // PG-12: Section enforcement — verify critical sections are present before transitioning to review
+  // PG-12: Section enforcement, verify critical sections are present before transitioning to review
   const CD_REQUIRED_SECTIONS = [
     "Where Things Stand",
     "What's Working",
@@ -229,7 +229,7 @@ async function processCDResult(
     (section) => !reportHtml.includes(section)
   );
   if (missingSections.length > 0) {
-    console.error(`[batch-poller] CD missing ${missingSections.length} sections: ${missingSections.join(", ")} — case ${row.id}`);
+    console.error(`[batch-poller] CD missing ${missingSections.length} sections: ${missingSections.join(", ")}, case ${row.id}`);
     await ctx.supabase
       .from("cases")
       .update({ status: "generation-failed", batch_id: null, updated_at: new Date().toISOString() })
@@ -238,7 +238,7 @@ async function processCDResult(
     await sendEmail(
       {
         to: ctx.operatorEmail,
-        subject: `SECTION MISSING: Case Decoder — ${row.email}`,
+        subject: `SECTION MISSING: Case Decoder, ${row.email}`,
         html: `<p>Generated report for case ${row.id} is missing critical sections:</p>
           <ul>${missingSections.map((s) => `<li>${s}</li>`).join("")}</ul>
           <p><strong>Retry:</strong></p>
@@ -283,7 +283,7 @@ async function processCDResult(
   await sendEmail(
     {
       to: ctx.operatorEmail,
-      subject: `Case Decoder Ready — ${meta.firstName} (${meta.charges})`,
+      subject: `Case Decoder Ready, ${meta.firstName} (${meta.charges})`,
       html: `<p>Batch-generated report ready for review.</p>
         <p><a href="${reportUrl}">Preview Report</a> | <a href="${ctx.siteUrl}/api/deliver?case=${row.id}&token=${signOperatorToken(row.id)}">Approve &amp; Deliver</a></p>`,
     },
@@ -328,7 +328,7 @@ async function processIBPhaseAResult(
     await sendEmail(
       {
         to: ctx.operatorEmail,
-        subject: `IB Phase A FAILED (${failures}/5) — ${row.email}`,
+        subject: `IB Phase A FAILED (${failures}/5), ${row.email}`,
         html: `<p>Case ${row.id}: ${failures}/5 Phase A sections failed.</p>
           <code>curl -X POST ${ctx.siteUrl}/api/generate/intelligence-brief -H "Content-Type: application/json" -H "Authorization: Bearer $OPERATOR_SECRET" -d '{"caseId":"${row.id}","force":true}'</code>`,
       },
@@ -385,7 +385,7 @@ function stripSections(markdown: string, headerKeywords: string[]): string {
         skipping = true;
         continue;
       }
-      // Any heading that isn't a skip target — stop skipping
+      // Any heading that isn't a skip target, stop skipping
       if (skipping && !shouldSkip) {
         skipping = false;
       }

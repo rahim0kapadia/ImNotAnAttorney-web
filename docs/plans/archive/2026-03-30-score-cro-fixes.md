@@ -35,4 +35,4 @@ Add 2-3 example questions inside the live playbook CTA section.
 - Delivery timeline on Case Decoder CTA (brand voice bans speed)
 
 ## Verification
-- npx tsc --noEmit --skipLibCheck
+- npx tsc,noEmit,skipLibCheck

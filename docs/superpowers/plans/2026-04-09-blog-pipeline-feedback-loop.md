@@ -1,10 +1,10 @@
-# Blog Pipeline Self-Improving Feedback Loop — Implementation Plan
+# Blog Pipeline Self-Improving Feedback Loop, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Close the feedback loop so the blog pipeline learns from performance data — which posts drive traffic/conversions, what structural patterns win, and which topics to prioritize.
+**Goal:** Close the feedback loop so the blog pipeline learns from performance data, which posts drive traffic/conversions, what structural patterns win, and which topics to prioritize.
 
-**Architecture:** Three phases. Phase 0 fixes the broken attribution chain (blog→score→subscribe→checkout). Phase 1 builds a traffic-based feedback loop that works immediately with existing 59 posts. Phase 2 adds attribution-powered adaptive QA and underperformer revision (activates after 30 days of Phase 0 data). Kevin Indig's SEO growth loop framework: content is a loop, not a funnel — performance feeds back into generation.
+**Architecture:** Three phases. Phase 0 fixes the broken attribution chain (blog→score→subscribe→checkout). Phase 1 builds a traffic-based feedback loop that works immediately with existing 59 posts. Phase 2 adds attribution-powered adaptive QA and underperformer revision (activates after 30 days of Phase 0 data). Kevin Indig's SEO growth loop framework: content is a loop, not a funnel, performance feeds back into generation.
 
 **Tech Stack:** Next.js 15, Supabase (PostgREST), TypeScript, cron-job.org, Vercel Analytics API, Engine repo (Node.js/ESM)
 
@@ -14,7 +14,7 @@
 
 ## Phase 0: Fix Attribution Chain
 
-### Task 1: Migration — Add referral_url + original_source to subscribers
+### Task 1: Migration, Add referral_url + original_source to subscribers
 
 **Files:**
 - Create: `supabase/migrations/20260409f_subscriber_attribution.sql`
@@ -22,18 +22,18 @@
 - [ ] **Step 1: Write the migration**
 
 ```sql
--- Add attribution columns to subscribers table.
--- referral_url: the blog slug or page that referred the subscriber (e.g. "blog-dui-first-72-hours")
--- original_source: first source that created this subscriber, never overwritten on re-subscription
+, Add attribution columns to subscribers table.
+, referral_url: the blog slug or page that referred the subscriber (e.g. "blog-dui-first-72-hours")
+, original_source: first source that created this subscriber, never overwritten on re-subscription
 
 ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS referral_url text;
 ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS original_source text;
 
--- Backfill original_source from existing source values
+, Backfill original_source from existing source values
 UPDATE subscribers SET original_source = source WHERE original_source IS NULL;
 
 COMMENT ON COLUMN subscribers.referral_url IS 'Blog slug or page that referred this subscriber (e.g. blog-dui-first-72-hours)';
-COMMENT ON COLUMN subscribers.original_source IS 'First source that created this subscriber — never overwritten on re-subscription';
+COMMENT ON COLUMN subscribers.original_source IS 'First source that created this subscriber, never overwritten on re-subscription';
 ```
 
 - [ ] **Step 2: Apply migration via Supabase Management API**
@@ -126,7 +126,7 @@ Replace lines 206-213 (the subscriber upsert block) with:
 
 ```typescript
     if (normalizedEmail) {
-      // Check if subscriber already exists — don't overwrite original_source or referral_url
+      // Check if subscriber already exists, don't overwrite original_source or referral_url
       const { data: existingSub } = await supabase
         .from("subscribers")
         .select("id, original_source")
@@ -278,7 +278,7 @@ href={referralUrl ? `/score?ref=${referralUrl}` : "/score"}
 
 In `src/app/blog/[slug]/page.tsx`, update these lines:
 
-Line 268 — from:
+Line 268, from:
 ```tsx
 <BlogInlineCapture category={post.category || "general-defense"} />
 ```
@@ -287,7 +287,7 @@ To:
 <BlogInlineCapture category={post.category || "general-defense"} slug={slug} />
 ```
 
-Line 276-277 — from:
+Line 276-277, from:
 ```tsx
 <PlaybookCTA />
 ```
@@ -296,7 +296,7 @@ To:
 <PlaybookCTA slug={slug} />
 ```
 
-Line 282 — from:
+Line 282, from:
 ```tsx
 <BlogCTA category={post.category} />
 ```
@@ -305,7 +305,7 @@ To:
 <BlogCTA category={post.category} slug={slug} />
 ```
 
-Line 293 — from:
+Line 293, from:
 ```tsx
 href="/score"
 ```
@@ -370,7 +370,7 @@ Apply to all checkout/playbook links in the CTA section.
 
 - [ ] **Step 4: Wrap ScoreClient in Suspense in page.tsx**
 
-`useSearchParams()` requires a Suspense boundary in Next.js 15. Update `src/app/score/page.tsx` — change:
+`useSearchParams()` requires a Suspense boundary in Next.js 15. Update `src/app/score/page.tsx`, change:
 
 ```tsx
 export default function ScorePage() {
@@ -401,7 +401,7 @@ git commit -m "feat(attribution): thread blog ref through score tool to subscrib
 
 ## Phase 1: Traffic-Based Feedback Loop
 
-### Task 6: Migration — demand_feedback table
+### Task 6: Migration, demand_feedback table
 
 **Files:**
 - Create: `supabase/migrations/20260409g_demand_feedback.sql`
@@ -409,8 +409,8 @@ git commit -m "feat(attribution): thread blog ref through score tool to subscrib
 - [ ] **Step 1: Write the migration**
 
 ```sql
--- demand_feedback: stores per-charge-type feedback signals that the generation
--- pipeline consumes to improve topic selection, prompt guidance, and QA thresholds.
+, demand_feedback: stores per-charge-type feedback signals that the generation
+, pipeline consumes to improve topic selection, prompt guidance, and QA thresholds.
 
 CREATE TABLE IF NOT EXISTS demand_feedback (
   charge_type_slug text PRIMARY KEY,
@@ -420,7 +420,7 @@ CREATE TABLE IF NOT EXISTS demand_feedback (
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 
--- Trigger for updated_at
+, Trigger for updated_at
 CREATE TRIGGER update_demand_feedback_updated_at
   BEFORE UPDATE ON demand_feedback
   FOR EACH ROW EXECUTE FUNCTION moddatetime(updated_at);
@@ -446,7 +446,7 @@ git commit -m "feat(feedback): create demand_feedback table"
 
 ---
 
-### Task 7: feedback-score.ts — Performance multiplier + emerging auto-promote
+### Task 7: feedback-score.ts, Performance multiplier + emerging auto-promote
 
 **Files:**
 - Create: `src/lib/demand/feedback-score.ts`
@@ -455,7 +455,7 @@ git commit -m "feat(feedback): create demand_feedback table"
 
 ```typescript
 /**
- * @file Feedback Score — computes performance multipliers per charge type
+ * @file Feedback Score, computes performance multipliers per charge type
  * and auto-promotes qualifying emerging topics.
  *
  * Called weekly by /api/cron/demand-feedback-score (Sundays, after demand-performance).
@@ -531,8 +531,8 @@ export async function computeFeedbackScores(
     }
     multipliersUpserted = rows.length;
   } else {
-    // No real attribution data yet — all multipliers stay at 1.0 (default)
-    console.log("[feedback-score] No attribution data yet — multipliers unchanged");
+    // No real attribution data yet, all multipliers stay at 1.0 (default)
+    console.log("[feedback-score] No attribution data yet, multipliers unchanged");
   }
 
   // ── Auto-promote emerging topics ──
@@ -593,12 +593,12 @@ export async function computeFeedbackScores(
 
 ```bash
 git add src/lib/demand/feedback-score.ts
-git commit -m "feat(feedback): feedback-score — performance multiplier + emerging auto-promote"
+git commit -m "feat(feedback): feedback-score, performance multiplier + emerging auto-promote"
 ```
 
 ---
 
-### Task 8: feedback-patterns.ts — Structural pattern extraction
+### Task 8: feedback-patterns.ts, Structural pattern extraction
 
 **Files:**
 - Create: `src/lib/demand/feedback-patterns.ts`
@@ -607,7 +607,7 @@ git commit -m "feat(feedback): feedback-score — performance multiplier + emerg
 
 ```typescript
 /**
- * @file Feedback Patterns — extracts structural features from published blog
+ * @file Feedback Patterns, extracts structural features from published blog
  * posts and identifies winning patterns by comparing top vs bottom performers.
  *
  * Pure TypeScript analysis, no LLM calls. Reads MDX files from content/blog/.
@@ -884,7 +884,7 @@ export async function extractWinningPatterns(
 
 ```bash
 git add src/lib/demand/feedback-patterns.ts
-git commit -m "feat(feedback): feedback-patterns — structural feature extraction + winning pattern analysis"
+git commit -m "feat(feedback): feedback-patterns, structural feature extraction + winning pattern analysis"
 ```
 
 ---
@@ -899,7 +899,7 @@ git commit -m "feat(feedback): feedback-patterns — structural feature extracti
 
 ```typescript
 /**
- * @file /api/cron/demand-feedback-score — Weekly performance feedback scorer
+ * @file /api/cron/demand-feedback-score, Weekly performance feedback scorer
  *
  * Schedule: Sundays 7:00 AM ET via cron-job.org (after demand-performance at 6:00 AM).
  * Computes performance multipliers and auto-promotes emerging topics.
@@ -940,7 +940,7 @@ export async function GET(req: NextRequest) {
 
 ```typescript
 /**
- * @file /api/cron/demand-feedback-patterns — Weekly structural pattern extraction
+ * @file /api/cron/demand-feedback-patterns, Weekly structural pattern extraction
  *
  * Schedule: Sundays 8:00 AM ET via cron-job.org (after demand-feedback-score at 7:00 AM).
  * Extracts winning patterns from published blog posts.
@@ -1178,7 +1178,7 @@ git commit -m "feat(feedback): register 3 feedback cron jobs with cron-job.org"
 
 ## Phase 2: Attribution-Powered Closed Loop
 
-### Task 13: Migration — content_revisions table
+### Task 13: Migration, content_revisions table
 
 **Files:**
 - Create: `supabase/migrations/20260409h_content_revisions.sql`
@@ -1219,7 +1219,7 @@ git commit -m "feat(feedback): create content_revisions table for underperformer
 
 ---
 
-### Task 14: feedback-revise.ts — Underperformer flagging + adaptive QA
+### Task 14: feedback-revise.ts, Underperformer flagging + adaptive QA
 
 **Files:**
 - Create: `src/lib/demand/feedback-revise.ts`
@@ -1228,7 +1228,7 @@ git commit -m "feat(feedback): create content_revisions table for underperformer
 
 ```typescript
 /**
- * @file Feedback Revise — flags underperforming posts for regeneration and
+ * @file Feedback Revise, flags underperforming posts for regeneration and
  * computes adaptive QA thresholds based on performance correlations.
  *
  * Called weekly by /api/cron/demand-feedback-revise (Sundays, after feedback-patterns).
@@ -1416,7 +1416,7 @@ export async function computeFeedbackRevisions(
 
 ```bash
 git add src/lib/demand/feedback-revise.ts
-git commit -m "feat(feedback): feedback-revise — underperformer flagging + adaptive QA threshold"
+git commit -m "feat(feedback): feedback-revise, underperformer flagging + adaptive QA threshold"
 ```
 
 ---
@@ -1430,7 +1430,7 @@ git commit -m "feat(feedback): feedback-revise — underperformer flagging + ada
 
 ```typescript
 /**
- * @file /api/cron/demand-feedback-revise — Weekly underperformer flagging + adaptive QA
+ * @file /api/cron/demand-feedback-revise, Weekly underperformer flagging + adaptive QA
  *
  * Schedule: Sundays 9:00 AM ET via cron-job.org (after demand-feedback-patterns at 8:00 AM).
  * Self-gates: only activates when sufficient attribution data exists.

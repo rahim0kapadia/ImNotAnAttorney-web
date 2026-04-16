@@ -128,7 +128,7 @@ describe("calculateScore", () => {
       const allBands = new Set(["Critical", "Concerning", "Average", "Adequate", "Excellent"]);
       expect(allBands.size).toBe(5);
 
-      // Verify mid-baseline lands in Average (51-70) — score is 67
+      // Verify mid-baseline lands in Average (51-70), score is 67
       const avg = score();
       expect(avg.score).toBeGreaterThanOrEqual(51);
       expect(avg.score).toBeLessThanOrEqual(70);

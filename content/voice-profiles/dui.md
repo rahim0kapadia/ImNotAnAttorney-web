@@ -132,7 +132,7 @@ The product bridge earns its place because the free content already delivered va
 | "you should" | UPL violation in legal context | "consider" or "one option is" |
 | "drunk" / "intoxicated" (as labels for the reader) | Shame-reinforcing | "over the limit" or "above the legal BAC" or "charged with DUI" |
 | "you should have called an Uber" | Blame, the reader already knows | Cut entirely |
-| em dash (— or --) | Top AI writing tell, zero tolerance | Comma, colon, parentheses, or period |
+| em dash (, or,) | Top AI writing tell, zero tolerance | Comma, colon, parentheses, or period |
 | "the consequences are severe" (standalone) | Orphan threat without action | Pair with what defendants can do about it |
 
 ### Terms to Define Inline (first use only)
@@ -216,7 +216,7 @@ When delivering particularly heavy DUI-specific bad news, a high BAC result, a t
 Before publishing any DUI blog post, check every item. Any match triggers a rewrite of that section.
 
 ### Structural Slop (inherited from general-defense)
-- [ ] ZERO em dashes (— or --), use commas, colons, parentheses, or periods
+- [ ] ZERO em dashes (, or,), use commas, colons, parentheses, or periods
 - [ ] No "it's important to note/understand/remember" (filler, just say it)
 - [ ] No "navigate" in legal context
 - [ ] No 3+ sentences starting with the same word in sequence

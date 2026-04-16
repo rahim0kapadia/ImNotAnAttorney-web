@@ -3,7 +3,7 @@
 **Topic:** When your attorney seems too friendly with the other side
 **Format:** POV storytime + text overlay + empowerment shift
 **Duration:** 45s
-**Trending sound suggestion:** Original audio -- voiceover + muted courtroom ambient transitioning to confident beat
+**Trending sound suggestion:** Original audio, voiceover + muted courtroom ambient transitioning to confident beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -18,11 +18,11 @@
 ## Body
 [SECOND 3-12]
 **Visual**: Cut to speaker. Balanced, honest tone.
-**Audio/Voiceover**: "Before you panic: attorneys and prosecutors working together is normal. They're professionals in the same system. They know each other. They negotiate with each other. Friendly doesn't automatically mean corrupt. But -- and this is a real 'but' -- there's a line between professional rapport and being too comfortable with losing your case."
+**Audio/Voiceover**: "Before you panic: attorneys and prosecutors working together is normal. They're professionals in the same system. They know each other. They negotiate with each other. Friendly doesn't automatically mean corrupt. But, and this is a real 'but', there's a line between professional rapport and being too comfortable with losing your case."
 **Text overlay**: "Friendly = normal. Too comfortable with losing = problem."
 
 [SECOND 12-22]
-**Visual**: Two columns. "NORMAL" vs. "RED FLAG" -- items appearing one at a time.
+**Visual**: Two columns. "NORMAL" vs. "RED FLAG", items appearing one at a time.
 **Audio/Voiceover**: "Normal: knowing the prosecutor by name, having professional conversations, negotiating informally before hearings. Red flag: agreeing to terms without asking you first. Dismissing your concerns about the deal without explanation. Spending more time chatting with the prosecutor than talking to you. Telling you the plea is the 'best deal' before doing any defense work."
 **Text overlay**: "NORMAL: professional rapport. RED FLAG: deciding your case without your input."
 
@@ -37,7 +37,7 @@
 **Text overlay**: "Email after the meeting. Paper trail or proof of neglect."
 
 [SECOND 40-45]
-**Visual**: POV returns to the courtroom hallway -- but now the person is standing, notepad in hand, walking toward their attorney. Not angry. Prepared.
+**Visual**: POV returns to the courtroom hallway, but now the person is standing, notepad in hand, walking toward their attorney. Not angry. Prepared.
 **Text overlay**: "Don't wonder. Ask. Know What They Know. imnotanattorney.com"
 **Audio**: Laughter fades. Confident footsteps. Beat resolves.
 
@@ -54,13 +54,13 @@ Share this with someone who feels like their attorney isn't fighting for them.
 - 0:40 "Don't wonder. Ask."
 
 ## Caption
-Your attorney is laughing with the prosecutor in the hallway. Your stomach drops. Before you panic -- professional rapport is normal. But there's a line. Here's how to tell the difference between a working relationship and an attorney who's too comfortable with losing your case.
+Your attorney is laughing with the prosecutor in the hallway. Your stomach drops. Before you panic, professional rapport is normal. But there's a line. Here's how to tell the difference between a working relationship and an attorney who's too comfortable with losing your case.
 
 ## Hashtags
 #lawyerredflags #criminaldefense #attorneyaccountability #courtroom #defendantrights #knowyourrights
 
 ---
 
-**Context**: Sourced from feels-like-lawyer-working-against-me. This addresses the VoC phrase "I feel like my lawyer is not fighting hard enough for me" with nuance -- it doesn't demonize the attorney-prosecutor relationship, but gives specific diagnostic criteria. The balanced take builds trust with the audience.
+**Context**: Sourced from feels-like-lawyer-working-against-me. This addresses the VoC phrase "I feel like my lawyer is not fighting hard enough for me" with nuance, it doesn't demonize the attorney-prosecutor relationship, but gives specific diagnostic criteria. The balanced take builds trust with the audience.
 **Loop strategy**: Opens sitting passively watching the hallway laughter, closes walking toward the attorney with a notepad. The passivity-to-agency visual arc is deeply satisfying.
-**KPI target**: Shares (this is the #1 most relatable feeling for criminal defendants -- they will share it instantly)
+**KPI target**: Shares (this is the #1 most relatable feeling for criminal defendants, they will share it instantly)

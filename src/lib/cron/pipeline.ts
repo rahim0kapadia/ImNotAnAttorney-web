@@ -1,5 +1,5 @@
 /**
- * @file Parts 12, 15, 16 — Pipeline operations
+ * @file Parts 12, 15, 16, Pipeline operations
  *
  * Part 12: Missed evaluation safety net (re-trigger eval for cases stuck in review)
  * Part 15: Stuck job detection (processing_jobs > 30 min)
@@ -91,7 +91,7 @@ export async function detectStuckJobs(ctx: CronContext): Promise<CronResult> {
       await ctx.supabase.from("operator_tasks").insert({
         case_id: job.case_id,
         task_type: "stuck_job",
-        title: `Stuck job: ${job.job_type}${job.job_subtype ? ` (${job.job_subtype})` : ""} — ${minutesStuck}min`,
+        title: `Stuck job: ${job.job_type}${job.job_subtype ? ` (${job.job_subtype})` : ""}, ${minutesStuck}min`,
         description: `Processing job ${job.id} has been stuck for ${minutesStuck} minutes. Worker: ${job.worker_id || "unknown"}. Automatically marked as failed.`,
         priority: "HIGH",
         priority_rank: 2,
@@ -146,7 +146,7 @@ export async function checkPipelineCompletion(ctx: CronContext): Promise<CronRes
       const doneJobs = completedJobs + failedJobs;
 
       if (doneJobs >= totalJobs) {
-        // All jobs are done — transition to review
+        // All jobs are done, transition to review
         await ctx.supabase
           .from("cases")
           .update({ status: "review", updated_at: ctx.now.toISOString() })
@@ -164,17 +164,17 @@ export async function checkPipelineCompletion(ctx: CronContext): Promise<CronRes
         // Priority assessment
         let priorityLine = "";
         if (healthScore !== null && healthScore < 40) {
-          priorityLine = `<p style="color: #EF4444; margin: 16px 0 0;"><strong>Low discovery health — potential gaps. Prioritize review.</strong></p>`;
+          priorityLine = `<p style="color: #EF4444; margin: 16px 0 0;"><strong>Low discovery health, potential gaps. Prioritize review.</strong></p>`;
         } else if (doiScore !== null && doiScore > 70) {
-          priorityLine = `<p style="color: #F59E0B; margin: 16px 0 0;"><strong>High defense opportunity — strong defense angles identified.</strong></p>`;
+          priorityLine = `<p style="color: #F59E0B; margin: 16px 0 0;"><strong>High defense opportunity, strong defense angles identified.</strong></p>`;
         } else if (healthScore === null && doiScore === null) {
           priorityLine = `<p style="color: #A1A1AA; margin: 16px 0 0;">Scores not yet calculated.</p>`;
         }
 
         await sendEmail({
           to: ctx.operatorEmail,
-          subject: `${tierLabel} ready for review — ${pc.finding_count || 0} findings, ${completedJobs}/${totalJobs} jobs${failedJobs > 0 ? ` (${failedJobs} failed)` : ""}`,
-          html: `<h1 style="color: #22C55E;">Pipeline Complete — Ready for Review</h1>
+          subject: `${tierLabel} ready for review, ${pc.finding_count || 0} findings, ${completedJobs}/${totalJobs} jobs${failedJobs > 0 ? ` (${failedJobs} failed)` : ""}`,
+          html: `<h1 style="color: #22C55E;">Pipeline Complete, Ready for Review</h1>
             <p>All processing jobs for this ${escapeHtml(tierLabel)} case have finished.</p>
             <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #22C55E;">
               <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(pc.email)}</p>

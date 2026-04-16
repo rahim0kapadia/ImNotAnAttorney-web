@@ -190,7 +190,7 @@ async function main() {
           }
         }
       } else {
-        console.log(`NOT_FOUND (${status}) — kept (other sources)`);
+        console.log(`NOT_FOUND (${status}), kept (other sources)`);
         stats.notFound++;
       }
     }
@@ -200,7 +200,7 @@ async function main() {
 
   console.log("\n=== RESULTS ===");
   console.log(`Verified at Cornell : ${stats.verified}`);
-  console.log(`Not found at Cornell: ${stats.notFound} (kept — has other sources)`);
+  console.log(`Not found at Cornell: ${stats.notFound} (kept, has other sources)`);
   console.log(`Deleted             : ${stats.deleted}`);
   console.log(`Parse errors        : ${stats.parseErrors}`);
 }

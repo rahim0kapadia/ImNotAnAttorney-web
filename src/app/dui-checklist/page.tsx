@@ -1,7 +1,7 @@
 /**
  * DUI Checklist Landing Page (/dui-checklist)
  *
- * Single-purpose landing page for Reddit/social links. Minimal layout —
+ * Single-purpose landing page for Reddit/social links. Minimal layout,
  * headline, 3-item checklist (fully ungated), /score CTA,
  * and a direct Playbook buy link.
  *
@@ -15,7 +15,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "What to Do After a DUI Arrest — Free 72-Hour Checklist",
+  title: "What to Do After a DUI Arrest, Free 72-Hour Checklist",
   description:
     "You were just arrested for DUI. Here are the 3 things to do in the next 72 hours, including the DMV deadline that could cost your license. Free checklist.",
   alternates: {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "You Were Just Arrested for DUI. Here's What to Do Next.",
     description:
-      "3 things to do in the next 72 hours. Your DMV hearing deadline may be 7 days away. Free checklist — no signup required to preview.",
+      "3 things to do in the next 72 hours. Your DMV hearing deadline may be 7 days away. Free checklist, no signup required to preview.",
   },
 };
 
@@ -42,11 +42,11 @@ export default function DuiChecklistPage() {
       <p className="mt-4 text-lg text-zinc-400">
         Your DMV hearing deadline may be as short as{" "}
         <span className="font-semibold text-amber-400">7 days</span> from
-        arrest. Miss it and you lose your license automatically — no hearing, no
+        arrest. Miss it and you lose your license automatically, no hearing, no
         appeal.
       </p>
 
-      {/* 3-ITEM PREVIEW — Ungated proof of value */}
+      {/* 3-ITEM PREVIEW, Ungated proof of value */}
       <div className="mt-10 space-y-4">
         <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
           Inside the checklist
@@ -60,7 +60,7 @@ export default function DuiChecklistPage() {
           {
             number: "2",
             title: "Document everything while it's fresh",
-            desc: "What happened before the stop. What the officer said. Whether you were read your rights. Your memory fades — write it down now.",
+            desc: "What happened before the stop. What the officer said. Whether you were read your rights. Your memory fades, write it down now.",
           },
           {
             number: "3",
@@ -83,7 +83,7 @@ export default function DuiChecklistPage() {
         ))}
       </div>
 
-      {/* SCORE CTA — Free defense quiz */}
+      {/* SCORE CTA, Free defense quiz */}
       <div className="mt-10 rounded-xl border border-amber-500/30 bg-amber-500/5 p-8 text-center">
         <h2 className="text-lg font-bold text-white">
           Want to see how your DUI defense scores?
@@ -96,7 +96,7 @@ export default function DuiChecklistPage() {
           href="/score"
           className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
         >
-          Take the Defense Milestone Score — Free
+          Take the Defense Milestone Score, Free
         </Link>
       </div>
 
@@ -109,7 +109,7 @@ export default function DuiChecklistPage() {
           href="/playbook/dui-first-offense"
           className="mt-3 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
         >
-          Get the DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} Instant Download
+          Get the DUI Defense Playbook, {TIER_CORE["dui-first-offense"].priceDisplay} Instant Download
         </Link>
         <p className="mt-2 text-xs text-zinc-400">
           26 questions, evidence red flag checklist, case stage roadmap, one-page cheat sheet.

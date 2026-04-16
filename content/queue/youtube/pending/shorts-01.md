@@ -37,7 +37,7 @@ imnotanattorney.com/score (Free Defense Milestone Score)
 
 [0:14-0:24] THE REALITY:
 [TEXT ON SCREEN: "This is not their fault."]
-"And here's the thing — this is not a failure of individual public defenders. Many of them are brilliant, dedicated attorneys doing impossible work under impossible conditions. It's a systemic, documented underfunding of your constitutional right to counsel."
+"And here's the thing, this is not a failure of individual public defenders. Many of them are brilliant, dedicated attorneys doing impossible work under impossible conditions. It's a systemic, documented underfunding of your constitutional right to counsel."
 
 [0:24-0:34] WHAT IT MEANS FOR YOU:
 [TEXT ON SCREEN: "Innocent people plead guilty because their attorney didn't have time to investigate."]
@@ -49,7 +49,7 @@ imnotanattorney.com/score (Free Defense Milestone Score)
 
 [0:46-0:58] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com/score"]
-"Your public defender may care deeply about your case. But caring and having the time to act on that care are different things. Free Case Progress Score — link in bio. Know What They Know."
+"Your public defender may care deeply about your case. But caring and having the time to act on that care are different things. Free Case Progress Score, link in bio. Know What They Know."
 
 ## On-Screen Text
 - [0:00] "150 cases per year = ABA recommendation"

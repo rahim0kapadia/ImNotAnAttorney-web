@@ -19,7 +19,7 @@ source: content/queue/tiktok/pending/tt-03-discovery-rights-drug-cases.md
 **Type**: Reel (45 seconds)
 **Format**: 9:16 vertical, text overlays + talking head
 **Suggested time**: Wednesday 6:00 PM EST
-**Sound**: Original audio -- calm, informational tone
+**Sound**: Original audio, calm, informational tone
 
 ---
 
@@ -38,7 +38,7 @@ source: content/queue/tiktok/pending/tt-03-discovery-rights-drug-cases.md
 [SECOND 8-15]
 **Visual**: Cut to person at desk, looking directly at camera.
 **Text overlay**: "Most defendants never ask."
-**Audio**: "Most defendants never ask for it. They assume their attorney is handling it. But here's the thing -- you were there. You know what happened. You might catch something your attorney missed."
+**Audio**: "Most defendants never ask for it. They assume their attorney is handling it. But here's the thing, you were there. You know what happened. You might catch something your attorney missed."
 
 [SECOND 15-22]
 **Visual**: Close-up of a document with text visible (blurred details). Finger points to a specific line.
@@ -82,7 +82,7 @@ Three questions to ask your attorney this week:
 
 Write down the answers. Follow up by email.
 
-DM "CHECKLIST" for the free DUI Defense Checklist -- 26 things your attorney should be doing before your court date.
+DM "CHECKLIST" for the free DUI Defense Checklist, 26 things your attorney should be doing before your court date.
 
 This is information, not legal advice. We are not attorneys.
 .

@@ -1,7 +1,7 @@
-<!-- caveman-compressed -->
-# ImNotAnAttorney-web — Claude Code Instructions
+<!, caveman-compressed,>
+# ImNotAnAttorney-web, Claude Code Instructions
 
-## Ecosystem — INAA Project Family
+## Ecosystem, INAA Project Family
 Part of INAA (ImNotAnAttorney) ecosystem. Freely read files from sibling repos:
 
 | Repo | Path | Role |
@@ -18,19 +18,19 @@ Part of INAA (ImNotAnAttorney) ecosystem. Freely read files from sibling repos:
 - **This repo → Parent:** Reads `system/EVALUATION-TEAM.md` for audit criteria. Engine reads `system/templates/` for prompt templates at runtime.
 - **Shared Supabase:** All 3 repos share one database (`jxjbjmgdukwkoclydqdr`). Web owns checkout/intake/delivery. Engine owns analysis/research/strategy tables. Parent seeds reference data.
 - **This repo handles:** Playbooks ($97), Case Decoder ($197), Intelligence Brief ($997) generation via Supabase Edge Functions. Blog, checkout, intake, delivery, cron, email.
-- **Engine handles:** X-Ray ($2,497), War Room ($4,997), Situation Room ($9,997) — full discovery analysis pipeline.
+- **Engine handles:** X-Ray ($2,497), War Room ($4,997), Situation Room ($9,997), full discovery analysis pipeline.
 
 **Architecture docs:** Each repo has own `ARCHITECTURE.md` at root. Read before cross-repo work.
 
 ## Identity: Atticus (Atti)
 
-Auto-loaded via `.claude/rules/atti-persona.md` — 10 thinking modes (6 shared + 4 project-specific), research-first rule, voice.
+Auto-loaded via `.claude/rules/atti-persona.md`, 10 thinking modes (6 shared + 4 project-specific), research-first rule, voice.
 Rules auto-loaded: `brand-voice`, `fix-engine`, `product-tiers`.
 Eval framework: `ImNotAnAttorney/system/EVALUATION-TEAM.md` (11 teams, 164 criteria).
 
 ## What This Is
 
-Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment for criminal defendants holding attorneys accountable. 43 blog posts, 48 pages, multi-tier checkout ($97-$9,997).
+Next.js content-driven sales funnel for ImNotAnAttorney, legal empowerment for criminal defendants holding attorneys accountable. 43 blog posts, 48 pages, multi-tier checkout ($97-$9,997).
 
 ## Tech Stack
 
@@ -38,9 +38,9 @@ Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment fo
 - **Styling:** Tailwind CSS
 - **CMS:** MDX files in `content/blog/`
 - **Database:** Supabase (cases, orders, drip email tracking, discovery documents, counters, score_aggregates)
-- **Payments:** Stripe Checkout — all tiers LIVE since Mar 28 2026 (live flag per tier in `tiers.ts`). Using `STRIPE_SECRET_KEY_LIVE`. See `.claude/rules/product-tiers.md`
+- **Payments:** Stripe Checkout, all tiers LIVE since Mar 28 2026 (live flag per tier in `tiers.ts`). Using `STRIPE_SECRET_KEY_LIVE`. See `.claude/rules/product-tiers.md`
 - **Email:** Resend (drip sequences, delivery notifications, admin digests)
-- **Hosting:** Vercel — production domain served by project **`imnotanattorney`** (ID: `prj_zqxNgG9xcM235bnKRoEgP5kBOEEr`), NOT `imnotanattorney-web`. Deploy via `git push origin master` ONLY (GitHub integration). NEVER use `vercel deploy` CLI.
+- **Hosting:** Vercel, production domain served by project **`imnotanattorney`** (ID: `prj_zqxNgG9xcM235bnKRoEgP5kBOEEr`), NOT `imnotanattorney-web`. Deploy via `git push origin master` ONLY (GitHub integration). NEVER use `vercel deploy` CLI.
 - **Schema:** FAQ, Service, Organization, Article, HowTo, BreadcrumbList (with `speakable`, `@id` binding, `citation`, `about`, `educationalLevel`, `audience`, `isBasedOn`)
 
 ## Key Architectural Files
@@ -51,7 +51,7 @@ Next.js content-driven sales funnel for ImNotAnAttorney — legal empowerment fo
 | `supabase/SCHEMA.md` | Full column-level DB schema reference (tables, RPCs, indexes, triggers) |
 | `supabase/CONTEXT.md` | Case status state machine (19 statuses), Edge Functions, Storage buckets |
 | `src/lib/schema.ts` | Structured data generators (about entities, citation mapping) |
-| `src/lib/tiers.ts` | TIER_CORE array — single source of truth for pricing |
+| `src/lib/tiers.ts` | TIER_CORE array, single source of truth for pricing |
 | `src/lib/drip-emails.ts` | 7+ email sequence definitions |
 | `src/lib/blog.ts` | Frontmatter parser + renderer |
 | `src/lib/email.ts` | Resend integration |
@@ -68,9 +68,9 @@ When changing prices, the pre-commit hook validates automatically via `scripts/c
 
 - Repo: github.com/rahim0kapadia/ImNotAnAttorney-web
 - Vercel account: `rahim0kapadia-1967` / team: `rahim-kapadias-projects`
-- **CRITICAL: Production Vercel project is `imnotanattorney` (prj_zqxNgG9xcM235bnKRoEgP5kBOEEr), NOT `imnotanattorney-web`.** Env vars and CLI commands must target production project. `.vercel/project.json` set correctly — verify with `vercel env ls`.
+- **CRITICAL: Production Vercel project is `imnotanattorney` (prj_zqxNgG9xcM235bnKRoEgP5kBOEEr), NOT `imnotanattorney-web`.** Env vars and CLI commands must target production project. `.vercel/project.json` set correctly, verify with `vercel env ls`.
 - Deploy: `git push origin master` → auto-deploy. NEVER `vercel deploy`, `vercel env pull`, or `vercel domains` commands
-- Domain: imnotanattorney.com — Cloudflare A records → Vercel. Already configured. DO NOT touch domain settings.
+- Domain: imnotanattorney.com, Cloudflare A records → Vercel. Already configured. DO NOT touch domain settings.
 - Twitter: @ImNotAnAttorney (live: https://x.com/ImNotAnAttorney)
 
 <important if="Rahim says run CV or you are doing verification or continuous verification">
@@ -78,20 +78,20 @@ When changing prices, the pre-commit hook validates automatically via `scripts/c
 ## Continuous Verification (CV)
 
 ```bash
-node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends
+node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends
 ```
 
 Hypotheses monitored: H1 (UPL gate), H2 (cron 48h), H3 (site up), H5 (adversarial UPL), H6 (orders healthy).
 H1 CLEAN as of 2026-03-13. Zero violations.
 
-Full verification: `node ~/projects/continuous-verification/verify.mjs --project inna`
+Full verification: `node ~/projects/continuous-verification/verify.mjs,project inna`
 
 </important>
 
 ## Design System
 
-- **Brand identity:** `design-system/brand.md` -- read BEFORE any UI/frontend work. Defines colors, typography, theme constraints.
-- **Design intelligence:** UIU UX Pro Max skill at `.claude/skills/ui-ux-pro-max/` -- run `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system` for industry-specific design recommendations.
+- **Brand identity:** `design-system/brand.md`, read BEFORE any UI/frontend work. Defines colors, typography, theme constraints.
+- **Design intelligence:** UIU UX Pro Max skill at `.claude/skills/ui-ux-pro-max/`, run `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<query>",design-system` for industry-specific design recommendations.
 - **Global design rule:** `~/.claude/rules/design-intelligence.md` auto-loads on UI files. Priority chain: brand.md > UIU search > frontend-design skill > existing patterns.
 - **Brand:** Dark mode only. Amber (#f59e0b) + Navy (#1E3A8A) on black. Playfair Display (display) + Lato (body).
 

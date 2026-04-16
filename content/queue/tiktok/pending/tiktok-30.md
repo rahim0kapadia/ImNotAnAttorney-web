@@ -1,9 +1,9 @@
 # TikTok Script #30: Information Asymmetry Is the Weapon. Questions Are the Defense.
 
-**Topic:** INNA's core thesis -- the information gap is the real opponent
+**Topic:** INNA's core thesis, the information gap is the real opponent
 **Format:** talking head + visual metaphor + brand manifesto energy
 **Duration:** 45s
-**Trending sound suggestion:** Original audio -- voiceover + cinematic, building instrumental
+**Trending sound suggestion:** Original audio, voiceover + cinematic, building instrumental
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -18,17 +18,17 @@
 ## Body
 [SECOND 3-15]
 **Visual**: Three bars representing information levels. PROSECUTION: full bar. COURT: nearly full. YOUR ATTORNEY: three-quarters. YOU: barely a sliver. The gap between attorney and defendant highlighted.
-**Audio/Voiceover**: "The prosecution has full access to the evidence, the witnesses, the police reports, the lab results, the surveillance. The court has the docket, the judge's history, the precedent. Your attorney -- if they're doing their job -- knows most of it. You? You know what they choose to tell you. Which might be everything. Or might be a summary of a summary of a conversation they had in a hallway with the prosecutor."
+**Audio/Voiceover**: "The prosecution has full access to the evidence, the witnesses, the police reports, the lab results, the surveillance. The court has the docket, the judge's history, the precedent. Your attorney, if they're doing their job, knows most of it. You? You know what they choose to tell you. Which might be everything. Or might be a summary of a summary of a conversation they had in a hallway with the prosecutor."
 **Text overlay**: "Prosecution: everything. Court: most of it. Attorney: some. You: what they choose to tell you."
 
 [SECOND 15-25]
 **Visual**: The "YOU" bar starts growing. Each time a question appears on screen, the bar gets a little taller.
-**Audio/Voiceover**: "Every question you ask closes the gap. 'What motions have been filed?' -- the bar rises. 'What are the prosecution's weaknesses?' -- rises again. 'What are the collateral consequences of this plea?' -- higher. 'Does the dashcam support the stated reason for the stop?' -- higher still. 'What's the sentencing difference between plea and trial?' -- higher. You are never going to have MORE information than the prosecution. But you can have ENOUGH to make an informed decision about your own future."
+**Audio/Voiceover**: "Every question you ask closes the gap. 'What motions have been filed?', the bar rises. 'What are the prosecution's weaknesses?', rises again. 'What are the collateral consequences of this plea?', higher. 'Does the dashcam support the stated reason for the stop?', higher still. 'What's the sentencing difference between plea and trial?', higher. You are never going to have MORE information than the prosecution. But you can have ENOUGH to make an informed decision about your own future."
 **Text overlay**: Questions appearing one by one as the bar grows. "ENOUGH to decide."
 
 [SECOND 25-35]
-**Visual**: The courtroom from the opening -- but now the defense side has a notebook, a list of questions, highlighted discovery pages. Still one person. But prepared.
-**Audio/Voiceover**: "We're not attorneys. We don't give legal advice. We don't tell you what to do. What we do is research your specific situation -- your charges, your judge, your evidence, your attorney's track record -- and generate the questions that close the information gap. You bring the questions. Your attorney has to answer them. That's how the dynamic changes."
+**Visual**: The courtroom from the opening, but now the defense side has a notebook, a list of questions, highlighted discovery pages. Still one person. But prepared.
+**Audio/Voiceover**: "We're not attorneys. We don't give legal advice. We don't tell you what to do. What we do is research your specific situation, your charges, your judge, your evidence, your attorney's track record, and generate the questions that close the information gap. You bring the questions. Your attorney has to answer them. That's how the dynamic changes."
 **Text overlay**: "Know What They Know. That's how the dynamic changes."
 
 [SECOND 35-42]
@@ -38,7 +38,7 @@
 
 [SECOND 42-45]
 **Visual**: Clean black screen. The INNA tagline appears, word by word: "Know What They Know."
-**Text overlay**: "imnotanattorney.com -- free Defense Milestone Score at /score"
+**Text overlay**: "imnotanattorney.com, free Defense Milestone Score at /score"
 **Audio**: Cinematic beat resolves. Powerful. Final.
 
 ## CTA
@@ -61,6 +61,6 @@ The criminal justice system runs on information asymmetry. The prosecution knows
 
 ---
 
-**Context**: This is the brand manifesto video -- the one that defines INNA's identity on TikTok. Every concept from the other 29 videos connects back to this thesis: information asymmetry is the weapon, questions are the defense. This should be pinned to the top of the profile. The VoC-to-question transformation at the end is the most powerful visual in the entire library because it takes the audience's exact words and shows them the INNA transformation.
+**Context**: This is the brand manifesto video, the one that defines INNA's identity on TikTok. Every concept from the other 29 videos connects back to this thesis: information asymmetry is the weapon, questions are the defense. This should be pinned to the top of the profile. The VoC-to-question transformation at the end is the most powerful visual in the entire library because it takes the audience's exact words and shows them the INNA transformation.
 **Loop strategy**: Opens with an empty defense table, closes with a prepared defense table. The visual information gap literally closes during the video. The density of the content guarantees rewatches.
-**KPI target**: Profile visits + Follows (this is the video that converts viewers into followers -- it communicates the entire brand promise in 45 seconds)
+**KPI target**: Profile visits + Follows (this is the video that converts viewers into followers, it communicates the entire brand promise in 45 seconds)

@@ -1,4 +1,4 @@
-# Partner Program: Best-in-Class Upgrade — Implementation Plan
+# Partner Program: Best-in-Class Upgrade, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -12,35 +12,35 @@
 
 ---
 
-## Task 1: DB Migration — Schema + RPC Updates
+## Task 1: DB Migration, Schema + RPC Updates
 
 **Files:**
 - Create: `supabase/migrations/20260412a_partner_program_upgrade.sql`
 
-This MUST be applied first — every other task depends on the new columns and updated RPC.
+This MUST be applied first, every other task depends on the new columns and updated RPC.
 
 - [ ] **Step 1: Write the migration file**
 
 ```sql
--- Partner program best-in-class upgrade
--- New columns, updated track_referral RPC with tier evaluation, partner_analytics RPC
+, Partner program best-in-class upgrade
+, New columns, updated track_referral RPC with tier evaluation, partner_analytics RPC
 
--- 1. New columns on partners
+, 1. New columns on partners
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS commission_tier text DEFAULT 'partner';
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS payment_paypal text;
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS activation_email_sent_at timestamptz;
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS last_activation_email_key text;
 
--- 2. New column on referrals
+, 2. New column on referrals
 ALTER TABLE referrals ADD COLUMN IF NOT EXISTS sub_id text;
 
--- 3. Drip cron index
+, 3. Drip cron index
 CREATE INDEX IF NOT EXISTS idx_partners_activation_drip
   ON partners (status, activation_email_sent_at)
   WHERE status = 'approved';
 
--- 4. Updated track_referral: adds sub_id param + atomic tier evaluation
--- Drop old signature first (void return)
+, 4. Updated track_referral: adds sub_id param + atomic tier evaluation
+, Drop old signature first (void return)
 DROP FUNCTION IF EXISTS track_referral(uuid, uuid, text, bigint, bigint, bigint);
 
 CREATE OR REPLACE FUNCTION track_referral(
@@ -58,25 +58,25 @@ DECLARE
   v_new_rate integer;
   v_inserted boolean := false;
 BEGIN
-  -- Insert referral (idempotent via unique constraint)
+ , Insert referral (idempotent via unique constraint)
   INSERT INTO referrals (partner_id, order_id, tier, sale_amount, discount_amount, commission_amount, sub_id)
   VALUES (p_partner_id, p_order_id, p_tier, p_sale_amount, p_discount_amount, p_commission_amount, p_sub_id)
   ON CONFLICT (order_id, partner_id) DO NOTHING
   RETURNING true INTO v_inserted;
 
-  -- If duplicate (already tracked), return early
+ , If duplicate (already tracked), return early
   IF v_inserted IS NULL THEN
     RETURN jsonb_build_object('tier_changed', false, 'duplicate', true);
   END IF;
 
-  -- Atomic increment
+ , Atomic increment
   UPDATE partners SET
     total_referrals = total_referrals + 1,
     total_commission = total_commission + p_commission_amount
   WHERE id = p_partner_id
   RETURNING total_referrals, commission_tier INTO v_new_total, v_old_tier;
 
-  -- Tier evaluation (only upgrades, never downgrades)
+ , Tier evaluation (only upgrades, never downgrades)
   v_new_tier := CASE
     WHEN v_new_total >= 15 THEN 'gold'
     WHEN v_new_total >= 5 THEN 'silver'
@@ -101,7 +101,7 @@ $$;
 REVOKE ALL ON FUNCTION track_referral(uuid, uuid, text, bigint, bigint, bigint, text) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION track_referral(uuid, uuid, text, bigint, bigint, bigint, text) TO service_role;
 
--- 5. Partner analytics RPC
+, 5. Partner analytics RPC
 CREATE OR REPLACE FUNCTION partner_analytics(p_partner_id uuid)
 RETURNS jsonb
 LANGUAGE plpgsql SECURITY DEFINER
@@ -160,7 +160,7 @@ Verify: Check that `partners.commission_tier`, `partners.payment_paypal`, `refer
 
 ```bash
 git add supabase/migrations/20260412a_partner_program_upgrade.sql
-git commit -m "feat(partners): migration — commission tiers, sub-ID tracking, analytics RPC"
+git commit -m "feat(partners): migration, commission tiers, sub-ID tracking, analytics RPC"
 ```
 
 ---
@@ -295,7 +295,7 @@ export function getNextTier(tierKey: string) {
   return idx < COMMISSION_TIERS.length - 1 ? COMMISSION_TIERS[idx + 1] : null;
 }
 
-/** Shared partner shape — used by dashboard page and auth helpers. */
+/** Shared partner shape, used by dashboard page and auth helpers. */
 export interface Partner {
   id: string;
   name: string;
@@ -324,7 +324,7 @@ Update the FAQ "When do I get paid?" answer:
 ```typescript
 {
   question: "When do I get paid?",
-  answer: "Commissions are tracked in real time. Payouts are processed on the 1st of each month (NET-30) via PayPal, Venmo, Zelle, or check — your choice. You can see your running total and referral history anytime in your partner dashboard.",
+  answer: "Commissions are tracked in real time. Payouts are processed on the 1st of each month (NET-30) via PayPal, Venmo, Zelle, or check, your choice. You can see your running total and referral history anytime in your partner dashboard.",
 },
 ```
 
@@ -421,7 +421,7 @@ In `src/app/sitemap.ts`, add to the static entries array (after existing entries
 
 In `src/app/partners/page.tsx`: remove the `"use client";` directive at the top. The `PartnerApplicationForm` component already has its own `"use client"` boundary.
 
-In `src/app/partners/bondsman/page.tsx`: same — remove `"use client";`.
+In `src/app/partners/bondsman/page.tsx`: same, remove `"use client";`.
 
 - [ ] **Step 5: Update "10%" copy to "up to 20%"**
 
@@ -449,7 +449,7 @@ git commit -m "feat(partners): footer link, 90-day cookie, sitemap, remove unnec
 - Modify: `src/components/partner/PartnerApplicationForm.tsx` (compliance checkbox + success msg)
 - Modify: `src/app/api/partner/magic-link/verify/route.ts` (promo code activation)
 
-The core onboarding change — transforms the application from a manual review queue to instant approval.
+The core onboarding change, transforms the application from a manual review queue to instant approval.
 
 - [ ] **Step 1: Rewrite the apply route**
 
@@ -457,7 +457,7 @@ Replace the contents of `src/app/api/partners/apply/route.ts` with the auto-appr
 
 ```typescript
 /**
- * POST /api/partners/apply — Auto-approve partner application.
+ * POST /api/partners/apply, Auto-approve partner application.
  *
  * 1. Validate inputs + compliance checkbox
  * 2. Check for existing partner email (UNIQUE constraint)
@@ -545,7 +545,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (existingPartner.status === "approved") {
-      // Already a partner — send a fresh magic link
+      // Already a partner, send a fresh magic link
       try {
         const magicLinkUrl = await generateMagicLink(existingPartner.id);
         if (magicLinkUrl) {
@@ -569,7 +569,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Status is "pending" — upgrade to approved (fall through to creation logic below)
+    // Status is "pending", upgrade to approved (fall through to creation logic below)
     // Update existing record rather than inserting duplicate
   }
 
@@ -636,7 +636,7 @@ export async function POST(req: NextRequest) {
     partnerId = newPartner.id;
   }
 
-  // Create Stripe promo code (inactive — activated on magic link click)
+  // Create Stripe promo code (inactive, activated on magic link click)
   try {
     const stripePromo = await createPartnerPromoCode(partnerId, promoCode, name);
     await supabase
@@ -648,7 +648,7 @@ export async function POST(req: NextRequest) {
       .eq("id", partnerId);
   } catch (e) {
     console.error("[Partner Apply] Stripe promo code creation failed:", e);
-    // Don't fail the application — admin can create manually
+    // Don't fail the application, admin can create manually
   }
 
   // Generate magic link and send welcome email
@@ -656,10 +656,10 @@ export async function POST(req: NextRequest) {
     const magicLinkUrl = await generateMagicLink(partnerId);
     if (magicLinkUrl) {
       // Welcome email imported from partner-emails.ts (Task 5)
-      // For now, inline a basic welcome — Task 5 replaces this with the full template
+      // For now, inline a basic welcome, Task 5 replaces this with the full template
       await sendEmail({
         to: normalizedEmail,
-        subject: `Welcome — your partner code is ${promoCode}`,
+        subject: `Welcome, your partner code is ${promoCode}`,
         html: `
           <h1 style="color: #F59E0B;">You're In, ${escapeHtml(name.split(" ")[0])}!</h1>
           <p style="color: #D4D4D8;">Your partner code is:</p>
@@ -769,7 +769,7 @@ After session creation (after line 50, before the response), add:
     }
   } catch (e) {
     console.error("[Magic Link Verify] Promo code activation failed:", e);
-    // Non-fatal — partner can still use dashboard, admin can activate manually
+    // Non-fatal, partner can still use dashboard, admin can activate manually
   }
 ```
 
@@ -796,14 +796,14 @@ This file contains all partner email template functions. Each returns `{ subject
 
 Create the file with these exports:
 
-- `partnerWelcomeEmail(name, promoCode, magicLinkUrl)` — Day 0 welcome
-- `partnerFirstShareEmail(name, promoCode, referralUrl)` — Day 1 nudge
-- `partnerTheMathEmail(name)` — Day 3 commission calculator
-- `partnerSocialProofEmail(name)` — Day 7 usage scenarios
-- `partnerCheckinEmail(name, totalReferrals, totalEarned)` — Day 14
-- `partnerSaleNotificationEmail(name, tierName, commissionCents, totalEarnedCents)` — real-time
-- `partnerPayoutNotificationEmail(name, amountCents, method)` — payout processed
-- `partnerTierUpgradeEmail(name, newTier, newRate)` — tier upgrade
+- `partnerWelcomeEmail(name, promoCode, magicLinkUrl)`, Day 0 welcome
+- `partnerFirstShareEmail(name, promoCode, referralUrl)`, Day 1 nudge
+- `partnerTheMathEmail(name)`, Day 3 commission calculator
+- `partnerSocialProofEmail(name)`, Day 7 usage scenarios
+- `partnerCheckinEmail(name, totalReferrals, totalEarned)`, Day 14
+- `partnerSaleNotificationEmail(name, tierName, commissionCents, totalEarnedCents)`, real-time
+- `partnerPayoutNotificationEmail(name, amountCents, method)`, payout processed
+- `partnerTierUpgradeEmail(name, newTier, newRate)`, tier upgrade
 
 All emails use dark styling: inner HTML only (sendEmail wraps in template). Amber (#F59E0B) accent, zinc text (#D4D4D8), dark bg handled by wrapper.
 
@@ -845,7 +845,7 @@ Build all 8 templates following this pattern. The Day 3 "the math" email should 
 
 ```typescript
 /**
- * GET /api/cron/partner-drip — Send partner activation emails on schedule.
+ * GET /api/cron/partner-drip, Send partner activation emails on schedule.
  *
  * Runs every 6 hours via cron-job.org. Sends Day 1/3/7/14 emails to
  * approved partners based on time since creation.
@@ -1070,7 +1070,7 @@ In `src/app/api/admin/partners/[id]/route.ts`, in the POST handler after `proces
 
 ```bash
 git add src/lib/partner-emails.ts src/app/api/cron/partner-drip/route.ts src/app/api/webhooks/stripe/route.ts src/app/api/admin/partners/[id]/route.ts
-git commit -m "feat(partners): lifecycle emails — activation drip, sale notifications, payout + tier alerts"
+git commit -m "feat(partners): lifecycle emails, activation drip, sale notifications, payout + tier alerts"
 ```
 
 ---
@@ -1086,7 +1086,7 @@ git commit -m "feat(partners): lifecycle emails — activation drip, sale notifi
 
 ```typescript
 /**
- * /r/[code]/[product] — Deep link: sets ref cookie + redirects to product checkout.
+ * /r/[code]/[product], Deep link: sets ref cookie + redirects to product checkout.
  *
  * Used when partners know which tier the defendant needs.
  * Sets both ref and ref_sub cookies, then redirects to checkout.
@@ -1318,9 +1318,9 @@ const PROHIBITED_LANGUAGE = [
 ];
 
 const FTC_DISCLOSURES = [
-  { platform: "Social Media", text: "Partner link — I earn a commission if you purchase, at no extra cost to you. #ad" },
+  { platform: "Social Media", text: "Partner link, I earn a commission if you purchase, at no extra cost to you. #ad" },
   { platform: "Email", text: "Disclosure: I'm a partner of ImNotAnAttorney and earn a commission on purchases made through my link." },
-  { platform: "In Person", text: "I work with a company that researches cases and helps defendants prepare questions for their attorney. If you use my code, I get a small commission — doesn't cost you any extra." },
+  { platform: "In Person", text: "I work with a company that researches cases and helps defendants prepare questions for their attorney. If you use my code, I get a small commission, doesn't cost you any extra." },
 ];
 
 export function ComplianceKit() {
@@ -1382,7 +1382,7 @@ export function ComplianceKit() {
 
 - [ ] **Step 5: Create `CreativeAssets`**
 
-Follow the same pattern as `MessageTemplates.tsx` — array of templates with copy buttons. Include:
+Follow the same pattern as `MessageTemplates.tsx`, array of templates with copy buttons. Include:
 - 3 social posts (X, Facebook, general)
 - 2 email swipe templates
 - 1 verbal script for bondsmen
@@ -1496,7 +1496,7 @@ git commit -m "feat(partners): partner terms of service page"
 
 ```typescript
 /**
- * GET /api/cron/partner-cleanup — Clean expired magic links and sessions.
+ * GET /api/cron/partner-cleanup, Clean expired magic links and sessions.
  * Runs daily at 3am ET via cron-job.org.
  */
 
@@ -1611,12 +1611,12 @@ Verify: partner row created with `status: "approved"`, promo code generated (ina
 
 - [ ] **Step 4: Test deep link**
 
-Visit `/r/TESTCODE/case-decoder` — should set `ref` cookie (90 days) and redirect to `/checkout?tier=case-decoder`.
+Visit `/r/TESTCODE/case-decoder`, should set `ref` cookie (90 days) and redirect to `/checkout?tier=case-decoder`.
 
 - [ ] **Step 5: Run CV**
 
 ```bash
-node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends
+node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends
 ```
 
 - [ ] **Step 6: Final commit if needed**

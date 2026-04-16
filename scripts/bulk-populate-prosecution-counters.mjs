@@ -9,12 +9,12 @@
  *
  * Prosecution Counters schema:
  *   - id (uuid, PK)
- *   - case_id (uuid, FK to cases — NULL for now, filled in P1.1 with motion_type)
- *   - motion_id (uuid, FK — NULL for now)
- *   - state_argument (text — prosecution's statutory argument)
- *   - state_case_law (jsonb — array of prosecution case law)
- *   - strength_rating (text — WEAK/MODERATE/STRONG)
- *   - defense_counter (text — defense counter-argument, populated later)
+ *   - case_id (uuid, FK to cases, NULL for now, filled in P1.1 with motion_type)
+ *   - motion_id (uuid, FK, NULL for now)
+ *   - state_argument (text, prosecution's statutory argument)
+ *   - state_case_law (jsonb, array of prosecution case law)
+ *   - strength_rating (text, WEAK/MODERATE/STRONG)
+ *   - defense_counter (text, defense counter-argument, populated later)
  *   - created_at
  *
  * Logic (P0 partial):
@@ -24,7 +24,7 @@
  *   4. INSERT prosecution_counter with the top 5 defense cases as jsonb array
  *   5. case_id and motion_id stay NULL until P1.1 (motion_type linking)
  *
- * This is PARTIAL — will be re-run after motion_types are populated.
+ * This is PARTIAL, will be re-run after motion_types are populated.
  *
  * Usage:
  *   node scripts/bulk-populate-prosecution-counters.mjs              # Full run

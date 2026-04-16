@@ -1,10 +1,10 @@
-# Flow 3 Gap Fixes — Implementation Plan
+# Flow 3 Gap Fixes, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Close 4 spec gaps in the Score Quiz Re-engagement email flow: add charge-type variant emails (Day 3), wire `{{SCORE}}` interpolation, update cron query to fetch score_value/charge_type, and add charge variants to Flow 6 Day 14.
 
-**Architecture:** DB columns (`score_value`, `score_band`, `charge_type`) and API endpoints already exist and store data correctly. All changes are in the drip layer: `src/lib/drip-emails.ts` (email definitions + interpolation helper) and `src/lib/cron/drip-nurture.ts` (cron fetcher + sender). The `getChargeLabel()` function in `src/lib/score.ts` maps charge slugs to human labels — reuse it.
+**Architecture:** DB columns (`score_value`, `score_band`, `charge_type`) and API endpoints already exist and store data correctly. All changes are in the drip layer: `src/lib/drip-emails.ts` (email definitions + interpolation helper) and `src/lib/cron/drip-nurture.ts` (cron fetcher + sender). The `getChargeLabel()` function in `src/lib/score.ts` maps charge slugs to human labels, reuse it.
 
 **Tech Stack:** Next.js 15, TypeScript, Supabase, Resend, vitest
 
@@ -15,7 +15,7 @@
 ## File Map
 
 | File | Action | Responsibility |
-|------|--------|----------------|
+|------|------, |----------------|
 | `src/lib/drip-emails.ts` | Modify | Add Day 3 charge-variant email to SCORE_CRISIS_EMAILS, update Day 14 reengage with charge variants, update Day 7 reengage subject with `{{SCORE}}`, add `interpolateScoreVars()` helper |
 | `src/lib/cron/drip-nurture.ts` | Modify | Add `score_value`, `charge_type` to `.select()` query, call `interpolateScoreVars()` before sending |
 | `src/lib/drip-emails.test.ts` | Create | Unit tests for `interpolateScoreVars()` and Day 3 email routing |
@@ -41,7 +41,7 @@ In `src/lib/cron/drip-nurture.ts`, line 39, change:
 
 - [ ] **Step 2: Verify TypeScript compiles**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: Clean (no errors).
 
 - [ ] **Step 3: Commit**
@@ -127,7 +127,7 @@ export function interpolateScoreVars(
 
 - [ ] **Step 3: Verify TypeScript compiles**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: Clean
 
 - [ ] **Step 4: Commit**
@@ -149,7 +149,7 @@ git commit -m "feat(drip): add interpolateScoreVars() for score/charge template 
 Insert this new entry into the SCORE_CRISIS_EMAILS array:
 
 ```typescript
-  // Day 3: Charge-specific — how cases like yours usually play out.
+  // Day 3: Charge-specific, how cases like yours usually play out.
   // {{CHARGE_LABEL}} and {{SCORE}} are interpolated at send time by
   // interpolateScoreVars() in drip-nurture.ts.
   {
@@ -163,49 +163,49 @@ Insert this new entry into the SCORE_CRISIS_EMAILS array:
       <div class="charge-variant-dui" style="display:none;">
         <p><strong style="color: white;">DUI/DWI defendants</strong> in your score range often have one or more of these gaps:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">DMV hearing not requested</strong> — the administrative hearing is separate from the criminal case and has its own deadline (usually 7-10 days from arrest). Miss it and your license gets suspended regardless of the criminal outcome.</li>
-          <li><strong style="color: white;">Breathalyzer calibration records not requested</strong> — every breath test machine has calibration logs. If the machine wasn't calibrated within the required window, the BAC number can be challenged. Most attorneys don't request these unless asked.</li>
-          <li><strong style="color: white;">Field sobriety test conditions not documented</strong> — lighting, surface, weather, and the officer's training records all affect whether the FST results hold up. If your attorney hasn't documented these, ask why.</li>
+          <li><strong style="color: white;">DMV hearing not requested</strong>, the administrative hearing is separate from the criminal case and has its own deadline (usually 7-10 days from arrest). Miss it and your license gets suspended regardless of the criminal outcome.</li>
+          <li><strong style="color: white;">Breathalyzer calibration records not requested</strong>, every breath test machine has calibration logs. If the machine wasn't calibrated within the required window, the BAC number can be challenged. Most attorneys don't request these unless asked.</li>
+          <li><strong style="color: white;">Field sobriety test conditions not documented</strong>, lighting, surface, weather, and the officer's training records all affect whether the FST results hold up. If your attorney hasn't documented these, ask why.</li>
         </ul>
       </div>
 
       <div class="charge-variant-drug" style="display:none;">
         <p><strong style="color: white;">Drug offense defendants</strong> in your score range often have one or more of these gaps:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">Lab report not independently reviewed</strong> — the substance and weight in the police report don't always match the lab results. A 68.3g field weight that comes back as 52.1g in the lab can change the charge entirely.</li>
-          <li><strong style="color: white;">Search and seizure not challenged</strong> — if the evidence was found during a traffic stop, a consent search, or a warrant execution, each has specific constitutional requirements. An invalid search can suppress all downstream evidence.</li>
-          <li><strong style="color: white;">Chain of custody gaps</strong> — evidence that changed hands without proper documentation, or was stored improperly, creates reasonable doubt about what was actually seized.</li>
+          <li><strong style="color: white;">Lab report not independently reviewed</strong>, the substance and weight in the police report don't always match the lab results. A 68.3g field weight that comes back as 52.1g in the lab can change the charge entirely.</li>
+          <li><strong style="color: white;">Search and seizure not challenged</strong>, if the evidence was found during a traffic stop, a consent search, or a warrant execution, each has specific constitutional requirements. An invalid search can suppress all downstream evidence.</li>
+          <li><strong style="color: white;">Chain of custody gaps</strong>, evidence that changed hands without proper documentation, or was stored improperly, creates reasonable doubt about what was actually seized.</li>
         </ul>
       </div>
 
       <div class="charge-variant-white-collar" style="display:none;">
         <p><strong style="color: white;">White collar defendants</strong> in your score range often have one or more of these gaps:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">Intent not adequately challenged</strong> — white collar charges almost always require proving intent. Your attorney should be building a narrative around legitimate business purpose, good-faith reliance on advisors, or lack of knowledge.</li>
-          <li><strong style="color: white;">Document volume used against you</strong> — prosecutors cherry-pick from thousands of pages. Your attorney should be identifying the documents that show the full context, not just the ones the prosecution highlighted.</li>
-          <li><strong style="color: white;">Restitution strategy not started</strong> — voluntary restitution before sentencing dramatically affects outcomes. If your attorney hasn't discussed this, ask about the timeline.</li>
+          <li><strong style="color: white;">Intent not adequately challenged</strong>, white collar charges almost always require proving intent. Your attorney should be building a narrative around legitimate business purpose, good-faith reliance on advisors, or lack of knowledge.</li>
+          <li><strong style="color: white;">Document volume used against you</strong>, prosecutors cherry-pick from thousands of pages. Your attorney should be identifying the documents that show the full context, not just the ones the prosecution highlighted.</li>
+          <li><strong style="color: white;">Restitution strategy not started</strong>, voluntary restitution before sentencing dramatically affects outcomes. If your attorney hasn't discussed this, ask about the timeline.</li>
         </ul>
       </div>
 
       <div class="charge-variant-felony" style="display:none;">
         <p><strong style="color: white;">Felony defendants</strong> in your score range often have one or more of these gaps:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">Preliminary hearing strategy unclear</strong> — the preliminary hearing is your first real opportunity to test the prosecution's case. Your attorney should have a specific plan for what to challenge and which witnesses to cross-examine.</li>
-          <li><strong style="color: white;">Discovery incomplete or unreviewed</strong> — felony cases generate significant discovery. If your attorney summarized it rather than walking you through it page by page, important details may have been missed.</li>
-          <li><strong style="color: white;">Sentencing exposure not mapped</strong> — you should know the minimum, maximum, and guideline range for each charge, including how enhancements or prior record affect the math.</li>
+          <li><strong style="color: white;">Preliminary hearing strategy unclear</strong>, the preliminary hearing is your first real opportunity to test the prosecution's case. Your attorney should have a specific plan for what to challenge and which witnesses to cross-examine.</li>
+          <li><strong style="color: white;">Discovery incomplete or unreviewed</strong>, felony cases generate significant discovery. If your attorney summarized it rather than walking you through it page by page, important details may have been missed.</li>
+          <li><strong style="color: white;">Sentencing exposure not mapped</strong>, you should know the minimum, maximum, and guideline range for each charge, including how enhancements or prior record affect the math.</li>
         </ul>
       </div>
 
       <div class="charge-variant-misdemeanor" style="display:none;">
         <p><strong style="color: white;">Misdemeanor defendants</strong> in your score range often have one or more of these gaps:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">Diversion or deferred adjudication not explored</strong> — many misdemeanor charges qualify for programs that can result in dismissal. If your attorney hasn't discussed these options, ask specifically about eligibility.</li>
-          <li><strong style="color: white;">Collateral consequences not addressed</strong> — a misdemeanor conviction can affect employment, housing, professional licenses, and immigration status. Your attorney should be considering these beyond just the criminal penalty.</li>
-          <li><strong style="color: white;">Witness statements not obtained</strong> — misdemeanor cases often rely heavily on one or two witnesses. Your attorney should be getting statements or depositions before memories fade or witnesses become unavailable.</li>
+          <li><strong style="color: white;">Diversion or deferred adjudication not explored</strong>, many misdemeanor charges qualify for programs that can result in dismissal. If your attorney hasn't discussed these options, ask specifically about eligibility.</li>
+          <li><strong style="color: white;">Collateral consequences not addressed</strong>, a misdemeanor conviction can affect employment, housing, professional licenses, and immigration status. Your attorney should be considering these beyond just the criminal penalty.</li>
+          <li><strong style="color: white;">Witness statements not obtained</strong>, misdemeanor cases often rely heavily on one or two witnesses. Your attorney should be getting statements or depositions before memories fade or witnesses become unavailable.</li>
         </ul>
       </div>
 
-      <p>The Case Decoder maps every vulnerability specific to your charges, jurisdiction, and case stage — then generates the exact questions to close each gap.</p>
+      <p>The Case Decoder maps every vulnerability specific to your charges, jurisdiction, and case stage, then generates the exact questions to close each gap.</p>
       ${cta("Get My Case Decoder \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
     `,
   },
@@ -217,7 +217,7 @@ Quick sanity: the array should have exactly 4 entries with delayDays [1, 2, 3, 5
 
 - [ ] **Step 3: Verify TypeScript compiles**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: Clean
 
 - [ ] **Step 4: Commit**
@@ -260,26 +260,26 @@ Replace the entire `score_reengage_day14` entry (~lines 390-403) with:
       <p>Motions have deadlines. And once a deadline passes, arguments that could have changed your case are <strong style="color: #EF4444;">gone forever</strong>.</p>
 
       <div class="charge-variant-dui" style="display:none;">
-        <p>For DUI/DWI cases, the motion most often missed is a <strong style="color: white;">motion to suppress the breath or blood test results</strong>. If the breathalyzer wasn't calibrated within the required window, or if the blood draw didn't follow proper chain-of-custody protocol, the BAC number — the prosecution's strongest evidence — can be excluded entirely. But only if the motion is filed before the deadline.</p>
+        <p>For DUI/DWI cases, the motion most often missed is a <strong style="color: white;">motion to suppress the breath or blood test results</strong>. If the breathalyzer wasn't calibrated within the required window, or if the blood draw didn't follow proper chain-of-custody protocol, the BAC number, the prosecution's strongest evidence, can be excluded entirely. But only if the motion is filed before the deadline.</p>
       </div>
 
       <div class="charge-variant-drug" style="display:none;">
-        <p>For drug offense cases, the motion most often missed is a <strong style="color: white;">motion to suppress evidence based on an unlawful search</strong>. Whether it was a traffic stop, a consent search, or a warrant execution, each has specific constitutional requirements. The prosecution needs that evidence — if it was obtained improperly and your attorney files in time, it can be excluded.</p>
+        <p>For drug offense cases, the motion most often missed is a <strong style="color: white;">motion to suppress evidence based on an unlawful search</strong>. Whether it was a traffic stop, a consent search, or a warrant execution, each has specific constitutional requirements. The prosecution needs that evidence, if it was obtained improperly and your attorney files in time, it can be excluded.</p>
       </div>
 
       <div class="charge-variant-white-collar" style="display:none;">
-        <p>For white collar cases, the motion most often missed is a <strong style="color: white;">motion to compel discovery of exculpatory documents</strong>. Prosecutors are required to disclose evidence favorable to the defense (Brady material), but they don't always do it proactively. Your attorney should be filing motions to ensure the full picture — including documents that support your defense — is on the table.</p>
+        <p>For white collar cases, the motion most often missed is a <strong style="color: white;">motion to compel discovery of exculpatory documents</strong>. Prosecutors are required to disclose evidence favorable to the defense (Brady material), but they don't always do it proactively. Your attorney should be filing motions to ensure the full picture, including documents that support your defense, is on the table.</p>
       </div>
 
       <div class="charge-variant-felony" style="display:none;">
-        <p>For felony cases, the motion most often missed is a <strong style="color: white;">motion to reduce charges at the preliminary hearing stage</strong>. If the prosecution's evidence doesn't support the highest charge, a well-timed motion can force a reduction before trial. But it requires preparation — your attorney needs to identify the weakness and file before the window closes.</p>
+        <p>For felony cases, the motion most often missed is a <strong style="color: white;">motion to reduce charges at the preliminary hearing stage</strong>. If the prosecution's evidence doesn't support the highest charge, a well-timed motion can force a reduction before trial. But it requires preparation, your attorney needs to identify the weakness and file before the window closes.</p>
       </div>
 
       <div class="charge-variant-misdemeanor" style="display:none;">
-        <p>For misdemeanor cases, the opportunity most often missed is a <strong style="color: white;">motion for diversion or deferred adjudication</strong>. Many jurisdictions offer programs that can result in complete dismissal — but they have eligibility windows and filing requirements. If your attorney hasn't explored this, ask specifically about your eligibility before the next court date.</p>
+        <p>For misdemeanor cases, the opportunity most often missed is a <strong style="color: white;">motion for diversion or deferred adjudication</strong>. Many jurisdictions offer programs that can result in complete dismissal, but they have eligibility windows and filing requirements. If your attorney hasn't explored this, ask specifically about your eligibility before the next court date.</p>
       </div>
 
-      <p>Understanding what motions apply to your case — and when they need to be filed — is one of the most important things you can do right now.</p>
+      <p>Understanding what motions apply to your case, and when they need to be filed, is one of the most important things you can do right now.</p>
       <p>${link("Read the Full Guide: What Motions Should Your Attorney Be Filing?", "/blog/what-motions-should-your-attorney-be-filing")}</p>
       <p style="margin-top: 24px;">Want the motion analysis specific to <strong style="color: white;">your</strong> charges and jurisdiction? The Case Decoder maps out what applies to your case.</p>
       ${cta("Get My Case Decoder \u2014 " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}
@@ -289,7 +289,7 @@ Replace the entire `score_reengage_day14` entry (~lines 390-403) with:
 
 - [ ] **Step 3: Verify TypeScript compiles**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: Clean
 
 - [ ] **Step 4: Commit**
@@ -350,7 +350,7 @@ Insert between the win-back fallthrough block (~line 128) and the `if (!nextEmai
 
 - [ ] **Step 3: Verify TypeScript compiles**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: Clean
 
 - [ ] **Step 4: Commit**
@@ -385,13 +385,13 @@ describe("interpolateScoreVars", () => {
   const baseEmail: DripEmail = {
     key: "test",
     delayDays: 1,
-    subject: "Your case scored {{SCORE}}/100 — {{CHARGE_LABEL}} defense",
+    subject: "Your case scored {{SCORE}}/100, {{CHARGE_LABEL}} defense",
     html: "<p>Score: {{SCORE}}. Charge: {{CHARGE_LABEL}}.</p>",
   };
 
   it("replaces {{SCORE}} and {{CHARGE_LABEL}} with provided values", () => {
     const result = interpolateScoreVars(baseEmail, 42, "dui");
-    expect(result.subject).toBe("Your case scored 42/100 — DUI/DWI defense");
+    expect(result.subject).toBe("Your case scored 42/100, DUI/DWI defense");
     expect(result.html).toContain("Score: 42.");
     expect(result.html).toContain("Charge: DUI/DWI.");
   });
@@ -411,7 +411,7 @@ describe("interpolateScoreVars", () => {
   it("uses fallbacks for both null values", () => {
     const result = interpolateScoreVars(baseEmail, null, null);
     expect(result.subject).toBe(
-      "Your case scored your score/100 — criminal defense"
+      "Your case scored your score/100, criminal defense"
     );
   });
 
@@ -587,7 +587,7 @@ git commit -m "test(drip): add unit tests for interpolateScoreVars + charge rout
 
 - [ ] **Step 1: TypeScript check**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: Clean
 
 - [ ] **Step 2: Run all tests**
@@ -605,17 +605,17 @@ Expected: Deploys via Vercel GitHub integration.
 ## Summary of Changes
 
 | Gap | Fix | Task |
-|-----|-----|------|
+|---, |---, |------|
 | Missing Day 3 charge-specific email | Added to SCORE_CRISIS_EMAILS with 5 charge-variant divs | Task 3 |
 | No `{{SCORE}}` interpolation | Added `interpolateScoreVars()` + wired in cron sender | Tasks 2, 5 |
 | Missing charge_type/score_value in cron query | Added to `.select()` | Task 1 |
 | Day 14 reengage missing charge variants | Added 5 charge-variant divs (Flow 6 spec) | Task 4 |
 | Day 7 reengage subject missing score | Updated subject to include `{{SCORE}}` | Task 4 |
-| Day 2 timing discrepancy | **No change needed** — Day 1 + Day 2 cadence matches spec given daily cron | N/A |
+| Day 2 timing discrepancy | **No change needed**, Day 1 + Day 2 cadence matches spec given daily cron | N/A |
 
 ## What Was NOT Changed (and why)
 
-- **DB schema** — `score_value`, `score_band`, `charge_type` columns already exist (migration 009)
-- **Subscribe API** — already accepts and stores all three fields
-- **Score page** — already sends all three fields
-- **`getNextScoreEmail()` function signature** — kept pure (routes by band only); interpolation at send time
+- **DB schema**, `score_value`, `score_band`, `charge_type` columns already exist (migration 009)
+- **Subscribe API**, already accepts and stores all three fields
+- **Score page**, already sends all three fields
+- **`getNextScoreEmail()` function signature**, kept pure (routes by band only); interpolation at send time

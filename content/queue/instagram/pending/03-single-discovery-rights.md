@@ -51,7 +51,7 @@ Every police report. Every witness statement. Every lab result. Every photograph
 
 This is called "discovery." And it is YOUR right.
 
-If your attorney tells you "don't worry about it" or "you don't need to see that" -- that is a red flag. You are the one whose freedom is on the line. You have the right to review what they're using to take it away.
+If your attorney tells you "don't worry about it" or "you don't need to see that", that is a red flag. You are the one whose freedom is on the line. You have the right to review what they're using to take it away.
 
 Three questions to ask your attorney this week:
 
@@ -59,7 +59,7 @@ Three questions to ask your attorney this week:
 2. "Is there anything that should have been turned over but hasn't been?"
 3. "Can I have a copy of everything to review myself?"
 
-You know your life better than anyone. You might catch something in those documents that your attorney missed -- a wrong date, a wrong description, an inconsistency between two reports.
+You know your life better than anyone. You might catch something in those documents that your attorney missed, a wrong date, a wrong description, an inconsistency between two reports.
 
 Read your discovery. It matters.
 

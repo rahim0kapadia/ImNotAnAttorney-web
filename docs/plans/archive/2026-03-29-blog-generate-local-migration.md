@@ -4,22 +4,22 @@
 - **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web`
 - **Problem:** blog-generate cron route calls Anthropic API directly from Vercel, requiring paid API credits. Should use `claude -p` via Rahim's Max subscription (unlimited, already paid for). Same pattern as Telegram bots and cron-dispatch.js.
 - **Key files:**
-  - `src/app/api/cron/blog-generate/route.ts` — current Vercel route (to be gutted)
-  - `src/lib/blog-generation/generate-post.ts` — core generation logic (Anthropic SDK call)
-  - `src/lib/blog-generation/topic-research.ts` — topic enrichment (keep as-is, runs on Vercel)
-  - `src/lib/blog-generation/prompts.ts` — prompt builder (extract for local use)
-  - `C:\Users\email\.claude\scripts\telegram\cron-dispatch.js` — existing pattern for local claude -p dispatch
-  - `C:\Users\email\.claude\scripts\telegram\prompts\` — existing cron prompt files
+  - `src/app/api/cron/blog-generate/route.ts`, current Vercel route (to be gutted)
+  - `src/lib/blog-generation/generate-post.ts`, core generation logic (Anthropic SDK call)
+  - `src/lib/blog-generation/topic-research.ts`, topic enrichment (keep as-is, runs on Vercel)
+  - `src/lib/blog-generation/prompts.ts`, prompt builder (extract for local use)
+  - `C:\Users\email\.claude\scripts\telegram\cron-dispatch.js`, existing pattern for local claude -p dispatch
+  - `C:\Users\email\.claude\scripts\telegram\prompts\`, existing cron prompt files
 - **Tech stack:** Next.js 16 + Supabase + Windows Scheduled Tasks + claude -p
 - **Key decisions:**
-  - Queue (step 1), QA (step 3), Publish (step 4) stay on Vercel — lightweight DB operations
-  - Only Generate (step 2) moves local — it's the only step that needs LLM
-  - Use `claude -p` with `--append-system-prompt` for INAA project context + brand voice
+  - Queue (step 1), QA (step 3), Publish (step 4) stay on Vercel, lightweight DB operations
+  - Only Generate (step 2) moves local, it's the only step that needs LLM
+  - Use `claude -p` with `, append-system-prompt` for INAA project context + brand voice
   - Write draft to Supabase `blog_drafts` table (same schema, same downstream)
 
 ## Architecture: Before vs After
 
-### Before (broken — needs API credits)
+### Before (broken, needs API credits)
 ```
 cron-job.org → Vercel /api/cron/blog-generate → Anthropic API ($$) → blog_drafts table
 ```
@@ -36,7 +36,7 @@ cron-job.org → Vercel /api/cron/blog-generate → reads blog_drafts, validates
 - Create `C:\Users\email\.claude\scripts\telegram\prompts\blog-generate.md`
 - Include: brand voice rules from `.claude/rules/brand-voice.md`, MDX format requirements, frontmatter schema, TLDRBox requirement, word count (1500-3000), FAQ minimum (5), question_count field
 - Prompt must instruct Claude to query Supabase for the queued gap data, enrich with Reddit signals, generate the MDX, and insert into blog_drafts table
-- Reference `src/lib/blog-generation/prompts.ts` for the current prompt — extract and adapt
+- Reference `src/lib/blog-generation/prompts.ts` for the current prompt, extract and adapt
 
 ### Task 2: Create local generation script
 - Create `C:\Users\email\.claude\scripts\blog-generate-local.js`

@@ -8,7 +8,7 @@
 
 ---
 
-## Phase 1: QA — Click-Through Verification
+## Phase 1: QA, Click-Through Verification
 **Goal:** Verify every user-facing flow works after the 128-fix batch.
 
 ### 1.1 Public Pages (no auth)
@@ -23,7 +23,7 @@
 ### 1.2 Checkout Flow
 - [ ] Case Decoder one-time checkout creates Stripe session
 - [ ] Case Decoder installment (2x) checkout creates subscription session
-- [ ] Installment with promo code — discount applies to BOTH payments (P2-38 fix)
+- [ ] Installment with promo code, discount applies to BOTH payments (P2-38 fix)
 - [ ] Upgrade credit coupon applied correctly
 - [ ] Combined referral + upgrade coupon works
 - [ ] Verify endpoint returns quickly (no double-latency from P2-53 fix)
@@ -35,7 +35,7 @@
 - [ ] Intake submission triggers report generation (check console for HTTP error logging from P3-13 fix)
 - [ ] Intelligence Brief Phase 2 intake rejects non-IB tier cases (P3-10 fix)
 - [ ] Upload page accepts valid files (PDF, JPEG, PNG, DOCX)
-- [ ] Upload page rejects invalid files (ZIP disguised as DOCX — P2-52 fix)
+- [ ] Upload page rejects invalid files (ZIP disguised as DOCX, P2-52 fix)
 - [ ] Upload page rejects WebP file claimed as WAV and vice versa (RIFF fix)
 
 ### 1.4 Customer Portal
@@ -55,9 +55,9 @@
 - [ ] Delivery approval sends email
 
 ### 1.6 Admin Panel
-- [ ] Inbox loads (body_html excluded from list response — P2-62 fix)
-- [ ] Reply sends email, log shows ID only (no recipient email — PII fix)
-- [ ] Demand gaps/emerging/subreddits — PATCH with non-string id returns 400
+- [ ] Inbox loads (body_html excluded from list response, P2-62 fix)
+- [ ] Reply sends email, log shows ID only (no recipient email, PII fix)
+- [ ] Demand gaps/emerging/subreddits, PATCH with non-string id returns 400
 - [ ] Email PATCH with non-string id returns 400
 
 ---
@@ -66,9 +66,9 @@
 **Goal:** Verify all payment paths work with real Stripe test cards.
 
 ### 2.1 Test Mode
-- [ ] `stripe trigger checkout.session.completed` — order + case created
-- [ ] `stripe trigger charge.refunded` — case marked refunded, commission reversed
-- [ ] Installment subscription — cancel_at set, 2 payments process
+- [ ] `stripe trigger checkout.session.completed`, order + case created
+- [ ] `stripe trigger charge.refunded`, case marked refunded, commission reversed
+- [ ] Installment subscription, cancel_at set, 2 payments process
 - [ ] Webhook signature verification works (timing-safe comparison)
 - [ ] Duplicate webhook handling (23505) returns 200
 - [ ] Failed order insert returns 500 (Stripe will retry)
@@ -128,10 +128,10 @@
 - [ ] In-memory fallback activates when Supabase is down
 
 ### 4.2 Input Validation
-- [ ] XSS in unsubscribe page — escaped emailParam renders safely
-- [ ] Webhook signature — forged payload returns 400
-- [ ] Score band — invalid band value falls through to non-score email path
-- [ ] Array fields in intake — non-string elements filtered before escapeHtml
+- [ ] XSS in unsubscribe page, escaped emailParam renders safely
+- [ ] Webhook signature, forged payload returns 400
+- [ ] Score band, invalid band value falls through to non-score email path
+- [ ] Array fields in intake, non-string elements filtered before escapeHtml
 
 ### 4.3 Supabase RLS Audit (NOT done in code review)
 - [ ] Verify RLS policies on: cases, orders, subscribers, intakes, referrals, partners

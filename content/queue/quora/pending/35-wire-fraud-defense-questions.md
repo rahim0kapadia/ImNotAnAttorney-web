@@ -18,19 +18,19 @@ Wire fraud under 18 U.S.C. 1343 carries up to 20 years per count. If a financial
 
 Here are the questions that actually matter.
 
-**On intent -- the heart of every wire fraud case:**
+**On intent, the heart of every wire fraud case:**
 
 "What specific evidence does the government have that I intended to defraud anyone?" Wire fraud isn't just a bad business deal that went sideways. The government has to prove you specifically intended to deceive someone and take their money through that deception. Projections that didn't pan out aren't fraud. Promises that got broken aren't fraud. The prosecution has to prove you knew what you were saying was false at the time you said it.
 
-"Can we argue good faith?" If you genuinely believed your representations were true -- even if they turned out wrong -- that negates intent. Your attorney should be gathering every piece of evidence showing what you actually believed: internal communications, business plans, actions inconsistent with someone running a scheme.
+"Can we argue good faith?" If you genuinely believed your representations were true, even if they turned out wrong, that negates intent. Your attorney should be gathering every piece of evidence showing what you actually believed: internal communications, business plans, actions inconsistent with someone running a scheme.
 
 **On evidence:**
 
-"Have you reviewed all the discovery, and what's the most damaging piece?" Federal wire fraud cases generate massive discovery -- thousands of emails, financial records, recorded calls. If your attorney can't name the single most damaging piece of evidence in your case, they don't know your case well enough.
+"Have you reviewed all the discovery, and what's the most damaging piece?" Federal wire fraud cases generate massive discovery, thousands of emails, financial records, recorded calls. If your attorney can't name the single most damaging piece of evidence in your case, they don't know your case well enough.
 
 "What's the government's theory of the scheme to defraud, and where are the holes?" Every theory has weaknesses. Maybe the timeline doesn't add up. Maybe key participants contradict each other. Maybe the alleged victims kept investing after supposedly being defrauded. Your attorney should know exactly where the government's narrative is weakest.
 
-**On sentencing -- where loss amount drives everything:**
+**On sentencing, where loss amount drives everything:**
 
 "What is the government's alleged loss amount, and are we challenging it?" In federal sentencing, loss amount is often the single biggest factor. The difference between $250,000 and $9.5 million in alleged losses is the difference between roughly a year and a decade. Intended loss vs. actual loss. Gross vs. net. Loss attributable to you vs. others. Your attorney should be fighting every dollar.
 
@@ -38,7 +38,7 @@ Here are the questions that actually matter.
 
 **On witnesses:**
 
-"Who are the government's cooperating witnesses, and what deal did they get?" Cooperating witnesses have every incentive to tell the government what it wants to hear -- their freedom depends on being useful. Your attorney should know every cooperator's deal and every inconsistency in their statements.
+"Who are the government's cooperating witnesses, and what deal did they get?" Cooperating witnesses have every incentive to tell the government what it wants to hear, their freedom depends on being useful. Your attorney should know every cooperator's deal and every inconsistency in their statements.
 
 **On the big decision:**
 

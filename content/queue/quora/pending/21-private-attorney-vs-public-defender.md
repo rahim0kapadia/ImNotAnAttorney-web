@@ -20,7 +20,7 @@ Everyone has an opinion. Nobody gives you the real answer.
 
 This isn't an insult to public defenders. It's an indictment of how we fund criminal defense in this country.
 
-**The truth about private attorneys:** Paying $5,000-$25,000 should buy fewer cases per attorney, more time on your case, more resources. But it depends entirely on the attorney. Some private attorneys are outstanding -- they file motions, review every page of discovery, investigate independently. Some collect the retainer, assign your case to a junior associate, file nothing, and push you toward a plea.
+**The truth about private attorneys:** Paying $5,000-$25,000 should buy fewer cases per attorney, more time on your case, more resources. But it depends entirely on the attorney. Some private attorneys are outstanding, they file motions, review every page of discovery, investigate independently. Some collect the retainer, assign your case to a junior associate, file nothing, and push you toward a plea.
 
 A $15,000 private attorney who doesn't file motions is worse than a public defender who does.
 
@@ -28,15 +28,15 @@ A $15,000 private attorney who doesn't file motions is worse than a public defen
 
 The accountability checklist applies regardless of who's paying:
 
-Communication -- do they return calls within 48 hours? Do they explain things in plain language?
+Communication, do they return calls within 48 hours? Do they explain things in plain language?
 
-Motion filing -- have they filed or considered suppression motions, discovery demands, Brady motions? If zero motions and no clear explanation for why -- that's information.
+Motion filing, have they filed or considered suppression motions, discovery demands, Brady motions? If zero motions and no clear explanation for why, that's information.
 
-Discovery review -- have they read every page, watched every video, and shared it with you?
+Discovery review, have they read every page, watched every video, and shared it with you?
 
-Investigation -- did they investigate anything independently, or accept the prosecution's version at face value?
+Investigation, did they investigate anything independently, or accept the prosecution's version at face value?
 
-**Questions for a private attorney:** How many active cases right now? Who actually works on my case? What does the fee cover -- just the plea deal, or actual defense work?
+**Questions for a private attorney:** How many active cases right now? Who actually works on my case? What does the fee cover, just the plea deal, or actual defense work?
 
 **Questions for a public defender:** What is your current caseload? Can we schedule a dedicated case review? What motions are you considering?
 

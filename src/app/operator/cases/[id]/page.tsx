@@ -466,7 +466,7 @@ function OverviewTab({ caseData }: { caseData: CaseDetail }) {
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <MetricCard
         label="Discovery Health Score"
-        value={c.discovery_health_score != null ? `${c.discovery_health_score}%` : "—"}
+        value={c.discovery_health_score != null ? `${c.discovery_health_score}%` : ", "}
       />
       <MetricCard
         label="Documents"
@@ -489,7 +489,7 @@ function OverviewTab({ caseData }: { caseData: CaseDetail }) {
         value={
           c.evidence_custody_total > 0
             ? `${c.evidence_custody_verified}/${c.evidence_custody_total} verified`
-            : "—"
+            : ", "
         }
       />
       <MetricCard
@@ -545,14 +545,14 @@ function DocumentsTab({ documents }: { documents: DocumentRow[] }) {
               </td>
               <td className="px-4 py-3 text-zinc-400">{d.file_type}</td>
               <td className="px-4 py-3 text-zinc-400">
-                {d.doc_type ?? "—"}
+                {d.doc_type ?? ", "}
                 {d.doc_subtype ? ` / ${d.doc_subtype}` : ""}
               </td>
               <td className="px-4 py-3 text-right text-zinc-400">
                 {formatBytes(d.file_size_bytes)}
               </td>
               <td className="px-4 py-3 text-right text-zinc-400">
-                {d.page_count ?? "—"}
+                {d.page_count ?? ", "}
               </td>
               <td className="px-4 py-3">
                 <StatusBadge status={d.status} />
@@ -665,7 +665,7 @@ function WitnessesTab({ witnesses }: { witnesses: WitnessSummary[] }) {
                 {w.witness_type}
                 {w.subtype ? ` (${w.subtype})` : ""}
               </td>
-              <td className="px-4 py-3 text-zinc-400">{w.agency ?? "—"}</td>
+              <td className="px-4 py-3 text-zinc-400">{w.agency ?? ", "}</td>
               <td className="px-4 py-3 text-right">
                 {w.credibility_score != null ? (
                   <span
@@ -680,14 +680,14 @@ function WitnessesTab({ witnesses }: { witnesses: WitnessSummary[] }) {
                     {w.credibility_score}/10
                   </span>
                 ) : (
-                  <span className="text-zinc-400">—</span>
+                  <span className="text-zinc-400">, </span>
                 )}
               </td>
               <td className="px-4 py-3">
                 {w.threat_level ? (
                   <SeverityBadge severity={w.threat_level} />
                 ) : (
-                  <span className="text-zinc-400">—</span>
+                  <span className="text-zinc-400">, </span>
                 )}
               </td>
               <td className="px-4 py-3">
@@ -768,7 +768,7 @@ function JobsTab({
                 {j.retry_count}/{j.max_retries}
               </td>
               <td className="px-4 py-3 text-zinc-400">
-                {j.started_at ? formatDate(j.started_at) : "—"}
+                {j.started_at ? formatDate(j.started_at) : ", "}
               </td>
               <td className="px-4 py-3 text-right">
                 {j.status === "failed" && (
@@ -822,7 +822,7 @@ function TasksTab({ tasks }: { tasks: OperatorTaskRow[] }) {
                 <StatusBadge status={t.status} />
               </td>
               <td className="px-4 py-3 text-zinc-400">
-                {t.due_at ? formatDate(t.due_at) : "—"}
+                {t.due_at ? formatDate(t.due_at) : ", "}
               </td>
               <td className="px-4 py-3">
                 {t.sla_breach ? (
@@ -899,10 +899,10 @@ function LegalTab({
                     </td>
                     <td className="px-4 py-3 text-zinc-400">{ct.citation}</td>
                     <td className="px-4 py-3 text-zinc-400">
-                      {ct.court ?? "—"}
+                      {ct.court ?? ", "}
                     </td>
                     <td className="px-4 py-3 text-zinc-400">
-                      {ct.year ?? "—"}
+                      {ct.year ?? ", "}
                     </td>
                     <td className="px-4 py-3">
                       {ct.is_binding ? (
@@ -962,7 +962,7 @@ function LegalTab({
                       <StatusBadge status={m.status} />
                     </td>
                     <td className="px-4 py-3 text-right text-zinc-400">
-                      {m.strategic_score ?? "—"}
+                      {m.strategic_score ?? ", "}
                     </td>
                     <td className="px-4 py-3 text-zinc-400 max-w-xs truncate">
                       {m.description}

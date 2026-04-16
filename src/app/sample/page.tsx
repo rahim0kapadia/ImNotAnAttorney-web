@@ -3,7 +3,7 @@
  *
  * Redacted sample of a real Case Decoder report (v2 emotional architecture),
  * used as proof of deliverable quality. This is one of the highest-impact
- * conversion pages — visitors who view the sample are significantly more
+ * conversion pages, visitors who view the sample are significantly more
  * likely to purchase.
  *
  * User journey position:
@@ -15,21 +15,21 @@
  * case numbers, and dates changed. The v2 emotional architecture is shown.
  *
  * Report sections shown (v2 structure):
- *   1. Report header — Client name, charges, jurisdiction (redacted)
- *   2. Methodology note — Names the 3 God Mode experts for this charge type
- *   3. Where Things Stand — 4-area diagnostic table (Communication, Preparation,
+ *   1. Report header, Client name, charges, jurisdiction (redacted)
+ *   2. Methodology note, Names the 3 God Mode experts for this charge type
+ *   3. Where Things Stand, 4-area diagnostic table (Communication, Preparation,
  *      Strategy, Filing Activity) with "What to Ask About" column
- *   4. Understanding Your Charges — Elements table with "Question for Your Attorney"
+ *   4. Understanding Your Charges, Elements table with "Question for Your Attorney"
  *      column, penalty range, "What this means" plain English
- *   5. Mid-page CTA — Conversion point
- *   6. Exactly What to Say — Ready-to-send email template (preview)
- *   7. Questions for Your Attorney — 3 of 15 shown in 6-part format
- *   8. Your Next 7 Days — 7-day action plan (preview)
- *   9. End-page CTA — Final conversion point
+ *   5. Mid-page CTA, Conversion point
+ *   6. Exactly What to Say, Ready-to-send email template (preview)
+ *   7. Questions for Your Attorney, 3 of 15 shown in 6-part format
+ *   8. Your Next 7 Days, 7-day action plan (preview)
+ *   9. End-page CTA, Final conversion point
  *
  * Two inline CTAs strategically placed:
- *   - Mid-page (after charges section) — catches engaged readers
- *   - End-page (after 7-day plan) — catches completionists
+ *   - Mid-page (after charges section), catches engaged readers
+ *   - End-page (after 7-day plan), catches completionists
  *
  * SEO: Full OG metadata with specific findings in description.
  */
@@ -39,26 +39,26 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sample Case Decoder Report — Real Case, Redacted",
+  title: "Sample Case Decoder Report, Real Case, Redacted",
   description:
     "See what a Case Decoder report actually looks like. Real DWI case analysis: 15 calibrated attorney questions, ready-to-send email templates, 7-day action plan. Built from elite defense methodology.",
   alternates: {
     canonical: `${SITE_URL}/sample`,
   },
   openGraph: {
-    title: "Sample Case Decoder Report — Real Findings from a Real Case",
+    title: "Sample Case Decoder Report, Real Findings from a Real Case",
     description:
       "15 calibrated questions. Ready-to-send email templates. A 7-day action plan. See what a Case Decoder actually delivers.",
   },
 };
 
-/** Visual separator between report sections — amber-tinted line. */
+/** Visual separator between report sections, amber-tinted line. */
 function SectionDivider() {
   return <div className="my-8 border-t border-amber-500/20" />;
 }
 
 /**
- * InlineCTA — conversion callout placed within the report body.
+ * InlineCTA, conversion callout placed within the report body.
  * "mid" variant: after the charges section (engagement point).
  * "end" variant: after the 7-day plan (completion point).
  * Both link to /checkout?tier=case-decoder at $197.
@@ -80,7 +80,7 @@ function InlineCTA({ variant }: { variant: "mid" | "end" }) {
         href="/checkout?tier=case-decoder"
         className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
       >
-        Get Your Case Analysis — {TIER_CORE["case-decoder"].priceDisplay} →
+        Get Your Case Analysis, {TIER_CORE["case-decoder"].priceDisplay} →
       </Link>
       <p className="mt-2 text-xs text-zinc-400">
         Delivered within 48 hours. Find It or It&apos;s Free &mdash; full refund
@@ -107,10 +107,10 @@ export default function SamplePage() {
         }}
       />
       <div className="mx-auto max-w-3xl">
-        {/* PAGE HEADER — Sets expectations: real case, redacted, v2 structure */}
+        {/* PAGE HEADER, Sets expectations: real case, redacted, v2 structure */}
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-amber-500">
-            Sample Report — Real Case, Redacted
+            Sample Report, Real Case, Redacted
           </p>
           <h1 className="mt-4 text-3xl font-bold text-white md:text-4xl">
             What a Case Decoder Actually Looks Like
@@ -122,9 +122,9 @@ export default function SamplePage() {
           </p>
         </div>
 
-        {/* REPORT CONTAINER — Styled to look like the actual delivered report */}
+        {/* REPORT CONTAINER, Styled to look like the actual delivered report */}
         <div className="mt-12 rounded-xl border border-amber-500/30 bg-zinc-900 p-6 md:p-10">
-          {/* REPORT HEADER — Monospace styled case info block (redacted) */}
+          {/* REPORT HEADER, Monospace styled case info block (redacted) */}
           <div className="rounded-lg border border-zinc-700 bg-zinc-800/50 p-6 font-mono text-sm text-zinc-300">
             <p className="text-center font-bold text-amber-400">
               CASE DECODER REPORT
@@ -137,7 +137,7 @@ export default function SamplePage() {
                 <span className="text-zinc-400">Prepared for:</span> Sarah M.
               </p>
               <p>
-                <span className="text-zinc-400">Charge(s):</span> DWI — First
+                <span className="text-zinc-400">Charge(s):</span> DWI, First
                 Offense (Class B Misdemeanor)
               </p>
               <p>
@@ -150,7 +150,7 @@ export default function SamplePage() {
             </div>
           </div>
 
-          {/* METHODOLOGY NOTE — Names the 3 God Mode experts for DWI. */}
+          {/* METHODOLOGY NOTE, Names the 3 God Mode experts for DWI. */}
           <div className="mt-8 rounded-lg border border-zinc-700 bg-zinc-800/30 p-5">
             <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
               Methodology Note
@@ -160,21 +160,21 @@ export default function SamplePage() {
               winning methods from elite criminal defense attorneys. Calibrated
               for DWI defense using documented methodology from Lawrence Taylor
               (DWI suppression), Robert Remar (field sobriety analysis), and
-              Robert Ramsey (BAC forensics) — three of the most cited DUI defense
+              Robert Ramsey (BAC forensics), three of the most cited DUI defense
               attorneys in published legal scholarship.
             </p>
           </div>
 
           <SectionDivider />
 
-          {/* WHERE THINGS STAND — 4-area diagnostic table (v2 core section) */}
+          {/* WHERE THINGS STAND, 4-area diagnostic table (v2 core section) */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Where Things Stand
             </h2>
             <p className="mt-2 text-sm italic text-zinc-400">
               This is not a grade on your attorney or your case. It&apos;s a map
-              of what you know and what you don&apos;t know — based on what you
+              of what you know and what you don&apos;t know, based on what you
               shared with us.
             </p>
             <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Defense milestone assessment table">
@@ -195,7 +195,7 @@ export default function SamplePage() {
                     </td>
                     <td className="py-3 pr-4 text-zinc-400">
                       You said your attorney hasn&apos;t returned calls in 3
-                      weeks. Communication gaps happen — sometimes attorneys are
+                      weeks. Communication gaps happen, sometimes attorneys are
                       working behind the scenes.
                     </td>
                     <td className="py-3 pr-4 text-zinc-300">
@@ -239,7 +239,7 @@ export default function SamplePage() {
                     </td>
                     <td className="py-3 pr-4 text-zinc-400">
                       You told us no motions have been filed. That&apos;s a
-                      common gap — most defendants aren&apos;t told about filings
+                      common gap, most defendants aren&apos;t told about filings
                       proactively.
                     </td>
                     <td className="py-3 pr-4 text-zinc-300">
@@ -263,14 +263,14 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* UNDERSTANDING YOUR CHARGES — Elements table + penalty range (v2) */}
+          {/* UNDERSTANDING YOUR CHARGES, Elements table + penalty range (v2) */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Understanding Your Charges
             </h2>
             <div className="mt-4">
               <h3 className="font-semibold text-amber-400">
-                DWI — First Offense (Class B Misdemeanor) — Tex. Penal Code §
+                DWI, First Offense (Class B Misdemeanor), Tex. Penal Code §
                 49.04
               </h3>
 
@@ -298,7 +298,7 @@ export default function SamplePage() {
                 public place while intoxicated. &ldquo;Intoxicated&rdquo; means
                 either a BAC of 0.08+ or losing normal use of mental or physical
                 faculties. The prosecution has to prove both that you were
-                driving and that you were intoxicated — those are two separate
+                driving and that you were intoxicated, those are two separate
                 things, and both are worth asking about.
               </p>
 
@@ -332,7 +332,7 @@ export default function SamplePage() {
                         On a road, parking lot, or other publicly accessible area
                       </td>
                       <td className="py-2 text-zinc-400">
-                        &ldquo;Where exactly was the stop — does the location
+                        &ldquo;Where exactly was the stop, does the location
                         matter?&rdquo;
                       </td>
                     </tr>
@@ -343,7 +343,7 @@ export default function SamplePage() {
                       </td>
                       <td className="py-2 text-zinc-400">
                         &ldquo;What&apos;s the basis for the intoxication
-                        determination — the breath test, the field sobriety, or
+                        determination, the breath test, the field sobriety, or
                         both?&rdquo;
                       </td>
                     </tr>
@@ -351,14 +351,14 @@ export default function SamplePage() {
                 </table>
               </div>
 
-              {/* ALR admin process callout — DWI-specific */}
+              {/* ALR admin process callout, DWI-specific */}
               <div className="mt-4 rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
                 <p className="text-sm font-semibold text-amber-400">
                   Something Your Attorney Can Help With
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
                   Texas DWI cases trigger a separate administrative license
-                  revocation (ALR) hearing — there&apos;s a 15-day deadline to
+                  revocation (ALR) hearing, there&apos;s a 15-day deadline to
                   request it from arrest. Your attorney may have already handled
                   this. If you&apos;re not sure, Q6 gives you the words to ask.
                   There may still be options.
@@ -367,22 +367,22 @@ export default function SamplePage() {
             </div>
           </section>
 
-          {/* SENTENCING CONTEXT — JUSTFAIR data (new Phase 6 section) */}
+          {/* SENTENCING CONTEXT, JUSTFAIR data (new Phase 6 section) */}
           <SectionDivider />
           <section>
             <h2 className="text-xl font-bold text-white">
-              Sentencing Context — Federal Data
+              Sentencing Context, Federal Data
             </h2>
             <p className="mt-2 text-sm text-zinc-400">
               Your report now includes sentencing context from 595,851 federal
               cases (JUSTFAIR / USSC). This grounds your conversation with real
-              numbers — not guesses.
+              numbers, not guesses.
             </p>
 
             <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Federal sentencing context table">
               <table className="w-full text-sm">
                 <caption className="mb-4 text-left text-base font-semibold text-zinc-300">
-                  Sample sentencing data — DWI, Southern District of Texas
+                  Sample sentencing data, DWI, Southern District of Texas
                 </caption>
                 <thead>
                   <tr className="border-b border-zinc-700 text-left text-zinc-400">
@@ -421,12 +421,12 @@ export default function SamplePage() {
               </span>{" "}
               When your attorney says &ldquo;most cases like yours end with
               probation,&rdquo; you can ask: &ldquo;The federal data shows a
-              34.2% downward departure rate in this district — does that apply
+              34.2% downward departure rate in this district, does that apply
               to my situation?&rdquo; Data turns vague answers into specific
               conversations.
             </p>
             <p className="mt-2 text-xs text-zinc-500">
-              Source: JUSTFAIR (QSIDE Institute) — 595,851 federal sentencing records, FY2001-2023. Federal courts only.
+              Source: JUSTFAIR (QSIDE Institute), 595,851 federal sentencing records, FY2001-2023. Federal courts only.
             </p>
           </section>
 
@@ -434,7 +434,7 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* EXACTLY WHAT TO SAY — Email template preview (v2 core section) */}
+          {/* EXACTLY WHAT TO SAY, Email template preview (v2 core section) */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Exactly What to Say
@@ -451,7 +451,7 @@ export default function SamplePage() {
                 <p>
                   <span className="text-zinc-400">Subject:</span>{" "}
                   <span className="italic">
-                    Case Update Request — Sarah M.
+                    Case Update Request, Sarah M.
                   </span>
                 </p>
                 <div className="mt-2 rounded border border-zinc-700 bg-zinc-800/50 p-4 text-sm text-zinc-400">
@@ -489,7 +489,7 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* QUESTIONS FOR YOUR ATTORNEY — 3 of 15 shown, 6-part format (v2) */}
+          {/* QUESTIONS FOR YOUR ATTORNEY, 3 of 15 shown, 6-part format (v2) */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Questions for Your Attorney
@@ -500,15 +500,15 @@ export default function SamplePage() {
             </p>
 
             <div className="mt-6 space-y-6">
-              {/* Q1 — Golden Question */}
+              {/* Q1, Golden Question */}
               <div className="rounded-lg border border-amber-500/30 bg-zinc-800/30 p-5">
                 <p className="text-xs font-semibold text-amber-400">
-                  Q1 — GOLDEN QUESTION (if you only ask one, ask this one)
+                  Q1, GOLDEN QUESTION (if you only ask one, ask this one)
                 </p>
                 <p className="mt-2 text-sm font-semibold leading-relaxed text-white">
                   &ldquo;You mentioned that you haven&apos;t heard from your
                   attorney in three weeks. Can you walk me through what&apos;s
-                  been happening with my case since our last conversation — any
+                  been happening with my case since our last conversation, any
                   filings, discovery requests, or strategy decisions?&rdquo;
                 </p>
                 <div className="mt-3 space-y-2 text-xs text-zinc-400">
@@ -528,14 +528,14 @@ export default function SamplePage() {
                       Good answer:
                     </span>{" "}
                     Attorney provides specific dates, filed documents, or
-                    pending actions — not just &ldquo;everything&apos;s
+                    pending actions, not just &ldquo;everything&apos;s
                     fine.&rdquo;
                   </p>
                   <p>
                     <span className="font-semibold text-zinc-300">
                       If the answer is vague:
                     </span>{" "}
-                    &ldquo;I appreciate that — could you give me specific dates
+                    &ldquo;I appreciate that, could you give me specific dates
                     or next steps so I can follow along?&rdquo;
                   </p>
                   <p>
@@ -549,10 +549,10 @@ export default function SamplePage() {
                 </div>
               </div>
 
-              {/* Q3 — Discovery */}
+              {/* Q3, Discovery */}
               <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-5">
                 <p className="text-xs font-semibold text-amber-400">
-                  Q3 — DISCOVERY STATUS
+                  Q3, DISCOVERY STATUS
                 </p>
                 <p className="mt-2 text-sm font-semibold leading-relaxed text-white">
                   &ldquo;You told us you haven&apos;t seen any discovery yet.
@@ -596,10 +596,10 @@ export default function SamplePage() {
                 </div>
               </div>
 
-              {/* Q5 — Suppression */}
+              {/* Q5, Suppression */}
               <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-5">
                 <p className="text-xs font-semibold text-amber-400">
-                  Q5 — FIELD SOBRIETY & SUPPRESSION
+                  Q5, FIELD SOBRIETY & SUPPRESSION
                 </p>
                 <p className="mt-2 text-sm font-semibold leading-relaxed text-white">
                   &ldquo;You shared that you were asked to do field sobriety
@@ -655,7 +655,7 @@ export default function SamplePage() {
 
           <SectionDivider />
 
-          {/* YOUR NEXT 7 DAYS — 7-day action plan preview (v2 core section) */}
+          {/* YOUR NEXT 7 DAYS, 7-day action plan preview (v2 core section) */}
           <section>
             <h2 className="text-xl font-bold text-white">
               Your Next 7 Days
@@ -668,7 +668,7 @@ export default function SamplePage() {
               <p className="mt-1 text-sm text-zinc-300">
                 The pre-written email in Exactly What to Say is built from your
                 case specifics. Copy, paste, send. The questions that follow
-                aren&apos;t generic tips — they&apos;re the same moves that
+                aren&apos;t generic tips, they&apos;re the same moves that
                 separate prepared defendants from unprepared ones.
               </p>
             </div>
@@ -690,7 +690,7 @@ export default function SamplePage() {
                     </td>
                     <td className="py-2 pr-4">Your attorney email is ready to send</td>
                     <td className="py-2 text-zinc-400">
-                      Pre-written in Exactly What to Say — copy, paste, send.
+                      Pre-written in Exactly What to Say, copy, paste, send.
                     </td>
                   </tr>
                   <tr className="border-b border-zinc-500">
@@ -699,7 +699,7 @@ export default function SamplePage() {
                     </td>
                     <td className="py-2 pr-4">5 priority questions are highlighted and numbered</td>
                     <td className="py-2 text-zinc-400">
-                      Already in order — review when ready.
+                      Already in order, review when ready.
                     </td>
                   </tr>
                   <tr className="border-b border-zinc-500">
@@ -708,7 +708,7 @@ export default function SamplePage() {
                     </td>
                     <td className="py-2 pr-4">Follow-up template is ready if needed</td>
                     <td className="py-2 text-zinc-400">
-                      Pre-written in Your Advocacy Steps — built for this scenario.
+                      Pre-written in Your Advocacy Steps, built for this scenario.
                     </td>
                   </tr>
                   <tr className="border-b border-zinc-500">
@@ -735,7 +735,7 @@ export default function SamplePage() {
                     </td>
                     <td className="py-2 pr-4">Meeting Ready Sheet prepared</td>
                     <td className="py-2 text-zinc-400">
-                      Everything you need is on one page — questions, checklist, notes space.
+                      Everything you need is on one page, questions, checklist, notes space.
                     </td>
                   </tr>
                 </tbody>
@@ -753,10 +753,10 @@ export default function SamplePage() {
           <InlineCTA variant="end" />
         </div>
 
-        {/* DISCLAIMER — Clarifies redaction and legal positioning */}
+        {/* DISCLAIMER, Clarifies redaction and legal positioning */}
         <p className="mt-6 text-center text-xs text-zinc-400">
           Names, case numbers, and dates have been changed. ImNotAnAttorney
-          provides legal information and research — not legal advice.
+          provides legal information and research, not legal advice.
         </p>
       </div>
     </div>

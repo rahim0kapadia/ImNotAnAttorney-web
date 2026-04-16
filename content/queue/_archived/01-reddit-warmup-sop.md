@@ -9,11 +9,11 @@
 
 ## Strategic Context
 
-INNA's target audience -- criminal defendants and their families -- actively uses Reddit to ask questions, vent frustrations, and seek guidance. Subreddits like r/legaladvice (2.5M+ members), r/dui (35K+ members), r/publicdefenders, and r/criminaldefense are high-intent communities where people are actively dealing with the exact problems INNA solves.
+INNA's target audience, criminal defendants and their families, actively uses Reddit to ask questions, vent frustrations, and seek guidance. Subreddits like r/legaladvice (2.5M+ members), r/dui (35K+ members), r/publicdefenders, and r/criminaldefense are high-intent communities where people are actively dealing with the exact problems INNA solves.
 
 Reddit is also now a major source for Google and AI search results. Helpful Reddit comments rank in Google and get cited by Perplexity, ChatGPT, and Google AI Overviews. Every quality comment is both community engagement AND SEO.
 
-**Critical rule:** INNA does NOT provide legal advice. Every Reddit comment must provide legal INFORMATION and QUESTIONS -- never advice. This actually works in our favor on legal subreddits where giving specific legal advice is against the rules.
+**Critical rule:** INNA does NOT provide legal advice. Every Reddit comment must provide legal INFORMATION and QUESTIONS, never advice. This actually works in our favor on legal subreddits where giving specific legal advice is against the rules.
 
 ---
 
@@ -22,7 +22,7 @@ Reddit is also now a major source for Google and AI search results. Helpful Redd
 ### Account Name Options
 - Use a personal-sounding name (NOT "ImNotAnAttorney_official")
 - Options: a derivative of Rahim's name, or something like "DefenseResearcher" or "CaseIntelGuy"
-- Bio: "Spent 18 months reading every page of my own discovery. Now I help other defendants do the same. Not an attorney -- just someone who believes you deserve to understand your own case."
+- Bio: "Spent 18 months reading every page of my own discovery. Now I help other defendants do the same. Not an attorney, just someone who believes you deserve to understand your own case."
 - Avatar: Real photo or distinctive non-stock avatar
 - Do NOT link to imnotanattorney.com in bio during Phase 1 or Phase 2
 
@@ -40,14 +40,14 @@ Reddit is also now a major source for Google and AI search results. Helpful Redd
 **Why:** Reddit's spam detection flags new accounts that immediately post in niche/commercial subreddits. Spending 30 days in unrelated communities builds baseline trust.
 
 ### Subreddit Selection (pick 3-5 based on genuine interest)
-- r/AskReddit -- easy karma from thoughtful answers to popular questions
-- r/todayilearned -- share interesting facts
-- r/movies, r/television, r/books -- media discussions
-- r/cooking, r/EatCheapAndHealthy -- recipe advice
-- r/DIY, r/HomeImprovement -- if applicable
-- r/sports or team-specific subs -- if applicable
-- r/technology, r/gadgets -- tech discussions
-- r/mildlyinteresting -- low-effort engagement
+- r/AskReddit, easy karma from thoughtful answers to popular questions
+- r/todayilearned, share interesting facts
+- r/movies, r/television, r/books, media discussions
+- r/cooking, r/EatCheapAndHealthy, recipe advice
+- r/DIY, r/HomeImprovement, if applicable
+- r/sports or team-specific subs, if applicable
+- r/technology, r/gadgets, tech discussions
+- r/mildlyinteresting, low-effort engagement
 
 ### Daily Actions (30 minutes/day)
 - Comment on 3-5 posts per day in your chosen hobby subreddits
@@ -75,7 +75,7 @@ Reddit is also now a major source for Google and AI search results. Helpful Redd
 - Do NOT link to any website
 - Do NOT post more than 5 times per day in any single subreddit
 - Do NOT use any promotional language anywhere
-- Do NOT rush -- 30 days minimum
+- Do NOT rush, 30 days minimum
 
 ---
 
@@ -87,24 +87,24 @@ Reddit is also now a major source for Google and AI search results. Helpful Redd
 
 ### Target Subreddits (in priority order)
 
-#### Tier 1 -- Primary Communities (most traffic, most moderated)
+#### Tier 1, Primary Communities (most traffic, most moderated)
 
 **r/legaladvice (2.5M+ members)**
 - Rules: No personal attacks, no doxxing, no requests for DMs, no advertising
-- Moderators are AGGRESSIVE about self-promotion -- even subtle mentions get banned
+- Moderators are AGGRESSIVE about self-promotion, even subtle mentions get banned
 - Posts must be actual legal questions with location specified
 - Comments must be on-topic legal information
-- INNA approach: Answer questions about criminal procedure, discovery rights, attorney accountability, motions -- all things we have blog content about. Never link to INNA. Provide the information directly in the comment.
-- Good targets: Posts about "my attorney won't call back," "should I take the plea," "what happens at arraignment," "how to read discovery" -- these map directly to our 29 blog topics
+- INNA approach: Answer questions about criminal procedure, discovery rights, attorney accountability, motions, all things we have blog content about. Never link to INNA. Provide the information directly in the comment.
+- Good targets: Posts about "my attorney won't call back," "should I take the plea," "what happens at arraignment," "how to read discovery", these map directly to our 29 blog topics
 
 **r/dui (35K+ members)**
 - Rules: Supportive community, no judgment of people with DUI charges
 - Less aggressive moderation than r/legaladvice
 - Posts are mostly: "just got arrested, what happens next?" and "how bad is this?"
-- INNA approach: Share practical information about DUI process, breathalyzer challenges, field sobriety tests, DMV hearings. Never give legal advice -- share questions they should be asking their attorney.
+- INNA approach: Share practical information about DUI process, breathalyzer challenges, field sobriety tests, DMV hearings. Never give legal advice, share questions they should be asking their attorney.
 - Tone: Empathetic, knowledgeable, been-there-done-that
 
-#### Tier 2 -- Niche Communities
+#### Tier 2, Niche Communities
 
 **r/criminaldefense**
 - Smaller but highly targeted
@@ -114,7 +114,7 @@ Reddit is also now a major source for Google and AI search results. Helpful Redd
 
 **r/publicdefenders**
 - Primarily for public defenders themselves
-- APPROACH WITH EXTREME CAUTION -- this is a professional community
+- APPROACH WITH EXTREME CAUTION, this is a professional community
 - Best use: Learn the language, understand PD frustrations, RARELY comment
 - If commenting: frame as "defendant perspective" to add value
 
@@ -127,7 +127,7 @@ Reddit is also now a major source for Google and AI search results. Helpful Redd
 - More relaxed than r/legaladvice
 - Good for answering general legal process questions
 
-#### Tier 3 -- Peripheral (monitor, comment occasionally)
+#### Tier 3, Peripheral (monitor, comment occasionally)
 - r/personalfinance (when posts involve legal costs, bail, attorney fees)
 - r/relationship_advice (when posts involve criminal charges affecting relationships)
 - r/Advice (when posts involve legal situations)
@@ -139,19 +139,19 @@ Reddit is also now a major source for Google and AI search results. Helpful Redd
 "This is unfortunately really common with criminal defense attorneys. Here's what the bar typically expects: your attorney should update you at minimum before every hearing, respond to reasonable communications within 48-72 hours, and discuss strategy changes as they develop. If none of that is happening, three questions worth asking at your next meeting: (1) What motions have you filed or plan to file? (2) Have you received all discovery materials? (3) What is your timeline for this case? Write them down beforehand. If the answers are vague or non-existent, that tells you something important."
 
 **Template 2: Should I Take the Plea?**
-"Before deciding on any plea, there are some things worth understanding. Over 97% of federal cases end in plea bargains, so this is normal -- but that doesn't mean you should accept it blindly. Questions to discuss with your attorney: (1) What are the sentencing guidelines for your specific charges? (2) What motions could still be filed that might change the state's position? (3) What does the discovery actually show -- have you reviewed it? (4) What's the judge's track record on sentences after trial vs. plea? A good attorney should be able to answer all of these in detail."
+"Before deciding on any plea, there are some things worth understanding. Over 97% of federal cases end in plea bargains, so this is normal, but that doesn't mean you should accept it blindly. Questions to discuss with your attorney: (1) What are the sentencing guidelines for your specific charges? (2) What motions could still be filed that might change the state's position? (3) What does the discovery actually show, have you reviewed it? (4) What's the judge's track record on sentences after trial vs. plea? A good attorney should be able to answer all of these in detail."
 
 **Template 3: Discovery Questions**
-"Discovery is your right -- Brady v. Maryland (1963) established that the prosecution must turn over all evidence, including anything favorable to your defense. If your attorney hasn't shared discovery with you, ask directly: 'Can I get a copy of all discovery materials?' You're entitled to see everything the state has. Some things to look for: inconsistencies between police reports and lab results, chain of custody gaps, witness statement contradictions, and anything that doesn't match the charges as stated."
+"Discovery is your right, Brady v. Maryland (1963) established that the prosecution must turn over all evidence, including anything favorable to your defense. If your attorney hasn't shared discovery with you, ask directly: 'Can I get a copy of all discovery materials?' You're entitled to see everything the state has. Some things to look for: inconsistencies between police reports and lab results, chain of custody gaps, witness statement contradictions, and anything that doesn't match the charges as stated."
 
 **Template 4: First-Time Felony Fear**
-"Take a breath. The process is slow and it's designed to feel overwhelming. A few things to know: arraignment is typically just a formality where you enter a plea (usually not guilty). Your case will likely take months -- sometimes over a year -- to resolve. The fact that you're researching is already putting you ahead of most defendants. Focus on understanding your charges, what the possible outcomes are, and whether your attorney has a plan beyond 'let's see what they offer.'"
+"Take a breath. The process is slow and it's designed to feel overwhelming. A few things to know: arraignment is typically just a formality where you enter a plea (usually not guilty). Your case will likely take months, sometimes over a year, to resolve. The fact that you're researching is already putting you ahead of most defendants. Focus on understanding your charges, what the possible outcomes are, and whether your attorney has a plan beyond 'let's see what they offer.'"
 
 ### Daily Actions (45-60 minutes/day)
 - Check target subreddits for new posts (sort by New)
 - Comment on 2-3 posts per day in legal subreddits
 - Continue 1-2 comments per day in hobby subreddits (maintain natural ratio)
-- Every comment should provide genuine value -- specific information, specific questions to ask
+- Every comment should provide genuine value, specific information, specific questions to ask
 - NEVER link to any website (not INNA, not even official legal resources)
 - NEVER mention INNA by name
 - Respond to replies on your comments
@@ -167,7 +167,7 @@ Reddit is also now a major source for Google and AI search results. Helpful Redd
 ### Phase 2 DOs
 - Answer questions with specific, actionable information
 - Frame everything as "questions to ask your attorney" (UPL-safe)
-- Be empathetic -- these are people in crisis
+- Be empathetic, these are people in crisis
 - Reference real legal concepts (Brady, suppression motions, Franks hearings) to establish expertise
 - Use the phrase "I'm not a lawyer, but..." or "Not legal advice, but here's what I learned from my own case..."
 - Upvote other good answers in legal threads
@@ -178,7 +178,7 @@ Reddit is also now a major source for Google and AI search results. Helpful Redd
 - Do NOT DM people offering services
 - Do NOT give specific legal advice ("you should file X motion")
 - Do NOT disagree with verified attorneys in comments
-- Do NOT post anything -- comments only
+- Do NOT post anything, comments only
 - Do NOT copy-paste the same comment in multiple threads
 - Do NOT exceed 3-4 comments per day in any single subreddit
 
@@ -234,7 +234,7 @@ These become reference posts that get bookmarked and upvoted over time.
 
 ### Weekly Milestones
 | Week | Target | Activity |
-|------|--------|----------|
+|------|------, |----------|
 | 13-14 | First 2 original posts, 750+ karma | Start with "What I Learned" posts |
 | 15-16 | 4-5 total posts, 1000+ karma | Add Discussion Starter posts |
 | 17-18 | 7-8 total posts, moderator outreach | Contact mods in top 2 subreddits |
@@ -254,7 +254,7 @@ These become reference posts that get bookmarked and upvoted over time.
 
 ### Phase 3 DON'Ts
 - Still do NOT link to INNA
-- Do NOT start promoting yet -- this phase builds the platform for Phase 4
+- Do NOT start promoting yet, this phase builds the platform for Phase 4
 - Do NOT post more than 2x per week in any single subreddit
 - Do NOT get combative with critics
 - Do NOT ignore moderator feedback
@@ -276,7 +276,7 @@ These become reference posts that get bookmarked and upvoted over time.
 
 ### Tactic 1: Bio Update
 - Add to Reddit bio: "Built imnotanattorney.com after reading my own discovery and finding issues my attorney missed."
-- This is passive -- people who find your profile organically will see it
+- This is passive, people who find your profile organically will see it
 - No change to comment behavior needed
 
 ### Tactic 2: Natural Mentions (Sparingly)
@@ -304,13 +304,13 @@ When someone asks a question that maps EXACTLY to an existing blog post:
 ### Tactic 5: Free Tool Promotion
 - Share the Defense Milestone Score quiz (imnotanattorney.com/score) as a free resource
 - Frame: "I built a free tool that tells you if your attorney is hitting basic defense milestones. No email required. Might be useful for people in this thread."
-- The score page is genuinely free and useful -- this is the least promotional promotion possible
+- The score page is genuinely free and useful, this is the least promotional promotion possible
 - Links to free tools are generally tolerated even in strict subreddits
 
 ### Content-to-Subreddit Mapping (What to Link Where)
 
 | Blog Post | Best Subreddit | Comment Trigger |
-|-----------|---------------|-----------------|
+|---------, |---------------|---------------, |
 | attorney-not-returning-calls | r/legaladvice, r/dui | "my lawyer won't call me back" |
 | should-you-take-the-plea-deal | r/criminaldefense | "should I take the plea" |
 | how-to-read-your-discovery | r/criminaldefense, r/dui | "how do I read discovery" |
@@ -350,11 +350,11 @@ When someone asks a question that maps EXACTLY to an existing blog post:
 - Track which links drive traffic (use UTM parameters: ?utm_source=reddit&utm_medium=comment&utm_campaign=[subreddit])
 
 ### Phase 4 DON'Ts
-- Do NOT spam links -- 1-2 per week maximum across ALL subreddits
+- Do NOT spam links, 1-2 per week maximum across ALL subreddits
 - Do NOT link in r/legaladvice (too risky, mods are aggressive)
 - Do NOT create multiple accounts to upvote your own content
 - Do NOT DM people to promote INNA
-- Do NOT get defensive if someone calls out the promotion -- acknowledge it gracefully
+- Do NOT get defensive if someone calls out the promotion, acknowledge it gracefully
 - Do NOT stop providing value-first comments (promotional comments should be <10% of total)
 
 ---
@@ -388,7 +388,7 @@ When someone asks a question that maps EXACTLY to an existing blog post:
 - **Moderation level:** Moderate. Professional community.
 - **Self-promotion policy:** Strong community pushback against anything that feels commercial.
 - **What works:** Understanding and empathy for PD workload. Acknowledging systemic issues (caseload, funding).
-- **What would backfire:** Anything implying PDs are bad attorneys. INNA must be careful here -- our messaging sometimes implies attorney negligence, which PDs take personally.
+- **What would backfire:** Anything implying PDs are bad attorneys. INNA must be careful here, our messaging sometimes implies attorney negligence, which PDs take personally.
 - **INNA strategy:** Mostly listen and learn. Occasional comments from defendant perspective. NEVER promote here.
 
 ---
@@ -397,7 +397,7 @@ When someone asks a question that maps EXACTLY to an existing blog post:
 
 ### Weekly Metrics to Track
 | Metric | Target | Tool |
-|--------|--------|------|
+|------, |------, |------|
 | Total karma | Phase milestones above | Reddit profile |
 | Comments per week | 14-21 | Manual count |
 | Posts per week | 1-2 (Phase 3+) | Manual count |
@@ -439,7 +439,7 @@ Examples:
 - NEVER engage in ban evasion
 
 ### If You Get Called Out for Self-Promotion
-- Acknowledge it honestly: "Fair point -- I do run a service in this space. Happy to remove the link if it's not welcome."
+- Acknowledge it honestly: "Fair point, I do run a service in this space. Happy to remove the link if it's not welcome."
 - Let your comment history speak for itself
 - Do NOT get defensive
 - Reduce promotional frequency for 2-3 weeks
@@ -477,8 +477,8 @@ Examples:
 
 Before reaching Phase 4, prepare these assets:
 
-1. **Founder Story Post** -- Rahim's real trafficking case, the 73% weight discrepancy, building INNA. For r/Entrepreneur or r/startups.
-2. **AMA Question Bank** -- Pre-written answers for 15+ anticipated questions about the service, the founder story, legal research, UPL compliance.
-3. **Score Quiz Landing Page** -- Ensure imnotanattorney.com/score is polished, fast, mobile-friendly (Reddit traffic is 60%+ mobile).
-4. **Blog Post UTM Links** -- Pre-generate UTM-tagged links for all 29 blog posts mapped to subreddits.
-5. **Comment Template Library** -- 10+ templates covering the most common defendant questions, ready to adapt (never copy-paste verbatim).
+1. **Founder Story Post**, Rahim's real trafficking case, the 73% weight discrepancy, building INNA. For r/Entrepreneur or r/startups.
+2. **AMA Question Bank**, Pre-written answers for 15+ anticipated questions about the service, the founder story, legal research, UPL compliance.
+3. **Score Quiz Landing Page**, Ensure imnotanattorney.com/score is polished, fast, mobile-friendly (Reddit traffic is 60%+ mobile).
+4. **Blog Post UTM Links**, Pre-generate UTM-tagged links for all 29 blog posts mapped to subreddits.
+5. **Comment Template Library**, 10+ templates covering the most common defendant questions, ready to adapt (never copy-paste verbatim).

@@ -2,7 +2,7 @@
  * Pipeline Status Monitor
  *
  * Quick read-only check of how the verification pipeline is progressing.
- * Safe to run anytime — only does SELECTs, never modifies data.
+ * Safe to run anytime, only does SELECTs, never modifies data.
  *
  * Usage:
  *   node scripts/pipeline-status.mjs           # One-shot snapshot
@@ -69,7 +69,7 @@ function bar(pct, width = 30) {
 
 async function snapshot() {
   console.log("\n" + "=".repeat(70));
-  console.log("  INAA PIPELINE STATUS — " + new Date().toISOString());
+  console.log("  INAA PIPELINE STATUS, " + new Date().toISOString());
   console.log("=".repeat(70));
 
   // Statutes
@@ -149,7 +149,7 @@ async function main() {
   }
 
   if (watch) {
-    console.log("Watching pipeline status — refresh every 30s. Ctrl+C to stop.");
+    console.log("Watching pipeline status, refresh every 30s. Ctrl+C to stop.");
     while (true) {
       try { await snapshot(); } catch (e) { console.error("Error:", e.message); }
       await new Promise(r => setTimeout(r, 30000));

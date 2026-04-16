@@ -3,7 +3,7 @@
  *
  * COURT_PREP_CONTENT provides charge-type-specific court logistics
  * (what to expect, what to bring, what to wear). This is general legal
- * education — the kind available on any court website or legal blog.
+ * education, the kind available on any court website or legal blog.
  *
  * NO attorney questions. NO case-specific analysis. Those are paid products.
  */
@@ -52,13 +52,13 @@ export interface CourtPrepContent {
   whatToBring: string[];
   whatToWear: string;
   arrivalTips: string;
-  /** Teaser copy — describes what the paid product covers, NOT actual questions */
+  /** Teaser copy, describes what the paid product covers, NOT actual questions */
   paidProductTeaser: string;
 }
 
 const GENERIC_CONTENT: CourtPrepContent = {
   whatToExpect:
-    "At your hearing, a judge will review the charges against you. The prosecutor will present their position, and your attorney will respond on your behalf. You may or may not be asked to speak — follow your attorney's guidance. Hearings typically last 10-30 minutes.",
+    "At your hearing, a judge will review the charges against you. The prosecutor will present their position, and your attorney will respond on your behalf. You may or may not be asked to speak, follow your attorney's guidance. Hearings typically last 10-30 minutes.",
   whatToBring: [
     "Government-issued photo ID",
     "Your bond paperwork",
@@ -66,11 +66,11 @@ const GENERIC_CONTENT: CourtPrepContent = {
     "A pen and notepad for notes",
   ],
   whatToWear:
-    "Business casual or better. No hats, sunglasses, shorts, or tank tops. Courts take appearance seriously — dress like you take your case seriously.",
+    "Business casual or better. No hats, sunglasses, shorts, or tank tops. Courts take appearance seriously, dress like you take your case seriously.",
   arrivalTips:
-    "Arrive 30 minutes early. Go through security (no phones in some courtrooms — check your county's rules). Find the correct courtroom number from the docket board in the lobby. Sit quietly until your case is called.",
+    "Arrive 30 minutes early. Go through security (no phones in some courtrooms, check your county's rules). Find the correct courtroom number from the docket board in the lobby. Sit quietly until your case is called.",
   paidProductTeaser:
-    "Your case has specific angles an attorney should investigate — charge-specific weaknesses, procedural requirements, and evidence standards. Our analysis identifies them and gives you the exact questions.",
+    "Your case has specific angles an attorney should investigate, charge-specific weaknesses, procedural requirements, and evidence standards. Our analysis identifies them and gives you the exact questions.",
 };
 
 const DUI_CONTENT: CourtPrepContent = {
@@ -83,7 +83,7 @@ const DUI_CONTENT: CourtPrepContent = {
   whatToWear: GENERIC_CONTENT.whatToWear,
   arrivalTips: GENERIC_CONTENT.arrivalTips,
   paidProductTeaser:
-    "DUI cases have specific procedural requirements — calibration records, observation periods, rising blood alcohol timelines. Our analysis identifies the angles specific to YOUR stop and YOUR test results.",
+    "DUI cases have specific procedural requirements, calibration records, observation periods, rising blood alcohol timelines. Our analysis identifies the angles specific to YOUR stop and YOUR test results.",
 };
 
 const DRUG_CONTENT: CourtPrepContent = {

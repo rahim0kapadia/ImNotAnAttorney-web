@@ -21,14 +21,14 @@
  *     utilities. The content component styles its own headings, paragraphs,
  *     and lists.
  *
- * Content component contract (enforced by convention — see `GUIDE_CONTENT`
+ * Content component contract (enforced by convention, see `GUIDE_CONTENT`
  * below):
  *   - MUST start headings at `<h2>`. Never emit an `<h1>`. Never skip
  *     levels.
  *   - MUST wrap thematic groups in `<section aria-labelledby="{id}">` with
  *     the matching heading carrying that id.
  *   - MUST remain UPL-safe ("consider", "one option is", "questions to
- *     explore" — never "you should", "we recommend", "your best option").
+ *     explore", never "you should", "we recommend", "your best option").
  */
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -119,10 +119,10 @@ export default async function GuidePage({ params }: Props) {
         <p className="mt-3 text-lg text-zinc-300">{product.description}</p>
       </header>
 
-      {/* Guide body — content component styles its own headings/paragraphs/lists. */}
+      {/* Guide body, content component styles its own headings/paragraphs/lists. */}
       <Content />
 
-      {/* Primary CTA — /score quiz is THE email capture point per INAA rules */}
+      {/* Primary CTA, /score quiz is THE email capture point per INAA rules */}
       <section
         aria-labelledby="score-cta-heading"
         className="mt-16 border-t border-zinc-800 pt-10"
@@ -134,7 +134,7 @@ export default async function GuidePage({ params }: Props) {
           How does your defense measure up?
         </h2>
         <p className="mt-3 text-zinc-300">
-          Take the free Defense Milestone Score — 10 questions, instant
+          Take the free Defense Milestone Score, 10 questions, instant
           results, no sign-up required to start.
         </p>
         <Link
@@ -145,7 +145,7 @@ export default async function GuidePage({ params }: Props) {
         </Link>
       </section>
 
-      {/* Secondary CTA — relevant paid product, if any */}
+      {/* Secondary CTA, relevant paid product, if any */}
       {product.upsellTier && product.upsellText && (
         <section
           aria-labelledby="playbook-cta-heading"
@@ -169,7 +169,7 @@ export default async function GuidePage({ params }: Props) {
 
       {/* UPL-approved methodology disclaimer */}
       <p className="mt-12 border-t border-zinc-800 pt-6 text-xs text-zinc-400">
-        This guide provides legal INFORMATION — not legal ADVICE. The content
+        This guide provides legal INFORMATION, not legal ADVICE. The content
         draws on methods developed by elite defense attorneys. Your attorney
         remains the final authority on strategy decisions.
       </p>

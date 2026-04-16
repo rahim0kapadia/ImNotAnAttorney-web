@@ -61,7 +61,7 @@ An attorney who takes these questions seriously is an attorney who respects your
 
 ### Visual Direction
 
-Create a clean, screenshot-worthy image: dark background (near-black), white text. Title in bold: "5 Questions That Change Your Next Attorney Meeting." The five questions listed below in clean numbered format, each on its own line. Subtle bottom line: "imnotanattorney.com" in light gray. 1080x1350px (4:5 for maximum feed real estate). Design for saving -- people will screenshot this and bring it to court.
+Create a clean, screenshot-worthy image: dark background (near-black), white text. Title in bold: "5 Questions That Change Your Next Attorney Meeting." The five questions listed below in clean numbered format, each on its own line. Subtle bottom line: "imnotanattorney.com" in light gray. 1080x1350px (4:5 for maximum feed real estate). Design for saving, people will screenshot this and bring it to court.
 
 ### Link Strategy
 
@@ -73,10 +73,10 @@ This post generates saves and screenshots more than comments. But comments will 
 
 ### UPL Compliance Note
 
-These questions are about accountability and information -- not legal strategy. They do not advise anyone to take legal action. They ask for information that every client has a right to request.
+These questions are about accountability and information, not legal strategy. They do not advise anyone to take legal action. They ask for information that every client has a right to request.
 
 ---
 
 **Share trigger**: A family member screenshots this image and texts it to the defendant before their next attorney meeting. A defendant saves it to their phone and brings it to court. Someone prints it out and puts it in their folder.
-**Context**: This is the most "saveable" post in the batch. The 5-question format is specific enough to be actionable and short enough to fit on a phone screen. It is designed to travel beyond Facebook -- into text messages, WhatsApp, and printed copies.
-**KPI target**: Saves (primary -- this is the most saved post) + screenshots + Messenger shares + comments from people who used the questions
+**Context**: This is the most "saveable" post in the batch. The 5-question format is specific enough to be actionable and short enough to fit on a phone screen. It is designed to travel beyond Facebook, into text messages, WhatsApp, and printed copies.
+**KPI target**: Saves (primary, this is the most saved post) + screenshots + Messenger shares + comments from people who used the questions

@@ -1,8 +1,8 @@
 /**
- * Bulk Dump — Export all verified_case_law rows to local JSON
+ * Bulk Dump, Export all verified_case_law rows to local JSON
  *
  * Single Supabase Management API query. Writes to data/bulk-verify/.
- * Zero rate limit risk — one query, one response.
+ * Zero rate limit risk, one query, one response.
  *
  * Usage:
  *   node scripts/bulk-dump-cases.mjs

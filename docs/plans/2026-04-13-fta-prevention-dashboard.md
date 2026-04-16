@@ -1,16 +1,16 @@
-# FTA Prevention Dashboard — Implementation Plan
+# FTA Prevention Dashboard, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task.
 
 **Goal:** Transform the partner dashboard from a referral tracker into a free FTA prevention tool that replaces $99/mo bail bond software. 5 features: client tracker, branded prep pages, FTA savings calculator, compliance docs, and one-tap client sharing.
 
-**Architecture:** Extends existing partner dashboard (client component at `/partner/dashboard`) and API (`/api/partner/dashboard`). New `ClientTracker` component fetches court_reminders by partner_promo_code. Prep page adds partner company branding. Add-client form creates a court_reminders row directly from the dashboard. All data from existing `court_reminders` table — no new tables.
+**Architecture:** Extends existing partner dashboard (client component at `/partner/dashboard`) and API (`/api/partner/dashboard`). New `ClientTracker` component fetches court_reminders by partner_promo_code. Prep page adds partner company branding. Add-client form creates a court_reminders row directly from the dashboard. All data from existing `court_reminders` table, no new tables.
 
 **Spec:** `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\specs\2026-04-12-court-reminders-platform-design.md`
 
 ---
 
-## Task 1: API — Extend Dashboard Route with Client Data
+## Task 1: API, Extend Dashboard Route with Client Data
 
 **Files:**
 - Modify: `src/app/api/partner/dashboard/route.ts`
@@ -20,7 +20,7 @@
 After the existing `reminderSignups` count query (line ~41), add a full client list query:
 
 ```typescript
-    // Court prep clients — full list for client tracker
+    // Court prep clients, full list for client tracker
     const { data: courtClients } = await supabase
       .from("court_reminders")
       .select("id, token, first_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at")
@@ -35,7 +35,7 @@ Add `courtClients: courtClients || []` to the JSON response object alongside exi
 
 - [ ] **Step 3: Build + verify**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 
 - [ ] **Step 4: Commit**
 
@@ -56,7 +56,7 @@ git commit -m "feat(fta-dashboard): add client list to partner dashboard API"
 ```tsx
 "use client";
 /**
- * ClientTracker — FTA prevention dashboard for partners.
+ * ClientTracker, FTA prevention dashboard for partners.
  *
  * Shows all clients who signed up through the partner's link with
  * court dates, reminder status, and conversion tracking. Replaces
@@ -188,7 +188,7 @@ export function ClientTracker({ clients, onAddClient }: ClientTrackerProps) {
 
 - [ ] **Step 2: Build + verify**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 
 - [ ] **Step 3: Commit**
 
@@ -209,7 +209,7 @@ git commit -m "feat(fta-dashboard): client tracker component with status badges 
 ```tsx
 "use client";
 /**
- * FTA Savings Calculator — shows partners the financial impact
+ * FTA Savings Calculator, shows partners the financial impact
  * of court reminders on their FTA rate.
  *
  * Based on research: court reminders reduce FTA by ~7%.
@@ -307,7 +307,7 @@ export function FtaCalculator() {
 
 - [ ] **Step 2: Build + verify**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 
 - [ ] **Step 3: Commit**
 
@@ -327,7 +327,7 @@ git commit -m "feat(fta-dashboard): FTA savings calculator with interactive inpu
 
 ```typescript
 /**
- * POST /api/partner/add-client — Partner adds a client manually.
+ * POST /api/partner/add-client, Partner adds a client manually.
  *
  * Creates a court_reminders row attributed to the partner.
  * Sends the client a sign-up confirmation email with their prep page link.
@@ -402,9 +402,9 @@ export async function POST(req: NextRequest) {
       html: `
         <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Your court prep is set up, ${safeName}.</h1>
         <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">${safeCompany} set this up for you. We'll send you reminders before your court date so you don't miss anything.</p>
-        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">Your personalized prep page — what to expect, what to bring, and how to prepare:</p>
+        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">Your personalized prep page, what to expect, what to bring, and how to prepare:</p>
         <p style="margin: 24px 0;"><a href="${prepUrl}" style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 700;">View Your Court Prep</a></p>
-        <p style="color: #71717A; font-size: 13px;">Bookmark this link — it's yours. We'll also include it in every reminder email.</p>
+        <p style="color: #71717A; font-size: 13px;">Bookmark this link, it's yours. We'll also include it in every reminder email.</p>
       `,
     });
   } catch (e) {
@@ -417,7 +417,7 @@ export async function POST(req: NextRequest) {
 
 - [ ] **Step 2: Build + verify**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 
 - [ ] **Step 3: Commit**
 
@@ -559,7 +559,7 @@ export function AddClientModal({ open, onClose, onSuccess }: AddClientModalProps
 
 - [ ] **Step 2: Build + verify**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 
 - [ ] **Step 3: Commit**
 
@@ -599,14 +599,14 @@ Then in the JSX, before the countdown section, add:
 ```tsx
 {partnerCompany && (
   <p className="text-zinc-500 text-sm text-center mb-4">
-    Court prep provided by {partnerCompany} — powered by ImNotAnAttorney
+    Court prep provided by {partnerCompany}, powered by ImNotAnAttorney
   </p>
 )}
 ```
 
 - [ ] **Step 2: Build + verify**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 
 - [ ] **Step 3: Commit**
 
@@ -673,7 +673,7 @@ Replace the existing court prep sign-ups stat card:
 
 With the full Client Tracker + FTA Calculator + Add Client Modal:
 ```tsx
-{/* Client Tracker — FTA Prevention Dashboard */}
+{/* Client Tracker, FTA Prevention Dashboard */}
 <ClientTracker
   clients={courtClients}
   onAddClient={() => setShowAddClient(true)}
@@ -712,12 +712,12 @@ git commit -m "feat(fta-dashboard): wire client tracker + FTA calculator + add-c
 
 Update the hero subtitle to lead with FTA prevention:
 ```
-"Free FTA prevention for your bond company. Court reminders + defendant prep — something other companies charge $99/month for."
+"Free FTA prevention for your bond company. Court reminders + defendant prep, something other companies charge $99/month for."
 ```
 
 Update the first value prop item to:
 ```
-{ title: "Free FTA Prevention", desc: "Your clients get court date reminders and hearing prep automatically. Reduce your FTA rate — protect your bottom line." }
+{ title: "Free FTA Prevention", desc: "Your clients get court date reminders and hearing prep automatically. Reduce your FTA rate, protect your bottom line." }
 ```
 
 - [ ] **Step 2: Build + verify**
@@ -728,7 +728,7 @@ Run: `npx next build 2>&1 | tail -5`
 
 ```bash
 git add src/app/partners/bondsman/page.tsx
-git commit -m "feat(fta-dashboard): update bondsman page pitch — FTA prevention positioning"
+git commit -m "feat(fta-dashboard): update bondsman page pitch, FTA prevention positioning"
 ```
 
 ---
@@ -755,5 +755,5 @@ git push origin master
 - [ ] **Step 4: Run CV**
 
 ```bash
-node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends
+node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends
 ```

@@ -1,6 +1,6 @@
 "use client";
 /**
- * ClientTracker — FTA prevention dashboard for partners.
+ * ClientTracker, FTA prevention dashboard for partners.
  *
  * Shows all clients who signed up through the partner's link with
  * court dates, reminder status, and conversion tracking. Replaces

@@ -8,7 +8,7 @@ THE 14 CHECKS:
 
 1. QUESTION_COUNT: The frontmatter field question_count must match the actual count of questions in the body that are directed at the reader's attorney. Count only questions that tell the reader what to ask their attorney. Tolerance: plus or minus 1. FAIL if off by more than 1.
 
-2. CITATION_SOURCING: Every factual claim (statistics, legal rules, procedural requirements) must have an inline source — a study citation, named agency source (e.g. Bureau of Justice Statistics, FBI, ABA), or jurisdiction qualifier (e.g. "in most states", "under federal law"). FAIL if more than 2 unsourced factual claims.
+2. CITATION_SOURCING: Every factual claim (statistics, legal rules, procedural requirements) must have an inline source, a study citation, named agency source (e.g. Bureau of Justice Statistics, FBI, ABA), or jurisdiction qualifier (e.g. "in most states", "under federal law"). FAIL if more than 2 unsourced factual claims.
 
 3. READABILITY: Action items and direct instructions must be readable at 10th grade level or below. Explanatory sections can be up to 12th grade. FAIL if action items use complex legal jargon without immediate definition.
 
@@ -22,7 +22,7 @@ THE 14 CHECKS:
 
 8. STRUCTURAL_INTEGRITY: Sections must be logically ordered (problem -> context -> solution -> action). No orphaned paragraphs that don't connect to adjacent sections. FAIL if section order is illogical or paragraphs are disconnected.
 
-9. CTA_CLARITY: The post must have at least one clear next step for the reader — a product link (Case Decoder, Intelligence Brief), an attorney question to ask, or a checklist to follow. FAIL if no actionable CTA exists.
+9. CTA_CLARITY: The post must have at least one clear next step for the reader, a product link (Case Decoder, Intelligence Brief), an attorney question to ask, or a checklist to follow. FAIL if no actionable CTA exists.
 
 10. HEDGING_DENSITY: Count action statements that are hedged with "could," "might," "possibly," "potentially." FAIL if more than 15% of action statements are hedged. Information statements can hedge freely.
 

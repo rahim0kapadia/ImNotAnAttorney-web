@@ -43,7 +43,7 @@ export async function GET() {
   ]);
 
   // If RPCs don't exist yet, fall back to manual queries.
-  // This is the expected path until the RPCs are created — use
+  // This is the expected path until the RPCs are created, use
   // client-side grouping over three simple selects.
   const useRpc =
     !gapsResult.error && !draftsResult.error && !ordersResult.error;
@@ -54,7 +54,7 @@ export async function GET() {
     {};
 
   if (useRpc) {
-    // RPC path — each returns [{pillar_slug, ...}]
+    // RPC path, each returns [{pillar_slug, ...}]
     for (const row of gapsResult.data ?? []) {
       gapsByPillar[row.pillar_slug] = {
         total: Number(row.total),

@@ -18,7 +18,7 @@ The ABA Model Rule 1.4 says attorneys must "keep the client reasonably informed"
 
 **Minimum communication standards from attorneys who get good outcomes:**
 
-After initial meeting: within 1 week with a case strategy overview. Discovery received: within 2 weeks with a summary. Before any court date: at least 48 hours ahead. After any court date: same day or next day. Motion filed or ruled on: within 24 hours. Plea offer received: immediately -- this requires YOUR decision. Routine update with no activity: at least once per month.
+After initial meeting: within 1 week with a case strategy overview. Discovery received: within 2 weeks with a summary. Before any court date: at least 48 hours ahead. After any court date: same day or next day. Motion filed or ruled on: within 24 hours. Plea offer received: immediately, this requires YOUR decision. Routine update with no activity: at least once per month.
 
 Return calls within 24-48 business hours. Respond to emails within 48-72 business hours. Urgent matters: same day.
 

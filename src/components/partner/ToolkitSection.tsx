@@ -1,6 +1,6 @@
 "use client";
 /**
- * Partner Toolkit — promo code, referral URL, QR code, preview link.
+ * Partner Toolkit, promo code, referral URL, QR code, preview link.
  * Extracted from the dashboard page for maintainability.
  */
 

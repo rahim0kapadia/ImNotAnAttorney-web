@@ -70,7 +70,7 @@ async function main() {
       const values = line.split(delimiter).map(v => v.trim());
       const row = Object.fromEntries(headers.map((h, i) => [h, values[i]]));
 
-      // Map BJS fields to our schema — field names vary by BJS publication
+      // Map BJS fields to our schema, field names vary by BJS publication
       // Implementer: adjust mappings based on actual BJS CSV column headers
       const jurisdiction = row.state || row.jurisdiction || "US";
       const level = jurisdiction === "US" ? "national" : "state";

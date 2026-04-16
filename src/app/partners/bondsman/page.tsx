@@ -1,5 +1,5 @@
 /**
- * /partners/bondsman — Bondsman-Specific Partner Signup Page
+ * /partners/bondsman, Bondsman-Specific Partner Signup Page
  *
  * Targeted version with bondsman-focused copy. Application pre-tags as source: bondsman.
  */
@@ -109,12 +109,12 @@ export default function BondsmanPartnersPage() {
         <div className="mx-auto max-w-4xl px-4 text-center">
           <FadeInUp>
             <h2 className="font-display text-3xl font-bold mb-4">Your Partner Toolkit</h2>
-            <p className="text-zinc-400 mb-12">Everything you need to start earning — no selling required</p>
+            <p className="text-zinc-400 mb-12">Everything you need to start earning, no selling required</p>
           </FadeInUp>
           <StaggerContainer className="grid md:grid-cols-3 gap-6">
             {[
-              { title: "Free FTA Prevention", desc: "Your clients get court date reminders and hearing prep automatically. Reduce your FTA rate — protect your bottom line." },
-              { title: "Client Tracker Dashboard", desc: "See all your clients, their court dates, and reminder status in one place. Free — other companies charge $99/month." },
+              { title: "Free FTA Prevention", desc: "Your clients get court date reminders and hearing prep automatically. Reduce your FTA rate, protect your bottom line." },
+              { title: "Client Tracker Dashboard", desc: "See all your clients, their court dates, and reminder status in one place. Free, other companies charge $99/month." },
               { title: "One-Tap Client Entry", desc: "Add a client from your dashboard. We email them their court prep page and handle all reminders automatically." },
               { title: "You Earn 10-20% on Upgrades", desc: "When they're ready for case-specific analysis, your code gets them 10% off and you earn commission." },
               { title: "FTA Savings Calculator", desc: "See how much court reminders save you in prevented forfeitures. Real math, real numbers." },
@@ -145,7 +145,7 @@ export default function BondsmanPartnersPage() {
           <FadeInUp>
             <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-2">Apply Now</h2>
             <p className="text-center text-zinc-400 mb-8">
-              Takes 60 seconds. Instant approval — check your email.
+              Takes 60 seconds. Instant approval, check your email.
             </p>
           </FadeInUp>
           <PartnerApplicationForm source="bondsman" />

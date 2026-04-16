@@ -9,20 +9,20 @@
 
 ### Issue 1: All cron routes return 401 Unauthorized
 - CRON_SECRET in Vercel env vars doesn't match the value in `.env.local` / cron-job.org headers
-- All INAA cron jobs on cron-job.org show `lastExecution: 0` — never fired successfully
+- All INAA cron jobs on cron-job.org show `lastExecution: 0`, never fired successfully
 - The middleware (Edge Runtime) inlines env vars at build time; Vercel may have a stale or auto-generated CRON_SECRET
 - **Fix:** Add CRON_SECRET to Vercel env vars matching `.env.local` value, then redeploy
 
 ### Issue 2: /api/admin/blog-pipeline returns 500
-- **Root cause A (FIXED):** `blog_drafts` table was missing — migration 031 applied via Supabase Management API
-- **Root cause B:** PostgREST FK ambiguity — two FKs between blog_drafts and content_gaps (`content_gap_id` + `blog_draft_id`). Supabase `!inner` join fails without explicit FK name.
+- **Root cause A (FIXED):** `blog_drafts` table was missing, migration 031 applied via Supabase Management API
+- **Root cause B:** PostgREST FK ambiguity, two FKs between blog_drafts and content_gaps (`content_gap_id` + `blog_draft_id`). Supabase `!inner` join fails without explicit FK name.
 - **Fix:** Change `content_gaps!inner(...)` → `content_gaps!blog_drafts_content_gap_id_fkey(...)` in 2 files
 
 ## Tasks
 
 ### Task 1: Fix PostgREST FK ambiguity (2 files)
-- `src/app/api/admin/blog-pipeline/route.ts` — already fixed
-- `src/app/api/cron/blog-publish/route.ts` — needs fix
+- `src/app/api/admin/blog-pipeline/route.ts`, already fixed
+- `src/app/api/cron/blog-publish/route.ts`, needs fix
 
 ### Task 2: Fix CRON_SECRET in Vercel
 - Rahim must add/update CRON_SECRET in Vercel dashboard (browser-only task)

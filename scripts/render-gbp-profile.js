@@ -1,5 +1,5 @@
 /**
- * Render GBP profile photo — 500x500 square, designed for circular crop.
+ * Render GBP profile photo, 500x500 square, designed for circular crop.
  */
 const puppeteer = require('C:/Users/email/projects/KDP-Publishing/node_modules/puppeteer');
 const path = require('path');

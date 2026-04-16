@@ -6,10 +6,10 @@
 - Root cause: missing maxDuration exports + demand-fetch makes 120 Reddit requests (~180s total)
 
 ## Files to Modify
-1. `src/app/api/cron/demand-fetch/route.ts` — add maxDuration=300 + dynamic exports
-2. `src/app/api/cron/demand-score/route.ts` — add maxDuration=120 + dynamic exports
-3. `src/lib/demand/fetch-signals.ts` — change terms.slice(0,2) → terms.slice(0,1) to halve Reddit requests
-4. `vercel.json` — add maxDuration entries for both routes
+1. `src/app/api/cron/demand-fetch/route.ts`, add maxDuration=300 + dynamic exports
+2. `src/app/api/cron/demand-score/route.ts`, add maxDuration=120 + dynamic exports
+3. `src/lib/demand/fetch-signals.ts`, change terms.slice(0,2) → terms.slice(0,1) to halve Reddit requests
+4. `vercel.json`, add maxDuration entries for both routes
 
 ## Tasks
 1. Add `export const maxDuration = 300` and `export const dynamic = "force-dynamic"` to demand-fetch/route.ts (DONE)

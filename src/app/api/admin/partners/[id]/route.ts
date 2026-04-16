@@ -1,11 +1,11 @@
 /**
- * @file /api/admin/partners/[id] — Partner detail, update, and payout.
+ * @file /api/admin/partners/[id], Partner detail, update, and payout.
  *
  * Auth: X-Admin-Password header (middleware + defense-in-depth guard).
  *
- * GET   — Partner detail + referral history
- * PATCH — Update status, notes, commission rate
- * POST  — Mark unpaid commissions as paid (payout action)
+ * GET  , Partner detail + referral history
+ * PATCH, Update status, notes, commission rate
+ * POST , Mark unpaid commissions as paid (payout action)
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -124,7 +124,7 @@ export async function PATCH(
 }
 
 /**
- * POST /api/admin/partners/[id] — Mark unpaid commissions as paid.
+ * POST /api/admin/partners/[id], Mark unpaid commissions as paid.
  * Uses an atomic RPC to prevent race conditions (double-pay).
  */
 export async function POST(
@@ -153,7 +153,7 @@ export async function POST(
     const body = await req.json();
     if (body.payment_method) paymentMethod = body.payment_method;
   } catch {
-    // No body — use partner's preferred method
+    // No body, use partner's preferred method
   }
 
   // Validate payment method
@@ -161,7 +161,7 @@ export async function POST(
     return NextResponse.json({ error: "Invalid payment method" }, { status: 400 });
   }
 
-  // Atomic payout: lock referrals, create payout record, mark paid, increment total — all in one transaction
+  // Atomic payout: lock referrals, create payout record, mark paid, increment total, all in one transaction
   const { data, error } = await supabase.rpc("process_partner_payout", {
     p_partner_id: id,
     p_payment_method: paymentMethod,

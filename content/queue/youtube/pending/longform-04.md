@@ -15,7 +15,7 @@ target_length: 12-15 minutes
 **Target length:** 12-15 minutes
 **Content type:** educational / timeline walkthrough
 
-## Title Options (3 versions -- A/B testable)
+## Title Options (3 versions, A/B testable)
 1. First Time Felony: Everything That Actually Happens (52 chars)
 2. Charged With a Felony for the First Time? Watch This. (53 chars)
 3. First Felony Charge: What Nobody Tells You (43 chars)
@@ -25,7 +25,7 @@ You're staring at the word FELONY on a piece of paper with your name on it. You 
 
 Take a breath. Because what you're imagining and what actually happens are probably very different things.
 
-33% of felony defendants in state courts are not convicted. This video walks you through every stage -- arrest, arraignment, discovery, motions, plea, trial -- with the questions to ask at each one and the options most first-time defendants never learn about.
+33% of felony defendants in state courts are not convicted. This video walks you through every stage, arrest, arraignment, discovery, motions, plea, trial, with the questions to ask at each one and the options most first-time defendants never learn about.
 
 This is legal information, not legal advice. We are not attorneys.
 
@@ -51,7 +51,7 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 
 ## Thumbnail Concept
 **Text:** "FIRST FELONY?" in bold white, smaller text below: "watch this."
-**Visual:** A mugshot-style silhouette (no real person) with a booking number overlay, but instead of the standard background, the background is a split -- left half dark/scary, right half showing a clear path forward with stage markers (Discovery, Motions, Options). Face in the corner with a calm, reassuring expression. Communicates: "I know you're terrified. Here's the map."
+**Visual:** A mugshot-style silhouette (no real person) with a booking number overlay, but instead of the standard background, the background is a split, left half dark/scary, right half showing a clear path forward with stage markers (Discovery, Motions, Options). Face in the corner with a calm, reassuring expression. Communicates: "I know you're terrified. Here's the map."
 **Color scheme:** Dark red left half transitioning to blue/teal right half. White text readable at any size.
 
 ## Full Script
@@ -70,7 +70,7 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 
 **[0:15-0:30] THE NUMBER**
 [Text on screen in large font: "33% of felony defendants are NOT convicted."]
-"According to the Bureau of Justice Statistics, approximately 33 percent of felony defendants in state courts are not convicted. That includes dismissals, acquittals, and diversions. Of those who are convicted, many receive probation -- especially first-time offenders."
+"According to the Bureau of Justice Statistics, approximately 33 percent of felony defendants in state courts are not convicted. That includes dismissals, acquittals, and diversions. Of those who are convicted, many receive probation, especially first-time offenders."
 
 "A felony charge does not mean a felony conviction. And a felony conviction does not automatically mean prison. The space between charge and outcome is where your defense happens."
 
@@ -90,7 +90,7 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 **[1:15-2:00] THE RULES THAT SAVE YOU**
 [PATTERN INTERRUPT: screen goes red, then text appears]
 [Text on screen in bold red: "SAY NOTHING."]
-"Rule number one -- and this is the most important thing in this entire video. Say nothing. Not to the officers. Not to anyone in holding. Not to your cellmate. Not on the phone."
+"Rule number one, and this is the most important thing in this entire video. Say nothing. Not to the officers. Not to anyone in holding. Not to your cellmate. Not on the phone."
 
 "You have the right to remain silent. That is not a formality. It is the most powerful right you have. Officers are trained to keep conversations going even after you've been read your rights. It feels like small talk. It isn't."
 
@@ -106,16 +106,16 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 
 **[2:30-3:15] THE HEARING**
 [Text on screen: "STAGE 2: FIRST APPEARANCE / BAIL"]
-"Within 24 to 72 hours of arrest, you appear before a judge. The court informs you of the charges. Bail is set -- or you're released on your own recognizance."
+"Within 24 to 72 hours of arrest, you appear before a judge. The court informs you of the charges. Bail is set, or you're released on your own recognizance."
 
 "The hearing is 10 to 30 minutes. But what happens here has enormous consequences."
 
 [Text on screen: "Pretrial detention changes outcomes."]
-"If you can't make bail, you sit in jail while your case proceeds -- which can take months or years. Detained defendants accept plea deals at higher rates. Partly because jail is miserable. Partly because a plea might mean going home."
+"If you can't make bail, you sit in jail while your case proceeds, which can take months or years. Detained defendants accept plea deals at higher rates. Partly because jail is miserable. Partly because a plea might mean going home."
 
 **[3:15-3:45] FIRST-TIME ADVANTAGE**
 [Text on screen: "First offense = strongest bail argument"]
-"Here's where being a first-time offender helps you. No prior criminal record is one of the strongest arguments for reduced bail or release on recognizance. Community ties, employment, family -- these factors matter to judges at the bail stage."
+"Here's where being a first-time offender helps you. No prior criminal record is one of the strongest arguments for reduced bail or release on recognizance. Community ties, employment, family, these factors matter to judges at the bail stage."
 
 "Ask your attorney: is there a basis to challenge the bail amount? What would it take to get released?"
 
@@ -152,7 +152,7 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 [Text on screen: "What to look for in your discovery"]
 "Buried in those hundreds of pages are the details that can save you."
 
-"Do police reports from different officers tell the same story? Do weights, measurements, or descriptions match across documents? Is there body camera footage -- and does it match the written reports? Are there witnesses who weren't interviewed? Is there a gap in the chain of custody?"
+"Do police reports from different officers tell the same story? Do weights, measurements, or descriptions match across documents? Is there body camera footage, and does it match the written reports? Are there witnesses who weren't interviewed? Is there a gap in the chain of custody?"
 
 [Direct to camera]
 "You have the right to see all of this. Ask your attorney for a complete copy. Read it yourself. You lived the events. You will spot things a busy attorney might miss."
@@ -166,16 +166,16 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 [Text on screen: "STAGE 5: MOTIONS (WHERE CASES ARE ACTUALLY WON)"]
 "This is the most important stage that most first-time defendants don't understand."
 
-"Motions are formal written arguments asking the court to rule on legal issues before trial. The most important: the motion to suppress -- a request to exclude evidence because it was obtained illegally."
+"Motions are formal written arguments asking the court to rule on legal issues before trial. The most important: the motion to suppress, a request to exclude evidence because it was obtained illegally."
 
 **[6:30-7:00] HOW IT WORKS**
-"If the evidence against you was obtained through an unlawful stop, an invalid search, a coerced confession, or a defective warrant -- a successful suppression motion can gut the prosecution's case."
+"If the evidence against you was obtained through an unlawful stop, an invalid search, a coerced confession, or a defective warrant, a successful suppression motion can gut the prosecution's case."
 
 "Drug case where the drugs are suppressed? Often dismissed. DUI where the blood test is excluded? Often reduced or acquitted."
 
 **[7:00-7:30] THE RED FLAG**
-[Text on screen: "If your attorney has filed no motions and can't explain why -- that's a red flag."]
-"If your attorney hasn't filed a single motion and can't give you a specific, case-based reason -- that is a significant red flag. Motions are the tools of defense. If your attorney isn't using them, ask why."
+[Text on screen: "If your attorney has filed no motions and can't explain why, that's a red flag."]
+"If your attorney hasn't filed a single motion and can't give you a specific, case-based reason, that is a significant red flag. Motions are the tools of defense. If your attorney isn't using them, ask why."
 
 "For first-time defendants especially, the motion stage is where suppression issues, procedural errors, and constitutional violations can change everything."
 
@@ -190,7 +190,7 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 "This means for most first-time defendants, the plea negotiation IS the case."
 
 **[8:00-8:45] THE FIRST-TIME ADVANTAGE**
-[PATTERN INTERRUPT: positive visual shift -- brighter lighting, more open framing]
+[PATTERN INTERRUPT: positive visual shift, brighter lighting, more open framing]
 [Text on screen: "First-time offender = leverage"]
 "Being a first-time offender gives you something most defendants don't have: leverage."
 
@@ -207,11 +207,11 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 **[8:45-9:15] ALTERNATIVES TO CONVICTION**
 [Text on screen: "OPTIONS MOST FIRST-TIME DEFENDANTS NEVER LEARN ABOUT"]
 [Direct to camera, leaning forward]
-"Here are the options that many first-time defendants never learn exist -- because their attorney never mentions them."
+"Here are the options that many first-time defendants never learn exist, because their attorney never mentions them."
 
 **[9:15-10:00] THE LIST**
 [Each option appears on screen as spoken]
-"Diversion programs. Many jurisdictions offer pre-trial intervention for first offenders. Complete the program -- counseling, community service, drug testing -- and the charges are dropped. Not reduced. Dropped."
+"Diversion programs. Many jurisdictions offer pre-trial intervention for first offenders. Complete the program, counseling, community service, drug testing, and the charges are dropped. Not reduced. Dropped."
 
 "Deferred adjudication. You plead guilty or no contest, but the conviction isn't entered if you complete probation. At the end, no conviction on your record."
 
@@ -219,10 +219,10 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 
 "Drug court. For drug-related offenses, drug court is an intensive treatment program that can result in charges being dismissed upon completion."
 
-"Withhold of adjudication. In some states, a judge can find you guilty but withhold formal adjudication -- meaning no felony conviction on your record."
+"Withhold of adjudication. In some states, a judge can find you guilty but withhold formal adjudication, meaning no felony conviction on your record."
 
 [Direct to camera]
-"If your attorney hasn't discussed any of these options with you -- ask. Today. Some of these have eligibility windows that close."
+"If your attorney hasn't discussed any of these options with you, ask. Today. Some of these have eligibility windows that close."
 
 ---
 
@@ -230,7 +230,7 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 
 **[10:00-10:45] THE 3-6% CASE**
 [Text on screen: "STAGE 7: TRIAL (THE 3-6% CASE)"]
-"If your case goes to trial -- and most don't -- know this: trial is not like television. The surprise witness moment doesn't happen. Cases are decided by preparation."
+"If your case goes to trial, and most don't, know this: trial is not like television. The surprise witness moment doesn't happen. Cases are decided by preparation."
 
 "The attorneys who win at trial are the ones who prepared to win at trial. That preparation happens in the months before the first day of testimony."
 
@@ -246,14 +246,14 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 "Whether you're convicted at trial or through a plea, a felony conviction reaches far beyond the sentence itself."
 
 [Items appearing rapidly]
-"Employment -- background checks will show it. Housing -- landlords check records. Professional licenses -- many can be revoked. Immigration -- certain convictions trigger deportation. Financial aid -- drug convictions affect eligibility. Voting rights -- many states restrict felons. Firearms -- federal felony convictions prohibit ownership. Child custody -- convictions can be used against you."
+"Employment, background checks will show it. Housing, landlords check records. Professional licenses, many can be revoked. Immigration, certain convictions trigger deportation. Financial aid, drug convictions affect eligibility. Voting rights, many states restrict felons. Firearms, federal felony convictions prohibit ownership. Child custody, convictions can be used against you."
 
 **[11:15-12:00] THE EMOTIONAL REALITY**
 [Tone shift: empathetic, slower pace]
 [Text on screen: "It's okay to be scared."]
 "I know what you're feeling right now. The terror. The shame. The sense that your life is over."
 
-"It's not over. Thirty-three percent of felony defendants are not convicted. Many first-time offenders who are convicted receive probation and alternative dispositions. The system has options for people in your situation -- if your attorney knows about them and pursues them."
+"It's not over. Thirty-three percent of felony defendants are not convicted. Many first-time offenders who are convicted receive probation and alternative dispositions. The system has options for people in your situation, if your attorney knows about them and pursues them."
 
 "You are not defined by the worst moment of your life. You are defined by what you do next."
 
@@ -266,20 +266,20 @@ https://imnotanattorney.com/blog/first-time-felony-what-actually-happens (Full w
 "If you're facing your first felony, start with our free Defense Milestone Score. Five minutes. It tells you what stage you're in, what should have happened by now, and what questions to ask your attorney next. Link in the description."
 
 **[12:30-13:00] THE SERVICE**
-"If you need a deep dive -- a full analysis of your case, your charges, your attorney's work, and the specific questions for your situation -- that's our Case Decoder. $97. Built for exactly this moment."
+"If you need a deep dive, a full analysis of your case, your charges, your attorney's work, and the specific questions for your situation, that's our Case Decoder. $97. Built for exactly this moment."
 
 **[13:00-13:30] CLOSE**
 [Text on screen: "Know What They Know."]
 "A felony charge is not a felony conviction. The space between those two things is where your defense happens. Make sure someone is actually defending you."
 
-"Know What They Know. Subscribe -- this channel exists because nobody gives defendants a map. We're the map."
+"Know What They Know. Subscribe, this channel exists because nobody gives defendants a map. We're the map."
 
 ---
 
 ## Shorts Clip-Outs (3 per video)
-- Clip 1: 0:15-0:30 -- "33% of felony defendants are NOT convicted." (the reset)
-- Clip 2: 8:45-9:45 -- "Options your attorney never mentioned" (diversion, deferred adj.)
-- Clip 3: 1:15-2:00 -- "SAY NOTHING. The most important rule." (arrest rules)
+- Clip 1: 0:15-0:30, "33% of felony defendants are NOT convicted." (the reset)
+- Clip 2: 8:45-9:45, "Options your attorney never mentioned" (diversion, deferred adj.)
+- Clip 3: 1:15-2:00, "SAY NOTHING. The most important rule." (arrest rules)
 
 ## Cards & End Screen
 - Card at 4:45 linking to "How to Read Your Discovery Documents" (longform-02)

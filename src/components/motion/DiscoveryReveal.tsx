@@ -6,7 +6,7 @@ import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
 
 /**
- * DiscoveryReveal — Real PCSO Discovery Report Images
+ * DiscoveryReveal, Real PCSO Discovery Report Images
  *
  * Renders actual redacted pages from PCSO Supplement SO22-401531/7
  * and Pinellas County Forensic Laboratory Report 23-000093.
@@ -21,25 +21,25 @@ import { TIER_CORE } from "@/lib/tiers";
 const findings = [
   {
     image: "/discovery/pcso-page3-ci-phone.png",
-    alt: "PCSO Supplement SO22-401531/7, Page 3 — phone number (912) 380-2720 listed under both the suspect and confidential informant CI-7042",
+    alt: "PCSO Supplement SO22-401531/7, Page 3, phone number (912) 380-2720 listed under both the suspect and confidential informant CI-7042",
     tag: "DUAL ATTRIBUTION \u2014 Same phone number (912) 380-2720 listed for both the suspect and the confidential informant in the same report",
     text: "The suspect\u2019s phone and the CI\u2019s phone are the same number. Same detective. Same report. Same page.",
   },
   {
     image: "/discovery/pcso-page4-weight.png",
-    alt: "PCSO Supplement SO22-401531/7, Page 4 — property weight listed as 93.9 grams of MDMA at the scene",
+    alt: "PCSO Supplement SO22-401531/7, Page 4, property weight listed as 93.9 grams of MDMA at the scene",
     tag: "68.3g UNACCOUNTED \u2014 Scene: 93.9g. Lab: 25.59g. Where is the rest?",
     text: "The detective weighed 93.9 grams at the scene. The lab received and tested 25.59 grams. 68.3 grams vanished between the scene and the lab.",
   },
   {
     image: "/discovery/lab-page1-items.png",
-    alt: "Pinellas County Forensic Laboratory Report 23-000093, Page 1 — lab tested items totaling 25.59 grams, identified as methamphetamine not MDMA",
+    alt: "Pinellas County Forensic Laboratory Report 23-000093, Page 1, lab tested items totaling 25.59 grams, identified as methamphetamine not MDMA",
     tag: "SUBSTANCE MISMATCH \u2014 Police called it MDMA. Lab found methamphetamine. Different drug, different statute, different charge.",
     text: "The detective logged \u201CMDMA (Ecstasy)\u201D at the scene. The lab\u2019s chemical analysis found methamphetamine. The charge references one substance. The evidence contains another.",
   },
   {
     image: "/discovery/lab-page2-drugtype.png",
-    alt: "Pinellas County Forensic Laboratory Report 23-000093, Page 2 — Items 025-A and 026-A identified as MDMA and MDA respectively",
+    alt: "Pinellas County Forensic Laboratory Report 23-000093, Page 2, Items 025-A and 026-A identified as MDMA and MDA respectively",
     tag: "FATAL VARIANCE \u2014 Items 137-139 identified as \u201CAdderall\u201D (amphetamine) by police. Lab found MDMA and MDA. Charged under wrong statute.",
     text: "Count 8 charges amphetamine trafficking under FS 893.135(1)(f)(1). The lab found MDMA/MDA \u2014 a different controlled substance under FS 893.135(1)(k). The charge is for a substance the lab says isn\u2019t there.",
   },

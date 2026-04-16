@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// backfill-pillar-tags.mjs — One-time backfill to tag existing content_gaps,
+// backfill-pillar-tags.mjs, One-time backfill to tag existing content_gaps,
 // blog_drafts, and MDX blog posts with Content Pillar Engine metadata.
 //
 // Usage: node scripts/backfill-pillar-tags.mjs [--dry-run]
@@ -25,7 +25,7 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
 
 // ============================================================
 // PILLAR RESOLUTION (duplicated from ImNotAnAttorney-engine
-//   src/lib/blog-gen/topic-research.mjs — keep in sync)
+//   src/lib/blog-gen/topic-research.mjs, keep in sync)
 // ============================================================
 
 const PILLAR_REGISTRY_PATH = 'C:/Users/email/projects/ImNotAnAttorney/system/pillar-registry.json';
@@ -175,7 +175,7 @@ const CATEGORY_TO_CHARGE_TYPE = {
 
 /**
  * Backfill pillar_slug on content_gaps where it's currently NULL.
- * NOTE: 729 gaps as of Apr 2026 — single query is fine.
+ * NOTE: 729 gaps as of Apr 2026, single query is fine.
  * If this grows past 1000, add .range() pagination (PostgREST 1000-row cap).
  */
 async function backfillGaps(supabase, dryRun) {
@@ -230,7 +230,7 @@ async function backfillGaps(supabase, dryRun) {
  */
 async function backfillDrafts(supabase, dryRun) {
   // PostgREST join: blog_drafts.content_gap_id -> content_gaps(id)
-  // Explicit FK hint needed — PostgREST sees multiple paths between these tables.
+  // Explicit FK hint needed, PostgREST sees multiple paths between these tables.
   const { data: drafts, error } = await supabase
     .from('blog_drafts')
     .select('id, title, frontmatter, content_gap_id, content_gaps!content_gap_id(charge_type_slug)')
@@ -342,7 +342,7 @@ async function backfillMDX(dryRun) {
 // ============================================================
 
 const dryRun = process.argv.includes('--dry-run');
-console.log(`Pillar backfill — ${dryRun ? 'DRY RUN' : 'LIVE'}\n`);
+console.log(`Pillar backfill, ${dryRun ? 'DRY RUN' : 'LIVE'}\n`);
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 

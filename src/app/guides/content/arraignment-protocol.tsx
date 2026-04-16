@@ -15,8 +15,8 @@ export default function ArraignmentProtocolContent() {
         </p>
         <p className="mt-3">
           This is not a trial. No evidence is presented. No witnesses are
-          called. It is a procedural step — typically five to fifteen minutes
-          — and it happens in every criminal case.
+          called. It is a procedural step, typically five to fifteen minutes
+         , and it happens in every criminal case.
         </p>
       </section>
 
@@ -33,7 +33,7 @@ export default function ArraignmentProtocolContent() {
             {" "}&mdash; This does not mean &ldquo;I didn&rsquo;t do it.&rdquo;
             It means &ldquo;make the prosecution prove it.&rdquo; This is
             the standard first plea in the vast majority of criminal cases.
-            Entering a not guilty plea preserves every option — your attorney
+            Entering a not guilty plea preserves every option, your attorney
             can still negotiate, file motions, or prepare for trial.
           </li>
           <li>

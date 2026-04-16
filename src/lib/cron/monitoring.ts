@@ -1,5 +1,5 @@
 /**
- * @file Parts 17, 18, 19, 20, 21 — Monitoring and reporting
+ * @file Parts 17, 18, 19, 20, 21, Monitoring and reporting
  *
  * Part 17: SLA breach detection (delivery_due_at passed)
  * Part 18: Weekly progress emails (War Room + Situation Room)
@@ -52,7 +52,7 @@ export async function detectSLABreaches(ctx: CronContext): Promise<CronResult> {
       await ctx.supabase.from("operator_tasks").insert({
         case_id: slaCase.id,
         task_type: "sla_breach",
-        title: `SLA BREACH: ${tierLabel} overdue by ${hoursOverdue}h — ${slaCase.email}`,
+        title: `SLA BREACH: ${tierLabel} overdue by ${hoursOverdue}h, ${slaCase.email}`,
         description: `Delivery was due ${new Date(slaCase.delivery_due_at!).toISOString()} (${hoursOverdue} hours ago). Customer: ${slaCase.email}`,
         priority: "URGENT",
         priority_rank: 1,
@@ -62,8 +62,8 @@ export async function detectSLABreaches(ctx: CronContext): Promise<CronResult> {
 
       await sendEmail({
         to: ctx.operatorEmail,
-        subject: `SLA BREACH: ${tierLabel} overdue by ${hoursOverdue} hours — ${slaCase.email}`,
-        html: `<h1 style="color: #EF4444;">SLA Breach — Delivery Overdue</h1>
+        subject: `SLA BREACH: ${tierLabel} overdue by ${hoursOverdue} hours, ${slaCase.email}`,
+        html: `<h1 style="color: #EF4444;">SLA Breach, Delivery Overdue</h1>
           <p>This case has exceeded its delivery deadline by <strong style="color: #EF4444;">${hoursOverdue} hours</strong>.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
             <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(slaCase.email)}</p>
@@ -262,7 +262,7 @@ export async function checkEngineHeartbeat(ctx: CronContext): Promise<CronResult
           <p><strong style="color: #EF4444;">${staleQueued.length} processing jobs</strong> have been queued for over an hour without being picked up.</p>
           <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
             <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Stale Jobs:</strong> ${staleQueued.length}</p>
-            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Oldest Job:</strong> ${firstJob.job_type} — queued ${oldestMinutes} minutes ago</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Oldest Job:</strong> ${firstJob.job_type}, queued ${oldestMinutes} minutes ago</p>
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Job ID:</strong> ${firstJob.id}</p>
             <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${firstJob.case_id}</p>
           </div>
@@ -386,7 +386,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
         resolutionType: "full_refund",
         amountRefunded: tierPriceNum("x-ray"),
         taskType: "guarantee_xray_full",
-        taskTitle: "GUARANTEE TRIGGERED: X-Ray FULL refund due — 5 days past deadline",
+        taskTitle: "GUARANTEE TRIGGERED: X-Ray FULL refund due, 5 days past deadline",
         taskPriority: "CRITICAL",
         priorityRank: 0,
         emailColor: "red",
@@ -414,7 +414,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
         resolutionType: "full_refund",
         amountRefunded: tierPriceNum("war-room"),
         taskType: "guarantee_warroom_full",
-        taskTitle: "GUARANTEE TRIGGERED: War Room FULL refund due — 3 days past deadline",
+        taskTitle: "GUARANTEE TRIGGERED: War Room FULL refund due, 3 days past deadline",
         taskPriority: "CRITICAL",
         priorityRank: 0,
         emailColor: "red",
@@ -442,7 +442,7 @@ const GUARANTEE_SPECS: GuaranteeEscalationSpec[] = [
         resolutionType: "full_refund",
         amountRefunded: tierPriceNum("situation-room"),
         taskType: "guarantee_sr_full",
-        taskTitle: "GUARANTEE TRIGGERED: Situation Room FULL refund due — 3 days past deadline",
+        taskTitle: "GUARANTEE TRIGGERED: Situation Room FULL refund due, 3 days past deadline",
         taskPriority: "CRITICAL",
         priorityRank: 0,
         emailColor: "red",
@@ -471,7 +471,7 @@ export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> 
 
   if (!cases || cases.length === 0) return result;
   if (cases.length === 200) {
-    console.warn("[Drip Cron] Part 20: hit 200-case limit — some guarantees may be deferred");
+    console.warn("[Drip Cron] Part 20: hit 200-case limit, some guarantees may be deferred");
   }
 
   const caseIds = cases.map((c) => c.id);
@@ -554,8 +554,8 @@ export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> 
 
       const accentColor = threshold.emailColor === "red" ? "#EF4444" : "#F59E0B";
       const headingText = threshold.emailColor === "red"
-        ? "Guarantee Triggered — Refund Required"
-        : "Guarantee Warning — Action Required";
+        ? "Guarantee Triggered, Refund Required"
+        : "Guarantee Warning, Action Required";
 
       emailPromises.push(sendEmail({
         to: ctx.operatorEmail,
@@ -621,7 +621,7 @@ export async function escalateGuarantees(ctx: CronContext): Promise<CronResult> 
 //
 // This task closes any monitoring case whose delivered_at is older than the
 // MONITORING_MAX_DAYS safety cap. 365 days was chosen to match the 12-month
-// report_token_expires_at window — past that point the customer loses portal
+// report_token_expires_at window, past that point the customer loses portal
 // access anyway, so continuing to tag the case as "monitoring" in our internal
 // metrics is incoherent.
 //
@@ -648,7 +648,7 @@ export async function closeStaleMonitoring(ctx: CronContext): Promise<CronResult
 
   if (!staleCases || staleCases.length === 0) return result;
   if (staleCases.length === 200) {
-    console.warn("[Drip Cron] Part 21: hit 200-case limit — some closures deferred to next run");
+    console.warn("[Drip Cron] Part 21: hit 200-case limit, some closures deferred to next run");
   }
 
   // ── Queries 2+3: Batch-fetch subscribers + dedup records ──
@@ -722,7 +722,7 @@ export async function closeStaleMonitoring(ctx: CronContext): Promise<CronResult
       operatorTaskRows.push({
         case_id: sCase.id,
         task_type: "monitoring_auto_closed",
-        title: `Monitoring auto-closed: ${tierDisplayName(sCase.tier)} — ${sCase.email}`,
+        title: `Monitoring auto-closed: ${tierDisplayName(sCase.tier)}, ${sCase.email}`,
         description: `Case ${sCase.id} (${tierDisplayName(sCase.tier)}, ${sCase.email}) was auto-closed by the 365-day monitoring safety cap. Delivered: ${sCase.delivered_at}. Review if this closure was premature.`,
         priority: "NORMAL",
         priority_rank: 3,
@@ -780,7 +780,7 @@ export async function closeStaleMonitoring(ctx: CronContext): Promise<CronResult
         <p style="color: #D4D4D8;">Your ongoing ${escapeHtml(tierLabel)} engagement has reached its natural conclusion. Here is a summary of what was delivered during the engagement.</p>
         ${summaryBlock}
         ${portalBlock}
-        <p style="margin: 24px 0 0; color: #A1A1AA; font-size: 13px;">Thank you for trusting us with the information side of your case. We hope what we delivered helped you close the gap that every defendant faces — being the only stranger in a courtroom where everyone else already knows each other.</p>
+        <p style="margin: 24px 0 0; color: #A1A1AA; font-size: 13px;">Thank you for trusting us with the information side of your case. We hope what we delivered helped you close the gap that every defendant faces, being the only stranger in a courtroom where everyone else already knows each other.</p>
       `,
       threadingHeaders: {
         references: caseThreadId(sCase.id),

@@ -6,10 +6,10 @@ platform: email
 queued_at: 2026-04-10T18:57:40.468Z
 queued_by: content-scheduler
 ---
-# Email Teaser — The 10-Day DMV Deadline Your Attorney Might Not Mention
+# Email Teaser, The 10-Day DMV Deadline Your Attorney Might Not Mention
 
 ## Subject Line Options
-1. "Your license is on a countdown clock — did your attorney mention this?"
+1. "Your license is on a countdown clock, did your attorney mention this?"
 2. "10 days. Most DUI attorneys don't mention it until it's too late."
 3. "The part of your DUI case your attorney forgot to tell you about"
 
@@ -17,7 +17,7 @@ queued_by: content-scheduler
 
 ## Email Body (~150 words)
 
-After a DUI arrest, most states give you 10 days to request a DMV hearing. Miss it and your license gets automatically suspended — no hearing, no argument, no second chance.
+After a DUI arrest, most states give you 10 days to request a DMV hearing. Miss it and your license gets automatically suspended, no hearing, no argument, no second chance.
 
 This is completely separate from your criminal case. Your attorney is focused on the charges. The DMV is running on its own clock.
 
@@ -39,4 +39,4 @@ Which one do you have?
 ## Sending Notes
 - Best for: DUI-tagged subscribers, recent DUI blog readers, anyone who purchased DUI Playbook
 - Send time: Tuesday-Thursday, morning
-- Urgency angle is real — genuinely useful for people who may not know about the deadline
+- Urgency angle is real, genuinely useful for people who may not know about the deadline

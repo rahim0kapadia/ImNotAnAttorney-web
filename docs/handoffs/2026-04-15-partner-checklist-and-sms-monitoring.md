@@ -5,9 +5,9 @@ Date: 2026-04-15 22:30
 ## Task
 Two threads completed + one in flight:
 
-1. **SMS Delivery Monitoring (3 layers) — SHIPPED + REVIEWED**
-2. **Partner Portal 4-Plan Audit — COMPLETE, gaps fixed**
-3. **Bondsman Compliance Checklist — PLAN NEEDED (next step)**
+1. **SMS Delivery Monitoring (3 layers), SHIPPED + REVIEWED**
+2. **Partner Portal 4-Plan Audit, COMPLETE, gaps fixed**
+3. **Bondsman Compliance Checklist, PLAN NEEDED (next step)**
 
 ## What Shipped This Session (11 commits on master, all pushed)
 
@@ -35,18 +35,18 @@ Two threads completed + one in flight:
 
 ## Key Decisions
 
-1. **Resend webhook secret rotated** — old `RESEND_WEBHOOK_SECRET` was the inbound secret. New one: `whsec_i7uO2fo07azBUnF+WcuxQp6RIeo/maXc` for bounce webhook id `76c51884`. Both in Vercel prod + .env.local.
-2. **RESEND_API_KEY_FULL** (Dev1 full-access key `re_iKN77H2h_Hu211U8TRE2EedLQv44VLGZL`) stored in all 3 INAA repos' .env files. NOT deployed to Vercel — local scripts only.
+1. **Resend webhook secret rotated**, old `RESEND_WEBHOOK_SECRET` was the inbound secret. New one: `whsec_i7uO2fo07azBUnF+WcuxQp6RIeo/maXc` for bounce webhook id `76c51884`. Both in Vercel prod + .env.local.
+2. **RESEND_API_KEY_FULL** (Dev1 full-access key `re_iKN77H2h_Hu211U8TRE2EedLQv44VLGZL`) stored in all 3 INAA repos' .env files. NOT deployed to Vercel, local scripts only.
 3. **SMS_HEALTH_TEST_PHONE** env var on Vercel prod (replaces hardcoded PII).
 4. **partners.source** column added for partner-type awareness (bondsman vs generic vs attorney). Enables conditional checklist content.
 5. **Crisis-buyer lens HARD RULE** saved to memory: defendants = crisis buyers (3AM panic), bondsmen = regular B2B partners (not in crisis). Crisis filter applies to defendant-facing artifacts only, NOT bondsman-facing dashboard/drip.
 
 ## What Didn't Work
-- Inline `node -e` repeatedly blocked by triage hook — lesson: always write to a script file, triage first.
+- Inline `node -e` repeatedly blocked by triage hook, lesson: always write to a script file, triage first.
 - First recommendation batch for partner portal applied info-product affiliate patterns to bondsmen (McWilliams framework unfiltered). Fixed: crisis-buyer lens memory created, McWilliams expert profile updated with INAA-specific adaptation section.
 - Initial Layer 2 E2E failed because code wasn't pushed/deployed yet.
 
-## Remaining Steps — BONDSMAN COMPLIANCE CHECKLIST
+## Remaining Steps, BONDSMAN COMPLIANCE CHECKLIST
 
 **Status: needs implementation plan written BEFORE building.**
 
@@ -76,19 +76,19 @@ Two threads completed + one in flight:
 - Welcome email link update (if referencing /partner/card)
 - Print CSS (already proven in /partner/card)
 - QR code pointing to `/r/[code]/reminders`
-- Partner-type conditional (bondsman items vs generic — start with bondsman only)
+- Partner-type conditional (bondsman items vs generic, start with bondsman only)
 - SCHEMA.md update for partners.source column
 
 ### Expert context:
-- **Matt McWilliams** (cached at `~/.claude/experts/matt-mcwilliams.md`) — affiliate activation. His framework's skeleton applies to bondsman partners; INAA-specific adaptation section added to profile.
-- **Crisis-buyer lens** (`feedback-crisis-buyer-lens-mandatory.md`) — defendant-facing items on the checklist must pass 3AM panic test. Bondsman-facing dashboard/drip is standard B2B.
+- **Matt McWilliams** (cached at `~/.claude/experts/matt-mcwilliams.md`), affiliate activation. His framework's skeleton applies to bondsman partners; INAA-specific adaptation section added to profile.
+- **Crisis-buyer lens** (`feedback-crisis-buyer-lens-mandatory.md`), defendant-facing items on the checklist must pass 3AM panic test. Bondsman-facing dashboard/drip is standard B2B.
 - **Captira** is the market-leading bail bond software with GPS/photo check-ins. Our check-in system competes at $0.
 
 ## Verification
-- `npx tsc --noEmit --skipLibCheck` — clean
-- `npx vitest run` — 249/249 pass
-- `node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends` — 32/33 pass (1 pre-existing INNA-H2 CRON_SECRET drift)
-- `node scripts/verify-resend-webhook-e2e.mjs` — Layer 2 E2E PASS in prod
+- `npx tsc,noEmit,skipLibCheck`, clean
+- `npx vitest run`, 249/249 pass
+- `node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends`, 32/33 pass (1 pre-existing INNA-H2 CRON_SECRET drift)
+- `node scripts/verify-resend-webhook-e2e.mjs`, Layer 2 E2E PASS in prod
 
 ## Ready-to-Paste Prompt
 

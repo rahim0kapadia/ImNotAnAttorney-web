@@ -1,4 +1,4 @@
-# Architecture — ImNotAnAttorney-web
+# Architecture, ImNotAnAttorney-web
 
 > Living document. Updated: 2026-04-14. Read this before making any change.
 > Subsystem details live in `CONTEXT.md` files next to the code. This file is the system map.
@@ -6,7 +6,7 @@
 
 ## System Overview
 
-Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (60 MDX blog posts, free ungated resources, Plea Analyzer acquisition wedge) with e-commerce (8 playbooks at $127/$147, 5 service tiers at $197–$9,997, 44 standalone products — 32 paid $97–$497, 12 free — across 4 categories) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
+Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (60 MDX blog posts, free ungated resources, Plea Analyzer acquisition wedge) with e-commerce (8 playbooks at $127/$147, 5 service tiers at $197–$9,997, 44 standalone products, 32 paid $97–$497, 12 free, across 4 categories) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
 
 One of three repos in the INAA ecosystem: `ImNotAnAttorney` (business docs/templates), `ImNotAnAttorney-web` (this, customer-facing), `ImNotAnAttorney-engine` (background job workers). All three share the same Supabase database.
 
@@ -30,12 +30,12 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 8. **Atomic claim-then-mutate.** Operations risking TOCTOU races atomically update status BEFORE side effects. Uses conditional UPDATE (`.eq("status", "review")`) as mutex. Only first request wins.
 
-9. **No email gatekeeping.** Never gate content or resources behind email capture. All guides, checklists, and templates are free and ungated. The `/score` quiz is the ONLY pre-purchase email capture point — after the defendant has already received value (score, observations, attorney email template). Crisis buyers in a 7-day decision window don't trade emails for help — they bounce. Give first, capture after value delivered.
+9. **No email gatekeeping.** Never gate content or resources behind email capture. All guides, checklists, and templates are free and ungated. The `/score` quiz is the ONLY pre-purchase email capture point, after the defendant has already received value (score, observations, attorney email template). Crisis buyers in a 7-day decision window don't trade emails for help, they bounce. Give first, capture after value delivered.
 
 ## Component Map
 
 | Subsystem | What It Does | Details |
-|-----------|-------------|---------|
+|---------, |-------------|---------|
 | **Pages & Routes** | 58 pages + 70 API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
 | **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
 | **Standalone Products** | 44 active: 4 calculators, 8 content guides, 29 research reports, 3 bundles (4 delivery systems) | `src/lib/products.ts` + `src/lib/bundles.ts` |
@@ -64,28 +64,28 @@ Blog/SEO → Free resources (ungated) → Score Quiz (/score, email captured aft
            → Webhook detects pre-populated intake → instant generation (no intake email)
 
 STANDALONE PRODUCT SYSTEMS (src/lib/products.ts + bundles.ts):
-  1. Calculators (free, 3 active) — /tools/[slug] wizard → instant result
+  1. Calculators (free, 3 active), /tools/[slug] wizard → instant result
      (Good Time Credit, Diversion Eligibility, Veterans Court)
-  2. Content Guides (free, 8 active) — /guides/[slug] static React components
-  3. Instant Research ($97-$297, 24 active) — /services/[slug] → checkout → intake
+  2. Content Guides (free, 8 active), /guides/[slug] static React components
+  3. Instant Research ($97-$297, 24 active), /services/[slug] → checkout → intake
      → generate-standalone Edge Function → Storage → /report/standalone/[token]
-  4. Bundles ($97-$197, 3 active) — same flow as research, combined intake form
+  4. Bundles ($97-$197, 3 active), same flow as research, combined intake form
      (mergeFieldSets), combined report prompt (delegates to included product prompts)
 ```
 
 ## Life of a Case
 
-1. **Purchase** — Stripe checkout session created by `/api/checkout` using `tiers.ts` config. Live/test mode per tier via `TIER_CORE[slug].live`.
-2. **Webhook** — `/api/webhooks/stripe` receives `checkout.session.completed`, creates `orders` + `cases` rows, triggers initial email.
-3. **Intake** — Customer submits `/api/intake` (Case Decoder) or `/api/intake/intelligence-brief` (IB). `charge-taxonomy.ts` drives dynamic questions.
-4. **Report generation** — Supabase Edge Function `generate-report` calls Claude Opus (extended thinking, 16K budget). IB runs 5 parallel + 4 sequential phases via `/api/generate/intelligence-brief/*`.
-5. **Evaluation** — `evaluate-report` Edge Function checks for UPL violations. Failed eval → operator task, not customer delivery.
-6. **Delivery** — Operator approves → `/api/deliver` sends email + sets `delivered_at`. Customer accesses report at `/report/[token]`.
-7. **Post-purchase drip** — `src/lib/cron/drip-post-purchase.ts` fires upgrade-path emails at days 3, 7, 14.
+1. **Purchase**, Stripe checkout session created by `/api/checkout` using `tiers.ts` config. Live/test mode per tier via `TIER_CORE[slug].live`.
+2. **Webhook**, `/api/webhooks/stripe` receives `checkout.session.completed`, creates `orders` + `cases` rows, triggers initial email.
+3. **Intake**, Customer submits `/api/intake` (Case Decoder) or `/api/intake/intelligence-brief` (IB). `charge-taxonomy.ts` drives dynamic questions.
+4. **Report generation**, Supabase Edge Function `generate-report` calls Claude Opus (extended thinking, 16K budget). IB runs 5 parallel + 4 sequential phases via `/api/generate/intelligence-brief/*`.
+5. **Evaluation**, `evaluate-report` Edge Function checks for UPL violations. Failed eval → operator task, not customer delivery.
+6. **Delivery**, Operator approves → `/api/deliver` sends email + sets `delivered_at`. Customer accesses report at `/report/[token]`.
+7. **Post-purchase drip**, `src/lib/cron/drip-post-purchase.ts` fires upgrade-path emails at days 3, 7, 14.
 
 ## Tier Inclusion Model
 
-Upper-tier purchases create multiple `cases` rows — one primary plus one included deliverable per entry in `includesTiers` (`src/lib/tiers.ts`). Included deliverables are fully-generated reports that ship before the primary deliverable, not previews.
+Upper-tier purchases create multiple `cases` rows, one primary plus one included deliverable per entry in `includesTiers` (`src/lib/tiers.ts`). Included deliverables are fully-generated reports that ship before the primary deliverable, not previews.
 
 **Inclusion Map** (verified against `src/lib/tiers.ts`):
 
@@ -107,8 +107,8 @@ Upper-tier purchases create multiple `cases` rows — one primary plus one inclu
 
 **Two-Phase Intake Flow:**
 
-- **Phase 1** (standard intake) — Collected post-purchase. Used to generate the included Case Decoder.
-- **Phase 2** (IB-specific intake) — After CD delivery, customer receives email with HMAC-signed link to `/intake/intelligence-brief`. Collects judge, attorney, hearing details.
+- **Phase 1** (standard intake), Collected post-purchase. Used to generate the included Case Decoder.
+- **Phase 2** (IB-specific intake), After CD delivery, customer receives email with HMAC-signed link to `/intake/intelligence-brief`. Collects judge, attorney, hearing details.
 
 **Customer Identity:**
 
@@ -117,32 +117,32 @@ Upper-tier purchases create multiple `cases` rows — one primary plus one inclu
 
 ## Tier 9: Data-Driven Defense Intelligence Layer
 
-A purely statistical intelligence layer computed from CourtListener's 10M+ opinion corpus. No AI credits required — all keyword matching and graph analysis. Produces insights no attorney tool offers at any price.
+A purely statistical intelligence layer computed from CourtListener's 10M+ opinion corpus. No AI credits required, all keyword matching and graph analysis. Produces insights no attorney tool offers at any price.
 
 **9 Statistical Angles:**
 
-1. Judge × Prosecutor pairing matrix (`judge_prosecutor_pairings`) — motion grant rates per judge-prosecutor pair
-2. k-NN similar-case matching (`case_feature_vectors`) — feature vectors + nearest neighbors from DB data
-3. Sentencing outlier detection (`sentencing_distributions`) — sentence length extraction + percentile computation
-4. Bench vs jury sentencing divergence (`bench_jury_divergence`) — USSC district-level plea/bench/jury sentencing + CL opinion-mined acquittal rates
-5. Judge quote library (`judge_quotes`) — extracted judicial holding quotes from opinions
-6. Officer reliability cross-case patterns (`officer_reliability`) — cross-case officer credibility tracking
-7. Appeal outcome correlation (`appellate_trends`) — appellate reversal/affirmance rates via citation-map
-8. Co-defendant divergence analysis (`co_defendant_analysis`) — co-defendant outcome comparison
-9. Plea discount modeling (`plea_discount_curves`) — plea vs trial sentence distributions
+1. Judge × Prosecutor pairing matrix (`judge_prosecutor_pairings`), motion grant rates per judge-prosecutor pair
+2. k-NN similar-case matching (`case_feature_vectors`), feature vectors + nearest neighbors from DB data
+3. Sentencing outlier detection (`sentencing_distributions`), sentence length extraction + percentile computation
+4. Bench vs jury sentencing divergence (`bench_jury_divergence`), USSC district-level plea/bench/jury sentencing + CL opinion-mined acquittal rates
+5. Judge quote library (`judge_quotes`), extracted judicial holding quotes from opinions
+6. Officer reliability cross-case patterns (`officer_reliability`), cross-case officer credibility tracking
+7. Appeal outcome correlation (`appellate_trends`), appellate reversal/affirmance rates via citation-map
+8. Co-defendant divergence analysis (`co_defendant_analysis`), co-defendant outcome comparison
+9. Plea discount modeling (`plea_discount_curves`), plea vs trial sentence distributions
 
 **Bulk Extraction Scripts** (all in `scripts/`):
 
-- `bulk-judge-quote-extractor.mjs` — extracts judicial holding quotes from opinions CSV
-- `bulk-sentencing-outlier-detector.mjs` — sentence length extraction + percentile computation
-- `bulk-officer-reliability-aggregator.mjs` — cross-case officer credibility tracking
-- `bulk-judge-prosecutor-pairing.mjs` — motion grant rates by judge-prosecutor pair
-- `bulk-bench-jury-divergence.mjs` — bench vs jury outcome classification (CL opinions)
-- `ingest-ussc-bench-jury.mjs` — USSC district-level plea/bench/jury sentencing divergence (FY14-24, 739K cases)
-- `bulk-appeal-outcome-correlator.mjs` — appellate reversal/affirmance rates via citation-map
-- `bulk-similar-case-matcher.mjs` — feature vectors + k-NN from DB data
-- `bulk-co-defendant-divergence-analyzer.mjs` — co-defendant outcome comparison
-- `bulk-plea-discount-modeler.mjs` — plea vs trial sentence distributions
+- `bulk-judge-quote-extractor.mjs`, extracts judicial holding quotes from opinions CSV
+- `bulk-sentencing-outlier-detector.mjs`, sentence length extraction + percentile computation
+- `bulk-officer-reliability-aggregator.mjs`, cross-case officer credibility tracking
+- `bulk-judge-prosecutor-pairing.mjs`, motion grant rates by judge-prosecutor pair
+- `bulk-bench-jury-divergence.mjs`, bench vs jury outcome classification (CL opinions)
+- `ingest-ussc-bench-jury.mjs`, USSC district-level plea/bench/jury sentencing divergence (FY14-24, 739K cases)
+- `bulk-appeal-outcome-correlator.mjs`, appellate reversal/affirmance rates via citation-map
+- `bulk-similar-case-matcher.mjs`, feature vectors + k-NN from DB data
+- `bulk-co-defendant-divergence-analyzer.mjs`, co-defendant outcome comparison
+- `bulk-plea-discount-modeler.mjs`, plea vs trial sentence distributions
 
 **Tier Positioning** (additive to existing tier benefits):
 
@@ -153,11 +153,11 @@ A purely statistical intelligence layer computed from CourtListener's 10M+ opini
 
 **Standalone SKU Pages** (3 landing pages, server components):
 
-- `/judge-report-card` — $197, instant delivery. Sentencing patterns, prosecutor pairing, bench/jury divergence, quote library.
-- `/officer-background-check` — $97, instant delivery. Cross-case officer reliability, discreditation history.
-- `/similar-cases-analyzer` — $297, instant delivery. k-NN case matching with outcome distribution.
+- `/judge-report-card`, $197, instant delivery. Sentencing patterns, prosecutor pairing, bench/jury divergence, quote library.
+- `/officer-background-check`, $97, instant delivery. Cross-case officer reliability, discreditation history.
+- `/similar-cases-analyzer`, $297, instant delivery. k-NN case matching with outcome distribution.
 
-All 3 are in `tiers.ts` (live mode since 2026-04-11), gated by `AvailabilityChecker` (see below), and use Product + BreadcrumbList + FAQPage JSON-LD. No Edge Function needed — on-demand reads from Tier 9 tables.
+All 3 are in `tiers.ts` (live mode since 2026-04-11), gated by `AvailabilityChecker` (see below), and use Product + BreadcrumbList + FAQPage JSON-LD. No Edge Function needed, on-demand reads from Tier 9 tables.
 
 **Availability Gate** (deployed 2026-04-11):
 
@@ -166,26 +166,26 @@ Pre-purchase data check prevents selling products we can't deliver. Each Tier 9 
 Flow: Landing page → AvailabilityChecker (name + state input) → POST /api/check-availability/[slug] → coverage.ts queries Tier 9 tables (count only) → available: coverage preview + CTA (intake params in URL) / unavailable: waitlist form → data_waitlist insert + Telegram alert. Checkout passes intake in Stripe metadata → webhook detects pre-populated intake → instant generation (skips intake email).
 
 Key files:
-- `src/components/tier9/AvailabilityChecker.tsx` — client component (6 states: idle/checking/available/unavailable/waitlisted/error)
-- `src/app/api/check-availability/[slug]/route.ts` — API endpoint (rate limited 10/min/IP)
-- `src/lib/tier9-reports/coverage.ts` — lightweight count queries per product
-- `data_waitlist` table — captures demand for uncovered entities (migration `20260411_data_waitlist.sql`)
+- `src/components/tier9/AvailabilityChecker.tsx`, client component (6 states: idle/checking/available/unavailable/waitlisted/error)
+- `src/app/api/check-availability/[slug]/route.ts`, API endpoint (rate limited 10/min/IP)
+- `src/lib/tier9-reports/coverage.ts`, lightweight count queries per product
+- `data_waitlist` table, captures demand for uncovered entities (migration `20260411_data_waitlist.sql`)
 
 **IB Prompt Integration** (tasks 15-16):
 
-- `variables.ts` — 9 optional Tier 9 fields on `IBVariables` (tier-gated by caller)
-- `prompts.ts` — 5 existing section builders receive `<tier9_data>` blocks when populated; new `buildTier9DataAppendix` (Appendix F) registered in `PHASE_B_BUILDERS`
-- `render.ts` — `tier9DataCount`/`tier9SourceUrlCount` in report header metadata; Appendix F slot after Appendix E in section ordering
+- `variables.ts`, 9 optional Tier 9 fields on `IBVariables` (tier-gated by caller)
+- `prompts.ts`, 5 existing section builders receive `<tier9_data>` blocks when populated; new `buildTier9DataAppendix` (Appendix F) registered in `PHASE_B_BUILDERS`
+- `render.ts`, `tier9DataCount`/`tier9SourceUrlCount` in report header metadata; Appendix F slot after Appendix E in section ordering
 
 **CSV Parsing Pattern:** All opinions CSV scripts use `csv-parse` with `escape: "\\"` for CourtListener's backslash-escaped quotes. No hand-rolled parsers.
 
-## Data Sources Priority — ALWAYS Check Bulk Before API
+## Data Sources Priority, ALWAYS Check Bulk Before API
 
 A hard lesson learned in April 2026: 80K CourtListener API calls were made (estimated 32 hours, rate-limit thrashing) to fetch data that was already available in local bulk CSV files. The same work took ~20 minutes from bulk. This section exists to prevent recurrence.
 
 **Rule: Local bulk data is always the primary source. CourtListener API is fallback for data filed AFTER the last quarterly dump.**
 
-### Bulk Files (primary — check first)
+### Bulk Files (primary, check first)
 
 All files at `data/bulk-verify/cl-bulk/`. Regenerated quarterly (March 31, June 30, Sept 30, Dec 31).
 
@@ -193,33 +193,33 @@ All files at `data/bulk-verify/cl-bulk/`. Regenerated quarterly (March 31, June 
 |------|------|----------|
 | `opinion-clusters-2026-03-31.csv.bz2` | 2.3GB | Cluster metadata: id, case_name, case_name_full, posture, disposition, headmatter, judges, attorneys |
 | `opinions-2026-03-31.csv.bz2` | 51GB | Full opinion text by cluster_id |
-| `opinions-filtered.csv` | 1.1GB (8.3M rows) | Pre-filtered opinions, already decompressed — start here |
+| `opinions-filtered.csv` | 1.1GB (8.3M rows) | Pre-filtered opinions, already decompressed, start here |
 | `citation-map-2026-03-31.csv.bz2` | 499MB | Citation relationships between clusters |
 | `fjc-integrated-database-2026-03-31.csv.bz2` | 267MB | Federal Judicial Center judge/court data |
 
 External datasets at `data/bulk-verify/external-intel/`: BJS felony outcomes, USSC sentencing statistics, exoneration registry.
 
-### JUSTFAIR — Federal Sentencing Intelligence (primary for federal courts)
+### JUSTFAIR, Federal Sentencing Intelligence (primary for federal courts)
 
 Source: QSIDE Institute, 595,851 federal sentencing records (FY2001-2023). Downloaded from [osf.io/nseh5](https://osf.io/nseh5/). Local CSV at `data/external-intel/justfair/FinalDataset.csv` (1.3GB, gitignored).
 
 | Table | Contents | Row Count |
-|-------|----------|-----------|
+|-------|----------|---------, |
 | `judge_demographics` | Federal judge background: appointing president/party, ABA rating, law school, gender, race, active years | ~1,126 judges |
 | `judge_sentencing_demographics` | Sentencing by defendant race per judge: median sentence, departure rates, sample sizes | ~4,500 rows |
 | `outcome_benchmarks` | National plea/trial/dismissal rates by offense type (BJS) | ~10 rows |
 | `officer_external_intel` | Agency-level fatal encounter data (Fatal Encounters dataset, 2013+) | ~2,000 rows |
 
 **Integration points:**
-- **Judge Report Card** — `queryJustfairJudge()` in `defense-intelligence/query.ts` → demographics + racial disparity sections in `render.ts`
-- **Officer Background Check** — agency fatal encounters via `officer_external_intel` → agency alert section in `render.ts`
-- **Intelligence Brief** — JUSTFAIR fields injected via `variables.ts` → 3 section builders in `prompts.ts`
-- **Case Decoder** — sentencing context from `sentencing_distributions` + `outcome_benchmarks` injected in Edge Function
-- **Availability gate** — `coverage.ts` checks `judge_demographics` for federal judge coverage
+- **Judge Report Card**, `queryJustfairJudge()` in `defense-intelligence/query.ts` → demographics + racial disparity sections in `render.ts`
+- **Officer Background Check**, agency fatal encounters via `officer_external_intel` → agency alert section in `render.ts`
+- **Intelligence Brief**, JUSTFAIR fields injected via `variables.ts` → 3 section builders in `prompts.ts`
+- **Case Decoder**, sentencing context from `sentencing_distributions` + `outcome_benchmarks` injected in Edge Function
+- **Availability gate**, `coverage.ts` checks `judge_demographics` for federal judge coverage
 
 **Existing bulk scripts:**
-- `bulk-master-extractor.mjs` — single-pass 8-table extractor across all bulk files (the canonical entry point)
-- `enrich-from-bulk.mjs` — targeted enrichment pass for specific tables/columns
+- `bulk-master-extractor.mjs`, single-pass 8-table extractor across all bulk files (the canonical entry point)
+- `enrich-from-bulk.mjs`, targeted enrichment pass for specific tables/columns
 
 ### CourtListener API (fallback only)
 
@@ -232,11 +232,11 @@ Rate limit: ~5 req/sec authenticated. Token: `COURTLISTENER_TOKEN` in `.env.loca
 
 ### Bulk CSV Gotchas (from `~/.claude/rules/cl-bulk-data-defensive.md`)
 
-- CL CSVs quote ALL values — strip surrounding quotes before matching IDs
+- CL CSVs quote ALL values, strip surrounding quotes before matching IDs
 - Always use `relax_quotes: true`, `relax_column_count: true` in csv-parse
-- Run ONE CSV streamer at a time — two concurrent streams = OOM on Windows
+- Run ONE CSV streamer at a time, two concurrent streams = OOM on Windows
 - Never use `| head`, `| tail`, `| grep` on background Bash commands (orphan processes, no output)
-- Env var parsing: `.split("=").slice(1).join("=")` — JWT keys contain `=` characters
+- Env var parsing: `.split("=").slice(1).join("=")`, JWT keys contain `=` characters
 
 ## Cross-Cutting Concerns
 
@@ -248,8 +248,8 @@ Patterns that span multiple subsystems:
 - **HTML escaping.** All user strings in email/report HTML pass through `escapeHtml()` before interpolation. Prevents XSS in transactional emails and reports.
 - **Fire-and-forget logging.** Email sends, cron results, analytics events logged to DB asynchronously. Failures logged to console but never break the response.
 - **Client IP extraction.** Prefers Cloudflare `cf-connecting-ip`, falls back to `x-real-ip`, then `x-forwarded-for` (first entry). Used for rate limiting and analytics.
-- **SMS notifications (text.email gateway).** `sms.ts` sends SMS by emailing `{phone}@text.email` via existing Resend API. No additional env vars — uses `RESEND_API_KEY`. Gracefully degrades if send fails. All SMS bodies capped at 160 chars via `capSMS()`. All client SMS gated on consent (`canSendClientSMS`). Twilio kept as backup (10DLC pending, creds in `.env.local`).
-- **Notification preferences.** JSONB `notification_prefs` column on `court_reminders` (clients) and `partners` (bondsmen). Stores only overrides; `notification-prefs.ts` merges with defaults (all email). Safety invariant: `court_reminders` channel is never "sms" alone — always "email" or "both". `dispatchNotification` pattern: check prefs → gate email/SMS → `Promise.allSettled` for parallel sends.
+- **SMS notifications (text.email gateway).** `sms.ts` sends SMS by emailing `{phone}@text.email` via existing Resend API. No additional env vars, uses `RESEND_API_KEY`. Gracefully degrades if send fails. All SMS bodies capped at 160 chars via `capSMS()`. All client SMS gated on consent (`canSendClientSMS`). Twilio kept as backup (10DLC pending, creds in `.env.local`).
+- **Notification preferences.** JSONB `notification_prefs` column on `court_reminders` (clients) and `partners` (bondsmen). Stores only overrides; `notification-prefs.ts` merges with defaults (all email). Safety invariant: `court_reminders` channel is never "sms" alone, always "email" or "both". `dispatchNotification` pattern: check prefs → gate email/SMS → `Promise.allSettled` for parallel sends.
 - **Commission holdback.** Referral commissions lock after 45 days via `lock-commissions` cron. `referrals.locked_at` tracks confirmation. Refunded orders excluded (`.gt("commission_amount", 0)`).
 
 ## Architecture Patterns
@@ -266,7 +266,7 @@ Conditional UPDATE with WHERE clause as database-level mutex. The UPDATE happens
 UPDATE cases SET status = 'delivered', delivered_at = now()
 WHERE id = $1 AND status = 'review'
 RETURNING *;
--- If 0 rows returned → another request already delivered → return early
+, If 0 rows returned → another request already delivered → return early
 ```
 
 Used by: deliver route, generation triggers, cron parts.
@@ -285,37 +285,37 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 
 ## Life of a Blog Post (End-to-End)
 
-1. **Trigger** — Admin hits `POST /api/admin/blog-pipeline` or runs local `claude -p` task.
-2. **Topic research** — `blog-generation/topic-research.ts` fetches keyword volume + SERP difficulty.
-3. **Generation** — `blog-generation/generate-post.ts` calls Claude Sonnet with charge-type expertise prompts.
-4. **QA pipeline** — `qa-slop.ts` (removes AI tells) → `qa-humanizer.ts` (validates tone) → `qa-upl.ts` (UPL compliance).
-5. **Publish** — `blog-generation/publish.ts` writes MDX to `content/blog/[slug].mdx`.
-6. **Deploy** — `git push origin master` → Vercel auto-deploy. Blog listing + sitemap auto-update.
+1. **Trigger**, Admin hits `POST /api/admin/blog-pipeline` or runs local `claude -p` task.
+2. **Topic research**, `blog-generation/topic-research.ts` fetches keyword volume + SERP difficulty.
+3. **Generation**, `blog-generation/generate-post.ts` calls Claude Sonnet with charge-type expertise prompts.
+4. **QA pipeline**, `qa-slop.ts` (removes AI tells) → `qa-humanizer.ts` (validates tone) → `qa-upl.ts` (UPL compliance).
+5. **Publish**, `blog-generation/publish.ts` writes MDX to `content/blog/[slug].mdx`.
+6. **Deploy**, `git push origin master` → Vercel auto-deploy. Blog listing + sitemap auto-update.
 
 ## Life of a Score Assessment (End-to-End)
 
-1. **Quiz** — `/score` page presents 10 questions (charge type, time since arrest, attorney type, motions, discovery, communication, strategy, history, stage, licensed profession).
-2. **Submit** — `POST /api/score` validates inputs against `ALLOWED_VALUES` allowlist.
-3. **Calculate** — `score.ts` starts at 50, applies weighted adjustments (motions 20%, discovery 15%, communication 15%, time 30%, attorney/strategy 10% each). Clamps to 0-100, assigns band.
-4. **Aggregate** — Fire-and-forget: increments anonymous counters (total by charge, band distribution, penalty counters). No individual scores stored.
-5. **Share** — `POST /api/score/share` re-calculates score server-side (prevents tampering), generates token, stores in `score_results`, returns shareable URL.
-6. **Results** — `/score/results/[token]` renders score band, observations, and upgrade callouts.
+1. **Quiz**, `/score` page presents 10 questions (charge type, time since arrest, attorney type, motions, discovery, communication, strategy, history, stage, licensed profession).
+2. **Submit**, `POST /api/score` validates inputs against `ALLOWED_VALUES` allowlist.
+3. **Calculate**, `score.ts` starts at 50, applies weighted adjustments (motions 20%, discovery 15%, communication 15%, time 30%, attorney/strategy 10% each). Clamps to 0-100, assigns band.
+4. **Aggregate**, Fire-and-forget: increments anonymous counters (total by charge, band distribution, penalty counters). No individual scores stored.
+5. **Share**, `POST /api/score/share` re-calculates score server-side (prevents tampering), generates token, stores in `score_results`, returns shareable URL.
+6. **Results**, `/score/results/[token]` renders score band, observations, and upgrade callouts.
 
 ## Reddit Monitor Pipeline (End-to-End)
 
-1. **Trigger** — cron-job.org hits `GET /api/cron/reddit-monitor` every 30 minutes.
-2. **Fetch** — Fetches 25 newest posts from 5 subreddits (dui, legaladvice, probation, Felons, publicdefenders) via Reddit JSON API. 24-hour age window filters stale posts.
-3. **Match** — Each post title+body matched against 10 pre-written comment templates (`content/queue/reddit/pending/01-10*.md`). Zero LLM usage.
-4. **Dedup** — Checks `reddit_response_queue` table by `reddit_thread_id`. Skips duplicates.
-5. **Store** — Inserts matched draft into `reddit_response_queue` with template ID, blog URL, and customized response text.
-6. **Notify** — Sends 2-message Telegram notification: (1) thread link with subreddit + template label + detected state, (2) copy-paste reply draft with embedded blog URL.
+1. **Trigger**, cron-job.org hits `GET /api/cron/reddit-monitor` every 30 minutes.
+2. **Fetch**, Fetches 25 newest posts from 5 subreddits (dui, legaladvice, probation, Felons, publicdefenders) via Reddit JSON API. 24-hour age window filters stale posts.
+3. **Match**, Each post title+body matched against 10 pre-written comment templates (`content/queue/reddit/pending/01-10*.md`). Zero LLM usage.
+4. **Dedup**, Checks `reddit_response_queue` table by `reddit_thread_id`. Skips duplicates.
+5. **Store**, Inserts matched draft into `reddit_response_queue` with template ID, blog URL, and customized response text.
+6. **Notify**, Sends 2-message Telegram notification: (1) thread link with subreddit + template label + detected state, (2) copy-paste reply draft with embedded blog URL.
 
-## Feature Flags — Priority B Workers
+## Feature Flags, Priority B Workers
 
 7 feature flags registered via migration `20260411e` (all enabled as of 2026-04-11). Runtime-toggleable via `feature_flags` table and `isFeatureEnabled()` in `src/lib/feature-flags.ts` (5-minute TTL cache, tier-scoped).
 
 | Flag Key | Worker |
-|----------|--------|
+|----------|------, |
 | `plea_deal_analyzer` | B1: Plea deal analysis |
 | `ach_matrix` | B2: Analysis of Competing Hypotheses matrix |
 | `adversarial_prosecution_sim` | B3: Multi-round prosecution simulation |
@@ -326,7 +326,7 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 
 ## Gotchas
 
-1. **Dual-mode Stripe requires BOTH keys.** When any tier has `live: true`, `STRIPE_SECRET_KEY_LIVE` and `STRIPE_WEBHOOK_SECRET_LIVE` must be set. Not validated at startup — only at first live payment.
+1. **Dual-mode Stripe requires BOTH keys.** When any tier has `live: true`, `STRIPE_SECRET_KEY_LIVE` and `STRIPE_WEBHOOK_SECRET_LIVE` must be set. Not validated at startup, only at first live payment.
 
 2. **CSP nonce disables static optimization.** Root layout reads `headers()` for nonce → all pages render dynamically. ISR `revalidate` controls data freshness, not page caching.
 
@@ -343,7 +343,7 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 ## Key Decisions
 
 | Decision | Chosen | Why | Status |
-|----------|--------|-----|--------|
+|----------|------, |---, |------, |
 | Configurable playbook pages | 1 `PlaybookSalesPage` component + 8 `PlaybookConfig` objects | Copy changes don't touch component code; new playbooks = new config | accepted |
 | Dual-mode Stripe | `TIER_CORE[slug].live` flag per tier | Launch DUI first, keep others in test mode safely | accepted |
 | Magic link auth | No passwords; token in cookie | Criminal defendants won't remember passwords under stress | accepted |
@@ -375,11 +375,11 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 - Shared skills at `~/.claude/skills/`
 
 ### Forbidden
-- NEVER give legal advice — always disclaim "information, not legal advice" (UPL compliance)
+- NEVER give legal advice, always disclaim "information, not legal advice" (UPL compliance)
 - NEVER skip the UPL evaluation gate before delivery
-- NEVER use `vercel deploy` CLI — deploys via `git push origin master` only
-- NEVER run `vercel env pull` — overwrites `.env.local`
-- NEVER touch Cloudflare/domain settings — already configured
+- NEVER use `vercel deploy` CLI, deploys via `git push origin master` only
+- NEVER run `vercel env pull`, overwrites `.env.local`
+- NEVER touch Cloudflare/domain settings, already configured
 - NEVER read TasteDrop, Cloud Culture, video-factory, or marketing-hq repos
 
 ## Environment Variables
@@ -391,7 +391,7 @@ All vars verified present in `src/` via `process.env.*` grep. Common trap: the c
 | `NEXT_PUBLIC_SUPABASE_URL` | All API routes | Supabase project URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | All API routes | Full DB access (bypasses RLS) |
 | `STRIPE_SECRET_KEY` | checkout, webhook (test mode) | Stripe API access (test) |
-| `STRIPE_SECRET_KEY_LIVE` | checkout, webhook (live mode) | Stripe API access (live) — required when any tier has `live: true` |
+| `STRIPE_SECRET_KEY_LIVE` | checkout, webhook (live mode) | Stripe API access (live), required when any tier has `live: true` |
 | `STRIPE_WEBHOOK_SECRET` | webhook | Verify Stripe webhook signatures (test) |
 | `STRIPE_WEBHOOK_SECRET_LIVE` | webhook | Verify Stripe webhook signatures (live) |
 | `RESEND_API_KEY` | email.ts, admin/reply, resend-inbound | Send transactional emails |
@@ -403,13 +403,13 @@ All vars verified present in `src/` via `process.env.*` grep. Common trap: the c
 | `ADMIN_PASSWORD` | middleware, auth/guards | Admin password for `/api/admin/*` + `/api/operator/*` (timing-safe compare) |
 | `NEXT_PUBLIC_SITE_URL` | Email links, redirects | Canonical site URL (default `https://imnotanattorney.com`) |
 | `ANTHROPIC_API_KEY` | Edge Function, blog-generation, demand/classify-llm, batch-api | Claude API for report/content generation |
-| `CRON_AUTH_TOKEN` | middleware, auth/guards, all cron routes | Bearer auth for cron requests (NOT `CRON_SECRET` — common confusion) |
+| `CRON_AUTH_TOKEN` | middleware, auth/guards, all cron routes | Bearer auth for cron requests (NOT `CRON_SECRET`, common confusion) |
 | `SUPABASE_ACCESS_TOKEN` | Supabase CLI, scripts | Edge function + migration deployment (from `../ImNotAnAttorney/.env.local`) |
 | `CRONJOB_API_KEY` | scripts/setup-cronjob-org.js | cron-job.org job registration |
 | `INDEXNOW_KEY` | blog-generation/publish, /api/indexnow | IndexNow search engine ping |
 | `GITHUB_TOKEN` | blog-generation/publish | Git commit of generated blog posts |
-| `TWILIO_ACCOUNT_SID` | sms.ts (backup) | Twilio SID — backup provider, 10DLC pending |
-| `TWILIO_AUTH_TOKEN` | sms.ts (backup) | Twilio auth — backup provider |
+| `TWILIO_ACCOUNT_SID` | sms.ts (backup) | Twilio SID, backup provider, 10DLC pending |
+| `TWILIO_AUTH_TOKEN` | sms.ts (backup) | Twilio auth, backup provider |
 | `TWILIO_FROM_NUMBER` | sms.ts (backup) | Twilio sender phone (+16204624622) |
 | `NEXT_PUBLIC_GA_ID` | CookieConsent | Google Analytics ID |
 | `NEXT_PUBLIC_META_PIXEL_ID` | CookieConsent | Meta (FB) pixel ID |
@@ -423,19 +423,19 @@ All vars verified present in `src/` via `process.env.*` grep. Common trap: the c
 
 - **Trigger:** `git push origin master` → GitHub integration → Vercel auto-deploy
 - **Team ID:** `team_UEzHXQJJI46GEPEYeFspl1Pq`
-- **Production project:** `imnotanattorney` (prj_zqxNgG9xcM235bnKRoEgP5kBOEEr) — this serves `imnotanattorney.com`
-- **DO NOT USE:** `imnotanattorney-web` (prj_fgx7OUbudHbS2WrfoaLKb07jJAnB) — duplicate project, unlinked from GitHub Apr 4 2026
+- **Production project:** `imnotanattorney` (prj_zqxNgG9xcM235bnKRoEgP5kBOEEr), this serves `imnotanattorney.com`
+- **DO NOT USE:** `imnotanattorney-web` (prj_fgx7OUbudHbS2WrfoaLKb07jJAnB), duplicate project, unlinked from GitHub Apr 4 2026
 - **Edge Functions:** Deploy separately via Supabase CLI (`supabase functions deploy`)
-- **Env vars:** `vercel env add VAR_NAME production --token $VERCEL_TOKEN` (CLI targets correct project via `.vercel/project.json`)
+- **Env vars:** `vercel env add VAR_NAME production,token $VERCEL_TOKEN` (CLI targets correct project via `.vercel/project.json`)
 
 ### Deploy Guardrails
 
-Historical rules — violating any of these has broken production before. Rules 2/6/7 from the original 7 are already covered in Forbidden and Deployment above.
+Historical rules, violating any of these has broken production before. Rules 2/6/7 from the original 7 are already covered in Forbidden and Deployment above.
 
-- **NEVER deploy to `tastedrops-projects`** — that is TasteDrop's account, completely separate business.
-- **NEVER run `vercel env pull`** — it overwrites `.env.local` with only the vars in Vercel (drops any local-only vars).
-- **NEVER delete `.vercel/` directory** — it links the CLI to the correct project (`imnotanattorney`, not `imnotanattorney-web`).
-- **NEVER touch domain settings** — `imnotanattorney.com` is routed via Cloudflare A records, already configured.
+- **NEVER deploy to `tastedrops-projects`**, that is TasteDrop's account, completely separate business.
+- **NEVER run `vercel env pull`**, it overwrites `.env.local` with only the vars in Vercel (drops any local-only vars).
+- **NEVER delete `.vercel/` directory**, it links the CLI to the correct project (`imnotanattorney`, not `imnotanattorney-web`).
+- **NEVER touch domain settings**, `imnotanattorney.com` is routed via Cloudflare A records, already configured.
 - **Verify account before any Vercel CLI operation:** `npx vercel whoami` must show `rahim0kapadia-1967`.
 
 ## Maintenance Rules
@@ -443,12 +443,12 @@ Historical rules — violating any of these has broken production before. Rules 
 - **On component add/remove:** Update Component Map above
 - **On subsystem change:** Update that subsystem's CONTEXT.md, not this file
 - **On new external dependency:** Update External Dependencies
-- **On architecture decision:** Add row to Key Decisions (never modify — supersede)
+- **On architecture decision:** Add row to Key Decisions (never modify, supersede)
 - **On boundary change:** Update Boundaries section
-- **On invariant change:** Update Architectural Invariants (major event — requires review)
+- **On invariant change:** Update Architectural Invariants (major event, requires review)
 - **On new cross-cutting pattern:** Update Cross-Cutting Concerns
 - **New gotcha discovered:** Add to Gotchas (most impactful first)
 - **Deep detail needed:** DB schema → `supabase/SCHEMA.md`; case status state machine → `supabase/CONTEXT.md`; email sequences → `src/lib/CONTEXT.md`; env vars → this file
 - **On any code change:** `node docs/verify-architecture.js` (automated via CI on pull requests)
-- **Verification script:** `docs/verify-architecture.js` — auto-generated, do not edit manually
+- **Verification script:** `docs/verify-architecture.js`, auto-generated, do not edit manually
 - **Last full verification:** 2026-04-14

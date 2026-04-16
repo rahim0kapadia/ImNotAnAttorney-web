@@ -3,7 +3,7 @@
 **Topic:** Judge patterns as public information for defense strategy
 **Format:** talking head + data visualization + text overlay
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + investigative journalism-style beat
+**Trending sound suggestion:** Original audio, voiceover + investigative journalism-style beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -18,7 +18,7 @@
 ## Body
 [SECOND 3-12]
 **Visual**: Two judge profiles side by side (names redacted). Judge A: "Suppression: 65%. Sentences below guideline: 40%." Judge B: "Suppression: 8%. Sentences above guideline: 72%."
-**Audio/Voiceover**: "Judge patterns aren't secret. Sentencing data, motion rulings, trial outcomes -- this information is available through court records and legal databases. An attorney who knows your judge's tendencies can adjust strategy accordingly. File the motions this judge actually grants. Emphasize the arguments this judge finds persuasive. Avoid the tactics this judge penalizes."
+**Audio/Voiceover**: "Judge patterns aren't secret. Sentencing data, motion rulings, trial outcomes, this information is available through court records and legal databases. An attorney who knows your judge's tendencies can adjust strategy accordingly. File the motions this judge actually grants. Emphasize the arguments this judge finds persuasive. Avoid the tactics this judge penalizes."
 **Text overlay**: "Judge A grants suppressions. Judge B doesn't. SAME MOTION. DIFFERENT OUTCOME."
 
 [SECOND 12-20]
@@ -32,7 +32,7 @@
 **Text overlay**: "ASK: Judge's patterns? Suppression history? Sentencing vs. guidelines? Prior appearances?"
 
 [SECOND 27-30]
-**Visual**: Judge's bench from the opening -- but now the data overlay shows "STRATEGY: TAILORED."
+**Visual**: Judge's bench from the opening, but now the data overlay shows "STRATEGY: TAILORED."
 **Text overlay**: "Know your judge. Ask your attorney. imnotanattorney.com"
 **Audio**: Clean resolution.
 
@@ -48,13 +48,13 @@ Follow for the questions that separate prepared attorneys from unprepared ones.
 - 0:27 "Know your judge. Ask your attorney."
 
 ## Caption
-Your judge has a public track record -- suppression grant rates, sentencing patterns, motion tendencies. This information is available. Your attorney should know it. If they haven't researched your judge, they're running a generic defense on your specific case. Ask them.
+Your judge has a public track record, suppression grant rates, sentencing patterns, motion tendencies. This information is available. Your attorney should know it. If they haven't researched your judge, they're running a generic defense on your specific case. Ask them.
 
 ## Hashtags
 #judgepatterns #criminaldefense #courtroom #sentencing #criminalcase #knowyourrights
 
 ---
 
-**Context**: Sourced from 7-things-criminal-justice-wont-tell-you. Judge intelligence is one of INNA's key product differentiators -- the Intelligence Brief ($497) includes judge research. This video introduces the concept that judge patterns are knowable and actionable, naturally funneling toward the product.
+**Context**: Sourced from 7-things-criminal-justice-wont-tell-you. Judge intelligence is one of INNA's key product differentiators, the Intelligence Brief ($497) includes judge research. This video introduces the concept that judge patterns are knowable and actionable, naturally funneling toward the product.
 **Loop strategy**: Opens with data overlays on the judge's bench, closes with "STRATEGY: TAILORED" overlay. Viewers rewatch to absorb the data comparison between judges.
-**KPI target**: Profile visits (this introduces INNA's unique value proposition -- judge intelligence -- driving curiosity about the service)
+**KPI target**: Profile visits (this introduces INNA's unique value proposition, judge intelligence, driving curiosity about the service)

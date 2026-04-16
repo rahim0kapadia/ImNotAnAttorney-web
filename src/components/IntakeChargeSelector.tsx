@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 
 /**
- * IntakeChargeSelector — Second-step charge picker within a category.
+ * IntakeChargeSelector, Second-step charge picker within a category.
  *
  * Receives a pre-fetched, pre-sorted list of charges (with optional
  * jurisdiction-specific statute numbers) from the parent.  Renders
@@ -97,7 +97,7 @@ export function IntakeChargeSelector({
     if (!jurisdiction || !charge.statute_number) return null;
     const parts: string[] = [`${jurisdiction} ${charge.statute_number}`];
     if (charge.offense_class) parts.push(charge.offense_class);
-    return parts.join(" — ");
+    return parts.join(", ");
   }
 
   return (

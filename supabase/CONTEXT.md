@@ -1,4 +1,4 @@
-# Database Layer — supabase/
+# Database Layer, supabase/
 
 > Supabase PostgreSQL: 50+ tables, 41 sequential migrations, RLS policies, 3 Edge Functions, and 3 storage buckets. Shared by all three INAA repos (web, engine, business-docs).
 
@@ -8,7 +8,7 @@
 
 | Table | Purpose |
 |-------|---------|
-| `orders` | Stripe order records: tier, amount, stripe_session_id, refund state, `updated_at` (added 2026-04-08). Standalone product columns: `standalone_product_slug`, `standalone_intake_token_hash` (SHA-256, added 2026-04-08), `standalone_intake` (jsonb), `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at`, `standalone_eval_results`. Legacy `standalone_intake_token` plaintext column retained in schema but no longer written — to be dropped in a follow-up migration. Refund clears all standalone report fields. |
+| `orders` | Stripe order records: tier, amount, stripe_session_id, refund state, `updated_at` (added 2026-04-08). Standalone product columns: `standalone_product_slug`, `standalone_intake_token_hash` (SHA-256, added 2026-04-08), `standalone_intake` (jsonb), `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at`, `standalone_eval_results`. Legacy `standalone_intake_token` plaintext column retained in schema but no longer written, to be dropped in a follow-up migration. Refund clears all standalone report fields. |
 | `cases` | One row per case service purchase. Central state machine: `pending → intake → processing → review → delivered` |
 | `intakes` | Case Decoder intake form submissions |
 | `ib_intakes` | Intelligence Brief Phase 2 intake submissions |
@@ -45,10 +45,10 @@
 
 ### Tier 9 Intelligence Tables (web-owned, populated by bulk scripts)
 
-Added 2026-04-09 via migration `20260409h_tier9_data_driven_intelligence.sql`. All 9 tables have RLS enabled with a permissive `service_all` policy (service role only — no user-facing reads). Populated by `scripts/bulk-master-extractor.mjs` (single-pass 50GB CSV extractor), `scripts/bulk-appeal-outcome-correlator.mjs`, and `scripts/bulk-similar-case-matcher.mjs`.
+Added 2026-04-09 via migration `20260409h_tier9_data_driven_intelligence.sql`. All 9 tables have RLS enabled with a permissive `service_all` policy (service role only, no user-facing reads). Populated by `scripts/bulk-master-extractor.mjs` (single-pass 50GB CSV extractor), `scripts/bulk-appeal-outcome-correlator.mjs`, and `scripts/bulk-similar-case-matcher.mjs`.
 
 | Table | Purpose | Queried by tiers | Source script |
-|-------|---------|-----------------|---------------|
+|-------|---------|---------------, |---------------|
 | `judge_quotes` | Attributable judicial quotations with topic classification + CourtListener source URLs | IB, X-Ray, WR, SR, Judge Report Card | bulk-master-extractor |
 | `sentencing_distributions` | Per-judge sentencing p25/median/p75 per charge slug | X-Ray, WR, SR, Judge Report Card | bulk-master-extractor |
 | `officer_reliability` | Cross-case officer credibility: testimony count, discredited count, Brady history | X-Ray, WR, SR, Officer Background Check | bulk-master-extractor |
@@ -63,11 +63,11 @@ Added 2026-04-09 via migration `20260409h_tier9_data_driven_intelligence.sql`. A
 
 **Tier inclusion rule (additive):** Each tier extends the tier below. IB gets judge quotes + appellate trends. X-Ray adds sentencing outliers + officer reliability. WR adds pairing matrix + bench/jury divergence + similar cases. SR adds co-defendant divergence + plea curves.
 
-**Standalone SKUs (Tier 9):** Judge Report Card ($197), Officer Background Check ($97), Similar Cases Analyzer ($297). These query Tier 9 tables directly — no prerequisite tier purchase needed. Defined in `src/lib/tiers.ts`, test mode (`live: false`).
+**Standalone SKUs (Tier 9):** Judge Report Card ($197), Officer Background Check ($97), Similar Cases Analyzer ($297). These query Tier 9 tables directly, no prerequisite tier purchase needed. Defined in `src/lib/tiers.ts`, test mode (`live: false`).
 
 ### Key Schema Notes
 - `cases.status` is the primary state machine. Valid transitions enforced at app layer, not DB. Full diagram + 19-status definitions + `ALLOWED_TRANSITIONS` below in the "Case Status State Machine" section.
-- `processing_jobs.case_id` links engine jobs back to `cases`. Engine never writes to `cases` directly — it writes job results; web cron reads them.
+- `processing_jobs.case_id` links engine jobs back to `cases`. Engine never writes to `cases` directly, it writes job results; web cron reads them.
 - RLS: all tables have RLS enabled. Service role key (bypasses RLS) used only in server-side API routes via `supabase/admin.ts`. Anon key never used server-side.
 
 ## Migration Pattern
@@ -83,8 +83,8 @@ supabase/migrations/
 - 62 migrations (mix of sequential numbering + date-prefixed from 2026-04-09)
 - Forward-only: never modify existing migrations
 - Each migration is idempotent (`IF NOT EXISTS`, `IF NOT EXISTS` for RLS policies)
-- Run locally: `npx supabase db push` (dev) or `npx supabase db push --db-url $PROD_URL` (prod)
-- Never drop columns with data — add nullable columns, migrate, then deprecate
+- Run locally: `npx supabase db push` (dev) or `npx supabase db push,db-url $PROD_URL` (prod)
+- Never drop columns with data, add nullable columns, migrate, then deprecate
 
 ## Edge Functions
 
@@ -110,13 +110,13 @@ supabase/functions/
 - If PASS: sets `cases.evaluation_status = 'passed'`, operator can deliver
 - If FAIL: sets `cases.evaluation_status = 'failed'`, blocks delivery, creates operator task with flagged passages
 
-### evaluate-report — teams in production vs CLI
+### evaluate-report, teams in production vs CLI
 
-The `evaluate-report` Edge Function in production implements only **2 teams** from the INAA evaluation framework: UPL compliance + Psychological Intelligence. This is intentional — both run inside a shared 150s Edge Function budget, and adding the other 5 teams (Legal, Defendant Experience, Conversion, Rendering, System Truth) would push total runtime past the hard kill.
+The `evaluate-report` Edge Function in production implements only **2 teams** from the INAA evaluation framework: UPL compliance + Psychological Intelligence. This is intentional, both run inside a shared 150s Edge Function budget, and adding the other 5 teams (Legal, Defendant Experience, Conversion, Rendering, System Truth) would push total runtime past the hard kill.
 
-The full **7-team framework** lives in the CLI tool at `ImNotAnAttorney/scripts/evaluate-report.mjs` (sibling business-docs repo). Invocation: `node evaluate-report.mjs --file <report.html> --teams upl,legal --model sonnet`. Use the CLI for pre-launch audits, post-fix re-runs, or any time the 5 missing teams matter. Source of truth for criteria and team definitions: `ImNotAnAttorney/system/EVALUATION-TEAM.md`.
+The full **7-team framework** lives in the CLI tool at `ImNotAnAttorney/scripts/evaluate-report.mjs` (sibling business-docs repo). Invocation: `node evaluate-report.mjs,file <report.html>,teams upl,legal,model sonnet`. Use the CLI for pre-launch audits, post-fix re-runs, or any time the 5 missing teams matter. Source of truth for criteria and team definitions: `ImNotAnAttorney/system/EVALUATION-TEAM.md`.
 
-If UPL eval exceeds 100s inside the Edge Function, the Psych eval is skipped and partial results are saved — both evals share the same 150s timeout.
+If UPL eval exceeds 100s inside the Edge Function, the Psych eval is skipped and partial results are saved, both evals share the same 150s timeout.
 
 ### generate-standalone
 - Called via fire-and-forget POST from `/api/intake/standalone/[slug]` (customer path) or `/api/generate/standalone` (operator retry)
@@ -127,8 +127,8 @@ If UPL eval exceeds 100s inside the Edge Function, the Psych eval is skipped and
   - **Wave 2 (life-impact, 5):** collateral-consequences, license-risk, custody-impact, immigration-impact, security-clearance
   - **Wave 3 (post-conviction HIGH UPL, 4):** expungement-research, sentence-reduction, appeal-viability, ineffective-counsel
   - **Wave 4 (Reddit net-new, 6):** attorney-performance-review, probation-violation-response, discovery-decoder, constructive-possession, self-surrender-prep, probation-rights
-- Architecture: `PRODUCT_META` map (slug -> name + price display), per-slug TypeScript interfaces for intake shape, `buildUserPrompt(slug, intake)` switch with 24 cases. System prompt is shared — UPL-safe + anti-hallucination + HTML output format.
-- Anti-hallucination rules baked into every prompt: "Do not fabricate statute citations, case names, or case numbers. If uncertain about a specific state's statute, say 'state law varies — verify current provisions with your attorney'". Free-text user inputs are wrapped in triple-quotes in the prompt; the `sanitizeText` function in the intake route strips incoming triple-quotes to block prompt injection via input escape.
+- Architecture: `PRODUCT_META` map (slug -> name + price display), per-slug TypeScript interfaces for intake shape, `buildUserPrompt(slug, intake)` switch with 24 cases. System prompt is shared, UPL-safe + anti-hallucination + HTML output format.
+- Anti-hallucination rules baked into every prompt: "Do not fabricate statute citations, case names, or case numbers. If uncertain about a specific state's statute, say 'state law varies, verify current provisions with your attorney'". Free-text user inputs are wrapped in triple-quotes in the prompt; the `sanitizeText` function in the intake route strips incoming triple-quotes to block prompt injection via input escape.
 - HIGH UPL products (expungement-research, sentence-reduction, appeal-viability, ineffective-counsel, custody-impact) have extra-cautious framing: "factors that MAY be relevant" never "you should", "based on published criteria, you MAY be eligible" never "you are eligible".
 - Calls Claude Sonnet (configurable via `CLAUDE_MODEL` env var, default `claude-sonnet-4-6`)
 - Generates cryptographic report token (16 bytes hex); hashes with SHA-256
@@ -136,19 +136,19 @@ If UPL eval exceeds 100s inside the Edge Function, the Psych eval is skipped and
 - Updates `orders` with: `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at` (1 year)
 - Sends delivery email to customer with `/report/standalone/{plaintextToken}` link
 - On failure: updates order status, emails operator with retry curl command
-- **Deploy after adding new products:** `npx supabase functions deploy generate-standalone --project-ref jxjbjmgdukwkoclydqdr --no-verify-jwt`
+- **Deploy after adding new products:** `npx supabase functions deploy generate-standalone,project-ref jxjbjmgdukwkoclydqdr,no-verify-jwt`
 
 ### Deploy Edge Functions
 ```bash
-npx supabase functions deploy generate-report --project-ref jxjbjmgdukwkoclydqdr
-npx supabase functions deploy evaluate-report --project-ref jxjbjmgdukwkoclydqdr
-npx supabase functions deploy generate-standalone --project-ref jxjbjmgdukwkoclydqdr --no-verify-jwt
+npx supabase functions deploy generate-report,project-ref jxjbjmgdukwkoclydqdr
+npx supabase functions deploy evaluate-report,project-ref jxjbjmgdukwkoclydqdr
+npx supabase functions deploy generate-standalone,project-ref jxjbjmgdukwkoclydqdr,no-verify-jwt
 ```
 
 ## Storage Buckets
 
 | Bucket | Purpose | Access |
-|--------|---------|--------|
+|------, |---------|------, |
 | `discovery-files` | Customer-uploaded case documents (PDFs, images) | Private: service role only |
 | `charge-packs` | Playbook PDFs for download | Private: download token required |
 | `standalone-reports` | Generated HTML reports for standalone research products (Employment Impact, etc.) | Private: token-hash lookup via report viewer. 5MB limit, `text/html` only. |
@@ -157,12 +157,12 @@ npx supabase functions deploy generate-standalone --project-ref jxjbjmgdukwkocly
 
 All tables default to DENY. Policies added per table:
 ```sql
--- Customer reads own cases only
+, Customer reads own cases only
 CREATE POLICY "customer_read_own" ON cases
   FOR SELECT USING (customer_email = auth.jwt() ->> 'email');
 
--- Service role bypasses all RLS (used by API routes via supabase/admin.ts)
--- No policy needed — service role is superuser
+, Service role bypasses all RLS (used by API routes via supabase/admin.ts)
+, No policy needed, service role is superuser
 ```
 
 For tables with no user-level access (operator-only like `processing_jobs`): no SELECT policy for anon/customer, only service role.
@@ -173,11 +173,11 @@ For tables with no user-level access (operator-only like `processing_jobs`): no 
 - **Add an Edge Function:** Create `supabase/functions/your-function/index.ts`. Follow the `generate-report` pattern: import Supabase client + Anthropic SDK, handle CORS, validate auth header. Deploy with `npx supabase functions deploy your-function`.
 - **Add a new table:** Write migration SQL with RLS enabled (`ALTER TABLE x ENABLE ROW LEVEL SECURITY`). Add policies for customer access if needed. Add service role policy if operator-only. Reference from web via `supabase/admin.ts` (service role client).
 - **Debug a failing Edge Function:** Check Supabase dashboard → Edge Functions → Logs. Common failures: missing env var (`ANTHROPIC_API_KEY` not set in Supabase secrets), timeout (Opus calls can take 60s+, set timeout to 150s), CORS (add origin header on non-browser calls).
-- **Add Supabase secret (env var):** `npx supabase secrets set VAR_NAME=value --project-ref jxjbjmgdukwkoclydqdr`
+- **Add Supabase secret (env var):** `npx supabase secrets set VAR_NAME=value,project-ref jxjbjmgdukwkoclydqdr`
 
 ## Case Status State Machine
 
-`cases.status` is the primary state machine for every paid service order. Valid transitions are enforced at the app layer (`src/lib/types/operator.ts`), not at the database — the DB stores the status as a plain string. Engine pipeline phases were added in the v4 restructure (March 2026) so the state machine covers Case Decoder, Intelligence Brief, and the full X-Ray / War Room / Situation Room discovery flow.
+`cases.status` is the primary state machine for every paid service order. Valid transitions are enforced at the app layer (`src/lib/types/operator.ts`), not at the database, the DB stores the status as a plain string. Engine pipeline phases were added in the v4 restructure (March 2026) so the state machine covers Case Decoder, Intelligence Brief, and the full X-Ray / War Room / Situation Room discovery flow.
 
 ```
                                     ┌──────────────┐
@@ -226,21 +226,21 @@ For tables with no user-level access (operator-only like `processing_jobs`): no 
 ### Status Definitions
 
 | Status | Meaning | Tier(s) | Next Step |
-|--------|---------|---------|-----------|
+|------, |---------|---------|---------, |
 | `awaiting-intake` | Paid but no intake form yet | All services | Customer fills intake |
 | `intake` | Intake linked, ready for processing | CD, IB | Auto-generates report |
 | `generating` | Edge function running (CD) | case-decoder | Wait (30min max) |
 | `auto-generating` | IB Phase A running | intelligence-brief | Wait (30min max) |
 | `compiling` | IB Phase B running | intelligence-brief | Wait (30min max) |
-| `researching` | Judge research pending | intelligence-brief | Optional — Phase B can proceed |
+| `researching` | Judge research pending | intelligence-brief | Optional, Phase B can proceed |
 | `generation-failed` | Generation crashed / timed out | CD, IB | Operator retries |
 | `pending` | Discovery tier, waiting for upload | X-Ray+ | Customer uploads files |
 | `uploaded` | Files uploaded, not yet finalized | X-Ray+ | Customer finalizes |
 | `submitted` | Files finalized, ready for processing | X-Ray+ | Engine claims the job |
 | `processing` | Discovery pipeline running | X-Ray+ | Jobs complete → intelligence phase |
-| `intelligence` | Engine pipeline — intelligence extraction phase | X-Ray+ | → strategy or back to processing |
-| `strategy` | Engine pipeline — strategy synthesis phase | X-Ray+ | → packaging or back to intelligence |
-| `packaging` | Engine pipeline — final report packaging | X-Ray+ | → review or back to strategy |
+| `intelligence` | Engine pipeline, intelligence extraction phase | X-Ray+ | → strategy or back to processing |
+| `strategy` | Engine pipeline, strategy synthesis phase | X-Ray+ | → packaging or back to intelligence |
+| `packaging` | Engine pipeline, final report packaging | X-Ray+ | → review or back to strategy |
 | `review` | Report generated, awaiting operator approval | CD, IB, discovery | Operator reviews + delivers |
 | `delivered` | Report sent to customer | All | Drip sequence begins; War Room advances to `monitoring` |
 | `monitoring` | War Room post-delivery continuous updates | War Room, Situation Room | Engine docket_monitor worker sends weekly updates; transitions to `completed` on closure |
@@ -278,7 +278,7 @@ export const ALLOWED_TRANSITIONS: Record<string, string[]> = {
 };
 ```
 
-The 4 engine pipeline phases (`intelligence`, `strategy`, `packaging`, `monitoring`) were added when the X-Ray pipeline moved in-house in v4. The terminal `completed` status was added in 2026-04-09 to give War Room and Situation Room engagements a clean exit from `monitoring` (manually by operator, or automatically by cron Part 21 after 365 days from `delivered_at`). `refunded` and `cancelled` are not in the manual transitions map — they are set only by the Stripe webhook and the admin order-cancel flow respectively.
+The 4 engine pipeline phases (`intelligence`, `strategy`, `packaging`, `monitoring`) were added when the X-Ray pipeline moved in-house in v4. The terminal `completed` status was added in 2026-04-09 to give War Room and Situation Room engagements a clean exit from `monitoring` (manually by operator, or automatically by cron Part 21 after 365 days from `delivered_at`). `refunded` and `cancelled` are not in the manual transitions map, they are set only by the Stripe webhook and the admin order-cancel flow respectively.
 
 ## Data Flow
 
@@ -306,7 +306,7 @@ GET /api/cron/batch-poller ──────→ (inline)
 ## Key Constants
 
 | Constant | Value | File:Line |
-|----------|-------|-----------|
+|----------|-------|---------, |
 | Edge Function timeout | 150 seconds (hard kill) | `functions/generate-report/index.ts:6` |
 | Report model | `claude-opus-4-6` | `functions/generate-report/index.ts` |
 | Thinking budget | 16,000 tokens | `functions/generate-report/index.ts` |
@@ -329,18 +329,18 @@ GET /api/cron/batch-poller ──────→ (inline)
 - Partner routes → `partners`, `partner_referrals`, `partner_magic_links`
 
 **Exports to (web app reads from DB):**
-- `cases.report_html` — Edge Function writes, web reads for preview/delivery
-- `cases.eval_results` — Edge Function writes UPL results, web gates delivery
-- `cases.section_outputs` — IB Phase A sections, Phase B consumes
-- `operator_tasks` — Edge Functions create, operator dashboard reads
+- `cases.report_html`, Edge Function writes, web reads for preview/delivery
+- `cases.eval_results`, Edge Function writes UPL results, web gates delivery
+- `cases.section_outputs`, IB Phase A sections, Phase B consumes
+- `operator_tasks`, Edge Functions create, operator dashboard reads
 
 **Shared with engine repo (read/write):**
-- `processing_jobs` — engine writes job results, web reads via cron
-- `document_pages` — engine writes OCR output
-- `entity_extractions` — engine writes parsed entities
-- `findings` — engine writes analysis results
-- `job_cost_tracking` — engine writes token metrics
-- `cases` — web writes order data, engine links via case_id
+- `processing_jobs`, engine writes job results, web reads via cron
+- `document_pages`, engine writes OCR output
+- `entity_extractions`, engine writes parsed entities
+- `findings`, engine writes analysis results
+- `job_cost_tracking`, engine writes token metrics
+- `cases`, web writes order data, engine links via case_id
 
 ## Gotchas
 

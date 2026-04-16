@@ -27,7 +27,7 @@ try {
   );
   console.log("Backfill results:");
   for (const r of backfilled) console.log(`  ${r.source}: ${r.cnt} partners`);
-  if (backfilled.length === 0) console.log("  (no partner_applications with source found — column added but empty)");
+  if (backfilled.length === 0) console.log("  (no partner_applications with source found, column added but empty)");
 
   const total = await query("SELECT COUNT(*) as cnt FROM partners");
   const nullCount = await query("SELECT COUNT(*) as cnt FROM partners WHERE source IS NULL");

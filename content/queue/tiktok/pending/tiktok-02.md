@@ -3,7 +3,7 @@
 **Topic:** Public defender caseload crisis
 **Format:** talking head + text overlay + math visual
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + ticking clock ambient
+**Trending sound suggestion:** Original audio, voiceover + ticking clock ambient
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -32,7 +32,7 @@
 **Text overlay**: Questions appear as spoken.
 
 [SECOND 27-30]
-**Visual**: Calculator from the opening -- but now someone types a different equation: "YOUR QUESTIONS = MORE TIME"
+**Visual**: Calculator from the opening, but now someone types a different equation: "YOUR QUESTIONS = MORE TIME"
 **Text overlay**: "Make those 7 minutes count. imnotanattorney.com"
 **Audio**: Clock stops ticking.
 
@@ -47,13 +47,13 @@ Follow for more questions that hold the system accountable.
 - 0:27 "Make those 7 minutes count."
 
 ## Caption
-50 hours a week. 400 cases. That's 7.5 minutes per client. Your public defender isn't lazy -- the system is underfunded. But knowing that math changes what you do next. These 3 questions make those 7 minutes count.
+50 hours a week. 400 cases. That's 7.5 minutes per client. Your public defender isn't lazy, the system is underfunded. But knowing that math changes what you do next. These 3 questions make those 7 minutes count.
 
 ## Hashtags
 #publicdefender #criminaldefense #knowyourrights #criminaljustice #defendantrights
 
 ---
 
-**Context**: Sourced from how-your-attorney-makes-money and private-attorney-vs-public-defender. The math hook is concrete, shocking, and inarguable. Validates the frustration without demonizing public defenders -- which is the INNA brand distinction.
+**Context**: Sourced from how-your-attorney-makes-money and private-attorney-vs-public-defender. The math hook is concrete, shocking, and inarguable. Validates the frustration without demonizing public defenders, which is the INNA brand distinction.
 **Loop strategy**: Opens with calculator showing 7.5 minutes, closes with calculator showing "YOUR QUESTIONS = MORE TIME." The math-to-empowerment arc drives rewatches.
 **KPI target**: Shares (families of defendants and public defender clients will share this widely)

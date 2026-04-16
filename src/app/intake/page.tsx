@@ -13,25 +13,25 @@
  *   /contact CTA -> THIS PAGE
  *
  * Query parameters:
- *   ?interest=situation-room — Pre-selects Situation Room in service interest
- *   ?email=... — Pre-fills email (passed from checkout success)
- *   ?tier=... — Pre-selects the corresponding service interest checkbox
+ *   ?interest=situation-room, Pre-selects Situation Room in service interest
+ *   ?email=..., Pre-fills email (passed from checkout success)
+ *   ?tier=..., Pre-selects the corresponding service interest checkbox
  *
  * 3-Step wizard structure:
- *   Step 1 — Contact & Charges:
+ *   Step 1, Contact & Charges:
  *     Required: First name, email, jurisdiction level, charge type, state,
  *     court case number, time since arrest
  *     Conditional: Sex offense sub-routing, 3-4 charge-specific questions,
  *     county (required when jurisdiction_level = "state")
  *     Optional: Last name, phone, incident location, arrest circumstances
  *
- *   Step 2 — Your Situation:
+ *   Step 2, Your Situation:
  *     Required: Has attorney?
  *     Optional: Has discovery, co-defendants, attorney strategy, communication
  *     frequency, last attorney contact, arrest date, plea offered, plea terms,
  *     evidence types, court date, service interest, situation
  *
- *   Step 3 — One More Thing:
+ *   Step 3, One More Thing:
  *     Optional: One specific question (max 300 chars)
  *     Legal disclaimer + submit button
  *
@@ -63,7 +63,7 @@ import IntakeChargeQuestions from "@/components/IntakeChargeQuestions";
 // JURISDICTION + CHARGE TYPE CONFIGURATION
 // ============================================================
 
-/** Jurisdiction level — determines which charge categories and experts apply. */
+/** Jurisdiction level, determines which charge categories and experts apply. */
 const jurisdictionOptions = [
   { value: "federal", label: "Federal court" },
   { value: "state", label: "State or local court" },
@@ -440,7 +440,7 @@ const usStates = [
   "West Virginia","Wisconsin","Wyoming",
 ];
 
-/** Service interest options — maps to the 5 tiers + "help me decide" fallback. */
+/** Service interest options, maps to the 5 tiers + "help me decide" fallback. */
 const serviceInterests = [
   `${TIER_CORE["case-decoder"].name} (${TIER_CORE["case-decoder"].priceDisplay})`,
   `${TIER_CORE["intelligence-brief"].name} (${TIER_CORE["intelligence-brief"].priceDisplay})`,
@@ -450,7 +450,7 @@ const serviceInterests = [
   "Not sure \u2014 help me decide",
 ];
 
-/** How law enforcement got involved — helps determine applicable motions. */
+/** How law enforcement got involved, helps determine applicable motions. */
 const arrestCircumstances = [
   "Traffic stop",
   "Search warrant",
@@ -461,7 +461,7 @@ const arrestCircumstances = [
   "Other",
 ];
 
-/** Incident location — affects search/seizure analysis (home = higher 4A protection). */
+/** Incident location, affects search/seizure analysis (home = higher 4A protection). */
 const incidentLocations = [
   "Home / residence",
   "Vehicle",
@@ -471,7 +471,7 @@ const incidentLocations = [
   "Other",
 ];
 
-/** Co-defendant status — affects cooperation/snitch analysis in report. */
+/** Co-defendant status, affects cooperation/snitch analysis in report. */
 const coDefendantOptions = [
   "I was alone",
   "Co-defendant(s) charged",
@@ -479,7 +479,7 @@ const coDefendantOptions = [
   "I may have been misidentified / wrong target",
 ];
 
-/** Attorney strategy communication — feeds into Defense Milestone Score. */
+/** Attorney strategy communication, feeds into Defense Milestone Score. */
 const strategyOptions = [
   "Yes \u2014 attorney explained clearly",
   "Mentioned something but unclear",
@@ -488,7 +488,7 @@ const strategyOptions = [
   "It hasn\u2019t come up",
 ];
 
-/** When defendant last heard from attorney — key signal for report framing. */
+/** When defendant last heard from attorney, key signal for report framing. */
 const lastAttorneyContactOptions = [
   "This week",
   "1-2 weeks ago",
@@ -498,7 +498,7 @@ const lastAttorneyContactOptions = [
   "I\u2019ve never spoken with them",
 ];
 
-/** How often attorney communicates — key metric for accountability scoring. */
+/** How often attorney communicates, key metric for accountability scoring. */
 const communicationFrequencyOptions = [
   "Weekly",
   "Biweekly",
@@ -507,7 +507,7 @@ const communicationFrequencyOptions = [
   "Never returned calls",
 ];
 
-/** Plea deal status — if "yes" or "discussing", conditionally shows plea terms textarea. */
+/** Plea deal status, if "yes" or "discussing", conditionally shows plea terms textarea. */
 const pleaOfferedOptions = [
   { value: "yes", label: "Yes \u2014 a specific offer has been made" },
   { value: "discussing", label: "We\u2019re discussing options" },
@@ -515,7 +515,7 @@ const pleaOfferedOptions = [
   { value: "dont-know", label: "I don\u2019t know" },
 ];
 
-/** Evidence types (multi-select) — determines which attorney frameworks apply. */
+/** Evidence types (multi-select), determines which attorney frameworks apply. */
 const evidenceTypeOptions = [
   "Confidential Informant (CI)",
   "Surveillance (video, audio, photos)",
@@ -570,7 +570,7 @@ const STATE_ABBR: Record<string, string> = {
 };
 
 /**
- * IntakeForm — multi-step wizard component.
+ * IntakeForm, multi-step wizard component.
  * Reads URL params for pre-fill (interest, email, tier) and manages
  * a 3-step form with progressive disclosure and per-step validation gates.
  */
@@ -585,7 +585,7 @@ function IntakeForm() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // All form data in one state object — simplifies submission (entire object POSTed as JSON)
+  // All form data in one state object, simplifies submission (entire object POSTed as JSON)
   const [form, setForm] = useState<Record<string, string | string[]>>({
     firstName: "",
     lastName: "",
@@ -677,7 +677,7 @@ function IntakeForm() {
   const showSexOffenseSubRouting =
     form.chargeType === "sex-offense" && form.jurisdictionLevel !== "federal";
 
-  // Step validation gates — each step's "Continue" button is disabled until these are met
+  // Step validation gates, each step's "Continue" button is disabled until these are met
   const hasChargeSelection = taxonomyLoaded
     ? !!(form.commonChargeSlug || form.chargeFreeText)
     : !!form.chargeType;
@@ -766,7 +766,7 @@ function IntakeForm() {
           by attorney-client privilege.
         </p>
 
-        {/* PROGRESS BAR — 3-segment visual indicator of wizard progress */}
+        {/* PROGRESS BAR, 3-segment visual indicator of wizard progress */}
         <div className="mt-6 flex items-center gap-2">
           {[1, 2, 3].map((s) => (
             <div key={s} className="flex-1">
@@ -779,10 +779,10 @@ function IntakeForm() {
         </div>
 
         <form className="mt-10 space-y-8" onSubmit={(e) => { e.preventDefault(); if (step === 3) handleSubmit(); }}>
-          {/* STEP 1 — Contact info, jurisdiction, charge details, charge-specific Qs */}
+          {/* STEP 1, Contact info, jurisdiction, charge details, charge-specific Qs */}
           {step === 1 && (
             <>
-              {/* Who is filling this out? (Jayadev participatory defense — families navigate for loved ones) */}
+              {/* Who is filling this out? (Jayadev participatory defense, families navigate for loved ones) */}
               <fieldset>
                 <legend className="text-sm font-semibold text-zinc-300">
                   Before We Start
@@ -842,7 +842,7 @@ function IntakeForm() {
               <fieldset>
                 <legend className="text-sm font-semibold text-zinc-300">Your Case</legend>
 
-                {/* Jurisdiction level — determines which charge categories appear */}
+                {/* Jurisdiction level, determines which charge categories appear */}
                 <div className="mt-4">
                   <label htmlFor="jurisdictionLevel" className={labelClass}>
                     Is your case in federal or state court? <span className="text-red-400">*</span>
@@ -1114,7 +1114,7 @@ function IntakeForm() {
             </>
           )}
 
-          {/* STEP 2 — Attorney status, case details, evidence, plea info.    */}
+          {/* STEP 2, Attorney status, case details, evidence, plea info.    */}
           {/* Gate: hasAttorney must be selected.                              */}
           {step === 2 && (
             <>
@@ -1143,9 +1143,9 @@ function IntakeForm() {
                     onChange={(e) => setField("hasDiscovery", e.target.value)}
                     className={selectClass}>
                     <option value="">Select</option>
-                    <option value="yes">Yes — I&apos;ve received discovery documents</option>
-                    <option value="requested">Not yet — my attorney requested it</option>
-                    <option value="no">Not yet — discovery hasn&apos;t been discussed</option>
+                    <option value="yes">Yes, I&apos;ve received discovery documents</option>
+                    <option value="requested">Not yet, my attorney requested it</option>
+                    <option value="no">Not yet, discovery hasn&apos;t been discussed</option>
                     <option value="dont-know">I don&apos;t know</option>
                   </select>
                 </div>
@@ -1252,7 +1252,7 @@ function IntakeForm() {
                 </div>
               </fieldset>
 
-              {/* Employment & Mental Health — powers collateral consequence analysis */}
+              {/* Employment & Mental Health, powers collateral consequence analysis */}
               <fieldset>
                 <legend className="text-sm font-semibold text-zinc-300">
                   Background <span className="text-zinc-400 font-normal">(helps us identify hidden consequences)</span>
@@ -1363,7 +1363,7 @@ function IntakeForm() {
             </>
           )}
 
-          {/* STEP 3 — Optional specific question + disclaimer + submit.      */}
+          {/* STEP 3, Optional specific question + disclaimer + submit.      */}
           {step === 3 && (
             <>
               <fieldset>

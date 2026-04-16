@@ -1,4 +1,4 @@
-# Score Sharing Viral Loop — Design Spec
+# Score Sharing Viral Loop, Design Spec
 
 **Date:** 2026-03-28
 **Status:** Ready for implementation
@@ -6,7 +6,7 @@
 
 ## Problem
 
-The Defense Milestone Score quiz at `/score` is INAA's primary free lead magnet — zero friction, no email required, immediate personalized value. But it has **zero sharing mechanics**. Every quiz completion is a dead end. No way to share results, no social preview when linked, no viral coefficient.
+The Defense Milestone Score quiz at `/score` is INAA's primary free lead magnet, zero friction, no email required, immediate personalized value. But it has **zero sharing mechanics**. Every quiz completion is a dead end. No way to share results, no social preview when linked, no viral coefficient.
 
 The viral loops design doc estimates K-factor 0.09-0.25 for score sharing alone. With 15 products now LIVE and all copy/CRO hardened, distribution is the bottleneck. Score sharing is the lowest-effort, highest-impact growth lever available.
 
@@ -14,7 +14,7 @@ The viral loops design doc estimates K-factor 0.09-0.25 for score sharing alone.
 
 **Chosen:** Token-based server-side storage with lazy persistence (store only on share action)
 
-**Why:** Criminal defense is sensitive. URL params like `?score=72&band=Critical` leak data in browser history, server logs, social previews, and analytics tools. An opaque token (`/score/results/a7k2m9pq`) is privacy-first and aligns with INAA's trust-first brand. Lazy persistence preserves the "Your answers are not stored" promise — scores are only persisted when the user explicitly chooses to share.
+**Why:** Criminal defense is sensitive. URL params like `?score=72&band=Critical` leak data in browser history, server logs, social previews, and analytics tools. An opaque token (`/score/results/a7k2m9pq`) is privacy-first and aligns with INAA's trust-first brand. Lazy persistence preserves the "Your answers are not stored" promise, scores are only persisted when the user explicitly chooses to share.
 
 **Rejected alternatives:**
 - **URL params (client-side only):** Rejected because score data visible in URL, browser history, server logs. Privacy violation for criminal defense context. Also: no server-side OG image generation possible without a DB lookup.
@@ -56,7 +56,7 @@ User completes quiz → Score calculated client-side (existing)
 ### Modified Files
 
 | File | Change |
-|------|--------|
+|------|------, |
 | `src/app/score/page.tsx` | Add ShareScoreSection after observations |
 
 ## Database Schema
@@ -81,12 +81,12 @@ CREATE INDEX idx_score_results_expires ON score_results(expires_at);
 ```
 
 **Design notes:**
-- `token`: 12-character base64url string (`crypto.randomBytes(9).toString('base64url')`) — short enough for SMS, opaque enough for privacy.
+- `token`: 12-character base64url string (`crypto.randomBytes(9).toString('base64url')`), short enough for SMS, opaque enough for privacy.
 - `observations`: JSONB array of strings. Stored verbatim from ScoreResult.
 - `view_count`: Anonymous aggregate only. No viewer identity tracked.
 - `expires_at`: 90-day TTL. Rows can be cleaned up by a cron job or left to age (they're small).
-- No `user_id` or `email` column — score sharing is anonymous by design.
-- No RLS needed — results are public-read (anyone with the token can view). Writes go through the API route.
+- No `user_id` or `email` column, score sharing is anonymous by design.
+- No RLS needed, results are public-read (anyone with the token can view). Writes go through the API route.
 
 ## API: POST /api/score/share
 
@@ -135,7 +135,7 @@ Added to the score display area, between observations and email capture:
 │  Observations (existing)                 │
 ├─────────────────────────────────────────┤
 │  "Know someone facing charges?"          │
-│  "Send them this — 60 seconds, free,    │
+│  "Send them this, 60 seconds, free,    │
 │   no email required."                    │
 │                                          │
 │  [Share Your Score]  ← triggers POST     │
@@ -157,12 +157,12 @@ Added to the score display area, between observations and email capture:
 5. User shares via preferred channel
 
 **Share message templates:**
-- **SMS/WhatsApp:** "I just scored my criminal defense in 60 seconds — free, no email. Worth checking if you have a case: {url}"
-- **Email subject:** "Check this — are you getting a real defense?"
+- **SMS/WhatsApp:** "I just scored my criminal defense in 60 seconds, free, no email. Worth checking if you have a case: {url}"
+- **Email subject:** "Check this, are you getting a real defense?"
 - **Email body:** "I used this free tool to check if my attorney is hitting basic defense milestones. Takes 60 seconds, no email required: {url}"
 - **Twitter/X:** "Just scored my criminal defense readiness. Free, 60 seconds, no email: {url} #criminaldefense"
 
-Note: Share messages do NOT include the actual score number. Privacy-first — recipients see the score only when they click through.
+Note: Share messages do NOT include the actual score number. Privacy-first, recipients see the score only when they click through.
 
 ## Results Page: `/score/results/[token]`
 
@@ -178,7 +178,7 @@ Fetches the score result from Supabase by token. If token not found or expired, 
 ├─────────────────────────────────────────┤
 │  "Defense Milestone Score"               │
 │                                          │
-│  [Score Arc: 72/100 — Adequate]          │
+│  [Score Arc: 72/100, Adequate]          │
 │  (same animated arc as score page)       │
 │                                          │
 │  "Someone shared their score with you.   │
@@ -227,8 +227,8 @@ Fetches the score result from Supabase by token. If token not found or expired, 
 
 ```typescript
 export const metadata = {
-  title: "Defense Milestone Score — ImNotAnAttorney",
-  description: "Someone scored their criminal defense readiness. Check yours — free, 60 seconds, no email required.",
+  title: "Defense Milestone Score, ImNotAnAttorney",
+  description: "Someone scored their criminal defense readiness. Check yours, free, 60 seconds, no email required.",
 };
 ```
 
@@ -246,12 +246,12 @@ export const metadata = {
 
 ## What This Does NOT Include
 
-- **No login/account required** — zero friction for both sharer and recipient
-- **No referral tracking** — this is viral awareness, not commission tracking (that's the bondsman referral system)
-- **No email capture on results page** — keep it clean. CTA is "take the quiz yourself." Email capture happens on THEIR score page.
-- **No score comparison** ("average defendant scores 42") — deferred until we have volume for meaningful aggregates
-- **No mid-article share triggers or exit-intent** — separate viral loop enhancements (Loop 3 in viral loops doc)
-- **No cron for expired result cleanup** — rows are tiny (< 1KB each). Add cron when table exceeds 100K rows.
+- **No login/account required**, zero friction for both sharer and recipient
+- **No referral tracking**, this is viral awareness, not commission tracking (that's the bondsman referral system)
+- **No email capture on results page**, keep it clean. CTA is "take the quiz yourself." Email capture happens on THEIR score page.
+- **No score comparison** ("average defendant scores 42"), deferred until we have volume for meaningful aggregates
+- **No mid-article share triggers or exit-intent**, separate viral loop enhancements (Loop 3 in viral loops doc)
+- **No cron for expired result cleanup**, rows are tiny (< 1KB each). Add cron when table exceeds 100K rows.
 
 ## Testing Strategy
 
@@ -264,7 +264,7 @@ export const metadata = {
 ## Success Metrics
 
 | Metric | Baseline | Target (30 days) |
-|--------|----------|-------------------|
+|------, |----------|-------------------|
 | Score quiz share rate | 0% (no share button) | 10-15% |
 | Shared link click-through rate | N/A | 20-30% |
 | Recipient quiz completion rate | N/A | 40-50% |

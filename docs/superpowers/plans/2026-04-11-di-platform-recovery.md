@@ -1,27 +1,27 @@
-# Data Intelligence Platform — Recovery + Phase 1 Completion Plan
+# Data Intelligence Platform, Recovery + Phase 1 Completion Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Complete Phase 0 (populate bench_jury_divergence, fix data quality), save migration tracking files, then create 5 ingestion scripts to populate Phase 1 external intelligence tables with free public data.
 
-**Architecture:** Fix-forward approach — production has all Phase 1 tables (applied by crashed session) + all product code extensions (query.ts/render.ts already integrated). Remaining work: data quality fixes, migration file tracking, ingestion scripts for 5 free external data sources, SCHEMA.md docs.
+**Architecture:** Fix-forward approach, production has all Phase 1 tables (applied by crashed session) + all product code extensions (query.ts/render.ts already integrated). Remaining work: data quality fixes, migration file tracking, ingestion scripts for 5 free external data sources, SCHEMA.md docs.
 
 **Tech Stack:** Node.js ESM scripts following `scripts/bulk-*.mjs` pattern, Supabase Management API for SQL, PostgREST for data reads, web scraping (cheerio) for Brady/Giglio, CSV parsing for NPI/BJS/Exoneration, Python pyreadstat for USSC SAS files.
 
 **Spec:** `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\specs\2026-04-11-di-platform-recovery-design.md`
 
-**Previous plan (stale):** `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\plans\2026-04-11-data-intelligence-phase0-phase1.md` — superseded by this plan. Original had 23 tasks; triage found 15 already done.
+**Previous plan (stale):** `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\plans\2026-04-11-data-intelligence-phase0-phase1.md`, superseded by this plan. Original had 23 tasks; triage found 15 already done.
 
 ---
 
-## Phase 0 — Data Quality + Migration Tracking
+## Phase 0, Data Quality + Migration Tracking
 
 ### Task 1: Save migration file to disk (tracking what's already applied)
 
 **Files:**
 - Create: `supabase/migrations/20260411f_external_intelligence_layer.sql`
 
-**IMPORTANT:** This file documents what's ALREADY in production. All statements use IF NOT EXISTS — idempotent on both fresh and existing databases. This is required by the "migration file before apply" rule.
+**IMPORTANT:** This file documents what's ALREADY in production. All statements use IF NOT EXISTS, idempotent on both fresh and existing databases. This is required by the "migration file before apply" rule.
 
 - [ ] **Step 1: Create the migration file**
 
@@ -30,7 +30,7 @@ Create `supabase/migrations/20260411f_external_intelligence_layer.sql` with the 
 1. `CREATE EXTENSION IF NOT EXISTS pg_trgm;`
 2. 8 new tables (all `CREATE TABLE IF NOT EXISTS`): officer_external_intel, judge_sentencing_patterns, prosecution_profiles, outcome_benchmarks, exoneration_patterns, forensic_lab_profiles, citation_authority, data_source_freshness
 3. co_defendant_analysis recreation (`CREATE TABLE IF NOT EXISTS`)
-4. `ALTER TABLE verified_case_law ADD COLUMN IF NOT EXISTS citation_depth integer, ADD COLUMN IF NOT EXISTS authority_score numeric;` — NOTE: uses `verified_case_law` NOT `statute_case_law`
+4. `ALTER TABLE verified_case_law ADD COLUMN IF NOT EXISTS citation_depth integer, ADD COLUMN IF NOT EXISTS authority_score numeric;`, NOTE: uses `verified_case_law` NOT `statute_case_law`
 5. `ALTER TABLE officer_reliability ADD COLUMN IF NOT EXISTS external_intel_id uuid REFERENCES officer_external_intel(id), ADD COLUMN IF NOT EXISTS brady_status text, ADD COLUMN IF NOT EXISTS decertified boolean DEFAULT false;`
 6. RLS policies with `IF NOT EXISTS` guards (DO $$ block pattern)
 
@@ -54,7 +54,7 @@ SUPABASE_ACCESS_TOKEN=$(grep SUPABASE_ACCESS_TOKEN C:/Users/email/projects/ImNot
   node scripts/apply-pending-sql.mjs <(echo "SELECT column_name, data_type FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'verified_case_law' AND column_name IN ('citation_depth', 'authority_score');")
 ```
 
-Expected: 2 rows — citation_depth (integer), authority_score (numeric)
+Expected: 2 rows, citation_depth (integer), authority_score (numeric)
 
 - [ ] **Step 4: Commit**
 
@@ -81,18 +81,18 @@ judge_quotes (64,730 → ~32,365) and sentencing_distributions (244 → ~122) we
 Create `supabase/migrations/20260411g_dedup_tier9_data.sql`:
 
 ```sql
--- Dedup Tier 9 tables — judge_quotes and sentencing_distributions were doubled
--- by a crashed session that re-applied INSERT SQL on top of existing data.
--- Uses ctid to identify physical duplicates (keeps one copy per unique combo).
+, Dedup Tier 9 tables, judge_quotes and sentencing_distributions were doubled
+, by a crashed session that re-applied INSERT SQL on top of existing data.
+, Uses ctid to identify physical duplicates (keeps one copy per unique combo).
 
--- judge_quotes: dedup on (judge_id, quote, cluster_id)
+, judge_quotes: dedup on (judge_id, quote, cluster_id)
 DELETE FROM judge_quotes a USING judge_quotes b
 WHERE a.ctid > b.ctid
   AND a.judge_id = b.judge_id
   AND a.quote = b.quote
   AND COALESCE(a.cluster_id, '') = COALESCE(b.cluster_id, '');
 
--- sentencing_distributions: dedup on (judge_id, jurisdiction, charge_slug)
+, sentencing_distributions: dedup on (judge_id, jurisdiction, charge_slug)
 DELETE FROM sentencing_distributions a USING sentencing_distributions b
 WHERE a.ctid > b.ctid
   AND COALESCE(a.judge_id::text, '') = COALESCE(b.judge_id::text, '')
@@ -128,22 +128,22 @@ judge_quotes: 64,730 → ~32,365. sentencing_distributions: 244 → ~122."
 
 ---
 
-### Task 3: Re-run bench_jury_divergence with --apply
+### Task 3: Re-run bench_jury_divergence with,apply
 
 **Files:**
 - Read: `scripts/bulk-bench-jury-divergence.mjs` (already has pagination fix + lower threshold + relax_quotes)
 
-The dry-run collected 954 classified results from 2.5M rows before csv-parse hit a quote error. The try/catch should let the --apply run proceed with collected data.
+The dry-run collected 954 classified results from 2.5M rows before csv-parse hit a quote error. The try/catch should let the,apply run proceed with collected data.
 
-- [ ] **Step 1: Run with --apply**
+- [ ] **Step 1: Run with,apply**
 
 ```bash
-cd C:/Users/email/projects/ImNotAnAttorney-web && node scripts/bulk-bench-jury-divergence.mjs --apply 2>&1 | tail -50
+cd C:/Users/email/projects/ImNotAnAttorney-web && node scripts/bulk-bench-jury-divergence.mjs,apply 2>&1 | tail -50
 ```
 
-Timeout: 10 minutes (streams 50GB CSV). Expected: generates SQL + applies via Management API. The CSV parse error at ~2.5M rows is expected — the catch handler proceeds with collected data.
+Timeout: 10 minutes (streams 50GB CSV). Expected: generates SQL + applies via Management API. The CSV parse error at ~2.5M rows is expected, the catch handler proceeds with collected data.
 
-If the script produces 0 divergences (all 954 classified opinions had same trial type), skip this task — the table will be populated when more judge data accumulates.
+If the script produces 0 divergences (all 954 classified opinions had same trial type), skip this task, the table will be populated when more judge data accumulates.
 
 - [ ] **Step 2: Verify row count**
 
@@ -165,14 +165,14 @@ git commit -m "fix(tier9): bench_jury_divergence populated after pagination + th
 
 ---
 
-## Phase 1 — External Data Ingestion Scripts
+## Phase 1, External Data Ingestion Scripts
 
 ### Task 4: Brady/Giglio List scraper → officer_external_intel
 
 **Files:**
 - Create: `scripts/ingest-brady-giglio.mjs`
 
-**Data source:** https://giglio-bradylist.com/ — free, no API. HTML tables listing officers with Brady/Giglio disclosures by state.
+**Data source:** https://giglio-bradylist.com/, free, no API. HTML tables listing officers with Brady/Giglio disclosures by state.
 
 **Dependency:** `npm install cheerio` (HTML parser)
 
@@ -195,8 +195,8 @@ Create `scripts/ingest-brady-giglio.mjs`:
  *
  * Usage:
  *   node scripts/ingest-brady-giglio.mjs              # Dry-run (generate SQL)
- *   node scripts/ingest-brady-giglio.mjs --apply      # Generate + apply
- *   node scripts/ingest-brady-giglio.mjs --limit 50   # Test with 50 records
+ *   node scripts/ingest-brady-giglio.mjs,apply      # Generate + apply
+ *   node scripts/ingest-brady-giglio.mjs,limit 50   # Test with 50 records
  */
 import fs from "fs";
 import path from "path";
@@ -213,8 +213,8 @@ const OUTPUT_DIR = path.join(PROJECT_ROOT, "data", "bulk-verify", "external-inte
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const args = process.argv.slice(2);
-const dryRun = !args.includes("--apply");
-const limitIdx = args.indexOf("--limit");
+const dryRun = !args.includes(", apply");
+const limitIdx = args.indexOf(", limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
@@ -262,7 +262,7 @@ async function main() {
   const $ = cheerio.load(mainHtml);
   const records = [];
 
-  // Parse officer entries from tables — structure varies by site version.
+  // Parse officer entries from tables, structure varies by site version.
   // Look for table rows with officer name, agency, state, reason.
   $("table tr").each((_, row) => {
     const cells = $(row).find("td");
@@ -280,7 +280,7 @@ async function main() {
 
   console.log(`Parsed ${records.length} officer records from Brady/Giglio list`);
   if (records.length === 0) {
-    console.log("No records found — site structure may have changed. Check HTML manually.");
+    console.log("No records found, site structure may have changed. Check HTML manually.");
     process.exit(1);
   }
 
@@ -307,7 +307,7 @@ async function main() {
   console.log(`\nWrote ${count} UPSERT statements to ${outputFile}`);
 
   if (dryRun) {
-    console.log("Dry run complete. Run with --apply to execute.");
+    console.log("Dry run complete. Run with,apply to execute.");
     return;
   }
 
@@ -344,17 +344,17 @@ main().catch(err => { console.error(err); process.exit(1); });
 - [ ] **Step 3: Test with dry-run**
 
 ```bash
-node scripts/ingest-brady-giglio.mjs --limit 10
+node scripts/ingest-brady-giglio.mjs,limit 10
 ```
 
 Expected: "Parsed N officer records" + "Wrote 10 UPSERT statements"
 
 If the site structure changed and 0 records parse, save the HTML to `data/bulk-verify/external-intel/brady-giglio-cache.html` for manual inspection and adjust the cheerio selectors.
 
-- [ ] **Step 4: Run with --apply**
+- [ ] **Step 4: Run with,apply**
 
 ```bash
-node scripts/ingest-brady-giglio.mjs --apply
+node scripts/ingest-brady-giglio.mjs,apply
 ```
 
 - [ ] **Step 5: Verify**
@@ -381,7 +381,7 @@ UPSERTs on (officer_name_normalized, state, agency). Updates data_source_freshne
 **Files:**
 - Create: `scripts/ingest-npi.mjs`
 
-**Data source:** Invisible Institute National Police Index — free downloadable CSV from https://invisible.institute/national-police-index
+**Data source:** Invisible Institute National Police Index, free downloadable CSV from https://invisible.institute/national-police-index
 
 **Acquisition:** Download the CSV dataset. Save to `data/bulk-verify/external-intel/npi-data.csv`. The dataset contains officer employment history, complaints, and use-of-force data.
 
@@ -390,7 +390,7 @@ UPSERTs on (officer_name_normalized, state, agency). Updates data_source_freshne
 ```bash
 cd C:/Users/email/projects/ImNotAnAttorney-web/data/bulk-verify/external-intel
 # Check if dataset is directly downloadable
-curl -sL -o npi-data.csv "https://invisible.institute/national-police-index" --max-time 30 || echo "Direct download failed — may need to visit the page and download manually"
+curl -sL -o npi-data.csv "https://invisible.institute/national-police-index",max-time 30 || echo "Direct download failed, may need to visit the page and download manually"
 ```
 
 If direct download fails, the script should document the manual download URL and check for the file at startup.
@@ -412,8 +412,8 @@ Create `scripts/ingest-npi.mjs`:
  *
  * Usage:
  *   node scripts/ingest-npi.mjs              # Dry-run
- *   node scripts/ingest-npi.mjs --apply      # Apply
- *   node scripts/ingest-npi.mjs --limit 500  # Test with 500
+ *   node scripts/ingest-npi.mjs,apply      # Apply
+ *   node scripts/ingest-npi.mjs,limit 500  # Test with 500
  */
 import fs from "fs";
 import path from "path";
@@ -430,8 +430,8 @@ const OUTPUT_DIR = path.join(PROJECT_ROOT, "data", "bulk-verify", "external-inte
 const NPI_FILE = path.join(OUTPUT_DIR, "npi-data.csv");
 
 const args = process.argv.slice(2);
-const dryRun = !args.includes("--apply");
-const limitIdx = args.indexOf("--limit");
+const dryRun = !args.includes(", apply");
+const limitIdx = args.indexOf(", limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 
 function esc(str) {
@@ -464,7 +464,7 @@ async function main() {
     rowCount++;
     if (rowCount > limit) break;
 
-    // NPI CSV columns vary by version — adapt to actual headers
+    // NPI CSV columns vary by version, adapt to actual headers
     const name = row.full_name || row.officer_name || row.last_name
       ? `${row.first_name || ""} ${row.last_name || ""}`.trim()
       : null;
@@ -552,15 +552,15 @@ main().catch(err => { console.error(err); process.exit(1); });
 - [ ] **Step 3: Test with dry-run**
 
 ```bash
-node scripts/ingest-npi.mjs --limit 500
+node scripts/ingest-npi.mjs,limit 500
 ```
 
 If NPI CSV headers differ from expected, adapt the column name mapping in the script.
 
-- [ ] **Step 4: Run with --apply**
+- [ ] **Step 4: Run with,apply**
 
 ```bash
-node scripts/ingest-npi.mjs --apply
+node scripts/ingest-npi.mjs,apply
 ```
 
 - [ ] **Step 5: Commit**
@@ -581,7 +581,7 @@ Merges with Brady/Giglio data via UPSERT on (name, state, agency)."
 - Create: `scripts/ingest-ussc-sentencing.mjs`
 - Create: `scripts/convert-ussc-sas.py` (one-time SAS→CSV converter)
 
-**Data source:** https://www.ussc.gov/research/datafiles/commission-datafiles — free SAS/SPSS format. Individual case-level sentencing data FY2002-FY2025.
+**Data source:** https://www.ussc.gov/research/datafiles/commission-datafiles, free SAS/SPSS format. Individual case-level sentencing data FY2002-FY2025.
 
 **Acquisition:** Download the most recent fiscal year datafile (SAS format). Convert to CSV using Python. Save to `data/bulk-verify/external-intel/ussc-individual.csv`.
 
@@ -607,7 +607,7 @@ if len(sys.argv) < 3:
 df, meta = pyreadstat.read_sas7bdat(sys.argv[1])
 # Key columns: SENTMON (sentence months), ZONE (guideline zone), BOOTEFFT (departure),
 # NEWCNVTN (conviction type), DISTRICT, CIRCDIST, MONSEX, NEWRACE, XCRHISSR (crim history)
-# JUDGE (judge identifier — anonymized in some years)
+# JUDGE (judge identifier, anonymized in some years)
 cols_of_interest = [c for c in df.columns if c.upper() in (
     "SENTMON", "SENTTOT", "ZONE", "BOOTEFLT", "BOOTEFTT", "NEWCNVTN", "DISTRICT",
     "CIRCDIST", "MONSEX", "NEWRACE", "XCRHISSR", "JUDGE", "USSCIDN", "SENSPLT0",
@@ -624,7 +624,7 @@ print(f"Wrote {len(df)} rows to {sys.argv[2]}")
 
 ```bash
 # Download latest USSC datafile (check URL at ussc.gov/research/datafiles)
-# The URL changes yearly — verify current download link
+# The URL changes yearly, verify current download link
 cd C:/Users/email/projects/ImNotAnAttorney-web/data/bulk-verify/external-intel
 
 # After download:
@@ -643,7 +643,7 @@ Create `scripts/ingest-ussc-sentencing.mjs`:
  * Aggregates individual case-level USSC data by district to produce
  * judge sentencing pattern summaries (median/mean sentence, departure rates, etc).
  *
- * Note: USSC data is anonymized — no judge names. Aggregates by district instead.
+ * Note: USSC data is anonymized, no judge names. Aggregates by district instead.
  * judge_name_normalized uses the district name for matching.
  *
  * Prerequisites:
@@ -651,7 +651,7 @@ Create `scripts/ingest-ussc-sentencing.mjs`:
  *
  * Usage:
  *   node scripts/ingest-ussc-sentencing.mjs              # Dry-run
- *   node scripts/ingest-ussc-sentencing.mjs --apply      # Apply
+ *   node scripts/ingest-ussc-sentencing.mjs,apply      # Apply
  */
 import fs from "fs";
 import path from "path";
@@ -668,7 +668,7 @@ const OUTPUT_DIR = path.join(PROJECT_ROOT, "data", "bulk-verify", "external-inte
 const CSV_FILE = path.join(OUTPUT_DIR, "ussc-individual.csv");
 
 const args = process.argv.slice(2);
-const dryRun = !args.includes("--apply");
+const dryRun = !args.includes(", apply");
 
 function esc(str) {
   if (str === null || str === undefined) return "NULL";
@@ -805,8 +805,8 @@ main().catch(err => { console.error(err); process.exit(1); });
 - [ ] **Step 4: Test + apply + commit**
 
 ```bash
-node scripts/ingest-ussc-sentencing.mjs --limit 1000
-node scripts/ingest-ussc-sentencing.mjs --apply
+node scripts/ingest-ussc-sentencing.mjs,limit 1000
+node scripts/ingest-ussc-sentencing.mjs,apply
 git add scripts/ingest-ussc-sentencing.mjs scripts/convert-ussc-sas.py
 git commit -m "feat(tier9): USSC sentencing → judge_sentencing_patterns
 
@@ -821,7 +821,7 @@ departure rates, offense/criminal history breakdowns. Includes SAS→CSV convert
 **Files:**
 - Create: `scripts/ingest-bjs-outcomes.mjs`
 
-**Data source:** Bureau of Justice Statistics — Felony Sentences in State Courts + Federal Justice Statistics. Free CSV/Excel downloads from https://bjs.ojp.gov/topics/courts
+**Data source:** Bureau of Justice Statistics, Felony Sentences in State Courts + Federal Justice Statistics. Free CSV/Excel downloads from https://bjs.ojp.gov/topics/courts
 
 **Acquisition:** Download the latest datasets. Save to `data/bulk-verify/external-intel/bjs-felony.csv`.
 
@@ -834,12 +834,12 @@ Create `scripts/ingest-bjs-outcomes.mjs` following the same pattern as Tasks 4-6
 - Fields: conviction_rate, acquittal_rate, dismissal_rate, plea_rate, trial_rate, plea_trial_penalty_pct, median_sentence_months
 - Source: BJS CSV with columns varying by dataset year
 
-The script structure mirrors `ingest-ussc-sentencing.mjs` — read CSV, aggregate by jurisdiction + offense type, compute rates, UPSERT.
+The script structure mirrors `ingest-ussc-sentencing.mjs`, read CSV, aggregate by jurisdiction + offense type, compute rates, UPSERT.
 
 ```bash
 # After creating the script:
-node scripts/ingest-bjs-outcomes.mjs --limit 100
-node scripts/ingest-bjs-outcomes.mjs --apply
+node scripts/ingest-bjs-outcomes.mjs,limit 100
+node scripts/ingest-bjs-outcomes.mjs,apply
 git add scripts/ingest-bjs-outcomes.mjs
 git commit -m "feat(tier9): BJS outcome data → outcome_benchmarks
 
@@ -854,7 +854,7 @@ Computes conviction, plea, trial rates and plea-trial penalty."
 **Files:**
 - Create: `scripts/ingest-exoneration-registry.mjs`
 
-**Data source:** University of Michigan National Registry of Exonerations — free downloadable spreadsheet from https://www.law.umich.edu/special/exoneration/
+**Data source:** University of Michigan National Registry of Exonerations, free downloadable spreadsheet from https://www.law.umich.edu/special/exoneration/
 
 **Acquisition:** Download the detailed cases spreadsheet. Save to `data/bulk-verify/external-intel/exonerations.csv`.
 
@@ -890,8 +890,8 @@ if (!isNaN(convicted) && !isNaN(exonerated)) o.yearsServed.push(exonerated - con
 
 ```bash
 # After creating the script:
-node scripts/ingest-exoneration-registry.mjs --limit 100
-node scripts/ingest-exoneration-registry.mjs --apply
+node scripts/ingest-exoneration-registry.mjs,limit 100
+node scripts/ingest-exoneration-registry.mjs,apply
 git add scripts/ingest-exoneration-registry.mjs
 git commit -m "feat(tier9): exoneration registry → exoneration_patterns
 
@@ -901,7 +901,7 @@ Computes false confession, mistaken ID, misconduct rates, avg years served."
 
 ---
 
-## Phase 1 — Documentation + Verification
+## Phase 1, Documentation + Verification
 
 ### Task 9: Update SCHEMA.md with new tables
 
@@ -928,7 +928,7 @@ git commit -m "docs: add Phase 1 external intelligence tables to SCHEMA.md"
 - [ ] **Step 1: TypeScript compile check**
 
 ```bash
-cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc --noEmit
+cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc,noEmit
 ```
 
 Expected: clean compile (0 errors)

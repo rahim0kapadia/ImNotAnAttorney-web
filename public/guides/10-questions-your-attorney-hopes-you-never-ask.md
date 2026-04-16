@@ -8,7 +8,7 @@
 
 ## Why This Guide Exists
 
-You hired an attorney to defend your freedom. You're paying them thousands — maybe tens of thousands — of dollars. And right now, you probably have no idea if they're actually doing their job.
+You hired an attorney to defend your freedom. You're paying them thousands, maybe tens of thousands, of dollars. And right now, you probably have no idea if they're actually doing their job.
 
 That's not your fault. The legal system wasn't designed for you to understand it. But these 10 questions will change that.
 
@@ -20,7 +20,7 @@ Either way, you'll know where you stand.
 
 ## Question 1: "What is your theory of defense in my case?"
 
-**Why it matters:** Every case needs a story — a framework that explains why you should win. Without one, your attorney is just reacting instead of leading.
+**Why it matters:** Every case needs a story, a framework that explains why you should win. Without one, your attorney is just reacting instead of leading.
 
 **What a good answer sounds like:** "We're arguing the traffic stop was illegal because the officer lacked reasonable suspicion. If the judge agrees, every piece of evidence gathered after the stop gets thrown out."
 
@@ -38,9 +38,9 @@ Either way, you'll know where you stand.
 
 ---
 
-## Question 3: "What motions have you filed — or plan to file — and why?"
+## Question 3: "What motions have you filed, or plan to file, and why?"
 
-**Why it matters:** Motions are how attorneys fight. Suppression motions can throw out illegally obtained evidence. Brady motions force the prosecution to hand over evidence that helps you. If zero motions have been filed, ask why — specifically.
+**Why it matters:** Motions are how attorneys fight. Suppression motions can throw out illegally obtained evidence. Brady motions force the prosecution to hand over evidence that helps you. If zero motions have been filed, ask why, specifically.
 
 **Ask about each one:**
 - Motion to Suppress (illegal search/stop)
@@ -79,7 +79,7 @@ Either way, you'll know where you stand.
 
 ## Question 6: "What independent investigation have you done?"
 
-**Why it matters:** The only investigation most defendants get is the one conducted by the police — the same people trying to convict you. Your attorney should be doing their own work.
+**Why it matters:** The only investigation most defendants get is the one conducted by the police, the same people trying to convict you. Your attorney should be doing their own work.
 
 **This might include:**
 - Visiting the scene
@@ -94,7 +94,7 @@ Either way, you'll know where you stand.
 
 ## Question 7: "Have you spoken directly to the prosecutor about my case?"
 
-**Why it matters:** Negotiation happens in conversations — not just in court appearances. Your attorney should be actively communicating with the assigned prosecutor, understanding their position, and advocating for you.
+**Why it matters:** Negotiation happens in conversations, not just in court appearances. Your attorney should be actively communicating with the assigned prosecutor, understanding their position, and advocating for you.
 
 **Follow up:** "What is their position? Where is there flexibility?"
 
@@ -127,13 +127,13 @@ Either way, you'll know where you stand.
 - What's our jury strategy?
 - How long would a trial take?
 
-**Red flag:** "You don't want to go to trial." Maybe not — but that should be an informed choice, not a default position.
+**Red flag:** "You don't want to go to trial." Maybe not, but that should be an informed choice, not a default position.
 
 ---
 
 ## Question 10: "What should I be doing right now to help my case?"
 
-**Why it matters:** There are almost always things you can do — character reference letters, treatment programs, employment documentation, compliance records. A good attorney gives you a specific action list. A bad one says "just stay out of trouble."
+**Why it matters:** There are almost always things you can do, character reference letters, treatment programs, employment documentation, compliance records. A good attorney gives you a specific action list. A bad one says "just stay out of trouble."
 
 ---
 
@@ -153,11 +153,11 @@ Either way, you'll know where you stand.
 
 That's where we come in.
 
-**ImNotAnAttorney** provides case-specific research and analysis for criminal defendants. We review your discovery, identify what your attorney should be doing, and give you the exact questions to ask — backed by the tactics of 40+ elite defense attorneys.
+**ImNotAnAttorney** provides case-specific research and analysis for criminal defendants. We review your discovery, identify what your attorney should be doing, and give you the exact questions to ask, backed by the tactics of 40+ elite defense attorneys.
 
 We're not lawyers. We don't give legal advice. But we make sure you're never in the dark about your own case.
 
-**Services start at $197.** Our Case Decoder gives you a plain-English charge breakdown plus 10-15 targeted questions — delivered in 24 hours.
+**Services start at $197.** Our Case Decoder gives you a plain-English charge breakdown plus 10-15 targeted questions, delivered in 24 hours.
 
 → Visit **imnotanattorney.com** to get started.
 

@@ -1,5 +1,5 @@
 /**
- * @file /api/admin/emails — Admin API for inbound emails
+ * @file /api/admin/emails, Admin API for inbound emails
  *
  * GET: List inbound emails (paginated, newest first)
  * PATCH: Mark email as read/unread

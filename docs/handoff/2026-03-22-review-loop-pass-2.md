@@ -1,8 +1,8 @@
-# Handoff: Code Review Loop — Pass 2
+# Handoff: Code Review Loop, Pass 2
 Date: 2026-03-22 05:00
 
 ## Task
-Deep code review loop on ImNotAnAttorney-web. Goal: keep running reviews and fixing issues until the site comes back clean. User wants this to run autonomously — continue after compaction without user input.
+Deep code review loop on ImNotAnAttorney-web. Goal: keep running reviews and fixing issues until the site comes back clean. User wants this to run autonomously, continue after compaction without user input.
 
 ## Approach
 1. Launch 6 parallel code-reviewer agents covering: payments, auth, cron, admin/operator, public routes, frontend
@@ -20,34 +20,34 @@ Deep code review loop on ImNotAnAttorney-web. Goal: keep running reviews and fix
 - **TypeScript:** Clean compile after all fixes
 
 ## Files Modified (Pass 1 Fixes)
-- `src/app/api/checkout/route.ts` — playbook credit double-count fix (tierOrder guard)
-- `src/app/api/webhooks/stripe/route.ts` — commission reversal NaN fix + $0 amount guard
-- `src/app/api/checkout/verify/route.ts` — reject test-mode sessions in production
-- `src/lib/partner-auth.ts` — delete old sessions before creating new one
-- `src/app/api/partner/magic-link/verify/route.ts` — hex token format validation
-- `src/app/api/upload/route.ts` — UUID validation on caseId
-- `src/lib/cron/compliance.ts` — only purge drip_emails for unsubscribed subscribers
-- `src/lib/drip-emails.ts` — fix stale month (module-load-time Date)
-- `src/lib/cron/operator-alerts.ts` — check sendEmail result before setting flags + ctx.now
-- `src/lib/cron/pipeline.ts` — ctx.now instead of new Date()
-- `src/app/api/generate/case-decoder/route.ts` — try/catch req.json()
-- `src/app/api/generate/intelligence-brief/route.ts` — try/catch req.json()
-- `src/app/api/generate/intelligence-brief/judge-research/route.ts` — try/catch req.json()
-- `src/app/api/evaluate/case-decoder/route.ts` — try/catch req.json()
-- `src/app/api/operator/cases/[id]/route.ts` — UUID validation on id param
-- `src/app/api/operator/cases/[id]/status/route.ts` — UUID validation on id param
-- `src/app/api/operator/jobs/[id]/retry/route.ts` — UUID validation + atomic retry
-- `src/app/api/intake/route.ts` — array element string type filter
-- `src/app/api/intake/intelligence-brief/route.ts` — input length limits (cap function)
-- `src/lib/blog.ts` — slug validation (path traversal prevention)
-- `src/app/api/admin/demand/scores/route.ts` — param allowlist + .limit(100)
-- `src/app/api/admin/emails/route.ts` — NaN page guard
+- `src/app/api/checkout/route.ts`, playbook credit double-count fix (tierOrder guard)
+- `src/app/api/webhooks/stripe/route.ts`, commission reversal NaN fix + $0 amount guard
+- `src/app/api/checkout/verify/route.ts`, reject test-mode sessions in production
+- `src/lib/partner-auth.ts`, delete old sessions before creating new one
+- `src/app/api/partner/magic-link/verify/route.ts`, hex token format validation
+- `src/app/api/upload/route.ts`, UUID validation on caseId
+- `src/lib/cron/compliance.ts`, only purge drip_emails for unsubscribed subscribers
+- `src/lib/drip-emails.ts`, fix stale month (module-load-time Date)
+- `src/lib/cron/operator-alerts.ts`, check sendEmail result before setting flags + ctx.now
+- `src/lib/cron/pipeline.ts`, ctx.now instead of new Date()
+- `src/app/api/generate/case-decoder/route.ts`, try/catch req.json()
+- `src/app/api/generate/intelligence-brief/route.ts`, try/catch req.json()
+- `src/app/api/generate/intelligence-brief/judge-research/route.ts`, try/catch req.json()
+- `src/app/api/evaluate/case-decoder/route.ts`, try/catch req.json()
+- `src/app/api/operator/cases/[id]/route.ts`, UUID validation on id param
+- `src/app/api/operator/cases/[id]/status/route.ts`, UUID validation on id param
+- `src/app/api/operator/jobs/[id]/retry/route.ts`, UUID validation + atomic retry
+- `src/app/api/intake/route.ts`, array element string type filter
+- `src/app/api/intake/intelligence-brief/route.ts`, input length limits (cap function)
+- `src/lib/blog.ts`, slug validation (path traversal prevention)
+- `src/app/api/admin/demand/scores/route.ts`, param allowlist + .limit(100)
+- `src/app/api/admin/emails/route.ts`, NaN page guard
 
 ## What Didn't Work
-- Nothing failed — all fixes applied cleanly and TypeScript compiles
+- Nothing failed, all fixes applied cleanly and TypeScript compiles
 
 ## Remaining Steps (Pass 2)
-1. **Run another 6-agent review** — same agent structure as Pass 1, but now looking for:
+1. **Run another 6-agent review**, same agent structure as Pass 1, but now looking for:
    - Remaining MEDIUM issues from `docs/reviews/2026-03-22-deep-code-review.md` (37 items)
    - Any regressions from Pass 1 fixes
    - Issues missed by Pass 1 (different angles, edge cases)
@@ -70,6 +70,6 @@ Deep code review loop on ImNotAnAttorney-web. Goal: keep running reviews and fix
 - **Social proof (#13):** DEFERRED. Will swap fake for real data as purchases come in. TODO: research .01% expert on soliciting testimonials from customers in legal/sensitive services.
 
 ## Verification
-- `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc --noEmit --skipLibCheck` — TypeScript compiles
-- `cd C:/Users/email/projects/ImNotAnAttorney-web && git log --oneline -5` — verify commit landed
-- Read `docs/reviews/2026-03-22-deep-code-review.md` — full issue list with remaining MEDIUMs/LOWs
+- `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc,noEmit,skipLibCheck`, TypeScript compiles
+- `cd C:/Users/email/projects/ImNotAnAttorney-web && git log,oneline -5`, verify commit landed
+- Read `docs/reviews/2026-03-22-deep-code-review.md`, full issue list with remaining MEDIUMs/LOWs

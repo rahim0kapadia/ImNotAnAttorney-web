@@ -42,11 +42,11 @@ imnotanattorney.com
 
 [0:26-0:36] THE OPERATOR:
 [TEXT ON SCREEN: "Was the officer certified on THAT machine?"]
-"And the officer who administered your test — were they certified on that specific make and model? An Intoxilyzer 8000 is not an Alco-Sensor FST. Certification on one does not cover the other. If their certification lapsed before your test date, an uncertified operator ran your test."
+"And the officer who administered your test, were they certified on that specific make and model? An Intoxilyzer 8000 is not an Alco-Sensor FST. Certification on one does not cover the other. If their certification lapsed before your test date, an uncertified operator ran your test."
 
 [0:36-0:47] THE QUESTION:
 [TEXT ON SCREEN: "One question changes everything."]
-"One question to ask your DUI attorney: 'Have you requested the calibration records for the specific machine used in my test?' If the answer is no — or if they don't know what machine was used — that tells you everything about how your defense is going."
+"One question to ask your DUI attorney: 'Have you requested the calibration records for the specific machine used in my test?' If the answer is no, or if they don't know what machine was used, that tells you everything about how your defense is going."
 
 [0:47-0:57] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]

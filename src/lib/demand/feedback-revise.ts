@@ -1,5 +1,5 @@
 /**
- * @file Feedback Revise — flags underperforming posts for regeneration and
+ * @file Feedback Revise, flags underperforming posts for regeneration and
  * computes adaptive QA thresholds based on performance correlations.
  *
  * Called weekly by /api/cron/demand-feedback-revise (Sundays, after feedback-patterns).

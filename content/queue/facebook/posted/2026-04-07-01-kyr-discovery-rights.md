@@ -11,7 +11,7 @@ suggested_time: "Thursday 7:30 PM ET"
 target_groups: ["DUI Support Groups", "Drug Charge Support Groups", "Know Your Rights Community Groups"]
 ---
 
-## Facebook Post: Know Your Rights — Discovery Access
+## Facebook Post: Know Your Rights, Discovery Access
 
 **Type**: Text post (colored background)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -28,7 +28,7 @@ Every police report. Every witness statement. Every lab result. Every photograph
 
 This is called "discovery." And it is YOUR right.
 
-If your attorney tells you "don't worry about it" or "you don't need to see that" — that is a red flag. You are the one whose freedom is on the line. You have the right to review what they're using to take it away.
+If your attorney tells you "don't worry about it" or "you don't need to see that", that is a red flag. You are the one whose freedom is on the line. You have the right to review what they're using to take it away.
 
 Three questions to ask your attorney this week:
 
@@ -36,7 +36,7 @@ Three questions to ask your attorney this week:
 2. "Is there anything that should have been turned over but hasn't been?"
 3. "Can I have a copy of everything to review myself?"
 
-You know your life better than anyone. You might catch something in those documents that your attorney missed — a wrong date, a wrong description, an inconsistency between two reports.
+You know your life better than anyone. You might catch something in those documents that your attorney missed, a wrong date, a wrong description, an inconsistency between two reports.
 
 Read your discovery. It matters.
 
@@ -44,7 +44,7 @@ Read your discovery. It matters.
 
 ### Visual Direction
 
-Colored text background post — use Facebook's built-in dark navy or charcoal colored background. The text itself IS the visual. No image needed. The colored background forces the post to stand out in the feed and the brevity forces engagement.
+Colored text background post, use Facebook's built-in dark navy or charcoal colored background. The text itself IS the visual. No image needed. The colored background forces the post to stand out in the feed and the brevity forces engagement.
 
 ### Link Strategy
 

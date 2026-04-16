@@ -7,7 +7,7 @@
  * Run: node test-email-render.mjs
  * Output: test-emails/ directory with 40+ HTML files + index.html
  *
- * No external dependencies needed — reads source files directly and
+ * No external dependencies needed, reads source files directly and
  * evaluates template strings with sample data.
  */
 
@@ -57,7 +57,7 @@ function wrapInBrandedTemplate(innerHtml, { subject, category, hasUnsubscribe = 
   ${innerHtml}
   <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #27272A; font-size: 12px; color: #71717A; text-align: center;">
     <p style="margin: 0 0 8px;">ImNotAnAttorney</p>
-    <p style="margin: 0;">Legal information and research services — not legal advice.</p>
+    <p style="margin: 0;">Legal information and research services, not legal advice.</p>
     <p style="margin: 4px 0 0; font-size: 11px; color: #52525B;">${PHYSICAL_ADDRESS}</p>
     ${unsubscribeHtml}
   </div>
@@ -103,9 +103,9 @@ emails.push({
   html: `
     <h1 style="color: #F59E0B;">3 Things Your Attorney Should Have Done By Now</h1>
     <p>If you're past arraignment, your attorney should have done three things by now:</p>
-    <p><strong style="color: white;">1. Reviewed ALL discovery with you</strong> — not summarized it. Reviewed every page and explained what matters.</p>
-    <p><strong style="color: white;">2. Identified at least one issue</strong> — weight discrepancies, witness contradictions, procedural errors. Every case has them.</p>
-    <p><strong style="color: white;">3. Filed or discussed motions</strong> — suppression, dismissal, compelling discovery. If none have been discussed, ask why.</p>
+    <p><strong style="color: white;">1. Reviewed ALL discovery with you</strong>, not summarized it. Reviewed every page and explained what matters.</p>
+    <p><strong style="color: white;">2. Identified at least one issue</strong>, weight discrepancies, witness contradictions, procedural errors. Every case has them.</p>
+    <p><strong style="color: white;">3. Filed or discussed motions</strong>, suppression, dismissal, compelling discovery. If none have been discussed, ask why.</p>
     <p>If all three are done, those are positive signs of active representation.</p>
     <p>If even one is missing, some defendants ask: <em>"Why hasn't this been done yet?"</em></p>
     ${cta("See what informed defendants find →", "/sample")}
@@ -134,33 +134,33 @@ emails.push({
   html: `
     <h1 style="color: #F59E0B;">68.3 Grams of Missing Evidence</h1>
     <p>A real trafficking case. Mandatory minimum: 3 years.</p>
-    <p>The police inventory said <strong style="color: white;">93.9 grams</strong>. The lab report said <strong style="color: white;">25.59 grams</strong>. That's 68.3 grams missing — <strong style="color: #EF4444;">73% of the evidence weight</strong>.</p>
-    <p>The charging document said "amphetamine." The lab confirmed MDMA/MDA — a completely different substance.</p>
+    <p>The police inventory said <strong style="color: white;">93.9 grams</strong>. The lab report said <strong style="color: white;">25.59 grams</strong>. That's 68.3 grams missing, <strong style="color: #EF4444;">73% of the evidence weight</strong>.</p>
+    <p>The charging document said "amphetamine." The lab confirmed MDMA/MDA, a completely different substance.</p>
     <p>21 latent fingerprints. Zero matched the defendant.</p>
     <p><strong style="color: white;">The attorney had raised none of these issues.</strong></p>
-    <p>We found all of them in the discovery documents. We generated 15 specific questions — each traced to a documented winning method from attorneys like Barry Scheck, Jeffrey Lichtman, and Alan Dershowitz.</p>
+    <p>We found all of them in the discovery documents. We generated 15 specific questions, each traced to a documented winning method from attorneys like Barry Scheck, Jeffrey Lichtman, and Alan Dershowitz.</p>
     ${cta("See the full sample report →", "/sample")}
   `,
 });
 
 emails.push({
   filename: "nurture-day7.html",
-  subject: "10 questions, $197, 24 hours — here's exactly what you get",
+  subject: "10 questions, $197, 24 hours, here's exactly what you get",
   category: "Nurture Drip (Day 7)",
   html: `
     <h1 style="color: #F59E0B;">Here's What a Case Decoder Includes</h1>
     <ul style="padding-left: 20px;">
-      <li>Your charges explained in plain English — with what the prosecution must prove</li>
+      <li>Your charges explained in plain English, with what the prosecution must prove</li>
       <li>15 calibrated questions for your attorney (6-part format with follow-up probes)</li>
       <li>Ready-to-send email template + phone script for your attorney</li>
-      <li>Where Things Stand — 4-area diagnostic of your case</li>
-      <li>Your Next 7 Days — one action per day with Meeting Ready Sheet</li>
+      <li>Where Things Stand, 4-area diagnostic of your case</li>
+      <li>Your Next 7 Days, one action per day with Meeting Ready Sheet</li>
       <li>BONUS: Scripts for when the conversation gets difficult</li>
     </ul>
-    <p>Every question generated using tactics from elite defense attorneys — Barry Scheck, Jeffrey Lichtman, F. Lee Bailey.</p>
-    <p>Delivered within 24 hours with 15 calibrated questions + communication tools — or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
+    <p>Every question generated using tactics from elite defense attorneys, Barry Scheck, Jeffrey Lichtman, F. Lee Bailey.</p>
+    <p>Delivered within 24 hours with 15 calibrated questions + communication tools, or full cash refund. Delivered and not satisfied? 100% credit toward any higher tier.</p>
     <p><strong style="color: white;">$197.</strong> Less than one hour of your attorney's time.</p>
-    ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
+    ${cta("Find What's in My Case, $197 →", "/checkout?tier=case-decoder")}
   `,
 });
 
@@ -180,16 +180,16 @@ emails.push({
 
 emails.push({
   filename: "nurture-day14.html",
-  subject: "Motion deadlines don't wait — and your attorney might not remind you",
+  subject: "Motion deadlines don't wait, and your attorney might not remind you",
   category: "Nurture Drip (Day 14)",
   html: `
     <h1 style="color: #F59E0B;">Motion Deadlines Don't Wait</h1>
     <p>Motion deadlines are real. Once they pass, arguments that could have changed your entire case are <strong style="color: #EF4444;">gone forever</strong>.</p>
     <p>A motion to suppress that could have thrown out evidence. A Franks hearing that could have invalidated the warrant. A motion to dismiss based on a charging error.</p>
     <p>In the real case we reviewed, <strong style="color: white;">zero motions had been filed</strong>. The substance variance alone was grounds for a motion to dismiss.</p>
-    <p>The Case Decoder includes a motion deadline awareness section specific to your charges. It tells you what to ASK about — so nothing slips through the cracks.</p>
+    <p>The Case Decoder includes a motion deadline awareness section specific to your charges. It tells you what to ASK about, so nothing slips through the cracks.</p>
     <p><strong style="color: white;">$197. 24 hours.</strong> The cost of not knowing is higher.</p>
-    ${cta("Find What's in My Case — $197 →", "/checkout?tier=case-decoder")}
+    ${cta("Find What's in My Case, $197 →", "/checkout?tier=case-decoder")}
   `,
 });
 
@@ -203,11 +203,11 @@ emails.push({
   category: "Post-Purchase: Case Decoder (Day 0)",
   html: `
     <h1 style="color: #F59E0B;">Your Attorney Meeting Prep Kit Is Ready</h1>
-    <p>Your Case Decoder report has been delivered — check your inbox for the report link. Here's how to use it:</p>
+    <p>Your Case Decoder report has been delivered, check your inbox for the report link. Here's how to use it:</p>
     <ol>
-      <li><strong style="color: white;">Start with "Where Things Stand"</strong> — see exactly where your case is right now</li>
-      <li><strong style="color: white;">Read "Questions for Your Attorney"</strong> — pick your top 5, start with the Golden Question</li>
-      <li><strong style="color: white;">Send the email from "Exactly What to Say"</strong> — it's already written, just copy-paste</li>
+      <li><strong style="color: white;">Start with "Where Things Stand"</strong>, see exactly where your case is right now</li>
+      <li><strong style="color: white;">Read "Questions for Your Attorney"</strong>, pick your top 5, start with the Golden Question</li>
+      <li><strong style="color: white;">Send the email from "Exactly What to Say"</strong>, it's already written, just copy-paste</li>
     </ol>
     <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
       After your next attorney meeting, reply to this email and tell me: <strong style="color: white;">which question got the most reaction?</strong> Real cases make this service better for every defendant who comes after you.
@@ -217,7 +217,7 @@ emails.push({
 
 emails.push({
   filename: "post-case-decoder-story-harvest.html",
-  subject: "You met with your attorney — what was the first question they stopped to think about?",
+  subject: "You met with your attorney, what was the first question they stopped to think about?",
   category: "Post-Purchase: Case Decoder (Day 5, relative to delivery)",
   html: `
     <h1 style="color: #F59E0B;">How Did It Go?</h1>
@@ -237,7 +237,7 @@ emails.push({
   category: "Post-Purchase: Case Decoder (Day 7)",
   html: `
     <h1 style="color: #F59E0B;">Ready to Go Deeper?</h1>
-    <p>Your Case Decoder gave you the foundation — charges explained, 15 calibrated questions, and a 7-day action plan.</p>
+    <p>Your Case Decoder gave you the foundation, charges explained, 15 calibrated questions, and a 7-day action plan.</p>
     <p>The <strong style="color: white;">Intelligence Brief ($997)</strong> goes deeper:</p>
     <ul style="padding-left: 20px;">
       <li>Your judge's actual sentencing patterns</li>
@@ -247,7 +247,7 @@ emails.push({
       <li>BONUS: Judge Tendencies Card</li>
     </ul>
     <p><strong style="color: white;">Your $197 is already credited.</strong> Upgrade for just $800.</p>
-    ${cta("Upgrade to Intelligence Brief — $800 →", "/checkout?tier=intelligence-brief")}
+    ${cta("Upgrade to Intelligence Brief, $800 →", "/checkout?tier=intelligence-brief")}
   `,
 });
 
@@ -270,15 +270,15 @@ emails.push({
 
 emails.push({
   filename: "post-intelligence-brief-delivery.html",
-  subject: "Your Intelligence Brief is ready — here's how to use it in your next meeting",
+  subject: "Your Intelligence Brief is ready, here's how to use it in your next meeting",
   category: "Post-Purchase: Intelligence Brief (Day 0)",
   html: `
     <h1 style="color: #F59E0B;">Your Intelligence Brief Is Ready</h1>
-    <p>Your full Intelligence Brief has been delivered — check your inbox for the report link. Here's how to use it:</p>
+    <p>Your full Intelligence Brief has been delivered, check your inbox for the report link. Here's how to use it:</p>
     <ol>
-      <li><strong style="color: white;">Start with the Judge Tendencies Card</strong> — know your judge before your next hearing</li>
-      <li><strong style="color: white;">Review the motion landscape</strong> — which motions apply and what the deadlines look like</li>
-      <li><strong style="color: white;">Pick 10 questions from the 35-50 generated</strong> — bring them to your next meeting</li>
+      <li><strong style="color: white;">Start with the Judge Tendencies Card</strong>, know your judge before your next hearing</li>
+      <li><strong style="color: white;">Review the motion landscape</strong>, which motions apply and what the deadlines look like</li>
+      <li><strong style="color: white;">Pick 10 questions from the 35-50 generated</strong>, bring them to your next meeting</li>
     </ol>
     <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
       After your next attorney meeting, reply to this email and tell me: <strong style="color: white;">which question got the most reaction?</strong> Real cases make this service better for every defendant who comes after you.
@@ -288,7 +288,7 @@ emails.push({
 
 emails.push({
   filename: "post-intelligence-brief-story-harvest.html",
-  subject: "You met with your attorney — what was the first question they stopped to think about?",
+  subject: "You met with your attorney, what was the first question they stopped to think about?",
   category: "Post-Purchase: Intelligence Brief (Day 5, relative to delivery)",
   html: `
     <h1 style="color: #F59E0B;">How Did It Go?</h1>
@@ -300,7 +300,7 @@ emails.push({
 
 emails.push({
   filename: "post-intelligence-brief-upsell.html",
-  subject: "When you get discovery — we're ready",
+  subject: "When you get discovery, we're ready",
   category: "Post-Purchase: Intelligence Brief (Day 10)",
   html: `
     <h1 style="color: #F59E0B;">When You Get Discovery</h1>
@@ -312,24 +312,24 @@ emails.push({
       <li>Discrepancy report (weight, dates, descriptions)</li>
       <li>Red flags summary</li>
       <li>35+ case-specific questions</li>
-      <li>Discovery Health Score — completeness rated out of 100</li>
-      <li>Defense Opportunity Index — defense angles organized by charge category</li>
+      <li>Discovery Health Score, completeness rated out of 100</li>
+      <li>Defense Opportunity Index, defense angles organized by charge category</li>
     </ul>
     <p><strong style="color: white;">Your $997 is already credited.</strong> Upgrade for just $1,500.</p>
-    ${cta("Upgrade to The X-Ray — $1,500 →", "/checkout?tier=x-ray")}
+    ${cta("Upgrade to The X-Ray, $1,500 →", "/checkout?tier=x-ray")}
   `,
 });
 
 emails.push({
   filename: "post-xray-delivery.html",
-  subject: "Your X-Ray analysis is ready — here's how to use it",
+  subject: "Your X-Ray analysis is ready, here's how to use it",
   category: "Post-Purchase: X-Ray (Day 0)",
   html: `
     <h1 style="color: #F59E0B;">Your X-Ray Analysis Is Ready</h1>
-    <p>Your full discovery analysis has been delivered — check your inbox for the report link.</p>
+    <p>Your full discovery analysis has been delivered, check your inbox for the report link.</p>
     <ol>
-      <li><strong style="color: white;">Start with the Discrepancy Report</strong> — these are the findings that matter most</li>
-      <li><strong style="color: white;">Review the timeline</strong> — look for date conflicts and gaps</li>
+      <li><strong style="color: white;">Start with the Discrepancy Report</strong>, these are the findings that matter most</li>
+      <li><strong style="color: white;">Review the timeline</strong>, look for date conflicts and gaps</li>
       <li><strong style="color: white;">Use the Red Flags summary</strong> as your meeting agenda</li>
     </ol>
     <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
@@ -344,16 +344,16 @@ emails.push({
   category: "Post-Purchase: X-Ray (Day 2)",
   html: `
     <h1 style="color: #F59E0B;">Upload Reminder</h1>
-    <p>We're ready to start your X-Ray analysis — but we need your discovery documents first.</p>
+    <p>We're ready to start your X-Ray analysis, but we need your discovery documents first.</p>
     <p>If you've already uploaded them, ignore this email. If not:</p>
     ${cta("Upload Discovery Documents →", "/upload?case=test-case-123&email=test@example.com")}
-    <p style="color: #71717A;">Not sure what to upload? Send everything your attorney gave you — police reports, lab results, witness statements, photos, any documents labeled "discovery."</p>
+    <p style="color: #71717A;">Not sure what to upload? Send everything your attorney gave you, police reports, lab results, witness statements, photos, any documents labeled "discovery."</p>
   `,
 });
 
 emails.push({
   filename: "post-xray-story-harvest.html",
-  subject: "You met with your attorney — what was the first finding they hadn't seen?",
+  subject: "You met with your attorney, what was the first finding they hadn't seen?",
   category: "Post-Purchase: X-Ray (Day 5, relative to delivery)",
   html: `
     <h1 style="color: #F59E0B;">How Did It Go?</h1>
@@ -371,9 +371,9 @@ emails.push({
     <h1 style="color: #F59E0B;">Your War Room Package Is Being Assembled</h1>
     <p>Your War Room engagement has begun. Here's what happens next:</p>
     <ol>
-      <li><strong style="color: white;">Days 1-7:</strong> Full case analysis — charges, judge intel, discovery deep dive</li>
+      <li><strong style="color: white;">Days 1-7:</strong> Full case analysis, charges, judge intel, discovery deep dive</li>
       <li><strong style="color: white;">Days 7-21:</strong> Witness dossiers (up to 8), prosecution analysis, motion landscape</li>
-      <li><strong style="color: white;">Days 21-28:</strong> Final package assembly — attorney delivery package, case law references, strategy questions</li>
+      <li><strong style="color: white;">Days 21-28:</strong> Final package assembly, attorney delivery package, case law references, strategy questions</li>
     </ol>
     <p>After the initial package, you'll receive <strong style="color: white;">weekly updates for the duration of your case</strong>.</p>
     <p>If you haven't uploaded your discovery documents yet:</p>
@@ -392,7 +392,7 @@ emails.push({
     <h1 style="color: #F59E0B;">Know Someone Facing Charges?</h1>
     <p>You know what it's like to face the system without enough information. If someone you know is in the same position, you can help them skip the confusion.</p>
     <p style="font-size: 18px; color: white;"><strong>Send them to ${link("imnotanattorney.com", "/")}</strong></p>
-    <p>They can start with a free Case Progress Score — no payment, no commitment. Just clarity on where they stand.</p>
+    <p>They can start with a free Case Progress Score, no payment, no commitment. Just clarity on where they stand.</p>
     <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
       Every defendant deserves to walk into their attorney's office with the right questions. You did it. They can too.
     </p>
@@ -407,13 +407,13 @@ emails.push({
     <h1 style="color: #F59E0B;">Your Situation Room Engagement Begins Now</h1>
     <p>Welcome to the highest level of case intelligence we offer. Here's what's happening:</p>
     <ol>
-      <li><strong style="color: white;">Priority Analysis (24-48 hours per stage)</strong> — your case moves to the front of the queue</li>
-      <li><strong style="color: white;">Trial Intelligence Operations</strong> — when trial begins, you get an evening debrief + morning prep brief every trial day</li>
-      <li><strong style="color: white;">Priority Response Line</strong> — 2-hour response during trial prep, 4-hour during trial</li>
+      <li><strong style="color: white;">Priority Analysis (24-48 hours per stage)</strong>, your case moves to the front of the queue</li>
+      <li><strong style="color: white;">Trial Intelligence Operations</strong>, when trial begins, you get an evening debrief + morning prep brief every trial day</li>
+      <li><strong style="color: white;">Priority Response Line</strong>, 2-hour response during trial prep, 4-hour during trial</li>
     </ol>
     <p>Your dedicated communication channel is now active. Use it for urgent questions at any time.</p>
     <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-      <strong style="color: white;">What to expect:</strong> Full War Room deliverables on a priority timeline, plus complete trial preparation — research-based questions about JOA standards, witness background research for your attorney, and daily trial support.
+      <strong style="color: white;">What to expect:</strong> Full War Room deliverables on a priority timeline, plus complete trial preparation, research-based questions about JOA standards, witness background research for your attorney, and daily trial support.
     </p>
   `,
 });
@@ -424,7 +424,7 @@ emails.push({
   category: "Post-Purchase: Situation Room (Day 5, relative to delivery)",
   html: `
     <h1 style="color: #F59E0B;">How's the Case Progressing?</h1>
-    <p>You're in the Situation Room — the most comprehensive intelligence package available. I have one question:</p>
+    <p>You're in the Situation Room, the most comprehensive intelligence package available. I have one question:</p>
     <p style="font-size: 18px; color: white;"><strong>What's made the biggest difference so far?</strong></p>
     <p>Just reply to this email. Your experience at this level is invaluable for refining every aspect of what we deliver.</p>
   `,
@@ -432,18 +432,18 @@ emails.push({
 
 emails.push({
   filename: "post-witness-pack-delivery.html",
-  subject: "Your Witness Pack order is confirmed — upload discovery to begin",
+  subject: "Your Witness Pack order is confirmed, upload discovery to begin",
   category: "Post-Purchase: Witness Pack (Day 0)",
   html: `
     <h1 style="color: #F59E0B;">Your Witness Pack Order Is Confirmed</h1>
-    <p>We're ready to analyze up to 3 witnesses — but we need your discovery documents first.</p>
+    <p>We're ready to analyze up to 3 witnesses, but we need your discovery documents first.</p>
     <p><strong style="color: white;">Upload your documents now so we can start immediately:</strong></p>
     ${cta("Upload Discovery Documents →", "/upload")}
     <p style="margin-top: 24px;">Here's what you'll receive once analysis begins:</p>
     <ul style="padding-left: 20px;">
-      <li>Statement analysis for each witness — inconsistencies, gaps, and patterns</li>
-      <li>Inconsistency report — where witness statements conflict with evidence or each other</li>
-      <li>Cross-examination questions per witness — specific, sourced, ready for your attorney</li>
+      <li>Statement analysis for each witness, inconsistencies, gaps, and patterns</li>
+      <li>Inconsistency report, where witness statements conflict with evidence or each other</li>
+      <li>Cross-examination questions per witness, specific, sourced, ready for your attorney</li>
     </ul>
     <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
       <strong style="color: white;">Delivery: 3-5 business days from when we receive your documents.</strong>
@@ -457,9 +457,9 @@ emails.push({
   category: "Post-Purchase: Witness Pack (Day 7)",
   html: `
     <h1 style="color: #F59E0B;">Your Witnesses Revealed Something Interesting</h1>
-    <p>Witness analysis often uncovers patterns that go beyond individual testimony — contradictions that connect to the broader case, gaps that suggest missing evidence, statements that don't match the physical evidence.</p>
+    <p>Witness analysis often uncovers patterns that go beyond individual testimony, contradictions that connect to the broader case, gaps that suggest missing evidence, statements that don't match the physical evidence.</p>
     <p>If your witness analysis raised more questions than it answered, a deeper dive might be worth it:</p>
-    <p><strong style="color: white;">The X-Ray ($2,497)</strong> — full discovery analysis:</p>
+    <p><strong style="color: white;">The X-Ray ($2,497)</strong>, full discovery analysis:</p>
     <ul style="padding-left: 20px;">
       <li>Complete document index and timeline</li>
       <li>Discrepancy report across ALL evidence</li>
@@ -467,8 +467,8 @@ emails.push({
       <li>Discovery Health Score + Defense Opportunity Index</li>
     </ul>
     <p><strong style="color: white;">Your $297 is already credited.</strong> Upgrade for $2,200.</p>
-    ${cta("Upgrade to The X-Ray — $2,200 →", "/checkout?tier=x-ray")}
-    <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">The War Room ($4,997)</strong> — full intelligence operation with weekly updates. Your $297 credit applies. ${link("Learn more →", "/services")}</p>
+    ${cta("Upgrade to The X-Ray, $2,200 →", "/checkout?tier=x-ray")}
+    <p style="margin-top: 16px;">Or go deeper with <strong style="color: white;">The War Room ($4,997)</strong>, full intelligence operation with weekly updates. Your $297 credit applies. ${link("Learn more →", "/services")}</p>
   `,
 });
 
@@ -497,7 +497,7 @@ emails.push({
 
 emails.push({
   filename: "webhook-payment-confirmation.html",
-  subject: "Payment Confirmed — Your Case Decoder is Being Prepared",
+  subject: "Payment Confirmed, Your Case Decoder is Being Prepared",
   category: "Webhook: Payment Confirmation",
   html: `
     <h1 style="color: #F59E0B;">Payment Received</h1>
@@ -513,7 +513,7 @@ emails.push({
 
 emails.push({
   filename: "webhook-payment-with-upload.html",
-  subject: "Payment Confirmed — Your X-Ray is Being Prepared",
+  subject: "Payment Confirmed, Your X-Ray is Being Prepared",
   category: "Webhook: Payment Confirmation (Discovery Tier)",
   html: `
     <h1 style="color: #F59E0B;">Payment Received</h1>
@@ -546,7 +546,7 @@ emails.push({
 
 emails.push({
   filename: "webhook-partial-refund.html",
-  subject: "Partial Refund Processed — $50.00",
+  subject: "Partial Refund Processed, $50.00",
   category: "Webhook: Partial Refund Notification",
   html: `
     <h1 style="color: #F59E0B;">Partial Refund Issued</h1>
@@ -562,7 +562,7 @@ emails.push({
 
 emails.push({
   filename: "operator-new-order.html",
-  subject: "New Order: Case Decoder — $197.00",
+  subject: "New Order: Case Decoder, $197.00",
   category: "Operator: New Order Notification",
   hasUnsubscribe: false,
   html: `
@@ -583,7 +583,7 @@ emails.push({
 
 emails.push({
   filename: "operator-full-refund.html",
-  subject: "Full Refund: case-decoder — $197.00",
+  subject: "Full Refund: case-decoder, $197.00",
   category: "Operator: Full Refund Notification",
   hasUnsubscribe: false,
   html: `
@@ -606,15 +606,15 @@ emails.push({
   html: `
     <h1 style="color: #F59E0B;">Your Case Decoder Report is Ready</h1>
     <p>Hi Danielle,</p>
-    <p>Your personalized Case Decoder report is ready to view. It contains targeted questions, communication tools, and a clear picture of where things stand — built specifically from your case details.</p>
+    <p>Your personalized Case Decoder report is ready to view. It contains targeted questions, communication tools, and a clear picture of where things stand, built specifically from your case details.</p>
     <a href="${SITE_URL}/report/f47ac10b-58cc-4372-a567-0e02b2c3d479" style="display: inline-block; margin: 24px 0; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Your Report</a>
     <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
       <p style="margin: 0; color: white; font-weight: bold;">How to use your report:</p>
       <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
         <li style="margin-bottom: 8px;"><strong style="color: white;">Print it</strong> and bring it to your next attorney meeting</li>
-        <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the 5 Priority Questions</strong> in "Questions for Your Attorney" — if you only ask one, ask the Golden Question</li>
-        <li style="margin-bottom: 8px;"><strong style="color: white;">Send the email</strong> from "Exactly What to Say" — it's already written for you, just copy-paste and hit send</li>
-        <li style="margin-bottom: 8px;"><strong style="color: white;">Follow Your Next 7 Days</strong> — one simple action per day, starting with sending that email</li>
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the 5 Priority Questions</strong> in "Questions for Your Attorney", if you only ask one, ask the Golden Question</li>
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Send the email</strong> from "Exactly What to Say", it's already written for you, just copy-paste and hit send</li>
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Follow Your Next 7 Days</strong>, one simple action per day, starting with sending that email</li>
       </ol>
     </div>
     <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
@@ -630,7 +630,7 @@ emails.push({
 
 emails.push({
   filename: "operator-review-report.html",
-  subject: "Review Report: dui — Danielle",
+  subject: "Review Report: dui, Danielle",
   category: "Operator: Review Report (from Edge Function)",
   hasUnsubscribe: false,
   html: `
@@ -672,7 +672,7 @@ emails.push({
 emails.push({
   filename: "intake-confirmation-paid.html",
   subject: "We Received Your Case Details, Danielle",
-  category: "Intake: Confirmation (After Payment — Flow B)",
+  category: "Intake: Confirmation (After Payment, Flow B)",
   html: `
     <h1 style="color: #F59E0B;">Case Details Received</h1>
     <p>Thank you, Danielle. We've received your intake form and your report is being generated.</p>
@@ -686,7 +686,7 @@ emails.push({
 emails.push({
   filename: "intake-confirmation-browsing.html",
   subject: "We Received Your Case Details, Danielle",
-  category: "Intake: Confirmation (Before Payment — Flow A)",
+  category: "Intake: Confirmation (Before Payment, Flow A)",
   html: `
     <h1 style="color: #F59E0B;">Case Details Received</h1>
     <p>Thank you, Danielle. We've received your intake form.</p>
@@ -696,10 +696,10 @@ emails.push({
     <h2 style="color: white; font-size: 18px;">What Happens Next</h2>
     <ol style="color: #D4D4D8; padding-left: 20px;">
       <li style="margin-bottom: 8px;">Browse our <a href="${SITE_URL}/services" style="color: #F59E0B;">services page</a> to find the right tier for your case</li>
-      <li style="margin-bottom: 8px;">Purchase your chosen service — 100% of what you pay is credited if you upgrade later</li>
+      <li style="margin-bottom: 8px;">Purchase your chosen service, 100% of what you pay is credited if you upgrade later</li>
       <li style="margin-bottom: 8px;">We'll analyze your case and deliver your report within the guaranteed timeframe</li>
     </ol>
-    <p style="color: #A1A1AA;">Not sure where to start? For <strong style="color: white;">dui</strong> cases, the <a href="${SITE_URL}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder ($197)</a> covers the essentials — and every dollar counts toward an upgrade.</p>
+    <p style="color: #A1A1AA;">Not sure where to start? For <strong style="color: white;">dui</strong> cases, the <a href="${SITE_URL}/checkout?tier=case-decoder" style="color: #F59E0B;">Case Decoder ($197)</a> covers the essentials, and every dollar counts toward an upgrade.</p>
   `,
 });
 
@@ -730,11 +730,11 @@ emails.push({
 
 emails.push({
   filename: "cron-stuck-intake.html",
-  subject: "ALERT: Case stuck in intake for 3+ hours — danielle.test@example.com",
+  subject: "ALERT: Case stuck in intake for 3+ hours, danielle.test@example.com",
   category: "Cron: Stuck Intake Alert",
   hasUnsubscribe: false,
   html: `
-    <h1 style="color: #EF4444;">Case Stuck — Generation May Have Failed</h1>
+    <h1 style="color: #EF4444;">Case Stuck, Generation May Have Failed</h1>
     <p>Case has been in "intake" status for <strong>3 hours</strong>. Report generation may have been silently dropped.</p>
     <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
       <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> danielle.test@example.com</p>
@@ -750,7 +750,7 @@ emails.push({
 
 emails.push({
   filename: "cron-stuck-generating.html",
-  subject: "ALERT: Report generation stuck for 45+ min — danielle.test@example.com",
+  subject: "ALERT: Report generation stuck for 45+ min, danielle.test@example.com",
   category: "Cron: Stuck Generating Alert",
   hasUnsubscribe: false,
   html: `
@@ -772,7 +772,7 @@ emails.push({
   category: "Cron: Intake Reminder (24h)",
   html: `
     <h1 style="color: #F59E0B;">We're Waiting on You</h1>
-    <p>You purchased your report — but we still need your case details before we can generate it.</p>
+    <p>You purchased your report, but we still need your case details before we can generate it.</p>
     <p>It only takes 3 minutes:</p>
     <a href="${SITE_URL}/intake?email=test%40example.com&tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Your Case Details</a>
     <p style="color: #A1A1AA;">Once you submit, your report will be generated within 24 hours.</p>
@@ -781,7 +781,7 @@ emails.push({
 
 emails.push({
   filename: "cron-intake-escalation-72h.html",
-  subject: "ALERT: Customer paid 3 days ago — still no intake",
+  subject: "ALERT: Customer paid 3 days ago, still no intake",
   category: "Cron: Intake Escalation (72h operator alert)",
   hasUnsubscribe: false,
   html: `
@@ -799,7 +799,7 @@ emails.push({
 
 emails.push({
   filename: "cron-intake-escalation-7d.html",
-  subject: "URGENT: Customer paid 8 days ago — no intake (consider refund)",
+  subject: "URGENT: Customer paid 8 days ago, no intake (consider refund)",
   category: "Cron: Intake Escalation (7d operator alert)",
   hasUnsubscribe: false,
   html: `
@@ -833,16 +833,16 @@ emails.push({
   category: "Cron: Abandoned Checkout Recovery",
   html: `
     <h1 style="color: #F59E0B;">You Were Close</h1>
-    <p>You started checkout but didn't finish. No pressure — but if you're still thinking about it, the Case Decoder is the right place to start.</p>
+    <p>You started checkout but didn't finish. No pressure, but if you're still thinking about it, the Case Decoder is the right place to start.</p>
     <p>For $197, you get a plain-English charge breakdown, 15 calibrated questions for your attorney, ready-to-send email templates, and a 7-day action plan.</p>
     <a href="${SITE_URL}/checkout?tier=case-decoder" style="display: inline-block; margin: 24px 0; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Continue to Checkout</a>
-    <p style="color: #A1A1AA;">Questions? Reply to this email — a real person reads every message.</p>
+    <p style="color: #A1A1AA;">Questions? Reply to this email, a real person reads every message.</p>
   `,
 });
 
 emails.push({
   filename: "cron-webhook-recovery.html",
-  subject: "URGENT: Recovered missed payment — test@example.com",
+  subject: "URGENT: Recovered missed payment, test@example.com",
   category: "Cron: Stripe Reconciliation Recovery",
   hasUnsubscribe: false,
   html: `
@@ -860,11 +860,11 @@ emails.push({
 
 emails.push({
   filename: "cron-orphan-order.html",
-  subject: "URGENT: Orphan order recovered — test@example.com",
+  subject: "URGENT: Orphan order recovered, test@example.com",
   category: "Cron: Orphan Order Recovery",
   hasUnsubscribe: false,
   html: `
-    <h1 style="color: #EF4444;">Orphan Order — Case Auto-Created</h1>
+    <h1 style="color: #EF4444;">Orphan Order, Case Auto-Created</h1>
     <p>Order existed with no linked case. Auto-created case.</p>
     <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
       <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> test@example.com</p>
@@ -878,7 +878,7 @@ emails.push({
 
 emails.push({
   filename: "cron-gap-detected.html",
-  subject: "ALERT: Cron missed runs — last run was 72 hours ago",
+  subject: "ALERT: Cron missed runs, last run was 72 hours ago",
   category: "Cron: Gap Detection / Heartbeat",
   hasUnsubscribe: false,
   html: `
@@ -895,7 +895,7 @@ emails.push({
 
 emails.push({
   filename: "webhook-refund-bounce.html",
-  subject: "ALERT: Refund failed — re_abc123",
+  subject: "ALERT: Refund failed, re_abc123",
   category: "Webhook: Refund Bounce/Failed",
   hasUnsubscribe: false,
   html: `
@@ -962,7 +962,7 @@ for (const email of emails) {
   }
 
   if (issues.length > 0) {
-    console.log(`  WARN: ${email.filename} — ${issues.join(", ")}`);
+    console.log(`  WARN: ${email.filename}, ${issues.join(", ")}`);
     termIssues += issues.length;
   }
 }
@@ -983,7 +983,7 @@ let indexHtml = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Email Template Audit — ImNotAnAttorney</title>
+<title>Email Template Audit, ImNotAnAttorney</title>
 <style>
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0C0A09; color: #D4D4D8; margin: 0; padding: 32px; }
   h1 { color: #F59E0B; border-bottom: 2px solid #F59E0B; padding-bottom: 12px; }
@@ -1028,12 +1028,12 @@ fs.writeFileSync(path.join(OUT_DIR, "index.html"), indexHtml);
 console.log(`\n  ${totalFiles} email templates rendered to test-emails/`);
 console.log(`  Index page: test-emails/index.html`);
 if (termIssues > 0) {
-  console.log(`  ${termIssues} v1 term issues found — review warnings above`);
+  console.log(`  ${termIssues} v1 term issues found, review warnings above`);
 } else {
   console.log(`  Zero v1 term issues found`);
 }
 
-// Link audit — check which links appear across all emails
+// Link audit, check which links appear across all emails
 console.log(`\n  Link audit:`);
 const allHtml = emails.map((e) => e.html).join(" ");
 for (const check of V2_EXPECTED_LINKS) {

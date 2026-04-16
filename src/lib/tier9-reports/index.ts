@@ -1,5 +1,5 @@
 /**
- * Tier 9 data-driven report generation — public API.
+ * Tier 9 data-driven report generation, public API.
  *
  * These products query pre-computed Tier 9 database tables (43K+ rows)
  * instead of calling Claude. No AI cost per generation.

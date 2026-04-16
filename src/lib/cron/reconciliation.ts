@@ -1,14 +1,14 @@
 /**
- * @file Part 9 — Stripe reconciliation + orphan order detection
+ * @file Part 9, Stripe reconciliation + orphan order detection
  *
- * Part 9a: Stripe reconciliation — detect paid sessions with no matching order.
+ * Part 9a: Stripe reconciliation, detect paid sessions with no matching order.
  *          If webhook failed or was never delivered, the customer paid but we
  *          have no record. Checks last 2 hours of paid sessions against orders.
  *          Checks BOTH test and live Stripe instances.
  *
- * Part 9b: Orphan order detection — detect orders with no linked case.
+ * Part 9b: Orphan order detection, detect orders with no linked case.
  *          If the case INSERT failed after the order INSERT, the customer has
- *          an order but no case — services can't be delivered.
+ *          an order but no case, services can't be delivered.
  */
 
 import { sendEmail, escapeHtml } from "@/lib/email";
@@ -51,7 +51,7 @@ export async function reconcileStripePayments(ctx: CronContext): Promise<CronRes
       if (existingSessionIds.has(session.id)) continue;
 
       {
-        // Missing order — webhook never fired or failed
+        // Missing order, webhook never fired or failed
         const email = (session.customer_email || session.customer_details?.email || "").toLowerCase().trim();
         const tier = session.metadata!.tier;
         const amount = session.amount_total || 0;
@@ -87,7 +87,7 @@ export async function reconcileStripePayments(ctx: CronContext): Promise<CronRes
         // URGENT operator alert
         await sendEmail({
           to: ctx.operatorEmail,
-          subject: `URGENT: Recovered missed payment — ${escapeHtml(email || "unknown")}`,
+          subject: `URGENT: Recovered missed payment, ${escapeHtml(email || "unknown")}`,
           html: `<h1 style="color: #EF4444;">Webhook Failure Recovered</h1>
             <p>A paid Stripe session had no matching order. Auto-recovered.</p>
             <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
@@ -145,7 +145,7 @@ export async function detectOrphanOrders(ctx: CronContext): Promise<CronResult> 
         if (orderIdsWithCases.has(order.id)) continue;
 
         {
-          // Orphan order — create case and alert
+          // Orphan order, create case and alert
           const caseId = crypto.randomUUID();
           await ctx.supabase.from("cases").insert({
             id: caseId,
@@ -158,8 +158,8 @@ export async function detectOrphanOrders(ctx: CronContext): Promise<CronResult> 
 
           await sendEmail({
             to: ctx.operatorEmail,
-            subject: `URGENT: Orphan order recovered — ${escapeHtml(order.email)}`,
-            html: `<h1 style="color: #EF4444;">Orphan Order — Case Auto-Created</h1>
+            subject: `URGENT: Orphan order recovered, ${escapeHtml(order.email)}`,
+            html: `<h1 style="color: #EF4444;">Orphan Order, Case Auto-Created</h1>
               <p>Order existed with no linked case. Auto-created case.</p>
               <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid #EF4444;">
                 <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(order.email)}</p>

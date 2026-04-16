@@ -5,13 +5,13 @@ project: inna
 status: pending
 created: 2026-03-13T10:00:00-04:00
 agent: social-facebook-engine
-title: "Resource #3: Complete DUI Defense Guide -- What Your Attorney Should Be Doing"
+title: "Resource #3: Complete DUI Defense Guide, What Your Attorney Should Be Doing"
 suggested_time: "Friday 6:00 PM ET"
 target_groups: ["DUI Support Groups", "Bail Bond Support Groups", "State-Specific Criminal Defense Groups"]
 blog_link: "/blog/complete-dui-defense-guide"
 ---
 
-## Facebook Post: Resource -- DUI Defense Guide
+## Facebook Post: Resource, DUI Defense Guide
 
 **Type**: Text post with image
 **Distribution**: Groups (rotate across 3-4 DUI-specific groups, one per day)
@@ -22,7 +22,7 @@ blog_link: "/blog/complete-dui-defense-guide"
 
 ### Post Content
 
-If you are facing a DUI charge, there is a checklist of things your attorney should be doing. Most defendants do not know what this checklist looks like -- so they have no way to know if the work is getting done.
+If you are facing a DUI charge, there is a checklist of things your attorney should be doing. Most defendants do not know what this checklist looks like, so they have no way to know if the work is getting done.
 
 Here is what a thorough DUI defense involves:
 
@@ -51,7 +51,7 @@ THE BLOOD TEST (if applicable):
 THE DMV HEARING:
 - In many states, you have a LIMITED window (often 10 days) to request a DMV hearing to challenge license suspension. If your attorney missed this deadline, ask why.
 
-If your attorney has not addressed each of these areas -- or cannot explain why a particular area is not relevant to your case -- the defense has not been fully developed.
+If your attorney has not addressed each of these areas, or cannot explain why a particular area is not relevant to your case, the defense has not been fully developed.
 
 This is not legal advice. This is a checklist of questions that informed clients bring to their DUI attorney meetings. Every one of these areas represents a potential challenge to the prosecution's case.
 
@@ -59,7 +59,7 @@ This is not legal advice. This is a checklist of questions that informed clients
 
 ### Visual Direction
 
-Create a structured checklist image: dark background, white text. Title: "DUI Defense Checklist: Is Your Attorney Doing the Work?" Four sections (The Stop, Field Sobriety, Breath Test, DMV Hearing) with 2-3 key questions under each. Clean, clinical formatting. 1080x1350px. Design for printing -- DUI defendants will bring this to meetings.
+Create a structured checklist image: dark background, white text. Title: "DUI Defense Checklist: Is Your Attorney Doing the Work?" Four sections (The Stop, Field Sobriety, Breath Test, DMV Hearing) with 2-3 key questions under each. Clean, clinical formatting. 1080x1350px. Design for printing, DUI defendants will bring this to meetings.
 
 ### Link Strategy
 
@@ -77,4 +77,4 @@ This post provides a checklist of questions, not legal analysis. It explicitly s
 
 **Share trigger**: Someone facing a DUI charge sends this to their family: "My attorney hasn't mentioned half of these things." A partner or parent sends it to the defendant: "Bring this list to your next meeting."
 **Context**: DUI is INNA's deepest content area. The technical specificity (calibration records, NHTSA standards, observation periods) signals expertise without providing legal advice. DUI defendants are desperate for structured information because the process feels chaotic and overwhelming.
-**KPI target**: Saves (extremely high -- checklist format) + blog traffic + Messenger shares + prints (yes, people print this)
+**KPI target**: Saves (extremely high, checklist format) + blog traffic + Messenger shares + prints (yes, people print this)

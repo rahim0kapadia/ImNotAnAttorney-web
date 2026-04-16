@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/demand-performance — Weekly content performance tracker
+ * @file /api/cron/demand-performance, Weekly content performance tracker
  *
  * Schedule: Runs weekly on Sundays at 6:00 AM ET via cron-job.org.
  * Protected by CRON_SECRET bearer token.

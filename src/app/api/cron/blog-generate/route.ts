@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/blog-generate — Blog post generation ENQUEUER
+ * @file /api/cron/blog-generate, Blog post generation ENQUEUER
  *
  * As of 2026-04-09 (blog engine port), this route enqueues processing_jobs
  * rows for the engine's blog_generate worker. It picks up content_gaps that
@@ -65,7 +65,7 @@ export async function GET(req: NextRequest) {
 
     // ── Enqueue one processing_jobs row per gap ──
     // case_id is null for blog jobs (migration 20260409e made it nullable).
-    // content_gaps.id is integer but processing_jobs.target_id is UUID — pass
+    // content_gaps.id is integer but processing_jobs.target_id is UUID, pass
     // the gap id through job_subtype (text column) instead.
     const jobs = gaps.map((g) => ({
       job_type: "blog_generate",
@@ -93,7 +93,7 @@ export async function GET(req: NextRequest) {
     if (updateError) {
       console.warn(`[Cron/blog-generate] Failed to mark gaps in-progress: ${updateError.message}`);
       // Non-fatal: the jobs were enqueued successfully. Worst case is duplicate
-      // enqueue on the next run — the engine worker checks for existing drafts
+      // enqueue on the next run, the engine worker checks for existing drafts
       // per gap as an idempotency guard.
     }
 

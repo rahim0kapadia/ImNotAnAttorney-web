@@ -1,5 +1,5 @@
 /**
- * POST /api/partner/magic-link — Request a magic link for partner login.
+ * POST /api/partner/magic-link, Request a magic link for partner login.
  *
  * Public route (no auth). Rate-limited to 3 requests per email per hour + 10 per IP per hour.
  * Sends magic link via Resend (email) + text.email gateway (SMS, if phone on file + preference enabled).

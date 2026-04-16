@@ -17,7 +17,7 @@ const PERSONAS = {
   "persona-a-dui": {
     firstName: "Danielle",
     charges: "DWI (First Offense)",
-    jurisdiction: "Texas — Harris County (State)",
+    jurisdiction: "Texas, Harris County (State)",
     caseNumber: "25-CR-11247",
     courtDate: "March 20, 2026",
     daysSinceArrest: 69,
@@ -27,7 +27,7 @@ const PERSONAS = {
   "persona-b-drug": {
     firstName: "Marcus",
     charges: "Cannabis Possession Over 20g (F.S. § 893.13(6)(a))",
-    jurisdiction: "Florida — Pinellas County (State)",
+    jurisdiction: "Florida, Pinellas County (State)",
     caseNumber: "26-CF-00412",
     courtDate: "April 10, 2026",
     daysSinceArrest: 51,
@@ -37,7 +37,7 @@ const PERSONAS = {
   "persona-c-whitecollar": {
     firstName: "Jennifer",
     charges: "Wire Fraud (18 U.S.C. § 1343)",
-    jurisdiction: "California — Northern District, N.D. Cal. (Federal)",
+    jurisdiction: "California, Northern District, N.D. Cal. (Federal)",
     caseNumber: "2:25-CR-00891",
     courtDate: "May 15, 2026",
     daysSinceArrest: 127,
@@ -46,8 +46,8 @@ const PERSONAS = {
   },
   "persona-d-dv": {
     firstName: "Sofia",
-    charges: "Assault — Family Violence (Texas Penal Code § 22.01(b)(2))",
-    jurisdiction: "Texas — Bexar County (State)",
+    charges: "Assault, Family Violence (Texas Penal Code § 22.01(b)(2))",
+    jurisdiction: "Texas, Bexar County (State)",
     caseNumber: "2025-CR-09218-B",
     courtDate: "April 28, 2026",
     daysSinceArrest: 168,
@@ -105,7 +105,7 @@ const fullHtml = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Decoder Report — ${meta.firstName}</title>
+<title>Case Decoder Report, ${meta.firstName}</title>
 <style>
   @media print {
     body { background: white !important; color: #1a1a1a !important; }
@@ -136,13 +136,13 @@ const fullHtml = `<!DOCTYPE html>
   </div>
   <blockquote style="border-left: 3px solid #F59E0B; padding: 16px; margin: 24px 0; background: #1C1917; border-radius: 0 8px 8px 0;">
     <p style="margin: 0 0 12px; color: #F59E0B; font-weight: bold;">METHODOLOGY NOTE</p>
-    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${meta.expertNames} — selected for ${meta.chargeType} cases. Expert attributions appear throughout.</p>
-    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${meta.expertNames}, selected for ${meta.chargeType} cases. Expert attributions appear throughout.</p>
+    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </blockquote>
   ${html}
   <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
     <p style="margin: 0; font-size: 13px; color: #71717A;">
-      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them — and why it matters.
+      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions, not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them, and why it matters.
     </p>
   </div>
   <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
@@ -151,8 +151,8 @@ const fullHtml = `<!DOCTYPE html>
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
-    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $997 ($800 after credit)</a>
-    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
+    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief, $997 ($800 after credit)</a>
+    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure, decide after your meeting.</p>
   </div>
 </div>
 </body>

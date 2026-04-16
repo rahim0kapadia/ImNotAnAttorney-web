@@ -1,5 +1,5 @@
 # ULTRA PLAN: Data-Driven Defense Intelligence Layer
-**Strategic master plan — sits above the execution plan**
+**Strategic master plan, sits above the execution plan**
 
 **Date:** 2026-04-09
 **Execution plan companion:** `docs/plans/2026-04-09-data-driven-defense-intelligence-layer.md`
@@ -11,26 +11,26 @@
 
 ## What this is
 
-The 8-tier Court Case Port (MASTER-PLAN.md) extracts Rahim's hand-built defense system into INAA's infrastructure. That's the *legal craft* layer — motion architecture, judge dossiers, attack patterns, witness research.
+The 8-tier Court Case Port (MASTER-PLAN.md) extracts Rahim's hand-built defense system into INAA's infrastructure. That's the *legal craft* layer, motion architecture, judge dossiers, attack patterns, witness research.
 
 This Ultra Plan defines a **9th tier**: a *statistical intelligence* layer that doesn't exist in Court Case because Court Case was built for ONE case. It only emerges when you process 10 million CourtListener opinions in aggregate and ask data architect questions instead of legal questions.
 
 **Tier 9 = Data-Driven Defense Intelligence**
 
-The premise: an elite AI/data architect who became a lawyer would see patterns across the corpus that no individual attorney can compute by hand. We're not replacing lawyers — we're computing what they don't have time to compute, then giving it to defendants whose attorneys may or may not be elite.
+The premise: an elite AI/data architect who became a lawyer would see patterns across the corpus that no individual attorney can compute by hand. We're not replacing lawyers, we're computing what they don't have time to compute, then giving it to defendants whose attorneys may or may not be elite.
 
 ---
 
 ## Three repos, three layers
 
 | Repo | Layer | What it owns |
-|------|-------|--------------|
+|------|-------|------------, |
 | **ImNotAnAttorney** | Strategy + content + business | MASTER-PLAN, marketing, brand, docs, content engine |
 | **ImNotAnAttorney-engine** | Per-case pipeline | 51 live workers, 6 phases, fires on each customer order |
 | **ImNotAnAttorney-web** (this) | Customer-facing + corpus data | Storefront, intake, delivery, the bulk data infrastructure |
 
 The 9 new statistical workers split across these three:
-- **Web** owns the bulk extraction scripts (read 50GB CSV, write to Supabase) — corpus-level batch work, runs once or quarterly
+- **Web** owns the bulk extraction scripts (read 50GB CSV, write to Supabase), corpus-level batch work, runs once or quarterly
 - **Engine** owns the per-case query layer (when a customer orders, query the pre-computed statistics for THEIR judge / their case)
 - **Parent** owns the strategic doc + positioning + SKU tier definitions
 
@@ -58,14 +58,14 @@ These are everything MASTER-PLAN doesn't cover that pure statistics over the CL 
 
 ---
 
-## Public positioning — the additive ladder
+## Public positioning, the additive ladder
 
 The brand foundation never changes:
 
 > **"Know What They Know."**
 > The defendant is the only stranger in the courtroom. Everyone else knows each other, works together every week. We close that information gap.
 
-Premium tiers ESCALATE that promise — they add MORE KINDS of intelligence inside the gap. They never replace the foundation.
+Premium tiers ESCALATE that promise, they add MORE KINDS of intelligence inside the gap. They never replace the foundation.
 
 | Tier | Price | Layer extension |
 |------|------:|----------------|
@@ -82,7 +82,7 @@ Each tier ADDS. Nothing replaces. The L0 promise (close the information gap) is 
 Three new low-commitment entry points:
 
 | SKU | Price | Strip from |
-|-----|------:|-----------|
+|---, |------:|---------, |
 | Judge Report Card | $197 | #1, #3, #4, #5, #6 for one specific judge |
 | Officer Background Check | $97 | #6 standalone |
 | Similar Cases Analyzer | $297 | #2 standalone |
@@ -96,7 +96,7 @@ Every render block presents **information**, not **advice**.
 - ✅ SAFE: "Judge Smith granted 8% of suppression motions in DUI cases since 2020. Cases granted shared these factors: [list]. Your case has 2 of those 5 factors. Ask your attorney whether the missing 3 factors can be argued."
 - ❌ UNSAFE: "You should not file a motion to suppress because Judge Smith will deny it."
 
-Every section ends with a question, never a recommendation. This is the same rule existing tiers follow — Tier 9 inherits it.
+Every section ends with a question, never a recommendation. This is the same rule existing tiers follow, Tier 9 inherits it.
 
 ---
 
@@ -114,18 +114,18 @@ That framing helps us prioritize, write good copy, and argue for funding. **It i
 
 The infrastructure to compute these 9 angles requires:
 - ~75 GB of CL bulk data on disk (we have it)
-- bzcat + csv-parse pipelines that handle CL's quirks (we built them — see `bulk-classify-from-opinions.mjs`)
-- Supabase free-tier compatible storage strategy (proven — we're at 91 MB / 500 MB)
-- A 51-worker engine that already does 60% of the legal craft (Court Case Port — we own it)
+- bzcat + csv-parse pipelines that handle CL's quirks (we built them, see `bulk-classify-from-opinions.mjs`)
+- Supabase free-tier compatible storage strategy (proven, we're at 91 MB / 500 MB)
+- A 51-worker engine that already does 60% of the legal craft (Court Case Port, we own it)
 - The COALESCE additive verification pattern that lets multiple sources stack without conflict (we proved it)
 
 That's not days of work. That's months of capital + product + data engineering. The moat is real.
 
 ---
 
-## Roadmap (high-level — the execution plan has the detail)
+## Roadmap (high-level, the execution plan has the detail)
 
-### Q2 2026 (Apr-Jun) — Tier 9 ships
+### Q2 2026 (Apr-Jun), Tier 9 ships
 
 | Wave | Scope | Outcome |
 |------|-------|---------|
@@ -135,14 +135,14 @@ That's not days of work. That's months of capital + product + data engineering. 
 | **Frontend integration** (week 4) | Report sections + 3 new standalone SKU pages | All tiers updated |
 | **Plea discount modeling** (week 5-6) | The hardest, last | Situation Room differentiator complete |
 
-### Q3 2026 (Jul-Sep) — Compounding
+### Q3 2026 (Jul-Sep), Compounding
 
 - Re-run all extractors on the next CL bulk dump (quarterly: Mar/Jun/Sep/Dec)
 - Add jurisdiction-specific tuning (federal vs state, US territories)
 - Build outcome feedback loop: when customers report case outcomes, flow back into score_calibration
 - Layer in real-time docket monitoring for War Room+ customers (engine has docket-monitor.mjs already)
 
-### Q4 2026 (Oct-Dec) — Differentiation
+### Q4 2026 (Oct-Dec), Differentiation
 
 - Probability scoring layer ("P(motion granted | judge X, charge Y, factors [A,B,C]) = 38%")
 - Brief auto-generation using judge quote libraries (Tier 9 + AI when credits return)
@@ -155,7 +155,7 @@ That's not days of work. That's months of capital + product + data engineering. 
 **Hormozi value equation impact:**
 
 | Factor | Before Tier 9 | After Tier 9 |
-|--------|---------------|--------------|
+|------, |---------------|------------, |
 | Dream Outcome | "Understand my case better" | "See the math on my specific judge/prosecutor/officer" |
 | Perceived Likelihood of Achievement | Medium (we tell you info) | High (we show you statistics with sources) |
 | Time Delay | Days (intake → report) | Same |
@@ -163,7 +163,7 @@ That's not days of work. That's months of capital + product + data engineering. 
 
 **Value equation lift:** Dream Outcome and Perceived Likelihood both 2-3x. With time/effort constant, the value-to-cost ratio jumps materially. Justifies War Room → Situation Room price tests AND creates 3 new low-commitment SKUs.
 
-**Layer-of-the-hierarchy diagnosis:** Tier 9 is an **L4 (Content & Distribution)** + **L5 (Conversion & Funnels)** play. The L1-L3 layers (audience, narrative, positioning, offers) are already healthy. The bottleneck is differentiation at premium price points — exactly what this layer addresses.
+**Layer-of-the-hierarchy diagnosis:** Tier 9 is an **L4 (Content & Distribution)** + **L5 (Conversion & Funnels)** play. The L1-L3 layers (audience, narrative, positioning, offers) are already healthy. The bottleneck is differentiation at premium price points, exactly what this layer addresses.
 
 **Bootstrap mode compatibility:** Zero new infrastructure cost. Zero new AI credit cost (everything is statistical). Existing storage. Existing workers. Pure leverage on assets we already own.
 
@@ -176,7 +176,7 @@ Tier 9 must execute via haiku-first agent strategy. The execution plan has the d
 - **Total expected agent cost:** $10-20 across the entire build
 - **Cost ceiling:** $30 (stop and re-evaluate if exceeded)
 - **Model selection:** haiku for pattern-mirroring + docs, sonnet for adaptation, opus only for novel critical logic
-- **Anti-pattern to avoid:** sitting in opus chat babysitting agents — that's where the real tokens burn, not the agents themselves
+- **Anti-pattern to avoid:** sitting in opus chat babysitting agents, that's where the real tokens burn, not the agents themselves
 
 ---
 
@@ -200,4 +200,4 @@ That's the operational blueprint. This Ultra Plan is the strategic context that 
 
 ## Single-sentence summary
 
-**Tier 9 makes INAA the first product where defendants get data-driven defense intelligence — judge math, prosecutor math, similar-case math, plea math — at a price they can afford, using bulk legal data we already have on disk, with zero new AI cost, while never abandoning the L0 promise to close the information gap.**
+**Tier 9 makes INAA the first product where defendants get data-driven defense intelligence, judge math, prosecutor math, similar-case math, plea math, at a price they can afford, using bulk legal data we already have on disk, with zero new AI cost, while never abandoning the L0 promise to close the information gap.**

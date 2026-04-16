@@ -1,5 +1,5 @@
 /**
- * Bulk Verify Cases — Match citations against local CAP data + generate SQL + batch apply
+ * Bulk Verify Cases, Match citations against local CAP data + generate SQL + batch apply
  *
  * Reads the dump JSON + cached .cap-cache/ files. For each case:
  *   1. Parse citation → reporter + volume
@@ -13,7 +13,7 @@
  * Batch-applies the generated SQL via Supabase Management API.
  *
  * NOTE: Unlike verify-via-cap.mjs (which DELETEs unverifiable rows), this script
- * marks them as validation_level='NOT_IN_DB' — safer for bulk operations where
+ * marks them as validation_level='NOT_IN_DB', safer for bulk operations where
  * a missing CAP cache file shouldn't trigger mass deletions.
  *
  * Usage:
@@ -159,7 +159,7 @@ function parsePostgresArray(val) {
   if (Array.isArray(val)) return val;
   if (!val || typeof val !== "string") return [];
   if (val === "{}") return [];
-  // Strip outer braces and split on comma (simple — no nested arrays)
+  // Strip outer braces and split on comma (simple, no nested arrays)
   const inner = val.slice(1, -1);
   const items = [];
   let current = "";
@@ -280,7 +280,7 @@ async function main() {
   };
 
   const sqlStatements = [];
-  sqlStatements.push("-- Bulk CAP Verification — Generated " + new Date().toISOString());
+  sqlStatements.push("-- Bulk CAP Verification, Generated " + new Date().toISOString());
   sqlStatements.push("-- Source: bulk-verify-cases.mjs");
   sqlStatements.push("");
 
@@ -306,12 +306,12 @@ async function main() {
     const metadata = loadVolume(parsed.reporter, parsed.volume);
     if (!metadata) {
       stats.noCacheFile++;
-      // No cache file — can't verify locally
+      // No cache file, can't verify locally
       // If it has a CL cluster ID, leave it for classify-case-law.mjs
       if (row.courtlistener_cluster_id) {
         stats.skippedHasCl++;
       } else {
-        // No CAP, no CL — mark as NOT_IN_DB
+        // No CAP, no CL, mark as NOT_IN_DB
         stats.markedNotInDb++;
         sqlStatements.push(
           `UPDATE statute_case_law SET validation_level = 'NOT_IN_DB' WHERE id = ${esc(row.id)};`
@@ -366,7 +366,7 @@ async function main() {
       stats.notInCap++;
       if (row.courtlistener_cluster_id) {
         stats.skippedHasCl++;
-        // Has CL data — defer to classify-case-law.mjs for verification
+        // Has CL data, defer to classify-case-law.mjs for verification
       } else {
         stats.markedNotInDb++;
         sqlStatements.push(
@@ -436,11 +436,11 @@ async function main() {
       process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} statements applied\n`);
     } catch (e) {
       batchErrors++;
-      console.error(`  Batch ${batchNum}/${totalBatches}: ERROR — ${e.message}`);
+      console.error(`  Batch ${batchNum}/${totalBatches}: ERROR, ${e.message}`);
 
       // On 429, wait and retry once
       if (e.message.indexOf("429") >= 0) {
-        console.log("  Rate limited — waiting 10s before retry...");
+        console.log("  Rate limited, waiting 10s before retry...");
         await sleep(10000);
         try {
           await supabaseQuery(batch.join("\n"));
@@ -448,7 +448,7 @@ async function main() {
           console.log(`  Batch ${batchNum} retry: SUCCESS`);
           batchErrors--;
         } catch (e2) {
-          console.error(`  Batch ${batchNum} retry: FAILED — ${e2.message}`);
+          console.error(`  Batch ${batchNum} retry: FAILED, ${e2.message}`);
         }
       }
     }

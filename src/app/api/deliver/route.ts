@@ -1,5 +1,5 @@
 /**
- * @file /api/deliver — Operator-facing report delivery endpoint
+ * @file /api/deliver, Operator-facing report delivery endpoint
  *
  * Pipeline position: Final step in the delivery pipeline. Called by the operator
  * after reviewing a generated report. This is where case status transitions from
@@ -7,13 +7,13 @@
  *
  * Two HTTP methods, each with a specific purpose:
  *
- *   GET  — Renders a confirmation page (read-only, no state change)
+ *   GET , Renders a confirmation page (read-only, no state change)
  *          Safe for email prefetch bots (Outlook, Gmail, etc.) that automatically
  *          follow links in emails. If this were a POST, bots would accidentally
  *          deliver reports. The GET shows case details + a "Confirm Delivery" button
  *          that submits a POST form.
  *
- *   POST — Actually delivers the report (sends email, updates status)
+ *   POST, Actually delivers the report (sends email, updates status)
  *          This is the destructive action. Only triggered by the operator clicking
  *          the confirmation button.
  *
@@ -21,7 +21,7 @@
  *   The case status is atomically updated to "delivered" BEFORE sending the
  *   delivery email. This prevents the TOCTOU race where two concurrent POST
  *   requests both pass a bare status check and both send delivery emails.
- *   The atomic conditional UPDATE (.eq("status", "review")) acts as a mutex —
+ *   The atomic conditional UPDATE (.eq("status", "review")) acts as a mutex,
  *   only one request wins. If the email fails after the status update, the
  *   operator is alerted and the report URL still works (manual forwarding).
  *
@@ -92,7 +92,7 @@ function renderEvalScorecard(evalResults: any): string {
   let banner: string;
   if (gatePassed === false) {
     banner = `<div style="background: #7F1D1D; padding: 12px 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #EF4444;">
-      <p style="margin: 0; color: #FCA5A5; font-weight: bold;">UPL GATE FAILED — Review evaluation below before delivering</p>
+      <p style="margin: 0; color: #FCA5A5; font-weight: bold;">UPL GATE FAILED, Review evaluation below before delivering</p>
     </div>`;
   } else {
     const uplScore = teams.upl?.score || "N/A";
@@ -109,11 +109,11 @@ function renderEvalScorecard(evalResults: any): string {
     // deno-lint-ignore no-explicit-any
     const t = team as any;
     if (t.error) {
-      details += `<div style="margin: 8px 0;"><strong style="color: #EF4444;">${escapeHtml(t.name || key)}: ERROR</strong> — ${escapeHtml(t.error)}</div>`;
+      details += `<div style="margin: 8px 0;"><strong style="color: #EF4444;">${escapeHtml(t.name || key)}: ERROR</strong>, ${escapeHtml(t.error)}</div>`;
       continue;
     }
     if (t.skipped) {
-      details += `<div style="margin: 8px 0;"><strong style="color: #F59E0B;">${escapeHtml(t.name || key)}: SKIPPED</strong> — ${escapeHtml(t.reason || "")}</div>`;
+      details += `<div style="margin: 8px 0;"><strong style="color: #F59E0B;">${escapeHtml(t.name || key)}: SKIPPED</strong>, ${escapeHtml(t.reason || "")}</div>`;
       continue;
     }
     if (!t.criteria) continue;
@@ -121,7 +121,7 @@ function renderEvalScorecard(evalResults: any): string {
     const teamBadge = t.failed > 0 ? "color: #EF4444;" : t.needs_work > 0 ? "color: #F59E0B;" : "color: #22C55E;";
     details += `<div style="margin: 12px 0;">
       <strong style="${teamBadge}">${escapeHtml(t.name || key)} (${escapeHtml(t.weight || "")}): ${escapeHtml(t.score || "")}</strong>
-      <span style="color: #71717A; font-size: 12px;"> — ${t.passed} pass, ${t.needs_work} needs_work, ${t.failed} fail</span>`;
+      <span style="color: #71717A; font-size: 12px;">, ${t.passed} pass, ${t.needs_work} needs_work, ${t.failed} fail</span>`;
 
     if (t.summary) {
       details += `<p style="margin: 4px 0 0; color: #A1A1AA; font-size: 13px;">${escapeHtml(t.summary)}</p>`;
@@ -175,7 +175,7 @@ export async function GET(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // AUTH: Operator token validation (signed tokens only for GET)
   // ──────────────────────────────────────────────────────────────
-  // GET only accepts HMAC-signed tokens (from email links — scoped to
+  // GET only accepts HMAC-signed tokens (from email links, scoped to
   // caseId, 24h expiry). Raw OPERATOR_SECRET is NOT accepted in GET
   // because query strings are logged in browser history, server access
   // logs, and email link prefetch services.
@@ -228,8 +228,8 @@ export async function GET(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // STATUS GUARDS: Prevent re-delivery or premature delivery
   // ──────────────────────────────────────────────────────────────
-  // "delivered" — idempotent: show already-delivered message
-  // anything other than "review" — case isn't ready for delivery yet
+  // "delivered", idempotent: show already-delivered message
+  // anything other than "review", case isn't ready for delivery yet
   if (caseData.status === "delivered") {
     return new NextResponse(
       `<h1>Already Delivered</h1><p>This case has already been delivered to ${escapeHtml(caseData.email)}.</p>`,
@@ -247,7 +247,7 @@ export async function GET(req: NextRequest) {
   const origin = getOrigin(req);
 
   // ──────────────────────────────────────────────────────────────
-  // RENDER CONFIRMATION PAGE (no state change — GET is read-only)
+  // RENDER CONFIRMATION PAGE (no state change, GET is read-only)
   // ──────────────────────────────────────────────────────────────
   // Shows case details, optional report preview link, and a POST form
   // with a "Confirm Delivery" button. The form POSTs back to this same
@@ -273,7 +273,7 @@ export async function GET(req: NextRequest) {
       <input type="hidden" name="case" value="${escapeHtml(caseId)}" />
       ${caseData.eval_results?.gate_passed === false
         ? `<button type="button" disabled style="margin-top: 16px; padding: 14px 32px; background: #7F1D1D; color: #FCA5A5; font-weight: bold; border: 2px solid #EF4444; border-radius: 8px; font-size: 16px; cursor: not-allowed; opacity: 0.8;">
-            Delivery Blocked — UPL Gate Failed
+            Delivery Blocked, UPL Gate Failed
           </button>
           <p style="margin-top: 8px; color: #EF4444; font-size: 13px;">Report cannot be delivered until evaluation issues are resolved and gate_passed is true.</p>`
         : `<button type="submit" style="margin-top: 16px; padding: 14px 32px; background: #22C55E; color: white; font-weight: bold; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
@@ -301,7 +301,7 @@ export async function GET(req: NextRequest) {
 //   4. Record drip to prevent duplicate delivery emails from cron
 //   5. Return confirmation HTML to operator
 //
-// The atomic-claim-before-email ordering prevents duplicate emails — see file-level JSDoc.
+// The atomic-claim-before-email ordering prevents duplicate emails, see file-level JSDoc.
 export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // PARSE INPUT: Support both form-encoded (from GET page button)
@@ -381,7 +381,7 @@ export async function POST(req: NextRequest) {
   //
   // IMPORTANT: This check runs BEFORE the atomic status claim below.
   // Previously it was after the claim, which left the case in "delivered"
-  // status even when the gate blocked delivery — an inconsistent state.
+  // status even when the gate blocked delivery, an inconsistent state.
   if (caseData.eval_results?.gate_passed === false) {
     return new NextResponse(
       `<!DOCTYPE html>
@@ -390,7 +390,7 @@ export async function POST(req: NextRequest) {
 <body style="font-family: Arial, sans-serif; background: #0C0A09; color: #D4D4D8; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;">
   <div style="text-align: center; max-width: 500px; padding: 32px;">
     <div style="font-size: 48px; margin-bottom: 16px; color: #EF4444;">&#10007;</div>
-    <h1 style="color: #EF4444;">Delivery Blocked — UPL Gate Failed</h1>
+    <h1 style="color: #EF4444;">Delivery Blocked, UPL Gate Failed</h1>
     <p>This report cannot be delivered because the evaluation gate failed. The report may contain UPL violations that must be resolved before delivery.</p>
     <p style="margin-top: 16px; color: #71717A;">Case ID: ${escapeHtml(caseId)}</p>
     <p style="margin-top: 8px; color: #71717A;">Fix the report, re-run evaluation, and ensure gate_passed is true before attempting delivery.</p>
@@ -405,7 +405,7 @@ export async function POST(req: NextRequest) {
   // ATOMIC DELIVERY GUARD: Claim the case for delivery
   // ──────────────────────────────────────────────────────────────
   // Uses a conditional UPDATE (eq status "review") as a database-level
-  // mutex. Only one concurrent POST can win this UPDATE — the loser
+  // mutex. Only one concurrent POST can win this UPDATE, the loser
   // gets null back and returns early. This prevents the TOCTOU race
   // where two requests both pass a bare status check and both send
   // delivery emails.
@@ -442,7 +442,7 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (!deliverGuard) {
-    // Atomic guard failed — re-fetch current status to avoid stale read
+    // Atomic guard failed, re-fetch current status to avoid stale read
     const { data: freshCase } = await supabase
       .from("cases")
       .select("status, email")
@@ -514,18 +514,18 @@ export async function POST(req: NextRequest) {
       <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
         <p style="margin: 0; color: white; font-weight: bold; font-size: 16px;">How to use your Intelligence Brief:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
-          <li style="margin-bottom: 10px;"><strong style="color: white;">Start with the 48-Hour Priority List</strong> — three actions ranked by urgency, each linked to a specific section in your brief</li>
-          <li style="margin-bottom: 10px;"><strong style="color: white;">Read Section 3: Case Intelligence</strong> — jurisdiction-specific outcome patterns, defense theories that apply to your charge, and prosecution strategy preview for your county</li>
-          <li style="margin-bottom: 10px;"><strong style="color: white;">Review Section 4: Legal Options &amp; Deadlines</strong> — every motion that could apply, with filing deadlines specific to your jurisdiction</li>
-          <li style="margin-bottom: 10px;"><strong style="color: white;">Check Section 5: Protecting Your Case and Life</strong> — how your charge may affect employment, housing, licensing, and other areas, with protective steps for each</li>
-          <li style="margin-bottom: 10px;"><strong style="color: white;">Bring the Meeting Ready Sheet</strong> (Section 6) to your next attorney appointment — 5 priority questions pre-filled from your case details</li>
-          <li style="margin-bottom: 10px;"><strong style="color: white;">Follow Your 14-Day Plan</strong> (Section 6) — one action per day, sequenced so each builds on the last</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Start with the 48-Hour Priority List</strong>, three actions ranked by urgency, each linked to a specific section in your brief</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Read Section 3: Case Intelligence</strong>, jurisdiction-specific outcome patterns, defense theories that apply to your charge, and prosecution strategy preview for your county</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Review Section 4: Legal Options &amp; Deadlines</strong>, every motion that could apply, with filing deadlines specific to your jurisdiction</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Check Section 5: Protecting Your Case and Life</strong>, how your charge may affect employment, housing, licensing, and other areas, with protective steps for each</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Bring the Meeting Ready Sheet</strong> (Section 6) to your next attorney appointment, 5 priority questions pre-filled from your case details</li>
+          <li style="margin-bottom: 10px;"><strong style="color: white;">Follow Your 14-Day Plan</strong> (Section 6), one action per day, sequenced so each builds on the last</li>
         </ol>
-        <p style="margin: 16px 0 0; color: #A1A1AA; font-size: 13px;">Your brief is 25-30 pages. You don't have to read it all at once — start with the 48-Hour Priority List and the rest will be there when you're ready.</p>
+        <p style="margin: 16px 0 0; color: #A1A1AA; font-size: 13px;">Your brief is 25-30 pages. You don't have to read it all at once, start with the 48-Hour Priority List and the rest will be there when you're ready.</p>
       </div>`;
     upgradeHtml = `
       <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 24px;">
-        <p style="margin: 0; color: #F59E0B; font-weight: bold;">When you get discovery — we're ready.</p>
+        <p style="margin: 0; color: #F59E0B; font-weight: bold;">When you get discovery, we're ready.</p>
         <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${TIER_CORE["intelligence-brief"].priceDisplay} is credited toward ${TIER_CORE["x-ray"].name} (${TIER_CORE["x-ray"].priceDisplay}). Pay only ${upgradePrice("intelligence-brief")}. <a href="${origin}/services" style="color: #F59E0B;">View upgrade options</a></p>
       </div>`;
   } else if (caseData.tier === "x-ray") {
@@ -533,7 +533,7 @@ export async function POST(req: NextRequest) {
     let docCount = 0;
     let redFlagCount = 0;
     let questionCount = 0;
-    let discoveryScore = "—";
+    let discoveryScore = ", ";
     const { data: analysisData } = await supabase
       .from("case_analysis_results")
       .select("red_flag_count, discovery_health_score")
@@ -543,7 +543,7 @@ export async function POST(req: NextRequest) {
       .single();
     if (analysisData) {
       redFlagCount = analysisData.red_flag_count || 0;
-      discoveryScore = analysisData.discovery_health_score != null ? String(analysisData.discovery_health_score) : "—";
+      discoveryScore = analysisData.discovery_health_score != null ? String(analysisData.discovery_health_score) : ", ";
     }
     // Count discovery documents
     const { count: docCountResult } = await supabase
@@ -558,16 +558,16 @@ export async function POST(req: NextRequest) {
       <h2 style="color: #F59E0B; margin-top: 32px;">Your X-Ray Discovery Analysis Is Ready</h2>
       <p>We analyzed <strong>${docCount} discovery document${docCount !== 1 ? "s" : ""}</strong> and found:</p>
       <ul>
-        <li><strong>${redFlagCount} red flag${redFlagCount !== 1 ? "s" : ""}</strong> — issues in the prosecution's evidence that deserve attention</li>
-        <li><strong>${questionCount}+ targeted questions</strong> — specific questions for your next attorney meeting</li>
-        <li><strong>Discovery Strength Rating: ${escapeHtml(discoveryScore)}/100</strong> — how complete your discovery is</li>
+        <li><strong>${redFlagCount} red flag${redFlagCount !== 1 ? "s" : ""}</strong>, issues in the prosecution's evidence that deserve attention</li>
+        <li><strong>${questionCount}+ targeted questions</strong>, specific questions for your next attorney meeting</li>
+        <li><strong>Discovery Strength Rating: ${escapeHtml(discoveryScore)}/100</strong>, how complete your discovery is</li>
       </ul>
       <h3 style="color: #E5E5E5;">How to Use This Report</h3>
       <ol style="color: #D4D4D8; padding-left: 20px;">
-        <li style="margin-bottom: 8px;"><strong style="color: white;">Read the Executive Summary</strong> (page 1) — your case at a glance</li>
-        <li style="margin-bottom: 8px;"><strong style="color: white;">Review the Top 3 Findings</strong> (page 2) — hand this page to your attorney</li>
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Read the Executive Summary</strong> (page 1), your case at a glance</li>
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Review the Top 3 Findings</strong> (page 2), hand this page to your attorney</li>
         <li style="margin-bottom: 8px;"><strong style="color: white;">Bring the "If You Only Have 15 Minutes" questions</strong> to your next attorney meeting</li>
-        <li style="margin-bottom: 8px;"><strong style="color: white;">Share relevant sections</strong> with your attorney — especially the Red Flags</li>
+        <li style="margin-bottom: 8px;"><strong style="color: white;">Share relevant sections</strong> with your attorney, especially the Red Flags</li>
       </ol>
       <p style="color: #71717A;">This is your Attorney Meeting Prep Kit. Schedule a meeting with your attorney within the next 7 days while findings are current.</p>`;
     upgradeHtml = `
@@ -582,9 +582,9 @@ export async function POST(req: NextRequest) {
         <p style="margin: 0; color: white; font-weight: bold;">How to use your report:</p>
         <ol style="color: #D4D4D8; padding-left: 20px; margin-top: 12px;">
           <li style="margin-bottom: 8px;"><strong style="color: white;">Print it</strong> and bring it to your next attorney meeting</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the 5 Priority Questions</strong> in "Questions for Your Attorney" — if you only ask one, ask the Golden Question</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Send the email</strong> from "Exactly What to Say" — it's already written for you, just copy-paste and hit send</li>
-          <li style="margin-bottom: 8px;"><strong style="color: white;">Follow Your Next 7 Days</strong> — one simple action per day, starting with sending that email</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Start with the 5 Priority Questions</strong> in "Questions for Your Attorney", if you only ask one, ask the Golden Question</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Send the email</strong> from "Exactly What to Say", it's already written for you, just copy-paste and hit send</li>
+          <li style="margin-bottom: 8px;"><strong style="color: white;">Follow Your Next 7 Days</strong>, one simple action per day, starting with sending that email</li>
         </ol>
       </div>`;
     // Skip upgrade CTA if this is an included deliverable (customer already bought higher tier)
@@ -597,7 +597,7 @@ export async function POST(req: NextRequest) {
 
   // For included deliverables, adjust the subject and intro
   const emailSubject = isIncluded
-    ? `Part 1 of Your ${escapeHtml(parentTierName)} Package is Ready — Your Case Decoder Report`
+    ? `Part 1 of Your ${escapeHtml(parentTierName)} Package is Ready, Your Case Decoder Report`
     : `Your ${tierName} Report is Ready`;
 
   const deliveryLogContext: EmailLogContext = { category: "delivery", case_id: caseId! };
@@ -612,7 +612,7 @@ export async function POST(req: NextRequest) {
     html: `
       <h1 style="color: #F59E0B;">${isIncluded ? `Part 1 of Your ${escapeHtml(parentTierName)} Package` : `Your ${escapeHtml(tierName)} Report`} is Ready</h1>
       <p>Hi ${escapeHtml(firstName)},</p>
-      <p>Your personalized ${escapeHtml(tierName)} report is ready to view. It contains targeted questions, communication tools, and a clear picture of where things stand — built specifically from your case details.</p>
+      <p>Your personalized ${escapeHtml(tierName)} report is ready to view. It contains targeted questions, communication tools, and a clear picture of where things stand, built specifically from your case details.</p>
       <a href="${reportUrl}" style="display: inline-block; margin: 24px 0; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">View Your Report</a>
       ${instructionsHtml}
       ${upgradeHtml}
@@ -624,7 +624,7 @@ export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // STEP 1b: RETRY with simplified email if first attempt failed
   // ──────────────────────────────────────────────────────────────
-  // The retry uses a much simpler HTML template — this helps if the
+  // The retry uses a much simpler HTML template, this helps if the
   // failure was due to email size or HTML complexity triggering spam
   // filters. If retry also fails, notify operator with the report URL
   // so they can forward it manually.
@@ -644,7 +644,7 @@ export async function POST(req: NextRequest) {
     if (!retryResult.success) {
       // ── OPERATOR FALLBACK: Both email attempts failed ──
       // Mark customerNotified=false so the operator knows to send manually.
-      // The case will still be marked "delivered" so the report URL works —
+      // The case will still be marked "delivered" so the report URL works,
       // the operator just needs to get the URL to the customer another way.
       _customerNotified = false;
       await sendEmail({
@@ -688,7 +688,7 @@ export async function POST(req: NextRequest) {
         if (sibling.tier === "intelligence-brief" && (sibling.status === "awaiting-intake" || sibling.status === "intake")) {
           await sendEmail({
             to: caseData.email,
-            subject: `Your Case Decoder is Ready — Next: Complete Your ${siblingTierName} Details`,
+            subject: `Your Case Decoder is Ready, Next: Complete Your ${siblingTierName} Details`,
             unsubscribeEmail: caseData.email,
             threadingHeaders: {
               inReplyTo: caseThreadId(sibling.id),
@@ -697,10 +697,10 @@ export async function POST(req: NextRequest) {
             html: `
               <h1 style="color: #F59E0B;">Part 1 Complete: Your Case Decoder Report</h1>
               <p>Hi ${escapeHtml(firstName)},</p>
-              <p>Your Case Decoder report is ready — <a href="${reportUrl}" style="color: #F59E0B;">view it here</a>.</p>
+              <p>Your Case Decoder report is ready, <a href="${reportUrl}" style="color: #F59E0B;">view it here</a>.</p>
               <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #F59E0B;">
                 <p style="margin: 0; color: white; font-weight: bold;">Next Step: Complete Your ${escapeHtml(siblingTierName)}</p>
-                <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${escapeHtml(siblingTierName)} includes jurisdiction intelligence, motion landscape analysis, and 10-15 targeted questions — but we need a few more details about your case.</p>
+                <p style="margin: 8px 0 0; color: #D4D4D8;">Your ${escapeHtml(siblingTierName)} includes jurisdiction intelligence, motion landscape analysis, and 10-15 targeted questions, but we need a few more details about your case.</p>
                 <a href="${origin}/intake/intelligence-brief?case=${sibling.id}&token=${signPhase2Token(sibling.id)}" style="display: inline-block; margin-top: 16px; padding: 14px 28px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Complete Intelligence Brief Details</a>
               </div>
               <p style="color: #A1A1AA;">This takes about 3-5 minutes. Your full ${escapeHtml(siblingTierName)} will be delivered within 72 hours after you complete this form.</p>

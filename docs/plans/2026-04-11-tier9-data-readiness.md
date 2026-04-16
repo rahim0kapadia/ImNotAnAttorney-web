@@ -1,4 +1,4 @@
-# Tier 9 Data Readiness — Audit + Remediation Plan
+# Tier 9 Data Readiness, Audit + Remediation Plan
 
 **Date:** 2026-04-11
 **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web\`
@@ -9,25 +9,25 @@
 ### Table-by-Table Status
 
 | Table | Rows | Status | Blocker |
-|-------|------|--------|---------|
-| `judge_profiles` | 15,613 | Schema mismatch | Column is `full_name`, not `name`. No `jurisdiction` column. No `court` column. Jurisdiction must be extracted from `positions` JSONB. Rollup columns (`sentencing_distributions`, `judicial_quotes`, `bench_acquittal_rate`, `jury_acquittal_rate`) are ALL NULL — never populated. |
-| `judge_quotes` | 64,730 | Unlinked + generic | `judge_id` is NULL on all rows — quotes aren't linked to judges. Topic is "general" everywhere (not classified). Quotes are generic court opinion excerpts, not judge-specific attributable quotes. |
-| `sentencing_distributions` | 244 | Unlinked | `judge_id` is NULL — not linked to specific judges. Has `charge_slug` data. Duplicate rows present. |
-| `officer_reliability` | 11,818 | Garbage data | Top entries are "Attorney General" (282 testimonies), "Public Defender" (126), "Atty" (91) — not officers. Garbage names from parsing artifacts ("Colclasure attempted to do the same"). Jurisdiction is "multi" on ALL rows. Duplicates present. |
+|-------|------|------, |---------|
+| `judge_profiles` | 15,613 | Schema mismatch | Column is `full_name`, not `name`. No `jurisdiction` column. No `court` column. Jurisdiction must be extracted from `positions` JSONB. Rollup columns (`sentencing_distributions`, `judicial_quotes`, `bench_acquittal_rate`, `jury_acquittal_rate`) are ALL NULL, never populated. |
+| `judge_quotes` | 64,730 | Unlinked + generic | `judge_id` is NULL on all rows, quotes aren't linked to judges. Topic is "general" everywhere (not classified). Quotes are generic court opinion excerpts, not judge-specific attributable quotes. |
+| `sentencing_distributions` | 244 | Unlinked | `judge_id` is NULL, not linked to specific judges. Has `charge_slug` data. Duplicate rows present. |
+| `officer_reliability` | 11,818 | Garbage data | Top entries are "Attorney General" (282 testimonies), "Public Defender" (126), "Atty" (91), not officers. Garbage names from parsing artifacts ("Colclasure attempted to do the same"). Jurisdiction is "multi" on ALL rows. Duplicates present. |
 | `judge_prosecutor_pairings` | 205 | Sparse but decent | Only 1 judge_id populated. Small sample sizes (max 4). Data structure is correct. |
 | `bench_jury_divergence` | 0 | Empty | Never populated. Script exists but hasn't run. |
 | `appellate_trends` | 1,523 | No jurisdiction | Jurisdiction is "unknown" on all rows. Has argument types and rates. |
 | `co_defendant_analysis` | 0 | Empty | Never populated. Script exists but hasn't run. |
-| `plea_discount_curves` | 46 | Bad data | `base_sentence = plea_sentence = 600` everywhere — no actual discount computed. Looks like a default/cap value leaked through. |
+| `plea_discount_curves` | 46 | Bad data | `base_sentence = plea_sentence = 600` everywhere, no actual discount computed. Looks like a default/cap value leaked through. |
 | `case_feature_vectors` | 1,008 | All null slugs | `charge_slug` is NULL on all 1,008 rows. Has jurisdiction but no charge linkage. Feature vectors exist but unusable without charge_slug. |
 
-### Code-to-Schema Mismatches (CRITICAL — pipeline won't work even with good data)
+### Code-to-Schema Mismatches (CRITICAL, pipeline won't work even with good data)
 
 | File | Issue |
 |------|-------|
-| `query.ts:152` | `.ilike("name", ...)` — column doesn't exist. Should be `full_name`. |
-| `query.ts:153` | `.eq("jurisdiction", intake.state)` — column doesn't exist on `judge_profiles`. Must derive from `positions` JSONB or add a denormalized column. |
-| `query.ts:230` | `.eq("jurisdiction", intake.state)` on `officer_reliability` — jurisdiction is "multi" on all rows, never matches a state code. |
+| `query.ts:152` | `.ilike("name", ...)`, column doesn't exist. Should be `full_name`. |
+| `query.ts:153` | `.eq("jurisdiction", intake.state)`, column doesn't exist on `judge_profiles`. Must derive from `positions` JSONB or add a denormalized column. |
+| `query.ts:230` | `.eq("jurisdiction", intake.state)` on `officer_reliability`, jurisdiction is "multi" on all rows, never matches a state code. |
 
 ---
 
@@ -43,10 +43,10 @@ Change `.ilike("name", ...)` → `.ilike("full_name", ...)`.
 
 For jurisdiction: the `positions` JSONB contains `court_id` values (e.g., "wva" = West Virginia). Options:
 1. **Add a denormalized `jurisdiction` column** to `judge_profiles` via migration, populated from `positions[0].court_id`. Then filter on it.
-2. **Skip jurisdiction filter on judge lookup** — use name only (with ILIKE escaping already in place). If multiple judges match, return the one with the most data (join-count on sentencing_distributions).
-3. **Parse `positions` in the query** — not possible with Supabase JS client's JSONB filtering.
+2. **Skip jurisdiction filter on judge lookup**, use name only (with ILIKE escaping already in place). If multiple judges match, return the one with the most data (join-count on sentencing_distributions).
+3. **Parse `positions` in the query**, not possible with Supabase JS client's JSONB filtering.
 
-**Recommendation:** Option 1 — add denormalized `jurisdiction` text column, populate via a one-time backfill script that maps `court_id` to state abbreviations using CourtListener's court ID format (first 2 chars are often the state, e.g., "txsd" = TX Southern District). Then the `.eq("jurisdiction", intake.state)` works.
+**Recommendation:** Option 1, add denormalized `jurisdiction` text column, populate via a one-time backfill script that maps `court_id` to state abbreviations using CourtListener's court ID format (first 2 chars are often the state, e.g., "txsd" = TX Southern District). Then the `.eq("jurisdiction", intake.state)` works.
 
 ### Task 0b: Fix officer_reliability jurisdiction
 
@@ -82,15 +82,15 @@ Without this link, the Judge Report Card can't show quotes for a specific judge.
 
 ### Task 1c: Link sentencing_distributions to judges
 
-Same issue — `judge_id` is NULL on all 244 rows. The `bulk-sentencing-outlier-detector.mjs` needs to extract the sentencing judge from the opinion and link to `judge_profiles`.
+Same issue, `judge_id` is NULL on all 244 rows. The `bulk-sentencing-outlier-detector.mjs` needs to extract the sentencing judge from the opinion and link to `judge_profiles`.
 
 ### Task 1d: Classify judge_quotes by topic
 
-All quotes have `topic = "general"`. Need NLP classification into: sentencing, suppression, credibility, procedure, constitutional, evidence, etc. This makes the quote library section of the Judge Report Card useful — currently it's just random court opinion excerpts.
+All quotes have `topic = "general"`. Need NLP classification into: sentencing, suppression, credibility, procedure, constitutional, evidence, etc. This makes the quote library section of the Judge Report Card useful, currently it's just random court opinion excerpts.
 
 ### Task 1e: Fix plea_discount_curves (base = plea = 600)
 
-All 46 rows have `base_sentence = plea_sentence = 600` (months = 50 years). This looks like a cap value that leaked through. The `bulk-plea-discount-modeler.mjs` sentence parsing needs debugging — it's not differentiating plea vs trial sentences.
+All 46 rows have `base_sentence = plea_sentence = 600` (months = 50 years). This looks like a cap value that leaked through. The `bulk-plea-discount-modeler.mjs` sentence parsing needs debugging, it's not differentiating plea vs trial sentences.
 
 ### Task 1f: Fix appellate_trends jurisdiction
 
@@ -119,9 +119,9 @@ New migration adding `jurisdiction text` column. Backfill from `positions` JSONB
 ### Task 2b: Populate judge_profiles rollup columns
 
 After Tasks 1b and 1c are done (quotes and sentencing linked to judges), run rollup aggregation:
-- `sentencing_distributions` JSONB — aggregate from sentencing_distributions table
-- `judicial_quotes` JSONB — aggregate from judge_quotes table
-- `bench_acquittal_rate` / `jury_acquittal_rate` — from bench_jury_divergence table
+- `sentencing_distributions` JSONB, aggregate from sentencing_distributions table
+- `judicial_quotes` JSONB, aggregate from judge_quotes table
+- `bench_acquittal_rate` / `jury_acquittal_rate`, from bench_jury_divergence table
 
 These rollup columns exist on judge_profiles but are currently ALL NULL.
 
@@ -133,9 +133,9 @@ These rollup columns exist on judge_profiles but are currently ALL NULL.
 
 After Phases 0-2, pick specific judges/officers that have data and run:
 ```
-node scripts/e2e-tier9.mjs --only judge-report-card
-node scripts/e2e-tier9.mjs --only officer-background-check
-node scripts/e2e-tier9.mjs --only similar-cases-analyzer
+node scripts/e2e-tier9.mjs,only judge-report-card
+node scripts/e2e-tier9.mjs,only officer-background-check
+node scripts/e2e-tier9.mjs,only similar-cases-analyzer
 ```
 
 Verify full report HTML renders with actual data sections populated.
@@ -158,7 +158,7 @@ In `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\tiers.ts`, set `live: tr
 ## Priority Order
 
 | Priority | Task | Blocks | Effort |
-|----------|------|--------|--------|
+|----------|------|------, |------, |
 | P0 | 0a: Fix `full_name` column | All judge queries | 10 min |
 | P0 | 0b: Fix officer jurisdiction fallback | Officer reports | 10 min |
 | P0 | 0c: Fix case_feature_vectors charge_slug | Similar cases | Needs re-run of bulk script |
@@ -194,16 +194,16 @@ In `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\tiers.ts`, set `live: tr
 
 Based on audit data, the bulk extraction scripts have systemic issues:
 
-1. **`bulk-officer-reliability-aggregator.mjs`** — No name validation filter. Extracts any capitalized word sequence as an "officer name", catching "Attorney General", "Public Defender", and sentence fragments.
+1. **`bulk-officer-reliability-aggregator.mjs`**, No name validation filter. Extracts any capitalized word sequence as an "officer name", catching "Attorney General", "Public Defender", and sentence fragments.
 
-2. **`bulk-judge-quote-extractor.mjs`** — Doesn't link quotes to specific judges. Extracts quotes from opinions but doesn't resolve the authoring judge to `judge_profiles.id`.
+2. **`bulk-judge-quote-extractor.mjs`**, Doesn't link quotes to specific judges. Extracts quotes from opinions but doesn't resolve the authoring judge to `judge_profiles.id`.
 
-3. **`bulk-sentencing-outlier-detector.mjs`** — Doesn't link sentencing data to specific judges. Computes distributions per charge but not per judge.
+3. **`bulk-sentencing-outlier-detector.mjs`**, Doesn't link sentencing data to specific judges. Computes distributions per charge but not per judge.
 
-4. **`bulk-plea-discount-modeler.mjs`** — Sentence parsing broken. All entries show `base_sentence = plea_sentence = 600` (cap value leak).
+4. **`bulk-plea-discount-modeler.mjs`**, Sentence parsing broken. All entries show `base_sentence = plea_sentence = 600` (cap value leak).
 
-5. **`bulk-appeal-outcome-correlator.mjs`** — Doesn't extract court jurisdiction from opinion metadata. Sets jurisdiction to "unknown".
+5. **`bulk-appeal-outcome-correlator.mjs`**, Doesn't extract court jurisdiction from opinion metadata. Sets jurisdiction to "unknown".
 
-6. **`bulk-similar-case-matcher.mjs`** — Doesn't set `charge_slug` on feature vectors. The classification step is missing or disconnected.
+6. **`bulk-similar-case-matcher.mjs`**, Doesn't set `charge_slug` on feature vectors. The classification step is missing or disconnected.
 
-7. **`bulk-master-extractor.mjs`** (76KB) — Orchestrator script. Likely delegates to the individual scripts above. The systemic issues suggest the common opinion-parsing layer doesn't extract judge identity, court jurisdiction, or charge classification reliably.
+7. **`bulk-master-extractor.mjs`** (76KB), Orchestrator script. Likely delegates to the individual scripts above. The systemic issues suggest the common opinion-parsing layer doesn't extract judge identity, court jurisdiction, or charge classification reliably.

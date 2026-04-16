@@ -1,8 +1,8 @@
-# Content Layer — content/
+# Content Layer, content/
 
 > Two subsystems: MDX blog posts (customer-facing SEO content) and social content queue (multi-platform publishing pipeline).
 
-## Blog — content/blog/
+## Blog, content/blog/
 
 60 MDX files. Rendered at `/blog/[slug]` via `next-mdx-remote`. Parsed by `src/lib/blog.ts`. Tag pills on individual posts link to `/blog?category=<category>` for filtered listing.
 
@@ -29,8 +29,8 @@ All fields except `faqs` and `howToSteps` are required. `faqs` generates FAQ sch
 
 | Category | Count | Notes |
 |----------|-------|-------|
-| `general-defense` | 33 | Largest — attorney accountability, process, motions, plea |
-| `dui` | 10 | DUI-specific — breathalyzer, field sobriety, 72-hour guide |
+| `general-defense` | 33 | Largest, attorney accountability, process, motions, plea |
+| `dui` | 10 | DUI-specific, breathalyzer, field sobriety, 72-hour guide |
 | `drug-cases` | 6 | Drug possession, trafficking, discovery, testing |
 | `white-collar` | 4 | Federal, wire fraud, cooperation agreements |
 | `probation` | 4 | Violations, drug test, technical violations |
@@ -51,9 +51,9 @@ All fields except `faqs` and `howToSteps` are required. `faqs` generates FAQ sch
 Every blog post must include a disclaimer: "This article provides general information, not legal advice. Every case is different. Consult a licensed attorney in your jurisdiction." This is audited by `src/lib/blog-generation/qa-upl.ts` for AI-generated posts.
 
 ### Expert Attribution Rule
-All expert references must exist in `ImNotAnAttorney/system/EXPERT-REFERENCE.md` and be web-verified. The Victor Knapp incident (March 2026) — a fabricated attorney cited across 3 pages — established this as a hard rule.
+All expert references must exist in `ImNotAnAttorney/system/EXPERT-REFERENCE.md` and be web-verified. The Victor Knapp incident (March 2026), a fabricated attorney cited across 3 pages, established this as a hard rule.
 
-## Content Queue — content/queue/
+## Content Queue, content/queue/
 
 Multi-platform social content staging directory. Content moves `pending/` → `approved/` → `posted/` via Postiz publishing pipeline.
 
@@ -69,7 +69,7 @@ content/queue/
   tiktok/         pending/  approved/  posted/
   twitter/        pending/  approved/  posted/
   youtube/        pending/  approved/  posted/
-  quora/          pending/    (no approved/posted yet — manual workflow)
+  quora/          pending/    (no approved/posted yet, manual workflow)
   growth/         pending/    (strategy + growth docs, not platform-specific)
 ```
 
@@ -95,22 +95,22 @@ Content body here...
 
 Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 1. Draft created in `content/queue/{platform}/pending/`
-2. Telegram approval via `@ClaborBot` — file moves `pending/` → `approved/`
+2. Telegram approval via `@ClaborBot`, file moves `pending/` → `approved/`
 3. Post via Postiz API → file moves `approved/` → `posted/`
 4. Postiz is self-hosted at `localhost:5100` (marketing-hq project)
 
 ## How To
 
-- **Add a blog post manually:** Create `content/blog/your-slug.mdx`. Required frontmatter: `title`, `date`, `tags`, `excerpt`, `author`, `category`. Body is MDX (standard markdown + JSX components). No import needed for basic markdown — advanced components must be registered in `src/app/blog/[slug]/page.tsx`'s MDX components map.
+- **Add a blog post manually:** Create `content/blog/your-slug.mdx`. Required frontmatter: `title`, `date`, `tags`, `excerpt`, `author`, `category`. Body is MDX (standard markdown + JSX components). No import needed for basic markdown, advanced components must be registered in `src/app/blog/[slug]/page.tsx`'s MDX components map.
 - **Generate a blog post via pipeline:** Use `POST /api/admin/blog-pipeline` (operator-only). Pipeline runs `blog-generation/generate-post.ts` → `qa-humanizer.ts` → `qa-slop.ts` → `qa-upl.ts` → saves to `content/blog/`. Review output before committing.
 - **Add content to queue:** Create a `.md` file in `content/queue/{platform}/pending/` with the frontmatter above. Status: `pending`. Operator reviews and approves via Telegram before publishing.
 - **Fix a UPL violation in a post:** Edit the `.mdx` file directly. Remove specific outcome predictions, add disclaimers, reframe legal claims as questions for attorneys. Redeploy via `git push origin master`.
-- **Update frontmatter fields:** Edit the `.mdx` file frontmatter directly. `getAllPosts()` re-reads on next build. No DB sync needed — blog is file-system only.
+- **Update frontmatter fields:** Edit the `.mdx` file frontmatter directly. `getAllPosts()` re-reads on next build. No DB sync needed, blog is file-system only.
 
 ## Key Constants
 
 | Constant | Value | File:Line |
-|----------|-------|-----------|
+|----------|-------|---------, |
 | BLOG_DIR | `path.join(process.cwd(), "content", "blog")` | `src/lib/blog.ts:33` |
 | Allowed categories | dui, drug-cases, white-collar, sex-offense, probation, general-defense, employment | `src/lib/blog.ts` |
 | Required frontmatter | title, date, tags, excerpt, author, category | `src/lib/blog.ts:15-24` |
@@ -136,10 +136,10 @@ Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 - Postiz API (self-hosted at localhost:5100) handles final publishing
 
 **Shared state (filesystem only):**
-- `content/blog/*.mdx` — 60 blog post files (no DB sync)
-- `content/queue/{platform}/pending/` — drafts awaiting review
-- `content/queue/{platform}/approved/` — reviewed drafts awaiting publish
-- `content/queue/{platform}/posted/` — archived after publish
+- `content/blog/*.mdx`, 60 blog post files (no DB sync)
+- `content/queue/{platform}/pending/`, drafts awaiting review
+- `content/queue/{platform}/approved/`, reviewed drafts awaiting publish
+- `content/queue/{platform}/posted/`, archived after publish
 
 ## Gotchas
 
@@ -161,7 +161,7 @@ Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 
 ## Schema.org / GEO Enhancements
 
-Structured data is emitted inline from the page components (not centrally via `src/lib/schema.ts` — that file holds helpers for `about`, `citation`, and `DefinedTerm` entities only). Blog post JSON-LD lives in `src/app/blog/[slug]/page.tsx`; site-wide Organization schema lives in `src/app/layout.tsx` and `src/app/page.tsx`; service schemas live in `src/app/services/page.tsx`.
+Structured data is emitted inline from the page components (not centrally via `src/lib/schema.ts`, that file holds helpers for `about`, `citation`, and `DefinedTerm` entities only). Blog post JSON-LD lives in `src/app/blog/[slug]/page.tsx`; site-wide Organization schema lives in `src/app/layout.tsx` and `src/app/page.tsx`; service schemas live in `src/app/services/page.tsx`.
 
 ### Schema Types Emitted
 
@@ -171,26 +171,26 @@ Structured data is emitted inline from the page components (not centrally via `s
 | `FAQPage` | Posts that declare `faqs` in frontmatter | FAQ rich results, linked to the Article via `mainEntity` / `isPartOf` |
 | `HowTo` | Posts that declare `howToSteps` in frontmatter | Step-by-step rich results |
 | `BreadcrumbList` | All blog posts + the `/score` page | Navigation hierarchy for Google |
-| `Organization` | Site-wide (`layout.tsx`, `page.tsx`) | Publisher entity — anonymous (no personal names, per project rule) |
+| `Organization` | Site-wide (`layout.tsx`, `page.tsx`) | Publisher entity, anonymous (no personal names, per project rule) |
 | `Service` / `LegalService` | `/services` page | Product listings with `OfferCatalog` for each tier |
 
 ### .01% GEO Enhancements (applied to blog Article JSON-LD)
 
 | Property | Applied To | Signal |
-|----------|-----------|--------|
-| `speakable` | All posts — `cssSelector: [".tldr-box"]` | Makes TLDRBox content AI-extractable for voice / summarization |
+|----------|---------, |------, |
+| `speakable` | All posts, `cssSelector: [".tldr-box"]` | Makes TLDRBox content AI-extractable for voice / summarization |
 | `@id` entity binding | Article ↔ FAQPage ↔ Organization | Closes the entity graph so Google / LLMs see one coherent entity per post |
 | `citation` | Posts that reference `.gov` or `.edu` sources | Classifies the post as backed by authoritative reference material (list built by `getArticleCitations` in `src/lib/schema.ts`) |
 | `isBasedOn` | Research-style posts with primary source URLs | Classifies the post as a "research article" for GEO retrieval |
-| `educationalLevel` | All posts (`"beginner"`) | Content classifier — signals to AI that the audience is non-specialist |
-| `audience` | All posts — `@type: Audience, audienceType: "criminal defendant"` | Audience targeting, helps LLMs route the content to the right query intent |
-| `about` | All posts — derived from `category + tags` via `getArticleAboutEntities` | Topic entity mapping (Thing entities) — ties the post to named concepts rather than raw keywords |
+| `educationalLevel` | All posts (`"beginner"`) | Content classifier, signals to AI that the audience is non-specialist |
+| `audience` | All posts, `@type: Audience, audienceType: "criminal defendant"` | Audience targeting, helps LLMs route the content to the right query intent |
+| `about` | All posts, derived from `category + tags` via `getArticleAboutEntities` | Topic entity mapping (Thing entities), ties the post to named concepts rather than raw keywords |
 
 ### Content GEO Features
 
-- **TLDRBoxes**: targeted at roughly 57% coverage across the blog. Every high-traffic post has one, with the `speakable` selector pointing at it. Verify actual coverage before citing a percentage — blog post count drifts.
+- **TLDRBoxes**: targeted at roughly 57% coverage across the blog. Every high-traffic post has one, with the `speakable` selector pointing at it. Verify actual coverage before citing a percentage, blog post count drifts.
 - **Internal linking**: cross-linked posts use semantic anchor text variation (not the same exact phrase twice) so the link graph doesn't look mechanical to LLMs.
-- **DefinedTerm blocks**: hard-coded in `src/lib/schema.ts` for concepts like constructive possession, proffer session, etc. — emitted as `DefinedTermSet` JSON-LD so AI systems can surface definitions as direct answers.
+- **DefinedTerm blocks**: hard-coded in `src/lib/schema.ts` for concepts like constructive possession, proffer session, etc., emitted as `DefinedTermSet` JSON-LD so AI systems can surface definitions as direct answers.
 - **Numbered Q+A format**: FAQPage schema pairs with visually-distinct numbered question blocks in the MDX, so AI retrieval gets both structured data AND direct-answer paragraphs that are already written in answer form.
 
 Verified: `Article`, `FAQPage`, `HowTo`, `BreadcrumbList`, `Organization` schema types all present in `src/app/blog/[slug]/page.tsx`; `speakable`, `isBasedOn`, `educationalLevel`, and `audience` properties all confirmed via grep in the same file.

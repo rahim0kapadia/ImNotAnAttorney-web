@@ -179,6 +179,6 @@ Facebook skews older than TikTok/Instagram. The INNA audience on Facebook is pri
 2. NEVER give legal advice. Always frame as "questions to ask your attorney."
 3. ALWAYS add the disclaimer: "This is information, not legal advice."
 4. Respond to people in crisis with genuine empathy first, information second.
-5. If someone asks "what should I do?" — respond with "here are questions you might want to ask your attorney" never "you should do X."
+5. If someone asks "what should I do?", respond with "here are questions you might want to ask your attorney" never "you should do X."
 6. Build relationships with group admins. Be their favorite contributor.
 7. Track which groups drive the most profile visits and website traffic.

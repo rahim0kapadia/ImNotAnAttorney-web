@@ -1,5 +1,5 @@
 /**
- * @file /api/evaluate/case-decoder — Thin evaluation dispatcher
+ * @file /api/evaluate/case-decoder, Thin evaluation dispatcher
  *
  * Pipeline position: Called AFTER report generation completes (status = "review").
  * Triggered by:
@@ -8,11 +8,11 @@
  *   3. Manual operator trigger
  *
  * Pattern: Fire-and-forget delegation
- *   Same pattern as /api/generate/case-decoder — validates auth, checks case
+ *   Same pattern as /api/generate/case-decoder, validates auth, checks case
  *   exists and has a report, then fires off the evaluate-report Supabase Edge
  *   Function without awaiting the response. Returns 202 Accepted immediately.
  *
- * No atomic guard needed — evaluation is advisory and idempotent (re-running
+ * No atomic guard needed, evaluation is advisory and idempotent (re-running
  * just overwrites eval_results). No status change happens here.
  *
  * Security: OPERATOR_SECRET bearer token required (same as generation dispatcher).
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
 
   if (!caseData.report_html) {
     return NextResponse.json(
-      { error: "Case has no report — generate first" },
+      { error: "Case has no report, generate first" },
       { status: 400 }
     );
   }

@@ -1,10 +1,10 @@
 /**
  * Arrest Survival Kit landing page (/arrest-survival-kit)
  *
- * Standalone Tier 9 data product — $47, instant delivery.
+ * Standalone Tier 9 data product, $47, instant delivery.
  * State-specific know-your-rights, agency incident data, first-48-hours
  * action plan, and bail hearing preparation.
- * Server component — AvailabilityChecker is a client island.
+ * Server component, AvailabilityChecker is a client island.
  */
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
@@ -16,13 +16,13 @@ import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Arrest Survival Kit — ${TIER_CORE["arrest-survival-kit"].priceDisplay} | ImNotAnAttorney`,
+    title: `Arrest Survival Kit, ${TIER_CORE["arrest-survival-kit"].priceDisplay} | ImNotAnAttorney`,
     description:
       "Know your rights before they read you yours. State-specific arrest procedures, first-48-hours action plan, bail hearing prep, and agency incident data.",
     alternates: { canonical: `${SITE_URL}/arrest-survival-kit` },
     openGraph: {
       title:
-        "Arrest Survival Kit — Know Your Rights Before They Read You Yours",
+        "Arrest Survival Kit, Know Your Rights Before They Read You Yours",
       description:
         "State-specific rights checklist, first-48-hours action plan, bail hearing preparation, and agency incident data. Instant delivery.",
       url: `${SITE_URL}/arrest-survival-kit`,
@@ -35,12 +35,12 @@ export function generateMetadata(): Metadata {
 /* ------------------------------------------------------------------ */
 
 const FEATURES = [
-  "Your constitutional rights during arrest — in plain English",
+  "Your constitutional rights during arrest, in plain English",
   "State-specific arrest procedure rules for your jurisdiction",
-  "First 48 hours action timeline — what to do and when",
+  "First 48 hours action timeline, what to do and when",
   "Bail hearing preparation checklist",
   "Agency incident data for your arresting agency (where available)",
-  "What NOT to say — the 5 statements that hurt defendants most",
+  "What NOT to say, the 5 statements that hurt defendants most",
   "Upsell path to Officer Background Check for deeper analysis",
 ] as const;
 

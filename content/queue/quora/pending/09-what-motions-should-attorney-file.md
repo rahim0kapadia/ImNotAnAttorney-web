@@ -18,9 +18,9 @@ Motions are how your attorney fights for you before trial ever starts. If your c
 
 Here are the motions every defendant should know about:
 
-**Motion to Suppress Evidence.** The most powerful weapon in a defense attorney's arsenal. If police pulled you over without reasonable suspicion, searched your car without a warrant or valid exception, or interrogated you without Miranda warnings -- that evidence can be thrown out. In drug cases, suppressing the drugs often means the case gets dismissed entirely. In DUI cases, suppressing the traffic stop eliminates everything that followed.
+**Motion to Suppress Evidence.** The most powerful weapon in a defense attorney's arsenal. If police pulled you over without reasonable suspicion, searched your car without a warrant or valid exception, or interrogated you without Miranda warnings, that evidence can be thrown out. In drug cases, suppressing the drugs often means the case gets dismissed entirely. In DUI cases, suppressing the traffic stop eliminates everything that followed.
 
-**Motion to Compel Discovery.** Forces the prosecution to hand over evidence they're required to share but haven't. Under Brady v. Maryland, the prosecution is constitutionally required to turn over anything that could help your defense -- including evidence that hurts the credibility of their witnesses.
+**Motion to Compel Discovery.** Forces the prosecution to hand over evidence they're required to share but haven't. Under Brady v. Maryland, the prosecution is constitutionally required to turn over anything that could help your defense, including evidence that hurts the credibility of their witnesses.
 
 **Brady Motion.** Specifically demands exculpatory and impeachment evidence. The prosecution might not think of a witness's criminal record or a cooperating co-defendant's deal as "evidence." A Brady motion forces them to disclose it.
 
@@ -28,7 +28,7 @@ Here are the motions every defendant should know about:
 
 **Daubert or Frye Motion.** Challenges the reliability of expert testimony or forensic evidence. Drug identification by unreliable field test? Breathalyzer with calibration issues? The prosecution's "expert" with questionable credentials? This motion can exclude that testimony before the jury ever hears it.
 
-**Motion in Limine.** Prevents prejudicial evidence from being shown to the jury -- prior arrests that aren't relevant, inflammatory photos that don't prove anything, unsubstantiated gang affiliation claims.
+**Motion in Limine.** Prevents prejudicial evidence from being shown to the jury, prior arrests that aren't relevant, inflammatory photos that don't prove anything, unsubstantiated gang affiliation claims.
 
 **Critical timing note:** Some motions have strict deadlines. Suppression motions often must be filed within 30-45 days of arraignment. Miss it, and you lose that right forever. This is why waiting is dangerous and why your attorney should be filing early.
 

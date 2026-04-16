@@ -1,8 +1,8 @@
-# Flow: Score Re-engagement (Extended) — Email 2 of 4
+# Flow: Score Re-engagement (Extended), Email 2 of 4
 
 **Trigger:** Email 1 sent, no purchase
 **Timing:** Day 14 after score completion
-**Goal:** Charge-specific value — send the most relevant blog content based on their charge type
+**Goal:** Charge-specific value, send the most relevant blog content based on their charge type
 
 ## Subject Line Options (3 versions for A/B testing)
 1. The one thing {{CHARGE_LABEL}} defendants always miss
@@ -14,7 +14,7 @@ Every charge type has blind spots. Here's the one that matters most for yours.
 
 ## Email Body
 
-<!--
+<!, 
   Flow: Score Re-engagement (Extended)
   Position: Email 2 of 4
   Trigger: Email 1 sent, no purchase
@@ -29,9 +29,9 @@ Every charge type has blind spots. Here's the one that matters most for yours.
 
   NOTE: This email has 5 variants based on charge type. Primary variant shown is DUI.
   All variants follow the same structure: charge-specific insight + relevant blog link + CTA.
--->
+, >
 
-<!-- ====== DUI VARIANT ====== -->
+<!, ====== DUI VARIANT ======,>
 
 <h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">The DUI Blind Spot Most Defendants Never See.</h1>
 
@@ -39,7 +39,7 @@ Every charge type has blind spots. Here's the one that matters most for yours.
 
 <p><strong style="color: white;">The breathalyzer reading is not the case.</strong></p>
 
-<p>Most defendants — and honestly, a lot of attorneys — treat the breathalyzer number like a verdict. You blew .12, so you're guilty. End of story.</p>
+<p>Most defendants, and honestly, a lot of attorneys, treat the breathalyzer number like a verdict. You blew .12, so you're guilty. End of story.</p>
 
 <p>Except it's not the end. It's the beginning of a set of questions nobody is asking:</p>
 
@@ -55,33 +55,33 @@ Every charge type has blind spots. Here's the one that matters most for yours.
 
 <p style="font-size: 14px; color: #A1A1AA;">Also relevant: <a href="https://imnotanattorney.com/blog/field-sobriety-test-standards" style="color: #F59E0B; text-decoration: underline;">Field Sobriety Test Standards</a> | <a href="https://imnotanattorney.com/blog/10-day-dmv-deadline" style="color: #F59E0B; text-decoration: underline;">The 10-Day DMV Deadline</a></p>
 
-<!-- ====== DRUG VARIANT (swap in for DUI section above) ======
+<!, ====== DRUG VARIANT (swap in for DUI section above) ======
 <h1>The Drug Case Blind Spot Most Defendants Never See.</h1>
 Focus on: field test vs lab test discrepancies, chain of custody gaps,
 constructive vs actual possession.
 Link to: /blog/field-test-vs-lab-test-drug-cases, /blog/trafficking-charges-constructive-possession
 CTA: Read the guide + Case Decoder pitch
--->
+, >
 
-<!-- ====== WHITE-COLLAR VARIANT ======
+<!, ====== WHITE-COLLAR VARIANT ======
 <h1>The White Collar Blind Spot Most Defendants Never See.</h1>
 Focus on: mens rea requirements (intent vs mistake), document preservation,
 statute of limitations analysis.
 Link to: /blog/complete-white-collar-defense-guide, /blog/wire-fraud-defense-questions
--->
+, >
 
-<!-- ====== OTHER-FELONY VARIANT ======
+<!, ====== OTHER-FELONY VARIANT ======
 <h1>The Blind Spot Most Felony Defendants Never See.</h1>
 Focus on: discovery rights, motion deadlines, attorney communication frequency.
 Link to: /blog/how-criminal-cases-actually-work, /blog/10-questions-every-defendant-should-ask
--->
+, >
 
-<!-- ====== OTHER-MISDEMEANOR VARIANT ======
+<!, ====== OTHER-MISDEMEANOR VARIANT ======
 <h1>The Blind Spot Most Misdemeanor Defendants Never See.</h1>
 Focus on: collateral consequences (background checks, professional licenses),
 plea deal evaluation, what the prosecution must actually prove.
 Link to: /blog/should-you-take-the-plea-deal, /blog/can-criminal-charges-be-dropped
--->
+, >
 
 <div style="margin: 24px 0; padding: 16px; border: 1px solid #F59E0B30; border-radius: 8px; background: #F59E0B08;">
   <p style="margin: 0 0 8px; font-size: 14px; color: white; font-weight: bold;">Want questions built for YOUR exact case?</p>

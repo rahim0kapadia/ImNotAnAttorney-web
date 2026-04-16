@@ -5,9 +5,9 @@ Date: 2026-03-28 17:30
 
 ### Code Shipped (committed d9e0e19)
 - **Seed migration 029** applied to Supabase: 115 common_charges + 161 charge_questions
-- **8 jurisdiction files** generated (FL, GA, IL, MI, NC, NJ, PA, federal) — AI-generated from training data, pending verification via research skill
-- **Pipeline architecture doc** at `docs/PIPELINE-ARCHITECTURE.md` — end-to-end data flow map
-- **Seed builder script** at `scripts/build-seed-migration.ts` — regenerates migration from static data + JSON files
+- **8 jurisdiction files** generated (FL, GA, IL, MI, NC, NJ, PA, federal), AI-generated from training data, pending verification via research skill
+- **Pipeline architecture doc** at `docs/PIPELINE-ARCHITECTURE.md`, end-to-end data flow map
+- **Seed builder script** at `scripts/build-seed-migration.ts`, regenerates migration from static data + JSON files
 - Migration 028 tables confirmed: 12 charge_categories, 4 empty tables ready for data
 
 ### DB State (production Supabase)
@@ -19,7 +19,7 @@ Date: 2026-03-28 17:30
 ### Quick Fixes (already in HEAD from previous session)
 - "6-part" → "multi-part" in checkout features (was already committed)
 - "8 Advocacy Steps" → "5 Advocacy Steps" in generate-report (was already committed)
-- Item 4 (3 uncommitted files) — already committed in fa0d062
+- Item 4 (3 uncommitted files), already committed in fa0d062
 
 ### Critical Discovery: Pipeline Audit Results
 **18 of 31 data points are broken.** The entire legal data enrichment layer is non-functional:
@@ -53,14 +53,14 @@ Every table mapped with producer→consumer→status. Key finding: the 4 legal r
 - NICE-TO-HAVE (3): Judge news, witness background, historical dispositions
 
 ### 4. Legal Data Source APIs
-- **GovInfo API** — federal statute text (authoritative, free api.data.gov key)
-- **CourtListener API v4.3** — case law + judges (5K/hr, free token)
-- **CourtListener Citation Lookup** — citation validation (60/min)
-- **Eyecite** (Python) — citation parsing
-- **eCFR API** — federal regs (no auth)
-- **State statutes** — no unified API; OpenLaws.us (paid) or per-state scrapers
-- **Cornell LII** — verification links, no formal API
-- **Justia** — verification links, no API
+- **GovInfo API**, federal statute text (authoritative, free api.data.gov key)
+- **CourtListener API v4.3**, case law + judges (5K/hr, free token)
+- **CourtListener Citation Lookup**, citation validation (60/min)
+- **Eyecite** (Python), citation parsing
+- **eCFR API**, federal regs (no auth)
+- **State statutes**, no unified API; OpenLaws.us (paid) or per-state scrapers
+- **Cornell LII**, verification links, no formal API
+- **Justia**, verification links, no API
 
 ### 5. Skill Architecture Patterns
 - Frontmatter: name, description, version
@@ -69,7 +69,7 @@ Every table mapped with producer→consumer→status. Key finding: the 4 legal r
 - References subdirectory for complex frameworks
 
 ## Blocker: Anthropic API Credits
-The generation script (`scripts/generate-charge-taxonomy.ts --all`) requires Anthropic API credits. Key `sk-ant-api03-CvMg...` in .env.local is depleted. Top up at console.anthropic.com to run the full 52-jurisdiction generation. (The research skill replaces this approach but credits are still needed for report generation.)
+The generation script (`scripts/generate-charge-taxonomy.ts,all`) requires Anthropic API credits. Key `sk-ant-api03-CvMg...` in .env.local is depleted. Top up at console.anthropic.com to run the full 52-jurisdiction generation. (The research skill replaces this approach but credits are still needed for report generation.)
 
 ## Next Session: Build the Legal Research Skill
 
@@ -90,12 +90,12 @@ The generation script (`scripts/generate-charge-taxonomy.ts --all`) requires Ant
 5. Backfill experts.common_charge_slugs
 
 ### Architecture Docs
-- `C:\Users\email\projects\ImNotAnAttorney-web\docs\PIPELINE-ARCHITECTURE.md` — the end-to-end map (READ FIRST)
-- `C:\Users\email\projects\ImNotAnAttorney\supabase\migrations\011-legal-source-maximization.sql` — the missing migration
-- `C:\Users\email\projects\ImNotAnAttorney\system\templates\personas\CASE-LAW-VALIDATION-PERSONA.md` — validation rules
+- `C:\Users\email\projects\ImNotAnAttorney-web\docs\PIPELINE-ARCHITECTURE.md`, the end-to-end map (READ FIRST)
+- `C:\Users\email\projects\ImNotAnAttorney\supabase\migrations\011-legal-source-maximization.sql`, the missing migration
+- `C:\Users\email\projects\ImNotAnAttorney\system\templates\personas\CASE-LAW-VALIDATION-PERSONA.md`, validation rules
 
 ### Key Insight from Rahim
-"Don't ignore data coming in — we add it then validate it." The AI-generated jurisdiction files (8 states) are committed as starting data. The research skill validates and enriches them rather than replacing from scratch. Case law on every ruling and statute is the highest-value enrichment.
+"Don't ignore data coming in, we add it then validate it." The AI-generated jurisdiction files (8 states) are committed as starting data. The research skill validates and enriches them rather than replacing from scratch. Case law on every ruling and statute is the highest-value enrichment.
 
 ## Copy-Paste Prompt for Next Session
 ```

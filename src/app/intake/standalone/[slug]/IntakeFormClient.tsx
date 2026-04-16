@@ -64,13 +64,13 @@ const EMPLOYER_TYPES = [
   { value: "government-federal", label: "Federal Government" },
   { value: "government-state", label: "State Government" },
   { value: "government-local", label: "Local Government" },
-  { value: "private-regulated", label: "Private — Regulated Industry" },
-  { value: "private-unregulated", label: "Private — Unregulated Industry" },
+  { value: "private-regulated", label: "Private, Regulated Industry" },
+  { value: "private-unregulated", label: "Private, Unregulated Industry" },
   { value: "self-employed", label: "Self-Employed" },
   { value: "unemployed", label: "Unemployed" },
 ];
 
-// Wave 1 court case port — case stage options for motion-opportunity-scan.
+// Wave 1 court case port, case stage options for motion-opportunity-scan.
 // Server-side allowlist lives in src/app/api/intake/standalone/[slug]/route.ts
 // (VALID_CASE_STAGES). Keep both in sync.
 const CASE_STAGES = [
@@ -181,7 +181,7 @@ const BREATHALYZER_TYPES = [
   { value: "unknown", label: "Don't know / Other" },
 ];
 
-// FST tests are free-text (testsAdministered) — no select options needed.
+// FST tests are free-text (testsAdministered), no select options needed.
 
 const APPEAL_DEADLINE_STATUS = [
   { value: "within-deadline", label: "Within deadline" },
@@ -190,7 +190,7 @@ const APPEAL_DEADLINE_STATUS = [
   { value: "dont-know", label: "Don't know" },
 ];
 
-// IAC issues are free-text (issuesIdentified textarea) — no select options needed.
+// IAC issues are free-text (issuesIdentified textarea), no select options needed.
 
 const CASE_OUTCOMES = [
   { value: "convicted-trial", label: "Convicted at trial" },
@@ -220,14 +220,14 @@ const CHARGE_TYPE_LABELS: Record<string, string> = {
   "drug-possession": "Drug Possession",
   "drug-trafficking": "Drug Trafficking",
   dui: "DUI / DWI",
-  "dui-first": "DUI — First Offense",
-  "dui-repeat": "DUI — Repeat Offense",
+  "dui-first": "DUI, First Offense",
+  "dui-repeat": "DUI, Repeat Offense",
   assault: "Assault",
   "domestic-violence": "Domestic Violence",
   theft: "Theft / Larceny",
   "sex-offense": "Sex Offense",
-  "sex-offense-contact": "Sex Offense — Contact",
-  "sex-offense-digital": "Sex Offense — Digital",
+  "sex-offense-contact": "Sex Offense, Contact",
+  "sex-offense-digital": "Sex Offense, Digital",
   weapons: "Weapons Charge",
   "white-collar": "White Collar / Financial Crime",
   federal: "Federal Charge",
@@ -370,7 +370,7 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       maxLength: 200,
       placeholder: "Optional",
       helpText:
-        "Optional. Format varies by court — paste it as it appears on your paperwork.",
+        "Optional. Format varies by court, paste it as it appears on your paperwork.",
     },
     {
       kind: "select",
@@ -700,7 +700,7 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       maxLength: 500,
       rows: 3,
       helpText:
-        "Passport, prior FTAs, out-of-state connections — or 'none'",
+        "Passport, prior FTAs, out-of-state connections, or 'none'",
     },
     {
       kind: "text",
@@ -1538,7 +1538,7 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
     },
   ],
 
-  // ─── PRIORITY B — Critical 7 Worker Standalone Products ─────
+  // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────
   "plea-analyzer": [
     {
       kind: "select",
@@ -1564,7 +1564,7 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       maxLength: 800,
       rows: 5,
       helpText:
-        "Describe the plea offer — what charge(s) are they offering, what sentence, what conditions?",
+        "Describe the plea offer, what charge(s) are they offering, what sentence, what conditions?",
     },
     {
       kind: "text",
@@ -1616,7 +1616,7 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       maxLength: 800,
       rows: 5,
       helpText:
-        "List the key evidence in your case — physical evidence, witness statements, documents, test results",
+        "List the key evidence in your case, physical evidence, witness statements, documents, test results",
     },
     {
       kind: "textarea",
@@ -1684,7 +1684,7 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       maxLength: 800,
       rows: 5,
       helpText:
-        "Key facts of your case — what is disputed and what is not?",
+        "Key facts of your case, what is disputed and what is not?",
     },
   ],
   "sentencing-intelligence": [
@@ -1836,11 +1836,11 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
     },
   ],
 
-  // ─── COURT CASE PORT — WAVE 2+3 (ship dark via products.ts isActive=false) ──
-  // trial-prep-package $1,997 — Tier 2 Cross-Exam Library, requires War Room
-  // case-law-intelligence $297 — Tier 6 Case Law Enrichment
-  // expert-witness-challenge $297 — Tier 7 Witness Research, Daubert-focused
-  // discovery-demand-letter $97 — Tier 8B Misc High-Value, pre-discovery SKU
+  // ─── COURT CASE PORT, WAVE 2+3 (ship dark via products.ts isActive=false) ──
+  // trial-prep-package $1,997, Tier 2 Cross-Exam Library, requires War Room
+  // case-law-intelligence $297, Tier 6 Case Law Enrichment
+  // expert-witness-challenge $297, Tier 7 Witness Research, Daubert-focused
+  // discovery-demand-letter $97, Tier 8B Misc High-Value, pre-discovery SKU
 
   "trial-prep-package": [
     {
@@ -2122,7 +2122,7 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
   ],
 };
 
-// ─── Bundle FIELD_SETS — computed from included products ──────
+// ─── Bundle FIELD_SETS, computed from included products ──────
 // Deduplicates by field name (first occurrence wins), preserving order.
 function mergeFieldSets(...slugs: string[]): FieldConfig[] {
   const seen = new Set<string>();
@@ -2167,7 +2167,7 @@ type FormValue = string | boolean;
 
 export default function IntakeFormClient({ slug, productName, token }: Props) {
   // Resolve the field set for this slug. If the slug has no config we
-  // bail to an empty array — the parent page.tsx already 404s on invalid
+  // bail to an empty array, the parent page.tsx already 404s on invalid
   // slugs, so this is purely a defensive default.
   const fields = useMemo<FieldConfig[]>(
     () => FIELD_SETS[slug] || [],
@@ -2264,7 +2264,7 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
       noValidate
       aria-label={`Intake form for ${productName}`}
     >
-      {/* Error summary — announced to screen readers */}
+      {/* Error summary, announced to screen readers */}
       {status === "error" && errorMessage && (
         <div
           ref={errorRef}
@@ -2440,7 +2440,7 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
 
       {/* UPL disclaimer */}
       <p className="mt-4 text-xs text-zinc-500">
-        This report provides legal INFORMATION — not legal ADVICE. Your
+        This report provides legal INFORMATION, not legal ADVICE. Your
         attorney remains the final authority on strategy decisions.
       </p>
     </form>

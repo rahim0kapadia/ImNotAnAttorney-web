@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/engine — Trigger engine worker via GitHub Actions workflow_dispatch
+ * @file /api/cron/engine, Trigger engine worker via GitHub Actions workflow_dispatch
  *
  * Called by cron-job.org every 5 minutes. Dispatches a GitHub Actions workflow
  * run on ImNotAnAttorney-engine, which processes queued jobs (discovery-tier
@@ -10,8 +10,8 @@
  *   -> GitHub Actions runner -> node src/worker.mjs --once -> processes up to 20 jobs
  *
  * Env vars required:
- *   CRON_AUTH_TOKEN     — Bearer token for cron-job.org auth
- *   ENGINE_DISPATCH_PAT  — GitHub PAT with workflow dispatch permission on engine repo
+ *   CRON_AUTH_TOKEN    , Bearer token for cron-job.org auth
+ *   ENGINE_DISPATCH_PAT , GitHub PAT with workflow dispatch permission on engine repo
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
   const auth = requireCron(req);
   if (!auth.authorized) return auth.error;
 
-  // Idempotency lock — 4min window prevents overlapping 5-min cron runs
+  // Idempotency lock, 4min window prevents overlapping 5-min cron runs
   const lock = await acquireCronLock("engine", 4 * 60 * 1000);
   if (!lock.shouldRun) {
     return NextResponse.json({ skipped: true, reason: lock.reason });

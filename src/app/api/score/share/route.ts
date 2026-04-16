@@ -1,12 +1,12 @@
 /**
- * POST /api/score/share — Generate a shareable score URL.
+ * POST /api/score/share, Generate a shareable score URL.
  *
  * Accepts the original 10 quiz answers, re-calculates the score server-side
  * (preventing tampering), generates a 12-char token, stores the verified
  * result in score_results, and returns the shareable URL.
  *
  * Privacy: scores are stored ONLY when the user explicitly shares.
- * The token is opaque — no score data in the URL.
+ * The token is opaque, no score data in the URL.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { randomBytes } from "crypto";

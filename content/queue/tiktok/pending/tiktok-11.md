@@ -3,7 +3,7 @@
 **Topic:** How the flat-fee billing structure creates pressure toward quick pleas
 **Format:** talking head + whiteboard-style explanation + text overlay
 **Duration:** 45s
-**Trending sound suggestion:** Original audio -- voiceover + slow building beat
+**Trending sound suggestion:** Original audio, voiceover + slow building beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -28,17 +28,17 @@
 
 [SECOND 25-35]
 **Visual**: Questions appearing on screen in clean list format.
-**Audio/Voiceover**: "Ask your attorney these questions. What does the retainer cover versus what costs extra? If this goes to trial, what's the additional cost? How many hours have you spent on my case so far? And -- critically -- would your recommendation change if you were billing hourly instead of flat fee?"
+**Audio/Voiceover**: "Ask your attorney these questions. What does the retainer cover versus what costs extra? If this goes to trial, what's the additional cost? How many hours have you spent on my case so far? And, critically, would your recommendation change if you were billing hourly instead of flat fee?"
 **Text overlay**: Questions appear as spoken.
 
 [SECOND 35-42]
-**Visual**: The two columns from the opening -- but now a third column appears: "INFORMED CLIENT WHO ASKS QUESTIONS."
+**Visual**: The two columns from the opening, but now a third column appears: "INFORMED CLIENT WHO ASKS QUESTIONS."
 **Audio/Voiceover**: "The point is not that all attorneys are greedy. Many are exceptional. The point is that you should understand the financial structure behind the advice you're receiving. Information asymmetry is the weapon. Questions are the defense."
 **Text overlay**: "Understand the incentive. Ask better questions."
 
 [SECOND 42-45]
 **Visual**: "Know What They Know." logo treatment.
-**Text overlay**: "imnotanattorney.com/score -- free Defense Milestone Score"
+**Text overlay**: "imnotanattorney.com/score, free Defense Milestone Score"
 **Audio**: Beat resolves cleanly.
 
 ## CTA
@@ -53,13 +53,13 @@ Take the free Defense Milestone Score at imnotanattorney.com/score
 - 0:42 "Know What They Know."
 
 ## Caption
-Your attorney charges a flat fee. Whether they fight for 3 months or settle in 2 weeks, they earn the same. That doesn't make them bad -- but it means you should understand the financial pressure behind the advice. These questions help.
+Your attorney charges a flat fee. Whether they fight for 3 months or settle in 2 weeks, they earn the same. That doesn't make them bad, but it means you should understand the financial pressure behind the advice. These questions help.
 
 ## Hashtags
 #criminaldefense #attorneyfees #retainer #pleadeal #lawyerbilling #knowyourrights
 
 ---
 
-**Context**: Sourced from how-your-attorney-makes-money blog post. This is one of INNA's most provocative topics -- pulling back the curtain on the business of criminal defense. The visual of same fee / different effort is immediately graspable. Carefully framed as "be informed" not "attorneys are corrupt" -- which is the INNA brand distinction.
+**Context**: Sourced from how-your-attorney-makes-money blog post. This is one of INNA's most provocative topics, pulling back the curtain on the business of criminal defense. The visual of same fee / different effort is immediately graspable. Carefully framed as "be informed" not "attorneys are corrupt", which is the INNA brand distinction.
 **Loop strategy**: Opens with two-column fee comparison, closes with a third column: the informed client. The visual progression from naive to informed drives rewatches.
 **KPI target**: Profile visits (this kind of insider-knowledge content drives follows)

@@ -2,21 +2,21 @@
  * Report Viewer Page (/report/[token])
  *
  * Token-based report delivery page. Customers access their completed reports
- * via a unique URL token — no login required. The token is emailed to the
+ * via a unique URL token, no login required. The token is emailed to the
  * customer when their report is marked as "delivered" in Supabase.
  *
  * User journey position:
  *   Delivery email (report link) -> THIS PAGE
- *   No other entry points — token is the only access mechanism.
+ *   No other entry points, token is the only access mechanism.
  *
  * Security & access control:
- *   1. Token-based auth — no user accounts needed, token is unguessable UUID
- *   2. Refunded case blocking — status="refunded" shows "Report No Longer Available"
+ *   1. Token-based auth, no user accounts needed, token is unguessable UUID
+ *   2. Refunded case blocking, status="refunded" shows "Report No Longer Available"
  *      (customer loses access after full refund per refund policy)
- *   3. Status gating — only "delivered" and "review" statuses show the report.
+ *   3. Status gating, only "delivered" and "review" statuses show the report.
  *      "review" is for operator preview before marking as delivered.
  *      Other statuses (pending, uploaded, processing) show "Not Ready Yet"
- *   4. HTML sanitization (sanitize-html) — reports are stored as HTML in Supabase.
+ *   4. HTML sanitization (sanitize-html), reports are stored as HTML in Supabase.
  *      Tightened allowedTags: REMOVED <style>, <html>, <head>, <body>, <meta>, <link>
  *      (all XSS vectors). CSS property values use strict regex patterns instead of
  *      wildcards. This prevents:
@@ -29,7 +29,7 @@
  *   Reads: report_html, status, tier.
  *   Sanitizes HTML then renders via dangerouslySetInnerHTML in a report-container div.
  *
- * SEO: robots noindex/nofollow — reports should not appear in search engines.
+ * SEO: robots noindex/nofollow, reports should not appear in search engines.
  * Metadata: Dynamic title based on tier name (e.g., "Your Case Decoder Report").
  */
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -47,7 +47,7 @@ const TIER_NAMES: Record<string, string> = {
   "situation-room": "Situation Room",
 };
 
-/** Dynamic metadata — generates tier-specific title, sets noindex/nofollow. */
+/** Dynamic metadata, generates tier-specific title, sets noindex/nofollow. */
 export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
   const { token } = await params;
   const supabase = createAdminClient();
@@ -64,13 +64,13 @@ export async function generateMetadata({ params }: { params: Promise<{ token: st
 
   const tierName = data?.tier ? TIER_NAMES[data.tier] || "Report" : "Report";
   return {
-    title: `Your ${tierName} Report — ImNotAnAttorney`,
+    title: `Your ${tierName} Report, ImNotAnAttorney`,
     robots: { index: false, follow: false },
   };
 }
 
 /**
- * ReportPage — async server component that fetches case data by token,
+ * ReportPage, async server component that fetches case data by token,
  * applies access controls, sanitizes HTML, and renders the report.
  */
 export default async function ReportPage({
@@ -98,7 +98,7 @@ export default async function ReportPage({
             .single()
     );
 
-  // ACCESS CONTROL 0: Token expiration — reports expire after 12 months.
+  // ACCESS CONTROL 0: Token expiration, reports expire after 12 months.
   if (caseData?.report_token_expires_at && new Date(caseData.report_token_expires_at) < new Date()) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
@@ -118,7 +118,7 @@ export default async function ReportPage({
     );
   }
 
-  // ACCESS CONTROL 1: Refunded cases — customer loses report access after full refund.
+  // ACCESS CONTROL 1: Refunded cases, customer loses report access after full refund.
   // This is enforced here (not just in the webhook) as a defense-in-depth measure.
   if (caseData && caseData.status === "refunded") {
     return (
@@ -246,7 +246,7 @@ export default async function ReportPage({
     );
   }
 
-  // ACCESS CONTROL 2: Status gate — only "delivered" (customer) and "review"
+  // ACCESS CONTROL 2: Status gate, only "delivered" (customer) and "review"
   // (operator preview) statuses render the report. All other statuses
   // (pending, uploaded, processing) show "Not Ready Yet" to prevent
   // premature access to incomplete reports.
@@ -275,7 +275,7 @@ export default async function ReportPage({
     );
   }
 
-  // HTML SANITIZATION — Critical security layer.
+  // HTML SANITIZATION, Critical security layer.
   // Reports are authored HTML stored in Supabase, rendered via dangerouslySetInnerHTML.
   // Tightened from the sanitize-html defaults:
   //   REMOVED tags: <style> (CSS injection), <html>/<head>/<body> (structural),
@@ -339,7 +339,7 @@ export default async function ReportPage({
 
   return (
     <>
-      {/* Print-friendly styles — lives OUTSIDE sanitized HTML so the sanitizer
+      {/* Print-friendly styles, lives OUTSIDE sanitized HTML so the sanitizer
           can't strip it. Mirrors the @media print block from renderReportHtml()
           which sanitize-html removes (it strips <style> tags for XSS safety). */}
       <style

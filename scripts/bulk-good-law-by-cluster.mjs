@@ -1,5 +1,5 @@
 /**
- * Bulk Good-Law Verification by Cluster — API-loop optimization
+ * Bulk Good-Law Verification by Cluster, API-loop optimization
  *
  * Replaces classify-case-law.mjs's row-by-row API loop with a cluster-based one.
  * Multiple statute_case_law rows can share a courtlistener_cluster_id (typically
@@ -285,7 +285,7 @@ async function main() {
     const tag =
       result.isGoodLaw === false ? "BAD LAW" :
       result.isGoodLaw === true ? "GOOD LAW" : "UNVERIFIED";
-    console.log(tag + (result.treatment ? " — " + result.treatment.slice(0, 60) : ""));
+    console.log(tag + (result.treatment ? ", " + result.treatment.slice(0, 60) : ""));
 
     if (result.isGoodLaw === true) stats.good++;
     else if (result.isGoodLaw === false) stats.bad++;

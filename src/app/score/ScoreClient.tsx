@@ -18,7 +18,7 @@ import { useReducedMotion, AnimatePresence, motion, LazyMotion, domAnimation } f
  * answers object sent to /api/score) and radio-button options.
  * Question order: easy/validating first (attorney relationship), then case
  * details, sensitive last (charge type, criminal history, profession).
- * Builds momentum before asking harder questions — maximizes completion.
+ * Builds momentum before asking harder questions, maximizes completion.
  */
 /** Valid chargeType values accepted by the quiz */
 const VALID_CHARGE_TYPES = new Set([
@@ -62,8 +62,8 @@ const questions = [
     id: "hasAttorney",
     label: "Do you have an attorney?",
     options: [
-      { value: "private", label: "Yes — private attorney" },
-      { value: "public-defender", label: "Yes — public defender" },
+      { value: "private", label: "Yes, private attorney" },
+      { value: "public-defender", label: "Yes, public defender" },
       { value: "no", label: "No" },
       { value: "not-sure", label: "Not sure" },
     ],
@@ -103,8 +103,8 @@ const questions = [
     label: "What stage is your case at?",
     options: [
       { value: "pre-arrest", label: "Under investigation (not arrested yet)" },
-      { value: "arrested", label: "Arrested — awaiting first court date" },
-      { value: "arraigned", label: "Had arraignment — awaiting next hearing" },
+      { value: "arrested", label: "Arrested, awaiting first court date" },
+      { value: "arraigned", label: "Had arraignment, awaiting next hearing" },
       { value: "pre-trial", label: "Pre-trial (discovery/motions phase)" },
       { value: "trial-prep", label: "Preparing for trial" },
       { value: "sentencing", label: "Sentencing" },
@@ -143,8 +143,8 @@ const questions = [
     id: "licensedProfession",
     label: "Are you employed in a licensed profession?",
     options: [
-      { value: "yes-licensed", label: "Yes — licensed profession (nurse, teacher, CDL, etc.)" },
-      { value: "yes-other", label: "Yes — other employment" },
+      { value: "yes-licensed", label: "Yes, licensed profession (nurse, teacher, CDL, etc.)" },
+      { value: "yes-other", label: "Yes, other employment" },
       { value: "no", label: "Not currently employed" },
       { value: "student", label: "Student" },
     ],
@@ -174,9 +174,9 @@ type ScoreResult = {
 };
 
 /**
- * Attorney email templates by charge type — free value before any paid CTA.
+ * Attorney email templates by charge type, free value before any paid CTA.
  * Defendants can copy-paste these and send to their attorney immediately.
- * Uses "I'd like to understand" framing (UPL-safe — questions, not advice).
+ * Uses "I'd like to understand" framing (UPL-safe, questions, not advice).
  */
 const ATTORNEY_EMAIL_TEMPLATES: Record<string, { questions: string[]; preservationNote: string }> = {
   dui: {
@@ -186,12 +186,12 @@ const ATTORNEY_EMAIL_TEMPLATES: Record<string, { questions: string[]; preservati
       "Have any motions been filed or planned in my case? If so, what is the timeline? If not, I'd like to understand why.",
       "When is our next scheduled communication, and what should I prepare before then?",
     ],
-    preservationNote: "Breathalyzer calibration logs and dash cam footage have fixed retention windows — some agencies delete footage at 30 or 90 days.",
+    preservationNote: "Breathalyzer calibration logs and dash cam footage have fixed retention windows, some agencies delete footage at 30 or 90 days.",
   },
   drug: {
     questions: [
       "I'd like to understand whether the search warrant and affidavit in my case have been reviewed for potential challenges. Have any issues been identified?",
-      "Has the lab report been compared against the field inventory — specifically weight, substance type, and chain of custody documentation?",
+      "Has the lab report been compared against the field inventory, specifically weight, substance type, and chain of custody documentation?",
       "Have any motions been filed or planned, specifically regarding evidence suppression or search validity? What are the filing deadlines?",
       "When is our next scheduled communication, and what should I prepare before then?",
     ],
@@ -199,7 +199,7 @@ const ATTORNEY_EMAIL_TEMPLATES: Record<string, { questions: string[]; preservati
   },
   "white-collar": {
     questions: [
-      "I'd like to understand the current scope of the investigation — which transactions or time periods are at issue, and has the government's theory of the case been identified?",
+      "I'd like to understand the current scope of the investigation, which transactions or time periods are at issue, and has the government's theory of the case been identified?",
       "Has the loss calculation methodology been examined? I understand the loss amount can significantly affect sentencing guidelines.",
       "Have any motions been filed or planned? What are the key filing deadlines I should be aware of?",
       "When is our next scheduled communication, and what should I prepare before then?",
@@ -209,7 +209,7 @@ const ATTORNEY_EMAIL_TEMPLATES: Record<string, { questions: string[]; preservati
   "drug-possession": {
     questions: [
       "I'd like to understand whether the search warrant and affidavit in my case have been reviewed for potential challenges. Have any issues been identified?",
-      "Has the lab report been compared against the field inventory — specifically weight, substance type, and chain of custody documentation?",
+      "Has the lab report been compared against the field inventory, specifically weight, substance type, and chain of custody documentation?",
       "Have any motions been filed or planned, specifically regarding evidence suppression or search validity? What are the filing deadlines?",
       "When is our next scheduled communication, and what should I prepare before then?",
     ],
@@ -235,35 +235,35 @@ const ATTORNEY_EMAIL_TEMPLATES: Record<string, { questions: string[]; preservati
   },
   "sex-offense": {
     questions: [
-      "I'd like to understand the full scope of collateral consequences — specifically registry requirements, residency restrictions, and employment limitations under current SORNA rules.",
-      "Has the forensic evidence collection been reviewed for procedural errors — chain of custody, interview protocols, and digital evidence handling?",
+      "I'd like to understand the full scope of collateral consequences, specifically registry requirements, residency restrictions, and employment limitations under current SORNA rules.",
+      "Has the forensic evidence collection been reviewed for procedural errors, chain of custody, interview protocols, and digital evidence handling?",
       "Has all Brady material been requested and received? Are there any inconsistencies in witness statements or prior statements?",
       "Have any motions been filed or planned? What are the key filing deadlines I should be aware of?",
     ],
-    preservationNote: "Digital evidence and forensic interview recordings may be subject to preservation requests. Registry consequences make plea decisions particularly high-stakes — understand the full collateral impact before any plea discussions.",
+    preservationNote: "Digital evidence and forensic interview recordings may be subject to preservation requests. Registry consequences make plea decisions particularly high-stakes, understand the full collateral impact before any plea discussions.",
   },
   "federal-criminal": {
     questions: [
-      "I'd like to understand my current sentencing guideline range under the USSG — including base offense level, specific offense characteristics, and criminal history category.",
+      "I'd like to understand my current sentencing guideline range under the USSG, including base offense level, specific offense characteristics, and criminal history category.",
       "Has all Rule 16 discovery been received and reviewed? Are there additional materials we should request?",
       "Have any discussions with the AUSA occurred regarding cooperation, plea agreements, or charge bargaining? What is the government's theory of the case?",
       "Have any motions been filed or planned? What are the key filing deadlines?",
     ],
-    preservationNote: "Federal pre-trial motions have strict filing deadlines. Early assessment of cooperation options and sentencing exposure is critical — federal sentences are substantially longer than state equivalents.",
+    preservationNote: "Federal pre-trial motions have strict filing deadlines. Early assessment of cooperation options and sentencing exposure is critical, federal sentences are substantially longer than state equivalents.",
   },
   "self-defense": {
     questions: [
-      "I'd like to understand our jurisdiction's self-defense standard — specifically, is this a 'stand your ground' jurisdiction or 'duty to retreat,' and how does that affect our defense theory?",
-      "Has all evidence supporting my reasonable belief of imminent harm been preserved — including surveillance footage, 911 recordings, medical records, and witness statements?",
+      "I'd like to understand our jurisdiction's self-defense standard, specifically, is this a 'stand your ground' jurisdiction or 'duty to retreat,' and how does that affect our defense theory?",
+      "Has all evidence supporting my reasonable belief of imminent harm been preserved, including surveillance footage, 911 recordings, medical records, and witness statements?",
       "Has the proportionality of force been analyzed in the context of the threat I faced? Are we prepared to address this at trial?",
       "Have any motions been filed or planned? What are the key filing deadlines?",
     ],
-    preservationNote: "Surveillance footage and 911 recordings have retention windows. Witness memories fade quickly — early identification and statements are critical for self-defense cases.",
+    preservationNote: "Surveillance footage and 911 recordings have retention windows. Witness memories fade quickly, early identification and statements are critical for self-defense cases.",
   },
   "other-felony": {
     questions: [
       "I'd like to understand the current status of discovery in my case. Has all discovery been received and reviewed?",
-      "Have any issues been identified in the evidence — inconsistencies, missing documentation, or procedural concerns?",
+      "Have any issues been identified in the evidence, inconsistencies, missing documentation, or procedural concerns?",
       "Have any motions been filed or planned? What are the key filing deadlines?",
       "When is our next scheduled communication, and what should I prepare before then?",
     ],
@@ -272,7 +272,7 @@ const ATTORNEY_EMAIL_TEMPLATES: Record<string, { questions: string[]; preservati
   "other-misdemeanor": {
     questions: [
       "I'd like to understand the current status of discovery in my case. Has all discovery been received and reviewed?",
-      "Have any issues been identified in the evidence — inconsistencies, missing documentation, or procedural concerns?",
+      "Have any issues been identified in the evidence, inconsistencies, missing documentation, or procedural concerns?",
       "Have any motions been filed or planned? What are the key filing deadlines?",
       "When is our next scheduled communication, and what should I prepare before then?",
     ],
@@ -280,7 +280,7 @@ const ATTORNEY_EMAIL_TEMPLATES: Record<string, { questions: string[]; preservati
   },
 };
 
-/** Time index from timeSinceArrest — used for attorney email template eligibility */
+/** Time index from timeSinceArrest, used for attorney email template eligibility */
 function getTimeIndex(timeSinceArrest: string): number {
   const map: Record<string, number> = {
     "less-than-1-month": 0,
@@ -347,7 +347,7 @@ function getLoadingSteps(chargeType: string): string[] {
 }
 
 /**
- * ScoreDisplay — renders the score result after the 10 questions are answered.
+ * ScoreDisplay, renders the score result after the 10 questions are answered.
  *
  * Crisis buyer architecture (score 0-50):
  *   Score arc → Band context → Observations → Urgency block → Free attorney
@@ -392,19 +392,19 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const colorClass = bandColors[result.band] || "text-amber-400 border-amber-500/50";
   const [textClass] = colorClass.split(" ").filter((c) => c.startsWith("text-"));
 
-  // Band-specific identity subtitles — VoC language that validates what the defendant is feeling
+  // Band-specific identity subtitles, VoC language that validates what the defendant is feeling
   const bandIdentity: Record<string, string> = {
     Critical: "Your gut was right. Something is wrong.",
-    Concerning: "You're not imagining it — your case needs attention.",
+    Concerning: "You're not imagining it, your case needs attention.",
     Average: "Your attorney is doing the minimum. Is that enough?",
     Adequate: "Things look okay on the surface. Most gaps hide here.",
     Excellent: "Your attorney appears to be working. Trust, but verify.",
   };
 
-  // Band-specific context lines — gives meaning to the band label
+  // Band-specific context lines, gives meaning to the band label
   const bandContextLines: Record<string, string> = {
     Critical: "This score means what you suspected: your defense is behind in ways that create permanent consequences.",
-    Concerning: "Your defense is behind pace — 2-3 milestones need attention before windows close.",
+    Concerning: "Your defense is behind pace, 2-3 milestones need attention before windows close.",
     Average: "Meeting minimum benchmarks, but gaps often hide at this level.",
     Adequate: "Your attorney is clearing basic milestones. The vulnerabilities that matter most don\u2019t show up in 10 questions.",
     Excellent: "Surface checks clear. The gaps that change outcomes live in the charge-specific details a targeted analysis catches.",
@@ -421,11 +421,11 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
   // Band-specific email capture headlines (Godin + Chaperon)
   const bandEmailHeadlines: Record<string, string> = {
-    Critical: "Get the 10 questions your attorney needs to answer — before your next court date.",
-    Concerning: "Get the 10 questions that close the gaps your score just flagged — sent now.",
-    Average: "Get the 10 questions that change how your next attorney meeting goes — sent now.",
-    Adequate: "Get the advanced checklist — the gaps that matter most don\u2019t show up in 10 questions.",
-    Excellent: "Get the verification checklist elite attorneys use to confirm case readiness — sent now.",
+    Critical: "Get the 10 questions your attorney needs to answer, before your next court date.",
+    Concerning: "Get the 10 questions that close the gaps your score just flagged, sent now.",
+    Average: "Get the 10 questions that change how your next attorney meeting goes, sent now.",
+    Adequate: "Get the advanced checklist, the gaps that matter most don\u2019t show up in 10 questions.",
+    Excellent: "Get the verification checklist elite attorneys use to confirm case readiness, sent now.",
   };
 
   /** Build the copy-paste attorney email text */
@@ -476,7 +476,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 
   return (
     <div className="mt-8 space-y-6" tabIndex={-1} ref={scoreRef} aria-label={`Your Defense Milestone Score is ${result.score} out of 100, rated ${result.band}`}>
-      {/* 1. SCORE ARC — Animated SVG arc with color transition by band */}
+      {/* 1. SCORE ARC, Animated SVG arc with color transition by band */}
       <div className="text-center">
         <div className="mx-auto">
           <AnimatedScoreArc score={result.score} />
@@ -493,7 +493,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </p>
       </div>
 
-      {/* 2. OBSERVATIONS — Plain-English findings from the score algorithm */}
+      {/* 2. OBSERVATIONS, Plain-English findings from the score algorithm */}
       <div className="space-y-3">
         <h2 className="text-sm font-semibold text-zinc-300">
           {isCrisis
@@ -509,7 +509,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         ))}
       </div>
 
-      {/* 2b. DAI BENCHMARK INSIGHTS — aggregate data from prior completions */}
+      {/* 2b. DAI BENCHMARK INSIGHTS, aggregate data from prior completions */}
       {stats && stats.insights.pctNoMotions !== null && (
         <div className="mt-6 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
           <p className="text-xs font-semibold uppercase tracking-wider text-amber-500">
@@ -532,44 +532,44 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </div>
       )}
 
-      {/* 3. URGENCY BLOCK — for crisis buyers only (score <= 55) */}
+      {/* 3. URGENCY BLOCK, for crisis buyers only (score <= 55) */}
       {result.score <= 55 && (
         <div className="rounded-lg border border-rose-500/30 bg-rose-500/5 p-4">
           <p className="text-base leading-relaxed text-rose-200/90">
             <span className="font-semibold text-rose-400">Time-sensitive:</span>{" "}
             {answers.chargeType === "dui" && answers.motionsFiled !== "yes"
-              ? "DUI cases have time-critical evidence — breathalyzer calibration logs and dash cam footage have fixed retention windows. Some agencies delete footage at 30 or 90 days. If your attorney hasn't preserved this evidence, it may already be gone."
+              ? "DUI cases have time-critical evidence, breathalyzer calibration logs and dash cam footage have fixed retention windows. Some agencies delete footage at 30 or 90 days. If your attorney hasn't preserved this evidence, it may already be gone."
               : (answers.chargeType === "drug" || answers.chargeType === "drug-possession") && answers.motionsFiled !== "yes"
-              ? "In drug possession cases, search warrant challenges and evidence suppression motions must be filed before specific court deadlines. Once those windows close, the evidence — even if improperly obtained — stays in."
+              ? "In drug possession cases, search warrant challenges and evidence suppression motions must be filed before specific court deadlines. Once those windows close, the evidence, even if improperly obtained, stays in."
               : answers.chargeType === "drug-trafficking"
-              ? "Trafficking charges carry mandatory minimum sentences based on quantity calculations that can be contested. Wiretap authorization challenges and CI reliability motions have strict pre-trial deadlines — once those windows close, the evidence stays in regardless of how it was obtained."
+              ? "Trafficking charges carry mandatory minimum sentences based on quantity calculations that can be contested. Wiretap authorization challenges and CI reliability motions have strict pre-trial deadlines, once those windows close, the evidence stays in regardless of how it was obtained."
               : answers.chargeType === "probation-violation"
-              ? "Probation revocation hearings can be scheduled quickly and use a lower standard of proof. Compliance documentation, treatment records, and employment verification need to be gathered immediately — the hearing may come before you're ready."
+              ? "Probation revocation hearings can be scheduled quickly and use a lower standard of proof. Compliance documentation, treatment records, and employment verification need to be gathered immediately, the hearing may come before you're ready."
               : answers.chargeType === "sex-offense"
-              ? "Sex offense convictions trigger mandatory registry requirements, residency restrictions, and employment limitations that can last decades — separate from the criminal sentence. Every plea discussion needs to account for these collateral consequences before any decision is made."
+              ? "Sex offense convictions trigger mandatory registry requirements, residency restrictions, and employment limitations that can last decades, separate from the criminal sentence. Every plea discussion needs to account for these collateral consequences before any decision is made."
               : answers.chargeType === "federal-criminal"
-              ? "Federal cases move faster and carry substantially longer sentences than state cases. Federal sentencing guidelines and mandatory minimums make early guideline calculation and cooperation assessment critical — the window for pre-indictment intervention is narrow."
+              ? "Federal cases move faster and carry substantially longer sentences than state cases. Federal sentencing guidelines and mandatory minimums make early guideline calculation and cooperation assessment critical, the window for pre-indictment intervention is narrow."
               : answers.chargeType === "self-defense"
-              ? "Evidence preservation requests are time-sensitive in self-defense cases — surveillance footage, 911 recordings, and witness memories degrade quickly. This is a critical topic to discuss with your attorney."
-              : "Motion deadlines in criminal cases run from the date of arrest — not from when you decide to act. Suppression motions, speedy trial demands, and diversion applications all have filing windows that close permanently."}
+              ? "Evidence preservation requests are time-sensitive in self-defense cases, surveillance footage, 911 recordings, and witness memories degrade quickly. This is a critical topic to discuss with your attorney."
+              : "Motion deadlines in criminal cases run from the date of arrest, not from when you decide to act. Suppression motions, speedy trial demands, and diversion applications all have filing windows that close permanently."}
           </p>
         </div>
       )}
 
-      {/* 3b. "MY ATTORNEY SAYS FINE" HANDLER — for non-crisis scorers */}
+      {/* 3b. "MY ATTORNEY SAYS FINE" HANDLER, for non-crisis scorers */}
       {result.score > 55 && (
         <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
           <p className="text-base leading-relaxed text-zinc-300">
             <span className="font-semibold text-white">If your attorney told you everything is fine:</span>{" "}
-            that&apos;s exactly what this tool is designed to check. Attorneys communicate at the level of detail they think you can handle. The Case Decoder gives you the specific benchmarks for your charge type — and the questions already written, built from the same methodology elite defense attorneys use internally.
+            that&apos;s exactly what this tool is designed to check. Attorneys communicate at the level of detail they think you can handle. The Case Decoder gives you the specific benchmarks for your charge type, and the questions already written, built from the same methodology elite defense attorneys use internally.
           </p>
         </div>
       )}
 
-      {/* 4. FREE ATTORNEY EMAIL TEMPLATE — The generous act (Task 1.1) */}
+      {/* 4. FREE ATTORNEY EMAIL TEMPLATE, The generous act (Task 1.1) */}
       {showAttorneyTemplate && (
         <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
-          <h2 className="font-semibold text-white">What to do in the next 24 hours — free, no purchase required</h2>
+          <h2 className="font-semibold text-white">What to do in the next 24 hours, free, no purchase required</h2>
           <p className="mt-2 text-base text-zinc-400">
             Your score flagged gaps that have deadlines attached. Here is an email you can send your attorney today. Copy it exactly.
           </p>
@@ -592,19 +592,19 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             {ATTORNEY_EMAIL_TEMPLATES[answers.chargeType]?.preservationNote || ATTORNEY_EMAIL_TEMPLATES["other-felony"].preservationNote}
           </p>
           <p className="mt-3 text-base text-zinc-400">
-            Whatever your attorney says — the Case Decoder translates the answers into plain language and tells you whether they add up.
+            Whatever your attorney says, the Case Decoder translates the answers into plain language and tells you whether they add up.
           </p>
         </div>
       )}
 
-      {/* 5. ORIGIN STORY — Built by a defendant (Task 1.2) */}
+      {/* 5. ORIGIN STORY, Built by a defendant (Task 1.2) */}
       <div className="rounded-lg border border-zinc-500 bg-zinc-900/30 p-4">
         <p className="text-base leading-relaxed text-zinc-300">
-          One of our founders spent six weeks in the dark while his attorney said nothing — then opened his own discovery and found 68.3 grams of missing evidence that his attorney had never raised. That case is why this tool exists.
+          One of our founders spent six weeks in the dark while his attorney said nothing, then opened his own discovery and found 68.3 grams of missing evidence that his attorney had never raised. That case is why this tool exists.
         </p>
       </div>
 
-      {/* 6. TRIBE IDENTITY — You're a different kind of defendant (Task 1.2) */}
+      {/* 6. TRIBE IDENTITY, You're a different kind of defendant (Task 1.2) */}
       <div className="rounded-lg border border-zinc-500 bg-zinc-900/30 p-4">
         <p className="text-base leading-relaxed text-zinc-300">
           Most defendants wait. They wait for their attorney to call. They wait for the court date. They wait to find out what&apos;s happening in their own case.
@@ -617,12 +617,12 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </p>
       </div>
 
-      {/* 7. EMAIL CAPTURE — Moved before paid CTAs per McGlaughlin: peak engagement moment */}
+      {/* 7. EMAIL CAPTURE, Moved before paid CTAs per McGlaughlin: peak engagement moment */}
       {!emailSent && (
         <div className="rounded-xl border border-amber-500/40 bg-amber-500/5 p-6">
-          <p className="text-lg font-bold text-white">{bandEmailHeadlines[result.band] || "Get your free Defense Gap Report — the 10 questions that change how your next attorney meeting goes."}</p>
+          <p className="text-lg font-bold text-white">{bandEmailHeadlines[result.band] || "Get your free Defense Gap Report, the 10 questions that change how your next attorney meeting goes."}</p>
           <p className="mt-2 text-base text-zinc-300">
-            Based on your score, we&apos;ll send your personalized Defense Gap Report immediately. No pitch. No sales sequence. After that: practical information about your case stage, never more than once a week. Unsubscribe any time — one click.
+            Based on your score, we&apos;ll send your personalized Defense Gap Report immediately. No pitch. No sales sequence. After that: practical information about your case stage, never more than once a week. Unsubscribe any time, one click.
           </p>
           <form onSubmit={async (e) => {
             e.preventDefault();
@@ -668,14 +668,14 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </div>
       )}
 
-      {/* 8. CTA SECTION — Route to live products; playbook primary when live, Case Decoder when not */}
+      {/* 8. CTA SECTION, Route to live products; playbook primary when live, Case Decoder when not */}
       {(() => {
         const playbookKey = CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE | undefined;
         const playbookTier = playbookKey ? TIER_CORE[playbookKey] : null;
         const hasLivePlaybook = playbookTier?.live === true;
 
         if (hasLivePlaybook && playbookTier && playbookKey) {
-          // PLAYBOOK IS LIVE — make it the primary CTA (e.g. DUI Playbook $97)
+          // PLAYBOOK IS LIVE, make it the primary CTA (e.g. DUI Playbook $97)
           return (
             <div className="space-y-4">
               <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
@@ -685,7 +685,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                     : `The score measured 10 surface indicators. The ${playbookTier.name} goes deeper.`}
                 </h2>
                 <p className="mt-2 text-base text-zinc-400">
-                  26 questions that change how your next attorney meeting goes. A roadmap for every stage of your case. Instant download — start reading in 60 seconds.
+                  26 questions that change how your next attorney meeting goes. A roadmap for every stage of your case. Instant download, start reading in 60 seconds.
                 </p>
                 <div className="mt-3 rounded-lg border border-zinc-700 bg-zinc-800/50 p-3">
                   <p className="text-xs font-semibold text-zinc-400">Sample questions inside:</p>
@@ -703,18 +703,18 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                     href={appendRef(`/checkout?tier=${playbookKey}&charge=${answers.chargeType}&band=${result.band}`)}
                     className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-base font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
                   >
-                    Get Your {playbookTier.name} — {playbookTier.priceDisplay} →
+                    Get Your {playbookTier.name}, {playbookTier.priceDisplay} →
                   </Link>
                 </div>
                 <p className="mt-2 text-xs text-zinc-400">
-                  5 questions you&apos;ve never thought to ask — or full refund. No forms. No arguments.
+                  5 questions you&apos;ve never thought to ask, or full refund. No forms. No arguments.
                 </p>
               </div>
-              {/* Case Decoder upsell — secondary, softer */}
+              {/* Case Decoder upsell, secondary, softer */}
               <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
                 <p className="text-base text-zinc-300">
                   <span className="font-semibold text-white">Need case-specific analysis?</span>{" "}
-                  The Case Decoder ({TIER_CORE["case-decoder"].priceDisplay}) analyzes YOUR discovery, YOUR specific charges, YOUR case stage — 15 calibrated questions built from your exact charge type and case stage. Every playbook dollar applies as credit.
+                  The Case Decoder ({TIER_CORE["case-decoder"].priceDisplay}) analyzes YOUR discovery, YOUR specific charges, YOUR case stage, 15 calibrated questions built from your exact charge type and case stage. Every playbook dollar applies as credit.
                 </p>
                 <Link
                   href={appendRef(`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`)}
@@ -727,12 +727,12 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           );
         }
 
-        // NO LIVE PLAYBOOK — show Case Decoder as primary (existing behavior)
+        // NO LIVE PLAYBOOK, show Case Decoder as primary (existing behavior)
         return isCrisis ? (
           <div className="space-y-4">
             <p className="text-base font-semibold text-zinc-300">Where to start depends on what you need next.</p>
             <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
-              <h2 className="font-bold text-white">Get your case analyzed by documented defense methodology — {TIER_CORE["case-decoder"].priceDisplay}</h2>
+              <h2 className="font-bold text-white">Get your case analyzed by documented defense methodology, {TIER_CORE["case-decoder"].priceDisplay}</h2>
               <p className="mt-2 text-base text-zinc-400">
                 15 questions specific to your {getChargeLabel(answers.chargeType)} charges, a 7-day action plan, email templates, and phone scripts. Every question built from the same methods used by elite defense attorneys.
               </p>
@@ -744,7 +744,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                   href={appendRef(`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`)}
                   className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-base font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
                 >
-                  {bandCTAButton[result.band] || "Start My Case Analysis"} — {TIER_CORE["case-decoder"].priceDisplay} →
+                  {bandCTAButton[result.band] || "Start My Case Analysis"}, {TIER_CORE["case-decoder"].priceDisplay} →
                 </Link>
               </div>
               <p className="mt-2 text-xs text-zinc-400">
@@ -770,13 +770,13 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
             <h2 className="font-bold text-white">
               {result.band === "Adequate"
-                ? "Your defense looks active on the surface. The Case Decoder checks what surface indicators miss — prosecutor patterns, jurisdiction-specific filing windows, and the questions elite attorneys ask that most defendants never think to raise."
+                ? "Your defense looks active on the surface. The Case Decoder checks what surface indicators miss, prosecutor patterns, jurisdiction-specific filing windows, and the questions elite attorneys ask that most defendants never think to raise."
                 : result.band === "Excellent"
-                ? "You\u2019re passing the basics. The Case Decoder checks the charge-specific vulnerabilities that don\u2019t show up in 10 questions — the gaps that separate adequate outcomes from the best possible outcome."
-                : "Average isn\u2019t a strategy. The Case Decoder identifies charge-specific patterns and filing windows that basic milestones don\u2019t capture — so you know which questions matter most."}
+                ? "You\u2019re passing the basics. The Case Decoder checks the charge-specific vulnerabilities that don\u2019t show up in 10 questions, the gaps that separate adequate outcomes from the best possible outcome."
+                : "Average isn\u2019t a strategy. The Case Decoder identifies charge-specific patterns and filing windows that basic milestones don\u2019t capture, so you know which questions matter most."}
             </h2>
             <p className="mt-2 text-base text-zinc-400">
-              The score measured 10 surface indicators. The Case Decoder goes deeper — analyzing {getChargeLabel(answers.chargeType)}-specific patterns, your exact case stage, and the gaps your score revealed. 15 calibrated questions, email templates, and a 7-day action plan, built from your exact charge type and case stage.
+              The score measured 10 surface indicators. The Case Decoder goes deeper, analyzing {getChargeLabel(answers.chargeType)}-specific patterns, your exact case stage, and the gaps your score revealed. 15 calibrated questions, email templates, and a 7-day action plan, built from your exact charge type and case stage.
             </p>
             <p className="mt-2 text-xs text-zinc-400">
               {TIER_CORE["case-decoder"].priceDisplay}. Less than one hour of the attorney time you already paid for. Every dollar applies as credit toward higher tiers.
@@ -786,7 +786,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 href={appendRef(`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`)}
                 className="w-full rounded-lg bg-amber-500 px-6 py-4 text-center text-base font-bold text-black transition-colors hover:bg-amber-400 sm:w-auto sm:inline-block block"
               >
-                {bandCTAButton[result.band] || "See What My Score Misses"} — {TIER_CORE["case-decoder"].priceDisplay} →
+                {bandCTAButton[result.band] || "See What My Score Misses"}, {TIER_CORE["case-decoder"].priceDisplay} →
               </Link>
             </div>
             {showIBNudge && (
@@ -807,9 +807,9 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         );
       })()}
 
-      {/* Old email capture removed — moved to section 7 above paid CTAs */}
+      {/* Old email capture removed, moved to section 7 above paid CTAs */}
 
-      {/* 9. PLAYBOOK STEP-DOWN — Only shown when playbook is NOT already the primary CTA above */}
+      {/* 9. PLAYBOOK STEP-DOWN, Only shown when playbook is NOT already the primary CTA above */}
       {CHARGE_PLAYBOOK[answers.chargeType] && !TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE]?.live && (
         <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
           <p className="text-base text-zinc-300">
@@ -821,7 +821,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             ) : (
               <>
                 <span className="font-semibold text-white">Not ready for the full Case Decoder?</span>{" "}
-                The {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].name} is an instant PDF for {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].priceDisplay} — and every dollar applies as credit toward the Case Decoder within 30 days.
+                The {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].name} is an instant PDF for {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].priceDisplay}, and every dollar applies as credit toward the Case Decoder within 30 days.
               </>
             )}
           </p>
@@ -829,18 +829,18 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             href={appendRef(`/checkout?tier=${CHARGE_PLAYBOOK[answers.chargeType]}`)}
             className="mt-3 w-full rounded-lg border border-amber-500/50 px-6 py-4 text-center text-base font-semibold text-amber-400 transition-colors hover:border-amber-500 sm:w-auto sm:inline-block block"
           >
-            Start with the Playbook — {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].priceDisplay} →
+            Start with the Playbook, {TIER_CORE[CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE].priceDisplay} →
           </Link>
         </div>
       )}
 
-      {/* 10. SAVE & SHARE — save results for later upgrade + viral share */}
+      {/* 10. SAVE & SHARE, save results for later upgrade + viral share */}
       {!shareToken ? (
         <FadeInUp>
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center">
             <p className="text-sm font-bold text-white">Save your results</p>
             <p className="mt-1 text-xs text-zinc-400">
-              Get a personal link to your score. Come back anytime — your results stay on file if you decide to upgrade later.
+              Get a personal link to your score. Come back anytime, your results stay on file if you decide to upgrade later.
             </p>
             <button
               onClick={handleShare}
@@ -858,7 +858,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             <div className="text-center">
               <p className="text-sm font-bold text-emerald-400">Your results are saved</p>
               <p className="mt-1 text-xs text-zinc-400">
-                Bookmark this link — your score, observations, and charge details are stored. If you upgrade later, we&apos;ll use these results so you don&apos;t repeat anything.
+                Bookmark this link, your score, observations, and charge details are stored. If you upgrade later, we&apos;ll use these results so you don&apos;t repeat anything.
               </p>
               <div className="mt-3 flex items-center gap-2 justify-center">
                 <input
@@ -891,7 +891,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                 title={`Defense Milestone Score: ${result.band}`}
                 heading=""
                 subheading=""
-                shareText={`I just scored my criminal defense in 60 seconds — free, no email. Worth checking if you have a case: ${shareUrl}`}
+                shareText={`I just scored my criminal defense in 60 seconds, free, no email. Worth checking if you have a case: ${shareUrl}`}
                 emailBody={`I used this free tool to check if my attorney is hitting basic defense milestones. Takes 60 seconds, no email required: ${shareUrl}`}
               />
             </div>
@@ -927,7 +927,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
 }
 
 /**
- * ScoreClient — main page component managing question/answer state
+ * ScoreClient, main page component managing question/answer state
  * and the transition from questionnaire to score display.
  */
 export default function ScoreClient() {
@@ -950,7 +950,7 @@ export default function ScoreClient() {
   } | null>(null);
   const scoreRef = useRef<HTMLDivElement>(null);
 
-  // Wizard state — skip chargeType question (step 0) when pre-filled from URL
+  // Wizard state, skip chargeType question (step 0) when pre-filled from URL
   const [currentStep, setCurrentStep] = useState(prefillCharge ? 1 : 0);
   const [direction, setDirection] = useState<"forward" | "back">("forward");
   const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -961,7 +961,7 @@ export default function ScoreClient() {
   const allAnswered = answeredCount === questions.length;
   const currentQuestion = questions[currentStep];
 
-  // Fetch DAI stats on mount (includes totalCompletions — single source of truth)
+  // Fetch DAI stats on mount (includes totalCompletions, single source of truth)
   useEffect(() => {
     fetch("/api/stats/score-summary")
       .then((r) => r.json())
@@ -995,10 +995,10 @@ export default function ScoreClient() {
       clearTimeout(autoAdvanceTimer.current);
     }
 
-    // Skip auto-advance for reduced motion users — they use Next button
+    // Skip auto-advance for reduced motion users, they use Next button
     if (shouldReduceMotion) return;
 
-    // Don't auto-advance on last step — user submits manually
+    // Don't auto-advance on last step, user submits manually
     if (currentStep >= questions.length - 1) return;
 
     autoAdvanceTimer.current = setTimeout(() => {
@@ -1008,7 +1008,7 @@ export default function ScoreClient() {
     }, 300);
   }, [answers, currentStep, shouldReduceMotion]);
 
-  /** Submit score — extracted from form handler for programmatic use */
+  /** Submit score, extracted from form handler for programmatic use */
   const submitScore = useCallback(async (submittedAnswers: Record<string, string>) => {
     if (Object.keys(submittedAnswers).length !== questions.length) return;
 
@@ -1118,10 +1118,10 @@ export default function ScoreClient() {
         }}
       />
       <div className="mx-auto max-w-2xl">
-        {/* Pre-quiz hero — compact: badge + H1 + subtitle only */}
+        {/* Pre-quiz hero, compact: badge + H1 + subtitle only */}
         <div className="text-center">
           <span className="mb-4 inline-block rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-emerald-400">
-            Free — 60 seconds, no email required
+            Free, 60 seconds, no email required
           </span>
           <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
             {prefillCharge
@@ -1129,7 +1129,7 @@ export default function ScoreClient() {
               : "Is Your Attorney Actually Working Your Case?"}
           </h1>
           <p className="mt-3 text-base text-zinc-300">
-            Find out in 60 seconds. {prefillCharge ? "9" : "10"} questions, instant score, anonymous — nothing stored, nothing sold.
+            Find out in 60 seconds. {prefillCharge ? "9" : "10"} questions, instant score, anonymous, nothing stored, nothing sold.
           </p>
         </div>
 
@@ -1143,7 +1143,7 @@ export default function ScoreClient() {
           <>
             <ScoreDisplay result={result} emailSent={emailSent} setEmailSent={setEmailSent} answers={answers} scoreRef={scoreRef} onAdjust={() => { setResult(null); setCurrentStep(0); }} onReset={() => { setResult(null); setAnswers({}); setEmailSent(false); setCurrentStep(0); try { sessionStorage.removeItem("inna-score"); } catch {} }} stats={stats} blogRef={blogRef} />
 
-            {/* Post-quiz testimonial — social proof near CTAs */}
+            {/* Post-quiz testimonial, social proof near CTAs */}
             <div className="mt-8">
               <TestimonialSection
                 variant="inline"
@@ -1162,7 +1162,7 @@ export default function ScoreClient() {
             </div>
           </>
         ) : loading ? (
-          /* Loading screen — centered, with role="status" for a11y */
+          /* Loading screen, centered, with role="status" for a11y */
           <div role="status" className="mt-12 text-center py-12">
             <svg
               className="mx-auto h-8 w-8 animate-spin text-amber-500"
@@ -1179,9 +1179,9 @@ export default function ScoreClient() {
             <p className="mt-2 text-xs text-zinc-400">Your answers are not stored.</p>
           </div>
         ) : (
-          /* Wizard — one question at a time */
+          /* Wizard, one question at a time */
           <div className="mt-8" onKeyDown={handleWizardKeyDown}>
-            {/* Progress bar — tracks position, not completion */}
+            {/* Progress bar, tracks position, not completion */}
             <div className="mb-6">
               <div
                 role="progressbar"
@@ -1231,7 +1231,7 @@ export default function ScoreClient() {
                       <p className="mt-1 text-xs text-zinc-400">This affects sentencing risk context in your score, not your attorney&apos;s competence rating.</p>
                     )}
                     {currentQuestion.id === "licensedProfession" && (
-                      <p className="mt-1 text-xs text-zinc-400">Licensed professionals and students face separate collateral consequences — your score flags this if relevant.</p>
+                      <p className="mt-1 text-xs text-zinc-400">Licensed professionals and students face separate collateral consequences, your score flags this if relevant.</p>
                     )}
                     <div className="mt-4 space-y-3">
                       {currentQuestion.options.map((opt) => {
@@ -1276,7 +1276,7 @@ export default function ScoreClient() {
             {currentStep >= 7 && !answers[currentQuestion.id] && (
               <div className="mt-4 rounded-lg border border-zinc-700 bg-zinc-900/30 p-3">
                 <p className="text-sm leading-relaxed text-zinc-400">
-                  If you&apos;re hesitating — that hesitation is information. The score doesn&apos;t create the gaps in your defense. It just shows you where they are. You&apos;re better off knowing.
+                  If you&apos;re hesitating, that hesitation is information. The score doesn&apos;t create the gaps in your defense. It just shows you where they are. You&apos;re better off knowing.
                 </p>
               </div>
             )}

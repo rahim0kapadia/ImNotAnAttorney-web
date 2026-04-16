@@ -33,6 +33,6 @@
 1. Grep for `isOperatorAuthorized` and `operator-auth` references in src/
 2. If zero references: delete the file
 3. If referenced: add `@deprecated` JSDoc
-4. Run `npx tsc --noEmit` to verify no type errors
+4. Run `npx tsc,noEmit` to verify no type errors
 
 **Commit:** `chore: remove deprecated operator-auth.ts (replaced by auth/guards.ts)`

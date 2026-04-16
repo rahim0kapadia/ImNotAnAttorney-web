@@ -30,7 +30,7 @@ Has anyone discussed collateral consequences? A guilty plea doesn't just mean th
 
 Are there alternatives to a guilty plea? Diversion programs, deferred adjudication, charge reduction to a misdemeanor, withhold of adjudication (in some states). First-time offenders especially should be exploring these.
 
-The plea deal might be the smart move. Sometimes it is. But it should come AFTER your attorney has done the work -- reviewed discovery, filed motions, investigated weaknesses -- not before.
+The plea deal might be the smart move. Sometimes it is. But it should come AFTER your attorney has done the work, reviewed discovery, filed motions, investigated weaknesses, not before.
 
 A "limited-time offer" from the prosecution is a negotiation tactic, not a deadline. First offers are almost never the best offers.
 

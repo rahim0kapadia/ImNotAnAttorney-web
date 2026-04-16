@@ -1,16 +1,16 @@
 /**
- * @file /api/generate/intelligence-brief — Phase A generation dispatcher
+ * @file /api/generate/intelligence-brief, Phase A generation dispatcher
  *
  * Pipeline position: Called AFTER Phase 2 intake is submitted.
  * Triggered by:
- *   1. Phase 2 intake endpoint (/api/intake/intelligence-brief) — fire-and-forget
+ *   1. Phase 2 intake endpoint (/api/intake/intelligence-brief), fire-and-forget
  *   2. Manual operator retry via curl (with force:true to override idempotency)
  *
  * Pattern: Fire-and-forget delegation (same as Case Decoder dispatcher)
  *   Validates auth + idempotency, atomically claims the case, then fires
  *   the Supabase Edge Function with tier=intelligence-brief, phase=A.
  *
- * Status flow (v4 — fully automated, no operator judge research gate):
+ * Status flow (v4, fully automated, no operator judge research gate):
  *   intake → auto-generating → compiling → review
  *   - This endpoint handles: intake → auto-generating
  *   - The Edge Function (handleIBPhaseA) handles: auto-generating → compiling
@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
   // ── "WE'VE STARTED" TRANSACTIONAL EMAIL ──────────────────────
   // Let the customer know their IB is being generated. This fills the
   // silence gap between CD delivery and IB delivery (up to 72 hours).
-  // Fire-and-forget — don't block the response on email delivery.
+  // Fire-and-forget, don't block the response on email delivery.
   const { data: caseForEmail } = await supabase
     .from("cases")
     .select("email")
@@ -139,13 +139,13 @@ export async function POST(req: NextRequest) {
       },
       html: `
         <h1 style="color: #F59E0B;">Your Intelligence Brief Is Being Built</h1>
-        <p>Your Case Decoder has been delivered. We're now generating your full Intelligence Brief — including:</p>
+        <p>Your Case Decoder has been delivered. We're now generating your full Intelligence Brief, including:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">Jurisdiction intelligence</strong> — local sentencing patterns and court tendencies</li>
-          <li><strong style="color: white;">Motion landscape</strong> — every motion that applies to your case, with deadlines</li>
-          <li><strong style="color: white;">Defense theory analysis</strong> — established defense strategies for your charge type</li>
-          <li><strong style="color: white;">Priority questions</strong> — 10-15 targeted questions with follow-up probes</li>
-          <li><strong style="color: white;">14-day action plan</strong> — one action per day, with scripts for difficult conversations</li>
+          <li><strong style="color: white;">Jurisdiction intelligence</strong>, local sentencing patterns and court tendencies</li>
+          <li><strong style="color: white;">Motion landscape</strong>, every motion that applies to your case, with deadlines</li>
+          <li><strong style="color: white;">Defense theory analysis</strong>, established defense strategies for your charge type</li>
+          <li><strong style="color: white;">Priority questions</strong>, 10-15 targeted questions with follow-up probes</li>
+          <li><strong style="color: white;">14-day action plan</strong>, one action per day, with scripts for difficult conversations</li>
         </ul>
         <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
           <strong style="color: white;">Expected delivery: within 72 hours.</strong> We'll email you as soon as your Intelligence Brief is ready.
@@ -159,6 +159,6 @@ export async function POST(req: NextRequest) {
     success: true,
     caseId,
     status: "auto-generating",
-    message: "Intelligence Brief Phase A started. Phase B will auto-trigger on completion (v4 — no operator gate).",
+    message: "Intelligence Brief Phase A started. Phase B will auto-trigger on completion (v4, no operator gate).",
   });
 }

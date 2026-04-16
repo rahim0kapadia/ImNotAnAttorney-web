@@ -1,4 +1,4 @@
-# ORPHAN/LINKAGE AUDIT — IMNOTANATTORNEY SUPABASE
+# ORPHAN/LINKAGE AUDIT, IMNOTANATTORNEY SUPABASE
 **Date:** 2026-04-13  
 **Database:** jxjbjmgdukwkoclydqdr  
 **Scope:** Judge ecosystem, legal data, case integration, officer data
@@ -7,7 +7,7 @@
 
 ## CRITICAL GAPS (High Impact)
 
-### 1. JUDGE QUOTES UNLINKED — 108,058 rows (90.4% of all quotes)
+### 1. JUDGE QUOTES UNLINKED, 108,058 rows (90.4% of all quotes)
 - **Total judge_quotes:** 119,506
 - **Linked to judge_profiles:** 11,448 (9.6%)
 - **UNLINKED (NULL judge_id):** 108,058 (90.4%)
@@ -15,27 +15,27 @@
 - **Root cause:** Quotes extracted from CourtListener opinions but never matched back to judge_profiles table.
 - **Impact:** Judge quotes not usable in judge profile pages, judge report cards, or any judge-facing intelligence.
 
-### 2. JUDGE PROFILES WITHOUT QUOTES — 14,973 rows (95.9% of profiles)
+### 2. JUDGE PROFILES WITHOUT QUOTES, 14,973 rows (95.9% of profiles)
 - **Total judge_profiles:** 15,613
 - **WITH linked quotes:** 640 (4.1%)
 - **WITHOUT quotes:** 14,973 (95.9%)
 - **Pattern:** Judge profiles exist but zero quotes associated.
 - **Impact:** Judge intelligence incomplete; no quote library for landing pages, reports, or judge report cards.
 
-### 3. JUDGE PROFILES WITHOUT JURISDICTION — 227 rows
+### 3. JUDGE PROFILES WITHOUT JURISDICTION, 227 rows
 - **Total judge_profiles:** 15,613
 - **NULL or empty jurisdiction:** 227 (1.5%)
 - **Pattern:** Partial profile data from CourtListener (full_name, cl_person_id exist).
 - **Impact:** Bench/jury divergence queries fail (require jurisdiction grouping).
 
-### 4. CASE LAW NEVER LINKED TO CASES — Zero linkage
+### 4. CASE LAW NEVER LINKED TO CASES, Zero linkage
 - **Total case_law rows:** 3,407
 - **Linked to cases table:** 0 (0%)
 - **Pattern:** case_law.case_id is ALWAYS NULL.
 - **Root cause:** case_law table designed as general CourtListener index, not case-specific.
 - **Impact:** Case law cannot be surfaced per-case (Intelligence Brief, X-Ray). Case law exists only in Judge Ecosystem, not in Case tier.
 
-### 5. OFFICER EXTERNAL INTEL NOT POPULATED — 0 rows
+### 5. OFFICER EXTERNAL INTEL NOT POPULATED, 0 rows
 - **Total officer_reliability rows:** 13,342
 - **Linked officer_external_intel:** 0 (0%)
 - **Note:** Task #1 (Brady/Giglio pipeline) marked completed but data is empty.
@@ -74,12 +74,12 @@
 - **is_good_law = NULL:** 0 rows (0%)
 - **source_url:** 100% populated (all have CourtListener URL)
 - **verification_url:** 100% populated
-- **Status:** HEALTHY — No fabricated case law.
+- **Status:** HEALTHY, No fabricated case law.
 
 ### 10. OFFICER RELIABILITY JURISDICTION ✓
 - **NULL jurisdiction:** 0 rows
 - **Multi-jurisdiction flag:** tracked separately
-- **Status:** HEALTHY — All rows have jurisdiction.
+- **Status:** HEALTHY, All rows have jurisdiction.
 
 ### 11. APPELLATE TRENDS JURISDICTION ✓
 - **NULL jurisdiction:** 0 rows
@@ -96,13 +96,13 @@
 ## SUMMARY TABLE
 
 | Issue | Severity | Count | % Affected | Fixable? |
-|-------|----------|-------|-----------|----------|
+|-------|----------|-------|---------, |----------|
 | Judge quotes unlinked | CRITICAL | 108,058 | 90.4% | Yes |
 | Judge profiles without quotes | CRITICAL | 14,973 | 95.9% | Yes |
 | Judge profiles no jurisdiction | MEDIUM | 227 | 1.5% | Yes |
 | Case law never linked to cases | CRITICAL | 3,407 | 100% | Design |
 | Officer external intel empty | CRITICAL | 0 | N/A | WIP |
-| Sentencing data sparse | MEDIUM | — | — | Need USSC |
+| Sentencing data sparse | MEDIUM |, |, | Need USSC |
 | Case intake not in engine | CRITICAL | 46 | 100% | Workflow |
 | Citation authority sparse | MEDIUM | 57/3407 | 1.6% | Need CL API |
 
@@ -154,7 +154,7 @@
    - Test: Submit a real DUI case, check processing_jobs, check engine logs
    - Est. effort: 1 hour (full E2E test)
 
-### TIER 4 (Reference Data Only — Acceptable Gap):
+### TIER 4 (Reference Data Only, Acceptable Gap):
 5. **Citation authority sparse: Only 57 of 3.4K case_law rows have scoring**
    - Root: Would require bulk CourtListener /opinions/{id}/citing/ API calls
    - Decision: Defer; currently pulling TOP 50 cases only (citation_authority table is the elite 50-100 most-cited cases, not ALL cases).
@@ -168,14 +168,14 @@ All queries executed against Supabase Management API `/v1/projects/{ref}/databas
 
 Example query patterns:
 ```sql
--- Judge quotes unlinked
-SELECT COUNT(*) FROM judge_quotes WHERE judge_id IS NULL;  -- 108,058
+, Judge quotes unlinked
+SELECT COUNT(*) FROM judge_quotes WHERE judge_id IS NULL; , 108,058
 
--- Judge profiles with quotes
+, Judge profiles with quotes
 SELECT COUNT(DISTINCT jp.id) FROM judge_profiles jp 
-  INNER JOIN judge_quotes jq ON jp.id = jq.judge_id;  -- 640
+  INNER JOIN judge_quotes jq ON jp.id = jq.judge_id; , 640
 
--- Case law verification state
+, Case law verification state
 SELECT is_good_law, COUNT(*) FROM case_law GROUP BY is_good_law;
--- is_good_law = true: 3,407; false: 0; NULL: 0
+, is_good_law = true: 3,407; false: 0; NULL: 0
 ```

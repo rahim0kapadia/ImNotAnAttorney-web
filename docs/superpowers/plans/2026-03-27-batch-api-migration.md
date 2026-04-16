@@ -1,8 +1,8 @@
-# Batch API + Prompt Caching Migration — Implementation Plan
+# Batch API + Prompt Caching Migration, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Migrate all Claude API calls from synchronous Messages API to asynchronous Batch API — 50% cost reduction on Case Decoder, ~25% on Intelligence Brief Phase A, fix deprecated `budget_tokens` thinking, and fix a missing anti-hallucination block bug in the worker.
+**Goal:** Migrate all Claude API calls from synchronous Messages API to asynchronous Batch API, 50% cost reduction on Case Decoder, ~25% on Intelligence Brief Phase A, fix deprecated `budget_tokens` thinking, and fix a missing anti-hallucination block bug in the worker.
 
 **Architecture:** Decoupled submit/process. Edge Function and Worker become thin batch submitters (submit → save `batch_id` → exit). A new cron batch poller (every 5 min) handles ALL result processing (render HTML, save to Supabase, trigger eval). This eliminates the 150s Edge Function timeout constraint and centralizes result processing (DRY). IB Phase B stays synchronous due to sequential section dependencies.
 
@@ -17,18 +17,18 @@
 - **Repo:** `C:\Users\email\projects\ImNotAnAttorney-web`
 - **Problem:** Claude API costs ~$0.40-0.60 per Case Decoder report (Opus 4.6 + extended thinking). The Anthropic Batch API offers 50% off for async processing. Current code uses deprecated `budget_tokens` thinking format. The Edge Function has a 150s hard kill that causes generation failures on complex cases (250-294s).
 - **Key files to read first:**
-  1. `scripts/generate-worker.mjs` — backup worker (990 lines), raw `fetch()` to Messages API
-  2. `supabase/functions/generate-report/index.ts` — primary Edge Function (~5194 lines)
-  3. `src/lib/cron/operator-alerts.ts:128-184` — Part 5 stuck detection (30-min threshold)
-  4. `src/app/api/cron/drip/route.ts` — cron orchestrator with task registry
-  5. `src/lib/cron/types.ts` — CronContext, CronResult interfaces
+  1. `scripts/generate-worker.mjs`, backup worker (990 lines), raw `fetch()` to Messages API
+  2. `supabase/functions/generate-report/index.ts`, primary Edge Function (~5194 lines)
+  3. `src/lib/cron/operator-alerts.ts:128-184`, Part 5 stuck detection (30-min threshold)
+  4. `src/app/api/cron/drip/route.ts`, cron orchestrator with task registry
+  5. `src/lib/cron/types.ts`, CronContext, CronResult interfaces
 - **Tech stack:** Next.js 15, Supabase (Deno Edge Functions), Node.js ESM workers, Anthropic API (raw `fetch`, no SDK)
 - **Key decisions:**
-  1. **Batch-first, not batch-optional.** All generation moves to batch. Batch submission is fast (<1s) — the 150s timeout only affected synchronous generation.
+  1. **Batch-first, not batch-optional.** All generation moves to batch. Batch submission is fast (<1s), the 150s timeout only affected synchronous generation.
   2. **Centralized result processing.** New cron poller handles ALL batch results (CD + IB Phase A). Eliminates rendering duplication between worker and Edge Function.
-  3. **IB Phase B stays synchronous.** Sections are sequentially dependent (each builds on prior outputs). Batching sequential items adds 1-60 min latency per step — the 50% savings on 4 Sonnet calls (~$0.04) is not worth 4-240 min added delay.
-  4. **Adaptive thinking for CD.** Edge Function comment says adaptive caused 600s+ times — but that was synchronous where timeout mattered. With batch, latency is irrelevant. Use `{type: "adaptive"}` + `output_config: {effort: "high"}`.
-  5. **Prompt caching: limited benefit at current volume.** Each IB section has a UNIQUE system prompt (not shared as the spec assumed). Cross-section caching won't work. CD system prompt (~6K tokens) exceeds Opus's 4096-token cache minimum, so we structure it for caching — but hits only occur if multiple reports generate within 1h.
+  3. **IB Phase B stays synchronous.** Sections are sequentially dependent (each builds on prior outputs). Batching sequential items adds 1-60 min latency per step, the 50% savings on 4 Sonnet calls (~$0.04) is not worth 4-240 min added delay.
+  4. **Adaptive thinking for CD.** Edge Function comment says adaptive caused 600s+ times, but that was synchronous where timeout mattered. With batch, latency is irrelevant. Use `{type: "adaptive"}` + `output_config: {effort: "high"}`.
+  5. **Prompt caching: limited benefit at current volume.** Each IB section has a UNIQUE system prompt (not shared as the spec assumed). Cross-section caching won't work. CD system prompt (~6K tokens) exceeds Opus's 4096-token cache minimum, so we structure it for caching, but hits only occur if multiple reports generate within 1h.
   6. **Separate cron endpoint.** Batch poller needs 5-min cadence (vs daily drip cron). New route at `/api/cron/batch-poll`, registered with cron-job.org.
 - **Setup/prerequisites:**
   - **Top up API credits** at console.anthropic.com BEFORE Task 1 (QA finding H5: balance too low)
@@ -41,19 +41,19 @@
 **Why:** Current architecture has rendering logic duplicated between Edge Function (`supabase/functions/generate-report/index.ts`) and Worker (`scripts/generate-worker.mjs`). By making both thin batch submitters and centralizing result processing in the cron poller, we get DRY result handling + eliminate the 150s timeout issue.
 
 **Rejected alternatives:**
-- **Worker inline polling** (worker submits + polls for 2h) — rejected because it ties up the worker process and duplicates rendering logic
-- **IB Phase B batch** (batch all 4 Phase B sections) — rejected because sequential dependencies (each section needs prior output); 4 sequential batch submissions × 1-60 min each = 4-240 min vs ~30s synchronous
-- **SDK migration** (raw fetch → @anthropic-ai/sdk) — rejected because entire codebase uses raw fetch, Edge Function is Deno (no Node SDK), and adding a dependency adds risk without benefit
-- **Phase B as independent sections** (restructure prompts to remove dependencies) — rejected because the sequential dependency is semantic (your-plan references case-intelligence's gap analysis, questions references your-plan's exclusion list)
+- **Worker inline polling** (worker submits + polls for 2h), rejected because it ties up the worker process and duplicates rendering logic
+- **IB Phase B batch** (batch all 4 Phase B sections), rejected because sequential dependencies (each section needs prior output); 4 sequential batch submissions × 1-60 min each = 4-240 min vs ~30s synchronous
+- **SDK migration** (raw fetch → @anthropic-ai/sdk), rejected because entire codebase uses raw fetch, Edge Function is Deno (no Node SDK), and adding a dependency adds risk without benefit
+- **Phase B as independent sections** (restructure prompts to remove dependencies), rejected because the sequential dependency is semantic (your-plan references case-intelligence's gap analysis, questions references your-plan's exclusion list)
 
 ## Pre-existing Bugs Fixed During Migration
 
-1. **Worker missing ANTI_HALLUCINATION_BLOCK** — Worker extracts `SYSTEM_PROMPT` from Edge Function source via string slicing but never extracts `ANTI_HALLUCINATION_BLOCK` (separate constant). Reports generated by backup worker lack 6 anti-hallucination safety rules. Fixed in Task 5.
-2. **H4: Directive language** — System prompt says "do not show this report to your attorney" which is imperative/directive (UPL risk). Fixed in Task 6.
+1. **Worker missing ANTI_HALLUCINATION_BLOCK**, Worker extracts `SYSTEM_PROMPT` from Edge Function source via string slicing but never extracts `ANTI_HALLUCINATION_BLOCK` (separate constant). Reports generated by backup worker lack 6 anti-hallucination safety rules. Fixed in Task 5.
+2. **H4: Directive language**, System prompt says "do not show this report to your attorney" which is imperative/directive (UPL risk). Fixed in Task 6.
 
 ## Revised Cost Projections
 
-The spec projected 67-83% savings on IB. That assumed shared system prompts across sections — research found each section has a unique system prompt. Revised:
+The spec projected 67-83% savings on IB. That assumed shared system prompts across sections, research found each section has a unique system prompt. Revised:
 
 | Tier | Current | After Batch | Savings |
 |------|---------|-------------|---------|
@@ -65,9 +65,9 @@ IB savings: 50% batch discount on Phase A (5 calls) only. Phase B (4 calls) stay
 ## Batch API Contract (Reference)
 
 ```
-POST /v1/messages/batches          — Create batch (returns batch_id)
-GET  /v1/messages/batches/{id}     — Poll status
-GET  /v1/messages/batches/{id}/results — Fetch JSONL results (after ended)
+POST /v1/messages/batches         , Create batch (returns batch_id)
+GET  /v1/messages/batches/{id}    , Poll status
+GET  /v1/messages/batches/{id}/results, Fetch JSONL results (after ended)
 
 Headers: x-api-key, anthropic-version: 2023-06-01, content-type: application/json
 
@@ -125,7 +125,7 @@ Tasks 7+8 can run in parallel after 6+4.
 
 ## Tasks
 
-### Task 1: Test Script — Validate Batch + Adaptive Thinking
+### Task 1: Test Script, Validate Batch + Adaptive Thinking
 
 **Files:**
 - Create: `scripts/test-batch-generation.mjs`
@@ -182,11 +182,11 @@ const ANTI_HALLUCINATION_BLOCK = indexTs.slice(ahStart + 33, ahEnd);
 const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK;
 console.log(`[test-batch] System prompt: ${fullSystemPrompt.length} chars`);
 
-// ── Test persona (Danielle — DUI first offense) ──
-const testUserPrompt = `DEFENDANT INTAKE — CASE DECODER ($197)
+// ── Test persona (Danielle, DUI first offense) ──
+const testUserPrompt = `DEFENDANT INTAKE, CASE DECODER ($197)
 
 Name: Danielle M.
-Charge(s): DUI — First Offense (BAC 0.11%)
+Charge(s): DUI, First Offense (BAC 0.11%)
 Jurisdiction: Maricopa County, Arizona
 Arrest Date: 2026-03-15
 Next Court Date: 2026-04-10
@@ -299,7 +299,7 @@ while (elapsed < MAX_MS) {
         (rh) => !headings.some((h) => h.toLowerCase().includes(rh.toLowerCase().slice(0, 15)))
       );
       if (missing.length > 0) {
-        console.warn(`\nWARNING — Missing sections: ${missing.join(", ")}`);
+        console.warn(`\nWARNING, Missing sections: ${missing.join(", ")}`);
       } else {
         console.log("\nAll reference sections present.");
       }
@@ -343,7 +343,7 @@ caching structure before migrating production generation pipeline."
 
 ---
 
-### Task 2: DB Migration — Add `batch_id` Column
+### Task 2: DB Migration, Add `batch_id` Column
 
 **Files:**
 - Create: `supabase/migrations/027-batch-id.sql`
@@ -351,11 +351,11 @@ caching structure before migrating production generation pipeline."
 - [ ] **Step 1: Write migration SQL**
 
 ```sql
--- Migration 027: Add batch_id for Anthropic Batch API integration.
--- Stores the batch ID for async generation polling by cron batch poller.
+, Migration 027: Add batch_id for Anthropic Batch API integration.
+, Stores the batch ID for async generation polling by cron batch poller.
 ALTER TABLE cases ADD COLUMN IF NOT EXISTS batch_id text;
 
--- Partial index: only rows with active batches (used by poller query)
+, Partial index: only rows with active batches (used by poller query)
 CREATE INDEX IF NOT EXISTS idx_cases_batch_id
   ON cases (batch_id)
   WHERE batch_id IS NOT NULL;
@@ -389,7 +389,7 @@ require('dotenv').config({path:'.env.local'});
 const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 sb.from('cases').select('batch_id').limit(1).then(({data,error}) => {
   if (error) console.error('FAIL:', error.message);
-  else console.log('OK — batch_id column exists');
+  else console.log('OK, batch_id column exists');
 });
 "
 ```
@@ -415,13 +415,13 @@ Partial index on non-null batch_id for cron poller queries."
 
 ```typescript
 /**
- * Anthropic Batch API utilities — types + helper functions.
+ * Anthropic Batch API utilities, types + helper functions.
  * Used by cron batch poller for polling and result fetching.
  *
  * Batch API contract:
- *   POST /v1/messages/batches           — create batch
- *   GET  /v1/messages/batches/{id}      — poll status
- *   GET  /v1/messages/batches/{id}/results — fetch JSONL results
+ *   POST /v1/messages/batches          , create batch
+ *   GET  /v1/messages/batches/{id}     , poll status
+ *   GET  /v1/messages/batches/{id}/results, fetch JSONL results
  */
 
 // ── Types ──
@@ -555,7 +555,7 @@ export function extractText(result: BatchResultSucceeded): string {
 - [ ] **Step 2: TypeScript check**
 
 ```bash
-cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc --noEmit --skipLibCheck
+cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc,noEmit,skipLibCheck
 ```
 
 Expected: No errors related to `batch-api.ts`.
@@ -671,7 +671,7 @@ export function renderReportHtml(markdown: string, meta: ReportMeta): string {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Decoder Report — ${escapeHtml(meta.firstName)}</title>
+<title>Case Decoder Report, ${escapeHtml(meta.firstName)}</title>
 <style>
   @media print {
     body { background: white !important; color: #1a1a1a !important; }
@@ -704,13 +704,13 @@ export function renderReportHtml(markdown: string, meta: ReportMeta): string {
   </div>
   ${meta.expertNames ? `<blockquote style="border-left: 3px solid #F59E0B; padding: 16px; margin: 24px 0; background: #1C1917; border-radius: 0 8px 8px 0;">
     <p style="margin: 0 0 12px; color: #F59E0B; font-weight: bold;">METHODOLOGY NOTE</p>
-    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)} — selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
-    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION — not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+    <p style="margin: 0 0 12px; color: #A1A1AA;">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)}, selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p style="margin: 0; color: #A1A1AA;"><strong style="color: white;">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </blockquote>` : ""}
   ${html}
   <div style="background: #1C1917; padding: 16px; border-radius: 8px; margin-top: 40px; border-left: 4px solid #A1A1AA;">
     <p style="margin: 0; font-size: 13px; color: #71717A;">
-      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them — and why it matters.
+      <strong style="color: #A1A1AA;">A note on what this is:</strong> This report gives you legal information, context, and questions, not legal advice. We can't tell you what to do. What we can do is make sure you walk into your next conversation informed, prepared, and asking the right things. Your attorney has your case file, your courtroom, and your judge. This report makes sure you know what to ask them, and why it matters.
     </p>
   </div>
   <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
@@ -719,8 +719,8 @@ export function renderReportHtml(markdown: string, meta: ReportMeta): string {
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">
     <p style="margin: 0 0 12px; font-size: 14px; color: #A1A1AA;">After your meeting, if you want to verify your attorney's answers against the evidence:</p>
-    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief — $997 ($800 after credit)</a>
-    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure — decide after your meeting.</p>
+    <a href="/checkout" style="display: inline-block; padding: 16px 32px; background: #F59E0B; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px;">Case Intelligence Brief, $997 ($800 after credit)</a>
+    <p style="margin-top: 12px; font-size: 13px; color: #71717A;">Your $197 is fully credited toward any tier within 12 months. No pressure, decide after your meeting.</p>
   </div>
 </div>
 </body>
@@ -812,7 +812,7 @@ async function processCDResult(
     await sendEmail(
       {
         to: ctx.operatorEmail,
-        subject: `BATCH FAILED: Case Decoder — ${row.email}`,
+        subject: `BATCH FAILED: Case Decoder, ${row.email}`,
         html: `<p>Batch error for case ${row.id}: ${reason}</p>
           <p><strong>Retry:</strong></p>
           <code>curl -X POST ${ctx.siteUrl}/api/generate/case-decoder -H "Content-Type: application/json" -H "Authorization: Bearer ${ctx.operatorSecret}" -d '{"caseId":"${row.id}","force":true}'</code>`,
@@ -849,7 +849,7 @@ async function processCDResult(
   const tokenExpiry = new Date(now);
   tokenExpiry.setFullYear(tokenExpiry.getFullYear() + 1);
 
-  const expertMatch = cleaned.match(/draws on (.+?)(?:\.|—)/);
+  const expertMatch = cleaned.match(/draws on (.+?)(?:\.|, )/);
   const meta = {
     firstName: intake?.first_name ?? "Defendant",
     charges: intake?.charges ?? row.charge_type ?? "Unknown",
@@ -898,7 +898,7 @@ async function processCDResult(
   await sendEmail(
     {
       to: ctx.operatorEmail,
-      subject: `Case Decoder Ready — ${meta.firstName} (${meta.charges})`,
+      subject: `Case Decoder Ready, ${meta.firstName} (${meta.charges})`,
       html: `<p>Batch-generated report ready for review.</p>
         <p><a href="${reportUrl}">Preview Report</a> | <a href="${ctx.siteUrl}/api/deliver?caseId=${row.id}&token=${ctx.operatorSecret}">Approve &amp; Deliver</a></p>`,
     },
@@ -943,7 +943,7 @@ async function processIBPhaseAResult(
     await sendEmail(
       {
         to: ctx.operatorEmail,
-        subject: `IB Phase A FAILED (${failures}/5) — ${row.email}`,
+        subject: `IB Phase A FAILED (${failures}/5), ${row.email}`,
         html: `<p>Case ${row.id}: ${failures}/5 Phase A sections failed.</p>
           <code>curl -X POST ${ctx.siteUrl}/api/generate/intelligence-brief -H "Content-Type: application/json" -H "Authorization: Bearer ${ctx.operatorSecret}" -d '{"caseId":"${row.id}","force":true}'</code>`,
       },
@@ -986,7 +986,7 @@ async function processIBPhaseAResult(
 
 ```typescript
 /**
- * @file /api/cron/batch-poll — Batch result polling (every 5 min)
+ * @file /api/cron/batch-poll, Batch result polling (every 5 min)
  *
  * Lightweight endpoint that only runs the batch poller task.
  * Registered with cron-job.org at */5 * * * * cadence.
@@ -1066,7 +1066,7 @@ Replace with:
       hours: [-1],
     },
     timeout: 30,
-    description: 'Poll Anthropic Batch API results — processes completed CD + IB Phase A batches',
+    description: 'Poll Anthropic Batch API results, processes completed CD + IB Phase A batches',
   },
 ];
 ```
@@ -1115,14 +1115,14 @@ fetch('https://api.cron-job.org/jobs', {
 - [ ] **Step 5: TypeScript check**
 
 ```bash
-cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc --noEmit --skipLibCheck
+cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 6: Commit**
 
 ```bash
 git add src/lib/report-renderer.ts src/lib/cron/batch-poller.ts src/app/api/cron/batch-poll/route.ts scripts/setup-cronjob-org.js
-git commit -m "feat: add cron batch poller — polls Anthropic Batch API results every 5 min
+git commit -m "feat: add cron batch poller, polls Anthropic Batch API results every 5 min
 
 Centralized result processor for both Case Decoder and IB Phase A batches.
 Renders HTML, saves to Supabase, triggers evaluation.
@@ -1131,7 +1131,7 @@ Registered with cron-job.org at */5 cadence."
 
 ---
 
-### Task 5: Worker Migration — Batch Submit + Exit
+### Task 5: Worker Migration, Batch Submit + Exit
 
 **Files:**
 - Modify: `scripts/generate-worker.mjs`
@@ -1180,7 +1180,7 @@ try {
   SYSTEM_PROMPT = indexTs.slice(sysStart + 22, sysEnd);
   console.log(`[worker] Extracted SYSTEM_PROMPT (${SYSTEM_PROMPT.length} chars)`);
 
-  // Extract ANTI_HALLUCINATION_BLOCK (was missing — bug fix)
+  // Extract ANTI_HALLUCINATION_BLOCK (was missing, bug fix)
   const ahStart = indexTs.indexOf("const ANTI_HALLUCINATION_BLOCK = `");
   if (ahStart === -1) throw new Error("Could not find ANTI_HALLUCINATION_BLOCK in index.ts");
   const ahEnd = indexTs.indexOf("`;", ahStart + 33);
@@ -1298,7 +1298,7 @@ Replace (from `// Step 4:` through the end of the retry loop, up to but not incl
     }
   }
 
-  // Step 5: Save batch_id and exit — cron poller handles result processing
+  // Step 5: Save batch_id and exit, cron poller handles result processing
   await supabase
     .from("cases")
     .update({ batch_id: batchId, updated_at: new Date().toISOString() })
@@ -1311,7 +1311,7 @@ Replace (from `// Step 4:` through the end of the retry loop, up to but not incl
 
 - [ ] **Step 3: Remove the now-dead code below Step 5**
 
-Everything after the batch submission (the old rendering, validation, Supabase save, operator email, eval trigger — approximately lines 860-990) should be removed since the cron poller now handles all result processing. Find the comment `// Step 5:` (or the rendering section starting with `// Strip model-generated methodology`) and delete everything from there to the end of `main()`, EXCEPT the final error handler:
+Everything after the batch submission (the old rendering, validation, Supabase save, operator email, eval trigger, approximately lines 860-990) should be removed since the cron poller now handles all result processing. Find the comment `// Step 5:` (or the rendering section starting with `// Strip model-generated methodology`) and delete everything from there to the end of `main()`, EXCEPT the final error handler:
 
 Keep:
 ```javascript
@@ -1354,9 +1354,9 @@ The `.is("batch_id", null)` ensures the worker only picks up cases that don't al
 
 ```bash
 git add scripts/generate-worker.mjs
-git commit -m "feat(worker): migrate to Batch API — submit + exit pattern
+git commit -m "feat(worker): migrate to Batch API, submit + exit pattern
 
-- Fix: extract ANTI_HALLUCINATION_BLOCK (was missing — pre-existing bug)
+- Fix: extract ANTI_HALLUCINATION_BLOCK (was missing, pre-existing bug)
 - Replace sync Messages API call with Batch API submission
 - Migrate thinking: budget_tokens → adaptive (type: adaptive, effort: high)
 - Add cache_control on system prompt (1h TTL ephemeral)
@@ -1367,7 +1367,7 @@ git commit -m "feat(worker): migrate to Batch API — submit + exit pattern
 
 ---
 
-### Task 6: Edge Function CD Migration — Batch Submit + Exit
+### Task 6: Edge Function CD Migration, Batch Submit + Exit
 
 **Files:**
 - Modify: `supabase/functions/generate-report/index.ts`
@@ -1440,10 +1440,10 @@ Find the main Case Decoder handler (around line 4989). The current pattern is:
     const reportMarkdown = await callClaudeAPI(intake, apiKey, supabaseUrl, supabaseKey, caseId);
 ```
 
-Replace the CD handler block — from where it calls `callClaudeAPI` through the rendering, validation, Supabase save, and eval trigger — with:
+Replace the CD handler block, from where it calls `callClaudeAPI` through the rendering, validation, Supabase save, and eval trigger, with:
 
 ```typescript
-    // Submit batch and exit — cron poller handles result processing
+    // Submit batch and exit, cron poller handles result processing
     const batchId = await submitCDBatch(intake, apiKey, supabaseUrl, supabaseKey, caseId);
 
     // Save batch_id to case record
@@ -1454,16 +1454,16 @@ Replace the CD handler block — from where it calls `callClaudeAPI` through the
       .eq("id", caseId);
 
     return new Response(
-      JSON.stringify({ success: true, batchId, message: "Batch submitted — poller will process results" }),
+      JSON.stringify({ success: true, batchId, message: "Batch submitted, poller will process results" }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
 ```
 
-The old synchronous flow (callClaudeAPI → render → validate → save → eval) becomes dead code for CD. Remove it or wrap in a `// DEPRECATED: synchronous fallback (removed — now batch-only)` comment block for reference during migration.
+The old synchronous flow (callClaudeAPI → render → validate → save → eval) becomes dead code for CD. Remove it or wrap in a `// DEPRECATED: synchronous fallback (removed, now batch-only)` comment block for reference during migration.
 
 **Important:** The CD handler's error catch block should still set `status: "generation-failed"` on batch submission failures. Keep that pattern.
 
-- [ ] **Step 3: Fix H4 — directive language in system prompt**
+- [ ] **Step 3: Fix H4, directive language in system prompt**
 
 In `SYSTEM_PROMPT` (around line 290+), search for text containing "do not show this report to your attorney" or similar directive language. Replace any imperative directive with informational framing:
 
@@ -1474,7 +1474,7 @@ do not show this report to your attorney
 
 Replace with:
 ```
-This report is designed to help you prepare for conversations with your attorney — sharing it is entirely your choice
+This report is designed to help you prepare for conversations with your attorney, sharing it is entirely your choice
 ```
 
 Search the full `SYSTEM_PROMPT` for other directive patterns ("do not", "you must not", "never tell your attorney") and reframe each as informational.
@@ -1483,9 +1483,9 @@ Search the full `SYSTEM_PROMPT` for other directive patterns ("do not", "you mus
 
 ```bash
 cd C:\Users\email\projects\ImNotAnAttorney-web && git add supabase/functions/generate-report/index.ts
-git commit -m "feat(edge-fn): migrate CD to Batch API — submit + exit
+git commit -m "feat(edge-fn): migrate CD to Batch API, submit + exit
 
-- Add submitCDBatch() — submits single-request batch with adaptive thinking
+- Add submitCDBatch(), submits single-request batch with adaptive thinking
 - CD handler now submits batch, saves batch_id, returns immediately
 - Eliminates 150s timeout constraint (batch submission < 1s)
 - Fix H4: replace directive 'do not show' with informational framing
@@ -1548,7 +1548,7 @@ Replace the parallel execution and all subsequent result handling (retries, sect
     const batch = await batchResponse.json();
     console.log(`[generate-report] IB Phase A batch submitted: ${batch.id} (5 sections)`);
 
-    // Save batch_id — cron poller handles result processing + Phase B trigger
+    // Save batch_id, cron poller handles result processing + Phase B trigger
     const supabaseClient = createClient(supabaseUrl, supabaseKey);
     await supabaseClient
       .from("cases")
@@ -1563,11 +1563,11 @@ Replace the parallel execution and all subsequent result handling (retries, sect
 
 Remove the old Phase A code: `Promise.allSettled`, retry logic, section_outputs saving, status transition to "compiling", Phase B trigger, operator email, customer micro-delivery. All of this is now handled by the cron poller (Task 4).
 
-**Important:** The section config building code (variable assembly, prompt building) stays — only the execution and result handling changes.
+**Important:** The section config building code (variable assembly, prompt building) stays, only the execution and result handling changes.
 
 - [ ] **Step 2: Verify Phase B is unchanged**
 
-`handleIBPhaseB` (around line 3865) must remain synchronous — it calls `callClaudeForSection` sequentially for each section. Verify this function is NOT modified. Phase B runs sequentially because:
+`handleIBPhaseB` (around line 3865) must remain synchronous, it calls `callClaudeForSection` sequentially for each section. Verify this function is NOT modified. Phase B runs sequentially because:
 - `case-intelligence` needs all Phase A outputs
 - `your-plan` needs `case-intelligence` output
 - `questions` needs `your-plan` output
@@ -1577,7 +1577,7 @@ Remove the old Phase A code: `Promise.allSettled`, retry logic, section_outputs 
 
 ```bash
 cd C:\Users\email\projects\ImNotAnAttorney-web && git add supabase/functions/generate-report/index.ts
-git commit -m "feat(edge-fn): migrate IB Phase A to Batch API — 5-request batch
+git commit -m "feat(edge-fn): migrate IB Phase A to Batch API, 5-request batch
 
 Phase A's 5 parallel Claude calls → single 5-request batch submission.
 Cron poller processes results, saves section_outputs, triggers Phase B.
@@ -1638,35 +1638,35 @@ Also update the comment at line 128:
 ```
 To:
 ```typescript
-// PART 5: STUCK "GENERATING" DETECTION (2h threshold — accounts for Batch API latency)
+// PART 5: STUCK "GENERATING" DETECTION (2h threshold, accounts for Batch API latency)
 ```
 
 - [ ] **Step 2: Do the same for `detectStuckIBGeneration`**
 
 Find `detectStuckIBGeneration` (around line 190). Apply the same 30-min → 2h change for the `auto-generating` and `compiling` status queries.
 
-- [ ] **Step 3: Fix C1 — "8-step" → "5-step" on checkout page**
+- [ ] **Step 3: Fix C1, "8-step" → "5-step" on checkout page**
 
-In `src/app/checkout/page.tsx` (around line 390), search for "8-step" or "8 step" and replace with "5-step". The system prompt enforces exactly 5 steps — the copy must match.
+In `src/app/checkout/page.tsx` (around line 390), search for "8-step" or "8 step" and replace with "5-step". The system prompt enforces exactly 5 steps, the copy must match.
 
 - [ ] **Step 4: Fix C1 on sample page**
 
 In `src/app/sample/page.tsx` (around line 122), search for "8-step" or "8 step" and replace with "5-step".
 
-- [ ] **Step 5: Fix H1 — drip Days 4-7 push X-Ray → Intelligence Brief**
+- [ ] **Step 5: Fix H1, drip Days 4-7 push X-Ray → Intelligence Brief**
 
-In `src/lib/drip-emails.ts`, find the keys `post_case_decoder_discovery_question` and `post_case_decoder_upsell`. These emails push X-Ray ($2,497) too early — they should push Intelligence Brief ($997) first (next rung on the value ladder).
+In `src/lib/drip-emails.ts`, find the keys `post_case_decoder_discovery_question` and `post_case_decoder_upsell`. These emails push X-Ray ($2,497) too early, they should push Intelligence Brief ($997) first (next rung on the value ladder).
 
 Replace references to X-Ray/discovery in these specific email bodies with Intelligence Brief. Change pricing from $2,497 to $997, and update the CTA to point to the IB checkout.
 
-- [ ] **Step 6: Fix H2 — "Section 10" reference**
+- [ ] **Step 6: Fix H2, "Section 10" reference**
 
-In `src/lib/drip-emails.ts`, find the key `post_case_decoder_meeting_prep` (Day 3 email). Find "Section 10 of your report" and replace with "the 'Your Next 7 Days' section of your report" — reports don't have numbered sections.
+In `src/lib/drip-emails.ts`, find the key `post_case_decoder_meeting_prep` (Day 3 email). Find "Section 10 of your report" and replace with "the 'Your Next 7 Days' section of your report", reports don't have numbered sections.
 
 - [ ] **Step 7: Build check**
 
 ```bash
-cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc --noEmit --skipLibCheck && npx next build
+cd C:\Users\email\projects\ImNotAnAttorney-web && npx tsc,noEmit,skipLibCheck && npx next build
 ```
 
 - [ ] **Step 8: Commit**
@@ -1688,12 +1688,12 @@ git commit -m "fix: stuck detection 30m→2h for batch latency + QA fixes (C1, H
 After all tasks are complete:
 
 1. **Build passes:** `npx next build` exits 0
-2. **TypeScript clean:** `npx tsc --noEmit --skipLibCheck` exits 0
+2. **TypeScript clean:** `npx tsc,noEmit,skipLibCheck` exits 0
 3. **Test script validates quality:** `test-reports/batch-test-report.md` has all expected sections
 4. **DB column exists:** `batch_id` column on `cases` table confirmed
 5. **Cron-job.org registered:** `batch-poll` job running every 5 min
 6. **Worker submits batch:** `node scripts/generate-worker.mjs` (with a test case) submits batch and exits
-7. **No synchronous CD calls remain:** Search `generate-report/index.ts` for CD handler — confirms batch path, not `callClaudeAPI`
+7. **No synchronous CD calls remain:** Search `generate-report/index.ts` for CD handler, confirms batch path, not `callClaudeAPI`
 8. **IB Phase B unchanged:** `handleIBPhaseB` still calls `callClaudeForSection` sequentially
 9. **Part 5 threshold is 2h:** `grep "Hours\|hours" src/lib/cron/operator-alerts.ts` confirms
 

@@ -3,7 +3,7 @@
  * @fileoverview SMS via email-to-text gateway (text.email).
  *
  * Sends SMS by emailing {phone}@text.email via Resend.
- * They handle 10DLC compliance. We pay $0 per message — just Resend email cost.
+ * They handle 10DLC compliance. We pay $0 per message, just Resend email cost.
  *
  * Requires: RESEND_API_KEY (already configured for email delivery).
  * Phone numbers must be 10-digit US (stripped of +1 prefix for the gateway).
@@ -14,7 +14,7 @@ import { isSmsSuspended } from "@/lib/sms-suspensions";
 
 // ── Types ─────────────────────────────────────────────────
 
-/** Optional context for sms_log audit trail. Fire-and-forget — never blocks send. */
+/** Optional context for sms_log audit trail. Fire-and-forget, never blocks send. */
 export interface SmsLogContext {
   category: string;
   court_reminder_id?: string;
@@ -45,15 +45,15 @@ export async function sendSMS(
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
-    console.warn("[SMS] RESEND_API_KEY not configured — skipping SMS");
+    console.warn("[SMS] RESEND_API_KEY not configured, skipping SMS");
     return { success: false, error: "SMS not configured" };
   }
 
-  // Single admin client per send — reused by suspension check + audit log.
+  // Single admin client per send, reused by suspension check + audit log.
   const supabase = createAdminClient();
 
   // Layer 2 guard: skip if phone is suspended (prior gateway bounce).
-  // The category stays unchanged so the sms_log.category index keeps its cardinality —
+  // The category stays unchanged so the sms_log.category index keeps its cardinality,
   // downstream queries filter skipped-by-suspension rows via `error_message`.
   try {
     if (await isSmsSuspended(supabase, to)) {
@@ -64,7 +64,7 @@ export async function sendSMS(
       return result;
     }
   } catch (err) {
-    // Fail open — don't block sends on suspension-check errors.
+    // Fail open, don't block sends on suspension-check errors.
     console.warn("[SMS] Suspension check failed, proceeding:", err instanceof Error ? err.message : err);
   }
 

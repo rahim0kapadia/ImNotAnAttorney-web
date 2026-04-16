@@ -85,7 +85,7 @@ async function main() {
   console.log(`Loaded ${clusterIds.length} clusters from cache`);
 
   if (dryRun) {
-    console.log("Dry run — would apply to these clusters. Exiting.");
+    console.log("Dry run, would apply to these clusters. Exiting.");
     return;
   }
 

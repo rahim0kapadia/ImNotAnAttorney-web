@@ -44,7 +44,7 @@ const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
  *
  * Accepted formats: PDF, common image types (JPEG, PNG, GIF, WebP, TIFF),
  * plain text, Word documents (legacy .doc and modern .docx), audio (MP3, WAV),
- * and video (MP4) — for dashcam, bodycam, and recorded statement uploads.
+ * and video (MP4), for dashcam, bodycam, and recorded statement uploads.
  */
 const ACCEPTED_MIME_TYPES = new Set([
   "application/pdf",
@@ -55,7 +55,7 @@ const ACCEPTED_MIME_TYPES = new Set([
   "image/tiff",
   "text/plain",
   "text/csv",
-  // application/msword removed — mammoth cannot parse .doc (OLE2). Only .docx supported.
+  // application/msword removed, mammoth cannot parse .doc (OLE2). Only .docx supported.
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "audio/mpeg",
   "audio/wav",
@@ -77,10 +77,10 @@ const MAGIC_BYTES: { mime: string; bytes: number[] }[] = [
   { mime: "image/webp", bytes: [0x52, 0x49, 0x46, 0x46] },                // RIFF (WebP)
   { mime: "image/tiff", bytes: [0x49, 0x49, 0x2A, 0x00] },                // Little-endian TIFF (II)
   { mime: "image/tiff", bytes: [0x4D, 0x4D, 0x00, 0x2A] },                // Big-endian TIFF (MM)
-  // application/msword magic bytes removed — .doc not supported
+  // application/msword magic bytes removed, .doc not supported
   { mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", bytes: [0x50, 0x4B, 0x03, 0x04] }, // PK (ZIP/OOXML)
   { mime: "audio/mpeg", bytes: [0xFF, 0xFB] },                             // MP3 frame sync
-  { mime: "audio/wav", bytes: [0x52, 0x49, 0x46, 0x46] },                 // RIFF (WAV — same header as WebP)
+  { mime: "audio/wav", bytes: [0x52, 0x49, 0x46, 0x46] },                 // RIFF (WAV, same header as WebP)
   { mime: "video/mp4", bytes: [0x00, 0x00, 0x00] },                       // ftyp box (variable 4th byte)
   { mime: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", bytes: [0x50, 0x4B, 0x03, 0x04] }, // PK (ZIP/OOXML)
   { mime: "application/vnd.ms-excel", bytes: [0xD0, 0xCF, 0x11, 0xE0] },  // OLE2
@@ -113,12 +113,12 @@ function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
 
   // Sub-format validation for shared magic byte signatures
   if (claimedMime === "image/webp" && buffer.length >= 12) {
-    // RIFF....WEBP — bytes 8-11 must be "WEBP"
+    // RIFF....WEBP, bytes 8-11 must be "WEBP"
     const subFormat = String.fromCharCode(buffer[8], buffer[9], buffer[10], buffer[11]);
     return subFormat === "WEBP";
   }
   if (claimedMime === "audio/wav" && buffer.length >= 12) {
-    // RIFF....WAVE — bytes 8-11 must be "WAVE"
+    // RIFF....WAVE, bytes 8-11 must be "WAVE"
     const subFormat = String.fromCharCode(buffer[8], buffer[9], buffer[10], buffer[11]);
     return subFormat === "WAVE";
   }
@@ -128,7 +128,7 @@ function validateMagicBytes(buffer: Buffer, claimedMime: string): boolean {
     return ftyp === "ftyp";
   }
   if (claimedMime === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" && buffer.length >= 30) {
-    // PK header is shared with all ZIP-based formats — verify OOXML content
+    // PK header is shared with all ZIP-based formats, verify OOXML content
     // Check for [Content_Types].xml or word/ directory in the ZIP central directory
     const header = buffer.subarray(0, Math.min(200, buffer.length)).toString("ascii");
     return header.includes("[Content_Types]") || header.includes("word/");
@@ -284,7 +284,7 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     // 5a. MAGIC BYTE VALIDATION
     // Validates actual file content matches the claimed MIME type. Client MIME
-    // types can be spoofed — this checks the real file signature bytes.
+    // types can be spoofed, this checks the real file signature bytes.
     // =========================================================================
     if (!validateMagicBytes(buffer, file.type)) {
       return NextResponse.json(
@@ -327,7 +327,7 @@ export async function POST(req: NextRequest) {
       new_url: path,
     });
 
-    // Hard error if RPC fails — the race-prone read-modify-write fallback was removed.
+    // Hard error if RPC fails, the race-prone read-modify-write fallback was removed.
     // Migration 003 must be applied for append_file_url RPC to exist.
     if (appendError) {
       console.error("[Upload] RPC append_file_url failed:", appendError.message);
@@ -345,7 +345,7 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     await sendEmail({
       to: caseRecord.email,
-      subject: "Document Received — Your File Has Been Uploaded",
+      subject: "Document Received, Your File Has Been Uploaded",
       unsubscribeEmail: caseRecord.email,
       html: `
         <h1 style="color: #F59E0B;">Document Received</h1>

@@ -12,7 +12,7 @@ target_groups: ["Strong Prison Wives", "Know Your Rights Community Groups", "Fed
 blog_link: "/blog/10-questions-every-defendant-should-ask"
 ---
 
-## Facebook Post: Resource — 10 Questions
+## Facebook Post: Resource, 10 Questions
 
 **Type**: Image post (4:5 ratio)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -30,7 +30,7 @@ Write them down. Bring a pen. Write down the answers.
 1. Have you received and reviewed ALL discovery?
 2. What are the three biggest weaknesses in the prosecution's case?
 3. What motions have you filed or considered filing?
-4. What is my realistic sentence exposure — not the maximum, the realistic range?
+4. What is my realistic sentence exposure, not the maximum, the realistic range?
 5. What are the collateral consequences if I plead guilty? (job, housing, custody, immigration)
 6. Is there a diversion program or deferred adjudication option?
 7. Have you investigated the prosecution's witnesses?
@@ -48,7 +48,7 @@ Print this. Screenshot this. Bring it to court.
 
 ### Visual Direction
 
-Create a clean, structured image for this post. Dark background (near-black or very dark navy). Title in bold white: "10 Questions for Your Attorney." The 10 questions listed below in clean white text, numbered. Small text at bottom: "imnotanattorney.com" in subtle gray. No decorative elements, no clip art. Just the questions. 1080x1350px. Design it to be screenshot-worthy — people will save this image directly.
+Create a clean, structured image for this post. Dark background (near-black or very dark navy). Title in bold white: "10 Questions for Your Attorney." The 10 questions listed below in clean white text, numbered. Small text at bottom: "imnotanattorney.com" in subtle gray. No decorative elements, no clip art. Just the questions. 1080x1350px. Design it to be screenshot-worthy, people will save this image directly.
 
 ### Link Strategy
 

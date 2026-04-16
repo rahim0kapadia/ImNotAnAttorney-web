@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Free Plea Deal Analyzer — client component.
+ * Free Plea Deal Analyzer, client component.
  *
  * Multi-step intake form that collects plea offer details and submits to
  * /api/plea-analyzer for free Claude-generated analysis. Email capture is
@@ -53,15 +53,15 @@ const CHARGE_TYPES = [
   { value: "drug-possession", label: "Drug Possession" },
   { value: "drug-trafficking", label: "Drug Trafficking" },
   { value: "dui", label: "DUI / DWI" },
-  { value: "dui-first", label: "DUI — First Offense" },
-  { value: "dui-repeat", label: "DUI — Repeat Offense" },
+  { value: "dui-first", label: "DUI, First Offense" },
+  { value: "dui-repeat", label: "DUI, Repeat Offense" },
   { value: "assault", label: "Assault" },
   { value: "domestic-violence", label: "Domestic Violence" },
   { value: "theft", label: "Theft / Larceny" },
   { value: "white-collar", label: "White Collar / Financial Crime" },
   { value: "sex-offense", label: "Sex Offense" },
-  { value: "sex-offense-contact", label: "Sex Offense — Contact" },
-  { value: "sex-offense-digital", label: "Sex Offense — Digital / Possession" },
+  { value: "sex-offense-contact", label: "Sex Offense, Contact" },
+  { value: "sex-offense-digital", label: "Sex Offense, Digital / Possession" },
   { value: "weapons", label: "Weapons Charge" },
   { value: "federal", label: "Federal Charge" },
   { value: "probation-violation", label: "Probation Violation" },
@@ -240,7 +240,7 @@ export default function PleaAnalyzerClient() {
             href="/checkout?tier=case-decoder"
             className="inline-block bg-amber-500 hover:bg-amber-400 text-black font-semibold py-3 px-8 rounded-lg transition-colors"
           >
-            Get Your Case Decoder — {TIER_CORE["case-decoder"].priceDisplay}
+            Get Your Case Decoder, {TIER_CORE["case-decoder"].priceDisplay}
           </a>
           <p className="text-zinc-500 text-xs mt-3">
             15 defense-specific questions + full case landscape analysis.
@@ -447,7 +447,7 @@ export default function PleaAnalyzerClient() {
               : "Don\u2019t know? Look up what you\u2019re facing"}
           </button>
 
-          {/* Persistent aria-live container — mounted once, content updates */}
+          {/* Persistent aria-live container, mounted once, content updates */}
           <div aria-live="polite" className="sr-only">
             {lookupStatus}
           </div>
@@ -468,7 +468,7 @@ export default function PleaAnalyzerClient() {
                   id="charge-results-heading"
                   className="text-sm font-medium text-zinc-300"
                 >
-                  {lookupResults.length} charge{lookupResults.length !== 1 ? "s" : ""} found — select yours
+                  {lookupResults.length} charge{lookupResults.length !== 1 ? "s" : ""} found, select yours
                 </h3>
                 <button
                   type="button"

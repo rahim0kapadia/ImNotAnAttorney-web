@@ -10,7 +10,7 @@ topic: The fee structure your lawyer hopes you never understand
 blog_slug: null
 estimated_duration: 45s
 format: Standard (talking head + graphics)
-suggested_sound: "Original audio — voiceover + money-counting ambient + clean beat"
+suggested_sound: "Original audio, voiceover + money-counting ambient + clean beat"
 suggested_posting_time: "Monday 8:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Monday 8:00 PM EST"
 
 **Format**: Standard
 **Duration**: 45 seconds
-**Suggested sound**: Original audio — voiceover + clean beat
+**Suggested sound**: Original audio, voiceover + clean beat
 **Suggested posting time**: Monday 8:00 PM EST
 
 ---
@@ -57,14 +57,14 @@ suggested_posting_time: "Monday 8:00 PM EST"
 **Text overlay**: "$15K for 30 days of light work vs. $15K for 6 months of war. Same check."
 
 [SECOND 40-45]
-**Visual**: Retainer agreement from the opening — but now with notes written in the margins: questions, highlights, circled sections.
+**Visual**: Retainer agreement from the opening, but now with notes written in the margins: questions, highlights, circled sections.
 **Text overlay**: "Understand the economics. Then decide. imnotanattorney.com"
 **Audio**: Beat resolves.
 
 ---
 
 ### Caption
-You wrote a $15,000 check. Here's why your attorney's financial incentive flipped the moment you paid — and the questions that tell you whether you're getting a defense or a processing.
+You wrote a $15,000 check. Here's why your attorney's financial incentive flipped the moment you paid, and the questions that tell you whether you're getting a defense or a processing.
 
 ### Hashtags
 #legalfees #criminaldefense #retainerfee #attorneyfees #knowyourrights #flatfee
@@ -75,5 +75,5 @@ Retainer agreement showing "$15,000" with a pen next to the signature line. Text
 ---
 
 **Context**: Fee transparency content is extremely engaging because it validates the suspicion many defendants already feel. This positions INNA as the resource that explains what attorneys won't. Based on the "How Your Attorney Makes Money" blog post content.
-**Loop strategy**: Opens with the unsigned agreement, ends with the annotated agreement — the shift from passive signing to informed analysis invites rewatching.
+**Loop strategy**: Opens with the unsigned agreement, ends with the annotated agreement, the shift from passive signing to informed analysis invites rewatching.
 **KPI target**: Shares (this gets sent to anyone about to write a retainer check)

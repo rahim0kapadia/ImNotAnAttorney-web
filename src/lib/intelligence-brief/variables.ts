@@ -6,7 +6,7 @@
  *
  * Design constraints:
  *   - Dependency-free (no npm imports) for Deno Edge Function compatibility
- *   - All fields have safe defaults — never returns undefined or null values
+ *   - All fields have safe defaults, never returns undefined or null values
  *   - Charge-specific data querying is handled by the caller (Edge Function)
  *     and passed in via chargeContext parameter
  */
@@ -154,24 +154,24 @@ export interface IBVariables {
   protection_output: string;
   your_plan_output: string;
 
-  // Tier 9 — Judge Intel (IB and above)
+  // Tier 9, Judge Intel (IB and above)
   judge_quote_library?: string;
   appellate_trends_summary?: string;
 
-  // Tier 9 — X-Ray and above
+  // Tier 9, X-Ray and above
   sentencing_outlier_flags?: string;
   officer_reliability_crosscase?: string;
 
-  // Tier 9 — War Room and above
+  // Tier 9, War Room and above
   pairing_matrix_summary?: string;
   bench_jury_divergence_summary?: string;
   similar_case_matches?: string;
 
-  // Tier 9 — Situation Room
+  // Tier 9, Situation Room
   codefendant_divergence_summary?: string;
   plea_discount_curve_summary?: string;
 
-  // External Intelligence Layer — Phase 1
+  // External Intelligence Layer, Phase 1
   outcome_benchmarks_summary?: string;
   sentencing_range_context?: string;
 
@@ -226,7 +226,7 @@ export function extractVariables(
     ? "No Attorney"
     : hasAttorney || "Not specified";
 
-  // County — from Phase 2 (primary) or intake state as fallback
+  // County, from Phase 2 (primary) or intake state as fallback
   const county = p2.county || intake.incident_location || "Not provided";
   const state = intake.state || "Not provided";
   const stateCounty = county !== "Not provided"
@@ -298,11 +298,11 @@ export function extractVariables(
 
     case_stage: caseStage,
     arrest_date: intake.arrest_date || "Not provided",
-    arraignment_date: "Not yet identified — ask your attorney",
+    arraignment_date: "Not yet identified, ask your attorney",
     months_since_arrest: monthsSinceArrest,
     next_court_date: p2.next_court_date || intake.court_date || "Not provided",
     next_hearing_type: p2.hearing_type || "Not specified",
-    motion_deadlines: "Not yet identified — ask your attorney about applicable motion deadlines",
+    motion_deadlines: "Not yet identified, ask your attorney about applicable motion deadlines",
 
     attorney_type: attorneyType,
     attorney_name: p2.attorney_name || "Not provided",
@@ -327,13 +327,13 @@ export function extractVariables(
     prior_convictions_summary: priorConvictionsSummary,
 
     key_dates: keyDates,
-    question_assessment_data: "First Intelligence Brief — no prior question assessment",
+    question_assessment_data: "First Intelligence Brief, no prior question assessment",
     prior_section_outputs_xml: priorXml,
 
     judge_name: p2.judge_name || "Not provided",
-    judge_research_data: judgeResearch || "Judge research pending — use general patterns with appropriate caveats",
+    judge_research_data: judgeResearch || "Judge research pending, use general patterns with appropriate caveats",
 
-    // Phase B cross-references — extracted from Phase A outputs
+    // Phase B cross-references, extracted from Phase A outputs
     gaps_from_section_2: so["whats-working"]
       ? extractGaps(so["whats-working"])
       : "Pending Phase A completion",
@@ -463,5 +463,5 @@ function deriveCriminalHistoryLabel(raw: string): string {
 function buildEmploymentDetail(status: string, industry: string): string {
   if (!status || status === "Not provided") return "Not provided";
   const base = status.replace(/-/g, " ");
-  return industry ? `${base} — ${industry}` : base;
+  return industry ? `${base}, ${industry}` : base;
 }

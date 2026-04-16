@@ -16,26 +16,26 @@ suggested_time: "Weekday 10:00 AM EST"
 
 That field test is not confirmation of anything. It's a screening tool. And it gets it wrong more often than you'd think.
 
-A field test -- sometimes called a presumptive test or colorimetric reagent test -- works by mixing a chemical reagent with an unknown substance. If the mixture turns a specific color, it's considered a "presumptive positive." That's it. No molecular analysis. No confirmation. Just a color change interpreted by an officer at the scene.
+A field test, sometimes called a presumptive test or colorimetric reagent test, works by mixing a chemical reagent with an unknown substance. If the mixture turns a specific color, it's considered a "presumptive positive." That's it. No molecular analysis. No confirmation. Just a color change interpreted by an officer at the scene.
 
 **Common substances that have triggered false positives:**
-- Chocolate -- tested presumptive positive for marijuana
-- Aspirin and ibuprofen -- triggered positives for various controlled substances
-- Household cleaners -- certain products react with test reagents
-- Baking soda -- commonly triggers a false positive for cocaine
+- Chocolate, tested presumptive positive for marijuana
+- Aspirin and ibuprofen, triggered positives for various controlled substances
+- Household cleaners, certain products react with test reagents
+- Baking soda, commonly triggers a false positive for cocaine
 - Certain spices, supplements, kratom, oregano
 
 Multiple studies and news investigations have documented cases where innocent people were arrested, charged, and jailed based on field test results that turned out to be completely wrong. Some pleaded guilty before lab results came back because they were scared, pressured, or told the "evidence" was clear.
 
-**What a real test looks like:** Confirmatory lab tests use methods like gas chromatography-mass spectrometry (GC-MS) that identify the exact molecular composition. Real science, performed by trained analysts in controlled conditions -- not a patrol officer on the side of the road at 2 AM.
+**What a real test looks like:** Confirmatory lab tests use methods like gas chromatography-mass spectrometry (GC-MS) that identify the exact molecular composition. Real science, performed by trained analysts in controlled conditions, not a patrol officer on the side of the road at 2 AM.
 
-In one documented case, a field test indicated amphetamine. Lab results identified the substance as MDMA and MDA -- completely different drugs with different scheduling, different charges, and different sentencing implications. The field test didn't just get the answer wrong. It got the question wrong.
+In one documented case, a field test indicated amphetamine. Lab results identified the substance as MDMA and MDA, completely different drugs with different scheduling, different charges, and different sentencing implications. The field test didn't just get the answer wrong. It got the question wrong.
 
 **What this means for your case:**
 
 Field tests are generally not admissible as conclusive evidence. They can support probable cause for arrest, but they're not proof of substance identity. The prosecution needs lab confirmation for trial.
 
-Lab results take weeks, sometimes months. Many defendants accept plea deals before lab results are available -- meaning they're pleading guilty based on a color change in a plastic pouch.
+Lab results take weeks, sometimes months. Many defendants accept plea deals before lab results are available, meaning they're pleading guilty based on a color change in a plastic pouch.
 
 Your attorney can file a Daubert or Frye challenge arguing the field test doesn't meet the threshold for admissible scientific evidence. If a field test is the only identification evidence the prosecution has, this challenge could be devastating.
 

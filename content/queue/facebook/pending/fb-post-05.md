@@ -21,11 +21,11 @@ target_groups: ["Federal Defendant Support Groups", "FAMM Community", "Criminal 
 
 ### Post Content
 
-Before you accepted a plea deal -- or if you are considering one right now -- did your attorney explain what happens AFTER?
+Before you accepted a plea deal, or if you are considering one right now, did your attorney explain what happens AFTER?
 
 Not the sentence. Not the probation terms. The other stuff. The stuff nobody mentions until it is too late.
 
-A guilty plea -- even to a misdemeanor -- can affect:
+A guilty plea, even to a misdemeanor, can affect:
 
 - Whether you can get hired (background checks)
 - Whether you can rent an apartment (housing applications)
@@ -37,13 +37,13 @@ A guilty plea -- even to a misdemeanor -- can affect:
 - Whether you qualify for student financial aid
 - Whether you can volunteer at your kid's school
 
-These are called "collateral consequences." And most attorneys never bring them up before a plea. They focus on the sentence -- the jail time, the probation, the fines. But for many people, the collateral consequences are worse than the sentence itself.
+These are called "collateral consequences." And most attorneys never bring them up before a plea. They focus on the sentence, the jail time, the probation, the fines. But for many people, the collateral consequences are worse than the sentence itself.
 
 A question to ask your attorney before signing anything:
 
 "What are the collateral consequences of this plea? Walk me through every area of my life this will touch."
 
-If they cannot answer that question in detail -- they have not done the analysis.
+If they cannot answer that question in detail, they have not done the analysis.
 
 Did your attorney explain the collateral consequences? Or did you find out the hard way?
 
@@ -51,7 +51,7 @@ Did your attorney explain the collateral consequences? Or did you find out the h
 
 ### Visual Direction
 
-Colored text background -- dark amber or gold. The bulleted list of consequences is the visual and emotional punch. Each line is a life area that could be affected. No image needed.
+Colored text background, dark amber or gold. The bulleted list of consequences is the visual and emotional punch. Each line is a life area that could be affected. No image needed.
 
 ### Link Strategy
 
@@ -63,10 +63,10 @@ This post will generate two types of powerful responses: (1) people who discover
 
 ### UPL Compliance Note
 
-Do NOT list specific collateral consequences for specific charges. Keep it general. If someone asks "will a [specific charge] affect my [specific license]?" respond with: "That's a great question for your attorney -- or for a lawyer who specializes in collateral consequences in your state. It varies by jurisdiction."
+Do NOT list specific collateral consequences for specific charges. Keep it general. If someone asks "will a [specific charge] affect my [specific license]?" respond with: "That's a great question for your attorney, or for a lawyer who specializes in collateral consequences in your state. It varies by jurisdiction."
 
 ---
 
 **Share trigger**: Someone sends this to a friend or family member who is about to accept a plea: "Read this list before you sign anything. Nobody told me about half of these." A defendant shares it with their attorney: "Can we go through this list?"
 **Context**: Collateral consequences are the hidden iceberg of criminal convictions. Many defendants discover years later that their plea affected housing, employment, or custody in ways nobody mentioned. This post creates urgency to ask BEFORE signing.
-**KPI target**: Saves (extremely high -- people will reference this list) + comments sharing post-conviction discoveries + Messenger shares to people facing pleas
+**KPI target**: Saves (extremely high, people will reference this list) + comments sharing post-conviction discoveries + Messenger shares to people facing pleas

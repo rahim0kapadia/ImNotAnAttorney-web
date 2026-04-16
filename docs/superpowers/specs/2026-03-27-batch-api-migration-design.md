@@ -1,4 +1,4 @@
-# Batch API + Prompt Caching Migration — Design Spec
+# Batch API + Prompt Caching Migration, Design Spec
 
 Date: 2026-03-27
 
@@ -8,21 +8,21 @@ Date: 2026-03-27
 - **Problem:** Claude API costs ~$0.40-0.60 per Case Decoder report (Opus 4.6 + extended thinking). At scale this adds up. The Anthropic Batch API offers 50% off for async processing. Prompt caching offers up to 90% off on repeated system prompts. Current code also uses deprecated `budget_tokens` thinking format.
 - **Tech stack:** Next.js 15, Supabase Edge Functions (Deno), Node.js worker scripts, Claude API (raw HTTP fetch, no SDK)
 - **Key files:**
-  - `scripts/generate-worker.mjs` — backup worker that calls Claude API directly
-  - `supabase/functions/generate-report/index.ts` — primary Edge Function (~5000 lines)
-  - `src/lib/intelligence-brief/prompts.ts` — 9 IB prompt builders
-  - `src/lib/cron/pipeline.ts` — cron safety nets (Parts 5, 12, 15)
+  - `scripts/generate-worker.mjs`, backup worker that calls Claude API directly
+  - `supabase/functions/generate-report/index.ts`, primary Edge Function (~5000 lines)
+  - `src/lib/intelligence-brief/prompts.ts`, 9 IB prompt builders
+  - `src/lib/cron/pipeline.ts`, cron safety nets (Parts 5, 12, 15)
 - **Key decisions:**
   - Batch API is the primary cost lever (50% off immediately)
   - Prompt caching adds value mainly for Intelligence Brief (5 parallel calls sharing system prompt)
-  - Adaptive thinking migration is overdue — `budget_tokens` is deprecated on Opus 4.6
+  - Adaptive thinking migration is overdue, `budget_tokens` is deprecated on Opus 4.6
   - Test quality BEFORE migrating production
   - VPS + Max subscription proxy rejected (Anthropic blocked it Jan 2026, ToS risk)
 - **Setup/prerequisites:** `.env.local` with ANTHROPIC_API_KEY (needs credit top-up first)
 
 ## Current Architecture
 
-### Case Decoder ($197) — 1 Opus call
+### Case Decoder ($197), 1 Opus call
 ```
 Trigger → Edge Function (150s) OR Backup Worker
   → fetch("https://api.anthropic.com/v1/messages")
@@ -35,7 +35,7 @@ Trigger → Edge Function (150s) OR Backup Worker
 ```
 Cost: ~$0.40-0.60/report. Generation time: 60-294s.
 
-### Intelligence Brief ($997) — 9 Sonnet calls
+### Intelligence Brief ($997), 9 Sonnet calls
 ```
 Phase A (5 parallel): case-roadmap, whats-working, legal-options, protection, court-prep
 Phase B (4 sequential): case-intelligence, your-plan, questions, 48hr-priorities
@@ -47,16 +47,16 @@ Phase B (4 sequential): case-intelligence, your-plan, questions, 48hr-priorities
 Cost: ~$0.12-0.18/report. All Phase A calls share the same system prompt.
 
 ### Report Pipeline Consumers (unchanged by migration)
-- **Report viewer** (`/report/[token]`) — reads `cases.report_html`
-- **Delivery endpoint** (`/api/deliver`) — transitions status, sends email
-- **Evaluation engine** (`evaluate-report` Edge Function) — runs UPL + Psych teams
-- **Operator dashboard** — displays eval scorecard
-- **Drip email sequence** — references report URL in post-purchase emails
-- **Cron safety nets** — Parts 5 (stuck detection), 12 (missed evals), 15 (stuck processing)
+- **Report viewer** (`/report/[token]`), reads `cases.report_html`
+- **Delivery endpoint** (`/api/deliver`), transitions status, sends email
+- **Evaluation engine** (`evaluate-report` Edge Function), runs UPL + Psych teams
+- **Operator dashboard**, displays eval scorecard
+- **Drip email sequence**, references report URL in post-purchase emails
+- **Cron safety nets**, Parts 5 (stuck detection), 12 (missed evals), 15 (stuck processing)
 
 ## Target Architecture
 
-### Case Decoder — Batch API + Adaptive Thinking
+### Case Decoder, Batch API + Adaptive Thinking
 ```
 Trigger → Edge Function (or Worker)
   → POST /v1/messages/batches (1 request)
@@ -72,7 +72,7 @@ Cron Batch Poller (every 5 min)
 ```
 Cost: ~$0.20-0.30/report (50% off). Latency: 1-60 min (within 48h SLA).
 
-### Intelligence Brief — Batch API + Prompt Caching
+### Intelligence Brief, Batch API + Prompt Caching
 ```
 Phase A: Submit 5-request batch (all share cached system prompt)
   → cache_control on system prompt → calls 2-5 hit cache (90% off input)
@@ -82,7 +82,7 @@ Phase B: Submit 4-request batch after Phase A completes
 ```
 Cost: ~$0.03-0.06/report (from $0.12-0.18). Major savings.
 
-### Evaluation — No change initially
+### Evaluation, No change initially
 Evaluation calls are cheap and fast (Sonnet, temp 0). Batch adds latency that slows operator workflow. Keep synchronous.
 
 ## Components
@@ -141,13 +141,13 @@ Evaluation calls are cheap and fast (Sonnet, temp 0). Batch adds latency that sl
 
 ## Migration Order
 
-1. **Test script** — validate batch + adaptive thinking quality
-2. **DB migration** — add `batch_id` column
-3. **Worker migration** — backup worker switches to batch (low risk, easy rollback)
-4. **Cron batch poller** — new cron part for async result polling
-5. **Edge Function migration** — primary generation path switches to batch
-6. **IB optimization** — batch Phase A calls together with caching
-7. **Adapt cron Part 5** — update stuck detection timing for batch latency
+1. **Test script**, validate batch + adaptive thinking quality
+2. **DB migration**, add `batch_id` column
+3. **Worker migration**, backup worker switches to batch (low risk, easy rollback)
+4. **Cron batch poller**, new cron part for async result polling
+5. **Edge Function migration**, primary generation path switches to batch
+6. **IB optimization**, batch Phase A calls together with caching
+7. **Adapt cron Part 5**, update stuck detection timing for batch latency
 
 ## Cost Savings Projection
 
@@ -161,7 +161,7 @@ Evaluation calls are cheap and fast (Sonnet, temp 0). Batch adds latency that sl
 ## Risk Assessment
 
 | Risk | Likelihood | Impact | Mitigation |
-|------|-----------|--------|------------|
+|------|---------, |------, |------------|
 | Batch quality differs from sync | Low | High | Test script validates before migration |
 | Adaptive thinking quality differs | Low | Medium | Compare side-by-side in test |
 | Batch latency exceeds 2h | Low | Medium | Fallback to sync API in worker |

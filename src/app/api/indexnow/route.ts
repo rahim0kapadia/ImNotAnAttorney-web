@@ -1,5 +1,5 @@
 /**
- * IndexNow API route — instantly notifies Bing (and partners) when content changes.
+ * IndexNow API route, instantly notifies Bing (and partners) when content changes.
  *
  * POST /api/indexnow with body: { urls: string[] }
  * Protected by CRON_SECRET to prevent abuse.
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Validate all URLs belong to our domain — prevent SSRF via IndexNow
+  // Validate all URLs belong to our domain, prevent SSRF via IndexNow
   const siteHost = new URL(SITE_URL).host;
   const validUrls = (urls as string[])
     .map((u) => (u.startsWith("http") ? u : `${SITE_URL}${u}`))

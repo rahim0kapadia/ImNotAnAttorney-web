@@ -70,7 +70,7 @@ const ID_PREFIX_MAP = {
   'guam': 'gu', 'pr': 'pr', 'vi': 'vi',
 };
 
-// Sort prefixes by length descending — longer/more-specific prefixes first
+// Sort prefixes by length descending, longer/more-specific prefixes first
 // to prevent 'mo' (Missouri) matching before 'mont' (Montana), etc.
 const ID_PREFIX_SORTED = Object.entries(ID_PREFIX_MAP)
   .sort((a, b) => b[0].length - a[0].length);
@@ -103,7 +103,7 @@ function deriveJurisdiction(courtId, fullName, jurisdictionType) {
     const last2 = id.slice(-2);
     const last1 = id.slice(-1);
     if (last2 === 'ed' || last2 === 'wd' || last2 === 'nd' || last2 === 'sd' || last2 === 'md' || last2 === 'cd') {
-      // Could be a federal district — check if name confirms
+      // Could be a federal district, check if name confirms
       if (name.indexOf('district') >= 0 || name.indexOf('bankruptcy') >= 0) {
         return 'federal';
       }

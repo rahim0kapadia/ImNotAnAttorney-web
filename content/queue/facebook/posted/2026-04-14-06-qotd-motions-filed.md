@@ -11,7 +11,7 @@ suggested_time: "Wednesday 7:00 PM ET"
 target_groups: ["DUI Support Groups", "Drug Charge Support Groups", "Public Defender Clients Groups"]
 ---
 
-## Facebook Post: Question of the Day — Motions
+## Facebook Post: Question of the Day, Motions
 
 **Type**: Text post (colored background)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -26,7 +26,7 @@ Question of the day:
 
 Has your attorney filed a single motion in your case?
 
-Not a continuance. Not an appearance entry. An actual motion — a motion to suppress evidence, a motion to compel discovery, a motion to dismiss.
+Not a continuance. Not an appearance entry. An actual motion, a motion to suppress evidence, a motion to compel discovery, a motion to dismiss.
 
 If you don't know the answer, that's the problem.
 
@@ -42,7 +42,7 @@ Have you checked your docket? What did you find?
 
 ### Visual Direction
 
-Colored text background — orange or amber. The question format invites responses. Keep it punchy.
+Colored text background, orange or amber. The question format invites responses. Keep it punchy.
 
 ### Link Strategy
 

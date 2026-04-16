@@ -15,7 +15,7 @@ import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Privacy Policy for ImNotAnAttorney — how we collect, use, and protect your data.",
+    "Privacy Policy for ImNotAnAttorney, how we collect, use, and protect your data.",
   alternates: {
     canonical: `${SITE_URL}/privacy`,
   },
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
         </p>
 
         <div className="mt-10 space-y-8 text-sm leading-relaxed text-zinc-400">
-          {/* Human intro — TL;DR before the legal details */}
+          {/* Human intro, TL;DR before the legal details */}
           <p className="text-base text-zinc-300">
             You&apos;re sharing sensitive legal information with us. We
             don&apos;t take that lightly. Here&apos;s the short version: we
@@ -247,7 +247,7 @@ export default function PrivacyPage() {
                 Discovery documents are automatically deleted 90 days after your
                 report is delivered. Consider downloading and saving your
                 report upon delivery. You may also request immediate deletion at
-                any time by contacting us — documents are removed within 5
+                any time by contacting us, documents are removed within 5
                 business days of a deletion request.
               </li>
               <li>
@@ -257,7 +257,7 @@ export default function PrivacyPage() {
                 If your purchase is <strong className="text-zinc-300">refunded</strong>{" "}
                 (delivery guarantee or chargeback), your uploaded documents
                 and generated report are deleted, and your report access
-                token is revoked. This protects you — once a transaction
+                token is revoked. This protects you, once a transaction
                 is reversed, we don&apos;t hold onto your data. Satisfaction
                 credits do not trigger deletion or token revocation.
               </li>
@@ -282,7 +282,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                <strong className="text-zinc-300">Stripe</strong> — Payment
+                <strong className="text-zinc-300">Stripe</strong>, Payment
                 processing. Receives your payment card details directly (we
                 never see them). Subject to{" "}
                 <a
@@ -295,31 +295,31 @@ export default function PrivacyPage() {
                 </a>
               </li>
               <li>
-                <strong className="text-zinc-300">Supabase</strong> — Database
+                <strong className="text-zinc-300">Supabase</strong>, Database
                 and file storage (US East region). Stores your case data and
                 uploaded documents. SOC 2 Type II compliant infrastructure
               </li>
               <li>
-                <strong className="text-zinc-300">Anthropic</strong> — Case
+                <strong className="text-zinc-300">Anthropic</strong>, Case
                 information processing for report generation (see Section 3 for
                 details)
               </li>
               <li>
-                <strong className="text-zinc-300">Resend</strong> —
+                <strong className="text-zinc-300">Resend</strong>,
                 Transactional and marketing email delivery. Receives your email
                 address and email content
               </li>
               <li>
-                <strong className="text-zinc-300">Vercel</strong> — Website
+                <strong className="text-zinc-300">Vercel</strong>, Website
                 hosting, serverless functions, and anonymized analytics
                 (cookieless)
               </li>
               <li>
-                <strong className="text-zinc-300">Cloudflare</strong> — DNS and
+                <strong className="text-zinc-300">Cloudflare</strong>, DNS and
                 CDN services. May process your IP address for routing purposes
               </li>
               <li>
-                <strong className="text-zinc-300">Google Analytics</strong> —
+                <strong className="text-zinc-300">Google Analytics</strong>,
                 Website traffic analytics via Google Analytics 4 (GA4). Collects
                 page views, device information (browser, operating system,
                 screen size), referral source, and user interaction events
@@ -340,13 +340,13 @@ export default function PrivacyPage() {
                 </a>
               </li>
               <li>
-                <strong className="text-zinc-300">Meta Pixel (consent-gated)</strong> —
+                <strong className="text-zinc-300">Meta Pixel (consent-gated)</strong>,
                 Conversion tracking and ad measurement for Meta (Facebook,
                 Instagram) advertising. Tracks page views and conversion
                 events (purchases, intake submissions). Sets the{" "}
                 <code className="text-zinc-300">_fbp</code> cookie. Data is
                 shared with Meta for ad targeting and measurement. The Meta
-                Pixel only loads after you provide explicit consent — it is
+                Pixel only loads after you provide explicit consent, it is
                 disabled by default. Subject to{" "}
                 <a
                   href="https://www.facebook.com/privacy/policy"
@@ -358,13 +358,13 @@ export default function PrivacyPage() {
                 </a>
               </li>
               <li>
-                <strong className="text-zinc-300">Google Ads (consent-gated)</strong> —
+                <strong className="text-zinc-300">Google Ads (consent-gated)</strong>,
                 Conversion tracking and ad measurement for Google Ads
                 campaigns. Tracks conversion events for ad attribution. Sets
                 the <code className="text-zinc-300">_gcl_au</code> cookie.
                 Data is shared with Google for ad measurement and conversion
                 reporting. Google Ads only loads after you provide explicit
-                consent — it is disabled by default. Subject to{" "}
+                consent, it is disabled by default. Subject to{" "}
                 <a
                   href="https://policies.google.com/privacy"
                   target="_blank"
@@ -461,25 +461,25 @@ export default function PrivacyPage() {
             <p>Regardless of where you live, you have the right to:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                <strong className="text-zinc-300">Access</strong> — Request a
+                <strong className="text-zinc-300">Access</strong>, Request a
                 copy of the personal data we hold about you
               </li>
               <li>
-                <strong className="text-zinc-300">Correct</strong> — Request
+                <strong className="text-zinc-300">Correct</strong>, Request
                 correction of inaccurate personal data
               </li>
               <li>
-                <strong className="text-zinc-300">Delete</strong> — Request
+                <strong className="text-zinc-300">Delete</strong>, Request
                 deletion of your personal data (subject to legal retention
                 requirements for order records)
               </li>
               <li>
-                <strong className="text-zinc-300">Unsubscribe</strong> — Opt
+                <strong className="text-zinc-300">Unsubscribe</strong>, Opt
                 out of marketing emails at any time via the unsubscribe link
                 included in every marketing email
               </li>
               <li>
-                <strong className="text-zinc-300">Data portability</strong> —
+                <strong className="text-zinc-300">Data portability</strong>,
                 Request your data in a commonly used, machine-readable format
               </li>
             </ul>
@@ -641,7 +641,7 @@ export default function PrivacyPage() {
               after 2 years and 24 hours respectively. Vercel Analytics provides
               additional anonymized usage data without cookies. Stripe may set
               essential cookies during the checkout
-              process to prevent fraud and process payments — see{" "}
+              process to prevent fraud and process payments, see{" "}
               <a
                 href="https://stripe.com/privacy"
                 target="_blank"

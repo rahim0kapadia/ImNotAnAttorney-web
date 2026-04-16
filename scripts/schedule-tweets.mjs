@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * schedule-tweets.mjs — Schedule pending tweets via Postiz API
+ * schedule-tweets.mjs, Schedule pending tweets via Postiz API
  * Spreads tweets across days: 2/day at 9 AM and 6 PM EST
  */
 import fs from 'node:fs';

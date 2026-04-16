@@ -1,5 +1,5 @@
 /**
- * @fileoverview Cron idempotency guard — prevents duplicate execution across serverless instances.
+ * @fileoverview Cron idempotency guard, prevents duplicate execution across serverless instances.
  *
  * Uses a `cron_executions` table in Supabase as a distributed lock.
  * This replaces the pg_try_advisory_lock() RPC which is unreliable with
@@ -59,8 +59,8 @@ export interface IdempotencyResult {
  *   clock drift and scheduler jitter.
  * @param options.staleThresholdMs - How long a 'running' lock is considered active
  *   before being treated as stale (crashed run). Default: 5 minutes. Override for
- *   long-running jobs — e.g. demand-fetch has maxDuration=300s so use 360_000.
- * @returns IdempotencyResult — if shouldRun is false, the caller must return
+ *   long-running jobs, e.g. demand-fetch has maxDuration=300s so use 360_000.
+ * @returns IdempotencyResult, if shouldRun is false, the caller must return
  *   immediately without executing job logic.
  */
 export async function acquireCronLock(
@@ -96,21 +96,21 @@ export async function acquireCronLock(
         const staleThresholdMs = options?.staleThresholdMs ?? 5 * 60 * 1000; // default 5 minutes
 
         if (ageMs < staleThresholdMs) {
-          // Another instance is actively running — skip
+          // Another instance is actively running, skip
           return {
             shouldRun: false,
             reason: `Already running (started ${entry.started_at}, ${Math.round(ageMs / 1000)}s ago)`,
           };
         }
 
-        // Stale lock — previous run crashed. Mark it failed so we can proceed.
+        // Stale lock, previous run crashed. Mark it failed so we can proceed.
         console.warn(`[cron-idempotency] Stale lock for "${jobName}" (${Math.round(ageMs / 1000)}s old), marking failed`);
         await supabase
           .from("cron_executions")
           .update({ status: "failed", completed_at: new Date().toISOString() })
           .eq("id", entry.id);
       } else {
-        // status === 'completed' — already ran within the window
+        // status === 'completed', already ran within the window
         return {
           shouldRun: false,
           reason: `Already completed at ${entry.started_at}`,
@@ -158,7 +158,7 @@ export async function releaseCronLock(
   executionId: string | undefined,
   status: "completed" | "failed"
 ): Promise<void> {
-  if (!executionId) return; // Fail-open mode — no row to update
+  if (!executionId) return; // Fail-open mode, no row to update
 
   try {
     const supabase = createAdminClient();
@@ -167,7 +167,7 @@ export async function releaseCronLock(
       .update({ status, completed_at: new Date().toISOString() })
       .eq("id", executionId);
   } catch (err) {
-    // Non-fatal — worst case the row stays 'running' and will be treated as
+    // Non-fatal, worst case the row stays 'running' and will be treated as
     // stale after 5 minutes on the next invocation
     console.warn(`[cron-idempotency] Failed to release lock ${executionId}:`, err);
   }

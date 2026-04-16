@@ -3,15 +3,15 @@
 - **Problem:** Deep code review found 109 issues (19 CRITICAL, 23 HIGH). Fixing the most impactful ones.
 - **Key files to read first:** `docs/reviews/2026-03-22-deep-code-review.md`, `src/lib/stripe.ts`, `src/lib/tiers.ts`
 - **Tech stack:** Next.js 14 (App Router), TypeScript, Supabase (PostgREST), Stripe (dual-mode test/live), Resend email
-- **Key decisions:** Fake social proof (#13) DEFERRED — will swap to real data later. All other CRITICALs and HIGHs are fix targets.
-- **Setup/prerequisites:** `npm install` already done. TypeScript check: `npx tsc --noEmit --skipLibCheck`. No test suite.
+- **Key decisions:** Fake social proof (#13) DEFERRED, will swap to real data later. All other CRITICALs and HIGHs are fix targets.
+- **Setup/prerequisites:** `npm install` already done. TypeScript check: `npx tsc,noEmit,skipLibCheck`. No test suite.
 
 ## Review Source
 Full report: `docs/reviews/2026-03-22-deep-code-review.md`
 
 ---
 
-## Batch 1: Payment Integrity (CRITICAL — fix first)
+## Batch 1: Payment Integrity (CRITICAL, fix first)
 
 ### Task 1.1: Fix playbook credit double-counting
 **File:** `src/app/api/checkout/route.ts`
@@ -27,7 +27,7 @@ tierOrder.indexOf(o.tier) < currentTierIndex
 ### Task 1.2: Fix commission reversal NaN zeroing
 **File:** `src/app/api/webhooks/stripe/route.ts`
 **Lines:** 940-953
-**Bug:** Inline `await` inside `.update()` — if inner `select` fails, `undefined - 1 = NaN`, `NaN || 0 = 0`, `Math.max(0, 0) = 0`. Zeroes out partner totals.
+**Bug:** Inline `await` inside `.update()`, if inner `select` fails, `undefined - 1 = NaN`, `NaN || 0 = 0`, `Math.max(0, 0) = 0`. Zeroes out partner totals.
 **Fix:** Separate the reads from the write. Read partner totals first, validate non-NaN, then write:
 ```typescript
 // Read first
@@ -106,9 +106,9 @@ if (!token || !/^[0-9a-f]{64}$/.test(token)) {
 ### Task 2.3: Add upload endpoint auth to middleware
 **File:** `src/middleware.ts`
 **Bug:** `/api/upload/` paths fall through to CSP-only branch. No auth gate.
-**Fix:** This is tricky — upload is used by customers who just paid but may not have a customer session yet (the upload page is linked from the checkout success page). The upload route already validates email+caseId ownership against the orders table. Adding middleware cookie auth would break the flow. Instead, add rate limiting to the upload routes if not already present, and add UUID validation on caseId.
+**Fix:** This is tricky, upload is used by customers who just paid but may not have a customer session yet (the upload page is linked from the checkout success page). The upload route already validates email+caseId ownership against the orders table. Adding middleware cookie auth would break the flow. Instead, add rate limiting to the upload routes if not already present, and add UUID validation on caseId.
 **Files to modify:**
-- `src/app/api/upload/route.ts` — add UUID validation on caseId (line ~172)
+- `src/app/api/upload/route.ts`, add UUID validation on caseId (line ~172)
 - Verify rate limiting is already in place (it was added in the previous review session per handoff)
 **Verify:** Read upload route to confirm rate limiting exists, add UUID check.
 
@@ -156,7 +156,7 @@ Then change `SCORE_CRISIS_EMAILS` from a `const` array to a function that return
 **Bug:** Multiple functions set permanent flags (e.g., `review_reminder_sent = true`) without checking if `sendEmail` succeeded.
 **Fix in each function:**
 - `sendReviewReminders` (line 42-62): wrap flag update in `if (sendResult.success)`, increment `result.sent` or `result.errors`
-- `detectStuckIntakes` (line 92-111): same pattern — check email result before status change
+- `detectStuckIntakes` (line 92-111): same pattern, check email result before status change
 - `detectStuckGenerating` and `detectStuckIBGeneration`: same pattern
 **Verify:** TypeScript check passes.
 
@@ -213,7 +213,7 @@ Then change `SCORE_CRISIS_EMAILS` from a `const` array to a function that return
 
 ## Session Management
 
-- **After each batch:** commit, verify with `npx tsc --noEmit --skipLibCheck`
+- **After each batch:** commit, verify with `npx tsc,noEmit,skipLibCheck`
 - **If compaction needed:** use `/save-and-clear` with this plan file as the continuation point
 - **Handoff format:** Write to `docs/handoff/2026-03-22-code-review-fixes-batch-N.md` with completed tasks and next batch number
 - **Progress tracking:** Check off tasks in THIS file by changing `###` to `### ~~TaskName~~ DONE`

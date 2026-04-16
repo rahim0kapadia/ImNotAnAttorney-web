@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/demand-feedback-score — Weekly performance feedback scorer
+ * @file /api/cron/demand-feedback-score, Weekly performance feedback scorer
  *
  * Schedule: Sundays 7:00 AM ET via cron-job.org (after demand-performance at 6:00 AM).
  * Computes performance multipliers and auto-promotes emerging topics.

@@ -11,7 +11,7 @@ suggested_time: "Thursday 8:30 PM ET"
 target_groups: ["DUI Support Groups", "Drug Charge Support Groups", "Know Your Rights Community Groups"]
 ---
 
-## Facebook Post: Story — Field Test vs Lab Test
+## Facebook Post: Story, Field Test vs Lab Test
 
 **Type**: Text post (long-form)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -30,7 +30,7 @@ He was pulled over during a traffic stop. The officer found a small bag in his j
 
 He was arrested. Charged with possession. His attorney reviewed the police report, saw "field test positive," and started talking plea deal.
 
-Here is what most people don't know: roadside field tests are notoriously unreliable. They have false positive rates that would shock you. Common substances — caffeine, certain medications, baking soda, even some vitamins — can trigger a positive result on cheap field test kits.
+Here is what most people don't know: roadside field tests are notoriously unreliable. They have false positive rates that would shock you. Common substances, caffeine, certain medications, baking soda, even some vitamins, can trigger a positive result on cheap field test kits.
 
 That is why there is a lab test. The field test gives officers probable cause for an arrest. The lab test is the actual evidence.
 
@@ -48,7 +48,7 @@ He almost pled guilty to possession of a substance that was never illegal. Becau
 
 Two questions every person facing drug charges should ask their attorney:
 
-1. "Has the substance been tested in a laboratory — not just a field test?"
+1. "Has the substance been tested in a laboratory, not just a field test?"
 2. "What were the actual lab results, and do they match the charges?"
 
 A field test is not evidence. It is a starting point. Don't let your case end where it began.

@@ -96,7 +96,7 @@ async function processTask(taskName, sqlPath) {
     }
   }
 
-  console.log(`${taskName}: Complete — ${totalApplied} rows applied`);
+  console.log(`${taskName}: Complete, ${totalApplied} rows applied`);
   return totalApplied;
 }
 

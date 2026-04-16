@@ -1,6 +1,6 @@
 "use client";
 /**
- * FTA Savings Calculator — shows partners the financial impact
+ * FTA Savings Calculator, shows partners the financial impact
  * of court reminders on their FTA rate.
  *
  * Based on research: court reminders reduce FTA by ~7%.

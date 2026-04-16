@@ -4,8 +4,8 @@
  * Computes appellate trends (reversal/affirmance rates by argument type, jurisdiction, year).
  *
  * Two-pass architecture:
- *   Phase 1: Stream citation-map CSV (522 MB) — identify citing opinions
- *   Phase 2: Stream opinions CSV (50 GB) — classify citing opinions for reversal/affirmance
+ *   Phase 1: Stream citation-map CSV (522 MB), identify citing opinions
+ *   Phase 2: Stream opinions CSV (50 GB), classify citing opinions for reversal/affirmance
  *   Phase 3: Compute trends by argument_type + jurisdiction + year
  *   Phase 4: Apply to appellate_trends table
  *
@@ -289,7 +289,7 @@ async function phase1() {
 
       if (!citedOpinionId || !citingOpinionId) continue;
 
-      // Map opinion_id to cluster_id — for now, assume opinion_id contains cluster info
+      // Map opinion_id to cluster_id, for now, assume opinion_id contains cluster info
       // (We'll verify in Phase 2 by matching against the opinions CSV)
       if (!citingMap.has(citedOpinionId)) {
         citingMap.set(citedOpinionId, []);
@@ -335,7 +335,7 @@ async function phase1() {
   }) + "\n");
 
   // Flatten citingMap → unique citing ID stream, written in batches.
-  // Dedup per-batch (not globally — that would rebuild the OOM problem);
+  // Dedup per-batch (not globally, that would rebuild the OOM problem);
   // Phase 2 dedups on the receiving end using its own Set.
   let batch = [];
   let batchesWritten = 0;
@@ -383,7 +383,7 @@ async function phase2() {
     process.exit(1);
   }
 
-  // Load Phase 1 output (JSONL — see Phase 1 writer for format).
+  // Load Phase 1 output (JSONL, see Phase 1 writer for format).
   // First line is meta; remaining lines are {type:"batch", citing:[ids...]}.
   let clusterToJurisdiction = {};
   let clusterToYear = {};
@@ -644,7 +644,7 @@ async function phase4(trends) {
       await supabaseQuery(batch.join("\n"));
       applied += batch.length;
       const rate = (applied / ((Date.now() - applyStart) / 1000)).toFixed(0);
-      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} trends — ${rate}/sec\n`);
+      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} trends, ${rate}/sec\n`);
     } catch (e) {
       errors++;
       console.error(`  Batch ${batchNum}: ${e.message.slice(0, 200)}`);

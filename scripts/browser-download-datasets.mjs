@@ -1,8 +1,8 @@
 /**
  * Playwright-automated downloads for datasets that require browser interaction.
  *
- * 1. FBI Crime Data Explorer — Arrests bulk CSV
- * 2. Measures for Justice — FL county-level data
+ * 1. FBI Crime Data Explorer, Arrests bulk CSV
+ * 2. Measures for Justice, FL county-level data
  *
  * Usage:
  *   node scripts/browser-download-datasets.mjs
@@ -30,7 +30,7 @@ const doFbi = !mfjOnly;
 const doMfj = !fbiOnly;
 
 async function downloadFBI(browser) {
-  console.log("\n=== FBI Crime Data Explorer — Bulk Downloads ===");
+  console.log("\n=== FBI Crime Data Explorer, Bulk Downloads ===");
   const context = await browser.newContext({ acceptDownloads: true });
   const page = await context.newPage();
 
@@ -97,7 +97,7 @@ async function downloadFBI(browser) {
 }
 
 async function downloadMFJ(browser) {
-  console.log("\n=== Measures for Justice — FL County Data ===");
+  console.log("\n=== Measures for Justice, FL County Data ===");
   const context = await browser.newContext({ acceptDownloads: true });
   const page = await context.newPage();
 

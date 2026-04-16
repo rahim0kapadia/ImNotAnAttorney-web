@@ -1,5 +1,5 @@
 /**
- * GET /api/admin/blog-pipeline — all drafts with QA results and linked content gap data
+ * GET /api/admin/blog-pipeline, all drafts with QA results and linked content gap data
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";

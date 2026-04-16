@@ -299,13 +299,13 @@ function JobsContent() {
                     {j.retry_count}/{j.max_retries}
                   </td>
                   <td className="px-4 py-3 text-zinc-400 text-xs">
-                    {j.worker_id ?? "—"}
+                    {j.worker_id ?? ", "}
                   </td>
                   <td className="px-4 py-3 text-zinc-400">
-                    {j.started_at ? formatDate(j.started_at) : "—"}
+                    {j.started_at ? formatDate(j.started_at) : ", "}
                   </td>
                   <td className="px-4 py-3 text-red-400 max-w-[200px] truncate">
-                    {j.error_message ?? "—"}
+                    {j.error_message ?? ", "}
                   </td>
                   <td className="px-4 py-3 text-right">
                     {j.status === "failed" && (

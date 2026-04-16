@@ -51,7 +51,7 @@ async function main() {
       out.push(line);
       continue;
     }
-    // Find the first value after VALUES (' — that's the judge_id
+    // Find the first value after VALUES (', that's the judge_id
     const valuesIdx = line.indexOf("VALUES ('");
     if (valuesIdx === -1) { out.push(line); continue; }
 
@@ -66,7 +66,7 @@ async function main() {
       out.push(line.slice(0, idStart) + uuid + line.slice(idEnd));
       fixed++;
     } else {
-      // No UUID match — skip this row (can't insert non-UUID)
+      // No UUID match, skip this row (can't insert non-UUID)
       unfixed++;
     }
   }

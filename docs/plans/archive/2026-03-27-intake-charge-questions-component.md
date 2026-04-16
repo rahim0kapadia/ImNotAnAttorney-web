@@ -17,6 +17,6 @@
    - Unselected state: zinc (border-zinc-700, bg-zinc-900, text-zinc-400, hover:border-zinc-600)
    - Options wrap with flex-wrap, mb-6 per question group
 
-2. Verify TypeScript compiles: `npx tsc --noEmit --skipLibCheck`
+2. Verify TypeScript compiles: `npx tsc,noEmit,skipLibCheck`
 
 3. Commit

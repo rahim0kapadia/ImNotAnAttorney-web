@@ -1,12 +1,12 @@
 /**
- * @fileoverview Judge Comparison API — side-by-side JUSTFAIR data for two judges.
+ * @fileoverview Judge Comparison API, side-by-side JUSTFAIR data for two judges.
  *
  * POST /api/tools/judge-comparison
  *
  * Input: { judgeNameA, judgeNameB }
  * Returns: demographics + sentencing + racial disparity for each judge.
  *
- * FEDERAL COURTS ONLY — 1,126 judges in JUSTFAIR database.
+ * FEDERAL COURTS ONLY, 1,126 judges in JUSTFAIR database.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";

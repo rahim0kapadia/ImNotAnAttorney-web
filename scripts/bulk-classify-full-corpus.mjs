@@ -47,7 +47,7 @@ const OPINIONS_BZ2 = path.join(
 );
 // Pre-filtered criminal CSV produced by scripts/filter-criminal-opinions.py
 // (indexed_bzip2, 12-core parallel, ~50min run). When present, skip bzcat
-// entirely — stream directly for ~10x faster classification reruns.
+// entirely, stream directly for ~10x faster classification reruns.
 const OPINIONS_CRIMINAL_CSV = path.join(
   PROJECT_ROOT, "data", "bulk-verify", "cl-bulk", "opinions-criminal.csv"
 );
@@ -64,7 +64,7 @@ const resumeIdx = args.indexOf("--resume-from");
 const resumeFrom = resumeIdx >= 0 ? parseInt(args[resumeIdx + 1], 10) : 0;
 
 // ── Criminal filter keywords ─────────────────────────────────────────────────
-// indexOf on lowercased text — NO regex (project rule)
+// indexOf on lowercased text, NO regex (project rule)
 const CRIMINAL_KEYWORDS = [
   "criminal", "defendant", "guilty", "not guilty", "sentenced", "sentencing",
   "prosecution", "prosecutor", "indictment", "arraignment", "plea",
@@ -159,7 +159,7 @@ function escJsonb(obj) {
   return esc(JSON.stringify(obj));
 }
 
-// ── HTML stripping (no regex — project rule) ──────────────────────────────────
+// ── HTML stripping (no regex, project rule) ──────────────────────────────────
 function stripHtml(html) {
   if (!html) return "";
   const parts = html.split("<");
@@ -172,7 +172,7 @@ function stripHtml(html) {
 }
 
 // ── Jurisdiction heuristic from text ─────────────────────────────────────────
-// State name → two-letter code. No regex — indexOf scanning.
+// State name → two-letter code. No regex, indexOf scanning.
 const STATE_PATTERNS = [
   ["florida", "fl"], ["california", "ca"], ["texas", "tx"], ["new york", "ny"],
   ["illinois", "il"], ["pennsylvania", "pa"], ["ohio", "oh"], ["georgia", "ga"],
@@ -429,7 +429,7 @@ async function applyBatches(upserts, applyStart) {
       const rate = (applied / ((Date.now() - applyStart) / 1000)).toFixed(0);
       process.stdout.write(
         "  Batch " + batchNum + "/" + totalBatches +
-        ": " + batch.length + " rows — " + rate + "/sec\n"
+        ": " + batch.length + " rows, " + rate + "/sec\n"
       );
     } catch (e) {
       errors++;
@@ -486,7 +486,7 @@ async function main() {
 
   loadToken();
 
-  // Load reference maps (one streamer at a time — OOM gotcha)
+  // Load reference maps (one streamer at a time, OOM gotcha)
   const clusterJurisdictions = loadClusterJurisdictionMap();
   const courtMap = loadCourtJurisdictionMap();
   const [statuteMap, theoryMap, existingJurisdictions] = await Promise.all([
@@ -502,7 +502,7 @@ async function main() {
 
   if (useCriminalCsv) {
     // Fast path: opinions-criminal.csv produced by filter-criminal-opinions.py
-    // Already filtered to criminal opinions — no keyword check needed in stream loop.
+    // Already filtered to criminal opinions, no keyword check needed in stream loop.
     console.log("\nStreaming pre-filtered CSV: " + OPINIONS_CRIMINAL_CSV + "\n");
     const csvStream = fs.createReadStream(OPINIONS_CRIMINAL_CSV);
     parser = csvStream.pipe(
@@ -596,7 +596,7 @@ async function main() {
         if ((rowCount - resumeFrom) % 500000 === 0) logMem((rowCount / 1000000).toFixed(1) + "M");
       }
 
-      // CL CSVs quote ALL values — strip surrounding quotes before using
+      // CL CSVs quote ALL values, strip surrounding quotes before using
       const cluster_id = (record.cluster_id || "").split('"').join("").trim();
       if (!cluster_id) { skippedNoText++; continue; }
 
@@ -623,7 +623,7 @@ async function main() {
         continue;
       }
 
-      // Criminal filter — indexOf on lowercased text, no regex
+      // Criminal filter, indexOf on lowercased text, no regex
       const lowerText = text.toLowerCase();
       if (!isCriminalOpinion(lowerText)) {
         skippedNotCriminal++;
@@ -680,10 +680,10 @@ async function main() {
       if (confidence === "verified") verified++;
       else lowConfidence++;
 
-      // case_name placeholder — ON CONFLICT COALESCE preserves real name from existing row
+      // case_name placeholder, ON CONFLICT COALESCE preserves real name from existing row
       const case_name = "cluster:" + cluster_id;
       // author_str is judge name, not court. Court resolution needs docket data.
-      // For now store "unknown" — future: resolve via cluster→docket→court pipeline.
+      // For now store "unknown", future: resolve via cluster→docket→court pipeline.
       const court = "unknown";
       const decision_date = record.date_filed ? record.date_filed.slice(0, 10) : null;
       const source_url = "https://www.courtlistener.com/opinion/" + cluster_id + "/";
@@ -748,7 +748,7 @@ async function main() {
 
   if (!applyMode) {
     if (upserts.length > 0) {
-      console.log("\nDry run — no DB writes. Pass --apply to write to DB.");
+      console.log("\nDry run, no DB writes. Pass --apply to write to DB.");
     } else {
       console.log("\nNo upserts to apply.");
     }

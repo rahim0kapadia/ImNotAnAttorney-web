@@ -33,7 +33,7 @@ export const ATTORNEYS: Record<
 };
 
 export function SourceIntelligence({ category }: { category: string }) {
-  // Suppress unused variable warning — kept for future post-purchase use
+  // Suppress unused variable warning, kept for future post-purchase use
   void category;
 
   return (

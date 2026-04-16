@@ -1,4 +1,4 @@
-# ARCHITECTURE.md Audit Report — 2026-03-14
+# ARCHITECTURE.md Audit Report, 2026-03-14
 
 4-agent parallel audit across all 3 ImNotAnAttorney projects. Compared docs/ARCHITECTURE.md (1,715 lines, committed `a6fa82f`) against actual code.
 
@@ -14,10 +14,10 @@ The doc correctly covers the web app's own code, but:
 
 ---
 
-## P0 — Factual Errors (WRONG in the current doc)
+## P0, Factual Errors (WRONG in the current doc)
 
 ### 1. Claude Model for Report Generation
-- **Doc says (line 45):** "AI: Claude Sonnet 4.6 — IB generation"
+- **Doc says (line 45):** "AI: Claude Sonnet 4.6, IB generation"
 - **Doc says (line 1004):** "Model: Claude Sonnet 4.6 for all sections"
 - **Doc says (line 1512):** "Claude Sonnet 4.6 can exceed this on complex charges"
 - **Reality:** `supabase/functions/generate-report/index.ts` uses `claude-opus-4-6` with **extended thinking** (budget_tokens: 16000) for Case Decoder generation. Sonnet 4.6 is used for IB sections and evaluation only.
@@ -38,7 +38,7 @@ The doc correctly covers the web app's own code, but:
 - **Reality:** `supabase/functions/evaluate-report/index.ts` implements only **2 teams** (UPL gate + Psychological Architecture). Legal Quality, Defendant Experience, and Conversion & Brand are designed in business docs but NOT coded.
 - **Fix:** Add note: "Currently implemented: UPL (GATE) + Psych (HIGH). Remaining 3 teams designed but not yet coded."
 
-### 5. Cron Parts Count — Internal Inconsistency
+### 5. Cron Parts Count, Internal Inconsistency
 - **Doc header (line 1176):** "19 parts"
 - **Doc table (lines 1180-1202):** Lists 23 entries (1, 2, 3, 4, 5, 5b, 5c, 6, 6b, 7, 8, 9a, 9b, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)
 - **Actual code:** Cron file header says "21 things". Parts 9a/9b are combined as single Part 9 in code.
@@ -46,7 +46,7 @@ The doc correctly covers the web app's own code, but:
 
 ---
 
-## P1 — Major Missing Systems
+## P1, Major Missing Systems
 
 ### 6. ImNotAnAttorney-Engine (ENTIRELY MISSING)
 
@@ -54,7 +54,7 @@ A separate Node.js project (`~/projects/ImNotAnAttorney-engine/`) that powers AL
 
 **What it is:** Distributed job queue worker system. Polls `processing_jobs` table, dispatches to 39 worker modules across 6 phases, writes results back to shared Supabase.
 
-**Deployment:** GitHub Actions cron (`process-jobs.yml`) every 5 minutes, `node src/worker.mjs --once`, max 20 jobs/run.
+**Deployment:** GitHub Actions cron (`process-jobs.yml`) every 5 minutes, `node src/worker.mjs,once`, max 20 jobs/run.
 
 **39 Worker Modules:**
 
@@ -81,24 +81,24 @@ Post-report: report → (War Room+) docket_monitor + intelligence workers
 ```
 
 **Additional DB tables used by engine (not in web doc):**
-- `document_pages` — OCR page-level output
-- `entity_extractions` — Named entity extraction results
-- `finding_sources` — Source document for each finding
-- `evidence_inventory` — Evidence catalog
-- `chain_of_custody_records` — Custody chain analysis
-- `case_persons` — Role-based (witness/judge/prosecutor)
-- `case_analysis_scores` — Defense Strength Score
-- `case_monitoring` — CourtListener docket alerts
-- `job_cost_tracking` — Claude API cost per job
-- `legal_citations` — Citation verification results
-- `jurisdiction_profiles` — Jurisdiction context cache
+- `document_pages`, OCR page-level output
+- `entity_extractions`, Named entity extraction results
+- `finding_sources`, Source document for each finding
+- `evidence_inventory`, Evidence catalog
+- `chain_of_custody_records`, Custody chain analysis
+- `case_persons`, Role-based (witness/judge/prosecutor)
+- `case_analysis_scores`, Defense Strength Score
+- `case_monitoring`, CourtListener docket alerts
+- `job_cost_tracking`, Claude API cost per job
+- `legal_citations`, Citation verification results
+- `jurisdiction_profiles`, Jurisdiction context cache
 
 ### 7. External Legal Data Sources (ENTIRELY MISSING)
 
 The engine integrates with 7 external legal data APIs. ARCHITECTURE.md mentions none.
 
 | Source | Module | Purpose | Auth |
-|--------|--------|---------|------|
+|------, |------, |---------|------|
 | CourtListener | legal-verifier.mjs, docket-fetcher.mjs | Dockets, opinions, judge profiles, financial disclosures, citation verification | Optional token |
 | PACER | pacer-fetcher.mjs | Federal court records | Login/password |
 | JudyRecords | docket-fetcher.mjs | State court records | Optional API key |
@@ -126,11 +126,11 @@ Templates use `{placeholder}` syntax for case data injection. Anti-hallucination
 ### 9. Anti-Hallucination Seed Data (MISSING)
 
 5 JSON files in `ImNotAnAttorney/system/data/`:
-- `motion-library.json` — 30+ motions with legal basis + attorney attribution
-- `penalty-ranges.json` — Charge-specific sentencing ranges from actual statutes
-- `statute-references.json` — Statute citations with verification metadata
-- `diversion-programs.json` — State-by-state diversion eligibility
-- `speedy-trial-rules.json` — State-specific speedy trial timelines
+- `motion-library.json`, 30+ motions with legal basis + attorney attribution
+- `penalty-ranges.json`, Charge-specific sentencing ranges from actual statutes
+- `statute-references.json`, Statute citations with verification metadata
+- `diversion-programs.json`, State-by-state diversion eligibility
+- `speedy-trial-rules.json`, State-specific speedy trial timelines
 
 Every prompt template references these files. Blocks hallucinated motion names, fake statistics, and fabricated procedures.
 
@@ -150,17 +150,17 @@ Cross-cutting experts include forensic evidence, trial methodology, jury consult
 - Warm language rules ("you told us" vs "you indicated")
 - Bridging patterns after hard information
 
-This is WHY Opus 4.6 with extended thinking is required for CD generation — Sonnet produced "mechanical emotional calibration."
+This is WHY Opus 4.6 with extended thinking is required for CD generation, Sonnet produced "mechanical emotional calibration."
 
 ### 12. Buyer States Framework (MISSING)
 
 6 buyer states in `ImNotAnAttorney/system/BUYER-STATES.md`:
-1. distrust — "I Don't Trust My Attorney"
-2. double-checking — "I'm Double-Checking What He Said"
-3. information-vacuum — "He's Not Telling Me Anything"
-4. no-attorney — "No Attorney Yet"
-5. just-arrested — "I Just Got Arrested"
-6. family-buyer — (future state)
+1. distrust, "I Don't Trust My Attorney"
+2. double-checking, "I'm Double-Checking What He Said"
+3. information-vacuum, "He's Not Telling Me Anything"
+4. no-attorney, "No Attorney Yet"
+5. just-arrested, "I Just Got Arrested"
+6. family-buyer, (future state)
 
 Buyer state drives Section 2 framing in reports. Evaluation criterion D11 checks buyer state alignment.
 
@@ -175,22 +175,22 @@ No mention in ARCHITECTURE.md.
 
 ---
 
-## P2 — Partially Documented / Stale
+## P2, Partially Documented / Stale
 
-### 14. Evaluation Framework — Designed vs Implemented Gap
+### 14. Evaluation Framework, Designed vs Implemented Gap
 - **Business docs:** 7 evaluation teams with 99+ criteria
 - **ARCHITECTURE.md:** 5 teams documented
 - **Code:** 2 teams implemented (UPL + Psych)
 - **Gap:** Doc should clearly state what's designed vs. what's coded
 
-### 15. Deliverables-by-Tier — Outdated
+### 15. Deliverables-by-Tier, Outdated
 - Missing v4 March 2026 restructure
 - Judge Intelligence moved from IB to X-Ray tier
 - New deliverables: 8-Domain Life Impact Map, Prosecution Pressure Tactics Decoder
 - New: Prosecutor Research Profile in X-Ray
 - Missing: "Clarity or It's Free Guarantee" for Intelligence Brief
 
-### 16. Pipeline Stages — Only Partially Documented
+### 16. Pipeline Stages, Only Partially Documented
 `ImNotAnAttorney/system/PIPELINE-MAP.md` defines 16 stages (00-15). Doc covers CD/IB flow well but vaguely hand-waves discovery pipeline as "job queue with batch grouping."
 
 ### 17. Cron Part 9a/9b Split
@@ -200,7 +200,7 @@ No mention in ARCHITECTURE.md.
 
 ---
 
-## P3 — Minor / Cosmetic
+## P3, Minor / Cosmetic
 
 ### 18. Component Count
 - Doc says "25 components in src/components/"
@@ -214,14 +214,14 @@ No mention in ARCHITECTURE.md.
 ### 20. Supabase PostgREST in Edge Functions
 - Edge Functions use raw fetch to `/rest/v1/{table}` instead of @supabase/supabase-js SDK
 - Reason: SDK import via esm.sh adds 60-90s cold start (40%+ of 150s timeout budget)
-- Not documented — useful for anyone touching Edge Function code
+- Not documented, useful for anyone touching Edge Function code
 
 ---
 
 ## Summary: What Needs to Happen
 
 | Priority | Gap | Effort |
-|----------|-----|--------|
+|----------|---, |------, |
 | P0 | Fix 5 factual errors (model names, counts, eval teams) | 30 min |
 | P1 | Add Engine Architecture section (39 workers, job queue, pipeline) | 2-3 hours |
 | P1 | Add External Data Sources section | 1 hour |

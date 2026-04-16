@@ -1,5 +1,5 @@
 /**
- * E2E: Full bondsman partner walkthrough — every page, every form, every section.
+ * E2E: Full bondsman partner walkthrough, every page, every form, every section.
  *
  * Tests the complete post-signup experience:
  * 1. Login page renders

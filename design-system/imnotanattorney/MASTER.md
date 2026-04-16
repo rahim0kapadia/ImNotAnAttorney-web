@@ -17,12 +17,12 @@
 ### Color Palette
 
 | Role | Hex | CSS Variable |
-|------|-----|--------------|
-| Primary | `#1E3A8A` | `--color-primary` |
-| Secondary | `#1E40AF` | `--color-secondary` |
-| CTA/Accent | `#B45309` | `--color-cta` |
-| Background | `#F8FAFC` | `--color-background` |
-| Text | `#0F172A` | `--color-text` |
+|------|---, |------------, |
+| Primary | `#1E3A8A` | `, color-primary` |
+| Secondary | `#1E40AF` | `, color-secondary` |
+| CTA/Accent | `#B45309` | `, color-cta` |
+| Background | `#F8FAFC` | `, color-background` |
+| Text | `#0F172A` | `, color-text` |
 
 **Color Notes:** Authority navy + trust gold
 
@@ -42,22 +42,22 @@
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--space-xs` | `4px` / `0.25rem` | Tight gaps |
-| `--space-sm` | `8px` / `0.5rem` | Icon gaps, inline spacing |
-| `--space-md` | `16px` / `1rem` | Standard padding |
-| `--space-lg` | `24px` / `1.5rem` | Section padding |
-| `--space-xl` | `32px` / `2rem` | Large gaps |
-| `--space-2xl` | `48px` / `3rem` | Section margins |
-| `--space-3xl` | `64px` / `4rem` | Hero padding |
+| `, space-xs` | `4px` / `0.25rem` | Tight gaps |
+| `, space-sm` | `8px` / `0.5rem` | Icon gaps, inline spacing |
+| `, space-md` | `16px` / `1rem` | Standard padding |
+| `, space-lg` | `24px` / `1.5rem` | Section padding |
+| `, space-xl` | `32px` / `2rem` | Large gaps |
+| `, space-2xl` | `48px` / `3rem` | Section margins |
+| `, space-3xl` | `64px` / `4rem` | Hero padding |
 
 ### Shadow Depths
 
 | Level | Value | Usage |
 |-------|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Subtle lift |
-| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)` | Cards, buttons |
-| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)` | Modals, dropdowns |
-| `--shadow-xl` | `0 20px 25px rgba(0,0,0,0.15)` | Hero images, featured cards |
+| `, shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Subtle lift |
+| `, shadow-md` | `0 4px 6px rgba(0,0,0,0.1)` | Cards, buttons |
+| `, shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)` | Modals, dropdowns |
+| `, shadow-xl` | `0 20px 25px rgba(0,0,0,0.15)` | Hero images, featured cards |
 
 ---
 
@@ -102,13 +102,13 @@
   background: #F8FAFC;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(, shadow-md);
   transition: all 200ms ease;
   cursor: pointer;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(, shadow-lg);
   transform: translateY(-2px);
 }
 ```
@@ -143,7 +143,7 @@
   background: white;
   border-radius: 16px;
   padding: 32px;
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(, shadow-xl);
   max-width: 500px;
   width: 90%;
 }
@@ -179,12 +179,12 @@
 
 ### Additional Forbidden Patterns
 
-- ❌ **Emojis as icons** — Use SVG icons (Heroicons, Lucide, Simple Icons)
-- ❌ **Missing cursor:pointer** — All clickable elements must have cursor:pointer
-- ❌ **Layout-shifting hovers** — Avoid scale transforms that shift layout
-- ❌ **Low contrast text** — Maintain 4.5:1 minimum contrast ratio
-- ❌ **Instant state changes** — Always use transitions (150-300ms)
-- ❌ **Invisible focus states** — Focus states must be visible for a11y
+- ❌ **Emojis as icons**, Use SVG icons (Heroicons, Lucide, Simple Icons)
+- ❌ **Missing cursor:pointer**, All clickable elements must have cursor:pointer
+- ❌ **Layout-shifting hovers**, Avoid scale transforms that shift layout
+- ❌ **Low contrast text**, Maintain 4.5:1 minimum contrast ratio
+- ❌ **Instant state changes**, Always use transitions (150-300ms)
+- ❌ **Invisible focus states**, Focus states must be visible for a11y
 
 ---
 

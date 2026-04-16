@@ -8,7 +8,7 @@
  *   - charge_questions
  * Plus expert queries scoped to a common_charge_slug.
  *
- * Uses raw fetch against Supabase REST API (PostgREST) — no Supabase JS client.
+ * Uses raw fetch against Supabase REST API (PostgREST), no Supabase JS client.
  * This mirrors the pattern used in supabase/functions/generate-report/index.ts,
  * which avoids @supabase/supabase-js to eliminate esm.sh cold start latency.
  *
@@ -87,7 +87,7 @@ export interface Expert {
 
 /**
  * Performs a SELECT query against a Supabase table via PostgREST.
- * Not exported — callers use the typed query functions below.
+ * Not exported, callers use the typed query functions below.
  *
  * @param url - Supabase project URL (e.g. NEXT_PUBLIC_SUPABASE_URL).
  * @param key - Service role key or anon key for authentication.
@@ -325,7 +325,7 @@ function buildEnrichedChargeContext(
       chargeLines.push(`- Enhancements: ${statute.enhancements.join("; ")}`);
     }
   } else {
-    // Statute unknown — include charge name only
+    // Statute unknown, include charge name only
     chargeLines.push(`- Charge: ${commonCharge.label}`);
   }
 
@@ -335,7 +335,7 @@ function buildEnrichedChargeContext(
   if (experts.length > 0) {
     const expertLines = experts.map(
       (e, i) =>
-        `${i + 1}. ${e.name} — ${e.why_elite}. Methodology: ${e.key_framework}.`
+        `${i + 1}. ${e.name}, ${e.why_elite}. Methodology: ${e.key_framework}.`
     );
     sections.push(`EXPERT PANEL:\n${expertLines.join("\n")}`);
   }

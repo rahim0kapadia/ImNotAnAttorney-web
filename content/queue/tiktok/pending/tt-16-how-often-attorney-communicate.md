@@ -10,7 +10,7 @@ topic: How often should your attorney communicate?
 blog_slug: how-often-should-attorney-communicate
 estimated_duration: 30s
 format: Standard (talking head + comparison graphic)
-suggested_sound: "Original audio — voiceover + clean ambient beat"
+suggested_sound: "Original audio, voiceover + clean ambient beat"
 suggested_posting_time: "Wednesday 7:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Wednesday 7:00 PM EST"
 
 **Format**: Standard
 **Duration**: 30 seconds
-**Suggested sound**: Original audio — voiceover + clean ambient beat
+**Suggested sound**: Original audio, voiceover + clean ambient beat
 **Suggested posting time**: Wednesday 7:00 PM EST
 
 ---
@@ -57,7 +57,7 @@ suggested_posting_time: "Wednesday 7:00 PM EST"
 ---
 
 ### Caption
-37 days since your attorney called. Your state bar says they must keep you "reasonably informed" and "promptly comply" with requests. That's not optional — it's an obligation. Here's the email that fixes it.
+37 days since your attorney called. Your state bar says they must keep you "reasonably informed" and "promptly comply" with requests. That's not optional, it's an obligation. Here's the email that fixes it.
 
 ### Hashtags
 #attorneycommunication #criminaldefense #defendantrights #barstandards #knowyourrights
@@ -68,5 +68,5 @@ Phone screen showing "37 days" since last attorney call. Text: "Is This Normal?"
 ---
 
 **Context**: Communication failure is the #1 bar complaint. This video gives defendants a practical tool (the email template) and reframes asking for communication as a professional expectation, not being "difficult."
-**Loop strategy**: Phone showing "37 days" at the start, calendar with scheduled updates at the end — transformation from abandoned to organized.
+**Loop strategy**: Phone showing "37 days" at the start, calendar with scheduled updates at the end, transformation from abandoned to organized.
 **KPI target**: Saves (defendants will save and use the email template)

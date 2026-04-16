@@ -11,7 +11,7 @@ suggested_time: "Sunday 5:00 PM ET"
 target_groups: ["Strong Prison Wives", "Public Defender Clients Groups", "Probation and Parole Support Groups"]
 ---
 
-## Facebook Post: Know Your Rights — Firing Your Attorney
+## Facebook Post: Know Your Rights, Firing Your Attorney
 
 **Type**: Text post (colored background)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -28,7 +28,7 @@ Read that again.
 
 You. Can. Fire. Your. Attorney.
 
-If you hired a private attorney and they are not performing — not returning calls, not filing motions, not explaining your case — you have the right to terminate the relationship and hire someone else.
+If you hired a private attorney and they are not performing, not returning calls, not filing motions, not explaining your case, you have the right to terminate the relationship and hire someone else.
 
 If you have a public defender, you can request a substitution of counsel by filing a motion with the court. The judge will evaluate whether your reasons are sufficient.
 
@@ -45,9 +45,9 @@ Here is what constitutes legitimate grounds:
 
 Before you make the switch, do three things:
 
-1. Document everything — every unanswered call, every missed meeting, every vague answer to a direct question
-2. Request your complete case file — you are entitled to it
-3. Consult with a new attorney before firing the old one — you don't want a gap in representation
+1. Document everything, every unanswered call, every missed meeting, every vague answer to a direct question
+2. Request your complete case file, you are entitled to it
+3. Consult with a new attorney before firing the old one, you don't want a gap in representation
 
 Switching attorneys mid-case feels scary. Staying with one who isn't fighting for you is scarier.
 
@@ -55,7 +55,7 @@ Switching attorneys mid-case feels scary. Staying with one who isn't fighting fo
 
 ### Visual Direction
 
-Colored text background — dark green. The opening line "You can fire your attorney" is the hook. Let the text do the work.
+Colored text background, dark green. The opening line "You can fire your attorney" is the hook. Let the text do the work.
 
 ### Link Strategy
 

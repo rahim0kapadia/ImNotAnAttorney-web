@@ -10,7 +10,7 @@ suggested_time: "Friday 8:30 PM ET"
 target_groups: ["Second Chance Groups", "DUI Support Groups", "Know Your Rights Community Groups"]
 ---
 
-## Facebook Post: Story -- The Option Nobody Mentioned
+## Facebook Post: Story, The Option Nobody Mentioned
 
 **Type**: Text post (long-form)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -31,7 +31,7 @@ He was about to accept. It seemed reasonable. He did not know there was another 
 
 Then someone in a support group mentioned something called a "diversion program." He had never heard the term. His attorney had never brought it up.
 
-He researched it. In his state, first-time DUI offenders with no prior record could be eligible for pretrial diversion. You complete a program -- classes, community service, substance evaluation, whatever the program requires. If you complete it successfully, the charges are dismissed. Not reduced. Dismissed. Record stays clean.
+He researched it. In his state, first-time DUI offenders with no prior record could be eligible for pretrial diversion. You complete a program, classes, community service, substance evaluation, whatever the program requires. If you complete it successfully, the charges are dismissed. Not reduced. Dismissed. Record stays clean.
 
 He asked his attorney: "Am I eligible for diversion?"
 
@@ -41,11 +41,11 @@ He was eligible. He had been eligible from the beginning.
 
 The diversion program took six months. Classes twice a week. Community service on weekends. It was not easy. But he completed it. The charges were dismissed. His record is clean. His license was suspended for a shorter period. No permanent criminal record.
 
-If he had taken the plea -- which his attorney was ready to submit -- he would carry a DUI conviction for the rest of his life. Every job application. Every background check. Every time.
+If he had taken the plea, which his attorney was ready to submit, he would carry a DUI conviction for the rest of his life. Every job application. Every background check. Every time.
 
 Three things worth knowing:
 
-1. Many states have diversion programs for first-time offenders -- but eligibility rules vary by jurisdiction.
+1. Many states have diversion programs for first-time offenders, but eligibility rules vary by jurisdiction.
 2. Your attorney may not mention diversion if they are focused on moving cases quickly.
 3. Deferred adjudication is another option: plead guilty, but the conviction is not entered if you complete the terms.
 
@@ -60,7 +60,7 @@ If they say no, ask them to explain specifically why not. "You're not eligible" 
 
 ### Visual Direction
 
-No image. Text only. The "learned about it from a stranger on the internet" opening is meta -- the reader is currently in a support group reading a post from a stranger on the internet. The connection is immediate.
+No image. Text only. The "learned about it from a stranger on the internet" opening is meta, the reader is currently in a support group reading a post from a stranger on the internet. The connection is immediate.
 
 ### Link Strategy
 
@@ -72,10 +72,10 @@ This post will generate questions: "Is this available in [my state]?" Respond co
 
 ### UPL Compliance Note
 
-The post explicitly notes that eligibility varies by state and jurisdiction. It does not advise anyone to pursue diversion. It provides questions to ask. If someone asks "can I get diversion in [state]?" respond with: "That depends on your charges, your record, and your jurisdiction's specific rules. Your attorney can tell you -- ask them directly."
+The post explicitly notes that eligibility varies by state and jurisdiction. It does not advise anyone to pursue diversion. It provides questions to ask. If someone asks "can I get diversion in [state]?" respond with: "That depends on your charges, your record, and your jurisdiction's specific rules. Your attorney can tell you, ask them directly."
 
 ---
 
 **Share trigger**: A first-time offender sends this to their family: "My attorney never mentioned this. I need to ask." A parent or partner sends it to the defendant: "Ask about diversion before you sign anything."
-**Context**: Diversion programs are the single best outcome for first-time offenders -- and the most commonly overlooked option. Many attorneys, especially overworked public defenders, default to the plea track without evaluating diversion eligibility. This post plants the question that can change an outcome.
+**Context**: Diversion programs are the single best outcome for first-time offenders, and the most commonly overlooked option. Many attorneys, especially overworked public defenders, default to the plea track without evaluating diversion eligibility. This post plants the question that can change an outcome.
 **KPI target**: Saves (reference material) + comments asking about diversion + Messenger shares to defendants facing first offenses

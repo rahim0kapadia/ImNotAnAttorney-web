@@ -4,7 +4,7 @@
  *
  * The original bulk-sentencing-outlier-detector.mjs failed to match judges
  * because it queried judge_profiles.name (doesn't exist) instead of full_name.
- * All 244 rows have judge_id = NULL — they are jurisdiction-level aggregates
+ * All 244 rows have judge_id = NULL, they are jurisdiction-level aggregates
  * (all judges lumped together), not per-judge distributions.
  *
  * This script re-derives per-judge sentencing distributions by:
@@ -190,7 +190,7 @@ async function loadDump() {
       targetClusters.set(String(r.courtlistener_cluster_id), jsEntry);
       resolved++;
     } else {
-      // No jurisdiction info — skip (can't attribute to a charge)
+      // No jurisdiction info, skip (can't attribute to a charge)
       unresolved++;
     }
   }
@@ -271,7 +271,7 @@ async function streamOpinions(targetClusters, judgeMap) {
 
       const dumpRow = targetClusters.get(clusterId);
 
-      // Get opinion text — try plain_text first, fall back to HTML
+      // Get opinion text, try plain_text first, fall back to HTML
       let text = (record.plain_text || "").trim();
       if (text.length < 200) {
         const html = record.html_with_citations || record.html || record.html_columbia || "";

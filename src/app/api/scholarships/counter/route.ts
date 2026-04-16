@@ -21,7 +21,7 @@ export async function GET() {
   return NextResponse.json({
     total,
     fulfilled,
-    waitlist: Math.max(0, total - fulfilled), // Transparent waitlist — spec sub-task 7
+    waitlist: Math.max(0, total - fulfilled), // Transparent waitlist, spec sub-task 7
     month: counters[monthKey] ?? 0,
     monthLabel: new Date().toLocaleString('en-US', { month: 'long', year: 'numeric' }),
   });

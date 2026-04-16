@@ -3,7 +3,7 @@
 **Topic:** Field test false positives in drug cases
 **Format:** talking head + text overlay + B-roll
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + suspense beat with reveal
+**Trending sound suggestion:** Original audio, voiceover + suspense beat with reveal
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -18,21 +18,21 @@
 ## Body
 [SECOND 3-10]
 **Visual**: Text cards appearing one by one with items that have triggered false positives. Each drops in with impact.
-**Audio/Voiceover**: "Field drug tests -- those little plastic pouches officers use at the scene -- have false-positive'd on chocolate, aspirin, baking soda, household cleaners, and oregano. These are screening tools designed to be fast and cheap. Not accurate."
-**Text overlay**: "CHOCOLATE. ASPIRIN. BAKING SODA. OREGANO." -- each word punches in.
+**Audio/Voiceover**: "Field drug tests, those little plastic pouches officers use at the scene, have false-positive'd on chocolate, aspirin, baking soda, household cleaners, and oregano. These are screening tools designed to be fast and cheap. Not accurate."
+**Text overlay**: "CHOCOLATE. ASPIRIN. BAKING SODA. OREGANO.", each word punches in.
 
 [SECOND 10-18]
-**Visual**: Split screen -- left shows a field test color change, right shows a GC-MS machine in a lab.
-**Audio/Voiceover**: "The field test is a color in a bag. The lab test -- gas chromatography-mass spectrometry -- is real science. In one actual case, the field test said amphetamine. The lab said MDMA. Completely different drug. Completely different charges."
+**Visual**: Split screen, left shows a field test color change, right shows a GC-MS machine in a lab.
+**Audio/Voiceover**: "The field test is a color in a bag. The lab test, gas chromatography-mass spectrometry, is real science. In one actual case, the field test said amphetamine. The lab said MDMA. Completely different drug. Completely different charges."
 **Text overlay**: "Field test: color in a bag. Lab test: actual science."
 
 [SECOND 18-25]
 **Visual**: Back to speaker, leaning in.
-**Audio/Voiceover**: "If your case is built on a field test and the lab results haven't come back yet -- or came back different -- ask your attorney: have you compared the field test results to the lab confirmation? Are they charging me based on a presumptive positive?"
+**Audio/Voiceover**: "If your case is built on a field test and the lab results haven't come back yet, or came back different, ask your attorney: have you compared the field test results to the lab confirmation? Are they charging me based on a presumptive positive?"
 **Text overlay**: "ASK: Have you compared field vs. lab results?"
 
 [SECOND 25-30]
-**Visual**: Chocolate bar from the opening -- but now with a "NOT GUILTY" stamp over it.
+**Visual**: Chocolate bar from the opening, but now with a "NOT GUILTY" stamp over it.
 **Text overlay**: "A color in a bag is not proof. imnotanattorney.com/score"
 **Audio**: Beat resolves. Clean.
 
@@ -47,7 +47,7 @@ Visit imnotanattorney.com/score to check your defense for free.
 - 0:25 "A color in a bag is not proof."
 
 ## Caption
-A chocolate bar. Tested positive. For marijuana. Field drug tests are wrong more often than you think -- and people are pleading guilty based on them before lab results come back. If your case started with a field test, ask your attorney if the lab confirmed it.
+A chocolate bar. Tested positive. For marijuana. Field drug tests are wrong more often than you think, and people are pleading guilty based on them before lab results come back. If your case started with a field test, ask your attorney if the lab confirmed it.
 
 ## Hashtags
 #drugcharges #fieldtest #falsepositive #criminaldefense #knowyourrights

@@ -42,7 +42,7 @@ export async function PATCH(
   // SAFETY: court_reminders must never be "sms" alone
   if (!validateClientPrefs(body)) {
     return NextResponse.json(
-      { error: "Court reminders require email — choose Email or Both." },
+      { error: "Court reminders require email, choose Email or Both." },
       { status: 400 }
     );
   }

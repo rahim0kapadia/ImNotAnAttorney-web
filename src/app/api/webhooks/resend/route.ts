@@ -1,13 +1,13 @@
 /**
- * Resend Webhook — POST /api/webhooks/resend
+ * Resend Webhook, POST /api/webhooks/resend
  *
  * Handles bounce and complaint events from Resend's webhook system.
  * Auto-unsubscribes recipients who bounce or complain to maintain
  * sender reputation and CAN-SPAM compliance.
  *
  * Events handled:
- *   - email.bounced — Hard bounce, auto-unsubscribe
- *   - email.complained — Spam complaint, auto-unsubscribe
+ *   - email.bounced, Hard bounce, auto-unsubscribe
+ *   - email.complained, Spam complaint, auto-unsubscribe
  *
  * Verification: Resend uses Svix for webhook signing.
  * The RESEND_WEBHOOK_SECRET env var contains the Svix signing secret.
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   // Resend uses Svix for webhook signing. REJECT if secret is not configured
   // to prevent forged webhooks (e.g., mass-unsubscribe attacks).
   if (!webhookSecret) {
-    console.error("[Resend Webhook] RESEND_WEBHOOK_SECRET not configured — rejecting request");
+    console.error("[Resend Webhook] RESEND_WEBHOOK_SECRET not configured, rejecting request");
     return NextResponse.json({ error: "Webhook verification not configured" }, { status: 500 });
   }
   {
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing Svix headers" }, { status: 400 });
     }
 
-    // Basic timestamp check — reject webhooks older than 5 minutes or malformed
+    // Basic timestamp check, reject webhooks older than 5 minutes or malformed
     const ts = parseInt(svixTimestamp, 10);
     if (!Number.isFinite(ts) || Math.abs(Date.now() / 1000 - ts) > 300) {
       return NextResponse.json({ error: "Timestamp too old or malformed" }, { status: 400 });
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     const sig = await crypto.subtle.sign("HMAC", key, encoder.encode(signedContent));
     const expectedSig = `v1,${btoa(String.fromCharCode(...new Uint8Array(sig)))}`;
 
-    // Svix sends multiple signatures separated by spaces — use constant-time comparison
+    // Svix sends multiple signatures separated by spaces, use constant-time comparison
     const signatures = svixSignature.split(" ");
     const expectedBytes = new TextEncoder().encode(expectedSig);
     let valid = false;
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       const b = new Uint8Array(hmacB);
       let match = true;
       for (let i = 0; i < a.length; i++) {
-        if (a[i] !== b[i]) match = false; // no early return — constant time
+        if (a[i] !== b[i]) match = false; // no early return, constant time
       }
       if (match) valid = true;
     }
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Extract recipient email(s). `data.to` is usually string[] but some events
-  // deliver a single string — normalize, then cap to avoid pathological payloads.
+  // deliver a single string, normalize, then cap to avoid pathological payloads.
   const rawTo = data?.to;
   const toList: string[] = Array.isArray(rawTo) ? rawTo : rawTo ? [rawTo] : [];
   const MAX_RECIPIENTS = 100;
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
     const normalizedEmail = email.toLowerCase().trim();
 
     // Layer 2 SMS path: {10digits}@text.email is our SMS gateway. A bounce here
-    // means the gateway rejected the number — suspend future sends.
+    // means the gateway rejected the number, suspend future sends.
     const gatewayPhone = extractPhoneFromGateway(normalizedEmail);
     if (gatewayPhone) {
       const res = await suspendSmsPhone(supabase, gatewayPhone, {
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
         smsSuspended += 1;
         suspendedPhones.push(gatewayPhone);
       }
-      // Don't unsubscribe the gateway address from the subscriber list —
+      // Don't unsubscribe the gateway address from the subscriber list,
       // it's not a real subscriber. Skip to next recipient.
       continue;
     }
@@ -176,6 +176,6 @@ async function sendSmsSuspensionAlert(phones: string[], eventType: string): Prom
       body: JSON.stringify({ chat_id: chatId, text }),
     });
   } catch {
-    // Fire-and-forget — alert failures don't break webhook 200.
+    // Fire-and-forget, alert failures don't break webhook 200.
   }
 }

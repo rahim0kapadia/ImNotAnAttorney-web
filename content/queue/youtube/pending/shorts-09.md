@@ -34,7 +34,7 @@ imnotanattorney.com
 
 [0:04-0:14] WHO HAS THE POWER:
 [TEXT ON SCREEN: "The prosecutor decides. Not the victim."]
-"First — the prosecutor has almost exclusive power to drop charges. Not the judge. Not the police. Not the victim. In criminal cases, the victim doesn't 'press charges' or 'drop charges.' That's a TV myth. The state brings criminal charges. The prosecutor decides whether to pursue them."
+"First, the prosecutor has almost exclusive power to drop charges. Not the judge. Not the police. Not the victim. In criminal cases, the victim doesn't 'press charges' or 'drop charges.' That's a TV myth. The state brings criminal charges. The prosecutor decides whether to pursue them."
 
 [0:14-0:24] REASON 1:
 [TEXT ON SCREEN: "1. Insufficient evidence"]
@@ -42,15 +42,15 @@ imnotanattorney.com
 
 [0:24-0:36] REASON 2:
 [TEXT ON SCREEN: "2. Constitutional violations"]
-"Two: constitutional violations. If your rights were violated — illegal search, unlawful stop, Miranda violation, coerced confession — the evidence obtained through that violation can be suppressed. Without that evidence, the prosecution may drop the charges rather than go to trial with nothing. This is why motions to suppress are so critical."
+"Two: constitutional violations. If your rights were violated, illegal search, unlawful stop, Miranda violation, coerced confession, the evidence obtained through that violation can be suppressed. Without that evidence, the prosecution may drop the charges rather than go to trial with nothing. This is why motions to suppress are so critical."
 
 [0:36-0:46] REASON 3:
 [TEXT ON SCREEN: "3. Diversion programs"]
-"Three: diversion programs. Many jurisdictions offer pre-trial intervention, especially for first-time offenders. Complete the program — counseling, community service, drug testing — and the charges are dropped entirely. Your attorney should know if you qualify. Many never bring it up."
+"Three: diversion programs. Many jurisdictions offer pre-trial intervention, especially for first-time offenders. Complete the program, counseling, community service, drug testing, and the charges are dropped entirely. Your attorney should know if you qualify. Many never bring it up."
 
 [0:46-0:58] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com/score"]
-"Charges being dropped doesn't happen by accident. It happens because an attorney does the work. Ask yours: what is our strategy for dismissal? If they don't have one, you need to know that now. Free Case Progress Score — link in bio. Know What They Know."
+"Charges being dropped doesn't happen by accident. It happens because an attorney does the work. Ask yours: what is our strategy for dismissal? If they don't have one, you need to know that now. Free Case Progress Score, link in bio. Know What They Know."
 
 ## On-Screen Text
 - [0:00] "YES. But not the way you think."

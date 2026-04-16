@@ -15,15 +15,15 @@
 | Original ID | Verdict | Severity | Notes |
 |---|---|---|---|
 | CD #5 | **CONFIRMED** | P0 CRITICAL | `caseId=` vs `case=` param mismatch in operator delivery link |
-| IB #1 | **REFUTED** | -- | Included CD auto-generates correctly via intake route |
+| IB #1 | **REFUTED** |, | Included CD auto-generates correctly via intake route |
 | CD #1 | CONFIRMED | P2 | `auto_deliver` dead code (68 lines) |
 | CD #2 | PARTIAL | P1 | Retry UI exists for engine jobs only, not CD/IB generation |
 | CD #3 | **CONFIRMED** | P1 | Status transition is data-only, no generation trigger |
 | CD #4 | **CONFIRMED + UPGRADED** | P1 | Triple email in Flow B, not double |
 | IB #2 | CONFIRMED | P2 | Phase 2 form missing state/charge type |
-| IB #3 | **REFUTED** | -- | "researching" IS handled via operator-alerts.ts 24h/72h escalation |
+| IB #3 | **REFUTED** |, | "researching" IS handled via operator-alerts.ts 24h/72h escalation |
 | CD #6 | **CONFIRMED** | P1 | Zero customer notification on generation failure |
-| CD #7 | **CONFIRMED** | P1 | No progress tracking -- report_token only on success |
+| CD #7 | **CONFIRMED** | P1 | No progress tracking, report_token only on success |
 | CD #8 | CONFIRMED | P2 | delivery_due_at from generation start, not purchase |
 | IB #4 | **CONFIRMED** | P1 | Phase B 4 sync calls vs 150s Supabase limit, no backup worker |
 | IB #5 | **CONFIRMED** | P2 | No auto-delivery despite "fully automated" marketing |
@@ -33,8 +33,8 @@
 
 | ID | Issue | Severity | Found by |
 |---|---|---|---|
-| NEW-1 | `/api/customer/cases` missing `report_token` in SELECT -- `/my-cases` links all broken | P0 | Delivery agent |
-| NEW-2 | Intake route uses `fetch().catch()` instead of `after()` -- GC risk on Vercel | P1 | Webhook agent |
+| NEW-1 | `/api/customer/cases` missing `report_token` in SELECT, `/my-cases` links all broken | P0 | Delivery agent |
+| NEW-2 | Intake route uses `fetch().catch()` instead of `after()`, GC risk on Vercel | P1 | Webhook agent |
 | NEW-3 | Phase B fire-and-forget trigger has no safety net if fails | P1 | Batch-poller agent |
 | NEW-4 | Installment coupon conversion swallows errors silently | P2 | Checkout agent |
 | NEW-5 | Operator metrics exclude CD/IB from totals | P3 | Operator agent |
@@ -43,7 +43,7 @@
 
 ---
 
-## P0 -- Fix Immediately (blocks real customer experience)
+## P0, Fix Immediately (blocks real customer experience)
 
 ### Fix 1: Delivery URL param mismatch (CD #5)
 
@@ -85,19 +85,19 @@ AFTER:  "id, order_id, tier, status, delivered_at, created_at, report_token"
 
 ---
 
-## P1 -- Fix This Sprint (customer promise violations)
+## P1, Fix This Sprint (customer promise violations)
 
 ### Fix 3: Customer failure notification (CD #6)
 
 **Problem:** When generation fails, the customer gets zero notification. They wait 48 hours for a report that will never arrive, until SLA breach fires (which also only alerts the operator).
 
 **Files:**
-- `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\cron\operator-alerts.ts` -- `detectStuckGenerating()` (Part 5, line ~130)
-- `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\cron\batch-poller.ts` -- `processCDResult()` failure path (line ~80)
+- `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\cron\operator-alerts.ts`, `detectStuckGenerating()` (Part 5, line ~130)
+- `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\cron\batch-poller.ts`, `processCDResult()` failure path (line ~80)
 
 **Fix:** At every point where status transitions to `generation-failed`, also send a customer email:
 - Subject: "Update on Your {Product Name}"
-- Body: "We hit a technical issue generating your report. Our team has been notified and is working on it. You don't need to do anything -- we'll have your report ready within [revised timeline]. If you have questions, reply to this email."
+- Body: "We hit a technical issue generating your report. Our team has been notified and is working on it. You don't need to do anything, we'll have your report ready within [revised timeline]. If you have questions, reply to this email."
 - Do NOT expose technical details. Reassuring tone.
 
 **Implementation:**
@@ -118,7 +118,7 @@ AFTER:  "id, order_id, tier, status, delivered_at, created_at, report_token"
 
 **Fix:** The generation route should NOT send its own "analyzing" email when triggered by the intake endpoint. Add a `skipEmail` parameter:
 1. Intake route passes `{ caseId, skipEmail: true }` when triggering generation (since it already sent its own confirmation)
-2. Webhook `after()` passes `{ caseId }` (no skipEmail -- its confirmation email is different)
+2. Webhook `after()` passes `{ caseId }` (no skipEmail, its confirmation email is different)
 3. Generate route: `if (!body.skipEmail)` before sending the transactional email
 
 **Result:** Flow A = 2 emails (payment + analyzing). Flow B = 2 emails (payment + intake confirmation). Manual retry = 1 email (analyzing).
@@ -156,14 +156,14 @@ Similarly for `auto-generating` + `intelligence-brief` tier.
 **Problem:** `report_token` is only created when generation succeeds. Customer has no way to check progress during the 48-72 hour wait. The `/my-case/[token]` progress portal is inaccessible.
 
 **Files:**
-- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\webhooks\stripe\route.ts` -- case creation (~line 480-513)
+- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\webhooks\stripe\route.ts`, case creation (~line 480-513)
 
-**Fix:** Create `report_token` at case creation time (in the Stripe webhook), not at generation success. The batch poller already handles the case where `report_token` exists -- it just updates the HTML.
+**Fix:** Create `report_token` at case creation time (in the Stripe webhook), not at generation success. The batch poller already handles the case where `report_token` exists, it just updates the HTML.
 
 Steps:
 1. In webhook case creation (~line 480-513), generate `report_token = crypto.randomUUID()` and `report_token_hash`, set `report_token_expires_at` to 12 months
 2. Include the `/my-case/{token}` link in the payment confirmation email and intake confirmation email
-3. The `/my-case/[token]` page already shows status-aware empty states for in-progress cases -- this unlocks that feature
+3. The `/my-case/[token]` page already shows status-aware empty states for in-progress cases, this unlocks that feature
 
 **Impact:** Customers can track their case from moment of purchase. Huge trust builder.
 
@@ -174,7 +174,7 @@ Steps:
 **Problem:** Engine job retry has a button. CD/IB generation retry requires curl commands from operator alert emails.
 
 **Files:**
-- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\operator\cases\[id]\page.tsx` -- action bar
+- `C:\Users\email\projects\ImNotAnAttorney-web\src\app\operator\cases\[id]\page.tsx`, action bar
 
 **Fix:** Add a "Retry Generation" button in the case detail action bar, visible when status is `generation-failed` or `intake-stalled`:
 1. Button calls `POST /api/generate/case-decoder` (or intelligence-brief) with `{ caseId, force: true }`
@@ -191,9 +191,9 @@ Steps:
 
 **Fix (two-part):**
 
-**Part A -- Immediate mitigation:** Reduce stuck-detection threshold for `compiling` status from 2 hours to 30 minutes in operator-alerts.ts Part 5b. The 2-hour threshold wastes 3% of the 72-hour delivery window just on detection.
+**Part A, Immediate mitigation:** Reduce stuck-detection threshold for `compiling` status from 2 hours to 30 minutes in operator-alerts.ts Part 5b. The 2-hour threshold wastes 3% of the 72-hour delivery window just on detection.
 
-**Part B -- Architectural (next sprint):** Convert Phase B to Batch API like Phase A. This eliminates the 150s timeout entirely. Tradeoff: adds 5-30 min polling latency, but the 72-hour SLA has room for that. Implementation lives in the Edge Function, not in the Next.js app.
+**Part B, Architectural (next sprint):** Convert Phase B to Batch API like Phase A. This eliminates the 150s timeout entirely. Tradeoff: adds 5-30 min polling latency, but the 72-hour SLA has room for that. Implementation lives in the Edge Function, not in the Next.js app.
 
 ---
 
@@ -216,7 +216,7 @@ Steps:
 
 ---
 
-## P2 -- Next Sprint (quality improvements)
+## P2, Next Sprint (quality improvements)
 
 ### Fix 11: Remove `auto_deliver` dead code (CD #1)
 
@@ -232,7 +232,7 @@ Steps:
 - `C:\Users\email\projects\ImNotAnAttorney-web\src\app\intake\intelligence-brief\page.tsx`
 - `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\intake\intelligence-brief\route.ts`
 
-**Fix:** Add optional `state` and `chargeType` fields to the Phase 2 form, pre-populated from the linked CD intake if available. Store in `phase2_data`. Use as override/confirmation -- the IB prompts can then reference the most recent data.
+**Fix:** Add optional `state` and `chargeType` fields to the Phase 2 form, pre-populated from the linked CD intake if available. Store in `phase2_data`. Use as override/confirmation, the IB prompts can then reference the most recent data.
 
 ---
 
@@ -242,7 +242,7 @@ Steps:
 - `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\generate\case-decoder\route.ts` lines 208-209
 - `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\webhooks\stripe\route.ts`
 
-**Fix:** Set `delivery_due_at` at case creation (webhook) not at generation trigger. For Flow B, the customer sees "48 hours" at purchase -- the clock should start then.
+**Fix:** Set `delivery_due_at` at case creation (webhook) not at generation trigger. For Flow B, the customer sees "48 hours" at purchase, the clock should start then.
 
 **Nuance:** For Flow B, if the customer delays intake by 5 days, the 48-hour SLA was never achievable from purchase time. Consider: set `delivery_due_at` at purchase, but show the customer "48 hours from completing your case details" in the confirmation email. Marketing should align with actual capability.
 
@@ -266,7 +266,7 @@ This aligns with the "fully automated" marketing promise while preserving qualit
 
 ---
 
-## P3 -- Backlog (polish)
+## P3, Backlog (polish)
 
 ### Fix 16: Marketing copy alignment for "Prosecution Pattern Summary" (IB #6)
 Update marketing copy to say "Prosecution Strategy Preview (included in your Intelligence Brief)" instead of presenting it as a standalone deliverable. Files: PricingTable.tsx, checkout/page.tsx, services/page.tsx.
@@ -284,13 +284,13 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 
 ## PART 2: PROMISE FULFILLMENT AUDIT
 
-**Source:** 3-agent audit — marketing pages, email templates, actual generation output
+**Source:** 3-agent audit, marketing pages, email templates, actual generation output
 **Question:** Does each tier actually deliver everything we say it does?
 
 ### Promise Gap Scorecard
 
 | # | Gap | Tier | Severity | Category |
-|---|-----|------|----------|----------|
+|---|---, |------|----------|----------|
 | PG-1 | **IB missing "A Letter to You"** | $997 | CRITICAL | Generation |
 | PG-2 | **IB Appendix C/E numbering mismatch** | $997 | HIGH | Generation |
 | PG-3 | **Prosecution Pressure Tactics Decoder conditional** | $997 | HIGH | Generation |
@@ -313,9 +313,9 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 
 ### PG-1 (CRITICAL): IB missing "A Letter to You"
 
-**Problem:** The CD ($197) includes an elaborate personalized letter (750+ lines of prompt instructions). The IB ($997) has NO letter — no prompt builder in `prompts.ts`, no render slot in `render.ts`. A customer who upgrades from CD to IB loses the personal touch.
+**Problem:** The CD ($197) includes an elaborate personalized letter (750+ lines of prompt instructions). The IB ($997) has NO letter, no prompt builder in `prompts.ts`, no render slot in `render.ts`. A customer who upgrades from CD to IB loses the personal touch.
 
-**Evidence:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\intelligence-brief\prompts.ts` — no `buildLetterToYou()` function. `render.ts:307-332` — no letter slot in section assembly.
+**Evidence:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\intelligence-brief\prompts.ts`, no `buildLetterToYou()` function. `render.ts:307-332`, no letter slot in section assembly.
 
 **Fix:** Add a `buildLetterToYou()` prompt builder to `prompts.ts`. Add it as the first section in `render.ts` section assembly (after 48-Hour Priority List, before Section 1). Use Phase B (sequential) since it should reference Phase A outputs for personalization.
 
@@ -326,7 +326,7 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 **Problem:** DELIVERABLES-BY-TIER says Appendix C = Attorney Script Pack (5 scripts), Appendix E = Your Rights. The code has Appendix C = Your Rights (static). The Script Pack content is scattered across Section 6 subsections (6b email, 6c phone, 6e follow-up, 6i difficult conversations, 6j advocacy).
 
 **Fix:** Two options:
-- **Option A (recommended):** Relabel the code to match the spec — rename "Appendix C: Your Rights" to "Appendix E: Your Rights" and add "Appendix C: Attorney Script Pack" that consolidates the 5 scripts from Section 6 into a printable appendix. Section 6 keeps its subsections; Appendix C provides the printer-friendly standalone.
+- **Option A (recommended):** Relabel the code to match the spec, rename "Appendix C: Your Rights" to "Appendix E: Your Rights" and add "Appendix C: Attorney Script Pack" that consolidates the 5 scripts from Section 6 into a printable appendix. Section 6 keeps its subsections; Appendix C provides the printer-friendly standalone.
 - **Option B:** Update the spec and marketing to match the code. Simpler but means the deliverables list changes.
 
 ---
@@ -335,11 +335,11 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 
 **Problem:** Listed as deliverable #23 (always-present). In code, it's subsection 4e of the Plea Decision Framework, only generated at full depth when `plea_status` is "offered" or "discussing." Many defendants haven't received a plea offer yet.
 
-**Fix:** Extract the Pressure Tactics Decoder from the plea-conditional block. Make it always-present — prosecution pressure exists whether or not a plea is offered (e.g., overcharging, bail conditions, continuances). Adjust the prompt in `buildLegalOptions()` to always include a Pressure Tactics section even when no plea is on the table.
+**Fix:** Extract the Pressure Tactics Decoder from the plea-conditional block. Make it always-present, prosecution pressure exists whether or not a plea is offered (e.g., overcharging, bail conditions, continuances). Adjust the prompt in `buildLegalOptions()` to always include a Pressure Tactics section even when no plea is on the table.
 
 ---
 
-### PG-4 (CRITICAL): Situation Room — 2 workers missing
+### PG-4 (CRITICAL): Situation Room, 2 workers missing
 
 **Problem:** Reply Brief Templates and Witness Statement Analysis have prompt templates in the engine but NO workers to execute them. These are $9,997 deliverables.
 
@@ -348,19 +348,19 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 - Template exists: `C:\Users\email\projects\ImNotAnAttorney-engine\prompts\prompt-template-witness-research.md`
 - No worker file for either
 
-**Fix:** Create `reply-brief.mjs` and `witness-statement-analysis.mjs` workers in the engine repo. Wire them into the Phase 12 (Reply Briefs) and Phase 14 (Trial) pipeline stages. Alternatively, if no Situation Room customer exists yet, add a pre-sale check that these deliverables are noted as "in development" — but this is risky at $9,997.
+**Fix:** Create `reply-brief.mjs` and `witness-statement-analysis.mjs` workers in the engine repo. Wire them into the Phase 12 (Reply Briefs) and Phase 14 (Trial) pipeline stages. Alternatively, if no Situation Room customer exists yet, add a pre-sale check that these deliverables are noted as "in development", but this is risky at $9,997.
 
 ---
 
 ### PG-5 (HIGH): 7-Day Follow-Up Window has no system
 
-**Problem:** IB ($997) promises "7-Day Follow-Up Window — 1 clarifying question answered within 24 hours." There is no ticketing system, no SLA tracker, no email routing for follow-up questions. This is a manual operator process with no enforcement.
+**Problem:** IB ($997) promises "7-Day Follow-Up Window, 1 clarifying question answered within 24 hours." There is no ticketing system, no SLA tracker, no email routing for follow-up questions. This is a manual operator process with no enforcement.
 
 **Fix:** At minimum:
 1. Add a `follow_up_window_ends_at` field to cases (set to delivery + 7 days)
 2. Add a section to the delivery email explaining how to submit a follow-up question (reply to email)
 3. Add operator task auto-creation when a reply is received via Resend inbound webhook
-4. Add SLA tracking — if 24 hours pass without response, escalate
+4. Add SLA tracking, if 24 hours pass without response, escalate
 
 ---
 
@@ -382,7 +382,7 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\drip-emails.ts` line ~678
 
-**Fix:** Remove "You have already paid $97" line. Present CD at full $197 price with note: "DUI Playbook buyers get $97 credit." Or add a conditional check — but the nurture cron doesn't track purchase history, so the conditional is harder to implement. Safest: remove the false claim entirely.
+**Fix:** Remove "You have already paid $97" line. Present CD at full $197 price with note: "DUI Playbook buyers get $97 credit." Or add a conditional check, but the nurture cron doesn't track purchase history, so the conditional is harder to implement. Safest: remove the false claim entirely.
 
 ---
 
@@ -390,7 +390,7 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 
 **Problem:** Three nurture emails say "within 30 days" for upgrade credit. Actual policy is 12 months (tiers.ts, checkout logic). Customer reads 30 days, panics, buys under pressure or gives up thinking they missed the window.
 
-**Files:** `drip-emails.ts` — `nurture_day7` (~line 278), `nurture_day14` (~line 312), `score_crisis_day2` (~line 372)
+**Files:** `drip-emails.ts`, `nurture_day7` (~line 278), `nurture_day14` (~line 312), `score_crisis_day2` (~line 372)
 
 **Fix:** Change all "within 30 days" to "within 12 months" to match actual policy. Exception: Playbook-to-CD credit IS 30 days (checkout route confirms). So playbook credit references should stay 30 days; service tier credit references should say 12 months.
 
@@ -398,7 +398,7 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 
 ### PG-9 (MODERATE): Discovery Checklist link broken
 
-**Problem:** Welcome email links to `/guides/discovery-checklist-7-evidence-problems.md` — a raw markdown file path that likely 404s.
+**Problem:** Welcome email links to `/guides/discovery-checklist-7-evidence-problems.md`, a raw markdown file path that likely 404s.
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\subscribe\route.ts` line ~205
 
@@ -410,7 +410,7 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 
 **Problem:** Partial refunds send customer email (T17). Full refunds send ONLY operator email. Customer who gets a full refund has to check their bank statement.
 
-**File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\webhooks\stripe\route.ts` — `charge.refunded` handler
+**File:** `C:\Users\email\projects\ImNotAnAttorney-web\src\app\api\webhooks\stripe\route.ts`, `charge.refunded` handler
 
 **Fix:** Add customer email on full refund: "Your refund of ${amount} has been processed. You'll see it reflected in 5-10 business days." Includes case number and closes the loop professionally.
 
@@ -471,32 +471,32 @@ Wire up the existing PATCH endpoint to a notes textarea in the case detail UI. A
 ## Updated Implementation Order
 
 ```
-Sprint 1 (P0 -- immediate, same day):
+Sprint 1 (P0, immediate, same day):
   Fix 1 (CD#5 delivery param) -> Fix 2 (my-cases SELECT) -> deploy -> verify
 
-Sprint 2 (P1 -- this week, customer-facing):
-  Fix 6 (early report_token) -- biggest trust builder
-  Fix 3 (failure notification) -- no more silent failures
+Sprint 2 (P1, this week, customer-facing):
+  Fix 6 (early report_token), biggest trust builder
+  Fix 3 (failure notification), no more silent failures
   Fix 4 (triple email consolidation)
   Fix 5 (status triggers generation)
   Fix 7 (retry button)
   Fix 8a (reduce stuck threshold)
   Fix 9 (intake after())
-  PG-7 (false $97 claim) -- CRITICAL, fix same sprint
-  PG-8 (30d vs 12m credit) -- easy text fix
-  PG-9 (broken checklist link) -- easy text fix
-  PG-10 (full refund email) -- customer experience
+  PG-7 (false $97 claim), CRITICAL, fix same sprint
+  PG-8 (30d vs 12m credit), easy text fix
+  PG-9 (broken checklist link), easy text fix
+  PG-10 (full refund email), customer experience
   PG-15 (wrong appendix labels in email)
 
-Sprint 3 (P1 -- next week, generation/content):
-  PG-1 (IB Letter to You) -- add prompt + render slot
+Sprint 3 (P1, next week, generation/content):
+  PG-1 (IB Letter to You), add prompt + render slot
   PG-2 (IB appendix relabeling)
   PG-3 (Pressure Tactics always-present)
   PG-12 (CD section enforcement)
   PG-17 (verify IB email references)
   Fix 11-15 (pipeline P2 fixes)
 
-Sprint 4 (P2 -- following week, operations + engine):
+Sprint 4 (P2, following week, operations + engine):
   PG-5 (7-Day Follow-Up Window system)
   PG-11 (generic playbook post-purchase drip)
   PG-13 (Witness Reliability 7-dimension table)
@@ -505,24 +505,24 @@ Sprint 4 (P2 -- following week, operations + engine):
   Fix 16-19 (pipeline P3 fixes)
 
 Pre-Sale Blockers (before first Situation Room sale):
-  PG-4 (2 missing workers -- Reply Briefs + Witness Statement)
+  PG-4 (2 missing workers, Reply Briefs + Witness Statement)
   PG-6 (dedicated communication channel)
 ```
 
 ```
-Sprint 1 (P0 -- immediate):
+Sprint 1 (P0, immediate):
   Fix 1 (CD#5 param) -> Fix 2 (my-cases SELECT) -> deploy -> verify
 
-Sprint 2 (P1 -- this week):
-  Fix 6 (early report_token) -- largest impact, enables progress tracking
-  Fix 3 (failure notification) -- honors the communication promise
-  Fix 4 (triple email) -- clean up email experience
-  Fix 5 (status triggers generation) -- operator workflow
-  Fix 7 (retry button) -- operator productivity
-  Fix 8a (reduce stuck threshold) -- faster failure detection
-  Fix 9 (intake after()) -- reliability
+Sprint 2 (P1, this week):
+  Fix 6 (early report_token), largest impact, enables progress tracking
+  Fix 3 (failure notification), honors the communication promise
+  Fix 4 (triple email), clean up email experience
+  Fix 5 (status triggers generation), operator workflow
+  Fix 7 (retry button), operator productivity
+  Fix 8a (reduce stuck threshold), faster failure detection
+  Fix 9 (intake after()), reliability
 
-Sprint 3 (P2 -- next week):
+Sprint 3 (P2, next week):
   Fix 11-15
 
 Backlog:
@@ -535,7 +535,7 @@ Backlog:
 
 ```bash
 # Type check
-cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc --noEmit
+cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc,noEmit
 
 # Build
 cd C:/Users/email/projects/ImNotAnAttorney-web && npm run build

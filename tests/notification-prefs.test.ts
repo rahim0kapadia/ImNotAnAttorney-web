@@ -86,7 +86,7 @@ describe("shouldSendEmail / shouldSendSMS", () => {
 });
 
 describe("COURT_REMINDER_SAFE_CHANNELS", () => {
-  it("only allows email or both — never sms alone", () => {
+  it("only allows email or both, never sms alone", () => {
     expect(COURT_REMINDER_SAFE_CHANNELS).toEqual(new Set(["email", "both"]));
   });
 });

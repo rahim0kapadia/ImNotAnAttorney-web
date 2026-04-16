@@ -1,5 +1,5 @@
 /**
- * @file /api/partners/apply — Public partner application endpoint.
+ * @file /api/partners/apply, Public partner application endpoint.
  *
  * PUBLIC (no auth required). Rate-limited to prevent spam.
  * Auto-approves partners on application:
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (existingPartner.status === "suspended") {
-      // Don't leak suspension status — generic response
+      // Don't leak suspension status, generic response
       return NextResponse.json({
         success: true,
         message: "Application received. We'll be in touch.",
@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (existingPartner.status === "approved") {
-      // Already approved — send fresh magic link
+      // Already approved, send fresh magic link
       try {
         const mlResult = await generateMagicLink(normalizedEmail);
         if (mlResult) {
@@ -149,7 +149,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (existingPartner.status === "pending") {
-      // Upgrade pending partner to approved — continue to promo code generation below
+      // Upgrade pending partner to approved, continue to promo code generation below
       // We'll use the existing partner record
     }
   }
@@ -182,7 +182,7 @@ export async function POST(req: NextRequest) {
     }
     partnerId = existingPartner.id;
 
-    // Check if pending partner already has a promo code — generate one if not
+    // Check if pending partner already has a promo code, generate one if not
     const { data: pendingRecord } = await supabase
       .from("partners")
       .select("promo_code")
@@ -298,7 +298,7 @@ export async function POST(req: NextRequest) {
 
     partnerId = newPartner.id;
 
-    // Create Stripe promo codes (inactive — activated on email verification)
+    // Create Stripe promo codes (inactive, activated on email verification)
     try {
       const stripePromo = await createPartnerPromoCode(partnerId, promoCode, partnerName);
       await supabase
@@ -307,7 +307,7 @@ export async function POST(req: NextRequest) {
         .eq("id", partnerId);
     } catch (stripeErr) {
       console.error("[Partner Apply] Stripe promo code creation failed:", stripeErr);
-      // Non-fatal — partner still gets approved, promo code can be created manually
+      // Non-fatal, partner still gets approved, promo code can be created manually
     }
 
     // Insert audit trail
@@ -366,7 +366,7 @@ export async function POST(req: NextRequest) {
       to: OPERATOR_EMAIL,
       subject: `New Partner Auto-Approved (${source || "direct"}): ${name}`,
       html: `
-        <h1 style="color: #F59E0B;">New Partner — Auto-Approved</h1>
+        <h1 style="color: #F59E0B;">New Partner, Auto-Approved</h1>
         <div style="background: #1C1917; padding: 24px; border-radius: 12px; border-left: 4px solid #F59E0B;">
           <p style="color: #D4D4D8; margin: 0;"><strong style="color: white;">Name:</strong> ${escapeHtml(name)}</p>
           ${company ? `<p style="color: #D4D4D8; margin: 8px 0 0;"><strong style="color: white;">Company:</strong> ${escapeHtml(company)}</p>` : ""}

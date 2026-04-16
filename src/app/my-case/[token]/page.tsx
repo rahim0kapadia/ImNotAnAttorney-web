@@ -1,5 +1,5 @@
 /**
- * @file /my-case/[token] — Customer Case Progress Portal
+ * @file /my-case/[token], Customer Case Progress Portal
  *
  * Token-based, server-rendered portal showing real-time case progress for
  * discovery tier customers ($2,497-$9,997). Customers waiting 10-28 days
@@ -10,7 +10,7 @@
  *   Post-purchase email (portal link) -> THIS PAGE
  *   Also linked from checkout success page for discovery tiers.
  *
- * Auth model: Same as /report/[token] — URL token validated server-side,
+ * Auth model: Same as /report/[token], URL token validated server-side,
  *   no login required. Token is an unguessable UUID stored on the case record.
  *
  * Tier gating:
@@ -32,7 +32,7 @@
  *   timeline_events, case_witnesses, case_law_references, motion_recommendations,
  *   trial_materials, processing_jobs
  *
- * SEO: robots noindex/nofollow — case progress should not appear in search engines.
+ * SEO: robots noindex/nofollow, case progress should not appear in search engines.
  */
 import { createAdminClient } from "@/lib/supabase/admin";
 import { CONTACT_EMAIL, SITE_URL, hashToken } from "@/lib/site";
@@ -100,17 +100,17 @@ export async function generateMetadata({
   };
   const name = data?.tier ? tierNames[data.tier] || "Case" : "Case";
   return {
-    title: `Your ${name} Progress — ImNotAnAttorney`,
+    title: `Your ${name} Progress, ImNotAnAttorney`,
     robots: { index: false, follow: false },
   };
 }
 
 // ============================================================
-// HELPER COMPONENTS (server — no hooks)
+// HELPER COMPONENTS (server, no hooks)
 // ============================================================
 
 /**
- * Score bar — renders a numeric score with a colored progress bar.
+ * Score bar, renders a numeric score with a colored progress bar.
  * Color coding: green (70+), amber (40-69), red (<40).
  * Shows "Calculating..." when score is null (analysis in progress).
  */
@@ -147,7 +147,7 @@ function ScoreBar({
 }
 
 /**
- * Progress stepper — horizontal step indicator showing case status.
+ * Progress stepper, horizontal step indicator showing case status.
  * Discovery tiers use: Submitted -> Processing -> Under Review -> Delivered
  * Non-discovery tiers use: Purchased -> Generating -> Under Review -> Delivered
  */
@@ -240,7 +240,7 @@ function ProgressStepper({
 }
 
 /**
- * Stat card — reusable card showing a label and value.
+ * Stat card, reusable card showing a label and value.
  * Used for document counts, finding breakdowns, timeline events, etc.
  */
 function StatCard({
@@ -268,7 +268,7 @@ function StatCard({
 }
 
 /**
- * Section header — consistent section headings throughout the portal.
+ * Section header, consistent section headings throughout the portal.
  */
 function SectionHeader({ title }: { title: string }) {
   return (
@@ -277,7 +277,7 @@ function SectionHeader({ title }: { title: string }) {
 }
 
 /**
- * Empty state — shown when data is not yet available for a section.
+ * Empty state, shown when data is not yet available for a section.
  */
 function EmptyState({ message }: { message: string }) {
   return (
@@ -392,7 +392,7 @@ export default async function MyCasePage({
     );
   }
 
-  // ── Step 3: Non-discovery tiers — simple status page ────────
+  // ── Step 3: Non-discovery tiers, simple status page ────────
   // ── Step 4b: Referral attribution lookup ───────────────────
   // Check if this purchase came through a partner referral
   let referralCode: string | null = null;
@@ -478,9 +478,9 @@ export default async function MyCasePage({
             <h2 className="text-lg font-semibold text-white mb-3">What to Do Next</h2>
             {isDelivered ? (
               <ul className="space-y-2 text-sm text-zinc-300">
-                <li>1. Review your report — read every question carefully.</li>
+                <li>1. Review your report, read every question carefully.</li>
                 <li>2. Schedule a meeting with your attorney and bring these questions.</li>
-                <li>3. Take notes on their answers — write down what they say.</li>
+                <li>3. Take notes on their answers, write down what they say.</li>
                 <li>4. If anything is unclear, email us and we will help you understand it.</li>
               </ul>
             ) : (
@@ -515,7 +515,7 @@ export default async function MyCasePage({
     );
   }
 
-  // ── Step 4: Discovery tiers — parallel data queries ─────────
+  // ── Step 4: Discovery tiers, parallel data queries ─────────
   const caseId = caseData.id;
 
   const [
@@ -629,7 +629,7 @@ export default async function MyCasePage({
   // Motions (War Room+)
   const motionCount = motionResult.count ?? 0;
 
-  // Attack intelligence (Situation Room) — count findings with attack-related categories
+  // Attack intelligence (Situation Room), count findings with attack-related categories
   const attackFindingCount =
     findingsResult.data?.filter((f) => {
       const cat = f.category?.toLowerCase();
@@ -662,7 +662,7 @@ export default async function MyCasePage({
     : null;
   const submittedDate = new Date(caseData.created_at);
 
-  // Defense Opportunity Index — stored as JSONB, extract the overall score
+  // Defense Opportunity Index, stored as JSONB, extract the overall score
   const doiValue =
     caseData.defense_opportunity_index &&
     typeof caseData.defense_opportunity_index === "object" &&
@@ -996,9 +996,9 @@ export default async function MyCasePage({
           <h2 className="text-lg font-semibold text-white mb-3">What to Do Next</h2>
           {isDelivered ? (
             <ul className="space-y-2 text-sm text-zinc-300">
-              <li>1. Review your full report — read every question and finding.</li>
+              <li>1. Review your full report, read every question and finding.</li>
               <li>2. Schedule a meeting with your attorney and bring these questions.</li>
-              <li>3. Take notes on their answers — write down what they say.</li>
+              <li>3. Take notes on their answers, write down what they say.</li>
               <li>4. If anything is unclear, email us and we will help you understand it.</li>
             </ul>
           ) : (

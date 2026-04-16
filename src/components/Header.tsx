@@ -15,6 +15,7 @@
  */
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
@@ -77,7 +78,7 @@ export function Header() {
     }
   }, []);
 
-  // Landing page has no navigation — reduces CTA competition
+  // Landing page has no navigation, reduces CTA competition
   if (pathname === "/") return null;
 
   return (

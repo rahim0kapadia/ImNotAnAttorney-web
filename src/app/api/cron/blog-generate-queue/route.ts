@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/blog-generate-queue — Daily blog content queue selection
+ * @file /api/cron/blog-generate-queue, Daily blog content queue selection
  *
  * Selects the highest-priority content gaps (status='identified', gap_score>=7,
  * quadrant IN GOLD_MINE/RISKY_BET) and transitions them to `queued` status so
@@ -93,7 +93,7 @@ export async function GET(req: NextRequest) {
       }
 
       if (existingDraft) {
-        // Draft already exists — skip to avoid duplicate work
+        // Draft already exists, skip to avoid duplicate work
         skipped++;
         continue;
       }

@@ -1,4 +1,4 @@
-# Jurisdiction Statutes Coverage Audit — 2026-04-14
+# Jurisdiction Statutes Coverage Audit, 2026-04-14
 
 ## Executive Summary
 
@@ -82,10 +82,10 @@ All jurisdictions are fully covered at 100%. Listed smallest to largest:
 - **No jurisdiction** has less than 100% coverage
 
 ### 2. Statute Distribution
-- **Thinnest coverage**: Federal (45 statutes) — still 100% mapped
-- **Thickest coverage**: South Carolina (158 statutes) — still 100% mapped
+- **Thinnest coverage**: Federal (45 statutes), still 100% mapped
+- **Thickest coverage**: South Carolina (158 statutes), still 100% mapped
 - **Narrow middle band**: Most states cluster at 85-95 statutes
-- **Outliers**: Idaho (155), SC (158) — both common law heavy jurisdictions
+- **Outliers**: Idaho (155), SC (158), both common law heavy jurisdictions
 
 ### 3. Charge Category Distribution
 - **Total unique categories**: 174 categories across all jurisdictions
@@ -132,9 +132,9 @@ All jurisdictions are fully covered at 100%. Listed smallest to largest:
 ## Implications for the Charge Extractor
 
 ### Strengths
-1. **Complete coverage** — No jurisdiction gaps to handle
-2. **Atomic mapping** — 1:1 statute-to-slug ensures charge specificity
-3. **Cross-jurisdiction consistency** — Same charge categories across 52 jurisdictions
+1. **Complete coverage**, No jurisdiction gaps to handle
+2. **Atomic mapping**, 1:1 statute-to-slug ensures charge specificity
+3. **Cross-jurisdiction consistency**, Same charge categories across 52 jurisdictions
 
 ### Usage Confidence
 - Every statute in every jurisdiction has a mapped charge slug
@@ -151,10 +151,10 @@ All jurisdictions are fully covered at 100%. Listed smallest to largest:
 
 ## Data Quality Notes
 
-1. **100% population rate** — No NULL values in common_charge_slug across 4,699 rows
-2. **No orphan statutes** — Every statute has a valid, mapped charge category
-3. **Consistent across all tier usage** — Case Decoder, Intelligence Brief, X-Ray all have equal access
-4. **No state-specific gaps** — Common law, civil law, and code states all equally covered
+1. **100% population rate**, No NULL values in common_charge_slug across 4,699 rows
+2. **No orphan statutes**, Every statute has a valid, mapped charge category
+3. **Consistent across all tier usage**, Case Decoder, Intelligence Brief, X-Ray all have equal access
+4. **No state-specific gaps**, Common law, civil law, and code states all equally covered
 
 ---
 

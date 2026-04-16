@@ -12,7 +12,7 @@ Police reports. Lab results. Witness statements. Informant information.
 
 Your attorney should have it. You should be able to see it.
 
-Here's what discovery means in drug cases — and what to do if you're not getting it:
+Here's what discovery means in drug cases, and what to do if you're not getting it:
 ===TWEET===
 Discovery is a constitutional right, not a courtesy.
 
@@ -39,10 +39,10 @@ The red flags your attorney isn't doing their job:
 ===TWEET===
 You don't need a law degree to ask: "Can I see my discovery?"
 
-If your attorney says no, or gets vague, or tells you not to worry — that's information.
+If your attorney says no, or gets vague, or tells you not to worry, that's information.
 
 That tells you how your case is being handled.
 ===TWEET===
-Full breakdown of what you're entitled to in drug cases — and the questions that force your attorney to show their work:
+Full breakdown of what you're entitled to in drug cases, and the questions that force your attorney to show their work:
 
 → https://imnotanattorney.com/blog/discovery-rights-drug-cases?utm_source=twitter&utm_medium=thread&utm_campaign=discovery-rights-drug-cases

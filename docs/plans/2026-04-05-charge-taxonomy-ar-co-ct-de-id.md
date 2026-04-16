@@ -4,11 +4,11 @@
 Write 5 new JSON charge taxonomy files to `data/charge-taxonomy/` for Arkansas, Colorado, Connecticut, Delaware, and Idaho. Each file follows the existing format (AL.json) with 80 charges per state covering DUI, drugs, violent crimes, property, domestic, weapons, fraud, sex offenses, public order, probation/parole, and other (conspiracy, aiding-abetting, attempt).
 
 ## Files to Create
-1. `data/charge-taxonomy/AR.json` — Arkansas (Ark. Code Ann. citations) -- DONE
-2. `data/charge-taxonomy/CO.json` — Colorado (C.R.S. citations) -- DONE
-3. `data/charge-taxonomy/CT.json` — Connecticut (Conn. Gen. Stat. citations) -- DONE
-4. `data/charge-taxonomy/DE.json` — Delaware (Del. C. citations) -- DONE
-5. `data/charge-taxonomy/ID.json` — Idaho (Idaho Code citations) -- PENDING
+1. `data/charge-taxonomy/AR.json`, Arkansas (Ark. Code Ann. citations), DONE
+2. `data/charge-taxonomy/CO.json`, Colorado (C.R.S. citations), DONE
+3. `data/charge-taxonomy/CT.json`, Connecticut (Conn. Gen. Stat. citations), DONE
+4. `data/charge-taxonomy/DE.json`, Delaware (Del. C. citations), DONE
+5. `data/charge-taxonomy/ID.json`, Idaho (Idaho Code citations), PENDING
 
 ## Files to Modify
 None.

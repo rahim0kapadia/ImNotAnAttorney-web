@@ -10,7 +10,7 @@ suggested_time: "Sunday 5:00 PM ET"
 target_groups: ["Know Your Rights Community Groups", "Bail Bond Support Groups", "DUI Support Groups"]
 ---
 
-## Facebook Post: Poll -- Court Docket Awareness
+## Facebook Post: Poll, Court Docket Awareness
 
 **Type**: Poll (Facebook native poll feature in Groups)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -23,10 +23,10 @@ target_groups: ["Know Your Rights Community Groups", "Bail Bond Support Groups",
 
 POLL: Have you ever looked up your own case on the court docket?
 
-Most counties let you search court records online for free. You can see every document filed in your case -- every motion, every continuance, every order.
+Most counties let you search court records online for free. You can see every document filed in your case, every motion, every continuance, every order.
 
-A) Yes -- I check it regularly
-B) Yes -- I checked once
+A) Yes, I check it regularly
+B) Yes, I checked once
 C) I didn't know I could do that
 D) I tried but couldn't figure out how
 E) My attorney told me not to worry about it
@@ -59,7 +59,7 @@ This poll has a built-in action step: people who vote C or D can immediately go 
 
 The follow-up comments from people checking their dockets for the first time will be the most powerful content in the thread. Engage with each one.
 
-After 24-48 hours, post a follow-up: "X% of people in this group didn't know they could check their own court docket. That's not a personal failing -- it's a system that doesn't want you to look."
+After 24-48 hours, post a follow-up: "X% of people in this group didn't know they could check their own court docket. That's not a personal failing, it's a system that doesn't want you to look."
 
 ### UPL Compliance Note
 
@@ -68,5 +68,5 @@ Court dockets are public record. Encouraging someone to look at their own public
 ---
 
 **Share trigger**: Someone checks their docket for the first time and sends a message to their family: "Nothing has been filed. Not a single motion." The poll results (majority C or D) get shared to other groups: "Most defendants don't even know they can check."
-**Context**: Docket-checking is the single most empowering action step INNA teaches. Once someone sees their own docket, they never go back to passive acceptance. The poll format discovers how many people do not know this is possible -- and the answer will be striking. The follow-up comments from first-time docket checkers create organic, powerful testimonials.
+**Context**: Docket-checking is the single most empowering action step INNA teaches. Once someone sees their own docket, they never go back to passive acceptance. The poll format discovers how many people do not know this is possible, and the answer will be striking. The follow-up comments from first-time docket checkers create organic, powerful testimonials.
 **KPI target**: Poll votes (aim for 150+) + follow-up comments from first-time docket checkers + Messenger shares of the docket-checking instructions

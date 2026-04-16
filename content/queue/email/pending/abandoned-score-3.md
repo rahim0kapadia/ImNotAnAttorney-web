@@ -1,8 +1,8 @@
-# Flow: Score Quiz Abandonment — Email 3 of 3
+# Flow: Score Quiz Abandonment, Email 3 of 3
 
 **Trigger:** Email 2 sent, user still hasn't completed the quiz or purchased
 **Timing:** 72 hours after Email 2 (approximately 4 days after abandonment)
-**Goal:** Frame the cost of inaction — last reminder with urgency reframe
+**Goal:** Frame the cost of inaction, last reminder with urgency reframe
 
 ## Subject Line Options (3 versions for A/B testing)
 1. The cost of not knowing
@@ -14,7 +14,7 @@ The prosecution doesn't wait for you to get informed. Neither do deadlines.
 
 ## Email Body
 
-<!--
+<!, 
   Flow: Score Quiz Abandonment
   Position: Email 3 of 3
   Trigger: Email 2 sent, no quiz completion or purchase
@@ -26,7 +26,7 @@ The prosecution doesn't wait for you to get informed. Neither do deadlines.
   Subject line B: Your case is moving. Are you?
   Subject line C: Nobody is going to tell you this
   Preview text: The prosecution doesn't wait for you to get informed. Neither do deadlines.
--->
+, >
 
 <h1 style="color: #F59E0B; font-size: 22px; margin: 0 0 16px;">Nobody Benefits From Your Silence. Except the Prosecution.</h1>
 
@@ -36,7 +36,7 @@ The prosecution doesn't wait for you to get informed. Neither do deadlines.
 
 <p>We don't know what it was. But we know what happens next if nothing changes.</p>
 
-<p><strong style="color: white;">Your case keeps moving.</strong> Court dates get set. Discovery deadlines pass. The prosecution prepares their witnesses. Your attorney — if they're not being pushed — handles the cases where clients are asking questions first.</p>
+<p><strong style="color: white;">Your case keeps moving.</strong> Court dates get set. Discovery deadlines pass. The prosecution prepares their witnesses. Your attorney, if they're not being pushed, handles the cases where clients are asking questions first.</p>
 
 <p>That's not a judgment on your attorney. That's human nature. The squeaky wheel gets the grease. And if you don't know what questions to ask, you can't be the squeaky wheel.</p>
 
@@ -59,7 +59,7 @@ The prosecution doesn't wait for you to get informed. Neither do deadlines.
 <p style="font-size: 14px; color: #A1A1AA;">Or if you already know your defense needs work: <a href="https://imnotanattorney.com/checkout?tier=case-decoder" style="color: #F59E0B; text-decoration: underline;">Get 15 calibrated questions for $197</a></p>
 
 <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; font-size: 13px;">
-  <strong style="color: white;">P.S.</strong> If your case has been resolved — congratulations. Ignore this and we'll stop emailing about the score. But if it hasn't, and you're still sitting with that uneasy feeling that your attorney isn't doing enough... that feeling is information too.
+  <strong style="color: white;">P.S.</strong> If your case has been resolved, congratulations. Ignore this and we'll stop emailing about the score. But if it hasn't, and you're still sitting with that uneasy feeling that your attorney isn't doing enough... that feeling is information too.
 </p>
 
 ## CTA Button
@@ -67,7 +67,7 @@ The prosecution doesn't wait for you to get informed. Neither do deadlines.
 **URL:** https://imnotanattorney.com/score
 
 ## Segmentation Notes
-- Final email in score abandonment flow — no further follow-up
+- Final email in score abandonment flow, no further follow-up
 - Suppress if subscriber completed the quiz or purchased since Email 2
 - Secondary CTA links directly to Case Decoder checkout for high-intent readers who want to skip the quiz
 

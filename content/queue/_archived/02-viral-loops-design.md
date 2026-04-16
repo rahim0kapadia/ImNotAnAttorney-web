@@ -34,7 +34,7 @@ The /score page is a 7-question free quiz that gives a 0-100 Defense Milestone S
 After displaying the score, add a sharing section:
 
 ```
-"Your Defense Milestone Score: [XX]/100 -- [Band]"
+"Your Defense Milestone Score: [XX]/100, [Band]"
 
 "Know someone facing charges? Send them the score."
 
@@ -42,12 +42,12 @@ After displaying the score, add a sharing section:
 ```
 
 Share text templates (pre-filled, user edits):
-- **Text/WhatsApp:** "I just checked my Defense Milestone Score -- it's [XX]/100. You should check yours too. Free, no email required: imnotanattorney.com/score"
-- **Email subject:** "Check this -- are you getting a real defense?"
+- **Text/WhatsApp:** "I just checked my Defense Milestone Score, it's [XX]/100. You should check yours too. Free, no email required: imnotanattorney.com/score"
+- **Email subject:** "Check this, are you getting a real defense?"
 - **Email body:** "I used this free tool to check if my attorney is hitting basic defense milestones. My score was [XX]/100. Takes 60 seconds: imnotanattorney.com/score"
 - **Twitter:** "Just found out my attorney is [missing/hitting] basic defense milestones. Score: [XX]/100. Free check: imnotanattorney.com/score #criminaldefense"
 
-**Why this works:** Scores are inherently shareable. People share quiz results for the same reason they share personality test results -- it validates their experience and invites comparison. A low score (Critical/Concerning) creates urgency to warn others. A high score (Adequate/Excellent) creates validation to share.
+**Why this works:** Scores are inherently shareable. People share quiz results for the same reason they share personality test results, it validates their experience and invites comparison. A low score (Critical/Concerning) creates urgency to warn others. A high score (Adequate/Excellent) creates validation to share.
 
 **1b. Dynamic Share Image**
 
@@ -96,7 +96,7 @@ This creates a reference point and makes the score more meaningful. Scores above
 3. When someone purchases through the link, both parties benefit:
    - **Referrer:** $50 credit toward any upgrade or future purchase
    - **Referred:** $25 off their first purchase ($97 Playbook becomes $72, $197 Case Decoder becomes $172)
-4. Credits stack -- refer 4 people, earn $200 toward an Intelligence Brief upgrade
+4. Credits stack, refer 4 people, earn $200 toward an Intelligence Brief upgrade
 
 **Why upgrade credits instead of cash:**
 - Keeps money in the ecosystem (higher LTV)
@@ -138,14 +138,14 @@ Track referral credits and show balance:
 "When I got charged, I found this service that researches your case and gives you questions to ask your attorney. It actually helped. They're giving $25 off through my link: [link]"
 
 **Email template:**
-Subject: "This helped me with my case -- might help you too"
-Body: "I know you're going through it. I used ImNotAnAttorney to get specific questions for my attorney about my case -- things I never would have known to ask. They have a $97 playbook that's actually useful. Here's $25 off if you want to check it out: [link]"
+Subject: "This helped me with my case, might help you too"
+Body: "I know you're going through it. I used ImNotAnAttorney to get specific questions for my attorney about my case, things I never would have known to ask. They have a $97 playbook that's actually useful. Here's $25 off if you want to check it out: [link]"
 
 ### Viral Coefficient Estimate
 - Assume 100 customers purchase
 - 30-40% of criminal defendants know someone else facing charges (or have family who knows someone)
 - 15-20% will share their referral link when prompted post-purchase
-- Of those reached, 5-10% convert (high intent -- they were already considering)
+- Of those reached, 5-10% convert (high intent, they were already considering)
 - **K-factor estimate: 0.075-0.20** per customer
 
 ---
@@ -167,7 +167,7 @@ Instead of a single generic share CTA, add context-specific prompts based on the
 | should-you-take-the-plea-deal | "Someone you know is deciding on a plea? They need to read this first." |
 | first-time-felony-what-actually-happens | "Know someone who just got charged? The system won't explain itself. This will." |
 | can-dui-be-dismissed | "Someone you care about got a DUI? There are actual defenses. Share this." |
-| feels-like-lawyer-working-against-me | "If someone you know feels like their lawyer isn't fighting for them -- they're probably right. Send them this." |
+| feels-like-lawyer-working-against-me | "If someone you know feels like their lawyer isn't fighting for them, they're probably right. Send them this." |
 | how-to-read-your-discovery | "Know a defendant who can't make sense of their discovery? This is the guide they need." |
 | 10-questions-every-defendant-should-ask | "These 10 questions change the dynamic with any defense attorney. Share with someone who needs them." |
 
@@ -188,7 +188,7 @@ If you know someone going through this, they need to see this too.
 
 When a user scrolls to leave a blog post (or hovers over the back button on desktop), show a lightweight modal:
 ```
-"Before you go -- know someone facing charges?"
+"Before you go, know someone facing charges?"
 "Most defendants don't know they can hold their attorney accountable."
 [Share via Text] [Share via WhatsApp] [Maybe Later]
 ```
@@ -196,7 +196,7 @@ When a user scrolls to leave a blog post (or hovers over the back button on desk
 This catches visitors who found the content valuable but weren't prompted to share at the right moment.
 
 ### Impact Estimate
-- Current blog traffic: [unknown -- establish baseline with analytics]
+- Current blog traffic: [unknown, establish baseline with analytics]
 - Adding contextual prompts + mid-article triggers could increase share rate by 2-3x over current generic prompts
 - Text and WhatsApp shares have the highest conversion rates for this audience (personal, urgent, one-to-one)
 
@@ -222,7 +222,7 @@ Create a structured way for defendants to share their experiences with the crimi
 4. Published stories appear on a /stories page and can be featured in blog posts
 
 **Why This Works:**
-- Defendants want to be heard -- the system silences them
+- Defendants want to be heard, the system silences them
 - Stories create authentic social proof (more powerful than constructed testimonials)
 - Each published story is shared by the person who submitted it (organic distribution)
 - Stories provide VoC data for copywriting and product development
@@ -233,7 +233,7 @@ After story is published, email the submitter:
 ```
 Subject: "Your story is live"
 Body: "Your story has been published at imnotanattorney.com/stories/[slug].
-Share it with your community -- your experience might help someone else
+Share it with your community, your experience might help someone else
 who's going through the same thing.
 
 [Share via Text] [Share via Email] [Share via Facebook]"
@@ -252,7 +252,7 @@ The submitter naturally shares their published story with their network, bringin
 ## Loop 5: Embeddable Badge Viral Distribution
 
 ### Current State
-INNA already has an EmbeddableBadge component -- a widget that other sites can embed.
+INNA already has an EmbeddableBadge component, a widget that other sites can embed.
 
 ### Proposed Enhancement: Bail Bond and Attorney Directory Partnerships
 
@@ -265,7 +265,7 @@ INNA already has an EmbeddableBadge component -- a widget that other sites can e
 - Court self-help centers (some link to external resources)
 
 **Badge variants:**
-1. "Check Your Defense Milestone Score -- Free" (links to /score)
+1. "Check Your Defense Milestone Score, Free" (links to /score)
 2. "Know Your Rights: Free Criminal Defense Resources" (links to /resources)
 3. "Questions Your Attorney Should Be Answering" (links to blog)
 
@@ -290,11 +290,11 @@ Allow Playbook buyers to send a free preview chapter to a friend facing similar 
 1. After purchasing a $97 Playbook, the customer sees on the success page:
    ```
    "Know someone facing [DUI/drug/etc.] charges?"
-   "Send them a free preview of the playbook -- the first 5 questions."
+   "Send them a free preview of the playbook, the first 5 questions."
    [Enter their email] [Send Preview]
    ```
 2. The friend receives an email with a 5-question preview from the playbook
-3. The email includes a CTA: "Get the full playbook with all 26 questions -- $97"
+3. The email includes a CTA: "Get the full playbook with all 26 questions, $97"
 4. The friend also sees the Defense Milestone Score quiz as a free alternative
 
 **Why This Works:**
@@ -314,13 +314,13 @@ Allow Playbook buyers to send a free preview chapter to a friend facing similar 
 ## Priority Ranking and Implementation Order
 
 | Loop | Effort | Expected Impact | Priority |
-|------|--------|----------------|----------|
-| 1: Score quiz sharing | Low (add share buttons to existing page) | Medium-High | 1 -- Implement first |
-| 3: Blog share enhancements | Low (copy changes + mid-article CTA) | Medium | 2 -- Quick wins |
-| 2: Referral program | Medium (referral tracking, credits, emails) | High | 3 -- Implement after first paid customers |
-| 6: Playbook sampling | Medium (preview email, tracking) | Medium | 4 -- After playbook sales establish |
-| 4: UGC defendant stories | Medium (form, moderation, page) | Medium-Long term | 5 -- After community establishes |
-| 5: Embeddable badges | Low-Medium (outreach effort) | Low-Medium per placement, scales | 6 -- Ongoing partnership development |
+|------|------, |----------------|----------|
+| 1: Score quiz sharing | Low (add share buttons to existing page) | Medium-High | 1, Implement first |
+| 3: Blog share enhancements | Low (copy changes + mid-article CTA) | Medium | 2, Quick wins |
+| 2: Referral program | Medium (referral tracking, credits, emails) | High | 3, Implement after first paid customers |
+| 6: Playbook sampling | Medium (preview email, tracking) | Medium | 4, After playbook sales establish |
+| 4: UGC defendant stories | Medium (form, moderation, page) | Medium-Long term | 5, After community establishes |
+| 5: Embeddable badges | Low-Medium (outreach effort) | Low-Medium per placement, scales | 6, Ongoing partnership development |
 
 ---
 
@@ -348,7 +348,7 @@ At 0.35 combined K-factor, a paid acquisition spend that brings 1,000 visitors a
 ## Metrics to Track
 
 | Metric | Baseline | Target (90 days) |
-|--------|----------|-------------------|
+|------, |----------|-------------------|
 | Score quiz completions/month | [establish] | 500+ |
 | Score quiz share rate | 0% (no share buttons) | 15-25% |
 | Blog share rate | [establish] | 3-5% |

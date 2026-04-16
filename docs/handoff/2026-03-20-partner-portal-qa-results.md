@@ -1,11 +1,11 @@
-# Partner Portal QA — 2026-03-20
+# Partner Portal QA, 2026-03-20
 
 ## Migration Status
 
 Migrations 013-019 were NOT previously applied. Applied all 7 in this session:
 
 | Migration | Description | Status |
-|-----------|-------------|--------|
+|---------, |-------------|------, |
 | 013 | Referral system (partners, referrals, partner_applications) | APPLIED |
 | 014 | Partner portal (magic links, sessions, payouts, payment info) | APPLIED |
 | 015-a | Emergency playbook split (charge_packs) | APPLIED |
@@ -18,7 +18,7 @@ Migrations 013-019 were NOT previously applied. Applied all 7 in this session:
 ## Page Load Tests
 
 | Page | Status | URL |
-|------|--------|-----|
+|------|------, |---, |
 | Partner signup | PASS (200) | `/partners` |
 | Partner login | PASS (200) | `/partner/login` |
 | Bondsman landing | PASS (200) | `/partners/bondsman` |
@@ -26,9 +26,9 @@ Migrations 013-019 were NOT previously applied. Applied all 7 in this session:
 ## API Tests
 
 | Endpoint | Method | Status | Notes |
-|----------|--------|--------|-------|
+|----------|------, |------, |-------|
 | `/api/partners/apply` | POST | PASS (200) | Application created in `partner_applications` |
-| `/api/admin/partners/[id]` | PATCH | BLOCKED | 401 — local ADMIN_PASSWORD doesn't match Vercel production. Need Rahim to test admin approval from production env. |
+| `/api/admin/partners/[id]` | PATCH | BLOCKED | 401, local ADMIN_PASSWORD doesn't match Vercel production. Need Rahim to test admin approval from production env. |
 
 ## What Was Verified
 

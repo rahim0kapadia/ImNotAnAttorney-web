@@ -1,11 +1,11 @@
 /**
- * Bulk Charge Type Extraction — Focused Pipeline
+ * Bulk Charge Type Extraction, Focused Pipeline
  *
  * Streams opinions-criminal.csv (45GB pre-filtered criminal opinions),
  * runs keyword-based charge classification on full opinion text, and
  * updates classified_opinions.charge_types via direct Postgres.
  *
- * This is a focused counterpart to bulk-classify-full-corpus.mjs —
+ * This is a focused counterpart to bulk-classify-full-corpus.mjs,
  * it ONLY extracts charge_types (not motions, theories, outcomes).
  * Much faster: skips statute parsing, motion extraction, cross-validation.
  *
@@ -55,7 +55,7 @@ const processLimit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity
 const resumeIdx = args.indexOf("--resume-from");
 const resumeFrom = resumeIdx >= 0 ? parseInt(args[resumeIdx + 1], 10) : 0;
 
-// ── HTML stripping (no regex — project rule) ─────────────────────────────────
+// ── HTML stripping (no regex, project rule) ─────────────────────────────────
 function stripHtml(html) {
   if (!html) return "";
   const parts = html.split("<");
@@ -228,7 +228,7 @@ async function main() {
         break;
       }
 
-      // CL CSVs quote ALL values — strip surrounding quotes
+      // CL CSVs quote ALL values, strip surrounding quotes
       const cluster_id = (record.cluster_id || "").split('"').join("").trim();
       if (!cluster_id) { skippedNoCluster++; continue; }
 
@@ -327,7 +327,7 @@ async function main() {
   if (applyMode) {
     console.log("\nDB updates:         " + totalApplied.toLocaleString() + " applied, " + totalErrors.toLocaleString() + " errors");
   } else {
-    console.log("\nDry run — no DB writes. Use --apply to write.");
+    console.log("\nDry run, no DB writes. Use --apply to write.");
   }
 
   await end();

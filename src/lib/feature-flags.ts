@@ -1,5 +1,5 @@
 /**
- * Feature flags — runtime gating for features.
+ * Feature flags, runtime gating for features.
  *
  * IMPORTANT: This is SEPARATE from tier.live which controls Stripe routing.
  * Feature flags control UI visibility and feature availability.

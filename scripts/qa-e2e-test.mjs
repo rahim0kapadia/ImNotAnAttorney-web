@@ -45,18 +45,18 @@ async function testTier(tier, browser) {
   const page = await context.newPage();
 
   try {
-    // 1. Hit QA checkout — creates session + redirects to Stripe
+    // 1. Hit QA checkout, creates session + redirects to Stripe
     console.log(`\n[${tier}] Starting checkout...`);
     const qaUrl = `${SITE_URL}/api/qa-checkout?key=${OPERATOR_SECRET}&tier=${tier}`;
     await page.goto(qaUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
 
-    // 2. On Stripe checkout — click submit for $0 order
+    // 2. On Stripe checkout, click submit for $0 order
     const url = page.url();
     console.log(`[${tier}] At: ${url.substring(0, 80)}...`);
 
     if (url.includes("checkout.stripe.com")) {
       r.checkout = "PASS";
-      // Wait for submit button — Stripe pages never reach networkidle
+      // Wait for submit button, Stripe pages never reach networkidle
       const btn = page.locator('[data-testid="hosted-payment-submit-button"]')
         .or(page.locator('button:has-text("Complete")'))
         .or(page.locator('button[type="submit"]'))
@@ -85,7 +85,7 @@ async function testTier(tier, browser) {
 
       // Check upgrade copy
       const has197 = await page.locator('text=/\\$197/').count();
-      if (has197 > 0) console.log(`[${tier}] Upgrade copy shows $197 — PASS`);
+      if (has197 > 0) console.log(`[${tier}] Upgrade copy shows $197, PASS`);
     }
 
     // 4. Download PDFs via API
@@ -112,7 +112,7 @@ async function testTier(tier, browser) {
         r.downloadEmergency = "SKIP (none for tier)";
       } else { r.downloadEmergency = `FAIL (${emResp.status})`; }
     } else {
-      console.log(`[${tier}] No download token — webhook may not have fired`);
+      console.log(`[${tier}] No download token, webhook may not have fired`);
       r.downloadFull = r.downloadEmergency = "SKIP (no order)";
     }
 

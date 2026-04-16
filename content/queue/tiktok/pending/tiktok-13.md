@@ -3,7 +3,7 @@
 **Topic:** DMV hearing deadline after DUI arrest
 **Format:** talking head + countdown timer + text overlay
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + urgent clock-tick beat
+**Trending sound suggestion:** Original audio, voiceover + urgent clock-tick beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -17,8 +17,8 @@
 
 ## Body
 [SECOND 3-12]
-**Visual**: Split screen -- left: CRIMINAL CASE (courtroom), right: DMV CASE (DMV office). Two separate paths from one arrest.
-**Audio/Voiceover**: "A DUI triggers two completely separate legal proceedings. Your criminal case in court -- that's what your attorney is focused on. And a DMV administrative action that runs on its own timeline, its own rules, and its own deadline. The DMV doesn't care about your criminal case. Their deadline comes first."
+**Visual**: Split screen, left: CRIMINAL CASE (courtroom), right: DMV CASE (DMV office). Two separate paths from one arrest.
+**Audio/Voiceover**: "A DUI triggers two completely separate legal proceedings. Your criminal case in court, that's what your attorney is focused on. And a DMV administrative action that runs on its own timeline, its own rules, and its own deadline. The DMV doesn't care about your criminal case. Their deadline comes first."
 **Text overlay**: "ONE arrest. TWO cases. Your attorney is working on ONE. The DMV isn't waiting."
 
 [SECOND 12-20]
@@ -32,7 +32,7 @@
 **Text overlay**: "DMV hearing = free cross-examination of the officer. BEFORE trial."
 
 [SECOND 27-30]
-**Visual**: Countdown timer from the opening -- now at "DAY 1" with a checkmark: "DMV HEARING REQUESTED."
+**Visual**: Countdown timer from the opening, now at "DAY 1" with a checkmark: "DMV HEARING REQUESTED."
 **Text overlay**: "Ask your attorney today: has the DMV hearing been requested? imnotanattorney.com"
 **Audio**: Clock stops. Confident beat.
 
@@ -48,13 +48,13 @@ If you were arrested for DUI this week, ask your attorney about this TODAY.
 - 0:27 "Has the DMV hearing been requested?"
 
 ## Caption
-After a DUI arrest, you have 10 days to request a DMV hearing -- or your license is automatically suspended. No hearing. No argument. Most attorneys focus on the criminal case and miss this deadline entirely. Ask yours today: has the DMV hearing been requested?
+After a DUI arrest, you have 10 days to request a DMV hearing, or your license is automatically suspended. No hearing. No argument. Most attorneys focus on the criminal case and miss this deadline entirely. Ask yours today: has the DMV hearing been requested?
 
 ## Hashtags
 #DUI #DMVhearing #DUIarrest #licensesuspension #DUIdefense #10daydeadline
 
 ---
 
-**Context**: Sourced from 10-day-dmv-deadline blog post. The countdown creates genuine urgency -- especially for someone who was just arrested and is watching this within the 10-day window. The dual-case structure (criminal + DMV) is something most defendants never learn about until it's too late. The "free deposition" angle adds strategic value beyond just saving the license.
-**Loop strategy**: Opens with countdown running down (urgency), closes with "DAY 1 -- REQUESTED" (action taken). The urgency-to-action arc drives rewatches.
-**KPI target**: Shares (anyone who knows a recent DUI arrestee will share this immediately -- time-sensitive content has the highest share velocity)
+**Context**: Sourced from 10-day-dmv-deadline blog post. The countdown creates genuine urgency, especially for someone who was just arrested and is watching this within the 10-day window. The dual-case structure (criminal + DMV) is something most defendants never learn about until it's too late. The "free deposition" angle adds strategic value beyond just saving the license.
+**Loop strategy**: Opens with countdown running down (urgency), closes with "DAY 1, REQUESTED" (action taken). The urgency-to-action arc drives rewatches.
+**KPI target**: Shares (anyone who knows a recent DUI arrestee will share this immediately, time-sensitive content has the highest share velocity)

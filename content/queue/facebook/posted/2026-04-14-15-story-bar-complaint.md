@@ -11,7 +11,7 @@ suggested_time: "Friday 8:00 PM ET"
 target_groups: ["Public Defender Clients Groups", "Mass Incarceration Awareness Groups", "Probation and Parole Support Groups"]
 ---
 
-## Facebook Post: Story — The Bar Complaint
+## Facebook Post: Story, The Bar Complaint
 
 **Type**: Text post (long-form)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -26,7 +26,7 @@ She filed a bar complaint. Then her attorney finally called back.
 
 That's the whole story, really. But here's how she got there.
 
-She hired a private attorney. Paid $8,000 in retainer fees. The consultation was incredible — he knew the judges, knew the prosecutors, had handled hundreds of cases like hers. She felt relieved for the first time since the arrest.
+She hired a private attorney. Paid $8,000 in retainer fees. The consultation was incredible, he knew the judges, knew the prosecutors, had handled hundreds of cases like hers. She felt relieved for the first time since the arrest.
 
 Then the silence started.
 
@@ -48,15 +48,15 @@ She filed the complaint on a Tuesday.
 
 Her attorney called her on Thursday. Not the receptionist. Not a paralegal. The attorney himself. Suddenly available. Suddenly concerned. Suddenly full of apologies and explanations.
 
-They met that Friday. He had her discovery — which he had received six weeks ago and never reviewed. He filed two motions the following week that should have been filed a month earlier.
+They met that Friday. He had her discovery, which he had received six weeks ago and never reviewed. He filed two motions the following week that should have been filed a month earlier.
 
-The bar complaint was eventually dismissed — the bar saw it as a communication issue, not a serious ethical violation. But it didn't matter. The complaint did its job. It got her attorney's attention. It shifted the power dynamic. It reminded him that he worked for her, not the other way around.
+The bar complaint was eventually dismissed, the bar saw it as a communication issue, not a serious ethical violation. But it didn't matter. The complaint did its job. It got her attorney's attention. It shifted the power dynamic. It reminded him that he worked for her, not the other way around.
 
 She didn't file the complaint to punish him. She filed it because she was out of options and needed her case to be worked.
 
 Sometimes that's what it takes.
 
-If you've documented repeated communication failures and nothing has worked — a bar complaint is not the nuclear option. It's a tool. And it exists for a reason.
+If you've documented repeated communication failures and nothing has worked, a bar complaint is not the nuclear option. It's a tool. And it exists for a reason.
 
 (This story is a composite based on common experiences. It is not about a specific individual. This is information, not legal advice.)
 
@@ -71,5 +71,5 @@ First comment (pinned): link to "How to File a Bar Complaint Against Your Attorn
 ---
 
 **Share trigger**: Someone who has been venting about their attorney in the group for weeks gets sent this post by another member: "This is what you need to do." A defendant sends this to their family member who has been saying "just be patient with your lawyer."
-**Context**: Bar complaints feel like a nuclear option to most defendants, and they're afraid of retaliation. This story normalizes the process and shows that the filing itself — not the outcome — often creates the change.
-**KPI target**: Saves (high save rate expected — people will bookmark this as a "plan B") + Messenger shares + comments discussing whether to file
+**Context**: Bar complaints feel like a nuclear option to most defendants, and they're afraid of retaliation. This story normalizes the process and shows that the filing itself, not the outcome, often creates the change.
+**KPI target**: Saves (high save rate expected, people will bookmark this as a "plan B") + Messenger shares + comments discussing whether to file

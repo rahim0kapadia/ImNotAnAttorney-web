@@ -8,7 +8,7 @@
  * federal positions, uses the state court. If only federal, uses "FEDERAL".
  *
  * Usage:
- *   node scripts/backfill-judge-jurisdiction.mjs              # Dry run — show stats
+ *   node scripts/backfill-judge-jurisdiction.mjs              # Dry run, show stats
  *   node scripts/backfill-judge-jurisdiction.mjs --apply      # Apply to database
  */
 

@@ -1,12 +1,12 @@
 /**
- * GET /api/cron/sms-health-check — Daily SMS gateway health probe.
+ * GET /api/cron/sms-health-check, Daily SMS gateway health probe.
  *
  * Schedule: Daily at 10:00 America/New_York via cron-job.org (jobId 7485383).
  * Protected by CRON_AUTH_TOKEN bearer token.
  *
  * Sends a test SMS to Rahim's number via text.email gateway,
  * logs to sms_log, and alerts via Telegram on failure.
- * Also checks recent sms_log success rate — alerts if below 80%.
+ * Also checks recent sms_log success rate, alerts if below 80%.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -39,14 +39,14 @@ export async function GET(req: NextRequest) {
     if (TEST_PHONE) {
       testResult = await sendSMS(
         TEST_PHONE,
-        `INAA SMS health check — ${new Date().toISOString().slice(0, 10)}`,
+        `INAA SMS health check, ${new Date().toISOString().slice(0, 10)}`,
         { category: "health_check" }
       );
       if (!testResult.success) {
         alerts.push(`Test SMS FAILED: ${testResult.error}`);
       }
     } else {
-      testResult = { success: false, error: "SMS_HEALTH_TEST_PHONE not set — skipped" };
+      testResult = { success: false, error: "SMS_HEALTH_TEST_PHONE not set, skipped" };
     }
 
     // Layer 2: Check recent success rate from sms_log
@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
 
       if (rate < SUCCESS_RATE_THRESHOLD) {
         alerts.push(
-          `SMS success rate ${(rate * 100).toFixed(1)}% (${successCount}/${recentLogs.length}) — below ${SUCCESS_RATE_THRESHOLD * 100}% threshold`
+          `SMS success rate ${(rate * 100).toFixed(1)}% (${successCount}/${recentLogs.length}), below ${SUCCESS_RATE_THRESHOLD * 100}% threshold`
         );
       }
     }
@@ -111,7 +111,7 @@ async function sendTelegramAlert(alerts: string[]): Promise<void> {
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (!botToken || !chatId) {
-    console.error("[SMS Health] Telegram not configured — alerts:", alerts);
+    console.error("[SMS Health] Telegram not configured, alerts:", alerts);
     return;
   }
 

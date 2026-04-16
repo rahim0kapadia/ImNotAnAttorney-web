@@ -1,10 +1,10 @@
 /**
- * @file /api/generate/case-decoder — Thin generation dispatcher
+ * @file /api/generate/case-decoder, Thin generation dispatcher
  *
  * Pipeline position: Called AFTER intake is linked to a paid case.
  * Triggered by:
- *   1. Stripe webhook (checkout.session.completed) — when intake already exists at payment time
- *   2. Intake endpoint (/api/intake) — when customer fills intake after paying
+ *   1. Stripe webhook (checkout.session.completed), when intake already exists at payment time
+ *   2. Intake endpoint (/api/intake), when customer fills intake after paying
  *   3. Manual operator retry via curl (with force:true to override idempotency)
  *
  * Pattern: Fire-and-forget delegation
@@ -23,7 +23,7 @@
  *   - The cron (/api/cron/drip Part 5) detects stuck "generating" and marks generation-failed
  *
  * Security: OPERATOR_SECRET bearer token required. The guard explicitly checks that
- * OPERATOR_SECRET is defined — if the env var is missing/undefined, ALL requests are
+ * OPERATOR_SECRET is defined, if the env var is missing/undefined, ALL requests are
  * rejected. This prevents an auth bypass where "Bearer undefined" would match a
  * missing env var.
  */
@@ -35,7 +35,7 @@ import { caseThreadId } from "@/lib/site";
 import { requireOperatorSecret } from "@/lib/auth/guards";
 
 /**
- * Thin dispatcher — validates auth + idempotency, then fires off
+ * Thin dispatcher, validates auth + idempotency, then fires off
  * the Supabase Edge Function (150s timeout) for the heavy work.
  * Returns immediately so Vercel Hobby's timeout is never hit.
  */
@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
   // acts as a database-level mutex:
   //   - It sets status to "generating" ONLY IF the current status is NOT
   //     already "generating", "review", or "delivered".
-  //   - Supabase/Postgres guarantees atomicity — only one UPDATE can match.
+  //   - Supabase/Postgres guarantees atomicity, only one UPDATE can match.
   //   - The loser gets zero rows back (guardData === null) and bails out.
   // This is cheaper and more reliable than advisory locks for our use case.
   // When force=true, skip the status filter so stuck-generating or failed
@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // The Edge Function has a 150s timeout (vs Vercel Hobby's 10s), which is
   // enough for the LLM to generate the full 9-section Case Decoder report.
-  // We intentionally do NOT await this fetch — the response goes to the
+  // We intentionally do NOT await this fetch, the response goes to the
   // caller immediately while the Edge Function works in the background.
   // Errors are caught and logged but don't affect the response.
   // If the Edge Function crashes silently, the cron (Part 5) will detect
@@ -160,7 +160,7 @@ export async function POST(req: NextRequest) {
   // "WE'VE STARTED" TRANSACTIONAL EMAIL
   // ────────────────────────────────────────────────────────���─────
   // Let the customer know their CD is being generated. Same pattern as IB route.
-  // Fire-and-forget — don't block the response on email delivery.
+  // Fire-and-forget, don't block the response on email delivery.
   // skipEmail: when triggered by intake route (which sends its own confirmation),
   // skip this email to avoid sending near-identical "analyzing" emails (Fix 4).
   const { data: caseForEmail } = await supabase
@@ -180,12 +180,12 @@ export async function POST(req: NextRequest) {
       },
       html: `
         <h1 style="color: #F59E0B;">Your Case Decoder Is Being Built</h1>
-        <p>Your case details are in. We're generating your Case Decoder report — including:</p>
+        <p>Your case details are in. We're generating your Case Decoder report, including:</p>
         <ul style="padding-left: 20px;">
-          <li><strong style="color: white;">Charge analysis</strong> — what the prosecution must prove, explained in plain English</li>
-          <li><strong style="color: white;">15 calibrated questions</strong> — each traced to methods used by elite defense attorneys</li>
-          <li><strong style="color: white;">Communication tools</strong> — email template and phone script for your attorney</li>
-          <li><strong style="color: white;">7-day action plan</strong> — one action per day with a Meeting Ready Sheet</li>
+          <li><strong style="color: white;">Charge analysis</strong>, what the prosecution must prove, explained in plain English</li>
+          <li><strong style="color: white;">15 calibrated questions</strong>, each traced to methods used by elite defense attorneys</li>
+          <li><strong style="color: white;">Communication tools</strong>, email template and phone script for your attorney</li>
+          <li><strong style="color: white;">7-day action plan</strong>, one action per day with a Meeting Ready Sheet</li>
         </ul>
         <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
           <strong style="color: white;">Expected delivery: within 48 hours.</strong> We'll email you as soon as your Case Decoder is ready.
@@ -198,7 +198,7 @@ export async function POST(req: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   // RESPONSE: Confirm generation started
   // ──────────────────────────────────────────────────────────────
-  // The caller (webhook or intake endpoint) doesn't wait for the report —
+  // The caller (webhook or intake endpoint) doesn't wait for the report,
   // they'll check case status later or the customer gets an email when ready.
   return NextResponse.json({
     success: true,

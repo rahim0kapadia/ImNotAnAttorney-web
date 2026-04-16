@@ -1,5 +1,5 @@
 /**
- * E2E Pipeline Tests — All Tiers
+ * E2E Pipeline Tests, All Tiers
  *
  * Exercises every pipeline's backend flow using real Supabase writes and real
  * API endpoint calls against the production deployment (test Stripe keys).
@@ -7,12 +7,12 @@
  * Everything else is real: status transitions, emails, operator flow.
  *
  * Pipelines tested:
- *   1. All Playbooks ($97 x4) — digital products (order only, no case)
- *   2. Case Decoder ($197) — full automated flow
- *   3. Intelligence Brief ($997) — multi-case (CD included + IB)
- *   4. X-Ray ($2,497) — discovery upload flow
- *   5. War Room ($4,997) — multi-case + multi-phase
- *   6. Situation Room ($9,997) — prerequisite gate
+ *   1. All Playbooks ($97 x4), digital products (order only, no case)
+ *   2. Case Decoder ($197), full automated flow
+ *   3. Intelligence Brief ($997), multi-case (CD included + IB)
+ *   4. X-Ray ($2,497), discovery upload flow
+ *   5. War Room ($4,997), multi-case + multi-phase
+ *   6. Situation Room ($9,997), prerequisite gate
  *
  * Run: node scripts/e2e-all-pipelines.mjs
  *   Options:
@@ -65,11 +65,11 @@ const OPERATOR_SECRET = process.env.OPERATOR_SECRET;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 
 if (!SUPABASE_KEY) {
-  console.error("Missing SUPABASE_SERVICE_ROLE_KEY — set in .env.local");
+  console.error("Missing SUPABASE_SERVICE_ROLE_KEY, set in .env.local");
   process.exit(1);
 }
 if (!OPERATOR_SECRET) {
-  console.error("Missing OPERATOR_SECRET — set in .env.local");
+  console.error("Missing OPERATOR_SECRET, set in .env.local");
   process.exit(1);
 }
 
@@ -90,7 +90,7 @@ const skipApi = args.includes("--skip-api");
 const skipStripe = args.includes("--skip-stripe");
 
 // All test emails go to test@imnotanattorney.com (real inbox, visible in
-// Resend dashboard + admin email viewer — same as help@imnotanattorney.com).
+// Resend dashboard + admin email viewer, same as help@imnotanattorney.com).
 // This avoids bounces that hurt sender reputation.
 const RUN_TS = Date.now();
 const TEST_EMAIL = "test@imnotanattorney.com";
@@ -110,7 +110,7 @@ const pipelineResults = [];
 
 // Stub report HTML for CD/IB
 const STUB_REPORT_HTML = `<!DOCTYPE html><html><head><title>E2E Test Report</title></head><body>
-<h1>Test Report — E2E Pipeline Verification</h1>
+<h1>Test Report, E2E Pipeline Verification</h1>
 <p>This is a stub report inserted by the E2E test script. It should be cleaned up automatically.</p>
 <p>Generated at: ${new Date().toISOString()}</p>
 </body></html>`;
@@ -139,7 +139,7 @@ function signOperatorToken(caseId) {
 }
 
 // ================================================================
-// E2E HELPERS — Real HTTP flow
+// E2E HELPERS, Real HTTP flow
 // ================================================================
 
 /**
@@ -279,7 +279,7 @@ async function waitForCases(orderId, expectedCount, timeoutMs = 10000) {
 }
 
 /**
- * GET /api/download/[token] — follow redirects to verify the PDF
+ * GET /api/download/[token], follow redirects to verify the PDF
  * is actually downloadable. Returns status + content-type.
  */
 async function verifyDownload(downloadToken) {
@@ -431,7 +431,7 @@ async function callIntake(email, chargeType, firstName = "E2E Test") {
     chargeType,
     state: "Florida",
     hasAttorney: "yes-public-defender",
-    situation: "E2E pipeline test — this should be cleaned up automatically.",
+    situation: "E2E pipeline test, this should be cleaned up automatically.",
   };
 
   try {
@@ -472,7 +472,7 @@ async function insertReport(caseId) {
 
 async function callDeliver(caseId) {
   if (skipApi) {
-    console.log("    [skip-api] Skipping deliver API call — doing direct DB transition");
+    console.log("    [skip-api] Skipping deliver API call, doing direct DB transition");
     const now = new Date().toISOString();
     const { error } = await supabase
       .from("cases")
@@ -517,7 +517,7 @@ async function callDeliver(caseId) {
 
 async function callFinalize(caseId, email) {
   if (skipApi) {
-    console.log("    [skip-api] Skipping finalize API call — doing direct DB transition");
+    console.log("    [skip-api] Skipping finalize API call, doing direct DB transition");
     const { error } = await supabase
       .from("cases")
       .update({ status: "submitted", updated_at: new Date().toISOString() })
@@ -622,7 +622,7 @@ async function cleanup() {
     await supabase.from("orders").delete().eq("id", orderId);
   }
 
-  // Delete intakes by tracked IDs (not email — test@ is shared across runs)
+  // Delete intakes by tracked IDs (not email, test@ is shared across runs)
   for (const intakeId of allIntakeIds) {
     await supabase.from("intakes").delete().eq("id", intakeId);
   }
@@ -641,7 +641,7 @@ async function cleanup() {
 }
 
 // ================================================================
-// PIPELINE 1: All Playbooks ($97 each) — Instant Digital Products
+// PIPELINE 1: All Playbooks ($97 each), Instant Digital Products
 // ================================================================
 
 const PLAYBOOK_TIERS = [
@@ -689,7 +689,7 @@ async function testPlaybooks() {
     if (useStripe) {
       // ── REAL E2E: Checkout API → Webhook → Order ──
 
-      // Step 1: POST /api/checkout — creates Stripe session
+      // Step 1: POST /api/checkout, creates Stripe session
       console.log("  Step 1: POST /api/checkout");
       const checkout = await callCheckout(pb.slug, email, {
         productType: "digital-product",
@@ -744,7 +744,7 @@ async function testPlaybooks() {
         passed = assert(dl.isPdf, `Content-Type is PDF (got: ${dl.contentType})`) && passed;
         passed = assert(dl.contentLength > 10000, `PDF has content (${Math.round(dl.contentLength / 1024)}KB)`) && passed;
       } else {
-        passed = assert(false, "Download token missing — cannot verify PDF") && passed;
+        passed = assert(false, "Download token missing, cannot verify PDF") && passed;
       }
 
     } else {
@@ -813,7 +813,7 @@ async function testPlaybooks() {
 }
 
 // ================================================================
-// PIPELINE 2: Case Decoder ($197) — Full Automated
+// PIPELINE 2: Case Decoder ($197), Full Automated
 // ================================================================
 
 async function testCaseDecoder() {
@@ -899,7 +899,7 @@ async function testCaseDecoder() {
     passed = assert(!!caseAfterIntake?.intake_id, "Case linked to intake") && passed;
   } else {
     if (intakeResult.status === 429) {
-      console.log("    ⚠ Rate-limited (429) — falling back to direct DB intake");
+      console.log("    ⚠ Rate-limited (429), falling back to direct DB intake");
     }
     const intakeId = await createDirectIntake(email, "dui", [caseId]);
     passed = assert(!!intakeId, "Intake created via direct DB (API rate-limited)") && passed;
@@ -930,7 +930,7 @@ async function testCaseDecoder() {
 }
 
 // ================================================================
-// PIPELINE 3: Intelligence Brief ($997) — Multi-Case (CD + IB)
+// PIPELINE 3: Intelligence Brief ($997), Multi-Case (CD + IB)
 // ================================================================
 
 async function testIntelligenceBrief() {
@@ -1004,7 +1004,7 @@ async function testIntelligenceBrief() {
     return false;
   }
 
-  // Intake (direct DB — API already tested in pipeline 2)
+  // Intake (direct DB, API already tested in pipeline 2)
   console.log(`  Step ${useStripe ? 4 : 3}: Create intake + link cases (direct DB)`);
   const intakeId = await createDirectIntake(email, "drug-possession", [cdCaseId, ibCaseId]);
   passed = assert(!!intakeId, "Intake created + linked to both cases") && passed;
@@ -1045,7 +1045,7 @@ async function testIntelligenceBrief() {
 }
 
 // ================================================================
-// PIPELINE 4: X-Ray ($2,497) — Discovery Upload Flow
+// PIPELINE 4: X-Ray ($2,497), Discovery Upload Flow
 // ================================================================
 
 async function testXRay() {
@@ -1169,7 +1169,7 @@ async function testXRay() {
 }
 
 // ================================================================
-// PIPELINE 5: War Room ($4,997) — Multi-Case + Discovery
+// PIPELINE 5: War Room ($4,997), Multi-Case + Discovery
 // ================================================================
 
 async function testWarRoom() {
@@ -1300,7 +1300,7 @@ async function testWarRoom() {
 }
 
 // ================================================================
-// PIPELINE 6: Situation Room ($9,997) — Prerequisite Gate
+// PIPELINE 6: Situation Room ($9,997), Prerequisite Gate
 // ================================================================
 
 async function testSituationRoom(priorWarRoomOrderId, priorWarRoomEmail) {
@@ -1316,11 +1316,11 @@ async function testSituationRoom(priorWarRoomOrderId, priorWarRoomEmail) {
   let orderId, cdCaseId, ibCaseId, xrayCaseId, wrCaseId, srCaseId, email;
 
   if (useStripe) {
-    // Use same email as War Room pipeline — prerequisite check + upgrade credit
+    // Use same email as War Room pipeline, prerequisite check + upgrade credit
     email = priorWarRoomEmail || `test+wr-${RUN_TS}@imnotanattorney.com`;
     allTestEmails.add(email);
 
-    // Verify prerequisite — WR order must exist for this email
+    // Verify prerequisite, WR order must exist for this email
     console.log("  Step 1: Verify War Room prerequisite");
     if (priorWarRoomOrderId) {
       const { data: wrOrder } = await supabase
@@ -1332,7 +1332,7 @@ async function testSituationRoom(priorWarRoomOrderId, priorWarRoomEmail) {
         .single();
       passed = assert(!!wrOrder, "Prior War Room order exists (prerequisite met)") && passed;
     } else {
-      // No prior WR from pipeline 5 — create one for prerequisite
+      // No prior WR from pipeline 5, create one for prerequisite
       console.log("    Creating mock War Room order for prerequisite");
       const mockWrOrderId = await createTestOrder("war-room", email);
       passed = assert(!!mockWrOrderId, "Mock War Room order created") && passed;
@@ -1433,7 +1433,7 @@ async function testSituationRoom(priorWarRoomOrderId, priorWarRoomEmail) {
   // Collect all case IDs that need intake + delivery
   const activeCaseIds = [cdCaseId, ibCaseId, xrayCaseId, wrCaseId, srCaseId].filter(Boolean);
 
-  // Intake — direct insert to avoid dedup with pipeline 5
+  // Intake, direct insert to avoid dedup with pipeline 5
   const stepBase = useStripe ? 5 : 4;
   console.log(`  Step ${stepBase}: Submit intake`);
   const intakeId = randomUUID();
@@ -1455,7 +1455,7 @@ async function testSituationRoom(priorWarRoomOrderId, priorWarRoomEmail) {
       .eq("id", id);
   }
 
-  // Deliver CD + IB (if they exist — dedup may have skipped them)
+  // Deliver CD + IB (if they exist, dedup may have skipped them)
   let step = stepBase + 1;
   if (cdCaseId) {
     console.log(`  Step ${step++}: Deliver CD`);
@@ -1518,12 +1518,12 @@ async function testSituationRoom(priorWarRoomOrderId, priorWarRoomEmail) {
 }
 
 // ================================================================
-// MAIN — Run all pipelines sequentially
+// MAIN, Run all pipelines sequentially
 // ================================================================
 
 async function run() {
   console.log("╔══════════════════════════════════════════════════════════╗");
-  console.log("║   E2E Pipeline Tests — All Tiers                       ║");
+  console.log("║   E2E Pipeline Tests, All Tiers                       ║");
   console.log("╚══════════════════════════════════════════════════════════╝");
   console.log(`  Site URL: ${SITE_URL}`);
   console.log(`  Supabase: ${SUPABASE_URL}`);
@@ -1570,7 +1570,7 @@ async function run() {
   console.log(`  Total: ${totalPass} passed, ${totalFail} failed`);
 
   if (totalFail > 0) {
-    console.log("\n  ✗ SOME TESTS FAILED — see details above");
+    console.log("\n  ✗ SOME TESTS FAILED, see details above");
     process.exitCode = 1;
   } else {
     console.log("\n  ✓ ALL TESTS PASSED");

@@ -1,4 +1,4 @@
-# Defense Intelligence System Foundation — Implementation Plan
+# Defense Intelligence System Foundation, Implementation Plan
 
 **Spec:** `C:\Users\email\projects\ImNotAnAttorney-web\docs\superpowers\specs\2026-04-13-defense-intelligence-system-design.md`
 **Scope:** Phase 0A (taxonomy bootstrap) + Phase 0B (mechanical extraction pipeline + gold-set eval) + Phase 1 (link, classify, pattern tables, query module, Tier 9 integration)
@@ -43,7 +43,7 @@ Tier 9 SKUs (Judge Report Card, Officer Background, Similar Cases)
 
 ## Phase 0A: Taxonomy Bootstrap (Tasks 1-2)
 
-### Task 1: DB Migrations — Create Foundation Tables
+### Task 1: DB Migrations, Create Foundation Tables
 
 **Files:**
 - Create: `supabase/migrations/20260414c_defense_intelligence_foundation.sql`
@@ -55,17 +55,17 @@ Tier 9 SKUs (Judge Report Card, Officer Background, Similar Cases)
 Save to `C:\Users\email\projects\ImNotAnAttorney-web\supabase\migrations\20260414c_defense_intelligence_foundation.sql`:
 
 ```sql
--- Defense Intelligence Foundation — Phase 0A/0B tables
--- Applied via Management API. See: docs/superpowers/plans/2026-04-13-defense-intelligence-foundation.md
--- Tables: charge_defense_theories, classified_opinions, pipeline_accuracy_log
+, Defense Intelligence Foundation, Phase 0A/0B tables
+, Applied via Management API. See: docs/superpowers/plans/2026-04-13-defense-intelligence-foundation.md
+, Tables: charge_defense_theories, classified_opinions, pipeline_accuracy_log
 
--- ─────────────────────────────────────────────────────────────────────────────
--- 1. charge_defense_theories — constrained mapping: charge → theory → keywords + motions
--- Foundation table for Phase 0A. Every defense theory derivation is constrained
--- to this mapping. No free-text classification.
--- Populated by: data/defense-intelligence/charge-defense-theories.json seed script
--- Queried by: scripts/classify-opinion-mechanical.mjs
--- ─────────────────────────────────────────────────────────────────────────────
+, ─────────────────────────────────────────────────────────────────────────────
+, 1. charge_defense_theories, constrained mapping: charge → theory → keywords + motions
+, Foundation table for Phase 0A. Every defense theory derivation is constrained
+, to this mapping. No free-text classification.
+, Populated by: data/defense-intelligence/charge-defense-theories.json seed script
+, Queried by: scripts/classify-opinion-mechanical.mjs
+, ─────────────────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS charge_defense_theories (
   charge_slug text NOT NULL,
   theory_name text NOT NULL,
@@ -76,13 +76,13 @@ CREATE TABLE IF NOT EXISTS charge_defense_theories (
   PRIMARY KEY (charge_slug, theory_name)
 );
 
--- ─────────────────────────────────────────────────────────────────────────────
--- 2. classified_opinions — purpose-built, verification-first opinion corpus
--- NOT extending case_law or statute_case_law (avoids third-universe problem).
--- Every field is either CL metadata or mechanically extracted.
--- Populated by: scripts/classify-opinion-mechanical.mjs
--- Queried by: src/lib/defense-intelligence/query.ts
--- ─────────────────────────────────────────────────────────────────────────────
+, ─────────────────────────────────────────────────────────────────────────────
+, 2. classified_opinions, purpose-built, verification-first opinion corpus
+, NOT extending case_law or statute_case_law (avoids third-universe problem).
+, Every field is either CL metadata or mechanically extracted.
+, Populated by: scripts/classify-opinion-mechanical.mjs
+, Queried by: src/lib/defense-intelligence/query.ts
+, ─────────────────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS classified_opinions (
   cluster_id text PRIMARY KEY,
   case_name text NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS classified_opinions (
   updated_at timestamptz DEFAULT now()
 );
 
--- Indexes for classified_opinions
+, Indexes for classified_opinions
 CREATE INDEX IF NOT EXISTS idx_classified_opinions_jurisdiction
   ON classified_opinions(jurisdiction);
 CREATE INDEX IF NOT EXISTS idx_classified_opinions_opinion_type
@@ -123,11 +123,11 @@ CREATE INDEX IF NOT EXISTS idx_classified_opinions_motion_types
 CREATE INDEX IF NOT EXISTS idx_classified_opinions_defense_theories
   ON classified_opinions USING GIN(defense_theories);
 
--- ─────────────────────────────────────────────────────────────────────────────
--- 3. pipeline_accuracy_log — tracks extraction accuracy over time
--- Populated by: scripts/validate-gold-set.mjs, monthly monitoring
--- Queried by: operator dashboards
--- ─────────────────────────────────────────────────────────────────────────────
+, ─────────────────────────────────────────────────────────────────────────────
+, 3. pipeline_accuracy_log, tracks extraction accuracy over time
+, Populated by: scripts/validate-gold-set.mjs, monthly monitoring
+, Queried by: operator dashboards
+, ─────────────────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS pipeline_accuracy_log (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   evaluation_date date NOT NULL,
@@ -141,12 +141,12 @@ CREATE TABLE IF NOT EXISTS pipeline_accuracy_log (
   created_at timestamptz DEFAULT now()
 );
 
--- ─────────────────────────────────────────────────────────────────────────────
--- 4. defense_theory_outcomes — pre-computed: charge x theory x jurisdiction
--- Phase 1 pattern table. Aggregated from classified_opinions.
--- Populated by: scripts/compute-pattern-tables.mjs
--- Queried by: src/lib/defense-intelligence/query.ts
--- ─────────────────────────────────────────────────────────────────────────────
+, ─────────────────────────────────────────────────────────────────────────────
+, 4. defense_theory_outcomes, pre-computed: charge x theory x jurisdiction
+, Phase 1 pattern table. Aggregated from classified_opinions.
+, Populated by: scripts/compute-pattern-tables.mjs
+, Queried by: src/lib/defense-intelligence/query.ts
+, ─────────────────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS defense_theory_outcomes (
   charge_slug text NOT NULL,
   defense_theory text NOT NULL,
@@ -163,12 +163,12 @@ CREATE TABLE IF NOT EXISTS defense_theory_outcomes (
   CONSTRAINT defense_theory_outcomes_pk UNIQUE (charge_slug, defense_theory, jurisdiction)
 );
 
--- ─────────────────────────────────────────────────────────────────────────────
--- 5. motion_success_patterns — pre-computed: motion x charge x jurisdiction x judge
--- Phase 1 pattern table. Aggregated from classified_opinions.
--- Populated by: scripts/compute-pattern-tables.mjs
--- Queried by: src/lib/defense-intelligence/query.ts
--- ─────────────────────────────────────────────────────────────────────────────
+, ─────────────────────────────────────────────────────────────────────────────
+, 5. motion_success_patterns, pre-computed: motion x charge x jurisdiction x judge
+, Phase 1 pattern table. Aggregated from classified_opinions.
+, Populated by: scripts/compute-pattern-tables.mjs
+, Queried by: src/lib/defense-intelligence/query.ts
+, ─────────────────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS motion_success_patterns (
   motion_type text NOT NULL,
   charge_slug text NOT NULL,
@@ -186,9 +186,9 @@ CREATE TABLE IF NOT EXISTS motion_success_patterns (
   CONSTRAINT motion_success_patterns_pk UNIQUE (motion_type, charge_slug, jurisdiction, COALESCE(judge_id::text, '__null__'))
 );
 
--- ─────────────────────────────────────────────────────────────────────────────
--- RLS — service_role only for all new tables
--- ─────────────────────────────────────────────────────────────────────────────
+, ─────────────────────────────────────────────────────────────────────────────
+, RLS, service_role only for all new tables
+, ─────────────────────────────────────────────────────────────────────────────
 ALTER TABLE charge_defense_theories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE classified_opinions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pipeline_accuracy_log ENABLE ROW LEVEL SECURITY;
@@ -213,7 +213,7 @@ DO $$ BEGIN
   END IF;
 END $$;
 
--- Deny anon
+, Deny anon
 DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'charge_defense_theories' AND policyname = 'anon_no_access_charge_defense_theories') THEN
     CREATE POLICY anon_no_access_charge_defense_theories ON charge_defense_theories FOR ALL TO anon USING (false);
@@ -780,8 +780,8 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\scripts\seed-charge-defense
  *
  * Usage:
  *   node scripts/seed-charge-defense-theories.mjs              # Dry-run (print SQL)
- *   node scripts/seed-charge-defense-theories.mjs --apply      # Insert into DB
- *   node scripts/seed-charge-defense-theories.mjs --apply --clear  # Clear + re-insert
+ *   node scripts/seed-charge-defense-theories.mjs,apply      # Insert into DB
+ *   node scripts/seed-charge-defense-theories.mjs,apply,clear  # Clear + re-insert
  */
 
 import fs from "fs";
@@ -794,8 +794,8 @@ const PROJECT_ROOT = path.resolve(__dirname, "..");
 const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
 
 const args = process.argv.slice(2);
-const applyMode = args.includes("--apply");
-const clearFirst = args.includes("--clear");
+const applyMode = args.includes(", apply");
+const clearFirst = args.includes(", clear");
 
 // Load SUPABASE_ACCESS_TOKEN from parent repo
 let supabaseToken = null;
@@ -891,7 +891,7 @@ if (!applyMode) {
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, sql);
   console.log("\nSQL written to: " + outPath);
-  console.log("Run with --apply to insert into DB.");
+  console.log("Run with,apply to insert into DB.");
 } else {
   console.log("\nApplying to database...");
   try {
@@ -929,7 +929,7 @@ SQL written to: data/defense-intelligence/seed-theories.sql
 - [ ] **Step 2.4:** Apply the seed data.
 
 ```bash
-node scripts/seed-charge-defense-theories.mjs --apply --clear
+node scripts/seed-charge-defense-theories.mjs,apply,clear
 ```
 
 Expected output:
@@ -975,10 +975,10 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\scripts\lib\opinion-classif
  * markers. Determines which extraction steps run and weighting in aggregates.
  *
  * Types:
- *   'full'        — >1000 words with analysis section (weight: 1.0)
- *   'memorandum'  — 500-1000 words (weight: 0.8)
- *   'pca'         — <500 words OR 'PER CURIAM' + 'Affirmed' (weight: 0.3)
- *   'order'       — <200 words (weight: 0.5)
+ *   'full'       , >1000 words with analysis section (weight: 1.0)
+ *   'memorandum' , 500-1000 words (weight: 0.8)
+ *   'pca'        , <500 words OR 'PER CURIAM' + 'Affirmed' (weight: 0.3)
+ *   'order'      , <200 words (weight: 0.5)
  */
 
 export const OPINION_TYPE_WEIGHTS = {
@@ -1020,7 +1020,7 @@ function containsCI(text, needle) {
 /**
  * Classify an opinion's structure.
  *
- * @param {string} text — plain text of the opinion (HTML already stripped)
+ * @param {string} text, plain text of the opinion (HTML already stripped)
  * @returns {{ type: string, wordCount: number, confidence: string }}
  */
 export function classifyOpinionType(text) {
@@ -1043,7 +1043,7 @@ export function classifyOpinionType(text) {
     if (hasPerCuriam && hasAffirmed) {
       return { type: "pca", wordCount, confidence: "high" };
     }
-    // Short but not PCA — still classify as PCA if very short, order if ambiguous
+    // Short but not PCA, still classify as PCA if very short, order if ambiguous
     if (hasPerCuriam) {
       return { type: "pca", wordCount, confidence: "medium" };
     }
@@ -1052,7 +1052,7 @@ export function classifyOpinionType(text) {
 
   // Check for PCA markers even in longer opinions (unusual but happens)
   if (hasPerCuriam && hasAffirmed && wordCount < 800) {
-    // Short-ish per curiam with affirmed — classify as PCA
+    // Short-ish per curiam with affirmed, classify as PCA
     return { type: "pca", wordCount, confidence: "medium" };
   }
 
@@ -1083,7 +1083,7 @@ export function classifyOpinionType(text) {
 /**
  * Determine which extraction steps to run based on opinion type.
  *
- * @param {string} opinionType — 'full', 'memorandum', 'pca', 'order'
+ * @param {string} opinionType, 'full', 'memorandum', 'pca', 'order'
  * @returns {{ extractCharges: boolean, extractMotions: boolean, extractTheories: boolean, extractOutcomes: boolean, extractHolding: boolean }}
  */
 export function getExtractionSteps(opinionType) {
@@ -1300,9 +1300,9 @@ const HOLDING_KEYWORDS = [
  * Check for negation in a window of N words before a keyword match position.
  * Returns true if a negation term is found within the window.
  *
- * @param {string} lowerText — lowercased full text
- * @param {number} matchPos — position of the keyword match
- * @param {number} windowChars — number of characters to look back (default: ~5 words = 40 chars)
+ * @param {string} lowerText, lowercased full text
+ * @param {number} matchPos, position of the keyword match
+ * @param {number} windowChars, number of characters to look back (default: ~5 words = 40 chars)
  * @returns {boolean}
  */
 export function hasNegation(lowerText, matchPos, windowChars = 40) {
@@ -1318,8 +1318,8 @@ export function hasNegation(lowerText, matchPos, windowChars = 40) {
  * Extract motion types from opinion text.
  * Keyword matching against MOTION_SIGNALS with negation window.
  *
- * @param {string} text — opinion text (plain text, not HTML)
- * @returns {string[]} — array of canonical motion type names
+ * @param {string} text, opinion text (plain text, not HTML)
+ * @returns {string[]}, array of canonical motion type names
  */
 export function extractMotionTypes(text) {
   if (!text) return [];
@@ -1348,7 +1348,7 @@ export function extractMotionTypes(text) {
  *
  * Returns raw citation strings for matching against jurisdiction_statutes.
  *
- * @param {string} text — opinion text
+ * @param {string} text, opinion text
  * @returns {Array<{citation: string, position: number, isPrimary: boolean}>}
  */
 export function extractStatuteCitations(text) {
@@ -1433,7 +1433,7 @@ function extractNumberAfterPosition(text, start) {
     // Open paren: 40
     if (ch === 40) { parenDepth++; result += "("; pos++; continue; }
     // Close paren: 41
-    if (ch === 41 && parenDepth > 0) { parenDepth--; result += ")"; pos++; continue; }
+    if (ch === 41 && parenDepth > 0) { parenDepth, ; result += ")"; pos++; continue; }
     // Lowercase letters (for subsection markers like 'a', 'b'): 97-122
     if (ch >= 97 && ch <= 122 && parenDepth > 0) { result += text[pos]; pos++; continue; }
     // Uppercase letters in specific contexts (e.g., "316.193(1)(a)"): 65-90
@@ -1455,8 +1455,8 @@ function extractNumberAfterPosition(text, start) {
  * Match extracted statute citations against jurisdiction_statutes table.
  *
  * @param {Array<{citation: string, position: number, isPrimary: boolean}>} citations
- * @param {string} jurisdiction — two-letter state code from CL court metadata
- * @param {Map<string, {charge_slug: string, statute_number: string}>} statuteMap — keyed by "jurisdiction:statute_number" (lowercased)
+ * @param {string} jurisdiction, two-letter state code from CL court metadata
+ * @param {Map<string, {charge_slug: string, statute_number: string}>} statuteMap, keyed by "jurisdiction:statute_number" (lowercased)
  * @returns {Array<{charge_slug: string, isPrimary: boolean}>}
  */
 export function matchStatutesToCharges(citations, jurisdiction, statuteMap) {
@@ -1511,11 +1511,11 @@ function stripSubsection(statuteNum) {
  * the charge_defense_theories constrained mapping.
  * Also checks for keyword presence with negation window.
  *
- * @param {string[]} chargeTypes — charge_slug values
- * @param {string[]} motionTypes — motion type canonical names
- * @param {string} text — opinion text (for keyword check)
- * @param {Map<string, Array<{theory_name: string, theory_keywords: string[], motion_types: string[]}>>} theoryMap — keyed by charge_slug
- * @returns {string[]} — defense theory names
+ * @param {string[]} chargeTypes, charge_slug values
+ * @param {string[]} motionTypes, motion type canonical names
+ * @param {string} text, opinion text (for keyword check)
+ * @param {Map<string, Array<{theory_name: string, theory_keywords: string[], motion_types: string[]}>>} theoryMap, keyed by charge_slug
+ * @returns {string[]}, defense theory names
  */
 export function deriveDefenseTheories(chargeTypes, motionTypes, text, theoryMap) {
   if (!chargeTypes || chargeTypes.length === 0) return [];
@@ -1560,8 +1560,8 @@ export function deriveDefenseTheories(chargeTypes, motionTypes, text, theoryMap)
  * Outcome keywords: GRANTED/DENIED/DISMISSED in positional window.
  * Negation window NOT applied to outcome keywords (Section 3.4).
  *
- * @param {string[]} motionTypes — motion types found in this opinion
- * @param {string} text — full opinion text
+ * @param {string[]} motionTypes, motion types found in this opinion
+ * @param {string} text, full opinion text
  * @returns {Array<{motion_type: string, outcome: string|null}>}
  */
 export function extractMotionOutcomes(motionTypes, text) {
@@ -1620,7 +1620,7 @@ export function extractMotionOutcomes(motionTypes, text) {
   }
 
   // For each motion, use the single outcome (we don't have per-motion
-  // docket data to differentiate — that's a Phase 2 enhancement).
+  // docket data to differentiate, that's a Phase 2 enhancement).
   // This is the per-spec approximation for Phase 1.
   return motionTypes.map(mt => ({ motion_type: mt, outcome }));
 }
@@ -1630,8 +1630,8 @@ export function extractMotionOutcomes(motionTypes, text) {
  * Finds sentences containing ruling keywords.
  * Strips quoted text before scanning for ruling keywords.
  *
- * @param {string} text — full opinion text
- * @returns {string|null} — extracted holding sentences joined, or null
+ * @param {string} text, full opinion text
+ * @returns {string|null}, extracted holding sentences joined, or null
  */
 export function extractHoldingText(text) {
   if (!text) return null;
@@ -1723,7 +1723,7 @@ export function computeMotionFavorability(motionOutcomes) {
  * 0-100 from case outcome (granted/dismissed vs denied/affirmed).
  *
  * @param {Array<{motion_type: string, outcome: string|null}>} motionOutcomes
- * @param {boolean|null} isGoodLaw — CL citation treatment
+ * @param {boolean|null} isGoodLaw, CL citation treatment
  * @returns {number|null}
  */
 export function computeCaseFavorability(motionOutcomes, isGoodLaw) {
@@ -1755,14 +1755,14 @@ export function computeCaseFavorability(motionOutcomes, isGoodLaw) {
  * Full mechanical extraction pipeline for a single opinion.
  *
  * @param {object} params
- * @param {string} params.text — plain text of opinion
- * @param {string} params.jurisdiction — two-letter state code
- * @param {string} params.opinionType — from classifyOpinionType
- * @param {object} params.extractionSteps — from getExtractionSteps
- * @param {Map} params.statuteMap — jurisdiction:statute_number → charge info
- * @param {Map} params.theoryMap — charge_slug → theory definitions
- * @param {boolean|null} params.isGoodLaw — CL is_good_law status
- * @returns {object} — classified fields
+ * @param {string} params.text, plain text of opinion
+ * @param {string} params.jurisdiction, two-letter state code
+ * @param {string} params.opinionType, from classifyOpinionType
+ * @param {object} params.extractionSteps, from getExtractionSteps
+ * @param {Map} params.statuteMap, jurisdiction:statute_number → charge info
+ * @param {Map} params.theoryMap, charge_slug → theory definitions
+ * @param {boolean|null} params.isGoodLaw, CL is_good_law status
+ * @returns {object}, classified fields
  */
 export function extractAll(params) {
   const { text, jurisdiction, opinionType, extractionSteps, statuteMap, theoryMap, isGoodLaw } = params;
@@ -2048,7 +2048,7 @@ Expected: All tests pass.
 
 ```bash
 git add scripts/lib/mechanical-extractor.mjs tests/mechanical-extractor.test.ts
-git commit -m "feat(di): mechanical extraction pipeline — all extraction functions
+git commit -m "feat(di): mechanical extraction pipeline, all extraction functions
 
 Extracts charge_types, motion_types, defense_theories, motion_outcomes,
 holding_text via deterministic keyword matching + lookup tables.
@@ -2092,12 +2092,12 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\scripts\lib\cross-validator
 /**
  * Cross-validate classified opinion fields.
  *
- * @param {object} extracted — output from extractAll()
- * @param {object} clMetadata — CourtListener metadata for this opinion
- * @param {string} clMetadata.nature_of_suit — CL nature_of_suit code
- * @param {string} clMetadata.court — CL court identifier
- * @param {string} clMetadata.jurisdiction — derived from court
- * @param {string[]} clMetadata.docketCharges — charge slugs from CL docket (if available)
+ * @param {object} extracted, output from extractAll()
+ * @param {object} clMetadata, CourtListener metadata for this opinion
+ * @param {string} clMetadata.nature_of_suit, CL nature_of_suit code
+ * @param {string} clMetadata.court, CL court identifier
+ * @param {string} clMetadata.jurisdiction, derived from court
+ * @param {string[]} clMetadata.docketCharges, charge slugs from CL docket (if available)
  * @returns {{ confidence: string, signals: object }}
  */
 export function crossValidate(extracted, clMetadata) {
@@ -2115,7 +2115,7 @@ export function crossValidate(extracted, clMetadata) {
     signals.charge_types.details.push("statute_citation_extraction");
   }
 
-  // Signal 2: CL nature_of_suit (independent — assigned by court staff)
+  // Signal 2: CL nature_of_suit (independent, assigned by court staff)
   if (clMetadata.nature_of_suit) {
     const nosCriminal = isCriminalNOS(clMetadata.nature_of_suit);
     if (nosCriminal && extracted.charge_types.length > 0) {
@@ -2124,7 +2124,7 @@ export function crossValidate(extracted, clMetadata) {
     }
   }
 
-  // Signal 3: jurisdiction_statutes lookup matched (independent — our curated table)
+  // Signal 3: jurisdiction_statutes lookup matched (independent, our curated table)
   if (extracted.charge_types.length > 0) {
     // If we got charge_types, that means the statute lookup succeeded
     signals.charge_types.independent++;
@@ -2150,7 +2150,7 @@ export function crossValidate(extracted, clMetadata) {
   }
 
   // ── Defense theory cross-validation ──
-  // Signal 1: constrained mapping from charge_defense_theories (independent — taxonomy-derived)
+  // Signal 1: constrained mapping from charge_defense_theories (independent, taxonomy-derived)
   // Signal 2: keyword presence in text (same-source)
   // deriveDefenseTheories already requires BOTH, so if we have theories, both signals exist
   if (extracted.defense_theories.length > 0) {
@@ -2276,7 +2276,7 @@ npx vitest run tests/cross-validator.test.ts
 
 ```bash
 git add scripts/lib/cross-validator.mjs tests/cross-validator.test.ts
-git commit -m "feat(di): cross-validation engine — signal independence classification
+git commit -m "feat(di): cross-validation engine, signal independence classification
 
 Validates each field against 2+ independent signals per spec Section 3.3.
 Tags confidence as verified/low_confidence. 3 unit tests."
@@ -2297,7 +2297,7 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\scripts\validate-gold-set.m
 
 ```javascript
 /**
- * Gold-Set Evaluation — Phase 0B
+ * Gold-Set Evaluation, Phase 0B
  *
  * Selects 200 opinions from the existing case_law table, runs the mechanical
  * extraction pipeline, and compares against human-labeled ground truth.
@@ -2307,9 +2307,9 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\scripts\validate-gold-set.m
  *
  * Usage:
  *   node scripts/validate-gold-set.mjs                        # Run evaluation
- *   node scripts/validate-gold-set.mjs --sample 50            # Use smaller sample
- *   node scripts/validate-gold-set.mjs --load-labels FILE     # Load pre-labeled JSON
- *   node scripts/validate-gold-set.mjs --save-results FILE    # Save results to file
+ *   node scripts/validate-gold-set.mjs,sample 50            # Use smaller sample
+ *   node scripts/validate-gold-set.mjs,load-labels FILE     # Load pre-labeled JSON
+ *   node scripts/validate-gold-set.mjs,save-results FILE    # Save results to file
  *
  * Gold-set labels file format (JSON array):
  * [
@@ -2338,11 +2338,11 @@ const PROJECT_ROOT = path.resolve(__dirname, "..");
 const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
 
 const args = process.argv.slice(2);
-const sampleIdx = args.indexOf("--sample");
+const sampleIdx = args.indexOf(", sample");
 const sampleSize = sampleIdx >= 0 ? parseInt(args[sampleIdx + 1], 10) : 200;
-const labelsIdx = args.indexOf("--load-labels");
+const labelsIdx = args.indexOf(", load-labels");
 const labelsFile = labelsIdx >= 0 ? args[labelsIdx + 1] : null;
-const saveIdx = args.indexOf("--save-results");
+const saveIdx = args.indexOf(", save-results");
 const savePath = saveIdx >= 0 ? args[saveIdx + 1] : null;
 
 // Load SUPABASE_ACCESS_TOKEN
@@ -2459,7 +2459,7 @@ function computeFieldAccuracy(predicted, actual, fieldName) {
 
 async function main() {
   console.log("=".repeat(60));
-  console.log("DEFENSE INTELLIGENCE — GOLD-SET EVALUATION (Phase 0B)");
+  console.log("DEFENSE INTELLIGENCE, GOLD-SET EVALUATION (Phase 0B)");
   console.log("Sample size: " + sampleSize);
   console.log("=".repeat(60));
 
@@ -2571,10 +2571,10 @@ async function main() {
     if (allAccuracies.length > 0) {
       const overall = allAccuracies.reduce((a, b) => a + b, 0) / allAccuracies.length;
       console.log("\nOverall accuracy: " + (overall * 100).toFixed(1) + "%");
-      console.log(overall >= 0.9 ? "GO — Pipeline passes 90% threshold" : "NO-GO — Below 90% threshold. Debug extraction rules before Phase 1.");
+      console.log(overall >= 0.9 ? "GO, Pipeline passes 90% threshold" : "NO-GO, Below 90% threshold. Debug extraction rules before Phase 1.");
     }
   } else {
-    console.log("\nNo gold-set labels provided. Run with --load-labels <file> to compute accuracy.");
+    console.log("\nNo gold-set labels provided. Run with,load-labels <file> to compute accuracy.");
     console.log("Generate labels template: use cluster_ids above to manually label 200 opinions.");
   }
 
@@ -2587,7 +2587,7 @@ async function main() {
     "'" + JSON.stringify(fieldAccuracies).split("'").join("''") + "'::jsonb, " +
     "NULL, " +
     "'mechanical_pipeline', " +
-    "'Phase 0B evaluation — " + (goldLabels ? "with labels" : "structure only") + "'" +
+    "'Phase 0B evaluation, " + (goldLabels ? "with labels" : "structure only") + "'" +
     ");";
 
   try {
@@ -2620,12 +2620,12 @@ main().catch(err => { console.error("Fatal:", err); process.exit(1); });
 - [ ] **Step 6.2:** Run the evaluation (structure validation without gold labels).
 
 ```bash
-node scripts/validate-gold-set.mjs --sample 50 --save-results data/defense-intelligence/gold-set-results.json
+node scripts/validate-gold-set.mjs,sample 50,save-results data/defense-intelligence/gold-set-results.json
 ```
 
 Expected output:
 ```
-DEFENSE INTELLIGENCE — GOLD-SET EVALUATION (Phase 0B)
+DEFENSE INTELLIGENCE, GOLD-SET EVALUATION (Phase 0B)
 Sample size: 50
 ...
 Statute map loaded: ~4699 entries
@@ -2666,17 +2666,17 @@ Logs to pipeline_accuracy_log. 90% threshold enforced."
 Save to `C:\Users\email\projects\ImNotAnAttorney-web\supabase\migrations\20260414d_judge_quotes_source_urls.sql`:
 
 ```sql
--- Add source_urls text[] to judge_quotes for consistency with classified_opinions.
--- Migrate existing source_url (singular) into source_urls array.
--- The defense-intelligence/query.ts wrapper reads source_urls[] and falls back to source_url.
+, Add source_urls text[] to judge_quotes for consistency with classified_opinions.
+, Migrate existing source_url (singular) into source_urls array.
+, The defense-intelligence/query.ts wrapper reads source_urls[] and falls back to source_url.
 
 ALTER TABLE judge_quotes ADD COLUMN IF NOT EXISTS source_urls text[] DEFAULT '{}';
 
--- Migrate existing data
+, Migrate existing data
 UPDATE judge_quotes SET source_urls = ARRAY[source_url]
 WHERE source_url IS NOT NULL AND (source_urls IS NULL OR source_urls = '{}');
 
--- Add opinion_context column for Phase 1 quote-to-pattern linking
+, Add opinion_context column for Phase 1 quote-to-pattern linking
 ALTER TABLE judge_quotes ADD COLUMN IF NOT EXISTS opinion_context jsonb;
 ```
 
@@ -2706,9 +2706,9 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\scripts\link-quotes-to-judg
  *   4. Update judge_id where a match is found
  *
  * Usage:
- *   node scripts/link-quotes-to-judges.mjs              # Dry-run — show stats
- *   node scripts/link-quotes-to-judges.mjs --apply      # Apply updates
- *   node scripts/link-quotes-to-judges.mjs --limit 100  # Process first N unlinked
+ *   node scripts/link-quotes-to-judges.mjs              # Dry-run, show stats
+ *   node scripts/link-quotes-to-judges.mjs,apply      # Apply updates
+ *   node scripts/link-quotes-to-judges.mjs,limit 100  # Process first N unlinked
  */
 
 import fs from "fs";
@@ -2722,8 +2722,8 @@ const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
 const BATCH_SIZE = 500;
 
 const args = process.argv.slice(2);
-const applyMode = args.includes("--apply");
-const limitIdx = args.indexOf("--limit");
+const applyMode = args.includes(", apply");
+const limitIdx = args.indexOf(", limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 
 // Load SUPABASE_ACCESS_TOKEN from parent repo
@@ -2835,7 +2835,7 @@ async function main() {
           const clusterId = slashIdx >= 0 ? afterOpinion.slice(0, slashIdx) : afterOpinion;
           if (clusterId && clusterId.length > 0) {
             // Look up this cluster_id in statute_case_law to find any associated judge
-            // (We don't have author data directly — we'll match by case_cited name)
+            // (We don't have author data directly, we'll match by case_cited name)
           }
         }
       }
@@ -2894,7 +2894,7 @@ async function main() {
     }
     console.log("Done.");
   } else {
-    console.log("Run with --apply to update database.");
+    console.log("Run with,apply to update database.");
   }
 }
 
@@ -2938,8 +2938,8 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\scripts\classify-existing-o
  *
  * Usage:
  *   node scripts/classify-existing-opinions.mjs              # Dry-run (stats + SQL)
- *   node scripts/classify-existing-opinions.mjs --apply      # Write to DB
- *   node scripts/classify-existing-opinions.mjs --limit 100  # First N opinions
+ *   node scripts/classify-existing-opinions.mjs,apply      # Write to DB
+ *   node scripts/classify-existing-opinions.mjs,limit 100  # First N opinions
  */
 
 import fs from "fs";
@@ -2956,8 +2956,8 @@ const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
 const BATCH_SIZE = 500;
 
 const args = process.argv.slice(2);
-const applyMode = args.includes("--apply");
-const limitIdx = args.indexOf("--limit");
+const applyMode = args.includes(", apply");
+const limitIdx = args.indexOf(", limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 
 // Load SUPABASE_ACCESS_TOKEN
@@ -3200,7 +3200,7 @@ async function main() {
     const countResult = await supabaseQuery("SELECT count(*) as cnt FROM classified_opinions");
     console.log("\nclassified_opinions row count: " + (countResult[0]?.cnt || "unknown"));
   } else {
-    console.log("\nRun with --apply to insert into classified_opinions.");
+    console.log("\nRun with,apply to insert into classified_opinions.");
   }
 }
 
@@ -3210,7 +3210,7 @@ main().catch(err => { console.error("Fatal:", err); process.exit(1); });
 - [ ] **Step 8.2:** Run in dry-run mode to verify structure.
 
 ```bash
-node scripts/classify-existing-opinions.mjs --limit 50
+node scripts/classify-existing-opinions.mjs,limit 50
 ```
 
 Expected: Stats printed, SQL file generated.
@@ -3218,7 +3218,7 @@ Expected: Stats printed, SQL file generated.
 - [ ] **Step 8.3:** Apply classification.
 
 ```bash
-node scripts/classify-existing-opinions.mjs --apply
+node scripts/classify-existing-opinions.mjs,apply
 ```
 
 Expected: All 3,407 opinions classified and inserted into classified_opinions.
@@ -3248,7 +3248,7 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\scripts\compute-pattern-tab
 
 ```javascript
 /**
- * Compute Pattern Tables — defense_theory_outcomes + motion_success_patterns
+ * Compute Pattern Tables, defense_theory_outcomes + motion_success_patterns
  *
  * Aggregates from classified_opinions using the join paths from spec Section 6.1.1.
  * Weights opinions by opinion_type: full=1.0, memo=0.8, order=0.5, pca=0.3.
@@ -3256,7 +3256,7 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\scripts\compute-pattern-tab
  *
  * Usage:
  *   node scripts/compute-pattern-tables.mjs              # Dry-run
- *   node scripts/compute-pattern-tables.mjs --apply      # Write to DB
+ *   node scripts/compute-pattern-tables.mjs,apply      # Write to DB
  */
 
 import fs from "fs";
@@ -3270,7 +3270,7 @@ const PROJECT_REF = "jxjbjmgdukwkoclydqdr";
 const BATCH_SIZE = 500;
 
 const args = process.argv.slice(2);
-const applyMode = args.includes("--apply");
+const applyMode = args.includes(", apply");
 
 // Load SUPABASE_ACCESS_TOKEN
 let supabaseToken = null;
@@ -3345,7 +3345,7 @@ async function main() {
       FROM classified_opinions
       WHERE classification_confidence IN ('verified', 'low_confidence')
     ),
-    -- Unnest charge_types and defense_theories
+   , Unnest charge_types and defense_theories
     expanded AS (
       SELECT
         ow.cluster_id, ow.weight, ow.jurisdiction,
@@ -3356,12 +3356,12 @@ async function main() {
         unnest(ow.charge_types) AS ct(charge_slug),
         unnest(ow.defense_theories) AS dt(defense_theory)
     ),
-    -- For each theory, check motion outcomes via charge_defense_theories mapping
+   , For each theory, check motion outcomes via charge_defense_theories mapping
     theory_outcomes AS (
       SELECT
         e.charge_slug, e.defense_theory, e.jurisdiction, e.weight,
         e.case_favorability, e.source_urls,
-        -- Check if any associated motion was granted
+       , Check if any associated motion was granted
         (SELECT bool_or(
           (mo->>'outcome') = 'granted' OR (mo->>'outcome') = 'reversed' OR (mo->>'outcome') = 'dismissed'
         )
@@ -3425,7 +3425,7 @@ async function main() {
       WHERE classification_confidence IN ('verified', 'low_confidence')
         AND motion_outcomes IS NOT NULL
     ),
-    -- Expand: one row per motion_type per charge_type per opinion
+   , Expand: one row per motion_type per charge_type per opinion
     expanded AS (
       SELECT
         ow.cluster_id, ow.weight, ow.jurisdiction,
@@ -3436,13 +3436,13 @@ async function main() {
       FROM opinion_weights ow,
         unnest(ow.charge_types) AS ct(charge_slug),
         jsonb_to_recordset(ow.motion_outcomes) AS mo(motion_type text, outcome text)
-      WHERE mo.outcome IS NOT NULL  -- NULL outcomes excluded per spec
+      WHERE mo.outcome IS NOT NULL , NULL outcomes excluded per spec
     )
     SELECT
       e.motion_type,
       e.charge_slug,
       e.jurisdiction,
-      NULL::uuid AS judge_id,  -- Phase 1: no judge-level data from case_law
+      NULL::uuid AS judge_id, , Phase 1: no judge-level data from case_law
       count(*)::int AS filed_count,
       count(*) FILTER (WHERE e.outcome IN ('granted', 'reversed', 'dismissed'))::int AS granted_count,
       count(*) FILTER (WHERE e.outcome IN ('denied', 'affirmed'))::int AS denied_count,
@@ -3482,7 +3482,7 @@ async function main() {
       process.exit(1);
     }
   } else {
-    console.log("Run with --apply to compute patterns.");
+    console.log("Run with,apply to compute patterns.");
   }
 }
 
@@ -3498,7 +3498,7 @@ node scripts/compute-pattern-tables.mjs
 - [ ] **Step 9.3:** Apply pattern computation.
 
 ```bash
-node scripts/compute-pattern-tables.mjs --apply
+node scripts/compute-pattern-tables.mjs,apply
 ```
 
 Expected: Pattern table row counts printed.
@@ -3531,7 +3531,7 @@ Save to `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\defense-intelligenc
  * Defense Intelligence Query Module
  *
  * Single query surface for all intelligence data.
- * Wraps and extends tier9-reports/query.ts — no breaking changes.
+ * Wraps and extends tier9-reports/query.ts, no breaking changes.
  *
  * Integration principles (spec Section 7.1):
  *   1. Every product works with zero intelligence data
@@ -3786,7 +3786,7 @@ export async function queryDefenseIntelligence(
 - [ ] **Step 10.2:** Verify TypeScript compilation.
 
 ```bash
-npx tsc --noEmit src/lib/defense-intelligence/query.ts 2>&1 || echo "Check for type errors above"
+npx tsc,noEmit src/lib/defense-intelligence/query.ts 2>&1 || echo "Check for type errors above"
 ```
 
 Expected: No errors (or only non-blocking warnings from the broader codebase).
@@ -3795,7 +3795,7 @@ Expected: No errors (or only non-blocking warnings from the broader codebase).
 
 ```bash
 git add src/lib/defense-intelligence/query.ts
-git commit -m "feat(di): defense-intelligence/query.ts — single query surface
+git commit -m "feat(di): defense-intelligence/query.ts, single query surface
 
 Wraps tier9-reports/query.ts + new intelligence tables. Confidence
 thresholds per tier, hard floor N<5, source_urls enforcement.
@@ -3828,7 +3828,7 @@ import {
 
 Update the `case "judge-report-card"` branch (around line 101) to also query intelligence:
 
-Replace the existing judge-report-card case block body (lines 102-116 approximately) — the section after `case "judge-report-card": {` and before the `break;` — with code that also queries intelligence. The intelligence data is passed as an optional second parameter to the renderer.
+Replace the existing judge-report-card case block body (lines 102-116 approximately), the section after `case "judge-report-card": {` and before the `break;`, with code that also queries intelligence. The intelligence data is passed as an optional second parameter to the renderer.
 
 Similarly for `case "similar-cases-analyzer"`.
 
@@ -3894,10 +3894,10 @@ function renderIntelligenceSection(intel: DefenseIntelligenceData): string {
             ${escapeHtml(t.defense_theory.split("_").join(" "))}
           </td>
           <td style="padding: 8px; border-bottom: 1px solid #292524; color: #D4D4D8; text-align: center;">
-            ${t.motion_success_rate !== null ? (t.motion_success_rate * 100).toFixed(0) + "%" : "—"}
+            ${t.motion_success_rate !== null ? (t.motion_success_rate * 100).toFixed(0) + "%" : ", "}
           </td>
           <td style="padding: 8px; border-bottom: 1px solid #292524; color: #D4D4D8; text-align: center;">
-            ${t.case_success_rate !== null ? (t.case_success_rate * 100).toFixed(0) + "%" : "—"}
+            ${t.case_success_rate !== null ? (t.case_success_rate * 100).toFixed(0) + "%" : ", "}
           </td>
           <td style="padding: 8px; border-bottom: 1px solid #292524; color: #71717A; text-align: center;">
             ${t.attempts} ${sourceLinks(t.sample_source_urls)}
@@ -3935,7 +3935,7 @@ function renderIntelligenceSection(intel: DefenseIntelligenceData): string {
             ${escapeHtml(m.motion_type.split("_").join(" "))}
           </td>
           <td style="padding: 8px; border-bottom: 1px solid #292524; color: #D4D4D8; text-align: center;">
-            ${m.grant_rate !== null ? (m.grant_rate * 100).toFixed(0) + "%" : "—"}
+            ${m.grant_rate !== null ? (m.grant_rate * 100).toFixed(0) + "%" : ", "}
           </td>
           <td style="padding: 8px; border-bottom: 1px solid #292524; color: #71717A; text-align: center;">
             ${m.filed_count} ${sourceLinks(m.sample_source_urls)}
@@ -4005,7 +4005,7 @@ const { data: motionCount } = await supabase
   .from("motion_success_patterns")
   .select("motion_type", { count: "exact", head: true });
 
-// These may be empty in test env — that's OK, it tests graceful degradation
+// These may be empty in test env, that's OK, it tests graceful degradation
 console.log(`    Intelligence tables: defense_theory_outcomes=${theoryCount?.length ?? 0}, motion_success_patterns=${motionCount?.length ?? 0}`);
 assert(true, "Intelligence tables queried without error (graceful degradation path)");
 ```
@@ -4035,17 +4035,17 @@ Graceful degradation: both paths (with/without intelligence) tested."
 
 ```
 Phase 0A (Days 1-3):
-  Task 1 → Task 2 (sequential — Task 2 needs tables from Task 1)
+  Task 1 → Task 2 (sequential, Task 2 needs tables from Task 1)
 
 Phase 0B (Days 4-10):
-  Task 3 → Task 4 → Task 5 → Task 6 (sequential — each builds on previous)
+  Task 3 → Task 4 → Task 5 → Task 6 (sequential, each builds on previous)
   GO/NO-GO GATE after Task 6. Do not proceed if accuracy < 90%.
 
 Phase 1 (Days 11-18):
-  Task 7 + Task 8 (parallel — independent scripts)
-  Task 9 (after Task 8 — needs classified_opinions populated)
-  Task 10 (after Task 9 — needs pattern tables computed)
-  Task 11 (after Task 10 — needs query module)
+  Task 7 + Task 8 (parallel, independent scripts)
+  Task 9 (after Task 8, needs classified_opinions populated)
+  Task 10 (after Task 9, needs pattern tables computed)
+  Task 11 (after Task 10, needs query module)
 ```
 
 ## Verification Checklist

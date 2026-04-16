@@ -1,11 +1,11 @@
 /**
- * PATCH /api/admin/blog-pipeline/[id] — management actions on individual drafts
+ * PATCH /api/admin/blog-pipeline/[id], management actions on individual drafts
  *
  * Actions:
- *   retry-qa       — reset to 'draft', clear all QA fields
- *   decline        — set draft + linked content_gap to 'declined'
- *   approve-override — force to 'qa-passed' with qa_passed_at = now()
- *   edit           — update mdx_content, increment version, reset QA fields
+ *   retry-qa      , reset to 'draft', clear all QA fields
+ *   decline       , set draft + linked content_gap to 'declined'
+ *   approve-override, force to 'qa-passed' with qa_passed_at = now()
+ *   edit          , update mdx_content, increment version, reset QA fields
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";

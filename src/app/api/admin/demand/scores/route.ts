@@ -1,5 +1,5 @@
 /**
- * GET /api/admin/demand/scores — demand scores for latest window
+ * GET /api/admin/demand/scores, demand scores for latest window
  * Query params: window (7d|30d|90d), dimension (charge_type|pain_point)
  */
 import { NextRequest, NextResponse } from "next/server";

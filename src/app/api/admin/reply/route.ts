@@ -1,5 +1,5 @@
 /**
- * @file /api/admin/reply — Send a reply to an inbound email
+ * @file /api/admin/reply, Send a reply to an inbound email
  *
  * Sends an email via Resend with proper threading headers (In-Reply-To,
  * References) so the reply appears in the same thread in the recipient's
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     process.env.RESEND_FROM_EMAIL || "help@imnotanattorney.com";
 
   // Append signature
-  const signature = `\n\n—\nYour team at ImNotAnAttorney\nYou're not in this alone.\nhelp@imnotanattorney.com`;
+  const signature = `\n\n, \nYour team at ImNotAnAttorney\nYou're not in this alone.\nhelp@imnotanattorney.com`;
   const fullText = text + signature;
 
   // Build email payload
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
     reply_to: fromEmail,
   };
 
-  // Threading headers — makes reply appear in same thread
+  // Threading headers, makes reply appear in same thread
   if (message_id) {
     payload.headers = {
       "In-Reply-To": message_id,
@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
     }
 
     const result = await res.json();
-    console.warn(`[Admin Reply] Sent reply — id: ${result.id}`);
+    console.warn(`[Admin Reply] Sent reply, id: ${result.id}`);
     return NextResponse.json({ ok: true, id: result.id });
   } catch (err) {
     console.error("[Admin Reply] Send error:", err);

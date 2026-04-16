@@ -1,4 +1,4 @@
-# The War Room ($4,997) — Pipeline Documentation
+# The War Room ($4,997), Pipeline Documentation
 
 ## Pipeline Overview
 
@@ -25,7 +25,7 @@ Customer Journey:
 ### Case Status Progression
 
 | Status | Meaning | Trigger |
-|--------|---------|---------|
+|------, |---------|---------|
 | `awaiting-intake` | Paid but no intake form exists | Webhook: no intake found for email |
 | `pending` | Intake linked, waiting for discovery upload | Webhook: intake exists + discovery tier |
 | `submitted` | Discovery uploaded and finalized | POST /api/upload/finalize |
@@ -117,20 +117,20 @@ War Room supports a priority delivery add-on:
 
 Expert basis: Cialdini (commitment/consistency), Kahneman (cognitive ease), Eyal (Hook Model).
 
-The War Room is the $4,997 tier — a multi-phase, ongoing engagement. Full engagement elements are active with discovery document references, and this tier adds **weekly update bridges** that maintain momentum across the 25-28 day delivery window and ongoing weekly updates.
+The War Room is the $4,997 tier, a multi-phase, ongoing engagement. Full engagement elements are active with discovery document references, and this tier adds **weekly update bridges** that maintain momentum across the 25-28 day delivery window and ongoing weekly updates.
 
 Every report section must include:
 
-1. **Section-End Executive Summary** — 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. At this tier, summaries are phase-aware — they reference what was delivered in prior phases and what the current phase adds. Example: "Building on the timeline gaps identified in Phase 1, this witness analysis reveals three additional inconsistencies your attorney should raise before the next hearing."
+1. **Section-End Executive Summary**, 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. At this tier, summaries are phase-aware, they reference what was delivered in prior phases and what the current phase adds. Example: "Building on the timeline gaps identified in Phase 1, this witness analysis reveals three additional inconsistencies your attorney should raise before the next hearing."
 
-2. **"Your Case" Personalization** — At least 1 personalized reference per section using the client's actual case details, jurisdiction-level intelligence, AND specific discovery document references (same depth as X-Ray). At this tier, personalization also references findings from PRIOR delivery phases. Example: "In Phase 1 we identified that Officer [Name]'s report contained a 33-minute gap. This witness statement from [Witness] now places them at a different location during that exact window."
+2. **"Your Case" Personalization**, At least 1 personalized reference per section using the client's actual case details, jurisdiction-level intelligence, AND specific discovery document references (same depth as X-Ray). At this tier, personalization also references findings from PRIOR delivery phases. Example: "In Phase 1 we identified that Officer [Name]'s report contained a 33-minute gap. This witness statement from [Witness] now places them at a different location during that exact window."
 
-3. **Section Bridges** — Final 1-2 sentences of each section create anticipation for the next. Standard within-report bridges apply to all sections. Additionally, this tier requires **cross-phase bridges**:
-   - **Phase 1 closing bridge:** "Phase 2 begins next week with witness dossiers — the officer discrepancies identified above will be cross-referenced against every witness statement."
+3. **Section Bridges**, Final 1-2 sentences of each section create anticipation for the next. Standard within-report bridges apply to all sections. Additionally, this tier requires **cross-phase bridges**:
+   - **Phase 1 closing bridge:** "Phase 2 begins next week with witness dossiers, the officer discrepancies identified above will be cross-referenced against every witness statement."
    - **Phase 2 closing bridge:** "The final package (Phase 3) will compile everything into an attorney-ready delivery format with case law backing each finding."
    - **Weekly update bridges:** Each weekly update opens with a bridge from the previous week ("Last week we identified X. This week, new discovery from [source] changes the picture...") and closes with a forward bridge ("Next week's update will incorporate the hearing results from [date]...").
 
-4. **Progress Structure** — Each section header includes position: "Section N of M: [Section Title]". For multi-phase delivery, progress is tracked at TWO levels:
+4. **Progress Structure**, Each section header includes position: "Section N of M: [Section Title]". For multi-phase delivery, progress is tracked at TWO levels:
    - **Within a phase:** "Phase 1, Section 3 of 5: Discovery Deep Dive"
    - **Across the engagement:** "Phase 2 of 3: Witness and Prosecution Analysis"
    - **Weekly updates:** "Week 4 Update: [Key Development]"
@@ -155,7 +155,7 @@ Two witness-related add-on products are available. These are standalone Stripe p
 
 - Tier slug: `extra-witness`
 - Adds one additional witness dossier beyond the 8 included in War Room base
-- Delivery: "Next update cycle" -- folded into the next weekly War Room update
+- Delivery: "Next update cycle", folded into the next weekly War Room update
 - Does NOT require discovery upload (`requiresDiscovery: false` in `stripe.ts`)
 - The witness analysis is added to the customer's existing case
 - Post-purchase drip: delivery confirmation only (day 0)
@@ -179,7 +179,7 @@ Two witness-related add-on products are available. These are standalone Stripe p
 100% of any prior lower-tier purchase is credited toward War Room within a 12-month rolling window.
 
 | Prior Purchase | War Room Price | Credit | Customer Pays |
-|---------------|---------------|--------|---------------|
+|---------------|---------------|------, |---------------|
 | Case Decoder ($197) | $4,997 | $197 | $4,800 |
 | Intelligence Brief ($997) | $4,997 | $997 | $4,000 |
 | X-Ray ($2,497) | $4,997 | $2,497 | $2,500 |
@@ -240,7 +240,7 @@ The prerequisite is a **soft gate**, not a hard block:
 - The Stripe line item description gets a note: "War Room prerequisite not confirmed"
 - Session metadata includes `prerequisite_skipped: "true"`
 - The operator sees the warning on the Stripe dashboard and follows up manually
-- The purchase is NOT blocked -- the customer can still complete checkout
+- The purchase is NOT blocked, the customer can still complete checkout
 
 This design allows edge cases (e.g., War Room purchased under a different email) to proceed with operator intervention rather than being hard-blocked.
 
@@ -288,7 +288,7 @@ War Room is an ongoing engagement with weekly operator contact. Unlike lower tie
 ### Built (Automated Infrastructure)
 
 | Component | Location | Status |
-|-----------|----------|--------|
+|---------, |----------|------, |
 | Stripe checkout session creation | `src/app/api/checkout/route.ts` | Working |
 | Stripe webhook (order + case creation) | `src/app/api/webhooks/stripe/route.ts` | Working |
 | Payment confirmation email (with upload CTA) | Webhook handler | Working |
@@ -309,7 +309,7 @@ War Room is an ongoing engagement with weekly operator contact. Unlike lower tie
 ### Manual (Operator-Driven)
 
 | Component | Current Process | Notes |
-|-----------|----------------|-------|
+|---------, |----------------|-------|
 | Phase 1 analysis (days 1-7) | Operator runs analysis using elite skills | Uses god-mode-trial, elite-drug-defense, master-strategy-trial |
 | Phase 2 witness dossiers (days 7-21) | Operator creates witness + prosecution analysis | Up to 8 witnesses in base price |
 | Phase 3 package assembly (days 21-28) | Operator compiles attorney delivery package | Case law, strategy questions, scored deliverables |
@@ -321,7 +321,7 @@ War Room is an ongoing engagement with weekly operator contact. Unlike lower tie
 ### Not Yet Built (Future: ImNotAnAttorney-engine)
 
 | Component | Description |
-|-----------|-------------|
+|---------, |-------------|
 | Automated discovery parsing | PDF/image extraction + indexing |
 | AI-assisted case analysis | Claude-powered analysis using elite skills |
 | Report generation pipeline | Automated multi-section report builder |
@@ -369,7 +369,7 @@ Related add-on tiers:
 ## Key File References
 
 | File | Role in War Room Pipeline |
-|------|--------------------------|
+|------|------------------------, |
 | `src/lib/stripe.ts` | Tier definition, pricing, discovery flag |
 | `src/lib/drip-emails.ts` | 3 post-purchase email templates |
 | `src/app/api/checkout/route.ts` | Session creation, consent, credits, prerequisite check |

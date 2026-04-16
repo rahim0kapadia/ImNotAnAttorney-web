@@ -1,11 +1,11 @@
 /**
- * Reddit Response Pipeline — Template Loader & Matcher
+ * Reddit Response Pipeline, Template Loader & Matcher
  *
  * Parses pre-written comment templates from content/queue/reddit/pending/,
  * matches Reddit posts against trigger keyword sets, and customizes drafts
  * with state-specific details.
  *
- * No LLM generation — templates are pre-audited for anti-hallucination safety.
+ * No LLM generation, templates are pre-audited for anti-hallucination safety.
  * Customization is pure string interpolation based on detected state/context.
  */
 
@@ -33,7 +33,7 @@ export interface CustomizedDraft {
   blogUrl: string;
 }
 
-// Hardcoded from plan — avoids runtime FS parsing in serverless environment
+// Hardcoded from plan, avoids runtime FS parsing in serverless environment
 const TEMPLATES: TemplateDefinition[] = [
   {
     id: '01',
@@ -259,13 +259,13 @@ export function matchTemplate(
     }
   }
 
-  // Minimum confidence threshold — at least one keyword must match
+  // Minimum confidence threshold, at least one keyword must match
   return bestMatch && bestMatch.confidence >= 0.05 ? bestMatch : null;
 }
 
 /**
  * Customize a template draft with state-specific details.
- * Pure string operations — no LLM, no hallucination risk.
+ * Pure string operations, no LLM, no hallucination risk.
  */
 export function customizeTemplate(
   templateText: string,

@@ -1,12 +1,12 @@
 /**
- * @fileoverview Dynamic Calculator API — serves all calculator tools.
+ * @fileoverview Dynamic Calculator API, serves all calculator tools.
  *
  * POST /api/tools/good-time              → Good Time Credit Calculator
  * POST /api/tools/sol                     → Statute of Limitations Calculator (future)
  * POST /api/tools/diversion-eligibility   → Diversion Eligibility Checker
  * POST /api/tools/veterans-court          → Veterans Treatment Court Eligibility
  *
- * Pattern: Same as /api/score — validate input, compute, return result,
+ * Pattern: Same as /api/score, validate input, compute, return result,
  * fire anonymous analytics. No PII stored at computation time.
  *
  * The slug determines which calculator function to call. Add new calculators
@@ -31,7 +31,7 @@ import {
 /**
  * Registry of calculator functions keyed by product slug. Each entry
  * validates and computes its own input shape. Add new calculators here
- * as they ship — the route is generic, the registry is where the
+ * as they ship, the route is generic, the registry is where the
  * calculator-specific wiring lives.
  */
 const CALCULATOR_REGISTRY: Record<
@@ -109,7 +109,7 @@ export async function POST(
   // Compute result
   const result = calculator.calculate(body);
 
-  // Fire anonymous analytics (non-blocking — fire and forget)
+  // Fire anonymous analytics (non-blocking, fire and forget)
   const b = body as { state?: unknown; chargeType?: unknown };
   const analyticsState =
     typeof b.state === "string" ? b.state.toUpperCase() : null;

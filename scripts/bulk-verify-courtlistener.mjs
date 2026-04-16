@@ -1,5 +1,5 @@
 /**
- * Bulk Verify via CourtListener — Mark CL-tracked cases with source URLs + validation
+ * Bulk Verify via CourtListener, Mark CL-tracked cases with source URLs + validation
  *
  * For cases that have courtlistener_cluster_id but weren't verified via CAP:
  *   1. Constructs CourtListener source URLs from cluster IDs (no download needed)
@@ -190,7 +190,7 @@ async function main() {
 
   // Generate SQL: set validation_level, add CL URL, bump confidence
   const sqlStatements = [];
-  sqlStatements.push("-- Bulk CL Verification — Generated " + new Date().toISOString());
+  sqlStatements.push("-- Bulk CL Verification, Generated " + new Date().toISOString());
   sqlStatements.push("-- Source: bulk-verify-courtlistener.mjs");
   sqlStatements.push(`-- Cases: ${clRows.length}`);
   sqlStatements.push("");
@@ -253,9 +253,9 @@ async function main() {
       process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} applied\n`);
     } catch (e) {
       batchErrors++;
-      console.error(`  Batch ${batchNum}: ERROR — ${e.message}`);
+      console.error(`  Batch ${batchNum}: ERROR, ${e.message}`);
       if (e.message.indexOf("429") >= 0) {
-        console.log("  Rate limited — waiting 10s...");
+        console.log("  Rate limited, waiting 10s...");
         await sleep(10000);
         try {
           await supabaseQuery(batch.join("\n"));
@@ -273,7 +273,7 @@ async function main() {
   console.log(`\n--- Results ---`);
   console.log(`Applied:                 ${applied}`);
   console.log(`Batch errors:            ${batchErrors}`);
-  console.log(`\nNext step — negative treatment check + classification:`);
+  console.log(`\nNext step, negative treatment check + classification:`);
   console.log(`  node scripts/classify-case-law.mjs --limit 500`);
   console.log(`  (repeat until all ${needsGoodLawCheck} cases processed)`);
   console.log(`  Estimated: ~${Math.ceil(needsGoodLawCheck * 2.5 / 5000)} hours at CL rate limit`);

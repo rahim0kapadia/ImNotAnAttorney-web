@@ -31,7 +31,7 @@ import { createClient } from "@supabase/supabase-js";
  * be used in server-side contexts: API routes, webhooks, cron jobs.
  *
  * Auth options are explicitly disabled (no token refresh, no session
- * persistence) because the service role key does not use Supabase Auth —
+ * persistence) because the service role key does not use Supabase Auth,
  * it authenticates directly as a privileged database user.
  *
  * Env var checks throw descriptive errors instead of using TypeScript's

@@ -1,8 +1,8 @@
-# Scheduled Client Check-In System — Implementation Plan (Reviewed)
+# Scheduled Client Check-In System, Implementation Plan (Reviewed)
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add configurable check-in schedules for bail bond clients — daily cron prompts, missed-check-in alerts to bondsmen, compliance rate tracking.
+**Goal:** Add configurable check-in schedules for bail bond clients, daily cron prompts, missed-check-in alerts to bondsmen, compliance rate tracking.
 
 **Architecture:** Extends existing court_reminders + partners tables. One new cron route with two phases (prompt + missed alert). Reuses SMS/email/notification-prefs infrastructure. Dashboard and compliance report get new columns.
 
@@ -17,24 +17,24 @@
 Three-reviewer pre-implementation audit (code review, brainstorm, simplify). All findings integrated below.
 
 | ID | Severity | Finding | Fix |
-|----|----------|---------|-----|
-| C1 | Critical | Missing `after()` wrapper — cron times out on cron-job.org 30s cap | Task 5: `after()` wrapper, `dynamic`, `maxDuration` exports |
-| C2 | Critical | `check_in_prompts_sent text[]` grows unbounded — only today's date ever checked | Task 1+5: replaced with `last_prompted_date text` single column, eliminated RPC |
+|----|----------|---------|---, |
+| C1 | Critical | Missing `after()` wrapper, cron times out on cron-job.org 30s cap | Task 5: `after()` wrapper, `dynamic`, `maxDuration` exports |
+| C2 | Critical | `check_in_prompts_sent text[]` grows unbounded, only today's date ever checked | Task 1+5: replaced with `last_prompted_date text` single column, eliminated RPC |
 | C3 | Critical | PostgREST 1000-row cap silently truncates compliance `client_check_ins` | Task 8: paginated check-in fetch |
 | C4 | Critical | `getETMidnightUTC` wrong on DST spring-forward dates | Task 2: probe at 05:00 UTC (always pre-transition), added DST transition tests |
-| H1 | High | N+1 partner queries in 48-hour followup loop | Eliminated — followup deferred to v2 (H2) |
+| H1 | High | N+1 partner queries in 48-hour followup loop | Eliminated, followup deferred to v2 (H2) |
 | H2 | High | 48-hour followup adds 2 columns, ~65 lines, crash re-send risk | Task 1+5: followup section and columns removed entirely |
 | H3 | High | Dashboard `CourtClient` interface missing new fields | Task 7: explicit interface update step |
 | H4 | High | Day picker duplicated: inline in form (Task 4) vs component (Task 7) | Task 2: `CheckInDayPicker` built early, used in Tasks 4+7 |
 | H5 | High | Phase 1 `throw` kills Phase 2 despite separate locks | Task 5: independent try/catch per phase inside `after()` |
-| H6 | High | `sendSMS` 4th positional param after optional 3rd — fragile | Task 3: `subject` added to `SmsLogContext` interface (no signature change) |
-| H7 | High | Cron fires at 7am ET during EST — `hours:[12]` is fixed UTC | Task 5: `timezone: 'America/New_York'` with `hours: [8]` |
+| H6 | High | `sendSMS` 4th positional param after optional 3rd, fragile | Task 3: `subject` added to `SmsLogContext` interface (no signature change) |
+| H7 | High | Cron fires at 7am ET during EST, `hours:[12]` is fixed UTC | Task 5: `timezone: 'America/New_York'` with `hours: [8]` |
 | H8 | High | Compliance denominator counts from `created_at`, wrong for late schedules | Task 8: documented as intentional simplification with comment |
 | M1 | Medium | Existing rows show "Schedule needed" badge for all pre-existing clients | Task 7: filter to `active + future court_date + has partner` |
 | M2 | Medium | `.in("court_reminder_id", ids)` can exceed PostgREST URL length | Task 5: chunked to 500 per batch |
 | M3 | Medium | Dynamic import of `validateCheckInDays` in settings route | Task 7: static import |
 | M4 | Medium | `notification_prefs: any` in `resolvedPartner` type | Task 4: `Record<string, unknown> \| null` |
-| M5 | Medium | No integration tests for cron route — highest-risk component | Task 9: extended E2E verification with test data |
+| M5 | Medium | No integration tests for cron route, highest-risk component | Task 9: extended E2E verification with test data |
 | M6 | Medium | `countScheduledDays` iterates day-by-day O(n) | Task 2: O(1) arithmetic with remainder check |
 
 ---
@@ -42,7 +42,7 @@ Three-reviewer pre-implementation audit (code review, brainstorm, simplify). All
 ## File Structure
 
 | Action | File | Responsibility |
-|--------|------|----------------|
+|------, |------|----------------|
 | Create | `supabase/migrations/20260415a_scheduled_check_in_system.sql` | Schema: new columns + indexes |
 | Create | `src/lib/check-in-schedule.ts` | Shared: validation, ET timezone, compliance math |
 | Create | `src/lib/__tests__/check-in-schedule.test.ts` | Tests for shared helpers |
@@ -62,7 +62,7 @@ Three-reviewer pre-implementation audit (code review, brainstorm, simplify). All
 
 ---
 
-### Task 1: Migration — Schema Changes
+### Task 1: Migration, Schema Changes
 
 **Files:**
 - Create: `supabase/migrations/20260415a_scheduled_check_in_system.sql`
@@ -70,12 +70,12 @@ Three-reviewer pre-implementation audit (code review, brainstorm, simplify). All
 - [ ] **Step 1: Write the migration file**
 
 ```sql
--- Scheduled Client Check-In System
--- Adds configurable check-in schedule columns to court_reminders and partners.
--- [C2] Uses last_prompted_date (single column) instead of check_in_prompts_sent (array).
--- [H2] Followup columns (check_in_schedule_notified_at, check_in_schedule_followup_sent) deferred to v2.
+, Scheduled Client Check-In System
+, Adds configurable check-in schedule columns to court_reminders and partners.
+, [C2] Uses last_prompted_date (single column) instead of check_in_prompts_sent (array).
+, [H2] Followup columns (check_in_schedule_notified_at, check_in_schedule_followup_sent) deferred to v2.
 
--- Court reminders: check-in schedule columns
+, Court reminders: check-in schedule columns
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS check_in_days text[];
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS check_in_source text;
 ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_prompted_date text;
@@ -83,10 +83,10 @@ ALTER TABLE court_reminders ADD COLUMN IF NOT EXISTS last_prompted_date text;
 ALTER TABLE court_reminders ADD CONSTRAINT chk_check_in_source
   CHECK (check_in_source IS NULL OR check_in_source IN ('client', 'partner', 'default'));
 
--- Partners: default check-in days
+, Partners: default check-in days
 ALTER TABLE partners ADD COLUMN IF NOT EXISTS default_check_in_days text[];
 
--- Indexes for cron queries
+, Indexes for cron queries
 CREATE INDEX IF NOT EXISTS idx_court_reminders_check_in_days
   ON court_reminders USING GIN (check_in_days);
 
@@ -99,7 +99,7 @@ CREATE INDEX IF NOT EXISTS idx_court_reminders_partner_promo
 
 - [ ] **Step 2: Apply migration via Supabase Management API**
 
-Primary method — Management API:
+Primary method, Management API:
 ```bash
 node -e "
 const fs = require('fs');
@@ -115,7 +115,7 @@ fetch('https://api.supabase.com/v1/projects/jxjbjmgdukwkoclydqdr/database/query'
 "
 ```
 
-Fallback — exec_sql RPC (if Management API is unavailable):
+Fallback, exec_sql RPC (if Management API is unavailable):
 ```bash
 node -e "
 const fs = require('fs');
@@ -153,7 +153,7 @@ s.from('partners').select('default_check_in_days').limit(1).then(r => {
 
 ```bash
 git add supabase/migrations/20260415a_scheduled_check_in_system.sql
-git commit -m "feat(check-in): migration — schedule columns, indexes, CHECK constraint"
+git commit -m "feat(check-in): migration, schedule columns, indexes, CHECK constraint"
 ```
 
 ---
@@ -261,7 +261,7 @@ describe("formatDaysDisplay", () => {
 
 describe("countScheduledDays", () => {
   it("counts matching weekdays in range", () => {
-    // Mon Apr 13 to Fri Apr 17 2026 — contains Mon(13), Wed(15), Fri(17)
+    // Mon Apr 13 to Fri Apr 17 2026, contains Mon(13), Wed(15), Fri(17)
     const count = countScheduledDays(
       ["mon", "wed", "fri"],
       "2026-04-13",
@@ -301,7 +301,7 @@ describe("sortCheckInDays", () => {
 - [ ] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run src/lib/__tests__/check-in-schedule.test.ts`
-Expected: FAIL — module not found
+Expected: FAIL, module not found
 
 - [ ] **Step 3: Write the implementation**
 
@@ -344,7 +344,7 @@ export function getETDate(now?: Date): string {
 /**
  * Convert an ET date string to midnight ET expressed as a UTC Date.
  *
- * [C4] Probes at 05:00 UTC, which is always midnight-1am ET — before the 2am DST
+ * [C4] Probes at 05:00 UTC, which is always midnight-1am ET, before the 2am DST
  * transition point. This ensures the offset reflects midnight's timezone, not a
  * post-transition timezone. Works correctly on spring-forward and fall-back dates.
  */
@@ -375,7 +375,7 @@ export function formatDaysDisplay(days: string[] | null): string {
 
 /**
  * Count scheduled check-in days between two dates (inclusive).
- * [M6] O(1) arithmetic — full weeks × days/week + remainder scan (max 6 iterations).
+ * [M6] O(1) arithmetic, full weeks × days/week + remainder scan (max 6 iterations).
  */
 export function countScheduledDays(
   checkInDays: string[] | null,
@@ -393,7 +393,7 @@ export function countScheduledDays(
   const remainder = totalDays % 7;
   let count = fullWeeks * checkInDays.length;
 
-  // [Simplify R2] getUTCDay() is equivalent here — T12:00:00Z anchor means
+  // [Simplify R2] getUTCDay() is equivalent here, T12:00:00Z anchor means
   // UTC day always matches ET calendar day (noon UTC = 7-8am ET).
   const DOW_MAP = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
   const startIdx = start.getUTCDay();
@@ -493,13 +493,13 @@ git commit -m "feat(check-in): shared helpers, tests, and CheckInDayPicker compo
 In `src/lib/notification-prefs.ts`, add to `PartnerNotificationPrefs` interface:
 
 ```typescript
-missed_check_in: Channel;  // <-- ADD after last existing field
+missed_check_in: Channel;  // <, ADD after last existing field
 ```
 
 And to `PARTNER_DEFAULTS`:
 
 ```typescript
-missed_check_in: "email",  // <-- ADD after last existing field
+missed_check_in: "email",  // <, ADD after last existing field
 ```
 
 **Verify:** Confirm `check_in` exists in `ClientNotificationPrefs`. If missing, add `check_in: Channel` to the interface and `check_in: "both"` to `CLIENT_DEFAULTS`.
@@ -514,21 +514,21 @@ missed_check_in: "Missed check-in alerts",
 
 - [ ] **Step 3: Add `subject` to SmsLogContext [H6]**
 
-In `src/lib/sms.ts`, add `subject` to the `SmsLogContext` interface — no function signature change needed:
+In `src/lib/sms.ts`, add `subject` to the `SmsLogContext` interface, no function signature change needed:
 
 ```typescript
 export interface SmsLogContext {
   category: string;
   court_reminder_id?: string;
   partner_id?: string;
-  subject?: string;  // <-- ADD: email-to-SMS subject line override
+  subject?: string;  // <, ADD: email-to-SMS subject line override
 }
 ```
 
 And in the `sendSMS` function body, update the fetch body's `subject` field:
 
 ```typescript
-subject: logContext?.subject ?? "Court Reminder",  // <-- CHANGE from hardcoded "Court Reminder"
+subject: logContext?.subject ?? "Court Reminder",  // <, CHANGE from hardcoded "Court Reminder"
 ```
 
 This is backward-compatible: existing callers that don't pass `subject` get the default.
@@ -547,7 +547,7 @@ git commit -m "feat(check-in): missed_check_in notification pref + SMS subject i
 
 ---
 
-### Task 4: Client Signup — Check-In Day Picker
+### Task 4: Client Signup, Check-In Day Picker
 
 **Files:**
 - Modify: `src/components/CourtReminderForm.tsx`
@@ -566,8 +566,8 @@ interface CreateBody {
   court_date: string;
   recommended_tier?: string;
   partner_promo_code?: string;
-  check_in_days?: string[] | null;  // <-- ADD
-  check_in_idk?: boolean;           // <-- ADD ("I don't know" flag)
+  check_in_days?: string[] | null;  // <, ADD
+  check_in_idk?: boolean;           // <, ADD ("I don't know" flag)
 }
 ```
 
@@ -581,10 +581,10 @@ import { getPartnerPrefs, shouldSendEmail, shouldSendSMS, type PartnerNotificati
 import { sendSMS, capSMS } from "@/lib/sms";
 ```
 
-**Note on imports:** Verify `sendEmail` and `escapeHtml` from `"@/lib/email"` are already imported — they are already present in this file. Do NOT add duplicate imports.
+**Note on imports:** Verify `sendEmail` and `escapeHtml` from `"@/lib/email"` are already imported, they are already present in this file. Do NOT add duplicate imports.
 
 ```typescript
-// -- Check-in schedule resolution --
+//, Check-in schedule resolution,
 let checkInDays: string[] | null = null;
 let checkInSource: string | null = null;
 // [R2 fix] Proper type matching getPartnerPrefs signature
@@ -604,7 +604,7 @@ if (body.partner_promo_code) {
     checkInDays = sortCheckInDays(body.check_in_days);  // [R2-M1] canonical order
     checkInSource = "client";
   } else if (body.check_in_idk) {
-    // "I don't know" — check partner default, then fall through to bondsman notification
+    // "I don't know", check partner default, then fall through to bondsman notification
     const { data: partner } = await supabase
       .from("partners")
       .select("id, email, phone, notification_prefs, sms_consent_at, name, company, default_check_in_days")
@@ -615,7 +615,7 @@ if (body.partner_promo_code) {
       checkInDays = partner.default_check_in_days;
       checkInSource = "default";
     }
-    // else: null — triggers bondsman fallback notification after insert
+    // else: null, triggers bondsman fallback notification after insert
 
     resolvedPartner = partner;
   }
@@ -636,7 +636,7 @@ check_in_source: checkInSource,
 After the successful insert, if schedule is null and partner exists:
 
 ```typescript
-// -- Bondsman fallback notification (no schedule set) --
+//, Bondsman fallback notification (no schedule set),
 if (body.partner_promo_code && !checkInDays && body.check_in_idk) {
   const partner = resolvedPartner;
 
@@ -657,7 +657,7 @@ if (body.partner_promo_code && !checkInDays && body.check_in_idk) {
     if (shouldSendSMS(prefs.missed_check_in) && partner.phone) {
       sendSMS(
         partner.phone,
-        capSMS(`${first_name.trim()} needs a check-in schedule. Set it: ${dashUrl} — Do not reply`),
+        capSMS(`${first_name.trim()} needs a check-in schedule. Set it: ${dashUrl}, Do not reply`),
         { category: "schedule_needed", partner_id: partner.id, subject: "Check-In Schedule Needed" }
       ).catch((e) => console.warn("[Court Reminders] Partner SMS failed:", e));
     }
@@ -665,11 +665,11 @@ if (body.partner_promo_code && !checkInDays && body.check_in_idk) {
 }
 ```
 
-**Note:** Partner SMS uses simple `partner.phone` truthy check, NOT `canSendClientSMS()`. Partners are business users — the 10DLC client consent guard does not apply.
+**Note:** Partner SMS uses simple `partner.phone` truthy check, NOT `canSendClientSMS()`. Partners are business users, the 10DLC client consent guard does not apply.
 
 - [ ] **Step 5: Update CourtReminderForm.tsx [H4]**
 
-The prop type stays `string` — the form is only rendered when a partner promo code exists. No widening to `string | null` [R2 fix].
+The prop type stays `string`, the form is only rendered when a partner promo code exists. No widening to `string | null` [R2 fix].
 
 ```typescript
 interface CourtReminderFormProps {
@@ -726,7 +726,7 @@ check_in_idk: checkInIdk ? true : undefined,
 
 - [ ] **Step 6: Verify compilation**
 
-Run: `npx tsc --noEmit --skipLibCheck 2>&1 | grep -i courtreminder`
+Run: `npx tsc,noEmit,skipLibCheck 2>&1 | grep -i courtreminder`
 Expected: No new errors
 
 - [ ] **Step 7: Run tests**
@@ -743,7 +743,7 @@ git commit -m "feat(check-in): client signup day picker + bondsman fallback noti
 
 ---
 
-### Task 5: Cron — Check-In Prompt + Missed Alert
+### Task 5: Cron, Check-In Prompt + Missed Alert
 
 **Files:**
 - Create: `src/app/api/cron/check-in-prompt/route.ts`
@@ -753,7 +753,7 @@ git commit -m "feat(check-in): client signup day picker + bondsman fallback noti
 ```typescript
 // src/app/api/cron/check-in-prompt/route.ts
 /**
- * GET /api/cron/check-in-prompt — Two-phase daily cron.
+ * GET /api/cron/check-in-prompt, Two-phase daily cron.
  *
  * Phase 1: Send check-in prompts to clients whose scheduled day is today.
  * Phase 2: Send missed-check-in alerts to bondsmen for yesterday's misses.
@@ -762,8 +762,8 @@ git commit -m "feat(check-in): client signup day picker + bondsman fallback noti
  * Auth: CRON_AUTH_TOKEN bearer (covered by /api/cron/* middleware).
  * Idempotency: Two separate lock keys for independent failure/retry.
  *
- * [C1] Uses after() to return 200 immediately — prevents cron-job.org timeout.
- * [H5] Each phase has independent try/catch — Phase 1 failure doesn't kill Phase 2.
+ * [C1] Uses after() to return 200 immediately, prevents cron-job.org timeout.
+ * [H5] Each phase has independent try/catch, Phase 1 failure doesn't kill Phase 2.
  * [C2] Uses last_prompted_date (single column) not unbounded array.
  * [H2] 48-hour followup deferred to v2.
  */
@@ -795,7 +795,7 @@ export async function GET(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  // Acquire locks before returning — prevents duplicate after() work
+  // Acquire locks before returning, prevents duplicate after() work
   const lock1 = await acquireCronLock("check-in-prompt", 23 * 60 * 60 * 1000);
   const lock2 = await acquireCronLock("check-in-missed-alert", 23 * 60 * 60 * 1000);
 
@@ -875,7 +875,7 @@ export async function GET(req: NextRequest) {
               sends.push(
                 sendSMS(
                   r.phone!,
-                  capSMS(`${r.first_name}, ${companyName} requests your check-in today: imnotanattorney.com/prep/${r.token} — Do not reply to this text`),
+                  capSMS(`${r.first_name}, ${companyName} requests your check-in today: imnotanattorney.com/prep/${r.token}, Do not reply to this text`),
                   { category: "check_in_prompt", court_reminder_id: r.id, subject: "Check-In Reminder" }
                 )
               );
@@ -912,7 +912,7 @@ export async function GET(req: NextRequest) {
     // ================================================================
     if (lock2.shouldRun) {
       try {
-        // Compute yesterday via calendar subtraction (not ms — avoids DST breakage)
+        // Compute yesterday via calendar subtraction (not ms, avoids DST breakage)
         const [y, m, d] = todayDate.split("-").map(Number);
         const yd = new Date(Date.UTC(y, m - 1, d));
         yd.setUTCDate(yd.getUTCDate() - 1);
@@ -1001,7 +1001,7 @@ export async function GET(req: NextRequest) {
             if (shouldSendSMS(prefs.missed_check_in) && partner.phone) {
               sendSMS(
                 partner.phone,
-                capSMS(`${count} client(s) missed check-in yesterday: ${names}. Details: ${dashUrl} — Do not reply`),
+                capSMS(`${count} client(s) missed check-in yesterday: ${names}. Details: ${dashUrl}, Do not reply`),
                 { category: "missed_check_in_alert", partner_id: partner.id, subject: "Missed Check-In Alert" }
               ).catch((e) => console.warn("[Missed Check-In] SMS failed:", e));
             }
@@ -1035,7 +1035,7 @@ Expected: All tests PASS
 
 - [ ] **Step 3: Register cron job [H7]**
 
-Uses timezone-aware scheduling — 8am ET year-round regardless of DST:
+Uses timezone-aware scheduling, 8am ET year-round regardless of DST:
 
 ```bash
 node -e "
@@ -1065,12 +1065,12 @@ fetch('https://api.cron-job.org/jobs', {
 
 ```bash
 git add src/app/api/cron/check-in-prompt/route.ts
-git commit -m "feat(check-in): cron — daily prompt + missed alert phases via after()"
+git commit -m "feat(check-in): cron, daily prompt + missed alert phases via after()"
 ```
 
 ---
 
-### Task 6: Dashboard — Schedule Override API
+### Task 6: Dashboard, Schedule Override API
 
 **Files:**
 - Create: `src/app/api/partner/clients/[id]/schedule/route.ts`
@@ -1080,7 +1080,7 @@ git commit -m "feat(check-in): cron — daily prompt + missed alert phases via a
 ```typescript
 // src/app/api/partner/clients/[id]/schedule/route.ts
 /**
- * PATCH /api/partner/clients/[id]/schedule — Set or clear check-in schedule.
+ * PATCH /api/partner/clients/[id]/schedule, Set or clear check-in schedule.
  *
  * Auth: Partner session cookie.
  * Body: { check_in_days: string[] | null }
@@ -1169,7 +1169,7 @@ export async function PATCH(
         to: reminder.email,
         subject: `Check-in reminders set up by ${companyName}`,
         html: `<p style="color:#D4D4D8;font-size:15px;">${escapeHtml(reminder.first_name)}, ${escapeHtml(companyName)} has set up check-in reminders for you on <strong>${daysStr}</strong>.</p>
-               <p style="color:#D4D4D8;font-size:15px;">You'll receive a reminder each scheduled day — tap the link to check in.</p>
+               <p style="color:#D4D4D8;font-size:15px;">You'll receive a reminder each scheduled day, tap the link to check in.</p>
                <a href="${prepUrl}" style="display:inline-block;padding:12px 24px;background:#F59E0B;color:#000;font-weight:bold;border-radius:8px;text-decoration:none;margin-top:16px;">View Your Prep Page</a>`,
       }).catch((e) => console.error("[Schedule Override] Client email failed:", e));
     }
@@ -1177,7 +1177,7 @@ export async function PATCH(
     if (shouldSendSMS(prefs.check_in) && canSendClientSMS(reminder.phone, reminder.sms_consent_at)) {
       sendSMS(
         reminder.phone!,
-        capSMS(`${reminder.first_name}, ${companyName} set your check-in days: ${daysStr}. Tap here on those days: ${prepUrl} — Do not reply`),
+        capSMS(`${reminder.first_name}, ${companyName} set your check-in days: ${daysStr}. Tap here on those days: ${prepUrl}, Do not reply`),
         { category: "schedule_set_confirmation", court_reminder_id: reminder.id, subject: "Check-In Schedule Set" }
       ).catch((e) => console.warn("[Schedule Override] Client SMS failed:", e));
     }
@@ -1196,12 +1196,12 @@ Expected: All tests PASS
 
 ```bash
 git add src/app/api/partner/clients/[id]/schedule/route.ts
-git commit -m "feat(check-in): PATCH /api/partner/clients/[id]/schedule — bondsman override"
+git commit -m "feat(check-in): PATCH /api/partner/clients/[id]/schedule, bondsman override"
 ```
 
 ---
 
-### Task 7: Dashboard UI — Status Indicators + Schedule Override
+### Task 7: Dashboard UI, Status Indicators + Schedule Override
 
 **Files:**
 - Modify: `src/app/api/partner/dashboard/route.ts`
@@ -1236,7 +1236,7 @@ const todayDow = getETDow();
 const todayDateStr = getETDate();
 ```
 
-Per-client status indicator — **[M1] only shows for active clients with partner and future court date:**
+Per-client status indicator, **[M1] only shows for active clients with partner and future court date:**
 
 ```tsx
 {/* Check-in status */}
@@ -1268,7 +1268,7 @@ Use the `CheckInDayPicker` component (created in Task 2) in the dashboard's per-
 
 Read `src/app/api/partner/settings/route.ts` first to confirm current state.
 
-**Auth note:** The settings route uses `requirePartnerAuth(req)` — do NOT change its auth pattern.
+**Auth note:** The settings route uses `requirePartnerAuth(req)`, do NOT change its auth pattern.
 
 Add **static** import at the top of the file [M3]:
 
@@ -1321,7 +1321,7 @@ git commit -m "feat(check-in): dashboard status indicators + schedule override U
 
 ---
 
-### Task 8: Compliance Report — Rate + Schedule Columns
+### Task 8: Compliance Report, Rate + Schedule Columns
 
 **Files:**
 - Modify: `src/app/partner/compliance-report/page.tsx`
@@ -1333,7 +1333,7 @@ Read `src/app/partner/compliance-report/page.tsx` first. Find the `client_check_
 
 ```typescript
 // [C3] Paginate check-ins to avoid PostgREST 1000-row silent cap.
-// [R2-C2] Keep array shape — existing ComplianceReportClient uses checked_in_at
+// [R2-C2] Keep array shape, existing ComplianceReportClient uses checked_in_at
 // timestamps for date-range filtering (last 30d, 90d, quarters). A pre-aggregated
 // count map would break that filtering. Paginate into array instead.
 const allCheckIns: Array<{ court_reminder_id: string; checked_in_at: string }> = [];
@@ -1404,7 +1404,7 @@ function getComplianceRate(client: ComplianceClient, clientCheckIns: number): st
   const startDate = new Date(client.created_at).toLocaleDateString("en-CA", { timeZone: "America/New_York" });
   const scheduled = countScheduledDays(client.check_in_days, startDate, endDate);
   if (scheduled === 0) return "\u2014";
-  // [R2-M2] Cap at 100% — bonus check-ins on non-scheduled days can overstate rate
+  // [R2-M2] Cap at 100%, bonus check-ins on non-scheduled days can overstate rate
   const pct = Math.min(100, Math.round((clientCheckIns / scheduled) * 100));
   return `${Math.min(clientCheckIns, scheduled)} / ${scheduled} (${pct}%)`;
 }
@@ -1442,7 +1442,7 @@ Expected: All tests PASS
 
 ```bash
 git add src/app/partner/compliance-report/page.tsx src/app/partner/compliance-report/ComplianceReportClient.tsx
-git commit -m "feat(check-in): compliance report — paginated check-ins, rate + schedule columns"
+git commit -m "feat(check-in): compliance report, paginated check-ins, rate + schedule columns"
 ```
 
 ---
@@ -1451,7 +1451,7 @@ git commit -m "feat(check-in): compliance report — paginated check-ins, rate +
 
 - [ ] **Step 1: TypeScript check**
 
-Run: `npx tsc --noEmit --skipLibCheck`
+Run: `npx tsc,noEmit,skipLibCheck`
 Expected: Only pre-existing test file errors (cross-validator.test.ts, mechanical-extractor.test.ts)
 
 - [ ] **Step 2: Full test suite**
@@ -1522,7 +1522,7 @@ async function test() {
   // 3. Simulate prompt sent
   await s.from('court_reminders').update({ last_prompted_date: today }).eq('id', created.id);
 
-  // 4. Verify idempotency — should NOT appear in cron query now
+  // 4. Verify idempotency, should NOT appear in cron query now
   const { data: recheck } = await s
     .from('court_reminders')
     .select('id')

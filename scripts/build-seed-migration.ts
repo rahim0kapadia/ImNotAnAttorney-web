@@ -73,7 +73,7 @@ interface QuestionEntry {
 function buildQuestionsSQL(): string {
   const questionsPath = path.join(DATA_DIR, "questions.json");
   if (!fs.existsSync(questionsPath)) {
-    return "-- No questions.json found — skipping charge_questions";
+    return "-- No questions.json found, skipping charge_questions";
   }
 
   const raw: Record<string, QuestionEntry[]> = JSON.parse(
@@ -90,7 +90,7 @@ function buildQuestionsSQL(): string {
   const values: string[] = [];
   for (const [slug, questions] of Object.entries(raw)) {
     for (const q of questions) {
-      // Options stored as text[] in DB — each option is "value|label"
+      // Options stored as text[] in DB, each option is "value|label"
       const optionStrings = (q.options || []).map(
         (o) => `${o.value}|${o.label}`
       );

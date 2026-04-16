@@ -1,5 +1,5 @@
 /**
- * Hybrid Stacking Matrix — unified 4-way product placement.
+ * Hybrid Stacking Matrix, unified 4-way product placement.
  * Maps standalone products to: tier bundles + IDD eligibility.
  * Source: docs/superpowers/specs/2026-04-09-hybrid-stacking-cascade-design.md Section 7.
  *
@@ -24,7 +24,7 @@ export interface MatrixEntry {
  * Products NOT in this map are standalone-only (no tier bundle, no IDD).
  */
 export const PRODUCT_MATRIX: Record<string, MatrixEntry> = {
-  // ── Category A — Universal (bundled at Case Decoder and above) ──
+  // ── Category A, Universal (bundled at Case Decoder and above) ──
   'bail-hearing-prep': {
     bundledInTiers: ['case-decoder', 'intelligence-brief', 'x-ray', 'war-room', 'situation-room'],
     iddEligible: true,
@@ -34,7 +34,7 @@ export const PRODUCT_MATRIX: Record<string, MatrixEntry> = {
     iddEligible: true,
   },
 
-  // ── Category B — Charge-Specific (X-Ray+, conditional on charge type) ──
+  // ── Category B, Charge-Specific (X-Ray+, conditional on charge type) ──
   'breathalyzer-challenge': {
     bundledInTiers: ['x-ray', 'war-room', 'situation-room'],
     tierCondition: 'dui',
@@ -51,7 +51,7 @@ export const PRODUCT_MATRIX: Record<string, MatrixEntry> = {
     iddEligible: true,
   },
 
-  // ── Category C — Life Consequence ──
+  // ── Category C, Life Consequence ──
   'plea-consequences': {
     bundledInTiers: ['case-decoder', 'intelligence-brief', 'x-ray', 'war-room', 'situation-room'],
     iddEligible: true,
@@ -85,7 +85,7 @@ export const PRODUCT_MATRIX: Record<string, MatrixEntry> = {
     iddEligible: true,
   },
 
-  // ── Category D — Hearing / Phase Specific ──
+  // ── Category D, Hearing / Phase Specific ──
   'sentencing-prep': {
     bundledInTiers: ['intelligence-brief', 'x-ray', 'war-room', 'situation-room'],
     tierCondition: 'post-conviction',
@@ -96,7 +96,7 @@ export const PRODUCT_MATRIX: Record<string, MatrixEntry> = {
     iddEligible: true,
   },
 
-  // ── Category E — Premium Enrichment ──
+  // ── Category E, Premium Enrichment ──
   'judge-profile': {
     bundledInTiers: ['x-ray', 'war-room', 'situation-room'],
     iddEligible: true,
@@ -106,7 +106,7 @@ export const PRODUCT_MATRIX: Record<string, MatrixEntry> = {
     iddEligible: true,
   },
 
-  // ── Category H — Priority B Critical 7 (new capabilities) ──
+  // ── Category H, Priority B Critical 7 (new capabilities) ──
   'plea-analyzer': {
     bundledInTiers: ['case-decoder', 'intelligence-brief', 'x-ray', 'war-room', 'situation-room'],
     iddEligible: true,

@@ -3,11 +3,11 @@
 **Topic:** Premature plea offers before complete discovery review
 **Format:** POV storytime + text overlay + duet-bait energy
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + suspense-to-empowerment beat
+**Trending sound suggestion:** Original audio, voiceover + suspense-to-empowerment beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
-**Visual**: POV of a conference table. Attorney slides a plea agreement across. On the other side of the table, a stack of unopened manila envelopes labeled "DISCOVERY -- NOT YET REVIEWED."
+**Visual**: POV of a conference table. Attorney slides a plea agreement across. On the other side of the table, a stack of unopened manila envelopes labeled "DISCOVERY, NOT YET REVIEWED."
 **Text overlay**: "The plea came before the discovery review."
 **Audio**: Paper sliding sound. Silence.
 
@@ -22,7 +22,7 @@
 **Text overlay**: "Incomplete discovery review = uninformed plea decision."
 
 [SECOND 12-20]
-**Visual**: Checklist appearing -- items that should be done BEFORE considering a plea.
+**Visual**: Checklist appearing, items that should be done BEFORE considering a plea.
 **Audio/Voiceover**: "Before you consider any plea: has all discovery been received? Has it been reviewed in its entirety? Have inconsistencies been identified? Have motions been considered based on what's in there? Has a suppression analysis been done? If any of those are 'no,' you're not ready to decide."
 **Text overlay**: "Before ANY plea: received? Reviewed? Motions considered? Suppression analyzed?"
 
@@ -32,7 +32,7 @@
 **Text overlay**: "'Not until discovery is reviewed' is a complete sentence."
 
 [SECOND 27-30]
-**Visual**: The manila envelopes from the opening -- now being opened. Pages spread across the table. A highlighter in someone's hand.
+**Visual**: The manila envelopes from the opening, now being opened. Pages spread across the table. A highlighter in someone's hand.
 **Text overlay**: "Open the discovery before you sign anything. imnotanattorney.com"
 **Audio**: Paper rustling. Confident beat.
 
@@ -48,13 +48,13 @@ Save this and send it to someone whose attorney is pushing a quick plea.
 - 0:27 "Open the discovery first."
 
 ## Caption
-Your attorney slides a plea across the table. The discovery envelopes haven't been opened yet. How can you evaluate a deal when you don't know what's in the evidence? Ask: has all discovery been reviewed? Have motions been considered? If not -- you're not ready to decide.
+Your attorney slides a plea across the table. The discovery envelopes haven't been opened yet. How can you evaluate a deal when you don't know what's in the evidence? Ask: has all discovery been reviewed? Have motions been considered? If not, you're not ready to decide.
 
 ## Hashtags
 #pleadeal #discovery #criminaldefense #pleabargain #defendantrights #knowyourrights
 
 ---
 
-**Context**: Sourced from how-to-read-your-discovery and should-you-take-the-plea-deal. The visual of unopened discovery envelopes sitting next to a plea agreement is viscerally wrong -- viewers can SEE the problem immediately. The duet-bait energy invites other legal creators to respond.
+**Context**: Sourced from how-to-read-your-discovery and should-you-take-the-plea-deal. The visual of unopened discovery envelopes sitting next to a plea agreement is viscerally wrong, viewers can SEE the problem immediately. The duet-bait energy invites other legal creators to respond.
 **Loop strategy**: Opens with envelopes closed + plea pushed forward, closes with envelopes open + highlighter in hand. The closed-to-open transformation drives rewatches.
 **KPI target**: Shares (defendants feeling pressured will share this as validation)

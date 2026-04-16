@@ -1,5 +1,5 @@
 /**
- * @fileoverview Standalone Product Catalog — single source of truth.
+ * @fileoverview Standalone Product Catalog, single source of truth.
  *
  * Parallels tiers.ts but for standalone products (calculators, research
  * reports, content guides) that exist OUTSIDE the tier upgrade ladder.
@@ -10,7 +10,7 @@
  * Prices are in CENTS (Stripe convention). 0 = free product.
  *
  * Add new products here. The checkout, webhook, and delivery systems
- * read from this catalog — no code changes needed per product.
+ * read from this catalog, no code changes needed per product.
  */
 
 export type ProductCategory = "calculator" | "research" | "content" | "bundle";
@@ -18,7 +18,7 @@ export type ProductCategory = "calculator" | "research" | "content" | "bundle";
 export interface StandaloneProduct {
   name: string;
   category: ProductCategory;
-  price: number; // cents — 0 for free
+  price: number; // cents, 0 for free
   priceDisplay: string;
   delivery: string; // "Instant" | "Under 60 seconds" | "24 hours"
   deliveryDetail: string;
@@ -32,7 +32,7 @@ export interface StandaloneProduct {
 }
 
 export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
-  // ─── CALCULATORS ($0 — free lead gen tools) ───────────────────
+  // ─── CALCULATORS ($0, free lead gen tools) ───────────────────
   "good-time": {
     name: "Good Time Credit Calculator",
     category: "calculator",
@@ -142,7 +142,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Sentencing data returned instantly from 595,851 federal sentencing records.",
     description:
-      "Look up real federal sentencing data by charge type and state — median sentences, departure rates, and judge-specific patterns.",
+      "Look up real federal sentencing data by charge type and state, median sentences, departure rates, and judge-specific patterns.",
     intakeFields: ["state", "chargeType"],
     stripePriceId: null,
     upsellTier: "judge-report-card",
@@ -160,17 +160,17 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Side-by-side judge comparison from federal sentencing data.",
     description:
-      "Compare two federal judges side-by-side — sentencing patterns, departure rates, demographics, and defendant demographic data.",
+      "Compare two federal judges side-by-side, sentencing patterns, departure rates, demographics, and defendant demographic data.",
     intakeFields: ["judgeNameA", "judgeNameB"],
     stripePriceId: null,
     upsellTier: "judge-report-card",
     upsellText:
-      "Get the complete intelligence package on your judge — not just a comparison, but a full report with quotes, sentencing, and accountability data.",
+      "Get the complete intelligence package on your judge, not just a comparison, but a full report with quotes, sentencing, and accountability data.",
     dripSequenceKey: "calculator_judge_comparison",
     isActive: true,
   },
 
-  // ─── RESEARCH PRODUCTS ($97-$297 — instant generated reports) ─
+  // ─── RESEARCH PRODUCTS ($97-$297, instant generated reports) ─
   "employment-impact": {
     name: "Employment Impact Assessment",
     category: "research",
@@ -327,7 +327,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
-  // ─── COURT CASE PORT — WAVE 1 (isActive=false until operator review) ─────
+  // ─── COURT CASE PORT, WAVE 1 (isActive=false until operator review) ─────
   // Both ship with isActive=false. Landing page returns 404 until flipped.
   // Plans: docs/plans/2026-04-06-court-case-port/05-judge-intelligence.md
   //        docs/plans/2026-04-06-court-case-port/01-strategy-motion-architecture.md
@@ -364,7 +364,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Your motion opportunity scan is generated within 60 seconds of submitting your details.",
     description:
-      "10-20 motion opportunities filtered by your charge, jurisdiction, and case stage — with grant/deny/partial reasoning for each.",
+      "10-20 motion opportunities filtered by your charge, jurisdiction, and case stage, with grant/deny/partial reasoning for each.",
     intakeFields: [
       "chargeType",
       "state",
@@ -381,7 +381,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
-  // ─── WAVE 1 — $97 Reddit-validated research products ─────────
+  // ─── WAVE 1, $97 Reddit-validated research products ─────────
   "breathalyzer-challenge": {
     name: "Breathalyzer Calibration Challenges",
     category: "research",
@@ -584,7 +584,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
-  // ─── WAVE 3 — Post-conviction research (HIGH UPL, inactive) ──
+  // ─── WAVE 3, Post-conviction research (HIGH UPL, inactive) ──
   "expungement-research": {
     name: "Expungement Eligibility Research",
     category: "research",
@@ -682,7 +682,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
-  // ─── WAVE 4 — Net-new from Reddit research ───────────────────
+  // ─── WAVE 4, Net-new from Reddit research ───────────────────
   "attorney-performance-review": {
     name: "Attorney Performance Review",
     category: "research",
@@ -826,11 +826,11 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
-  // ─── COURT CASE PORT — WAVE 2+3 (isActive=false until operator review) ──
-  // Wave 2 (Tier 2 Cross-Exam Library): trial-prep-package $1,997 — requires War Room
-  // Wave 2 (Tier 6 Case Law Enrichment): case-law-intelligence $297 — IB-tier add-on
-  // Wave 3 (Tier 7 Witness Research): expert-witness-challenge $297 — Daubert-focused
-  // Wave 3 (Tier 8B Misc High-Value): discovery-demand-letter $97 — pre-discovery SKU
+  // ─── COURT CASE PORT, WAVE 2+3 (isActive=false until operator review) ──
+  // Wave 2 (Tier 2 Cross-Exam Library): trial-prep-package $1,997, requires War Room
+  // Wave 2 (Tier 6 Case Law Enrichment): case-law-intelligence $297, IB-tier add-on
+  // Wave 3 (Tier 7 Witness Research): expert-witness-challenge $297, Daubert-focused
+  // Wave 3 (Tier 8B Misc High-Value): discovery-demand-letter $97, pre-discovery SKU
   // All ship dark. Three-layer gate: landing 404 + checkout 400 + operator review.
   // Plans:
   //   docs/plans/2026-04-06-court-case-port/02-cross-exam-library.md
@@ -844,9 +844,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     priceDisplay: "$1,997",
     delivery: "Under 60 seconds",
     deliveryDetail:
-      "Your trial preparation package is generated within 60 seconds of submitting your details. Designed for War Room clients heading to trial — the legal research team assembles themes, voir dire intelligence, opening and closing frameworks, and a Judgment of Acquittal package.",
+      "Your trial preparation package is generated within 60 seconds of submitting your details. Designed for War Room clients heading to trial, the legal research team assembles themes, voir dire intelligence, opening and closing frameworks, and a Judgment of Acquittal package.",
     description:
-      "Trial preparation package for War Room clients heading to trial — themes, voir dire, opening and closing frameworks, and a JOA package built on elite trial methodology.",
+      "Trial preparation package for War Room clients heading to trial, themes, voir dire, opening and closing frameworks, and a JOA package built on elite trial methodology.",
     intakeFields: [
       "chargeType",
       "state",
@@ -870,9 +870,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     priceDisplay: "$297",
     delivery: "Under 60 seconds",
     deliveryDetail:
-      "Your case law intelligence pack is generated within 60 seconds of submitting your details — strategic classification, per-motion applicability, and ranked verification URLs.",
+      "Your case law intelligence pack is generated within 60 seconds of submitting your details, strategic classification, per-motion applicability, and ranked verification URLs.",
     description:
-      "Strategic case law analysis for your charge and jurisdiction — Judgment of Acquittal opportunities, prosecution citation anticipation, per-motion applicability matrix, and ranked verification URLs your attorney can confirm in minutes.",
+      "Strategic case law analysis for your charge and jurisdiction, Judgment of Acquittal opportunities, prosecution citation anticipation, per-motion applicability matrix, and ranked verification URLs your attorney can confirm in minutes.",
     intakeFields: [
       "chargeType",
       "state",
@@ -896,9 +896,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     priceDisplay: "$297",
     delivery: "Under 60 seconds",
     deliveryDetail:
-      "Your expert witness challenge report is generated within 60 seconds of submitting your details — Daubert factors, qualification gap analysis, and a defense brief outline.",
+      "Your expert witness challenge report is generated within 60 seconds of submitting your details, Daubert factors, qualification gap analysis, and a defense brief outline.",
     description:
-      "Daubert-focused challenge analysis for the prosecution's expert witness — testability, peer review, error rate, and qualification gaps assembled into a defense brief outline. No discovery upload required.",
+      "Daubert-focused challenge analysis for the prosecution's expert witness, testability, peer review, error rate, and qualification gaps assembled into a defense brief outline. No discovery upload required.",
     intakeFields: [
       "expertName",
       "state",
@@ -921,9 +921,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     priceDisplay: "$97",
     delivery: "Under 60 seconds",
     deliveryDetail:
-      "Your discovery demand letter is generated within 60 seconds of submitting your details — a charge-specific letter your attorney can review, adapt, or file as-is.",
+      "Your discovery demand letter is generated within 60 seconds of submitting your details, a charge-specific letter your attorney can review, adapt, or file as-is.",
     description:
-      "A custom discovery demand letter your attorney can file — listing the items prosecutors regularly withhold for your charge type and jurisdiction. No discovery required to order.",
+      "A custom discovery demand letter your attorney can file, listing the items prosecutors regularly withhold for your charge type and jurisdiction. No discovery required to order.",
     intakeFields: [
       "chargeType",
       "state",
@@ -940,14 +940,14 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: false,
   },
 
-  // ─── CONTENT GUIDES ($0 — free, SEO-driven lead magnets) ─────
+  // ─── CONTENT GUIDES ($0, free, SEO-driven lead magnets) ─────
   "first-court-appearance": {
     name: "First Court Appearance Preparation Guide",
     category: "content",
     price: 0,
     priceDisplay: "Free",
     delivery: "Instant",
-    deliveryDetail: "Read immediately — no sign-up required.",
+    deliveryDetail: "Read immediately, no sign-up required.",
     description:
       "What to expect, what to say, and what NOT to say at your first court appearance.",
     intakeFields: [],
@@ -963,7 +963,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     price: 0,
     priceDisplay: "Free",
     delivery: "Instant",
-    deliveryDetail: "Read immediately — no sign-up required.",
+    deliveryDetail: "Read immediately, no sign-up required.",
     description:
       "Step-by-step guide for family members when a loved one is arrested.",
     intakeFields: [],
@@ -980,7 +980,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     price: 0,
     priceDisplay: "Free",
     delivery: "Instant",
-    deliveryDetail: "Read immediately — no sign-up required.",
+    deliveryDetail: "Read immediately, no sign-up required.",
     description:
       "What happens at arraignment, how to enter a plea, and key questions to ask your attorney.",
     intakeFields: [],
@@ -997,9 +997,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     price: 0,
     priceDisplay: "Free",
     delivery: "Instant",
-    deliveryDetail: "Read immediately — no sign-up required.",
+    deliveryDetail: "Read immediately, no sign-up required.",
     description:
-      "How to act, speak, and present yourself in court — from someone who learned the hard way.",
+      "How to act, speak, and present yourself in court, from someone who learned the hard way.",
     intakeFields: [],
     stripePriceId: null,
     upsellTier: "case-decoder",
@@ -1014,9 +1014,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     price: 0,
     priceDisplay: "Free",
     delivery: "Instant",
-    deliveryDetail: "Read immediately — no sign-up required.",
+    deliveryDetail: "Read immediately, no sign-up required.",
     description:
-      "What to wear and what NOT to wear to your court date — judges notice more than you think.",
+      "What to wear and what NOT to wear to your court date, judges notice more than you think.",
     intakeFields: [],
     stripePriceId: null,
     upsellTier: "case-decoder",
@@ -1031,7 +1031,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     price: 0,
     priceDisplay: "Free",
     delivery: "Instant",
-    deliveryDetail: "Read immediately — no sign-up required.",
+    deliveryDetail: "Read immediately, no sign-up required.",
     description:
       "What to bring, what to expect, and how to find your facility's visitation rules.",
     intakeFields: [],
@@ -1048,9 +1048,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     price: 0,
     priceDisplay: "Free",
     delivery: "Instant",
-    deliveryDetail: "Read immediately — no sign-up required.",
+    deliveryDetail: "Read immediately, no sign-up required.",
     description:
-      "What judges look for in character reference letters — and a framework to write one that matters.",
+      "What judges look for in character reference letters, and a framework to write one that matters.",
     intakeFields: [],
     stripePriceId: null,
     upsellTier: "case-decoder",
@@ -1065,7 +1065,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     price: 0,
     priceDisplay: "Free",
     delivery: "Instant",
-    deliveryDetail: "Read immediately — no sign-up required.",
+    deliveryDetail: "Read immediately, no sign-up required.",
     description:
       "Email templates and a communication log for productive conversations with your defense attorney.",
     intakeFields: [],
@@ -1077,7 +1077,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
-  // ─── BUNDLES ($97-$197 — combined reports at a discount) ────
+  // ─── BUNDLES ($97-$197, combined reports at a discount) ────
   "first-72-hours": {
     name: "First 72 Hours Bundle",
     category: "bundle",
@@ -1087,7 +1087,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Your combined report is generated within 60 seconds of submitting your details.",
     description:
-      "Everything you need in the critical first 72 hours after arrest — arrest report review, bail hearing prep, and two free guides.",
+      "Everything you need in the critical first 72 hours after arrest, arrest report review, bail hearing prep, and two free guides.",
     intakeFields: [
       "state",
       "chargeType",
@@ -1113,7 +1113,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Your combined report is generated within 60 seconds of submitting your details.",
     description:
-      "Challenge every piece of evidence — breathalyzer, field sobriety, drug test, and arrest report in one combined analysis.",
+      "Challenge every piece of evidence, breathalyzer, field sobriety, drug test, and arrest report in one combined analysis.",
     intakeFields: [
       "state",
       "chargeType",
@@ -1150,7 +1150,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Your combined report is generated within 60 seconds of submitting your details.",
     description:
-      "Understand every consequence before you decide — plea terms, collateral impact, and sentencing landscape.",
+      "Understand every consequence before you decide, plea terms, collateral impact, and sentencing landscape.",
     intakeFields: [
       "state",
       "chargeType",
@@ -1177,7 +1177,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
 
   // ─── TIER 9 DATA-DRIVEN REPORTS ($97-$297) ──────────────────
   // Query pre-computed Tier 9 database tables (43K+ rows).
-  // No Claude API call — pure data-driven reports from verified court records.
+  // No Claude API call, pure data-driven reports from verified court records.
   // Also defined in tiers.ts for checkout validation; defined here for
   // getProduct() in intake/delivery/viewer flows.
   "judge-report-card": {
@@ -1267,12 +1267,12 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     stripePriceId: null,
     upsellTier: "officer-background-check",
     upsellText:
-      "Know your rights — then know your arresting officer's track record.",
+      "Know your rights, then know your arresting officer's track record.",
     dripSequenceKey: "research_arrest_kit",
     isActive: true,
   },
 
-  // ─── PRIORITY B — Critical 7 Worker Standalone Products ─────
+  // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────
   "plea-analyzer": {
     name: "Plea Deal Analyzer",
     category: "research",
@@ -1307,7 +1307,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Your personalized hypothesis analysis is generated within 60 seconds of submitting your details.",
     description:
-      "Every plausible explanation for the evidence — including the prosecution's strongest theory — scored and ranked.",
+      "Every plausible explanation for the evidence, including the prosecution's strongest theory, scored and ranked.",
     intakeFields: [
       "state",
       "chargeType",
@@ -1331,7 +1331,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Your personalized prosecution simulation is generated within 60 seconds of submitting your details.",
     description:
-      "Multi-round simulation of how the prosecution will attack each defense strategy — before your attorney tries it in court.",
+      "Multi-round simulation of how the prosecution will attack each defense strategy, before your attorney tries it in court.",
     intakeFields: [
       "state",
       "chargeType",
@@ -1380,7 +1380,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Your personalized Daubert analysis is generated within 60 seconds of submitting your details.",
     description:
-      "Systematic Daubert factor analysis of the prosecution's expert witness — methodology, qualifications, and challenge opportunities.",
+      "Systematic Daubert factor analysis of the prosecution's expert witness, methodology, qualifications, and challenge opportunities.",
     intakeFields: [
       "state",
       "chargeType",
@@ -1404,7 +1404,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Your analysis report is generated within 60 seconds of submitting your details.",
     description:
-      "Legal analysis framework for body camera footage — Miranda compliance, procedural issues, and defense-relevant moments.",
+      "Legal analysis framework for body camera footage, Miranda compliance, procedural issues, and defense-relevant moments.",
     intakeFields: [
       "state",
       "chargeType",

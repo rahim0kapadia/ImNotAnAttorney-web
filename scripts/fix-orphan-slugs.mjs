@@ -1,7 +1,7 @@
 /**
  * Fix orphan slugs across all jurisdiction JSON files.
  * Remaps non-standard charge slug names to canonical COMMON_CHARGES slugs.
- * One-time script — delete after use.
+ * One-time script, delete after use.
  *
  * Usage: node scripts/fix-orphan-slugs.mjs
  */
@@ -210,8 +210,8 @@ for (const file of files) {
         s.common_charge_slug = slug;
         fixed++;
       } else {
-        // Unknown orphan — skip
-        console.log("  " + file + ": UNKNOWN orphan '" + slug + "' — removed");
+        // Unknown orphan, skip
+        console.log("  " + file + ": UNKNOWN orphan '" + slug + "', removed");
         removed++;
         continue;
       }

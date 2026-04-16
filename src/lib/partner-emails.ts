@@ -12,7 +12,7 @@
  * - Real-time: Tier upgrade congratulations
  *
  * All functions return `{ subject: string; html: string }` where html is
- * INNER HTML only — `sendEmail()` from `@/lib/email` wraps in the branded
+ * INNER HTML only, `sendEmail()` from `@/lib/email` wraps in the branded
  * dark template automatically.
  *
  * Security: All user-supplied strings are escaped via `escapeHtml()`.
@@ -51,7 +51,7 @@ function dollarsWhole(cents: number): string {
 }
 
 // ============================================================
-// 1. WELCOME — Day 0 (sent by apply route)
+// 1. WELCOME, Day 0 (sent by apply route)
 // ============================================================
 
 export function partnerWelcomeEmail(
@@ -63,7 +63,7 @@ export function partnerWelcomeEmail(
   const safeCode = escapeHtml(promoCode);
 
   return {
-    subject: "Welcome to the Partner Program — Your Promo Code is Ready",
+    subject: "Welcome to the Partner Program, Your Promo Code is Ready",
     html: `
       <h1 style="${h1Style}">Welcome, ${safeName}.</h1>
       <p style="${pStyle}">You're approved. Here's your promo code:</p>
@@ -73,7 +73,7 @@ export function partnerWelcomeEmail(
       <p style="${pStyle}">Every defendant who uses this code at checkout gets 10% off. You earn commission on every sale.</p>
 
       <h2 style="${h2Style}">Send This to Your Next Client</h2>
-      <p style="${pStyle}">Copy-paste this message right now — it takes 10 seconds:</p>
+      <p style="${pStyle}">Copy-paste this message right now, it takes 10 seconds:</p>
       <div style="${copyBoxStyle}">
         <em>"Hey &mdash; I work with a company that researches criminal cases and helps defendants prepare the right questions for their attorney. If you use my code <strong>${safeCode}</strong> at checkout, you get 10% off. Check it out: ${escapeHtml(SITE_URL)}"</em>
       </div>
@@ -90,7 +90,7 @@ export function partnerWelcomeEmail(
 }
 
 // ============================================================
-// 2. FIRST SHARE — Day 1
+// 2. FIRST SHARE, Day 1
 // ============================================================
 
 export function partnerFirstShareEmail(
@@ -107,23 +107,23 @@ export function partnerFirstShareEmail(
   const messageBlock = isBondsman
     ? `
       <h2 style="${h2Style}">Hand This to Every Client</h2>
-      <p style="${pStyle}">Print your Compliance Checklist from the dashboard and hand it to every client at bonding. It covers bail conditions, court dates, and free court reminders — everything they need in one page.</p>
+      <p style="${pStyle}">Print your Compliance Checklist from the dashboard and hand it to every client at bonding. It covers bail conditions, court dates, and free court reminders, everything they need in one page.</p>
       <p style="${pStyle}">The defendants who sign up for reminders are the ones who show up. That's fewer FTAs for you and better outcomes for them.</p>
     `
     : `
       <h2 style="${h2Style}">Text This Right Now</h2>
       <div style="${copyBoxStyle}">
-        <em>"Hey — I set you up with a research service that'll help you stay on top of your case. Go to ${safeUrl} and use code <strong>${safeCode}</strong> for 10% off. They'll generate questions you can bring to your attorney."</em>
+        <em>"Hey, I set you up with a research service that'll help you stay on top of your case. Go to ${safeUrl} and use code <strong>${safeCode}</strong> for 10% off. They'll generate questions you can bring to your attorney."</em>
       </div>
       <p style="${pStyle}">Takes 30 seconds. The defendant gets help. You earn commission. Everyone wins.</p>
 
       <h2 style="${h2Style}">Pro Tip: QR Code</h2>
-      <p style="${pStyle}">Print your referral URL as a QR code on your business card. Defendants scan it on the spot — no typing, no forgotten codes.</p>
+      <p style="${pStyle}">Print your referral URL as a QR code on your business card. Defendants scan it on the spot, no typing, no forgotten codes.</p>
     `;
 
   return {
     subject: isBondsman
-      ? "Print Your Checklist — Hand It to Every Client"
+      ? "Print Your Checklist, Hand It to Every Client"
       : "Send This to Your Next Client (30 Seconds)",
     html: `
       <h1 style="${h1Style}">${isBondsman ? "One page. Every client." : "One message. That's it."}</h1>
@@ -139,7 +139,7 @@ export function partnerFirstShareEmail(
 }
 
 // ============================================================
-// 3. THE MATH — Day 3
+// 3. THE MATH, Day 3
 // ============================================================
 
 export function partnerTheMathEmail(
@@ -147,7 +147,7 @@ export function partnerTheMathEmail(
 ): { subject: string; html: string } {
   const safeName = escapeHtml(name);
 
-  // Single aspirational scenario — Gold tier (20%) on X-Ray ($2,497)
+  // Single aspirational scenario, Gold tier (20%) on X-Ray ($2,497)
   const goldTier = COMMISSION_TIERS_CONFIG.find((t) => t.key === "gold");
   const goldRate = goldTier?.rate ?? 20;
   const xRayPrice = TIER_CORE["x-ray"].price;
@@ -163,7 +163,7 @@ export function partnerTheMathEmail(
         <p style="color: white; font-size: 16px; margin: 0;">5 X-Ray referrals a month at Gold tier.</p>
       </div>
 
-      <p style="${pStyle}">That's passive income from defendants you're already talking to. The more you refer, the higher your commission rate climbs — and that number grows.</p>
+      <p style="${pStyle}">That's passive income from defendants you're already talking to. The more you refer, the higher your commission rate climbs, and that number grows.</p>
 
       <p style="${pStyle}">See all commission tiers and earnings in your dashboard:</p>
 
@@ -175,7 +175,7 @@ export function partnerTheMathEmail(
 }
 
 // ============================================================
-// 4. SOCIAL PROOF / SHARING SCENARIOS — Day 7
+// 4. SOCIAL PROOF / SHARING SCENARIOS, Day 7
 // ============================================================
 
 export function partnerSocialProofEmail(
@@ -187,17 +187,17 @@ export function partnerSocialProofEmail(
     {
       title: "At Bonding",
       icon: "&#x1F3E2;",
-      desc: "Hand them your business card with the QR code. They're stressed, processing everything — a card they can look at later is perfect. \"This service helped my last client ask the right questions. Scan that code when you're ready.\"",
+      desc: "Hand them your business card with the QR code. They're stressed, processing everything, a card they can look at later is perfect. \"This service helped my last client ask the right questions. Scan that code when you're ready.\"",
     },
     {
       title: "After First Attorney Meeting",
       icon: "&#x1F4F1;",
-      desc: "Text them: \"How'd it go with your attorney? If you want help preparing questions for next time, check out imnotanattorney.com — use my code for 10% off. They research your specific case and give you questions to bring.\"",
+      desc: "Text them: \"How'd it go with your attorney? If you want help preparing questions for next time, check out imnotanattorney.com, use my code for 10% off. They research your specific case and give you questions to bring.\"",
     },
     {
       title: "Past Clients",
       icon: "&#x1F4E7;",
-      desc: "Email anyone with an active case: \"I started working with a service that helps defendants hold their attorneys accountable. If you or anyone you know has a pending case, here's my code — they get 10% off and it's worth every penny.\"",
+      desc: "Email anyone with an active case: \"I started working with a service that helps defendants hold their attorneys accountable. If you or anyone you know has a pending case, here's my code, they get 10% off and it's worth every penny.\"",
     },
   ];
 
@@ -230,7 +230,7 @@ export function partnerSocialProofEmail(
 }
 
 // ============================================================
-// 5. CHECK-IN — Day 14
+// 5. CHECK-IN, Day 14
 // ============================================================
 
 export function partnerCheckinEmail(
@@ -252,7 +252,7 @@ export function partnerCheckinEmail(
     `
       : `
       <div style="background: #1C1917; border-radius: 8px; padding: 20px; margin: 16px 0; text-align: center;">
-        <p style="color: ${ZINC}; font-size: 16px; margin: 0;">No referrals yet — but you're set up and ready.</p>
+        <p style="color: ${ZINC}; font-size: 16px; margin: 0;">No referrals yet, but you're set up and ready.</p>
         <p style="color: #71717A; font-size: 14px; margin: 8px 0 0;">Your next bonding is your first commission.</p>
       </div>
     `;
@@ -260,16 +260,16 @@ export function partnerCheckinEmail(
   return {
     subject: totalReferrals > 0
       ? `Two Weeks In: ${totalReferrals} Referral${totalReferrals !== 1 ? "s" : ""} and ${earned} Earned`
-      : "Two Weeks In — Quick Check",
+      : "Two Weeks In, Quick Check",
     html: `
       <h1 style="${h1Style}">Two-week check-in, ${safeName}.</h1>
       ${statsHtml}
 
       <h2 style="${h2Style}">Tips From Top Partners</h2>
       <ul style="color: ${ZINC}; font-size: 15px; line-height: 1.8; padding-left: 20px;">
-        <li>Keep cards in your car — you never know when you'll run into someone with a case.</li>
+        <li>Keep cards in your car, you never know when you'll run into someone with a case.</li>
         <li>Mention the code <em>before</em> they leave your office, not after.</li>
-        <li>Follow up by text the same day — defendants forget everything in the first 48 hours.</li>
+        <li>Follow up by text the same day, defendants forget everything in the first 48 hours.</li>
       </ul>
 
       <p style="${pStyle}">Reply to this email if you have questions or need anything. We read every response.</p>
@@ -282,7 +282,7 @@ export function partnerCheckinEmail(
 }
 
 // ============================================================
-// 6. SALE NOTIFICATION — Real-time
+// 6. SALE NOTIFICATION, Real-time
 // ============================================================
 
 export function partnerSaleNotificationEmail(
@@ -321,7 +321,7 @@ export function partnerSaleNotificationEmail(
 }
 
 // ============================================================
-// 7. PAYOUT NOTIFICATION — Real-time
+// 7. PAYOUT NOTIFICATION, Real-time
 // ============================================================
 
 export function partnerPayoutNotificationEmail(
@@ -369,7 +369,7 @@ export function partnerDay30Email(
         <p style="color: ${ZINC}; font-size: 14px; margin: 0 0 4px;">Your Referrals So Far</p>
         <p style="font-size: 32px; font-weight: 800; color: white; margin: 0;">${totalReferrals}</p>
       </div>
-      <p style="${pStyle}">Keep it going. Every referral helps a defendant take control of their case — and earns you commission.</p>
+      <p style="${pStyle}">Keep it going. Every referral helps a defendant take control of their case, and earns you commission.</p>
     `
       : `
       <p style="${pStyle}">Your code is live and ready. The next defendant you talk to is your first commission.</p>
@@ -403,7 +403,7 @@ export function partnerDay60Email(
     subject: "Haven't Shared Your Code Yet?",
     html: `
       <h1 style="${h1Style}">Still here, ${safeName}.</h1>
-      <p style="${pStyle}">We noticed you haven't shared your code yet — no pressure, but we want to make sure nothing's holding you back.</p>
+      <p style="${pStyle}">We noticed you haven't shared your code yet, no pressure, but we want to make sure nothing's holding you back.</p>
 
       <p style="${pStyle}">If you're not sure how to bring it up, or who to share it with, reply to this email. We'll help you figure out the easiest way to get started.</p>
 
@@ -417,7 +417,7 @@ export function partnerDay60Email(
 }
 
 // ============================================================
-// 10. TIER UPGRADE — Real-time
+// 10. TIER UPGRADE, Real-time
 // ============================================================
 
 export function partnerTierUpgradeEmail(
@@ -446,7 +446,7 @@ export function partnerTierUpgradeEmail(
         <p style="${moneyStyle}; font-size: 22px; margin: 8px 0 0;">${newRate}% commission on every sale</p>
       </div>
 
-      <p style="${pStyle}">Your commission rate just increased. This applies to <strong style="color: white;">all future referrals</strong> — starting now.</p>
+      <p style="${pStyle}">Your commission rate just increased. This applies to <strong style="color: white;">all future referrals</strong>, starting now.</p>
 
       <div style="background: #1C1917; border-left: 4px solid ${GREEN}; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0;">
         <p style="color: white; font-size: 16px; margin: 0 0 8px; font-weight: 700;">At Your New Rate</p>

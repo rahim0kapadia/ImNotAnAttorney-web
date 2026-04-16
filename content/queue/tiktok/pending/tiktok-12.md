@@ -3,7 +3,7 @@
 **Topic:** The information vacuum after arrest
 **Format:** POV storytime + text overlay + first-person narration
 **Duration:** 45s
-**Trending sound suggestion:** Original audio -- voiceover + muffled ambient (jail sounds, fluorescent buzz) transitioning to clarity
+**Trending sound suggestion:** Original audio, voiceover + muffled ambient (jail sounds, fluorescent buzz) transitioning to clarity
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -22,13 +22,13 @@
 **Text overlay**: "Nobody tells you: don't talk to the person next to you."
 
 [SECOND 12-22]
-**Visual**: POV of sitting across from a public defender for 3 minutes. The PD is flipping through a stack of files -- yours is somewhere in the middle. They look exhausted.
+**Visual**: POV of sitting across from a public defender for 3 minutes. The PD is flipping through a stack of files, yours is somewhere in the middle. They look exhausted.
 **Audio/Voiceover**: "Then you meet your attorney for the first time. They have your file somewhere in a stack of 30. They have four minutes. They tell you the charges. They mention a plea. They say they'll be in touch. That's it. Nobody explains what a suppression motion is. Nobody explains that you have the right to see the evidence against you. Nobody explains that there are deadlines that, once missed, close forever."
 **Text overlay**: "4 minutes. Charges. Plea mention. 'I'll be in touch.' That's your defense?"
 
 [SECOND 22-32]
 **Visual**: POV shifts. Now sitting at a kitchen table. Phone in hand. Googling "what happens after arrest." Scrolling through results that don't help.
-**Audio/Voiceover**: "So you go home -- if you're lucky enough to make bail -- and you start Googling. But the answers are either too vague to help or written by attorneys trying to sell you a consultation. Nobody is just telling you what's happening. What your timeline looks like. What questions to ask. What paperwork to request."
+**Audio/Voiceover**: "So you go home, if you're lucky enough to make bail, and you start Googling. But the answers are either too vague to help or written by attorneys trying to sell you a consultation. Nobody is just telling you what's happening. What your timeline looks like. What questions to ask. What paperwork to request."
 **Text overlay**: "Googling your case at 2 AM because nobody explained anything."
 
 [SECOND 32-40]
@@ -37,12 +37,12 @@
 **Text overlay**: "The system runs on what you don't know."
 
 [SECOND 40-45]
-**Visual**: POV returns -- but now the person at the kitchen table has a notebook, a list of questions, and a calm expression. Organized, not panicked.
+**Visual**: POV returns, but now the person at the kitchen table has a notebook, a list of questions, and a calm expression. Organized, not panicked.
 **Text overlay**: "Don't panic. Get informed. imnotanattorney.com/score"
 **Audio**: Muffled sounds clear. Music shifts to calm, resolved beat.
 
 ## CTA
-Take the free Defense Milestone Score -- find out what questions to ask right now.
+Take the free Defense Milestone Score, find out what questions to ask right now.
 
 ## On-Screen Text
 - 0:00 "POV: You just got arrested for the first time."
@@ -60,6 +60,6 @@ POV: You just got arrested for the first time. Nobody explains the process. Nobo
 
 ---
 
-**Context**: Sourced from first-time-felony-what-actually-happens and the VoC phrase "I was scared to death. I didn't know what to do." This POV storytime captures the emotional reality of being arrested -- the confusion, the isolation, the information vacuum. It's the single most relatable scenario for INNA's entire audience.
+**Context**: Sourced from first-time-felony-what-actually-happens and the VoC phrase "I was scared to death. I didn't know what to do." This POV storytime captures the emotional reality of being arrested, the confusion, the isolation, the information vacuum. It's the single most relatable scenario for INNA's entire audience.
 **Loop strategy**: Opens with blurry fluorescent lights (disorientation), closes with clear vision and a notebook (organization). The fog-to-clarity arc is deeply satisfying to rewatch.
-**KPI target**: Shares (families send this to loved ones who just got arrested -- highest share potential in the entire library)
+**KPI target**: Shares (families send this to loved ones who just got arrested, highest share potential in the entire library)

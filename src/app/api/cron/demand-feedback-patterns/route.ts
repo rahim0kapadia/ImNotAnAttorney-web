@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/demand-feedback-patterns — Weekly structural pattern extraction
+ * @file /api/cron/demand-feedback-patterns, Weekly structural pattern extraction
  *
  * Schedule: Sundays 8:00 AM ET via cron-job.org (after demand-feedback-score at 7:00 AM).
  * Extracts winning patterns from published blog posts.

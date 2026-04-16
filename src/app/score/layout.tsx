@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
 
 /**
- * Score page layout — SEO metadata for the Defense Milestone Score.
+ * Score page layout, SEO metadata for the Defense Milestone Score.
  * This page is a lead magnet and should be indexed by search engines.
  */
 export const metadata: Metadata = {
   title: "Is Your Attorney Working Your Case? | Free Defense Score",
   description:
-    "Answer 10 questions. Find out if your criminal defense attorney is meeting the milestones that matter — in 60 seconds, free, no email required.",
+    "Answer 10 questions. Find out if your criminal defense attorney is meeting the milestones that matter, in 60 seconds, free, no email required.",
   alternates: {
     canonical: `${SITE_URL}/score`,
   },
   openGraph: {
     title: "Is Your Attorney Working Your Case? | Free Defense Score",
     description:
-      "Answer 10 questions. Find out if your criminal defense attorney is meeting the milestones that matter — in 60 seconds, free, no email required.",
+      "Answer 10 questions. Find out if your criminal defense attorney is meeting the milestones that matter, in 60 seconds, free, no email required.",
     url: `${SITE_URL}/score`,
   },
 };

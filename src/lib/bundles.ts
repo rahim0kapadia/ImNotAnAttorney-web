@@ -1,5 +1,5 @@
 /**
- * @fileoverview Bundle definitions — maps bundle slugs to included products.
+ * @fileoverview Bundle definitions, maps bundle slugs to included products.
  *
  * Bundles flow through the standalone product pipeline (checkout, webhook,
  * intake, Edge Function). The only differences:

@@ -10,7 +10,7 @@ topic: 7 things the criminal justice system won't tell you
 blog_slug: 7-things-criminal-justice-wont-tell-you
 estimated_duration: 60s
 format: Standard (rapid-fire reveals + talking head)
-suggested_sound: "Original audio — voiceover + building tension beat with reveals"
+suggested_sound: "Original audio, voiceover + building tension beat with reveals"
 suggested_posting_time: "Tuesday 7:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Tuesday 7:00 PM EST"
 
 **Format**: Standard
 **Duration**: 60 seconds
-**Suggested sound**: Original audio — voiceover + building tension beat
+**Suggested sound**: Original audio, voiceover + building tension beat
 **Suggested posting time**: Tuesday 7:00 PM EST
 
 ---
@@ -35,37 +35,37 @@ suggested_posting_time: "Tuesday 7:00 PM EST"
 
 [SECOND 3-10]
 **Visual**: Number "1" appears large, then shrinks as text fills in.
-**Audio/Voiceover**: "One — the trial penalty is real. If you exercise your right to trial and lose, your sentence will likely be three to six times harsher than the plea deal. That's not a rule. It's a documented reality that nobody publishes."
+**Audio/Voiceover**: "One, the trial penalty is real. If you exercise your right to trial and lose, your sentence will likely be three to six times harsher than the plea deal. That's not a rule. It's a documented reality that nobody publishes."
 **Text overlay**: "1. TRIAL PENALTY: 3-6x harsher sentence if you lose at trial"
 
 [SECOND 10-17]
 **Visual**: Number "2" appears.
-**Audio/Voiceover**: "Two — your public defender is likely carrying 300 to 500 cases. The ABA recommends 150 max. That means your constitutional right to counsel is being delivered at one-third capacity."
+**Audio/Voiceover**: "Two, your public defender is likely carrying 300 to 500 cases. The ABA recommends 150 max. That means your constitutional right to counsel is being delivered at one-third capacity."
 **Text overlay**: "2. PD CASELOAD: ABA says 150 max. Reality: 300-500."
 
 [SECOND 17-24]
 **Visual**: Number "3" appears.
-**Audio/Voiceover**: "Three — continuances are schedule management disguised as strategy. If nothing gets filed between continuances, the delay isn't helping you. It's helping your attorney's calendar."
+**Audio/Voiceover**: "Three, continuances are schedule management disguised as strategy. If nothing gets filed between continuances, the delay isn't helping you. It's helping your attorney's calendar."
 **Text overlay**: "3. CONTINUANCES: Strategy or calendar management?"
 
 [SECOND 24-30]
 **Visual**: Number "4" appears.
-**Audio/Voiceover**: "Four — discovery is a battlefield, not a file delivery. What the prosecution gives you is the minimum. What's missing — body cam that should exist, witness statements that disappeared — that's where your defense lives."
+**Audio/Voiceover**: "Four, discovery is a battlefield, not a file delivery. What the prosecution gives you is the minimum. What's missing, body cam that should exist, witness statements that disappeared, that's where your defense lives."
 **Text overlay**: "4. DISCOVERY: What's missing is the defense."
 
 [SECOND 30-37]
 **Visual**: Number "5" appears.
-**Audio/Voiceover**: "Five — judge patterns are public information. Some judges grant suppression motions at high rates. Some never do. Your attorney should be tailoring strategy to your specific judge. Ask them."
+**Audio/Voiceover**: "Five, judge patterns are public information. Some judges grant suppression motions at high rates. Some never do. Your attorney should be tailoring strategy to your specific judge. Ask them."
 **Text overlay**: "5. JUDGE PATTERNS: Public info your attorney should be using."
 
 [SECOND 37-44]
 **Visual**: Number "6" appears.
-**Audio/Voiceover**: "Six — the first plea offer is the worst one. Attorneys with real trial credibility get better deals. If your attorney always settles, prosecutors know — and the offers reflect it."
+**Audio/Voiceover**: "Six, the first plea offer is the worst one. Attorneys with real trial credibility get better deals. If your attorney always settles, prosecutors know, and the offers reflect it."
 **Text overlay**: "6. FIRST PLEA = WORST PLEA: Trial credibility = better deals."
 
 [SECOND 44-50]
 **Visual**: Number "7" appears. Bigger. More dramatic.
-**Audio/Voiceover**: "Seven — bar complaints exist and most defendants never file them. You can file one while your case is active. You can request fee arbitration. You can fire your attorney. These are real options. The system counts on you not knowing them."
+**Audio/Voiceover**: "Seven, bar complaints exist and most defendants never file them. You can file one while your case is active. You can request fee arbitration. You can fire your attorney. These are real options. The system counts on you not knowing them."
 **Text overlay**: "7. BAR COMPLAINTS: Real. Available. Almost never filed."
 
 [SECOND 50-57]
@@ -81,7 +81,7 @@ suggested_posting_time: "Tuesday 7:00 PM EST"
 ---
 
 ### Caption
-The criminal justice system has no instruction manual for defendants. The police don't give you one. The court doesn't give you one. Your attorney might — if they have time. Here are 7 things nobody tells you, each one paired with a question that changes your case.
+The criminal justice system has no instruction manual for defendants. The police don't give you one. The court doesn't give you one. Your attorney might, if they have time. Here are 7 things nobody tells you, each one paired with a question that changes your case.
 
 ### Hashtags
 #criminaljustice #courtsystem #criminaldefense #trialpenalty #knowyourrights #defendantrights #systemtruth
@@ -91,6 +91,6 @@ Black background. "7" in large white text. Below: "Things the System Won't Tell 
 
 ---
 
-**Context**: Based directly on INNA's blog post of the same name. This is a flagship content piece — the kind of video that defines a TikTok account's identity. If this goes viral, the entire channel benefits. Optimized for the "things nobody tells you about X" trending format.
+**Context**: Based directly on INNA's blog post of the same name. This is a flagship content piece, the kind of video that defines a TikTok account's identity. If this goes viral, the entire channel benefits. Optimized for the "things nobody tells you about X" trending format.
 **Loop strategy**: The rapid-fire 7-point format is impossible to absorb in one viewing. Viewers WILL loop. The dense, specific content rewards rewatching.
 **KPI target**: Shares + Profile visits (this is a channel-defining video)

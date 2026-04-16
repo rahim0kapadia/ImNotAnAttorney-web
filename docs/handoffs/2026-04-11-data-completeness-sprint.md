@@ -7,32 +7,32 @@ Fill all empty data tables that feed customer-facing products. 8 of 17 product t
 ## What This Session Did
 
 ### Tier 9 Pipeline Hardening (SHIPPED)
-- **CSV parser hardening** — 16 `for await` loops across 13 bulk scripts wrapped in try-catch (commit `497a0b3`)
-- **PostgREST pagination** — 3 scripts fixed to load all 15,613 judges instead of 1,000 cap
-- **Quote min-length filter** — <40 char quotes excluded from query + extraction
-- **Jurisdiction extractor fix** — 95.3% of case_feature_vectors were misclassified. Fixed. 40 FL rows now present (commit `c22e3f4`)
-- **Trial judge extraction** — New 3-tier matching for bench_jury_divergence: regex patterns + DB name scan + author fallback. 44% match rate vs 0% before (commit `8fa2bff`)
-- **Two rules promoted** — `verify-before-assuming.md` and `cl-bulk-data-defensive.md` in `~/.claude/rules/`
+- **CSV parser hardening**, 16 `for await` loops across 13 bulk scripts wrapped in try-catch (commit `497a0b3`)
+- **PostgREST pagination**, 3 scripts fixed to load all 15,613 judges instead of 1,000 cap
+- **Quote min-length filter**, <40 char quotes excluded from query + extraction
+- **Jurisdiction extractor fix**, 95.3% of case_feature_vectors were misclassified. Fixed. 40 FL rows now present (commit `c22e3f4`)
+- **Trial judge extraction**, New 3-tier matching for bench_jury_divergence: regex patterns + DB name scan + author fallback. 44% match rate vs 0% before (commit `8fa2bff`)
+- **Two rules promoted**, `verify-before-assuming.md` and `cl-bulk-data-defensive.md` in `~/.claude/rules/`
 
 ### Full Data Audit Completed
 Complete audit of all 17 product tables, 19 untapped data sources, 33 unused CL endpoints. Results below.
 
 ## Still Running
-- `bulk-bench-jury-divergence.mjs --apply` — background process streaming 50GB CSV with 3-tier matching. At 0.5M rows, 44% match rate. Will take ~4 hours total. **If this session dies, process dies too. Re-run needed.**
+- `bulk-bench-jury-divergence.mjs,apply`, background process streaming 50GB CSV with 3-tier matching. At 0.5M rows, 44% match rate. Will take ~4 hours total. **If this session dies, process dies too. Re-run needed.**
 
-## Remaining Steps — Data Completeness Sprint
+## Remaining Steps, Data Completeness Sprint
 
-### Phase 1: Run Existing Scripts (ZERO new code — do this FIRST)
+### Phase 1: Run Existing Scripts (ZERO new code, do this FIRST)
 
 1. **`ingest-bjs-outcomes.mjs`** → fills `outcome_benchmarks` (0 rows → ~500)
    - Fixes: Similar Cases Analyzer "National & State Outcome Data" section
    - Script location: `C:\Users\email\projects\ImNotAnAttorney-web\scripts\ingest-bjs-outcomes.mjs`
-   - Command: `node scripts/ingest-bjs-outcomes.mjs --apply`
+   - Command: `node scripts/ingest-bjs-outcomes.mjs,apply`
 
 2. **`ingest-npi.mjs`** → fills `officer_external_intel` (0 rows → ~100K+)
    - Fixes: Officer BGC employment history, wandering officer, complaints, UOF
    - Script location: `C:\Users\email\projects\ImNotAnAttorney-web\scripts\ingest-npi.mjs`
-   - Command: `node scripts/ingest-npi.mjs --apply`
+   - Command: `node scripts/ingest-npi.mjs,apply`
 
 3. **CL `/aba-ratings/` API** → fills `judge_profiles.aba_rating` (NULL → ~5K judges)
    - Dead TODO at engine `legal-verifier.mjs:510`
@@ -69,32 +69,32 @@ Complete audit of all 17 product tables, 19 untapped data sources, 33 unused CL 
 
 ### Phase 4: Verify bench_jury completion
 - Check `bench_jury_divergence` table for rows
-- If 0: re-run `node scripts/bulk-bench-jury-divergence.mjs --apply`
+- If 0: re-run `node scripts/bulk-bench-jury-divergence.mjs,apply`
 - If >0: re-run E2E for Judge Report Card
 
 ## Files Modified This Session
-- `scripts/bulk-bench-jury-divergence.mjs` — trial judge extraction (3-tier matching)
-- `scripts/bulk-similar-case-matcher.mjs` — jurisdiction extractor fix + dump file reader
-- `src/lib/tier9-reports/query.ts` — quote min-length filter (40 chars)
-- `scripts/bulk-judge-quote-extractor.mjs` — min-length filter at extraction
-- `scripts/bulk-master-extractor.mjs` — min-length filter + PostgREST pagination
-- `scripts/bulk-judge-prosecutor-pairing.mjs` — PostgREST pagination + key truncation fix
-- 11 additional bulk scripts — CSV parser try-catch + relax_quotes hardening
+- `scripts/bulk-bench-jury-divergence.mjs`, trial judge extraction (3-tier matching)
+- `scripts/bulk-similar-case-matcher.mjs`, jurisdiction extractor fix + dump file reader
+- `src/lib/tier9-reports/query.ts`, quote min-length filter (40 chars)
+- `scripts/bulk-judge-quote-extractor.mjs`, min-length filter at extraction
+- `scripts/bulk-master-extractor.mjs`, min-length filter + PostgREST pagination
+- `scripts/bulk-judge-prosecutor-pairing.mjs`, PostgREST pagination + key truncation fix
+- 11 additional bulk scripts, CSV parser try-catch + relax_quotes hardening
 
 ## What Didn't Work
-- **author_id matching for bench_jury** — CL opinion authors are appellate judges, not trial judges. 0 matches from 5,307 classified opinions. Fixed with preamble extraction.
-- **relax_quotes alone** — doesn't prevent "Quote Not Closed" fatal errors. Must wrap in try-catch.
-- **`| head` on background tasks** — creates orphan processes on Windows with no output.
-- **Background processes across sessions** — die when session ends. Always re-verify.
+- **author_id matching for bench_jury**, CL opinion authors are appellate judges, not trial judges. 0 matches from 5,307 classified opinions. Fixed with preamble extraction.
+- **relax_quotes alone**, doesn't prevent "Quote Not Closed" fatal errors. Must wrap in try-catch.
+- **`| head` on background tasks**, creates orphan processes on Windows with no output.
+- **Background processes across sessions**, die when session ends. Always re-verify.
 
 ## Verification
-- `npx tsc --noEmit --skipLibCheck` — TypeScript clean
-- `node scripts/e2e-tier9.mjs` — 32/32 passing (all 3 SKUs)
-- `powershell -Command 'Get-Process bzcat -ErrorAction SilentlyContinue'` — check if bench_jury still running
+- `npx tsc,noEmit,skipLibCheck`, TypeScript clean
+- `node scripts/e2e-tier9.mjs`, 32/32 passing (all 3 SKUs)
+- `powershell -Command 'Get-Process bzcat -ErrorAction SilentlyContinue'`, check if bench_jury still running
 
 ## Data Health Snapshot (2026-04-11)
 | Table | Rows | Status |
-|-------|------|--------|
+|-------|------|------, |
 | judge_profiles | 15,613 | HEALTHY |
 | judge_quotes | 29,668 | HEALTHY |
 | jurisdiction_statutes | 4,699 | HEALTHY |
@@ -120,10 +120,10 @@ Execute the data completeness sprint at
 Context:
 - Tier 9 hardening SHIPPED (commits 497a0b3, c22e3f4, 8fa2bff). E2E 32/32.
 - bench_jury_divergence was running in background (44% match rate). Check if
-  table has rows — if not, re-run: node scripts/bulk-bench-jury-divergence.mjs --apply
+  table has rows, if not, re-run: node scripts/bulk-bench-jury-divergence.mjs,apply
 - START WITH Phase 1: run existing scripts (zero new code). Use haiku agents.
   ingest-bjs-outcomes.mjs and ingest-npi.mjs first. Then CL ABA ratings + retention events.
 - Phase 2: backfill jurisdiction on appellate_trends + officer_reliability.
 - Phase 3: build scrapers for Brady/Giglio, deeper USSC, CL parties/attorneys.
-- Full data audit in the handoff file — read it for table health + source mapping.
+- Full data audit in the handoff file, read it for table health + source mapping.
 ```

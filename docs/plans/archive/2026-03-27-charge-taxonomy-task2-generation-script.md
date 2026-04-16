@@ -7,7 +7,7 @@
 - Output: `data/charge-taxonomy/{JURISDICTION_CODE}.json` + `data/charge-taxonomy/questions.json`
 
 ## Files to Create
-1. `scripts/generate-charge-taxonomy.ts` — main script
+1. `scripts/generate-charge-taxonomy.ts`, main script
 
 ## Files to Modify
 - None (new file only)
@@ -17,15 +17,15 @@
 2. Define `JURISDICTIONS` array (52 entries: 50 states + DC + federal)
 3. Implement `callAnthropicAPI()` using direct Messages API fetch
 4. Implement `buildJurisdictionPrompt()` and `buildQuestionsPrompt()`
-5. Implement `generateJurisdiction()` — single jurisdiction with dry-run support
-6. Implement `generateAllJurisdictions()` — sequential with 2s delay
+5. Implement `generateJurisdiction()`, single jurisdiction with dry-run support
+6. Implement `generateAllJurisdictions()`, sequential with 2s delay
 7. Port existing intake questions into `EXISTING_QUESTIONS` map with alias resolution
-8. Implement `generateQuestions()` — covers uncovered slugs via API
-9. Implement `validateOutput()` — checks all 52 files + required fields + no duplicates
-10. Implement CLI flag routing (`--all`, `--jurisdiction`, `--questions`, `--validate`, `--dry-run`)
+8. Implement `generateQuestions()`, covers uncovered slugs via API
+9. Implement `validateOutput()`, checks all 52 files + required fields + no duplicates
+10. Implement CLI flag routing (`, all`, `, jurisdiction`, `, questions`, `, validate`, `, dry-run`)
 
 ## Key Decisions
-- Use direct Messages API (not Batch API) — sequential processing with delay to avoid rate limits
+- Use direct Messages API (not Batch API), sequential processing with delay to avoid rate limits
 - Preserve existing intake form questions verbatim to avoid regression
 - Export `COMMON_CHARGES` so Task 4 seed builder can import it
-- Idempotent — re-running overwrites existing files
+- Idempotent, re-running overwrites existing files

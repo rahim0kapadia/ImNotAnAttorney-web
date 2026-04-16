@@ -1,5 +1,5 @@
 /**
- * GET /api/partner/compliance-report — Compliance report data.
+ * GET /api/partner/compliance-report, Compliance report data.
  *
  * Returns partner profile, all court_reminders for the partner's promo code,
  * and client_check_ins for those reminders.
@@ -7,7 +7,7 @@
  * Uses paginatedQuery (PostgREST 1000-row cap) and batchedInQuery
  * (URL length limit on .in() with large ID arrays).
  *
- * No last_name in select — bondsmen should not see client PII beyond first name.
+ * No last_name in select, bondsmen should not see client PII beyond first name.
  *
  * Auth: session cookie validated via requirePartnerAuth().
  */
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
       console.error("[partner/compliance-report] Client query errors:", clientErrors);
     }
 
-    // Batched .in() — chunks of 200 IDs to stay within URL length limits
+    // Batched .in(), chunks of 200 IDs to stay within URL length limits
     const clientIds = clients.map((c) => c.id).filter(Boolean);
     let checkIns: CheckIn[] = [];
     if (clientIds.length > 0) {

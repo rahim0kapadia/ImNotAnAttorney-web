@@ -1,5 +1,5 @@
 /**
- * POST /api/check-in — Defendant check-in endpoint.
+ * POST /api/check-in, Defendant check-in endpoint.
  *
  * Accepts a prep page token + optional geolocation. Inserts into
  * client_check_ins. Rate-limited to one check-in per 12 hours.
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid or inactive token" }, { status: 404 });
   }
 
-  // Check last check-in — enforce 12-hour cooldown
+  // Check last check-in, enforce 12-hour cooldown
   const { data: lastCheckInRow } = await supabase
     .from("client_check_ins")
     .select("checked_in_at")
@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Check-in failed" }, { status: 500 });
   }
 
-  // SMS confirmation (fire-and-forget — don't delay the response)
+  // SMS confirmation (fire-and-forget, don't delay the response)
   if (canSendClientSMS(reminder.phone, reminder.sms_consent_at)) {
     const prefs = getClientPrefs(reminder.notification_prefs);
     if (shouldSendSMS(prefs.check_in)) {

@@ -19,7 +19,7 @@ source: content/twitter/thread-01-origin-story.md
 **Type**: Reel (60 seconds)
 **Format**: 9:16 vertical, talking head + text overlays
 **Suggested time**: Thursday 7:00 PM EST
-**Sound**: Original audio -- calm, direct voiceover. No background music. Silence is the production value.
+**Sound**: Original audio, calm, direct voiceover. No background music. Silence is the production value.
 
 ---
 
@@ -43,12 +43,12 @@ source: content/twitter/thread-01-origin-story.md
 [SECOND 18-25]
 **Visual**: Cut back to face. Closer shot. More intensity.
 **Text overlay**: "My $20K attorney missed all of it."
-**Audio**: "My $20,000 attorney was getting paid to do nothing. And I had no way to know -- because I didn't know what questions to ask."
+**Audio**: "My $20,000 attorney was getting paid to do nothing. And I had no way to know, because I didn't know what questions to ask."
 
 [SECOND 25-35]
 **Visual**: Slow zoom into face.
 **Text overlay**: "The questions changed everything."
-**Audio**: "I started researching. Studied tactics from 40 elite defense attorneys. Built a system of questions. Not legal advice -- accountability questions. The kind that make an attorney either do the work or admit they haven't."
+**Audio**: "I started researching. Studied tactics from 40 elite defense attorneys. Built a system of questions. Not legal advice, accountability questions. The kind that make an attorney either do the work or admit they haven't."
 
 [SECOND 35-45]
 **Visual**: Cut to different angle, slightly wider.
@@ -78,7 +78,7 @@ I paid $20,000 to a private attorney. No motions filed. No discovery reviewed. N
 
 I read my own discovery in one afternoon. Found issues my attorney never mentioned. Weight discrepancies. Officer statement conflicts. Evidence chain problems.
 
-Then I studied tactics from 40 elite defense attorneys. Built a framework of accountability questions -- the kind that make an attorney either start working or reveal that they haven't been.
+Then I studied tactics from 40 elite defense attorneys. Built a framework of accountability questions, the kind that make an attorney either start working or reveal that they haven't been.
 
 The moment I started asking informed questions, everything changed.
 

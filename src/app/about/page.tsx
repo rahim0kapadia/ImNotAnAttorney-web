@@ -1,7 +1,7 @@
 /**
  * About Page (/about)
  *
- * Founding team story page using an "epiphany bridge" narrative — the copywriting
+ * Founding team story page using an "epiphany bridge" narrative, the copywriting
  * technique where you share the personal experience that led to creating the
  * product. This builds trust by demonstrating lived experience as defendants.
  *
@@ -9,24 +9,24 @@
  *   Nav / footer -> THIS PAGE -> /services (primary CTA) or /blog (secondary CTA)
  *
  * Narrative structure (epiphany bridge):
- *   1. Hero — "Built by defendants. For defendants." (identity statement)
- *   2. The Setup — One founder facing trafficking charges, paid thousands for attorney,
+ *   1. Hero, "Built by defendants. For defendants." (identity statement)
+ *   2. The Setup, One founder facing trafficking charges, paid thousands for attorney,
  *      got silence and inaction for months
- *   3. The Epiphany — Opened the discovery himself, found 4 critical issues
+ *   3. The Epiphany, Opened the discovery himself, found 4 critical issues
  *      in one week that the attorney never mentioned:
  *        - 73% weight discrepancy (93.9g -> 25.59g = 68.3g missing)
  *        - CI phone dual attribution
  *        - Drug type mismatch (amphetamine charged, MDMA/MDA found)
  *        - 21 fingerprints, zero match
- *   4. The Mission — Built a research system from 40+ elite defense attorneys'
+ *   4. The Mission, Built a research system from 40+ elite defense attorneys'
  *      published methodologies. Now available to any defendant.
- *   5. How We Do It — Three differentiators (deep research, real case experience,
+ *   5. How We Do It, Three differentiators (deep research, real case experience,
  *      plain English translation)
- *   6. What We're NOT — UPL compliance section. Five explicit disclaimers:
+ *   6. What We're NOT, UPL compliance section. Five explicit disclaimers:
  *      not a law firm, no legal advice, no court representation, no attorney
  *      replacement, no outcome guarantees. "Know What They Know." tagline.
- *   7. CTA — Services page + blog links
- *   8. Lead capture — Email opt-in fallback
+ *   7. CTA, Services page + blog links
+ *   8. Lead capture, Email opt-in fallback
  *
  * Conversion role: This page handles the "who are these people?" objection.
  * Team-as-defendants credibility is the strongest trust signal for the
@@ -41,16 +41,16 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About — Built by Defendants, for Defendants",
+  title: "About, Built by Defendants, for Defendants",
   description:
-    "ImNotAnAttorney was built by defendants, for defendants. We provide legal research and questions — not legal advice.",
+    "ImNotAnAttorney was built by defendants, for defendants. We provide legal research and questions, not legal advice.",
   alternates: {
     canonical: `${SITE_URL}/about`,
   },
   openGraph: {
-    title: "About — Built by Defendants, for Defendants",
+    title: "About, Built by Defendants, for Defendants",
     description:
-      "ImNotAnAttorney was built by defendants, for defendants. We provide legal research and questions — not legal advice.",
+      "ImNotAnAttorney was built by defendants, for defendants. We provide legal research and questions, not legal advice.",
     url: `${SITE_URL}/about`,
   },
 };
@@ -87,7 +87,7 @@ export default function AboutPage() {
         }}
       />
       <div className="mx-auto max-w-3xl">
-        {/* HERO — Identity statement that immediately establishes credibility */}
+        {/* HERO, Identity statement that immediately establishes credibility */}
         <FadeInUp>
         <h1 className="font-display text-3xl font-bold text-white md:text-5xl">
           Built by defendants.
@@ -113,7 +113,7 @@ export default function AboutPage() {
         </p>
         </FadeInUp>
 
-        {/* THE STORY — Epiphany bridge: the night one of our founders opened his own */}
+        {/* THE STORY, Epiphany bridge: the night one of our founders opened his own */}
         {/* discovery and found four issues the attorney had never raised.   */}
         {/* This is the emotional core of the brand narrative.               */}
         <FadeInUp>
@@ -126,10 +126,10 @@ export default function AboutPage() {
             </p>
             <p>
               Within a week, he found four issues his attorney had never
-              mentioned: A 73% weight discrepancy — 93.9 grams on the scene,
+              mentioned: A 73% weight discrepancy, 93.9 grams on the scene,
               25.59 grams at the lab. 68.3 grams missing. A CI (confidential informant) phone number
               attributed to both the informant and him in the same report.
-              Officers wrote &quot;amphetamine&quot; — the lab confirmed
+              Officers wrote &quot;amphetamine&quot;, the lab confirmed
               MDMA/MDA. A completely different substance. 21 latent
               fingerprints. Zero matched him.
             </p>
@@ -145,7 +145,7 @@ export default function AboutPage() {
           <div className="space-y-4 text-zinc-400 leading-relaxed">
             <p>
               Another one of us was facing a second DUI. License, job,
-              custody — all on the line. The attorney&apos;s advice: take the
+              custody, all on the line. The attorney&apos;s advice: take the
               deal, the BAC is too high to fight.
             </p>
             <p>
@@ -168,7 +168,7 @@ export default function AboutPage() {
             <p>
               We read the discovery ourselves. Three of the transactions in
               the indictment pre-dated the business relationship the government
-              claimed created the fraudulent intent. The timeline was wrong —
+              claimed created the fraudulent intent. The timeline was wrong,
               and it wasn&apos;t a detail, it was the case. The attorney had
               never mapped the transaction dates against the contract records.
             </p>
@@ -180,13 +180,13 @@ export default function AboutPage() {
         <section className="mt-12">
           <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
             <p className="text-zinc-300 leading-relaxed">
-              The attorneys in our stories weren&apos;t all bad lawyers. Some were overworked. Some were under-resourced. What was missing in every case wasn&apos;t effort — it was information. The right questions, asked at the right time.
+              The attorneys in our stories weren&apos;t all bad lawyers. Some were overworked. Some were under-resourced. What was missing in every case wasn&apos;t effort, it was information. The right questions, asked at the right time.
             </p>
           </div>
         </section>
         </FadeInUp>
 
-        {/* WHAT WE BUILT — Transition from personal story to product.       */}
+        {/* WHAT WE BUILT, Transition from personal story to product.       */}
         {/* Shows how the personal epiphany became a service for others.     */}
         <FadeInUp>
         <section className="mt-16">
@@ -194,20 +194,20 @@ export default function AboutPage() {
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
             <p>
               We started reading everything the best defense attorneys ever
-              published. Their chain of custody protocols — who handled the evidence and when. Informant defense
+              published. Their chain of custody protocols, who handled the evidence and when. Informant defense
               methodologies. Investigation patterns. 40+ legendary attorneys.
             </p>
             <p>
-              We built a system that does what he did — more thoroughly, with documented methodology behind every finding, and available to any defendant who refuses to sit in the dark about their own case.
+              We built a system that does what he did, more thoroughly, with documented methodology behind every finding, and available to any defendant who refuses to sit in the dark about their own case.
             </p>
             <p>
-              We don&apos;t give legal advice. We give your attorney the questions they need to be answering — documented, sourced, and ready for your next meeting.
+              We don&apos;t give legal advice. We give your attorney the questions they need to be answering, documented, sourced, and ready for your next meeting.
             </p>
           </div>
         </section>
         </FadeInUp>
 
-        {/* HOW WE DO IT — Three differentiators: deep research, real case   */}
+        {/* HOW WE DO IT, Three differentiators: deep research, real case   */}
         {/* experience, and plain English.                                   */}
         <FadeInUp>
         <section className="mt-16">
@@ -216,11 +216,11 @@ export default function AboutPage() {
             {[
               {
                 title: "Deep Case Research",
-                desc: "Our system analyzes cases using tactics from 40+ elite criminal defense attorneys. We know what good defense looks like — and we can spot when it's missing.",
+                desc: "Our system analyzes cases using tactics from 40+ elite criminal defense attorneys. We know what good defense looks like, and we can spot when it's missing.",
               },
               {
                 title: "Real case experience",
-                desc: "This isn't theoretical. Our analysis framework was built from real cases — our founders' cases. We found weight discrepancies the attorney missed. We found CI attribution errors — when police listed the same informant's details for two different people — in the warrant. We found officer statement conflicts that became trial ammunition.",
+                desc: "This isn't theoretical. Our analysis framework was built from real cases, our founders' cases. We found weight discrepancies the attorney missed. We found CI attribution errors, when police listed the same informant's details for two different people, in the warrant. We found officer statement conflicts that became trial ammunition.",
               },
               {
                 title: "Plain English",
@@ -239,10 +239,10 @@ export default function AboutPage() {
         </section>
         </FadeInUp>
 
-        {/* WHAT WE'RE NOT — UPL (Unauthorized Practice of Law) compliance.  */}
+        {/* WHAT WE'RE NOT, UPL (Unauthorized Practice of Law) compliance.  */}
         {/* Five explicit disclaimers plus the "Know What They Know."        */}
         {/* tagline that defines the legal boundary of our services.         */}
-        {/* This section is legally important — do not remove or soften.     */}
+        {/* This section is legally important, do not remove or soften.     */}
         <FadeInUp>
         <section className="mt-16">
           <h2 className="font-display text-2xl font-bold text-white">
@@ -267,14 +267,14 @@ export default function AboutPage() {
               Know What They Know.
             </p>
             <p className="mt-1 text-sm text-zinc-400">
-              We provide legal information — not legal advice. Not representation. Not outcomes. Information is the equalizer.
+              We provide legal information, not legal advice. Not representation. Not outcomes. Information is the equalizer.
             </p>
             <p className="mt-3 text-sm text-zinc-400">In every criminal case, the judge, the prosecutor, and your defense attorney already know each other. They work in the same building. They&apos;ve seen hundreds of cases like yours. You are the only person in that room who doesn&apos;t know how this works. We close that gap.</p>
           </div>
         </section>
         </FadeInUp>
 
-        {/* CTA — Routes to services (primary) and blog (secondary) */}
+        {/* CTA, Routes to services (primary) and blog (secondary) */}
         <FadeInUp>
         <section className="mt-16 text-center">
           <h2 className="font-display text-2xl font-bold text-white">
@@ -289,7 +289,7 @@ export default function AboutPage() {
               href="/checkout?tier=case-decoder"
               className="rounded-lg bg-amber-500 px-8 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
             >
-              Get Your Case Analysis — {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+              Get Your Case Analysis, {TIER_CORE["case-decoder"].priceDisplay} &rarr;
             </Link>
             <Link
               href="/blog"
@@ -301,7 +301,7 @@ export default function AboutPage() {
         </section>
         </FadeInUp>
 
-        {/* RELATED READING — Specific blog posts that reinforce the About page narrative */}
+        {/* RELATED READING, Specific blog posts that reinforce the About page narrative */}
         <section className="mt-16">
           <h2 className="font-display text-xl font-bold text-white mb-4">Recommended Reading</h2>
           <div className="space-y-3">
@@ -311,16 +311,16 @@ export default function AboutPage() {
             </Link>
             <Link href="/blog/how-your-attorney-makes-money" className="block rounded-lg border border-zinc-500 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
               <p className="text-sm font-semibold text-amber-400">How Your Attorney Makes Money</p>
-              <p className="mt-1 text-xs text-zinc-400">The economics of criminal defense — what every defendant should understand before their first meeting.</p>
+              <p className="mt-1 text-xs text-zinc-400">The economics of criminal defense, what every defendant should understand before their first meeting.</p>
             </Link>
             <Link href="/blog/attorney-not-returning-calls" className="block rounded-lg border border-zinc-500 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700">
               <p className="text-sm font-semibold text-amber-400">Your Attorney Won&apos;t Return Your Calls</p>
-              <p className="mt-1 text-xs text-zinc-400">The exact problem that started all of this — and what you can do about it.</p>
+              <p className="mt-1 text-xs text-zinc-400">The exact problem that started all of this, and what you can do about it.</p>
             </Link>
           </div>
         </section>
 
-        {/* FOR ATTORNEYS — Referral signal. Opens the referral channel      */}
+        {/* FOR ATTORNEYS, Referral signal. Opens the referral channel      */}
         {/* without requiring a full page. Addresses segment 2 (double-     */}
         {/* checkers with decent attorneys) and positions product as         */}
         {/* complementary, not competitive.                                 */}
@@ -330,7 +330,7 @@ export default function AboutPage() {
             For defense attorneys
           </h2>
           <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-            Your clients who show up prepared ask better questions and get better outcomes. We provide case-specific research that helps defendants understand their situation — so when they sit down with you, the conversation is productive from the first minute.
+            Your clients who show up prepared ask better questions and get better outcomes. We provide case-specific research that helps defendants understand their situation, so when they sit down with you, the conversation is productive from the first minute.
           </p>
           <p className="mt-2 text-sm text-zinc-400">
             Questions?{" "}
@@ -341,7 +341,7 @@ export default function AboutPage() {
         </section>
         </FadeInUp>
 
-        {/* LEAD CAPTURE — Email opt-in fallback for visitors not ready to buy */}
+        {/* LEAD CAPTURE, Email opt-in fallback for visitors not ready to buy */}
         <div className="mt-16">
           <LeadCapture ungated />
         </div>

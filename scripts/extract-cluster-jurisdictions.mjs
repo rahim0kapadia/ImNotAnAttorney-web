@@ -38,7 +38,7 @@ function findBzcat() {
   return 'bzcat';
 }
 
-// State patterns — same as bulk-classify but also catches "Commonwealth of X", "People of the State of X"
+// State patterns, same as bulk-classify but also catches "Commonwealth of X", "People of the State of X"
 // Codes are lowercase to match pipeline convention
 const STATE_PATTERNS = [
   ["florida", "fl"], ["california", "ca"], ["texas", "tx"], ["new york", "ny"],
@@ -58,7 +58,7 @@ const STATE_PATTERNS = [
 ];
 
 // Federal indicators in case_name_full.
-// "district court" removed — too broad, matches state district courts.
+// "district court" removed, too broad, matches state district courts.
 // Use "united states district" instead.
 const FEDERAL_PATTERNS = [
   "united states of america",
@@ -82,7 +82,7 @@ function deriveJurisdictionFromCaseName(caseName, caseNameFull) {
     if (text.indexOf(pat) >= 0) return "federal";
   }
 
-  // Check state patterns — "State of X", "Commonwealth of X", "People of the State of X"
+  // Check state patterns, "State of X", "Commonwealth of X", "People of the State of X"
   for (const [name, code] of STATE_PATTERNS) {
     if (text.indexOf(name) >= 0) return code;
   }

@@ -20,7 +20,7 @@ I know this feels like the end of the world right now. It's not.
 
 First thing, right now: write down everything you remember about the stop and the arrest. What did the officer say was the reason for pulling you over? What happened during the field sobriety tests? What did the officer say and do? Where were you? What was the road surface like? Memory fades fast and these details matter more than you'd think.
 
-Second, and this is urgent: in most states you have 7-15 days to request a DMV hearing or your license gets automatically suspended. This is separate from the criminal case and most attorneys don't mention it until it's too late. California and Florida give you 10 days. Texas gives you 15. Check your state's deadline today -- not tomorrow.
+Second, and this is urgent: in most states you have 7-15 days to request a DMV hearing or your license gets automatically suspended. This is separate from the criminal case and most attorneys don't mention it until it's too late. California and Florida give you 10 days. Texas gives you 15. Check your state's deadline today, not tomorrow.
 
 Third, when you talk to an attorney, ask these specific questions:
 - Was the traffic stop legal? What was the stated reason?
@@ -28,7 +28,7 @@ Third, when you talk to an attorney, ask these specific questions:
 - Were the field sobriety tests administered correctly per NHTSA standards?
 - What's the margin of error on my BAC reading?
 
-On that last point -- breathalyzers have an accepted margin of error (Forensic Science International has published on this extensively). If you blew .08 or .09, the margin of error alone could put you under the limit. That's not a technicality. That's the science the prosecution doesn't mention.
+On that last point, breathalyzers have an accepted margin of error (Forensic Science International has published on this extensively). If you blew .08 or .09, the margin of error alone could put you under the limit. That's not a technicality. That's the science the prosecution doesn't mention.
 
 Best realistic outcomes for a first offense DUI with no accident: reduced to reckless driving (no DUI on record), deferred prosecution or diversion program, or DUI conviction with minimal probation and no jail. Almost nobody goes to prison for a first offense with no accident.
 

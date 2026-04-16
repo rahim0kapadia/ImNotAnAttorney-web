@@ -120,7 +120,7 @@ The product bridge earns its place because the free content already delivered va
 | "verify with your attorney" | Implies verification step that doesn't happen | Rephrase with specific action |
 | "we recommend" / "we advise" | UPL violation | "defendants in this situation often explore..." |
 | "you should" | UPL violation in legal context | "consider" or "one option is" |
-| em dash (— or --) | Top AI writing tell, zero tolerance | Comma, colon, parentheses, or period |
+| em dash (, or,) | Top AI writing tell, zero tolerance | Comma, colon, parentheses, or period |
 
 ### Terms to Define Inline (first use only)
 - **Proffer agreement**, "sometimes called 'queen for a day', a meeting where you provide information to the government under a limited use agreement"
@@ -201,7 +201,7 @@ For sections delivering bad news, high loss amounts, multiple counts, conspiracy
 
 Before publishing any white collar / federal defense blog post:
 
-- [ ] ZERO em dashes (— or --), use commas, colons, parentheses, or periods
+- [ ] ZERO em dashes (, or,), use commas, colons, parentheses, or periods
 - [ ] No "it's important to note/understand/remember" (filler, just say it)
 - [ ] No "navigate" in legal context
 - [ ] No 3+ sentences starting with the same word in sequence

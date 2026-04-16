@@ -1,10 +1,10 @@
 /**
- * @file /api/admin/partners — List and create bondsman partners.
+ * @file /api/admin/partners, List and create bondsman partners.
  *
  * Auth: X-Admin-Password header (middleware + defense-in-depth guard).
  *
- * GET  — Returns all partners with stats, ordered by most recent.
- * POST — Creates a new partner, generates a Stripe promotion code,
+ * GET , Returns all partners with stats, ordered by most recent.
+ * POST, Creates a new partner, generates a Stripe promotion code,
  *        and stores everything in Supabase.
  */
 
@@ -100,18 +100,18 @@ export async function POST(req: NextRequest) {
       .maybeSingle();
     if (!existingCode) break;
     if (promoCode) {
-      // User-specified code collides — fail with clear error
+      // User-specified code collides, fail with clear error
       return NextResponse.json(
         { error: `Promo code "${code}" is already in use` },
         { status: 409 }
       );
     }
-    // Auto-generated collision — retry with new random suffix
+    // Auto-generated collision, retry with new random suffix
     const base = sanitizePromoCode(name.split(" ").join("").slice(0, 8));
     code = `${base}${Math.floor(Math.random() * 900 + 100)}`;
   }
 
-  // Final uniqueness check — if still colliding after 5 retries, fail
+  // Final uniqueness check, if still colliding after 5 retries, fail
   {
     const { data: stillExists } = await supabase
       .from("partners")
@@ -180,7 +180,7 @@ export async function POST(req: NextRequest) {
       .eq("id", partner.id);
   } catch (stripeErr) {
     console.error("[Admin Partners] Stripe promo code error:", stripeErr);
-    // Partner created but promo code failed — don't roll back, operator can retry
+    // Partner created but promo code failed, don't roll back, operator can retry
     return NextResponse.json({
       partner: { ...partner, promo_code: code },
       warning: "Partner created but Stripe promo code failed. Check logs.",

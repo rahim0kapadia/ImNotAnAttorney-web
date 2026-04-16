@@ -1,6 +1,6 @@
 "use client";
 /**
- * AdminNav — Shared navigation bar for /admin/* pages.
+ * AdminNav, Shared navigation bar for /admin/* pages.
  * Highlights the current page based on pathname.
  */
 

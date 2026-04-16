@@ -27,7 +27,7 @@
  *     </body>
  *   </html>
  *
- * metadataBase: https://imnotanattorney.com — all relative OG/canonical URLs
+ * metadataBase: https://imnotanattorney.com, all relative OG/canonical URLs
  * resolve against this. Required for Next.js metadata API.
  */
 import type { Metadata, Viewport } from "next";
@@ -40,13 +40,13 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-/** Geist Sans — primary font. Loaded via next/font/google for zero-CLS font loading. */
+/** Geist Sans, primary font. Loaded via next/font/google for zero-CLS font loading. */
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-/** Playfair Display — display/serif font for headlines. Adds premium typographic contrast. */
+/** Playfair Display, display/serif font for headlines. Adds premium typographic contrast. */
 const playfairDisplay = Playfair_Display({
   variable: "--font-display",
   subsets: ["latin"],
@@ -54,7 +54,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 
-/** Viewport configuration — exported separately per Next.js 15 requirements. */
+/** Viewport configuration, exported separately per Next.js 15 requirements. */
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -70,7 +70,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ImNotAnAttorney — Know What They Know.",
+    default: "ImNotAnAttorney, Know What They Know.",
     template: "%s | ImNotAnAttorney",
   },
   description:
@@ -92,7 +92,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * RootLayout — wraps all pages with consistent chrome and global scripts.
+ * RootLayout, wraps all pages with consistent chrome and global scripts.
  * The body applies Geist Sans font + antialiasing + dark mode color scheme.
  */
 export default async function RootLayout({
@@ -100,7 +100,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Reading headers forces dynamic rendering — required for CSP nonce propagation
+  // Reading headers forces dynamic rendering, required for CSP nonce propagation
   const nonce = (await headers()).get("x-nonce") ?? "";
 
   return (
@@ -108,14 +108,14 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${playfairDisplay.variable} antialiased bg-background text-foreground`}
       >
-        {/* Skip link — accessibility: allows keyboard/screen reader users to bypass nav */}
+        {/* Skip link, accessibility: allows keyboard/screen reader users to bypass nav */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-amber-500 focus:px-4 focus:py-2 focus:text-black focus:text-sm focus:font-semibold"
         >
           Skip to content
         </a>
-        {/* Organization JSON-LD schema — appears on every page for Google Knowledge Panel */}
+        {/* Organization JSON-LD schema, appears on every page for Google Knowledge Panel */}
         <script
           nonce={nonce}
           type="application/ld+json"
@@ -127,7 +127,7 @@ export default async function RootLayout({
                 "@id": `${SITE_URL}/#organization`,
                 name: "ImNotAnAttorney",
                 url: SITE_URL,
-                description: "Defendant preparation intelligence — case-specific research and accountability questions for criminal defendants. Legal information, not legal advice.",
+                description: "Defendant preparation intelligence, case-specific research and accountability questions for criminal defendants. Legal information, not legal advice.",
                 logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
                 foundingDate: "2026",
                 knowsAbout: [
@@ -158,7 +158,7 @@ export default async function RootLayout({
                 "@id": `${SITE_URL}/#website`,
                 url: SITE_URL,
                 name: "ImNotAnAttorney",
-                description: "Defendant preparation intelligence — case research and accountability questions for criminal defendants.",
+                description: "Defendant preparation intelligence, case research and accountability questions for criminal defendants.",
                 publisher: { "@id": `${SITE_URL}/#organization` },
               },
             ]),

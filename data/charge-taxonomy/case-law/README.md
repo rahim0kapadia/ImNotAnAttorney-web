@@ -1,4 +1,4 @@
-# Case Law Directory — DO NOT WRITE FILES HERE
+# Case Law Directory, DO NOT WRITE FILES HERE
 
 ## SAFETY-CRITICAL RULE
 
@@ -20,9 +20,9 @@ Case law for the INAA system is stored in the Supabase `statute_case_law` table,
 
 Multiple safety layers ensure no hand-written or LLM-generated case law files reach defendants:
 
-1. **Background watcher** — runs during agent dispatches, deletes any file appearing in this directory within seconds
-2. **Pre-commit gates** — git hooks (when added) reject any commit that writes case law JSON files here
-3. **Automated scrubber** — `scripts/scrub-enrichment-citations.mjs` runs after agent batches and strips fabricated content
+1. **Background watcher**, runs during agent dispatches, deletes any file appearing in this directory within seconds
+2. **Pre-commit gates**, git hooks (when added) reject any commit that writes case law JSON files here
+3. **Automated scrubber**, `scripts/scrub-enrichment-citations.mjs` runs after agent batches and strips fabricated content
 
 ## Forbidden Patterns
 
@@ -30,7 +30,7 @@ Per `.claude/rules/no-hallucinated-legal-data.md`:
 - NEVER generate, fabricate, or hallucinate case law citations
 - NEVER write files like `case-law/FL.json`, `case-law/CA.json`, etc.
 - NEVER bypass the verified pipeline to "save time"
-- NEVER use language like "verify with attorney" — defendants are alone
+- NEVER use language like "verify with attorney", defendants are alone
 
 ## The Right Path Forward
 

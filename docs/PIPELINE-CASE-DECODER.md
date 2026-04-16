@@ -1,4 +1,4 @@
-# Case Decoder ($197) — Automated Pipeline Documentation
+# Case Decoder ($197), Automated Pipeline Documentation
 
 This document describes the full automated pipeline for the Case Decoder product, from Stripe checkout through report delivery and post-purchase drip emails.
 
@@ -6,7 +6,7 @@ This document describes the full automated pipeline for the Case Decoder product
 
 ```
                          CUSTOMER                                    SYSTEM                                   OPERATOR
-                         --------                                    ------                                   --------
+                         ------,                                    ------                                   ------, 
 
   1. Visit /checkout?tier=case-decoder
      or submit intake form + checkout     ------>   POST /api/checkout
@@ -19,9 +19,9 @@ This document describes the full automated pipeline for the Case Decoder product
                                                       v
                                                    POST /api/webhooks/stripe
                                                       |
-                                                      |-- INSERT orders (unique on stripe_session_id)
-                                                      |-- INSERT cases (status depends on intake)
-                                                      |-- Lookup intake by email
+                                                      |, INSERT orders (unique on stripe_session_id)
+                                                      |, INSERT cases (status depends on intake)
+                                                      |, Lookup intake by email
                                                       |
                                               +-------+-------+
                                               |               |
@@ -36,57 +36,57 @@ This document describes the full automated pipeline for the Case Decoder product
                                               |         Customer fills intake form
                                               |               |
                                               |         POST /api/intake
-                                              |           |-- INSERT intakes
-                                              |           |-- Link intake to case
-                                              |           |-- case.status = "intake"
+                                              |           |, INSERT intakes
+                                              |           |, Link intake to case
+                                              |           |, case.status = "intake"
                                               |               |
                                               +-------+-------+
                                                       |
                                                       v
                                      Fire-and-forget: POST /api/generate/case-decoder
                                                       |
-                                                      |-- Auth check (OPERATOR_SECRET)
-                                                      |-- Idempotency check (skip if already processing)
-                                                      |-- Atomic guard: UPDATE cases SET status='generating'
+                                                      |, Auth check (OPERATOR_SECRET)
+                                                      |, Idempotency check (skip if already processing)
+                                                      |, Atomic guard: UPDATE cases SET status='generating'
                                                       |   WHERE status NOT IN ('generating','review','delivered')
                                                       |
                                                       v
                                      Fire-and-forget: Supabase Edge Function
                                                       /functions/v1/generate-report
                                                       |
-                                                      |-- Fetch case + intake from Supabase
-                                                      |-- Call Claude Opus 4.6 API with thinking (~60-120s)
-                                                      |-- Render markdown to branded HTML
-                                                      |-- Save report_html + report_token
-                                                      |-- case.status = "review"
+                                                      |, Fetch case + intake from Supabase
+                                                      |, Call Claude Opus 4.6 API with thinking (~60-120s)
+                                                      |, Render markdown to branded HTML
+                                                      |, Save report_html + report_token
+                                                      |, case.status = "review"
                                                       |
-                                                      |-- Fire-and-forget: /functions/v1/evaluate-report
-                                                      |     |-- Run UPL eval (Sonnet 4.6, ~30-45s)
-                                                      |     |-- Run Psych eval (Sonnet 4.6, ~30-45s)
-                                                      |     |-- Save eval_results JSONB to cases
-                                                      |     |-- UPL FAIL → operator alert email
+                                                      |, Fire-and-forget: /functions/v1/evaluate-report
+                                                      |     |, Run UPL eval (Sonnet 4.6, ~30-45s)
+                                                      |     |, Run Psych eval (Sonnet 4.6, ~30-45s)
+                                                      |     |, Save eval_results JSONB to cases
+                                                      |     |, UPL FAIL → operator alert email
                                                       |
                                                       v
                                                    Operator email:                ------>  3. Review report
-                                                   "Review Report: [charge] — [name]"        (Preview link)
+                                                   "Review Report: [charge], [name]"        (Preview link)
                                                    [Approve & Deliver] [Preview]              |
                                                                                               |
                                                                                         Click "Approve & Deliver"
                                                                                               |
-                                                      +--------------------------------------+
+                                                      +------------------------------------, +
                                                       |
                                                       v
                                                    GET /api/deliver
-                                                      |-- Render confirmation page (safe for email prefetch)
-                                                      |-- Show eval scorecard (green/red/yellow badge)
+                                                      |, Render confirmation page (safe for email prefetch)
+                                                      |, Show eval scorecard (green/red/yellow badge)
                                                       |
                                                    Operator clicks "Confirm Delivery"
                                                       |
                                                       v
                                                    POST /api/deliver
-                                                      |-- Send delivery email to customer
-                                                      |-- case.status = "delivered"
-                                                      |-- Record drip: "post_case_decoder_delivery"
+                                                      |, Send delivery email to customer
+                                                      |, case.status = "delivered"
+                                                      |, Record drip: "post_case_decoder_delivery"
                                                       |
   4. Receive delivery email               <------     v
      "Your Case Decoder Report is Ready"
@@ -94,7 +94,7 @@ This document describes the full automated pipeline for the Case Decoder product
                                                       |
                                                       v
                                                    /api/cron/drip (daily 14:00 UTC)
-                                                      |-- Part 2: Post-purchase drip sequence
+                                                      |, Part 2: Post-purchase drip sequence
                                                       |   Day 5: Story harvest email
                                                       |   Day 7: Upsell to Intelligence Brief
                                                       |   Day 14: Referral email
@@ -111,15 +111,15 @@ The customer initiates a purchase via `POST /api/checkout` with body `{ tier: "c
 
 The checkout route performs these operations before creating the Stripe session:
 
-1. **Tier validation** -- Rejects unknown tier slugs against the `TIERS` config.
-2. **Email normalization** -- Lowercase + trim for consistent DB lookups.
-3. **Email capture** -- Upserts email into `subscribers` table (powers abandonment recovery even if checkout is abandoned).
-4. **Charge type auto-detection** -- If no `chargeType` provided, looks up the customer's most recent intake form.
-5. **Refund check** -- Customers with a prior refund forfeit all upgrade credit.
-6. **Situation Room prerequisite gate** -- Not applicable for Case Decoder, but runs for all tiers.
-7. **Consent validation** -- Not required for Case Decoder ($197 < $2,497 threshold).
-8. **Upgrade credit calculation** -- 100% credit from prior lower-tier purchases (12-month window), implemented as a one-time Stripe coupon.
-9. **Stripe session creation** -- All business context (tier, credit, consent, charge type) is packed into session metadata so the webhook can create records without re-querying.
+1. **Tier validation**, Rejects unknown tier slugs against the `TIERS` config.
+2. **Email normalization**, Lowercase + trim for consistent DB lookups.
+3. **Email capture**, Upserts email into `subscribers` table (powers abandonment recovery even if checkout is abandoned).
+4. **Charge type auto-detection**, If no `chargeType` provided, looks up the customer's most recent intake form.
+5. **Refund check**, Customers with a prior refund forfeit all upgrade credit.
+6. **Situation Room prerequisite gate**, Not applicable for Case Decoder, but runs for all tiers.
+7. **Consent validation**, Not required for Case Decoder ($197 < $2,497 threshold).
+8. **Upgrade credit calculation**, 100% credit from prior lower-tier purchases (12-month window), implemented as a one-time Stripe coupon.
+9. **Stripe session creation**, All business context (tier, credit, consent, charge type) is packed into session metadata so the webhook can create records without re-querying.
 
 **Output:** Returns `{ url }` pointing to Stripe-hosted checkout.
 
@@ -127,7 +127,7 @@ The checkout route performs these operations before creating the Stripe session:
 
 ---
 
-### Step 2: Stripe Webhook — Order + Case Creation
+### Step 2: Stripe Webhook, Order + Case Creation
 
 **File:** `src/app/api/webhooks/stripe/route.ts`
 
@@ -135,13 +135,13 @@ The checkout route performs these operations before creating the Stripe session:
 
 After the customer pays, Stripe fires a webhook. The handler:
 
-1. **Verifies Stripe signature** -- Using `STRIPE_WEBHOOK_SECRET`.
-2. **Extracts metadata** -- `tier`, `email` (normalized), `amount`, plus all the checkout metadata fields.
-3. **Creates order record** -- Inserts into `orders` table. The `stripe_session_id` column has a unique constraint for deduplication (see Idempotency section below).
-4. **Creates case record** -- Assigns a `crypto.randomUUID()` as the case ID. Looks up the most recent intake by email match. Sets initial status:
+1. **Verifies Stripe signature**, Using `STRIPE_WEBHOOK_SECRET`.
+2. **Extracts metadata**, `tier`, `email` (normalized), `amount`, plus all the checkout metadata fields.
+3. **Creates order record**, Inserts into `orders` table. The `stripe_session_id` column has a unique constraint for deduplication (see Idempotency section below).
+4. **Creates case record**, Assigns a `crypto.randomUUID()` as the case ID. Looks up the most recent intake by email match. Sets initial status:
    - **Intake found** + non-discovery tier = `"intake"` (ready for generation)
    - **No intake found** = `"awaiting-intake"` (customer needs to fill the form)
-5. **Triggers generation or sends intake request email** -- See Trigger Paths below.
+5. **Triggers generation or sends intake request email**, See Trigger Paths below.
 6. **Sends payment confirmation email** to customer (product name, amount, delivery timeframe).
 7. **Sends operator notification email** (full order details).
 
@@ -153,36 +153,36 @@ After the customer pays, Stripe fires a webhook. The handler:
 
 This is a thin dispatcher running on Vercel Hobby (10s timeout). It cannot do the actual generation (which takes 60-120s), so it delegates to the Supabase Edge Function.
 
-1. **Auth check** -- `OPERATOR_SECRET` bearer token. Includes an explicit undefined-guard: if the env var is missing, ALL requests are rejected (prevents `"Bearer undefined"` matching a missing env var).
-2. **Idempotency check** -- Reads case status. If already `"generating"`, `"review"`, or `"delivered"`, returns early (unless `force: true`).
-3. **Atomic guard** -- Conditional `UPDATE cases SET status = 'generating' WHERE id = ? AND status NOT IN ('generating', 'review', 'delivered')`. Only one concurrent caller can win this UPDATE (see Idempotency section). The loser gets zero rows back and bails.
-4. **Fire-and-forget** -- Calls `{SUPABASE_URL}/functions/v1/generate-report` via fetch without awaiting the response. Returns `{ success: true, status: "generating" }` immediately.
+1. **Auth check**, `OPERATOR_SECRET` bearer token. Includes an explicit undefined-guard: if the env var is missing, ALL requests are rejected (prevents `"Bearer undefined"` matching a missing env var).
+2. **Idempotency check**, Reads case status. If already `"generating"`, `"review"`, or `"delivered"`, returns early (unless `force: true`).
+3. **Atomic guard**, Conditional `UPDATE cases SET status = 'generating' WHERE id = ? AND status NOT IN ('generating', 'review', 'delivered')`. Only one concurrent caller can win this UPDATE (see Idempotency section). The loser gets zero rows back and bails.
+4. **Fire-and-forget**, Calls `{SUPABASE_URL}/functions/v1/generate-report` via fetch without awaiting the response. Returns `{ success: true, status: "generating" }` immediately.
 
 ---
 
-### Step 4: Supabase Edge Function — Report Generation (Primary Path)
+### Step 4: Supabase Edge Function, Report Generation (Primary Path)
 
 **File:** `supabase/functions/generate-report/index.ts`
 
-This is the heavy-lift function that runs in the Supabase Deno runtime with a 150-second timeout. It is the **primary** generation path — most reports complete within this window. For cases that exceed the timeout (Opus 4.6 can take 250-294s on complex charges), the GitHub Actions backup worker picks them up (see Step 4B below).
+This is the heavy-lift function that runs in the Supabase Deno runtime with a 150-second timeout. It is the **primary** generation path, most reports complete within this window. For cases that exceed the timeout (Opus 4.6 can take 250-294s on complex charges), the GitHub Actions backup worker picks them up (see Step 4B below).
 
-1. **Fetches case record** from Supabase via raw PostgREST (no SDK -- avoids 60-90s cold start from esm.sh imports).
-2. **Idempotency check** -- If case is already `"review"` or `"delivered"`, returns early (unless `force: true`).
-3. **Finds linked intake** -- First by `intake_id` FK, then by email fallback. If no intake found, emails operator and returns 404.
-4. **Calls Claude Opus 4.6 API with extended thinking (budget_tokens: 16000)** -- Model `claude-opus-4-6`, max 32000 tokens (thinking + output), `thinking: { type: "enabled", budget_tokens: 16000 }`. No temperature (incompatible with thinking). The system prompt encodes expertise from 40+ defense attorneys plus an 8-dimension emotional profiling framework. Opus uses its thinking budget to build an emotional profile (PRIMARY FEAR, EMOTIONAL STANCE, ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT DYNAMIC, READING ARC) before generating, producing stance-calibrated reports. See `system/EMOTIONAL-INTELLIGENCE.md` for the full framework.
-5. **Loads charge-specific expert data from Supabase** -- `getChargeContext()` queries `charge_types` and `experts` tables for dynamic prompt enrichment (expert names, methodologies, focus areas). Falls back to hardcoded data if DB query fails.
-6. **Renders markdown to branded HTML** -- Dark theme (#0C0A09 background), amber accents (#F59E0B), print-optimized CSS, 9-section report structure.
-7. **Saves to Supabase** -- Updates the case record with `report_html`, `report_token` (UUID for URL-safe access), `generated_at`, `status: "review"`, and the `charge_type` from intake.
-8. **Emails operator** -- Subject: "Review Report: [charge] -- [name]". Contains two action buttons:
-   - **"Approve & Deliver"** -- Links to `GET /api/deliver?token={OPERATOR_SECRET}&case={caseId}`
-   - **"Preview Report"** -- Links to `/report/{report_token}`
+1. **Fetches case record** from Supabase via raw PostgREST (no SDK, avoids 60-90s cold start from esm.sh imports).
+2. **Idempotency check**, If case is already `"review"` or `"delivered"`, returns early (unless `force: true`).
+3. **Finds linked intake**, First by `intake_id` FK, then by email fallback. If no intake found, emails operator and returns 404.
+4. **Calls Claude Opus 4.6 API with extended thinking (budget_tokens: 16000)**, Model `claude-opus-4-6`, max 32000 tokens (thinking + output), `thinking: { type: "enabled", budget_tokens: 16000 }`. No temperature (incompatible with thinking). The system prompt encodes expertise from 40+ defense attorneys plus an 8-dimension emotional profiling framework. Opus uses its thinking budget to build an emotional profile (PRIMARY FEAR, EMOTIONAL STANCE, ATTORNEY WOUND, HOPE SIGNAL, ISOLATION, CHARGE PATTERN, CO-DEFENDANT DYNAMIC, READING ARC) before generating, producing stance-calibrated reports. See `system/EMOTIONAL-INTELLIGENCE.md` for the full framework.
+5. **Loads charge-specific expert data from Supabase**, `getChargeContext()` queries `charge_types` and `experts` tables for dynamic prompt enrichment (expert names, methodologies, focus areas). Falls back to hardcoded data if DB query fails.
+6. **Renders markdown to branded HTML**, Dark theme (#0C0A09 background), amber accents (#F59E0B), print-optimized CSS, 9-section report structure.
+7. **Saves to Supabase**, Updates the case record with `report_html`, `report_token` (UUID for URL-safe access), `generated_at`, `status: "review"`, and the `charge_type` from intake.
+8. **Emails operator**, Subject: "Review Report: [charge], [name]". Contains two action buttons:
+   - **"Approve & Deliver"**, Links to `GET /api/deliver?token={OPERATOR_SECRET}&case={caseId}`
+   - **"Preview Report"**, Links to `/report/{report_token}`
 
 **On Claude API failure:**
 - Sets `case.status = "generation-failed"`
 - Emails operator with error details and a working curl retry command
 
 **On Edge Function timeout (150s wall clock):**
-- Case remains in `"generating"` status (no error handler runs — the process is hard-killed)
+- Case remains in `"generating"` status (no error handler runs, the process is hard-killed)
 - The backup worker (Step 4B) detects and completes the report
 
 ---
@@ -247,16 +247,16 @@ GitHub Actions (every 5 min) → picks up "generating" cases >3 min old
 - Validates operator auth (raw `OPERATOR_SECRET` or HMAC-signed token).
 - Shows case details (customer email, tier, charge type, case ID).
 - Includes a "Preview Report" link and a POST form with "Confirm Delivery" button.
-- Safe for email prefetch bots -- GET never modifies state.
+- Safe for email prefetch bots, GET never modifies state.
 
 **POST** (actual delivery):
-1. **Auth validation** -- Same dual-token support (raw secret or HMAC-signed).
-2. **Atomic status claim** -- Conditionally updates case to `"delivered"` with `.eq("status", "review")` guard. Only one request wins — duplicates get a friendly idempotent message.
-3. **Send delivery email** to customer -- "Your Case Decoder Report is Ready" with report view link, usage instructions (print it, start with priority questions, document answers), and upgrade upsell ($197 credit).
-4. **Retry on failure** -- If first email fails, waits 2s and retries with a simplified HTML template. If both fail, alerts operator with the report URL for manual forwarding.
-5. **Record drip** -- Inserts `"post_case_decoder_delivery"` into `drip_emails` table via upsert. This prevents the cron from re-sending the delivery notification.
+1. **Auth validation**, Same dual-token support (raw secret or HMAC-signed).
+2. **Atomic status claim**, Conditionally updates case to `"delivered"` with `.eq("status", "review")` guard. Only one request wins, duplicates get a friendly idempotent message.
+3. **Send delivery email** to customer, "Your Case Decoder Report is Ready" with report view link, usage instructions (print it, start with priority questions, document answers), and upgrade upsell ($197 credit).
+4. **Retry on failure**, If first email fails, waits 2s and retries with a simplified HTML template. If both fail, alerts operator with the report URL for manual forwarding.
+5. **Record drip**, Inserts `"post_case_decoder_delivery"` into `drip_emails` table via upsert. This prevents the cron from re-sending the delivery notification.
 
-**Atomic-claim-then-email pattern:** The status is atomically updated to "delivered" (with `.eq("status", "review")` guard) BEFORE sending the delivery email. This prevents double-click races — only one request wins the atomic UPDATE, so duplicate emails are impossible. If the email fails after the status claim, the operator can see the case is "delivered" but re-trigger notification.
+**Atomic-claim-then-email pattern:** The status is atomically updated to "delivered" (with `.eq("status", "review")` guard) BEFORE sending the delivery email. This prevents double-click races, only one request wins the atomic UPDATE, so duplicate emails are impossible. If the email fails after the status claim, the operator can see the case is "delivered" but re-trigger notification.
 
 ---
 
@@ -292,14 +292,14 @@ Creates case with status = "intake"
 Fire-and-forget: POST /api/generate/case-decoder  { caseId }
      |
      v
-Dispatcher claims case (atomic guard) --> Edge Function --> Report generated
+Dispatcher claims case (atomic guard),> Edge Function,> Report generated
 ```
 
 **Files involved:**
-1. `src/app/api/intake/route.ts` -- Intake insertion (earlier, separate request)
-2. `src/app/api/webhooks/stripe/route.ts` -- Order + case creation, intake lookup, generation trigger
-3. `src/app/api/generate/case-decoder/route.ts` -- Dispatcher (auth, idempotency, atomic guard)
-4. `supabase/functions/generate-report/index.ts` -- Claude API call, report rendering, DB save
+1. `src/app/api/intake/route.ts`, Intake insertion (earlier, separate request)
+2. `src/app/api/webhooks/stripe/route.ts`, Order + case creation, intake lookup, generation trigger
+3. `src/app/api/generate/case-decoder/route.ts`, Dispatcher (auth, idempotency, atomic guard)
+4. `supabase/functions/generate-report/index.ts`, Claude API call, report rendering, DB save
 
 ### Path B: Intake Submitted After Payment
 
@@ -331,14 +331,14 @@ Found! Links intake to case, updates status to "intake"
 Fire-and-forget: POST /api/generate/case-decoder  { caseId }
      |
      v
-Dispatcher claims case (atomic guard) --> Edge Function --> Report generated
+Dispatcher claims case (atomic guard),> Edge Function,> Report generated
 ```
 
 **Files involved:**
-1. `src/app/api/webhooks/stripe/route.ts` -- Order + case creation, no-intake detection, intake request email
-2. `src/app/api/intake/route.ts` -- Intake insertion, pending case detection, intake linking, generation trigger
-3. `src/app/api/generate/case-decoder/route.ts` -- Dispatcher
-4. `supabase/functions/generate-report/index.ts` -- Claude API call, report rendering, DB save
+1. `src/app/api/webhooks/stripe/route.ts`, Order + case creation, no-intake detection, intake request email
+2. `src/app/api/intake/route.ts`, Intake insertion, pending case detection, intake linking, generation trigger
+3. `src/app/api/generate/case-decoder/route.ts`, Dispatcher
+4. `supabase/functions/generate-report/index.ts`, Claude API call, report rendering, DB save
 
 ### Path C: Manual Operator Retry
 
@@ -353,7 +353,7 @@ curl -X POST /api/generate/case-decoder \
   -d '{"caseId":"...", "force": true}'
      |
      v
-Dispatcher (force=true bypasses idempotency check) --> Edge Function --> Report generated
+Dispatcher (force=true bypasses idempotency check),> Edge Function,> Report generated
 ```
 
 ---
@@ -405,15 +405,15 @@ The Edge Function has NO npm/esm.sh imports. Importing `@supabase/supabase-js` v
 
 **Model:** `claude-opus-4-6` with extended thinking (budget_tokens: 16000)
 
-Upgraded from Sonnet 4.6 to Opus 4.6 for emotional intelligence. Sonnet produced structurally correct reports but with mechanical emotional calibration — every defendant got the same warm-language cadence regardless of their emotional state. Opus uses its thinking budget to build an 8-dimension emotional profile before generating, producing stance-calibrated reports (minimizer vs catastrophizer vs intellectualizer vs dissociater).
+Upgraded from Sonnet 4.6 to Opus 4.6 for emotional intelligence. Sonnet produced structurally correct reports but with mechanical emotional calibration, every defendant got the same warm-language cadence regardless of their emotional state. Opus uses its thinking budget to build an 8-dimension emotional profile before generating, producing stance-calibrated reports (minimizer vs catastrophizer vs intellectualizer vs dissociater).
 
 At ~$0.40-0.60/report, cost is still negligible vs $197 price (0.2-0.3%). Timing: 60-120s within the 150s edge function timeout.
 
-**Parameters:** `max_tokens: 32000` (thinking + output combined), `thinking: { type: "enabled", budget_tokens: 16000 }`. Temperature is NOT set (incompatible with thinking mode). Note: "adaptive" thinking was tested but reverted — it caused 600s+ generation times without meaningful quality improvement.
+**Parameters:** `max_tokens: 32000` (thinking + output combined), `thinking: { type: "enabled", budget_tokens: 16000 }`. Temperature is NOT set (incompatible with thinking mode). Note: "adaptive" thinking was tested but reverted, it caused 600s+ generation times without meaningful quality improvement.
 
-**Response parsing:** Response `content` array contains `{ type: "thinking" }` and `{ type: "text" }` blocks. Code filters for `type === "text"` only — thinking blocks contain the emotional profiling analysis and are not included in the report.
+**Response parsing:** Response `content` array contains `{ type: "thinking" }` and `{ type: "text" }` blocks. Code filters for `type === "text"` only, thinking blocks contain the emotional profiling analysis and are not included in the report.
 
-### Report Format (v2 — 7+2 Empowerment Architecture)
+### Report Format (v2, 7+2 Empowerment Architecture)
 
 The generated report is a 7-section + 0-2 conditional section markdown document rendered to branded HTML.
 
@@ -421,31 +421,31 @@ The generated report is a 7-section + 0-2 conditional section markdown document 
 
 **Always Present (7 sections + Letter + Closing + Postscript):**
 
-- **A Letter to You** -- Quotes defendant's own words, validates instinct, previews report
-1. **Where Things Stand** -- 4-area diagnostic table (Communication, Preparation, Strategy, Filing Activity). NO aggregate X/100 score. Each row says "You reported..." and links to specific questions.
-2. **Your Charges — What You're Facing** -- Elements with "Question for Your Attorney" column (NOT difficulty ratings), penalty ranges, "Your Rights" box
-3. **Communication Playbook** -- Ready-to-send email template, opening script, escalation ladder (8 levels, 5-7 days between), follow-up template
-4. **Targeted Questions for Your Attorney** -- 15 calibrated questions, each referencing intake data with 5-part format (question, why it matters, good answer, red flag response, source)
-5. **Things Worth Asking About** -- 5-6 items with labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT. Never blames attorney.
-6. **Is There Something We Missed?** -- Open channel for follow-up (help@imnotanattorney.com). No upgrade pitch.
-7. **Your Action Blueprint** -- 7-day plan + Meeting Ready Sheet (safe for attorney) + future pacing
-- **What This Report Cannot Tell You** -- Honest limitations
-- **What Comes Next** (Postscript) -- ONLY upgrade language. Pipeline: questions → answers → verification via Intelligence Brief ($997)
+- **A Letter to You**, Quotes defendant's own words, validates instinct, previews report
+1. **Where Things Stand**, 4-area diagnostic table (Communication, Preparation, Strategy, Filing Activity). NO aggregate X/100 score. Each row says "You reported..." and links to specific questions.
+2. **Your Charges, What You're Facing**, Elements with "Question for Your Attorney" column (NOT difficulty ratings), penalty ranges, "Your Rights" box
+3. **Communication Playbook**, Ready-to-send email template, opening script, escalation ladder (8 levels, 5-7 days between), follow-up template
+4. **Targeted Questions for Your Attorney**, 15 calibrated questions, each referencing intake data with 5-part format (question, why it matters, good answer, red flag response, source)
+5. **Things Worth Asking About**, 5-6 items with labels: ADDRESS FIRST / LOOK INTO / ASK ABOUT. Never blames attorney.
+6. **Is There Something We Missed?**, Open channel for follow-up (help@imnotanattorney.com). No upgrade pitch.
+7. **Your Action Blueprint**, 7-day plan + Meeting Ready Sheet (safe for attorney) + future pacing
+- **What This Report Cannot Tell You**, Honest limitations
+- **What Comes Next** (Postscript), ONLY upgrade language. Pipeline: questions → answers → verification via Intelligence Brief ($997)
 
 **Conditional Sections (0-2, based on intake data):**
 
-- **C1: Case Clock** -- ONLY if `arrest_date` exists. Informational speedy trial status + question. No "URGENT" alerts.
-- **C2: Plea Landscape** -- ONLY if `plea_offered = "yes"` OR `attorney_strategy` mentions plea. Educational, not evaluative. Collateral consequences + alternatives.
+- **C1: Case Clock**, ONLY if `arrest_date` exists. Informational speedy trial status + question. No "URGENT" alerts.
+- **C2: Plea Landscape**, ONLY if `plea_offered = "yes"` OR `attorney_strategy` mentions plea. Educational, not evaluative. Collateral consequences + alternatives.
 
 **Removed Sections (from v1):**
-- Defense Milestone Score (X/100) -- replaced by diagnostic table
-- Prosecution Difficulty Ratings -- replaced by "Question for Your Attorney"
-- Plea Quality Ratings -- replaced by educational content
-- Motion Recommendations -- integrated into S4 questions
-- Evidence Accountability Checklist -- we haven't seen the evidence
-- Discovery Readiness Guide -- discovery analysis belongs in X-Ray ($2,497+)
-- Case Stage Benchmark -- merged into S1 and S7
-- Verify Facts (standalone) -- moved to S4 callout
+- Defense Milestone Score (X/100), replaced by diagnostic table
+- Prosecution Difficulty Ratings, replaced by "Question for Your Attorney"
+- Plea Quality Ratings, replaced by educational content
+- Motion Recommendations, integrated into S4 questions
+- Evidence Accountability Checklist, we haven't seen the evidence
+- Discovery Readiness Guide, discovery analysis belongs in X-Ray ($2,497+)
+- Case Stage Benchmark, merged into S1 and S7
+- Verify Facts (standalone), moved to S4 callout
 
 **Section Budget:** 2,950 words (minimum) to 3,550 words (all conditionals). Down from ~4,800 in v1.
 
@@ -460,23 +460,23 @@ The HTML includes:
 
 Expert basis: Cialdini (commitment/consistency), Kahneman (cognitive ease), Eyal (Hook Model).
 
-The Case Decoder is the $197 entry tier. Engagement elements are basic — focused on clarity and momentum rather than deep personalization.
+The Case Decoder is the $197 entry tier. Engagement elements are basic, focused on clarity and momentum rather than deep personalization.
 
 Every report section must include:
 
-1. **Section-End Executive Summary** — 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. At this tier, summaries distill the section into what the defendant should DO (e.g., "Ask your attorney about X before your next hearing").
+1. **Section-End Executive Summary**, 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. At this tier, summaries distill the section into what the defendant should DO (e.g., "Ask your attorney about X before your next hearing").
 
-2. **"Your Case" Personalization** — At least 1 personalized reference per section using the client's intake data (defendant name, charges, jurisdiction, arrest date). Personalization at this tier draws exclusively from intake questionnaire data — no external research is incorporated. Example: "Based on your [charge] in [jurisdiction], the standard process is..."
+2. **"Your Case" Personalization**, At least 1 personalized reference per section using the client's intake data (defendant name, charges, jurisdiction, arrest date). Personalization at this tier draws exclusively from intake questionnaire data, no external research is incorporated. Example: "Based on your [charge] in [jurisdiction], the standard process is..."
 
-3. **Section Bridges** — Final 1-2 sentences of each section create anticipation for the next. Example: "Now that you understand where things stand, the next section breaks down exactly what you're facing — and the questions that can change the outcome."
+3. **Section Bridges**, Final 1-2 sentences of each section create anticipation for the next. Example: "Now that you understand where things stand, the next section breaks down exactly what you're facing, and the questions that can change the outcome."
 
-4. **Progress Structure** — Each section header includes position: "Section N of M: [Section Title]". For the 7+2 architecture, conditional sections (C1, C2) are numbered after the core 7. Example: "Section 3 of 7: Communication Playbook" or "Section 8 of 9: Case Clock" (when conditional sections are present).
+4. **Progress Structure**, Each section header includes position: "Section N of M: [Section Title]". For the 7+2 architecture, conditional sections (C1, C2) are numbered after the core 7. Example: "Section 3 of 7: Communication Playbook" or "Section 8 of 9: Case Clock" (when conditional sections are present).
 
 **Tier-specific constraints:**
 - No jurisdiction-level intelligence in personalization (that's Intelligence Brief, $997)
 - No discovery document references (that's X-Ray, $2,497)
 - Executive summaries are action-oriented ("do this next") rather than analytical ("this means...")
-- Bridges reference the report's own content only — no promises about what deeper tiers would reveal
+- Bridges reference the report's own content only, no promises about what deeper tiers would reveal
 
 ---
 
@@ -494,15 +494,15 @@ When payment is received, the operator gets an email with:
 
 When the Edge Function completes generation, the operator gets a "Review Report" email with:
 - Customer name, email, charge type, state, case ID, generation date
-- **"Approve & Deliver" button** -- Links to `GET /api/deliver?token={OPERATOR_SECRET}&case={caseId}`
-- **"Preview Report" button** -- Links to `/report/{report_token}` (the same URL the customer will receive)
+- **"Approve & Deliver" button**, Links to `GET /api/deliver?token={OPERATOR_SECRET}&case={caseId}`
+- **"Preview Report" button**, Links to `/report/{report_token}` (the same URL the customer will receive)
 
 ### Automated Evaluation Gate
 
 After saving the report (status = "review"), the generate-report Edge Function fires a non-awaited request to the evaluate-report Edge Function. This runs two evaluation teams:
 
-1. **UPL Compliance (GATE)** — 10 criteria checking for advice language, attorney judgment, disclaimer presence, etc. Any FAIL = `gate_passed: false` + operator alert email.
-2. **Psychological Architecture (HIGH)** — 10 criteria checking trauma-informed design, efficacy pairing, emotional progression, etc.
+1. **UPL Compliance (GATE)**, 10 criteria checking for advice language, attorney judgment, disclaimer presence, etc. Any FAIL = `gate_passed: false` + operator alert email.
+2. **Psychological Architecture (HIGH)**, 10 criteria checking trauma-informed design, efficacy pairing, emotional progression, etc.
 
 **Model:** Sonnet 4.6, temperature 0, no thinking mode. ~60-90s total for both teams.
 
@@ -514,15 +514,15 @@ After saving the report (status = "review"), the generate-report Edge Function f
 
 1. Operator clicks "Approve & Deliver" in the email.
 2. A confirmation page renders showing case details, a "Preview Report" link, and the **evaluation scorecard**:
-   - **Green badge** — "Evaluation: PASSED" with team scores (e.g., "UPL 10/10, Psych 9/10")
-   - **Red banner** — "UPL GATE FAILED — Review evaluation below before delivering" with specific failed criteria
-   - **Yellow badge** — "Evaluation pending" (eval hasn't completed yet)
+   - **Green badge**, "Evaluation: PASSED" with team scores (e.g., "UPL 10/10, Psych 9/10")
+   - **Red banner**, "UPL GATE FAILED, Review evaluation below before delivering" with specific failed criteria
+   - **Yellow badge**, "Evaluation pending" (eval hasn't completed yet)
    - Collapsible details section with criterion-by-criterion results
 3. Operator can preview the report, review the eval scorecard, then clicks "Confirm Delivery".
 4. The POST handler sends the delivery email to the customer and updates the case status.
 5. Operator sees a confirmation page: "Report Delivered" with the report URL.
 
-**Note:** The evaluation scorecard is advisory — operators can still deliver even if UPL gate fails, if they believe the evaluation is wrong.
+**Note:** The evaluation scorecard is advisory, operators can still deliver even if UPL gate fails, if they believe the evaluation is wrong.
 
 ### Review Reminder (48-hour guarantee protection)
 
@@ -546,13 +546,13 @@ The reminder is sent only once per case (`review_reminder_sent` flag).
 These are sent in real time by the respective route handlers:
 
 | When | Email | Sent By | Recipient |
-|------|-------|---------|-----------|
-| Payment received | "Payment Confirmed -- Your Case Decoder is Being Prepared" | `webhooks/stripe/route.ts` | Customer |
-| Payment received | "New Order: Case Decoder -- $197" | `webhooks/stripe/route.ts` | Operator |
+|------|-------|---------|---------, |
+| Payment received | "Payment Confirmed, Your Case Decoder is Being Prepared" | `webhooks/stripe/route.ts` | Customer |
+| Payment received | "New Order: Case Decoder, $197" | `webhooks/stripe/route.ts` | Operator |
 | No intake at payment | "Complete Your Case Details to Start Your Report" | `webhooks/stripe/route.ts` | Customer |
 | Intake submitted | "We Received Your Case Details, [Name]" | `intake/route.ts` | Customer |
-| Intake submitted | "New Intake: [charge] -- [name]" | `intake/route.ts` | Operator |
-| Report generated | "Review Report: [charge] -- [name]" | `generate-report/index.ts` | Operator |
+| Intake submitted | "New Intake: [charge], [name]" | `intake/route.ts` | Operator |
+| Report generated | "Review Report: [charge], [name]" | `generate-report/index.ts` | Operator |
 | Report delivered | "Your Case Decoder Report is Ready" | `deliver/route.ts` | Customer |
 
 ### Post-Purchase Drip Sequence (Sent by Cron)
@@ -560,9 +560,9 @@ These are sent in real time by the respective route handlers:
 The Case Decoder tier has four post-purchase emails defined in `POST_PURCHASE_EMAILS`:
 
 | Key | Delay | Relative To | Subject | Purpose |
-|-----|-------|------------|---------|---------|
+|---, |-------|------------|---------|---------|
 | `post_case_decoder_delivery` | Day 0 | Purchase | "Your Attorney Meeting Prep Kit is ready" | Skipped by cron (day-0 emails handled by delivery endpoint) |
-| `post_case_decoder_story_harvest` | Day 5 | **Delivery** | "You met with your attorney -- what was the first question they stopped to think about?" | Collect customer stories for social proof |
+| `post_case_decoder_story_harvest` | Day 5 | **Delivery** | "You met with your attorney, what was the first question they stopped to think about?" | Collect customer stories for social proof |
 | `post_case_decoder_upsell` | Day 7 | Purchase | "Ready to go deeper?" | Upsell to Intelligence Brief ($997, $800 after credit) |
 
 **Key design decisions:**
@@ -609,7 +609,7 @@ Separate from the post-purchase flow, free subscribers receive a 6-email nurture
 1. Sets `case.status = "generation-failed"`.
 2. Emails operator with the case details, minutes stuck, and a curl retry command.
 
-**Why 30 minutes for cron?** The worker checks every 5 minutes. If a case is still "generating" after 30 minutes, both the Edge Function and several worker cycles have failed — something is genuinely wrong.
+**Why 30 minutes for cron?** The worker checks every 5 minutes. If a case is still "generating" after 30 minutes, both the Edge Function and several worker cycles have failed, something is genuinely wrong.
 
 ### Stuck in "intake" (Generation Never Triggered)
 
@@ -626,9 +626,9 @@ Separate from the post-purchase flow, free subscribers receive a 6-email nurture
 
 ### Email Delivery Failure
 
-**Pattern (webhook):** `sendEmailWithRetry()` -- send once, wait 2s, retry once. If both fail, email operator for manual send. Never crash.
+**Pattern (webhook):** `sendEmailWithRetry()`, send once, wait 2s, retry once. If both fail, email operator for manual send. Never crash.
 
-**Pattern (deliver):** Send delivery email, retry with simplified HTML on failure, alert operator with report URL if both fail. Case is marked `"delivered"` regardless -- the report URL works even without the email, and the operator can share it manually.
+**Pattern (deliver):** Send delivery email, retry with simplified HTML on failure, alert operator with report URL if both fail. Case is marked `"delivered"` regardless, the report URL works even without the email, and the operator can share it manually.
 
 ### Order Insert Failure (Critical)
 
@@ -674,7 +674,7 @@ This returns 200 to Stripe, which stops further retries. No duplicate order or c
 
 **Solution:** Two-layer protection in `src/app/api/generate/case-decoder/route.ts`:
 
-**Layer 1 -- Idempotency check (read):**
+**Layer 1, Idempotency check (read):**
 ```typescript
 if (!force && ["generating", "review", "delivered"].includes(caseData.status)) {
   return { skipped: true, message: "Report already [status]" };
@@ -682,7 +682,7 @@ if (!force && ["generating", "review", "delivered"].includes(caseData.status)) {
 ```
 This catches the common case where generation has already started or completed.
 
-**Layer 2 -- Atomic guard (write):**
+**Layer 2, Atomic guard (write):**
 ```typescript
 const { data: guardData } = await supabase
   .from("cases")
@@ -723,7 +723,7 @@ The delivery endpoint uses an upsert with `onConflict: "subscriber_id,email_key"
 ## Files Reference
 
 | File | Role in Pipeline |
-|------|-----------------|
+|------|---------------, |
 | `src/app/api/checkout/route.ts` | Creates Stripe Checkout session with metadata |
 | `src/app/api/webhooks/stripe/route.ts` | Order + case creation, intake linking, generation trigger (Path A), payment emails |
 | `src/app/api/intake/route.ts` | Intake form submission, pending case detection, generation trigger (Path B) |

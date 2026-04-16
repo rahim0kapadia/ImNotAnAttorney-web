@@ -1,4 +1,4 @@
-# Pages & Routes — src/app/
+# Pages & Routes, src/app/
 
 > Next.js App Router: 58 pages and 80 API routes. All routes are server components by default; client components marked `"use client"`.
 
@@ -25,7 +25,7 @@
 | `/dui-checklist` | `dui-checklist/page.tsx` | Ungated DUI first-72-hours checklist |
 | `/sample` | `sample/page.tsx` | Sample Case Decoder report preview |
 | `/sample-xray` | `sample-xray/page.tsx` | Sample X-Ray discovery report preview |
-| `/start` | `start/page.tsx` | Entry router — charge-type selector → tier |
+| `/start` | `start/page.tsx` | Entry router, charge-type selector → tier |
 | `/family` | `family/page.tsx` | Family/loved-one landing page |
 | `/partners` | `partners/page.tsx` | Partner program overview |
 | `/partners/bondsman` | `partners/bondsman/page.tsx` | Bondsman referral landing page |
@@ -41,17 +41,17 @@
 | `/similar-cases-analyzer` | `similar-cases-analyzer/page.tsx` | Similar cases analyzer product page |
 | `/services` | `services/page.tsx` | Services overview/listing page |
 
-### Standalone Products (catalog: `src/lib/products.ts` — 54 products, 44 active: 32 paid $97–$497, 12 free)
+### Standalone Products (catalog: `src/lib/products.ts`, 54 products, 44 active: 32 paid $97–$497, 12 free)
 | Route | File | Purpose |
 |-------|------|---------|
 | `/tools/[slug]` | `tools/[slug]/page.tsx` | Free calculator wizard (Good Time Credit live; SOL and Diversion draft) |
 | `/tools/[slug]/results/[token]` | `tools/[slug]/results/[token]/page.tsx` | Saved calculator results, shareable link (noindex) |
 | `/guides/[slug]` | `guides/[slug]/page.tsx` | Free content guides (First Court Appearance, Family Action Plan, Arraignment Protocol) |
-| `/services/[slug]` | `services/[slug]/page.tsx` | Landing page for paid research products — 26 PRODUCT_COPY entries (employment-impact $197, judge-profile $497, motion-opportunity-scan $497, collateral-consequences $147, license-risk $297, security-clearance $147, + 8 Wave 1 $97 DUI/evidence products + 6 Wave 4 Reddit net-new products). Dynamic route — PRODUCT_COPY map keyed by slug. |
-| `/intake/standalone/[slug]` | `intake/standalone/[slug]/page.tsx` | Token-gated intake form for research products. `IntakeFormClient.tsx` has a FIELD_SETS registry with 26 per-slug field configurations — data-driven form, zero code per new product. |
+| `/services/[slug]` | `services/[slug]/page.tsx` | Landing page for paid research products, 26 PRODUCT_COPY entries (employment-impact $197, judge-profile $497, motion-opportunity-scan $497, collateral-consequences $147, license-risk $297, security-clearance $147, + 8 Wave 1 $97 DUI/evidence products + 6 Wave 4 Reddit net-new products). Dynamic route, PRODUCT_COPY map keyed by slug. |
+| `/intake/standalone/[slug]` | `intake/standalone/[slug]/page.tsx` | Token-gated intake form for research products. `IntakeFormClient.tsx` has a FIELD_SETS registry with 26 per-slug field configurations, data-driven form, zero code per new product. |
 | `/report/standalone/[token]` | `report/standalone/[token]/page.tsx` | Report viewer (Storage-backed, sanitized HTML, noindex) |
 
-**Product stamping sprint (2026-04-08):** 18 new research products + 5 updated existing products added in a single session. Non-destructive architecture — IntakeFormClient.tsx was already generalized from hardcoded employment-impact fields to a data-driven FIELD_SETS registry in the prior court case port session, so Wave 1-4 stamping was pure data additions across 6 files (products.ts, IntakeFormClient.tsx, services/[slug]/page.tsx, generate-standalone/index.ts, intake/standalone/[slug]/route.ts, qa-checkout/route.ts). Zero breaking changes to Employment Impact live flow. See `docs/handoff/2026-04-08-product-stamping-waves-1-4.md` in the ImNotAnAttorney business repo for the per-product breakdown.
+**Product stamping sprint (2026-04-08):** 18 new research products + 5 updated existing products added in a single session. Non-destructive architecture, IntakeFormClient.tsx was already generalized from hardcoded employment-impact fields to a data-driven FIELD_SETS registry in the prior court case port session, so Wave 1-4 stamping was pure data additions across 6 files (products.ts, IntakeFormClient.tsx, services/[slug]/page.tsx, generate-standalone/index.ts, intake/standalone/[slug]/route.ts, qa-checkout/route.ts). Zero breaking changes to Employment Impact live flow. See `docs/handoff/2026-04-08-product-stamping-waves-1-4.md` in the ImNotAnAttorney business repo for the per-product breakdown.
 
 ### Auth & Checkout
 | Route | File | Purpose |
@@ -89,39 +89,39 @@
 
 ### Checkout & Payments (3 routes)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | POST | `/api/checkout` | Create Stripe session; uses `tiers.ts` + dual-mode live flag |
 | POST | `/api/checkout/verify` | Verify session + webhook idempotency |
 | GET | `/api/qa-checkout` | Operator-only $0 webhook trigger for E2E testing |
 
-#### Checkout Flow — 10 Steps
+#### Checkout Flow, 10 Steps
 
 Source: `src/app/api/checkout/route.ts`. Runs in order; any step can 4xx out before Stripe is touched.
 
 | Step | Action | Details |
-|------|--------|---------|
-| 1 | Rate limit | `checkRateLimit(adminClient, "checkout:${ip}", 10, 300)` — 10 requests per 300 seconds per IP. Returns 429 if exceeded |
-| 2 | Tier validation | Reject unknown tier slugs against `TIERS` config — 400 |
-| 3 | Email validation | Regex + normalize (lowercase + trim via `normalizeEmail`) — 400 on invalid format |
-| 4 | Email capture | Upsert to `subscribers` with `source="checkout"` — powers abandonment recovery (cron Part 11) |
+|------|------, |---------|
+| 1 | Rate limit | `checkRateLimit(adminClient, "checkout:${ip}", 10, 300)`, 10 requests per 300 seconds per IP. Returns 429 if exceeded |
+| 2 | Tier validation | Reject unknown tier slugs against `TIERS` config, 400 |
+| 3 | Email validation | Regex + normalize (lowercase + trim via `normalizeEmail`), 400 on invalid format |
+| 4 | Email capture | Upsert to `subscribers` with `source="checkout"`, powers abandonment recovery (cron Part 11) |
 | 5 | Charge type auto-detect | Lookup most recent intake for this email if `chargeType` not provided in request body |
 | 6 | Refund check | Block if a prior refunded order exists for this email (fraud prevention) |
-| 7 | Prerequisite gate | Situation Room requires a prior delivered War Room case (soft gate — returns specific error) |
+| 7 | Prerequisite gate | Situation Room requires a prior delivered War Room case (soft gate, returns specific error) |
 | 8 | Consent validation | Non-digital tiers require `consent=true`; $2,497+ (X-Ray and up) have a stricter consent check |
-| 9 | Case number lookup | Cross-email identity matching — if `court_case_number` matches a prior case under ANY email, link the new case for returning customers |
+| 9 | Case number lookup | Cross-email identity matching, if `court_case_number` matches a prior case under ANY email, link the new case for returning customers |
 | 10 | Upgrade credit | 100% credit from lower service tiers (12-month expiry), 30-day expiry for playbook→CD. Create a Stripe coupon on the fly and attach to the session |
 
 **Checkout Success OTO (One-Time Offer) system:**
-- 24-hour countdown timer — stored in `localStorage` + server session
+- 24-hour countdown timer, stored in `localStorage` + server session
 - Per-tier upgrade offers with credit pre-calculated (`upgradeCostBetween` from `tiers.ts`)
-- Tier-specific next steps via `TIER_NEXT_STEPS` config — tells the customer what to expect and when
+- Tier-specific next steps via `TIER_NEXT_STEPS` config, tells the customer what to expect and when
 - Lives at `/checkout/success` page; server component loads the order + tier + computes upgrade options in a single pass
 
-**Dual-mode Stripe keys:** Checkout picks `STRIPE_SECRET_KEY` vs `STRIPE_SECRET_KEY_LIVE` based on the tier's `live: true` flag. If a tier has `live: true` but `STRIPE_SECRET_KEY_LIVE` is missing, checkout crashes at runtime — keep both in sync.
+**Dual-mode Stripe keys:** Checkout picks `STRIPE_SECRET_KEY` vs `STRIPE_SECRET_KEY_LIVE` based on the tier's `live: true` flag. If a tier has `live: true` but `STRIPE_SECRET_KEY_LIVE` is missing, checkout crashes at runtime, keep both in sync.
 
 ### Webhooks (4 routes)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | POST | `/api/webhooks/stripe` | Order + refund processing; creates `orders` + `cases` rows |
 | POST | `/api/webhooks/resend` | Delivery tracking + bounce handling |
 | POST | `/api/webhooks/resend-inbound` | Email reply parsing → operator inbox |
@@ -129,35 +129,35 @@ Source: `src/app/api/checkout/route.ts`. Runs in order; any step can 4xx out bef
 
 #### Stripe Webhook Handler Flow
 
-Source: `src/app/api/webhooks/stripe/route.ts`. Handles 4 Stripe event types. Dual-mode signature verification tries `STRIPE_WEBHOOK_SECRET` (test) first, then `STRIPE_WEBHOOK_SECRET_LIVE`. Whichever verifies wins — supports gradual go-live where some tiers are live and others are test.
+Source: `src/app/api/webhooks/stripe/route.ts`. Handles 4 Stripe event types. Dual-mode signature verification tries `STRIPE_WEBHOOK_SECRET` (test) first, then `STRIPE_WEBHOOK_SECRET_LIVE`. Whichever verifies wins, supports gradual go-live where some tiers are live and others are test.
 
 **Event 1: `checkout.session.completed`** (customer just paid):
-1. **Extract metadata** — tier, email (normalized via `normalizeEmail`), amount, product_type, priority_delivery, court_date, consent_timestamp, upgrade_credit_applied, existing_case_number/state.
-2. **Create order** — insert row with unique constraint on `stripe_session_id`. Postgres error code `23505` (unique violation) returns 200 idempotently — Stripe retries up to 3 times over 72 hours on non-2xx.
-3. **Digital product path** (early return) — generate `download_token` (UUID) + 72h expiry → send playbook delivery email → show upgrade credit toward CD → operator notification → RETURN. Does not create a case row.
-4. **Service tier path** — create case → link intake if one exists for that email → loop `tierConfig.includesTiers` to create additional cases with `is_included_deliverable=true` + `parent_order_id` → trigger generation via `after()` (runs post-response, GC-safe on Vercel) → status-appropriate customer emails.
+1. **Extract metadata**, tier, email (normalized via `normalizeEmail`), amount, product_type, priority_delivery, court_date, consent_timestamp, upgrade_credit_applied, existing_case_number/state.
+2. **Create order**, insert row with unique constraint on `stripe_session_id`. Postgres error code `23505` (unique violation) returns 200 idempotently, Stripe retries up to 3 times over 72 hours on non-2xx.
+3. **Digital product path** (early return), generate `download_token` (UUID) + 72h expiry → send playbook delivery email → show upgrade credit toward CD → operator notification → RETURN. Does not create a case row.
+4. **Service tier path**, create case → link intake if one exists for that email → loop `tierConfig.includesTiers` to create additional cases with `is_included_deliverable=true` + `parent_order_id` → trigger generation via `after()` (runs post-response, GC-safe on Vercel) → status-appropriate customer emails.
 
 Status assignments on the new case:
-- `"intake"` — intake exists + non-discovery tier → ready for generation
-- `"awaiting-intake"` — no intake found → email customer to fill intake form
-- `"pending"` — intake exists + discovery tier → waiting for document upload
+- `"intake"`, intake exists + non-discovery tier → ready for generation
+- `"awaiting-intake"`, no intake found → email customer to fill intake form
+- `"pending"`, intake exists + discovery tier → waiting for document upload
 
 **Event 2: `charge.refunded`** (full or partial refund):
-1. **Full refund path** — order status → `"refunded"`, case status → `"refunded"`, `refunded_at = now()`, report access revoked (download token lookup returns 403).
-2. **Partial refund path** — order stays `"paid"`, only `refunded_at` timestamp logged for audit trail.
-3. **Commission reversal** — zero out referral commission + decrement partner totals.
-4. **Standalone report fields cleared** — `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at` all set to NULL on refund.
-5. **Operator notification** — email with refund amount + reason.
+1. **Full refund path**, order status → `"refunded"`, case status → `"refunded"`, `refunded_at = now()`, report access revoked (download token lookup returns 403).
+2. **Partial refund path**, order stays `"paid"`, only `refunded_at` timestamp logged for audit trail.
+3. **Commission reversal**, zero out referral commission + decrement partner totals.
+4. **Standalone report fields cleared**, `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at` all set to NULL on refund.
+5. **Operator notification**, email with refund amount + reason.
 
-**Event 3: `charge.refund.updated`** — refund bounce detection. Alerts operator when refund fails or requires action.
+**Event 3: `charge.refund.updated`**, refund bounce detection. Alerts operator when refund fails or requires action.
 
-**Event 4: `invoice.payment_failed`** — installment payment failure. Alerts operator when a subscription invoice fails (e.g., second installment on deferred payment plans).
+**Event 4: `invoice.payment_failed`**, installment payment failure. Alerts operator when a subscription invoice fails (e.g., second installment on deferred payment plans).
 
 Email normalization is critical: all customer emails lowercased + trimmed before storage/lookup, so cross-email identity matching (upgrade credits, case number lookups) works regardless of how the customer capitalized their address at each touchpoint.
 
 ### Customer Auth (5 routes)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | POST | `/api/customer/magic-link` | Send magic link email |
 | POST | `/api/customer/magic-link/verify` | Exchange token for session cookie |
 | POST | `/api/customer/logout` | Clear session cookie |
@@ -165,7 +165,7 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 
 ### Intake & Case Management (4 routes)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | POST | `/api/intake` | Submit intake → create processing jobs |
 | POST | `/api/intake/intelligence-brief` | IB-specific intake (Phase 2) |
 | POST | `/api/upload` | Begin multipart document upload |
@@ -175,7 +175,7 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 
 ### Report Generation & Delivery (6 routes)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | POST | `/api/generate/case-decoder` | Trigger Case Decoder Edge Function |
 | POST | `/api/generate/intelligence-brief/*` | Trigger IB phases (5 parallel + 4 sequential) |
 | POST | `/api/generate/intelligence-brief/judge-research` | Targeted judge research sub-phase |
@@ -186,31 +186,31 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 
 ### Tier 9 Availability Gate (1 route)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | POST | `/api/check-availability/[slug]` | Pre-purchase data check for Tier 9 SKUs (judge-report-card, officer-background-check, similar-cases-analyzer). Returns coverage counts + availability boolean. Waitlist capture when `waitlist: true` + `email` in body → `data_waitlist` upsert + Telegram alert. Rate limited: 10/min per IP. |
 
 ### Standalone Product Routes (calculators, intake, tools)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | POST | `/api/intake/standalone/[slug]` | Token-auth intake submission; validates allowlists, sanitizes, fires Edge Function |
 | POST | `/api/tools/save-results` | Save calculator results with email for shareable link |
 | GET | `/api/tools/[slug]` | Dynamic calculator compute endpoint |
 
 ### Scoring & Free Tools (3 routes)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | GET/POST | `/api/score` | Fetch score by token (GET) + submit quiz responses (POST) |
 | POST | `/api/score/share` | Social share lead capture |
 | GET | `/api/stats/score-summary` | Aggregate score stats (ISR 5min) |
 
-### Cron Tasks (12 routes — see lib/CONTEXT.md for task list)
-All cron routes: `GET /api/cron/*` — authenticated via `CRON_AUTH_TOKEN` header.
-Main orchestrator: `/api/cron/drip` — runs all 22 tasks sequentially.
+### Cron Tasks (12 routes, see lib/CONTEXT.md for task list)
+All cron routes: `GET /api/cron/*`, authenticated via `CRON_AUTH_TOKEN` header.
+Main orchestrator: `/api/cron/drip`, runs all 22 tasks sequentially.
 Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blog-generate-queue`, `blog-qa`, `blog-publish`, `reddit-monitor`, `demand-fetch`, `demand-score`, `demand-classify`, `demand-performance`, `demand-feedback-patterns`, `demand-feedback-revise`, `demand-feedback-score`.
 
 ### Admin-Only (12 routes)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | GET/POST | `/api/admin/demand/scores` | Demand score read + regenerate |
 | GET/POST | `/api/admin/demand/gaps` | Content gap CRUD |
 | GET/POST | `/api/admin/demand/emerging` | Emerging topic tracker |
@@ -226,7 +226,7 @@ Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blo
 
 ### Operator Dashboard (7 routes)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | GET/POST | `/api/operator/cases` | Case list + case CRUD |
 | GET | `/api/operator/cases/[id]` | Single case detail |
 | PATCH | `/api/operator/cases/[id]/status` | Case status transition (state machine) |
@@ -237,7 +237,7 @@ Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blo
 
 ### Partner Portal (6 routes)
 | Method | Route | Purpose |
-|--------|-------|---------|
+|------, |-------|---------|
 | POST | `/api/partner/magic-link` | Send partner login magic link |
 | POST | `/api/partner/magic-link/verify` | Exchange token for partner session |
 | POST | `/api/partner/logout` | Clear partner session cookie |
@@ -246,14 +246,14 @@ Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blo
 | POST | `/api/partners/apply` | Referral program application (public) |
 
 ### Charge Taxonomy (3 routes)
-`GET /api/charge-taxonomy/{categories,charges,questions}` — serves `charge-taxonomy.ts` data.
+`GET /api/charge-taxonomy/{categories,charges,questions}`, serves `charge-taxonomy.ts` data.
 
 ### Miscellaneous (5 routes)
 `POST /api/subscribe`, `POST /api/unsubscribe`, `POST /api/indexnow`, `GET /api/health`.
 
 ## Auth Middleware
 
-`src/middleware.ts` — Edge middleware runs on every request:
+`src/middleware.ts`, Edge middleware runs on every request:
 - Injects CSP nonce
 - Checks `customer_session` cookie for protected routes (`/my-case`, `/my-cases`, `/report`)
 - Checks `operator_session` cookie for admin routes (`/operator`, `/admin`)
@@ -266,7 +266,7 @@ Source: `src/middleware.ts` (CSP, per-request nonce) + `next.config.ts` (static 
 **Content-Security-Policy** (set on both request and response headers for Next.js SSR nonce parsing):
 
 | Directive | Value |
-|-----------|-------|
+|---------, |-------|
 | `default-src` | `'self'` |
 | `script-src` | `'self' 'nonce-${nonce}' 'strict-dynamic' https://js.stripe.com https://vercel.live` |
 | `style-src` | `'self' 'unsafe-inline'` (required by Tailwind + inline email styles) |
@@ -285,31 +285,31 @@ The per-request nonce is base64-encoded `crypto.randomUUID()`, written to the `x
 **Static security headers** (applied to ALL routes via `next.config.ts` `headers()`):
 
 | Header | Value | Purpose |
-|--------|-------|---------|
-| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` | HSTS for 2 years with preload list opt-in — browsers will never make an HTTP request after first visit |
+|------, |-------|---------|
+| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` | HSTS for 2 years with preload list opt-in, browsers will never make an HTTP request after first visit |
 | `X-Content-Type-Options` | `nosniff` | Block MIME sniffing, mitigates drive-by download attacks |
 | `X-Frame-Options` | `DENY` | Block iframe embedding anywhere (clickjacking protection) |
-| `Referrer-Policy` | `strict-origin-when-cross-origin` | Full URL on same-origin, origin-only on cross-origin — prevents leaking `/report/{token}` paths |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` | Full URL on same-origin, origin-only on cross-origin, prevents leaking `/report/{token}` paths |
 | `Permissions-Policy` | feature disables | Disables browser features not used by the app |
 
 ## Data Flow
 
 ```mermaid
 graph TD
-    Browser[Browser / External] --> MW[middleware.ts — Edge]
-    MW -->|CSP nonce + auth check| Router[App Router]
-    Router --> Pages[55 Pages]
-    Router --> API[71 API Routes]
-    Router --> Special[sitemap.ts / robots.ts / OG images]
+    Browser[Browser / External],> MW[middleware.ts, Edge]
+    MW,>|CSP nonce + auth check| Router[App Router]
+    Router,> Pages[55 Pages]
+    Router,> API[71 API Routes]
+    Router,> Special[sitemap.ts / robots.ts / OG images]
     
-    API --> Guards[auth/guards.ts]
-    Guards --> Lib[src/lib/ — Business Logic]
-    Lib --> Supa[Supabase DB]
-    Lib --> Edge[Edge Functions]
-    Lib --> Ext[Stripe / Resend / Claude API]
+    API,> Guards[auth/guards.ts]
+    Guards,> Lib[src/lib/, Business Logic]
+    Lib,> Supa[Supabase DB]
+    Lib,> Edge[Edge Functions]
+    Lib,> Ext[Stripe / Resend / Claude API]
     
-    Pages --> Components[src/components/]
-    Pages --> Lib
+    Pages,> Components[src/components/]
+    Pages,> Lib
 ```
 
 **Middleware auth matrix:**
@@ -324,7 +324,7 @@ graph TD
 ## Key Constants
 
 | Constant | Value | File:Line |
-|----------|-------|-----------|
+|----------|-------|---------, |
 | `TIER_CORE` | 14 tiers (pricing + Stripe IDs) | `src/lib/tiers.ts:30-256` |
 | `PLAYBOOK_CONFIGS` | 8 charge-type sales pages | `src/lib/playbook-configs.ts` |
 | `SITE_URL` | `https://imnotanattorney.com` | `src/lib/site.ts:48-49` |
@@ -347,27 +347,27 @@ graph TD
 ## Integration Points
 
 **Imports from lib (highest traffic):**
-- `@/lib/tiers` — TIER_CORE, upgradePrice (homepage, checkout, services, about)
-- `@/lib/site` — SITE_URL, signOperatorToken, normalizeEmail (all email routes, schema generation)
-- `@/lib/supabase/admin` — createAdminClient() (all API routes touching DB)
-- `@/lib/email` — sendEmail(), escapeHtml (webhooks, cron, delivery)
-- `@/lib/stripe` — stripeForTier() (checkout, webhooks)
-- `@/lib/auth/guards` — requireAdmin(), requireCron(), requireCustomerAuth() (all protected routes)
-- `@/lib/schema` — JSON-LD generators (pages with structured data)
-- `@/lib/blog` — getAllPosts(), getPostBySlug() (blog pages, sitemap)
-- `@/lib/playbook-configs` — allPlaybookSlugs(), PLAYBOOK_CONFIGS (playbook pages, sitemap)
+- `@/lib/tiers`, TIER_CORE, upgradePrice (homepage, checkout, services, about)
+- `@/lib/site`, SITE_URL, signOperatorToken, normalizeEmail (all email routes, schema generation)
+- `@/lib/supabase/admin`, createAdminClient() (all API routes touching DB)
+- `@/lib/email`, sendEmail(), escapeHtml (webhooks, cron, delivery)
+- `@/lib/stripe`, stripeForTier() (checkout, webhooks)
+- `@/lib/auth/guards`, requireAdmin(), requireCron(), requireCustomerAuth() (all protected routes)
+- `@/lib/schema`, JSON-LD generators (pages with structured data)
+- `@/lib/blog`, getAllPosts(), getPostBySlug() (blog pages, sitemap)
+- `@/lib/playbook-configs`, allPlaybookSlugs(), PLAYBOOK_CONFIGS (playbook pages, sitemap)
 
 **Imports from components (highest traffic):**
 - Header, Footer (root layout)
 - HomepageHero, ChargeTypeSelector, PricingTable, TrustBadges, TestimonialSection (homepage)
 - LeadCapture, BlogCTA, BlogCard (blog pages)
 - AdminNav, StatusBadge (operator/admin pages)
-- motion/* (FadeInUp, StaggerContainer — used across pages)
+- motion/* (FadeInUp, StaggerContainer, used across pages)
 
 **Shared state:**
-- `customer-session` cookie — set by customer auth, read by middleware + route handlers
-- `partner-session` cookie — set by partner auth, read by middleware + route handlers
-- CSP nonce — generated in middleware, read in layout.tsx via `headers()`
+- `customer-session` cookie, set by customer auth, read by middleware + route handlers
+- `partner-session` cookie, set by partner auth, read by middleware + route handlers
+- CSP nonce, generated in middleware, read in layout.tsx via `headers()`
 
 **Edge Functions called from API routes:**
 - `generate-report` ← `/api/generate/case-decoder` (fire-and-forget POST)
@@ -389,12 +389,12 @@ graph TD
 
 7. **OG images use Edge runtime.** Cannot import external images or fonts. Use inline data URLs or hardcoded font files.
 
-## Operator Case Detail — 8 Tabs
+## Operator Case Detail, 8 Tabs
 
 `/operator/cases/[id]` runs 13 parallel Supabase queries on mount and surfaces the result through 8 tabs. Header above the tabs shows email, tier, status, phase, dates, order info, intake summary, operator notes, and the report link.
 
 | Tab | Contents |
-|-----|----------|
+|---, |----------|
 | Overview | MetricCards: discovery health, documents, findings, witnesses, evidence, custody, timeline, citations |
 | Documents | Table: name, type, category, size, pages, status, upload date |
 | Findings | Grouped by severity (critical / major / minor / info) with verification status |
@@ -404,13 +404,13 @@ graph TD
 | Timeline | Reconstructed events summary |
 | Legal | Citations table (binding / good law) + Motions table (strategic scores) |
 
-Auth is handled by `OperatorShell` component wrapping all operator pages — password in `sessionStorage` (key `admin-password`), verified via `X-Admin-Password` header against `isOperatorAuthorized()` in `src/lib/operator-auth.ts` using timing-safe compare. Sidebar keyboard shortcuts: H (Dashboard), C (Cases), J (Jobs), M (Metrics).
+Auth is handled by `OperatorShell` component wrapping all operator pages, password in `sessionStorage` (key `admin-password`), verified via `X-Admin-Password` header against `isOperatorAuthorized()` in `src/lib/operator-auth.ts` using timing-safe compare. Sidebar keyboard shortcuts: H (Dashboard), C (Cases), J (Jobs), M (Metrics).
 
-## My-Case Portal — Tier-Gated Architecture
+## My-Case Portal, Tier-Gated Architecture
 
-Token-based customer portal at `/my-case` (single case) and `/my-cases` (all cases for authenticated user). No login required for magic-link flow — unguessable UUID token with 12-month expiry. The dashboard surface is tier-gated: each tier unlocks more data panels from the same ~10 parallel Supabase queries (discovery_documents, case_findings, evidence_items, evidence_custody, timeline_events, case_witnesses, case_law_references, motion_recommendations, trial_materials, processing_jobs).
+Token-based customer portal at `/my-case` (single case) and `/my-cases` (all cases for authenticated user). No login required for magic-link flow, unguessable UUID token with 12-month expiry. The dashboard surface is tier-gated: each tier unlocks more data panels from the same ~10 parallel Supabase queries (discovery_documents, case_findings, evidence_items, evidence_custody, timeline_events, case_witnesses, case_law_references, motion_recommendations, trial_materials, processing_jobs).
 
-**Non-Discovery Tiers (Case Decoder $197, Intelligence Brief $997):** Simple progress stepper — Purchased → Generating → Under Review → Delivered — plus the report link once delivered.
+**Non-Discovery Tiers (Case Decoder $197, Intelligence Brief $997):** Simple progress stepper, Purchased → Generating → Under Review → Delivered, plus the report link once delivered.
 
 **X-Ray ($2,497):** Full discovery dashboard:
 - Discovery Strength Rating (0-100)

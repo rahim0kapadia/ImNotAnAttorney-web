@@ -2,7 +2,7 @@
  * BJS Felony Sentences in State Courts → outcome_benchmarks
  *
  * Reads CSV from data/bulk-verify/external-intel/bjs-felony.csv
- * (download from https://bjs.ojp.gov/topics/courts — Felony Sentences in State Courts)
+ * (download from https://bjs.ojp.gov/topics/courts, Felony Sentences in State Courts)
  *
  * Aggregates by (jurisdiction_level, jurisdiction_name, offense_type) and computes:
  *   - conviction_rate, acquittal_rate, dismissal_rate
@@ -76,11 +76,11 @@ function loadEnv() {
 }
 loadEnv();
 
-// ── Helpers — NO REGEX (hook enforced) ──────────────────────────────────────
+// ── Helpers, NO REGEX (hook enforced) ──────────────────────────────────────
 
 /**
  * Normalize a string: lowercase, keep a-z, 0-9, and space only.
- * Char-code loop — no regex on file contents.
+ * Char-code loop, no regex on file contents.
  */
 function normalize(name) {
   if (!name) return "";
@@ -112,7 +112,7 @@ function normalize(name) {
   return result.slice(start, end + 1).join("");
 }
 
-/** SQL escape — single-quote doubling, no regex. */
+/** SQL escape, single-quote doubling, no regex. */
 function esc(str) {
   if (str === null || str === undefined) return "NULL";
   const s = String(str);
@@ -153,7 +153,7 @@ function mean(arr) {
 
 /**
  * Find a column value by trying multiple possible header names.
- * BJS CSV schema varies by dataset year — this handles all known variants.
+ * BJS CSV schema varies by dataset year, this handles all known variants.
  * Returns the first non-empty match, or null.
  */
 function col(row, candidates) {
@@ -161,7 +161,7 @@ function col(row, candidates) {
     const key = candidates[i];
     if (row[key] !== undefined && row[key] !== null) {
       const trimmed = String(row[key]).trim();
-      if (trimmed !== "" && trimmed !== "." && trimmed !== "N/A" && trimmed !== "—") {
+      if (trimmed !== "" && trimmed !== "." && trimmed !== "N/A" && trimmed !== ", ") {
         return trimmed;
       }
     }
@@ -185,7 +185,7 @@ function parseRate(raw) {
   }
   const n = parseFloat(numStr);
   if (isNaN(n)) return null;
-  // If value > 1.0 it is a percentage (0-100 scale) — normalize to 0-1
+  // If value > 1.0 it is a percentage (0-100 scale), normalize to 0-1
   if (n > 1.0) return n / 100;
   return n;
 }
@@ -210,7 +210,7 @@ function parseCount(raw) {
 }
 
 /**
- * Parse sentence months. BJS sometimes uses years — detect and convert.
+ * Parse sentence months. BJS sometimes uses years, detect and convert.
  * Returns numeric months or null.
  */
 function parseSentenceMonths(raw, columnName) {
@@ -245,7 +245,7 @@ function parseSentenceMonths(raw, columnName) {
 /**
  * Given a row object from csv-parse, attempt to identify which CSV column maps
  * to which logical BJS field. Returns a field-map object.
- * Uses char-code comparisons to find substring matches — no regex.
+ * Uses char-code comparisons to find substring matches, no regex.
  */
 function buildFieldMap(headers) {
   const map = {};
@@ -342,7 +342,7 @@ function buildFieldMap(headers) {
       if (!map.trial_rate) map.trial_rate = h;
     }
 
-    // Sentence columns — plea
+    // Sentence columns, plea
     if (
       lh === "mean sentence length (months) plea" || lh === "plea_avg_sentence" ||
       lh === "mean sentence plea" || lh === "average sentence plea" ||
@@ -352,7 +352,7 @@ function buildFieldMap(headers) {
       if (!map.plea_sentence) map.plea_sentence = h;
     }
 
-    // Sentence columns — trial
+    // Sentence columns, trial
     if (
       lh === "mean sentence length (months) trial" || lh === "trial_avg_sentence" ||
       lh === "mean sentence trial" || lh === "average sentence trial" ||
@@ -457,7 +457,7 @@ async function main() {
   }
 
   if (rows.length === 0) {
-    console.error("CSV is empty — nothing to process.");
+    console.error("CSV is empty, nothing to process.");
     process.exit(1);
   }
 
@@ -506,7 +506,7 @@ async function main() {
     let jurisdictionName;
 
     if (!jurisdictionRaw) {
-      // No jurisdiction column — treat entire dataset as national
+      // No jurisdiction column, treat entire dataset as national
       jurisdictionLevel = "national";
       jurisdictionName = "United States";
     } else {

@@ -9,8 +9,8 @@
 The current system has 17 charge slugs covering ~7 of the FBI's 38 NIBRS offense categories. Structural issues:
 
 1. **Lumping:** "Theft/Burglary/Robbery" treats shoplifting ($50 misdemeanor), residential burglary (felony), and armed robbery (violent felony with mandatory minimums) as the same charge. A robbery defendant gets the same expert panel as a shoplifter.
-2. **Missing categories:** Homicide, kidnapping, arson, stalking, contempt, disorderly conduct, and dozens of other charges hit "Other" — no charge-specific questions, no expert panel, generic report.
-3. **No statute-level precision:** Reports reference generic charge categories instead of the defendant's actual statute. At every tier — including Case Decoder ($197) — the report should reference the defendant's specific statute with elements and penalties. At Situation Room ($9,997), this is critical.
+2. **Missing categories:** Homicide, kidnapping, arson, stalking, contempt, disorderly conduct, and dozens of other charges hit "Other", no charge-specific questions, no expert panel, generic report.
+3. **No statute-level precision:** Reports reference generic charge categories instead of the defendant's actual statute. At every tier, including Case Decoder ($197), the report should reference the defendant's specific statute with elements and penalties. At Situation Room ($9,997), this is critical.
 4. **DUI-centric depth:** DUI has the richest charge-specific questions. Other charges were backfilled with less depth.
 5. **Missing seed data:** The `charge_types` and `experts` tables exist in the DB schema but have no seed data in the repo. The system falls back to 14 hardcoded blocks in `getChargeContextFallback()`.
 6. **Redundant questions:** The intake form asks questions the statute already answers (e.g., severity classification), wasting the defendant's time and undermining trust.
@@ -19,14 +19,14 @@ The current system has 17 charge slugs covering ~7 of the FBI's 38 NIBRS offense
 
 A three-layer charge taxonomy covering all US criminal charges across all 52 jurisdictions (50 states + DC + federal), backed by NCIC Uniform Offense Codes as the national standard, with a crisis-optimized intake UX designed for panicked defendants at 2AM.
 
-Statute data (number, elements, penalties) is always included in the charge context block sent to Claude — at every tier, not just upper tiers.
+Statute data (number, elements, penalties) is always included in the charge context block sent to Claude, at every tier, not just upper tiers.
 
 ## Expert Basis
 
 | Domain | Expert | Framework Applied |
 |---|---|---|
 | Crisis Interface UX | Vitaly Friedman (Smashing Magazine, Smart Interface Design Patterns) | 10-30s micro-steps, progressive disclosure, high-priority actions first, built-in safeguards, better defaults |
-| Defendant Decision Psychology | Dr. Vincent Covello (Center for Risk Communication) | Mental Noise Model — 80% cognitive reduction under stress, Rule of 3 (max 3 key messages per screen), 4-grade-level-down labels, first/last items stick, negative dominance |
+| Defendant Decision Psychology | Dr. Vincent Covello (Center for Risk Communication) | Mental Noise Model, 80% cognitive reduction under stress, Rule of 3 (max 3 key messages per screen), 4-grade-level-down labels, first/last items stick, negative dominance |
 | Legal Form UX | Margaret Hagan (Stanford Legal Design Lab) | Amplify legal capability, glanceable structure, off-ramps near hard questions, users scan/work in bursts/disengage when tired, visual hierarchy over text |
 | Charge Taxonomy | Paul Robinson (UPenn Law, *Mapping American Criminal Law*) + NCIC/SEARCH Group | 52 independent US criminal codes with "almost endless diversity," NCIC codes as Rosetta Stone, SEARCH Group's charge table crosswalk methodology |
 
@@ -41,7 +41,7 @@ CREATE TABLE charge_categories (
   slug text PRIMARY KEY,
   label text NOT NULL,
   description text,
-  icon_name text,                  -- Lucide icon identifier for card UI
+  icon_name text,                 , Lucide icon identifier for card UI
   sort_order integer DEFAULT 0 NOT NULL,
   active boolean DEFAULT true NOT NULL,
   created_at timestamptz DEFAULT now() NOT NULL,
@@ -73,14 +73,14 @@ The NCIC-backed charge names. ~200 rows. This is what the defendant selects in t
 ```sql
 CREATE TABLE common_charges (
   slug text PRIMARY KEY,
-  label text NOT NULL,             -- plain-language name defendant sees
+  label text NOT NULL,            , plain-language name defendant sees
   category_slug text NOT NULL REFERENCES charge_categories(slug),
-  ncic_code text,                  -- NCIC 4-digit code (internal only, never displayed)
-  description text,                -- 1-sentence plain English description
-  severity_range text,             -- "Misdemeanor to Felony" or "Felony"
+  ncic_code text,                 , NCIC 4-digit code (internal only, never displayed)
+  description text,               , 1-sentence plain English description
+  severity_range text,            , "Misdemeanor to Felony" or "Felony"
   is_federal boolean DEFAULT false,
   is_state boolean DEFAULT true,
-  legacy_slugs text[],             -- maps old ALLOWED_CHARGE_TYPES values for backward compat
+  legacy_slugs text[],            , maps old ALLOWED_CHARGE_TYPES values for backward compat
   sort_order integer DEFAULT 0 NOT NULL,
   active boolean DEFAULT true NOT NULL,
   created_at timestamptz DEFAULT now() NOT NULL,
@@ -124,17 +124,17 @@ State-specific statute mapping. One row per common_charge x jurisdiction. ~8,000
 CREATE TABLE jurisdiction_statutes (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   common_charge_slug text NOT NULL REFERENCES common_charges(slug),
-  jurisdiction text NOT NULL,      -- "FL", "CA", "TX", "DC", "federal"
-  statute_number text,             -- "784.045", "PC 245(a)(1)", "18 USC 1111"
-  statute_title text,              -- "Aggravated Battery"
-  offense_class text,              -- "2nd Degree Felony", "Class A Misdemeanor"
-  penalty_min text,                -- "0 years" or null
-  penalty_max text,                -- "15 years"
-  fine_max text,                   -- "$10,000"
-  elements text[],                 -- prosecution must prove each element
-  mandatory_minimum text,          -- null or specific (e.g., "3 years")
-  enhancements text[],             -- e.g., ["10-20-Life if weapon used", "hate crime enhancement"]
-  notes text,                      -- jurisdiction-specific nuances, wobbler status, etc.
+  jurisdiction text NOT NULL,     , "FL", "CA", "TX", "DC", "federal"
+  statute_number text,            , "784.045", "PC 245(a)(1)", "18 USC 1111"
+  statute_title text,             , "Aggravated Battery"
+  offense_class text,             , "2nd Degree Felony", "Class A Misdemeanor"
+  penalty_min text,               , "0 years" or null
+  penalty_max text,               , "15 years"
+  fine_max text,                  , "$10,000"
+  elements text[],                , prosecution must prove each element
+  mandatory_minimum text,         , null or specific (e.g., "3 years")
+  enhancements text[],            , e.g., ["10-20-Life if weapon used", "hate crime enhancement"]
+  notes text,                     , jurisdiction-specific nuances, wobbler status, etc.
   active boolean DEFAULT true NOT NULL,
   created_at timestamptz DEFAULT now() NOT NULL,
   updated_at timestamptz DEFAULT now() NOT NULL,
@@ -150,9 +150,9 @@ Replaces the hardcoded `chargeSpecificQuestions` in `src/app/intake/page.tsx`. Q
 CREATE TABLE charge_questions (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   common_charge_slug text NOT NULL REFERENCES common_charges(slug),
-  question_id text NOT NULL,       -- "selfDefense", "initiator", "bacLevel"
-  label text NOT NULL,             -- plain-language question text
-  options text[] NOT NULL,         -- always includes "Don't know" as last option
+  question_id text NOT NULL,      , "selfDefense", "initiator", "bacLevel"
+  label text NOT NULL,            , plain-language question text
+  options text[] NOT NULL,        , always includes "Don't know" as last option
   sort_order integer DEFAULT 0 NOT NULL,
   created_at timestamptz DEFAULT now() NOT NULL,
   UNIQUE(common_charge_slug, question_id)
@@ -161,17 +161,17 @@ CREATE TABLE charge_questions (
 
 ### Existing table changes
 
-**`experts`** — Add `common_charge_slugs text[]` column alongside existing `charge_types text[]` (backward compat). Expert panels link at the `common_charges` level.
+**`experts`**, Add `common_charge_slugs text[]` column alongside existing `charge_types text[]` (backward compat). Expert panels link at the `common_charges` level.
 
-**`cases`** — Add `common_charge_slug text` and `jurisdiction_statute_id uuid` columns alongside existing `charge_type text`. Existing rows keep their `charge_type` value unchanged.
+**`cases`**, Add `common_charge_slug text` and `jurisdiction_statute_id uuid` columns alongside existing `charge_type text`. Existing rows keep their `charge_type` value unchanged.
 
-**`charge_types`** — No changes. Keep as-is for backward compatibility. New system reads from new tables; old tables remain as fallback.
+**`charge_types`**, No changes. Keep as-is for backward compatibility. New system reads from new tables; old tables remain as fallback.
 
 ## Intake UX Flow
 
 One decision per screen. Card-based selectors (not dropdowns). Per Friedman/Hagan/Covello.
 
-### Screen 1: Jurisdiction (existing — keep as-is)
+### Screen 1: Jurisdiction (existing, keep as-is)
 
 ```
 Federal court  |  State or local court  |  I don't know
@@ -181,31 +181,31 @@ If state → state dropdown (pre-sorted by IP geolocation if available, otherwis
 
 Default: "State or local court" (pre-selected, ~95% of criminal cases are state per BJS data). Per Friedman: better defaults.
 
-### Screen 2: Category (NEW — replaces current charge type dropdown)
+### Screen 2: Category (NEW, replaces current charge type dropdown)
 
 Visual card grid. Max 8 visible per row (2x4 mobile, 4x3 desktop). Sorted by arrest frequency per FBI UCR data. Per Covello: first and last items stick, so most common categories go first.
 
 Each card: icon + plain-language label + one-line description. Toggle behavior (like existing ChargeTypeSelector). Per Hagan: visual hierarchy over text, glanceable structure.
 
-"Other" always last — Hagan's "off-ramp" for anyone who can't find their category.
+"Other" always last, Hagan's "off-ramp" for anyone who can't find their category.
 
 If jurisdiction is "Federal" → hide state-only categories, show federal-relevant subset.
 
-### Screen 3: Specific Charge (NEW — filtered by category + jurisdiction)
+### Screen 3: Specific Charge (NEW, filtered by category + jurisdiction)
 
 Filtered list of common charges for the selected category. When a state is selected, each entry shows the state-specific statute number for instant credibility. Max ~15 options per category.
 
 Example for Florida + Violent Crimes:
 ```
-Aggravated Assault / Battery — FL 784.045 (2nd Degree Felony)
-Simple Assault / Battery — FL 784.011 (2nd Degree Misdemeanor)
-Manslaughter — FL 782.07 (2nd Degree Felony)
-Murder (1st Degree) — FL 782.04 (Capital/Life Felony)
-Murder (2nd Degree) — FL 782.04 (1st Degree Felony)
-Robbery — FL 812.13 (2nd Degree Felony)
-Armed Robbery — FL 812.13(2) (1st Degree Felony)
-Kidnapping — FL 787.01 (1st Degree Felony)
-Aggravated Stalking — FL 784.048 (3rd Degree Felony)
+Aggravated Assault / Battery, FL 784.045 (2nd Degree Felony)
+Simple Assault / Battery, FL 784.011 (2nd Degree Misdemeanor)
+Manslaughter, FL 782.07 (2nd Degree Felony)
+Murder (1st Degree), FL 782.04 (Capital/Life Felony)
+Murder (2nd Degree), FL 782.04 (1st Degree Felony)
+Robbery, FL 812.13 (2nd Degree Felony)
+Armed Robbery, FL 812.13(2) (1st Degree Felony)
+Kidnapping, FL 787.01 (1st Degree Felony)
+Aggravated Stalking, FL 784.048 (3rd Degree Felony)
 [My charge isn't listed]
 ```
 
@@ -237,15 +237,15 @@ All 50 states + DC + federal. Complete coverage. No phasing by state.
 
 ### Pipeline
 
-1. **Define master prompt** — Takes a jurisdiction code (e.g., "FL") and the full list of ~200 common charge slugs. Returns structured JSON with statute_number, statute_title, offense_class, penalties, elements, enhancements, and notes for each charge that exists in that jurisdiction. Charges that don't exist in the jurisdiction are omitted.
+1. **Define master prompt**, Takes a jurisdiction code (e.g., "FL") and the full list of ~200 common charge slugs. Returns structured JSON with statute_number, statute_title, offense_class, penalties, elements, enhancements, and notes for each charge that exists in that jurisdiction. Charges that don't exist in the jurisdiction are omitted.
 
-2. **Submit 52 batch requests** — One per jurisdiction (50 states + DC + federal). Use the Anthropic Batch API infrastructure already built in this repo. Free with existing API access.
+2. **Submit 52 batch requests**, One per jurisdiction (50 states + DC + federal). Use the Anthropic Batch API infrastructure already built in this repo. Free with existing API access.
 
-3. **Generate charge questions** — Separate batch: for each of the ~200 common charges, generate 3-4 fact-pattern questions that the statute doesn't already answer. Reuse existing expert-grounded questions from the current `chargeSpecificQuestions` object where they map to the new common charge slugs.
+3. **Generate charge questions**, Separate batch: for each of the ~200 common charges, generate 3-4 fact-pattern questions that the statute doesn't already answer. Reuse existing expert-grounded questions from the current `chargeSpecificQuestions` object where they map to the new common charge slugs.
 
-4. **Validate output** — Automated: check all required fields populated, statute numbers match expected format patterns per state (e.g., FL uses "XXX.XX", CA uses "PC XXX", TX uses "PC XX.XX"). Manual: spot-check 5 high-volume states (CA, TX, FL, NY, IL) against official state code websites.
+4. **Validate output**, Automated: check all required fields populated, statute numbers match expected format patterns per state (e.g., FL uses "XXX.XX", CA uses "PC XXX", TX uses "PC XX.XX"). Manual: spot-check 5 high-volume states (CA, TX, FL, NY, IL) against official state code websites.
 
-5. **Insert via migration** — Write a seed migration that inserts all data. Version-controlled and reproducible.
+5. **Insert via migration**, Write a seed migration that inserts all data. Version-controlled and reproducible.
 
 ### Estimated data volume
 
@@ -292,9 +292,9 @@ CHARGE CONTEXT:
 - Enhancements: 10-20-Life if firearm used; hate crime enhancement if bias-motivated
 
 EXPERT PANEL:
-- Andrew F. Branca (Law of Self Defense) — 5 elements of self-defense analysis
-- Massad Ayoob (Lethal Force Institute) — force continuum, disparity of force
-- Don West (criminal trial attorney) — cross-examination of use-of-force witnesses
+- Andrew F. Branca (Law of Self Defense), 5 elements of self-defense analysis
+- Massad Ayoob (Lethal Force Institute), force continuum, disparity of force
+- Don West (criminal trial attorney), cross-examination of use-of-force witnesses
 
 FOCUS AREAS: self-defense viability, weapon enhancement exposure, victim injury documentation, prior history impact on sentencing
 
@@ -341,29 +341,29 @@ INTAKE ANSWERS:
 ## Files Modified
 
 ### New files
-- `supabase/migrations/028-charge-taxonomy.sql` — new tables DDL
-- `supabase/migrations/029-charge-taxonomy-seed.sql` — seed data (generated via Batch API)
-- `scripts/generate-charge-taxonomy.ts` — Batch API prompt + submission + validation script
-- `src/lib/charge-taxonomy.ts` — query functions for new tables
+- `supabase/migrations/028-charge-taxonomy.sql`, new tables DDL
+- `supabase/migrations/029-charge-taxonomy-seed.sql`, seed data (generated via Batch API)
+- `scripts/generate-charge-taxonomy.ts`, Batch API prompt + submission + validation script
+- `src/lib/charge-taxonomy.ts`, query functions for new tables
 
 ### Modified files (Phase 1)
-- `supabase/functions/generate-report/index.ts` — `getChargeContext()` queries new tables, `resolveChargeSlug()` handles legacy mapping, new `buildEnrichedChargeContext()`
-- `src/lib/charge-types.ts` — add legacy slug resolver, keep `ALLOWED_CHARGE_TYPES`
+- `supabase/functions/generate-report/index.ts`, `getChargeContext()` queries new tables, `resolveChargeSlug()` handles legacy mapping, new `buildEnrichedChargeContext()`
+- `src/lib/charge-types.ts`, add legacy slug resolver, keep `ALLOWED_CHARGE_TYPES`
 
 ### Modified files (Phase 2)
-- `src/app/intake/page.tsx` — charge selection UI rewrite (3-screen progressive narrowing, DB-driven questions)
-- `src/app/api/intake/route.ts` — accept `common_charge_slug` field
+- `src/app/intake/page.tsx`, charge selection UI rewrite (3-screen progressive narrowing, DB-driven questions)
+- `src/app/api/intake/route.ts`, accept `common_charge_slug` field
 
 ### Modified files (Phase 3)
-- `src/components/ChargeTypeSelector.tsx` — expand to use `charge_categories`
-- `src/components/HomepageHero.tsx` — handle category-based selection
-- `src/app/page.tsx` — playbook catalog grid update, schema update
+- `src/components/ChargeTypeSelector.tsx`, expand to use `charge_categories`
+- `src/components/HomepageHero.tsx`, handle category-based selection
+- `src/app/page.tsx`, playbook catalog grid update, schema update
 
 ### Untouched files
-- `src/lib/intelligence-brief/prompts.ts` — no changes, `${v.charge_specific_data}` handles any format
-- `src/lib/tiers.ts` — pricing unchanged
-- `src/lib/playbook-configs.ts` — unchanged until Phase 4
-- All email/drip/cron files — unchanged
+- `src/lib/intelligence-brief/prompts.ts`, no changes, `${v.charge_specific_data}` handles any format
+- `src/lib/tiers.ts`, pricing unchanged
+- `src/lib/playbook-configs.ts`, unchanged until Phase 4
+- All email/drip/cron files, unchanged
 
 ## Constraints & Risks
 
@@ -375,6 +375,6 @@ INTAKE ANSWERS:
 
 4. **Intake form steps:** 3-screen progressive narrowing adds steps vs. current single dropdown. Mitigation: per Friedman, each step is 10-30 seconds and reduces cognitive load vs. 200 options on one screen. Progress indicator visible.
 
-5. **Missing charges per state:** Not every common charge exists in every state. Mitigation: `jurisdiction_statutes` allows gaps — missing charges don't appear in Screen 3. "My charge isn't listed" off-ramp catches edge cases.
+5. **Missing charges per state:** Not every common charge exists in every state. Mitigation: `jurisdiction_statutes` allows gaps, missing charges don't appear in Screen 3. "My charge isn't listed" off-ramp catches edge cases.
 
 6. **Expert panel coverage:** Currently 14 charge types have expert panels. Expanding to ~200 means many won't have dedicated experts initially. Mitigation: multiple common charges share expert panels (all assault variants share Branca/Ayoob/West). Generate new expert assignments via Batch API for uncovered charges.

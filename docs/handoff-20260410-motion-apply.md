@@ -5,7 +5,7 @@
 **Session A (this handoff's origin):** Prefilter v3 producing `opinions-filtered.csv` (~5-6h).
 **Session B:** Full bz2 motion extraction + apply with fresh Supabase token (~4h). Will finish first.
 
-## Before Running Anything — Check What's Already Done
+## Before Running Anything, Check What's Already Done
 
 Session B may have already applied motion data. Check FIRST:
 
@@ -26,34 +26,34 @@ wc -c C:/Users/email/projects/ImNotAnAttorney-web/data/bulk-verify/cl-bulk/opini
 - If **>10KB**: Prefilter completed. Scripts will auto-detect and finish in seconds.
 - If **<1KB**: Prefilter still running or failed. Check `data/legal-research-logs/prefilter-v3-20260410.log`.
 
-## Execution Sequence (SEQUENTIAL — never two CSV streamers at once)
+## Execution Sequence (SEQUENTIAL, never two CSV streamers at once)
 
 1. **Motion extraction** (skip if already applied per check above)
    ```bash
-   node --max-old-space-size=8192 scripts/bulk-extract-motion-legal-issues.mjs --apply
+   node,max-old-space-size=8192 scripts/bulk-extract-motion-legal-issues.mjs,apply
    ```
    Seconds if prefilter done, ~4h on bz2 fallback.
 
 2. **Master extractor**
    ```bash
-   node --max-old-space-size=8192 scripts/bulk-master-extractor.mjs --apply
+   node,max-old-space-size=8192 scripts/bulk-master-extractor.mjs,apply
    ```
    Seconds if prefilter done, ~3-4h on bz2 fallback.
 
 3. **Appeal outcome correlator**
    ```bash
-   node scripts/bulk-appeal-outcome-correlator.mjs --phase 1
-   node scripts/bulk-appeal-outcome-correlator.mjs --phase 2 --phase 3 --phase 4 --apply
+   node scripts/bulk-appeal-outcome-correlator.mjs,phase 1
+   node scripts/bulk-appeal-outcome-correlator.mjs,phase 2,phase 3,phase 4,apply
    ```
    Phase 1: 8 min (522MB citation-map, JSONL fix applied). Phases 2-4: varies.
 
 4. **Similar case matcher**
    ```bash
-   node scripts/bulk-similar-case-matcher.mjs --apply
+   node scripts/bulk-similar-case-matcher.mjs,apply
    ```
    5 min, DB-only.
 
-## After All 4 Complete — Wave 4 Frontend Integration
+## After All 4 Complete, Wave 4 Frontend Integration
 
 Blueprint: `C:\Users\email\projects\ImNotAnAttorney-web\docs\plans\2026-04-09-tier9-frontend-integration.md`
 

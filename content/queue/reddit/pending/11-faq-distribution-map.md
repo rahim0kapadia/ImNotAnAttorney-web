@@ -4,14 +4,14 @@ type: distribution-map
 project: inna
 status: pending
 created: 2026-03-11
-title: "FAQ-to-Subreddit Distribution Map — GEO Round 2"
+title: "FAQ-to-Subreddit Distribution Map, GEO Round 2"
 ---
 
 # FAQ-to-Subreddit Distribution Map
 
 Maps each FAQ-enriched blog post to specific subreddits where defendants ask those exact questions. Each entry includes the question match (what the Reddit poster is asking), the target subreddit, and the link strategy.
 
-**Key principle:** Reddit posts should be genuinely helpful standalone answers (not teasers). The link is for "more detail" — the comment itself provides real value. This matches Reddit culture and avoids removal/downvotes.
+**Key principle:** Reddit posts should be genuinely helpful standalone answers (not teasers). The link is for "more detail", the comment itself provides real value. This matches Reddit culture and avoids removal/downvotes.
 
 ---
 
@@ -235,12 +235,12 @@ Maps each FAQ-enriched blog post to specific subreddits where defendants ask tho
 
 1. **One post per day max** across all subreddits
 2. **Never post the same link twice** in the same subreddit
-3. **Comment, don't post** — find existing threads asking these questions and answer them
-4. **No self-promotion language** — "I found this helpful" not "check out my site"
-5. **Standalone value required** — if the link disappeared, the comment should still be useful
-6. **NAL disclaimer** on every comment: "NAL — this is legal information, not legal advice"
+3. **Comment, don't post**, find existing threads asking these questions and answer them
+4. **No self-promotion language**, "I found this helpful" not "check out my site"
+5. **Standalone value required**, if the link disappeared, the comment should still be useful
+6. **NAL disclaimer** on every comment: "NAL, this is legal information, not legal advice"
 7. **Wait for karma threshold** before any linking (see warmup guide)
-8. **Track what's posted** — move entries to /posted/ with date and thread URL
+8. **Track what's posted**, move entries to /posted/ with date and thread URL
 
 ## Priority Order
 

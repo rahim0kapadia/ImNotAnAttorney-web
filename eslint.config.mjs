@@ -8,7 +8,7 @@ const eslintConfig = defineConfig([
   {
     rules: {
       // Upgrade Next.js default a11y warns → error + add full recommended set
-      // Plugin already registered by eslint-config-next — only override rules here
+      // Plugin already registered by eslint-config-next, only override rules here
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
       "jsx-a11y/aria-activedescendant-has-tabindex": "error",

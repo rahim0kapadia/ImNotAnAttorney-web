@@ -1,8 +1,8 @@
 /**
- * @fileoverview Customer authentication — magic links + sessions.
+ * @fileoverview Customer authentication, magic links + sessions.
  *
  * Mirrors the partner auth system (src/lib/partner-auth.ts) but scoped
- * to customers with at least one paid order. No partner lookup — just
+ * to customers with at least one paid order. No partner lookup, just
  * email-based verification against the orders table.
  *
  * Magic link flow:
@@ -116,7 +116,7 @@ export async function createCustomerSession(email: string): Promise<string | nul
 
 /**
  * Validates a session token. Returns customer data if valid, null otherwise.
- * Used by route handlers for auth (not middleware — keeps DB calls in Node runtime).
+ * Used by route handlers for auth (not middleware, keeps DB calls in Node runtime).
  */
 export async function validateCustomerSession(sessionToken: string): Promise<{
   email: string;

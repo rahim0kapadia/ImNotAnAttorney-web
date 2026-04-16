@@ -36,7 +36,7 @@ export default function CourtOutfitContent() {
           </li>
           <li>
             <span className="font-semibold text-zinc-50">Better:</span>{" "}
-            A suit if you have one. Dark colors — navy, charcoal, black.
+            A suit if you have one. Dark colors, navy, charcoal, black.
             Tie optional but never hurts.
           </li>
           <li>Clean-shaven or neatly groomed facial hair.</li>
@@ -63,7 +63,7 @@ export default function CourtOutfitContent() {
             A blazer or cardigan over the blouse. Dark, muted colors.
           </li>
           <li>Closed-toe shoes. Low heels or flats.</li>
-          <li>Minimal jewelry — nothing that makes noise or draws attention.</li>
+          <li>Minimal jewelry, nothing that makes noise or draws attention.</li>
           <li>Conservative makeup. Nothing that suggests you are going out for the evening.</li>
         </ul>
       </section>
@@ -79,10 +79,10 @@ export default function CourtOutfitContent() {
           <li>No clothing with logos, slogans, or graphic designs.</li>
           <li>No hats or sunglasses inside the courthouse.</li>
           <li>No clothing with drug or alcohol references.</li>
-          <li>No revealing clothing — low necklines, short skirts, tank tops, shorts.</li>
+          <li>No revealing clothing, low necklines, short skirts, tank tops, shorts.</li>
           <li>No excessive jewelry, chains, or visible piercings beyond ears.</li>
           <li>No clothing associated with gang affiliation (specific colors, styles, or symbols).</li>
-          <li>No athletic wear — sweatpants, jerseys, track suits, gym shoes.</li>
+          <li>No athletic wear, sweatpants, jerseys, track suits, gym shoes.</li>
         </ul>
       </section>
 
@@ -96,7 +96,7 @@ export default function CourtOutfitContent() {
         <p className="mt-4">
           This is not about vanity. Studies on judicial decision-making show
           that appearance influences perception of remorse, reliability, and
-          respect for the court — all factors that affect outcomes.
+          respect for the court, all factors that affect outcomes.
         </p>
         <p className="mt-3">
           A judge who sees a defendant in clean, professional clothing

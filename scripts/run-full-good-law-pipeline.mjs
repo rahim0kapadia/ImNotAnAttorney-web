@@ -47,5 +47,5 @@ for (let i = 0; i < steps.length; i++) {
 
 const totalMin = ((Date.now() - startTime) / 1000 / 60).toFixed(1);
 console.log(`\n${"=".repeat(60)}`);
-console.log(`  PIPELINE COMPLETE — ${totalMin} min total`);
+console.log(`  PIPELINE COMPLETE, ${totalMin} min total`);
 console.log(`${"=".repeat(60)}`);

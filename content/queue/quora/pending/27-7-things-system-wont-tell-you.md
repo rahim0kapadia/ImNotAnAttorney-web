@@ -14,7 +14,7 @@ suggested_time: "Weekday 10:00 AM EST"
 **Topics**: Criminal Justice, Defendant Rights, Plea Deals, Criminal Defense, Legal System
 **SEO**: "things criminal justice system won't tell you" / "what defendants should know" / "criminal justice system secrets"
 
-The criminal justice system doesn't come with a manual. Nobody hands you one at booking. Nobody explains it at your first court date. And your attorney -- if they even have time -- gives you the version that fits between other appointments.
+The criminal justice system doesn't come with a manual. Nobody hands you one at booking. Nobody explains it at your first court date. And your attorney, if they even have time, gives you the version that fits between other appointments.
 
 Here are some things that took me a long time to piece together.
 
@@ -22,7 +22,7 @@ Here are some things that took me a long time to piece together.
 
 **Your public defender probably has 300+ cases.** The ABA recommends a max of 150 felonies per attorney per year. Most public defender offices are running double or triple that. At 400 cases and a 50-hour week, each client gets about 7.5 minutes of attorney time per week. That's not enough to read a police report, let alone prepare a suppression motion.
 
-**Plea deals are negotiated, not fixed.** The first offer is an opening position. Defense attorneys who have a credible trial threat -- who actually file motions and prepare for trial -- consistently get better offers. An attorney whose entire strategy is "let's see what they offer" has no leverage.
+**Plea deals are negotiated, not fixed.** The first offer is an opening position. Defense attorneys who have a credible trial threat, who actually file motions and prepare for trial, consistently get better offers. An attorney whose entire strategy is "let's see what they offer" has no leverage.
 
 **Discovery is a weapon, not a delivery.** The prosecution is required to share the evidence, but what they hand over in the initial round is often the minimum. What's missing from discovery can be as important as what's there. Body camera footage that should exist but doesn't? That's information. A witness statement that's referenced but never produced? That's information too.
 
@@ -32,6 +32,6 @@ Here are some things that took me a long time to piece together.
 
 **97% of federal cases end in guilty pleas.** That number isn't because 97% of defendants are guilty. It's because the system is built to process pleas efficiently. Understanding that machinery is how you avoid being processed by it.
 
-None of this is legal advice. It's structural information about how the system actually operates. The defendants who understand these dynamics make better decisions -- not because information changes the law, but because it changes how you interact with the people who operate it.
+None of this is legal advice. It's structural information about how the system actually operates. The defendants who understand these dynamics make better decisions, not because information changes the law, but because it changes how you interact with the people who operate it.
 
 **Image direction**: Infographic-style numbered list with stark stat callouts (97%, 7.5 min, 3-6x) | **Republish to**: Medium if 10K+ views

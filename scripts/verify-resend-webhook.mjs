@@ -35,7 +35,7 @@ const REQUIRED_EVENTS = ["email.bounced", "email.complained"];
 console.log("=== Layer 2 SMS bounce webhook verification ===\n");
 
 // 1. Local env
-// Prefer full-access "Dev1" key when present — restricted RESEND_API_KEY can't list webhooks.
+// Prefer full-access "Dev1" key when present, restricted RESEND_API_KEY can't list webhooks.
 const apiKey = env.RESEND_API_KEY_FULL || env.RESEND_API_KEY;
 const usingFull = !!env.RESEND_API_KEY_FULL;
 
@@ -55,7 +55,7 @@ if (!apiKey) {
   process.exit(1);
 }
 
-// 2. Resend API — list webhooks
+// 2. Resend API, list webhooks
 console.log("2. Resend webhooks (GET /webhooks)");
 const resp = await fetch("https://api.resend.com/webhooks", {
   headers: { Authorization: `Bearer ${apiKey}` },

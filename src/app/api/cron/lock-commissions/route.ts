@@ -1,5 +1,5 @@
 /**
- * GET /api/cron/lock-commissions — Locks commissions after 45-day holdback period.
+ * GET /api/cron/lock-commissions, Locks commissions after 45-day holdback period.
  *
  * Schedule: Daily at 06:00 UTC via cron-job.org.
  * Protected by CRON_AUTH_TOKEN bearer token.
@@ -9,7 +9,7 @@
  * then notifies each partner via their preferred channel (email/SMS/both).
  *
  * Safety invariant: .gt("commission_amount", 0) excludes refunded orders
- * whose commission was zeroed — those should never be locked.
+ * whose commission was zeroed, those should never be locked.
  */
 
 import { NextRequest, NextResponse } from "next/server";

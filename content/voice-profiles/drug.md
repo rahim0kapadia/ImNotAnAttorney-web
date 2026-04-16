@@ -125,7 +125,7 @@ The product bridge earns its place because the free content already delivered va
 | "you should" | UPL violation in legal context | "consider" or "one option is" |
 | "stash" | Slang, implies intentional concealment | "the substance was located" or "found in" |
 | "admitted to" | Implies confession, may not be accurate | "statements made to officers" or "according to the police report" |
-| em dash (— or --) | Top AI writing tell, zero tolerance | Comma, colon, parentheses, or period |
+| em dash (, or,) | Top AI writing tell, zero tolerance | Comma, colon, parentheses, or period |
 
 ### Terms to Define Inline (first use only)
 - **Constructive possession**, "a legal concept meaning the substance wasn't on your body, but the prosecution claims you knew about it and had control over it"
@@ -192,7 +192,7 @@ For high weight, prior record, or federal jurisdiction sections:
 
 Before publishing any drug defense blog post:
 
-- [ ] ZERO em dashes (— or --), use commas, colons, parentheses, or periods
+- [ ] ZERO em dashes (, or,), use commas, colons, parentheses, or periods
 - [ ] No "it's important to note/understand/remember" (filler, just say it)
 - [ ] No "navigate" in legal context
 - [ ] No 3+ sentences starting with the same word in sequence

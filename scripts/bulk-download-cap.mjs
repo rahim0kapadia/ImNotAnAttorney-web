@@ -1,5 +1,5 @@
 /**
- * Bulk Download CAP — Download all needed CasesMetadata.json files from static.case.law
+ * Bulk Download CAP, Download all needed CasesMetadata.json files from static.case.law
  *
  * Reads the dump JSON from bulk-dump-cases.mjs, parses each citation to find
  * the reporter+volume, deduplicates, and downloads missing volumes to .cap-cache/.
@@ -206,7 +206,7 @@ async function main() {
   console.log(`To download:             ${toDownload.length}`);
 
   if (dryRun) {
-    console.log("\n--- DRY RUN — Volumes to download ---");
+    console.log("\n--- DRY RUN, Volumes to download ---");
     for (const vol of toDownload) {
       console.log(`  ${vol.reporter}/${vol.volume} (${vol.count} citations)`);
     }
@@ -238,14 +238,14 @@ async function main() {
         if (data) {
           fs.writeFileSync(cacheFile, JSON.stringify(data));
           downloaded++;
-          process.stdout.write(`  [${current + 1}/${toDownload.length}] ${vol.reporter}/${vol.volume} — ${Array.isArray(data) ? data.length : "?"} cases\n`);
+          process.stdout.write(`  [${current + 1}/${toDownload.length}] ${vol.reporter}/${vol.volume}, ${Array.isArray(data) ? data.length : "?"} cases\n`);
         } else {
           failed++;
-          process.stdout.write(`  [${current + 1}/${toDownload.length}] ${vol.reporter}/${vol.volume} — FAILED (404 or timeout)\n`);
+          process.stdout.write(`  [${current + 1}/${toDownload.length}] ${vol.reporter}/${vol.volume}, FAILED (404 or timeout)\n`);
         }
       } catch (e) {
         failed++;
-        process.stdout.write(`  [${current + 1}/${toDownload.length}] ${vol.reporter}/${vol.volume} — ERROR: ${e.message}\n`);
+        process.stdout.write(`  [${current + 1}/${toDownload.length}] ${vol.reporter}/${vol.volume}, ERROR: ${e.message}\n`);
       }
       await sleep(CAP_DELAY_MS);
     }

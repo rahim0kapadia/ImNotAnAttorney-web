@@ -83,10 +83,10 @@ const TIERS = [
     priceCents: 9700,
     description: "Instant DUI defense playbook with 26 questions, case stage roadmap, red flag checklist, and case progress scorecard.",
     contents: [
-      { section: 1, title: "Charge Reality Report", description: "Plain-English DUI first offense breakdown — elements, dual-track (DMV + criminal), sentencing ranges", anchor_value: 297 },
+      { section: 1, title: "Charge Reality Report", description: "Plain-English DUI first offense breakdown, elements, dual-track (DMV + criminal), sentencing ranges", anchor_value: 297 },
       { section: 2, title: "26 Questions Your DUI Attorney Hopes You Never Ask", description: "Elite defense attorney methodologies in 6-part format per question", anchor_value: 197 },
       { section: 3, title: "DUI Case Stage Roadmap", description: "Arrest through resolution timeline with milestones and deadlines", anchor_value: 97 },
-      { section: 4, title: "Red Flag Checklist", description: "12 evidence and procedural red flags — breathalyzer calibration, FST protocol, 15-min observation", anchor_value: 97 },
+      { section: 4, title: "Red Flag Checklist", description: "12 evidence and procedural red flags, breathalyzer calibration, FST protocol, 15-min observation", anchor_value: 97 },
       { section: 5, title: "Case Progress Scorecard", description: "10 behaviors to rate your attorney on before it is too late to switch", anchor_value: 97 },
     ],
   },
@@ -99,7 +99,7 @@ const TIERS = [
     priceCents: 9700,
     description: "Drug possession defense playbook with charge-specific questions, constitutional search issues, diversion program eligibility, and attorney accountability checklist.",
     contents: [
-      { section: 1, title: "Charge Reality Report", description: "Drug possession charge breakdown — schedule classifications, possession types, quantity thresholds", anchor_value: 297 },
+      { section: 1, title: "Charge Reality Report", description: "Drug possession charge breakdown, schedule classifications, possession types, quantity thresholds", anchor_value: 297 },
       { section: 2, title: "Defense Questions Your Attorney Hopes You Never Ask", description: "Targeted questions on search legality, chain of custody, lab testing, and informant reliability", anchor_value: 197 },
       { section: 3, title: "Drug Case Stage Roadmap", description: "Arrest through resolution timeline with suppression hearing milestones", anchor_value: 97 },
       { section: 4, title: "Red Flag Checklist", description: "Search warrant issues, Miranda violations, lab testing irregularities", anchor_value: 97 },
@@ -115,10 +115,10 @@ const TIERS = [
     priceCents: 9700,
     description: "Probation violation defense playbook covering technical vs. substantive violations, hearing preparation, compliance documentation strategy, and modification options.",
     contents: [
-      { section: 1, title: "Charge Reality Report", description: "Probation violation breakdown — technical vs. substantive, standard of proof, sentencing exposure", anchor_value: 297 },
+      { section: 1, title: "Charge Reality Report", description: "Probation violation breakdown, technical vs. substantive, standard of proof, sentencing exposure", anchor_value: 297 },
       { section: 2, title: "Defense Questions for Your Probation Violation Hearing", description: "Targeted questions on violation type, compliance history, officer conduct", anchor_value: 197 },
       { section: 3, title: "Violation Hearing Roadmap", description: "From violation report through disposition with key deadlines", anchor_value: 97 },
-      { section: 4, title: "Compliance Documentation Checklist", description: "Every document that proves compliance — the strongest defense in PV cases", anchor_value: 97 },
+      { section: 4, title: "Compliance Documentation Checklist", description: "Every document that proves compliance, the strongest defense in PV cases", anchor_value: 97 },
       { section: 5, title: "Case Progress Scorecard", description: "10 behaviors to rate your attorney on before it is too late to switch", anchor_value: 97 },
     ],
   },
@@ -131,7 +131,7 @@ const TIERS = [
     priceCents: 9700,
     description: "White collar defense playbook covering fraud charges, forensic accounting issues, document preservation, cooperation strategies, and sentencing guidelines.",
     contents: [
-      { section: 1, title: "Charge Reality Report", description: "White collar charge breakdown — fraud elements, conspiracy exposure, sentencing guidelines", anchor_value: 297 },
+      { section: 1, title: "Charge Reality Report", description: "White collar charge breakdown, fraud elements, conspiracy exposure, sentencing guidelines", anchor_value: 297 },
       { section: 2, title: "Defense Questions for White Collar Cases", description: "Targeted questions on document production, forensic analysis, cooperation agreements", anchor_value: 197 },
       { section: 3, title: "White Collar Case Stage Roadmap", description: "Investigation through resolution timeline with grand jury and plea milestones", anchor_value: 97 },
       { section: 4, title: "Red Flag Checklist", description: "Document production gaps, forensic accounting irregularities, cooperation pitfalls", anchor_value: 97 },
@@ -147,7 +147,7 @@ const TIERS = [
     priceCents: 9700,
     description: "Sex offense defense playbook covering charge classifications, registry implications, forensic evidence issues, and constitutional defense strategies.",
     contents: [
-      { section: 1, title: "Charge Reality Report", description: "Sex offense charge breakdown — classifications, registration requirements, collateral consequences", anchor_value: 297 },
+      { section: 1, title: "Charge Reality Report", description: "Sex offense charge breakdown, classifications, registration requirements, collateral consequences", anchor_value: 297 },
       { section: 2, title: "Defense Questions for Sex Offense Cases", description: "Targeted questions on forensic evidence, witness credibility, digital evidence handling", anchor_value: 197 },
       { section: 3, title: "Sex Offense Case Stage Roadmap", description: "Arrest through resolution timeline with pretrial motion milestones", anchor_value: 97 },
       { section: 4, title: "Red Flag Checklist", description: "Forensic evidence handling, witness interview protocols, digital evidence chain of custody", anchor_value: 97 },
@@ -163,7 +163,7 @@ const TIERS = [
     priceCents: 9700,
     description: "Federal criminal defense playbook covering federal sentencing guidelines, mandatory minimums, cooperation agreements, and federal procedural differences.",
     contents: [
-      { section: 1, title: "Charge Reality Report", description: "Federal charge breakdown — guidelines calculations, mandatory minimums, relevant conduct", anchor_value: 297 },
+      { section: 1, title: "Charge Reality Report", description: "Federal charge breakdown, guidelines calculations, mandatory minimums, relevant conduct", anchor_value: 297 },
       { section: 2, title: "Defense Questions for Federal Cases", description: "Targeted questions on guidelines calculations, cooperation agreements, Bureau of Prisons designations", anchor_value: 197 },
       { section: 3, title: "Federal Case Stage Roadmap", description: "Indictment through sentencing timeline with federal procedural milestones", anchor_value: 97 },
       { section: 4, title: "Red Flag Checklist", description: "Guidelines miscalculations, cooperation agreement pitfalls, relevant conduct overreach", anchor_value: 97 },
@@ -179,7 +179,7 @@ const TIERS = [
     priceCents: 9700,
     description: "Drug trafficking defense playbook covering conspiracy charges, mandatory minimums, cooperation strategies, safety valve provisions, and surveillance evidence issues.",
     contents: [
-      { section: 1, title: "Charge Reality Report", description: "Drug trafficking breakdown — conspiracy elements, mandatory minimums, safety valve eligibility", anchor_value: 297 },
+      { section: 1, title: "Charge Reality Report", description: "Drug trafficking breakdown, conspiracy elements, mandatory minimums, safety valve eligibility", anchor_value: 297 },
       { section: 2, title: "Defense Questions for Trafficking Cases", description: "Targeted questions on wiretap legality, informant reliability, quantity attribution, conspiracy scope", anchor_value: 197 },
       { section: 3, title: "Drug Trafficking Case Stage Roadmap", description: "Investigation through sentencing timeline with cooperation and plea milestones", anchor_value: 97 },
       { section: 4, title: "Red Flag Checklist", description: "Wiretap authorization issues, informant handling, drug quantity disputes, co-defendant cooperation", anchor_value: 97 },
@@ -195,7 +195,7 @@ const TIERS = [
     priceCents: 9700,
     description: "Self-defense playbook covering justifiable force standards, Stand Your Ground vs. Duty to Retreat, Castle Doctrine, proportionality analysis, and witness documentation.",
     contents: [
-      { section: 1, title: "Charge Reality Report", description: "Self-defense law breakdown — justifiable force standards, Castle Doctrine, Stand Your Ground, proportionality", anchor_value: 297 },
+      { section: 1, title: "Charge Reality Report", description: "Self-defense law breakdown, justifiable force standards, Castle Doctrine, Stand Your Ground, proportionality", anchor_value: 297 },
       { section: 2, title: "Defense Questions for Self-Defense Cases", description: "Targeted questions on force proportionality, initial aggressor doctrine, witness identification, scene evidence", anchor_value: 197 },
       { section: 3, title: "Self-Defense Case Stage Roadmap", description: "Arrest through immunity hearing / trial with self-defense specific milestones", anchor_value: 97 },
       { section: 4, title: "Red Flag Checklist", description: "Scene evidence preservation, witness identification gaps, use-of-force analysis issues", anchor_value: 97 },
@@ -362,7 +362,7 @@ async function run() {
   if (allOk) {
     console.log("  ✓ ALL STEPS COMPLETED SUCCESSFULLY");
   } else {
-    console.log("  ✗ SOME STEPS FAILED — see details above");
+    console.log("  ✗ SOME STEPS FAILED, see details above");
     process.exitCode = 1;
   }
 }

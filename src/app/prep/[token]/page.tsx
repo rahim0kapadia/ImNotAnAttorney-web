@@ -1,5 +1,5 @@
 /**
- * /prep/[token] — Personalized court prep page.
+ * /prep/[token], Personalized court prep page.
  *
  * Shows court date countdown, what to expect, what to bring,
  * and a product recommendation. Refreshes partner ref cookie
@@ -44,10 +44,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const chargeName = CHARGE_DISPLAY_NAMES[data.charge_type] || "Criminal Charges";
   return {
-    title: `Court Prep — ${data.county_state} | ImNotAnAttorney`,
+    title: `Court Prep, ${data.county_state} | ImNotAnAttorney`,
     description: `Your court date is ${data.court_date}. Here's what to expect and how to prepare.`,
     openGraph: {
-      title: `Court Prep — ${chargeName}`,
+      title: `Court Prep, ${chargeName}`,
       description: `Your court date is ${data.court_date}. What to expect at your hearing.`,
     },
   };
@@ -97,7 +97,7 @@ export default async function PrepPage({ params }: PageProps) {
   const daysUntil = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
   const courtPassed = daysUntil < 0;
 
-  // Partner branding — show company name on prep page
+  // Partner branding, show company name on prep page
   let partnerCompany: string | null = null;
   if (reminder.partner_promo_code) {
     const { data: partnerData } = await supabase
@@ -150,12 +150,12 @@ export default async function PrepPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* Check-In Button — only before court date */}
+        {/* Check-In Button, only before court date */}
         {!courtPassed && (
           <CheckInButton token={token} lastCheckIn={lastCheckInRow?.checked_in_at ?? null} />
         )}
 
-        {/* SMS Text Reminders — only before court date */}
+        {/* SMS Text Reminders, only before court date */}
         {!courtPassed && (
           <div className="mb-8">
             <PhoneOptIn token={token} hasPhone={!!reminder.phone} />
@@ -177,13 +177,13 @@ export default async function PrepPage({ params }: PageProps) {
               <p className="text-5xl font-bold text-amber-400 mb-2">{daysUntil} day{daysUntil !== 1 ? "s" : ""}</p>
               <p className="text-xl text-zinc-300">
                 {courtDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
-                {" — "}{reminder.county_state}
+                {", "}{reminder.county_state}
               </p>
             </>
           )}
         </section>
 
-        {/* Insider Tips (3 sections — always render) */}
+        {/* Insider Tips (3 sections, always render) */}
         {insiderTips.map((section) => (
           <PrepSectionBlock key={section.title} section={section} />
         ))}
@@ -198,7 +198,7 @@ export default async function PrepPage({ params }: PageProps) {
               {prepData.statute.statute_number && (
                 <div className="flex justify-between">
                   <span className="text-zinc-400">Statute</span>
-                  <span className="text-zinc-200 text-right">{prepData.statute.statute_number}{prepData.statute.statute_title ? ` — ${prepData.statute.statute_title}` : ""}</span>
+                  <span className="text-zinc-200 text-right">{prepData.statute.statute_number}{prepData.statute.statute_title ? `, ${prepData.statute.statute_title}` : ""}</span>
                 </div>
               )}
               {prepData.statute.offense_class && (
@@ -325,7 +325,7 @@ export default async function PrepPage({ params }: PageProps) {
                         </div>
                       )}
                       {bj.fiscal_year_range && (
-                        <p className="text-zinc-600 text-xs">USSC data: {bj.fiscal_year_range}{bj.offense_category ? ` — ${bj.offense_category}` : ""}</p>
+                        <p className="text-zinc-600 text-xs">USSC data: {bj.fiscal_year_range}{bj.offense_category ? `, ${bj.offense_category}` : ""}</p>
                       )}
                     </div>
                   ))}
@@ -333,7 +333,7 @@ export default async function PrepPage({ params }: PageProps) {
               )}
             </div>
             <p className="text-zinc-500 text-xs mt-3">
-              These are aggregate statistics from public court records — not a prediction for your case. Every case is different. But knowing what typically happens helps you have informed conversations with your attorney.
+              These are aggregate statistics from public court records, not a prediction for your case. Every case is different. But knowing what typically happens helps you have informed conversations with your attorney.
             </p>
           </section>
         )}
@@ -364,10 +364,10 @@ export default async function PrepPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Questions to Ask Your Attorney — always renders */}
+        {/* Questions to Ask Your Attorney, always renders */}
         <PrepSectionBlock section={attorneyQuestions} highlight />
 
-        {/* What Happens Next — always renders */}
+        {/* What Happens Next, always renders */}
         <PrepSectionBlock section={whatHappensNext} />
 
         {/* Section D: Product Recommendation / Quiz CTA */}
@@ -377,7 +377,7 @@ export default async function PrepPage({ params }: PageProps) {
               Want questions specific to YOUR case?
             </h2>
             <p className="text-zinc-300 mb-4">
-              Your case has specific angles an attorney should investigate — charge-specific weaknesses, procedural requirements, and evidence standards. Our analysis identifies them and gives you the exact questions.
+              Your case has specific angles an attorney should investigate, charge-specific weaknesses, procedural requirements, and evidence standards. Our analysis identifies them and gives you the exact questions.
             </p>
 
             {tier && discount ? (
@@ -401,7 +401,7 @@ export default async function PrepPage({ params }: PageProps) {
                 </div>
 
                 <p className="text-zinc-400 text-sm mb-6">
-                  {tier.name} — {tier.delivery}
+                  {tier.name}, {tier.delivery}
                 </p>
 
                 <Link
@@ -419,7 +419,7 @@ export default async function PrepPage({ params }: PageProps) {
                   </p>
                 )}
                 <p className="text-zinc-400 text-sm mb-6">
-                  Take a 2-minute quiz. We&apos;ll tell you exactly which questions your attorney should be answering — based on your charge, your county, and your situation.
+                  Take a 2-minute quiz. We&apos;ll tell you exactly which questions your attorney should be answering, based on your charge, your county, and your situation.
                 </p>
                 <Link
                   href={`/score${reminder.partner_promo_code ? `?ref=${reminder.partner_promo_code}` : ""}`}
@@ -435,7 +435,7 @@ export default async function PrepPage({ params }: PageProps) {
         {/* Section E: Footer */}
         <footer className="mt-12 pt-8 border-t border-zinc-800 text-center">
           <p className="text-zinc-500 text-sm">
-            ImNotAnAttorney provides legal information — not legal advice.
+            ImNotAnAttorney provides legal information, not legal advice.
           </p>
           <p className="text-zinc-600 text-xs mt-2">
             Reminders will be sent to {reminder.email} at 14, 7, 3, and 1 day(s) before your court date.

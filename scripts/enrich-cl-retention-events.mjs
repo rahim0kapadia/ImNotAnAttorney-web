@@ -5,7 +5,7 @@
  * to judge_sentencing_patterns as a JSONB array [{year, vote_pct, retained}].
  *
  * CL endpoint: GET /api/rest/v4/retention-events/?person={person_id}
- * Rate limit: 5K queries/hour — we have ~400 judges, well within limit.
+ * Rate limit: 5K queries/hour, we have ~400 judges, well within limit.
  *
  * Usage:
  *   node scripts/enrich-cl-retention-events.mjs                # Dry-run

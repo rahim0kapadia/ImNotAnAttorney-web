@@ -1,11 +1,11 @@
 /**
- * Anthropic Batch API utilities — types + helper functions.
+ * Anthropic Batch API utilities, types + helper functions.
  * Used by cron batch poller for polling and result fetching.
  *
  * Batch API contract:
- *   POST /v1/messages/batches           — create batch
- *   GET  /v1/messages/batches/{id}      — poll status
- *   GET  /v1/messages/batches/{id}/results — fetch JSONL results
+ *   POST /v1/messages/batches          , create batch
+ *   GET  /v1/messages/batches/{id}     , poll status
+ *   GET  /v1/messages/batches/{id}/results, fetch JSONL results
  */
 
 // ── Types ──

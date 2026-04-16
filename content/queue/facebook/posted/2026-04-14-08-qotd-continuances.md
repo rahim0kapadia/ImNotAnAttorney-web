@@ -11,7 +11,7 @@ suggested_time: "Saturday 5:00 PM ET"
 target_groups: ["Probation and Parole Support Groups", "Criminal Justice Reform Groups", "State-Specific Criminal Defense Groups"]
 ---
 
-## Facebook Post: Question of the Day — Continuances
+## Facebook Post: Question of the Day, Continuances
 
 **Type**: Text post (colored background)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -36,7 +36,7 @@ Continuances can be genuinely strategic:
 - Allowing time for a related ruling that could help your case
 - Completing an investigation
 
-But continuances can also be scheduling management — your attorney has too many cases and they're pushing yours back to make room for others.
+But continuances can also be scheduling management, your attorney has too many cases and they're pushing yours back to make room for others.
 
 The way you tell the difference: ask what changed between the last continuance and this one. A strategic continuance comes with a specific answer. A scheduling continuance gets you a vague one.
 
@@ -46,7 +46,7 @@ How many continuances are you at? What reason were you given?
 
 ### Visual Direction
 
-Colored text background — steel blue. Clean, authoritative.
+Colored text background, steel blue. Clean, authoritative.
 
 ### Link Strategy
 

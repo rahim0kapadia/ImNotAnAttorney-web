@@ -1,5 +1,5 @@
 /**
- * POST /api/partner/magic-link/verify — Verify magic link token.
+ * POST /api/partner/magic-link/verify, Verify magic link token.
  *
  * Called by the client-rendered verify page via fetch (same origin).
  * Validates token, creates session, returns session token for cookie setting.
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
     }
   } catch (e) {
     console.error("[Magic Link Verify] Promo code activation failed:", e);
-    // Non-fatal — partner can still use dashboard
+    // Non-fatal, partner can still use dashboard
   }
 
   // Set session cookie and return success

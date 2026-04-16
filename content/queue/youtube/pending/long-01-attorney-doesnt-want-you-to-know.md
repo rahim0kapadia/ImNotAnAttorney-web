@@ -13,7 +13,7 @@ target_length: 12-14 minutes
 
 **Format**: Long-form (16:9)
 **Target length**: 12-14 minutes
-**Target audience**: Criminal defendants who feel something is off with their representation — suspicious, frustrated, paying thousands with no visible results
+**Target audience**: Criminal defendants who feel something is off with their representation, suspicious, frustrated, paying thousands with no visible results
 
 ---
 
@@ -27,7 +27,7 @@ target_length: 12-14 minutes
 ### Thumbnail Concept
 **Version A**: Direct-to-camera face with a "shh" finger-to-lips gesture. Bold text: "THEY WON'T TELL YOU." Dark background with a subtle blurred courthouse behind. Red accent on the text. Face shows knowing, slightly conspiratorial expression.
 
-**Version B**: Split screen — left side: polished attorney in a suit with a forced smile. Right side: same silhouette but with a price tag hanging off the suit reading "$25,000." Text: "THE TRUTH." White and red on dark background.
+**Version B**: Split screen, left side: polished attorney in a suit with a forced smile. Right side: same silhouette but with a price tag hanging off the suit reading "$25,000." Text: "THE TRUTH." White and red on dark background.
 
 ### Description
 Your attorney works for you. Not the other way around. But the business model of criminal defense creates incentives that don't always align with your interests.
@@ -62,10 +62,10 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 "You paid twenty-five thousand dollars. It's been six months. Zero motions filed. Zero strategy calls. Just court dates that end in continuances and an attorney who says 'trust the process.'"
 
 **[0:05-0:15] THE PROMISE**
-"By the end of this video, you're going to understand exactly how the business model of criminal defense works — how attorneys get paid, what incentives that creates, and the specific questions that cut through everything. Whether you have a private attorney or a public defender, what I'm about to tell you changes how you evaluate your representation."
+"By the end of this video, you're going to understand exactly how the business model of criminal defense works, how attorneys get paid, what incentives that creates, and the specific questions that cut through everything. Whether you have a private attorney or a public defender, what I'm about to tell you changes how you evaluate your representation."
 
 **[0:15-0:30] CREDIBILITY + STAKES**
-"We're ImNotAnAttorney. We don't practice law. We don't give legal advice. What we do is research — the kind of research that gives defendants the questions they need to hold their attorneys accountable. We've studied how the best defense attorneys in the country approach cases, and we've studied the gap between that and what most defendants actually get."
+"We're ImNotAnAttorney. We don't practice law. We don't give legal advice. What we do is research, the kind of research that gives defendants the questions they need to hold their attorneys accountable. We've studied how the best defense attorneys in the country approach cases, and we've studied the gap between that and what most defendants actually get."
 
 [Text on screen: "Know What They Know."]
 "The gap is enormous. And it starts with money."
@@ -74,9 +74,9 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 
 **[0:30-1:15] SETUP: THE CONVERSATION NOBODY HAS**
 [B-roll: courtroom exterior, law office, paperwork on desk]
-"Here's a conversation that almost never happens. Your attorney will discuss your charges. They'll discuss strategy — sometimes. They'll discuss the plea offer. But they will almost never discuss how their fee structure shapes the decisions they make on your case."
+"Here's a conversation that almost never happens. Your attorney will discuss your charges. They'll discuss strategy, sometimes. They'll discuss the plea offer. But they will almost never discuss how their fee structure shapes the decisions they make on your case."
 
-"And I get it — it's uncomfortable. You hired someone to defend your freedom, and the idea that their financial interests might conflict with yours feels disloyal to even think about. But understanding those pressures is how you protect yourself."
+"And I get it, it's uncomfortable. You hired someone to defend your freedom, and the idea that their financial interests might conflict with yours feels disloyal to even think about. But understanding those pressures is how you protect yourself."
 
 ---
 
@@ -105,7 +105,7 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 [Direct to camera, closer framing]
 "This is the part nobody explains."
 
-"Before you hire a private attorney, every hour they spend on your case — that initial consultation, the follow-up call, reviewing your arrest report — is an investment in landing the engagement. They're earning your business."
+"Before you hire a private attorney, every hour they spend on your case, that initial consultation, the follow-up call, reviewing your arrest report, is an investment in landing the engagement. They're earning your business."
 
 "After you hire them? After you've signed the retainer and the check has cleared? Every hour they spend on your case is an hour they can't spend acquiring or serving a new client."
 
@@ -114,7 +114,7 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 [Text on screen: "A quick plea = profitable. A 3-month suppression fight = expensive."]
 "A quick plea deal is profitable. It closes the file, frees the calendar, and opens space for the next retainer. A three-month suppression battle followed by a two-week trial? That's expensive to staff, risky to the attorney's win rate, and may not generate one additional dollar."
 
-"This does NOT mean your attorney will deliberately sell you out. Most won't. But the pressure toward early resolution — toward the plea — is built into the math. And if you don't understand the math, you can't evaluate whether the plea recommendation is in YOUR best interest or in your attorney's best interest."
+"This does NOT mean your attorney will deliberately sell you out. Most won't. But the pressure toward early resolution, toward the plea, is built into the math. And if you don't understand the math, you can't evaluate whether the plea recommendation is in YOUR best interest or in your attorney's best interest."
 
 ---
 
@@ -126,7 +126,7 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 "The American Bar Association recommends a maximum of 150 felony cases per attorney per year. In practice? Many public defenders carry 300 to 500 active cases at the same time."
 
 [Text on screen: "400 cases / 50 hours per week = 7.5 minutes per client"]
-"Let's do the math. If a public defender works a 50-hour week — which is generous — and divides it by 400 clients, each client gets approximately seven and a half minutes of their attorney's time per week. That's not enough time to read a single police report, let alone draft a suppression motion."
+"Let's do the math. If a public defender works a 50-hour week, which is generous, and divides it by 400 clients, each client gets approximately seven and a half minutes of their attorney's time per week. That's not enough time to read a single police report, let alone draft a suppression motion."
 
 "This isn't a failure of individual public defenders. Many are genuinely skilled, dedicated attorneys doing extraordinary work under impossible conditions. It's a systemic, documented underfunding of a constitutional right."
 
@@ -143,9 +143,9 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 
 "Assembly-line justice. And it happens more than the profession likes to admit."
 
-"The question isn't whether plea deals are inherently bad. Sometimes the plea is the smart move — the evidence is overwhelming, the offer is genuinely below guidelines, your attorney has done the work and concluded this is the best path."
+"The question isn't whether plea deals are inherently bad. Sometimes the plea is the smart move, the evidence is overwhelming, the offer is genuinely below guidelines, your attorney has done the work and concluded this is the best path."
 
-"The question is: did the recommendation come AFTER the investigation? Or before it? Because if your attorney is recommending a plea before they've reviewed discovery, before they've filed motions, before they've investigated anything — that's not strategy. That's the path of least resistance."
+"The question is: did the recommendation come AFTER the investigation? Or before it? Because if your attorney is recommending a plea before they've reviewed discovery, before they've filed motions, before they've investigated anything, that's not strategy. That's the path of least resistance."
 
 ---
 
@@ -162,7 +162,7 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 [Text on screen: "Strategic continuance = specific answer. Scheduling continuance = vague answer."]
 "Ask: what specific work will be completed during this additional time? A strategic continuance comes with a specific answer. A scheduling continuance generates a vague one."
 
-"Also: ask what's happened between the last continuance and now. If the answer is 'not much' — well. That's your answer too."
+"Also: ask what's happened between the last continuance and now. If the answer is 'not much', well. That's your answer too."
 
 ---
 
@@ -194,13 +194,13 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 
 "Number three: What are the three biggest weaknesses in the prosecution's case?"
 
-"Number four: What motions have you filed — or are you planning to file?"
+"Number four: What motions have you filed, or are you planning to file?"
 
-"Number five: What is the realistic sentence exposure if we go to trial — not the maximum, the realistic number?"
+"Number five: What is the realistic sentence exposure if we go to trial, not the maximum, the realistic number?"
 
-"Number six: What are the collateral consequences of this plea — employment, housing, immigration, licensing?"
+"Number six: What are the collateral consequences of this plea, employment, housing, immigration, licensing?"
 
-"Number seven: If this were your case — not your client's case, YOUR case — what would you do?"
+"Number seven: If this were your case, not your client's case, YOUR case, what would you do?"
 
 [Pause]
 "That last one is the most important. Watch their face when you ask it."
@@ -209,9 +209,9 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 
 **[12:00-13:00] WHAT GOOD LOOKS LIKE**
 [Tone shift: slightly warmer]
-"Look — not every attorney is working against you. Many are genuinely fighting. Here's what good alignment looks like."
+"Look, not every attorney is working against you. Many are genuinely fighting. Here's what good alignment looks like."
 
-"They explain the plea AND present the case for trial, and let you decide. They file motions even when it costs them time. They share discovery and explain it. They're honest about realistic outcomes. They tell you the risks. And — this shouldn't be remarkable but it is — they return your calls."
+"They explain the plea AND present the case for trial, and let you decide. They file motions even when it costs them time. They share discovery and explain it. They're honest about realistic outcomes. They tell you the risks. And, this shouldn't be remarkable but it is, they return your calls."
 
 "That's not the bar for exceptional. That's the bar for adequate. And the fact that so many defendants don't even get that? That's why we exist."
 
@@ -221,20 +221,20 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 [Text on screen: "imnotanattorney.com"]
 "If you watched this far, something in your case already feels off. Trust that instinct."
 
-"We built a free Case Progress Score — takes five minutes, gives you a clear read on what's been done, what's missing, and what to focus on next. Link in the description."
+"We built a free Case Progress Score, takes five minutes, gives you a clear read on what's been done, what's missing, and what to focus on next. Link in the description."
 
-"If you need more than that — if you want us to actually review your case, analyze what your attorney has and hasn't done, and generate the specific questions for your situation — that's our Case Decoder. It's what we do."
+"If you need more than that, if you want us to actually review your case, analyze what your attorney has and hasn't done, and generate the specific questions for your situation, that's our Case Decoder. It's what we do."
 
 "We're not your lawyers. But we're on your side."
 
 [Text on screen: "Know What They Know."]
-"Know What They Know. Subscribe if this was useful — next week we're breaking down how criminal cases actually move through the system, stage by stage. The map nobody gives you."
+"Know What They Know. Subscribe if this was useful, next week we're breaking down how criminal cases actually move through the system, stage by stage. The map nobody gives you."
 
 ---
 
 ### Shorts Script (derived from main video)
 
-[This video generates Short #10 — "How Your Attorney Actually Makes Money" — already created as a standalone Short. Additionally, the "7 Questions" section can be extracted as a standalone Short:]
+[This video generates Short #10, "How Your Attorney Actually Makes Money", already created as a standalone Short. Additionally, the "7 Questions" section can be extracted as a standalone Short:]
 
 **Bonus Short: "7 Questions That Hold ANY Attorney Accountable" (55s)**
 
@@ -248,16 +248,16 @@ criminal defense attorney, attorney accountability, is my lawyer working, crimin
 
 **[0:22-0:28]** "#4: What motions have you filed or plan to file?"
 
-**[0:28-0:34]** "#5: What is my realistic sentence exposure — not the maximum?"
+**[0:28-0:34]** "#5: What is my realistic sentence exposure, not the maximum?"
 
 **[0:34-0:40]** "#6: What are the collateral consequences of this plea?"
 
-**[0:40-0:48]** "#7: If this were YOUR case — what would you do? Watch their face when you ask it."
+**[0:40-0:48]** "#7: If this were YOUR case, what would you do? Watch their face when you ask it."
 
 **[0:48-0:55]** "Your attorney works for you. Know What They Know. Link in bio."
 
 ---
 
-**Context**: This is the flagship video — the comprehensive version of the INNA value proposition. Maps to "how-your-attorney-makes-money," "is-your-attorney-actually-working-your-case," "7-things-criminal-justice-wont-tell-you" blog posts. Every stat and claim is sourced from existing blog content. This video should be pinned to the channel and featured on the website.
-**Retention strategy**: Pattern interrupts placed at 3:00 (incentive flip reveal), 4:30 (public defender math), 7:30 (continuance calendar), and 10:00 (the accountability questions). The "7 questions" section at 10:00 is the clear payoff that the hook promises — viewers who make it to this point have maximum engagement.
+**Context**: This is the flagship video, the comprehensive version of the INNA value proposition. Maps to "how-your-attorney-makes-money," "is-your-attorney-actually-working-your-case," "7-things-criminal-justice-wont-tell-you" blog posts. Every stat and claim is sourced from existing blog content. This video should be pinned to the channel and featured on the website.
+**Retention strategy**: Pattern interrupts placed at 3:00 (incentive flip reveal), 4:30 (public defender math), 7:30 (continuance calendar), and 10:00 (the accountability questions). The "7 questions" section at 10:00 is the clear payoff that the hook promises, viewers who make it to this point have maximum engagement.
 **KPI target**: CTR > 8% (strong title/thumbnail). AVD > 55% (strong retention through accountability questions). Subscriber conversion > 5%.

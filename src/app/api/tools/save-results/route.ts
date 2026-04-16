@@ -1,5 +1,5 @@
 /**
- * @fileoverview Save Calculator Results — email capture + persistence.
+ * @fileoverview Save Calculator Results, email capture + persistence.
  *
  * POST /api/tools/save-results
  *
@@ -8,7 +8,7 @@
  * Same pattern as /api/score/share.
  *
  * The `inputs` and `result` bodies are accepted as-is because they come
- * from the calculator API immediately prior — the client round-trips them
+ * from the calculator API immediately prior, the client round-trips them
  * here for persistence. If they were used for anything else (scoring,
  * eligibility, etc.) they would need re-validation, but for save-and-link
  * they are treated as opaque blobs stored in jsonb columns.
@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
 
   // If email provided, upsert subscriber + send saved-results email
   if (normalizedEmail) {
-    // subscribers table has only (email, source) — charge_type is NOT a column.
+    // subscribers table has only (email, source), charge_type is NOT a column.
     // charge_type is denormalized into calculator_results instead.
     const { error: subError } = await supabase.from("subscribers").upsert(
       { email: normalizedEmail, source: `calculator-${slug}` },
@@ -137,7 +137,7 @@ export async function POST(req: NextRequest) {
     await sendEmail(
       {
         to: normalizedEmail,
-        subject: "Your Calculator Results — Saved",
+        subject: "Your Calculator Results, Saved",
         html: `
           <p>Your results have been saved. You can access them anytime with the link below.</p>
           <p style="margin: 24px 0;">
@@ -147,7 +147,7 @@ export async function POST(req: NextRequest) {
             </a>
           </p>
           <p style="color: #6b7280; font-size: 14px;">
-            These results are based on published state rules and are provided as legal INFORMATION — not legal ADVICE.
+            These results are based on published state rules and are provided as legal INFORMATION, not legal ADVICE.
           </p>
         `,
         unsubscribeEmail: normalizedEmail,

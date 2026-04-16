@@ -10,13 +10,13 @@ blog_source: 10-day-dmv-deadline
 suggested_time: "Weekday 10:00 AM EST"
 ---
 
-## Quora: INNA-Q24 | I got a DUI -- do I need to do something about my license right away?
+## Quora: INNA-Q24 | I got a DUI, do I need to do something about my license right away?
 **Topics**: DUI, DMV Hearing, License Suspension, DUI Defense, Administrative Hearing
 **SEO**: "DUI license suspension deadline" / "DMV hearing after DUI" / "10 day deadline DUI license"
 
 Yes, and the clock is already running. This might be the most time-sensitive thing in your entire DUI case.
 
-After a DUI arrest, most states give you a narrow window -- often just **10 days** -- to request an administrative hearing with the DMV. Miss it and your license gets automatically suspended. No hearing. No argument. No second chance.
+After a DUI arrest, most states give you a narrow window, often just **10 days**, to request an administrative hearing with the DMV. Miss it and your license gets automatically suspended. No hearing. No argument. No second chance.
 
 This is separate from your criminal case. Completely separate. Your criminal attorney is focused on charges, plea negotiations, court dates. Meanwhile your driving privileges are on a countdown clock that nobody mentioned.
 

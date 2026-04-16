@@ -1,5 +1,5 @@
 /**
- * @file POST /api/generate/standalone — Operator trigger for standalone report generation.
+ * @file POST /api/generate/standalone, Operator trigger for standalone report generation.
  *
  * Same pattern as /api/generate/case-decoder: validates auth, checks idempotency,
  * then fire-and-forget delegates to the Supabase Edge Function (150s timeout).
@@ -9,7 +9,7 @@
  *   - Automated retry from the stuck-order detector cron
  *
  * The intake route (/api/intake/standalone/[slug]) also fires the Edge Function
- * directly — this route is the OPERATOR retry path.
+ * directly, this route is the OPERATOR retry path.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
   // Require intake data
   if (!order.standalone_intake) {
     return NextResponse.json(
-      { error: "No intake data — customer has not completed the form yet" },
+      { error: "No intake data, customer has not completed the form yet" },
       { status: 400 }
     );
   }
@@ -105,6 +105,6 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     status: "generating",
     orderId,
-    message: "Edge Function invoked — report generation started",
+    message: "Edge Function invoked, report generation started",
   });
 }

@@ -1,5 +1,5 @@
 /**
- * POST /api/customer/magic-link/verify — Verify magic link token.
+ * POST /api/customer/magic-link/verify, Verify magic link token.
  *
  * Called by the client-rendered verify page via fetch (same origin).
  * Validates token, creates session, sets session cookie.

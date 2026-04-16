@@ -1,5 +1,5 @@
 /**
- * Bulk Sentencing Outlier Detector — Judge Percentile Analyzer
+ * Bulk Sentencing Outlier Detector, Judge Percentile Analyzer
  *
  * Streams the 50 GB CourtListener opinions CSV and extracts sentencing data,
  * computing per-judge percentiles (p25, median, p75) for the sentencing_distributions table.
@@ -437,7 +437,7 @@ async function main() {
         }
       }
     }
-    // Fallback: author_str (appellate opinion writer — less useful but better than nothing)
+    // Fallback: author_str (appellate opinion writer, less useful but better than nothing)
     if (!judgeId) {
       const authorStr = (record.author_str || "").toLowerCase();
       if (authorStr.length > 3) {
@@ -503,9 +503,9 @@ async function main() {
   console.log(`Unique groups:           ${distributions.size}`);
 
   // ── Tiered grouping with rollup ──
-  // Tier 1: judge+jurisdiction+charge (most specific — what the table schema wants)
+  // Tier 1: judge+jurisdiction+charge (most specific, what the table schema wants)
   // Tier 2: judge+jurisdiction (roll up across charges for the same judge)
-  // Tier 3: judge-only (broadest — total sentencing pattern)
+  // Tier 3: judge-only (broadest, total sentencing pattern)
   // Coverage check picks the most specific tier available at query time.
 
   const results = [];
@@ -643,7 +643,7 @@ ON CONFLICT (judge_id, jurisdiction, charge_slug) DO UPDATE SET
       await supabaseQuery(batch.join("\n\n"));
       applied += batch.length;
       const rate = (applied / ((Date.now() - applyStart) / 1000)).toFixed(0);
-      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} distributions — ${rate}/sec\n`);
+      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} distributions, ${rate}/sec\n`);
     } catch (e) {
       errors++;
       console.error(`  Batch ${batchNum}: ${e.message.slice(0, 200)}`);

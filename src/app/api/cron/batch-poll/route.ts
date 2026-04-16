@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/batch-poll — Batch result polling (every 5 min)
+ * @file /api/cron/batch-poll, Batch result polling (every 5 min)
  *
  * Lightweight endpoint that only runs the batch poller task.
  * Registered with cron-job.org at every-5-minutes cadence.
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   const auth = requireCron(req);
   if (!auth.authorized) return auth.error;
 
-  // Idempotency lock — 4min window prevents overlapping 5-min cron runs
+  // Idempotency lock, 4min window prevents overlapping 5-min cron runs
   const lock = await acquireCronLock("batch-poll", 4 * 60 * 1000);
   if (!lock.shouldRun) {
     return NextResponse.json({ skipped: true, reason: lock.reason });

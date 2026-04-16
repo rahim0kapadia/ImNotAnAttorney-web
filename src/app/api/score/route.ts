@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
 
     supabase.rpc("increment_counter", { p_id: "score_completions" }).then(null, rpcLog("increment_counter"));
 
-    // Anonymous aggregate tracking — NO individual answers stored
+    // Anonymous aggregate tracking, NO individual answers stored
     supabase.rpc("increment_score_aggregate", { p_charge_type: ct, p_metric: "total_by_charge" }).then(null, rpcLog("total_by_charge"));
     supabase.rpc("increment_score_aggregate", { p_charge_type: ct, p_metric: `band_${result.band.toLowerCase()}` }).then(null, rpcLog("band"));
     if (input.motionsFiled === "no") {

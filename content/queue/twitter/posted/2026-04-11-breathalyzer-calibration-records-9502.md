@@ -16,7 +16,7 @@ The BAC result isn't a fact. It's a data point. And data points can be wrong.
 ===TWEET===
 Challenge Point 1: Calibration Records
 
-Was the device calibrated on schedule? Did it actually pass? What reference solution was used? Who performed it? A breathalyzer that's overdue for calibration doesn't produce reliable science — it produces a number.
+Was the device calibrated on schedule? Did it actually pass? What reference solution was used? Who performed it? A breathalyzer that's overdue for calibration doesn't produce reliable science, it produces a number.
 ===TWEET===
 Those aren't the same thing.
 ===TWEET===
@@ -42,6 +42,6 @@ For someone who blew .08 or .09, that margin is the entire case.
 ===TWEET===
 If your attorney is treating the BAC number like a carved-in-stone fact, they're conceding the prosecution's strongest evidence without a fight.
 ===TWEET===
-The 7 specific discovery requests your attorney should be making — by serial number, not just "the breathalyzer":
+The 7 specific discovery requests your attorney should be making, by serial number, not just "the breathalyzer":
 
 → https://imnotanattorney. com/blog/breathalyzer-calibration-records? utm_source=twitter&utm_medium=thread&utm_campaign=breathalyzer-calibration

@@ -1,5 +1,5 @@
 /**
- * Compute Pattern Tables — defense_theory_outcomes + motion_success_patterns
+ * Compute Pattern Tables, defense_theory_outcomes + motion_success_patterns
  *
  * Aggregates from classified_opinions using the join paths from spec Section 6.1.1.
  * Weights opinions by opinion_type: full=1.0, memo=0.8, order=0.5, pca=0.3.

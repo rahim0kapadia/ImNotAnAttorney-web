@@ -1,10 +1,10 @@
-# Court Reminders Platform — Implementation Plan
+# Court Reminders Platform, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add a free court prep tool (reminders + court logistics) to the partner referral quiz flow, capturing defendants who aren't ready to buy and converting them over time via email touchpoints.
 
-**Architecture:** A secondary CTA on the quiz recommendation page routes to a 4-field form. Submission creates a `court_reminders` row and redirects to a personalized prep page. A 6-hourly cron sends reminder emails at -14/-7/-3/-1 days before court. Each email links back to the prep page which includes the product recommendation. Conversion attribution uses token-based tracking through Stripe metadata. The free tier shows court logistics only — questions and case-specific intelligence remain paid.
+**Architecture:** A secondary CTA on the quiz recommendation page routes to a 4-field form. Submission creates a `court_reminders` row and redirects to a personalized prep page. A 6-hourly cron sends reminder emails at -14/-7/-3/-1 days before court. Each email links back to the prep page which includes the product recommendation. Conversion attribution uses token-based tracking through Stripe metadata. The free tier shows court logistics only, questions and case-specific intelligence remain paid.
 
 **Tech Stack:** Next.js 15 App Router, Supabase (PostgreSQL), Resend email, cron-job.org, existing partner referral infrastructure.
 
@@ -12,7 +12,7 @@
 
 ---
 
-## Task 0: CRO Copy Fixes (Independent — No Dependencies)
+## Task 0: CRO Copy Fixes (Independent, No Dependencies)
 
 **Files:**
 - Modify: `src/app/partners/page.tsx` (line 165)
@@ -29,7 +29,7 @@ In `src/app/partners/page.tsx`, find the form footer text (approximately line 16
 Takes 60 seconds. We&apos;ll review and get back to you within 24 hours.
 
 // NEW:
-Takes 60 seconds. Instant approval — check your email.
+Takes 60 seconds. Instant approval, check your email.
 ```
 
 - [ ] **Step 2: Fix copy inconsistency on bondsman page**
@@ -41,7 +41,7 @@ In `src/app/partners/bondsman/page.tsx`, find the same text (approximately line 
 Takes 60 seconds. We&apos;ll review and get back to you within 24 hours.
 
 // NEW:
-Takes 60 seconds. Instant approval — check your email.
+Takes 60 seconds. Instant approval, check your email.
 ```
 
 - [ ] **Step 3: Build to verify**
@@ -63,13 +63,13 @@ git commit -m "fix(partners): update stale 24h copy to match auto-approve flow"
 **Files:**
 - Create: `supabase/migrations/20260412b_court_reminders.sql`
 
-This MUST be applied first — Tasks 2-7 depend on the new table.
+This MUST be applied first, Tasks 2-7 depend on the new table.
 
 - [ ] **Step 1: Write the migration file**
 
 ```sql
--- Court reminders platform — free court prep for partner-referred defendants
--- Stores sign-ups, tracks reminder delivery, links to partner for attribution.
+, Court reminders platform, free court prep for partner-referred defendants
+, Stores sign-ups, tracks reminder delivery, links to partner for attribution.
 
 CREATE TABLE IF NOT EXISTS court_reminders (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -88,16 +88,16 @@ CREATE TABLE IF NOT EXISTS court_reminders (
   order_id uuid
 );
 
--- Cron query: find active reminders approaching court date
+, Cron query: find active reminders approaching court date
 CREATE INDEX IF NOT EXISTS idx_court_reminders_active_date
   ON court_reminders (status, court_date)
   WHERE status = 'active';
 
--- Prep page lookup by token
+, Prep page lookup by token
 CREATE INDEX IF NOT EXISTS idx_court_reminders_token
   ON court_reminders (token);
 
--- Partner dashboard: count sign-ups per partner
+, Partner dashboard: count sign-ups per partner
 CREATE INDEX IF NOT EXISTS idx_court_reminders_partner
   ON court_reminders (partner_promo_code)
   WHERE partner_promo_code IS NOT NULL;
@@ -144,12 +144,12 @@ Expected: 14 columns matching the schema above.
 
 ```bash
 git add supabase/migrations/20260412b_court_reminders.sql
-git commit -m "feat(court-prep): migration — court_reminders table + indexes"
+git commit -m "feat(court-prep): migration, court_reminders table + indexes"
 ```
 
 ---
 
-## Task 2: Shared Library — Types, Content, Discount Helper
+## Task 2: Shared Library, Types, Content, Discount Helper
 
 **Files:**
 - Create: `src/lib/court-reminders.ts`
@@ -163,7 +163,7 @@ git commit -m "feat(court-prep): migration — court_reminders table + indexes"
  *
  * COURT_PREP_CONTENT provides charge-type-specific court logistics
  * (what to expect, what to bring, what to wear). This is general legal
- * education — the kind available on any court website or legal blog.
+ * education, the kind available on any court website or legal blog.
  *
  * NO attorney questions. NO case-specific analysis. Those are paid products.
  */
@@ -206,13 +206,13 @@ export interface CourtPrepContent {
   whatToBring: string[];
   whatToWear: string;
   arrivalTips: string;
-  /** Teaser copy — describes what the paid product covers, NOT actual questions */
+  /** Teaser copy, describes what the paid product covers, NOT actual questions */
   paidProductTeaser: string;
 }
 
 const GENERIC_CONTENT: CourtPrepContent = {
   whatToExpect:
-    "At your hearing, a judge will review the charges against you. The prosecutor will present their position, and your attorney will respond on your behalf. You may or may not be asked to speak — follow your attorney's guidance. Hearings typically last 10-30 minutes.",
+    "At your hearing, a judge will review the charges against you. The prosecutor will present their position, and your attorney will respond on your behalf. You may or may not be asked to speak, follow your attorney's guidance. Hearings typically last 10-30 minutes.",
   whatToBring: [
     "Government-issued photo ID",
     "Your bond paperwork",
@@ -220,11 +220,11 @@ const GENERIC_CONTENT: CourtPrepContent = {
     "A pen and notepad for notes",
   ],
   whatToWear:
-    "Business casual or better. No hats, sunglasses, shorts, or tank tops. Courts take appearance seriously — dress like you take your case seriously.",
+    "Business casual or better. No hats, sunglasses, shorts, or tank tops. Courts take appearance seriously, dress like you take your case seriously.",
   arrivalTips:
-    "Arrive 30 minutes early. Go through security (no phones in some courtrooms — check your county's rules). Find the correct courtroom number from the docket board in the lobby. Sit quietly until your case is called.",
+    "Arrive 30 minutes early. Go through security (no phones in some courtrooms, check your county's rules). Find the correct courtroom number from the docket board in the lobby. Sit quietly until your case is called.",
   paidProductTeaser:
-    "Your case has specific angles an attorney should investigate — charge-specific weaknesses, procedural requirements, and evidence standards. Our analysis identifies them and gives you the exact questions.",
+    "Your case has specific angles an attorney should investigate, charge-specific weaknesses, procedural requirements, and evidence standards. Our analysis identifies them and gives you the exact questions.",
 };
 
 const DUI_CONTENT: CourtPrepContent = {
@@ -237,7 +237,7 @@ const DUI_CONTENT: CourtPrepContent = {
   whatToWear: GENERIC_CONTENT.whatToWear,
   arrivalTips: GENERIC_CONTENT.arrivalTips,
   paidProductTeaser:
-    "DUI cases have specific procedural requirements — calibration records, observation periods, rising blood alcohol timelines. Our analysis identifies the angles specific to YOUR stop and YOUR test results.",
+    "DUI cases have specific procedural requirements, calibration records, observation periods, rising blood alcohol timelines. Our analysis identifies the angles specific to YOUR stop and YOUR test results.",
 };
 
 const DRUG_CONTENT: CourtPrepContent = {
@@ -316,7 +316,7 @@ export function calculatePartnerDiscount(priceInCents: number): {
 
 - [ ] **Step 3: Build to verify types compile**
 
-Run: `npx tsc --noEmit --skipLibCheck 2>&1 | tail -5`
+Run: `npx tsc,noEmit,skipLibCheck 2>&1 | tail -5`
 Expected: Clean, no errors.
 
 - [ ] **Step 4: Commit**
@@ -338,7 +338,7 @@ git commit -m "feat(court-prep): shared types, content map, discount helper"
 
 ```typescript
 /**
- * POST /api/court-reminders — Creates a court reminder sign-up.
+ * POST /api/court-reminders, Creates a court reminder sign-up.
  *
  * Validates input, generates a unique token, stores in Supabase,
  * sends confirmation email, returns the prep page token.
@@ -416,14 +416,14 @@ export async function POST(req: NextRequest) {
       html: `
         <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Your court prep is set up, ${safeName}.</h1>
         <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">We'll send you reminders before your court date so you don't miss anything.</p>
-        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">Your personalized prep page — what to expect, what to bring, and how to prepare:</p>
+        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">Your personalized prep page, what to expect, what to bring, and how to prepare:</p>
         <p style="margin: 24px 0;"><a href="${prepUrl}" style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 700;">View Your Court Prep</a></p>
-        <p style="color: #71717A; font-size: 13px;">Bookmark this link — it's yours. We'll also include it in every reminder email.</p>
+        <p style="color: #71717A; font-size: 13px;">Bookmark this link, it's yours. We'll also include it in every reminder email.</p>
       `,
     });
   } catch (e) {
     console.warn("[Court Reminders] Confirmation email failed:", e);
-    // Non-fatal — reminder was still created
+    // Non-fatal, reminder was still created
   }
 
   return NextResponse.json({ token, prepUrl });
@@ -434,7 +434,7 @@ export async function POST(req: NextRequest) {
 
 ```typescript
 /**
- * GET /api/court-reminders/unsubscribe?token=xxx — Unsubscribes a reminder.
+ * GET /api/court-reminders/unsubscribe?token=xxx, Unsubscribes a reminder.
  * Sets status to 'unsubscribed'. Shows a simple confirmation page.
  */
 
@@ -458,7 +458,7 @@ export async function GET(req: NextRequest) {
     console.error("[Court Reminders] Unsubscribe error:", error);
   }
 
-  // Always show success (even if token not found — prevent enumeration)
+  // Always show success (even if token not found, prevent enumeration)
   return new NextResponse(
     `<!DOCTYPE html>
     <html lang="en"><head><meta charset="utf-8"><title>Unsubscribed</title>
@@ -475,14 +475,14 @@ export async function GET(req: NextRequest) {
 
 - [ ] **Step 3: Build to verify**
 
-Run: `npx tsc --noEmit --skipLibCheck 2>&1 | tail -5`
+Run: `npx tsc,noEmit,skipLibCheck 2>&1 | tail -5`
 Expected: Clean.
 
 - [ ] **Step 4: Commit**
 
 ```bash
 git add src/app/api/court-reminders/route.ts src/app/api/court-reminders/unsubscribe/route.ts
-git commit -m "feat(court-prep): API routes — create reminder + unsubscribe"
+git commit -m "feat(court-prep): API routes, create reminder + unsubscribe"
 ```
 
 ---
@@ -677,7 +677,7 @@ export function CourtReminderForm({
 
 ```tsx
 /**
- * /r/[code]/reminders — Court reminder sign-up page.
+ * /r/[code]/reminders, Court reminder sign-up page.
  *
  * Server component: looks up partner, sets ref cookie, renders form.
  * Accepts ?charge= and ?rec= query params from the quiz.
@@ -694,7 +694,7 @@ import { FadeInUp } from "@/components/motion/FadeInUp";
 export const metadata: Metadata = {
   title: "Free Court Prep | ImNotAnAttorney",
   description:
-    "Court date reminders, what to expect at your hearing, and how to prepare. Free — no account needed.",
+    "Court date reminders, what to expect at your hearing, and how to prepare. Free, no account needed.",
   openGraph: {
     title: "Free Court Prep",
     description: "Court date reminders + what to expect at your hearing.",
@@ -784,7 +784,7 @@ git commit -m "feat(court-prep): reminder sign-up form + /r/[code]/reminders pag
 
 ```tsx
 /**
- * /prep/[token] — Personalized court prep page.
+ * /prep/[token], Personalized court prep page.
  *
  * Shows court date countdown, what to expect, what to bring,
  * and a product recommendation. Refreshes partner ref cookie
@@ -825,10 +825,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const chargeName = CHARGE_DISPLAY_NAMES[data.charge_type] || "Criminal Charges";
   return {
-    title: `Court Prep — ${data.county_state} | ImNotAnAttorney`,
+    title: `Court Prep, ${data.county_state} | ImNotAnAttorney`,
     description: `Your court date is ${data.court_date}. Here's what to expect and how to prepare.`,
     openGraph: {
-      title: `Court Prep — ${chargeName}`,
+      title: `Court Prep, ${chargeName}`,
       description: `Your court date is ${data.court_date}. What to expect at your hearing.`,
     },
   };
@@ -915,7 +915,7 @@ export default async function PrepPage({ params }: PageProps) {
               <p className="text-5xl font-bold text-amber-400 mb-2">{daysUntil} day{daysUntil !== 1 ? "s" : ""}</p>
               <p className="text-xl text-zinc-300">
                 {courtDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
-                {" — "}{reminder.county_state}
+                {", "}{reminder.county_state}
               </p>
             </>
           )}
@@ -975,7 +975,7 @@ export default async function PrepPage({ params }: PageProps) {
             </div>
 
             <p className="text-zinc-400 text-sm mb-6">
-              {tier.name} — {tier.delivery}
+              {tier.name}, {tier.delivery}
             </p>
 
             <Link
@@ -990,7 +990,7 @@ export default async function PrepPage({ params }: PageProps) {
         {/* Section E: Footer */}
         <footer className="mt-12 pt-8 border-t border-zinc-800 text-center">
           <p className="text-zinc-500 text-sm">
-            ImNotAnAttorney provides legal information — not legal advice.
+            ImNotAnAttorney provides legal information, not legal advice.
           </p>
           <p className="text-zinc-600 text-xs mt-2">
             Reminders will be sent to {reminder.email} at 14, 7, 3, and 1 day(s) before your court date.
@@ -1111,7 +1111,7 @@ function unsubUrl(token: string) {
 
 function footer(token: string) {
   return `<p style="color: #71717A; font-size: 12px; margin-top: 32px; border-top: 1px solid #27272A; padding-top: 16px;">
-    ImNotAnAttorney provides legal information — not legal advice.<br/>
+    ImNotAnAttorney provides legal information, not legal advice.<br/>
     <a href="${unsubUrl(token)}" style="color: #71717A; text-decoration: underline;">Unsubscribe from reminders</a>
   </p>`;
 }
@@ -1120,11 +1120,11 @@ export function reminder14d(ctx: ReminderContext): { subject: string; html: stri
   const safeName = escapeHtml(ctx.firstName);
   const chargeName = CHARGE_DISPLAY_NAMES[ctx.chargeType] || "your hearing";
   return {
-    subject: `Your court date is in 2 weeks — ${ctx.countyState}`,
+    subject: `Your court date is in 2 weeks, ${ctx.countyState}`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">${safeName}, your court date is in 2 weeks.</h1>
       <p style="${pStyle}">We know this is stressful. Here's what helps: being prepared.</p>
-      <p style="${pStyle}">Your prep page has everything you need — what to expect at a ${escapeHtml(chargeName)} hearing, what to bring, and how to show up ready.</p>
+      <p style="${pStyle}">Your prep page has everything you need, what to expect at a ${escapeHtml(chargeName)} hearing, what to bring, and how to show up ready.</p>
       <p style="margin: 24px 0;"><a href="${prepUrl(ctx.token)}" style="${btnStyle}">View Your Court Prep</a></p>
       ${footer(ctx.token)}
     `,
@@ -1134,10 +1134,10 @@ export function reminder14d(ctx: ReminderContext): { subject: string; html: stri
 export function reminder7d(ctx: ReminderContext): { subject: string; html: string } {
   const safeName = escapeHtml(ctx.firstName);
   return {
-    subject: `1 week until your court date — ${ctx.countyState}`,
+    subject: `1 week until your court date, ${ctx.countyState}`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">1 week, ${safeName}.</h1>
-      <p style="${pStyle}">Your hearing is next week. Now's the time to prepare — review what to expect, plan what to bring, and make sure you know when and where to show up.</p>
+      <p style="${pStyle}">Your hearing is next week. Now's the time to prepare, review what to expect, plan what to bring, and make sure you know when and where to show up.</p>
       <p style="margin: 24px 0;"><a href="${prepUrl(ctx.token)}" style="${btnStyle}">Review Your Court Prep</a></p>
       ${footer(ctx.token)}
     `,
@@ -1149,7 +1149,7 @@ export function reminder3d(ctx: ReminderContext): { subject: string; html: strin
   const content = getPrepContent(ctx.chargeType);
   const items = content.whatToBring.map((b) => `<li style="color: ${ZINC}; margin: 4px 0;">${escapeHtml(b)}</li>`).join("");
   return {
-    subject: `3 days — are you prepared?`,
+    subject: `3 days, are you prepared?`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">3 days, ${safeName}.</h1>
       <p style="${pStyle}">Quick checklist:</p>
@@ -1194,7 +1194,7 @@ export function postCourtEmail(ctx: ReminderContext): { subject: string; html: s
 
 ```typescript
 /**
- * GET /api/cron/court-reminders — Sends court date reminder emails.
+ * GET /api/cron/court-reminders, Sends court date reminder emails.
  *
  * Schedule: Every 6 hours via cron-job.org.
  * Protected by CRON_AUTH_TOKEN bearer token.
@@ -1466,7 +1466,7 @@ Add to the toolkit/getting started section:
   <h3 className="font-bold text-amber-400 mb-2">How your link works</h3>
   <p className="text-sm text-zinc-300">
     When clients use your link, they take a quick quiz and get a product recommendation.
-    They can also set up free court prep — date reminders + what to expect at their hearing.
+    They can also set up free court prep, date reminders + what to expect at their hearing.
     You earn commission whether they buy now or later through a reminder.
   </p>
 </div>
@@ -1478,7 +1478,7 @@ In `src/app/partners/bondsman/page.tsx`, update the value proposition section. R
 
 Hero sub-headline:
 ```tsx
-Your clients need help preparing for court. We handle that — and you earn on every case.
+Your clients need help preparing for court. We handle that, and you earn on every case.
 ```
 
 Value prop bullets:
@@ -1493,7 +1493,7 @@ Value prop bullets:
 In `src/app/partners/page.tsx`, update the subtitle or value prop to mention court prep:
 
 ```tsx
-Your referrals get free court prep — date reminders and hearing guidance. You earn 10-20% on every product they purchase.
+Your referrals get free court prep, date reminders and hearing guidance. You earn 10-20% on every product they purchase.
 ```
 
 - [ ] **Step 5: Update message templates with court prep framing**
@@ -1505,17 +1505,17 @@ const TEMPLATES = [
   {
     label: "Add to your check-in text",
     template: (code: string, url: string) =>
-      `Hey [name], this is [your name]. Check-in: [day/time]. Free court prep — reminders and what to expect at your hearing: ${url} — code ${code} saves 10% on upgrades.`,
+      `Hey [name], this is [your name]. Check-in: [day/time]. Free court prep, reminders and what to expect at your hearing: ${url}, code ${code} saves 10% on upgrades.`,
   },
   {
     label: "Quick share",
     template: (code: string, url: string) =>
-      `Hey [name], free court date reminders + hearing prep for your case: ${url} — code ${code} saves 10% if you need anything more.`,
+      `Hey [name], free court date reminders + hearing prep for your case: ${url}, code ${code} saves 10% if you need anything more.`,
   },
   {
     label: "For someone else",
     template: (code: string, url: string) =>
-      `Someone dealing with a case? Free court prep — date reminders, what to expect, how to prepare: ${url} — code ${code} for 10% off.`,
+      `Someone dealing with a case? Free court prep, date reminders, what to expect, how to prepare: ${url}, code ${code} for 10% off.`,
   },
 ];
 ```
@@ -1528,7 +1528,7 @@ In `src/components/partner/CreativeAssets.tsx`, update the "Verbal One-Liner (fo
 {
   label: "Verbal One-Liner (for bondsmen)",
   template: (code: string, url: string) =>
-    `After you tell them about check-ins, say:\n\n"Free court prep — reminders before your court date and what to expect at your hearing. imnotanattorney.com, code ${code} saves you 10%."\n\nOne sentence. That's it.`,
+    `After you tell them about check-ins, say:\n\n"Free court prep, reminders before your court date and what to expect at your hearing. imnotanattorney.com, code ${code} saves you 10%."\n\nOne sentence. That's it.`,
 },
 ```
 
@@ -1569,7 +1569,7 @@ Wait for Vercel deploy, then verify:
 - [ ] **Step 4: Run CV**
 
 ```bash
-node ~/projects/continuous-verification/verify.mjs --project inna --probe-only --no-trends
+node ~/projects/continuous-verification/verify.mjs,project inna,probe-only,no-trends
 ```
 
 Expected: All probes pass.

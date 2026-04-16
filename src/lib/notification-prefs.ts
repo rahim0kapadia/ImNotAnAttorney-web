@@ -84,7 +84,7 @@ export function shouldSendSMS(pref: Channel): boolean {
   return pref === "sms" || pref === "both";
 }
 
-/** 10DLC consent guard — ALL client SMS must pass through this. */
+/** 10DLC consent guard, ALL client SMS must pass through this. */
 export function canSendClientSMS(
   phone: string | null | undefined,
   smsConsentAt: string | null | undefined

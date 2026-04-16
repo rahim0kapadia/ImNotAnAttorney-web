@@ -1,5 +1,5 @@
 /**
- * PATCH /api/partner/settings — Update partner payment settings.
+ * PATCH /api/partner/settings, Update partner payment settings.
  *
  * Auth: session cookie validated via validatePartnerSession().
  */

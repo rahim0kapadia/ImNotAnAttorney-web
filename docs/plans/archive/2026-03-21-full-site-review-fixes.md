@@ -1,4 +1,4 @@
-# Full Site Review Fixes — Implementation Plan
+# Full Site Review Fixes, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -15,15 +15,15 @@
 - **Repo:** `C:/Users/email/projects/ImNotAnAttorney-web/`
 - **Problem:** Full-site code review found 6 critical issues, 11 security warnings, 9 business logic warnings, and 11 code quality warnings. The most severe are in the payment pipeline (checkout + webhook + cron).
 - **Key files to read first:**
-  - `src/app/api/checkout/route.ts` (~592 lines) — main checkout flow
-  - `src/app/api/webhooks/stripe/route.ts` (~968 lines) — webhook handler
-  - `src/app/api/cron/drip/route.ts` (~2087 lines) — daily cron
-  - `src/lib/auth/guards.ts` — auth guard library
-  - `src/lib/feature-flags.ts` — feature flag helper
-  - `src/lib/customer-auth.ts` — customer auth library
-  - `src/middleware.ts` — centralized middleware
+  - `src/app/api/checkout/route.ts` (~592 lines), main checkout flow
+  - `src/app/api/webhooks/stripe/route.ts` (~968 lines), webhook handler
+  - `src/app/api/cron/drip/route.ts` (~2087 lines), daily cron
+  - `src/lib/auth/guards.ts`, auth guard library
+  - `src/lib/feature-flags.ts`, feature flag helper
+  - `src/lib/customer-auth.ts`, customer auth library
+  - `src/middleware.ts`, centralized middleware
 - **Key decisions:**
-  - Payment fixes are highest priority — they affect revenue and could be exploited
+  - Payment fixes are highest priority, they affect revenue and could be exploited
   - Cron refactoring is deferred to a separate plan (2087-line file needs a full decomposition, not a patch)
   - Each fix must preserve existing behavior for non-buggy paths
 
@@ -60,7 +60,7 @@ This ensures the webhook only gets `product_type: "digital-product"` when the TI
 - [ ] **Step 3: Verify & commit**
 
 ```bash
-npx tsc --noEmit
+npx tsc,noEmit
 git commit -m "fix: validate productType from tier config, not client input (security)"
 ```
 
@@ -90,7 +90,7 @@ if (event.type === "invoice.payment_failed") {
     // Email operator
     await sendEmail({
       to: operatorEmail,
-      subject: `⚠️ Installment Payment Failed — Subscription ${subscriptionId}`,
+      subject: `⚠️ Installment Payment Failed, Subscription ${subscriptionId}`,
       html: `<p>A customer's second installment payment failed.</p>
              <p>Subscription ID: ${subscriptionId}</p>
              <p>Amount due: $${(invoice.amount_due / 100).toFixed(2)}</p>
@@ -149,7 +149,7 @@ if (referral) {
 }
 ```
 
-NOTE: Read the actual schema first — the referrals table may have different column names. Use the actual Supabase update pattern (not raw SQL) if an RPC doesn't exist. The key principle: decrement `total_referrals` and `total_commission` on the partner, and mark the referral as reversed.
+NOTE: Read the actual schema first, the referrals table may have different column names. Use the actual Supabase update pattern (not raw SQL) if an RPC doesn't exist. The key principle: decrement `total_referrals` and `total_commission` on the partner, and mark the referral as reversed.
 
 - [ ] **Step 3: Commit**
 
@@ -276,7 +276,7 @@ git commit -m "fix: eliminate length oracle in auth guard timing-safe comparison
 - [ ] **Step 1: Read the deliver route's auth pattern (it has HMAC-signed tokens + raw secret)**
 - [ ] **Step 2: Replace raw `===` comparison with `requireOperatorSecret()` from guards**
 
-The deliver route has a complex auth pattern (HMAC-signed tokens for GET, Bearer or raw secret for POST). Only the raw secret comparison needs fixing — replace `token === process.env.OPERATOR_SECRET` with the guard's timing-safe version.
+The deliver route has a complex auth pattern (HMAC-signed tokens for GET, Bearer or raw secret for POST). Only the raw secret comparison needs fixing, replace `token === process.env.OPERATOR_SECRET` with the guard's timing-safe version.
 
 - [ ] **Step 3: Commit**
 
@@ -289,10 +289,10 @@ git commit -m "fix: use timing-safe comparison for OPERATOR_SECRET in deliver ro
 ## Task 9: Customer portal security hardening (S6, S7, S8, S9)
 
 **Files:**
-- Modify: `src/app/api/customer/magic-link/route.ts` — add email validation, fix rate limit window
-- Modify: `src/app/api/customer/magic-link/verify/route.ts` — add token format validation
-- Modify: `src/lib/customer-auth.ts` — invalidate old sessions on new login
-- Modify: `src/lib/email.ts` — escape magicLinkUrl
+- Modify: `src/app/api/customer/magic-link/route.ts`, add email validation, fix rate limit window
+- Modify: `src/app/api/customer/magic-link/verify/route.ts`, add token format validation
+- Modify: `src/lib/customer-auth.ts`, invalidate old sessions on new login
+- Modify: `src/lib/email.ts`, escape magicLinkUrl
 
 - [ ] **Step 1: Add email validation to magic-link route**
 
@@ -339,7 +339,7 @@ const safeUrl = magicLinkUrl.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 - [ ] **Step 6: Commit**
 
 ```bash
-git commit -m "fix: harden customer portal — email validation, rate limits, session invalidation, URL escaping"
+git commit -m "fix: harden customer portal, email validation, rate limits, session invalidation, URL escaping"
 ```
 
 ---
@@ -541,7 +541,7 @@ git commit -m "fix: add expiry indexes to customer auth tables"
 
 ---
 
-## Task 18: Fix cron — ISO week calculation + reconciliation (Q3, C4)
+## Task 18: Fix cron, ISO week calculation + reconciliation (Q3, C4)
 
 **Files:**
 - Modify: `src/app/api/cron/drip/route.ts` (~line 1906)
@@ -617,7 +617,7 @@ These items are real issues but require a larger refactoring effort:
 
 | Issue | Why deferred |
 |-------|-------------|
-| **Q11** Cron is 2087 lines in one function | Needs full decomposition plan — extracting 19 parts into separate functions with error isolation |
+| **Q11** Cron is 2087 lines in one function | Needs full decomposition plan, extracting 19 parts into separate functions with error isolation |
 | **Q1** N+1 query storm in cron Part 2 | Part of the cron decomposition |
 | **Q4** Unbounded N+1 in cron Part 7 | Part of the cron decomposition |
 | **Q5** Fire-and-forget fetch in cron Part 12 | Part of the cron decomposition |
@@ -633,11 +633,11 @@ These items are real issues but require a larger refactoring effort:
 ```bash
 cd ~/projects/ImNotAnAttorney-web
 # TypeScript compiles
-npx tsc --noEmit
+npx tsc,noEmit
 # No remaining timing-unsafe comparisons in routes
-grep -r "=== .*OPERATOR_SECRET\|=== .*ADMIN_PASSWORD" src/app/ --include="*.ts"
+grep -r "=== .*OPERATOR_SECRET\|=== .*ADMIN_PASSWORD" src/app/,include="*.ts"
 # All admin routes have try/catch on req.json()
-grep -rn "req.json()" src/app/api/admin/ --include="*.ts" -A2 | grep -v "try\|catch"
+grep -rn "req.json()" src/app/api/admin/,include="*.ts" -A2 | grep -v "try\|catch"
 # Feature flag tier_scope fix
 grep -n "tierScope" src/lib/feature-flags.ts
 ```

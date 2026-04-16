@@ -71,11 +71,11 @@ if (match) {
   const missing = EVENTS.filter((e) => !events.includes(e));
   if (missing.length === 0) {
     console.log("All required events subscribed. Nothing to do.");
-    console.log("NOTE: Resend does not return the signing_secret on list — retrieve it from the");
+    console.log("NOTE: Resend does not return the signing_secret on list, retrieve it from the");
     console.log("dashboard or by re-creating the webhook if you don't already have it stored.");
     process.exit(0);
   }
-  console.log(`Missing events: ${missing.join(", ")} — add in dashboard or PATCH via API.`);
+  console.log(`Missing events: ${missing.join(", ")}, add in dashboard or PATCH via API.`);
   process.exit(2);
 }
 

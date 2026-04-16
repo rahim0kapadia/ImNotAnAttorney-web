@@ -1,33 +1,33 @@
-# ImNotAnAttorney — Google Business Profile Services List
+# ImNotAnAttorney, Google Business Profile Services List
 
 Generated 2026-03-28. All services use noun-forward phrasing matching Google's format.
-UPL clean: "research," "analysis," "questions," "assessment" — never "advice," "representation," or "defense strategy."
+UPL clean: "research," "analysis," "questions," "assessment", never "advice," "representation," or "defense strategy."
 
 ## BACKLOG: Product Roadmap
 
 Every service on this list is a potential paid product. The GBP listing validates demand (search volume + zero competition) before we build anything.
 
 **Content strategy for each service (product-adjacent, NOT teaser):**
-- Write a blog post that gives FULL value on a RELATED topic — hold nothing back
+- Write a blog post that gives FULL value on a RELATED topic, hold nothing back
 - The blog is NOT a preview of the product. It's a neighbor topic.
 - At the bottom: "By the way, we offer [this service] if you need it."
 - Example: Blog = "5 things every defendant should check in their police report" (gives all 5). CTA = "We offer full police report error detection as part of our Case Decoder."
-- The blog earns trust by giving everything away. The product sells convenience and rigor — not information access.
+- The blog earns trust by giving everything away. The product sells convenience and rigor, not information access.
 - NEVER tease. NEVER gate. NEVER "here's 30%, pay for the rest." That's dead in 2026 and our audience sees through it instantly.
 
 **Priority products (shortest path to revenue):**
-- Already built: attorney accountability questions, discovery review, judge research, witness credibility, prosecution weakness (these ARE the existing tiers — just need landing pages per service)
+- Already built: attorney accountability questions, discovery review, judge research, witness credibility, prosecution weakness (these ARE the existing tiers, just need landing pages per service)
 - Calculator tools: defense milestone assessment (/score exists), good time credit, statute of limitations, motion deadlines
 - New standalone products ($47-$97): family member case research, employment impact assessment, first court appearance prep, post-arrest family action plan
 - Free lead magnets → Case Decoder funnel: court date outfit guidance, arraignment protocol, courtroom behavior expectations
 
-**P0 BACKLOG: Defense Milestone Score (/score) — QA + Marketing Push**
+**P0 BACKLOG: Defense Milestone Score (/score), QA + Marketing Push**
 The score tool is the #1 lead magnet and should be the front door of all marketing. Before pushing it:
-1. QA the score tool end-to-end — does it actually work well? Is the scoring algorithm producing useful results? Are observations helpful or generic?
-2. Review the 10 questions — are they the RIGHT questions? Do they surface real signal or just check boxes?
-3. Review the score bands and observations — do they feel like a science (systematic, calibrated) or an art (vague, generic)?
-4. Test with real scenarios across all charge types — does a DUI defendant get meaningfully different results than a federal defendant?
-5. Improve based on findings — tighten the algorithm, sharpen observations, add charge-specific intelligence
+1. QA the score tool end-to-end, does it actually work well? Is the scoring algorithm producing useful results? Are observations helpful or generic?
+2. Review the 10 questions, are they the RIGHT questions? Do they surface real signal or just check boxes?
+3. Review the score bands and observations, do they feel like a science (systematic, calibrated) or an art (vague, generic)?
+4. Test with real scenarios across all charge types, does a DUI defendant get meaningfully different results than a federal defendant?
+5. Improve based on findings, tighten the algorithm, sharpen observations, add charge-specific intelligence
 6. THEN push it to the front of all marketing: GBP, social, blog CTAs, email sequences, ads
 The score should be so good that defendants share it without being asked. Quality first, distribution second.
 

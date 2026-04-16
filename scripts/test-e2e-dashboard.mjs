@@ -64,7 +64,7 @@ async function assert(label, fn) {
     console.log(`  PASS: ${label}`);
     passed++;
   } catch (e) {
-    console.error(`  FAIL: ${label} — ${e.message}`);
+    console.error(`  FAIL: ${label}, ${e.message}`);
     failed++;
   }
 }
@@ -369,7 +369,7 @@ async function runTests() {
   });
 
   await assert("POST /api/operator/jobs/[id]/retry rejects non-failed job", async () => {
-    // testJobId is "completed" — should be rejected
+    // testJobId is "completed", should be rejected
     const res = await fetch(`${BASE_URL}/api/operator/jobs/${testJobId}/retry`, {
       method: "POST",
       headers: headers(),

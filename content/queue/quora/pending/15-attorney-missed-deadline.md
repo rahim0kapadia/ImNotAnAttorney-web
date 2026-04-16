@@ -39,13 +39,13 @@ Your attorney's response tells you everything. Good responses: "I acknowledge th
 
 **Your options depending on severity:**
 
-Motion to file late -- some deadlines have "good cause" provisions. Your attorney should know if this applies.
+Motion to file late, some deadlines have "good cause" provisions. Your attorney should know if this applies.
 
-Change attorneys -- if this is part of a pattern of neglect, this may be the final straw.
+Change attorneys, if this is part of a pattern of neglect, this may be the final straw.
 
-Bar complaint -- if the missed deadline caused actual harm, document everything and file with your state bar.
+Bar complaint, if the missed deadline caused actual harm, document everything and file with your state bar.
 
-Legal malpractice -- requires proving duty (they owed you care), breach (missing deadlines qualifies), causation (the breach caused harm), and damages (quantifiable harm). This is hard to prove but it's real.
+Legal malpractice, requires proving duty (they owed you care), breach (missing deadlines qualifies), causation (the breach caused harm), and damages (quantifiable harm). This is hard to prove but it's real.
 
 One missed deadline might be an honest mistake. A pattern of missed deadlines is negligence. Ask yourself: How many times has this happened? Does my attorney seem organized? Do I have confidence in them going forward?
 

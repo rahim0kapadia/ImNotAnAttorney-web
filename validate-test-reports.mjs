@@ -12,7 +12,7 @@ import { readFileSync, readdirSync } from "fs";
 import { join, basename } from "path";
 
 // ---------------------------------------------------------------------------
-// validateReportContent — mirrors edge function logic exactly
+// validateReportContent, mirrors edge function logic exactly
 // ---------------------------------------------------------------------------
 function validateReportContent(markdown) {
   const violations = [];
@@ -47,7 +47,7 @@ function validateReportContent(markdown) {
     }
   }
 
-  // 2. Unsourced collateral claims — sentences mentioning collateral topics
+  // 2. Unsourced collateral claims, sentences mentioning collateral topics
   //    without a statute citation (section, U.S.C., F.S., C.F.R., or case name "v.")
   //    and without "ask your attorney"
   const collateralTopics = [
@@ -79,7 +79,7 @@ function validateReportContent(markdown) {
     }
   }
 
-  // 3. Pricing errors — $797 should be $800
+  // 3. Pricing errors, $797 should be $800
   if (markdown.includes("$797")) {
     let idx = 0;
     while ((idx = markdown.indexOf("$797", idx)) !== -1) {
@@ -99,7 +99,7 @@ function validateReportContent(markdown) {
 }
 
 // ---------------------------------------------------------------------------
-// Main — run against all 3 test reports
+// Main, run against all 3 test reports
 // ---------------------------------------------------------------------------
 const testReportsDir = join(
   "C:",
@@ -130,7 +130,7 @@ for (const file of reportFiles) {
   try {
     markdown = readFileSync(filePath, "utf-8");
   } catch (err) {
-    console.log(`  [SKIP] ${file} — file not found or unreadable`);
+    console.log(`  [SKIP] ${file}, file not found or unreadable`);
     console.log();
     continue;
   }

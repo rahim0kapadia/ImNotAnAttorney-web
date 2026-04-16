@@ -1,5 +1,5 @@
 /**
- * @fileoverview Blog publish step — commits an MDX file to GitHub via the
+ * @fileoverview Blog publish step, commits an MDX file to GitHub via the
  * Contents API, then marks the draft and content gap as published, and
  * submits the new URL to IndexNow.
  *
@@ -59,7 +59,7 @@ async function resolveUniqueSlug(base: string): Promise<string> {
     n++;
   }
 
-  // Fallback after 3 collision attempts — timestamp suffix is unique enough
+  // Fallback after 3 collision attempts, timestamp suffix is unique enough
   return `${base}-${Date.now()}`;
 }
 
@@ -134,7 +134,7 @@ export async function publishDraft(
       .eq("id", draft.id);
 
     if (draftErr) {
-      // GitHub file was committed — log but don't throw so we don't orphan
+      // GitHub file was committed, log but don't throw so we don't orphan
       console.error(
         `[blog-publish] Draft DB update failed for "${slug}":`,
         draftErr.message

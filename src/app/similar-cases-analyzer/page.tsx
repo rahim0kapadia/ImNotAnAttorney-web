@@ -1,9 +1,9 @@
 /**
  * Similar Cases Analyzer landing page (/similar-cases-analyzer)
  *
- * Standalone Tier 9 data product — $297, instant delivery.
+ * Standalone Tier 9 data product, $297, instant delivery.
  * Presents factually similar case matching from Tier 9 tables.
- * Server component — AvailabilityChecker is a client island.
+ * Server component, AvailabilityChecker is a client island.
  */
 import type { Metadata } from "next";
 import { TrustBadges } from "@/components/TrustBadges";
@@ -17,12 +17,12 @@ import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Similar Cases Analyzer — ${TIER_CORE["similar-cases-analyzer"].priceDisplay} | ImNotAnAttorney`,
+    title: `Similar Cases Analyzer, ${TIER_CORE["similar-cases-analyzer"].priceDisplay} | ImNotAnAttorney`,
     description:
       "Find cases with facts like yours and see what happened. Factually similar case matching with outcome probabilities from verified court records.",
     alternates: { canonical: `${SITE_URL}/similar-cases-analyzer` },
     openGraph: {
-      title: "Similar Cases Analyzer — See What Happened in Cases Like Yours",
+      title: "Similar Cases Analyzer, See What Happened in Cases Like Yours",
       description:
         "Factually similar case matching with outcome data. Every case includes a source URL.",
       url: `${SITE_URL}/similar-cases-analyzer`,
@@ -36,7 +36,7 @@ const faqItems = [
   {
     question: "How does the case matching work?",
     answer:
-      "We match cases using charge type, jurisdiction, evidence type, defendant circumstances, and procedural history — finding the cases most factually similar to yours from verified court records.",
+      "We match cases using charge type, jurisdiction, evidence type, defendant circumstances, and procedural history, finding the cases most factually similar to yours from verified court records.",
   },
   {
     question: "Where does the data come from?",
@@ -46,12 +46,12 @@ const faqItems = [
   {
     question: "Are the outcomes predictions?",
     answer:
-      "No. These are actual outcomes from real cases with similar facts. They show what HAS happened — not what WILL happen. Every case is unique, and your attorney\u2019s strategy is what determines your outcome.",
+      "No. These are actual outcomes from real cases with similar facts. They show what HAS happened, not what WILL happen. Every case is unique, and your attorney\u2019s strategy is what determines your outcome.",
   },
   {
     question: "Is this legal advice?",
     answer:
-      "No. This is legal INFORMATION — verified court data compiled for your review. Your attorney remains the final authority on strategy decisions.",
+      "No. This is legal INFORMATION, verified court data compiled for your review. Your attorney remains the final authority on strategy decisions.",
   },
   {
     question: "How fast do I get it?",
@@ -192,7 +192,7 @@ export default function SimilarCasesAnalyzerPage() {
             </h1>
             <p className="mt-4 text-lg leading-relaxed text-zinc-300">
               Every case is unique. But patterns exist. Find the cases most
-              similar to yours and see how they resolved — from verified court
+              similar to yours and see how they resolved, from verified court
               records.
             </p>
             <p className="mt-6 text-3xl font-bold text-amber-400">{TIER_CORE["similar-cases-analyzer"].priceDisplay}</p>
@@ -255,7 +255,7 @@ export default function SimilarCasesAnalyzerPage() {
             <div className="mt-6 overflow-x-auto rounded-lg border border-zinc-700">
               <table className="w-full text-left text-sm">
                 <caption className="bg-zinc-900 px-4 py-3 text-left text-xs font-medium text-zinc-400">
-                  Sample similar case matches — DUI 1st offense, Pinellas County
+                  Sample similar case matches, DUI 1st offense, Pinellas County
                 </caption>
                 <thead>
                   <tr className="border-b border-zinc-700 bg-zinc-900/80">
@@ -371,7 +371,7 @@ export default function SimilarCasesAnalyzerPage() {
               Every case in your report links directly to a public court record.
               No scraped summaries. No fabricated case names. Verified source
               data from CourtListener, 595,851 federal sentencing records
-              (JUSTFAIR/USSC), and BJS national outcome data — so you and
+              (JUSTFAIR/USSC), and BJS national outcome data, so you and
               your attorney can check every match.
             </p>
             <p className="mt-3 text-sm text-zinc-400">
@@ -403,7 +403,7 @@ export default function SimilarCasesAnalyzerPage() {
               id="cta-heading"
               className="font-display text-2xl font-bold text-white"
             >
-              Get Your Similar Cases Analysis — {TIER_CORE["similar-cases-analyzer"].priceDisplay}
+              Get Your Similar Cases Analysis, {TIER_CORE["similar-cases-analyzer"].priceDisplay}
             </h2>
             <p className="mt-4 text-zinc-400">
               Most defendants guess what might happen. Defendants who prepare look at what actually happened. Your prosecutor has seen hundreds of cases like yours &mdash; now you will too.
@@ -416,7 +416,7 @@ export default function SimilarCasesAnalyzerPage() {
               />
             </div>
             <p className="mt-6 text-xs text-zinc-500">
-              This product provides legal information — verified court data
+              This product provides legal information, verified court data
               compiled for your review. It is not legal advice. Your attorney
               remains the final authority on all strategy decisions.
             </p>

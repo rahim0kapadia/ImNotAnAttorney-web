@@ -1,5 +1,5 @@
 /**
- * evaluate-report.mjs — DB-driven 7-team report audit tool (v3.1)
+ * evaluate-report.mjs, DB-driven 7-team report audit tool (v3.1)
  *
  * Reads criteria from Supabase eval_criteria + pipeline_eval_weights,
  * runs LLM-based evaluation per team, saves results to audit_runs table.
@@ -52,7 +52,7 @@ loadEnvFile(path.join(__dirname, ".env.local"));
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 if (!ANTHROPIC_API_KEY) {
-  console.error("Missing ANTHROPIC_API_KEY — set in .env.local");
+  console.error("Missing ANTHROPIC_API_KEY, set in .env.local");
   process.exit(1);
 }
 
@@ -114,7 +114,7 @@ function detectChargeType(content, filename) {
   if (fn.includes("assault") || fn.includes("battery")) return "Assault";
   if (fn.includes("dv") || fn.includes("domestic")) return "Domestic Violence";
 
-  // Content scan — most specific first
+  // Content scan, most specific first
   const lower = content.toLowerCase();
   if (lower.includes("wire fraud") || lower.includes("embezzlement") || lower.includes("securities fraud") || lower.includes("money laundering") || lower.includes("white collar") || lower.includes("white-collar")) return "White Collar";
   if (lower.includes("dui") || lower.includes("dwi") || lower.includes("blood alcohol") || lower.includes("breathalyzer") || lower.includes("field sobriety")) return "DUI";
@@ -179,7 +179,7 @@ async function fetchCriteriaFromDb(tier, chargeType) {
     console.log(`  🗄️  DB: ${filtered.length} criteria, ${weightRows.length} weights for "${tier}"`);
     return { criteria: byTeam, weights };
   } catch (err) {
-    console.warn(`  ⚠️  DB fetch failed: ${err.message} — falling back to hardcoded`);
+    console.warn(`  ⚠️  DB fetch failed: ${err.message}, falling back to hardcoded`);
     return null;
   }
 }
@@ -238,95 +238,95 @@ const TEAM_NAMES = {
 };
 
 const TEAM_SYSTEM_PROMPTS = {
-  upl: `You are Team 1: UPL Compliance — an expert evaluation panel for criminal defendant legal information products.
+  upl: `You are Team 1: UPL Compliance, an expert evaluation panel for criminal defendant legal information products.
 
-Your purpose: Ensure every deliverable provides legal INFORMATION and generates QUESTIONS — never legal ADVICE. This is the non-negotiable gate. A deliverable that fails UPL review does not ship.
+Your purpose: Ensure every deliverable provides legal INFORMATION and generates QUESTIONS, never legal ADVICE. This is the non-negotiable gate. A deliverable that fails UPL review does not ship.
 
 Expert grounding:
-- Alan Dershowitz — Rights preservation: what gets waived accidentally when language crosses the line
-- Andrew Branca — Legal boundary precision: the exact line between information and advice
-- Bryan Stevenson — Systemic consequences awareness: collateral consequences must be flagged as information, not directives`,
+- Alan Dershowitz, Rights preservation: what gets waived accidentally when language crosses the line
+- Andrew Branca, Legal boundary precision: the exact line between information and advice
+- Bryan Stevenson, Systemic consequences awareness: collateral consequences must be flagged as information, not directives`,
 
-  psych: `You are Team 2: Psychological Architecture — an expert evaluation panel for criminal defendant legal information products.
+  psych: `You are Team 2: Psychological Architecture, an expert evaluation panel for criminal defendant legal information products.
 
 Your purpose: Validate that every deliverable follows trauma-informed design, builds genuine self-efficacy, and never weaponizes fear without pairing it with action. The emotional arc is as engineered as its legal content.
 
 Expert grounding:
-- Judith Herman — 3-stage trauma recovery (Safety → Remembrance → Reconnection)
-- Albert Bandura — 4 sources of self-efficacy
-- Martin Seligman — Learned helplessness counter (depersonalize, contain, temporalize)
-- Kim Witte — EPPM: every threat MUST be paired with an action
-- BJ Fogg — B=MAP: every action must be Motivated, Able, and Prompted
-- Viktor Frankl — Meaning-making: shift from "this is happening TO me" to "I'm actively navigating"
-- Gary Klein — Under extreme stress, present ONE clear action, not a menu of 10 options`,
+- Judith Herman, 3-stage trauma recovery (Safety → Remembrance → Reconnection)
+- Albert Bandura, 4 sources of self-efficacy
+- Martin Seligman, Learned helplessness counter (depersonalize, contain, temporalize)
+- Kim Witte, EPPM: every threat MUST be paired with an action
+- BJ Fogg, B=MAP: every action must be Motivated, Able, and Prompted
+- Viktor Frankl, Meaning-making: shift from "this is happening TO me" to "I'm actively navigating"
+- Gary Klein, Under extreme stress, present ONE clear action, not a menu of 10 options`,
 
-  legal: `You are Team 3: Legal Substance — an expert evaluation panel for criminal defendant legal information products.
+  legal: `You are Team 3: Legal Substance, an expert evaluation panel for criminal defendant legal information products.
 
-Your purpose: Validate that legal information is accurate, jurisdiction-specific, charge-appropriate, and reflects the frameworks of the .01% defense attorneys — not generic legal content anyone could Google.
-
-Expert grounding:
-- Gerry Spence — Every case needs an affirmative defense theory
-- Tom Mesereau — Reverse-engineer the prosecution
-- Jeffrey Lichtman — In drug cases, destroy the evidence before the narrative
-- Barry Scheck — Challenge forensic evidence methodology
-- Brandon Garrett — Forensic evidence reliability framework
-- Alan Ellis — Federal sentencing science
-- Andrew Branca — Self-defense 5 testable elements
-- Lawrence Taylor — DUI defense is systematic: challenge every procedural step`,
-
-  defendant: `You are Team 4: Defendant Experience — an expert evaluation panel for criminal defendant legal information products.
-
-Your purpose: Validate that the deliverable is genuinely useful to a real defendant in crisis — not an impressive document that sits unread. Every section must pass the "3 AM panic test."
+Your purpose: Validate that legal information is accurate, jurisdiction-specific, charge-appropriate, and reflects the frameworks of the .01% defense attorneys, not generic legal content anyone could Google.
 
 Expert grounding:
-- Chris Voss — Calibrated questions: open-ended, non-accusatory
-- Rima Rudd — Health/legal literacy: 8th-grade reading level for critical actions
-- George Lakoff — Frame awareness: help defendant escape prosecution framing
-- Raj Jayadev — Participatory defense: empower defendant as active case participant
-- Richard Thaler — Choice architecture: most important action is also the easiest
-- Tom Tyler — Procedural justice: help identify fairness violations`,
+- Gerry Spence, Every case needs an affirmative defense theory
+- Tom Mesereau, Reverse-engineer the prosecution
+- Jeffrey Lichtman, In drug cases, destroy the evidence before the narrative
+- Barry Scheck, Challenge forensic evidence methodology
+- Brandon Garrett, Forensic evidence reliability framework
+- Alan Ellis, Federal sentencing science
+- Andrew Branca, Self-defense 5 testable elements
+- Lawrence Taylor, DUI defense is systematic: challenge every procedural step`,
 
-  conversion: `You are Team 5: Conversion & Value Architecture — an expert evaluation panel for criminal defendant legal information products.
+  defendant: `You are Team 4: Defendant Experience, an expert evaluation panel for criminal defendant legal information products.
 
-Your purpose: Validate that the business model serves defendants AND sustains the business. Every deliverable must deliver more value than the price, position the next tier honestly, and convert through genuine value — not manipulation.
+Your purpose: Validate that the deliverable is genuinely useful to a real defendant in crisis, not an impressive document that sits unread. Every section must pass the "3 AM panic test."
 
 Expert grounding:
-- Alex Hormozi — Value Equation: Dream Outcome makes price trivial
-- Russell Brunson — Value Ladder: standalone value per tier
-- Eugene Schwartz — Market awareness bridge
-- Sabri Suby — Hyperactive buyer at crisis moment
-- Dan Kennedy — Real urgency only
-- Andre Chaperon — Post-purchase drip delivers value
-- Robert Cialdini — Authority signals
-- Seth Godin — Permission marketing + tribal identity`,
+- Chris Voss, Calibrated questions: open-ended, non-accusatory
+- Rima Rudd, Health/legal literacy: 8th-grade reading level for critical actions
+- George Lakoff, Frame awareness: help defendant escape prosecution framing
+- Raj Jayadev, Participatory defense: empower defendant as active case participant
+- Richard Thaler, Choice architecture: most important action is also the easiest
+- Tom Tyler, Procedural justice: help identify fairness violations`,
 
-  rendering: `You are Team 6: Rendering & Delivery — an expert evaluation panel for criminal defendant legal information products.
+  conversion: `You are Team 5: Conversion & Value Architecture, an expert evaluation panel for criminal defendant legal information products.
+
+Your purpose: Validate that the business model serves defendants AND sustains the business. Every deliverable must deliver more value than the price, position the next tier honestly, and convert through genuine value, not manipulation.
+
+Expert grounding:
+- Alex Hormozi, Value Equation: Dream Outcome makes price trivial
+- Russell Brunson, Value Ladder: standalone value per tier
+- Eugene Schwartz, Market awareness bridge
+- Sabri Suby, Hyperactive buyer at crisis moment
+- Dan Kennedy, Real urgency only
+- Andre Chaperon, Post-purchase drip delivers value
+- Robert Cialdini, Authority signals
+- Seth Godin, Permission marketing + tribal identity`,
+
+  rendering: `You are Team 6: Rendering & Delivery, an expert evaluation panel for criminal defendant legal information products.
 
 Your purpose: Validate that what the customer SEES in the browser matches the designed experience. The markdown may be perfect, but rendering bugs, stripped elements, broken tables, or missing metadata destroy the customer's trust. You audit the rendered HTML output.
 
 Expert grounding:
-- Rendering pipeline — renderReportHtml() converts markdown to styled HTML. Tables, checkboxes, blockquotes, and styled divs must all survive the conversion.
-- sanitize-html — The report page sanitizes HTML before rendering. Elements that should be visible must not be stripped.
-- Print UX — Defendants print these reports. Print styles must invert to light theme and hide upgrade CTAs.`,
+- Rendering pipeline, renderReportHtml() converts markdown to styled HTML. Tables, checkboxes, blockquotes, and styled divs must all survive the conversion.
+- sanitize-html, The report page sanitizes HTML before rendering. Elements that should be visible must not be stripped.
+- Print UX, Defendants print these reports. Print styles must invert to light theme and hide upgrade CTAs.`,
 
-  'system-truth': `You are Team 7: System Truth — an expert evaluation panel for criminal defendant legal information products.
+  'system-truth': `You are Team 7: System Truth, an expert evaluation panel for criminal defendant legal information products.
 
-Your purpose: Validate that every deliverable weaves in the insider realities of the criminal defense system — the business incentives, emotional tactics, and structural patterns that defendants experience but nobody names. This is the credibility and differentiation layer. A deliverable that passes Teams 1-6 but fails Team 7 is technically correct but generic — it reads like every other legal information site.
+Your purpose: Validate that every deliverable weaves in the insider realities of the criminal defense system, the business incentives, emotional tactics, and structural patterns that defendants experience but nobody names. This is the credibility and differentiation layer. A deliverable that passes Teams 1-6 but fails Team 7 is technically correct but generic, it reads like every other legal information site.
 
 Expert grounding:
-- Amy Bach — "Ordinary injustice" framing: courts fail through routine negligence, not dramatic misconduct
-- Alexandra Natapoff — The numbers: 13M misdemeanor cases/year processed in minutes
-- Dan Canon — Plea bargaining as social control, not justice
-- Stephen Bright — Outcome determined by lawyer quality, not crime severity
-- Mark Godsey — Defense negligence as root cause of wrongful conviction
-- Norm Pattis — Active attorney calling out system dysfunction from inside
-- Joshua Baron / Atticus Advantage / Fretzin — The business playbook that reveals incentive structures
-- Strickland v. Washington — The legal standard that enables it all`,
+- Amy Bach, "Ordinary injustice" framing: courts fail through routine negligence, not dramatic misconduct
+- Alexandra Natapoff, The numbers: 13M misdemeanor cases/year processed in minutes
+- Dan Canon, Plea bargaining as social control, not justice
+- Stephen Bright, Outcome determined by lawyer quality, not crime severity
+- Mark Godsey, Defense negligence as root cause of wrongful conviction
+- Norm Pattis, Active attorney calling out system dysfunction from inside
+- Joshua Baron / Atticus Advantage / Fretzin, The business playbook that reveals incentive structures
+- Strickland v. Washington, The legal standard that enables it all`,
 };
 
 const HARDCODED_CRITERIA = {
   upl: [
-    { id: "U1", criterion_name: "No advice language", what_to_check: 'Every statement framed as information, never directive. EXCEPTION: Banned phrases inside quoted attorney dialogue in scenario headers are acceptable when clearly attributed as attorney speech — the ban applies to report language addressed TO the defendant.', fail_triggers: '"you should," "you need to," "we recommend," "we advise," "your best option," "the best strategy" — in report language to defendant (quoted attorney dialogue exempt when clearly attributed)' },
+    { id: "U1", criterion_name: "No advice language", what_to_check: 'Every statement framed as information, never directive. EXCEPTION: Banned phrases inside quoted attorney dialogue in scenario headers are acceptable when clearly attributed as attorney speech, the ban applies to report language addressed TO the defendant.', fail_triggers: '"you should," "you need to," "we recommend," "we advise," "your best option," "the best strategy", in report language to defendant (quoted attorney dialogue exempt when clearly attributed)' },
     { id: "U2", criterion_name: "Attorney redirection", what_to_check: "Every section redirects to the defendant's attorney", fail_triggers: "Any section lacking 'ask your attorney' or equivalent" },
     { id: "U3", criterion_name: "No attorney judgment", what_to_check: "Never evaluates attorney competence", fail_triggers: '"your attorney is failing," competence scoring with band labels' },
     { id: "U4", criterion_name: "Disclaimer presence", what_to_check: "Header/footer contains required disclaimers", fail_triggers: 'Missing "legal information" framing' },
@@ -353,7 +353,7 @@ const HARDCODED_CRITERIA = {
     { id: "L1", criterion_name: "Charge-specific accuracy", what_to_check: "Matches specific charge, statute, jurisdiction", fail_triggers: "Wrong statute, wrong mandatory minimum" },
     { id: "L2", criterion_name: "Defense theory completeness", what_to_check: "All established theories for this charge type", fail_triggers: "Missing suppression for drug, missing weight challenge" },
     { id: "L3", criterion_name: "Prosecution strategy realism", what_to_check: "Reflects how cases are ACTUALLY prosecuted", fail_triggers: 'Generic "prosecution will prove their case"' },
-    { id: "L4", criterion_name: "Judge intelligence utility", what_to_check: "Actionable info (sentencing patterns, motion tendencies)", fail_triggers: 'Generic "judge is fair" — note: N/A if judge section absent', applicable_tiers: ["intelligence-brief", "x-ray", "war-room", "situation-room"] },
+    { id: "L4", criterion_name: "Judge intelligence utility", what_to_check: "Actionable info (sentencing patterns, motion tendencies)", fail_triggers: 'Generic "judge is fair", note: N/A if judge section absent', applicable_tiers: ["intelligence-brief", "x-ray", "war-room", "situation-room"] },
     { id: "L5", criterion_name: "Outcome map calibration", what_to_check: "Reflects actual data for charge type + jurisdiction", fail_triggers: "Unrealistic probability claims", applicable_tiers: ["intelligence-brief", "x-ray", "war-room", "situation-room"] },
     { id: "L6", criterion_name: "Motion landscape specificity", what_to_check: "Available in this jurisdiction with deadlines", fail_triggers: "Wrong state motions, federal for state cases" },
     { id: "L7", criterion_name: "Collateral consequences accuracy", what_to_check: "Matches this state's statutes and charge class", fail_triggers: "Wrong state law, wrong felony degree" },
@@ -406,7 +406,7 @@ const HARDCODED_CRITERIA = {
     { id: "R8", criterion_name: "Sanitization survival", what_to_check: "No elements stripped by sanitize-html that should be visible", fail_triggers: "Checkboxes missing, blockquotes stripped, content visually broken" },
     { id: "R9", criterion_name: "Special characters", what_to_check: "Em dashes, checkmarks, Unicode renders correctly", fail_triggers: "Mojibake characters, encoding errors, missing glyphs" },
     { id: "R10", criterion_name: "Content completeness", what_to_check: "Word count within budget (~6,500 base + ~300 per conditional section), correct question count, all conditional sections present/omitted per intake", fail_triggers: "Under/over word budget by >20%, wrong question count, missing conditional section" },
-    { id: "R11", criterion_name: "Conditional section adequacy", what_to_check: "Each conditional section contains its required elements (plea → collateral table + alternatives + pre-signing questions; deadlines → speedy trial + waiver caveat; life-pending → employment + family + travel)", fail_triggers: "Conditional section present but hollow — missing required elements for that section type" },
+    { id: "R11", criterion_name: "Conditional section adequacy", what_to_check: "Each conditional section contains its required elements (plea → collateral table + alternatives + pre-signing questions; deadlines → speedy trial + waiver caveat; life-pending → employment + family + travel)", fail_triggers: "Conditional section present but hollow, missing required elements for that section type" },
   ],
   'system-truth': [
     { id: "ST1", criterion_name: "Plea mill exposure", what_to_check: "Explains WHY attorneys push pleas (flat fee economics, caseload, courthouse relationships)", fail_triggers: "Presenting plea offers as neutral without explaining system incentives" },
@@ -418,12 +418,12 @@ const HARDCODED_CRITERIA = {
     { id: "ST7", criterion_name: "Assembly-line indicators", what_to_check: "Teaches defendants to recognize volume practice signs (continuance games, paralegal-only review, per-diem attorneys, associate shuffle)", fail_triggers: "Assuming all attorneys provide individualized attention" },
     { id: "ST8", criterion_name: "Fear tactic recognition", what_to_check: "Helps defendant distinguish real legal risk from inflated fear used as control tool", fail_triggers: "Presenting attorney warnings at face value without teaching evaluation" },
     { id: "ST9", criterion_name: "Dependency pattern recognition", what_to_check: 'Names ways attorneys keep defendants passive ("trust the process," jargon as weapon, discovery withholding)', fail_triggers: "Assumes attorney-client information flow is normal and healthy" },
-    { id: "ST10", criterion_name: "Dignity awareness", what_to_check: "Validates daily indignities defendants experience — names them as system features, not personal failings", fail_triggers: "Ignores emotional experience of being a defendant" },
+    { id: "ST10", criterion_name: "Dignity awareness", what_to_check: "Validates daily indignities defendants experience, names them as system features, not personal failings", fail_triggers: "Ignores emotional experience of being a defendant" },
     { id: "ST11", criterion_name: "Rights they won't tell you", what_to_check: "Tells defendants rights attorneys don't: fire attorney, fee arbitration, bar complaints, see discovery, refuse plea", fail_triggers: "Assumes defendants know their rights within the attorney-client relationship" },
     { id: "ST12", criterion_name: "Agency without advice", what_to_check: "Empowers defendant to see clearly WITHOUT crossing into directives", fail_triggers: 'Either "fire your attorney" (UPL) OR so cautious it fails to validate' },
     { id: "ST13", criterion_name: "System literacy", what_to_check: "Teaches HOW the system works (courthouse ecosystem, prosecutor-defense dynamics, Strickland bar)", fail_triggers: "Legal information without system context" },
     { id: "ST14", criterion_name: "Credibility grounding", what_to_check: "System critiques grounded in real data, named sources, or documented patterns", fail_triggers: "Unsourced claims about attorney behavior; bitterness without evidence" },
-    { id: "ST15", criterion_name: "Intake-signal alignment", what_to_check: "System truth calibrated to THIS defendant's actual intake data — communication pattern, attorney type, strategy status", fail_triggers: "Flat-fee framing for hourly attorney, communication blackout framing for monthly contact, PD caseload framing for private attorney" },
+    { id: "ST15", criterion_name: "Intake-signal alignment", what_to_check: "System truth calibrated to THIS defendant's actual intake data, communication pattern, attorney type, strategy status", fail_triggers: "Flat-fee framing for hourly attorney, communication blackout framing for monthly contact, PD caseload framing for private attorney" },
   ],
 };
 
@@ -445,7 +445,7 @@ const HARDCODED_WEIGHTS = {
 
 const PERSONAS = {
   danielle: {
-    label: "Danielle — DUI/DWI — Texas",
+    label: "Danielle, DUI/DWI, Texas",
     chargeType: "DUI",
     intake: {
       first_name: "Danielle", charge_type: "dui", jurisdiction_level: "state",
@@ -455,12 +455,12 @@ const PERSONAS = {
       plea_offered: "no", evidence_type: ["body camera", "digital"],
       arrest_circumstances: ["DUI checkpoint", "Field sobriety test"], co_defendants: "No",
       case_number: "25-CR-11247", court_date: "2026-03-20",
-      situation: "I blew a .09 at a checkpoint on my way home from a work holiday party. My public defender met with me once for maybe 10 minutes, said he'd look into it, and hasn't returned a single call since. I'm a nurse — a DUI conviction could cost me my license and my career. I feel like nobody is listening to me.",
+      situation: "I blew a .09 at a checkpoint on my way home from a work holiday party. My public defender met with me once for maybe 10 minutes, said he'd look into it, and hasn't returned a single call since. I'm a nurse, a DUI conviction could cost me my license and my career. I feel like nobody is listening to me.",
       specific_question: "Can they really convict me on a .09 when the legal limit is .08?",
     },
   },
   marcus: {
-    label: "Marcus — Drug Possession — Florida",
+    label: "Marcus, Drug Possession, Florida",
     chargeType: "Drug",
     intake: {
       first_name: "Marcus", charge_type: "drug", jurisdiction_level: "state",
@@ -468,14 +468,14 @@ const PERSONAS = {
       has_attorney: "Private attorney", attorney_strategy: "She said she's going to try to get the charges reduced but hasn't explained how",
       communication_frequency: "Rarely", last_attorney_contact: "2 weeks ago",
       plea_offered: "no", evidence_type: ["forensic evidence"],
-      arrest_circumstances: ["Traffic stop", "Consent search"], co_defendants: "Yes — one other person was in the car",
+      arrest_circumstances: ["Traffic stop", "Consent search"], co_defendants: "Yes, one other person was in the car",
       case_number: "26-CF-00412", court_date: "2026-04-10",
       situation: "I was pulled over for a broken taillight and the officer asked to search my car. I said yes because I didn't think I had anything to worry about. They found a small bag in the center console that my friend must have left. My attorney says possession is possession but that doesn't feel right. I'm 23 and this could ruin my entire future.",
       specific_question: "If the drugs weren't mine and I didn't know they were there, how can they charge me with possession?",
     },
   },
   jennifer: {
-    label: "Jennifer — White Collar/Fraud — California (Federal)",
+    label: "Jennifer, White Collar/Fraud, California (Federal)",
     chargeType: "White Collar",
     intake: {
       first_name: "Jennifer", charge_type: "white-collar", jurisdiction_level: "federal",
@@ -484,7 +484,7 @@ const PERSONAS = {
       communication_frequency: "Monthly", last_attorney_contact: "3 weeks ago",
       plea_offered: "yes", plea_terms: "2-4 years with restitution of $180,000",
       evidence_type: ["digital"], arrest_circumstances: ["Grand jury indictment"],
-      co_defendants: "Yes — two former business partners", case_number: "2:25-CR-00891",
+      co_defendants: "Yes, two former business partners", case_number: "2:25-CR-00891",
       court_date: "2026-05-15",
       situation: "I'm a small business owner accused of wire fraud. My business partners and I are all charged but I believe I was the only one who didn't know about the fraudulent invoices. My attorney keeps pushing a plea deal but I don't understand why I should plead guilty to something I didn't do.",
       specific_question: "If I take the plea, what happens to my professional licenses? Can I ever run a business again?",
@@ -527,7 +527,7 @@ function renderMarkdownToHtml(markdown, meta = {}) {
   const jurisdiction = meta.jurisdiction ? escapeHtmlForRender(meta.jurisdiction) : "";
 
   return `<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><title>Report — ${name}</title></head>
+<html lang="en"><head><meta charset="UTF-8"><title>Report, ${name}</title></head>
 <body>
 <div class="header-block">
   <h1>CASE DECODER REPORT</h1>
@@ -542,10 +542,10 @@ function renderMarkdownToHtml(markdown, meta = {}) {
 </div>
 ${html}
 <div class="footer-disclaimer">
-  <p><strong>A note on what this is:</strong> This report gives you legal information, context, and questions — not legal advice.</p>
+  <p><strong>A note on what this is:</strong> This report gives you legal information, context, and questions, not legal advice.</p>
 </div>
 <div class="no-print upgrade-cta">
-  <a href="/checkout">Upgrade — 100% Credit Applied</a>
+  <a href="/checkout">Upgrade, 100% Credit Applied</a>
   <p>Your $197 is credited toward any higher tier within 12 months.</p>
 </div>
 </body></html>`;
@@ -678,7 +678,7 @@ ${intake.plea_terms ? `- Plea Terms: ${intake.plea_terms}` : ""}
 
   const result = await response.json();
   const text = (result.content || []).filter(b => b.type === "text").map(b => b.text).join("");
-  console.log(`  Report generated in ${((Date.now() - start) / 1000).toFixed(1)}s — ${text.length} chars`);
+  console.log(`  Report generated in ${((Date.now() - start) / 1000).toFixed(1)}s, ${text.length} chars`);
   console.log(`  Usage: ${JSON.stringify(result.usage)}\n`);
   return text;
 }
@@ -700,7 +700,7 @@ async function evaluateTeam(teamKey, teamCriteria, weight, chargeType, reportTex
 
   const systemPrompt = (TEAM_SYSTEM_PROMPTS[teamKey] || `You are a ${teamName} auditor.`) + `
 
-WEIGHT: ${weight} — ${weight === "GATE" ? "This is a GATE check. Any FAIL blocks shipment." : weight === "HIGH" ? "High priority — NEEDS_WORK items should be fixed before shipping." : "Medium priority — document but may ship with NEEDS_WORK."}
+WEIGHT: ${weight}, ${weight === "GATE" ? "This is a GATE check. Any FAIL blocks shipment." : weight === "HIGH" ? "High priority, NEEDS_WORK items should be fixed before shipping." : "Medium priority, document but may ship with NEEDS_WORK."}
 
 Evaluate the report against EACH criterion below. For each criterion, score PASS / NEEDS_WORK / FAIL with a one-sentence justification. On FAIL, quote the EXACT problematic text from the report.
 
@@ -718,7 +718,7 @@ ${criteriaBlock}
 
 ---
 
-PRODUCT: ${weight === "GATE" ? "Criminal defense report (UPL GATE — any FAIL blocks delivery)" : "Criminal defense report"}
+PRODUCT: ${weight === "GATE" ? "Criminal defense report (UPL GATE, any FAIL blocks delivery)" : "Criminal defense report"}
 CHARGE TYPE: ${chargeType}
 
 DELIVERABLE TO EVALUATE:
@@ -787,7 +787,7 @@ Options:
   }
 
   console.log("\n" + "═".repeat(65));
-  console.log("  REPORT AUDIT — DB-Driven 7-Team Evaluation (v3.1)");
+  console.log("  REPORT AUDIT, DB-Driven 7-Team Evaluation (v3.1)");
   console.log("═".repeat(65) + "\n");
 
   // ---- Load report text ----
@@ -829,7 +829,7 @@ Options:
   }
 
   if (!reportText || reportText.length < 100) {
-    console.error("Report text too short or empty — check the source");
+    console.error("Report text too short or empty, check the source");
     process.exit(1);
   }
 
@@ -945,7 +945,7 @@ Options:
   console.log(`  Charge Type:  ${chargeType}`);
   console.log(`  Tier:         ${args.tier}`);
   console.log(`  Model:        ${modelLabel}`);
-  console.log(`  Gate Passed:  ${gatePassed ? "✅ YES" : "❌ NO — GATE team has FAILs"}`);
+  console.log(`  Gate Passed:  ${gatePassed ? "✅ YES" : "❌ NO, GATE team has FAILs"}`);
   console.log(`  Total:        ${totalPass} PASS / ${totalNeedsWork} NEEDS_WORK / ${totalFail} FAIL`);
   console.log(`  Cost:         $${totalCost.toFixed(4)}`);
   console.log(`  Duration:     ${(duration / 1000).toFixed(1)}s`);
@@ -988,7 +988,7 @@ Options:
 
   // Exit code
   if (!gatePassed) {
-    console.log("\n  🚫 GATE BLOCKED — Fix all FAIL items in GATE teams before shipping.\n");
+    console.log("\n  🚫 GATE BLOCKED, Fix all FAIL items in GATE teams before shipping.\n");
     process.exit(1);
   } else if (totalFail > 0) {
     console.log("\n  ⚠️  FAILs found in non-GATE teams. Review and fix before shipping.\n");

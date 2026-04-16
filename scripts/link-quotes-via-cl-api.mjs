@@ -34,7 +34,7 @@ async function clFetch(endpoint) {
   const url = endpoint.startsWith("http") ? endpoint : "https://www.courtlistener.com" + endpoint;
   const res = await fetch(url, { headers: { Authorization: "Token " + CL_TOKEN } });
   if (res.status === 429) {
-    console.log("  Rate limited — waiting 60s...");
+    console.log("  Rate limited, waiting 60s...");
     await new Promise(r => setTimeout(r, 60000));
     return clFetch(endpoint);
   }

@@ -2,7 +2,7 @@
 
 **Status:** READY TO EXECUTE
 **Depends on:** Blog Pipeline V2 (executed 2026-04-10)
-**Expert basis:** The /simplify review agents identified 3 critical contradictions, 6x duplicated word budget, and ~30% token bloat in the assembled generation prompt. No new expert triangulation needed — this is mechanical deduplication guided by the review findings.
+**Expert basis:** The /simplify review agents identified 3 critical contradictions, 6x duplicated word budget, and ~30% token bloat in the assembled generation prompt. No new expert triangulation needed, this is mechanical deduplication guided by the review findings.
 
 ## Problem
 
@@ -23,10 +23,10 @@ The blog generation prompt (`ImNotAnAttorney-engine/src/lib/blog-gen/prompts.mjs
 
 ## What This Does NOT Change
 
-- **All 5 Hormozi patterns** remain available — instruction changes from "use all" to "pick 1-2"
-- **All 9 content topics** from STRUCTURE REQUIREMENTS remain — they become suggested coverage for the 3 H2 sections, not separate mandatory sections
+- **All 5 Hormozi patterns** remain available, instruction changes from "use all" to "pick 1-2"
+- **All 9 content topics** from STRUCTURE REQUIREMENTS remain, they become suggested coverage for the 3 H2 sections, not separate mandatory sections
 - **All virality principles V2-V5, V7** remain unchanged
-- **All voice profile content** stays in the .md files — only the prompt injection is trimmed
+- **All voice profile content** stays in the .md files, only the prompt injection is trimmed
 - **All QA gates** unchanged (humanizer, DNA, anti-hallucination, slop, UPL)
 - **Voice profile tone, vocabulary, emotional calibration** unchanged
 
@@ -36,10 +36,10 @@ The blog generation prompt (`ImNotAnAttorney-engine/src/lib/blog-gen/prompts.mjs
 
 **File:** `C:\Users\email\projects\ImNotAnAttorney-engine\src\lib\blog-gen\prompts.mjs`
 
-**Change 1 — Delete PSYCHOLOGICAL ARCHITECTURE section (lines ~289-296)**
+**Change 1, Delete PSYCHOLOGICAL ARCHITECTURE section (lines ~289-296)**
 Delete entirely. D9 in DNA_STRUCTURAL_REQUIREMENTS_BLOCK already covers Fear→Clarity→Agency with more precision and without the "professional help" conflict.
 
-**Change 2 — Replace STRUCTURE REQUIREMENTS (lines ~298-311)**
+**Change 2, Replace STRUCTURE REQUIREMENTS (lines ~298-311)**
 Replace 9-item mandatory list with:
 ```
 ## STRUCTURE REQUIREMENTS
@@ -59,29 +59,29 @@ FAQ section: minimum 3 Q&A pairs in frontmatter.
 
 Product bridge: name a specific INAA product (Case Decoder, Intelligence Brief,
 X-Ray, War Room), connect the free content value to the paid product value.
-NEVER use "consult a licensed criminal defense attorney" or any variation —
+NEVER use "consult a licensed criminal defense attorney" or any variation,
 see BANNED PHRASES above.
 ```
 
-**Change 3 — Update Hormozi block instruction (line ~82)**
+**Change 3, Update Hormozi block instruction (line ~82)**
 Replace: `"Mix patterns across the post; do not reuse the same pattern for every section."`
 With: `"Pick 1-2 of these patterns for the post. With 3 H2 sections, depth beats variety."`
 
-**Change 4 — Remove V1 and V6 from VIRALITY_CONVERGENCE_BLOCK**
-- Delete V1 (scenario-first) — already in every voice profile Opening Pattern + anti-slop checklist
-- Delete V6 (modular sections) — conflicts with D9 arc, implicit in 3-section structure
+**Change 4, Remove V1 and V6 from VIRALITY_CONVERGENCE_BLOCK**
+- Delete V1 (scenario-first), already in every voice profile Opening Pattern + anti-slop checklist
+- Delete V6 (modular sections), conflicts with D9 arc, implicit in 3-section structure
 - Renumber remaining principles V1-V5
 
-**Change 5 — Delete VOICE AND STYLE "5-item list" rule (line ~217)**
-Replace: `"- No bullet lists longer than 5 items — break into sub-sections instead"`
+**Change 5, Delete VOICE AND STYLE "5-item list" rule (line ~217)**
+Replace: `"- No bullet lists longer than 5 items, break into sub-sections instead"`
 With: nothing. D5 (3-item rule) is stricter and sufficient.
 
-**Change 6 — Deduplicate word budget**
+**Change 6, Deduplicate word budget**
 Keep the WORD BUDGET section (lines ~222-234) as the single authoritative statement.
 Remove word count line from STRUCTURE REQUIREMENTS (handled by Change 2).
 D10's "under 1,800 words" stays as enforcement context within the DNA block.
 
-**Change 7 — Remove "Active voice throughout" + "reading level" from VOICE AND STYLE**
+**Change 7, Remove "Active voice throughout" + "reading level" from VOICE AND STYLE**
 These are already specified with more precision in every voice profile (Tone Spectrum section). Keep only rules NOT covered by voice profiles:
 - Short paragraphs (2-4 sentences max)
 - Use subheadings every 2-4 paragraphs
@@ -96,11 +96,11 @@ These are already specified with more precision in every voice profile (Tone Spe
 - `C:\Users\email\projects\ImNotAnAttorney-engine\content\voice-profiles\white-collar.md`
 - `C:\Users\email\projects\ImNotAnAttorney-engine\content\voice-profiles\general-defense.md`
 
-**Change 8 — Trim DO/DON'T examples from 8 to 3 per profile**
+**Change 8, Trim DO/DON'T examples from 8 to 3 per profile**
 Keep examples 1, 2, 3 (they establish the register). Remove examples 4-8.
-The removed examples stay in the web repo copies for human reference — only the engine prompt injection copies are trimmed.
+The removed examples stay in the web repo copies for human reference, only the engine prompt injection copies are trimmed.
 
-**Change 9 — Trim Anti-Slop Checklist to category-specific items only**
+**Change 9, Trim Anti-Slop Checklist to category-specific items only**
 Remove the ~14 shared items that duplicate the main prompt (word budget, H2 caps, scenario-first, agency close, banned phrases, stat sources, legal terms, "do this now", hedging stacks, sycophancy, orphan threats, identical-length lists, same-word sequences, conclusion mirroring).
 Keep only category-specific items:
 - DUI: 12 items (drunk driving, failed the test, shame minimizing, DMV qualifiers, etc.)
@@ -110,40 +110,40 @@ Keep only category-specific items:
 
 For general-defense: add a one-line note: "Category-specific anti-slop: none beyond the shared checklist in the main prompt."
 
-**Change 10 — Remove duplicate word budget from voice profile header**
+**Change 10, Remove duplicate word budget from voice profile header**
 Delete the `**Word budget: 1,000-1,500...**` line from Section 1 of each profile. The word budget is stated in the main prompt's WORD BUDGET section and in the Structure Template. Three is redundant.
 
 ### Phase 3: Sync + Config (2 files)
 
-**Change 11 — Sync engine voice profiles to web repo**
+**Change 11, Sync engine voice profiles to web repo**
 After Phase 2 edits, copy engine voice profiles back to web repo:
 ```
 cp engine/content/voice-profiles/*.md web/content/voice-profiles/
 ```
-Note: web repo keeps the full 8-example versions for human reference. Engine copies are the trimmed prompt injection versions. This means they intentionally diverge — document this in both repos.
+Note: web repo keeps the full 8-example versions for human reference. Engine copies are the trimmed prompt injection versions. This means they intentionally diverge, document this in both repos.
 
 Actually, REVISED approach: keep web repo as the full reference copies (8 examples, full checklist). Engine copies are trimmed for prompt injection. Add a comment at the top of each engine voice profile:
 ```
-<!-- PROMPT-INJECTION COPY: Trimmed for token efficiency. Full reference version
-     at ImNotAnAttorney-web/content/voice-profiles/. Do not edit here — edit the
-     web repo version and re-trim. -->
+<!, PROMPT-INJECTION COPY: Trimmed for token efficiency. Full reference version
+     at ImNotAnAttorney-web/content/voice-profiles/. Do not edit here, edit the
+     web repo version and re-trim.,>
 ```
 
-**Change 12 — Update engine config.mjs**
+**Change 12, Update engine config.mjs**
 - `blog_generate: 8192` → `blog_generate: 4096`
 - Update comment: `// MDX blog post (1,000-1,500 words + frontmatter + SOCIAL_SPINE)`
 - `blog_qa_dna` comment: `// JSON array of 10 check results` → `// JSON array of 13 check results`
 
 ### Phase 4: Verify (no file changes)
 
-**Step 13 — Build and test the assembled prompt**
+**Step 13, Build and test the assembled prompt**
 ```javascript
 const prompt = buildGenerationPrompt(testGap, testEnrichment);
 console.log('Prompt length:', prompt.length, 'chars');
 // Target: <30,000 chars (was ~42,000)
 ```
 
-**Step 14 — Verify no functionality lost**
+**Step 14, Verify no functionality lost**
 Grep the assembled prompt for each required element:
 - Word budget present (1x)
 - Banned phrases present (1x)
@@ -156,14 +156,14 @@ Grep the assembled prompt for each required element:
 - SOCIAL_SPINE template present
 - FAQ frontmatter template present
 
-**Step 15 — Run prototype through humanizer to confirm no regression**
+**Step 15, Run prototype through humanizer to confirm no regression**
 ```
 node -e "import('./scripts/lib/blog-gen/humanizer.mjs').then(m => { ... })"
 ```
 
 ## Execution Order
 
-1. Phase 1: Engine prompt consolidation (Changes 1-7, sequential — same file)
+1. Phase 1: Engine prompt consolidation (Changes 1-7, sequential, same file)
 2. Phase 2: Voice profile trimming (Changes 8-10, parallel across 4 files)
 3. Phase 3: Sync + config (Changes 11-12)
 4. Phase 4: Verify (Steps 13-15)
@@ -189,6 +189,6 @@ CASCADE:
   Reader:      More consistent post structure (one authority, not three)
   Downstream:  Fewer QA failures from contradictory instructions = fewer regeneration cycles
   Ecosystem:   Cleaner prompt pattern reusable for KDP/TasteDrop content engines
-  Future-us:   One place to edit structure, word budget, banned phrases — not 6
+  Future-us:   One place to edit structure, word budget, banned phrases, not 6
   Adjacent:    Engine prompt becomes a reference for prompt consolidation methodology
 ```

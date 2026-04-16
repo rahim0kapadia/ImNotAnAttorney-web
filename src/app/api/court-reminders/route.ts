@@ -1,5 +1,5 @@
 /**
- * POST /api/court-reminders — Creates a court reminder sign-up.
+ * POST /api/court-reminders, Creates a court reminder sign-up.
  *
  * Validates input, generates a unique token, stores in Supabase,
  * sends confirmation email, returns the prep page token.
@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
       if (shouldSendSMS(prefs.missed_check_in) && partner.phone) {
         sendSMS(
           partner.phone,
-          capSMS(`${first_name.trim()} needs a check-in schedule. Set it: ${dashUrl} — Do not reply`),
+          capSMS(`${first_name.trim()} needs a check-in schedule. Set it: ${dashUrl}, Do not reply`),
           { category: "schedule_needed", partner_id: partner.id, subject: "Check-In Schedule Needed" }
         ).catch((e) => console.warn("[Court Reminders] Partner SMS failed:", e));
       }
@@ -143,14 +143,14 @@ export async function POST(req: NextRequest) {
       html: `
         <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Your court prep is set up, ${safeName}.</h1>
         <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">We'll send you reminders before your court date so you don't miss anything.</p>
-        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">Your personalized prep page — what to expect, what to bring, and how to prepare:</p>
+        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">Your personalized prep page, what to expect, what to bring, and how to prepare:</p>
         <p style="margin: 24px 0;"><a href="${prepUrl}" style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 700;">View Your Court Prep</a></p>
-        <p style="color: #71717A; font-size: 13px;">Bookmark this link — it's yours. We'll also include it in every reminder email.</p>
+        <p style="color: #71717A; font-size: 13px;">Bookmark this link, it's yours. We'll also include it in every reminder email.</p>
       `,
     });
   } catch (e) {
     console.warn("[Court Reminders] Confirmation email failed:", e);
-    // Non-fatal — reminder was still created
+    // Non-fatal, reminder was still created
   }
 
   return NextResponse.json({ token, prepUrl });

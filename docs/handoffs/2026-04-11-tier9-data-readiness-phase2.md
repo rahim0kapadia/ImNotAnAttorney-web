@@ -1,4 +1,4 @@
-# Handoff: Tier 9 Data Readiness — Phase 2 Complete
+# Handoff: Tier 9 Data Readiness, Phase 2 Complete
 Date: 2026-04-11 ~17:15
 
 ## Summary
@@ -7,8 +7,8 @@ Continued execution of `docs/plans/2026-04-11-tier9-data-readiness.md`. Phase 2 
 ## What This Session Did
 
 ### Phase 1g: bench_jury_divergence (fix + launch)
-- Fixed PostgREST 1000-row cap in `loadJudgeProfiles()` — replaced `?limit=50000` with Range header pagination (16 pages, all 15,613 judges loaded)
-- Launched `--apply` in background — 50GB CSV stream, ~4.5 hours total
+- Fixed PostgREST 1000-row cap in `loadJudgeProfiles()`, replaced `?limit=50000` with Range header pagination (16 pages, all 15,613 judges loaded)
+- Launched `, apply` in background, 50GB CSV stream, ~4.5 hours total
 - At 1M/8M rows when session ended (538 matched, 344 classified)
 - Script will INSERT into `bench_jury_divergence` AND UPDATE `judge_profiles.bench_acquittal_rate`/`jury_acquittal_rate` when complete
 
@@ -16,7 +16,7 @@ Continued execution of `docs/plans/2026-04-11-tier9-data-readiness.md`. Phase 2 
 - Added `jurisdiction text` column via Management API
 - Built court_id->state mapping from CourtListener courts API (3,358 courts mapped)
 - Federal district courts mapped to their state (flsd->FL, not FEDERAL)
-- Backfilled 15,386/15,613 judges (227 unmapped — no recognizable court_id)
+- Backfilled 15,386/15,613 judges (227 unmapped, no recognizable court_id)
 - Added index: `idx_judge_profiles_jurisdiction`
 - Updated `query.ts`: jurisdiction filter with name-only fallback
 - Script: `scripts/backfill-judge-jurisdiction.mjs`
@@ -29,7 +29,7 @@ Continued execution of `docs/plans/2026-04-11-tier9-data-readiness.md`. Phase 2 
 ### Phase 1d: Quote topic classification
 - Keyword-based classifier applied to 15,652 linked quotes
 - Distribution: sentencing=1,904, constitutional=754, evidence=620, procedure=610, dismissal=346, suppression=278, credibility=258, plea=202, plus 5 smaller categories
-- 10,158 remain "general" (no keyword match — acceptable for launch)
+- 10,158 remain "general" (no keyword match, acceptable for launch)
 - Refreshed judicial_quotes JSONB rollup with topic-specific quotes sorted first
 
 ### Phase 3: E2E + visual audit
@@ -40,8 +40,8 @@ Continued execution of `docs/plans/2026-04-11-tier9-data-readiness.md`. Phase 2 
 - All 3 SKUs already `live: true` (flipped by Session 2)
 
 ## Commits
-- `4893834` feat(tier9): Phase 2a — jurisdiction column on judge_profiles + query filter
-- `466ed60` fix(tier9): E2E test data — use real judges/officers with populated data
+- `4893834` feat(tier9): Phase 2a, jurisdiction column on judge_profiles + query filter
+- `466ed60` fix(tier9): E2E test data, use real judges/officers with populated data
 
 ## Database Changes (PRODUCTION)
 - `judge_profiles.jurisdiction`: new column, 15,386 rows populated, indexed
@@ -50,7 +50,7 @@ Continued execution of `docs/plans/2026-04-11-tier9-data-readiness.md`. Phase 2 
 - `judge_quotes.topic`: 5,494 quotes classified beyond "general"
 
 ## Still Running
-- `bulk-bench-jury-divergence.mjs --apply` — background process, ~4 hours remaining
+- `bulk-bench-jury-divergence.mjs,apply`, background process, ~4 hours remaining
 - When complete: `bench_jury_divergence` table will have rows, `judge_profiles.bench_acquittal_rate`/`jury_acquittal_rate` will be populated
 
 ### Additional DI Platform Phase 0 work (after initial handoff)
@@ -66,7 +66,7 @@ Continued execution of `docs/plans/2026-04-11-tier9-data-readiness.md`. Phase 2 
 
 ## Verification
 ```bash
-npx tsc --noEmit --skipLibCheck  # clean
+npx tsc,noEmit,skipLibCheck  # clean
 node scripts/e2e-tier9.mjs      # all 3 SKUs pass
 ```
 

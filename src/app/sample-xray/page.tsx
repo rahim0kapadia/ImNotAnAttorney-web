@@ -10,17 +10,17 @@
  *   Landing page / Blog CTAs -> THIS PAGE
  *
  * Page structure (11 blocks, 4 CTAs):
- *   1. Pre-flight trust signal — real case badge + context
- *   2. Case snapshot card — monospace styled case info
- *   3. First CTA — "Get My X-Ray"
- *   4. Red Flags section — 1 full CRITICAL + 1 partial SIGNIFICANT + count
- *   5. Second CTA — upgrade credit nudge
- *   6. Witness Contradiction Matrix — 2 visible rows + count
- *   7. Sample questions — 3 full format + grayed list
- *   8. Discovery Strength Rating — score visual + categories
- *   9. Process transparency — methodology overview
- *  10. Friction reduction — 4 objections handled
- *  11. Final CTA — guarantee stack + button
+ *   1. Pre-flight trust signal, real case badge + context
+ *   2. Case snapshot card, monospace styled case info
+ *   3. First CTA, "Get My X-Ray"
+ *   4. Red Flags section, 1 full CRITICAL + 1 partial SIGNIFICANT + count
+ *   5. Second CTA, upgrade credit nudge
+ *   6. Witness Contradiction Matrix, 2 visible rows + count
+ *   7. Sample questions, 3 full format + grayed list
+ *   8. Discovery Strength Rating, score visual + categories
+ *   9. Process transparency, methodology overview
+ *  10. Friction reduction, 4 objections handled
+ *  11. Final CTA, guarantee stack + button
  *
  * SEO: Full OG metadata with specific findings in description.
  */
@@ -31,14 +31,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sample X-Ray Report — Discovery Analysis",
+  title: "Sample X-Ray Report, Discovery Analysis",
   description:
-    "See a real X-Ray report excerpt — drug possession case, Pinellas County FL. 4 critical red flags found including a 73% weight discrepancy. 43 attorney questions generated. $2,497.",
+    "See a real X-Ray report excerpt, drug possession case, Pinellas County FL. 4 critical red flags found including a 73% weight discrepancy. 43 attorney questions generated. $2,497.",
   alternates: {
     canonical: `${SITE_URL}/sample-xray`,
   },
   openGraph: {
-    title: "Sample X-Ray Report — What We Find in Your Discovery",
+    title: "Sample X-Ray Report, What We Find in Your Discovery",
     description:
       "Real case, real findings. 14 red flags. 43 questions for your attorney. See what an X-Ray report looks like before you buy.",
   },
@@ -73,15 +73,15 @@ export default function SampleXRayPage() {
         <FadeInUp>
           <div className="text-center">
             <span className="inline-block rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-400">
-              Real Case — Redacted
+              Real Case, Redacted
             </span>
             <h1 className="mt-6 text-3xl font-bold text-white md:text-4xl">
               What an X-Ray Report Actually Looks Like
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-zinc-400">
-              This is from an actual X-Ray report — a drug possession case in
+              This is from an actual X-Ray report, a drug possession case in
               Florida. The defendant&apos;s name and case number have been changed.
-              Everything else — the documents, the contradictions, the findings —
+              Everything else, the documents, the contradictions, the findings,
               is real.
             </p>
           </div>
@@ -127,7 +127,7 @@ export default function SampleXRayPage() {
               <div>
                 <span className="text-zinc-400">Discovery Strength Rating:</span>{" "}
                 <span className="text-amber-400 font-semibold">62/100</span>{" "}
-                <span className="text-zinc-400">— Grade:</span>{" "}
+                <span className="text-zinc-400">, Grade:</span>{" "}
                 <span className="text-amber-400 font-semibold">C</span>
               </div>
               <div>
@@ -153,7 +153,7 @@ export default function SampleXRayPage() {
               href="/checkout?tier=x-ray"
               className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
             >
-              Get My X-Ray — {TIER_CORE["x-ray"].priceDisplay}
+              Get My X-Ray, {TIER_CORE["x-ray"].priceDisplay}
             </Link>
           </div>
         </FadeInUp>
@@ -169,7 +169,7 @@ export default function SampleXRayPage() {
               specific question to ask your attorney.
             </p>
 
-            {/* CRITICAL Red Flag #3 — Full verbatim */}
+            {/* CRITICAL Red Flag #3, Full verbatim */}
             <div className="mt-6 rounded-xl border border-red-500/30 bg-zinc-900 p-6">
               <div className="flex items-center gap-2">
                 <span className="inline-block rounded bg-red-500/20 px-2 py-0.5 text-xs font-bold uppercase text-red-400">
@@ -218,7 +218,7 @@ export default function SampleXRayPage() {
               <div className="mt-4 rounded-lg border border-zinc-500 bg-zinc-800/30 p-4">
                 <p className="text-xs text-zinc-400">
                   <span className="font-semibold text-zinc-300">Framework:</span>{" "}
-                  Chapman II Drug Forensic Analysis — weight discrepancies between
+                  Chapman II Drug Forensic Analysis, weight discrepancies between
                   field and lab exceeding 5% indicate potential evidence integrity
                   issues. This discrepancy exceeds 73%.
                 </p>
@@ -237,7 +237,7 @@ export default function SampleXRayPage() {
               </div>
             </div>
 
-            {/* SIGNIFICANT Red Flag #7 — Partially redacted */}
+            {/* SIGNIFICANT Red Flag #7, Partially redacted */}
             <div className="mt-6 rounded-xl border border-amber-500/30 bg-zinc-900 p-6">
               <div className="flex items-center gap-2">
                 <span className="inline-block rounded bg-amber-500/20 px-2 py-0.5 text-xs font-bold uppercase text-amber-400">
@@ -273,17 +273,17 @@ export default function SampleXRayPage() {
               {/* Redacted block */}
               <div className="mt-4 rounded-lg border border-dashed border-zinc-700 bg-zinc-800/50 p-4 text-center">
                 <p className="text-sm text-zinc-400">
-                  [REDACTED — Attorney questions for this finding included in your report]
+                  [REDACTED, Attorney questions for this finding included in your report]
                 </p>
               </div>
             </div>
 
             {/* Remaining count */}
             <p className="mt-6 text-center text-sm text-zinc-400">
-              12 more red flags identified —{" "}
+              12 more red flags identified,{" "}
               <span className="text-red-400">2 CRITICAL</span>,{" "}
               <span className="text-amber-400">4 SIGNIFICANT</span>,{" "}
-              <span className="text-zinc-300">4 NOTABLE</span> — all with
+              <span className="text-zinc-300">4 NOTABLE</span>, all with
               specific document citations and attorney questions.
             </p>
           </section>
@@ -297,7 +297,7 @@ export default function SampleXRayPage() {
         <FadeInUp>
           <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 text-center">
             <p className="text-sm text-zinc-300">
-              This is one finding from one case. Yours will be different — but the
+              This is one finding from one case. Yours will be different, but the
               process is the same. Every document reviewed. Every discrepancy
               documented. Every question calibrated to your case.
             </p>
@@ -305,7 +305,7 @@ export default function SampleXRayPage() {
               href="/checkout?tier=x-ray"
               className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400"
             >
-              Get My X-Ray — {TIER_CORE["x-ray"].priceDisplay}
+              Get My X-Ray, {TIER_CORE["x-ray"].priceDisplay}
             </Link>
             <p className="mt-2 text-xs text-zinc-400">
               Previously purchased Case Decoder or Intelligence Brief? You owe only
@@ -444,14 +444,14 @@ export default function SampleXRayPage() {
             </h2>
             <p className="mt-2 text-sm text-zinc-400">
               Showing 3 of 43 questions from this report. Each includes what a solid
-              answer looks like — and what a red flag answer looks like.
+              answer looks like, and what a red flag answer looks like.
             </p>
 
             <div className="mt-6 space-y-6">
-              {/* Q1 — Evidence */}
+              {/* Q1, Evidence */}
               <div className="rounded-xl border border-zinc-700 bg-zinc-900 p-6">
                 <p className="text-xs font-semibold text-amber-400">
-                  Q1 — EVIDENCE
+                  Q1, EVIDENCE
                 </p>
                 <p className="mt-2 text-sm font-semibold leading-relaxed text-white">
                   &ldquo;The field weight was 28.3 grams. The lab weight was 7.2
@@ -484,10 +484,10 @@ export default function SampleXRayPage() {
                 </div>
               </div>
 
-              {/* Q2 — Chain of Custody */}
+              {/* Q2, Chain of Custody */}
               <div className="rounded-xl border border-zinc-700 bg-zinc-900 p-6">
                 <p className="text-xs font-semibold text-amber-400">
-                  Q2 — CHAIN OF CUSTODY
+                  Q2, CHAIN OF CUSTODY
                 </p>
                 <p className="mt-2 text-sm font-semibold leading-relaxed text-white">
                   &ldquo;Evidence was checked out of the property room for 96 hours
@@ -520,10 +520,10 @@ export default function SampleXRayPage() {
                 </div>
               </div>
 
-              {/* Q3 — Constitutional */}
+              {/* Q3, Constitutional */}
               <div className="rounded-xl border border-zinc-700 bg-zinc-900 p-6">
                 <p className="text-xs font-semibold text-amber-400">
-                  Q3 — CONSTITUTIONAL
+                  Q3, CONSTITUTIONAL
                 </p>
                 <p className="mt-2 text-sm font-semibold leading-relaxed text-white">
                   &ldquo;I made statements at 14:15. The arrest report shows Miranda
@@ -646,7 +646,7 @@ export default function SampleXRayPage() {
                     What a C means:
                   </span>{" "}
                   Your discovery has enough documentation to identify issues, but
-                  significant gaps exist — particularly in forensic documentation.
+                  significant gaps exist, particularly in forensic documentation.
                   These gaps are themselves findings.
                 </p>
               </div>
@@ -666,12 +666,12 @@ export default function SampleXRayPage() {
             </h2>
             <p className="mt-2 text-sm text-zinc-400">
               Your X-Ray now includes federal sentencing data from 595,851 cases.
-              This grounds every finding in real-world outcomes — not estimates.
+              This grounds every finding in real-world outcomes, not estimates.
             </p>
 
             <div className="mt-6 rounded-xl border border-zinc-500 bg-zinc-900 p-6">
               <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">
-                Sample — Middle District of Florida
+                Sample, Middle District of Florida
               </p>
 
               <div className="mt-4 overflow-x-auto">
@@ -711,11 +711,11 @@ export default function SampleXRayPage() {
 
               <p className="mt-4 text-sm text-zinc-400">
                 Your full X-Ray includes judge-specific sentencing outlier flags, officer
-                reliability cross-case data, and sentencing by defendant demographics —
+                reliability cross-case data, and sentencing by defendant demographics,
                 all from verified federal court records.
               </p>
               <p className="mt-2 text-xs text-zinc-500">
-                Source: JUSTFAIR (QSIDE Institute) — 595,851 federal sentencing records,
+                Source: JUSTFAIR (QSIDE Institute), 595,851 federal sentencing records,
                 FY2001-2023. Federal courts only.
               </p>
             </div>
@@ -733,7 +733,7 @@ export default function SampleXRayPage() {
             <p className="mt-3 text-sm leading-relaxed text-zinc-400">
               Every X-Ray is built the same way: document-by-document analysis using
               defense methodologies including Scheck evidence integrity protocols,
-              Chapman II drug forensic analysis, and MacCarthy suppression methodology —
+              Chapman II drug forensic analysis, and MacCarthy suppression methodology,
               plus 15 forensic detection patterns. Every report is reviewed by the
               operator before delivery. No finding ships without a specific document
               citation.
@@ -744,7 +744,7 @@ export default function SampleXRayPage() {
         <SectionDivider />
 
         {/* ============================================================
-            BLOCK 10: FRICTION REDUCTION — 4 OBJECTIONS
+            BLOCK 10: FRICTION REDUCTION, 4 OBJECTIONS
             ============================================================ */}
         <FadeInUp>
           <section>
@@ -759,8 +759,8 @@ export default function SampleXRayPage() {
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
                   A single pretrial motion from a private attorney costs
-                  $2,500-$5,000. This analysis covers your entire discovery — every
-                  document, every contradiction, every question — for less than one
+                  $2,500-$5,000. This analysis covers your entire discovery, every
+                  document, every contradiction, every question, for less than one
                   motion. And your {TIER_CORE["x-ray"].priceDisplay} is fully credited if you
                   upgrade to {TIER_CORE["war-room"].name}.
                 </p>
@@ -771,7 +771,7 @@ export default function SampleXRayPage() {
                   &ldquo;I don&apos;t have all my discovery yet.&rdquo;
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  That&apos;s fine — and it&apos;s actually useful information. An
+                  That&apos;s fine, and it&apos;s actually useful information. An
                   incomplete discovery set is itself a finding. We document
                   what&apos;s missing and generate questions about why it hasn&apos;t
                   been provided.
@@ -784,7 +784,7 @@ export default function SampleXRayPage() {
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
                   The question is whether that review produced specific, documented
-                  findings with page citations — and whether you saw them. If your
+                  findings with page citations, and whether you saw them. If your
                   attorney found a 73% weight discrepancy, they should be able to show
                   you where.
                 </p>
@@ -795,7 +795,7 @@ export default function SampleXRayPage() {
                   &ldquo;Is this legal advice?&rdquo;
                 </p>
                 <p className="mt-2 text-sm text-zinc-400">
-                  No. This is legal information and research — document analysis with
+                  No. This is legal information and research, document analysis with
                   specific questions. Your attorney makes strategy decisions. We make
                   sure you have the information to ask the right questions.
                 </p>
@@ -826,8 +826,8 @@ export default function SampleXRayPage() {
                 </p>
                 <p className="mt-1 text-xs text-zinc-400">
                   If we analyze your discovery and don&apos;t identify at least one
-                  concrete issue your attorney can act on — a contradiction, a chain
-                  of custody gap, a constitutional question — you get every dollar
+                  concrete issue your attorney can act on, a contradiction, a chain
+                  of custody gap, a constitutional question, you get every dollar
                   back. No forms. No phone calls.
                 </p>
               </div>
@@ -839,7 +839,7 @@ export default function SampleXRayPage() {
                   Every X-Ray includes a formatted Attorney Delivery Package your
                   attorney can read in 10 minutes, sourced back to specific pages. If
                   your attorney says there&apos;s nothing there, send us their
-                  response — second round of analysis at no charge.
+                  response, second round of analysis at no charge.
                 </p>
               </div>
               <div className="rounded-lg border border-zinc-500 bg-zinc-950/50 p-4">
@@ -858,7 +858,7 @@ export default function SampleXRayPage() {
               href="/checkout?tier=x-ray"
               className="mt-8 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-colors hover:bg-amber-400"
             >
-              Get My X-Ray — {TIER_CORE["x-ray"].priceDisplay}
+              Get My X-Ray, {TIER_CORE["x-ray"].priceDisplay}
             </Link>
           </section>
         </FadeInUp>
@@ -866,7 +866,7 @@ export default function SampleXRayPage() {
         {/* DISCLAIMER */}
         <p className="mt-6 text-center text-xs text-zinc-400">
           Names, case numbers, and dates have been changed. ImNotAnAttorney
-          provides legal information and research — not legal advice.
+          provides legal information and research, not legal advice.
         </p>
       </div>
     </div>

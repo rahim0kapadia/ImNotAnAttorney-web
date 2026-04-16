@@ -1,4 +1,4 @@
-# IB Defense Intelligence Matrix — Spec
+# IB Defense Intelligence Matrix, Spec
 
 ## Problem
 Intelligence Brief uses Claude to guess at legal strategy patterns. We have 4.2M classified opinions with real motion success rates and defense theory outcomes. The data should render mechanically (no hallucination risk, faster, cheaper), with Claude only personalizing the connection to the defendant's facts.
@@ -18,7 +18,7 @@ intake (charge_type + state)
 
 ### Tier Boundaries (HARD GATE)
 | Data | IB ($997) | X-Ray ($2,497) | War Room ($4,997) |
-|------|-----------|----------------|-------------------|
+|------|---------, |----------------|-------------------|
 | Motion rates (jurisdiction-wide) | Mechanical matrix | Yes | Yes |
 | Defense theory outcomes | Mechanical matrix | Yes | Yes |
 | Top opinions + holdings | 3 cases | 10 cases | 25 cases |
@@ -42,7 +42,7 @@ Raw PostgREST queries (select only needed columns):
 
 Note: `judge_id=is.null` returns jurisdiction-wide aggregates only (IB tier gate). This differs from `query.ts` which returns ALL rows when judgeId is null. Raw PostgREST is intentional here to enforce the tier boundary.
 
-Note: `charge_slug` must match `intake.charge_type` values. Both use the `common_charges.slug` taxonomy (e.g., "dui-dwi", "drug-possession", "assault"). If no match, queries return empty — graceful degradation.
+Note: `charge_slug` must match `intake.charge_type` values. Both use the `common_charges.slug` taxonomy (e.g., "dui-dwi", "drug-possession", "assault"). If no match, queries return empty, graceful degradation.
 
 Returns: `{ theories: TheoryOutcome[], motions: MotionPattern[], isEmpty: boolean }`
 
@@ -67,7 +67,7 @@ Pure HTML render. No Claude call. Includes `data_source_note` from DB (appellate
   ...rows with data from motion_success_patterns...
 </table>
 
-<p class="source-note">{data_source_note from DB — includes appellate bias caveat}</p>
+<p class="source-note">{data_source_note from DB, includes appellate bias caveat}</p>
 <p class="source-note">Every data point traces to a public court opinion. This is historical pattern data, not a prediction for your case.</p>
 ```
 
@@ -85,7 +85,7 @@ After `buildYourRights(stateForRights)` (~line 5380), matching the slot that alr
 In the Edge Function's IB prompt builder (~line 4704), add the `<defense_intelligence>` block to the `case-intelligence` and `legal-options` section prompts:
 
 ```xml
-<defense_intelligence context="IB tier — jurisdiction-level, verified court data. DO NOT fabricate statistics.">
+<defense_intelligence context="IB tier, jurisdiction-level, verified court data. DO NOT fabricate statistics.">
 MOTION FILING PATTERNS ({state}, {charge}):
 - Motion to suppress: 43% granted (156 filed)
 - Motion to dismiss: 22% granted (89 filed)
@@ -103,16 +103,16 @@ This data is fetched once in `buildUserPrompt()` and formatted into a string tha
 #### 5. Pass mechanical HTML as `allOutputs["tier9-data-appendix"]`
 In the IB generation flow, after fetching defense intelligence data and before the Phase A/B section generation:
 ```js
-// Mechanical render — bypasses Claude for Appendix F
+// Mechanical render, bypasses Claude for Appendix F
 if (!defenseIntel.isEmpty) {
   allOutputs["tier9-data-appendix"] = renderDefenseMatrix(defenseIntel, intake.charge_type, intake.state);
 }
 ```
-This means `buildTier9DataAppendix()` in prompts.ts is never called for this section — the mechanical HTML takes its place.
+This means `buildTier9DataAppendix()` in prompts.ts is never called for this section, the mechanical HTML takes its place.
 
 ### What Does NOT Change
-- `src/lib/intelligence-brief/prompts.ts` — NOT used by Edge Function (it has own prompt builders)
-- `src/lib/intelligence-brief/variables.ts` — NOT used by Edge Function
-- `src/lib/intelligence-brief/render.ts` — NOT used by Edge Function (it has own render)
-- Case Decoder generation flow — defense intelligence only injected for IB path
+- `src/lib/intelligence-brief/prompts.ts`, NOT used by Edge Function (it has own prompt builders)
+- `src/lib/intelligence-brief/variables.ts`, NOT used by Edge Function
+- `src/lib/intelligence-brief/render.ts`, NOT used by Edge Function (it has own render)
+- Case Decoder generation flow, defense intelligence only injected for IB path
 - Graceful degradation: empty tables = no matrix = IB identical to before

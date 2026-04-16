@@ -1,5 +1,5 @@
 /**
- * Bulk Good-Law from Citation Graph — Lissner/FLP recommended pattern
+ * Bulk Good-Law from Citation Graph, Lissner/FLP recommended pattern
  *
  * Uses CL bulk data instead of API calls for is_good_law verification.
  * Per Mike Lissner (Free Law Project), the canonical pattern is:
@@ -469,7 +469,7 @@ async function phase4() {
   console.log(`Unverified:          ${unverifiedCount}`);
 
   if (dryRun) {
-    console.log(`\nDry run — no SQL applied.`);
+    console.log(`\nDry run, no SQL applied.`);
     return;
   }
 
@@ -516,7 +516,7 @@ async function phase4() {
       applied += batch.length;
       const elapsed = (Date.now() - startTime) / 1000;
       const rate = (applied / elapsed).toFixed(0);
-      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} clusters — ${rate}/sec\n`);
+      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} clusters, ${rate}/sec\n`);
     } catch (e) {
       errors++;
       console.error(`  Batch ${batchNum}: ${e.message.slice(0, 200)}`);

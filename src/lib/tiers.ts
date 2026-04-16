@@ -18,7 +18,7 @@
  *
  * Prices are in CENTS (Stripe convention). Example: 19700 = $197.00.
  *
- * NOTE: 100% upgrade credit policy — any purchase amount is credited toward
+ * NOTE: 100% upgrade credit policy, any purchase amount is credited toward
  * the next tier within 12 months. Refunded purchases forfeit upgrade credit.
  *
  * GRADUAL GO-LIVE: The `live` flag controls which Stripe mode each tier uses.
@@ -32,7 +32,7 @@ export const TIER_CORE = {
   // Rule: 10x minimum multiple, no single component below product price
   "dui-first-offense": {
     name: "DUI Defense Playbook",
-    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    price: 12700, // cents, raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
     priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
@@ -43,13 +43,13 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — real payments enabled 2026-03-24
+    live: true as boolean, // LIVE, real payments enabled 2026-03-24
   },
     // When changing this price, also update valueStack in playbook-configs.ts
   // Rule: 10x minimum multiple, no single component below product price
   "drug-possession": {
     name: "Drug Possession Defense Playbook",
-    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    price: 12700, // cents, raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
     priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
@@ -60,13 +60,13 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-25
+    live: true as boolean, // LIVE, 2026-03-25
   },
     // When changing this price, also update valueStack in playbook-configs.ts
   // Rule: 10x minimum multiple, no single component below product price
   "probation-violation": {
     name: "Probation Violation Defense Playbook",
-    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    price: 12700, // cents, raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
     priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
@@ -77,13 +77,13 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-25
+    live: true as boolean, // LIVE, 2026-03-25
   },
     // When changing this price, also update valueStack in playbook-configs.ts
   // Rule: 10x minimum multiple, no single component below product price
   "white-collar": {
     name: "White Collar Defense Playbook",
-    price: 14700, // cents — raised from $97 → $147 (2026-04-07, Hormozi premium tier for higher-stakes charges)
+    price: 14700, // cents, raised from $97 → $147 (2026-04-07, Hormozi premium tier for higher-stakes charges)
     priceDisplay: "$147",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
@@ -94,13 +94,13 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-25
+    live: true as boolean, // LIVE, 2026-03-25
   },
     // When changing this price, also update valueStack in playbook-configs.ts
   // Rule: 10x minimum multiple, no single component below product price
   "sex-offense": {
     name: "Sex Offense Defense Playbook",
-    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    price: 12700, // cents, raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
     priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
@@ -111,13 +111,13 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-25
+    live: true as boolean, // LIVE, 2026-03-25
   },
     // When changing this price, also update valueStack in playbook-configs.ts
   // Rule: 10x minimum multiple, no single component below product price
   "federal-criminal": {
     name: "Federal Criminal Defense Playbook",
-    price: 14700, // cents — raised from $97 → $147 (2026-04-07, Hormozi premium tier: federal stakes)
+    price: 14700, // cents, raised from $97 → $147 (2026-04-07, Hormozi premium tier: federal stakes)
     priceDisplay: "$147",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
@@ -128,13 +128,13 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-25
+    live: true as boolean, // LIVE, 2026-03-25
   },
     // When changing this price, also update valueStack in playbook-configs.ts
   // Rule: 10x minimum multiple, no single component below product price
   "drug-trafficking": {
     name: "Drug Trafficking Defense Playbook",
-    price: 14700, // cents — raised from $97 → $147 (2026-04-07, Hormozi premium tier: trafficking stakes)
+    price: 14700, // cents, raised from $97 → $147 (2026-04-07, Hormozi premium tier: trafficking stakes)
     priceDisplay: "$147",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
@@ -145,13 +145,13 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-25
+    live: true as boolean, // LIVE, 2026-03-25
   },
     // When changing this price, also update valueStack in playbook-configs.ts
   // Rule: 10x minimum multiple, no single component below product price
   "self-defense": {
     name: "Self-Defense / Justifiable Force Defense Playbook",
-    price: 12700, // cents — raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
+    price: 12700, // cents, raised from $97 → $127 (2026-04-07, Hormozi pricing lift)
     priceDisplay: "$127",
     delivery: "Instant download",
     deliveryDetail: "Your playbook is delivered instantly to your email after purchase.",
@@ -162,7 +162,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-25
+    live: true as boolean, // LIVE, 2026-03-25
   },
   "case-decoder": {
     name: "Case Decoder",
@@ -177,7 +177,7 @@ export const TIER_CORE = {
     priorityPrice: 9700,
     priorityDelivery: "Same-day (4 hours)",
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-27
+    live: true as boolean, // LIVE, 2026-03-27
   },
   "intelligence-brief": {
     name: "Case Intelligence Brief",
@@ -192,7 +192,7 @@ export const TIER_CORE = {
     priorityPrice: 29700,
     priorityDelivery: "24 hours",
     includesTiers: ["case-decoder"] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-28
+    live: true as boolean, // LIVE, 2026-03-28
   },
   "x-ray": {
     name: "The X-Ray",
@@ -208,7 +208,7 @@ export const TIER_CORE = {
     priorityPrice: 49700,
     priorityDelivery: "5 business days",
     includesTiers: ["case-decoder", "intelligence-brief"] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-28
+    live: true as boolean, // LIVE, 2026-03-28
   },
   "war-room": {
     name: "The War Room",
@@ -224,7 +224,7 @@ export const TIER_CORE = {
     priorityPrice: 99700,
     priorityDelivery: "Expedited 20-day delivery",
     includesTiers: ["case-decoder", "intelligence-brief", "x-ray"] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-28
+    live: true as boolean, // LIVE, 2026-03-28
   },
   "situation-room": {
     name: "The Situation Room",
@@ -240,7 +240,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: ["case-decoder", "intelligence-brief", "x-ray", "war-room"] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-28
+    live: true as boolean, // LIVE, 2026-03-28
   },
   "extra-witness": {
     name: "Extra Witness Intel",
@@ -255,7 +255,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-28
+    live: true as boolean, // LIVE, 2026-03-28
   },
   "judge-report-card": {
     name: "Judge Report Card",
@@ -270,7 +270,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-04-11 (availability gate deployed)
+    live: true as boolean, // LIVE, 2026-04-11 (availability gate deployed)
   },
   "officer-background-check": {
     name: "Officer Background Check",
@@ -285,7 +285,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-04-11 (availability gate deployed)
+    live: true as boolean, // LIVE, 2026-04-11 (availability gate deployed)
   },
   "similar-cases-analyzer": {
     name: "Similar Cases Analyzer",
@@ -300,7 +300,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-04-11 (availability gate deployed)
+    live: true as boolean, // LIVE, 2026-04-11 (availability gate deployed)
   },
   "district-court-intelligence": {
     name: "District Court Intelligence",
@@ -315,7 +315,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode — flip after E2E validation
+    live: false as boolean, // test mode, flip after E2E validation
   },
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",
@@ -330,7 +330,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode — flip after E2E validation
+    live: false as boolean, // test mode, flip after E2E validation
   },
   "witness-pack": {
     name: "Standalone Witness Pack",
@@ -345,7 +345,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE — 2026-03-28
+    live: true as boolean, // LIVE, 2026-03-28
   },
 } as const;
 
@@ -405,7 +405,7 @@ export function isTierLive(slug: TierSlug): boolean {
 // UPGRADE HELPERS
 // ============================================================
 
-/** All $97 playbook slugs — these upgrade to case-decoder, not to each other. */
+/** All $97 playbook slugs, these upgrade to case-decoder, not to each other. */
 export const PLAYBOOK_SLUGS: ReadonlySet<TierSlug> = new Set([
   "dui-first-offense",
   "drug-possession",

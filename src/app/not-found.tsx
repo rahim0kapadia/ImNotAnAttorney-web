@@ -19,7 +19,7 @@ export default function NotFound() {
         Page not found
       </h2>
       <p className="mt-3 max-w-md text-zinc-400">
-        This page doesn&apos;t exist — kind of like the motion your attorney
+        This page doesn&apos;t exist, kind of like the motion your attorney
         said they&apos;d file last month.
       </p>
       <div className="mt-8 flex gap-4">

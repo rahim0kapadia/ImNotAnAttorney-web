@@ -3,7 +3,7 @@
 **Topic:** Accountability questions that reveal whether your attorney is working
 **Format:** talking head + text overlay + dramatic delivery
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + confident trap beat
+**Trending sound suggestion:** Original audio, voiceover + confident trap beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -13,12 +13,12 @@
 
 [SECOND 1-3]
 **Visual**: Cut to speaker, slight smile, direct eye contact. Controlled confidence.
-**Audio/Voiceover**: "If your attorney can answer these without flinching, you've got a good one. If they can't -- now you know."
+**Audio/Voiceover**: "If your attorney can answer these without flinching, you've got a good one. If they can't, now you know."
 
 ## Body
 [SECOND 3-12]
 **Visual**: "QUESTION 1" appears with dramatic weight. Text fills in as spoken.
-**Audio/Voiceover**: "Question one: 'What motions have you FILED -- not considered, not planned -- actually filed?' Any attorney can say they're 'considering' a suppression motion. The court docket shows what's been filed. If nothing is on the docket, nothing has been done. That's not strategy. That's stalling."
+**Audio/Voiceover**: "Question one: 'What motions have you FILED, not considered, not planned, actually filed?' Any attorney can say they're 'considering' a suppression motion. The court docket shows what's been filed. If nothing is on the docket, nothing has been done. That's not strategy. That's stalling."
 **Text overlay**: "Q1: What motions have you FILED? Check the docket."
 
 [SECOND 12-20]
@@ -32,7 +32,7 @@
 **Text overlay**: "Q3: If this were YOUR family member, would you recommend this?"
 
 [SECOND 27-30]
-**Visual**: The phone from the opening -- but now it shows a text TO the attorney with all three questions typed out, ready to send.
+**Visual**: The phone from the opening, but now it shows a text TO the attorney with all three questions typed out, ready to send.
 **Text overlay**: "Send these today. imnotanattorney.com"
 **Audio**: Confident beat drops.
 
@@ -48,13 +48,13 @@ Follow for more questions that hold attorneys accountable.
 - 0:27 "Send these today."
 
 ## Caption
-Your attorney has 8 missed calls from you. Here are 3 questions that will tell you everything you need to know about whether they're actually working your case. If they can answer without flinching -- you've got a good one. If they can't -- now you know.
+Your attorney has 8 missed calls from you. Here are 3 questions that will tell you everything you need to know about whether they're actually working your case. If they can answer without flinching, you've got a good one. If they can't, now you know.
 
 ## Hashtags
 #criminaldefense #lawyerquestions #attorneyaccountability #defendantrights #knowyourrights
 
 ---
 
-**Context**: Sourced from is-your-attorney-actually-working-your-case and 10-questions-every-defendant-should-ask. The "questions that scare" framing is TikTok gold -- it creates a power dynamic reversal where the defendant becomes the one holding accountability. The third question ("your family member") is emotionally devastating and nearly impossible to deflect.
+**Context**: Sourced from is-your-attorney-actually-working-your-case and 10-questions-every-defendant-should-ask. The "questions that scare" framing is TikTok gold, it creates a power dynamic reversal where the defendant becomes the one holding accountability. The third question ("your family member") is emotionally devastating and nearly impossible to deflect.
 **Loop strategy**: Opens with unanswered calls (powerless), closes with a text containing all three questions (empowered). Viewers rewatch to memorize the questions.
 **KPI target**: Saves (defendants will save and screenshot these questions)

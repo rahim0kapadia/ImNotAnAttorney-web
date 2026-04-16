@@ -20,4 +20,4 @@ None.
 
 ## Verification
 
-- `npx tsc --noEmit --skipLibCheck` must pass with no type errors
+- `npx tsc,noEmit,skipLibCheck` must pass with no type errors

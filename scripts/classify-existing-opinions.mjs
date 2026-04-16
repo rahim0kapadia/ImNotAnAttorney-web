@@ -116,7 +116,7 @@ function extractClusterIdFromUrl(url) {
 
 /**
  * Derive a 2-letter jurisdiction code from a court name string.
- * Uses substring search — no regex.
+ * Uses substring search, no regex.
  */
 const COURT_TO_JURISDICTION = [
   ["district of columbia", "dc"],
@@ -214,7 +214,7 @@ async function main() {
   }
   console.log("Theory map: " + theoryMap.size + " charge types");
 
-  // Load opinions with pagination (SQL LIMIT/OFFSET — PostgREST 1000-row cap workaround)
+  // Load opinions with pagination (SQL LIMIT/OFFSET, PostgREST 1000-row cap workaround)
   let offset = 0;
   let totalProcessed = 0;
   let totalClassified = 0;

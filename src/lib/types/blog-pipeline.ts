@@ -109,7 +109,7 @@ export interface DNADetails {
 // BLOG DRAFT
 // ============================================================
 
-/** Full blog draft row — mirrors the blog_drafts DB table. */
+/** Full blog draft row, mirrors the blog_drafts DB table. */
 export interface BlogDraft {
   id: string;
   content_gap_id: number;

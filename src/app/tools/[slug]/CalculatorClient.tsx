@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * @fileoverview Calculator Wizard — multi-step client component.
+ * @fileoverview Calculator Wizard, multi-step client component.
  *
  * Pattern cloned from src/app/score/ScoreClient.tsx (wizard + results +
  * email capture). The step definitions are keyed by product slug so the
@@ -386,7 +386,7 @@ const SENTENCING_CALC_STEPS: Step[] = [
     label: "What state is the federal court in?",
     type: "dropdown",
     options: FEDERAL_STATES,
-    helpText: "Federal district courts — sentencing data from USSC FY2001-2023.",
+    helpText: "Federal district courts, sentencing data from USSC FY2001-2023.",
   },
   {
     id: "chargeType",
@@ -827,7 +827,7 @@ function VeteransCourtResults({
 
   return (
     <>
-      {/* Court Availability — primary result */}
+      {/* Court Availability, primary result */}
       <section className="mb-8">
         <div
           className={`rounded-lg p-5 border ${
@@ -1556,13 +1556,13 @@ export default function CalculatorClient({ slug, product }: Props) {
         setError(
           typeof data.error === "string"
             ? data.error
-            : "Calculation failed — please check your inputs and try again.",
+            : "Calculation failed, please check your inputs and try again.",
         );
         return;
       }
       setResult(data.result as CalculatorResult);
     } catch {
-      setError("Network error — please try again.");
+      setError("Network error, please try again.");
     } finally {
       setLoading(false);
     }
@@ -1589,11 +1589,11 @@ export default function CalculatorClient({ slug, product }: Props) {
         setSaveError(
           typeof data.error === "string"
             ? data.error
-            : "Could not save — please try again.",
+            : "Could not save, please try again.",
         );
       }
     } catch {
-      setSaveError("Network error — please try again.");
+      setSaveError("Network error, please try again.");
     }
   }
 

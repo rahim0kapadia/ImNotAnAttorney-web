@@ -22,7 +22,7 @@ format: "1080x1920px (9:16), 52 seconds"
 ### Reel Script
 
 [SECOND 0-4]
-HOOK — Person facing camera:
+HOOK, Person facing camera:
 "Your attorney says they filed a motion three weeks ago. Want to find out if that's true? It takes 2 minutes."
 Text overlay: "How to check in 2 minutes"
 
@@ -47,7 +47,7 @@ Text overlay: "Every filing. Every date. Everything."
 
 [SECOND 30-40]
 Person facing camera:
-"If the only things on your docket are appearance entries and continuance requests — no motions, no discovery demands, no defense filings — your attorney hasn't been working. They've been postponing."
+"If the only things on your docket are appearance entries and continuance requests, no motions, no discovery demands, no defense filings, your attorney hasn't been working. They've been postponing."
 Text overlay: "Continuances are not motions."
 
 [SECOND 40-48]
@@ -64,7 +64,7 @@ Black screen. White text:
 
 Your attorney says they filed a motion three weeks ago. Want to verify that? It takes 2 minutes.
 
-Most court dockets are public record. You can search by case number or your name. And you can see every single document that has been filed — or hasn't been.
+Most court dockets are public record. You can search by case number or your name. And you can see every single document that has been filed, or hasn't been.
 
 If the only activity on your docket is continuances and appearances... nobody has been fighting.
 
@@ -80,4 +80,4 @@ Search "[your county] clerk of court" and look up your case number. Do it today.
 
 **Share trigger**: A defendant checks their docket for the first time and sends this to their family: "There's nothing filed. He hasn't done anything." A family member sends this to the defendant: "Check your docket and tell me what you see."
 **Context**: This is the most actionable Reel in the batch. It teaches a specific skill that most defendants don't know exists. Once someone checks their docket and sees the reality, they understand the value of being informed.
-**KPI target**: Saves (extremely high — tutorial content gets saved) + Messenger shares + follow-up comments ("I just checked mine and...")
+**KPI target**: Saves (extremely high, tutorial content gets saved) + Messenger shares + follow-up comments ("I just checked mine and...")

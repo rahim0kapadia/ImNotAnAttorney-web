@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/cases/[id]/status — Manual status transition with atomic guard
+ * @file /api/operator/cases/[id]/status, Manual status transition with atomic guard
  *
  * PATCH: Transitions a case to a new status. Validates against ALLOWED_TRANSITIONS
  *        and uses an atomic conditional update to prevent race conditions (if
@@ -72,7 +72,7 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
     );
   }
 
-  // Atomic conditional update — only succeeds if status hasn't changed since we read it
+  // Atomic conditional update, only succeeds if status hasn't changed since we read it
   const { data: updated, error: updateError } = await supabase
     .from("cases")
     .update({ status: newStatus })
@@ -82,7 +82,7 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
     .single();
 
   if (updateError) {
-    // PGRST116 = "no rows returned" — means the status was changed by another process
+    // PGRST116 = "no rows returned", means the status was changed by another process
     if (updateError.code === "PGRST116") {
       return NextResponse.json(
         { error: "Status was changed by another process. Refresh and try again." },

@@ -10,7 +10,7 @@ export default function CourtroomBehaviorContent() {
         </h2>
         <p className="mt-4">
           Walking into a courtroom is intimidating. The formality, the
-          uniforms, the judge elevated above everyone else — it is designed
+          uniforms, the judge elevated above everyone else, it is designed
           to feel serious. That feeling is normal, and everyone who has been
           through the system knows it.
         </p>
@@ -18,7 +18,7 @@ export default function CourtroomBehaviorContent() {
           Here is what matters: courtroom behavior is one of the few things
           in this process you fully control. You cannot control the charges,
           the prosecutor, or the judge. But how you present yourself is
-          entirely your decision — and judges notice.
+          entirely your decision, and judges notice.
         </p>
       </section>
 
@@ -49,13 +49,13 @@ export default function CourtroomBehaviorContent() {
               Keep your hands visible and sit still.
             </span>{" "}
             Fidgeting, crossing arms, and leaning back all communicate
-            something — usually not what you want.
+            something, usually not what you want.
           </li>
           <li>
             <span className="font-semibold text-zinc-50">
               Empty your pockets before the metal detector.
             </span>{" "}
-            Keys, coins, belt — have them ready. Lines are long and delays
+            Keys, coins, belt, have them ready. Lines are long and delays
             get noticed.
           </li>
         </ul>
@@ -105,7 +105,7 @@ export default function CourtroomBehaviorContent() {
             Not silent. Off. A ringing phone in court is contempt-level
             disrespect in some courtrooms.
           </li>
-          <li>No recording of any kind — audio, video, or photos.</li>
+          <li>No recording of any kind, audio, video, or photos.</li>
           <li>No texting, even if the phone is on silent.</li>
           <li>
             Some courtrooms prohibit phones entirely. Check before you arrive
@@ -130,7 +130,7 @@ export default function CourtroomBehaviorContent() {
           <li>Do not sigh, roll your eyes, or make faces.</li>
           <li>Do not whisper loudly to your attorney during testimony.</li>
           <li>
-            Genuine emotion — tears, a quiet moment of composure — is human
+            Genuine emotion, tears, a quiet moment of composure, is human
             and judges understand that. Performative displays are spotted
             immediately.
           </li>
@@ -149,7 +149,7 @@ export default function CourtroomBehaviorContent() {
           Make sure they know:
         </p>
         <ul className="mt-3 space-y-3 pl-5 list-disc marker:text-amber-400">
-          <li>Do not react to testimony or rulings — no gasps, no head-shaking, no outbursts.</li>
+          <li>Do not react to testimony or rulings, no gasps, no head-shaking, no outbursts.</li>
           <li>Do not talk during proceedings.</li>
           <li>Same dress code and technology rules apply.</li>
           <li>

@@ -35,7 +35,7 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 1 -- THE HOOK
+### Slide 1, THE HOOK
 
 **Text**: Your DUI attorney said "just take the deal."
 **Subtext**: Ask these 5 questions first.
@@ -46,7 +46,7 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 2 -- QUESTION 1
+### Slide 2, QUESTION 1
 
 **Headline**: Have you subpoenaed the breathalyzer calibration records?
 
@@ -58,7 +58,7 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 3 -- QUESTION 2
+### Slide 3, QUESTION 2
 
 **Headline**: Was the field sobriety test done per NHTSA standards?
 
@@ -70,7 +70,7 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 4 -- QUESTION 3
+### Slide 4, QUESTION 3
 
 **Headline**: Does the dashcam support the reason for the stop?
 
@@ -82,7 +82,7 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 5 -- QUESTION 4
+### Slide 5, QUESTION 4
 
 **Headline**: What motions have you FILED? Not planned. Filed.
 
@@ -94,7 +94,7 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 6 -- QUESTION 5
+### Slide 6, QUESTION 5
 
 **Headline**: If this were YOUR case, would you take this deal?
 
@@ -106,7 +106,7 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 7 -- WHY THESE QUESTIONS MATTER
+### Slide 7, WHY THESE QUESTIONS MATTER
 
 **Headline**: These aren't gotcha questions.
 
@@ -118,7 +118,7 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 8 -- THE INFORMATION GAP
+### Slide 8, THE INFORMATION GAP
 
 **Headline**: Your attorney, the judge, and the prosecutor all know each other.
 
@@ -130,12 +130,12 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 9 -- WHAT TO DO WITH THE ANSWERS
+### Slide 9, WHAT TO DO WITH THE ANSWERS
 
 **Headline**: After you ask:
 
 **Body**:
-1. Write down every answer -- exact words, not paraphrases
+1. Write down every answer, exact words, not paraphrases
 2. Follow up by email so there's a paper trail
 3. If they can't answer or won't answer, that IS the answer
 4. Compare what they say to what's actually on the court docket
@@ -146,7 +146,7 @@ share_trigger: "A defendant screenshots the questions to bring to their next att
 
 ---
 
-### Slide 10 -- CTA
+### Slide 10, CTA
 
 **Top**: Save this post. Bring it to your next meeting.
 **Middle**: DM "QUESTIONS" for 50 free accountability questions tailored to your charges.
@@ -165,7 +165,7 @@ Your DUI attorney wants to plead it out. Before you sign anything, ask these 5 q
 
 I paid $20,000 to a private attorney. No motions filed. No discovery reviewed. No callbacks. Just "trust the process."
 
-When I finally started asking the RIGHT questions -- specific, informed, impossible to dodge -- everything changed. Suddenly my attorney had answers. And deadlines. And work product.
+When I finally started asking the RIGHT questions, specific, informed, impossible to dodge, everything changed. Suddenly my attorney had answers. And deadlines. And work product.
 
 The quality of your defense is directly related to the quality of your questions.
 

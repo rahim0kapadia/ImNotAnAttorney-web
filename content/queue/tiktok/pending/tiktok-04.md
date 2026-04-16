@@ -3,7 +3,7 @@
 **Topic:** The plea machine and trial penalty
 **Format:** talking head + text overlay + data visual
 **Duration:** 30s
-**Trending sound suggestion:** Original audio -- voiceover + ominous ambient drone
+**Trending sound suggestion:** Original audio, voiceover + ominous ambient drone
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -18,7 +18,7 @@
 ## Body
 [SECOND 3-12]
 **Visual**: Visual of 100 figures on screen. 97 of them dim out, leaving 3 standing.
-**Audio/Voiceover**: "This is not because 97% of people are guilty. It's because the system is built to make a trial the most expensive decision you'll ever make. It's called the trial penalty -- and it's the most powerful force in American criminal justice that nobody puts in writing."
+**Audio/Voiceover**: "This is not because 97% of people are guilty. It's because the system is built to make a trial the most expensive decision you'll ever make. It's called the trial penalty, and it's the most powerful force in American criminal justice that nobody puts in writing."
 **Text overlay**: "The trial penalty. Nobody puts it in writing."
 
 [SECOND 12-20]
@@ -32,7 +32,7 @@
 **Text overlay**: "ASK: What's the specific sentencing difference between plea and trial loss?"
 
 [SECOND 27-30]
-**Visual**: The 97% from the opening -- but now one of the dimmed figures lights back up, holding a notepad.
+**Visual**: The 97% from the opening, but now one of the dimmed figures lights back up, holding a notepad.
 **Text overlay**: "Know the math before you sign. imnotanattorney.com"
 **Audio**: Drone resolves to silence.
 
@@ -47,13 +47,13 @@ Share this with someone facing a federal case.
 - 0:27 "Know the math before you sign."
 
 ## Caption
-97% of federal cases end in a plea. Not because everyone is guilty. Because the system makes trials so risky that even people with viable defenses plead out. Ask your attorney the sentencing difference between the plea and a trial loss -- you deserve a specific number.
+97% of federal cases end in a plea. Not because everyone is guilty. Because the system makes trials so risky that even people with viable defenses plead out. Ask your attorney the sentencing difference between the plea and a trial loss, you deserve a specific number.
 
 ## Hashtags
 #federalcharges #pleadeal #trialpenalty #criminaljustice #criminaldefense
 
 ---
 
-**Context**: Sourced from 7-things-criminal-justice-wont-tell-you and should-you-take-the-plea-deal. The 97% stat is jaw-dropping and widely searched. This video drives home a systemic reality without telling anyone what to do -- pure information empowerment, which is the INNA UPL-safe lane.
-**Loop strategy**: Opens with 97% filling the screen, closes with one figure standing back up with a notepad -- the visual metaphor of knowledge as defense drives rewatches.
+**Context**: Sourced from 7-things-criminal-justice-wont-tell-you and should-you-take-the-plea-deal. The 97% stat is jaw-dropping and widely searched. This video drives home a systemic reality without telling anyone what to do, pure information empowerment, which is the INNA UPL-safe lane.
+**Loop strategy**: Opens with 97% filling the screen, closes with one figure standing back up with a notepad, the visual metaphor of knowledge as defense drives rewatches.
 **KPI target**: Shares (the stat alone makes this extremely shareable)

@@ -1,6 +1,6 @@
 "use client";
 /**
- * /partner/card — Printable bail packet insert.
+ * /partner/card, Printable bail packet insert.
  *
  * Full 8.5x11" page designed to sit in a bail packet alongside legal documents.
  * Co-branded with bondsman company. Print-optimized (white background for paper).

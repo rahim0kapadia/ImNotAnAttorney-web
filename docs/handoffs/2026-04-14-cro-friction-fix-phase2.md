@@ -1,4 +1,4 @@
-# Handoff: CRO Friction Fix — Phase 2-5
+# Handoff: CRO Friction Fix, Phase 2-5
 
 Date: 2026-04-14 14:12
 
@@ -13,17 +13,17 @@ Phase 1 (revenue-blocking bugs) is DONE and committed (`f018d5c`). Phases 2-5 re
 
 Plan has 15 tasks across 5 phases. Phase 1 (Tasks 1-4) fixed stale $97 prices, charge card mismatch, StickyMobileCTA routing, and BlogCTA fallback. All verified via tsc + grep. Committed with prior uncommitted changes (ScoreClient, Header, Footer, pillar-registry).
 
-## Files Modified (Phase 1 — committed as `f018d5c`)
+## Files Modified (Phase 1, committed as `f018d5c`)
 
-- `src/components/HomepageHero.tsx` — "$97 each" → dynamic `from ${TIER_CORE["dui-first-offense"].priceDisplay}`
-- `src/app/playbooks/page.tsx` — stripped $97 from metadata, hero subtitle now dynamic
-- `src/app/page.tsx` — charge cards pull price from each card's actual playbook tier (was hardcoded DUI price)
-- `src/components/StickyMobileCTA.tsx` — href `/start` → `/score`, label "Check Your Defense — Free"
-- `src/components/BlogCTA.tsx` — general-defense fallback → `case-decoder` (was `dui-first-offense`), added `isCaseDecoder` flag for copy that reflects 15 questions + 48hr delivery
-- `src/app/score/ScoreClient.tsx` — (prior session) quiz Q8→Q1 reorder, charge param support
-- `src/components/Header.tsx` — (prior session) "Get Started" → /score
-- `src/components/Footer.tsx` — (prior session) "Get Started" → /score
-- `src/data/pillar-registry.json` — (prior session) backfill data
+- `src/components/HomepageHero.tsx`, "$97 each" → dynamic `from ${TIER_CORE["dui-first-offense"].priceDisplay}`
+- `src/app/playbooks/page.tsx`, stripped $97 from metadata, hero subtitle now dynamic
+- `src/app/page.tsx`, charge cards pull price from each card's actual playbook tier (was hardcoded DUI price)
+- `src/components/StickyMobileCTA.tsx`, href `/start` → `/score`, label "Check Your Defense, Free"
+- `src/components/BlogCTA.tsx`, general-defense fallback → `case-decoder` (was `dui-first-offense`), added `isCaseDecoder` flag for copy that reflects 15 questions + 48hr delivery
+- `src/app/score/ScoreClient.tsx`, (prior session) quiz Q8→Q1 reorder, charge param support
+- `src/components/Header.tsx`, (prior session) "Get Started" → /score
+- `src/components/Footer.tsx`, (prior session) "Get Started" → /score
+- `src/data/pillar-registry.json`, (prior session) backfill data
 
 ## What Didn't Work
 
@@ -53,14 +53,14 @@ Plan has 15 tasks across 5 phases. Phase 1 (Tasks 1-4) fixed stale $97 prices, c
 
 ## Verification
 
-- `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc --noEmit --skipLibCheck` — pre-existing errors in tests/ only
-- `grep -r '\$97' src/components/ src/app/playbooks/` — should be zero matches in Phase 1 files
+- `cd C:/Users/email/projects/ImNotAnAttorney-web && npx tsc,noEmit,skipLibCheck`, pre-existing errors in tests/ only
+- `grep -r '\$97' src/components/ src/app/playbooks/`, should be zero matches in Phase 1 files
 - Branch is 3 commits ahead of origin (2 prior + 1 Phase 1). Push at Phase 5.
 
 ## Key Context
 
 - Plan path: `C:\Users\email\projects\ImNotAnAttorney\docs\plans\2026-04-14-cro-friction-fix.md`
-- Site is LIVE — changes deploy on git push via Vercel
+- Site is LIVE, changes deploy on git push via Vercel
 - Pre-existing tsc errors in `tests/cross-validator.test.ts` and `tests/mechanical-extractor.test.ts` (unrelated)
-- BlogCTA now has `isCaseDecoder` flag — Phase 2 Task 6 should build on this when swapping primary button
-- Expert consultation hook may fire on page.tsx / landing page edits — plan was already Peep Laja-reviewed
+- BlogCTA now has `isCaseDecoder` flag, Phase 2 Task 6 should build on this when swapping primary button
+- Expert consultation hook may fire on page.tsx / landing page edits, plan was already Peep Laja-reviewed

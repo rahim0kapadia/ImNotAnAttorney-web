@@ -13,7 +13,7 @@ Names and identifying details have been changed. The findings are real. The atto
 
 You got arrested. You hired an attorney. You're paying thousands of dollars a month. And you still have no idea what's actually in your discovery.
 
-That stack of papers your attorney told you to "review"? It contains police reports, lab results, witness statements, surveillance records, and forensic analysis — written in language designed to be confusing.
+That stack of papers your attorney told you to "review"? It contains police reports, lab results, witness statements, surveillance records, and forensic analysis, written in language designed to be confusing.
 
 But here's what nobody tells you: **the problems that win cases are hiding in those pages.** Weight discrepancies. Date impossibilities. Witness contradictions. Evidence that was handled improperly. Your attorney should be finding these. Many don't.
 
@@ -46,20 +46,20 @@ We reviewed the discovery. The attorney had raised none of the following issues.
 ## Problem 1: The Weight That Disappeared
 
 ### What to Look For in Your Discovery
-Compare every weight mentioned in your case — the arrest report weight, the property/evidence log weight, and the lab report weight. They should match. If they don't, someone has explaining to do.
+Compare every weight mentioned in your case, the arrest report weight, the property/evidence log weight, and the lab report weight. They should match. If they don't, someone has explaining to do.
 
 ### What We Found in the Real Case
 - **Police inventory report:** 93.9 grams seized at the scene
 - **FDLE lab report:** 25.59 grams tested
-- **Missing:** 68.3 grams — **73% of the evidence weight is unaccounted for**
+- **Missing:** 68.3 grams, **73% of the evidence weight is unaccounted for**
 
 ### Why This Can Matter
-Weight determines the charge. In trafficking cases, weight determines the mandatory minimum. If 73% of the evidence is unaccounted for, the chain of custody has a gap the size of a barn door. Was the evidence mishandled? Mislabeled? Mixed with another case? The State must prove the weight beyond a reasonable doubt — and this discrepancy creates reasonable doubt.
+Weight determines the charge. In trafficking cases, weight determines the mandatory minimum. If 73% of the evidence is unaccounted for, the chain of custody has a gap the size of a barn door. Was the evidence mishandled? Mislabeled? Mixed with another case? The State must prove the weight beyond a reasonable doubt, and this discrepancy creates reasonable doubt.
 
 ### The Question to Ask Your Attorney
 *"The scene weight is 93.9 grams. The lab weight is 25.59 grams. Where is the other 68.3 grams? Has a chain of custody audit been requested?"*
 
-**SOURCE:** Barry Scheck's chain of custody protocol — used to undermine DNA evidence in OJ Simpson and form the basis of 375+ Innocence Project exonerations.
+**SOURCE:** Barry Scheck's chain of custody protocol, used to undermine DNA evidence in OJ Simpson and form the basis of 375+ Innocence Project exonerations.
 
 ---
 
@@ -74,19 +74,19 @@ Compare what you're *charged* with to what the lab *found*. The charging documen
 - **Amphetamine, MDMA, and MDA are different substances under Florida law**
 
 ### Why This Can Matter
-This is called a "fatal variance" — the charge doesn't match the evidence. MDMA is not amphetamine. They have different statutory provisions, different weight thresholds, and potentially different penalties. The State may be forced to amend the charge, which resets parts of the case.
+This is called a "fatal variance", the charge doesn't match the evidence. MDMA is not amphetamine. They have different statutory provisions, different weight thresholds, and potentially different penalties. The State may be forced to amend the charge, which resets parts of the case.
 
 ### The Question to Ask Your Attorney
 *"The charge says amphetamine. The lab says MDMA. These are different substances. Has a motion to dismiss based on fatal variance been filed?"*
 
-**SOURCE:** Ron Chapman II's substance identification protocol — Chapman exploits prosecutorial complacency in federal drug cases.
+**SOURCE:** Ron Chapman II's substance identification protocol, Chapman exploits prosecutorial complacency in federal drug cases.
 
 ---
 
 ## Problem 3: The Fingerprints Nobody Mentioned
 
 ### What to Look For in Your Discovery
-Check for fingerprint analysis results. How many prints were collected? How many matched you? If zero match you — that's significant.
+Check for fingerprint analysis results. How many prints were collected? How many matched you? If zero match you, that's significant.
 
 ### What We Found in the Real Case
 - **Latent fingerprints collected:** 21
@@ -99,7 +99,7 @@ In a constructive possession case, the State must prove you knowingly possessed 
 ### The Question to Ask Your Attorney
 *"There are 21 fingerprints in evidence and none match me. Whose prints are they? Has this been raised with the prosecution?"*
 
-**SOURCE:** Barry Scheck's forensic evidence methodology — the absence of physical evidence connecting a defendant to the alleged crime is one of the strongest defense tools in possession cases.
+**SOURCE:** Barry Scheck's forensic evidence methodology, the absence of physical evidence connecting a defendant to the alleged crime is one of the strongest defense tools in possession cases.
 
 ---
 
@@ -114,12 +114,12 @@ Check report dates against the dates of the events they describe. A report about
 - **Three days before the events occurred**
 
 ### Why This Can Matter
-A report cannot be filed before the events it describes. This is either a serious administrative error or something worse. Either way, it undermines the reliability of that officer's reports — and potentially everything else they documented.
+A report cannot be filed before the events it describes. This is either a serious administrative error or something worse. Either way, it undermines the reliability of that officer's reports, and potentially everything else they documented.
 
 ### The Question to Ask Your Attorney
 *"This report is dated before the events it describes. Has this been raised? Is there a corrected version?"*
 
-**SOURCE:** Gerry Spence's investigation pattern analysis — find the one fact that calls everything into question.
+**SOURCE:** Gerry Spence's investigation pattern analysis, find the one fact that calls everything into question.
 
 ---
 
@@ -139,7 +139,7 @@ If the same phone number is attributed to two different people in a sworn affida
 ### The Question to Ask Your Attorney
 *"The same phone number appears for both the CI and the defendant in the same detective's report. Has a Franks hearing been discussed?"*
 
-**SOURCE:** Jeffrey Lichtman's 7-pillar CI destruction playbook — Lichtman's informant reliability challenges won 3 mistrials for John Gotti Jr. and formed the foundation of El Chapo's defense strategy.
+**SOURCE:** Jeffrey Lichtman's 7-pillar CI destruction playbook, Lichtman's informant reliability challenges won 3 mistrials for John Gotti Jr. and formed the foundation of El Chapo's defense strategy.
 
 ---
 
@@ -150,7 +150,7 @@ Check suspect descriptions, identification photos, and surveillance records agai
 
 ### What We Found in the Real Case
 - **SUSPECT identification photo:** Individual with a full head of hair
-- **Actual defendant:** Bald — and has been bald for years
+- **Actual defendant:** Bald, and has been bald for years
 
 ### Why This Can Matter
 If the suspect documentation doesn't match the defendant, the investigation's target identification is compromised. Who were they actually surveilling?
@@ -176,7 +176,7 @@ Large cash amounts are used by prosecutors to imply drug dealing. If the amount 
 ### The Question to Ask Your Attorney
 *"One report says $50. Another says $20,332. Which is accurate? Where is the documentation for the larger amount?"*
 
-**SOURCE:** Barry Scheck's chain of custody protocol — every piece of evidence must be tracked, documented, and verifiable.
+**SOURCE:** Barry Scheck's chain of custody protocol, every piece of evidence must be tracked, documented, and verifiable.
 
 ---
 
@@ -215,7 +215,7 @@ When you ask the questions in this guide, write down the answers. If your attorn
 
 This guide teaches you what to look for. Our **Case Decoder ($197)** does the looking for you.
 
-We analyze your actual case details — your charges, your stage, your jurisdiction — and generate 10-15 specific, pointed questions built from the same elite defense frameworks used in this guide.
+We analyze your actual case details, your charges, your stage, your jurisdiction, and generate 10-15 specific, pointed questions built from the same elite defense frameworks used in this guide.
 
 The defendants in this guide's real case wish they had these questions sooner. Don't make the same mistake.
 
@@ -223,4 +223,4 @@ The defendants in this guide's real case wish they had these questions sooner. D
 
 ---
 
-*ImNotAnAttorney provides legal information and research — not legal advice. No attorney-client relationship is created. Always consult with your licensed attorney before taking action.*
+*ImNotAnAttorney provides legal information and research, not legal advice. No attorney-client relationship is created. Always consult with your licensed attorney before taking action.*

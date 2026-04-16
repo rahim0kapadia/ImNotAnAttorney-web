@@ -5,10 +5,10 @@
  * markers. Determines which extraction steps run and weighting in aggregates.
  *
  * Types:
- *   'full'        — >1000 words with analysis section (weight: 1.0)
- *   'memorandum'  — 500-1000 words (weight: 0.8)
- *   'pca'         — <500 words OR 'PER CURIAM' + 'Affirmed' (weight: 0.3)
- *   'order'       — <200 words (weight: 0.5)
+ *   'full'       , >1000 words with analysis section (weight: 1.0)
+ *   'memorandum' , 500-1000 words (weight: 0.8)
+ *   'pca'        , <500 words OR 'PER CURIAM' + 'Affirmed' (weight: 0.3)
+ *   'order'      , <200 words (weight: 0.5)
  */
 
 export const OPINION_TYPE_WEIGHTS = {
@@ -50,7 +50,7 @@ function containsCI(text, needle) {
 /**
  * Classify an opinion's structure.
  *
- * @param {string} text — plain text of the opinion (HTML already stripped)
+ * @param {string} text, plain text of the opinion (HTML already stripped)
  * @returns {{ type: string, wordCount: number, confidence: string }}
  */
 export function classifyOpinionType(text) {
@@ -73,7 +73,7 @@ export function classifyOpinionType(text) {
     if (hasPerCuriam && hasAffirmed) {
       return { type: "pca", wordCount, confidence: "high" };
     }
-    // Short but not PCA — still classify as PCA if very short, order if ambiguous
+    // Short but not PCA, still classify as PCA if very short, order if ambiguous
     if (hasPerCuriam) {
       return { type: "pca", wordCount, confidence: "medium" };
     }
@@ -82,7 +82,7 @@ export function classifyOpinionType(text) {
 
   // Check for PCA markers even in longer opinions (unusual but happens)
   if (hasPerCuriam && hasAffirmed && wordCount < 800) {
-    // Short-ish per curiam with affirmed — classify as PCA
+    // Short-ish per curiam with affirmed, classify as PCA
     return { type: "pca", wordCount, confidence: "medium" };
   }
 
@@ -113,7 +113,7 @@ export function classifyOpinionType(text) {
 /**
  * Determine which extraction steps to run based on opinion type.
  *
- * @param {string} opinionType — 'full', 'memorandum', 'pca', 'order'
+ * @param {string} opinionType, 'full', 'memorandum', 'pca', 'order'
  * @returns {{ extractCharges: boolean, extractMotions: boolean, extractTheories: boolean, extractOutcomes: boolean, extractHolding: boolean }}
  */
 export function getExtractionSteps(opinionType) {

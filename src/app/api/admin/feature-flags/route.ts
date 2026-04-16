@@ -1,5 +1,5 @@
 /**
- * @file /api/admin/feature-flags — Admin API for feature flag management
+ * @file /api/admin/feature-flags, Admin API for feature flag management
  *
  * GET: List all feature flags (ordered by key)
  * PATCH: Toggle a feature flag on/off

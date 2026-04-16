@@ -32,14 +32,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Criminal Defense Blog",
   description:
-    "In-depth legal research and defense strategies for criminal defendants — the information that closes the gap between what you know and what everyone else in the courtroom knows.",
+    "In-depth legal research and defense strategies for criminal defendants, the information that closes the gap between what you know and what everyone else in the courtroom knows.",
   alternates: {
     canonical: `${SITE_URL}/blog`,
   },
   openGraph: {
     title: "Criminal Defense Blog",
     description:
-      "In-depth legal research and defense strategies for criminal defendants — the information that closes the gap between what you know and what everyone else in the courtroom knows.",
+      "In-depth legal research and defense strategies for criminal defendants, the information that closes the gap between what you know and what everyone else in the courtroom knows.",
     url: `${SITE_URL}/blog`,
   },
 };
@@ -78,9 +78,9 @@ export default async function BlogPage({
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Criminal Defense Blog — What Defendants Need to Know Before Court",
+            name: "Criminal Defense Blog, What Defendants Need to Know Before Court",
             description:
-              "In-depth legal research and defense strategies for criminal defendants — the information that closes the gap between what you know and what everyone else in the courtroom knows.",
+              "In-depth legal research and defense strategies for criminal defendants, the information that closes the gap between what you know and what everyone else in the courtroom knows.",
             url: `${SITE_URL}/blog`,
             isPartOf: { "@id": `${SITE_URL}/#website` },
             author: {
@@ -97,7 +97,7 @@ export default async function BlogPage({
       />
       <div className="mx-auto max-w-4xl">
         <FadeInUp>
-          <h1 className="font-display text-3xl font-bold text-white md:text-4xl">Criminal Defense Blog — What Defendants Need to Know Before Court</h1>
+          <h1 className="font-display text-3xl font-bold text-white md:text-4xl">Criminal Defense Blog, What Defendants Need to Know Before Court</h1>
           <p className="mt-3 text-zinc-400">
             Legal information that actually helps. No jargon, no fluff.
           </p>
@@ -106,7 +106,7 @@ export default async function BlogPage({
           </p>
         </FadeInUp>
 
-        {/* Category filters — client component for instant filtering */}
+        {/* Category filters, client component for instant filtering */}
         <Suspense fallback={<div className="mt-8 h-8" />}>
           <BlogCategoryFilter />
         </Suspense>

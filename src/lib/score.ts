@@ -1,5 +1,5 @@
 /**
- * @fileoverview Defense Milestone Score Calculator — pure scoring logic.
+ * @fileoverview Defense Milestone Score Calculator, pure scoring logic.
  *
  * Extracted from src/app/api/score/route.ts so the algorithm can be
  * unit-tested without Next.js request plumbing or Supabase dependencies.
@@ -11,7 +11,7 @@
  *   - Communication frequency: 15% weight
  *   - Attorney type: 10% weight
  *   - Strategy discussion: 10% weight
- * - Time since arrest is a MODIFIER, not a direct scorer — it scales penalties
+ * - Time since arrest is a MODIFIER, not a direct scorer, it scales penalties
  *   for motions, discovery, and compound checks. No points added/subtracted
  *   for time alone; it determines how harshly missing milestones are penalized.
  * - Time-based expectations: penalties increase as time passes without expected
@@ -95,23 +95,23 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   if (input.hasAttorney === "private") {
     score += 5;
   } else if (input.hasAttorney === "public-defender") {
-    score += 0; // neutral — PDs are overloaded, not bad
+    score += 0; // neutral, PDs are overloaded, not bad
     observations.push(
-      "Public defenders carry 2-4x recommended caseloads. Being proactive can help — confirm deadlines, request written updates, and ask about motions and discovery status."
+      "Public defenders carry 2-4x recommended caseloads. Being proactive can help, confirm deadlines, request written updates, and ask about motions and discovery status."
     );
   } else if (input.hasAttorney === "no") {
     score -= 15;
     observations.push(
-      "You don't have an attorney yet. This is urgent — most motion deadlines run from arrest date, not from when you hire counsel."
+      "You don't have an attorney yet. This is urgent, most motion deadlines run from arrest date, not from when you hire counsel."
     );
   } else if (input.hasAttorney === "not-sure") {
     score -= 10;
     observations.push(
-      "Confirm whether you have active counsel and who they are — your next court date may already be scheduled."
+      "Confirm whether you have active counsel and who they are, your next court date may already be scheduled."
     );
   }
 
-  // CHARGE-SPECIFIC OBSERVATION (mandatory — fires for every result)
+  // CHARGE-SPECIFIC OBSERVATION (mandatory, fires for every result)
   observations.push(getChargeSpecificObservation(input.chargeType, timeIndex, input.hasAttorney));
 
   // =========================================================================
@@ -121,14 +121,14 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     score += 15;
     if (timeIndex >= 2) {
       observations.push(
-        "Your attorney has filed motions — that's a positive sign of active case management."
+        "Your attorney has filed motions, that's a positive sign of active case management."
       );
     }
   } else if (input.motionsFiled === "no") {
     if (timeIndex >= 2) {
       score -= 20;
       observations.push(
-        `At ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed, key defense windows may be closing. Late suppression motions are often rejected — challengeable evidence stays in.`
+        `At ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed, key defense windows may be closing. Late suppression motions are often rejected, challengeable evidence stays in.`
       );
     } else {
       score -= 5;
@@ -150,7 +150,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     if (timeIndex >= 2) {
       score -= 15;
       observations.push(
-        "At this stage, discovery is typically part of the defense file. Without it, the defense is being built blind — and you can't challenge evidence you haven't reviewed. Worth asking: \"Have we received all discovery materials?\""
+        "At this stage, discovery is typically part of the defense file. Without it, the defense is being built blind, and you can't challenge evidence you haven't reviewed. Worth asking: \"Have we received all discovery materials?\""
       );
     } else {
       score -= 3;
@@ -159,7 +159,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     // "dont-know"
     score -= 10;
     observations.push(
-      "Discovery is evidence the prosecution must share — police reports, lab results, witness statements. A key question: \"Have we received all discovery?\""
+      "Discovery is evidence the prosecution must share, police reports, lab results, witness statements. A key question: \"Have we received all discovery?\""
     );
   }
 
@@ -172,13 +172,13 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     score += 0;
     if (timeIndex >= 2) {
       observations.push(
-        "Monthly communication may be acceptable early on, but as your case progresses, more frequent updates become the norm — especially around hearings and deadlines."
+        "Monthly communication may be acceptable early on, but as your case progresses, more frequent updates become the norm, especially around hearings and deadlines."
       );
     }
   } else if (input.communicationFrequency === "rarely") {
     score -= 10;
     observations.push(
-      "Rare communication is concerning. No contact often means no work — attorneys bill by the hour, and silence frequently means your file hasn't been touched."
+      "Rare communication is concerning. No contact often means no work, attorneys bill by the hour, and silence frequently means your file hasn't been touched."
     );
   } else if (input.communicationFrequency === "never") {
     score -= 20;
@@ -238,16 +238,16 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   // =========================================================================
   if (input.caseStage === "sentencing") {
     observations.push(
-      "At the sentencing stage, mitigation preparation is critical — character letters, treatment documentation, and a sentencing memorandum. Worth asking: \"What mitigation materials are being prepared?\""
+      "At the sentencing stage, mitigation preparation is critical, character letters, treatment documentation, and a sentencing memorandum. Worth asking: \"What mitigation materials are being prepared?\""
     );
   } else if (input.caseStage === "post-conviction") {
     observations.push(
-      "Post-conviction cases have strict appeal deadlines. One question worth exploring: \"Have all available remedies been identified — direct appeal, PCR, habeas — and what are their filing deadlines?\""
+      "Post-conviction cases have strict appeal deadlines. One question worth exploring: \"Have all available remedies been identified, direct appeal, PCR, habeas, and what are their filing deadlines?\""
     );
   } else if (input.caseStage === "pre-arrest") {
     score += 3;
     observations.push(
-      "Being proactive before an arrest gives you a strategic advantage. If you expect charges, consider retaining an attorney now — pre-arrest intervention can sometimes prevent charges entirely."
+      "Being proactive before an arrest gives you a strategic advantage. If you expect charges, consider retaining an attorney now, pre-arrest intervention can sometimes prevent charges entirely."
     );
   }
 
@@ -278,11 +278,11 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   // =========================================================================
   if (input.licensedProfession === "yes-licensed") {
     observations.push(
-      "A conviction could trigger licensing board action, suspension, or revocation — separate from the criminal case. Licensing consequences are worth raising as a distinct issue in your defense."
+      "A conviction could trigger licensing board action, suspension, or revocation, separate from the criminal case. Licensing consequences are worth raising as a distinct issue in your defense."
     );
   } else if (input.licensedProfession === "yes-other") {
     observations.push(
-      "A conviction affects background checks, security clearances, and professional opportunities — even without a license at stake. Collateral employment consequences are worth discussing with your attorney."
+      "A conviction affects background checks, security clearances, and professional opportunities, even without a license at stake. Collateral employment consequences are worth discussing with your attorney."
     );
   } else if (input.licensedProfession === "student") {
     observations.push(
@@ -311,7 +311,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   }
   if (observations.length < 3) {
     observations.push(
-      "No milestone assessment captures everything. The factors we can't measure from 10 questions — judge tendencies, prosecutor patterns, jurisdiction-specific deadlines — often matter most."
+      "No milestone assessment captures everything. The factors we can't measure from 10 questions, judge tendencies, prosecutor patterns, jurisdiction-specific deadlines, often matter most."
     );
   }
   if (observations.length < 3) {
@@ -361,7 +361,7 @@ export function getChargeLabel(charge: string): string {
 
 /**
  * Returns a charge-specific observation tailored to the defendant's charge type
- * and time since arrest. This fires for EVERY result — it's not padding.
+ * and time since arrest. This fires for EVERY result, it's not padding.
  */
 export function getChargeSpecificObservation(chargeType: string, timeIndex: number, hasAttorney: string): string {
   const noAttorney = hasAttorney === "no" || hasAttorney === "not-sure";
@@ -377,11 +377,11 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
     case "drug":
     case "drug-possession":
       if (noAttorney) {
-        return "Drug possession defense examines how evidence was obtained — warrant validity, informant reliability, chain of custody, lab accuracy. Key questions for counsel.";
+        return "Drug possession defense examines how evidence was obtained, warrant validity, informant reliability, chain of custody, lab accuracy. Key questions for counsel.";
       }
       return timeIndex >= 2
-        ? "Lab report review is critical — weight errors and chain-of-custody gaps lead to reductions. Ask: \"Have you reviewed the lab report?\""
-        : "Defense examines how evidence was obtained — warrant validity, informant reliability, chain of custody. Ask: \"What's the plan for challenging evidence?\"";
+        ? "Lab report review is critical, weight errors and chain-of-custody gaps lead to reductions. Ask: \"Have you reviewed the lab report?\""
+        : "Defense examines how evidence was obtained, warrant validity, informant reliability, chain of custody. Ask: \"What's the plan for challenging evidence?\"";
     case "drug-trafficking":
       if (noAttorney) {
         return "Trafficking defense examines quantity thresholds vs. distribution evidence, CI testimony, and wiretap authorization. Mandatory minimums make early counsel critical.";
@@ -395,7 +395,7 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
       }
       return timeIndex >= 2
         ? "Hearing prep includes mitigating evidence, compliance records, and alternative sanctions. Ask: \"What are we presenting, and have we explored alternatives?\""
-        : "Technical vs. substantive violations matters — technical often have alternatives to revocation. Ask: \"What type is this, and what alternatives exist?\"";
+        : "Technical vs. substantive violations matters, technical often have alternatives to revocation. Ask: \"What type is this, and what alternatives exist?\"";
     case "white-collar":
       if (noAttorney) {
         return "White collar cases often carry parallel civil or regulatory exposure. A key first question for counsel: is there civil liability connected to these charges?";
@@ -403,7 +403,7 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
       return "White collar cases often carry parallel civil or regulatory exposure. Ask: \"Is there civil liability connected to these charges?\"";
     case "sex-offense":
       if (noAttorney) {
-        return "Sex offense cases carry collateral consequences — SORNA registry, residency restrictions, employment limits. The right attorney scrutinizes forensic procedures, digital evidence, and Brady material first.";
+        return "Sex offense cases carry collateral consequences, SORNA registry, residency restrictions, employment limits. The right attorney scrutinizes forensic procedures, digital evidence, and Brady material first.";
       }
       return timeIndex >= 2
         ? "Forensic reports, evidence handling, and Brady material are critical now. Ask: \"Have issues been found with evidence collection, and what's the defense theory?\""
@@ -421,7 +421,7 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
       }
       return timeIndex >= 2
         ? "A clear justification theory and preserved evidence are essential. Ask: \"What's the justification theory, and has all threat evidence been preserved?\""
-        : "Preserving threat evidence is critical — witness statements, surveillance, medical records, 911 recordings. Ask: \"Has all threat evidence been preserved?\"";
+        : "Preserving threat evidence is critical, witness statements, surveillance, medical records, 911 recordings. Ask: \"Has all threat evidence been preserved?\"";
     case "other-felony":
       if (noAttorney) {
         return "Felony defense starts by identifying which elements of the charge are weakest. A key first conversation when retaining counsel.";
@@ -437,6 +437,6 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
         ? "A conviction creates a permanent record. Diversion and deferred adjudication are worth exploring. Ask: \"Have we explored every alternative to conviction?\""
         : "Misdemeanor convictions create permanent records affecting employment, housing, and licensing. Worth exploring: diversion or deferred adjudication that can result in dismissal.";
     default:
-      return `For ${getChargeLabel(chargeType)} cases, understanding which elements the prosecution must prove — and which ones are weakest — is a key question worth exploring.`;
+      return `For ${getChargeLabel(chargeType)} cases, understanding which elements the prosecution must prove, and which ones are weakest, is a key question worth exploring.`;
   }
 }

@@ -19,7 +19,7 @@ export function PlaybookCTA({ slug }: { slug?: string }) {
   return (
     <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
       <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
-        DUI Defense Playbook — {TIER_CORE["dui-first-offense"].priceDisplay}
+        DUI Defense Playbook, {TIER_CORE["dui-first-offense"].priceDisplay}
       </p>
       <h3 className="mt-2 text-lg font-bold text-white">
         26 questions that change how your next attorney meeting goes.
@@ -34,13 +34,13 @@ export function PlaybookCTA({ slug }: { slug?: string }) {
           href={appendRef("/playbook/dui-first-offense")}
           className="rounded-lg bg-amber-500 px-6 py-3 text-center text-sm font-bold text-black transition-colors hover:bg-amber-400"
         >
-          Get the DUI Playbook — {TIER_CORE["dui-first-offense"].priceDisplay} →
+          Get the DUI Playbook, {TIER_CORE["dui-first-offense"].priceDisplay} →
         </Link>
         <Link
           href={appendRef("/checkout?tier=case-decoder")}
           className="rounded-lg border border-zinc-700 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-500"
         >
-          Or upgrade to {TIER_CORE["case-decoder"].name} — {TIER_CORE["case-decoder"].priceDisplay}
+          Or upgrade to {TIER_CORE["case-decoder"].name}, {TIER_CORE["case-decoder"].priceDisplay}
         </Link>
       </div>
       <p className="mt-2 text-xs text-zinc-400">

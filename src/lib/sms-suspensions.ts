@@ -1,5 +1,5 @@
 /**
- * SMS suspension registry — Layer 2 of the SMS delivery monitoring stack.
+ * SMS suspension registry, Layer 2 of the SMS delivery monitoring stack.
  *
  * Populated by the Resend webhook when a {phone}@text.email email bounces.
  * Read by sendSMS() pre-flight to skip sends to known-bad numbers.
@@ -21,7 +21,7 @@ export function extractPhoneFromGateway(recipient: string): string | null {
 
 /**
  * Returns true if this phone is currently suspended (active row, resolved_at IS NULL).
- * Safe to call from hot paths — indexed on phone WHERE resolved_at IS NULL.
+ * Safe to call from hot paths, indexed on phone WHERE resolved_at IS NULL.
  */
 export async function isSmsSuspended(
   supabase: SupabaseClient,
@@ -40,7 +40,7 @@ export async function isSmsSuspended(
 
 /**
  * Upsert a suspension row. If the phone is already suspended (active), this is a no-op
- * on suspended_at — we keep the earliest detection timestamp. If a previous suspension
+ * on suspended_at, we keep the earliest detection timestamp. If a previous suspension
  * was resolved, the upsert overwrites with a fresh suspension.
  */
 export async function suspendSmsPhone(

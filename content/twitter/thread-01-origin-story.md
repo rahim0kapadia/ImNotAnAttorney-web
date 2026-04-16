@@ -72,7 +72,7 @@ Suddenly my attorney had answers. And deadlines. And work product.
 
 A good attorney WANTS informed clients. They welcome questions. They explain things.
 
-A bad attorney — or an overwhelmed one — hates questions. Because questions require answers. And work.
+A bad attorney, or an overwhelmed one, hates questions. Because questions require answers. And work.
 
 The quality of your defense is directly related to the quality of your questions.
 
@@ -102,7 +102,7 @@ We research your case and give you the questions that make them start working.
 
 Go to the blog. Read the posts. Use the questions.
 
-If you want deeper analysis — discovery review, motion awareness, case-specific reports — we do that too.
+If you want deeper analysis, discovery review, motion awareness, case-specific reports, we do that too.
 
 But the questions alone will change your relationship with your attorney.
 

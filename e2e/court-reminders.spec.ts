@@ -16,7 +16,7 @@ test.describe("Court Reminders Platform", () => {
   test("bridge page loads for valid partner code", async ({ page }) => {
     await page.goto(`${BASE}/r/${PARTNER_CODE}`);
     await expect(page.locator("h1")).toBeVisible();
-    // Bridge page CTA — scoped to main content to avoid header nav links
+    // Bridge page CTA, scoped to main content to avoid header nav links
     await expect(
       page.locator("main").getByRole("link", { name: /take back control/i })
     ).toBeVisible();
@@ -46,12 +46,12 @@ test.describe("Court Reminders Platform", () => {
     // Step 4: Concern
     await page.getByText("I don't understand my charges").click();
 
-    // Recommendation page — should show both CTAs
+    // Recommendation page, should show both CTAs
     await expect(
       page.getByRole("heading", { name: /here's what to consider/i })
     ).toBeVisible();
 
-    // Primary CTA: Get Started (checkout) — scoped to avoid header nav
+    // Primary CTA: Get Started (checkout), scoped to avoid header nav
     await expect(
       page.locator("main").getByRole("link", { name: /get started/i })
     ).toBeVisible();
@@ -167,7 +167,7 @@ test.describe("Court Reminders Platform", () => {
   });
 
   test("unsubscribe page renders", async ({ page }) => {
-    // Use a fake token — should still render the unsubscribe page (prevents enumeration)
+    // Use a fake token, should still render the unsubscribe page (prevents enumeration)
     await page.goto(
       `${BASE}/api/court-reminders/unsubscribe?token=fake-token-12345`
     );

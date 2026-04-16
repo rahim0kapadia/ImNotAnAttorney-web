@@ -1,4 +1,4 @@
-# Audit Fix Loop — Task 1 + Task 2
+# Audit Fix Loop, Task 1 + Task 2
 
 **Spec:** `C:\Users\email\projects\ImNotAnAttorney\docs\handoff\2026-04-05-audit-fix-loop-r1-r3.md`
 
@@ -23,8 +23,8 @@
 ### 1.2 Add contextual copy after gate selection
 **File:** `src/components/DiscoveryGate.tsx`
 - Below buttons, contextual paragraph:
-  - `pre-discovery`: "Most defendants start here — before receiving case documents. These services work from what you tell us about your charges."
-  - `post-discovery`: "You have your case documents — these services analyze every page and find what doesn't add up."
+  - `pre-discovery`: "Most defendants start here, before receiving case documents. These services work from what you tell us about your charges."
+  - `post-discovery`: "You have your case documents, these services analyze every page and find what doesn't add up."
   - `all`: no copy
 
 ### 1.3 Create RecommendedTier client component
@@ -45,9 +45,9 @@
 
 **Expert source:** Alex Russell, Matt Perry, Harry Roberts
 
-### 2.1 FadeInUp.tsx — IntersectionObserver + CSS transition
-### 2.2 StaggerContainer.tsx — CSS animation-delay + IntersectionObserver
-### 2.3 DiscoveryReveal.tsx — IntersectionObserver per card
-### 2.4 FAQAccordion.tsx — CSS grid-template-rows transition
-### 2.5 Header.tsx — CSS transition for mobile menu
+### 2.1 FadeInUp.tsx, IntersectionObserver + CSS transition
+### 2.2 StaggerContainer.tsx, CSS animation-delay + IntersectionObserver
+### 2.3 DiscoveryReveal.tsx, IntersectionObserver per card
+### 2.4 FAQAccordion.tsx, CSS grid-template-rows transition
+### 2.5 Header.tsx, CSS transition for mobile menu
 ### 2.6 LazyMotion wrapper for ScoreClient remaining usage

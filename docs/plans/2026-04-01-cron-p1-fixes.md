@@ -16,27 +16,27 @@
 
 ## Tasks
 
-### Task 1: P1-01 — Fix window_start timestamp drift (DONE)
+### Task 1: P1-01, Fix window_start timestamp drift (DONE)
 **File:** `src/lib/demand/score-demand.ts:209`
 **Change:** Replace `new Date(now.getTime() - days * 24 * 60 * 60 * 1000)` with midnight-UTC-rounded date.
 **Status:** COMPLETED
 
-### Task 2: P1-02 — Remove operator secret from email HTML (DONE)
+### Task 2: P1-02, Remove operator secret from email HTML (DONE)
 **File:** `src/lib/cron/batch-poller.ts` (lines 85, 184, 229)
 **Change:** Replace `${ctx.operatorSecret}` with `$OPERATOR_SECRET` placeholder in all 3 email templates.
 **Status:** COMPLETED
 
-### Task 3: P1-03 — Add idempotency lock to batch-poll route
+### Task 3: P1-03, Add idempotency lock to batch-poll route
 **File:** `src/app/api/cron/batch-poll/route.ts`
 **Change:** Import `acquireCronLock`/`releaseCronLock`, add lock acquisition after auth check with 4-minute window, wrap logic in try/finally with lock release.
 
-### Task 4: P1-04 — Set qa-running status before processing blog drafts
+### Task 4: P1-04, Set qa-running status before processing blog drafts
 **File:** `src/app/api/cron/blog-qa/route.ts`
 **Change:** Before calling `processDraft()`, update draft status to `qa-running`. Add recovery clause to fetch query for drafts stuck in `qa-running` > 10 minutes.
 
-### Task 5: P1-05 — Fix drip gap detection query filter
+### Task 5: P1-05, Fix drip gap detection query filter
 **File:** `src/app/api/cron/drip/route.ts:106-110`
 **Change:** Add `.eq("job", "drip")` filter to the `cron_runs` gap detection query.
 
 ### Task 6: Verify TypeScript compilation
-Run `npx tsc --noEmit` to confirm no type errors from the changes.
+Run `npx tsc,noEmit` to confirm no type errors from the changes.

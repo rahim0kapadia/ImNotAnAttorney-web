@@ -1,5 +1,5 @@
 /**
- * /start — Covello-Compliant 2AM Crisis Entry Page
+ * /start, Covello-Compliant 2AM Crisis Entry Page
  *
  * The most important page for crisis buyers. Designed for a defendant at 2AM,
  * under acute stress, with 80% reduced information processing capacity
@@ -118,7 +118,7 @@ function StartContent() {
   return (
     <div className="min-h-screen bg-zinc-950">
       {/* ------------------------------------------------------------------ */}
-      {/* ABOVE FOLD — Zero scroll on mobile. Covello Rule of 3:            */}
+      {/* ABOVE FOLD, Zero scroll on mobile. Covello Rule of 3:            */}
       {/*   1. Situation validation (headline)                              */}
       {/*   2. Methodology credibility (subtext)                            */}
       {/*   3. Binary routing (two buttons)                                 */}
@@ -141,7 +141,7 @@ function StartContent() {
             Research frameworks informed by 40+ elite defense pioneers, grounded in real case data.
           </p>
 
-          {/* Binary routing — no "or", just two paths */}
+          {/* Binary routing, no "or", just two paths */}
           {docState === null && (
             <div className="mt-10 flex flex-col gap-4">
               <button
@@ -162,7 +162,7 @@ function StartContent() {
           )}
 
           {/* ---------------------------------------------------------------- */}
-          {/* NO DOCUMENTS PATH — Case Decoder $197                           */}
+          {/* NO DOCUMENTS PATH, Case Decoder $197                           */}
           {/* Single card. Single price. Single CTA. Covello-compliant.       */}
           {/* ---------------------------------------------------------------- */}
           {docState === "no-documents" && (
@@ -217,7 +217,7 @@ function StartContent() {
           )}
 
           {/* ---------------------------------------------------------------- */}
-          {/* HAS DOCUMENTS PATH — The X-Ray $2,497                           */}
+          {/* HAS DOCUMENTS PATH, The X-Ray $2,497                           */}
           {/* Single card. Single price. Single CTA. Covello-compliant.       */}
           {/* ---------------------------------------------------------------- */}
           {docState === "has-documents" && (
@@ -274,7 +274,7 @@ function StartContent() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* BELOW FOLD — Trust items (3 only, per Covello)                    */}
+      {/* BELOW FOLD, Trust items (3 only, per Covello)                    */}
       {/* Dynamic delivery time based on selection state.                    */}
       {/* ------------------------------------------------------------------ */}
       <section className="border-t border-zinc-500 px-4 py-12">
@@ -318,7 +318,7 @@ function StartContent() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* $97 PLAYBOOK FALLBACK — Low-commitment entry for hesitant buyers  */}
+      {/* $97 PLAYBOOK FALLBACK, Low-commitment entry for hesitant buyers  */}
       {/* ------------------------------------------------------------------ */}
       <section className="px-4 py-8">
         <div className="mx-auto max-w-xl text-center">
@@ -332,7 +332,7 @@ function StartContent() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* SERVICES LINK — For deliberate browsers who want the full menu     */}
+      {/* SERVICES LINK, For deliberate browsers who want the full menu     */}
       {/* ------------------------------------------------------------------ */}
       <section className="border-t border-zinc-500 px-4 py-8">
         <div className="mx-auto max-w-xl text-center">

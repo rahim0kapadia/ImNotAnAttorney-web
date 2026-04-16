@@ -16,7 +16,7 @@ suggested_time: "Weekday 10:00 AM EST"
 
 Because trafficking charges in most states aren't based on what you did. They're based on what they weighed.
 
-In most jurisdictions, drug trafficking isn't defined by evidence of selling. It's defined by weight thresholds. If the substance exceeds a certain weight, the charge automatically escalates from possession to trafficking -- regardless of intent, regardless of whether you've ever sold a single thing to anyone.
+In most jurisdictions, drug trafficking isn't defined by evidence of selling. It's defined by weight thresholds. If the substance exceeds a certain weight, the charge automatically escalates from possession to trafficking, regardless of intent, regardless of whether you've ever sold a single thing to anyone.
 
 A person who buys a personal supply that crosses the weight threshold gets the same charge as someone running a distribution operation. The law doesn't distinguish between the two. The scale does.
 
@@ -24,10 +24,10 @@ And mandatory minimum sentences are tied to those weight thresholds. Once it's t
 
 **Where your defense may live: constructive possession.**
 
-If the drugs weren't physically on your person, the prosecution must prove constructive possession -- which requires two things:
+If the drugs weren't physically on your person, the prosecution must prove constructive possession, which requires two things:
 
-1. Knowledge -- you knew the substance was there
-2. Dominion and control -- you had the ability to exercise control over it
+1. Knowledge, you knew the substance was there
+2. Dominion and control, you had the ability to exercise control over it
 
 Both elements must be proven beyond a reasonable doubt. If drugs were found in a car with three passengers, the prosecution can't just point at whoever was sitting closest. They have to prove YOU knew they were there and YOU had control over them.
 
@@ -44,6 +44,6 @@ The weight used to determine your charge might not be the weight of the actual d
 6. Has anyone else been charged in connection with this case?
 7. What motions can we file to challenge the weight or the search?
 
-If your attorney isn't challenging the weight, they're accepting the prosecution's number -- and that number determines your mandatory minimum.
+If your attorney isn't challenging the weight, they're accepting the prosecution's number, and that number determines your mandatory minimum.
 
 **Image direction**: Scale illustration showing "what they weighed" vs. "actual substance" | **Republish to**: Medium if 10K+ views

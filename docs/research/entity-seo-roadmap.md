@@ -1,4 +1,4 @@
-# Entity SEO Roadmap — ImNotAnAttorney
+# Entity SEO Roadmap, ImNotAnAttorney
 
 **Framework:** Andrea Volpini (WordLift) knowledge graph optimization + Dixon Jones entity-based SEO
 **Auditor:** Chris Dreyer / Rankings.io framework
@@ -8,14 +8,14 @@
 
 ## What Is Entity SEO and Why It Matters for INAA
 
-Traditional keyword SEO optimizes for string matching: your page contains the words "criminal defense attorney questions" so it ranks for that query. Entity SEO is different. Google's Knowledge Graph and AI language models don't think in keywords — they think in entities: people, places, organizations, concepts, and the relationships between them.
+Traditional keyword SEO optimizes for string matching: your page contains the words "criminal defense attorney questions" so it ranks for that query. Entity SEO is different. Google's Knowledge Graph and AI language models don't think in keywords, they think in entities: people, places, organizations, concepts, and the relationships between them.
 
-When ChatGPT answers "what should I ask my criminal defense attorney," it doesn't search for keyword-matching pages. It answers based on entities it has learned — including entities associated with established organizations. A site that has established its entity identity (what it is, what it knows, how it relates to other recognized entities) gets cited. A site that hasn't established entity identity gets passed over, even if its keyword ranking is strong.
+When ChatGPT answers "what should I ask my criminal defense attorney," it doesn't search for keyword-matching pages. It answers based on entities it has learned, including entities associated with established organizations. A site that has established its entity identity (what it is, what it knows, how it relates to other recognized entities) gets cited. A site that hasn't established entity identity gets passed over, even if its keyword ranking is strong.
 
 For INAA, entity SEO is particularly high-leverage because:
-1. The service is definitionally niche (legal empowerment, not legal representation) — a clear, narrow entity definition is an advantage
-2. INAA's content references multiple high-authority Person entities (Barry Scheck, F. Lee Bailey, Lawrence Taylor, Gerry Spence) — connections to established knowledge graph nodes
-3. The Organization entity (ImNotAnAttorney) is new and not yet established in Google's Knowledge Graph — everything in this roadmap accelerates that establishment
+1. The service is definitionally niche (legal empowerment, not legal representation), a clear, narrow entity definition is an advantage
+2. INAA's content references multiple high-authority Person entities (Barry Scheck, F. Lee Bailey, Lawrence Taylor, Gerry Spence), connections to established knowledge graph nodes
+3. The Organization entity (ImNotAnAttorney) is new and not yet established in Google's Knowledge Graph, everything in this roadmap accelerates that establishment
 
 ---
 
@@ -34,27 +34,27 @@ For INAA, entity SEO is particularly high-leverage because:
 - Notable distinctions: Not a law firm, not an attorney referral service. Produces defendant-facing research reports and accountability questions.
 
 **Services (Product entities):**
-- Case Decoder ($97) — charge analysis + 10-15 questions
-- Intelligence Brief ($497) — judge intel + accountability research + 15-25 questions
-- X-Ray ($2,497) — discovery analysis + 35-50 questions
-- War Room ($4,997) — ongoing intelligence operation
+- Case Decoder ($97), charge analysis + 10-15 questions
+- Intelligence Brief ($497), judge intel + accountability research + 15-25 questions
+- X-Ray ($2,497), discovery analysis + 35-50 questions
+- War Room ($4,997), ongoing intelligence operation
 - Witness Pack (add-on)
 - Situation Room (add-on)
 
-**Person entities (referenced, not employees — `mentions` relationship):**
+**Person entities (referenced, not employees, `mentions` relationship):**
 These are established knowledge graph nodes that INAA's content connects to:
-- Barry Scheck — Innocence Project co-founder, forensic evidence challenge pioneer
-- F. Lee Bailey — O.J. Simpson defense team, cross-examination authority
-- Lawrence Taylor — DUI defense textbook author (*Drunk Driving Defense*)
-- Gerry Spence — criminal trial lawyer
-- William "Bubba" Head — NCDD award winner, FST defense authority
-- Jeffrey Lichtman — white collar defense attorney
+- Barry Scheck, Innocence Project co-founder, forensic evidence challenge pioneer
+- F. Lee Bailey, O.J. Simpson defense team, cross-examination authority
+- Lawrence Taylor, DUI defense textbook author (*Drunk Driving Defense*)
+- Gerry Spence, criminal trial lawyer
+- William "Bubba" Head, NCDD award winner, FST defense authority
+- Jeffrey Lichtman, white collar defense attorney
 
 **Topical entity clusters:**
-- DUI Defense — entities: breathalyzer, NHTSA, field sobriety tests, DMV hearing, BAC, blood alcohol content, observation period, calibration records
-- Drug Defense — entities: constructive possession, trafficking threshold, chain of custody, lab results, field test, CI (confidential informant), discovery rights, Brady material
-- Federal/White Collar Defense — entities: wire fraud (18 U.S.C. § 1343), proffer session, 5K1.1 motion, safety valve, Federal Sentencing Guidelines, Brady material, cooperation agreement, grand jury
-- General Criminal Defense — entities: arraignment, discovery, motions to suppress, plea deal, trial penalty, bar complaint, public defender
+- DUI Defense, entities: breathalyzer, NHTSA, field sobriety tests, DMV hearing, BAC, blood alcohol content, observation period, calibration records
+- Drug Defense, entities: constructive possession, trafficking threshold, chain of custody, lab results, field test, CI (confidential informant), discovery rights, Brady material
+- Federal/White Collar Defense, entities: wire fraud (18 U.S.C. § 1343), proffer session, 5K1.1 motion, safety valve, Federal Sentencing Guidelines, Brady material, cooperation agreement, grand jury
+- General Criminal Defense, entities: arraignment, discovery, motions to suppress, plea deal, trial penalty, bar complaint, public defender
 
 **Legal concept entities (INAA has definitional content for each):**
 - Brady material (Brady v. Maryland)
@@ -75,11 +75,11 @@ These are established knowledge graph nodes that INAA's content connects to:
 **What is currently implemented (confirmed by reading `src/app/layout.tsx` and `src/app/blog/[slug]/page.tsx`):**
 
 | Schema Type | Location | Status | Quality |
-|------------|----------|--------|---------|
-| Organization | `layout.tsx` (global) | Deployed | Partial — missing `founder`, weak `sameAs` (Twitter account not yet created) |
-| Article | `blog/[slug]/page.tsx` | Deployed | Good — `headline`, `datePublished`, `dateModified`, `keywords`, `articleSection`, `mentions`, `mainEntityOfPage`, `author`, `publisher`, `image` |
-| FAQPage | `blog/[slug]/page.tsx` | Deployed | Good — renders from frontmatter `faqs` array, all 35 posts now have FAQs |
-| BreadcrumbList | `blog/[slug]/page.tsx` | Deployed | Good — 3-level: Home > Blog > Post |
+|------------|----------|------, |---------|
+| Organization | `layout.tsx` (global) | Deployed | Partial, missing `founder`, weak `sameAs` (Twitter account not yet created) |
+| Article | `blog/[slug]/page.tsx` | Deployed | Good, `headline`, `datePublished`, `dateModified`, `keywords`, `articleSection`, `mentions`, `mainEntityOfPage`, `author`, `publisher`, `image` |
+| FAQPage | `blog/[slug]/page.tsx` | Deployed | Good, renders from frontmatter `faqs` array, all 35 posts now have FAQs |
+| BreadcrumbList | `blog/[slug]/page.tsx` | Deployed | Good, 3-level: Home > Blog > Post |
 | LegalService | None | Missing | High priority |
 | Product / Offer | `blog/[slug]/page.tsx` (via `PlaybookCTA`) | Not in schema | Playbook pages need Product schema |
 | HowTo | None | Missing | Medium priority for process posts |
@@ -96,7 +96,7 @@ Gap 2: `Organization` has no `founder` property. This matters for knowledge grap
 
 Fix: Add `"founder": {"@type": "Person", "name": "Rahim Kapadia"}` to the Organization schema in `layout.tsx`.
 
-Gap 3: No `LegalService` schema anywhere on the site. This is the schema type that Google uses to understand legal service businesses in its knowledge graph. INAA is not a law firm, but it is a LegalService adjacent entity — "legal information service" is a valid `serviceType`. Without this schema, Google classifies INAA as a generic content site rather than a legal information service.
+Gap 3: No `LegalService` schema anywhere on the site. This is the schema type that Google uses to understand legal service businesses in its knowledge graph. INAA is not a law firm, but it is a LegalService adjacent entity, "legal information service" is a valid `serviceType`. Without this schema, Google classifies INAA as a generic content site rather than a legal information service.
 
 Fix: Add a `LegalService` JSON-LD block to the homepage (`src/app/page.tsx`):
 ```json
@@ -149,7 +149,7 @@ Fix: For `how-to-file-bar-complaint-against-attorney`, add:
 
 The 35 posts organize into four clusters. Topic authority is established when a cluster has: a hub post, 5+ supporting posts, and consistent internal linking from spoke posts back to the hub and to each other.
 
-**Cluster 1: DUI Defense (8 posts — strongest cluster)**
+**Cluster 1: DUI Defense (8 posts, strongest cluster)**
 
 Hub: `complete-dui-defense-guide`
 Spokes: `can-dui-be-dismissed`, `5-questions-dui-attorney`, `breathalyzer-calibration-records`, `field-sobriety-test-standards`, `10-day-dmv-deadline`, `what-to-expect-after-dui-arrest`, `field-test-vs-lab-test-drug-cases` (partial)
@@ -158,25 +158,25 @@ Cluster strength: High. Hub post exists and is comprehensive. All spokes link to
 
 Gap: `field-test-vs-lab-test-drug-cases` is categorized as drug-cases but is also directly relevant to DUI blood test challenges. It should be linked from `complete-dui-defense-guide` in the blood test section.
 
-**Cluster 2: Drug Defense (4 posts — needs hub)**
+**Cluster 2: Drug Defense (4 posts, needs hub)**
 
-Hub: None — this is the critical gap
+Hub: None, this is the critical gap
 Spokes: `discovery-rights-drug-cases`, `trafficking-charges-constructive-possession`, `field-test-vs-lab-test-drug-cases`, `what-500-pages-of-drug-trafficking-discovery-contained`
 
 Cluster strength: Medium. The individual posts are strong, but there is no hub post that establishes topical authority for drug defense as a whole. `what-500-pages` is the most citation-worthy post on the site but it's functioning as a spoke without a hub to connect it to.
 
 Gap: Create a `complete-drug-defense-guide.mdx` hub post that covers the drug case process from search to sentencing, linking all four spokes. This mirrors what `complete-dui-defense-guide` does for DUI. Until this hub exists, INAA cannot establish topical authority for drug defense in the same way it has for DUI.
 
-**Cluster 3: Federal/White Collar Defense (4 posts — new, well-structured)**
+**Cluster 3: Federal/White Collar Defense (4 posts, new, well-structured)**
 
 Hub: `complete-white-collar-defense-guide`
 Spokes: `federal-investigation-what-to-expect`, `cooperation-agreement-federal-case`, `wire-fraud-defense-questions`
 
 Cluster strength: Medium-high. All four posts were published 2026-03-11 and form a complete cluster. Hub links to all three spokes. Each spoke links back to the hub and cross-references each other. The posts were built as a cluster from the start.
 
-Gap: The cluster covers wire fraud but not securities fraud, healthcare fraud, or tax fraud — which are the next three most common federal white collar charges. Three additional posts would extend topical authority and capture search volume from these adjacent queries.
+Gap: The cluster covers wire fraud but not securities fraud, healthcare fraud, or tax fraud, which are the next three most common federal white collar charges. Three additional posts would extend topical authority and capture search volume from these adjacent queries.
 
-**Cluster 4: General Criminal Defense + Attorney Accountability (19 posts — widest cluster, weakest hub)**
+**Cluster 4: General Criminal Defense + Attorney Accountability (19 posts, widest cluster, weakest hub)**
 
 Hub: `how-criminal-cases-actually-work` (best candidate, but not fully functioning as a hub)
 Spokes: All remaining posts
@@ -193,22 +193,22 @@ Sub-clusters to formalize:
 
 ## Part 4: Internal Linking Architecture
 
-The current internal linking is directional (posts link to related posts) but not systematic. For entity SEO, internal links function as entity relationship signals — they tell Google's crawlers which pages are related, which is the hub, and which topics belong together.
+The current internal linking is directional (posts link to related posts) but not systematic. For entity SEO, internal links function as entity relationship signals, they tell Google's crawlers which pages are related, which is the hub, and which topics belong together.
 
 **Hub-and-spoke linking rules (to implement):**
 
-1. Every spoke post must link to its hub post at least once, using anchor text that includes the hub's target keyword phrase. Not just "read our complete guide" — specifically "read our complete DUI defense guide" or "the full criminal case process is covered in how criminal cases actually work."
+1. Every spoke post must link to its hub post at least once, using anchor text that includes the hub's target keyword phrase. Not just "read our complete guide", specifically "read our complete DUI defense guide" or "the full criminal case process is covered in how criminal cases actually work."
 
-2. Hub posts must link to every spoke with descriptive anchor text. `complete-dui-defense-guide` links to `breathalyzer-calibration-records` as "breathalyzer calibration records" — this is correct. Apply this consistently.
+2. Hub posts must link to every spoke with descriptive anchor text. `complete-dui-defense-guide` links to `breathalyzer-calibration-records` as "breathalyzer calibration records", this is correct. Apply this consistently.
 
-3. Cross-linking between spoke posts should follow topical relevance. `breathalyzer-calibration-records` should link to `field-sobriety-test-standards` (same DUI cluster), but the link should not be random — it should appear in context when both topics are being discussed together.
+3. Cross-linking between spoke posts should follow topical relevance. `breathalyzer-calibration-records` should link to `field-sobriety-test-standards` (same DUI cluster), but the link should not be random, it should appear in context when both topics are being discussed together.
 
 4. Every attorney accountability post should link to `is-your-attorney-actually-working-your-case` as the cluster hub. Currently some do and some don't.
 
 **The 73% weight discrepancy cross-linking plan:**
 
 This statistic needs to appear, with attribution and link, in:
-- `what-500-pages-of-drug-trafficking-discovery-contained` (primary source — already present)
+- `what-500-pages-of-drug-trafficking-discovery-contained` (primary source, already present)
 - `trafficking-charges-constructive-possession` (already linked)
 - `discovery-rights-drug-cases` (should add in lab reports section)
 - `how-to-read-your-discovery` (should add in lab results section)
@@ -233,7 +233,7 @@ Each reference drives traffic back to the original post and builds its authority
 
 ## Part 5: Knowledge Panel Strategy
 
-Google's Knowledge Panel for an organization appears when the entity is sufficiently established in the Knowledge Graph. INAA is not there yet — it was founded in 2026. Here is the establishment sequence:
+Google's Knowledge Panel for an organization appears when the entity is sufficiently established in the Knowledge Graph. INAA is not there yet, it was founded in 2026. Here is the establishment sequence:
 
 **Phase 1: Entity consistency (implement now)**
 
@@ -251,7 +251,7 @@ Knowledge panels require that Google finds the entity described on multiple auth
 
 3. **Product Hunt listing:** Launch page creates inbound entity mentions from a high-authority source. Legal tech / productivity tools category. Describes the service as "We Research. You Ask." which is highly memeable on PH.
 
-4. **Justia or Avvo content reference:** These are the highest-authority legal information sites. Getting INAA mentioned — even informally — on a Justia article or legal blog establishes co-citation with trusted legal entities.
+4. **Justia or Avvo content reference:** These are the highest-authority legal information sites. Getting INAA mentioned, even informally, on a Justia article or legal blog establishes co-citation with trusted legal entities.
 
 5. **Podcast guesting:** Host or guest on a criminal defense or legal tech podcast. Podcast episode descriptions are indexed and create authoritative co-citations. The host entity (established podcast) transfers entity authority signal to the guest entity (INAA).
 
@@ -273,13 +273,13 @@ Every Google Business Profile, social profile, and directory listing should use 
 
 Who are the established entities competing in INAA's semantic space?
 
-**LegalMatch, Avvo, Justia:** These are attorney directories with massive entity authority in the "find a lawyer" space. INAA is not competing with them — it occupies a different entity niche (defendant empowerment, not attorney referral). The entities INAA competes with for AI citation are the informational content hubs.
+**LegalMatch, Avvo, Justia:** These are attorney directories with massive entity authority in the "find a lawyer" space. INAA is not competing with them, it occupies a different entity niche (defendant empowerment, not attorney referral). The entities INAA competes with for AI citation are the informational content hubs.
 
-**NOLO / Nolo.com:** The most established consumer legal information entity. Massive schema markup, extensive FAQs, decades of Google trust. INAA cannot compete broadly but can own specific query spaces where Nolo has thin coverage — particularly: attorney accountability (Nolo covers legal concepts, not defendant-attorney relationship management), discovery tactics (Nolo explains discovery at a basic level, not at INAA's depth), and the 73% weight discrepancy (Nolo has no original research in drug cases).
+**NOLO / Nolo.com:** The most established consumer legal information entity. Massive schema markup, extensive FAQs, decades of Google trust. INAA cannot compete broadly but can own specific query spaces where Nolo has thin coverage, particularly: attorney accountability (Nolo covers legal concepts, not defendant-attorney relationship management), discovery tactics (Nolo explains discovery at a basic level, not at INAA's depth), and the 73% weight discrepancy (Nolo has no original research in drug cases).
 
 **DUI Driving Laws / DUI Central:** Mid-tier DUI information sites. INAA's `complete-dui-defense-guide` and `field-sobriety-test-standards` are structurally superior to the equivalent pages on these sites. The NHTSA statistics and named expert citations give INAA citation authority that generic DUI information sites don't have.
 
-**Federal defense attorney blogs:** High-authority for specific federal procedure queries. INAA's white collar cluster is weaker than established federal defense attorneys' sites — but those sites target attorneys as the audience, not defendants. INAA owns an uncontested niche in "federal defense explained to defendants."
+**Federal defense attorney blogs:** High-authority for specific federal procedure queries. INAA's white collar cluster is weaker than established federal defense attorneys' sites, but those sites target attorneys as the audience, not defendants. INAA owns an uncontested niche in "federal defense explained to defendants."
 
 **Entity differentiation strategy:** INAA should not try to compete with Nolo on general legal information. INAA should own three specific entity spaces that Nolo and AVVO do not: (1) attorney accountability and defendant rights, (2) discovery analysis for non-lawyers, and (3) original case study research in criminal defense. These are INAA's semantic territory.
 
@@ -329,7 +329,7 @@ Who are the established entities competing in INAA's semantic space?
 ## Key Performance Indicators
 
 | Metric | Current (estimated) | 30-day target | 90-day target |
-|--------|--------------------|--------------|----|
+|------, |------------------, |------------, |----|
 | AI citation rate (10 prompts x 4 platforms) | ~7% (3/40) | 15% (6/40) | 25% (10/40) |
 | Posts with TLDRBox | 8/35 | 13/35 | 20/35 |
 | Posts with HowTo schema | 0/35 | 2/35 | 4/35 |

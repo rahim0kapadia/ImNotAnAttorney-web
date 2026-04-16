@@ -1,8 +1,8 @@
-# Partner Portal Growth Upgrades — Design Spec
+# Partner Portal Growth Upgrades, Design Spec
 
 **Date:** 2026-04-14
 **Status:** Approved
-**Approach:** Big Bang — all 3 subsystems ship in parallel via independent agents
+**Approach:** Big Bang, all 3 subsystems ship in parallel via independent agents
 
 ## Context
 
@@ -10,10 +10,10 @@ The partner portal is feature-complete across 4 plans (54 tasks, 6 safety invari
 
 ### Expert Basis
 
-- **Co-branded pages:** Superfiliate/Tapfiliate data — 2-3x conversion lift from trust transfer on co-branded landing pages. HubSpot — personalized CTAs convert 202% better than generic.
-- **Commission SMS:** Harry's razor pre-launch — first-sale confirmation is THE retention moment (4x more likely to keep referring). SMS has 98% open rate. Pavlovian reinforcement loop: intermittent variable rewards delivered immediately.
-- **Conversion analytics:** Standard partner program table stakes. Nationwide Insurance — QR-code referral pipelines with closed-loop attribution are lowest CPA channel.
-- **Adjacent industry patterns:** Surety 3 (bail bond referrals — one phone call, zero paperwork, overnight check), insurance agent referral pipelines (QR on existing materials = zero behavior change), Dropbox (3,900% growth — referral embedded in existing workflow, not layered on top).
+- **Co-branded pages:** Superfiliate/Tapfiliate data, 2-3x conversion lift from trust transfer on co-branded landing pages. HubSpot, personalized CTAs convert 202% better than generic.
+- **Commission SMS:** Harry's razor pre-launch, first-sale confirmation is THE retention moment (4x more likely to keep referring). SMS has 98% open rate. Pavlovian reinforcement loop: intermittent variable rewards delivered immediately.
+- **Conversion analytics:** Standard partner program table stakes. Nationwide Insurance, QR-code referral pipelines with closed-loop attribution are lowest CPA channel.
+- **Adjacent industry patterns:** Surety 3 (bail bond referrals, one phone call, zero paperwork, overnight check), insurance agent referral pipelines (QR on existing materials = zero behavior change), Dropbox (3,900% growth, referral embedded in existing workflow, not layered on top).
 
 ### Audience
 
@@ -32,17 +32,17 @@ Bail bondsmen (primary), paralegals, legal advocates. Busy, low-tech, barely com
 
 ### 1.1 Dynamic OG Meta Tags
 
-**Problem:** When bondsman shares their referral link on Facebook/iMessage/text, the preview shows generic "Court Prep for Your Case" — no trust transfer in the preview card.
+**Problem:** When bondsman shares their referral link on Facebook/iMessage/text, the preview shows generic "Court Prep for Your Case", no trust transfer in the preview card.
 
 **Solution:** `generateMetadata()` in `/r/[code]/page.tsx` needs partner context to inject into OG tags.
 
 **Implementation:**
 
-1. **Fix `generateMetadata()` signature** — Currently declared as `generateMetadata(): Promise<Metadata>` with NO params. Must change to `generateMetadata({ params }: { params: Promise<{ code: string }> }): Promise<Metadata>` to receive the route segment (same pattern as `/blog/[slug]`, `/services/[slug]`, `/report/[token]`).
-2. **Shared query helper with `React.cache()`** — Create a `getPartnerByCode(code: string)` function wrapped in `React.cache()` at module level. Both `generateMetadata()` and the page component call this. `React.cache()` guarantees deduplication within the same server request (Supabase client calls are not plain `fetch()` with identical URLs, so Next.js auto-dedup does not apply).
-3. **Expand partner SELECT** — The shared helper must select `name, company, city, promo_code, status` (adding `city` for Section 1.3).
+1. **Fix `generateMetadata()` signature**, Currently declared as `generateMetadata(): Promise<Metadata>` with NO params. Must change to `generateMetadata({ params }: { params: Promise<{ code: string }> }): Promise<Metadata>` to receive the route segment (same pattern as `/blog/[slug]`, `/services/[slug]`, `/report/[token]`).
+2. **Shared query helper with `React.cache()`**, Create a `getPartnerByCode(code: string)` function wrapped in `React.cache()` at module level. Both `generateMetadata()` and the page component call this. `React.cache()` guarantees deduplication within the same server request (Supabase client calls are not plain `fetch()` with identical URLs, so Next.js auto-dedup does not apply).
+3. **Expand partner SELECT**, The shared helper must select `name, company, city, promo_code, status` (adding `city` for Section 1.3).
 4. If partner found and approved, set OG tags:
-   - `og:title`: `"Court Prep for Your Case — Referred by {company || name}"`
+   - `og:title`: `"Court Prep for Your Case, Referred by {company || name}"`
    - `og:description`: `"{name} from {company} trusts this service. Understand your charges and get the right questions for your attorney."`
    - `twitter:title`: same as og:title
    - `twitter:description`: same as og:description
@@ -80,7 +80,7 @@ CREATE INDEX idx_partner_events_funnel
 
 **Fire-and-forget pattern:** Event INSERTs must NOT block page render or webhook response.
 
-- **In server components** (`/r/[code]/page.tsx`, `/r/[code]/quiz/page.tsx`): Use Next.js `after()` API. `after()` runs callbacks after the response is sent but before the Vercel function is frozen — detached promises have no guarantee of completing in serverless environments. The webhook file already imports `after` from `next/server`.
+- **In server components** (`/r/[code]/page.tsx`, `/r/[code]/quiz/page.tsx`): Use Next.js `after()` API. `after()` runs callbacks after the response is sent but before the Vercel function is frozen, detached promises have no guarantee of completing in serverless environments. The webhook file already imports `after` from `next/server`.
 - **In Route Handlers** (webhook, track-event endpoint): Detached promises are acceptable since the handler awaits other operations before returning.
 
 Example for server component event tracking:
@@ -114,7 +114,7 @@ after(async () => {
    - Without city: `"{Name} from {Company} referred you."` (current behavior, unchanged)
 3. `PartnerApplicationForm.tsx` gets an optional "City" text input between Company and Phone fields
 4. Partner signup API route accepts and stores the city value
-5. Existing partners are unaffected — null city means no display change
+5. Existing partners are unaffected, null city means no display change
 
 **BridgePage change:**
 
@@ -142,18 +142,18 @@ const displayName = company
 ```
 
 **Validation:**
-- `event_type` must be one of: `quiz_complete` (only client-side event type — `link_click` and `quiz_start` fire from server components, `purchase` fires from webhook)
+- `event_type` must be one of: `quiz_complete` (only client-side event type, `link_click` and `quiz_start` fire from server components, `purchase` fires from webhook)
 - `partner_promo_code` must resolve to an approved partner
 - Rate limit: no more than 10 events per promo code per minute (prevent abuse)
 
 **Response:** `{ ok: true }` on success, `{ error: "..." }` on failure. Status 200 on success, 400 on bad input, 429 on rate limit.
 
-**No auth required** — this endpoint is called from the public referral quiz page where there is no session. Partner is identified by promo code. The rate limit prevents abuse.
+**No auth required**, this endpoint is called from the public referral quiz page where there is no session. Partner is identified by promo code. The rate limit prevents abuse.
 
 ### Files Modified (Subsystem 1)
 
 | File | Change Type | What Changes |
-|------|-------------|--------------|
+|------|-------------|------------, |
 | `src/app/r/[code]/page.tsx` | Modify | Dynamic OG meta using partner context; link_click event INSERT; shared partner query helper |
 | `src/app/r/[code]/quiz/page.tsx` | Modify | quiz_start event INSERT on server component render |
 | `src/components/ReferralQuiz.tsx` | Modify | Fire quiz_complete event via fetch to /api/partner/track-event when recommendation step renders |
@@ -185,12 +185,12 @@ const displayName = company
 **First-sale SMS template:**
 
 ```
-INAA: Your FIRST referral just purchased a {tier_display_name}! You earned ${amount}. Code {PROMO_CODE} is working — keep those cards in the bail packets.
+INAA: Your FIRST referral just purchased a {tier_display_name}! You earned ${amount}. Code {PROMO_CODE} is working, keep those cards in the bail packets.
 ```
 
 **Detection logic:** After `track_referral` RPC completes, the webhook already queries the partner record for notification details. The `total_referrals` field on the partner record reflects the post-increment value (the RPC atomically increments it). If `total_referrals === 1`, use first-sale template instead of standard template.
 
-**Character count:** Longest realistic first-sale SMS: "INAA: Your FIRST referral just purchased an Intelligence Brief! You earned $89.73. Code SMITH10 is working — keep those cards in the bail packets." = 155 chars. Fits single segment.
+**Character count:** Longest realistic first-sale SMS: "INAA: Your FIRST referral just purchased an Intelligence Brief! You earned $89.73. Code SMITH10 is working, keep those cards in the bail packets." = 155 chars. Fits single segment.
 
 ### 2.2 Progress-to-Next-Tier in Commission SMS
 
@@ -200,18 +200,18 @@ INAA: Your FIRST referral just purchased a {tier_display_name}! You earned ${amo
 
 **Progress line formats:**
 
-- Not at max tier: `" [3/5 to Silver — 15%]"`
-- At Gold (max tier): `" [Gold Partner — 20%]"`
+- Not at max tier: `" [3/5 to Silver, 15%]"`
+- At Gold (max tier): `" [Gold Partner, 20%]"`
 
 **Computation:** Use `COMMISSION_TIERS_CONFIG` from `partner-data.ts`. Find current tier by `commission_tier` field. Find next tier via `getNextTier()`. Build progress string from `total_referrals` and `nextTier.threshold`.
 
 **Full non-first-sale SMS template:**
 
 ```
-INAA: You earned ${amount} from a referral! Confirms {holdback_date}. [3/5 to Silver — 15%]
+INAA: You earned ${amount} from a referral! Confirms {holdback_date}. [3/5 to Silver, 15%]
 ```
 
-**Character count:** Longest: "INAA: You earned $449.73 from a referral! Confirms Jun 29. [14/15 to Gold Partner — 20%]" = 88 chars. Well within 160.
+**Character count:** Longest: "INAA: You earned $449.73 from a referral! Confirms Jun 29. [14/15 to Gold Partner, 20%]" = 88 chars. Well within 160.
 
 ### 2.3 Milestone Micro-Celebrations
 
@@ -250,7 +250,7 @@ INAA: You earned $224.73 from a referral! Confirms Jun 29. 10 referrals! Top-tie
 
 **Auth:** `requireCron(req)` with `CRON_AUTH_TOKEN` bearer token (same pattern as all other crons)
 
-**Idempotency:** `acquireCronLock("partner-monthly-summary", 23 * 60 * 60 * 1000)` — prevents double-execution within 23 hours
+**Idempotency:** `acquireCronLock("partner-monthly-summary", 23 * 60 * 60 * 1000)`, prevents double-execution within 23 hours
 
 **Logic:**
 
@@ -300,7 +300,7 @@ export const PARTNER_DEFAULTS: PartnerNotificationPrefs = {
   client_reminded: "email",
   drip: "email",
   payout: "email",
-  commission_earned: "both",  // NEW — default to both for maximum engagement
+  commission_earned: "both",  // NEW, default to both for maximum engagement
 };
 ```
 
@@ -317,7 +317,7 @@ export const PARTNER_DEFAULTS: PartnerNotificationPrefs = {
 
 **No migration needed:** `notification_prefs` is a JSONB column. The new key is added via the `getPartnerPrefs()` spread which merges overrides with defaults. Existing partners with no override get the default `"both"`.
 
-**NotificationSettings.tsx change:** Add a new toggle row for "Commission Alerts" between existing "Client Reminders" and "Payouts" rows. Label: "Commission Alerts — instant notifications when you earn". Options: Email / SMS / Both.
+**NotificationSettings.tsx change:** Add a new toggle row for "Commission Alerts" between existing "Client Reminders" and "Payouts" rows. Label: "Commission Alerts, instant notifications when you earn". Options: Email / SMS / Both.
 
 ### SMS Message Builder Module
 
@@ -360,7 +360,7 @@ export function getMilestoneMessage(totalReferrals: number): string | null;
 
 /**
  * Builds the progress-to-next-tier string.
- * Returns "[3/5 to Silver — 15%]" or "[Gold Partner — 20%]" for max tier.
+ * Returns "[3/5 to Silver, 15%]" or "[Gold Partner, 20%]" for max tier.
  */
 export function buildTierProgress(totalReferrals: number, commissionTier: string): string;
 ```
@@ -369,7 +369,7 @@ export function buildTierProgress(totalReferrals: number, commissionTier: string
 
 1. Format amount as dollars: `(amountCents / 100).toFixed(2)`
 2. If `totalReferrals === 1`: return first-sale template with tierName, amount, promoCode
-3. Check `getMilestoneMessage(totalReferrals)` — if non-null, use milestone as suffix
+3. Check `getMilestoneMessage(totalReferrals)`, if non-null, use milestone as suffix
 4. Otherwise, use `buildTierProgress()` as suffix
 5. Compose full message: `"INAA: You earned ${amount} from a referral! Confirms ${holdbackDate}. ${suffix}"`
 6. Pass through `capSMS()` and return
@@ -377,7 +377,7 @@ export function buildTierProgress(totalReferrals: number, commissionTier: string
 ### Files Modified (Subsystem 2)
 
 | File | Change Type | What Changes |
-|------|-------------|--------------|
+|------|-------------|------------, |
 | `src/lib/partner-sms.ts` | Create | SMS message builders: buildCommissionSMS, buildMonthlySummarySMS, getMilestoneMessage, buildTierProgress |
 | `src/app/api/webhooks/stripe/route.ts` | Modify | Replace inline SMS strings with `buildCommissionSMS()` calls in both referral-tracking paths (primary promo code path and metadata fallback path) |
 | `src/lib/notification-prefs.ts` | Modify | Add `commission_earned: Channel` to `PartnerNotificationPrefs` interface and `PARTNER_DEFAULTS` |
@@ -397,7 +397,7 @@ export function buildTierProgress(totalReferrals: number, commissionTier: string
 
 ### 3.1 Conversion Funnel RPC
 
-**Problem:** No way to measure partner effectiveness. A partner with 100 link clicks and 1 purchase versus a partner with 5 clicks and 3 purchases — currently invisible.
+**Problem:** No way to measure partner effectiveness. A partner with 100 link clicks and 1 purchase versus a partner with 5 clicks and 3 purchases, currently invisible.
 
 **Solution:** New RPC that queries `partner_events` table to return funnel metrics for two time windows.
 
@@ -484,7 +484,7 @@ interface ConversionFunnelProps {
 }
 ```
 
-**Visual design:** Four horizontal CSS bars stacked vertically, each bar width proportional to count relative to link_clicks (the widest). Same visual pattern as `PartnerAnalytics` monthly bar chart — amber bars on zinc-800 background, no chart library.
+**Visual design:** Four horizontal CSS bars stacked vertically, each bar width proportional to count relative to link_clicks (the widest). Same visual pattern as `PartnerAnalytics` monthly bar chart, amber bars on zinc-800 background, no chart library.
 
 **Layout for each funnel step:**
 
@@ -494,10 +494,10 @@ Label (left) ───── [===== Bar =====] ──── Count (right)
 ```
 
 **Four rows:**
-1. "Link Clicks" — always 100% width (baseline)
-2. "Quiz Starts" — width = (quiz_starts / link_clicks) * 100%
-3. "Quiz Completed" — width = (quiz_completions / link_clicks) * 100%
-4. "Purchases" — width = (purchases / link_clicks) * 100%
+1. "Link Clicks", always 100% width (baseline)
+2. "Quiz Starts", width = (quiz_starts / link_clicks) * 100%
+3. "Quiz Completed", width = (quiz_completions / link_clicks) * 100%
+4. "Purchases", width = (purchases / link_clicks) * 100%
 
 **Drop-off percentages:** Shown as small zinc-400 text below each count. Calculated as: `((previous_step - current_step) / previous_step * 100).toFixed(0)%` drop-off. First row (Link Clicks) shows no drop-off.
 
@@ -510,7 +510,7 @@ Label (left) ───── [===== Bar =====] ──── Count (right)
 - `aria-label` on each bar: "{Step name}: {count} ({percentage}% of link clicks)"
 - Time window toggle buttons use `aria-pressed` for current selection
 
-**Conversion rate callout:** Below the funnel, a summary line: "Conversion rate: {(purchases/link_clicks*100).toFixed(1)}%" in amber text. Shows "—" if link_clicks is zero to avoid division by zero.
+**Conversion rate callout:** Below the funnel, a summary line: "Conversion rate: {(purchases/link_clicks*100).toFixed(1)}%" in amber text. Shows ", " if link_clicks is zero to avoid division by zero.
 
 ### 3.3 Dashboard Integration
 
@@ -550,7 +550,7 @@ return NextResponse.json({
 ### Files Modified (Subsystem 3)
 
 | File | Change Type | What Changes |
-|------|-------------|--------------|
+|------|-------------|------------, |
 | Migration file | Create | `partner_conversion_funnel` RPC with REVOKE/GRANT |
 | `src/components/partner/ConversionFunnel.tsx` | Create | Funnel visualization with 4 bars, time window toggle, conversion rate callout, empty state |
 | `src/app/api/partner/dashboard/route.ts` | Modify | Call `partner_conversion_funnel` RPC, add `funnel` to response |
@@ -599,31 +599,31 @@ All DB changes in one migration file, applied via `scripts/apply-pending-sql.mjs
 6. RLS on `partner_events` (same pattern as other partner tables):
    ```sql
    ALTER TABLE partner_events ENABLE ROW LEVEL SECURITY;
-   -- No public policies — accessed only via service_role (admin client)
+  , No public policies, accessed only via service_role (admin client)
    ```
 
 ---
 
 ## Invariants
 
-1. **No PII in partner_events** — No customer names, emails, phone numbers, or case details. Only partner_id, event_type, and metadata containing tier slugs and amounts.
-2. **All event tracking is fire-and-forget** — Event INSERTs are never awaited. They run as detached promises. Failures log warnings but never block page renders or webhook responses.
-3. **SMS respects notification prefs** — Every SMS send checks `shouldSendSMS()` on the relevant pref key and verifies partner phone is non-null before sending.
-4. **UPL clean** — No SMS or page copy provides legal advice. All messaging describes the service as research and questions, not legal counsel.
-5. **Existing tests unbroken** — All changes are additive. No modified function signatures, no removed columns, no changed RPC return shapes.
-6. **Single SMS segment** — All partner SMS messages are passed through `capSMS()` to guarantee they fit within 160 characters.
-7. **Cron idempotency** — Monthly summary cron uses `acquireCronLock()` to prevent double-execution within 23 hours.
+1. **No PII in partner_events**, No customer names, emails, phone numbers, or case details. Only partner_id, event_type, and metadata containing tier slugs and amounts.
+2. **All event tracking is fire-and-forget**, Event INSERTs are never awaited. They run as detached promises. Failures log warnings but never block page renders or webhook responses.
+3. **SMS respects notification prefs**, Every SMS send checks `shouldSendSMS()` on the relevant pref key and verifies partner phone is non-null before sending.
+4. **UPL clean**, No SMS or page copy provides legal advice. All messaging describes the service as research and questions, not legal counsel.
+5. **Existing tests unbroken**, All changes are additive. No modified function signatures, no removed columns, no changed RPC return shapes.
+6. **Single SMS segment**, All partner SMS messages are passed through `capSMS()` to guarantee they fit within 160 characters.
+7. **Cron idempotency**, Monthly summary cron uses `acquireCronLock()` to prevent double-execution within 23 hours.
 
 ---
 
 ## Out of Scope
 
-- **PayPal Payouts API** — Deferred until sales volume justifies a PayPal Business account. Payouts remain manual for now.
-- **Physical bail packet cards** — Marketing and fulfillment decision outside the scope of this code spec.
-- **Escalating commission rates within tiers** — Current 10%/15%/20% structure is validated by expert research and does not change.
-- **Partner public profile pages** — The `/r/[code]` bridge page IS the partner's public page. A separate profile page is unnecessary.
-- **Recurring/residual commissions** — LegalShield-style model requires subscription products which are not part of the current tier structure.
-- **Stripe Connect automated splits** — Requires partner Stripe onboarding (identity verification), which creates too much friction for low-tech bondsmen. Deferred indefinitely.
+- **PayPal Payouts API**, Deferred until sales volume justifies a PayPal Business account. Payouts remain manual for now.
+- **Physical bail packet cards**, Marketing and fulfillment decision outside the scope of this code spec.
+- **Escalating commission rates within tiers**, Current 10%/15%/20% structure is validated by expert research and does not change.
+- **Partner public profile pages**, The `/r/[code]` bridge page IS the partner's public page. A separate profile page is unnecessary.
+- **Recurring/residual commissions**, LegalShield-style model requires subscription products which are not part of the current tier structure.
+- **Stripe Connect automated splits**, Requires partner Stripe onboarding (identity verification), which creates too much friction for low-tech bondsmen. Deferred indefinitely.
 
 ---
 
@@ -642,7 +642,7 @@ All DB changes in one migration file, applied via `scripts/apply-pending-sql.mjs
 ### Modified Files (10)
 
 | File | Subsystem | What Changes |
-|------|-----------|--------------|
+|------|---------, |------------, |
 | `src/app/r/[code]/page.tsx` | S1 | Dynamic OG meta tags; link_click event INSERT; shared partner query helper |
 | `src/app/r/[code]/quiz/page.tsx` | S1 | quiz_start event INSERT on server component render |
 | `src/components/ReferralQuiz.tsx` | S1 | Fire quiz_complete event via fetch to /api/partner/track-event when recommendation renders |

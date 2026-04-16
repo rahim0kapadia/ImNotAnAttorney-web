@@ -33,7 +33,7 @@ Q3: "What motions are you planning to file?"
 
 Motion to suppress. Brady motion. Motion to compel. Motion to dismiss.
 
-If your attorney says "we don't need any motions" — ask them to explain specifically why each one doesn't apply.
+If your attorney says "we don't need any motions", ask them to explain specifically why each one doesn't apply.
 
 Specifics matter. Vague answers don't.
 ===TWEET===
@@ -49,7 +49,7 @@ Q8: "What are the weaknesses in the prosecution's case?"
 
 Every case has weaknesses. Every single one.
 
-If your attorney says "they have a strong case" and leaves it there — push back. An attorney who can't identify a single weakness hasn't looked hard enough. Or has already given up.
+If your attorney says "they have a strong case" and leaves it there, push back. An attorney who can't identify a single weakness hasn't looked hard enough. Or has already given up.
 ===TWEET===
 All 10 questions + why each matters + how to ask without torpedoing the relationship:
 

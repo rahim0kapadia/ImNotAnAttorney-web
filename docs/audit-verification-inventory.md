@@ -2,7 +2,7 @@
 
 **Audit date:** 2026-04-06
 **Scope:** Cross-reference parent project (`ImNotAnAttorney/`) and engine (`ImNotAnAttorney-engine/`) verification mechanisms against `ImNotAnAttorney-web/`.
-**Purpose:** Identify every anti-hallucination, citation-verification, and good-law-checking tactic the parent project documents — and flag which ones the web repo currently implements vs. lacks.
+**Purpose:** Identify every anti-hallucination, citation-verification, and good-law-checking tactic the parent project documents, and flag which ones the web repo currently implements vs. lacks.
 
 ---
 
@@ -10,8 +10,8 @@
 
 | File | Purpose |
 |------|---------|
-| `C:\Users\email\projects\ImNotAnAttorney\system\Attorney-Personas\CASE-LAW-VALIDATION-PERSONA.md` | CASE persona — validity + applicability framework |
-| `C:\Users\email\projects\ImNotAnAttorney\system\Attorney-Personas\VERI-CITATION-VERIFICATION-PERSONA.md` | VERI persona — discovery citation verbatim verification |
+| `C:\Users\email\projects\ImNotAnAttorney\system\Attorney-Personas\CASE-LAW-VALIDATION-PERSONA.md` | CASE persona, validity + applicability framework |
+| `C:\Users\email\projects\ImNotAnAttorney\system\Attorney-Personas\VERI-CITATION-VERIFICATION-PERSONA.md` | VERI persona, discovery citation verbatim verification |
 | `C:\Users\email\projects\ImNotAnAttorney\system\Case-Law\GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md` | Research prompt template (no-fabrication contract) |
 | `C:\Users\email\projects\ImNotAnAttorney\system\Case-Law\GEMINI-CASE-VERIFICATION-TEMPLATE.md` | Single-citation verification prompt template |
 | `C:\Users\email\projects\ImNotAnAttorney\docs\API-TOKEN-SIGNUP-GUIDE.md` | API token inventory for verification cascade |
@@ -31,57 +31,57 @@
 | `C:\Users\email\projects\ImNotAnAttorney-web\src\lib\intelligence-brief\prompts.ts` | Prompt-side anti-hallucination blocks |
 | `C:\Users\email\projects\ImNotAnAttorney-web\supabase\functions\generate-report\index.ts` | `ANTI_HALLUCINATION_BLOCK` injected into every Claude call |
 | `C:\Users\email\projects\ImNotAnAttorney-web\scripts\classify-case-law.mjs` | Defense/prosecution classifier from CourtListener opinions |
-| `C:\Users\email\projects\ImNotAnAttorney-web\scripts\generate-case-law-enrichment.ts` | Enrichment script — refuses to invent case law, requires verified pipeline |
+| `C:\Users\email\projects\ImNotAnAttorney-web\scripts\generate-case-law-enrichment.ts` | Enrichment script, refuses to invent case law, requires verified pipeline |
 | `C:\Users\email\projects\ImNotAnAttorney-web\supabase\migrations\00001_initial_schema.sql` | `case_law_references` table (no `verified_case_law` central library) |
-| `C:\Users\email\projects\ImNotAnAttorney-web\supabase\migrations\20250101000030_research-columns-and-case-law.sql` | `statute_case_law` table — has `is_good_law` boolean but no shepardize tracking |
+| `C:\Users\email\projects\ImNotAnAttorney-web\supabase\migrations\20250101000030_research-columns-and-case-law.sql` | `statute_case_law` table, has `is_good_law` boolean but no shepardize tracking |
 
 ---
 
-# CASE Persona — Case Law Validity & Applicability
+# CASE Persona, Case Law Validity & Applicability
 
 Source: `ImNotAnAttorney/system/Attorney-Personas/CASE-LAW-VALIDATION-PERSONA.md`
 
 ## C1. Six-Tier Validation Levels
 
 | Mechanism | What it checks | How | File:Line | Web repo status |
-|-----------|----------------|-----|-----------|-----------------|
-| `VALID_STRONG` | Good law + holding directly supports argument | Database query + holding text match | CASE-LAW-VALIDATION-PERSONA.md:67 | MISSING — no validation tier classification in web repo |
+|---------, |----------------|---, |---------, |---------------, |
+| `VALID_STRONG` | Good law + holding directly supports argument | Database query + holding text match | CASE-LAW-VALIDATION-PERSONA.md:67 | MISSING, no validation tier classification in web repo |
 | `VALID_MODERATE` | Good law + motion type matches, verify holding | Motion-type cross-reference | CASE-LAW-VALIDATION-PERSONA.md:68 | MISSING |
 | `VALID_WEAK` | Good law but holding may not apply | Motion-type mismatch flagged | CASE-LAW-VALIDATION-PERSONA.md:69 | MISSING |
 | `VALID_REVIEW` | Good law but holding may favor state | Heuristic on holding text | CASE-LAW-VALIDATION-PERSONA.md:70 | MISSING |
-| `INVALID` | Case overruled / superseded | DB column `is_good_law=0` | CASE-LAW-VALIDATION-PERSONA.md:71 | PARTIAL — `case_law_references.is_good_law` exists but defaults to `true` and is never set programmatically (`00001_initial_schema.sql:117`) |
+| `INVALID` | Case overruled / superseded | DB column `is_good_law=0` | CASE-LAW-VALIDATION-PERSONA.md:71 | PARTIAL, `case_law_references.is_good_law` exists but defaults to `true` and is never set programmatically (`00001_initial_schema.sql:117`) |
 | `NOT_IN_DB` | Citation not in `case_law` table | DB lookup miss | CASE-LAW-VALIDATION-PERSONA.md:72 | MISSING |
 
 ## C2. Validity Checks
 
 | Check | What it verifies | Source / How | File:Line | Web repo status |
-|-------|------------------|--------------|-----------|-----------------|
-| Good Law | Not overruled, abrogated, superseded | CourtListener, Justia | CASE-LAW-VALIDATION-PERSONA.md:76 | MISSING — no negative-treatment check runs in web; `is_good_law` is set only by classifier with no shepardization |
-| URL Status | Citation URL works | Web fetch | CASE-LAW-VALIDATION-PERSONA.md:77 | MISSING — `verification_url` column exists but never tested for liveness |
-| Age | Case not superseded by newer authority | Citing-opinions analysis | CASE-LAW-VALIDATION-PERSONA.md:78 | MISSING — no `age_status` column or computation (`getAgeStatus` exists in engine, not web) |
-| Jurisdiction | Binding (FL 2d DCA) vs Persuasive | Citation parse | CASE-LAW-VALIDATION-PERSONA.md:79 | PARTIAL — `case_law_references.is_binding` boolean, but no jurisdiction-aware parser |
+|-------|------------------|------------, |---------, |---------------, |
+| Good Law | Not overruled, abrogated, superseded | CourtListener, Justia | CASE-LAW-VALIDATION-PERSONA.md:76 | MISSING, no negative-treatment check runs in web; `is_good_law` is set only by classifier with no shepardization |
+| URL Status | Citation URL works | Web fetch | CASE-LAW-VALIDATION-PERSONA.md:77 | MISSING, `verification_url` column exists but never tested for liveness |
+| Age | Case not superseded by newer authority | Citing-opinions analysis | CASE-LAW-VALIDATION-PERSONA.md:78 | MISSING, no `age_status` column or computation (`getAgeStatus` exists in engine, not web) |
+| Jurisdiction | Binding (FL 2d DCA) vs Persuasive | Citation parse | CASE-LAW-VALIDATION-PERSONA.md:79 | PARTIAL, `case_law_references.is_binding` boolean, but no jurisdiction-aware parser |
 
 ## C3. Applicability Checks
 
 | Check | What it verifies | How | File:Line | Web repo status |
-|-------|------------------|-----|-----------|-----------------|
-| Motion Type Match | `case_law.motion_type == motion.motion_type` | DB query | CASE-LAW-VALIDATION-PERSONA.md:84 | MISSING — no `motion_type` column on `case_law_references` |
-| Holding Match | Holding text supports argument | Text analysis (similarity) | CASE-LAW-VALIDATION-PERSONA.md:85 | MISSING — no holding similarity logic in web (engine has `holdingSimilarity` at `legal-verifier.mjs:1303`) |
+|-------|------------------|---, |---------, |---------------, |
+| Motion Type Match | `case_law.motion_type == motion.motion_type` | DB query | CASE-LAW-VALIDATION-PERSONA.md:84 | MISSING, no `motion_type` column on `case_law_references` |
+| Holding Match | Holding text supports argument | Text analysis (similarity) | CASE-LAW-VALIDATION-PERSONA.md:85 | MISSING, no holding similarity logic in web (engine has `holdingSimilarity` at `legal-verifier.mjs:1303`) |
 | Factual Similarity | Facts are analogous | Pattern matching | CASE-LAW-VALIDATION-PERSONA.md:86 | MISSING |
-| Condemnation Score | "Police violated", "error to admit" | Keyword scoring | CASE-LAW-VALIDATION-PERSONA.md:87 | PARTIAL — `classify-case-law.mjs:138-160` has DEFENSE_SIGNALS / PROSECUTION_SIGNALS arrays; no condemnation scoring per se |
+| Condemnation Score | "Police violated", "error to admit" | Keyword scoring | CASE-LAW-VALIDATION-PERSONA.md:87 | PARTIAL, `classify-case-law.mjs:138-160` has DEFENSE_SIGNALS / PROSECUTION_SIGNALS arrays; no condemnation scoring per se |
 
 ## C4. Web Verification Flow (v2.0+)
 
 Documented at CASE-LAW-VALIDATION-PERSONA.md:114-131.
 
 | Step | What it does | Web repo status |
-|------|--------------|-----------------|
-| 1. CourtListener API search → cluster_id, opinion text | Primary lookup | PARTIAL — `classify-case-law.mjs` fetches opinions by cluster_id, but does not perform initial citation lookup |
-| 2. Justia fallback if CourtListener miss | Secondary source | MISSING — web has no Justia fetcher |
-| 3. Check for `overruled by`, `abrogated by`, `superseded by` | Negative-treatment scan | MISSING — engine has `NEGATIVE_KEYWORDS` at `legal-verifier.mjs:1166`, web has none |
-| 4. Extract holding via signal patterns (`we hold`, `we conclude`, `the court holds`) | Holding extraction | PARTIAL — `classify-case-law.mjs:200` matches the same signals to extract `key_quote`, but does not store as separate `holding` field |
-| 5. Compare to DB holding (HIGH/MEDIUM/LOW confidence) | Holding similarity confidence | MISSING — no comparison or confidence tier |
-| 6. Update DB with `web_verified_status`, `case_law_applicability` | Persist verification | MISSING — no such columns on `case_law_references` |
+|------|------------, |---------------, |
+| 1. CourtListener API search → cluster_id, opinion text | Primary lookup | PARTIAL, `classify-case-law.mjs` fetches opinions by cluster_id, but does not perform initial citation lookup |
+| 2. Justia fallback if CourtListener miss | Secondary source | MISSING, web has no Justia fetcher |
+| 3. Check for `overruled by`, `abrogated by`, `superseded by` | Negative-treatment scan | MISSING, engine has `NEGATIVE_KEYWORDS` at `legal-verifier.mjs:1166`, web has none |
+| 4. Extract holding via signal patterns (`we hold`, `we conclude`, `the court holds`) | Holding extraction | PARTIAL, `classify-case-law.mjs:200` matches the same signals to extract `key_quote`, but does not store as separate `holding` field |
+| 5. Compare to DB holding (HIGH/MEDIUM/LOW confidence) | Holding similarity confidence | MISSING, no comparison or confidence tier |
+| 6. Update DB with `web_verified_status`, `case_law_applicability` | Persist verification | MISSING, no such columns on `case_law_references` |
 
 ## C5. Fear Formula (Quality Gate)
 
@@ -92,8 +92,8 @@ FEAR SCORE = REVERSED × PUBLISHED × MANDATORY × CONSTITUTIONAL × INDISTINGUI
 ```
 
 | Component | What it checks | Web repo status |
-|-----------|----------------|-----------------|
-| REVERSED | Trial court got it wrong | PARTIAL — classifier scores DEFENSE/PROSECUTION but not REVERSED-as-quality-multiplier |
+|---------, |----------------|---------------, |
+| REVERSED | Trial court got it wrong | PARTIAL, classifier scores DEFENSE/PROSECUTION but not REVERSED-as-quality-multiplier |
 | PUBLISHED | Substantive holding (not per curiam affirm) | MISSING |
 | MANDATORY | "Must", "requires", "shall", "error to admit" keyword presence | MISSING |
 | CONSTITUTIONAL | 4th Amendment, Brady, Due Process tag | MISSING |
@@ -103,15 +103,15 @@ FEAR SCORE = REVERSED × PUBLISHED × MANDATORY × CONSTITUTIONAL × INDISTINGUI
 
 CASE-LAW-VALIDATION-PERSONA.md:275-282
 
-1. Citation format valid (reporter, page number) — MISSING in web
-2. `is_good_law = 1` (verified, not overruled) — PARTIAL (default-true, never verified)
-3. `motion_type` populated (route to motions) — MISSING
-4. `holding` populated (compare to arguments) — PARTIAL (`case_law_references.holding` column exists)
-5. If binding, `outcome = REVERSED` preferred — PARTIAL (classifier extracts outcome but no preference enforcement)
+1. Citation format valid (reporter, page number), MISSING in web
+2. `is_good_law = 1` (verified, not overruled), PARTIAL (default-true, never verified)
+3. `motion_type` populated (route to motions), MISSING
+4. `holding` populated (compare to arguments), PARTIAL (`case_law_references.holding` column exists)
+5. If binding, `outcome = REVERSED` preferred, PARTIAL (classifier extracts outcome but no preference enforcement)
 
 ---
 
-# VERI Persona — Discovery Citation Verbatim Verification
+# VERI Persona, Discovery Citation Verbatim Verification
 
 Source: `ImNotAnAttorney/system/Attorney-Personas/VERI-CITATION-VERIFICATION-PERSONA.md`
 
@@ -122,8 +122,8 @@ VERI is for **discovery document** citation verification ("Page 3 of police repo
 VERI-CITATION-VERIFICATION-PERSONA.md:66-77
 
 | Component | What it verifies | Fail condition | Web repo status |
-|-----------|------------------|----------------|-----------------|
-| Document ID | Report number matches actual document | `SO22-401531-37 ≠ SO22-401531-38` | NOT APPLICABLE — web has no discovery PDFs (engine handles X-Ray+) |
+|---------, |------------------|----------------|---------------, |
+| Document ID | Report number matches actual document | `SO22-401531-37 ≠ SO22-401531-38` | NOT APPLICABLE, web has no discovery PDFs (engine handles X-Ray+) |
 | Request Number | Lab request batch correct | `Request 0004 ≠ Request 0010` | NOT APPLICABLE |
 | Page Number | Content actually on cited page | "Page 3" but content on Page 5 | NOT APPLICABLE |
 | Report Date | Date in motion matches document | "Jan 15" vs "Jan 16" | NOT APPLICABLE |
@@ -135,7 +135,7 @@ VERI-CITATION-VERIFICATION-PERSONA.md:66-77
 VERI-CITATION-VERIFICATION-PERSONA.md:236-247
 
 | Status | Meaning | Auto-fix? | Web equivalent |
-|--------|---------|-----------|----------------|
+|------, |---------|---------, |----------------|
 | `VERIFIED` | Matches source exactly | n/a | NONE |
 | `MISMATCH` | Wrong page, content elsewhere | Yes | NONE |
 | `QUOTE_MISMATCH` | Quote close but not verbatim (Soft Find) | Yes | NONE |
@@ -151,7 +151,7 @@ VERI-CITATION-VERIFICATION-PERSONA.md:165-230
 Fuzzy-matching algorithm (75-95% similarity threshold) to find close-but-not-exact quotes in source PDFs and replace inaccurate quotes with verbatim text.
 
 | Mechanism | How | File:Line | Web repo status |
-|-----------|-----|-----------|-----------------|
+|---------, |---, |---------, |---------------, |
 | Sliding window search | Across normalized source text | VERI-CITATION-VERIFICATION-PERSONA.md:206 | NOT APPLICABLE (no PDFs in web) |
 | `SequenceMatcher` (Python `difflib`) | 75% fuzzy / 95% near-exact thresholds | VERI-CITATION-VERIFICATION-PERSONA.md:208 | NOT APPLICABLE |
 | Position mapping (normalized → original) | Preserves whitespace, casing | VERI-CITATION-VERIFICATION-PERSONA.md:209 | NOT APPLICABLE |
@@ -169,11 +169,11 @@ Flag quotes near negation words (`not`, `never`, `did not`) for manual review.
 
 VERI-CITATION-VERIFICATION-PERSONA.md:633-648
 
-Five regex patterns for police reports, lab reports, generic documents, transcripts. **Web repo status:** NOT APPLICABLE. Engine has separate citation extractors at `legal-verifier.mjs:49-85` for case law / statute / CFR — those ARE applicable and are MISSING from web.
+Five regex patterns for police reports, lab reports, generic documents, transcripts. **Web repo status:** NOT APPLICABLE. Engine has separate citation extractors at `legal-verifier.mjs:49-85` for case law / statute / CFR, those ARE applicable and are MISSING from web.
 
 ---
 
-# GEMINI Research Template — No-Fabrication Contract
+# GEMINI Research Template, No-Fabrication Contract
 
 Source: `ImNotAnAttorney/system/Case-Law/GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md`
 
@@ -182,38 +182,38 @@ Source: `ImNotAnAttorney/system/Case-Law/GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md`
 GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:24-34
 
 | Rule | What it bans | Web repo status |
-|------|--------------|-----------------|
-| Don't invent case names or citations | Hallucinated case law | ENFORCED IN PROMPT — `prompts.ts:65` `ANTI_HALLUCINATION_PERCENTAGES` and `generate-report/index.ts:281-292` `ANTI_HALLUCINATION_BLOCK` rule #1 instruct Claude not to fabricate. Not enforced post-generation. |
-| Don't invent decision dates / docket numbers | Hallucinated metadata | ENFORCED IN PROMPT — same blocks, no post-check |
-| Don't invent URLs | Phantom verification links | NOT ENFORCED — web has no URL validation step |
+|------|------------, |---------------, |
+| Don't invent case names or citations | Hallucinated case law | ENFORCED IN PROMPT, `prompts.ts:65` `ANTI_HALLUCINATION_PERCENTAGES` and `generate-report/index.ts:281-292` `ANTI_HALLUCINATION_BLOCK` rule #1 instruct Claude not to fabricate. Not enforced post-generation. |
+| Don't invent decision dates / docket numbers | Hallucinated metadata | ENFORCED IN PROMPT, same blocks, no post-check |
+| Don't invent URLs | Phantom verification links | NOT ENFORCED, web has no URL validation step |
 | Don't guess at page citations or quotes | Verbatim quote claims | NOT ENFORCED |
-| Return `[NOT FOUND]` instead of fabricating | Fail-loud on uncertainty | PARTIAL — web prompts use `[VERIFY]` marker (rule #6 at `generate-report/index.ts:290`); Gemini template uses `[NOT FOUND]` |
+| Return `[NOT FOUND]` instead of fabricating | Fail-loud on uncertainty | PARTIAL, web prompts use `[VERIFY]` marker (rule #6 at `generate-report/index.ts:290`); Gemini template uses `[NOT FOUND]` |
 
 ## G2. Required Verification Fields (per case)
 
-GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:39-52 — 11 mandatory fields:
+GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:39-52, 11 mandatory fields:
 
 | # | Field | Web `case_law_references` column | Status |
-|---|-------|----------------------------------|--------|
+|---|-------|----------------------------------|------, |
 | 1 | Full case name (Plaintiff v. Defendant) | `case_name` | PRESENT |
 | 2 | Full citation `[Vol] So.2d/So.3d [Page] (Fla. 2d DCA [Year])` | `citation` | PRESENT |
 | 3 | Decision date (Month Day, Year) | NONE | MISSING |
 | 4 | Docket number | NONE | MISSING |
 | 5 | Outcome (REVERSED / AFFIRMED / QUASHED / REMANDED) | NONE on `case_law_references`; `statute_case_law` has no outcome column either | MISSING |
-| 6 | RAW URL #1 (free public source) | `verification_url` (single) | PARTIAL — only one URL slot |
+| 6 | RAW URL #1 (free public source) | `verification_url` (single) | PARTIAL, only one URL slot |
 | 7 | RAW URL #2 (different source) | NONE | MISSING (engine has `verification_urls TEXT[]`) |
 | 8 | Verbatim holding quote (1-3 sentences) | `key_quote` | PRESENT |
 | 9 | Page citation for the quote | NONE | MISSING |
 | 10 | Application to motion argument | `application` | PRESENT |
-| 11 | Good law status | `is_good_law` (boolean) | PARTIAL — boolean, no enum: GOOD / QUESTIONED / BAD |
+| 11 | Good law status | `is_good_law` (boolean) | PARTIAL, boolean, no enum: GOOD / QUESTIONED / BAD |
 
 ## G3. Three-Tier Good Law Status
 
 GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:60-65
 
-- `GOOD LAW` — not overruled, still valid binding precedent
-- `QUESTIONED` — distinguished or criticized but not overruled
-- `BAD LAW` — overruled, superseded, receded from (DO NOT CITE)
+- `GOOD LAW`, not overruled, still valid binding precedent
+- `QUESTIONED`, distinguished or criticized but not overruled
+- `BAD LAW`, overruled, superseded, receded from (DO NOT CITE)
 
 **Web repo status:** MISSING. Web's `is_good_law` is binary; can't represent QUESTIONED tier.
 
@@ -222,10 +222,10 @@ GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:60-65
 GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:96-116
 
 | Priority | Source | Engine implementation | Web repo status |
-|----------|--------|----------------------|-----------------|
+|----------|------, |----------------------|---------------, |
 | P1 | Google Scholar | `fetchGoogleScholar` (`legal-verifier.mjs:263`) | MISSING |
 | P1 | Justia | `fetchJustia` (`legal-verifier.mjs:222`) | MISSING |
-| P1 | CourtListener | `fetchCourtListener` (`legal-verifier.mjs:95`) | PARTIAL — `classify-case-law.mjs` uses CourtListener Opinions API only, not Citation Lookup API |
+| P1 | CourtListener | `fetchCourtListener` (`legal-verifier.mjs:95`) | PARTIAL, `classify-case-law.mjs` uses CourtListener Opinions API only, not Citation Lookup API |
 | P1 | Official Court PDF (`2dca.flcourts.gov`) | NONE | MISSING |
 | P2 | Leagle | NONE | MISSING |
 | P2 | FindLaw | NONE | MISSING |
@@ -236,7 +236,7 @@ GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:96-116
 
 ## G5. Final Submission Checklist
 
-GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:202-220 — 15 boxes per case:
+GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:202-220, 15 boxes per case:
 
 1. Case Name (Plaintiff v. Defendant)
 2. Citation format `[Vol] So.X [Page] (Court [Year])`
@@ -258,40 +258,40 @@ GEMINI-CASE-LAW-RESEARCH-TEMPLATE.md:202-220 — 15 boxes per case:
 
 ---
 
-# GEMINI Verification Template — Single-Citation Verification
+# GEMINI Verification Template, Single-Citation Verification
 
 Source: `ImNotAnAttorney/system/Case-Law/GEMINI-CASE-VERIFICATION-TEMPLATE.md`
 
 ## V-G1. The 9 Verification Questions
 
-GEMINI-CASE-VERIFICATION-TEMPLATE.md:46-57 — for any cited case, verify:
+GEMINI-CASE-VERIFICATION-TEMPLATE.md:46-57, for any cited case, verify:
 
-1. Case EXISTS — MISSING in web (no existence check after Claude generates)
-2. CITATION is correct (Vol/Reporter/Page/Court/Year) — MISSING (no parser/normalizer)
-3. DOCKET NUMBER — MISSING (no column)
-4. DECISION DATE — MISSING (no column)
-5. OUTCOME (Reversed/Affirmed/etc.) — PARTIAL (classifier extracts as `outcome` text)
-6. HOLDING matches our use — MISSING (no similarity check)
-7. Exact VERBATIM QUOTE with page number — PARTIAL (`key_quote` exists, no page number column)
-8. OVERRULED status — MISSING
-9. MINIMUM 2-3 RAW DIRECT URLs — MISSING (single `verification_url` column)
+1. Case EXISTS, MISSING in web (no existence check after Claude generates)
+2. CITATION is correct (Vol/Reporter/Page/Court/Year), MISSING (no parser/normalizer)
+3. DOCKET NUMBER, MISSING (no column)
+4. DECISION DATE, MISSING (no column)
+5. OUTCOME (Reversed/Affirmed/etc.), PARTIAL (classifier extracts as `outcome` text)
+6. HOLDING matches our use, MISSING (no similarity check)
+7. Exact VERBATIM QUOTE with page number, PARTIAL (`key_quote` exists, no page number column)
+8. OVERRULED status, MISSING
+9. MINIMUM 2-3 RAW DIRECT URLs, MISSING (single `verification_url` column)
 
 ## V-G2. Raw URL vs. Wrapped URL
 
 GEMINI-CASE-VERIFICATION-TEMPLATE.md:60-83
 
 | Pattern | Status | Example |
-|---------|--------|---------|
+|---------|------, |---------|
 | RAW (good) | `https://law.justia.com/cases/florida/...` | accept |
 | Google search wrapper (bad) | `google.com/search?q=...` | reject |
 | Google URL redirect (bad) | `google.com/url?sa=t&url=...` | reject |
 | "Search for X on Y" (bad) | text placeholder | reject |
 
-**Web repo status:** MISSING. No URL pattern validation. The engine doesn't enforce this either — it relies on the source-fetcher functions returning real URLs by construction.
+**Web repo status:** MISSING. No URL pattern validation. The engine doesn't enforce this either, it relies on the source-fetcher functions returning real URLs by construction.
 
 ## V-G3. Output Status Categories
 
-GEMINI-CASE-VERIFICATION-TEMPLATE.md:106 — `Status` field enum:
+GEMINI-CASE-VERIFICATION-TEMPLATE.md:106, `Status` field enum:
 - `VERIFIED`
 - `NOT FOUND`
 - `CITATION ERROR`
@@ -304,8 +304,8 @@ GEMINI-CASE-VERIFICATION-TEMPLATE.md:106 — `Status` field enum:
 GEMINI-CASE-VERIFICATION-TEMPLATE.md:266-275
 
 | Issue | Action | Web repo status |
-|-------|--------|-----------------|
-| Opposite Holding (case REVERSED for State, not defendant) | DO NOT CITE | PARTIAL — classifier flags `PROSECUTION` party_side; nothing prevents using prosecution-favorable case in a defense report |
+|-------|------, |---------------, |
+| Opposite Holding (case REVERSED for State, not defendant) | DO NOT CITE | PARTIAL, classifier flags `PROSECUTION` party_side; nothing prevents using prosecution-favorable case in a defense report |
 | Wrong DCA (4th DCA cited as 2d DCA) | Correct citation | MISSING |
 | Citation Error (wrong volume/page) | Get correct citation | MISSING |
 | Overruled (later case overturned) | DO NOT CITE | MISSING |
@@ -322,7 +322,7 @@ Source: `ImNotAnAttorney/docs/API-TOKEN-SIGNUP-GUIDE.md`
 ## API-1. Configured Tokens (engine `.env`)
 
 | Token | Status | Purpose | Web repo status |
-|-------|--------|---------|-----------------|
+|-------|------, |---------|---------------, |
 | `COURTLISTENER_API_TOKEN` | DONE (Mar 13) | Citation Lookup API, opinions, judges, dockets, citing-opinions, financial disclosures | PRESENT in web `.env.local` as `COURTLISTENER_TOKEN` (used by `classify-case-law.mjs:44`) |
 | `JUDYRECORDS_API_KEY` | Pending email reply | 760M+ case metadata fallback | MISSING in web |
 | `HARVARD_CAP_TOKEN` | DEPRECATED | API v1 returns HTML; engine degrades gracefully | n/a |
@@ -331,7 +331,7 @@ Source: `ImNotAnAttorney/docs/API-TOKEN-SIGNUP-GUIDE.md`
 | `DESCRYBE_TOKEN` | Optional ($10/mo) | Negative treatment / good-law detection (Cytator) | MISSING in web |
 | `PACER_CREDENTIALS` | Optional | Federal court records | MISSING in web |
 
-## API-2. Migration 010 — `verified_case_law` Central Library
+## API-2. Migration 010, `verified_case_law` Central Library
 
 API-TOKEN-SIGNUP-GUIDE.md:15-17 documents that the engine has Migration 010 with:
 - `verified_case_law` table (30 columns, indexes, RLS, trigger)
@@ -346,7 +346,7 @@ API-TOKEN-SIGNUP-GUIDE.md:15-17 documents that the engine has Migration 010 with
 ## API-3. Verification Result Tiers (from API-TOKEN-SIGNUP-GUIDE.md:23-37)
 
 | Tier | Meaning | Engine code | Web repo status |
-|------|---------|-------------|-----------------|
+|------|---------|-------------|---------------, |
 | `VERIFIED_STRONG` | 3+ independent sources confirm | `legal-verifier.mjs:1416` | MISSING |
 | `VERIFIED_MODERATE` | 2 independent sources confirm | `legal-verifier.mjs:1419` | MISSING |
 | `VERIFIED_WEAK` | 1 source only | `legal-verifier.mjs:1422` | MISSING |
@@ -356,9 +356,9 @@ API-TOKEN-SIGNUP-GUIDE.md:15-17 documents that the engine has Migration 010 with
 ## API-4. Known Verification Issues
 
 | Issue | Notes | Web repo impact |
-|-------|-------|-----------------|
+|-------|-------|---------------, |
 | Harvard CAP API deprecated | Returns HTML instead of JSON; engine degrades gracefully | n/a |
-| `is_good_law` returns null for landmark cases | Citing-opinions endpoint returns thousands of results; can't determine treatment definitively. Engine waiting on Descrybe.ai token. | MISSING — web has no shepardize logic at all, so the bug doesn't manifest, but neither does the protection |
+| `is_good_law` returns null for landmark cases | Citing-opinions endpoint returns thousands of results; can't determine treatment definitively. Engine waiting on Descrybe.ai token. | MISSING, web has no shepardize logic at all, so the bug doesn't manifest, but neither does the protection |
 | GovInfo not wired | `govInfoKey` in config, no `fetchGovInfo` function exists | n/a |
 
 ---
@@ -402,7 +402,7 @@ const NEGATIVE_KEYWORDS = [
 
 ## E3. Holding Extraction
 
-`legal-verifier.mjs:1274-1300` — 11 holding signal patterns:
+`legal-verifier.mjs:1274-1300`, 11 holding signal patterns:
 
 ```js
 const HOLDING_SIGNALS = [
@@ -418,13 +418,13 @@ const HOLDING_SIGNALS = [
 
 ## E4. Holding Similarity (Validation)
 
-`legal-verifier.mjs:1303-1330` — bag-of-words overlap between fetched holding and argument context, classified into `STRONG` (≥0.7) / `MODERATE` (≥0.4) / `WEAK` / `REVIEW` (if pro-prosecution).
+`legal-verifier.mjs:1303-1330`, bag-of-words overlap between fetched holding and argument context, classified into `STRONG` (≥0.7) / `MODERATE` (≥0.4) / `WEAK` / `REVIEW` (if pro-prosecution).
 
 **Web repo status:** MISSING.
 
 ## E5. Citation Authority Scoring
 
-`legal-verifier.mjs:676-716` `fetchCitationAuthority()` — fetches cluster metadata, returns `citation_count`, `is_landmark` (>100 cites), `precedential_status`.
+`legal-verifier.mjs:676-716` `fetchCitationAuthority()`, fetches cluster metadata, returns `citation_count`, `is_landmark` (>100 cites), `precedential_status`.
 
 **Web repo status:** MISSING.
 
@@ -443,18 +443,18 @@ const HOLDING_SIGNALS = [
 Three-phase worker (`citation-verify.mjs`):
 
 | Phase | Action | Lines |
-|-------|--------|-------|
+|-------|------, |-------|
 | **A** | Verify structured `case_law_references` rows. Reuses central library hits via `verified_case_law` lookup. Re-shepardizes if `shepardized_at` >30 days old. | 39-217 |
 | **B** | Extract inline citations from `trial_materials` + `witness_dossiers` content using `extractCitations()`, verify each, insert new rows into `case_law_references`. | 219-308 |
-| **C** | Verify `motion_recommendations.basis` field — extracts case law + statutes, verifies, sets `basis_verified` boolean and `basis_verification_url/source`. | 310-370 |
+| **C** | Verify `motion_recommendations.basis` field, extracts case law + statutes, verifies, sets `basis_verified` boolean and `basis_verification_url/source`. | 310-370 |
 
 **Operator task auto-creation** when issues found:
-- `citation_fabricated` (HIGH priority) — citation not in any database
-- `citation_weak` (MEDIUM) — only one source confirmed
-- `citation_overruled` (HIGH) — negative treatment detected
-- `basis_fabricated` (HIGH) — fabricated citation in motion basis
+- `citation_fabricated` (HIGH priority), citation not in any database
+- `citation_weak` (MEDIUM), only one source confirmed
+- `citation_overruled` (HIGH), negative treatment detected
+- `basis_fabricated` (HIGH), fabricated citation in motion basis
 
-**Web repo status:** MISSING. None of `verified_case_law`, `motion_recommendations`, `operator_tasks`, `trial_materials`, or `witness_dossiers` exist as tables in the web migrations. Web doesn't run a verification worker at all — verification is purely prompt-side.
+**Web repo status:** MISSING. None of `verified_case_law`, `motion_recommendations`, `operator_tasks`, `trial_materials`, or `witness_dossiers` exist as tables in the web migrations. Web doesn't run a verification worker at all, verification is purely prompt-side.
 
 ---
 
@@ -476,7 +476,7 @@ All citations are automatically verified against CourtListener's legal database.
 Fabricated citations will be caught and flagged.
 ```
 
-**Status:** PRESENT, but the closing claim ("automatically verified against CourtListener's legal database") is **FALSE for the web repo's runtime path**. No post-generation verification runs on Case Decoder or Intelligence Brief output. The verification happens only during the offline `classify-case-law.mjs` build step that populates `statute_case_law` — and only for the pre-researched library, NOT for citations Claude introduces in a generated report.
+**Status:** PRESENT, but the closing claim ("automatically verified against CourtListener's legal database") is **FALSE for the web repo's runtime path**. No post-generation verification runs on Case Decoder or Intelligence Brief output. The verification happens only during the offline `classify-case-law.mjs` build step that populates `statute_case_law`, and only for the pre-researched library, NOT for citations Claude introduces in a generated report.
 
 ## W2. Domain-Specific Anti-Hallucination Sub-Rules
 
@@ -485,20 +485,20 @@ Fabricated citations will be caught and flagged.
 | Block | Location | What it blocks |
 |-------|----------|----------------|
 | `ANTI_HALLUCINATION_PERCENTAGES` | `prompts.ts:65-71` | Specific conviction/suppression percentages → forces qualitative framing |
-| Anti-Hallucination — Plea Framework | `prompts.ts:284-290`, `generate-report/index.ts:4523-4524` | Same as above for plea sections |
-| Anti-Hallucination — Immigration | `prompts.ts:393-394`, `generate-report/index.ts:4558-4559` | Bans definitive deportation conclusions |
-| Anti-Hallucination — Regulatory | `prompts.ts:396-397`, `generate-report/index.ts:4561-4562` | FAFSA/licensing rules (post-2021 changes) |
-| Anti-Hallucination — Outcome Map | `prompts.ts:630-635`, `generate-report/index.ts:4622-4623` | Bans specific percentages in How-Common-In-County column |
-| Anti-Hallucination — DA Office Patterns | `prompts.ts:637-638`, `generate-report/index.ts:4625-4626` | Forces qualifier "general patterns" if not operator-researched |
-| Anti-Hallucination — Judge Intelligence | `generate-report/index.ts:4628-4633` | If judge_research empty: don't fabricate, present FRAMEWORK as attorney questions |
-| Anti-Hallucination — CPS | `generate-report/index.ts:822-825` | Score only dimensions with intake evidence; mark "Insufficient Data" if not |
-| Anti-Hallucination — General | `generate-report/index.ts:2789-2791` | If unknown state statute fine range, say "varies by jurisdiction" |
+| Anti-Hallucination, Plea Framework | `prompts.ts:284-290`, `generate-report/index.ts:4523-4524` | Same as above for plea sections |
+| Anti-Hallucination, Immigration | `prompts.ts:393-394`, `generate-report/index.ts:4558-4559` | Bans definitive deportation conclusions |
+| Anti-Hallucination, Regulatory | `prompts.ts:396-397`, `generate-report/index.ts:4561-4562` | FAFSA/licensing rules (post-2021 changes) |
+| Anti-Hallucination, Outcome Map | `prompts.ts:630-635`, `generate-report/index.ts:4622-4623` | Bans specific percentages in How-Common-In-County column |
+| Anti-Hallucination, DA Office Patterns | `prompts.ts:637-638`, `generate-report/index.ts:4625-4626` | Forces qualifier "general patterns" if not operator-researched |
+| Anti-Hallucination, Judge Intelligence | `generate-report/index.ts:4628-4633` | If judge_research empty: don't fabricate, present FRAMEWORK as attorney questions |
+| Anti-Hallucination, CPS | `generate-report/index.ts:822-825` | Score only dimensions with intake evidence; mark "Insufficient Data" if not |
+| Anti-Hallucination, General | `generate-report/index.ts:2789-2791` | If unknown state statute fine range, say "varies by jurisdiction" |
 
 **Status:** PRESENT and comprehensive on the prompt side. Strong defensive prompting; ZERO post-generation enforcement.
 
 ## W3. Emergency Hallucination Rule
 
-`.claude/rules/no-hallucinated-legal-data.md` — agent-level instruction (not runtime enforcement):
+`.claude/rules/no-hallucinated-legal-data.md`, agent-level instruction (not runtime enforcement):
 
 > NEVER generate, fabricate, or hallucinate: case law citations, statute numbers, legal holdings, sentencing data, case outcomes.
 > ALL legal data MUST come from VERIFIED SOURCES: CourtListener API, official legislatures, FL Online Sunshine, Cornell LII, Justia, official court records.
@@ -511,7 +511,7 @@ Fabricated citations will be caught and flagged.
 `scripts/classify-case-law.mjs:138-260` runs over `statute_case_law` rows that already have a `courtlistener_cluster_id`:
 
 | Mechanism | What it does | Lines |
-|-----------|--------------|-------|
+|---------, |------------, |-------|
 | DEFENSE_SIGNALS array (19 phrases) | Counts defense-favorable phrases in opinion text | 138-148 |
 | PROSECUTION_SIGNALS array (15 phrases) | Counts prosecution-favorable phrases | 150-160 |
 | BINDING_COURTS array | Detects FL Supreme Court / FL DCA opinions | 163-166 |
@@ -519,12 +519,12 @@ Fabricated citations will be caught and flagged.
 | `stripHtml()` | Tag stripper using split/join (no regex on file content per project rule) | 120-134 |
 | `classifyFromName()` | Bypass for `In re:` / jury instruction cases → NEUTRAL | 262-277 |
 
-**Status:** PRESENT and functional. Operates on offline-imported library only. Does NOT run during report generation. Does NOT verify the case exists — it only classifies cases that have already been fetched.
+**Status:** PRESENT and functional. Operates on offline-imported library only. Does NOT run during report generation. Does NOT verify the case exists, it only classifies cases that have already been fetched.
 
 ## W5. Verified-Pipeline Reference
 
 | Script | Purpose | Lines | Status |
-|--------|---------|-------|--------|
+|------, |---------|-------|------, |
 | `scripts/legal-research-all.mjs` | Statute verification + finds citing cases on CourtListener | n/a | PRESENT |
 | `scripts/legal-research-fl.mjs` | FL-specific statute verification | n/a | PRESENT |
 | `scripts/classify-case-law.mjs` | Defense/prosecution classifier (W4 above) | 1-280 | PRESENT |
@@ -535,7 +535,7 @@ Fabricated citations will be caught and flagged.
 `supabase/migrations/00001_initial_schema.sql:105-125`:
 
 | Column | Type | Verification role | Status |
-|--------|------|-------------------|--------|
+|------, |------|-------------------|------, |
 | `case_name` | text | identity | PRESENT |
 | `citation` | text | identity | PRESENT |
 | `court` | text | binding analysis | PRESENT |
@@ -579,49 +579,49 @@ Fabricated citations will be caught and flagged.
 
 ### IMPLEMENTED in web repo (full or partial)
 
-1. **Universal anti-hallucination prompt block** (W1) — every Claude call gets it; 6 universal rules
-2. **Domain-specific anti-hallucination sub-rules** (W2) — 9 section-specific blocks across CD + IB
-3. **Emergency rule for agents** (W3) — `.claude/rules/no-hallucinated-legal-data.md`
-4. **Defense/prosecution classifier** (W4) — `classify-case-law.mjs` for offline library
-5. **Verified pipeline gate** (W5) — `generate-case-law-enrichment.ts` refuses to invent
-6. **`is_good_law` boolean column** (W6) — exists, defaulted true, never updated by runtime
-7. **Holding signal extraction** (4 of 11 patterns) — in `classify-case-law.mjs:200-207`
-8. **Binding court detection** — `classify-case-law.mjs:163-166`
+1. **Universal anti-hallucination prompt block** (W1), every Claude call gets it; 6 universal rules
+2. **Domain-specific anti-hallucination sub-rules** (W2), 9 section-specific blocks across CD + IB
+3. **Emergency rule for agents** (W3), `.claude/rules/no-hallucinated-legal-data.md`
+4. **Defense/prosecution classifier** (W4), `classify-case-law.mjs` for offline library
+5. **Verified pipeline gate** (W5), `generate-case-law-enrichment.ts` refuses to invent
+6. **`is_good_law` boolean column** (W6), exists, defaulted true, never updated by runtime
+7. **Holding signal extraction** (4 of 11 patterns), in `classify-case-law.mjs:200-207`
+8. **Binding court detection**, `classify-case-law.mjs:163-166`
 
 ### MISSING in web repo (high-priority gaps)
 
-1. **`verifyCaseLaw()` cascade** — multi-source independent confirmation (Gemini template's 2-URL minimum)
-2. **`verified_case_law` central library table** — Migration 010 in engine, no equivalent in web
-3. **Citation Verification Cascade** documented in `docs/ARCHITECTURE.md:269-279` — claimed but not implemented
+1. **`verifyCaseLaw()` cascade**, multi-source independent confirmation (Gemini template's 2-URL minimum)
+2. **`verified_case_law` central library table**, Migration 010 in engine, no equivalent in web
+3. **Citation Verification Cascade** documented in `docs/ARCHITECTURE.md:269-279`, claimed but not implemented
 4. **Negative treatment scan** (`NEGATIVE_KEYWORDS`, `checkNegativeTreatment`, `fetchDetailedTreatment`)
-5. **`is_good_law` programmatic update** — column exists, never written
-6. **`shepardized_at` freshness check** — column exists, never written; engine re-verifies if >30 days
-7. **Three-tier good-law status** (GOOD / QUESTIONED / BAD) — web has only boolean
+5. **`is_good_law` programmatic update**, column exists, never written
+6. **`shepardized_at` freshness check**, column exists, never written; engine re-verifies if >30 days
+7. **Three-tier good-law status** (GOOD / QUESTIONED / BAD), web has only boolean
 8. **Confidence tier classification** (STRONG/MODERATE/WEAK/FABRICATED/UNVERIFIED)
 9. **Holding similarity / applicability scoring** (`holdingSimilarity`, `classifyHoldingValidation`)
 10. **Age status classification** (`getAgeStatus`)
 11. **Citation authority scoring** (`fetchCitationAuthority`, `is_landmark`)
-12. **Two-URL minimum proof requirement** (Gemini template line 54) — web stores single URL
+12. **Two-URL minimum proof requirement** (Gemini template line 54), web stores single URL
 13. **URL liveness check** (CASE persona C2)
 14. **Decision date / docket number / outcome columns** (Gemini fields 3, 4, 5)
-15. **Post-generation verification worker** — engine has `citation-verify.mjs` 3-phase worker; web has none
-16. **Inline citation extraction from generated text** — engine has `extractCitations()` + Phase B scanner
+15. **Post-generation verification worker**, engine has `citation-verify.mjs` 3-phase worker; web has none
+16. **Inline citation extraction from generated text**, engine has `extractCitations()` + Phase B scanner
 17. **Operator task auto-creation** for fabricated/weak/overruled citations
-18. **VERI's out-of-context detection** (negation-word proximity flagging) — listed as future even in engine
-19. **Jurisdictional source priority** — Justia, Google Scholar, official court PDFs, Leagle, FindLaw fetchers
-20. **Statute verification cascade** — OpenLaws → Cornell LII → eCFR
-21. **eCFR point-in-time** (offense-date regulation vs current) — engine `legal-verifier.mjs:1105`
+18. **VERI's out-of-context detection** (negation-word proximity flagging), listed as future even in engine
+19. **Jurisdictional source priority**, Justia, Google Scholar, official court PDFs, Leagle, FindLaw fetchers
+20. **Statute verification cascade**, OpenLaws → Cornell LII → eCFR
+21. **eCFR point-in-time** (offense-date regulation vs current), engine `legal-verifier.mjs:1105`
 22. **Wex definition lookup** for plain-English term grounding
-23. **CourtListener Citation Lookup API** (POST endpoint) — engine uses it for exact match; web uses Opinions API only
-24. **`motion_recommendations.basis_verified`** field — engine sets it, web has no `motion_recommendations` table
-25. **Charge → motion-type routing matrix** — CASE persona's applicability check requires it
+23. **CourtListener Citation Lookup API** (POST endpoint), engine uses it for exact match; web uses Opinions API only
+24. **`motion_recommendations.basis_verified`** field, engine sets it, web has no `motion_recommendations` table
+25. **Charge → motion-type routing matrix**, CASE persona's applicability check requires it
 
 ### NOT APPLICABLE to web repo (engine territory)
 
-1. **VERI discovery PDF verification** (V1, V2, V3) — engine processes raw discovery PDFs in `01-Raw/`; web doesn't
-2. **Soft Find fuzzy quote correction** (V3) — same reason
-3. **Auto-correction of motion files** — web doesn't generate motion files
-4. **`citation_verification_log` table** — discovery-side audit log
+1. **VERI discovery PDF verification** (V1, V2, V3), engine processes raw discovery PDFs in `01-Raw/`; web doesn't
+2. **Soft Find fuzzy quote correction** (V3), same reason
+3. **Auto-correction of motion files**, web doesn't generate motion files
+4. **`citation_verification_log` table**, discovery-side audit log
 
 ---
 
@@ -670,4 +670,4 @@ The prompt's warning may deter Claude from inventing citations, but it should no
 - `C:\Users\email\projects\ImNotAnAttorney-web\scripts\generate-case-law-enrichment.ts`
 - `C:\Users\email\projects\ImNotAnAttorney-web\supabase\migrations\00001_initial_schema.sql`
 - `C:\Users\email\projects\ImNotAnAttorney-web\supabase\migrations\20250101000030_research-columns-and-case-law.sql`
-- `C:\Users\email\projects\ImNotAnAttorney-web\docs\ARCHITECTURE.md` (lines 261-302 — Citation Verification Cascade documented but not implemented)
+- `C:\Users\email\projects\ImNotAnAttorney-web\docs\ARCHITECTURE.md` (lines 261-302, Citation Verification Cascade documented but not implemented)

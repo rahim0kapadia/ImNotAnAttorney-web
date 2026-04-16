@@ -39,7 +39,7 @@ Files: src/components/motion/DiscoveryReveal.tsx, src/app/page.tsx
 
 - [ ] In DiscoveryReveal.tsx, remove the "Read the full story" Link to /about (lines 168-173). Change the parent div from flex-col with gap-2 to just text-center with the single remaining sample report link.
 - [ ] In page.tsx, remove the "Not ready to commit? Check your attorney's score" block after inline testimonials (lines 343-353).
-- [ ] Run: npx tsc --noEmit --skipLibCheck
+- [ ] Run: npx tsc,noEmit,skipLibCheck
 - [ ] Commit: fix(cro): reduce homepage CTAs from 14 to 8
 
 ### Task 2: Value Stacking in PricingTable (Phase 5.3.4)
@@ -54,7 +54,7 @@ Files: src/components/PricingTable.tsx
   - Intelligence Brief: second-opinion review $1,500, judge research $300, motion analysis $400, prosecution assessment $200
   - X-Ray: discovery review $2,000, evidence audit $500, constitutional analysis $800, witness prep $400
 - [ ] Render value stack in tier cards between bestFor and features list: left-aligned items with strikethrough prices, total value sum at bottom with amber highlight
-- [ ] Run: npx tsc --noEmit --skipLibCheck
+- [ ] Run: npx tsc,noEmit,skipLibCheck
 - [ ] Commit: feat(cro): add Brunson value stacking to pricing cards
 
 ### Task 3: DAI Stats API Endpoint
@@ -68,7 +68,7 @@ Files: Create src/app/api/stats/score-summary/route.ts
 - [ ] Return JSON with totalCompletions and insights object
 - [ ] Use Next.js ISR with revalidate = 300 (5-minute cache)
 - [ ] No auth required (public aggregate data, no PII)
-- [ ] Run: npx tsc --noEmit --skipLibCheck
+- [ ] Run: npx tsc,noEmit,skipLibCheck
 - [ ] Commit: feat: add DAI stats endpoint
 
 ### Task 4: DAI Display on Score Page
@@ -80,7 +80,7 @@ Files: src/app/score/page.tsx
 - [ ] Add stats state (totalCompletions + insights) and useEffect to fetch /api/stats/score-summary on mount (silent fail)
 - [ ] Add social proof counter above quiz form: "X defendants have scored their defense" (only shows when 50+ completions exist)
 - [ ] Add benchmark insights after score result display: "What our data shows" section with pctNoMotions, pctNeverDiscovery, pctNoComm percentages (only shows non-zero values)
-- [ ] Run: npx tsc --noEmit --skipLibCheck
+- [ ] Run: npx tsc,noEmit,skipLibCheck
 - [ ] Commit: feat: add DAI social proof + benchmark insights to score page
 
 ### Task 5: DefinedTermSet Glossary Schema
@@ -91,7 +91,7 @@ Files: src/lib/schema.ts, src/app/page.tsx
 
 - [ ] Add generateDefinedTermSet() function to schema.ts returning DefinedTermSet with 8 criminal defense terms: Brady Material, Chain of Custody, Constructive Possession, Suppression Motion, Discovery, Field Sobriety Test, Plea Bargain, Sentencing Guidelines. Each term has name, description (2-3 sentences in defendant voice), and url linking to relevant blog post.
 - [ ] In page.tsx, import generateDefinedTermSet and add a script type="application/ld+json" block after the LegalService schema block.
-- [ ] Run: npx tsc --noEmit --skipLibCheck
+- [ ] Run: npx tsc,noEmit,skipLibCheck
 - [ ] Commit: feat(seo): add DefinedTermSet glossary schema - 8 criminal defense terms
 
 ### Task 6: Flip Intelligence Brief to LIVE ($997)
@@ -99,7 +99,7 @@ Files: src/lib/schema.ts, src/app/page.tsx
 Files: src/lib/tiers.ts
 
 - [ ] Find intelligence-brief tier, change live: false to live: true
-- [ ] Run: npx tsc --noEmit --skipLibCheck
+- [ ] Run: npx tsc,noEmit,skipLibCheck
 - [ ] Commit: feat(stripe): flip Intelligence Brief ($997) to live payments
 
 ### Task 7: Flip X-Ray to LIVE ($2,497)
@@ -107,7 +107,7 @@ Files: src/lib/tiers.ts
 Files: src/lib/tiers.ts
 
 - [ ] Find x-ray tier, change live: false to live: true
-- [ ] Run: npx tsc --noEmit --skipLibCheck
+- [ ] Run: npx tsc,noEmit,skipLibCheck
 - [ ] Commit: feat(stripe): flip X-Ray ($2,497) to live payments
 
 ### Task 8: Flip War Room to LIVE ($4,997)
@@ -115,7 +115,7 @@ Files: src/lib/tiers.ts
 Files: src/lib/tiers.ts
 
 - [ ] Find war-room tier, change live: false to live: true
-- [ ] Run: npx tsc --noEmit --skipLibCheck
+- [ ] Run: npx tsc,noEmit,skipLibCheck
 - [ ] Commit: feat(stripe): flip War Room ($4,997) to live payments
 
 ### Task 9: Flip Situation Room to LIVE ($9,997)
@@ -123,7 +123,7 @@ Files: src/lib/tiers.ts
 Files: src/lib/tiers.ts
 
 - [ ] Find situation-room tier, change live: false to live: true
-- [ ] Run: npx tsc --noEmit --skipLibCheck
+- [ ] Run: npx tsc,noEmit,skipLibCheck
 - [ ] Commit: feat(stripe): flip Situation Room ($9,997) to live payments
 - [ ] Push all: git push origin master
 

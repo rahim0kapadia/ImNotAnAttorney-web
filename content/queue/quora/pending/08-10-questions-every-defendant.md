@@ -18,7 +18,7 @@ The quality of your questions determines the quality of your defense. Most defen
 
 Here are the ten questions that change that dynamic.
 
-**1. "What is your theory of defense?"** This is the most important question. A theory of defense is the story your attorney is telling -- to the prosecutor, the judge, a potential jury. If they say "we'll see what they offer," they don't have one. And if they don't have one, they're not defending you. They're processing you.
+**1. "What is your theory of defense?"** This is the most important question. A theory of defense is the story your attorney is telling, to the prosecutor, the judge, a potential jury. If they say "we'll see what they offer," they don't have one. And if they don't have one, they're not defending you. They're processing you.
 
 **2. "Have you reviewed all of the discovery?"** Every page? Every video? If not, why not? And can you see it? You lived the events. You'll catch things your attorney might miss.
 
@@ -28,7 +28,7 @@ Here are the ten questions that change that dynamic.
 
 **5. "What is the worst realistic outcome, and what is the best?"** Not the theoretical maximum. Not the minimum. The realistic range based on your facts, your judge, your jurisdiction.
 
-**6. "Have you spoken to the prosecutor about my case specifically?"** Negotiation happens in conversations -- informal ones. If your attorney only interacts with the prosecution at scheduled court dates, they're not fighting. They're waiting.
+**6. "Have you spoken to the prosecutor about my case specifically?"** Negotiation happens in conversations, informal ones. If your attorney only interacts with the prosecution at scheduled court dates, they're not fighting. They're waiting.
 
 **7. "What independent investigation have you done?"** Visited the scene? Interviewed witnesses? Checked calibration records? Examined expert credentials? If the only investigation was done by the people trying to convict you, that's not a defense.
 

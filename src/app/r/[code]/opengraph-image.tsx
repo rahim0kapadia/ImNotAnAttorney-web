@@ -1,7 +1,7 @@
 import { renderOgImage, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-template";
 import { createAdminClient } from "@/lib/supabase/admin";
 
-export const alt = "Referred by a Partner — ImNotAnAttorney";
+export const alt = "Referred by a Partner, ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 

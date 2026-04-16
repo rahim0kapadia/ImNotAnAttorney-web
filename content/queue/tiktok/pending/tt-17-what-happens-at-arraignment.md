@@ -10,7 +10,7 @@ topic: What happens at arraignment?
 blog_slug: what-happens-at-arraignment
 estimated_duration: 30s
 format: Standard (talking head + text overlays)
-suggested_sound: "Original audio — calm voiceover + courtroom ambient"
+suggested_sound: "Original audio, calm voiceover + courtroom ambient"
 suggested_posting_time: "Tuesday 6:00 PM EST"
 ---
 
@@ -18,7 +18,7 @@ suggested_posting_time: "Tuesday 6:00 PM EST"
 
 **Format**: Standard
 **Duration**: 30 seconds
-**Suggested sound**: Original audio — calm voiceover + courtroom ambient
+**Suggested sound**: Original audio, calm voiceover + courtroom ambient
 **Suggested posting time**: Tuesday 6:00 PM EST
 
 ---
@@ -35,7 +35,7 @@ suggested_posting_time: "Tuesday 6:00 PM EST"
 
 [SECOND 3-12]
 **Visual**: Simple numbered list appearing on screen, clean graphics.
-**Audio/Voiceover**: "One — the judge reads your charges out loud. You already know them. Two — they ask how you plead. You say 'not guilty.' Even if you're eventually going to take a deal. Saying not guilty at arraignment is standard — it preserves your options. Three — the judge schedules your next date."
+**Audio/Voiceover**: "One, the judge reads your charges out loud. You already know them. Two, they ask how you plead. You say 'not guilty.' Even if you're eventually going to take a deal. Saying not guilty at arraignment is standard, it preserves your options. Three, the judge schedules your next date."
 **Text overlay**:
 - "1. Charges read"
 - "2. You plead NOT GUILTY (this is normal)"
@@ -48,7 +48,7 @@ suggested_posting_time: "Tuesday 6:00 PM EST"
 
 [SECOND 18-25]
 **Visual**: Cut back to person.
-**Audio/Voiceover**: "The biggest mistake defendants make: they think arraignment is where they fight. It's not. The fight comes later — in discovery and motions. Arraignment is just the starting gun."
+**Audio/Voiceover**: "The biggest mistake defendants make: they think arraignment is where they fight. It's not. The fight comes later, in discovery and motions. Arraignment is just the starting gun."
 **Text overlay**: "Arraignment = starting gun. The fight comes later."
 
 [SECOND 25-30]
@@ -59,7 +59,7 @@ suggested_posting_time: "Tuesday 6:00 PM EST"
 ---
 
 ### Caption
-Your arraignment is tomorrow and you can't sleep. Here's the whole thing: charges read, you plead not guilty (this is standard), next date scheduled. 5-15 minutes. The real fight comes later — in discovery and motions.
+Your arraignment is tomorrow and you can't sleep. Here's the whole thing: charges read, you plead not guilty (this is standard), next date scheduled. 5-15 minutes. The real fight comes later, in discovery and motions.
 
 ### Hashtags
 #arraignment #courtdate #criminaldefense #firstcourtdate #criminalcase #knowyourrights
@@ -70,5 +70,5 @@ POV entering a courtroom. Text: "Your Arraignment Is Tomorrow. Relax. Here's Eve
 ---
 
 **Context**: "What happens at arraignment" is a panic search from first-time defendants. This video is calming, informative, and positions INNA as the trusted resource early in the case. Targets people at the very beginning of the criminal process.
-**Loop strategy**: Opens walking into the courtroom anxiously, ends walking out confidently — the emotional arc creates a satisfying loop.
+**Loop strategy**: Opens walking into the courtroom anxiously, ends walking out confidently, the emotional arc creates a satisfying loop.
 **KPI target**: Shares (family and friends send this to anyone with an upcoming arraignment)

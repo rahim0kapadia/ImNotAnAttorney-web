@@ -3,7 +3,7 @@
 **Topic:** Pressure to plead guilty before defense work begins
 **Format:** POV storytime + text overlay
 **Duration:** 45s
-**Trending sound suggestion:** Original audio -- voiceover + slow, melancholy piano transitioning to confident beat
+**Trending sound suggestion:** Original audio, voiceover + slow, melancholy piano transitioning to confident beat
 
 ## Hook (first 3 seconds)
 [SECOND 0-1]
@@ -22,22 +22,22 @@
 **Text overlay**: Checklist appearing with X marks: "Discovery reviewed? NO. Motions filed? NO. Witnesses contacted? NO. Evidence analyzed? NO."
 
 [SECOND 12-22]
-**Visual**: Cut to third-person -- speaker at desk, calm authority.
-**Audio/Voiceover**: "Here's what most defendants don't realize: the first plea offer is almost always the worst one. As your attorney files motions, as discovery reveals weaknesses, as the prosecution realizes they might actually have to try this case -- the offers get better. An attorney who's visibly preparing for trial gets better deals than one who's visibly ready to settle."
+**Visual**: Cut to third-person, speaker at desk, calm authority.
+**Audio/Voiceover**: "Here's what most defendants don't realize: the first plea offer is almost always the worst one. As your attorney files motions, as discovery reveals weaknesses, as the prosecution realizes they might actually have to try this case, the offers get better. An attorney who's visibly preparing for trial gets better deals than one who's visibly ready to settle."
 **Text overlay**: "First offer = worst offer. Defense work = better deals."
 
 [SECOND 22-32]
 **Visual**: Text appearing on screen, clean formatting.
-**Audio/Voiceover**: "Before you accept any plea, ask these questions: has all discovery been received and reviewed? What motions have you filed or considered? What are the specific collateral consequences -- job, housing, custody, immigration? Can we counter-offer? And is this offer likely to improve if we continue building the defense?"
+**Audio/Voiceover**: "Before you accept any plea, ask these questions: has all discovery been received and reviewed? What motions have you filed or considered? What are the specific collateral consequences, job, housing, custody, immigration? Can we counter-offer? And is this offer likely to improve if we continue building the defense?"
 **Text overlay**: Questions appearing one at a time as spoken.
 
 [SECOND 32-40]
-**Visual**: Back to POV -- but now the person is pushing the plea agreement back across the table. Camera looks up at the attorney.
+**Visual**: Back to POV, but now the person is pushing the plea agreement back across the table. Camera looks up at the attorney.
 **Audio/Voiceover**: "You're allowed to say 'not yet.' You're allowed to say 'I need to understand my options.' You're allowed to say 'what work have you actually done before recommending this?' Your attorney advises. You decide. That's the law."
 **Text overlay**: "'Not yet' is a complete sentence."
 
 [SECOND 40-45]
-**Visual**: Conference room from the opening -- but now the defendant has a notebook full of questions, pen in hand.
+**Visual**: Conference room from the opening, but now the defendant has a notebook full of questions, pen in hand.
 **Text overlay**: "Don't sign in the dark. Know What They Know. imnotanattorney.com"
 **Audio**: Piano shifts to confident beat. Resolves.
 

@@ -1,5 +1,5 @@
 /**
- * Bulk Add Reference URLs — TRUE BULK PATTERN
+ * Bulk Add Reference URLs, TRUE BULK PATTERN
  *
  * Replaces add-reference-urls.mjs's per-row UPDATE loop with a single
  * UPDATE ... FROM (VALUES ...) per batch. ~5x faster.
@@ -236,12 +236,12 @@ async function main() {
       applied += batch.length;
       const elapsed = (Date.now() - startTime) / 1000;
       const rate = (applied / elapsed).toFixed(0);
-      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} rows (${sqlSizeKB}KB) — ${rate} rows/sec\n`);
+      process.stdout.write(`  Batch ${batchNum}/${totalBatches}: ${batch.length} rows (${sqlSizeKB}KB), ${rate} rows/sec\n`);
     } catch (e) {
       batchErrors++;
-      console.error(`  Batch ${batchNum}: ERROR — ${e.message.slice(0, 200)}`);
+      console.error(`  Batch ${batchNum}: ERROR, ${e.message.slice(0, 200)}`);
       if (e.message.indexOf("429") >= 0) {
-        console.log("  Rate limited — waiting 10s...");
+        console.log("  Rate limited, waiting 10s...");
         await sleep(10000);
         try {
           await supabaseQuery(sql);

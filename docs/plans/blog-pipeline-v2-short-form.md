@@ -1,7 +1,7 @@
-# Plan: Blog Pipeline V2 — Short-Form Crisis Content
+# Plan: Blog Pipeline V2, Short-Form Crisis Content
 
-**Status:** EXECUTED 2026-04-10 — Phases 1-4 complete, all modules verified
-**Expert basis:** Sabri Suby (crisis buyer psychology, cascade: native), Andy Crestodina (blog data — 75% of readers prefer <1,000 words, Orbit Media 2025 Survey), Chris Dreyer (legal niche content strategy), Alex Hormozi (value equation — minimize effort/time delay denominator)
+**Status:** EXECUTED 2026-04-10, Phases 1-4 complete, all modules verified
+**Expert basis:** Sabri Suby (crisis buyer psychology, cascade: native), Andy Crestodina (blog data, 75% of readers prefer <1,000 words, Orbit Media 2025 Survey), Chris Dreyer (legal niche content strategy), Alex Hormozi (value equation, minimize effort/time delay denominator)
 **Prototype:** `C:\Users\email\projects\ImNotAnAttorney-web\content\blog\_prototypes\what-happens-at-arraignment-v2.mdx` (1,134 words vs 2,357 original)
 
 ## Problem
@@ -42,7 +42,7 @@ PRODUCT BRIDGE (3-4 sentences):
 
 DISCLAIMER (1 sentence)
 
-SOCIAL_SPINE (unchanged — metadata for social distribution)
+SOCIAL_SPINE (unchanged, metadata for social distribution)
 ```
 
 **Target word count:** 1,000-1,500 words (body content, excluding frontmatter/SOCIAL_SPINE)
@@ -65,7 +65,7 @@ SOCIAL_SPINE (unchanged — metadata for social distribution)
 1. Add to Section 1 (Voice Summary), first paragraph:
    ```
    **Word budget: 1,000-1,500 words body content. Maximum 1,800. Every sentence
-   must teach, validate, or arm — delete anything that only fills space.**
+   must teach, validate, or arm, delete anything that only fills space.**
    ```
 
 2. Replace the anti-slop checklist line:
@@ -84,13 +84,13 @@ SOCIAL_SPINE (unchanged — metadata for social distribution)
    ## Structure Template
 
    Every post follows this skeleton:
-   1. Hook (2-3 sentences) — name the fear, validate, promise the answer
-   2. TLDRBox — one-sentence answer + one 5-minute action
-   3. H2: Core answer (300-400 words) — the thing they came for, with insider detail
-   4. H2: Actions (200-300 words) — 2-3 things to do RIGHT NOW
-   5. H2: Common mistake (150-200 words) — one error + how to avoid it
-   6. Agency close (2 sentences) — competence, not fear
-   7. Product bridge (3-4 sentences) — free value → paid depth for YOUR case
+   1. Hook (2-3 sentences), name the fear, validate, promise the answer
+   2. TLDRBox, one-sentence answer + one 5-minute action
+   3. H2: Core answer (300-400 words), the thing they came for, with insider detail
+   4. H2: Actions (200-300 words), 2-3 things to do RIGHT NOW
+   5. H2: Common mistake (150-200 words), one error + how to avoid it
+   6. Agency close (2 sentences), competence, not fear
+   7. Product bridge (3-4 sentences), free value → paid depth for YOUR case
 
    Total: 1,000-1,500 words. The reader finishes in 3-4 minutes on their phone.
    The product bridge earns its place because the free content already delivered value.
@@ -140,7 +140,7 @@ Add "D13_PRODUCT_BRIDGE" to CHECK_IDS array.
 
 ### Phase 4: Generation Prompt (engine repo)
 
-**File:** `C:\Users\email\projects\ImNotAnAttorney-engine\` — find the blog generation prompt template
+**File:** `C:\Users\email\projects\ImNotAnAttorney-engine\`, find the blog generation prompt template
 
 **Key instruction to add:**
 ```
@@ -148,26 +148,26 @@ WORD BUDGET: 1,000-1,500 words of body content. Maximum 1,800.
 Do NOT write a comprehensive guide. Write a crisis-response post.
 The reader is on their phone at 3AM. They will spend 3-4 minutes reading.
 Every sentence must validate, teach, or arm them with an action.
-Delete anything that only fills space — scene-setting, redundant
+Delete anything that only fills space, scene-setting, redundant
 transitions, repeated structural patterns, step-by-step procedures
 that any attorney's website already covers.
 
 The product bridge is NOT a CTA bolted to the end. It's the answer
 to the question "what comes next?" The free content answered ONE
-question well. The product handles the rest — tailored to THEIR case.
+question well. The product handles the rest, tailored to THEIR case.
 ```
 
 ## What This Does NOT Change
 
-- **FAQs** — keep all 3-5 FAQ entries. These are metadata for GEO/featured snippets, not body content.
-- **SOCIAL_SPINE** — keep all social distribution metadata. Unchanged.
-- **howToSteps** — keep for HowTo schema. Can be shortened to 3-4 steps.
-- **Voice tone** — same warm, insider, peer voice. Just less of it.
-- **Existing posts** — do NOT rewrite the 59 existing posts in this phase. Pipeline changes affect new posts only. Existing posts can be trimmed in a future sprint.
+- **FAQs**, keep all 3-5 FAQ entries. These are metadata for GEO/featured snippets, not body content.
+- **SOCIAL_SPINE**, keep all social distribution metadata. Unchanged.
+- **howToSteps**, keep for HowTo schema. Can be shortened to 3-4 steps.
+- **Voice tone**, same warm, insider, peer voice. Just less of it.
+- **Existing posts**, do NOT rewrite the 59 existing posts in this phase. Pipeline changes affect new posts only. Existing posts can be trimmed in a future sprint.
 
 ## Execution Order
 
-1. Phase 1: Update 4 voice profiles (parallel — no dependencies)
+1. Phase 1: Update 4 voice profiles (parallel, no dependencies)
 2. Phase 2: Update DNA gate (depends on Phase 1 for alignment)
 3. Phase 3: Update humanizer gate (independent)
 4. Phase 4: Update engine generation prompt (depends on Phase 1)

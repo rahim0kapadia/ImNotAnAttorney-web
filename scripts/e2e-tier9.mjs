@@ -1,5 +1,5 @@
 /**
- * E2E Test — Tier 9 Standalone SKU Generation Pipeline
+ * E2E Test, Tier 9 Standalone SKU Generation Pipeline
  *
  * Tests the full purchase flow for all 5 Tier 9 data-driven products:
  *   1. Judge Report Card ($197)
@@ -267,7 +267,7 @@ async function testProduct(product) {
   assert(!insertError && order, `Order created (${insertError?.message || "ok"})`);
 
   if (!order) {
-    console.error("    Cannot continue — order not created");
+    console.error("    Cannot continue, order not created");
     return;
   }
 
@@ -324,9 +324,9 @@ async function testProduct(product) {
       .maybeSingle();
 
     if (updatedOrder?.standalone_intake && !updatedOrder.standalone_report_token_hash) {
-      console.log("    ⚠ Report not generated — likely insufficient data in Tier 9 tables for test input");
+      console.log("    ⚠ Report not generated, likely insufficient data in Tier 9 tables for test input");
       console.log("    ⚠ This is expected if the DB has no matching judge/officer/charge data");
-      assert(true, "Intake stored correctly (report skipped — no matching data)");
+      assert(true, "Intake stored correctly (report skipped, no matching data)");
     } else {
       assert(false, "Report generation timed out");
     }
@@ -375,7 +375,7 @@ async function testProduct(product) {
     assert(opinionRows !== null, "classified_opinions returns data or empty array");
 
     // Graceful degradation: intelligence absence must not block report generation
-    // (verified above — if report was generated, it succeeded with or without intel)
+    // (verified above, if report was generated, it succeeded with or without intel)
     assert(true, "Intelligence absence does not block report generation (graceful degradation)");
   }
 }

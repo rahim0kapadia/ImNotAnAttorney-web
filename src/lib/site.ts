@@ -29,7 +29,7 @@ import { createHash, createHmac, timingSafeEqual } from "crypto";
 
 /**
  * Hash a token with SHA-256 for secure storage.
- * Raw token stays in cookie/URL only — DB stores the hash.
+ * Raw token stays in cookie/URL only, DB stores the hash.
  * Used for report tokens, magic links, session tokens.
  */
 export function hashToken(token: string): string {

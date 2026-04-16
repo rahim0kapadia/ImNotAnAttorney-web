@@ -34,7 +34,7 @@ imnotanattorney.com
 
 [0:04-0:15] THE DATA:
 [TEXT ON SCREEN: "NHTSA accuracy rates"]
-"NHTSA — the National Highway Traffic Safety Administration — validated three field sobriety tests. Their own data says the one-leg stand is only 65% accurate. The walk-and-turn is 68% accurate. Even the eye test — the HGN — is only 77% accurate. All three combined? 82%. That means 18% of the time, sober people are identified as impaired."
+"NHTSA, the National Highway Traffic Safety Administration, validated three field sobriety tests. Their own data says the one-leg stand is only 65% accurate. The walk-and-turn is 68% accurate. Even the eye test, the HGN, is only 77% accurate. All three combined? 82%. That means 18% of the time, sober people are identified as impaired."
 
 [0:15-0:26] THE CONDITIONS:
 [TEXT ON SCREEN: "Perfect conditions. Perfect administration."]
@@ -42,11 +42,11 @@ imnotanattorney.com
 
 [0:26-0:37] WHAT OFFICERS GET WRONG:
 [TEXT ON SCREEN: "Common FST errors"]
-"Officers rush the eye test. They administer the walk-and-turn on gravel or sloped pavement. They skip asking about medical conditions — at least 38 conditions cause the same eye movements as alcohol impairment, including inner ear disorders, certain medications, even caffeine. They almost never ask."
+"Officers rush the eye test. They administer the walk-and-turn on gravel or sloped pavement. They skip asking about medical conditions, at least 38 conditions cause the same eye movements as alcohol impairment, including inner ear disorders, certain medications, even caffeine. They almost never ask."
 
 [0:37-0:48] THE QUESTION:
 [TEXT ON SCREEN: "Was YOUR test administered correctly?"]
-"Ask your DUI attorney: have you reviewed the field sobriety test administration against NHTSA standards? Have you reviewed the body camera footage to confirm proper procedure? If they haven't — the prosecution is presenting the officer's subjective opinion as scientific evidence. And nobody is challenging it."
+"Ask your DUI attorney: have you reviewed the field sobriety test administration against NHTSA standards? Have you reviewed the body camera footage to confirm proper procedure? If they haven't, the prosecution is presenting the officer's subjective opinion as scientific evidence. And nobody is challenging it."
 
 [0:48-0:57] CTA:
 [TEXT ON SCREEN: "imnotanattorney.com"]

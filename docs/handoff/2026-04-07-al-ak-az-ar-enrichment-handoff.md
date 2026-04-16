@@ -1,14 +1,14 @@
 # Handoff: AL/AK/AZ/AR Enrichment Generation
 
 **Date:** 2026-04-07
-**Status:** NOT STARTED — research and pattern identification only
+**Status:** NOT STARTED, research and pattern identification only
 **Reason for handoff:** Earlier session attempted to generate enrichment + case law for these jurisdictions but ran into the no-hallucinated-legal-data rule late in the process. Switched to canonical pattern documentation rather than ship a non-canonical generator.
 
 ## Request
 
 Generate enrichment data for AL, AK, AZ, AR jurisdictions following the canonical project pattern.
 
-**DO NOT generate case-law JSON files for these jurisdictions.** Per project directive (memory: `reference-enrichment-caselaw-format.md`): "case law explicitly forbidden in those tasks — directive was 'case law comes from CourtListener only'." This applies to all jurisdictions added in the 2026-04 expansion (SD/TN/TX/UT/MO/MT/NE/NV are documented as enrichment-only). AL/AK/AZ/AR follow the same rule.
+**DO NOT generate case-law JSON files for these jurisdictions.** Per project directive (memory: `reference-enrichment-caselaw-format.md`): "case law explicitly forbidden in those tasks, directive was 'case law comes from CourtListener only'." This applies to all jurisdictions added in the 2026-04 expansion (SD/TN/TX/UT/MO/MT/NE/NV are documented as enrichment-only). AL/AK/AZ/AR follow the same rule.
 
 ## Canonical Pattern
 
@@ -18,8 +18,8 @@ This is the most recent (Apr 2026) canonical generator. It:
 - Defines a `CONTEXT` table per state with `name`, `statePrefix`, `courts.{supreme,appellate}`, `selfDefenseCite`, `necessityCite`, `constArt`, `fourthAm`, `supervision`, and a `note`
 - Defines `BUILDERS[slug] = (code, stat) => ({prosecution_strengths, defense_opportunities, common_defenses})` per common charge slug
 - Each builder takes the state code and the actual statute number from the taxonomy file, and interpolates them into 4-5 items per array
-- Items reference real well-known SCOTUS cases (Birchfield v. North Dakota, Missouri v. McNeely, Terry v. Ohio) by name — those are implicitly verified
-- Items reference the actual statute number passed in via `${stat}` — that number is from the verified taxonomy file, so it's safe to cite
+- Items reference real well-known SCOTUS cases (Birchfield v. North Dakota, Missouri v. McNeely, Terry v. Ohio) by name, those are implicitly verified
+- Items reference the actual statute number passed in via `${stat}`, that number is from the verified taxonomy file, so it's safe to cite
 
 ## State Context for AL/AK/AZ/AR
 
@@ -58,7 +58,7 @@ const CONTEXT = {
     constArt: 'Ariz. Const. Art. 2 § 8',
     fourthAm: 'Ariz. Const. Art. 2 § 8',
     supervision: 'A.R.S. § 13-901',            // Probation
-    note: 'Arizona uses DUI under A.R.S. § 28-1381. "Impaired to slightest degree" standard — strictest DUI threshold. 84-month (7-year) lookback. Extreme DUI .15+, Super Extreme .20+. Aggravated DUI = Class 4 Felony. Recreational marijuana legal since Prop 207 (2020). Constitutional carry. Death penalty state. Mandatory ignition interlock all DUI convictions.'
+    note: 'Arizona uses DUI under A.R.S. § 28-1381. "Impaired to slightest degree" standard, strictest DUI threshold. 84-month (7-year) lookback. Extreme DUI .15+, Super Extreme .20+. Aggravated DUI = Class 4 Felony. Recreational marijuana legal since Prop 207 (2020). Constitutional carry. Death penalty state. Mandatory ignition interlock all DUI convictions.'
   },
   AR: {
     name: 'Arkansas',
@@ -80,8 +80,8 @@ const CONTEXT = {
 2. Common charge slugs (shared across jurisdictions): dui-dwi, dui-first-offense, dui-repeat-offense, dui-drugs, reckless-driving, hit-and-run, vehicular-homicide, vehicular-manslaughter, driving-on-suspended, fleeing-eluding, drug-possession (and 4 sub-variants), drug-trafficking, drug-distribution, drug-manufacturing, drug-paraphernalia, drug-possession-with-intent, murder-first-degree, murder-second-degree, voluntary-manslaughter, involuntary-manslaughter, aggravated-assault, simple-assault, battery (AL/AR only), robbery, armed-robbery, kidnapping, arson, attempted-murder, assault-with-deadly-weapon, theft-larceny, grand-theft, petty-theft, shoplifting, burglary, residential-burglary, motor-vehicle-theft, receiving-stolen-property, vandalism, trespassing, criminal-mischief, domestic-violence, domestic-battery, child-endangerment, child-abuse, violation-protective-order, stalking, harassment, elder-abuse (AL/AZ/AR only), weapons-possession, felon-in-possession, concealed-carry-violation, illegal-discharge, identity-theft, embezzlement, forgery, counterfeiting (AL/AR only), bad-checks, insurance-fraud (AL/AR only), credit-card-fraud, money-laundering (AL/AZ/AR only), fraud-general, sexual-assault, rape, indecent-exposure, solicitation-prostitution, child-exploitation, failure-to-register, statutory-rape, disorderly-conduct, resisting-arrest, obstruction-justice, contempt-of-court, public-intoxication (AL/AR only), failure-to-appear, false-report, criminal-threat, perjury, bribery, escape-custody, animal-cruelty, probation-violation, parole-violation, aiding-abetting, attempt, conspiracy.
 3. Build BUILDERS[slug] for every slug, using `(code, stat) => {...}` signature with state-specific text
 4. Write each enrichment file at `data/charge-taxonomy/enrichment/{CODE}.json`
-5. After writing, run `node scripts/scrub-enrichment-citations.mjs --dry-run` to verify nothing gets scrubbed
-6. **Important AK gotcha:** Existing `data/charge-taxonomy/enrichment/AK.json` already contains `"Alaska's implied consent law (AS 28.35.031)..."` — this slipped past the scrubber because PINPOINT_PREFIXES at lines 59-114 of `scrub-enrichment-citations.mjs` does NOT include `"as "`. Either: (a) add `"as "` to the prefix list and re-run scrubber, or (b) confirm `AS XX.XX.XXX` references are actually allowed when they reference the charge's own statute number.
+5. After writing, run `node scripts/scrub-enrichment-citations.mjs,dry-run` to verify nothing gets scrubbed
+6. **Important AK gotcha:** Existing `data/charge-taxonomy/enrichment/AK.json` already contains `"Alaska's implied consent law (AS 28.35.031)..."`, this slipped past the scrubber because PINPOINT_PREFIXES at lines 59-114 of `scrub-enrichment-citations.mjs` does NOT include `"as "`. Either: (a) add `"as "` to the prefix list and re-run scrubber, or (b) confirm `AS XX.XX.XXX` references are actually allowed when they reference the charge's own statute number.
 7. Run validation: every taxonomy slug has an enrichment entry with 3-5 items in each of the 3 arrays.
 
 ## Validation Snippet
@@ -107,7 +107,7 @@ const fs = require('fs');
 
 - Generate case-law JSON files for these jurisdictions
 - Fabricate case names, holdings, or unverified citations
-- Use generic copy-paste phrasing across states (silent dedup will remove items — see `gotcha-enrichment-silent-dedup.md`)
+- Use generic copy-paste phrasing across states (silent dedup will remove items, see `gotcha-enrichment-silent-dedup.md`)
 - Skip the validation step
 - Reference statute numbers that aren't in the source taxonomy file
 

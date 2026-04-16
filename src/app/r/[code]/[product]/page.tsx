@@ -1,5 +1,5 @@
 /**
- * /r/[code]/[product] — Deep link: sets ref cookie + redirects to product checkout.
+ * /r/[code]/[product], Deep link: sets ref cookie + redirects to product checkout.
  */
 
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -42,7 +42,7 @@ export default async function DeepLinkPage({ params, searchParams }: PageProps) 
     redirect(`/checkout?tier=${tierSlug}`);
   }
 
-  // Referral cookie is set by middleware (Next.js 16 — cookies().set() not allowed in Server Components)
+  // Referral cookie is set by middleware (Next.js 16, cookies().set() not allowed in Server Components)
 
   redirect(`/checkout?tier=${tierSlug}`);
 }

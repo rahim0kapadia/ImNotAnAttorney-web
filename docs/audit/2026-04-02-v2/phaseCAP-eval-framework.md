@@ -4,7 +4,7 @@ Date: 2026-04-02
 ## GATE Status
 
 | Gate Team | Status | Blockers |
-|-----------|--------|----------|
+|---------, |------, |----------|
 | Team 9: Positioning | **CONDITIONAL GO** | POS2 (competitive frame vs. inertia) is NEEDS WORK, not FAIL. No FAIL criteria. |
 | Team 10: CRO | **CONDITIONAL GO** | CRO11 (desktop exit intent missing), CRO13 (post-purchase UX unaudited). Both NEEDS WORK. No FAIL. |
 | Team 11: Trust | **CONDITIONAL GO** | T1-T5 downgraded to CONDITIONAL PASS per Reality Checker (no user-testing evidence). ANON1 and ANON5 NEEDS WORK. No FAIL. |
@@ -29,17 +29,17 @@ The site has production-grade architecture, genuinely strong UPL compliance infr
 ### Team 1: UPL Compliance (U1-U15)
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
+|----|---------, |-------|----------|
 | U1 | No advice language | **NEEDS WORK** | Phase 17: FLAG B4 in `attorney-not-returning-calls.mdx` line 194 is a clear U4: "you need to take immediate action. That means exploring new counsel, contacting the bar, or filing a motion for substitution of counsel." FLAG S1 in score.ts line 100 ("you need to be proactive") is borderline. Reality Checker agrees B4 must be fixed before posture can be called "strong." |
 | U2 | Attorney redirection | **PASS** | Phase 17: Every section across all products redirects to the defendant's attorney. "Ask your attorney" or equivalent present on every major surface. FAQ answers consistently redirect. |
 | U3 | No attorney judgment | **PASS** | Phase P1-P2 POS6: Zero instances of anti-attorney language across 6 pages, 3 components. "The right attorneys welcome informed clients." Score tool validates instincts without calling attorneys incompetent. |
 | U4 | Disclaimer presence | **PASS** | Phase 17: "Legal information, not legal advice" on footer, checkout, intake, score results, playbook pages, blog posts, sample reports. Phase 18-20: Terms Section 3 is the clearest UPL disclaimer in the codebase. |
-| U5 | Motion applicability framing | **PASS** | Phase 17: Motions presented as "factors that may be relevant." Score.ts line 260 uses "Ask your attorney: 'What motions are we filing before trial?'" — question framing, not recommendation. |
+| U5 | Motion applicability framing | **PASS** | Phase 17: Motions presented as "factors that may be relevant." Score.ts line 260 uses "Ask your attorney: 'What motions are we filing before trial?'", question framing, not recommendation. |
 | U6 | Immigration safety | **PASS** | Phase 17: No immigration advice found. Collateral consequences in prompts.ts are sourced and framed as requiring attorney + immigration lawyer consultation. |
 | U7 | Defense theory framing | **PASS** | Phase 17: Defense theories presented as landscape to "explore with your attorney." Prompts.ts banned list explicitly prevents "pursue this defense," "this is your strongest argument." |
-| U8 | Advocacy steps bounded | **NEEDS WORK** | Phase 17: FLAG B3 — "fire your lawyer" article TLDRBox line 30 says "Fire your lawyer if: they've missed a filing deadline." Reads as a command. Gray zone per Phase 17 analysis. Reality Checker agrees this needs reframing to observational language. |
+| U8 | Advocacy steps bounded | **NEEDS WORK** | Phase 17: FLAG B3, "fire your lawyer" article TLDRBox line 30 says "Fire your lawyer if: they've missed a filing deadline." Reads as a command. Gray zone per Phase 17 analysis. Reality Checker agrees this needs reframing to observational language. |
 | U9 | Question framing | **PASS** | Phase 17: All questions framed as "Question for Your Attorney." 6-part format (context, question, why it matters, good answer, bad answer, follow-up) empowers without pressuring. |
-| U10 | Collateral consequences sourced | **PASS** | Phase 17: Prompts.ts requires citations to statute, regulation, or NICCC. Blog citations verified in Phase 16 — .gov/.edu sources on 35+ posts. |
+| U10 | Collateral consequences sourced | **PASS** | Phase 17: Prompts.ts requires citations to statute, regulation, or NICCC. Blog citations verified in Phase 16, .gov/.edu sources on 35+ posts. |
 | U11 | No named companies in negative context | **PASS** | Phase 17: No named companies found in negative context. Generic industry descriptions used throughout. |
 | U12 | Attribution non-endorsement format | **PASS** | Phase P1-P2: "Informed by [Name]'s published work" format used. Non-endorsement disclaimer present on methodology sections. |
 | U13 | Non-adversarial attorney framing | **PASS** | Phase 17: No insider pejoratives found. Pro-defendant voice maintained without anti-attorney attacks. "The information gap" is the stated enemy. No "plea mill," "assembly line justice," or similar language in customer-facing copy. |
@@ -53,7 +53,7 @@ The site has production-grade architecture, genuinely strong UPL compliance infr
 ### Team 2: Psychological Architecture (P1-P14)
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
+|----|---------, |-------|----------|
 | P1 | Safety-first architecture | **PASS** | Phase P1-P2: Homepage hero leads with validation ("Your attorney hasn't called back"), not worst-case scenarios. /start CrisisHero establishes safety before any product mention. Phase 4: Crisis UX rated 6/7. |
 | P2 | Efficacy pairing (Witte) | **PASS** | Phase P1-P2: Every threat paired with action. Urgency bar pairs deadlines with specific motion types. Score observations pair findings with attorney questions. |
 | P3 | Learned helplessness counter | **PASS** | Phase P1-P2: "The charge is what you're facing, not who you are" framing. Score tool depersonalizes and temporalizes. |
@@ -78,7 +78,7 @@ The site has production-grade architecture, genuinely strong UPL compliance infr
 Note: Team 3 primarily evaluates product deliverables (reports, playbooks). For the website audit, scoring is based on publicly visible legal information on the site.
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
+|----|---------, |-------|----------|
 | L1 | Charge-specific accuracy | **PASS** | Phase 16: Per-charge-type playbook configs verified. State DUI pages use state-specific data (BAC limits, penalties). Score tool has charge-specific observations. |
 | L2 | Defense theory completeness | **PASS** | Phase P1-P2: Playbook configs cover charge-specific defense theories. DUI mentions breathalyzer challenges. Drug cases mention chain of custody. White collar mentions RICO. |
 | L3 | Prosecution strategy realism | **PASS** | Phase P1-P2: Services page per-case-type descriptions include prosecution tactics (drug case informant strategies, DUI BAC evidence ordering). |
@@ -87,7 +87,7 @@ Note: Team 3 primarily evaluates product deliverables (reports, playbooks). For 
 | L6 | Motion landscape specificity | **NEEDS WORK** | Phase 13-21: Homepage urgency bar mentions "suppression motions" and "Brady material requests" without explaining them to a 3AM reader. Services page mentions "JOA research brief" without defining the acronym. |
 | L7 | Collateral consequences accuracy | **PASS** | Phase 17: Collateral consequences properly cited to statutes. Blog posts reference state-specific laws. |
 | L8 | Expert framework application | **PASS** | Phase P1-P2 POS9: Methodology over opinion maintained. Taylor's DUI framework, Scheck's forensic methodology, Spence's storytelling approach all referenced. |
-| L9 | Statute citation accuracy | **PASS** | Phase 16: Blog external links verified — all point to Cornell LII, Justia, NHTSA, USSC. Phase 9-10: No broken external URLs in sampled blog posts. |
+| L9 | Statute citation accuracy | **PASS** | Phase 16: Blog external links verified, all point to Cornell LII, Justia, NHTSA, USSC. Phase 9-10: No broken external URLs in sampled blog posts. |
 | L10 | Plea/sentencing intelligence | **PASS** | Phase P1-P2: Playbook configs include cooperation sections (federal). Score observations include sentencing stage guidance. |
 
 **Team 3 Summary: 8 PASS / 1 NEEDS WORK / 0 FAIL / 2 N/A**
@@ -97,7 +97,7 @@ Note: Team 3 primarily evaluates product deliverables (reports, playbooks). For 
 ### Team 4: Defendant Experience (D1-D27)
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
+|----|---------, |-------|----------|
 | D1 | 3 AM panic test | **PASS** | Phase 4: Crisis UX 6/7. CrisisHero auto-detection 10PM-6AM. /start binary routing. StickyMobileCTA. Phase P1-P2: DUI checklist FK ~7, /start FK ~7. |
 | D2 | Question quality (Voss) | **PASS** | Phase P1-P2: 6-part question format (context, question, why it matters, good answer, bad answer, follow-up). Open-ended, non-accusatory. Score tool attorney email templates are calibrated. |
 | D3 | Action hierarchy (Thaler) | **PASS** | Phase P1-P2: Score results → primary CTA → urgency → attorney email template → step-down. Most important action (take the score quiz / send the email template) is also the easiest. |
@@ -110,10 +110,10 @@ Note: Team 3 primarily evaluates product deliverables (reports, playbooks). For 
 | D10 | Upgrade path integrity | **PASS** | Phase P1-P2: 100% upgrade credit architecture. Each tier's upsell describes what the next tier adds, not what the current tier lacks. No "without this you'll lose" language. |
 | D11 | Buyer state alignment | **PASS** | Phase P1-P2 POS8: Three buyer segments served (distrust, double-check, communication gap). Score tool "My attorney says fine" handler. Family member segment addressed. |
 | D12 | Repetition audit | **PASS** | Phase P1-P2: Copy variation maintained across pages. No repeated-phrase fatigue detected in the website audit scope. |
-| D13 | Format fatigue resistance | **NEEDS WORK** | Phase 4: "Card monoculture" — 80+ instances of identical `rounded-xl border border-zinc-800 bg-zinc-900/50 p-6`. AI-grid aesthetic reduces visual engagement. Pain points, trust signals, features, proofs all look the same. |
+| D13 | Format fatigue resistance | **NEEDS WORK** | Phase 4: "Card monoculture", 80+ instances of identical `rounded-xl border border-zinc-800 bg-zinc-900/50 p-6`. AI-grid aesthetic reduces visual engagement. Pain points, trust signals, features, proofs all look the same. |
 | D14 | Natural voice in action sections | **PASS** | Phase P1-P2: Brand voice is direct and natural. "Send the email" not "you may want to consider." Score attorney email templates are conversational. |
 | D15 | Contextual transitions | **PASS** | Phase 13-21: Section transitions are natural on /start and /dui-checklist. Homepage sequence (hero -> proof -> urgency -> pain -> bridge) flows logically. |
-| D16 | Mobile scannability | **NEEDS WORK** | Phase 4: Substantive content at text-sm (14px) — FAQ answers, testimonials, pricing features, score observations, urgency blocks. Phase 13-21: Score observations 25-49 words in dense paragraphs. Headers and bold usage could be stronger on mobile. |
+| D16 | Mobile scannability | **NEEDS WORK** | Phase 4: Substantive content at text-sm (14px), FAQ answers, testimonials, pricing features, score observations, urgency blocks. Phase 13-21: Score observations 25-49 words in dense paragraphs. Headers and bold usage could be stronger on mobile. |
 | D17 | Reddit relief test | **PASS** | Phase P1-P2: Score tool addresses top fears immediately. Attorney email template provides something concrete to DO in 60 seconds. Pain points use VoC from defendant forums. |
 | D18 | Realistic hope | **PASS** | Phase P1-P2: Score observations tie hope to specific case facts (BAC margin of error, calibration records, chain of custody challenges). Not generic "it'll be okay." |
 | D19 | Courtroom demystification | **NEEDS WORK** | Phase 13-21: Score observations mention case stages but do not tell the defendant what to physically expect at their next court appearance. The website does not currently address courtroom logistics (what to wear, where to go, how long it takes). This is addressed in product deliverables but not on the public site. |
@@ -122,7 +122,7 @@ Note: Team 3 primarily evaluates product deliverables (reports, playbooks). For 
 | D22 | Triage before depth | **NEEDS WORK** | Phase P1-P2: /services presents 15 tier cards without routing guidance for which tier is right. DiscoveryGate helps but does not fully triage. /start does this correctly with binary routing. |
 | D23 | Table pacing compliance | **PASS** | Phase 4: Tables are used sparingly on the site. Sample page has 3 tables with narrative context between them. |
 | D24 | Tribe signal present | **PASS** | Phase P1-P2 T4: "People like us don't just trust the system." "Join thousands of defendants who refused to go into court unprepared." Tribe signals on every conversion page. |
-| D25 | Family buyer acknowledgment | **PASS** | Phase P1-P2: Pain point 5 ("I'm not the one facing charges — but I'm the one doing all the research"). /family page. Checkout family buyer note. |
+| D25 | Family buyer acknowledgment | **PASS** | Phase P1-P2: Pain point 5 ("I'm not the one facing charges, but I'm the one doing all the research"). /family page. Checkout family buyer note. |
 | D26 | No-attorney reframe | **PASS** | Phase P1-P2: Score tool works for defendants without attorneys. /start binary routing handles both "have documents" and "haven't received documents" states. |
 | D27 | Timing-ambiguous discovery copy | **PASS** | Phase P1-P2: /start binary routing handles all 3 states (have documents / don't have documents). DiscoveryGate on services page filters appropriately. |
 
@@ -133,7 +133,7 @@ Note: Team 3 primarily evaluates product deliverables (reports, playbooks). For 
 ### Team 5: Conversion & Value Architecture (C1-C10, OA1-OA4)
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
+|----|---------, |-------|----------|
 | C1 | Value equation clarity (Hormozi) | **PASS** | Phase P1-P2 POS11: Stakes section quantifies ($10K-$100K attorney fees, 1-20 years). "The question is not whether $197 is worth it." Attorney cost comparison grid on services. |
 | C2 | Standalone tier value (Brunson) | **PASS** | Phase P1-P2: Each tier description communicates complete, usable value. No "for the full analysis, upgrade to..." language. Playbook delivers instantly without requiring higher tier. |
 | C3 | Natural tier revelation | **PASS** | Phase P1-P2 CRO12: Upgrade path surfaces naturally after value delivery. Score results show CTA after observations, not before. Playbook mentions upgrade credit as a follow-on, not a necessity. |
@@ -158,18 +158,18 @@ Note: Team 3 primarily evaluates product deliverables (reports, playbooks). For 
 Note: Team 6 primarily evaluates rendered report HTML. For the website audit, scoring is based on the site's rendering, delivery UX, and print/sanitization behavior.
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
-| R1 | Header completeness | **N/A** | Report header — not website. |
+|----|---------, |-------|----------|
+| R1 | Header completeness | **N/A** | Report header, not website. |
 | R2 | Methodology note | **PASS** | Phase P1-P2: Methodology attributions present on services, playbook, checkout pages. Expert names correct per charge type. |
 | R3 | Table rendering | **PASS** | Phase 8: Sample page tables render correctly. No raw markdown visible. Phase 9-10: No broken table rendering in Lighthouse audit. |
-| R4 | Section structure | **PASS** | Phase 7: Heading hierarchy verified — h1 -> h2 -> h3 correct on /score, confirmed clean on /playbook/dui-first-offense. Phase 16: Single H1 on all audited pages. |
+| R4 | Section structure | **PASS** | Phase 7: Heading hierarchy verified, h1 -> h2 -> h3 correct on /score, confirmed clean on /playbook/dui-first-offense. Phase 16: Single H1 on all audited pages. |
 | R5 | Footer disclaimer | **PASS** | Phase 17: "Legal information, not legal advice" in footer on every page. Phase 18-20: Terms and privacy pages comprehensive. |
 | R6 | Upgrade CTA | **PASS** | Phase P1-P2 CRO12: Correct tier names, correct prices, correct upgrade credits on all conversion surfaces. |
 | R7 | Print safety | **NEEDS WORK** | Phase 4: Not fully verified. The Phase 4 design audit mentions no @media print analysis. The Phase 6 security audit notes the report viewer has sanitization. Print styles for the public website were not audited. |
 | R8 | Sanitization survival | **PASS** | Phase 6: Sanitize-html configuration tightened. Checkboxes, blockquotes, styled divs survive. Background URL injection blocked. |
 | R9 | Special characters | **PASS** | No mojibake or encoding errors reported in any phase. Em dashes, checkmarks, Unicode characters render correctly per Phase 4 and Phase 13-21 reviews. |
-| R10 | Content completeness | **N/A** | Report word count — not website. |
-| R11 | Conditional section adequacy | **N/A** | Report conditional sections — not website. |
+| R10 | Content completeness | **N/A** | Report word count, not website. |
+| R11 | Conditional section adequacy | **N/A** | Report conditional sections, not website. |
 
 **Team 6 Summary: 7 PASS / 1 NEEDS WORK / 0 FAIL / 3 N/A**
 
@@ -180,7 +180,7 @@ Note: Team 6 primarily evaluates rendered report HTML. For the website audit, sc
 Note: Team 7 evaluates whether the site communicates insider system knowledge. The website is the primary surface for this.
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
+|----|---------, |-------|----------|
 | ST1 | Plea mill exposure | **PASS** | Phase P1-P2: Pain points explain WHY attorneys push pleas. Backstory narrative describes the flat fee dynamic. Blog posts cover attorney fee structures. |
 | ST2 | Instinct validation | **PASS** | Phase P1-P2 T5: "Your gut was right. Something is wrong." Score band-specific copy validates the defendant's instincts with specifics, not platitudes. |
 | ST3 | Good answer / bad answer | **PASS** | Phase P1-P2: 6-part question format includes "good answer" and "bad answer" benchmarks. Score attorney email templates provide expected response framing. |
@@ -195,7 +195,7 @@ Note: Team 7 evaluates whether the site communicates insider system knowledge. T
 | ST12 | Agency without advice | **PASS** | Phase 17: UPL compliance infrastructure prevents crossing into directives. Score tool validates and informs without directing. Questions empower without prescribing. |
 | ST13 | System literacy | **PASS** | Phase P1-P2 POS7: "Everyone in the courtroom knows each other" teaches the courthouse ecosystem. Blog posts explain how the system works behind the scenes. |
 | ST14 | Credibility grounding | **PASS** | Phase P1-P2 T2: Every proof point is specific (68.3g, 73% weight discrepancy, 21 fingerprints). No unsourced cynicism. Phase 16: .gov/.edu citations on 35+ blog posts. |
-| ST15 | Intake-signal alignment | **N/A** | This evaluates report content matched to intake data — not the website. |
+| ST15 | Intake-signal alignment | **N/A** | This evaluates report content matched to intake data, not the website. |
 | ST16 | Emotional peak CTA | **PASS** | Phase P1-P2: Score results place CTA at peak emotional moment (right after scoring). Playbook urgency section places CTA after deadline awareness. Homepage CTA follows pain point validation. |
 
 **Team 7 Summary: 14 PASS / 1 NEEDS WORK / 0 FAIL / 1 N/A**
@@ -205,11 +205,11 @@ Note: Team 7 evaluates whether the site communicates insider system knowledge. T
 ### Team 8: SEO & GEO Pioneer (GEO1-6, SEO1-7, LOC1-2)
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
+|----|---------, |-------|----------|
 | GEO1 | LLM Readability (Kopp) | **PASS** | Phase 16: TLDRBox components are answer-first, extractable chunks. Speakable spec targets .tldr-box directly. Blog posts lead with structured answers. |
 | GEO2 | GEO content signals (Princeton) | **PASS** | Phase 16: Expert quotations (40+ named attorneys), specific statistics (68.3g, 73%), source citations (.gov/.edu on 35+ posts). Princeton baseline met. |
-| GEO3 | Citation schema (Princeton) | **NEEDS WORK** | Phase 16 H2: `sex-offense` category missing from getArticleCitations(). New sex offense post generates no citation schema. Phase 9-10 C1: 5 of 8 DefinedTermSet URLs point to non-existent blog posts — broken entity graph. |
-| GEO4 | Entity identity (Barnard) | **NEEDS WORK** | Phase 16: Organization schema consistent across pages. sameAs limited to Twitter only — missing Reddit, LinkedIn. Blog CollectionPage has unverified Reddit sameAs URL. Logo schema lacks dimensions. |
+| GEO3 | Citation schema (Princeton) | **NEEDS WORK** | Phase 16 H2: `sex-offense` category missing from getArticleCitations(). New sex offense post generates no citation schema. Phase 9-10 C1: 5 of 8 DefinedTermSet URLs point to non-existent blog posts, broken entity graph. |
+| GEO4 | Entity identity (Barnard) | **NEEDS WORK** | Phase 16: Organization schema consistent across pages. sameAs limited to Twitter only, missing Reddit, LinkedIn. Blog CollectionPage has unverified Reddit sameAs URL. Logo schema lacks dimensions. |
 | GEO5 | Schema completeness (Barnard/van Berkel) | **NEEDS WORK** | Phase 16 M5: /playbooks catalog has no FAQ schema. /score has no FAQ schema despite being a high-value quiz page. Phase 16 C2: SearchAction targets non-existent /blog?q= search. Phase 16 H5: DefinedTermSet rendering not confirmed. |
 | GEO6 | Retrieval architecture (King) | **PASS** | Phase 16: Semantic HTML, heading hierarchy verified, internal entity references consistent. Speakable spec on all blog posts. DefinedTermSet creates glossary layer. |
 | SEO1 | E-E-A-T signals (Haynes) | **PASS** | Phase 16: Editorial policy page comprehensive. About page has strong Experience signal (68.3g story). .gov/.edu citations on 35+ posts. Attorney methodology attributions visible. |
@@ -229,7 +229,7 @@ Note: Team 7 evaluates whether the site communicates insider system knowledge. T
 ### Team 9: Positioning & Tone (POS1-POS11 + POS3-B)
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
+|----|---------, |-------|----------|
 | POS1 | Pro-defendant not anti-attorney | **PASS** | Phase P1-P2 POS6: Zero anti-attorney language. "The right attorneys welcome informed clients." Pain points blame the information gap, not attorneys personally. |
 | POS2 | Category framing | **PASS** | Phase P1-P2: "Know What They Know" frames a new category (defendant preparation intelligence). No "better than your attorney" positioning. |
 | POS3 | Anxiety resolution | **PASS** | Phase P1-P2: FAQ includes "Will this upset my attorney?" with explicit resolution. "The right attorneys welcome informed clients" addresses attorney-relationship anxiety. |
@@ -250,7 +250,7 @@ Note: Team 7 evaluates whether the site communicates insider system knowledge. T
 ### Team 10: CRO & Conversion Quality (CRO1-CRO17)
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
+|----|---------, |-------|----------|
 | CRO1 | Message clarity (Laja) | **PASS** | Phase P1-P2: All pages communicate what/who/what-next within 5 seconds. Score page is the strongest (10/10 clarity). |
 | CRO2 | Anxiety reduction (McGlaughlin) | **PASS** | Phase P1-P2: Every CTA has surrounding trust signals. Checkout has guarantee before features. TrustBadges component deployed near CTAs. |
 | CRO3 | VoC language (Wiebe) | **PASS** | Phase P1-P2: "My lawyer won't return my calls." "Nobody explained anything to me." VoC from defendant forums, not marketing language. |
@@ -265,9 +265,9 @@ Note: Team 7 evaluates whether the site communicates insider system knowledge. T
 | CRO12 | Covello Mental Noise compliance | **NEEDS WORK** | Phase 13-21: Homepage urgency bar has 7 items (exceeds Rule of 3). Homepage has 13 sections. /start passes (binary routing, single CTA). /score observations exceed 27 words. |
 | CRO13 | Crisis-mode rendering | **PASS** | Phase P1-P2 CRO17: CrisisHero auto-detected 10PM-6AM. /start crisis variant with single CTA. Covello-compliant simplified rendering. |
 | CRO14 | Credit-as-hero positioning | **PASS** | Phase P1-P2 CRO12: Upgrade credit math is visible on checkout nudge, playbook upgrade section, services page. "100% Applied" banner. |
-| CRO15 | Loss framing on upsell emails | **NEEDS WORK** | Not auditable from website alone — depends on drip email content. Phase 13-21 reviewed copy but not subject line framing strategy. Phase P1-P2 CRO13 notes post-purchase flow was not audited. |
+| CRO15 | Loss framing on upsell emails | **NEEDS WORK** | Not auditable from website alone, depends on drip email content. Phase 13-21 reviewed copy but not subject line framing strategy. Phase P1-P2 CRO13 notes post-purchase flow was not audited. |
 | CRO16 | Discovery-arrival email cadence | **NEEDS WORK** | Not fully auditable. Phase 13-21 reviewed drip email copy at FK ~7-8 but did not verify cadence timing or conditional logic against this criterion's specific Day 30/Day 45 requirements. |
-| CRO17 | War Room post-purchase experience | **NEEDS WORK** | Not auditable from website front-end alone. War Room post-purchase UX requires reviewing the success page, onboarding flow, and SR upsell trigger logic — none of which were in the audit scope. |
+| CRO17 | War Room post-purchase experience | **NEEDS WORK** | Not auditable from website front-end alone. War Room post-purchase UX requires reviewing the success page, onboarding flow, and SR upsell trigger logic, none of which were in the audit scope. |
 
 **Team 10 Summary: 12 PASS / 5 NEEDS WORK / 0 FAIL** (GATE: no FAIL criteria)
 
@@ -276,16 +276,16 @@ Note: Team 7 evaluates whether the site communicates insider system knowledge. T
 ### Team 11: Trust Architecture (T1-T5, ANON1-ANON5)
 
 | ID | Criterion | Score | Evidence |
-|----|-----------|-------|----------|
-| T1 | Vulnerability coherence | **PASS** | Phase P1-P2 T5: "The calls got shorter. Then they stopped. I decided to read the file myself." Above-fold observation requiring lived experience. Specific (68.3g, CI phone attribution), not polished marketing. Reality Checker downgrades to CONDITIONAL — I **partially agree**: the copy analysis is strong but lacks user-testing validation. Scoring PASS because the criterion asks "does the copy contain vulnerability coherence" and it does. Whether it *works* with the audience is a different question (unaudited). |
+|----|---------, |-------|----------|
+| T1 | Vulnerability coherence | **PASS** | Phase P1-P2 T5: "The calls got shorter. Then they stopped. I decided to read the file myself." Above-fold observation requiring lived experience. Specific (68.3g, CI phone attribution), not polished marketing. Reality Checker downgrades to CONDITIONAL, I **partially agree**: the copy analysis is strong but lacks user-testing validation. Scoring PASS because the criterion asks "does the copy contain vulnerability coherence" and it does. Whether it *works* with the audience is a different question (unaudited). |
 | T2 | Transformation identity through-line | **NEEDS WORK** | Phase P1-P2 T4: Tribe signal present on homepage, score, playbooks. Reality Checker blind spot #2: checkout success page and post-purchase emails were not audited. Cannot confirm tribe signal persists after payment. |
 | T3 | Implicit permission precision | **PASS** | Phase P1-P2: DUI checklist subscribers get DUI content. Score tool subscribers get score-related content. Drip emails are charge-type tagged. |
 | T4 | Shame permission signal | **PASS** | Phase P1-P2: Pricing framed as empowered action ("defendants who prepare"). No "your situation is worse = pay more" framing. Each tier positioned as appropriate for a case stage, not situation severity. |
-| T5 | The Less Alone Test | **PASS** | Phase P1-P2: First scroll on homepage is pain point validation, not feature lists. "Your attorney hasn't called back" before any benefit statement. Reality Checker downgrades to CONDITIONAL — I **disagree** on this specific criterion. The criterion asks whether first scroll has recognition of felt experience before value proposition. It does. User testing would validate effectiveness, but the criterion is about presence, not measured effectiveness. |
+| T5 | The Less Alone Test | **PASS** | Phase P1-P2: First scroll on homepage is pain point validation, not feature lists. "Your attorney hasn't called back" before any benefit statement. Reality Checker downgrades to CONDITIONAL, I **disagree** on this specific criterion. The criterion asks whether first scroll has recognition of felt experience before value proposition. It does. User testing would validate effectiveness, but the criterion is about presence, not measured effectiveness. |
 | ANON1 | Testimonial outcome specificity | **NEEDS WORK** | Phase 4: Testimonials render at text-sm (14px). Phase P1-P2: Testimonials quoted include first name + last initial (Sarah K., Marcus T.). Charge type is implied but not explicit in all testimonials. Not all include specific outcome claims. |
 | ANON2 | Externally verifiable proof | **PASS** | Phase 16: .gov/.edu citations on 35+ blog posts. Court procedures and statutes are externally verifiable. DiscoveryReveal shows actual PCSO document imagery. |
 | ANON3 | Methodology attribution resolution | **PASS** | Phase P1-P2: Named attorneys (Lawrence Taylor, Barry Scheck, Gerry Spence) with published works cited. "375+ exonerations" is verifiable through Innocence Project public records. |
-| ANON4 | Verifiable case facts | **PASS** | Phase P1-P2 T2: 68.3g weight discrepancy, 19-day calibration window, CI phone number attribution — these are specific forensic facts that could be verified against court records. |
+| ANON4 | Verifiable case facts | **PASS** | Phase P1-P2 T2: 68.3g weight discrepancy, 19-day calibration window, CI phone number attribution, these are specific forensic facts that could be verified against court records. |
 | ANON5 | Contact response time signal | **NEEDS WORK** | Phase 18-20: Contact email (help@imnotanattorney.com) exists. CRO11 notes contact not prominent on high-intent pages. No response time promise visible on checkout, services, or sample pages. |
 
 **Team 11 Summary: 7 PASS / 3 NEEDS WORK / 0 FAIL** (GATE: no FAIL criteria)
@@ -301,13 +301,13 @@ These criteria are not part of the 11 evaluation teams but are essential for a Y
 | Area | Score | Evidence |
 |------|-------|----------|
 | axe-core runtime | **NEEDS WORK** | Phase 3: 5 unique violations, 2 SERIOUS (scrollable region, links by color only), 3 MODERATE (duplicate main x4 pages). 7 of 13 pages clean. |
-| jsx-a11y static | **NEEDS WORK** | Phase 7: 21 real issues — 14 SERIOUS (missing label/htmlFor), 3 SERIOUS (autoFocus public pages), 3 MODERATE (autoFocus admin), 1 MODERATE (span onClick). |
+| jsx-a11y static | **NEEDS WORK** | Phase 7: 21 real issues, 14 SERIOUS (missing label/htmlFor), 3 SERIOUS (autoFocus public pages), 3 MODERATE (autoFocus admin), 1 MODERATE (span onClick). |
 | Autofix readiness | **PASS** | Phase 14: 19 patches written across 12 files. ~100 minutes to apply. All AUTO-FIX or HUMAN-REVIEW categorized. |
 | Color contrast | **PASS** | Phase 3: Zero color-contrast violations. Phase 4: amber-on-black 9.5:1, zinc-300-on-zinc-950 15:1. |
 | Keyboard navigation | **NEEDS WORK** | Phase 8: Scrollable region on /sample not keyboard-focusable. IntakeChargeSelector span onClick has no keyboard handler. Login pages autoFocus disorients screen readers. |
 | Focus management | **PASS** | Phase 7: Mobile nav has scroll lock, focus trap, Escape handler. DiscoveryGate has aria-pressed. IntakeChargeQuestions has full ARIA radio pattern. |
 | Landmarks | **NEEDS WORK** | Phase 8: Duplicate main on 4 pages (services, playbooks, score, start). Root cause: page components use `<main>` when layout.tsx already provides one. |
-| Link distinguishability | **NEEDS WORK** | Phase 8: hover:underline convention on inline text links violates WCAG 1.4.1 — links distinguished by color only at rest. 7 instances on /research page, likely site-wide. |
+| Link distinguishability | **NEEDS WORK** | Phase 8: hover:underline convention on inline text links violates WCAG 1.4.1, links distinguished by color only at rest. 7 instances on /research page, likely site-wide. |
 
 ### Security
 
@@ -317,8 +317,8 @@ These criteria are not part of the 11 evaluation teams but are essential for a Y
 | Input validation | **PASS** | Phase 6: Charge type allowlist. HTML escaping on all email templates. Parameterized Supabase queries. Magic byte file validation. |
 | Rate limiting | **NEEDS WORK** | Phase 6 S-3: Unsubscribe POST endpoint has no rate limiting. All other endpoints covered with Postgres-backed + in-memory fallback. |
 | Dependencies | **FAIL** | Phase 6 S-5: 6 npm audit vulnerabilities including Next.js CSRF bypass (GHSA-mq59-m269-xvcx) and HTTP request smuggling. Production framework has known CVEs. |
-| Data protection | **FAIL** | Phase 6 S-6: Report tokens stored unhashed in database. Criminal defense reports — the most sensitive data on the platform — accessible via plaintext token extraction from any database breach. |
-| CSP | **NEEDS WORK** | Phase 6 S-4: Missing object-src and worker-src directives. CSP exists and is nonce-based (Phase 6 confirms, contradicting Phase 9-10's Lighthouse finding — Phase 6 is authoritative). |
+| Data protection | **FAIL** | Phase 6 S-6: Report tokens stored unhashed in database. Criminal defense reports, the most sensitive data on the platform, accessible via plaintext token extraction from any database breach. |
+| CSP | **NEEDS WORK** | Phase 6 S-4: Missing object-src and worker-src directives. CSP exists and is nonce-based (Phase 6 confirms, contradicting Phase 9-10's Lighthouse finding, Phase 6 is authoritative). |
 | SSRF | **PASS** | Phase 6: IndexNow URL validated against site domain. All fetch targets use env vars, not user input. |
 | File upload | **PASS** | Phase 6: 10-point security checklist verified. UUID validation, ownership check, MIME allowlist, magic byte validation, private bucket. |
 
@@ -336,7 +336,7 @@ These criteria are not part of the 11 evaluation teams but are essential for a Y
 | Area | Score | Evidence |
 |------|-------|----------|
 | Privacy policy accuracy | **FAIL** | Phase 18-20 C1: Privacy policy Section 8 claims "no tracking cookies" while GA4 is live and setting _ga/_ga_* cookies. Factually false statement in a legal document on a YMYL legal site. |
-| Data retention | **PASS** | Phase 18-20: Section 6 is unusually thorough — specific retention periods for every data type. |
+| Data retention | **PASS** | Phase 18-20: Section 6 is unusually thorough, specific retention periods for every data type. |
 | CCPA compliance | **PASS** | Phase 18-20: "Do not sell" statement. Deletion request mechanism. 18 additional state privacy laws enumerated. |
 | UPL disclaimers (Terms) | **PASS** | Phase 18-20: Section 3 is comprehensive UPL protection. Intake form has per-submission disclaimer. |
 | Error states | **PASS** | Phase 18-20: 404 is on-brand with recovery paths. Report viewer has 6 access control states. My-case portal has 5 token error states. Score and checkout have proper error handling. |
@@ -346,7 +346,7 @@ These criteria are not part of the 11 evaluation teams but are essential for a Y
 
 | Area | Score | Evidence |
 |------|-------|----------|
-| Logic bugs | **FAIL** | Phase 19 C1: Stale WHERE clause in intake route line 276 — auto-generation detection broken for Flow B (paid before intake). Status updated to "intake" then WHERE clause checks for "awaiting-intake". One-line fix. |
+| Logic bugs | **FAIL** | Phase 19 C1: Stale WHERE clause in intake route line 276, auto-generation detection broken for Flow B (paid before intake). Status updated to "intake" then WHERE clause checks for "awaiting-intake". One-line fix. |
 | Error handling | **NEEDS WORK** | Phase 19 H1: Missing try/catch around req.json() in checkout route. Malformed body returns 500 instead of 400. |
 | Type safety | **NEEDS WORK** | Phase 19 M3/M4: `as any` usage in webhook handler and deliver route. Stripe invoice typed as any instead of Stripe.Invoice. |
 | Dead code | **NEEDS WORK** | Phase 19 M1/M2: Unused AnimatedCounter import on homepage. Unused productType destructured in checkout. |
@@ -357,13 +357,13 @@ These criteria are not part of the 11 evaluation teams but are essential for a Y
 ## Reality Checker Response
 
 ### Challenge 1: Trust T1-T5 all PASS -> CONDITIONAL PASS
-**Verdict: PARTIALLY AGREE.** The copy analysis is thorough and the trust architecture is well-designed. However, I distinguish between criterion compliance (does the copy contain the required element?) and effectiveness validation (does it work with this audience?). The criteria ask for presence and design quality, not measured conversion. I score T1 and T5 as PASS (the elements are present and well-executed). I score T2 as NEEDS WORK (tribe signal persistence after payment is unverified — the Reality Checker's point about the success page blind spot is valid). I agree that the ANON criteria need more scrutiny — ANON1 and ANON5 are NEEDS WORK.
+**Verdict: PARTIALLY AGREE.** The copy analysis is thorough and the trust architecture is well-designed. However, I distinguish between criterion compliance (does the copy contain the required element?) and effectiveness validation (does it work with this audience?). The criteria ask for presence and design quality, not measured conversion. I score T1 and T5 as PASS (the elements are present and well-executed). I score T2 as NEEDS WORK (tribe signal persistence after payment is unverified, the Reality Checker's point about the success page blind spot is valid). I agree that the ANON criteria need more scrutiny, ANON1 and ANON5 are NEEDS WORK.
 
 ### Challenge 2: Lighthouse a11y 100/100 called "exceptional"
 **Verdict: AGREE.** Lighthouse 100 is a subset score. Phase 3 found 5 violations (2 SERIOUS) and Phase 7 found 21 issues (14 SERIOUS). The accessibility posture is NEEDS WORK until the Phase 14 patches are applied. The word "exceptional" in the Phase 9-10 report is misleading without cross-referencing sibling reports.
 
 ### Challenge 3: Security "above-average" with 2 SERIOUS findings
-**Verdict: AGREE.** The security foundations (HMAC timing-safe, rate limiting, magic byte validation, defense-in-depth auth) ARE genuinely strong. But 2 SERIOUS findings open — one a known CVE (Next.js CSRF bypass) and one a fundamental data protection gap (unhashed report tokens for criminal defense data) — means the current posture is "strong foundations with critical gaps." I score dependencies and data protection as FAIL.
+**Verdict: AGREE.** The security foundations (HMAC timing-safe, rate limiting, magic byte validation, defense-in-depth auth) ARE genuinely strong. But 2 SERIOUS findings open, one a known CVE (Next.js CSRF bypass) and one a fundamental data protection gap (unhashed report tokens for criminal defense data), means the current posture is "strong foundations with critical gaps." I score dependencies and data protection as FAIL.
 
 ### Challenge 4: UPL "strong compliance posture" with B4 live
 **Verdict: AGREE.** The UPL compliance infrastructure is genuinely strong. But FLAG B4 is a clear U4 violation in published, indexable blog content. One clear violation in published content makes the overall posture CONDITIONAL, not "strong." I score U1 as NEEDS WORK and U8 as NEEDS WORK. The infrastructure passes; the blog content has two items that need fixing.
@@ -371,17 +371,17 @@ These criteria are not part of the 11 evaluation teams but are essential for a Y
 ### Challenge 5: Lighthouse SEO 100/100
 **Verdict: AGREE.** Lighthouse SEO is a baseline check. Phase 16 found 3 CRITICAL, 7 HIGH issues including title tags up to 92 characters and broken SearchAction schema. SEO is NEEDS WORK on multiple criteria despite Lighthouse 100.
 
-### Challenge 6: CRO6 guarantee visibility — text-sm finding
-**Verdict: AGREE with the Reality Checker's assessment — UPHELD with reservation.** The CRO architecture is correct. The text-sm issue is a Design finding that affects the guarantee's practical effectiveness but does not negate its architectural presence. I score CRO2 (anxiety reduction) as PASS because the guarantee is present and well-placed; the font sizing is a separate Design/D16 finding.
+### Challenge 6: CRO6 guarantee visibility, text-sm finding
+**Verdict: AGREE with the Reality Checker's assessment, UPHELD with reservation.** The CRO architecture is correct. The text-sm issue is a Design finding that affects the guarantee's practical effectiveness but does not negate its architectural presence. I score CRO2 (anxiety reduction) as PASS because the guarantee is present and well-placed; the font sizing is a separate Design/D16 finding.
 
 ### Challenge 7: /start page PASS at FK ~7
 **Verdict: AGREE with the original PASS.** /start is genuinely the best-performing page on the site. Well-supported evidence.
 
 ### Challenge 8: Terms UPL disclaimers PASS vs. privacy policy GA4 claim
-**Verdict: AGREE with the Reality Checker's distinction.** Terms UPL disclaimers remain PASS — they are genuinely well-written. Privacy compliance overall is FAIL due to the factually incorrect GA4 claim. These are different surfaces with different assessments.
+**Verdict: AGREE with the Reality Checker's distinction.** Terms UPL disclaimers remain PASS, they are genuinely well-written. Privacy compliance overall is FAIL due to the factually incorrect GA4 claim. These are different surfaces with different assessments.
 
 ### Challenge 9: Crisis UX 6/7 should account for score observation readability
-**Verdict: PARTIALLY AGREE.** The crisis UX architecture (CrisisHero, binary routing, auto-detection) is the site's strongest design area and deserves high marks. However, the score observations — which are the crisis UX output — have readability failures (7 exceed 27 words, FK ~10). I account for this in P9 (NEEDS WORK) and P11 (NEEDS WORK) rather than double-penalizing the crisis UX infrastructure. The entry path is excellent; the output path needs work. These are scored in the appropriate criteria.
+**Verdict: PARTIALLY AGREE.** The crisis UX architecture (CrisisHero, binary routing, auto-detection) is the site's strongest design area and deserves high marks. However, the score observations, which are the crisis UX output, have readability failures (7 exceed 27 words, FK ~10). I account for this in P9 (NEEDS WORK) and P11 (NEEDS WORK) rather than double-penalizing the crisis UX infrastructure. The entry path is excellent; the output path needs work. These are scored in the appropriate criteria.
 
 ### Challenge 10: CRO17 crisis buyer fast-path PASS
 **Verdict: AGREE with the original PASS.** The crisis mode implementation is genuine and comprehensive.
@@ -406,7 +406,7 @@ Privacy policy Section 8 claims "Our website does not use tracking cookies" whil
 
 ### 4. Fix the blog UPL violation B4
 **Phase 17 FLAG B4 | NEEDS WORK (GATE team) | 5-minute fix**
-`content/blog/attorney-not-returning-calls.mdx` line 194: "you need to take immediate action. That means exploring new counsel, contacting the bar, or filing a motion for substitution of counsel." Replace with: "Immediate action is worth considering — options include exploring new counsel, contacting the bar, or filing a motion for substitution of counsel." This is live, indexable, and the clearest U4 instance in the blog.
+`content/blog/attorney-not-returning-calls.mdx` line 194: "you need to take immediate action. That means exploring new counsel, contacting the bar, or filing a motion for substitution of counsel." Replace with: "Immediate action is worth considering, options include exploring new counsel, contacting the bar, or filing a motion for substitution of counsel." This is live, indexable, and the clearest U4 instance in the blog.
 
 ### 5. Upgrade Next.js to fix CSRF bypass CVE
 **Phase 6 S-5 | FAIL | Medium effort (test after upgrade)**
@@ -422,7 +422,7 @@ Eliminates all known axe-core and jsx-a11y violations: duplicate main (4 pages),
 
 ### 8. Hash report tokens in database
 **Phase 6 S-6 | FAIL | Medium effort (migration required)**
-Report access tokens stored as plaintext UUIDs in cases.report_token. Criminal defense reports — the most sensitive data on the platform — exposed in any database breach. Requires graceful migration: add report_token_hash column, populate from existing tokens, update lookup to check hash first, drop plaintext after all tokens expire (12 months).
+Report access tokens stored as plaintext UUIDs in cases.report_token. Criminal defense reports, the most sensitive data on the platform, exposed in any database breach. Requires graceful migration: add report_token_hash column, populate from existing tokens, update lookup to check hash first, drop plaintext after all tokens expire (12 months).
 
 ### 9. Fix title tag overruns on 4 high-traffic pages
 **Phase 16 C1 | NEEDS WORK | 30-minute fix**
@@ -455,16 +455,16 @@ Systematic change across FAQAccordion.tsx, TestimonialSection.tsx, PricingTable.
 
 ## What This Audit Did Not Cover (Blind Spots from Reality Checker)
 
-1. **End-to-end payment flow testing** — No report tested the complete purchase-to-delivery path.
-2. **Checkout success page** — Not audited. CRO13 scored NEEDS WORK for this reason.
-3. **Email deliverability and rendering** — Copy reviewed, delivery/rendering untested.
-4. **Real-device mobile testing** — All testing used headless Chrome. No iOS Safari testing.
-5. **Load testing** — Single-user lab measurements only.
-6. **Stripe webhook retry behavior** — Signature validation verified, retry scenarios untested.
-7. **Discovery upload UX** — Security verified, user experience untested.
-8. **Report viewing experience** — Access control states verified, rendered report quality untested.
-9. **Cross-browser testing** — Chrome only. No Firefox, Edge, or Safari.
-10. **International character handling** — Not tested.
+1. **End-to-end payment flow testing**, No report tested the complete purchase-to-delivery path.
+2. **Checkout success page**, Not audited. CRO13 scored NEEDS WORK for this reason.
+3. **Email deliverability and rendering**, Copy reviewed, delivery/rendering untested.
+4. **Real-device mobile testing**, All testing used headless Chrome. No iOS Safari testing.
+5. **Load testing**, Single-user lab measurements only.
+6. **Stripe webhook retry behavior**, Signature validation verified, retry scenarios untested.
+7. **Discovery upload UX**, Security verified, user experience untested.
+8. **Report viewing experience**, Access control states verified, rendered report quality untested.
+9. **Cross-browser testing**, Chrome only. No Firefox, Edge, or Safari.
+10. **International character handling**, Not tested.
 
 These blind spots should be addressed in a follow-up audit or E2E production test before scaling paid acquisition.
 

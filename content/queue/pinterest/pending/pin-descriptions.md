@@ -5,7 +5,7 @@ project: inna
 status: pending
 created: 2026-03-13T00:00:00.000Z
 agent: claude-opus
-title: "35 Pin Descriptions -- All Blog Posts Complete"
+title: "35 Pin Descriptions, All Blog Posts Complete"
 ---
 
 # 35 Pin Descriptions for ImNotAnAttorney
@@ -51,7 +51,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** 5 Questions Your DUI Attorney Hopes You Never Ask
 **Destination URL:** https://imnotanattorney.com/blog/5-questions-dui-attorney
 **Board:** DUI Defense Guide
-**Pin Description:** You hired a DUI attorney and they keep saying "trust the process." But what process? These 5 questions expose whether your attorney is actually building a defense or waiting for a plea offer. From breathalyzer calibration to dashcam footage -- know what to ask before your next meeting. Save this for reference.
+**Pin Description:** You hired a DUI attorney and they keep saying "trust the process." But what process? These 5 questions expose whether your attorney is actually building a defense or waiting for a plea offer. From breathalyzer calibration to dashcam footage, know what to ask before your next meeting. Save this for reference.
 **Alt Text:** Black infographic with amber accents listing 5 questions every DUI defendant should ask their attorney, including questions about traffic stop legality, breathalyzer calibration, and defense strategy. ImNotAnAttorney branding.
 **Pin Design Concept:**
 - **Text overlay:** "5 Questions Your DUI Attorney Hopes You Never Ask" / "Are they building a defense or waiting for a plea?"
@@ -67,7 +67,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** 7 Things the Criminal Justice System Won't Tell You
 **Destination URL:** https://imnotanattorney.com/blog/7-things-criminal-justice-wont-tell-you
 **Board:** Criminal Defense Questions
-**Pin Description:** The criminal justice system doesn't come with an instruction manual. The trial penalty, public defender caseloads, mandatory minimums, discovery rights -- these structural realities shape your case outcome and nobody explains them. Seven documented facts about how the system actually operates, each paired with a question you can ask your attorney today.
+**Pin Description:** The criminal justice system doesn't come with an instruction manual. The trial penalty, public defender caseloads, mandatory minimums, discovery rights, these structural realities shape your case outcome and nobody explains them. Seven documented facts about how the system actually operates, each paired with a question you can ask your attorney today.
 **Alt Text:** Infographic revealing 7 structural realities about the criminal justice system that most defendants never learn, including the trial penalty, public defender caseloads, and discovery rights. Black background with amber numbered items and lock icons representing hidden information.
 **Pin Design Concept:**
 - **Text overlay:** "7 Things the System Won't Tell You" / "The instruction manual they never gave you"
@@ -83,14 +83,14 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** Attorney Won't Return Your Calls? 4 Steps to Take Now
 **Destination URL:** https://imnotanattorney.com/blog/attorney-not-returning-calls
 **Board:** Attorney Accountability
-**Pin Description:** You paid thousands for a criminal defense attorney who has gone silent. No callbacks, no updates, no answers. This is more common than you think and there are concrete steps you can take today -- from documenting everything to filing a formal complaint. Don't wait for them to call back.
+**Pin Description:** You paid thousands for a criminal defense attorney who has gone silent. No callbacks, no updates, no answers. This is more common than you think and there are concrete steps you can take today, from documenting everything to filing a formal complaint. Don't wait for them to call back.
 **Alt Text:** Dark infographic showing 4 steps to take when your criminal defense attorney stops returning calls, including documentation tips and escalation options. Black background with amber numbered steps.
 **Pin Design Concept:**
 - **Text overlay:** "Your Attorney Won't Call Back?" / "4 steps to take right now"
 - **Color scheme:** Black background, amber timeline dots, white text, red missed-call badge accent
-- **Visual style:** Top third: Bold white text with amber underline. Middle: 4 steps as vertical timeline with amber dots. Step 1: "Document Everything" -- Step 2: "Send Written Request" -- Steps 3-4 faded with "Read the full guide" overlay. Phone icon with red missed-call badge in top corner. Bottom: amber bar with URL.
+- **Visual style:** Top third: Bold white text with amber underline. Middle: 4 steps as vertical timeline with amber dots. Step 1: "Document Everything", Step 2: "Send Written Request", Steps 3-4 faded with "Read the full guide" overlay. Phone icon with red missed-call badge in top corner. Bottom: amber bar with URL.
 **Keywords:** attorney not returning calls, lawyer won't call back, attorney not communicating, what to do when attorney won't respond, criminal defense attorney silent, lawyer ghosting client, attorney communication problems, how to reach your lawyer, attorney response time, legal communication standards
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -99,14 +99,14 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** Breathalyzer Calibration: The DUI Evidence Your Attorney Should Pull
 **Destination URL:** https://imnotanattorney.com/blog/breathalyzer-calibration-records
 **Board:** DUI Defense Guide
-**Pin Description:** The number on the breathalyzer is not a fact. It is an opinion from a machine -- a machine that drifts, malfunctions, and produces wrong numbers when it is not maintained. Calibration records, operator certifications, error margins, and observation period logs. These are the four categories of records your DUI attorney should be requesting through discovery. If they have not, ask why.
+**Pin Description:** The number on the breathalyzer is not a fact. It is an opinion from a machine, a machine that drifts, malfunctions, and produces wrong numbers when it is not maintained. Calibration records, operator certifications, error margins, and observation period logs. These are the four categories of records your DUI attorney should be requesting through discovery. If they have not, ask why.
 **Alt Text:** Infographic showing four categories of breathalyzer records a DUI defense attorney should request, including calibration schedules, operator certification, error margins, and observation period documentation. Black background with amber document icons and a breathalyzer device illustration.
 **Pin Design Concept:**
 - **Text overlay:** "That BAC number? It's a machine's opinion." / "4 records your attorney should be pulling"
 - **Color scheme:** Black background, amber document/record icons, white text, subtle red for the BAC number
-- **Visual style:** Top: BAC readout display ".08" with a red question mark overlay and the line "Opinion, not fact." Middle: 4 record categories as stacked document cards with amber borders -- Calibration Log, Operator Certification, Maintenance History, Observation Period. Each shows one key question (e.g., "Was calibration on schedule?"). Bottom cards partially visible. CTA: "Full guide at imnotanattorney.com."
+- **Visual style:** Top: BAC readout display ".08" with a red question mark overlay and the line "Opinion, not fact." Middle: 4 record categories as stacked document cards with amber borders, Calibration Log, Operator Certification, Maintenance History, Observation Period. Each shows one key question (e.g., "Was calibration on schedule?"). Bottom cards partially visible. CTA: "Full guide at imnotanattorney.com."
 **Keywords:** breathalyzer calibration records, DUI breathalyzer accuracy, can breathalyzer be wrong, breathalyzer error margin, DUI evidence challenge, breathalyzer maintenance records, DUI defense evidence, BAC test accuracy, breathalyzer defense, DUI attorney should request
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -115,14 +115,14 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** Can Criminal Charges Be Dropped? 6 Ways It Actually Happens
 **Destination URL:** https://imnotanattorney.com/blog/can-criminal-charges-be-dropped
 **Board:** Criminal Justice System Explained
-**Pin Description:** Yes, criminal charges can be dropped -- but not the way most people think. Insufficient evidence, witness problems, procedural errors, and diversion programs are real paths to dismissal. This guide explains 6 ways charges get dropped and the questions to ask your attorney about each one.
+**Pin Description:** Yes, criminal charges can be dropped, but not the way most people think. Insufficient evidence, witness problems, procedural errors, and diversion programs are real paths to dismissal. This guide explains 6 ways charges get dropped and the questions to ask your attorney about each one.
 **Alt Text:** Infographic explaining 6 ways criminal charges can be dropped or dismissed, including insufficient evidence, witness issues, and procedural errors. Dark background with amber numbered items and legal icons.
 **Pin Design Concept:**
 - **Text overlay:** "6 Ways Criminal Charges Get Dropped" / "It's not what you think"
 - **Color scheme:** Black background, amber branching paths, white text
 - **Visual style:** Large amber "6" with title. Below: six paths shown as branching options from a central case file icon. Each path: icon + label (e.g., evidence bag with X = "Insufficient Evidence"). First 3 paths detailed, last 3 show only icons and labels. "Which applies to your case?" CTA.
 **Keywords:** can criminal charges be dropped, how to get charges dropped, criminal charges dismissed, charges dropped reasons, case dismissal, insufficient evidence, criminal case dismissal, charges dropped process, dismiss criminal case, criminal defense dismissal
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -138,16 +138,16 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 - **Color scheme:** Black background, amber shield icon, white numbered list
 - **Visual style:** Title at top. Shield icon in amber. 7 defense angles as vertical list with amber circles. Angles 1-4 fully visible (illegal stop, breathalyzer calibration, field sobriety errors, missing evidence). Angles 5-7 blurred. "See all 7 defense angles" CTA.
 **Keywords:** can a DUI be dismissed, DUI defense angles, DUI case dismissed, how to get DUI charges dismissed, DUI defense strategy, DUI case thrown out, DUI dismissal reasons, beat a DUI, DUI evidence challenge, DUI attorney defense
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
 ## Pin #9: Complete DUI Defense Guide
 
-**Pin Title:** The Complete DUI Defense Guide -- Every Stage, Every Question
+**Pin Title:** The Complete DUI Defense Guide, Every Stage, Every Question
 **Destination URL:** https://imnotanattorney.com/blog/complete-dui-defense-guide
 **Board:** DUI Defense Guide
-**Pin Description:** From the moment you see the blue lights to the final resolution -- every stage of a DUI case, every defense that actually works, and every question you should be asking. The traffic stop, field sobriety tests, breathalyzer challenges, DMV deadlines, arraignment, motions, plea negotiations, and trial preparation. The guide your DUI attorney should have given you on day one.
+**Pin Description:** From the moment you see the blue lights to the final resolution, every stage of a DUI case, every defense that actually works, and every question you should be asking. The traffic stop, field sobriety tests, breathalyzer challenges, DMV deadlines, arraignment, motions, plea negotiations, and trial preparation. The guide your DUI attorney should have given you on day one.
 **Alt Text:** Comprehensive infographic showing the complete DUI defense process from arrest through resolution, with defense strategies and questions to ask at each stage. Timeline format with amber stage markers on black background.
 **Pin Design Concept:**
 - **Text overlay:** "The Complete DUI Defense Guide" / "Every stage. Every defense. Every question." / "Bookmark this."
@@ -160,33 +160,33 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 
 ## Pin #10: Complete White Collar Defense Guide
 
-**Pin Title:** Federal White Collar Defense Guide -- Investigation to Sentencing
+**Pin Title:** Federal White Collar Defense Guide, Investigation to Sentencing
 **Destination URL:** https://imnotanattorney.com/blog/complete-white-collar-defense-guide
 **Board:** White Collar & Federal Defense
-**Pin Description:** Federal white collar cases move differently -- longer investigations, more resources on the prosecution side, conviction rates above 90%, and mandatory sentencing guidelines. From the first knock on your door to sentencing, this guide covers every stage of a federal white collar case, every defense your attorney should explore, and every question you need answered.
+**Pin Description:** Federal white collar cases move differently, longer investigations, more resources on the prosecution side, conviction rates above 90%, and mandatory sentencing guidelines. From the first knock on your door to sentencing, this guide covers every stage of a federal white collar case, every defense your attorney should explore, and every question you need answered.
 **Alt Text:** Comprehensive infographic covering the complete federal white collar defense process from investigation through sentencing, including cooperation options, sentencing guidelines, and defense strategies. Dark background with amber flow arrows.
 **Pin Design Concept:**
 - **Text overlay:** "Federal White Collar Defense" / "From investigation to sentencing" / "The guide your attorney should give you on day one"
 - **Color scheme:** Black background, amber flow arrows, white text, subtle gold accent for financial theme
-- **Visual style:** Top: Title with a subtle federal building silhouette. Vertical flow showing stages: Investigation > Target Letter > Grand Jury > Indictment > Arraignment > Discovery > Motions > [Cooperation/Trial fork]. A decision diamond at the cooperation fork highlighted in amber. Top half detailed, bottom half faded. "See every stage" CTA. Professional, serious tone -- no playfulness for this audience.
+- **Visual style:** Top: Title with a subtle federal building silhouette. Vertical flow showing stages: Investigation > Target Letter > Grand Jury > Indictment > Arraignment > Discovery > Motions > [Cooperation/Trial fork]. A decision diamond at the cooperation fork highlighted in amber. Top half detailed, bottom half faded. "See every stage" CTA. Professional, serious tone, no playfulness for this audience.
 **Keywords:** white collar defense guide, federal criminal defense, wire fraud defense, federal investigation defense, federal sentencing guidelines, white collar crime attorney, federal case process, federal indictment, cooperation agreement federal, white collar crime questions
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
 ## Pin #11: Cooperation Agreement in Federal Case
 
-**Pin Title:** Federal Cooperation Agreements Explained -- Proffer, Safety Valve & Risks
+**Pin Title:** Federal Cooperation Agreements Explained, Proffer, Safety Valve & Risks
 **Destination URL:** https://imnotanattorney.com/blog/cooperation-agreement-federal-case
 **Board:** White Collar & Federal Defense
-**Pin Description:** The prosecutor says "cooperate and we'll help you." But cooperation in a federal case is a legal minefield. Proffer sessions, safety valve provisions, substantial assistance motions -- each has specific rules, protections, and traps. Learn what a "queen for a day" actually protects, what it does not protect, and the questions to ask before you walk into that room.
+**Pin Description:** The prosecutor says "cooperate and we'll help you." But cooperation in a federal case is a legal minefield. Proffer sessions, safety valve provisions, substantial assistance motions, each has specific rules, protections, and traps. Learn what a "queen for a day" actually protects, what it does not protect, and the questions to ask before you walk into that room.
 **Alt Text:** Infographic explaining federal cooperation agreements including proffer sessions, safety valve provisions, and substantial assistance motions. Shows what cooperation protects and what risks it carries. Dark background with amber warning styling.
 **Pin Design Concept:**
 - **Text overlay:** "Federal Cooperation Explained" / "What 'queen for a day' actually protects" / "And what it doesn't"
 - **Color scheme:** Black background, amber dividing line between protected/unprotected, white text, subtle red for risk items
-- **Visual style:** Top: Title with a split visual -- "PROTECTED" (amber shield) on left, "NOT PROTECTED" (red warning) on right. Below: the three cooperation mechanisms as cards -- Proffer Agreement, Safety Valve, Substantial Assistance. Each card shows one line of what it does. Below the cards: "The proffer trap nobody warns you about" in amber with a subtle arrow pointing down to a blurred section. CTA at bottom.
+- **Visual style:** Top: Title with a split visual, "PROTECTED" (amber shield) on left, "NOT PROTECTED" (red warning) on right. Below: the three cooperation mechanisms as cards, Proffer Agreement, Safety Valve, Substantial Assistance. Each card shows one line of what it does. Below the cards: "The proffer trap nobody warns you about" in amber with a subtle arrow pointing down to a blurred section. CTA at bottom.
 **Keywords:** federal cooperation agreement, proffer session explained, queen for a day federal, safety valve federal sentencing, substantial assistance, federal cooperation risks, cooperating with federal prosecutors, proffer agreement, federal plea cooperation, federal sentencing reduction
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -195,7 +195,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** Drug Charges? Your Discovery Rights Explained Step by Step
 **Destination URL:** https://imnotanattorney.com/blog/discovery-rights-drug-cases
 **Board:** Drug Charge Defense
-**Pin Description:** If you are facing drug charges, your attorney should have requested and shared your discovery by now. Police reports, lab results, chain of custody records, surveillance footage -- you have the right to see all of it. This guide explains what discovery is, what should be in it, and what questions to ask if something is missing.
+**Pin Description:** If you are facing drug charges, your attorney should have requested and shared your discovery by now. Police reports, lab results, chain of custody records, surveillance footage, you have the right to see all of it. This guide explains what discovery is, what should be in it, and what questions to ask if something is missing.
 **Alt Text:** Infographic explaining discovery rights for drug case defendants, showing types of evidence including police reports, lab results, and chain of custody documents. Black and amber color scheme.
 **Pin Design Concept:**
 - **Text overlay:** "Your Discovery Rights in a Drug Case" / "Have you seen ALL the evidence against you?"
@@ -206,7 +206,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 
 ---
 
-## Pin #13: Federal Investigation -- What to Expect
+## Pin #13: Federal Investigation, What to Expect
 
 **Pin Title:** Under Federal Investigation? What Happens Next and What to Do Now
 **Destination URL:** https://imnotanattorney.com/blog/federal-investigation-what-to-expect
@@ -216,9 +216,9 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Design Concept:**
 - **Text overlay:** "Under Federal Investigation?" / "The next 48 hours matter more than you think" / "Do not talk to agents."
 - **Color scheme:** Black background, amber urgency bar at top, white text, red for the "DO NOT" warning
-- **Visual style:** Top: Bold title with amber urgency pulse icon. Below: Three classification cards -- "TARGET" (red border), "SUBJECT" (amber border), "WITNESS" (white border) -- each with one-line definition. Below that: "CRITICAL: Do Not Talk to Federal Agents Without an Attorney" in red/white contrast box. Below: "Your 48-hour action plan" section partially visible, fading to CTA. Serious, urgent tone throughout.
+- **Visual style:** Top: Bold title with amber urgency pulse icon. Below: Three classification cards, "TARGET" (red border), "SUBJECT" (amber border), "WITNESS" (white border), each with one-line definition. Below that: "CRITICAL: Do Not Talk to Federal Agents Without an Attorney" in red/white contrast box. Below: "Your 48-hour action plan" section partially visible, fading to CTA. Serious, urgent tone throughout.
 **Keywords:** federal investigation what to expect, target letter meaning, FBI investigation, under federal investigation, federal criminal investigation, target vs subject federal, what to do federal investigation, federal agents at door, white collar investigation, federal grand jury
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -232,9 +232,9 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Design Concept:**
 - **Text overlay:** "Does Your Lawyer Feel Like the Enemy?" / "Bad strategy or bad faith? These questions tell the difference."
 - **Color scheme:** Black background, amber vs red two-column design, white text
-- **Visual style:** Two-column comparison. Left column (amber header): "It MIGHT mean..." -- innocent explanations. Right column (red header): "It DEFINITELY means..." -- genuine red flags. First row of each visible, rest faded. Creates curiosity about which column the reader's situation falls in. "Read the full guide" CTA.
+- **Visual style:** Two-column comparison. Left column (amber header): "It MIGHT mean...", innocent explanations. Right column (red header): "It DEFINITELY means...", genuine red flags. First row of each visible, rest faded. Creates curiosity about which column the reader's situation falls in. "Read the full guide" CTA.
 **Keywords:** lawyer working against me, attorney not fighting for me, feel like my lawyer doesn't care, defense attorney not helping, why is my lawyer pushing a plea, attorney bad faith, criminal defense not working, fire my criminal lawyer, attorney sabotaging case, lawyer on prosecution side
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -243,14 +243,14 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** NHTSA Field Sobriety Tests: What Officers Get Wrong (and Why It Matters)
 **Destination URL:** https://imnotanattorney.com/blog/field-sobriety-test-standards
 **Board:** DUI Defense Guide
-**Pin Description:** The government's own research says field sobriety tests are wrong 23% of the time -- even when administered perfectly. Officers rarely administer them perfectly. Rushed HGN tests, uneven surfaces, skipped medical questions, incorrect timing. NHTSA published specific standards for these tests and officers deviate from them constantly. Learn what the standards are and what questions to ask about your test.
+**Pin Description:** The government's own research says field sobriety tests are wrong 23% of the time, even when administered perfectly. Officers rarely administer them perfectly. Rushed HGN tests, uneven surfaces, skipped medical questions, incorrect timing. NHTSA published specific standards for these tests and officers deviate from them constantly. Learn what the standards are and what questions to ask about your test.
 **Alt Text:** Infographic showing NHTSA field sobriety test accuracy rates and common administration errors by officers, including HGN test, walk-and-turn, and one-leg stand standards. Black background with amber accuracy percentage charts.
 **Pin Design Concept:**
 - **Text overlay:** "Field Sobriety Tests: Wrong 23% of the Time" / "Even when administered perfectly" / "Officers rarely administer them perfectly."
 - **Color scheme:** Black background, amber/red accuracy bars, white text
-- **Visual style:** Top: Bold stat -- "23% ERROR RATE" in large amber text with a subtle red warning backdrop. Below: Three test cards -- HGN (77% accurate), Walk-and-Turn (68%), One-Leg Stand (65%) -- each as a horizontal accuracy bar, amber fill showing accuracy, empty space showing error. Below each bar: one common officer mistake (e.g., "Officers rush the HGN stimulus"). Bottom section faded with "What this means for your DUI case" teaser. CTA at bottom.
+- **Visual style:** Top: Bold stat, "23% ERROR RATE" in large amber text with a subtle red warning backdrop. Below: Three test cards, HGN (77% accurate), Walk-and-Turn (68%), One-Leg Stand (65%), each as a horizontal accuracy bar, amber fill showing accuracy, empty space showing error. Below each bar: one common officer mistake (e.g., "Officers rush the HGN stimulus"). Bottom section faded with "What this means for your DUI case" teaser. CTA at bottom.
 **Keywords:** field sobriety test accuracy, NHTSA standards, field sobriety test wrong, DUI test errors, HGN test accuracy, walk and turn test, one leg stand test, field sobriety test refused, DUI field test challenge, officer field sobriety mistakes
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -262,43 +262,43 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Description:** The officer said it "tested positive." But a field drug test is a screening tool, not confirmation. Chocolate, aspirin, and household cleaners have all triggered false positives. The difference between a field test presumptive positive and a confirmed lab result using gas chromatography is the difference between an arrest and actual proof. Do not accept a plea deal before lab results come back.
 **Alt Text:** Infographic comparing field drug tests and laboratory confirmation tests, showing false positive rates, substances that trigger false results, and why lab confirmation matters before accepting a plea. Black background with amber comparison columns.
 **Pin Design Concept:**
-- **Text overlay:** "That 'Positive' Drug Test? It Might Be Wrong." / "Field test vs lab test -- they are not the same thing"
+- **Text overlay:** "That 'Positive' Drug Test? It Might Be Wrong." / "Field test vs lab test, they are not the same thing"
 - **Color scheme:** Black background, amber vs green comparison columns, white text, red for false positive callout
-- **Visual style:** Top: Title with a plastic test pouch icon showing a color change. Below: Two-column comparison -- "FIELD TEST" (amber border) vs "LAB TEST" (green border). Field test column: "Screening tool," "Color change," "Known false positives" with examples (chocolate, aspirin). Lab test column: "Confirmation," "Molecular analysis," "Admissible evidence." Below: Red callout box: "Never accept a plea before lab results come back." CTA at bottom.
+- **Visual style:** Top: Title with a plastic test pouch icon showing a color change. Below: Two-column comparison, "FIELD TEST" (amber border) vs "LAB TEST" (green border). Field test column: "Screening tool," "Color change," "Known false positives" with examples (chocolate, aspirin). Lab test column: "Confirmation," "Molecular analysis," "Admissible evidence." Below: Red callout box: "Never accept a plea before lab results come back." CTA at bottom.
 **Keywords:** field drug test accuracy, field test vs lab test, drug test false positive, presumptive positive drug test, can drug field test be wrong, drug charge evidence, lab confirmation drug test, wrongful drug charges, field test inaccurate, drug case evidence challenge
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
-## Pin #17: First-Time Felony -- What Actually Happens
+## Pin #17: First-Time Felony, What Actually Happens
 
 **Pin Title:** First-Time Felony Charge? What Actually Happens Next
 **Destination URL:** https://imnotanattorney.com/blog/first-time-felony-what-actually-happens
 **Board:** Criminal Justice System Explained
-**Pin Description:** You just got charged with your first felony and you are terrified. The internet is full of worst-case scenarios. Here is what actually happens -- from booking to arraignment to resolution -- explained in plain English by someone who understands the system. Knowledge reduces fear. Save this.
+**Pin Description:** You just got charged with your first felony and you are terrified. The internet is full of worst-case scenarios. Here is what actually happens, from booking to arraignment to resolution, explained in plain English by someone who understands the system. Knowledge reduces fear. Save this.
 **Alt Text:** Step-by-step infographic showing what happens after a first-time felony charge, from arrest and booking through arraignment and case resolution. Dark background with amber timeline markers.
 **Pin Design Concept:**
 - **Text overlay:** "First Felony? Here's What Actually Happens." / "It's not what the internet told you."
 - **Color scheme:** Black background, amber timeline dots, white text
 - **Visual style:** Vertical timeline with amber dots: Arrest > Booking > Bail > Arraignment > Pre-Trial > [faded stages]. Each visible stage has 1-line description. Bottom 3 stages blurred with "See the full timeline" overlay.
 **Keywords:** first time felony what happens, first felony charge, charged with a felony first time, what happens after first felony arrest, first criminal charge, felony case process, first time offender, felony arraignment, felony case timeline, first felony defense
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
 ## Pin #18: How Criminal Cases Actually Work
 
-**Pin Title:** How Criminal Cases Actually Work -- The Process Nobody Explains
+**Pin Title:** How Criminal Cases Actually Work, The Process Nobody Explains
 **Destination URL:** https://imnotanattorney.com/blog/how-criminal-cases-actually-work
 **Board:** Criminal Justice System Explained
-**Pin Description:** The criminal justice system doesn't come with an instruction manual. From arrest to resolution, most defendants have no idea what happens next or why. This is the plain-English guide to how criminal cases actually move through the system -- stages, timelines, and decisions that shape your outcome.
+**Pin Description:** The criminal justice system doesn't come with an instruction manual. From arrest to resolution, most defendants have no idea what happens next or why. This is the plain-English guide to how criminal cases actually move through the system, stages, timelines, and decisions that shape your outcome.
 **Alt Text:** Flowchart infographic showing how criminal cases progress through the justice system from arrest to resolution, with key decision points and timelines marked. Dark background with amber flow arrows.
 **Pin Design Concept:**
 - **Text overlay:** "How Criminal Cases Actually Work" / "The process nobody explains to defendants"
 - **Color scheme:** Black background, amber connecting arrows, white node labels
 - **Visual style:** Vertical flowchart: Arrest > Booking > Bail > Arraignment > Discovery > Pre-Trial Motions > [Plea or Trial decision point] > [branches fade]. Decision diamond at plea/trial fork highlighted in amber. Top half detailed, bottom half faded with "See the full process" overlay.
 **Keywords:** how criminal cases work, criminal case process, criminal justice system steps, how does a criminal case work, criminal court process, criminal case stages, arrest to trial process, criminal case timeline, how criminal court works, criminal justice explained
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -312,7 +312,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Design Concept:**
 - **Text overlay:** "How Often Should Your Attorney Update You?" / "There are actual standards. Most defendants don't know them."
 - **Color scheme:** Black background, red-amber-green spectrum bar, white text
-- **Visual style:** Frequency spectrum bar from "Too Little" (red) through "Standard" (amber) to "Excellent" (green). Below: specific benchmarks -- "Monthly email minimum," "48hr callback," "Pre-hearing briefing." Each benchmark has checkmark or X. 3 visible, 3 faded.
+- **Visual style:** Frequency spectrum bar from "Too Little" (red) through "Standard" (amber) to "Excellent" (green). Below: specific benchmarks, "Monthly email minimum," "48hr callback," "Pre-hearing briefing." Each benchmark has checkmark or X. 3 visible, 3 faded.
 **Keywords:** how often should attorney communicate, attorney communication frequency, lawyer not updating me, how often attorney should call, criminal defense communication, attorney client communication, lawyer not responding, attorney update frequency, criminal case updates, attorney responsiveness
 **Cross-pin to boards:** Criminal Defense Questions
 
@@ -320,31 +320,31 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 
 ## Pin #20: How to File a Bar Complaint
 
-**Pin Title:** How to File a Bar Complaint Against Your Attorney -- Step by Step
+**Pin Title:** How to File a Bar Complaint Against Your Attorney, Step by Step
 **Destination URL:** https://imnotanattorney.com/blog/how-to-file-bar-complaint-against-attorney
 **Board:** Attorney Accountability
-**Pin Description:** Your attorney crossed a line. Maybe they missed a critical deadline, lied about your case status, or mishandled your retainer. Filing a bar complaint is your right and this step-by-step guide walks you through the process -- what qualifies, how to document it, and what to expect after you file.
+**Pin Description:** Your attorney crossed a line. Maybe they missed a critical deadline, lied about your case status, or mishandled your retainer. Filing a bar complaint is your right and this step-by-step guide walks you through the process, what qualifies, how to document it, and what to expect after you file.
 **Alt Text:** Step-by-step infographic on how to file a bar complaint against a criminal defense attorney, including what qualifies as misconduct and documentation requirements. Dark background with amber process steps.
 **Pin Design Concept:**
 - **Text overlay:** "How to File a Bar Complaint" / "Your attorney crossed a line. Here's your recourse."
 - **Color scheme:** Black background, amber arrows connecting steps, white text
 - **Visual style:** 5 connected steps flowing downward: Identify the Violation > Gather Documentation > Find Your State Bar > Submit the Complaint > What Happens Next. Steps 1-3 show brief detail, steps 4-5 show only titles. Document/folder icon styling.
 **Keywords:** how to file bar complaint against attorney, bar complaint process, attorney misconduct complaint, file bar complaint, attorney discipline, lawyer misconduct, bar association complaint, attorney ethics complaint, report bad lawyer, bar complaint steps
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
 ## Pin #21: How to Read Your Discovery
 
-**Pin Title:** How to Read Your Discovery Documents -- A Non-Lawyer's Guide
+**Pin Title:** How to Read Your Discovery Documents, A Non-Lawyer's Guide
 **Destination URL:** https://imnotanattorney.com/blog/how-to-read-your-discovery
 **Board:** Defendant Resources
-**Pin Description:** Your discovery is every piece of evidence the prosecution has against you -- police reports, witness statements, lab results, photos, and video. Most defendants never read it. Some attorneys never share it. This guide teaches you what to look for, what questions to ask, and why it matters.
+**Pin Description:** Your discovery is every piece of evidence the prosecution has against you, police reports, witness statements, lab results, photos, and video. Most defendants never read it. Some attorneys never share it. This guide teaches you what to look for, what questions to ask, and why it matters.
 **Alt Text:** Step-by-step guide infographic for criminal defendants on how to read and understand discovery documents including police reports, witness statements, and lab results. Black background with amber document icons.
 **Pin Design Concept:**
 - **Text overlay:** "How to Read Your Discovery" / "Most defendants never look at the evidence against them."
 - **Color scheme:** Black background, amber document section labels, white text
-- **Visual style:** Title at top. Large document icon breaking apart into labeled sections -- "Police Report," "Witness Statements," "Lab Results," "Photos/Video," "Your Statements." First two sections show detail, rest show only titles. "Full guide inside" CTA.
+- **Visual style:** Title at top. Large document icon breaking apart into labeled sections, "Police Report," "Witness Statements," "Lab Results," "Photos/Video," "Your Statements." First two sections show detail, rest show only titles. "Full guide inside" CTA.
 **Keywords:** how to read discovery documents, criminal discovery explained, understanding discovery evidence, how to read discovery as defendant, criminal case evidence, discovery documents explained, police report discovery, witness statements discovery, criminal evidence review, defense discovery guide
 **Cross-pin to boards:** DUI Defense, Drug Charge Defense
 
@@ -352,7 +352,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 
 ## Pin #22: How Your Attorney Makes Money
 
-**Pin Title:** How Your Criminal Defense Attorney Gets Paid -- And Why It Matters
+**Pin Title:** How Your Criminal Defense Attorney Gets Paid, And Why It Matters
 **Destination URL:** https://imnotanattorney.com/blog/how-your-attorney-makes-money
 **Board:** Criminal Defense Questions
 **Pin Description:** The way your attorney makes money directly shapes how they handle your case. Flat-fee retainers create one set of incentives. Hourly billing creates another. Public defenders face a completely different pressure. Understanding the business model of criminal defense is how you protect yourself.
@@ -384,10 +384,10 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 
 ## Pin #24: Private Attorney vs Public Defender
 
-**Pin Title:** Public Defender vs Private Attorney -- The Honest Comparison
+**Pin Title:** Public Defender vs Private Attorney, The Honest Comparison
 **Destination URL:** https://imnotanattorney.com/blog/private-attorney-vs-public-defender
 **Board:** Defendant Resources
-**Pin Description:** Everyone has an opinion. Your uncle says hire a private attorney. Your friend says public defenders are useless. The internet says both things at once. Here is the honest, no-agenda comparison -- what each option actually gives you, what it costs, and the questions that matter more than the label.
+**Pin Description:** Everyone has an opinion. Your uncle says hire a private attorney. Your friend says public defenders are useless. The internet says both things at once. Here is the honest, no-agenda comparison, what each option actually gives you, what it costs, and the questions that matter more than the label.
 **Alt Text:** Side-by-side comparison infographic of public defenders versus private attorneys in criminal cases, covering caseload, cost, experience, and communication differences. Dark background with two-column layout.
 **Pin Design Concept:**
 - **Text overlay:** "Public Defender vs Private Attorney" / "The honest comparison nobody gives you"
@@ -403,7 +403,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** Hiring a Criminal Defense Attorney? Ask These 8 Questions First
 **Destination URL:** https://imnotanattorney.com/blog/questions-to-ask-before-hiring-criminal-defense-attorney
 **Board:** Criminal Defense Questions
-**Pin Description:** Before you hand over a retainer, these 8 questions will tell you more about an attorney than their website ever will. Experience with your specific charges, trial record, communication style, and fee structure. The wrong hire costs more than money -- it costs time you don't have.
+**Pin Description:** Before you hand over a retainer, these 8 questions will tell you more about an attorney than their website ever will. Experience with your specific charges, trial record, communication style, and fee structure. The wrong hire costs more than money, it costs time you don't have.
 **Alt Text:** Infographic listing 8 essential questions to ask before hiring a criminal defense attorney, covering experience, trial record, fees, and communication expectations. Dark themed with amber accents.
 **Pin Design Concept:**
 - **Text overlay:** "Ask These 8 Questions Before You Hire" / "Their website won't tell you this"
@@ -419,14 +419,14 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** Should You Fire Your Lawyer? 5 Signs It's Time
 **Destination URL:** https://imnotanattorney.com/blog/should-you-fire-your-lawyer
 **Board:** Attorney Accountability
-**Pin Description:** Firing your criminal defense attorney mid-case feels terrifying. But keeping a bad one can be worse. These 5 signs tell you when the attorney-client relationship has broken down and what your options are -- from requesting new counsel to filing a bar complaint. Your defense is too important for loyalty to the wrong person.
+**Pin Description:** Firing your criminal defense attorney mid-case feels terrifying. But keeping a bad one can be worse. These 5 signs tell you when the attorney-client relationship has broken down and what your options are, from requesting new counsel to filing a bar complaint. Your defense is too important for loyalty to the wrong person.
 **Alt Text:** Infographic listing 5 warning signs that it may be time to fire your criminal defense attorney, including communication failures, missed deadlines, and inability to explain strategy. Dark theme with red and amber accents.
 **Pin Design Concept:**
 - **Text overlay:** "Should You Fire Your Lawyer?" / "5 signs the relationship is broken"
 - **Color scheme:** Black background, amber checklist, red accents for warning signs
 - **Visual style:** 5 signs as checklist with empty checkboxes. Signs 1-3 visible. Signs 4-5 faded. Below: "If you checked 2 or more, read this guide." Amber accent line.
 **Keywords:** should I fire my lawyer, when to fire your attorney, fire criminal defense lawyer, signs fire attorney, changing criminal defense lawyer, attorney client relationship, bad criminal lawyer, replace defense attorney, new attorney mid case, fire lawyer during case
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -451,14 +451,14 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** Charged With Drug Trafficking But Never Sold Anything? Here's Why
 **Destination URL:** https://imnotanattorney.com/blog/trafficking-charges-constructive-possession
 **Board:** Drug Charge Defense
-**Pin Description:** You have never sold drugs in your life. But you are staring at a trafficking charge with a mandatory minimum. In most states, trafficking is not about what you did -- it is about what they weighed. Weight thresholds, constructive possession defenses, the difference between actual and constructive possession, and a real case with a 73% weight discrepancy the attorney never caught.
+**Pin Description:** You have never sold drugs in your life. But you are staring at a trafficking charge with a mandatory minimum. In most states, trafficking is not about what you did, it is about what they weighed. Weight thresholds, constructive possession defenses, the difference between actual and constructive possession, and a real case with a 73% weight discrepancy the attorney never caught.
 **Alt Text:** Infographic explaining how drug trafficking charges are based on weight thresholds rather than evidence of selling, and how constructive possession defenses work. Shows weight threshold chart and possession type comparison. Black background with amber scale icon.
 **Pin Design Concept:**
 - **Text overlay:** "Trafficking Charge But You Never Sold Anything?" / "It's not about what you did. It's about what they weighed."
 - **Color scheme:** Black background, amber scale/weight icon, white text, red for mandatory minimum warning
-- **Visual style:** Top: Title with a scale icon showing weight. Below: Weight threshold chart showing how grams translate to charges -- Possession vs Trafficking cutoff clearly marked. Below that: "Actual Possession vs Constructive Possession" comparison with brief definitions. "73% weight discrepancy" stat callout in amber. Bottom section faded. CTA: "Learn the defense angles at imnotanattorney.com."
+- **Visual style:** Top: Title with a scale icon showing weight. Below: Weight threshold chart showing how grams translate to charges, Possession vs Trafficking cutoff clearly marked. Below that: "Actual Possession vs Constructive Possession" comparison with brief definitions. "73% weight discrepancy" stat callout in amber. Bottom section faded. CTA: "Learn the defense angles at imnotanattorney.com."
 **Keywords:** drug trafficking charges explained, constructive possession defense, trafficking charge weight, drug charge weight threshold, charged with trafficking, drug possession vs trafficking, constructive possession drug case, mandatory minimum drug trafficking, drug weight discrepancy, trafficking defense questions
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -472,7 +472,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Design Concept:**
 - **Text overlay:** "500 Pages. 4 Problems. Zero Motions Filed." / "He read his own discovery. His attorney hadn't."
 - **Color scheme:** Black background, amber document stack icon, white text, red for the four problems
-- **Visual style:** Top: "500 Pages of Discovery" with a thick document stack icon. Below: 4 numbered findings as red-bordered cards. Card 1: "73% Weight Discrepancy" (visible detail). Card 2: "CI Phone Number Match" (visible). Cards 3-4: partially faded. Below all cards: "His attorney had filed nothing." in stark white. CTA: "Read the full case study." This is a story-driven pin -- the narrative hook is what drives clicks.
+- **Visual style:** Top: "500 Pages of Discovery" with a thick document stack icon. Below: 4 numbered findings as red-bordered cards. Card 1: "73% Weight Discrepancy" (visible detail). Card 2: "CI Phone Number Match" (visible). Cards 3-4: partially faded. Below all cards: "His attorney had filed nothing." in stark white. CTA: "Read the full case study." This is a story-driven pin, the narrative hook is what drives clicks.
 **Keywords:** drug case discovery, reading your own discovery, attorney not reviewing evidence, drug case weight discrepancy, discovery problems criminal case, attorney missed evidence, drug trafficking defense, discovery documents drug case, criminal case evidence problems, defendant reviewing discovery
 **Cross-pin to boards:** Defendant Resources
 
@@ -480,17 +480,17 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 
 ## Pin #30: What Happens at Arraignment
 
-**Pin Title:** What Happens at Your Arraignment -- A Visual Step-by-Step Guide
+**Pin Title:** What Happens at Your Arraignment, A Visual Step-by-Step Guide
 **Destination URL:** https://imnotanattorney.com/blog/what-happens-at-arraignment
 **Board:** Criminal Justice System Explained
-**Pin Description:** Your first court date is called an arraignment and it is probably the least dramatic part of your entire case. But not knowing what to expect makes it terrifying. Here is exactly what happens -- what to wear, where to go, what the judge says, and what you say back. Save this before your court date.
+**Pin Description:** Your first court date is called an arraignment and it is probably the least dramatic part of your entire case. But not knowing what to expect makes it terrifying. Here is exactly what happens, what to wear, where to go, what the judge says, and what you say back. Save this before your court date.
 **Alt Text:** Step-by-step visual guide showing what happens at a criminal arraignment, including what to wear, what to bring, courtroom procedure, and what the judge will ask. Dark infographic with amber step markers.
 **Pin Design Concept:**
 - **Text overlay:** "What Happens at Your Arraignment" / "Less scary than you think. Save this."
 - **Color scheme:** Black background, amber numbered circles with icons, white text
 - **Visual style:** Vertical numbered steps: 1. Check in with clerk, 2. Wait for your case, 3. Judge reads charges, 4. Enter your plea, 5. Receive next date. Each step has a simple icon. Steps 1-3 detailed, 4-5 preview only. "Full court prep guide" CTA.
 **Keywords:** what happens at arraignment, first court date criminal case, arraignment what to expect, what to wear to arraignment, arraignment process, criminal court first appearance, arraignment procedure, what to bring to court, first criminal court date, arraignment preparation
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -506,7 +506,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 - **Color scheme:** Black background, amber-to-red severity scale, white text
 - **Visual style:** Large calendar icon with amber "X" at top. Severity scale below: "Minor" (amber) to "Critical" (red). Different deadline types mapped to the scale. Only 3 of 6 visible. "See what yours means" CTA.
 **Keywords:** attorney missed deadline criminal case, lawyer missed filing deadline, attorney malpractice deadline, missed court deadline, attorney missed motion deadline, what happens missed deadline, criminal case deadline, attorney negligence, court filing deadline missed, defense attorney deadline
-**Cross-pin to boards:** --
+**Cross-pin to boards:**,
 
 ---
 
@@ -515,7 +515,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** What Motions Should Your Attorney Be Filing? A Visual Guide
 **Destination URL:** https://imnotanattorney.com/blog/what-motions-should-your-attorney-be-filing
 **Board:** Criminal Defense Questions
-**Pin Description:** Motions are how your attorney fights for you before trial even starts. Motion to suppress evidence, motion to dismiss, motion to compel discovery -- if none of these have been filed, you need to ask why. This guide explains each motion type and when it should be used.
+**Pin Description:** Motions are how your attorney fights for you before trial even starts. Motion to suppress evidence, motion to dismiss, motion to compel discovery, if none of these have been filed, you need to ask why. This guide explains each motion type and when it should be used.
 **Alt Text:** Visual guide infographic explaining types of motions in criminal defense including motion to suppress, motion to dismiss, and motion to compel. Each motion type explained with when it applies. Dark theme.
 **Pin Design Concept:**
 - **Text overlay:** "What Motions Should Your Attorney Be Filing?" / "Motions are how defense happens before trial"
@@ -528,10 +528,10 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 
 ## Pin #33: What to Expect After a DUI Arrest
 
-**Pin Title:** What to Expect After a DUI Arrest -- A Step-by-Step Timeline
+**Pin Title:** What to Expect After a DUI Arrest, A Step-by-Step Timeline
 **Destination URL:** https://imnotanattorney.com/blog/what-to-expect-after-dui-arrest
 **Board:** DUI Defense Guide
-**Pin Description:** You just got arrested for a DUI. Everything feels chaotic. Here is exactly what happens next -- from the police station to your first court date to the DMV hearing you might not know about. Timelines, deadlines, and the questions you need to ask immediately. Save this now.
+**Pin Description:** You just got arrested for a DUI. Everything feels chaotic. Here is exactly what happens next, from the police station to your first court date to the DMV hearing you might not know about. Timelines, deadlines, and the questions you need to ask immediately. Save this now.
 **Alt Text:** Timeline infographic showing what happens after a DUI arrest, from booking and bail through arraignment, DMV hearing, and case resolution. Step-by-step with deadlines noted. Black and amber design.
 **Pin Design Concept:**
 - **Text overlay:** "What Happens After a DUI Arrest" / "Timelines. Deadlines. Questions to ask now."
@@ -547,12 +547,12 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Title:** Why Is My Criminal Case Taking So Long? 5 Real Reasons
 **Destination URL:** https://imnotanattorney.com/blog/why-is-my-criminal-case-taking-so-long
 **Board:** Criminal Justice System Explained
-**Pin Description:** Months have passed. Your case drags on. Your attorney says it is normal. But is it? Here are 5 real reasons criminal cases take longer than expected -- some legitimate, some not. Understanding the difference helps you know whether to be patient or push back.
+**Pin Description:** Months have passed. Your case drags on. Your attorney says it is normal. But is it? Here are 5 real reasons criminal cases take longer than expected, some legitimate, some not. Understanding the difference helps you know whether to be patient or push back.
 **Alt Text:** Infographic explaining 5 reasons why criminal cases take a long time to resolve, distinguishing between legitimate delays and potential attorney neglect. Dark background with amber clock and timeline icons.
 **Pin Design Concept:**
-- **Text overlay:** "Why Is Your Case Taking So Long?" / "5 reasons -- some are okay. Some aren't."
+- **Text overlay:** "Why Is Your Case Taking So Long?" / "5 reasons, some are okay. Some aren't."
 - **Color scheme:** Black background, amber clock icon, amber/red split for legitimate vs red flag reasons
-- **Visual style:** Large clock at top. 5 reasons as cards -- 3 labeled "Legitimate" (amber border), 2 labeled "Red Flag" (red border). Only reason titles visible. "Which one is yours?" CTA.
+- **Visual style:** Large clock at top. 5 reasons as cards, 3 labeled "Legitimate" (amber border), 2 labeled "Red Flag" (red border). Only reason titles visible. "Which one is yours?" CTA.
 **Keywords:** why is my criminal case taking so long, criminal case timeline, how long criminal cases take, slow criminal case, criminal case delays, how long does a criminal case take, case taking too long, attorney delay, criminal court schedule, case continuance reasons
 **Cross-pin to boards:** Attorney Accountability
 
@@ -568,7 +568,7 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 **Pin Design Concept:**
 - **Text overlay:** "15 Questions Your Wire Fraud Attorney Must Answer" / "20 years per count. 'We're working on it' is not an answer."
 - **Color scheme:** Black background, amber question numbers, white text, subtle gold accent for financial theme
-- **Visual style:** Top: Title with "20 YEARS PER COUNT" stat in large amber. Below: Questions organized by category cards -- "Intent Questions" (showing 2 of 4), "Evidence Questions" (showing 1 of 4), "Cooperation" and "Sentencing" cards partially visible. Each visible question is one powerful line. Remaining questions blurred with count: "15 questions total." CTA: "See all 15 at imnotanattorney.com." This pin targets a high-stakes, high-income audience -- the tone is deadly serious.
+- **Visual style:** Top: Title with "20 YEARS PER COUNT" stat in large amber. Below: Questions organized by category cards, "Intent Questions" (showing 2 of 4), "Evidence Questions" (showing 1 of 4), "Cooperation" and "Sentencing" cards partially visible. Each visible question is one powerful line. Remaining questions blurred with count: "15 questions total." CTA: "See all 15 at imnotanattorney.com." This pin targets a high-stakes, high-income audience, the tone is deadly serious.
 **Keywords:** wire fraud defense questions, wire fraud attorney, federal wire fraud defense, wire fraud charges, wire fraud sentencing, 18 USC 1343, wire fraud penalty, white collar defense questions, federal fraud attorney, wire fraud case defense, wire fraud intent, wire fraud good faith defense
 **Cross-pin to boards:** Criminal Defense Questions
 
@@ -578,10 +578,10 @@ Design system: All pins use 1000x1500px (2:3 ratio). Brand palette: black backgr
 
 Every blog post should have 3-5 unique pin designs over time. Below are the angle variations for creating fresh pins from the same URLs:
 
-**Angle 1 -- The List/Number Pin (default):** Numbered items, partially revealed. Works for every post.
-**Angle 2 -- The Single Spotlight:** Feature ONE powerful question, stat, or finding from the post with a "plus X more inside" callout.
-**Angle 3 -- The Comparison/Before-After:** Side-by-side layouts. "What you're doing vs what you should be doing." "Good attorney vs bad attorney."
-**Angle 4 -- The Stat-Forward:** Lead with the most surprising statistic from the post. Large number, brief context, link to full guide.
-**Angle 5 -- The Question Hook:** Pose the most provocative question from the post as the entire pin visual. "Your attorney can't explain their strategy. What does that tell you?"
+**Angle 1, The List/Number Pin (default):** Numbered items, partially revealed. Works for every post.
+**Angle 2, The Single Spotlight:** Feature ONE powerful question, stat, or finding from the post with a "plus X more inside" callout.
+**Angle 3, The Comparison/Before-After:** Side-by-side layouts. "What you're doing vs what you should be doing." "Good attorney vs bad attorney."
+**Angle 4, The Stat-Forward:** Lead with the most surprising statistic from the post. Large number, brief context, link to full guide.
+**Angle 5, The Question Hook:** Pose the most provocative question from the post as the entire pin visual. "Your attorney can't explain their strategy. What does that tell you?"
 
 Rotate through these angles so that each URL has visual variety in the feed and targets slightly different search intent with each design.

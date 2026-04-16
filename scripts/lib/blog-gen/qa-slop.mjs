@@ -1,9 +1,9 @@
-// qa-slop.mjs — Slop / A1 content quality audit gate.
+// qa-slop.mjs, Slop / A1 content quality audit gate.
 //
 // Ported from ImNotAnAttorney-web/src/lib/blog-generation/qa-slop.ts (2026-04-09
 // blog engine port). Same 14 checks, same prompt text, same threshold rules.
 // Only change: injected `callClaude` + jobId. The supabase arg from the web
-// version was reserved for future use — preserved here but ignored.
+// version was reserved for future use, preserved here but ignored.
 //
 // Uses Sonnet. MODEL_MAP routes 'blog_qa_slop' to Sonnet.
 //
@@ -45,7 +45,7 @@ THE 14 CHECKS:
 
 8. STRUCTURAL_INTEGRITY: Sections must be logically ordered (problem -> context -> solution -> action). No orphaned paragraphs that don't connect to adjacent sections. FAIL if section order is illogical or paragraphs are disconnected.
 
-9. CTA_CLARITY: The post must have at least one clear next step for the reader — a product link (Case Decoder, Intelligence Brief), an attorney question to ask, or a checklist to follow. FAIL if no actionable CTA exists.
+9. CTA_CLARITY: The post must have at least one clear next step for the reader, a product link (Case Decoder, Intelligence Brief), an attorney question to ask, or a checklist to follow. FAIL if no actionable CTA exists.
 
 10. HEDGING_DENSITY: Count action statements that are hedged with "could," "might," "possibly," "potentially." FAIL if more than 15% of action statements are hedged. Information statements can hedge freely.
 

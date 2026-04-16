@@ -23,7 +23,7 @@ target_groups: ["Strong Prison Wives", "Public Defender Clients Groups", "Women 
 
 I want to hear something real from this group.
 
-The next time you talk to your attorney -- or if you already have recently -- ask them this one question:
+The next time you talk to your attorney, or if you already have recently, ask them this one question:
 
 "What is your theory of defense in my case?"
 
@@ -41,7 +41,7 @@ One of those is a defense strategy. The other one is a sentence designed to end 
 
 If your attorney has a real strategy, they can explain it in plain language. They can tell you WHAT they plan to challenge, WHY they plan to challenge it, and WHAT the potential outcome is.
 
-If they can't -- or won't -- that tells you something.
+If they can't, or won't, that tells you something.
 
 What did yours say?
 
@@ -49,7 +49,7 @@ What did yours say?
 
 ### Visual Direction
 
-Colored text background -- dark purple. The side-by-side comparison (specific strategy vs. vague dismissal) is the core of this post. No image needed.
+Colored text background, dark purple. The side-by-side comparison (specific strategy vs. vague dismissal) is the core of this post. No image needed.
 
 ### Link Strategy
 
@@ -61,7 +61,7 @@ This post will generate three types of responses: (1) people with articulate att
 
 ### UPL Compliance Note
 
-Do NOT evaluate anyone's attorney's strategy in the comments. If someone shares what their attorney said and asks "is that good?" respond with: "I can't evaluate that -- that's between you and your attorney. But the fact that they could articulate a specific approach is a positive sign." Or if it was vague: "If you want more detail, try asking: 'What specific evidence are you planning to challenge and how?'"
+Do NOT evaluate anyone's attorney's strategy in the comments. If someone shares what their attorney said and asks "is that good?" respond with: "I can't evaluate that, that's between you and your attorney. But the fact that they could articulate a specific approach is a positive sign." Or if it was vague: "If you want more detail, try asking: 'What specific evidence are you planning to challenge and how?'"
 
 ---
 

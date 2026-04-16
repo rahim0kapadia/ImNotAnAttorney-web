@@ -2,16 +2,16 @@
  * Download All External Defense Intelligence Datasets
  *
  * Grabs every free dataset we've identified in parallel.
- * Each download is independent — failures don't block others.
+ * Each download is independent, failures don't block others.
  *
  * Datasets:
- *   1. JUSTFAIR — 600K+ federal sentencing records with judge demographics (OSF/GitHub)
- *   2. National Police Index — officer employment histories, 24 states (GitHub clone + pipeline)
- *   3. FJC Integrated Database — federal criminal defendant data 1996-present (fjc.gov)
- *   4. Mapping Police Violence — 15K+ police killings since 2013 (mappingpoliceviolence.org)
- *   5. Fatal Encounters — police-involved deaths since 2000 (fatalencounters.org)
- *   6. Measures for Justice — county-level criminal justice metrics (manual portal)
- *   7. FBI Crime Data — UCR/NIBRS arrest rates (bulk CSV from cde.ucr.cjis.gov)
+ *   1. JUSTFAIR, 600K+ federal sentencing records with judge demographics (OSF/GitHub)
+ *   2. National Police Index, officer employment histories, 24 states (GitHub clone + pipeline)
+ *   3. FJC Integrated Database, federal criminal defendant data 1996-present (fjc.gov)
+ *   4. Mapping Police Violence, 15K+ police killings since 2013 (mappingpoliceviolence.org)
+ *   5. Fatal Encounters, police-involved deaths since 2000 (fatalencounters.org)
+ *   6. Measures for Justice, county-level criminal justice metrics (manual portal)
+ *   7. FBI Crime Data, UCR/NIBRS arrest rates (bulk CSV from cde.ucr.cjis.gov)
  *
  * Usage:
  *   node scripts/download-all-external-datasets.mjs           # Download all
@@ -88,7 +88,7 @@ const DATASETS = [
     dir: "justfair",
     type: "git-clone",
     repo: "https://github.com/QSIDE-JUSTFAIR/Minnesota_Sentences.git",
-    note: "Main dataset on OSF (osf.io/nseh5). GitHub has Minnesota subset. Full dataset requires OSF download — checking for direct file links.",
+    note: "Main dataset on OSF (osf.io/nseh5). GitHub has Minnesota subset. Full dataset requires OSF download, checking for direct file links.",
     fallback_urls: [
       // OSF API endpoint for the project files
       "https://api.osf.io/v2/nodes/nseh5/files/osfstorage/",
@@ -106,7 +106,7 @@ const DATASETS = [
     dir: "fjc",
     type: "download",
     urls: [
-      // Criminal defendant data — the FJC serves these as direct downloads
+      // Criminal defendant data, the FJC serves these as direct downloads
       // These are the standard FJC IDB criminal defendant files
       { url: "https://www.fjc.gov/sites/default/files/idb/textfiles/cr96to25.zip", dest: "cr96to25.zip" },
       { url: "https://www.fjc.gov/sites/default/files/idb/codebooks/Criminal%20Code%20Book%201996%20Forward.pdf", dest: "criminal-codebook.pdf" },
@@ -133,13 +133,13 @@ const DATASETS = [
     name: "FBI Crime Data Explorer (UCR bulk downloads)",
     dir: "fbi-crime",
     type: "note-only",
-    note: "FBI CDE bulk CSVs require browser download from https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/downloads — no direct API. Download 'Arrests' and 'Offenses Known' CSV bundles manually.",
+    note: "FBI CDE bulk CSVs require browser download from https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/downloads, no direct API. Download 'Arrests' and 'Offenses Known' CSV bundles manually.",
   },
   {
     name: "Measures for Justice (county-level metrics)",
     dir: "mfj",
     type: "note-only",
-    note: "Portal at https://app.measuresforjustice.org/portal — select state, download county data as CSV. No bulk API. Do one state at a time.",
+    note: "Portal at https://app.measuresforjustice.org/portal, select state, download county data as CSV. No bulk API. Do one state at a time.",
   },
 ];
 
@@ -278,7 +278,7 @@ async function main() {
   console.log("  2. Measures for Justice: https://app.measuresforjustice.org/portal");
   console.log("     Select FL (priority), download county CSV → data/external-intel/mfj/");
   console.log("  3. FL Scoresheets: FOIA request to FL DOC for Criminal Punishment Code scoresheets");
-  console.log("  4. Maryland MSCCSP: https://msccsp.org/data/download/ — fill form, no IRB");
+  console.log("  4. Maryland MSCCSP: https://msccsp.org/data/download/, fill form, no IRB");
 }
 
 main().catch((err) => {

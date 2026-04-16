@@ -166,7 +166,7 @@ async function test2_IntakeLinksToAllCases(orderId) {
 }
 
 async function test3_UpgradeDedup() {
-  console.log("\n=== Test 3: Upgrade dedup — delivered CD → IB order ===");
+  console.log("\n=== Test 3: Upgrade dedup, delivered CD → IB order ===");
 
   const upgradeEmail = `test-upgrade-${Date.now()}@test.imnotanattorney.com`;
 
@@ -197,7 +197,7 @@ async function test3_UpgradeDedup() {
     court_state: "Florida",
   });
 
-  // Now simulate IB purchase — webhook would check for existing CD
+  // Now simulate IB purchase, webhook would check for existing CD
   const { data: existingCd } = await supabase
     .from("cases")
     .select("id")
@@ -298,7 +298,7 @@ async function run() {
 
     console.log("\n=== Done ===");
     if (process.exitCode === 1) {
-      console.log("Some tests FAILED — see above.");
+      console.log("Some tests FAILED, see above.");
     } else {
       console.log("All tests PASSED.");
     }

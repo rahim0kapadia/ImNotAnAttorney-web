@@ -1,5 +1,5 @@
 /**
- * @file /api/operator/cases — Paginated case list with filters
+ * @file /api/operator/cases, Paginated case list with filters
  *
  * GET: List cases with optional filters for status, tier, charge_type, email search.
  *      Returns all tiers by default; supports pagination via page/limit params.

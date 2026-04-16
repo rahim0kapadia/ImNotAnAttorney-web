@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * ComplianceReportClient — date-filterable, print-optimized compliance
+ * ComplianceReportClient, date-filterable, print-optimized compliance
  * report table for surety audits. Receives all data from the server
  * component; filtering and print happen client-side.
  */
@@ -116,7 +116,7 @@ export function ComplianceReportClient({
       return clients.filter((c) => new Date(c.created_at) >= cutoff);
     }
 
-    // Quarter filter — by court_date
+    // Quarter filter, by court_date
     const q = Number(dateRange.replace("q", ""));
     const { start, end } = getQuarterBounds(q);
     return clients.filter((c) => {
@@ -165,7 +165,7 @@ export function ComplianceReportClient({
   return (
     <div className="min-h-screen bg-zinc-950 text-white print:bg-white print:text-black">
       <div className="max-w-4xl mx-auto px-6 py-8">
-        {/* Controls — hidden in print */}
+        {/* Controls, hidden in print */}
         <div className="flex items-center justify-between mb-8 print:hidden">
           <a
             href="/partner/dashboard"

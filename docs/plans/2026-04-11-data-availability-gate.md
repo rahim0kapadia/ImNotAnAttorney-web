@@ -1,4 +1,4 @@
-# Data Availability Gate — Implementation Plan
+# Data Availability Gate, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -15,10 +15,10 @@
 ## File Structure
 
 | File | Role | Action |
-|------|------|--------|
+|------|------|------, |
 | `src/lib/tier9-reports/coverage.ts` | Coverage check functions (lightweight query, returns counts) | **CREATE** |
 | `src/app/api/check-availability/[slug]/route.ts` | API endpoint for availability check | **CREATE** |
-| `src/components/tier9/AvailabilityChecker.tsx` | Client component — intake fields + check + preview/waitlist | **CREATE** |
+| `src/components/tier9/AvailabilityChecker.tsx` | Client component, intake fields + check + preview/waitlist | **CREATE** |
 | `src/app/judge-report-card/page.tsx` | Add AvailabilityChecker, fix CTA link | **MODIFY** |
 | `src/app/officer-background-check/page.tsx` | Add AvailabilityChecker, fix CTA link | **MODIFY** |
 | `src/app/similar-cases-analyzer/page.tsx` | Add AvailabilityChecker, fix CTA link | **MODIFY** |
@@ -36,7 +36,7 @@
 - [ ] **Step 1: Create the migration file**
 
 ```sql
--- Data waitlist — captures demand for uncovered judges/officers
+, Data waitlist, captures demand for uncovered judges/officers
 CREATE TABLE IF NOT EXISTS data_waitlist (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   product_slug text NOT NULL,
@@ -94,7 +94,7 @@ This file exports lightweight functions that return coverage counts (not full da
 ```typescript
 /**
  * Lightweight coverage checks for Tier 9 data availability.
- * Returns counts per section — used by /api/check-availability/[slug]
+ * Returns counts per section, used by /api/check-availability/[slug]
  * to gate purchases before checkout.
  */
 
@@ -118,7 +118,7 @@ export async function checkJudgeCoverage(
   const supabase = createAdminClient();
   const safeName = escapeIlike(judgeName);
 
-  // Find judge — try with jurisdiction first, fall back to name only
+  // Find judge, try with jurisdiction first, fall back to name only
   let judges;
   ({ data: judges } = await supabase
     .from("judge_profiles")
@@ -242,7 +242,7 @@ export async function checkSimilarCasesCoverage(
 - [ ] **Step 2: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 3: Commit**
@@ -348,7 +348,7 @@ export async function POST(
 - [ ] **Step 2: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 3: Commit**
@@ -406,14 +406,14 @@ Key behavior:
 - [ ] **Step 2: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 3: Commit**
 
 ```bash
 git add src/components/tier9/AvailabilityChecker.tsx
-git commit -m "feat: AvailabilityChecker component — pre-purchase data check + waitlist"
+git commit -m "feat: AvailabilityChecker component, pre-purchase data check + waitlist"
 ```
 
 ---
@@ -447,7 +447,7 @@ if (body.waitlist === true && typeof body.email === "string") {
   // Telegram alert
   const { exec } = await import("child_process");
   const msg = `New data request: ${/* name */} (${state})\\nProduct: ${slug}\\nCustomer: ${email}\\nCoverage: ${JSON.stringify(result.coverage)}`;
-  exec(`node "C:\\Users\\email\\.claude\\scripts\\telegram\\telegram-send.js" --bot legal --message "${msg.replace(/"/g, '\\"')}"`);
+  exec(`node "C:\\Users\\email\\.claude\\scripts\\telegram\\telegram-send.js",bot legal,message "${msg.replace(/"/g, '\\"')}"`);
 
   return NextResponse.json({ ...result, waitlisted: true });
 }
@@ -458,7 +458,7 @@ Adapt the `search_name` and message for each product slug.
 - [ ] **Step 2: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 3: Commit**
@@ -479,7 +479,7 @@ git commit -m "feat: waitlist insert + Telegram alert on uncovered data requests
 
 - [ ] **Step 1: Update judge-report-card page**
 
-Import `AvailabilityChecker` and replace the static CTA section. The page stays a server component — only the checker is a client island.
+Import `AvailabilityChecker` and replace the static CTA section. The page stays a server component, only the checker is a client island.
 
 Replace the hero CTA button and the "Delivered within 60 seconds" line with:
 
@@ -493,26 +493,26 @@ Replace the hero CTA button and the "Delivered within 60 seconds" line with:
 
 Remove the standalone CTA `<Link>` elements that link to `/checkout?tier=judge-report-card` (which is broken anyway). The AvailabilityChecker's internal CTA will use the correct `/checkout?standaloneProduct=...` URL with intake params.
 
-Keep all other sections (What You Get, Sample Report, Trust, FAQ, Final CTA) — but update the Final CTA section at the bottom to also use `<AvailabilityChecker>` instead of a static link.
+Keep all other sections (What You Get, Sample Report, Trust, FAQ, Final CTA), but update the Final CTA section at the bottom to also use `<AvailabilityChecker>` instead of a static link.
 
 - [ ] **Step 2: Update officer-background-check page**
 
-Same pattern — replace CTA with `<AvailabilityChecker slug="officer-background-check" ...>`.
+Same pattern, replace CTA with `<AvailabilityChecker slug="officer-background-check" ...>`.
 
 - [ ] **Step 3: Update similar-cases-analyzer page**
 
-Same pattern — replace CTA with `<AvailabilityChecker slug="similar-cases-analyzer" ...>`.
+Same pattern, replace CTA with `<AvailabilityChecker slug="similar-cases-analyzer" ...>`.
 
 - [ ] **Step 4: Fix the FAQ answer**
 
-In `judge-report-card/page.tsx` line 52, the FAQ says "you'll be notified before purchase and offered a full refund." Change to: "If we don't have sufficient data for your specific judge, you'll see that before checkout — we won't charge you for data we don't have. You can join our waitlist and we'll notify you when coverage is available."
+In `judge-report-card/page.tsx` line 52, the FAQ says "you'll be notified before purchase and offered a full refund." Change to: "If we don't have sufficient data for your specific judge, you'll see that before checkout, we won't charge you for data we don't have. You can join our waitlist and we'll notify you when coverage is available."
 
 Apply the same FAQ fix to the other two landing pages if they have similar text.
 
 - [ ] **Step 5: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 6: Commit**
@@ -548,12 +548,12 @@ metadata: {
 },
 ```
 
-No other changes needed — the webhook reads from this metadata.
+No other changes needed, the webhook reads from this metadata.
 
 - [ ] **Step 2: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 3: Commit**
@@ -572,7 +572,7 @@ git commit -m "feat: pass intake fields through Stripe metadata for instant gene
 
 - [ ] **Step 1: Check for pre-populated intake in metadata**
 
-After the order insert (line 167), check if the Stripe metadata has intake fields. If so, populate `standalone_intake` on the order and trigger generation immediately — skip the intake email.
+After the order insert (line 167), check if the Stripe metadata has intake fields. If so, populate `standalone_intake` on the order and trigger generation immediately, skip the intake email.
 
 Replace the intake email block (lines 189-212) with:
 
@@ -619,12 +619,12 @@ if (hasPrePopulatedIntake) {
     });
   }
 } else {
-  // No pre-populated intake — send the traditional intake email with token link
+  // No pre-populated intake, send the traditional intake email with token link
   const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
   await sendEmailWithOperatorAlert(
     {
       to: customerStandaloneEmail,
-      subject: `Your ${product.name} — Complete Your Details`,
+      subject: `Your ${product.name}, Complete Your Details`,
       html: `
         <p>Thank you for your purchase.</p>
         <p>To generate your personalized ${escapeHtml(product.name)}, we need a few details about your situation.</p>
@@ -649,7 +649,7 @@ if (hasPrePopulatedIntake) {
 - [ ] **Step 2: Verify TypeScript compiles**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 3: Commit**
@@ -668,7 +668,7 @@ git commit -m "feat: instant report generation when intake pre-populated from av
 - [ ] **Step 1: TypeScript check**
 
 ```bash
-npx tsc --noEmit --skipLibCheck
+npx tsc,noEmit,skipLibCheck
 ```
 
 - [ ] **Step 2: Tier consistency check**

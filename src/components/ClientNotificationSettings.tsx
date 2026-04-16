@@ -8,7 +8,7 @@ type CategoryKey = keyof ClientNotificationPrefs;
 const CATEGORY_LABELS: Record<CategoryKey, { title: string; hint?: string }> = {
   court_reminders: {
     title: "Court date reminders",
-    hint: "Email is always sent — required for safety (phones die, SMS bounces).",
+    hint: "Email is always sent, required for safety (phones die, SMS bounces).",
   },
   magic_link: { title: "Secure sign-in links" },
   check_in: { title: "Check-in confirmations" },

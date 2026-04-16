@@ -1,4 +1,4 @@
-# Partner Growth Upgrades — Spec Errata (Code Review Fixes)
+# Partner Growth Upgrades, Spec Errata (Code Review Fixes)
 
 **Companion to:** `2026-04-14-partner-growth-upgrades-design.md`
 **Source:** Code review by superpowers:code-reviewer agent
@@ -34,7 +34,7 @@ jsonb_build_object('tier_changed', bool, 'new_tier', text, 'new_rate', int)
 
 It computes `v_new_total` internally but never exposes it.
 
-**Fix:** The `total_referrals` value comes from the partner detail query that runs AFTER the RPC (the same query fixed in C2). The RPC atomically increments `total_referrals`, so the subsequent SELECT reads the post-increment value. There is a theoretical race if two webhooks fire simultaneously for the same partner, but this is acceptable — milestone/first-sale detection off by one referral is not harmful.
+**Fix:** The `total_referrals` value comes from the partner detail query that runs AFTER the RPC (the same query fixed in C2). The RPC atomically increments `total_referrals`, so the subsequent SELECT reads the post-increment value. There is a theoretical race if two webhooks fire simultaneously for the same partner, but this is acceptable, milestone/first-sale detection off by one referral is not harmful.
 
 Implementation should NOT modify the RPC. Read `total_referrals` from the partner query instead.
 
@@ -46,13 +46,13 @@ Implementation should NOT modify the RPC. Read `total_referrals` from the partne
 
 The spec says "add optional city text input between Company and Phone fields." But `src/components/partner/PartnerApplicationForm.tsx` only collects name, email, and compliance checkbox. There are no Company or Phone inputs in the form (though the API route at `src/app/api/partners/apply/route.ts` does accept those fields in its body destructuring).
 
-**Fix:** Add city input after the email field (the last text input in the current form). Do NOT add company/phone fields as part of this change — that is separate scope. The city field should also be added to:
+**Fix:** Add city input after the email field (the last text input in the current form). Do NOT add company/phone fields as part of this change, that is separate scope. The city field should also be added to:
 - The form's submit body JSON
 - The apply route's INSERT statement (both new partner insert at ~line 273 and pending partner update at ~line 166)
 
 ### W4. Index needed for monthly summary cron date queries
 
-The monthly summary cron queries `referrals` by `partner_id` + `created_at` date range. No composite index exists — only `idx_referrals_partner_order` on `(order_id, partner_id)`.
+The monthly summary cron queries `referrals` by `partner_id` + `created_at` date range. No composite index exists, only `idx_referrals_partner_order` on `(order_id, partner_id)`.
 
 **Fix:** Add to the migration file:
 
@@ -83,7 +83,7 @@ total_commission?: number;
 total_paid_out?: number;
 ```
 
-Low priority — only implement if TypeScript errors surface during development.
+Low priority, only implement if TypeScript errors surface during development.
 
 ---
 
@@ -91,7 +91,7 @@ Low priority — only implement if TypeScript errors surface during development.
 
 ### I3. ConversionFunnel must handle link_clicks === 0 in bar widths
 
-The spec handles division-by-zero for the conversion rate callout ("Shows '--' if link_clicks is zero") but the bar width calculation `(quiz_starts / link_clicks) * 100%` would produce `Infinity%` or `NaN%` when `link_clicks === 0` but `purchase` events exist (from direct promo code entry at checkout, bypassing the referral link).
+The spec handles division-by-zero for the conversion rate callout ("Shows ', ' if link_clicks is zero") but the bar width calculation `(quiz_starts / link_clicks) * 100%` would produce `Infinity%` or `NaN%` when `link_clicks === 0` but `purchase` events exist (from direct promo code entry at checkout, bypassing the referral link).
 
 **Fix:** In `ConversionFunnel.tsx`, when `link_clicks === 0`:
 - Use `purchases` as the max denominator if any events exist
@@ -108,7 +108,7 @@ The spec references `src/app/api/partner/magic-link/route.ts` as the signup API.
 
 ## Already Fixed in Spec (via prior edits)
 
-- **C1:** `generateMetadata()` signature fix — documented in spec Section 1.1 step 1
-- **W1:** `after()` API for server component events — documented in spec Section 1.2 fire-and-forget pattern
-- **W2:** `city` added to partner SELECT — documented in spec Section 1.1 step 3
-- **I1:** `React.cache()` for shared query — documented in spec Section 1.1 step 2
+- **C1:** `generateMetadata()` signature fix, documented in spec Section 1.1 step 1
+- **W1:** `after()` API for server component events, documented in spec Section 1.2 fire-and-forget pattern
+- **W2:** `city` added to partner SELECT, documented in spec Section 1.1 step 3
+- **I1:** `React.cache()` for shared query, documented in spec Section 1.1 step 2

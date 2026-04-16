@@ -1,5 +1,5 @@
 /**
- * GET /api/partner/dashboard — Partner dashboard data.
+ * GET /api/partner/dashboard, Partner dashboard data.
  *
  * Returns partner profile, recent referrals, and payout history.
  * Auth: session cookie validated via validatePartnerSession().
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
   const supabase = createAdminClient();
 
   try {
-    // Fetch recent referrals (no PII — just tier, date, commission)
+    // Fetch recent referrals (no PII, just tier, date, commission)
     const { data: referrals } = await supabase
       .from("referrals")
       .select("id, tier, sale_amount, commission_amount, commission_paid, created_at")
@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
       .select("*", { count: "exact", head: true })
       .eq("partner_promo_code", partner.promo_code);
 
-    // Court prep clients — full list for client tracker (paginated, no silent cap)
+    // Court prep clients, full list for client tracker (paginated, no silent cap)
     const { data: courtClients } = await paginatedQuery<CourtClient>(supabase, {
       table: "court_reminders",
       select: "id, first_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at, check_in_days, check_in_source",

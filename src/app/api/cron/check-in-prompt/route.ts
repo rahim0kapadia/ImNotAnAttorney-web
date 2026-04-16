@@ -1,5 +1,5 @@
 /**
- * GET /api/cron/check-in-prompt — Two-phase daily cron.
+ * GET /api/cron/check-in-prompt, Two-phase daily cron.
  *
  * Phase 1: Send check-in prompts to clients whose scheduled day is today.
  * Phase 2: Send missed-check-in alerts to bondsmen for yesterday's misses.
@@ -8,8 +8,8 @@
  * Auth: CRON_AUTH_TOKEN bearer (covered by /api/cron/* middleware).
  * Idempotency: Two separate lock keys for independent failure/retry.
  *
- * Uses after() to return 200 immediately — prevents cron-job.org timeout.
- * Each phase has independent try/catch — Phase 1 failure doesn't kill Phase 2.
+ * Uses after() to return 200 immediately, prevents cron-job.org timeout.
+ * Each phase has independent try/catch, Phase 1 failure doesn't kill Phase 2.
  * Uses last_prompted_date (single column) not unbounded array.
  */
 
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  // Acquire locks before returning — prevents duplicate after() work
+  // Acquire locks before returning, prevents duplicate after() work
   const lock1 = await acquireCronLock("check-in-prompt", 23 * 60 * 60 * 1000);
   const lock2 = await acquireCronLock("check-in-missed-alert", 23 * 60 * 60 * 1000);
 
@@ -120,7 +120,7 @@ export async function GET(req: NextRequest) {
               sends.push(
                 sendSMS(
                   r.phone!,
-                  capSMS(`${r.first_name}, ${companyName} requests your check-in today: imnotanattorney.com/prep/${r.token} — Do not reply to this text`),
+                  capSMS(`${r.first_name}, ${companyName} requests your check-in today: imnotanattorney.com/prep/${r.token}, Do not reply to this text`),
                   { category: "check_in_prompt", court_reminder_id: r.id, subject: "Check-In Reminder" }
                 )
               );
@@ -157,7 +157,7 @@ export async function GET(req: NextRequest) {
     // ================================================================
     if (lock2.shouldRun) {
       try {
-        // Compute yesterday via calendar subtraction (not ms — avoids DST breakage)
+        // Compute yesterday via calendar subtraction (not ms, avoids DST breakage)
         const [y, m, d] = todayDate.split("-").map(Number);
         const yd = new Date(Date.UTC(y, m - 1, d));
         yd.setUTCDate(yd.getUTCDate() - 1);
@@ -246,7 +246,7 @@ export async function GET(req: NextRequest) {
             if (shouldSendSMS(prefs.missed_check_in) && partner.phone) {
               sendSMS(
                 partner.phone,
-                capSMS(`${count} client(s) missed check-in yesterday: ${names}. Details: ${dashUrl} — Do not reply`),
+                capSMS(`${count} client(s) missed check-in yesterday: ${names}. Details: ${dashUrl}, Do not reply`),
                 { category: "missed_check_in_alert", partner_id: partner.id, subject: "Missed Check-In Alert" }
               ).catch((e) => console.warn("[Missed Check-In] SMS failed:", e));
             }

@@ -5,7 +5,7 @@
 - Problem: Flow 3 drip email changes (Tasks 1-5) shipped without unit tests
 - Key files: `src/lib/drip-emails.ts`, `src/lib/drip-emails.test.ts`
 - Tech stack: Next.js 15, vitest
-- Key decisions: Test the three new surface areas — interpolateScoreVars, SCORE_CRISIS_EMAILS Day 3, SCORE_REENGAGE_EMAILS Day 7/14 template vars
+- Key decisions: Test the three new surface areas, interpolateScoreVars, SCORE_CRISIS_EMAILS Day 3, SCORE_REENGAGE_EMAILS Day 7/14 template vars
 
 ## Tasks
 

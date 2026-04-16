@@ -12,7 +12,7 @@ target_groups: ["Strong Prison Wives", "Public Defender Clients Groups", "Women 
 blog_link: "/blog/feels-like-lawyer-working-against-me"
 ---
 
-## Facebook Post: Resource — Lawyer Working Against You
+## Facebook Post: Resource, Lawyer Working Against You
 
 **Type**: Text post (colored background)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -37,7 +37,7 @@ They spend more time chatting with the prosecutor than talking to you.
 
 They haven't filed a single motion, and the only activity on your docket is continuances and appearances.
 
-They pressure you to plead quickly — "take this before they take it off the table" — without ever explaining what you'd be giving up.
+They pressure you to plead quickly, "take this before they take it off the table", without ever explaining what you'd be giving up.
 
 They don't know the basic facts of your case. They have to look at the file to remember your charges.
 
@@ -48,9 +48,9 @@ But some of these are red flags.
 Here is what to do:
 
 Ask directly: "What is your theory of defense in my case?"
-Put your concerns in writing — create a paper trail.
+Put your concerns in writing, create a paper trail.
 Check the court docket yourself to see what's actually been filed.
-Request your complete case file — you are entitled to it.
+Request your complete case file, you are entitled to it.
 
 The defendants who ask hard questions early get better outcomes than the ones who stay quiet and hope for the best. Whether you stay with your attorney or switch, the act of holding them accountable changes the dynamic.
 
@@ -60,11 +60,11 @@ You go from being a passive client to an engaged one. And engaged clients get be
 
 ### Visual Direction
 
-Colored text background — deep charcoal or dark gray. The opening quote is the hook. Let the text stand alone.
+Colored text background, deep charcoal or dark gray. The opening quote is the hook. Let the text stand alone.
 
 ### Link Strategy
 
-First comment (pinned): "We wrote a full guide on how to tell if it's a communication problem or something worse — and exactly what to do about it. Link: imnotanattorney.com/blog/feels-like-lawyer-working-against-me"
+First comment (pinned): "We wrote a full guide on how to tell if it's a communication problem or something worse, and exactly what to do about it. Link: imnotanattorney.com/blog/feels-like-lawyer-working-against-me"
 
 ---
 

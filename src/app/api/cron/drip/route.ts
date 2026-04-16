@@ -1,10 +1,10 @@
 /**
- * @file /api/cron/drip — Daily cron orchestrator
+ * @file /api/cron/drip, Daily cron orchestrator
  *
  * Schedule: Runs daily at 9 AM EST (14:00 UTC) via Vercel Cron.
  * Protected by CRON_AUTH_TOKEN bearer token via cron-job.org.
  *
- * All task logic lives in src/lib/cron/*.ts — this file is a thin orchestrator
+ * All task logic lives in src/lib/cron/*.ts, this file is a thin orchestrator
  * that runs each task sequentially with isolated error handling.
  */
 
@@ -41,7 +41,7 @@ import { sendReportExpiryWarnings, sendAbandonedCheckoutEmails } from "@/lib/cro
 import { retriggerMissedEvaluations, detectStuckJobs, checkPipelineCompletion } from "@/lib/cron/pipeline";
 import { detectSLABreaches, sendWeeklyProgressEmails, checkEngineHeartbeat, escalateGuarantees, closeStaleMonitoring } from "@/lib/cron/monitoring";
 
-/** Task registry — each entry runs sequentially with isolated error handling. */
+/** Task registry, each entry runs sequentially with isolated error handling. */
 const TASKS: { name: string; fn: (ctx: CronContext) => Promise<CronResult> }[] = [
   // Drip emails (Parts 1-2)
   { name: "nurture-emails", fn: sendNurtureEmails },
@@ -89,7 +89,7 @@ export async function GET(req: NextRequest) {
   if (!auth.authorized) return auth.error;
 
   // ── Idempotency guard (prevent duplicate runs within 23h window) ──
-  // Uses cron_executions table — works across serverless instances unlike
+  // Uses cron_executions table, works across serverless instances unlike
   // pg_try_advisory_lock which is session-scoped and unreliable with pooling.
   const lock = await acquireCronLock("drip", 23 * 60 * 60 * 1000);
   if (!lock.shouldRun) {

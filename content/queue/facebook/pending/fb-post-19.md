@@ -10,7 +10,7 @@ suggested_time: "Wednesday 7:30 PM ET"
 target_groups: ["Public Defender Clients Groups", "Strong Prison Wives", "Women with Incarcerated Partners"]
 ---
 
-## Facebook Post: Poll -- Attorney Communication Gap
+## Facebook Post: Poll, Attorney Communication Gap
 
 **Type**: Poll (Facebook native poll feature in Groups)
 **Distribution**: Groups (rotate across 3-4 groups, one per day)
@@ -34,17 +34,17 @@ F) They have NEVER proactively contacted me
 
 ---
 
-After voting, share your story in the comments. What happened the last time your attorney actually reached out on their own? Or if they never have -- when did you realize the communication was one-directional?
+After voting, share your story in the comments. What happened the last time your attorney actually reached out on their own? Or if they never have, when did you realize the communication was one-directional?
 
 For reference: The American Bar Association requires attorneys to "keep the client reasonably informed about the status of the matter" and "promptly comply with reasonable requests for information." This is Rule 1.4. It is not optional. It is a professional obligation.
 
-If you voted D, E, or F -- you are not being unreasonable. You are being underserved. Consider sending a written email (not a phone call -- email creates a paper trail) asking five specific questions about your case status. Document the date you sent it. Give them 5 business days to respond.
+If you voted D, E, or F, you are not being unreasonable. You are being underserved. Consider sending a written email (not a phone call, email creates a paper trail) asking five specific questions about your case status. Document the date you sent it. Give them 5 business days to respond.
 
 (This is information, not legal advice.)
 
 ### Visual Direction
 
-Use Facebook's native Group poll feature. The poll options should be the exact choices listed above (A through F). The text before and after the poll appears in the post body. No image needed -- the poll itself is the interactive element.
+Use Facebook's native Group poll feature. The poll options should be the exact choices listed above (A through F). The text before and after the poll appears in the post body. No image needed, the poll itself is the interactive element.
 
 Note: Facebook polls are available in Groups but not on Pages. This is a Group-only post.
 
@@ -64,6 +64,6 @@ The poll asks about communication frequency, not case details. The ABA Rule 1.4 
 
 ---
 
-**Share trigger**: Someone sees the results (majority voted D, E, or F) and sends it to the defendant or family member: "Look -- this isn't just us. Everyone is dealing with this."
+**Share trigger**: Someone sees the results (majority voted D, E, or F) and sends it to the defendant or family member: "Look, this isn't just us. Everyone is dealing with this."
 **Context**: Polls generate the highest participation-to-view ratio of any Facebook post type in Groups. The question is designed to produce results that validate the group's shared experience (most will vote C through F). The results themselves become shareable content.
-**KPI target**: Poll votes (primary -- aim for 200+) + comments sharing stories + follow-up engagement on results comment
+**KPI target**: Poll votes (primary, aim for 200+) + comments sharing stories + follow-up engagement on results comment

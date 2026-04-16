@@ -1,5 +1,5 @@
 /**
- * @file /api/cron/generate-backup — Trigger backup report generator via GitHub Actions
+ * @file /api/cron/generate-backup, Trigger backup report generator via GitHub Actions
  *
  * Called by cron-job.org every 5 minutes. Dispatches the generate-report.yml
  * workflow which picks up Case Decoder reports stuck in "generating" status
@@ -10,8 +10,8 @@
  *   -> GitHub Actions runner -> checks for stuck cases -> generates if found
  *
  * Env vars required:
- *   CRON_AUTH_TOKEN     — Bearer token for cron-job.org auth
- *   ENGINE_DISPATCH_PAT  — GitHub PAT with workflow dispatch permission
+ *   CRON_AUTH_TOKEN    , Bearer token for cron-job.org auth
+ *   ENGINE_DISPATCH_PAT , GitHub PAT with workflow dispatch permission
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
   const auth = requireCron(req);
   if (!auth.authorized) return auth.error;
 
-  // Idempotency lock — 4min window prevents overlapping 5-min cron runs
+  // Idempotency lock, 4min window prevents overlapping 5-min cron runs
   const lock = await acquireCronLock("generate-backup", 4 * 60 * 1000);
   if (!lock.shouldRun) {
     return NextResponse.json({ skipped: true, reason: lock.reason });

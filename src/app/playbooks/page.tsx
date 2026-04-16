@@ -8,9 +8,9 @@
  *   Nav / Blog / Landing page -> THIS PAGE -> /playbook/{slug} -> /checkout
  *
  * Page structure:
- *   1. Hero — "Defense Playbooks" heading with charge-type selection prompt
- *   2. Card grid — 4-col desktop, 2-col tablet, 1-col mobile
- *   3. Value props — What's inside every playbook (6 items)
+ *   1. Hero, "Defense Playbooks" heading with charge-type selection prompt
+ *   2. Card grid, 4-col desktop, 2-col tablet, 1-col mobile
+ *   3. Value props, What's inside every playbook (6 items)
  *   4. UPL disclaimer
  *
  * Filtering: Only displays playbooks where TIER_CORE[slug].live === true.
@@ -25,14 +25,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Defense Playbooks — Instant Download",
+  title: "Defense Playbooks, Instant Download",
   description:
     "Choose your charge type and get an instant-download defense playbook: 26 questions that change how your next attorney meeting goes, case stage roadmap, red flag checklist, attorney scorecard, and emergency guide.",
   alternates: {
     canonical: `${SITE_URL}/playbooks`,
   },
   openGraph: {
-    title: "Defense Playbooks — Instant Download",
+    title: "Defense Playbooks, Instant Download",
     description:
       "Choose your charge type. Get 26 questions that change how your next attorney meeting goes, a case stage roadmap, red flag checklist, and attorney scorecard. Instant PDF download.",
     url: `${SITE_URL}/playbooks`,
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Ordered list of playbook slugs — most common charge types first.
+ * Ordered list of playbook slugs, most common charge types first.
  * Only slugs with live: true in TIER_CORE will render.
  */
 const DISPLAY_ORDER: TierSlug[] = [
@@ -191,7 +191,7 @@ export default function PlaybooksCatalogPage() {
             })}
           </div>
 
-          {/* Empty state — if no playbooks are live yet */}
+          {/* Empty state, if no playbooks are live yet */}
           {livePlaybooks.length === 0 && (
             <div className="py-20 text-center">
               <p className="text-lg text-zinc-400">
@@ -241,7 +241,7 @@ export default function PlaybooksCatalogPage() {
         <a href="mailto:help@imnotanattorney.com" className="text-amber-400 underline hover:text-amber-300">
           help@imnotanattorney.com
         </a>{" "}
-        — usually same day.
+       , usually same day.
       </p>
 
       {/* ── UPL Disclaimer ── */}

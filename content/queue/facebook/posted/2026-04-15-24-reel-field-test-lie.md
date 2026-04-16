@@ -22,13 +22,13 @@ format: "1080x1920px (9:16), 42 seconds"
 ### Reel Script
 
 [SECOND 0-4]
-HOOK — Close-up of hands holding a small plastic test kit (or illustration).
+HOOK, Close-up of hands holding a small plastic test kit (or illustration).
 Text overlay: "This roadside test can ruin your life. And it's wrong more than you think."
 Audio: Dramatic sound effect.
 
 [SECOND 4-12]
 Person facing camera:
-"When an officer finds a substance during a traffic stop, they run a field test. It's a cheap chemical kit that turns a color. If it turns the 'right' color — you get arrested."
+"When an officer finds a substance during a traffic stop, they run a field test. It's a cheap chemical kit that turns a color. If it turns the 'right' color, you get arrested."
 Text overlay: "Roadside chemical kit = arrest"
 
 [SECOND 12-20]
@@ -49,7 +49,7 @@ Text overlay: "Field test = arrest. Lab test = evidence."
 Text overlay:
 "1. Has the substance been tested in a laboratory?"
 "2. Do the lab results match the charges?"
-"If the answer is 'I don't know' or 'I haven't checked' — that's a problem."
+"If the answer is 'I don't know' or 'I haven't checked', that's a problem."
 
 [SECOND 36-42]
 Person facing camera:

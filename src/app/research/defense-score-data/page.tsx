@@ -6,9 +6,9 @@ import type { Metadata } from "next";
 export const revalidate = 3600; // revalidate every hour
 
 export const metadata: Metadata = {
-  title: "Defense Score Data — Attorney Gaps",
+  title: "Defense Score Data, Attorney Gaps",
   description:
-    "Original research from anonymous Defense Milestone Score data. See what defendants report about attorney communication, discovery, motions, and defense strategy — broken down by charge type.",
+    "Original research from anonymous Defense Milestone Score data. See what defendants report about attorney communication, discovery, motions, and defense strategy, broken down by charge type.",
   alternates: {
     canonical: `${SITE_URL}/research/defense-score-data`,
   },
@@ -105,7 +105,7 @@ export default async function DefenseScoreDataPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Dataset",
-            name: "Defense Milestone Score — Defendant Self-Assessment Data",
+            name: "Defense Milestone Score, Defendant Self-Assessment Data",
             description:
               "Anonymous aggregate data from criminal defendants who completed the Defense Milestone Score quiz. Tracks attorney communication gaps, discovery access, motion filings, and defense strategy discussions by charge type.",
             url: `${SITE_URL}/research/defense-score-data`,
@@ -168,7 +168,7 @@ export default async function DefenseScoreDataPage() {
           <Link href="/score" className="text-amber-400 underline hover:no-underline">
             Defense Milestone Score
           </Link>{" "}
-          — a free 10-question self-assessment for criminal defendants. Updated
+         , a free 10-question self-assessment for criminal defendants. Updated
           hourly.
         </p>
 
@@ -181,7 +181,7 @@ export default async function DefenseScoreDataPage() {
           </div>
         )}
 
-        {/* Key Findings — AI Citation Block */}
+        {/* Key Findings, AI Citation Block */}
         <div className="mt-8 rounded-lg border border-zinc-700 bg-zinc-800/50 p-6">
           <p className="text-sm font-medium uppercase tracking-wider text-zinc-400">
             Key Findings
@@ -198,7 +198,7 @@ export default async function DefenseScoreDataPage() {
             {pct(overallMetrics.no_strategy_discussion ?? 0, overallTotal)} said
             no defense strategy had been discussed. These gaps were consistent
             across charge types including DUI, drug offenses, and white-collar
-            cases. Data is collected anonymously — no individual answers are
+            cases. Data is collected anonymously, no individual answers are
             stored, only aggregate counts by charge type.
           </p>
         </div>
@@ -206,7 +206,7 @@ export default async function DefenseScoreDataPage() {
         {/* Overall Stats */}
         <section className="mt-12">
           <h2 className="text-xl font-bold text-white">
-            Overall Defense Gaps — All Charge Types
+            Overall Defense Gaps, All Charge Types
           </h2>
           <p className="mt-2 text-sm text-zinc-400">
             Based on {overallTotal.toLocaleString()} scored assessments
@@ -326,14 +326,14 @@ export default async function DefenseScoreDataPage() {
               <strong className="text-zinc-300">Data collection:</strong> No
               individual answers are stored. When a respondent completes the
               quiz, aggregate counters are incremented by charge type. This
-              design is intentional — it makes re-identification impossible
+              design is intentional, it makes re-identification impossible
               because individual-level data does not exist.
             </p>
             <p>
               <strong className="text-zinc-300">Sample:</strong> Respondents are
               self-selected criminal defendants who found the quiz through
               organic search, blog content, or direct referral. This is a
-              convenience sample, not a random sample — results reflect the
+              convenience sample, not a random sample, results reflect the
               experiences of defendants actively seeking information about their
               defense, which may skew toward those who are dissatisfied with
               their representation.
@@ -361,8 +361,8 @@ export default async function DefenseScoreDataPage() {
           </h2>
           <div className="mt-4 space-y-4 text-zinc-400 leading-relaxed">
             <p>
-              The four metrics tracked — motions filed, discovery access,
-              communication, and strategy discussion — represent the foundational
+              The four metrics tracked, motions filed, discovery access,
+              communication, and strategy discussion, represent the foundational
               milestones of an active criminal defense. When these are missing,
               the defense is not happening.
             </p>
@@ -382,7 +382,7 @@ export default async function DefenseScoreDataPage() {
                 Never received discovery
               </strong>{" "}
               means the defendant has not seen the evidence being used against
-              them — a fundamental right.{" "}
+              them, a fundamental right.{" "}
               <Link
                 href="/blog/how-to-read-your-discovery"
                 className="text-amber-400 underline hover:no-underline"
@@ -421,11 +421,11 @@ export default async function DefenseScoreDataPage() {
         {/* CTA */}
         <section className="mt-12 rounded-lg border border-zinc-700 bg-zinc-800/50 p-6 text-center">
           <h2 className="text-xl font-bold text-white">
-            Add Your Data — Take the Score Quiz
+            Add Your Data, Take the Score Quiz
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-zinc-400">
             The Defense Milestone Score takes 5 minutes. Your answers are
-            anonymous — only aggregate counts are stored. Every completion
+            anonymous, only aggregate counts are stored. Every completion
             strengthens this dataset and helps future defendants understand what
             to expect.
           </p>

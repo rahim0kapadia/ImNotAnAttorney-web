@@ -1,4 +1,4 @@
-# Intelligence Brief ($997) — Pipeline Documentation
+# Intelligence Brief ($997), Pipeline Documentation
 
 > **STATUS (2026-03-14):** Pipeline is fully deployed and audited. v4 update: Phase A now auto-triggers Phase B (no operator judge research gate). IB uses jurisdiction-level intelligence patterns; specific judge research moved to X-Ray ($2,497+). Operator intervenes only for review/delivery. See `AUDIT-CHECKLIST.md` for the IB audit results.
 >
@@ -10,7 +10,7 @@ The Case Intelligence Brief is the $997 tier (`intelligence-brief` slug). It inc
 
 **Delivery target:** 72 hours (24 hours with priority add-on at $297).
 
-**Pipeline flow (v4):** Checkout → Webhook → CD auto-generation → Phase 2 intake → Phase A (5 sections parallel) → Phase B auto-triggered (4 sections sequential) → HTML report compiled → Operator review → Delivery email. No operator judge research gate — IB uses jurisdiction-level intelligence. Judge-research endpoint remains available for optional enrichment.
+**Pipeline flow (v4):** Checkout → Webhook → CD auto-generation → Phase 2 intake → Phase A (5 sections parallel) → Phase B auto-triggered (4 sections sequential) → HTML report compiled → Operator review → Delivery email. No operator judge research gate, IB uses jurisdiction-level intelligence. Judge-research endpoint remains available for optional enrichment.
 
 ---
 
@@ -79,10 +79,10 @@ For `intelligence-brief`, the intake is linked and status becomes `"intake"`, bu
 Three post-purchase emails are defined for this tier:
 
 | Key | Delay | Relative To | Subject | Purpose |
-|-----|-------|-------------|---------|---------|
-| `post_intelligence_brief_delivery` | Day 0 | Purchase | "Your Intelligence Brief is ready -- here's how to use it in your next meeting" | Sent at delivery time by `/api/deliver` |
-| `post_intelligence_brief_story_harvest` | Day 5 | `delivered_at` | "You met with your attorney -- what was the first question they stopped to think about?" | Story harvest / feedback |
-| `post_intelligence_brief_upsell` | Day 10 | Purchase | "When you get discovery -- we're ready" | Upsell to X-Ray ($2,497), credits $997 |
+|---, |-------|-------------|---------|---------|
+| `post_intelligence_brief_delivery` | Day 0 | Purchase | "Your Intelligence Brief is ready, here's how to use it in your next meeting" | Sent at delivery time by `/api/deliver` |
+| `post_intelligence_brief_story_harvest` | Day 5 | `delivered_at` | "You met with your attorney, what was the first question they stopped to think about?" | Story harvest / feedback |
+| `post_intelligence_brief_upsell` | Day 10 | Purchase | "When you get discovery, we're ready" | Upsell to X-Ray ($2,497), credits $997 |
 
 Notes:
 - The day-0 delivery email is sent by the `/api/deliver` endpoint at delivery time, not by the cron.
@@ -95,8 +95,8 @@ Notes:
 
 The `/api/deliver` endpoint is tier-agnostic. It works for Intelligence Brief orders the same way it works for Case Decoder:
 
-1. **GET** — Renders operator confirmation page with case details.
-2. **POST** — Sends delivery email, updates case `status` to `"delivered"`, records drip.
+1. **GET**, Renders operator confirmation page with case details.
+2. **POST**, Sends delivery email, updates case `status` to `"delivered"`, records drip.
 
 Requirements for delivery:
 - Case must be in `"review"` status.
@@ -111,29 +111,29 @@ The delivery email is currently hardcoded for Case Decoder content ("Your Case D
 
 **File:** `src/app/report/[token]/page.tsx`
 
-The token-gated report viewer renders whatever HTML is stored in `cases.report_html`. It is tier-agnostic — if `report_html` contains an Intelligence Brief, it renders an Intelligence Brief.
+The token-gated report viewer renders whatever HTML is stored in `cases.report_html`. It is tier-agnostic, if `report_html` contains an Intelligence Brief, it renders an Intelligence Brief.
 
 ---
 
-## ~~What Is NOT Built~~ — RESOLVED (2026-03-03)
+## ~~What Is NOT Built~~, RESOLVED (2026-03-03)
 
 All items below have been built and deployed. Kept for historical reference.
 
-### ~~1. Generation Endpoint~~ — BUILT
+### ~~1. Generation Endpoint~~, BUILT
 - Phase A dispatcher: `src/app/api/generate/intelligence-brief/route.ts`
 - Phase B dispatcher: `src/app/api/generate/intelligence-brief/judge-research/route.ts`
 - Edge Function: `supabase/functions/generate-report/index.ts` (handles `tier=intelligence-brief`, `phase=A` and `phase=B`)
 
-### ~~2. Auto-Trigger from Webhook~~ — BUILT
+### ~~2. Auto-Trigger from Webhook~~, BUILT
 - Webhook auto-triggers CD generation for IB tier (included product)
 - Phase A auto-triggers after Phase 1 intake submission
-- Phase B auto-triggered by Phase A on completion (v4 — no operator gate)
+- Phase B auto-triggered by Phase A on completion (v4, no operator gate)
 
-### ~~3. Delivery Email Personalization~~ — BUILT
+### ~~3. Delivery Email Personalization~~, BUILT
 - `/api/deliver` branches on tier for subject line and body copy
 - Post-purchase drip emails tier-aware in `drip-emails.ts`
 
-### ~~4. Case Decoder-Specific Cron Logic~~ — FIXED
+### ~~4. Case Decoder-Specific Cron Logic~~, FIXED
 - Cron stuck-intake detection skips IB-tier cases in `intake` status
 - IB-specific stuck detection: `compiling` (30min). v4: `researching` status no longer used in normal flow
 
@@ -165,17 +165,17 @@ All items below have been built and deployed. Kept for historical reference.
 
 Expert basis: Cialdini (commitment/consistency), Kahneman (cognitive ease), Eyal (Hook Model).
 
-The Intelligence Brief is the $997 tier — the first tier with full engagement design. At this price point, every engagement element is active and personalization incorporates jurisdiction-level intelligence.
+The Intelligence Brief is the $997 tier, the first tier with full engagement design. At this price point, every engagement element is active and personalization incorporates jurisdiction-level intelligence.
 
 Every report section must include:
 
-1. **Section-End Executive Summary** — 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. Summaries at this tier are analytical ("Based on sentencing patterns in [jurisdiction], this finding means...") in addition to action-oriented. Each summary should reference at least one jurisdiction-specific data point.
+1. **Section-End Executive Summary**, 3-5 key findings + recommended next action. Clearly boxed/separated from analysis text. Summaries at this tier are analytical ("Based on sentencing patterns in [jurisdiction], this finding means...") in addition to action-oriented. Each summary should reference at least one jurisdiction-specific data point.
 
-2. **"Your Case" Personalization** — At least 1 personalized reference per section using the client's actual case details (defendant name, charges, jurisdiction, dates) AND jurisdiction-level intelligence (judge tendencies, local court patterns, county-specific procedures). Example: "In [County] courts, judges handling [charge type] cases have historically..." Personalization boxes should be visually distinct (bordered callout) and labeled "Your Case."
+2. **"Your Case" Personalization**, At least 1 personalized reference per section using the client's actual case details (defendant name, charges, jurisdiction, dates) AND jurisdiction-level intelligence (judge tendencies, local court patterns, county-specific procedures). Example: "In [County] courts, judges handling [charge type] cases have historically..." Personalization boxes should be visually distinct (bordered callout) and labeled "Your Case."
 
-3. **Section Bridges** — Final 1-2 sentences of each section create anticipation for the next. Bridges at this tier reference specific findings from the current section that connect to the next. Example: "Based on the prosecution's evidence pattern above, the next section reveals how this typically plays out at sentencing in [jurisdiction]..."
+3. **Section Bridges**, Final 1-2 sentences of each section create anticipation for the next. Bridges at this tier reference specific findings from the current section that connect to the next. Example: "Based on the prosecution's evidence pattern above, the next section reveals how this typically plays out at sentencing in [jurisdiction]..."
 
-4. **Progress Structure** — Each section header includes position: "Section N of M: [Section Title]". For the 9-section + 3-appendix structure: sections numbered 1-9, appendices labeled "Appendix A-C" without numbering. Example: "Section 4 of 9: Prosecution Strategy Analysis"
+4. **Progress Structure**, Each section header includes position: "Section N of M: [Section Title]". For the 9-section + 3-appendix structure: sections numbered 1-9, appendices labeled "Appendix A-C" without numbering. Example: "Section 4 of 9: Prosecution Strategy Analysis"
 
 **Tier-specific enhancements over Case Decoder ($197):**
 - Personalization uses jurisdiction + judge intelligence data (not just intake questionnaire)
@@ -194,7 +194,7 @@ Every report section must include:
 
 ### Post-Purchase Emails (intelligence-brief tier)
 
-**Day 0 — Delivery** (`post_intelligence_brief_delivery`)
+**Day 0, Delivery** (`post_intelligence_brief_delivery`)
 - Triggered: At delivery time by `/api/deliver` drip recording
 - Content: Instructions to start with 48-Hour Priority List, read Case Progress Score, review 10-15 questions in Appendix D
 - CTA: Reply with which question got the most reaction (story harvest)
@@ -207,22 +207,22 @@ Every report section must include:
 **Day 10 after purchase** (`post_intelligence_brief_upsell`)
 - Triggered: Cron Part 2, relative to purchase date
 - Content: Promotes X-Ray ($2,497) for when customer receives discovery
-- CTA: "Upgrade to The X-Ray -- $1,500" (after $997 credit)
+- CTA: "Upgrade to The X-Ray, $1,500" (after $997 credit)
 
 Additionally, if the customer subscribed to the email list, they may also receive nurture sequence emails (days 1, 3, 5, 7, 10, 14 after subscribe). The nurture sequence is independent of purchases.
 
 ---
 
-## ~~Next Steps for Full Automation~~ — ALL COMPLETE (2026-03-03)
+## ~~Next Steps for Full Automation~~, ALL COMPLETE (2026-03-03)
 
 All 6 items below are implemented and deployed. See `AUDIT-CHECKLIST.md` for the full IB audit.
 
-1. ~~Prompt Template~~ — 9 section prompts in Edge Function (`buildIBPrompt`)
-2. ~~Edge Function~~ — Extended `generate-report` with `handleIBPhaseA` and `handleIBPhaseB`
-3. ~~Dispatcher Endpoints~~ — Phase A: `/api/generate/intelligence-brief/route.ts`, Phase B: `.../judge-research/route.ts`
-4. ~~Auto-Trigger~~ — Webhook and intake trigger CD generation; Phase A triggers after Phase 2 intake
-5. ~~Delivery Email~~ — `/api/deliver` branches on tier for subject and body
-6. ~~Cron Fix~~ — IB-specific stuck detection for `researching` (24h) and `compiling` (30min)
+1. ~~Prompt Template~~, 9 section prompts in Edge Function (`buildIBPrompt`)
+2. ~~Edge Function~~, Extended `generate-report` with `handleIBPhaseA` and `handleIBPhaseB`
+3. ~~Dispatcher Endpoints~~, Phase A: `/api/generate/intelligence-brief/route.ts`, Phase B: `.../judge-research/route.ts`
+4. ~~Auto-Trigger~~, Webhook and intake trigger CD generation; Phase A triggers after Phase 2 intake
+5. ~~Delivery Email~~, `/api/deliver` branches on tier for subject and body
+6. ~~Cron Fix~~, IB-specific stuck detection for `researching` (24h) and `compiling` (30min)
 
 ---
 
@@ -235,7 +235,7 @@ See `AUDIT-CHECKLIST.md` items IB1-IB8 for known low-severity gaps.
 ## File Reference
 
 | File | Role in Pipeline |
-|------|-----------------|
+|------|---------------, |
 | `src/lib/stripe.ts` | Tier definition (price, delivery, priority) |
 | `src/app/api/webhooks/stripe/route.ts` | Order + case creation on payment, CD auto-trigger |
 | `src/app/api/intake/route.ts` | Phase 1 intake + case linking |
@@ -247,4 +247,4 @@ See `AUDIT-CHECKLIST.md` items IB1-IB8 for known low-severity gaps.
 | `src/app/api/deliver/route.ts` | Operator delivery endpoint (tier-aware) |
 | `src/app/api/cron/drip/route.ts` | Daily cron: drip emails + stuck-case detection (IB-aware) |
 | `src/app/report/[token]/page.tsx` | Token-gated report viewer (tier-agnostic) |
-| `src/lib/intelligence-brief/render.ts` | Canonical HTML renderer (reference — Edge Function has Deno duplicate) |
+| `src/lib/intelligence-brief/render.ts` | Canonical HTML renderer (reference, Edge Function has Deno duplicate) |

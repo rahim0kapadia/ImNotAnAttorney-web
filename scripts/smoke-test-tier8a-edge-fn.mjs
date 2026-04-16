@@ -4,7 +4,7 @@
  * Validates that the SQL queries in fetchDefendantProfileBlock() and
  * fetchCaseIntelligenceBlock() execute cleanly against real backfilled
  * data and return the expected shape. Does NOT call the Edge Function
- * itself — that requires a live deployment with a real intake.
+ * itself, that requires a live deployment with a real intake.
  *
  * Run: node scripts/smoke-test-tier8a-edge-fn.mjs
  */
@@ -42,7 +42,7 @@ async function main() {
 
   console.log(`[PASS] defendant_profiles query returned ${profiles.length} rows`);
   if (profiles.length === 0) {
-    console.warn("[WARN] No defendant_profiles rows — backfill may not have run");
+    console.warn("[WARN] No defendant_profiles rows, backfill may not have run");
   } else {
     const sample = profiles[0];
     console.log(`  sample case_id: ${sample.case_id}`);
@@ -54,7 +54,7 @@ async function main() {
   }
 
   // 2. Verify case_intelligence query syntax (the filter chain is the
-  //    sensitive part — a typo here would expose unverified rows to customers).
+  //    sensitive part, a typo here would expose unverified rows to customers).
   const { data: intel, error: iErr } = await sb
     .from("case_intelligence")
     .select("case_id, fact_summary, fact_detail, source_type, source_reference, verification_status, verification_source, intel_category, legal_significance")
@@ -69,10 +69,10 @@ async function main() {
 
   console.log(`[PASS] case_intelligence query returned ${intel.length} rows (filtered)`);
   if (intel.length === 0) {
-    console.log("  (table is empty — operator-populated, expected at this stage)");
+    console.log("  (table is empty, operator-populated, expected at this stage)");
   }
 
-  // 3. Inverse check — make sure the unverified-exclusion logic actually
+  // 3. Inverse check, make sure the unverified-exclusion logic actually
   //    filters. If anything ever leaks an unverified row, it's a safety incident.
   const { data: unverified, error: uErr } = await sb
     .from("case_intelligence")
@@ -83,7 +83,7 @@ async function main() {
     console.error("[FAIL] case_intelligence unverified query error:", uErr);
     process.exit(1);
   }
-  console.log(`[PASS] case_intelligence has ${unverified.length} unverified rows total — these are correctly EXCLUDED by the Edge Function filter`);
+  console.log(`[PASS] case_intelligence has ${unverified.length} unverified rows total, these are correctly EXCLUDED by the Edge Function filter`);
 
   // 4. Mirror the exact PostgREST query string the Edge Function uses
   //    (`disclosure_restriction=eq.none&verification_status=in.(confirmed,supported,theory)`).

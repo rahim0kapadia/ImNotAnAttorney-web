@@ -1,4 +1,4 @@
-# UI Components — src/components/
+# UI Components, src/components/
 
 > 45 React components. Server Components by default; client components marked `"use client"` for interactivity.
 
@@ -6,7 +6,7 @@
 
 ### Layout & Navigation
 | File | Purpose | Client |
-|------|---------|--------|
+|------|---------|------, |
 | `Header.tsx` | Sticky nav bar, responsive mobile menu (hamburger + Escape close) | Yes |
 | `Footer.tsx` | 5-column grid footer: brand, nav, blog topics, services, legal + CAN-SPAM | No |
 | `StickyMobileCTA.tsx` | Fixed bottom CTA bar, IntersectionObserver on hero `<section>` | Yes |
@@ -15,7 +15,7 @@
 
 ### Homepage & Landing
 | File | Purpose | Client |
-|------|---------|--------|
+|------|---------|------, |
 | `HomepageHero.tsx` | Dynamic hero with charge selector + smart CTA routing | Yes |
 | `ChargeTypeSelector.tsx` | 12-category picker with urgency one-liners, fires onSelect | Yes |
 | `TestimonialSection.tsx` | Testimonial cards with inline/grid variants + FadeInUp | Yes |
@@ -24,7 +24,7 @@
 
 ### Pricing & Sales
 | File | Purpose | Client |
-|------|---------|--------|
+|------|---------|------, |
 | `PricingTable.tsx` | Tiered pricing grid (3-col base, 2-col premium, add-ons). maxTiers prop | No |
 | `PlaybookSalesPage.tsx` | Shared long-form sales layout: Hero→Agitate→Proof→Value Stack→FAQ→CTA | No |
 | `PlaybookCTA.tsx` | In-playbook CTA. Routes to live playbook or free Score Quiz | No |
@@ -34,7 +34,7 @@
 
 ### Blog & Content
 | File | Purpose | Client |
-|------|---------|--------|
+|------|---------|------, |
 | `BlogCard.tsx` | Post preview: date, reading time, title, excerpt (2-line clamp), tags | No |
 | `BlogCategoryFilter.tsx` | Category filter pills, useRouter for instant navigation | Yes |
 | `TLDRBox.tsx` | Key takeaway summary box | No |
@@ -43,7 +43,7 @@
 
 ### Case & Intake
 | File | Purpose | Client |
-|------|---------|--------|
+|------|---------|------, |
 | `IntakeChargeCategories.tsx` | Step 1: category picker for intake form | Yes |
 | `IntakeChargeSelector.tsx` | Step 2: charge picker within category. Arrow-key nav, free-text option | Yes |
 | `IntakeChargeQuestions.tsx` | Step 3: dynamic questions per charge type | Yes |
@@ -54,7 +54,7 @@
 
 ### Sharing & Social Proof
 | File | Purpose | Client |
-|------|---------|--------|
+|------|---------|------, |
 | `ShareButtons.tsx` | SMS, WhatsApp, Email, Twitter, Facebook, Copy Link + UTM params | Yes |
 | `QRCode.tsx` | QR code generation and display | Yes |
 | `ReferralQuiz.tsx` | Referral engagement quiz | Yes |
@@ -70,7 +70,7 @@
 
 ### Partner Portal
 | File | Purpose | Client |
-|------|---------|--------|
+|------|---------|------, |
 | `partner/PartnerApplicationForm.tsx` | Application form, POSTs to `/api/partners/apply` | Yes |
 | `partner/PartnerCommissionTable.tsx` | Commission table display | No |
 | `partner/PartnerHowItWorks.tsx` | Program mechanics explanation | No |
@@ -79,12 +79,12 @@
 
 ### Tier 9
 | File | Purpose | Client |
-|------|---------|--------|
+|------|---------|------, |
 | `tier9/AvailabilityChecker.tsx` | Pre-purchase data availability gate. 6 states (idle, checking, available, unavailable, waitlisted, error). POSTs to `/api/check-availability/[slug]`, renders coverage stats as `dl/dt/dd`, waitlist email capture on unavailable. WCAG AA: labeled inputs, aria-required, role="alert"/"status", aria-busy, focus management via refs. | Yes |
 
 ### Other
 | File | Purpose | Client |
-|------|---------|--------|
+|------|---------|------, |
 | `FAQAccordion.tsx` | Accessible accordion (aria-expanded, single-expand) | Yes |
 | `MessageTemplates.tsx` | Message template display | No |
 | `BridgePage.tsx` | Bridge/transition page | No |
@@ -93,7 +93,7 @@
 ## Key Constants
 
 | Constant | Value | File:Line |
-|----------|-------|-----------|
+|----------|-------|---------, |
 | CATEGORY_TO_PLAYBOOK | 6 category→tier slug mappings | `HomepageHero.tsx:18-25` |
 | CATEGORY_PLAYBOOK | 10 blog category→playbook mappings | `BlogCTA.tsx:15-26` |
 | ADMIN_LINKS | Inbox, Demand Intel, Partners | `AdminNav.tsx:10-14` |
@@ -112,9 +112,9 @@
 - `copyToClipboard` from `clipboard` (ShareButtons)
 
 **Imports external:**
-- `framer-motion` — all motion/* components + AnimatePresence
-- `next/link`, `next/image`, `next/navigation` — Next.js primitives
-- `lucide-react` — icons
+- `framer-motion`, all motion/* components + AnimatePresence
+- `next/link`, `next/image`, `next/navigation`, Next.js primitives
+- `lucide-react`, icons
 
 **Consumed by pages:**
 - Homepage → HomepageHero, ChargeTypeSelector, PricingTable, TrustBadges, TestimonialSection, StickyMobileCTA

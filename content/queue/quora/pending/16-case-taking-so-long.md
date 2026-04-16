@@ -39,12 +39,12 @@ Every court date is a continuance with no explanation. Five in a row with no wor
 
 Your attorney can't tell you what's happening. "These things take time" is not an answer. A real answer: "We filed a motion to suppress on January 15th. The prosecution's response is due February 28th."
 
-No motions have been filed after 6+ months. Even cases that resolve by plea should have motion activity -- motions create leverage for better plea deals.
+No motions have been filed after 6+ months. Even cases that resolve by plea should have motion activity, motions create leverage for better plea deals.
 
 You're the one initiating every communication. If the only time you hear from your attorney is when you call them, your case isn't their priority.
 
-**What to do:** Check the court docket yourself (search "[your county] court records"). Request a written timeline from your attorney. Ask about your speedy trial rights -- and whether they've been waived through continuances without your knowledge.
+**What to do:** Check the court docket yourself (search "[your county] court records"). Request a written timeline from your attorney. Ask about your speedy trial rights, and whether they've been waived through continuances without your knowledge.
 
 The waiting is its own punishment. You can't plan, can't move, can't make decisions. You deserve a timeline and straight answers.
 
-**Image direction**: Timeline comparison -- "strategic delay" vs. "nothing happening" | **Republish to**: Medium if 5K+ views
+**Image direction**: Timeline comparison, "strategic delay" vs. "nothing happening" | **Republish to**: Medium if 5K+ views

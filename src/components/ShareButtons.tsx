@@ -17,9 +17,9 @@ interface ShareButtonsProps {
 }
 
 /**
- * ShareButtons — Reusable share button strip (SMS, WhatsApp, Email, Twitter/X, Facebook, Copy Link).
+ * ShareButtons, Reusable share button strip (SMS, WhatsApp, Email, Twitter/X, Facebook, Copy Link).
  *
- * Used on blog posts and score page. SMS is always first — defendants share via text.
+ * Used on blog posts and score page. SMS is always first, defendants share via text.
  */
 export function ShareButtons({
   url,
@@ -34,9 +34,9 @@ export function ShareButtons({
 
   const fullUrl = url.startsWith("http") ? url : `${SITE_URL}${url}`;
   const shareUrl = utmParams ? `${fullUrl}?${utmParams}` : fullUrl;
-  const smsText = shareText || `Read this — it might help with your case: ${shareUrl}`;
+  const smsText = shareText || `Read this, it might help with your case: ${shareUrl}`;
   const waText = shareText || `${title} ${shareUrl}`;
-  const emailSubject = `This might help — ${title}`;
+  const emailSubject = `This might help, ${title}`;
   const emailBodyText = emailBody || `I thought this might be useful for your case:\n\n${title}\n${shareUrl}\n\nIt covers questions worth asking your attorney.`;
 
   const buttons = [

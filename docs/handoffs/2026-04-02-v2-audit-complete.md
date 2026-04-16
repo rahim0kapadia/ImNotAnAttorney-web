@@ -5,7 +5,7 @@ Date: 2026-04-02 14:45
 ## Task
 Complete all 15 findings from the 15-layer v2 audit. All items are now DONE and deployed.
 
-## Status: COMPLETE — Nothing Remaining
+## Status: COMPLETE, Nothing Remaining
 
 All 15/15 v2 audit items are fixed, committed, pushed, and deploying via Vercel.
 
@@ -27,12 +27,12 @@ All 15/15 v2 audit items are fixed, committed, pushed, and deploying via Vercel.
 
 ## What Didn't Work
 - report_token::bytea failed (UUID type needs ::text::bytea)
-- PowerShell SQL quoting — used scripts/apply-pending-sql.mjs instead
+- PowerShell SQL quoting, used scripts/apply-pending-sql.mjs instead
 - Hook gauntlet: ARCHITECTURE, CONTEXT, a11y-lead, FEATURE triage, plan Write, plan-mode flag
 
 ## Verification
-- npx tsc --noEmit — clean
-- npm run build — clean
+- npx tsc,noEmit, clean
+- npm run build, clean
 - Commit fca1287 pushed to origin/master
 - Migration 034 applied to production Supabase
 
@@ -40,5 +40,5 @@ All 15/15 v2 audit items are fixed, committed, pushed, and deploying via Vercel.
 None. V2 audit 15/15 complete.
 
 ## Next Priorities
-- Anthropic SDK npm audit vulnerability (deferred — breaking change)
+- Anthropic SDK npm audit vulnerability (deferred, breaking change)
 - leading-relaxed on longer body paragraphs (minor a11y follow-up)
