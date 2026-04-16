@@ -30,6 +30,12 @@ if [ "${BLOG_QA_SKIP_HOOK:-0}" = "1" ]; then
   exit 0
 fi
 
+# Detect if running inside a Claude Code session
+if [ -n "$CLAUDE_CODE_ENTRY_POINT" ]; then
+  echo "[pre-commit] CC session detected — full QA available via /blog-pipeline skill"
+  echo "[pre-commit] Sidecar check only (LLM gates run via the skill, not this hook)"
+fi
+
 # Collect staged .mdx files under content/blog/ (added or modified).
 staged_mdx=$(git diff --cached --name-only --diff-filter=AM | grep -E '^content/blog/[^/]+\.mdx$' || true)
 
@@ -46,8 +52,9 @@ if [ -n "$staged_mdx" ]; then
     slug=$(basename "$file" .mdx)
     sidecar="content/blog/.qa-state/${slug}.json"
 
-    if [ "${BLOG_QA_HOOK_FRESH:-0}" = "1" ]; then
+    if [ "${BLOG_QA_HOOK_FRESH:-0}" = "1" ] && [ -z "$CLAUDE_CODE_ENTRY_POINT" ]; then
       # Fresh mode: re-run anti_hallucination gate for this file.
+      # Skipped in CC sessions — LLM gates run via /blog-pipeline skill instead.
       echo "[blog-qa]   → $slug (fresh)"
       node scripts/qa-existing-post.mjs "$file" --gate=anti_hallucination > /dev/null 2>&1 || true
       if [ -f "$sidecar" ]; then
