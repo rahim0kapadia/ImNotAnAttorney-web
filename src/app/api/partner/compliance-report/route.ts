@@ -2,15 +2,42 @@
  * GET /api/partner/compliance-report — Compliance report data.
  *
  * Returns partner profile, all court_reminders for the partner's promo code,
- * and client_check_ins for those reminders. Paginated check-ins to avoid
- * PostgREST 1000-row cap.
+ * and client_check_ins for those reminders.
+ *
+ * Uses paginatedQuery (PostgREST 1000-row cap) and batchedInQuery
+ * (URL length limit on .in() with large ID arrays).
+ *
+ * No last_name in select — bondsmen should not see client PII beyond first name.
  *
  * Auth: session cookie validated via requirePartnerAuth().
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { requirePartnerAuth } from "@/lib/partner-helpers";
+import {
+  requirePartnerAuth,
+  paginatedQuery,
+  batchedInQuery,
+} from "@/lib/partner-helpers";
+
+interface ComplianceClient {
+  id: string;
+  first_name: string;
+  charge_type: string;
+  county_state: string;
+  court_date: string;
+  status: string;
+  reminders_sent: string[];
+  created_at: string;
+  converted_at: string | null;
+  check_in_days: string[] | null;
+  check_in_source: string | null;
+}
+
+interface CheckIn {
+  court_reminder_id: string;
+  checked_in_at: string;
+}
 
 export async function GET(req: NextRequest) {
   const { partner, error: authError } = await requirePartnerAuth(req);
@@ -19,59 +46,52 @@ export async function GET(req: NextRequest) {
   const supabase = createAdminClient();
 
   try {
-    // Fetch all clients — paginated to avoid PostgREST 1000-row cap.
-    // No last_name: bondsmen should not see client PII beyond first name.
-    const allClients: Array<Record<string, unknown>> = [];
-    let clientOffset = 0;
-    let clientHasMore = true;
-    while (clientHasMore) {
-      const { data: page } = await supabase
-        .from("court_reminders")
-        .select(
-          "id, first_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at, check_in_days, check_in_source"
-        )
-        .eq("partner_promo_code", partner.promo_code)
-        .order("court_date", { ascending: true })
-        .range(clientOffset, clientOffset + 999);
+    const { data: clients, errors: clientErrors } =
+      await paginatedQuery<ComplianceClient>(supabase, {
+        table: "court_reminders",
+        select:
+          "id, first_name, charge_type, county_state, court_date, status, reminders_sent, created_at, converted_at, check_in_days, check_in_source",
+        filters: [
+          { column: "partner_promo_code", op: "eq", value: partner.promo_code },
+        ],
+        order: { column: "court_date", ascending: true },
+      });
 
-      if (!page || page.length === 0) { clientHasMore = false; break; }
-      allClients.push(...page);
-      clientOffset += 1000;
-      if (page.length < 1000) clientHasMore = false;
+    if (clientErrors.length > 0) {
+      console.error("[partner/compliance-report] Client query errors:", clientErrors);
     }
 
-    // Fetch check-ins — paginated to avoid PostgREST 1000-row cap
-    const clientIds = allClients.map((c) => c.id as string);
-    const allCheckIns: Array<{ court_reminder_id: string; checked_in_at: string }> = [];
+    // Batched .in() — chunks of 200 IDs to stay within URL length limits
+    const clientIds = clients.map((c) => c.id).filter(Boolean);
+    let checkIns: CheckIn[] = [];
     if (clientIds.length > 0) {
-      let offset = 0;
-      let hasMore = true;
-      while (hasMore) {
-        const { data: page } = await supabase
-          .from("client_check_ins")
-          .select("court_reminder_id, checked_in_at")
-          .in("court_reminder_id", clientIds)
-          .range(offset, offset + 999);
-
-        if (!page || page.length === 0) { hasMore = false; break; }
-        allCheckIns.push(...page);
-        offset += 1000;
-        if (page.length < 1000) hasMore = false;
+      const { data, errors: checkInErrors } =
+        await batchedInQuery<CheckIn>(supabase, {
+          table: "client_check_ins",
+          select: "court_reminder_id, checked_in_at",
+          inColumn: "court_reminder_id",
+          ids: clientIds,
+        });
+      checkIns = data;
+      if (checkInErrors.length > 0) {
+        console.error("[partner/compliance-report] Check-in query errors:", checkInErrors);
       }
     }
 
     return NextResponse.json({
       partner: {
         name: partner.name,
-        email: partner.email,
         company: partner.company,
         promo_code: partner.promo_code,
       },
-      clients: allClients,
-      checkIns: allCheckIns,
+      clients,
+      checkIns,
     });
   } catch (err) {
     console.error("[partner/compliance-report] Failed to fetch data:", err);
-    return NextResponse.json({ error: "Failed to fetch compliance data" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch compliance data" },
+      { status: 500 }
+    );
   }
 }

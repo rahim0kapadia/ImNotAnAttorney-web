@@ -28,7 +28,6 @@ interface ComplianceClient {
 interface ComplianceReportClientProps {
   partner: {
     name: string;
-    email: string;
     company: string | null;
     promo_code: string | null;
   };
