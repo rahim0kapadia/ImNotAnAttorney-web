@@ -11,7 +11,7 @@
 // 2026-04-10: Added D13_PRODUCT_BRIDGE, tightened D10 word/section limits
 // for pipeline v2 short-form content (1,000-1,500 words target).
 
-const DNA_CHECKS_TOTAL = 13;
+const DNA_CHECKS_TOTAL = 14;
 const DNA_MAX_NEEDS_WORK = 3;
 
 const CHECK_IDS = [
@@ -28,14 +28,15 @@ const CHECK_IDS = [
   "D11_SCREENSHOT_SENTENCE",
   "D12_SHAREABLE_FAQ",
   "D13_PRODUCT_BRIDGE",
+  "D14_INSIDER_EDGE",
 ];
 
 function buildDNAPrompt(mdxContent) {
-  return `You are a structural quality auditor for ImNotAnAttorney.com blog posts. Each post is read by a criminal defendant in crisis on their phone at 2AM. Your job is to verify the post passes the 13 Blog DNA checks that make content actually useful to a crisis reader, not just informative.
+  return `You are a structural quality auditor for ImNotAnAttorney.com blog posts. Each post is read by a criminal defendant in crisis on their phone at 2AM. Your job is to verify the post passes the 14 Blog DNA checks that make content actually useful to a crisis reader, not just informative.
 
-Evaluate this blog post against exactly 13 DNA checks. For each check, return a JSON object with exactly these fields: check (string ID like "D1_3AM_PANIC"), result ("PASS", "NEEDS_WORK", or "FAIL"), evidence (one sentence quoting or describing the specific text that led to your decision).
+Evaluate this blog post against exactly 14 DNA checks. For each check, return a JSON object with exactly these fields: check (string ID like "D1_3AM_PANIC"), result ("PASS", "NEEDS_WORK", or "FAIL"), evidence (one sentence quoting or describing the specific text that led to your decision).
 
-THE 13 DNA CHECKS:
+THE 14 DNA CHECKS:
 
 D1_3AM_PANIC: PASS if (a) the opening hook names the reader's fear in the first 2 sentences, AND (b) every H2 header tells the reader what they GET (action-oriented, e.g. "How to Challenge the Weight on Your Charge"), not what the section is "about" (topical, e.g. "Understanding Weight Thresholds"). FAIL if the opening starts with a definition or history, OR if any H2 is purely topical with no implied action. NEEDS_WORK if the opening is fine but 1-2 H2s are topical.
 
@@ -63,12 +64,14 @@ D12_SHAREABLE_FAQ: PASS if every FAQ answer in the faqs frontmatter (a) starts w
 
 D13_PRODUCT_BRIDGE: PASS if the post ends with a product bridge that (a) names a specific INAA product by name (Case Decoder, Intelligence Brief, X-Ray, War Room, DUI Defense Playbook), (b) connects the free content value to the paid product value ("you got X free, the product gives you Y for YOUR case"), (c) does NOT use generic CTA language ("get started", "learn more", "check it out"). FAIL if the post ends with no product mention, OR if the product is introduced without connecting it to the post's value. NEEDS_WORK if the bridge exists but uses generic language.
 
+D14_INSIDER_EDGE: PASS if the post contains at least 2 specific insights that a defendant would NOT get from (a) a standard attorney website, (b) a "consult a licensed attorney" Google result, or (c) a 15-minute free consultation. These must be concrete and verifiable — a process detail most defendants miss, a deadline nobody mentions, a right they don't know they have, a question that forces a better answer from their attorney, or a defense angle that requires insider knowledge of how the system actually works. The framing should feel like someone on the defendant's side revealing what the system doesn't volunteer — not attacking attorneys, but filling the gap they leave. Look for language patterns like "here's what most people don't find out until...", "the part nobody mentions...", "your attorney knows this — whether they've explained it is another question", or equivalent insider-knowledge framing. FAIL if the post reads like it could appear on any attorney's website — all general information, no insider edge, nothing the reader couldn't find in the first 3 Google results. NEEDS_WORK if there is 1 insider insight but the rest is standard information, OR if the insider framing is vague ("there are things most people don't know") rather than specific.
+
 BLOG POST TO EVALUATE:
 ---
 ${mdxContent}
 ---
 
-Return a JSON array of exactly 13 objects in the order listed above. No other text. Example format:
+Return a JSON array of exactly 14 objects in the order listed above. No other text. Example format:
 [{"check":"D1_3AM_PANIC","result":"PASS","evidence":"Opening hook names the morning-after shame and every H2 is action-oriented"}]`;
 }
 
