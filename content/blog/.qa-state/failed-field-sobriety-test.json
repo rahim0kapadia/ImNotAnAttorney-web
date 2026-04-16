@@ -1,0 +1,70 @@
+{
+  "slug": "failed-field-sobriety-test",
+  "last_checked": "2026-04-16T16:05:00.000Z",
+  "all_passed": true,
+  "published_hash": "beef2a002a0db900801a759cea6a4010",
+  "gates": {
+    "anti_hallucination": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": 6,
+        "passed": 6,
+        "failed": 0,
+        "results": [
+          {"check": "STATUTE_CHECK", "result": "PASS"},
+          {"check": "EXPERT_CHECK", "result": "PASS"},
+          {"check": "STATISTICS_CHECK", "result": "PASS"},
+          {"check": "PROCEDURE_CHECK", "result": "PASS"},
+          {"check": "CASE_NAME_CHECK", "result": "PASS"},
+          {"check": "CONSEQUENCE_CHECK", "result": "PASS"}
+        ]
+      }
+    },
+    "humanizer": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "compositeScore": 16.2,
+        "patternScore": 10,
+        "uniformityScore": 30.7,
+        "flaggedPatterns": ["em_dash_density: 19 in 1116 words"]
+      }
+    },
+    "slop": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": 14,
+        "passed": 14,
+        "failed": 0,
+        "needs_work": 0,
+        "hard_gate_failures": 0,
+        "fix_cycle": 1,
+        "fixes_applied": ["QUESTION_COUNT: 5→1", "JARGON_DEFINITION: defined 'discovery' inline"]
+      }
+    },
+    "upl": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "criteria": 15,
+        "passed": 15,
+        "failed": 0
+      }
+    },
+    "dna": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": 14,
+        "passed": 14,
+        "failed": 0,
+        "needs_work": 0,
+        "fix_cycle": 1,
+        "fixes_applied": ["D1: renamed H2 to action-oriented", "D2: defined 'discovery' inline", "D9: added agency close sentence"],
+        "catalog_pattern": "system-decoder-post"
+      }
+    }
+  }
+}
