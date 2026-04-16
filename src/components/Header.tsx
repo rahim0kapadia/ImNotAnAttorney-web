@@ -84,8 +84,18 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-500 bg-zinc-950">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href="/" className="text-xl font-bold tracking-tight">
-          Im<span className="text-amber-400">Not</span>AnAttorney
+        <Link href="/" className="flex items-center gap-3 text-xl font-bold tracking-tight">
+          <Image
+            src="/brand/inaa-logo-sm.png"
+            alt="ImNotAnAttorney logo"
+            width={36}
+            height={36}
+            className="rounded-lg md:w-10 md:h-10"
+            priority
+          />
+          <span className="hidden sm:inline">
+            Im<span className="text-amber-400">Not</span>AnAttorney
+          </span>
         </Link>
 
         {/* Desktop nav */}

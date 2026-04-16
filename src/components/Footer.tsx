@@ -18,6 +18,7 @@
  */
 // Server component, no client-side interactivity needed
 
+import Image from "next/image";
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
 
@@ -40,8 +41,17 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-5">
           {/* Brand */}
           <div className="md:col-span-1">
-            <Link href="/" className="text-lg font-bold tracking-tight">
-              Im<span className="text-amber-400">Not</span>AnAttorney
+            <Link href="/" className="flex items-center gap-3 text-lg font-bold tracking-tight">
+              <Image
+                src="/brand/inaa-logo-sm.png"
+                alt="ImNotAnAttorney logo"
+                width={48}
+                height={48}
+                className="rounded-lg"
+              />
+              <span>
+                Im<span className="text-amber-400">Not</span>AnAttorney
+              </span>
             </Link>
             <p className="mt-3 text-sm text-zinc-400">
               Know What They Know.
