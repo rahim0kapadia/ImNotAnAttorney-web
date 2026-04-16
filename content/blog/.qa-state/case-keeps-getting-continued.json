@@ -1,8 +1,14 @@
 {
   "slug": "case-keeps-getting-continued",
-  "last_checked": "2026-04-16T15:30:00.000Z",
+  "last_checked": "2026-04-16T21:45:00.000Z",
   "all_passed": true,
   "published_hash": "275f468c0976a89ee958bb7d011d8f40",
+  "rubric_hashes": {
+    "anti_hallucination": "57b7121a06b5ac9738dd4d9be396540d",
+    "slop": "fe43dccba221d026068f9b10f9975876",
+    "upl": "a866a216246000701963c5afaa065d92",
+    "dna": "218bb3a0594d2b1f2c29736838888e7b"
+  },
   "gates": {
     "humanizer": {
       "passed": true,
@@ -72,20 +78,76 @@
         "checks_passed": 14,
         "checks_total": 14,
         "results": [
-          { "check": "QUESTION_COUNT", "result": "PASS", "reason": "Frontmatter says 8, body has 8 attorney-directed questions" },
-          { "check": "CITATION_SOURCING", "result": "PASS", "reason": "BJS, ABA, Speedy Trial Act all sourced; state claims qualified" },
-          { "check": "READABILITY", "result": "PASS", "reason": "Action items at 8th-10th grade level" },
-          { "check": "CLICHE_DENSITY", "result": "PASS", "reason": "No banned cliches found" },
-          { "check": "VOICE_CONSISTENCY", "result": "PASS", "reason": "Consistent second-person throughout" },
-          { "check": "PASSIVE_VOICE_RATIO", "result": "PASS", "reason": "Under 30% passive voice" },
-          { "check": "JARGON_DEFINITION", "result": "PASS", "reason": "All legal terms (continuance, discovery, motions, interlocutory appeals, excludable) defined inline" },
-          { "check": "STRUCTURAL_INTEGRITY", "result": "PASS", "reason": "Problem → context → rights → action flow" },
-          { "check": "CTA_CLARITY", "result": "PASS", "reason": "Multiple 5-minute actions + Case Decoder bridge" },
-          { "check": "HEDGING_DENSITY", "result": "PASS", "reason": "Action statements direct, hedging only in information context" },
-          { "check": "PARAGRAPH_LENGTH", "result": "PASS", "reason": "All paragraphs under limits" },
-          { "check": "SECTION_BALANCE", "result": "PASS", "reason": "No section exceeds 50% of total" },
-          { "check": "FEAR_ACTION_PAIRING", "result": "PASS", "reason": "All threats paired with actions within 2 sentences" },
-          { "check": "ENGAGEMENT_ARC", "result": "PASS", "reason": "Hook (courtroom scene) → evidence (reasons+rights) → empowerment (3-question framework)" }
+          {
+            "check": "QUESTION_COUNT",
+            "result": "PASS",
+            "reason": "Frontmatter says 8, body has 8 attorney-directed questions"
+          },
+          {
+            "check": "CITATION_SOURCING",
+            "result": "PASS",
+            "reason": "BJS, ABA, Speedy Trial Act all sourced; state claims qualified"
+          },
+          {
+            "check": "READABILITY",
+            "result": "PASS",
+            "reason": "Action items at 8th-10th grade level"
+          },
+          {
+            "check": "CLICHE_DENSITY",
+            "result": "PASS",
+            "reason": "No banned cliches found"
+          },
+          {
+            "check": "VOICE_CONSISTENCY",
+            "result": "PASS",
+            "reason": "Consistent second-person throughout"
+          },
+          {
+            "check": "PASSIVE_VOICE_RATIO",
+            "result": "PASS",
+            "reason": "Under 30% passive voice"
+          },
+          {
+            "check": "JARGON_DEFINITION",
+            "result": "PASS",
+            "reason": "All legal terms (continuance, discovery, motions, interlocutory appeals, excludable) defined inline"
+          },
+          {
+            "check": "STRUCTURAL_INTEGRITY",
+            "result": "PASS",
+            "reason": "Problem → context → rights → action flow"
+          },
+          {
+            "check": "CTA_CLARITY",
+            "result": "PASS",
+            "reason": "Multiple 5-minute actions + Case Decoder bridge"
+          },
+          {
+            "check": "HEDGING_DENSITY",
+            "result": "PASS",
+            "reason": "Action statements direct, hedging only in information context"
+          },
+          {
+            "check": "PARAGRAPH_LENGTH",
+            "result": "PASS",
+            "reason": "All paragraphs under limits"
+          },
+          {
+            "check": "SECTION_BALANCE",
+            "result": "PASS",
+            "reason": "No section exceeds 50% of total"
+          },
+          {
+            "check": "FEAR_ACTION_PAIRING",
+            "result": "PASS",
+            "reason": "All threats paired with actions within 2 sentences"
+          },
+          {
+            "check": "ENGAGEMENT_ARC",
+            "result": "PASS",
+            "reason": "Hook (courtroom scene) → evidence (reasons+rights) → empowerment (3-question framework)"
+          }
         ]
       }
     },
@@ -96,21 +158,81 @@
         "checks_passed": 15,
         "checks_total": 15,
         "results": [
-          { "criterion": "U1", "result": "PASS", "evidence": "Actions direct reader to ask attorney or gather public info, not legal commands" },
-          { "criterion": "U2", "result": "PASS", "evidence": "Every section has proximate attorney redirect: discovery demand letter, plea offers, timeline discussion, speedy trial, 3-question framework" },
-          { "criterion": "U3", "result": "PASS", "evidence": "No evaluation of reader's specific case" },
-          { "criterion": "U4", "result": "PASS", "evidence": "Motions described as what attorneys prepare, not recommended to reader" },
-          { "criterion": "U5", "result": "PASS", "evidence": "No immigration content" },
-          { "criterion": "U6", "result": "PASS", "evidence": "No collateral consequences mentioned" },
-          { "criterion": "U7", "result": "PASS", "evidence": "No specific companies named" },
-          { "criterion": "U8", "result": "PASS", "evidence": "No 'we recommend' language" },
-          { "criterion": "U9", "result": "PASS", "evidence": "Opening scenario uses 'you' — clearly hypothetical" },
-          { "criterion": "U10", "result": "PASS", "evidence": "Knowledge framed as empowering better questions, not self-help" },
-          { "criterion": "U11", "result": "PASS", "evidence": "Legal rules qualified with 'in some jurisdictions', 'some states'" },
-          { "criterion": "U12", "result": "PASS", "evidence": "No outcome guarantees; 'can change the trajectory' is qualified" },
-          { "criterion": "U13", "result": "PASS", "evidence": "Strategic delay attributed to ABA Criminal Justice Standards; speedy trial to statute" },
-          { "criterion": "U14", "result": "PASS", "evidence": "No contradictory legal statements" },
-          { "criterion": "U15", "result": "PASS", "evidence": "Case Decoder framed as research tool: 'maps your specific charges, identifies which motions typically apply'" }
+          {
+            "criterion": "U1",
+            "result": "PASS",
+            "evidence": "Actions direct reader to ask attorney or gather public info, not legal commands"
+          },
+          {
+            "criterion": "U2",
+            "result": "PASS",
+            "evidence": "Every section has proximate attorney redirect: discovery demand letter, plea offers, timeline discussion, speedy trial, 3-question framework"
+          },
+          {
+            "criterion": "U3",
+            "result": "PASS",
+            "evidence": "No evaluation of reader's specific case"
+          },
+          {
+            "criterion": "U4",
+            "result": "PASS",
+            "evidence": "Motions described as what attorneys prepare, not recommended to reader"
+          },
+          {
+            "criterion": "U5",
+            "result": "PASS",
+            "evidence": "No immigration content"
+          },
+          {
+            "criterion": "U6",
+            "result": "PASS",
+            "evidence": "No collateral consequences mentioned"
+          },
+          {
+            "criterion": "U7",
+            "result": "PASS",
+            "evidence": "No specific companies named"
+          },
+          {
+            "criterion": "U8",
+            "result": "PASS",
+            "evidence": "No 'we recommend' language"
+          },
+          {
+            "criterion": "U9",
+            "result": "PASS",
+            "evidence": "Opening scenario uses 'you' — clearly hypothetical"
+          },
+          {
+            "criterion": "U10",
+            "result": "PASS",
+            "evidence": "Knowledge framed as empowering better questions, not self-help"
+          },
+          {
+            "criterion": "U11",
+            "result": "PASS",
+            "evidence": "Legal rules qualified with 'in some jurisdictions', 'some states'"
+          },
+          {
+            "criterion": "U12",
+            "result": "PASS",
+            "evidence": "No outcome guarantees; 'can change the trajectory' is qualified"
+          },
+          {
+            "criterion": "U13",
+            "result": "PASS",
+            "evidence": "Strategic delay attributed to ABA Criminal Justice Standards; speedy trial to statute"
+          },
+          {
+            "criterion": "U14",
+            "result": "PASS",
+            "evidence": "No contradictory legal statements"
+          },
+          {
+            "criterion": "U15",
+            "result": "PASS",
+            "evidence": "Case Decoder framed as research tool: 'maps your specific charges, identifies which motions typically apply'"
+          }
         ]
       }
     },
@@ -121,20 +243,76 @@
         "checks_passed": 14,
         "checks_total": 14,
         "results": [
-          { "check": "D1_3AM_PANIC", "result": "PASS", "evidence": "Opening names courtroom frustration in first 2 sentences; all 4 H2s action-oriented (Why/How/Rights/What to Do)" },
-          { "check": "D2_READING_LEVEL", "result": "PASS", "evidence": "All legal terms (continuance, discovery, motions, interlocutory appeals, excludable) defined inline with parentheticals; no paragraph exceeds 4 sentences" },
-          { "check": "D3_DO_THIS_NOW", "result": "PASS", "evidence": "'Do this now' block before first H2: write down question, bring to court, ask attorney — <5 min, no attorney/computer needed" },
-          { "check": "D4_ONE_CLEAR_PATH", "result": "PASS", "evidence": "Decision points present clear defaults: 'If they cannot answer, the delay was not strategic'" },
-          { "check": "D5_3_ITEM_RULE", "result": "PASS", "evidence": "Max 3 items in any action list (3 questions in final section); table has 2 rows" },
-          { "check": "D6_CATALOG_VARIETY", "result": "PASS", "evidence": "System-decoder-post pattern (single-post audit)" },
-          { "check": "D7_THREAT_EFFICACY", "result": "PASS", "evidence": "Every threat paired: 'drifting toward worst outcome' → 'talk to your attorney'; in-custody threat → attorney redirect within same paragraph" },
-          { "check": "D8_IDENTITY_PROTECTION", "result": "PASS", "evidence": "Zero blame language; person always separated from situation" },
-          { "check": "D9_FEAR_CLARITY_AGENCY", "result": "PASS", "evidence": "Opening validates fear, middle explains, closing empowers; final sentence is agency: 'Now you know the six reasons...and the three questions that force a real answer'" },
-          { "check": "D10_PHONE_FIRST", "result": "PASS", "evidence": "4 H2 sections, ~1335 body words, 2-column table, all sections 250-350 words, no H3+" },
-          { "check": "D11_SCREENSHOT_SENTENCE", "result": "PASS", "evidence": "Every H2 has bolded standalone sentence under 27 words (e.g. 'The continuance itself is not the problem — the silence about what happens between continuances is the problem')" },
-          { "check": "D12_SHAREABLE_FAQ", "result": "PASS", "evidence": "All 4 FAQs start with direct answer, 2-4 sentences, natural voice" },
-          { "check": "D13_PRODUCT_BRIDGE", "result": "PASS", "evidence": "Case Decoder named, value connected: 'The free content gave you the framework. The Case Decoder fills it in with your details.'" },
-          { "check": "D14_INSIDER_EDGE", "result": "PASS", "evidence": "4+ insider insights: discovery demand letter request, continuance ratio tracking, speedy trial waiver risk, 3-question accountability framework" }
+          {
+            "check": "D1_3AM_PANIC",
+            "result": "PASS",
+            "evidence": "Opening names courtroom frustration in first 2 sentences; all 4 H2s action-oriented (Why/How/Rights/What to Do)"
+          },
+          {
+            "check": "D2_READING_LEVEL",
+            "result": "PASS",
+            "evidence": "All legal terms (continuance, discovery, motions, interlocutory appeals, excludable) defined inline with parentheticals; no paragraph exceeds 4 sentences"
+          },
+          {
+            "check": "D3_DO_THIS_NOW",
+            "result": "PASS",
+            "evidence": "'Do this now' block before first H2: write down question, bring to court, ask attorney — <5 min, no attorney/computer needed"
+          },
+          {
+            "check": "D4_ONE_CLEAR_PATH",
+            "result": "PASS",
+            "evidence": "Decision points present clear defaults: 'If they cannot answer, the delay was not strategic'"
+          },
+          {
+            "check": "D5_3_ITEM_RULE",
+            "result": "PASS",
+            "evidence": "Max 3 items in any action list (3 questions in final section); table has 2 rows"
+          },
+          {
+            "check": "D6_CATALOG_VARIETY",
+            "result": "PASS",
+            "evidence": "System-decoder-post pattern (single-post audit)"
+          },
+          {
+            "check": "D7_THREAT_EFFICACY",
+            "result": "PASS",
+            "evidence": "Every threat paired: 'drifting toward worst outcome' → 'talk to your attorney'; in-custody threat → attorney redirect within same paragraph"
+          },
+          {
+            "check": "D8_IDENTITY_PROTECTION",
+            "result": "PASS",
+            "evidence": "Zero blame language; person always separated from situation"
+          },
+          {
+            "check": "D9_FEAR_CLARITY_AGENCY",
+            "result": "PASS",
+            "evidence": "Opening validates fear, middle explains, closing empowers; final sentence is agency: 'Now you know the six reasons...and the three questions that force a real answer'"
+          },
+          {
+            "check": "D10_PHONE_FIRST",
+            "result": "PASS",
+            "evidence": "4 H2 sections, ~1335 body words, 2-column table, all sections 250-350 words, no H3+"
+          },
+          {
+            "check": "D11_SCREENSHOT_SENTENCE",
+            "result": "PASS",
+            "evidence": "Every H2 has bolded standalone sentence under 27 words (e.g. 'The continuance itself is not the problem — the silence about what happens between continuances is the problem')"
+          },
+          {
+            "check": "D12_SHAREABLE_FAQ",
+            "result": "PASS",
+            "evidence": "All 4 FAQs start with direct answer, 2-4 sentences, natural voice"
+          },
+          {
+            "check": "D13_PRODUCT_BRIDGE",
+            "result": "PASS",
+            "evidence": "Case Decoder named, value connected: 'The free content gave you the framework. The Case Decoder fills it in with your details.'"
+          },
+          {
+            "check": "D14_INSIDER_EDGE",
+            "result": "PASS",
+            "evidence": "4+ insider insights: discovery demand letter request, continuance ratio tracking, speedy trial waiver risk, 3-question accountability framework"
+          }
         ]
       }
     }

@@ -369,20 +369,35 @@ export function runHumanizerCheck(mdxContent, options = {}) {
     }
   }
 
-  // ── Detector 4: Em dash density ──
+  // ── Detector 4: Em dash — zero tolerance ──
+  // Em dashes are a top AI writing tell. Human writers use commas, colons,
+  // parentheses, or separate sentences. Any em dash (Unicode or --) = hard fail.
+  // Ignores --- (frontmatter/hr) and markdown table separators (|---|).
   {
-    const emDashCount =
-      countOccurrences(body, "\u2014") +
-      countOccurrences(body, "--");
-    const density = emDashCount / per1000;
-    if (density > 3) {
-      totalPatternPoints += 10;
+    let emDashCount = countOccurrences(body, "\u2014");
+    // Count standalone -- that aren't part of --- or longer dash runs
+    for (let di = 0; di < body.length; di++) {
+      if (body[di] === "-" && body[di + 1] === "-" && body[di + 2] !== "-") {
+        if (di === 0 || body[di - 1] !== "-") {
+          // Skip if inside a table separator line (starts with |)
+          let lineStart = di;
+          while (lineStart > 0 && body[lineStart - 1] !== "\n") lineStart--;
+          const linePrefix = body.slice(lineStart, di).trim();
+          if (linePrefix.length === 0 || linePrefix[0] !== "|") {
+            emDashCount++;
+          }
+          di++; // skip second dash
+        }
+      }
+    }
+    if (emDashCount > 0) {
+      totalPatternPoints += 65;
       flaggedPatterns.push({
-        detector: "em_dash_density",
-        severity: "style",
+        detector: "em_dash_zero_tolerance",
+        severity: "hard_fail",
         count: emDashCount,
-        matches: [`${emDashCount} em dashes in ${wordCount} words`],
-        points_added: 10,
+        matches: [`${emDashCount} em dashes in ${wordCount} words — all must be removed`],
+        points_added: 65,
       });
     }
   }
