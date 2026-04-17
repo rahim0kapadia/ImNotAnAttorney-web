@@ -8,18 +8,21 @@ import { TIER_CORE } from "@/lib/tiers";
 import type { TierSlug } from "@/lib/tiers";
 
 /**
- * HomepageHero, Dynamic hero with charge-type routing.
+ * HomepageHero — Round-3 expert consensus build.
  *
- * Positioning rewrite per elite panel consensus (Apex L2 fix, Dunford category anchor,
- * Suby crisis-buyer clarity, Godin 68.3g Purple Cow, Hormozi named deliverable,
- * Brunson epiphany-in-hero, Laja CTA consolidation).
- *
- * Key moves vs prior version:
- *  - H1 names the category + the buyer's fear in under 10 words
- *  - Sub surfaces the 68.3g origin story (previously buried in metadata + section 2)
- *  - Single primary CTA names the DELIVERABLE ("15 Questions") not the activity
- *  - 3-col value anchor row kills the $10K/$197 math in one glance
- *  - Secondary link collapsed to free Score (lead magnet, not pricing jump)
+ * Round-3 inputs folded in:
+ *  - Godin: tribe identity ABOVE H1 ("For the defendant who stopped waiting"),
+ *    68.3g isolated as its own standalone callout (purple cow deserves room),
+ *    drop "system" (too SaaS-y) from subhead.
+ *  - Brunson: Hook-Story-Offer in 5s; surface $127 Playbook tripwire alongside
+ *    free Score so the self-liquidating rung is visible.
+ *  - Chaperon: Score + Playbook as co-equal tertiary CTAs (not "not ready?"
+ *    apology framing). Trailing eyebrow stays plural peer voice.
+ *  - Dreyer: YMYL byline under H1 (methodology date + framework count)
+ *    signals a real human built this for a scared reader.
+ *  - Suby/Laja: guarantee line tier-aware (CD/IB + X-Ray+ both surfaced);
+ *    3-col $0 cell wording matches body ("if we don't deliver 15 questions").
+ *  - Hormozi: value anchor 3-col ($10K / $197 / $0) kept — textbook.
  */
 const CATEGORY_TO_PLAYBOOK: Record<string, string> = {
   "dui-driving": "dui-first-offense",
@@ -41,15 +44,28 @@ export function HomepageHero() {
       ? `Get the ${TIER_CORE[playbookSlug as TierSlug].name} \u2014 ${TIER_CORE[playbookSlug as TierSlug].priceDisplay}`
       : `Get Your 15 Questions \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`;
 
+  // Playbook tripwire — resolves to the charge-specific playbook, defaulting to DUI
+  const playbookTripwireHref = playbookSlug ? `/checkout?tier=${playbookSlug}` : "/playbooks";
+  const playbookTripwirePrice = playbookSlug && TIER_CORE[playbookSlug as TierSlug]
+    ? TIER_CORE[playbookSlug as TierSlug].priceDisplay
+    : TIER_CORE["dui-first-offense"].priceDisplay;
+
   return (
     <>
-      <section className="px-4 pb-10 pt-16 text-center md:pt-24">
+      <section className="px-4 pb-10 pt-12 text-center md:pt-20">
         <div className="mx-auto max-w-4xl">
+          {/* TRIBE IDENTITY — Godin: name the status they want to claim, above the H1 */}
           <FadeInUp>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-500">
+            <p className="font-display text-sm italic text-amber-400 md:text-base">
+              For the defendant who stopped waiting.
+            </p>
+          </FadeInUp>
+          <FadeInUp delay={0.03}>
+            <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
               Know What They Know &middot; Defense Intelligence for Defendants
             </p>
           </FadeInUp>
+
           <FadeInUp delay={0.05}>
             <h1 className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white md:text-6xl">
               Your attorney hasn&apos;t read your case.
@@ -57,19 +73,37 @@ export function HomepageHero() {
               <span className="text-amber-400">You&apos;re about to.</span>
             </h1>
           </FadeInUp>
-          <FadeInUp delay={0.1}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
-              Our system reads your case the way elite defense attorneys do &mdash; through{" "}
-              <span className="font-semibold text-white">40+ documented methodologies</span>:
-              chain of custody, informant credibility, constitutional violations, lab protocol breaks.
-              In one case it surfaced{" "}
-              <span className="font-semibold text-white">68.3 grams of evidence the attorney never mentioned</span>.
-              You get the 15 questions your attorney will have to answer on the record.
+
+          {/* YMYL byline — Dreyer: scared defendant needs "who made this, when" signal */}
+          <FadeInUp delay={0.08}>
+            <p className="mt-3 text-xs text-zinc-500">
+              Methodology built from 40+ documented defense frameworks &middot; Updated 2026
             </p>
           </FadeInUp>
 
-          {/* 3-col value anchor row: defuses Suby's inverted value equation in one glance */}
-          <FadeInUp delay={0.15}>
+          {/* 68.3g PURPLE COW — Godin: isolated, its own room to breathe */}
+          <FadeInUp delay={0.1}>
+            <div className="mx-auto mt-8 max-w-2xl rounded-xl border border-amber-500/30 bg-zinc-900/60 p-5 md:p-6">
+              <p className="font-display text-3xl font-bold text-amber-400 md:text-5xl">
+                68.3 grams
+              </p>
+              <p className="mt-2 text-sm text-zinc-300 md:text-base">
+                of evidence the attorney never mentioned. Found by reading the discovery file ourselves. That one number changed the case &mdash; and now we run the same read on yours.
+              </p>
+            </div>
+          </FadeInUp>
+
+          <FadeInUp delay={0.13}>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-zinc-300 md:text-lg">
+              We read your case the way elite defense attorneys do &mdash; through
+              40+ documented methodologies: chain of custody, informant credibility,
+              constitutional violations, lab protocol breaks. You get the 15 questions
+              your attorney will have to answer on the record.
+            </p>
+          </FadeInUp>
+
+          {/* 3-col value anchor row — Hormozi inverted value equation in one glance */}
+          <FadeInUp delay={0.16}>
             <div className="mx-auto mt-8 grid max-w-2xl grid-cols-3 gap-3 text-center">
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
                 <div className="text-xl font-bold text-zinc-300 md:text-2xl">$10K+</div>
@@ -86,12 +120,12 @@ export function HomepageHero() {
             </div>
           </FadeInUp>
 
-          {/* Charge Type Selector, drives CTA below */}
-          <FadeInUp delay={0.2}>
+          {/* Charge Type Selector — drives CTA below */}
+          <FadeInUp delay={0.19}>
             <ChargeTypeSelector onSelect={setSelectedSlug} />
           </FadeInUp>
 
-          <FadeInUp delay={0.25}>
+          <FadeInUp delay={0.22}>
             <div className="mt-8 flex flex-col items-center gap-3">
               <Link
                 href={primaryHref}
@@ -105,12 +139,22 @@ export function HomepageHero() {
               <p className="text-xs text-zinc-500">
                 48-hour delivery &middot; every dollar credits toward higher tiers
               </p>
-              <Link
-                href="/score"
-                className="mt-2 text-sm font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 hover:text-amber-300"
-              >
-                Not ready? Check your Defense Milestone Score &mdash; free, no email.
-              </Link>
+
+              {/* Co-equal tertiary rung — Brunson $127 tripwire + Chaperon free Score */}
+              <div className="mt-4 flex flex-col items-center gap-2 text-sm md:flex-row md:gap-6">
+                <Link
+                  href={playbookTripwireHref}
+                  className="font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 hover:text-amber-300"
+                >
+                  Start with the {playbookTripwirePrice} Defense Playbook &rarr;
+                </Link>
+                <Link
+                  href="/score"
+                  className="font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 hover:text-amber-300"
+                >
+                  Or check your free Defense Milestone Score &rarr;
+                </Link>
+              </div>
             </div>
           </FadeInUp>
         </div>
@@ -120,7 +164,7 @@ export function HomepageHero() {
         <div className="mx-auto max-w-4xl">
           <FadeInUp>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
-              Built by people who&apos;ve been where you are &middot; For defendants and the people who love them
+              Built by defendants who got tired of waiting for answers &middot; For defendants and the people who love them
             </p>
           </FadeInUp>
         </div>

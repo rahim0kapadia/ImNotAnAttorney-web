@@ -45,7 +45,7 @@ discovery rights criminal case, what is discovery, criminal discovery documents,
 
 **[0:00-0:05] HOOK, TEXT ON SCREEN: "You have the RIGHT to see the evidence against you"**
 [Direct to camera, firm tone]
-"The prosecution has a file on you. It contains every piece of evidence they plan to use to convict you. You have a constitutional right to see it. Most defendants never do."
+"The legal system has a file on you. We help you build one on them. That file contains every piece of evidence they plan to use to convict you. You have a constitutional right to see it. Most defendants never do."
 
 **[0:05-0:07] TRANSITION, TEXT ON SCREEN: "Here's what to ask for."**
 "Here's what you should be reading."

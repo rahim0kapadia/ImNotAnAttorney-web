@@ -30,7 +30,7 @@ imnotanattorney.com
 ## Script
 [0:00-0:04] HOOK:
 [Direct to camera, incredulous tone]
-"The prosecution has a file on you. Police reports. Witness statements. Lab results. Body camera footage. Phone records. Everything they've gathered to put you in prison. Have you seen it? Most defendants haven't."
+"The legal system has a file on you. Police reports. Witness statements. Lab results. Body camera footage. Phone records. Everything they've gathered to put you in prison. Have you seen it? Most defendants haven't. We help you build one on them."
 
 [0:04-0:14] THE RIGHT:
 [TEXT ON SCREEN: "Brady v. Maryland: Your constitutional right"]

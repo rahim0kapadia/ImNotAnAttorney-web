@@ -571,9 +571,9 @@ export default function Home() {
                     value: "$300",
                   },
                   {
-                    label: "Attorney Email Template",
-                    sub: "The exact message that gets an unresponsive attorney to call back",
-                    value: "$100",
+                    label: "The Callback Script",
+                    sub: "Exact words that get an unresponsive attorney dialing back within 24 hours",
+                    value: "$250",
                   },
                   {
                     label: "100% Upgrade Credit",
@@ -597,7 +597,7 @@ export default function Home() {
               <div className="mt-6 border-t border-amber-500/30 pt-6">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold uppercase tracking-wide text-zinc-400">Stack value</p>
-                  <p className="text-lg text-zinc-500 line-through">$1,397</p>
+                  <p className="text-lg text-zinc-500 line-through">$1,547</p>
                 </div>
                 <div className="mt-2 flex items-center justify-between">
                   <p className="font-display text-xl font-bold text-white">You pay today</p>
