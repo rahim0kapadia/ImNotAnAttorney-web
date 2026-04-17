@@ -112,22 +112,22 @@ export async function renderOgImage({
             borderBottomColor: "#27272a",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://imnotanattorney.com/brand/inaa-logo.png"
               alt=""
-              width={64}
-              height={64}
-              style={{ borderRadius: 10 }}
+              width={88}
+              height={88}
+              style={{ borderRadius: 14 }}
             />
             <div
               style={{
                 display: "flex",
-                fontSize: 38,
+                fontSize: 64,
                 fontWeight: 700,
                 color: "#f5f5f4",
-                letterSpacing: -0.4,
+                letterSpacing: -1,
                 fontFamily: lato ? "Lato" : "system-ui",
               }}
             >
@@ -179,15 +179,26 @@ export async function renderOgImage({
             {title}
           </div>
 
+          {/* Amber accent rule between title and subtitle */}
+          <div
+            style={{
+              display: "flex",
+              width: 120,
+              height: 5,
+              background: "#f59e0b",
+              borderRadius: 2,
+            }}
+          />
+
           {subtitle && (
             <div
               style={{
                 display: "flex",
-                fontSize: 42,
+                fontSize: 50,
                 fontWeight: 700,
                 color: "#f5f5f4",
-                lineHeight: 1.25,
-                maxWidth: 900,
+                lineHeight: 1.2,
+                maxWidth: 980,
                 whiteSpace: "pre-line",
                 fontFamily: lato ? "Lato" : "system-ui",
               }}
