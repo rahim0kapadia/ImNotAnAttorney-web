@@ -108,9 +108,26 @@ export default function AboutPage() {
         </FadeInUp>
 
         <FadeInUp delay={0.15}>
-        <p className="mt-6 text-lg leading-relaxed text-zinc-300 italic">
-          We don&apos;t use our names. We know what the system can do with names. What matters isn&apos;t who we are &mdash; it&apos;s what we found in our own cases, and what we can find in yours.
-        </p>
+        <div className="mt-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-6">
+          <p className="text-sm font-semibold uppercase tracking-wider text-amber-400">
+            Why we stay masked
+          </p>
+          <p className="mt-3 text-lg font-semibold text-white">
+            We stay masked because our files aren&apos;t closed &mdash; and that&apos;s exactly why we can read yours.
+          </p>
+          <p className="mt-3 text-base leading-relaxed text-zinc-300">
+            Some of our founders have active cases right now: trial prep, discovery fights, motion deadlines. Using our names would hand the same legal system that already has files on us more ammunition.
+          </p>
+          <p className="mt-3 text-base leading-relaxed text-zinc-300">
+            Every courtroom is a closed ecosystem. The judge, the prosecutor, the defense attorney know each other by face. They work together next week on a different case. Your attorney doesn&apos;t want to be the one who showed up with &ldquo;the INAA questions.&rdquo; The prosecutor doesn&apos;t want their witnesses cross-examined using our framework. The judge doesn&apos;t want our methodology in the record.
+          </p>
+          <p className="mt-3 text-base leading-relaxed text-zinc-300">
+            So we don&apos;t give them a face to remember. We give you the questions they can&apos;t trace back to anyone they can lean on. When our files close, we&apos;ll still be here. Still masked. Because the next defendant coming through deserves the same cover we had.
+          </p>
+          <p className="mt-4 text-sm italic text-amber-400">
+            &mdash; Researchers. Defendants, still fighting.
+          </p>
+        </div>
         </FadeInUp>
 
         {/* THE STORY, Epiphany bridge: the night one of our founders opened his own */}
