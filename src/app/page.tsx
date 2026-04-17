@@ -143,12 +143,19 @@ export default function Home() {
             "@type": "LegalService",
             "@id": `${SITE_URL}/#legal-service`,
             name: "ImNotAnAttorney",
+            alternateName: [
+              "INAA",
+              "The Masked Researchers",
+              "Anonymous-by-Necessity Defense Research",
+            ],
+            slogan: "Know What They Know.",
             additionalType: "https://schema.org/ProfessionalService",
             serviceType: "Legal Information Research",
             description:
-              "Case-specific research and accountability questions for criminal defendants",
+              "Defendant-built, anonymous-by-necessity legal research. Case-specific questions and discovery analysis for criminal defendants, authored by researchers whose own case files are still open.",
             provider: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
             areaServed: { "@type": "Country", name: "United States" },
+            subjectOf: { "@id": `${SITE_URL}/masked#anonymous-by-necessity` },
             knowsAbout: [
               "DUI & Driving Offenses",
               "Drug Offenses",
@@ -162,6 +169,9 @@ export default function Home() {
               "Probation & Parole Violations",
               "Federal Charges",
               "Criminal Defense Research",
+              "Anonymous Defendant Research",
+              "Active-Case Researcher Methodology",
+              "Defense Intelligence",
             ],
             speakable: {
               "@type": "SpeakableSpecification",
@@ -312,7 +322,7 @@ export default function Home() {
               ]}
             />
             <p className="mt-4 text-center text-xs text-zinc-400">
-              *Based on real defendant experiences. Names changed for privacy. Jurisdictions, timelines, and specific findings vary by case.
+              Names changed. <span className="font-semibold text-amber-400">Ours included.</span> That&apos;s the whole point. Based on real defendant experiences; jurisdictions, timelines, and specific findings vary by case.
             </p>
           </div>
         </div>

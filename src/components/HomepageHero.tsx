@@ -54,10 +54,11 @@ export function HomepageHero() {
     <>
       <section className="px-4 pb-10 pt-12 text-center md:pt-20">
         <div className="mx-auto max-w-4xl">
-          {/* TRIBE IDENTITY — Godin: name the status they want to claim, above the H1 */}
+          {/* TRIBE IDENTITY / CATEGORY LOCK-IN (Dunford 2026-04-17) — uncopyable positioning statement:
+              "Built from inside an open case file" is structurally impossible for named legal-tech founders. */}
           <FadeInUp>
             <p className="font-display text-sm italic text-amber-400 md:text-base">
-              For the defendant who stopped waiting.
+              Built from inside an open case file &mdash; that&apos;s why we can read yours.
             </p>
           </FadeInUp>
           <FadeInUp delay={0.03}>
@@ -88,7 +89,10 @@ export function HomepageHero() {
                 68.3 grams
               </p>
               <p className="mt-2 text-sm text-zinc-300 md:text-base">
-                of evidence the attorney never mentioned. Found by reading the discovery file ourselves. That one number changed the case &mdash; and now we run the same read on yours.
+                of evidence the attorney never mentioned. Found by a defendant reading his own discovery file &mdash; and his trial date is June 9, 2026. That&apos;s the read we run on your case.{" "}
+                <Link href="/masked" className="font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 hover:text-amber-300">
+                  Why we stay masked &rarr;
+                </Link>
               </p>
             </div>
           </FadeInUp>
