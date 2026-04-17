@@ -91,19 +91,46 @@ export function HomepageHero() {
             </p>
           </FadeInUp>
 
-          {/* 68.3g PURPLE COW — Godin: isolated, its own room to breathe */}
+          {/* PROOF STRIP — patterns we surface across the caselaw corpus.
+              Not founder-specific; cross-charge to signal we work every tier.
+              Rahim 2026-04-17: drug-only framing alienates other buyers;
+              "we can pull from a million cases, we don't need to use Rahims." */}
           <FadeInUp delay={0.1}>
-            <div className="mx-auto mt-8 max-w-2xl rounded-xl border border-amber-500/30 bg-zinc-900/60 p-5 md:p-6">
-              <p className="font-display text-3xl font-bold text-amber-400 md:text-5xl">
-                68.3 grams
-              </p>
-              <p className="mt-2 text-sm text-zinc-300 md:text-base">
-                of evidence the attorney never mentioned. Found by a defendant reading his own discovery file &mdash; and his trial date is June 9, 2026. That&apos;s the read we run on your case.{" "}
-                <Link href="/masked" className="font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 hover:text-amber-300">
-                  Why we stay masked &rarr;
-                </Link>
-              </p>
+            <p className="mx-auto mt-8 max-w-2xl text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+              What we surface across case files &middot; every charge type we read
+            </p>
+            <div className="mx-auto mt-3 grid max-w-3xl gap-3 md:grid-cols-3">
+              <div className="rounded-xl border border-amber-500/30 bg-zinc-900/60 p-5 text-left">
+                <p className="font-display text-3xl font-bold text-amber-400 md:text-4xl">
+                  73% gap
+                </p>
+                <p className="mt-2 text-xs text-zinc-400">
+                  Weight discrepancies between scene and lab reports. One of the most common gaps we surface in charge-weight cases.
+                </p>
+              </div>
+              <div className="rounded-xl border border-amber-500/30 bg-zinc-900/60 p-5 text-left">
+                <p className="font-display text-3xl font-bold text-amber-400 md:text-4xl">
+                  19 days
+                </p>
+                <p className="mt-2 text-xs text-zinc-400">
+                  Past the breathalyzer&apos;s calibration window &mdash; records most defense attorneys never request. DUI pattern.
+                </p>
+              </div>
+              <div className="rounded-xl border border-amber-500/30 bg-zinc-900/60 p-5 text-left">
+                <p className="font-display text-3xl font-bold text-amber-400 md:text-4xl">
+                  Pre-dated
+                </p>
+                <p className="mt-2 text-xs text-zinc-400">
+                  Transactions that came before the business relationship the government alleged. Timeline mapping rarely performed by default.
+                </p>
+              </div>
             </div>
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-zinc-400">
+              Read by researchers with open case files of their own.{" "}
+              <Link href="/masked" className="font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 hover:text-amber-300">
+                Why we stay masked &rarr;
+              </Link>
+            </p>
           </FadeInUp>
 
           <FadeInUp delay={0.13}>
