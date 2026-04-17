@@ -234,6 +234,30 @@ export default function Home() {
       {/* PROOF, PCSO-Authentic Discovery Document Reveal */}
       <DiscoveryReveal />
 
+      {/* MASK TEASER — Chaperon/Suby: surface Anonymous-by-necessity positioning above fold.
+          Full Who-We-Are section lives pre-guarantee; this teaser gets the mask message
+          into the 3-second scroll window for crisis buyers. Links to full /masked manifesto. */}
+      <section className="border-t border-zinc-800 px-4 py-10">
+        <div className="mx-auto max-w-3xl text-center">
+          <FadeInUp>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-500">
+              Found by the researcher who&apos;s still a defendant
+            </p>
+            <p className="mt-3 font-display text-xl font-semibold text-white md:text-2xl">
+              We stay masked because our files aren&apos;t closed &mdash;
+              <br className="hidden md:block" />
+              {" "}and that&apos;s exactly why we can read yours.
+            </p>
+            <Link
+              href="/masked"
+              className="mt-4 inline-block text-sm font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 hover:text-amber-300"
+            >
+              Why we stay masked &rarr;
+            </Link>
+          </FadeInUp>
+        </div>
+      </section>
+
       {/* URGENCY BAR, Motion deadline scarcity (moved up — right after proof, before pain) */}
       <section className="border-y border-amber-500/20 bg-amber-500/5 px-4 py-4">
         <p className="mx-auto max-w-4xl text-center text-sm text-amber-400">
