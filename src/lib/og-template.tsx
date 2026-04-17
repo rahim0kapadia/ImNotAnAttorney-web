@@ -69,10 +69,10 @@ export async function renderOgImage({
     .split("\n")
     .reduce((a, b) => (a.length > b.length ? a : b)).length;
   const titleSize =
-    longestLine > 26 ? 72 :
-    longestLine > 19 ? 84 :
-    longestLine > 14 ? 104 :
-    longestLine > 8 ? 120 : 132;
+    longestLine > 26 ? 64 :
+    longestLine > 19 ? 76 :
+    longestLine > 14 ? 96 :
+    longestLine > 8 ? 112 : 124;
 
   const fonts = [
     ...(playfair
@@ -112,22 +112,22 @@ export async function renderOgImage({
             borderBottomColor: "#27272a",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://imnotanattorney.com/brand/inaa-logo.png"
               alt=""
-              width={88}
-              height={88}
-              style={{ borderRadius: 14 }}
+              width={104}
+              height={104}
+              style={{ borderRadius: 16 }}
             />
             <div
               style={{
                 display: "flex",
-                fontSize: 64,
+                fontSize: 84,
                 fontWeight: 700,
                 color: "#f5f5f4",
-                letterSpacing: -1,
+                letterSpacing: -1.5,
                 fontFamily: lato ? "Lato" : "system-ui",
               }}
             >
@@ -194,11 +194,11 @@ export async function renderOgImage({
             <div
               style={{
                 display: "flex",
-                fontSize: 50,
+                fontSize: 54,
                 fontWeight: 700,
                 color: "#f5f5f4",
                 lineHeight: 1.2,
-                maxWidth: 980,
+                maxWidth: 1040,
                 whiteSpace: "pre-line",
                 fontFamily: lato ? "Lato" : "system-ui",
               }}
