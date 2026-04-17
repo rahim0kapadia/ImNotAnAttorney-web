@@ -183,12 +183,13 @@ export async function renderOgImage({
             <div
               style={{
                 display: "flex",
-                fontSize: 28,
-                color: "#d4d4d8",
+                fontSize: 34,
+                fontWeight: 700,
+                color: "#f5f5f4",
                 lineHeight: 1.3,
-                maxWidth: 760,
+                maxWidth: 820,
                 whiteSpace: "pre-line",
-                fontFamily: latoRegular ? "LatoR" : "system-ui",
+                fontFamily: lato ? "Lato" : "system-ui",
               }}
             >
               {subtitle.length > 140 ? subtitle.slice(0, 140) + "…" : subtitle}
