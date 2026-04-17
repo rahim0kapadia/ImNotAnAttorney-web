@@ -576,11 +576,6 @@ export default function Home() {
                     value: "$100",
                   },
                   {
-                    label: "The Questions Guarantee",
-                    sub: "Full refund if we don\u2019t deliver at least 15 case-specific questions your attorney hasn\u2019t raised",
-                    value: "$400 value",
-                  },
-                  {
                     label: "100% Upgrade Credit",
                     sub: "Every dollar banked toward X-Ray, War Room, or Situation Room",
                     value: "$197 banked",

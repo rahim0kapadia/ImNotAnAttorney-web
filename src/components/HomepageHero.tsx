@@ -81,7 +81,7 @@ export function HomepageHero() {
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
                 <div className="text-xl font-bold text-green-500 md:text-2xl">$0</div>
-                <p className="mt-1 text-[11px] leading-tight text-zinc-400">if the questions don&apos;t land</p>
+                <p className="mt-1 text-[11px] leading-tight text-zinc-400">if we don&apos;t deliver 15 questions</p>
               </div>
             </div>
           </FadeInUp>
@@ -100,7 +100,7 @@ export function HomepageHero() {
                 {primaryLabel} &rarr;
               </Link>
               <p className="text-sm font-medium text-zinc-300">
-                <span className="text-amber-400">Find It or It&apos;s Free</span> &mdash; at least 15 case-specific questions your attorney hasn&apos;t raised, or full refund.
+                <span className="text-amber-400">Find It or It&apos;s Free</span> &mdash; 15 case-specific questions (Case Decoder / Intelligence Brief) or a discovery gap (X-Ray and above) your attorney hasn&apos;t raised, or full refund.
               </p>
               <p className="text-xs text-zinc-500">
                 48-hour delivery &middot; every dollar credits toward higher tiers
