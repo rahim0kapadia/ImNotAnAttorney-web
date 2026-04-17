@@ -1,6 +1,6 @@
 # DUI First 72 Hours, Emergency Action Checklist
 
-**From ImNotAnAttorney.com**, Built by a defendant. For defendants.
+**From ImNotAnAttorney.com**, Built by people who've been where you are. For defendants.
 
 ---
 

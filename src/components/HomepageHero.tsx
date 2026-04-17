@@ -59,10 +59,12 @@ export function HomepageHero() {
           </FadeInUp>
           <FadeInUp delay={0.1}>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
-              A defendant read his own 500-page discovery file and found{" "}
-              <span className="font-semibold text-white">68.3 grams of evidence his attorney never mentioned</span>.
-              That finding changed the case. Now we do it for yours &mdash; case-specific research
-              and the 15 questions that force the case forward.
+              Our system reads your case the way elite defense attorneys do &mdash; through{" "}
+              <span className="font-semibold text-white">40+ documented methodologies</span>:
+              chain of custody, informant credibility, constitutional violations, lab protocol breaks.
+              In one case it surfaced{" "}
+              <span className="font-semibold text-white">68.3 grams of evidence the attorney never mentioned</span>.
+              You get the 15 questions your attorney can&apos;t ignore.
             </p>
           </FadeInUp>
 
@@ -118,7 +120,7 @@ export function HomepageHero() {
         <div className="mx-auto max-w-4xl">
           <FadeInUp>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
-              Built by a defendant who read his own 500-page discovery file &middot; For defendants and the people who love them
+              Built by people who&apos;ve been where you are &middot; For defendants and the people who love them
             </p>
           </FadeInUp>
         </div>

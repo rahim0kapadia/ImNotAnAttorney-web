@@ -198,7 +198,7 @@ export default function AboutPage() {
               methodologies. Investigation patterns. 40+ legendary attorneys.
             </p>
             <p>
-              We built a system that does what he did, more thoroughly, with documented methodology behind every finding, and available to any defendant who refuses to sit in the dark about their own case.
+              We built a system that does what we did, more thoroughly, with documented methodology behind every finding, and available to any defendant who refuses to sit in the dark about their own case.
             </p>
             <p>
               We don&apos;t give legal advice. We give your attorney the questions they need to be answering, documented, sourced, and ready for your next meeting.

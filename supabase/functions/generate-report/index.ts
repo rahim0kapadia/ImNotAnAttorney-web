@@ -2894,7 +2894,7 @@ The Meeting Ready Sheet in Your Next 7 Days contains only questions
 and is designed to be shared freely."
 
 ORIGIN STORY (1 sentence): "This report was built by ImNotAnAttorney.com
-, founded by a defendant who went through exactly what you're going
+, founded by people who went through exactly what you're going
 through. It's powered by documented strategies from 40+ elite defense
 attorneys. Every question below traces to one of them."
 
@@ -4013,7 +4013,7 @@ function renderReportHtml(
   </div>
   ${meta.expertNames ? `<blockquote class="methodology-note">
     <p class="methodology-note-title">METHODOLOGY NOTE</p>
-    <p class="methodology-note-text">Built by ImNotAnAttorney.com, founded by a defendant, powered by 40+ elite defense attorneys' documented strategies. Your report draws on ${escapeHtml(meta.expertNames)}, selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
+    <p class="methodology-note-text">Built by ImNotAnAttorney.com, founded by people who went through the system themselves, powered by 40+ elite defense attorneys' documented strategies. Your report draws on ${escapeHtml(meta.expertNames)}, selected for ${escapeHtml(meta.chargeType || meta.charges)} cases. Expert attributions appear throughout.</p>
     <p class="methodology-note-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
   </blockquote>` : ""}
   ${html}
@@ -4930,7 +4930,7 @@ RULES:
 1. NO heading, start directly with the defendant's first name and a comma.
 2. Reference specific facts from intake, charge type, situation, what they told us.
 3. Include overwhelm permission: "You don't have to read this all at once. Start with the 48-Hour Priority List on the next page."
-4. Insider vulnerability signal: "This service was founded by a defendant who went through exactly what you are going through."
+4. Insider vulnerability signal: "This service was founded by people who went through exactly what you are going through."
 5. If they mentioned their profession, acknowledge that their career IS at stake.
 6. If a family member filled this out, address both the defendant and support person.
 7. End with forward momentum, evidence that preparation matters, not sympathy.${BANNED}${WARM_LANG}

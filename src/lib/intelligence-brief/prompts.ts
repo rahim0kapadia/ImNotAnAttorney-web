@@ -584,7 +584,7 @@ CRITICAL RULES:
 2. Maximum 200 words. Every word must earn its place.
 3. Reference specific facts from their intake, charge type, situation, what they told us. Show you read every word.
 4. Include the overwhelm permission: "You don't have to read this all at once. Start with the 48-Hour Priority List on the next page. The rest will be here when you're ready."
-5. Insider vulnerability signal: "This service was founded by a defendant who went through exactly what you are going through."
+5. Insider vulnerability signal: "This service was founded by people who went through exactly what you are going through."
 6. End with forward momentum, not sympathy, but evidence that preparation matters.
 7. If they mentioned their profession, acknowledge that their career IS at stake.
 8. If a family member filled this out, address both the defendant and the support person.

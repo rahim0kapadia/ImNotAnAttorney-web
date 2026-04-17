@@ -50,14 +50,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Your Attorney Hasn't Read Everything. We Will. | ImNotAnAttorney",
   description:
-    `Built by a defendant who found 68.3g of evidence his attorney never mentioned. Case-specific research + 15 questions that force the case forward. Case Decoder ${TIER_CORE["case-decoder"].priceDisplay}, 48-hour delivery. Find It or It's Free.`,
+    `Built by people who found 68.3g of evidence the attorney never mentioned. Case-specific research + 15 questions that force the case forward. Case Decoder ${TIER_CORE["case-decoder"].priceDisplay}, 48-hour delivery. Find It or It's Free.`,
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
     title: "Your Attorney Hasn't Read Everything. We Will.",
     description:
-      "Built by a defendant who found 68.3g of missing evidence his attorney never mentioned. Case-specific research and the 15 questions that force your case forward.",
+      "Built by people who found 68.3g of missing evidence the attorney never mentioned. Case-specific research and the 15 questions that force your case forward.",
   },
 };
 
