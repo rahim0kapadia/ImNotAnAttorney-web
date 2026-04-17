@@ -70,7 +70,7 @@ const homeFaqs = [
   {
     question: "Can I get a refund?",
     answer:
-      `Find It or It's Free. If we don't identify at least one gap your attorney hasn't raised, full refund, no forms, no arguments. If we miss the delivery deadline, full refund AND you keep the report. Every dollar you spend is credited toward the next tier. Credits valid for 12 months.`,
+      `Find It or It's Free. For the Case Decoder and Intelligence Brief: if we don't deliver at least 15 case-specific questions your attorney hasn't raised, full refund, no forms, no arguments. For the X-Ray and above (where we read your actual discovery): if we don't identify at least one gap your attorney hasn't raised, full refund. Miss the delivery deadline on any tier? Full refund AND you keep the report. Every dollar spent is credited toward the next tier. Credits valid for 12 months.`,
   },
   {
     question: "Will asking these questions upset my attorney?",
@@ -95,7 +95,7 @@ const homeFaqs = [
   {
     question: "I've already spent everything on my attorney. Is $197 worth it?",
     answer:
-      `That\u2019s the exact situation we built this for. You\u2019ve already spent $10,000 or more. INAA costs ${TIER_CORE["case-decoder"].priceDisplay} \u2014 less than one hour of your attorney\u2019s billing rate. The guarantee means if we don\u2019t find at least one gap your attorney hasn\u2019t raised, you pay nothing. One question from our report can change what motions your attorney files. One motion can change your case.`,
+      `That\u2019s the exact situation we built this for. You\u2019ve already spent $10,000 or more. INAA costs ${TIER_CORE["case-decoder"].priceDisplay} \u2014 less than one hour of your attorney\u2019s billing rate. The guarantee means if we don\u2019t deliver at least 15 case-specific questions your attorney hasn\u2019t raised, you pay nothing. One question from our report can change what motions your attorney files. One motion can change your case.`,
   },
   {
     question: "What if my case is already too far along?",
@@ -509,9 +509,15 @@ export default function Home() {
               </h2>
               <div className="mt-6 space-y-4 text-left">
                 <div>
-                  <p className="text-sm font-semibold text-amber-400">The Discovery Guarantee</p>
+                  <p className="text-sm font-semibold text-amber-400">The Questions Guarantee &mdash; Case Decoder &amp; Intelligence Brief</p>
                   <p className="mt-1 text-base text-zinc-300">
-                    We will identify at least one gap, missed question, or unexamined area in your case that your attorney has not raised, or we refund every dollar. No forms. No arguments. One email to help@imnotanattorney.com.
+                    We will deliver at least 15 case-specific questions your attorney has not raised, or we refund every dollar. No forms. No arguments. One email to help@imnotanattorney.com.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-amber-400">The Discovery Guarantee &mdash; X-Ray and Above</p>
+                  <p className="mt-1 text-base text-zinc-300">
+                    Tiers where we read your actual discovery. We will identify at least one gap, missed motion, or unexamined area in your case file that your attorney has not raised, or full refund. The Case Decoder and Intelligence Brief don&apos;t require discovery, so this layer kicks in only from the X-Ray up.
                   </p>
                 </div>
                 <div>
@@ -570,8 +576,8 @@ export default function Home() {
                     value: "$100",
                   },
                   {
-                    label: "The Discovery Guarantee",
-                    sub: "Full refund if we don\u2019t find a gap your attorney hasn\u2019t raised",
+                    label: "The Questions Guarantee",
+                    sub: "Full refund if we don\u2019t deliver at least 15 case-specific questions your attorney hasn\u2019t raised",
                     value: "$400 value",
                   },
                   {
@@ -615,7 +621,7 @@ export default function Home() {
                   Get Your 15 Questions &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
                 </Link>
                 <p className="mt-3 text-sm text-zinc-300">
-                  <span className="text-amber-400">Find It or It&apos;s Free</span> &mdash; full refund if we don&apos;t find a gap.
+                  <span className="text-amber-400">Find It or It&apos;s Free</span> &mdash; 15 case-specific questions or full refund.
                 </p>
               </div>
             </div>
@@ -695,7 +701,7 @@ export default function Home() {
                 Get Your 15 Questions &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
               </Link>
               <p className="text-sm text-zinc-300">
-                Find It or It&apos;s Free &mdash; full refund if we don&apos;t find a gap.
+                Find It or It&apos;s Free &mdash; 15 case-specific questions or full refund.
               </p>
             </div>
           </FadeInUp>

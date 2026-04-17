@@ -201,7 +201,7 @@ function StartContent() {
               </Link>
 
               <p className="mt-4 text-base text-zinc-400">
-                If we don&apos;t find a gap your attorney hasn&apos;t raised: full refund.
+                If we don&apos;t deliver at least 15 case-specific questions your attorney hasn&apos;t raised: full refund.
               </p>
               <p className="mt-2 text-xs text-zinc-400">
                 100% credited when you upgrade. Valid 12 months.

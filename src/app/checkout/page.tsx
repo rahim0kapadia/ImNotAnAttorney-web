@@ -168,7 +168,9 @@ function StandaloneCheckout({
 
         <p className="mt-4 text-xs text-zinc-400">
           Find It or It&apos;s Free &mdash; if your report doesn&apos;t surface
-          something your attorney hasn&apos;t raised, one email to
+          case-specific questions or gaps your attorney hasn&apos;t raised
+          (tier-appropriate: questions for Case Decoder / Intelligence Brief,
+          discovery gaps for X-Ray and above), one email to
           help@imnotanattorney.com for a full refund.
         </p>
       </div>
