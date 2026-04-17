@@ -183,7 +183,7 @@ export async function renderOgImage({
           <div
             style={{
               display: "flex",
-              width: 120,
+              width: "100%",
               height: 5,
               background: "#f59e0b",
               borderRadius: 2,
