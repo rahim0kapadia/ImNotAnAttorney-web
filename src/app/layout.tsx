@@ -32,7 +32,7 @@
  */
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
-import { Geist, Playfair_Display } from "next/font/google";
+import { Lato, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
@@ -40,10 +40,11 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-/** Geist Sans, primary font. Loaded via next/font/google for zero-CLS font loading. */
-const geistSans = Geist({
+/** Lato, primary body font per brand.md. Warm, readable for legal content. CSS var kept as --font-geist-sans for minimal blast radius. */
+const bodyFont = Lato({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "700"],
 });
 
 /** Playfair Display, display/serif font for headlines. Adds premium typographic contrast. */
@@ -106,7 +107,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${playfairDisplay.variable} antialiased bg-background text-foreground`}
+        className={`${bodyFont.variable} ${playfairDisplay.variable} antialiased bg-background text-foreground`}
       >
         {/* Skip link, accessibility: allows keyboard/screen reader users to bypass nav */}
         <a

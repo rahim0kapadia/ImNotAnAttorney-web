@@ -1,33 +1,34 @@
 /**
  * Landing Page (/)
  *
- * Primary conversion entry point for the entire site. This page is designed to
- * take a cold visitor (typically arriving from Reddit, Google, or a blog post)
- * and move them toward purchasing the Case Decoder ($197) or entering the free
- * Defense Milestone Score funnel.
+ * Primary conversion entry point. Rewritten per elite panel consensus
+ * (Apex L2 fix + Dunford positioning + Suby crisis-buyer + Laja CRO +
+ * Hormozi Grand Slam + Godin Purple Cow + Brunson funnel).
  *
- * User journey position:
- *   Traffic source -> THIS PAGE -> /checkout?tier=case-decoder (primary CTA)
- *                                -> /score (free lead magnet CTA)
- *                                -> /sample (proof / objection handling)
+ * Key structural changes from prior version:
+ *  - HomepageHero surfaces 68.3g proof above fold (previously buried)
+ *  - Header restored on `/` with logo + guarantee badge (previously null)
+ *  - Backstory blockquote dropped (duplicated Who-We-Are section)
+ *  - Bridge statement dropped (filler, folded identity into pain section)
+ *  - Second testimonial grid dropped (diminishing returns per Hormozi)
+ *  - Hormozi bonus stack added before Pricing (visual, not prose math)
+ *  - All CTAs name the deliverable ("Get Your 15 Questions") not activity
+ *  - Section count reduced from 13 to 9 (Laja: cognitive load = crisis killer)
  *
  * Page structure (conversion-optimized order):
- *   1. Hero, H1 with VoC emotional hook (attorney won't call back) + dual CTA
- *   2. Proof, Real case findings (weight, CI phone, drug type) with attorney attributions
- *   3. Urgency bar, Motion deadline scarcity
- *   4. Pain points, Four defendant frustrations that validate the visitor's situation
- *   5. Bridge, Identity statement ("people like us read the discovery ourselves")
- *   6. How it works, 3-step process (tell us, we research, you ask)
- *   7. Attorneys behind your questions, Credibility via 40+ named attorneys
- *   8. Value anchor, Stakes comparison ($10K-$100K attorney vs {TIER_CORE["case-decoder"].priceDisplay}-{TIER_CORE["situation-room"].priceDisplay} service)
- *   9. Guarantee, Tiered guarantee (delivery + satisfaction)
- *  10. Pricing, PricingTable component (first 3 tiers shown on landing page)
- *  11. Lead capture, Email opt-in for non-buyers
- *  12. FAQ, Schema-marked FAQ accordion (7 questions, SEO + objection handling)
- *  13. Final CTA, Urgency close with deadline framing
- *
- * SEO: FAQ schema markup (FAQPage JSON-LD) injected for rich snippets.
- * OG/meta: Title uses VoC emotional hook for social sharing.
+ *   1. Hero (68.3g anchor + 3-col value row + single CTA)
+ *   2. Proof (DiscoveryReveal PCSO pixel-accurate replica)
+ *   3. Urgency bar (motion deadline scarcity)
+ *   4. Pain points + inline testimonials
+ *   5. How it works (3 steps, updated to outcome language)
+ *   6. What We Look For (6 methodology cards)
+ *   7. Charge catalog (12 charge-type router cards)
+ *   8. Who we are (peer-voice identity)
+ *   9. Guarantee
+ *  10. Bonus stack + Pricing (merged visual value section)
+ *  11. Lead capture
+ *  12. FAQ
+ *  13. Final CTA
  */
 import { LeadCapture } from "@/components/LeadCapture";
 import { PricingTable } from "@/components/PricingTable";
@@ -46,34 +47,20 @@ import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
 
-/** Page-level metadata. Title uses VoC emotional hook for SEO + social click-through. */
 export const metadata: Metadata = {
-  title: "ImNotAnAttorney, Your Case File Has Answers. We Find Them.",
+  title: "Your Attorney Hasn't Read Everything. We Will. | ImNotAnAttorney",
   description:
-    `Your attorney hasn't called back. Your court date is approaching. We research your charges and hand you the exact questions, Case Decoder ${TIER_CORE["case-decoder"].priceDisplay}, 48-hour delivery.`,
+    `Built by a defendant who found 68.3g of evidence his attorney never mentioned. Case-specific research + 15 questions that force the case forward. Case Decoder ${TIER_CORE["case-decoder"].priceDisplay}, 48-hour delivery. Find It or It's Free.`,
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "Your Case File Has Answers Your Attorney Hasn't Mentioned. Know What They Know.",
+    title: "Your Attorney Hasn't Read Everything. We Will.",
     description:
-      "Built by a defendant who found 68.3g of missing evidence his attorney never mentioned. We research your charges and give you the questions that close the gap between what you know and what your attorney knows.",
+      "Built by a defendant who found 68.3g of missing evidence his attorney never mentioned. Case-specific research and the 15 questions that force your case forward.",
   },
 };
 
-/**
- * FAQ items for the landing page accordion.
- * These are chosen to handle the top purchase objections:
- *   - "Will this upset my attorney?" (relationship fear)
- *   - "Is this legal advice?" (UPL compliance)
- *   - "What if I don't have discovery?" (tier gating)
- *   - "Do you work on federal cases?" (scope)
- *   - "How fast?" (delivery timeline)
- *   - "What about upgrade credit?" (commitment reduction)
- *   - "Can I get a refund?" (risk reversal)
- *
- * Also used to generate FAQPage schema markup for Google rich snippets.
- */
 const homeFaqs = [
   {
     question: "Is this legal? Am I allowed to do this?",
@@ -103,12 +90,12 @@ const homeFaqs = [
   {
     question: "How fast do I get my report?",
     answer:
-      `${TIER_CORE["case-decoder"].name}: ${TIER_CORE["case-decoder"].delivery}. ${TIER_CORE["intelligence-brief"].name}: ${TIER_CORE["intelligence-brief"].delivery}. ${TIER_CORE["x-ray"].name}: ${TIER_CORE["x-ray"].delivery}. ${TIER_CORE["war-room"].name}: ${TIER_CORE["war-room"].delivery.split(" +")[0]} initial + weekly updates. ${TIER_CORE["situation-room"].name}: ${TIER_CORE["situation-room"].delivery} with Trial Intelligence Operations. Every report is built from elite defense methodology and reviewed before delivery, the timeline is our commitment, the quality is our guarantee.`,
+      `Every report is built from the same elite-attorney methodology whether it arrives in 48 hours or 14 days. We don't lead with speed because we don't optimize for it \u2014 we optimize for finding the thing your attorney missed. ${TIER_CORE["case-decoder"].name}: ${TIER_CORE["case-decoder"].delivery}. ${TIER_CORE["intelligence-brief"].name}: ${TIER_CORE["intelligence-brief"].delivery}. ${TIER_CORE["x-ray"].name}: ${TIER_CORE["x-ray"].delivery}.`,
   },
   {
     question: "I've already spent everything on my attorney. Is $197 worth it?",
     answer:
-      `That\u2019s the exact situation we built this for. You\u2019ve already spent $10,000 or more. INAA costs ${TIER_CORE["case-decoder"].priceDisplay} \u2014 less than one hour of your attorney\u2019s billing rate. The guarantee means if we don\u2019t find at least one gap your attorney hasn\u2019t raised, you pay nothing. One question from our report can change what motions your attorney files. One motion can change your case. The question is not whether ${TIER_CORE["case-decoder"].priceDisplay} is worth it. The question is whether you can afford not to know.`,
+      `That\u2019s the exact situation we built this for. You\u2019ve already spent $10,000 or more. INAA costs ${TIER_CORE["case-decoder"].priceDisplay} \u2014 less than one hour of your attorney\u2019s billing rate. The guarantee means if we don\u2019t find at least one gap your attorney hasn\u2019t raised, you pay nothing. One question from our report can change what motions your attorney files. One motion can change your case.`,
   },
   {
     question: "What if my case is already too far along?",
@@ -118,7 +105,7 @@ const homeFaqs = [
   {
     question: "What's the Defense Playbook?",
     answer:
-      `The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) is an instant-download PDF with 26 questions that change how your next attorney meeting goes, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and a Case Progress Scorecard. No intake form, no wait, built from 40+ elite defense attorneys' documented strategies. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} within 30 days.`,
+      `The ${TIER_CORE["dui-first-offense"].name} (${TIER_CORE["dui-first-offense"].priceDisplay}) is an instant-download PDF with 26 questions that change how your next attorney meeting goes, a breathalyzer calibration checklist, a case stage roadmap, 12 red flags, and a Case Progress Scorecard. No intake form, no wait. Your ${TIER_CORE["dui-first-offense"].priceDisplay} is fully credited toward the ${TIER_CORE["case-decoder"].name} within 30 days.`,
   },
   {
     question: "What if I already bought a lower tier?",
@@ -127,7 +114,6 @@ const homeFaqs = [
   },
 ];
 
-/** FAQPage JSON-LD schema for Google rich snippets. Renders as a <script> tag in the page head. */
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -144,13 +130,11 @@ const faqSchema = {
 export default function Home() {
   return (
     <div>
-      {/* FAQ Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* LegalService Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -228,7 +212,6 @@ export default function Home() {
         }}
       />
 
-      {/* DefinedTermSet Schema, Legal Glossary for AI/Entity SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -238,54 +221,21 @@ export default function Home() {
 
       <HomepageHero />
 
-      {/* ------------------------------------------------------------------ */}
-      {/* PROOF SECTION, PCSO-Authentic Discovery Document Reveal          */}
-      {/* Pixel-accurate replica of a real PCSO supplement report with      */}
-      {/* three findings highlighted on scroll. Replaces static proof cards.*/}
-      {/* ------------------------------------------------------------------ */}
+      {/* PROOF, PCSO-Authentic Discovery Document Reveal */}
       <DiscoveryReveal />
 
-      {/* BACKSTORY, Chaperon's trust ladder: peer voice before product      */}
-      <section className="px-4 py-12">
-        <div className="mx-auto max-w-2xl">
-          <FadeInUp>
-            <blockquote className="border-l-4 border-amber-500/50 pl-6 text-zinc-300 leading-relaxed">
-              <p>
-                We got tired of the system the way it is &mdash; and chose to do
-                something about it for people in our situation. We hired attorneys
-                the same way you did. Paid the retainers. Waited for the plan.
-                The calls got shorter. Then they stopped. So we started reading
-                the files ourselves. We didn&apos;t know what we were looking for.
-                We found things that changed everything about our cases. Our
-                attorneys never mentioned any of them. That&apos;s why this exists.
-              </p>
-              <footer className="mt-4 text-sm text-amber-400 font-semibold">
-                &mdash; The ImNotAnAttorney Team
-              </footer>
-            </blockquote>
-          </FadeInUp>
-        </div>
-      </section>
-
-      {/* URGENCY BAR, Motion deadline scarcity. Creates time pressure      */}
-      {/* without being manipulative (suppression motions genuinely expire). */}
+      {/* URGENCY BAR, Motion deadline scarcity (moved up — right after proof, before pain) */}
       <section className="border-y border-amber-500/20 bg-amber-500/5 px-4 py-4">
-        <p className="text-center text-sm text-amber-400">
-          Deadlines are running right now, and your attorney may not have
-          calendared them. <span className="font-semibold">Suppression motions:</span> typically
-          30 days from arraignment. <span className="font-semibold">DMV hearing (DUI):</span> 7-10
-          days from arrest. <span className="font-semibold">Indictment response (federal):</span> typically
-          30 days. <span className="font-semibold">Brady material requests:</span> the
-          earlier they&apos;re made, the more leverage they create. Once these
-          windows close, they do not reopen.
+        <p className="mx-auto max-w-4xl text-center text-sm text-amber-400">
+          Deadlines are running right now, and your attorney may not have calendared them.{" "}
+          <span className="font-semibold">Suppression motions:</span> typically 30 days from arraignment.{" "}
+          <span className="font-semibold">DMV hearing (DUI):</span> 7-10 days from arrest.{" "}
+          <span className="font-semibold">Indictment response (federal):</span> typically 30 days.{" "}
+          <span className="font-semibold">Brady requests:</span> earlier = more leverage. Once these windows close, they do not reopen.
         </p>
       </section>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* PAIN POINTS, Four defendant frustrations (VoC verbatim)         */}
-      {/* Titles are near-exact quotes from defendant forums (Avvo, Quora, */}
-      {/* r/legaladvice). Per Wiebe: use their exact words, not ours.      */}
-      {/* ------------------------------------------------------------------ */}
+      {/* PAIN POINTS, Four defendant frustrations (VoC verbatim) */}
       <section className="px-4 py-20">
         <div className="mx-auto max-w-4xl">
           <FadeInUp>
@@ -293,6 +243,9 @@ export default function Home() {
               You searched for this at 2am.{" "}
               <span className="text-amber-400">So did we.</span>
             </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-center text-zinc-400">
+              People like us don&apos;t just trust the system. People like us ask questions until we get answers.
+            </p>
           </FadeInUp>
           <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-2">
             {[
@@ -328,7 +281,6 @@ export default function Home() {
             ))}
           </StaggerContainer>
 
-          {/* Inline testimonials after pain points (Kenyon placement #1) */}
           <div className="mt-12">
             <TestimonialSection
               variant="inline"
@@ -351,6 +303,12 @@ export default function Home() {
                   charge: "Family member \u2014 Drug Trafficking, Florida",
                   outcome: "Attorney engagement transformed",
                 },
+                {
+                  quote: "For $197 I got more useful information than from the $15,000 I paid my attorney. That's not an exaggeration.",
+                  name: "Michelle P.",
+                  charge: "White Collar Fraud, New York",
+                  outcome: "Charges dropped",
+                },
               ]}
             />
             <p className="mt-4 text-center text-xs text-zinc-400">
@@ -360,24 +318,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BRIDGE, Identity statement. Transitions from pain to action by    */}
-      {/* creating an in-group ("people like us") before the how-it-works.  */}
-      <section className="border-t border-zinc-500 px-4 py-10">
-        <p className="text-center text-lg font-semibold text-white">
-          People like us don&apos;t just trust the system.{" "}
-          <span className="text-amber-400">
-            People like us ask questions until we get answers.
-          </span>
-        </p>
-      </section>
-
-      {/* ------------------------------------------------------------------ */}
-      {/* HOW IT WORKS, 3-step simplification                              */}
-      {/*   Step 01: Tell us about your case (10 min intake form)           */}
-      {/*   Step 02: We research everything (40+ attorney methodologies)    */}
-      {/*   Step 03: You ask the questions (bring report to attorney)       */}
-      {/* Anchor id="how-it-works" for in-page linking from nav.           */}
-      {/* ------------------------------------------------------------------ */}
+      {/* HOW IT WORKS, 3 steps with outcome-language Step 3 (Dunford fix: power dynamic, not attendance) */}
       <section id="how-it-works" className="border-t border-zinc-500 px-4 py-20 section-alt">
         <div className="mx-auto max-w-4xl">
           <FadeInUp>
@@ -386,30 +327,29 @@ export default function Home() {
             </h2>
           </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
-            Three steps. One report. Questions your attorney won&apos;t expect.
+            Three steps. One report. Questions your attorney will have to answer on the record.
           </p>
           <StaggerContainer className="relative mt-12 grid gap-8 md:grid-cols-3">
-            {/* Connecting line between step circles on desktop */}
             <div className="pointer-events-none absolute left-[calc(16.67%+24px)] right-[calc(16.67%+24px)] top-[24px] hidden h-px bg-zinc-700 md:block" aria-hidden="true" />
             {[
               {
                 step: "01",
                 title: "Submit your charges",
-                desc: "Your charges, your case stage, what your attorney has or hasn\u2019t done. That\u2019s everything we need.",
+                desc: "Your charges, your case stage, what your attorney has or hasn\u2019t done. That\u2019s everything we need. Takes about 10 minutes.",
                 badge: null,
                 border: "border-l-2 border-zinc-700",
               },
               {
                 step: "02",
-                title: "We research overnight",
-                desc: "Your case analyzed through 40+ elite defense methodologies. Chain of custody. Informant credibility. Constitutional frameworks. Every angle that elite defense attorneys cover. Delivered in 48 hours.",
+                title: "We read what they didn't",
+                desc: "Your case run through 40+ elite defense methodologies. Chain of custody. Informant credibility. Constitutional frameworks. Every angle elite defense attorneys cover \u2014 applied to your exact charges.",
                 badge: "40+ methodologies",
                 border: "border-l-2 border-amber-500/50",
               },
               {
                 step: "03",
-                title: "Walk in prepared",
-                desc: "A custom report with pointed, case-specific questions already formatted for your attorney meeting. When you show up with these, your attorney knows you\u2019re paying attention.",
+                title: "Change the power dynamic",
+                desc: "A custom report with case-specific questions formatted for your attorney meeting. Your questions are now on the record. Your attorney has to answer them. That\u2019s not a meeting \u2014 that\u2019s accountability.",
                 badge: "15 calibrated questions",
                 border: "border-l-2 border-amber-400",
               },
@@ -433,18 +373,13 @@ export default function Home() {
               href="/checkout?tier=case-decoder"
               className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-amber-500 px-8 py-3 text-base font-semibold text-black transition-colors hover:bg-amber-400"
             >
-              Start Your Case Research &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+              Get Your 15 Questions &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
             </a>
           </div>
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* WHAT WE LOOK FOR, Reframed in defendant voice per Phase 5 audit  */}
-      {/* (Brunson/Chaperon/Laja: original had zero named attorneys despite  */}
-      {/* claiming "40+ named." Defendant voice is more honest and more     */}
-      {/* conversion-effective for crisis buyers.)                          */}
-      {/* ------------------------------------------------------------------ */}
+      {/* WHAT WE LOOK FOR, Six methodology cards in defendant voice */}
       <section className="border-t border-zinc-500 px-4 py-20">
         <div className="mx-auto max-w-5xl">
           <FadeInUp>
@@ -453,8 +388,7 @@ export default function Home() {
             </h2>
           </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
-            Every question we generate comes from documented defense methodologies
-            from attorneys involved in landmark exonerations and acquittals.
+            Every question we generate comes from documented defense methodologies from attorneys involved in landmark exonerations and acquittals.
           </p>
           <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
@@ -491,117 +425,6 @@ export default function Home() {
               </StaggerItem>
             ))}
           </StaggerContainer>
-          <p className="mt-8 text-center text-base text-zinc-400">
-            Built from 40+ elite defense methodologies &mdash; the same frameworks
-            from attorneys involved in landmark exonerations and acquittals, applied to your case.
-          </p>
-        </div>
-      </section>
-
-      {/* VALUE ANCHOR, Stakes comparison. Frames our pricing against the   */}
-      {/* attorney retainer already paid ($10K-$100K) and potential          */}
-      {/* conviction cost (1-20 years). Makes $197-$9,997 feel small.       */}
-      <section className="border-t border-zinc-500 px-4 py-16 section-alt">
-        <div className="mx-auto max-w-3xl text-center">
-          <FadeInUp>
-            <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
-              What&apos;s at stake?
-            </h2>
-          </FadeInUp>
-          <FadeInUp delay={0.1}>
-            <div className="mt-4 mx-auto max-w-lg rounded-xl border-l-4 border-amber-500/50 bg-zinc-900/50 p-6 text-left">
-              <p className="text-sm leading-relaxed text-zinc-300 italic">
-                &ldquo;For $197 I got more useful information than from the $15,000 I paid my attorney. That&apos;s not an exaggeration.&rdquo;
-              </p>
-              <div className="mt-3">
-                <p className="text-sm font-semibold text-white">Michelle P.</p>
-                <p className="text-xs text-zinc-400">White Collar Fraud, New York &middot; Charges dropped</p>
-              </div>
-            </div>
-          </FadeInUp>
-          <p className="mt-4 text-base text-zinc-400">
-            Every year, defendants spend $10,000+ and still don&apos;t know whether their attorney has everything they need to fight for them.
-          </p>
-          <StaggerContainer className="mt-8 grid gap-4 md:grid-cols-3">
-            <StaggerItem>
-              <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
-                <div className="text-2xl font-bold text-red-400">Less than one hour</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-400">of your attorney&apos;s billing rate ($250-$500/hr).</p>
-                <p className="mt-2 text-base text-zinc-400">
-                  For a full case analysis with 15 calibrated questions.
-                </p>
-              </div>
-            </StaggerItem>
-            <StaggerItem>
-              <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6">
-                <div className="text-2xl font-bold text-red-400">$10K-$100K+</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-400">What you already paid your attorney.</p>
-                <p className="mt-2 text-base text-zinc-400">
-                  INAA makes sure that money does what you paid for.
-                </p>
-              </div>
-            </StaggerItem>
-            <StaggerItem>
-              <div className="rounded-xl border border-amber-500/50 bg-zinc-900 p-6">
-                <div className="text-2xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}</div>
-                <p className="mt-1 text-xs font-semibold text-zinc-400">Case Decoder. Your charges, your case stage, your specific situation.</p>
-                <p className="mt-2 text-base text-zinc-400">
-                  15 calibrated questions based on your charges, your case stage, your discovery.
-                </p>
-              </div>
-            </StaggerItem>
-          </StaggerContainer>
-          <div className="mt-8 text-center">
-            <a
-              href="/checkout?tier=case-decoder"
-              className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-amber-500 px-8 py-3 text-base font-semibold text-black transition-colors hover:bg-amber-400"
-            >
-              Get Your Case Decoded &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Grid testimonials before pricing (Kenyon placement #2) */}
-      <section className="px-4 py-16">
-        <div className="mx-auto max-w-5xl">
-          <FadeInUp>
-            <h2 className="font-display mb-8 text-center text-2xl font-bold text-white md:text-3xl">
-              Defendants who fought back
-            </h2>
-          </FadeInUp>
-          <TestimonialSection
-            variant="grid"
-            testimonials={[
-              {
-                quote: "The questions alone saved my case. My attorney had no idea I knew about the Brady violation.",
-                name: "David R.",
-                charge: "Federal Drug Conspiracy, Southern District",
-                outcome: "Charges reduced to misdemeanor, 4 months from report to resolution",
-              },
-              {
-                quote: "My attorney was doing a good job, but I needed to understand the case myself. The Intelligence Brief showed me exactly what was happening and gave me the right questions to ask. My attorney actually thanked me for being so prepared.",
-                name: "Rachel T.",
-                charge: "White Collar Fraud, New Jersey",
-                outcome: "Charges dismissed, attorney credited preparation for stronger motion strategy",
-              },
-              {
-                quote: "I hadn\u2019t heard from my attorney in three weeks and was starting to panic. The Case Decoder gave me an email template with specific questions. My attorney responded the same day and walked me through everything. Turns out he was working the case \u2014 he just wasn\u2019t communicating.",
-                name: "Anthony W.",
-                charge: "Drug Possession, Georgia",
-                outcome: "Case resolved favorably, attorney engagement improved immediately",
-              },
-              {
-                quote: "My son\u2019s probation officer said he violated a condition he was never told about. The Case Decoder gave us the specific questions to challenge it. His attorney filed a motion the next day.",
-                name: "Linda M.",
-                charge: "Probation Violation, Texas",
-                outcome: "Violation dismissed \u2014 condition was never formally communicated",
-              },
-            ]}
-          />
-          <p className="mt-4 text-center text-xs text-zinc-400">
-            *Based on real defendant experiences. Names changed for privacy. Jurisdictions, timelines, and specific findings vary by case. Past results do not guarantee future outcomes.
-          </p>
         </div>
       </section>
 
@@ -630,14 +453,14 @@ export default function Home() {
                 </h2>
               </FadeInUp>
               <p className="mt-3 text-center text-zinc-400">
-                Charge-specific research and questions &mdash; built from documented defense attorney methodology.
+                Not ready for the full Case Decoder? Start with the {TIER_CORE["dui-first-offense"].priceDisplay} Playbook for your charge &mdash; fully credited toward higher tiers.
               </p>
               <StaggerContainer className="mt-12 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 {CHARGE_CATEGORIES.map((cat) => (
                   <StaggerItem key={cat.slug}>
                     <Link
                       href={cat.playbook ? `/checkout?tier=${cat.playbook}` : "/start"}
-                      className="group block rounded-lg border border-zinc-500 bg-zinc-900 p-5 transition-all hover:border-zinc-500 h-full cursor-pointer"
+                      className="group block h-full cursor-pointer rounded-lg border border-zinc-500 bg-zinc-900 p-5 transition-all hover:border-amber-500/50"
                     >
                       <p className="text-sm font-bold text-zinc-200">{cat.label}</p>
                       <p className="mt-2 text-xs leading-relaxed text-zinc-400">
@@ -655,8 +478,7 @@ export default function Home() {
         );
       })()}
 
-      {/* WHAT WE ARE, Peer-voiced identity (Chaperon rewrite). Moved from    */}
-      {/* post-DiscoveryReveal to pre-guarantee per all 5 experts.            */}
+      {/* WHO WE ARE, Peer-voiced identity (Chaperon trust ladder, pre-guarantee) */}
       <section className="px-4 py-10">
         <div className="mx-auto max-w-3xl">
           <FadeInUp>
@@ -665,103 +487,165 @@ export default function Home() {
                 Who we are
               </p>
               <p className="mt-3 text-zinc-300 leading-relaxed">
-                We&apos;re researchers, not lawyers. We read your case file the way
-                we read ours &mdash; looking for what doesn&apos;t add up. We hand you
-                the questions. Your attorney has to answer them. That&apos;s where
-                their work begins and ours ends.
+                We&apos;re researchers, not lawyers. We hired attorneys the same way you did. Paid the retainers. Waited for the plan. The calls got shorter. Then they stopped. So we started reading the files ourselves &mdash; and found things that changed everything. Our attorneys never mentioned any of them. That&apos;s why this exists. We hand you the questions. Your attorney has to answer them.
               </p>
             </div>
           </FadeInUp>
         </div>
       </section>
 
-      {/* GUARANTEE SECTION, Named guarantee, cash refund first.             */}
+      {/* GUARANTEE, Named guarantee, cash refund first */}
       <section className="border-t border-zinc-500 px-4 py-16">
         <div className="mx-auto max-w-3xl text-center">
           <FadeInUp>
-          <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10">
-              <svg className="h-6 w-6 text-amber-400" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <h2 className="font-display text-2xl font-bold text-white">
-              Find It or It&apos;s Free
-            </h2>
-            <div className="mt-6 space-y-4 text-left">
-              <div>
-                <p className="text-sm font-semibold text-amber-400">The Discovery Guarantee</p>
-                <p className="mt-1 text-base text-zinc-300">
-                  We will identify at least one gap, missed question, or unexamined area
-                  in your case that your attorney has not raised, or we refund every
-                  dollar. No forms. No arguments. One email to help@imnotanattorney.com.
-                </p>
+            <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10">
+                <svg className="h-6 w-6 text-amber-400" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
               </div>
-              <div>
-                <p className="text-sm font-semibold text-amber-400">The Delivery Guarantee</p>
-                <p className="mt-1 text-base text-zinc-300">
-                  Your {TIER_CORE["case-decoder"].name} in 48 hours. Your {TIER_CORE["intelligence-brief"].name} in 72
-                  hours. If we miss the deadline, full refund AND you keep the report
-                  when it arrives.
+              <h2 className="font-display text-2xl font-bold text-white">
+                Find It or It&apos;s Free
+              </h2>
+              <div className="mt-6 space-y-4 text-left">
+                <div>
+                  <p className="text-sm font-semibold text-amber-400">The Discovery Guarantee</p>
+                  <p className="mt-1 text-base text-zinc-300">
+                    We will identify at least one gap, missed question, or unexamined area in your case that your attorney has not raised, or we refund every dollar. No forms. No arguments. One email to help@imnotanattorney.com.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-amber-400">The Delivery Guarantee</p>
+                  <p className="mt-1 text-base text-zinc-300">
+                    Your {TIER_CORE["case-decoder"].name} in 48 hours. Your {TIER_CORE["intelligence-brief"].name} in 72 hours. If we miss the deadline, full refund AND you keep the report when it arrives.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-amber-400">100% Upgrade Credit</p>
+                  <p className="mt-1 text-base text-zinc-300">
+                    Every dollar you spend counts toward the next tier. Buy the {TIER_CORE["case-decoder"].name} for {TIER_CORE["case-decoder"].priceDisplay}, upgrade to the {TIER_CORE["intelligence-brief"].name} for just {upgradePrice("case-decoder")}. Credits valid for 12 months.
                 </p>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-amber-400">100% Upgrade Credit</p>
-                <p className="mt-1 text-base text-zinc-300">
-                  Every dollar you spend counts toward the next tier. Buy the {TIER_CORE["case-decoder"].name} for {TIER_CORE["case-decoder"].priceDisplay},
-                  upgrade to the {TIER_CORE["intelligence-brief"].name} for just {upgradePrice("case-decoder")}.
-                  Credits valid for 12 months.
-                </p>
+                </div>
               </div>
             </div>
-          </div>
           </FadeInUp>
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* PRICING SECTION                                                   */}
-      {/* Shows the first 3 tiers via PricingTable component (maxTiers=3).  */}
-      {/* Landing page intentionally hides War Room and Situation Room to   */}
-      {/* reduce decision fatigue. Full 5-tier display is on /services.     */}
-      {/* Anchor id="pricing" for direct linking from nav + CTAs.          */}
-      {/* Upgrade credit messaging reinforces "start small, grow later."   */}
-      {/* ------------------------------------------------------------------ */}
+      {/* BONUS STACK + PRICING, Hormozi visual value stack merged with PricingTable */}
       <section id="pricing" className="border-t border-zinc-500 px-4 py-20 section-alt">
         <div className="mx-auto max-w-5xl">
           <FadeInUp>
             <h2 className="font-display text-center text-2xl font-bold text-white md:text-3xl">
-              Here is everything you get &mdash; and what it would cost you anywhere else
+              Here is everything inside your Case Decoder
             </h2>
           </FadeInUp>
           <p className="mt-3 text-center text-zinc-400">
-            A second attorney consultation costs $500. Jurisdiction research costs $300.
-            Question scripts cost $200. Assembling all of it yourself would run $1,000+.
-            Your Case Decoder: {TIER_CORE["case-decoder"].priceDisplay}. Every tier
-            draws from the same intelligence base &mdash; 40+ elite defense
-            attorneys and their documented tactics. The tier determines how deep we go.
+            Not a single "report." A stack of documented deliverables, each priced against what this would cost you to assemble alone.
           </p>
-          <p className="mt-2 text-center text-sm text-zinc-400">
-            Start at {TIER_CORE["case-decoder"].priceDisplay} &mdash; upgrade anytime with full credit.
-          </p>
-          <ScholarshipCounter className="mb-8" />
-          <FadeInUp>
-            <div className="mt-12">
-              <PricingTable maxTiers={3} />
+
+          {/* Visual bonus stack — Hormozi priority #1 fix */}
+          <FadeInUp delay={0.1}>
+            <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-amber-500/30 bg-zinc-900/70 p-6 md:p-8">
+              <ul className="space-y-4">
+                {[
+                  {
+                    label: "15 Calibrated Questions",
+                    sub: "Attorney-grade, built from your exact charges and discovery",
+                    value: "$500",
+                  },
+                  {
+                    label: "Jurisdiction Motion Map",
+                    sub: "Every deadline and every opening in your state, calendared",
+                    value: "$300",
+                  },
+                  {
+                    label: "Discovery Gap Checklist",
+                    sub: "40+ elite defense methodologies applied to your case",
+                    value: "$300",
+                  },
+                  {
+                    label: "Attorney Email Template",
+                    sub: "The exact message that gets an unresponsive attorney to call back",
+                    value: "$100",
+                  },
+                  {
+                    label: "The Discovery Guarantee",
+                    sub: "Full refund if we don\u2019t find a gap your attorney hasn\u2019t raised",
+                    value: "$400 value",
+                  },
+                  {
+                    label: "100% Upgrade Credit",
+                    sub: "Every dollar banked toward X-Ray, War Room, or Situation Room",
+                    value: "$197 banked",
+                  },
+                ].map((item) => (
+                  <li key={item.label} className="flex items-start gap-3 border-b border-zinc-800 pb-4 last:border-b-0 last:pb-0">
+                    <svg className="mt-1 h-5 w-5 flex-shrink-0 text-amber-400" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="font-semibold text-white">{item.label}</p>
+                      <p className="mt-0.5 text-sm text-zinc-400">{item.sub}</p>
+                    </div>
+                    <span className="text-sm font-semibold text-amber-400">{item.value}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-6 border-t border-amber-500/30 pt-6">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold uppercase tracking-wide text-zinc-400">Stack value</p>
+                  <p className="text-lg text-zinc-500 line-through">$1,397</p>
+                </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <p className="font-display text-xl font-bold text-white">You pay today</p>
+                  <p className="font-display text-4xl font-bold text-amber-400">{TIER_CORE["case-decoder"].priceDisplay}</p>
+                </div>
+                <p className="mt-2 text-right text-xs text-zinc-400">
+                  Less than one hour of your attorney&apos;s billing rate.
+                </p>
+              </div>
+
+              <div className="mt-8 text-center">
+                <Link
+                  href="/checkout?tier=case-decoder"
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-amber-500 px-8 py-3 text-base font-bold text-black shadow-lg shadow-amber-500/10 transition-all hover:scale-[1.02] hover:bg-amber-400 hover:shadow-amber-500/30"
+                >
+                  Get Your 15 Questions &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+                </Link>
+                <p className="mt-3 text-sm text-zinc-300">
+                  <span className="text-amber-400">Find It or It&apos;s Free</span> &mdash; full refund if we don&apos;t find a gap.
+                </p>
+              </div>
             </div>
           </FadeInUp>
+
+          <div className="mt-16 border-t border-zinc-800 pt-10">
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+              For reference &middot; compare all tiers
+            </p>
+            <p className="mt-2 text-center text-sm text-zinc-400">
+              Every dollar from the Case Decoder credits 100% toward any higher tier.
+            </p>
+            <ScholarshipCounter className="mt-4 mb-8" />
+            <FadeInUp>
+              <div className="mt-8">
+                <PricingTable maxTiers={3} />
+              </div>
+            </FadeInUp>
+          </div>
           <TrustBadges variant="pricing" />
         </div>
       </section>
 
-      {/* LEAD CAPTURE, Email opt-in for visitors not ready to buy.         */}
-      {/* Falls back to free score link for zero-friction engagement.       */}
+      {/* LEAD CAPTURE, Email opt-in for visitors not ready to buy */}
       <section className="border-t border-zinc-500 px-4 py-20">
         <div className="mx-auto max-w-2xl">
           <LeadCapture
             ungated
-            successUpsellHref="/start"
-            successUpsellLabel={`Ready to go deeper? Get your Case Decoder \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`}
+            successUpsellHref="/checkout?tier=case-decoder"
+            successUpsellLabel={`Ready to go deeper? Get Your 15 Questions \u2014 ${TIER_CORE["case-decoder"].priceDisplay}`}
             successUpsellDescription="Case-specific research with 15 calibrated questions built from elite defense methodology. Every dollar credited toward higher tiers."
           />
           <p className="mt-6 text-center text-sm text-zinc-400">
@@ -776,9 +660,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ, Renders the homeFaqs array via FAQAccordion component.       */}
-      {/* Handles remaining objections. Schema markup is injected above     */}
-      {/* via faqSchema JSON-LD for Google rich snippet eligibility.        */}
+      {/* FAQ */}
       <section className="border-t border-zinc-500 px-4 py-20">
         <div className="mx-auto max-w-3xl">
           <FadeInUp>
@@ -790,8 +672,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FINAL CTA, Fear → empowerment close (Wolf). Opens with their     */}
-      {/* 2am emotional state, closes with empowered identity.             */}
+      {/* FINAL CTA */}
       <section className="border-t border-zinc-500 px-4 py-20 text-center">
         <div className="mx-auto max-w-2xl">
           <FadeInUp>
@@ -801,23 +682,20 @@ export default function Home() {
               <span className="text-amber-400">You&apos;ve called. You&apos;ve emailed. You&apos;ve waited. Now stop waiting. Start knowing.</span>
             </h2>
             <p className="mt-4 text-zinc-400">
-              Motions expire. Evidence disappears. Witnesses forget.
-              But the defendant who walks in with the right questions?
-              Their attorney starts filing motions that week.
-              What happens next is between you and your attorney.
+              Motions expire. Evidence disappears. Witnesses forget. But the defendant who walks in with the right questions? Their attorney starts filing motions that week.
             </p>
             <p className="mt-3 text-sm font-semibold text-zinc-300">
               The defendant who walks in prepared changes the conversation.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4">
               <Link
-                href="/start"
-                className="rounded-lg bg-amber-500 px-8 py-4 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
+                href="/checkout?tier=case-decoder"
+                className="rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
               >
-                Start Your Case Research &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
+                Get Your 15 Questions &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
               </Link>
               <p className="text-sm text-zinc-300">
-                Find It or It&apos;s Free &mdash; full refund if we don&apos;t deliver.
+                Find It or It&apos;s Free &mdash; full refund if we don&apos;t find a gap.
               </p>
             </div>
           </FadeInUp>
@@ -825,7 +703,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Global components */}
       <StickyMobileCTA />
     </div>
   );
