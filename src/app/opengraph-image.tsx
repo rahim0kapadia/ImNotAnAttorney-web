@@ -10,7 +10,7 @@ export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image() {
   return renderOgImage({
-    title: "Know\nWhat They Know.",
+    title: "Know What They Know.",
     subtitle:
       "The prosecution has a file on you.\nWe help you build one on them.",
     category: "Defense Intelligence",

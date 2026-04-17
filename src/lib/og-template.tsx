@@ -70,7 +70,7 @@ export async function renderOgImage({
     .reduce((a, b) => (a.length > b.length ? a : b)).length;
   const titleSize =
     longestLine > 26 ? 72 :
-    longestLine > 20 ? 84 :
+    longestLine > 19 ? 84 :
     longestLine > 14 ? 104 :
     longestLine > 8 ? 120 : 132;
 
@@ -112,22 +112,22 @@ export async function renderOgImage({
             borderBottomColor: "#27272a",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://imnotanattorney.com/brand/inaa-logo.png"
               alt=""
-              width={48}
-              height={48}
-              style={{ borderRadius: 6 }}
+              width={64}
+              height={64}
+              style={{ borderRadius: 10 }}
             />
             <div
               style={{
                 display: "flex",
-                fontSize: 30,
+                fontSize: 38,
                 fontWeight: 700,
                 color: "#f5f5f4",
-                letterSpacing: -0.3,
+                letterSpacing: -0.4,
                 fontFamily: lato ? "Lato" : "system-ui",
               }}
             >
@@ -183,11 +183,11 @@ export async function renderOgImage({
             <div
               style={{
                 display: "flex",
-                fontSize: 34,
+                fontSize: 42,
                 fontWeight: 700,
                 color: "#f5f5f4",
-                lineHeight: 1.3,
-                maxWidth: 820,
+                lineHeight: 1.25,
+                maxWidth: 900,
                 whiteSpace: "pre-line",
                 fontFamily: lato ? "Lato" : "system-ui",
               }}
