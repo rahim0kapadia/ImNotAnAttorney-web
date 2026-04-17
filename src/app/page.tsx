@@ -289,13 +289,13 @@ export default function Home() {
                   quote: "I didn't even know my attorney was supposed to file motions. The questions alone changed everything.",
                   name: "Marcus T.",
                   charge: "Drug Possession",
-                  outcome: "Charges reduced",
+                  outcome: "Attorney filed new suppression motion",
                 },
                 {
                   quote: "My lawyer hadn't even looked at the discovery. I walked in with 15 questions and suddenly he was actually working.",
                   name: "Sarah K.",
                   charge: "DUI",
-                  outcome: "Case dismissed",
+                  outcome: "Attorney re-opened discovery review",
                 },
                 {
                   quote: "I\u2019m not the one charged \u2014 my husband is. But I\u2019m the one doing all the research at 3am. The playbook gave me the language to actually talk to his attorney. She called back the same day.",
@@ -307,7 +307,7 @@ export default function Home() {
                   quote: "For $197 I got more useful information than from the $15,000 I paid my attorney. That's not an exaggeration.",
                   name: "Michelle P.",
                   charge: "White Collar Fraud, New York",
-                  outcome: "Charges dropped",
+                  outcome: "Attorney re-opened fraud timeline analysis",
                 },
               ]}
             />

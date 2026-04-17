@@ -64,7 +64,7 @@ export function HomepageHero() {
               chain of custody, informant credibility, constitutional violations, lab protocol breaks.
               In one case it surfaced{" "}
               <span className="font-semibold text-white">68.3 grams of evidence the attorney never mentioned</span>.
-              You get the 15 questions your attorney can&apos;t ignore.
+              You get the 15 questions your attorney will have to answer on the record.
             </p>
           </FadeInUp>
 
