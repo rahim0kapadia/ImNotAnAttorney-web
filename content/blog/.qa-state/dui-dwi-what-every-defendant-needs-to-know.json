@@ -1,0 +1,106 @@
+{
+  "slug": "dui-dwi-what-every-defendant-needs-to-know",
+  "last_checked": "2026-04-17T20:30:00.000Z",
+  "all_passed": true,
+  "published_hash": "2d8d99c9f32bce6755e7a36049e64a11",
+  "rubric_hashes": {
+    "anti_hallucination": "4c60e71e795901a535fd3574ae2b6a7b",
+    "slop": "0bc5ee85df740b679e50706be803b3ff",
+    "upl": "f82c43081da1a086e00667778fdbf6c1",
+    "dna": "8be3c3a542ce20a1b72dddbeea0ddba5"
+  },
+  "gates": {
+    "anti_hallucination": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": [
+          {"check": "STATUTE_CHECK", "result": "PASS", "evidence": "No statute numbers; uses 'in most states' and 'under federal law' patterns throughout"},
+          {"check": "EXPERT_CHECK", "result": "PASS", "evidence": "Only source agencies cited (FBI Uniform Crime Report, NHTSA); no individual attorneys or scholars named"},
+          {"check": "STATISTICS_CHECK", "result": "PASS", "evidence": "'Over 1 million DUI arrests' sourced to FBI Uniform Crime Report; other numbers are procedural ranges"},
+          {"check": "PROCEDURE_CHECK", "result": "PASS", "evidence": "Every deadline qualified with 'in most states', 'Usually', or similar"},
+          {"check": "CASE_NAME_CHECK", "result": "PASS", "evidence": "No case citations; no v. patterns"},
+          {"check": "CONSEQUENCE_CHECK", "result": "PASS", "evidence": "License suspension procedural; employer FAQ qualified 'Depends on your job and state'"}
+        ]
+      }
+    },
+    "humanizer": {
+      "status": "checked",
+      "passed": true,
+      "score": 9.1,
+      "details": {
+        "composite_score": 9.1,
+        "pattern_score": 0,
+        "uniformity_score": 30.3,
+        "flagged_patterns": []
+      }
+    },
+    "slop": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": [
+          {"check": "QUESTION_COUNT", "result": "PASS", "reason": "Frontmatter 0 matches body (no attorney-directed questions)"},
+          {"check": "CITATION_SOURCING", "result": "PASS", "reason": "Every factual claim sourced or jurisdiction-qualified"},
+          {"check": "READABILITY", "result": "PASS", "reason": "Action items readable; legal terms defined inline"},
+          {"check": "CLICHE_DENSITY", "result": "PASS", "reason": "No banned cliches present"},
+          {"check": "VOICE_CONSISTENCY", "result": "PASS", "reason": "Second person throughout"},
+          {"check": "PASSIVE_VOICE_RATIO", "result": "PASS", "reason": "Majority active voice; passive under 30%"},
+          {"check": "JARGON_DEFINITION", "result": "PASS", "reason": "BAC, administrative suspension, diversion programs, ignition interlock, implied consent, observation period, arraignment all defined inline on first use"},
+          {"check": "STRUCTURAL_INTEGRITY", "result": "PASS", "reason": "Problem (shame) -> context (two tracks) -> deadlines -> outcomes -> actions -> agency"},
+          {"check": "CTA_CLARITY", "result": "PASS", "reason": "DUI Defense Playbook link + 3 concrete actions in H2.4"},
+          {"check": "HEDGING_DENSITY", "result": "PASS", "reason": "Action statements are direct; hedges appear on info statements only"},
+          {"check": "PARAGRAPH_LENGTH", "result": "PASS", "reason": "No paragraph exceeds 300 words; action paragraphs under 100"},
+          {"check": "SECTION_BALANCE", "result": "PASS", "reason": "H2 sections ~275-295 words each, balanced"},
+          {"check": "FEAR_ACTION_PAIRING", "result": "PASS", "reason": "License suspension threat paired with DMV hearing request action; enhanced penalties paired with records request"},
+          {"check": "ENGAGEMENT_ARC", "result": "PASS", "reason": "Hook (booking photo scenario) -> context (two tracks) -> close (3 actions + agency)"}
+        ]
+      }
+    },
+    "upl": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": [
+          {"criterion": "U1", "result": "PASS", "evidence": "Imperatives are information-gathering (write, find, request DMV hearing) not legal strategy"},
+          {"criterion": "U2", "result": "PASS", "evidence": "H2.2 attorney redirect added ('Bring the calibration-records question... to your attorney'); H2.3 redirect added ('Worth asking your attorney...'); other sections cover self-directed actions"},
+          {"criterion": "U3", "result": "PASS", "evidence": "No evaluation of reader's specific case"},
+          {"criterion": "U4", "result": "PASS", "evidence": "DMV hearing request is administrative self-help, not courtroom motion"},
+          {"criterion": "U5", "result": "PASS", "evidence": "No immigration content"},
+          {"criterion": "U6", "result": "PASS", "evidence": "License suspension procedural; employer FAQ qualified"},
+          {"criterion": "U7", "result": "PASS", "evidence": "No firms/companies named"},
+          {"criterion": "U8", "result": "PASS", "evidence": "No 'we recommend/advise/suggest' phrasing"},
+          {"criterion": "U9", "result": "PASS", "evidence": "No hypothetical scenarios"},
+          {"criterion": "U10", "result": "PASS", "evidence": "Product framed as 'questions to bring to your attorney'"},
+          {"criterion": "U11", "result": "PASS", "evidence": "'in most states', 'typically', 'usually' used throughout"},
+          {"criterion": "U12", "result": "PASS", "evidence": "Outcomes qualified with 'most', 'typically'"},
+          {"criterion": "U13", "result": "PASS", "evidence": "No legal strategies presented as blog opinion"},
+          {"criterion": "U14", "result": "PASS", "evidence": "No contradictions"},
+          {"criterion": "U15", "result": "PASS", "evidence": "Playbook framed as research/preparation tool for attorney consultation"}
+        ]
+      }
+    },
+    "dna": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": [
+          {"check": "D1_3AM_PANIC", "result": "PASS", "evidence": "Opening hook names shame and booking photo in first 3 sentences; H2s are action-oriented ('How a DUI Case Splits', 'What to Do in the Next 72 Hours')"},
+          {"check": "D2_READING_LEVEL", "result": "PASS", "evidence": "All legal terms defined inline (BAC, administrative suspension, diversion programs, ignition interlock, implied consent, observation period, arraignment); no paragraph exceeds 4 sentences"},
+          {"check": "D3_DO_THIS_NOW", "result": "PASS", "evidence": "'Do this now:' block before first H2 with paperwork + deadline action"},
+          {"check": "D4_ONE_CLEAR_PATH", "result": "PASS", "evidence": "H2.4 presents 3 ordered actions in priority order"},
+          {"check": "D5_3_ITEM_RULE", "result": "PASS", "evidence": "H2.4 has exactly 3 numbered actions; H2.2 has 3 bold deadlines"},
+          {"check": "D6_CATALOG_VARIETY", "result": "PASS", "evidence": "Pattern: system-decoder-post (two tracks, three deadlines)"},
+          {"check": "D7_THREAT_EFFICACY", "result": "PASS", "evidence": "License suspension threat paired with DMV hearing action; enhanced penalties paired with records request"},
+          {"check": "D8_IDENTITY_PROTECTION", "result": "PASS", "evidence": "No 'you should have' or blame language; shame acknowledged once then pivots to agency"},
+          {"check": "D9_FEAR_CLARITY_AGENCY", "result": "PASS", "evidence": "Final body sentence is agency statement ('You now know how the two tracks work...'); product bridge follows"},
+          {"check": "D10_PHONE_FIRST", "result": "PASS", "evidence": "4 H2s; body ~1200 words; no tables; no H4+; sections 275-295 words each"},
+          {"check": "D11_SCREENSHOT_SENTENCE", "result": "PASS", "evidence": "Each H2 has one bolded standalone sentence under 27 words"},
+          {"check": "D12_SHAREABLE_FAQ", "result": "PASS", "evidence": "All 5 FAQs start with direct answer; each 3-4 sentences"},
+          {"check": "D13_PRODUCT_BRIDGE", "result": "PASS", "evidence": "Names 'DUI Defense Playbook' with free-to-paid connection; no generic CTA language"},
+          {"check": "D14_INSIDER_EDGE", "result": "PASS", "evidence": "Two-track explanation, dashcam retention timeline, observation period detail, 'offer built on paperwork not evidence' framing, records-are-public insight"}
+        ]
+      }
+    }
+  }
+}
