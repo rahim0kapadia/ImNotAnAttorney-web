@@ -116,7 +116,7 @@ export default function MaskedPage() {
         </FadeInUp>
         <FadeInUp delay={0.1}>
           <p className="mt-8 text-lg leading-relaxed text-zinc-300">
-            This is a manifesto. It is also the answer to the three questions a scared defendant asks before spending a dollar at 2am: <em>Who built this? Why won&apos;t they show their face? Can I trust them anyway?</em>
+            This is a manifesto. It is also the answer to the questions a scared defendant asks before spending a dollar at 2am: <em>Who built this? Why won&apos;t they show their face? Can I trust them anyway?</em>
           </p>
         </FadeInUp>
 
