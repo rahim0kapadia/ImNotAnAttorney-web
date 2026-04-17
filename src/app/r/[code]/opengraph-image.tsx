@@ -20,7 +20,7 @@ export default async function Image({ params }: { params: Promise<{ code: string
     // fallback to generic
   }
   return renderOgImage({
-    title: `Check-In Tool\nfrom ${partnerName}.`,
+    title: `Check-In for\n${partnerName}.`,
     subtitle: "Court reminders, case prep, and daily check-ins.\nAll in one place.",
     category: "Partner Network",
   });
