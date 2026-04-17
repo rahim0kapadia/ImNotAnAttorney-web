@@ -69,11 +69,9 @@ export function HomepageHero() {
 
           <FadeInUp delay={0.05}>
             <h1 className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white md:text-6xl">
-              They know each other.
+              Your attorney hasn&apos;t read your case.
               <br />
-              <span className="text-amber-400">They don&apos;t know us.</span>
-              <br />
-              That&apos;s the point.
+              <span className="text-amber-400">You&apos;re about to.</span>
             </h1>
           </FadeInUp>
 
