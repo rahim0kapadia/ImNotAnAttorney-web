@@ -203,6 +203,56 @@ export default function AboutPage() {
         </section>
         </FadeInUp>
 
+        {/* WHY WE'RE THE ONLY ONES WHO CAN DO THIS — Apex L2 move (Dunford-validated). */}
+        {/* Surfaces the uncopyable moat: competitors' founders are all doxxed and can't */}
+        {/* claim active-case researcher status without lying.                            */}
+        <FadeInUp>
+        <section className="mt-16">
+          <h2 className="font-display text-2xl font-bold text-white">Why we&apos;re the only ones who can do this</h2>
+          <p className="mt-3 text-zinc-400">
+            Every other legal-tech founder has already shown their face, filed their LLC under their own name, done the podcast circuit. They can&apos;t un-show. That&apos;s the moat.
+          </p>
+          <div className="mt-6 overflow-x-auto">
+            <table className="w-full border-collapse text-left text-sm">
+              <thead>
+                <tr className="border-b border-zinc-700 text-xs uppercase tracking-wider text-zinc-500">
+                  <th className="py-3 pr-4">Capability</th>
+                  <th className="py-3 pr-4 text-center">Named-founder legal-tech</th>
+                  <th className="py-3 pr-4 text-center">INAA</th>
+                </tr>
+              </thead>
+              <tbody className="text-zinc-300">
+                <tr className="border-b border-zinc-800">
+                  <td className="py-3 pr-4">Founders&apos; own case files still open</td>
+                  <td className="py-3 pr-4 text-center text-zinc-500">No</td>
+                  <td className="py-3 pr-4 text-center font-semibold text-amber-400">Yes</td>
+                </tr>
+                <tr className="border-b border-zinc-800">
+                  <td className="py-3 pr-4">Threat-model fluency (what the prosecutor will do with a document)</td>
+                  <td className="py-3 pr-4 text-center text-zinc-500">Read about it</td>
+                  <td className="py-3 pr-4 text-center font-semibold text-amber-400">Living it</td>
+                </tr>
+                <tr className="border-b border-zinc-800">
+                  <td className="py-3 pr-4">Questions traceable to a named researcher</td>
+                  <td className="py-3 pr-4 text-center text-zinc-500">Yes</td>
+                  <td className="py-3 pr-4 text-center font-semibold text-amber-400">No &mdash; masked</td>
+                </tr>
+                <tr className="border-b border-zinc-800">
+                  <td className="py-3 pr-4">Credential-forward (law degree, JD, bar number)</td>
+                  <td className="py-3 pr-4 text-center text-zinc-500">Yes</td>
+                  <td className="py-3 pr-4 text-center font-semibold text-amber-400">Not the point</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-4">Can honestly say &ldquo;we&apos;ve been where you are right now&rdquo;</td>
+                  <td className="py-3 pr-4 text-center text-zinc-500">No</td>
+                  <td className="py-3 pr-4 text-center font-semibold text-amber-400">Yes</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        </FadeInUp>
+
         {/* WHAT WE BUILT, Transition from personal story to product.       */}
         {/* Shows how the personal epiphany became a service for others.     */}
         <FadeInUp>
