@@ -1,9 +1,9 @@
 /**
- * icon.tsx, Dynamic favicon for browser tabs.
+ * icon.tsx — Dynamic 32×32 favicon for browser tabs and link previews.
  *
- * Generates a 32x32 PNG with the INAA brand mark:
- * Amber "I" on dark background with rounded corners.
- * Replaces the old default favicon.ico.
+ * Renders the INAA logo mark (man + magnifier + dossier on amber disc)
+ * rather than the generic "I" — this is what iMessage/iOS show next to
+ * the URL in rich link previews.
  */
 import { ImageResponse } from "next/og";
 
@@ -15,25 +15,23 @@ export default function Icon() {
     (
       <div
         style={{
-          background: "linear-gradient(135deg, #18181b 0%, #09090b 100%)",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: 8,
+          background: "#0a0a0a",
+          borderRadius: 6,
+          overflow: "hidden",
         }}
       >
-        <span
-          style={{
-            fontSize: 22,
-            fontWeight: 900,
-            color: "#f59e0b",
-            lineHeight: 1,
-          }}
-        >
-          I
-        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://imnotanattorney.com/brand/inaa-logo.png"
+          alt=""
+          width={32}
+          height={32}
+        />
       </div>
     ),
     { ...size }
