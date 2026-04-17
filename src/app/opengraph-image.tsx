@@ -12,7 +12,7 @@ export default async function Image() {
   return renderOgImage({
     title: "Know What They Know.",
     subtitle:
-      "The prosecution has a file on you.\nWe help you build one on them.",
+      "The legal system has a file on you.\nWe help you build one on them.",
     category: "Defense Intelligence",
   });
 }
