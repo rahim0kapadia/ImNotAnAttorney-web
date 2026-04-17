@@ -95,6 +95,13 @@ export default function AboutPage() {
           <span className="text-amber-400">For defendants.</span>
         </h1>
         </FadeInUp>
+        <FadeInUp delay={0.05}>
+        <p className="mt-6 font-display text-xl leading-snug text-zinc-200 md:text-2xl">
+          The legal system has a file on you.
+          <br />
+          <span className="font-semibold text-amber-400">We help you build one on them.</span>
+        </p>
+        </FadeInUp>
         <FadeInUp delay={0.1}>
         <p className="mt-6 text-lg leading-relaxed text-zinc-400">
           One of our founders was facing drug trafficking charges in

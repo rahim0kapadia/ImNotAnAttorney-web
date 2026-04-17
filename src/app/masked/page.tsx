@@ -107,6 +107,13 @@ export default function MaskedPage() {
             <span className="text-amber-400"> &mdash; and that&apos;s exactly why we can read yours.</span>
           </h1>
         </FadeInUp>
+        <FadeInUp delay={0.08}>
+          <p className="mt-6 font-display text-xl leading-snug text-zinc-200 md:text-2xl">
+            The legal system has a file on you.
+            <br />
+            <span className="font-semibold text-amber-400">We help you build one on them.</span>
+          </p>
+        </FadeInUp>
         <FadeInUp delay={0.1}>
           <p className="mt-8 text-lg leading-relaxed text-zinc-300">
             This is a manifesto. It is also the answer to the three questions a scared defendant asks before spending a dollar at 2am: <em>Who built this? Why won&apos;t they show their face? Can I trust them anyway?</em>

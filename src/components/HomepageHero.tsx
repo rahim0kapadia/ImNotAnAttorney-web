@@ -75,8 +75,17 @@ export function HomepageHero() {
             </h1>
           </FadeInUp>
 
+          {/* BRAND DNA TAGLINE (canonical long-form) — the thesis of the whole operation. */}
+          <FadeInUp delay={0.07}>
+            <p className="mt-6 font-display text-xl leading-snug text-zinc-200 md:text-2xl">
+              The legal system has a file on you.
+              <br />
+              <span className="font-semibold text-amber-400">We help you build one on them.</span>
+            </p>
+          </FadeInUp>
+
           {/* YMYL byline — Dreyer: scared defendant needs "who made this, when" signal */}
-          <FadeInUp delay={0.08}>
+          <FadeInUp delay={0.09}>
             <p className="mt-3 text-xs text-zinc-500">
               Methodology built from 40+ documented defense frameworks &middot; Updated 2026
             </p>
