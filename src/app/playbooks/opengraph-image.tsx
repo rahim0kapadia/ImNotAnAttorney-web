@@ -4,8 +4,8 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage({
-    title: "Defense Playbooks",
-    subtitle: "Pick your charge type. Get an instant-download defense packet.",
-    eyebrow: "Instant PDF Download",
+    title: "Pick Your Charge.\nGet the Playbook.",
+    subtitle: "Instant PDF. Eight charge types. No attorney sign-in.",
+    category: "Defense Playbook",
   });
 }

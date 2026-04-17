@@ -4,8 +4,8 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage({
-    title: "Sample X-Ray Report",
-    subtitle: "See a real X-Ray discovery analysis excerpt. Drug possession case.",
-    eyebrow: "Free Preview",
+    title: "See What $2,497\nActually Buys.",
+    subtitle: "Real X-Ray discovery analysis. Redacted. Nothing hidden.",
+    category: "Defense Intelligence",
   });
 }

@@ -4,10 +4,9 @@ export const alt = "Arrest Survival Kit, ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
-  const tier = TIER_CORE["arrest-survival-kit"];
   return renderOgImage({
-    title: "Arrest Survival Kit",
-    subtitle: "Know your rights before they read you yours. State-specific.",
-    eyebrow: tier?.priceDisplay ?? "$47",
+    title: "Know Your Rights Before\nThey Read Them.",
+    subtitle: "The first 72 hours after an arrest. State-specific.",
+    category: "State Briefing",
   });
 }

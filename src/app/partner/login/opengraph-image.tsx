@@ -4,7 +4,8 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage({
-    title: "Partner Login",
-    subtitle: "Access your referral dashboard, commissions, and compliance tools.",
+    title: "Partner Portal",
+    subtitle: "Referrals, commissions, and compliance tools.",
+    category: "Partner Network",
   });
 }

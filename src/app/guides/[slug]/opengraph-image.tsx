@@ -16,7 +16,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const product = isValidProduct(slug) ? getProduct(slug) : null;
   return renderOgImage({
     title: product?.name || "Defense Guide",
-    subtitle: product?.description?.slice(0, 100),
-    eyebrow: product?.priceDisplay,
+    subtitle: product?.description?.slice(0, 120),
+    category: "State Briefing",
   });
 }

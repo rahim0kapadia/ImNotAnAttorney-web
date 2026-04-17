@@ -4,11 +4,9 @@ export const alt = "Judge Report Card, ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
-  const tier = TIER_CORE["judge-report-card"];
   return renderOgImage({
-    title: "Judge Report Card",
-    subtitle:
-      "Sentencing patterns, prosecutor pairing data, and bench vs. jury divergence.",
-    eyebrow: tier?.priceDisplay ?? "$197",
+    title: "Who Is\nYour Judge?",
+    subtitle: "Know before you walk in.",
+    category: "Defense Intelligence",
   });
 }

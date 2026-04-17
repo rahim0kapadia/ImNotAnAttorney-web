@@ -4,10 +4,9 @@ export const alt = "Similar Cases Analyzer, ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
-  const tier = TIER_CORE["similar-cases-analyzer"];
   return renderOgImage({
-    title: "Similar Cases Analyzer",
-    subtitle: "Find cases with facts like yours and see what happened.",
-    eyebrow: tier?.priceDisplay ?? "$297",
+    title: "What Happened\nto People Like You.",
+    subtitle: "Outcomes from cases with facts like yours.",
+    category: "Defense Intelligence",
   });
 }

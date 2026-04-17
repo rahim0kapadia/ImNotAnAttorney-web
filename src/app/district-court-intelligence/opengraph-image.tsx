@@ -4,11 +4,9 @@ export const alt = "District Court Intelligence, ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
-  const tier = TIER_CORE["district-court-intelligence"];
   return renderOgImage({
-    title: "District Court Intelligence",
-    subtitle:
-      "Federal district-level sentencing patterns, conviction rates, and trends.",
-    eyebrow: tier?.priceDisplay ?? "$197",
+    title: "Your District's\nSentencing Map.",
+    subtitle: "How federal judges here actually sentence — not the statute, the reality.",
+    category: "Defense Intelligence",
   });
 }

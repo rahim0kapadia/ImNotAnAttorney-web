@@ -4,8 +4,8 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage({
-    title: "Is Your Defense on Track?",
-    subtitle: "Free, anonymous 10-question assessment. See where your defense stands.",
-    eyebrow: "Free Tool",
+    title: "Is Your Defense\non Track?",
+    subtitle: "Ten questions. Two minutes. Anonymous.",
+    category: "Defense Intelligence",
   });
 }

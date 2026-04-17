@@ -4,8 +4,8 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage({
-    title: "Sample Case Decoder Report",
-    subtitle: "See what a Case Decoder report actually looks like. Real case, redacted.",
-    eyebrow: "Free Preview",
+    title: "See What a Case Decoder\nActually Looks Like.",
+    subtitle: "Real case. Redacted. Nothing hidden.",
+    category: "Defense Intelligence",
   });
 }

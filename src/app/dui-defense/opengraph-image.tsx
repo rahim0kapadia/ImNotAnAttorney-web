@@ -4,7 +4,8 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage({
-    title: "DUI Defense Resources by State",
-    subtitle: "BAC limits, penalties, and defense strategies for all 50 states.",
+    title: "DUI Defense\nby State.",
+    subtitle: "BAC limits, penalties, and what to do next.",
+    category: "State Briefing",
   });
 }

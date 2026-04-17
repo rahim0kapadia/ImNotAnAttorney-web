@@ -4,8 +4,8 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage({
-    title: "Is Your Plea Offer Fair?",
-    subtitle: "Upload your plea offer details and get an honest analysis in minutes.",
-    eyebrow: "Free Tool",
+    title: "Is Your Plea Deal\nActually a Deal?",
+    subtitle: "Before you sign, know what you're signing.",
+    category: "Defense Intelligence",
   });
 }

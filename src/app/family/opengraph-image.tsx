@@ -3,5 +3,9 @@ export const alt = "Family Support, ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
-  return renderOgImage({ title: "Your Family Member Was Arrested", subtitle: "Here's how you can actually help, not just wait." });
+  return renderOgImage({
+    title: "Your Family Member\nWas Arrested.",
+    subtitle: "Here's how you can actually help — not just wait.",
+    category: "Inside INAA",
+  });
 }

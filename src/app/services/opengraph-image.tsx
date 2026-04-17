@@ -4,7 +4,8 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage({
-    title: "Defense Intelligence Services",
-    subtitle: "Five tiers of defense analysis, from charge decoding to full discovery.",
+    title: "Know the Case\nBefore They Do.",
+    subtitle: "Five tiers of defense intelligence. $97 to $9,997.",
+    category: "Defense Intelligence",
   });
 }

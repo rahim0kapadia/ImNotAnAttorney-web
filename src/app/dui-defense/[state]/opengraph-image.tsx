@@ -13,7 +13,8 @@ export default async function Image({ params }: { params: Promise<{ state: strin
   const { state } = await params;
   const data = getStateDuiData(state);
   return renderOgImage({
-    title: data ? `${data.name} DUI Defense` : "DUI Defense by State",
-    subtitle: data ? `BAC limit ${data.bac}. Penalties, defenses, and what to do next.` : undefined,
+    title: data ? `${data.name} DUI\nDefense Guide.` : "DUI Defense\nby State.",
+    subtitle: data ? `BAC ${data.bac}. Penalties, defenses, and what to do next.` : undefined,
+    category: "State Briefing",
   });
 }

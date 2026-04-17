@@ -1,29 +1,43 @@
 /**
- * og-template.tsx — Shared OG image template for all pages.
+ * og-template.tsx — Shared OG image template. v3.1.
  *
- * Branded 1200x630 PNG: amber accent bar, Playfair Display title,
- * ambient glow, eyebrow badge, logo mark, tagline footer.
+ * Iter2: applied iter1 expert-critique prescriptions (vertical-centered hero,
+ * tightened letter-spacing, consolidated gray family, equalized hairline
+ * padding, right-sized logo).
  *
- * Font strategy: fetch Playfair Display Bold (700) from Google Fonts at
- * render time using an old UA to force TTF format. satori only supports
- * TTF/OTF — woff2 and variable fonts both crash it.
+ * Principles:
+ *   - ONE amber element: the "Not" in the wordmark.
+ *   - Hairline rules top + bottom of hero (Stripe/Attio editorial convention).
+ *   - Subtle radial canvas gradient.
+ *   - Contrast floor: all text ≥ 7.72:1 (WCAG AAA).
+ *   - Title: Playfair 700 up to 132px with optical kerning at -1 tracking.
+ *   - Subtitle: Lato 400 #d4d4d8, outcome-anchored.
+ *
+ * Satori notes: every div with 2+ children needs display:flex. Static-weight TTF only.
  */
 import { ImageResponse } from "next/og";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
 
-interface OgTemplateProps {
+export interface OgTemplateProps {
+  /** Hero. Playfair 700. Use "\n" to force an editorial line break (template renders pre-line). */
   title: string;
+  /** 2-line outcome copy. Lato 28px #d4d4d8. Sells the page, never the category. */
   subtitle?: string;
-  eyebrow?: string;
+  /** Uppercase text label, top-right. Prefer the 6-taxonomy set: DEFENSE INTELLIGENCE / DEFENSE PLAYBOOK / STATE BRIEFING / FIELD REPORT / PARTNER NETWORK / INSIDE INAA. */
+  category?: string;
+  /** Deprecated — stat lines removed per expert guidance. Accepted to avoid breaking existing callers; value is ignored. */
+  stat?: string;
 }
 
-async function loadFont(): Promise<ArrayBuffer | undefined> {
+async function loadFont(
+  family: string,
+  weight: number
+): Promise<ArrayBuffer | undefined> {
   try {
-    // Old UA forces Google Fonts to return TTF instead of woff2
     const css = await fetch(
-      "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700",
+      `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}`,
       {
         headers: {
           "User-Agent":
@@ -39,212 +53,175 @@ async function loadFont(): Promise<ArrayBuffer | undefined> {
   }
 }
 
-export async function renderOgImage({ title, subtitle, eyebrow }: OgTemplateProps) {
-  const fontData = await loadFont();
+export async function renderOgImage({
+  title,
+  subtitle,
+  category,
+}: OgTemplateProps) {
+  const [playfair, lato, latoRegular] = await Promise.all([
+    loadFont("Playfair+Display", 700),
+    loadFont("Lato", 700),
+    loadFont("Lato", 400),
+  ]);
+
+  // Title sizing — hero dominates. "\n" breaks counted as one line each.
+  const longestLine = title
+    .split("\n")
+    .reduce((a, b) => (a.length > b.length ? a : b)).length;
   const titleSize =
-    title.length > 65 ? 34 :
-    title.length > 50 ? 40 :
-    title.length > 35 ? 48 : 56;
+    longestLine > 26 ? 72 :
+    longestLine > 20 ? 84 :
+    longestLine > 14 ? 104 :
+    longestLine > 8 ? 120 : 132;
+
+  const fonts = [
+    ...(playfair
+      ? [{ name: "Playfair", data: playfair, style: "normal" as const, weight: 700 as const }]
+      : []),
+    ...(lato
+      ? [{ name: "Lato", data: lato, style: "normal" as const, weight: 700 as const }]
+      : []),
+    ...(latoRegular
+      ? [{ name: "LatoR", data: latoRegular, style: "normal" as const, weight: 400 as const }]
+      : []),
+  ];
 
   return new ImageResponse(
     (
       <div
         style={{
-          background: "#09090b",
           width: "100%",
           height: "100%",
           display: "flex",
-          position: "relative",
-          overflow: "hidden",
+          flexDirection: "column",
+          padding: "64px 80px",
+          background:
+            "radial-gradient(ellipse at 28% 32%, #18181b 0%, #0a0a0a 70%)",
+          color: "#f5f5f4",
         }}
       >
-        {/* Left amber accent bar */}
-        <div
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            width: 10,
-            height: "100%",
-            background: "linear-gradient(180deg, #f59e0b 0%, #b45309 100%)",
-          }}
-        />
-
-        {/* Ambient glow — top right corner */}
-        <div
-          style={{
-            position: "absolute",
-            top: -120,
-            right: -120,
-            width: 520,
-            height: 520,
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(245,158,11,0.09) 0%, transparent 65%)",
-          }}
-        />
-
-        {/* Logo watermark — bottom right */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://imnotanattorney.com/brand/inaa-logo.png"
-          alt=""
-          width={210}
-          height={210}
-          style={{
-            position: "absolute",
-            right: 44,
-            bottom: 44,
-            opacity: 0.07,
-          }}
-        />
-
-        {/* Main content column */}
+        {/* TOP: logo + wordmark LEFT, category label RIGHT */}
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
+            alignItems: "center",
             justifyContent: "space-between",
-            padding: "52px 72px 48px 58px",
-            width: "100%",
-            height: "100%",
+            paddingBottom: 32,
+            borderBottomWidth: 1,
+            borderBottomStyle: "solid",
+            borderBottomColor: "#27272a",
           }}
         >
-          {/* Header: brand mark */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://imnotanattorney.com/brand/inaa-logo.png"
               alt=""
-              width={40}
-              height={40}
-              style={{ borderRadius: 8 }}
+              width={48}
+              height={48}
+              style={{ borderRadius: 6 }}
             />
-            <span
-              style={{
-                fontSize: 17,
-                fontWeight: 700,
-                color: "#52525b",
-                letterSpacing: 2,
-                textTransform: "uppercase",
-              }}
-            >
-              ImNotAnAttorney.com
-            </span>
-          </div>
-
-          {/* Center: title block */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 18,
-            }}
-          >
-            {eyebrow && (
-              <div style={{ display: "flex" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    background: "rgba(245,158,11,0.12)",
-                    borderWidth: 1,
-                    borderStyle: "solid",
-                    borderColor: "rgba(245,158,11,0.35)",
-                    borderRadius: 6,
-                    padding: "5px 14px",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 700,
-                      color: "#f59e0b",
-                      letterSpacing: 2,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {eyebrow}
-                  </span>
-                </div>
-              </div>
-            )}
-
             <div
               style={{
-                fontSize: titleSize,
+                display: "flex",
+                fontSize: 30,
                 fontWeight: 700,
-                color: "#ffffff",
-                lineHeight: 1.2,
-                maxWidth: 980,
-                fontFamily: fontData ? "Playfair" : "Georgia, serif",
+                color: "#f5f5f4",
+                letterSpacing: -0.3,
+                fontFamily: lato ? "Lato" : "system-ui",
               }}
             >
-              {title}
+              <span>Im</span>
+              <span style={{ color: "#f59e0b" }}>Not</span>
+              <span>AnAttorney</span>
             </div>
-
-            {subtitle && (
-              <div
-                style={{
-                  fontSize: 21,
-                  color: "#71717a",
-                  lineHeight: 1.55,
-                  maxWidth: 840,
-                }}
-              >
-                {subtitle.length > 115
-                  ? subtitle.slice(0, 115) + "..."
-                  : subtitle}
-              </div>
-            )}
           </div>
 
-          {/* Footer: tagline + URL with amber dot */}
+          {category && (
+            <span
+              style={{
+                fontSize: 15,
+                fontWeight: 700,
+                color: "#a1a1aa",
+                letterSpacing: 2,
+                textTransform: "uppercase",
+                fontFamily: lato ? "Lato" : "system-ui",
+              }}
+            >
+              {category}
+            </span>
+          )}
+        </div>
+
+        {/* HERO: title (one element) + outcome subtitle, optically centered between rules */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 28,
+            maxWidth: 1040,
+            flexGrow: 1,
+            justifyContent: "center",
+          }}
+        >
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              borderTopWidth: 1,
-              borderTopStyle: "solid",
-              borderTopColor: "rgba(255,255,255,0.07)",
-              paddingTop: 18,
+              fontSize: titleSize,
+              fontWeight: 700,
+              color: "#f5f5f4",
+              lineHeight: 0.98,
+              letterSpacing: -1,
+              whiteSpace: "pre-line",
+              fontFamily: playfair ? "Playfair" : "Georgia, serif",
             }}
           >
-            <span style={{ fontSize: 17, color: "#3f3f46", letterSpacing: 0.5 }}>
-              Know What They Know.
-            </span>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: "#f59e0b",
-                }}
-              />
-              <span style={{ fontSize: 15, color: "#3f3f46" }}>
-                imnotanattorney.com
-              </span>
-            </div>
+            {title}
           </div>
+
+          {subtitle && (
+            <div
+              style={{
+                display: "flex",
+                fontSize: 28,
+                color: "#d4d4d8",
+                lineHeight: 1.3,
+                maxWidth: 760,
+                whiteSpace: "pre-line",
+                fontFamily: latoRegular ? "LatoR" : "system-ui",
+              }}
+            >
+              {subtitle.length > 140 ? subtitle.slice(0, 140) + "…" : subtitle}
+            </div>
+          )}
+        </div>
+
+        {/* FOOTER: hairline + domain */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            paddingTop: 32,
+            borderTopWidth: 1,
+            borderTopStyle: "solid",
+            borderTopColor: "#27272a",
+          }}
+        >
+          <span
+            style={{
+              fontSize: 18,
+              fontWeight: 700,
+              color: "#a1a1aa",
+              letterSpacing: 1.2,
+              fontFamily: lato ? "Lato" : "system-ui",
+            }}
+          >
+            imnotanattorney.com
+          </span>
         </div>
       </div>
     ),
-    {
-      ...OG_SIZE,
-      ...(fontData
-        ? {
-            fonts: [
-              {
-                name: "Playfair",
-                data: fontData,
-                style: "normal" as const,
-                weight: 700 as const,
-              },
-            ],
-          }
-        : {}),
-    }
+    { ...OG_SIZE, ...(fonts.length ? { fonts } : {}) }
   );
 }

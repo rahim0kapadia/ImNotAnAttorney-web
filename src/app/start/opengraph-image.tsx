@@ -4,7 +4,8 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage({
-    title: "Get Started",
-    subtitle: "You have an attorney. You don't understand your case. That's the gap we close.",
+    title: "You Have an Attorney.\nYou Don't Understand.",
+    subtitle: "That's the gap we close.",
+    category: "Inside INAA",
   });
 }

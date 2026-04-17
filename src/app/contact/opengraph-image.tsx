@@ -3,5 +3,9 @@ export const alt = "Contact Us, ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
-  return renderOgImage({ title: "Contact Us", subtitle: "Questions about your case analysis? We're here to help." });
+  return renderOgImage({
+    title: "Stuck on a Report?\nWe Read Every Message.",
+    subtitle: "No phones. No sales. Defendant-first support.",
+    category: "Inside INAA",
+  });
 }

@@ -1,11 +1,15 @@
-import { ImageResponse } from "next/og";
+/**
+ * playbook/[slug]/opengraph-image.tsx — Dynamic per-playbook OG image.
+ *
+ * Pulls the playbook config's hero text and tier price, then renders through
+ * the shared OG template so every playbook preview matches site branding.
+ */
+import { renderOgImage, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-template";
 import { getPlaybookConfig } from "@/lib/playbook-configs";
-import { TIER_CORE } from "@/lib/tiers";
-import type { TierSlug } from "@/lib/tiers";
 
-export const runtime = "edge";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+export const alt = "Defense Playbook — ImNotAnAttorney";
+export const size = OG_SIZE;
+export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image({
   params,
@@ -15,86 +19,20 @@ export default async function Image({
   const { slug } = await params;
   const config = getPlaybookConfig(slug);
   if (!config) {
-    return new ImageResponse(
-      <div style={{ background: "#09090b", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 32 }}>
-        Not Found
-      </div>,
-      { ...size }
-    );
+    return renderOgImage({
+      title: "Pick Your Charge.\nGet the Playbook.",
+      subtitle: "Instant PDF. Eight charge types.",
+      category: "Defense Playbook",
+    });
   }
-
-  const tier = TIER_CORE[config.slug as TierSlug];
-
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          background:
-            "linear-gradient(135deg, #09090b 0%, #18181b 50%, #09090b 100%)",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "60px",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 24,
-            fontWeight: 700,
-            color: "#f59e0b",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-          }}
-        >
-          {config.hero.eyebrow}
-        </div>
-        <div
-          style={{
-            fontSize: 56,
-            fontWeight: 800,
-            color: "#ffffff",
-            textAlign: "center",
-            lineHeight: 1.2,
-            marginTop: 24,
-            maxWidth: 900,
-          }}
-        >
-          {config.hero.headline}
-        </div>
-        <div
-          style={{
-            fontSize: 28,
-            color: "#a1a1aa",
-            marginTop: 32,
-            textAlign: "center",
-          }}
-        >
-          {config.hero.subheadline.slice(0, 80)}
-          {config.hero.subheadline.length > 80 ? "..." : ""}
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            marginTop: 40,
-          }}
-        >
-          <div style={{ fontSize: 36, fontWeight: 800, color: "#f59e0b" }}>
-            {tier.priceDisplay}
-          </div>
-          <div style={{ fontSize: 20, color: "#71717a" }}>
-            Instant PDF Download
-          </div>
-        </div>
-        <div style={{ fontSize: 16, color: "#52525b", marginTop: 40 }}>
-          imnotanattorney.com
-        </div>
-      </div>
-    ),
-    { ...size }
-  );
+  const raw = config.hero.subheadline;
+  const subtitle =
+    raw.length > 120
+      ? raw.slice(0, raw.lastIndexOf(" ", 118)).replace(/[,;:\s]+$/, "") + "…"
+      : raw;
+  return renderOgImage({
+    title: config.hero.headline,
+    subtitle,
+    category: "Defense Playbook",
+  });
 }

@@ -4,11 +4,9 @@ export const alt = "Officer Background Check, ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
-  const tier = TIER_CORE["officer-background-check"];
   return renderOgImage({
-    title: "Officer Background Check",
-    subtitle:
-      "Cross-case officer reliability analysis and discreditation history.",
-    eyebrow: tier?.priceDisplay ?? "$97",
+    title: "Run a Background Check\non the Officer.",
+    subtitle: "Cross-case reliability and discreditation history.",
+    category: "Defense Intelligence",
   });
 }
