@@ -54,11 +54,32 @@ export async function GET(req: NextRequest) {
     const todayDow = getETDow();
     const todayDate = getETDate();
 
+    // Pre-fetch partners with check_in_enabled=true. PostgREST inner-join would silently
+    // no-op here because court_reminders.partner_promo_code is plain text (no FK). Use
+    // explicit .in(enabledCodes) filter instead. Shared across both phases.
+    let enabledCodes: string[] | null = null;
+    async function loadEnabledCodes(): Promise<string[]> {
+      if (enabledCodes !== null) return enabledCodes;
+      const { data: enabledPartners } = await supabase
+        .from("partners")
+        .select("promo_code")
+        .eq("check_in_enabled", true);
+      enabledCodes = (enabledPartners || [])
+        .map((p) => p.promo_code)
+        .filter(Boolean) as string[];
+      return enabledCodes;
+    }
+
     // ================================================================
     // PHASE 1: Check-in prompts (independent try/catch)
     // ================================================================
     if (lock1.shouldRun) {
       try {
+        const phase1Codes = await loadEnabledCodes();
+        if (phase1Codes.length === 0) {
+          console.log("[Check-In] Phase 1: no enabled partners, skipping");
+          await releaseCronLock(lock1.executionId!, "completed");
+        } else {
         let phase1Sent = 0;
         let phase1Errors = 0;
         let offset = 0;
@@ -70,6 +91,7 @@ export async function GET(req: NextRequest) {
             .from("court_reminders")
             .select("id, token, first_name, email, phone, notification_prefs, sms_consent_at, partner_promo_code")
             .eq("status", "active")
+            .in("partner_promo_code", phase1Codes)
             .gt("court_date", todayDate)
             .contains("check_in_days", [todayDow])
             .or(`last_prompted_date.is.null,last_prompted_date.neq.${todayDate}`)
@@ -146,6 +168,7 @@ export async function GET(req: NextRequest) {
 
         console.log(`[Check-In] Phase 1 complete: ${phase1Sent} sent, ${phase1Errors} errors`);
         await releaseCronLock(lock1.executionId!, "completed");
+        }
       } catch (err) {
         console.error("[Check-In] Phase 1 failed:", err);
         try { await releaseCronLock(lock1.executionId!, "failed"); } catch {}
@@ -157,6 +180,13 @@ export async function GET(req: NextRequest) {
     // ================================================================
     if (lock2.shouldRun) {
       try {
+        const phase2Codes = await loadEnabledCodes();
+        if (phase2Codes.length === 0) {
+          console.log("[Check-In] Phase 2: no enabled partners, skipping");
+          await releaseCronLock(lock2.executionId!, "completed");
+          return;
+        }
+
         // Compute yesterday via calendar subtraction (not ms, avoids DST breakage)
         const [y, m, d] = todayDate.split("-").map(Number);
         const yd = new Date(Date.UTC(y, m - 1, d));
@@ -172,13 +202,14 @@ export async function GET(req: NextRequest) {
         let hasMore = true;
 
         while (hasMore) {
+          // .in(partner_promo_code, phase2Codes) implies non-null; no separate .not() needed
           const { data } = await supabase
             .from("court_reminders")
             .select("id, first_name, partner_promo_code")
             .eq("status", "active")
+            .in("partner_promo_code", phase2Codes)
             .gt("court_date", todayDate)
             .contains("check_in_days", [yesterdayDow])
-            .not("partner_promo_code", "is", null)
             .range(offset, offset + PAGE_SIZE - 1);
 
           if (!data || data.length === 0) { hasMore = false; break; }
