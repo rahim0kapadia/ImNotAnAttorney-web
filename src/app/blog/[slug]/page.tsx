@@ -25,6 +25,7 @@
 import Link from "next/link";
 import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { BlogCTA } from "@/components/BlogCTA";
+import { BlogQuickPath } from "@/components/BlogQuickPath";
 import { PillarCTA } from "@/components/blog/PillarCTA";
 import { BlogCard } from "@/components/BlogCard";
 import { PlaybookCTA } from "@/components/PlaybookCTA";
@@ -258,6 +259,9 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Source Intelligence */}
         <SourceIntelligence category={post.category || "general-defense"} />
+
+        {/* Above-fold quick path for crisis readers */}
+        <BlogQuickPath category={post.category} slug={slug} />
 
         {/* Content */}
         <MDXErrorBoundary>
