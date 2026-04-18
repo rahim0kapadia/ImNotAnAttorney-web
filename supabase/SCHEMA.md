@@ -921,6 +921,8 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | region | text | Partner region/state (from application) |
 | source | text | Partner type: `bondsman`, `attorney`, `generic`, or null |
 | last_activation_email_key | text | Last drip email sent (cron dedup) |
+| check_in_enabled | boolean | NOT NULL DEFAULT true, Operational mode. true=Check-in mode (daily check-ins + court reminders + schedule controls). false=Referral mode (reminders + hearing prep, no check-in workflow). Backfilled false for non-bondsmen on 2026-04-17. Added migration 20260417a. |
+| flip_at | timestamptz | NULL, Last mode-flip timestamp. Drives FlipBanner visibility for 14 days post-flip. Set server-side by settings PATCH. Added migration 20260417a. |
 
 #### `referrals`
 
