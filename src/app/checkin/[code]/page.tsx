@@ -87,7 +87,7 @@ export default async function CheckInSignupPage({ params, searchParams }: PagePr
               requirePhone
               requireConsent
               submitLabel="Start My Check-Ins"
-              redirectTo={(_token) => `/r/${partner.promo_code}?fromCheckin=1`}
+              redirectTo={(_token) => `/r/${partner.promo_code}/quiz`}
             />
             <p className="text-amber-400 font-bold text-center mt-6">
               Because {partnerName} sent you, 10% off case analysis is built in.

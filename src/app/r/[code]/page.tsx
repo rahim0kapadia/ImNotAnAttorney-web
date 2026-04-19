@@ -61,17 +61,18 @@ export async function generateMetadata({
 
 interface PageProps {
   params: Promise<{ code: string }>;
-  searchParams: Promise<{ sub?: string }>;
+  searchParams: Promise<{ sub?: string; fromCheckin?: string }>;
 }
 
-export default async function ReferralPage({ params }: PageProps) {
+export default async function ReferralPage({ params, searchParams }: PageProps) {
   const { code } = await params;
+  const sp = await searchParams;
 
   const partner = await getPartnerByCode(code);
 
   if (!partner) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4">
+      <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4">
         <div className="max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">
             This referral link isn&apos;t active
@@ -82,16 +83,20 @@ export default async function ReferralPage({ params }: PageProps) {
           </p>
           <Link
             href="/"
-            className="inline-block px-8 py-3 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors"
+            className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors"
           >
             Visit ImNotAnAttorney
           </Link>
         </div>
-      </div>
+      </main>
     );
   }
 
-  if (process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true" && partner.check_in_enabled) {
+  if (
+    process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true" &&
+    partner.check_in_enabled === true &&
+    sp.fromCheckin !== "1"
+  ) {
     redirect(`/checkin/${code}`);
   }
 
@@ -134,7 +139,7 @@ export default async function ReferralPage({ params }: PageProps) {
       company={partner.company}
       city={partner.city}
       promoCode={partner.promo_code!}
-      checkInEnabled={partner.check_in_enabled ?? true}
+      checkInEnabled={partner.check_in_enabled}
       daysUntilCourt={daysUntilCourt}
     />
   );

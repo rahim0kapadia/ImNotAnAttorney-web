@@ -40,16 +40,17 @@ interface PageProps {
   searchParams: Promise<{ sub?: string }>;
 }
 
-export default async function CourtDatePage({ params }: PageProps) {
+export default async function CourtDatePage({ params, searchParams }: PageProps) {
   if (process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED !== "true") {
     notFound();
   }
   const { code } = await params;
+  const sp = await searchParams;
   const partner = await getPartnerByCode(code);
 
   if (!partner) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4">
+      <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4">
         <div className="max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">This referral link isn&apos;t active</h1>
           <p className="text-zinc-400 mb-8">
@@ -57,12 +58,12 @@ export default async function CourtDatePage({ params }: PageProps) {
           </p>
           <Link
             href="/"
-            className="inline-block px-8 min-h-[44px] py-3 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors inline-flex items-center justify-center"
+            className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors"
           >
             Visit ImNotAnAttorney
           </Link>
         </div>
-      </div>
+      </main>
     );
   }
   if (partner.check_in_enabled) {
@@ -79,7 +80,7 @@ export default async function CourtDatePage({ params }: PageProps) {
       await supabase.from("partner_events").insert({
         partner_id: partner.id,
         event_type: "link_click",
-        metadata: { referrer_url: referrerUrl, entry_path: "court-date" },
+        metadata: { referrer_url: referrerUrl, entry_path: "court-date", sub: sp.sub ?? null },
       });
     } catch (e) {
       console.warn("[PartnerEvents] court-date link_click insert failed:", e);
