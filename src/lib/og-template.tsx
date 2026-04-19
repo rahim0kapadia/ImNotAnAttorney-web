@@ -25,7 +25,7 @@ export interface OgTemplateProps {
   title: string;
   /** 2-line outcome copy. Lato 28px #d4d4d8. Sells the page, never the category. */
   subtitle?: string;
-  /** Uppercase text label, top-right. Prefer the 6-taxonomy set: DEFENSE INTELLIGENCE / DEFENSE PLAYBOOK / STATE BRIEFING / FIELD REPORT / PARTNER NETWORK / INSIDE INAA. */
+  /** Uppercase text label, top-right. Prefer the 6-taxonomy set: DEFENSE INTELLIGENCE / DEFENSE PLAYBOOK / STATE BRIEFING / FIELD REPORT / PARTNER NETWORK / INSIDE INAA. Partner-route extensions: COURT CHECK-IN (flag on) / COURT PREP (flag off). */
   category?: string;
   /** Deprecated — stat lines removed per expert guidance. Accepted to avoid breaking existing callers; value is ignored. */
   stat?: string;

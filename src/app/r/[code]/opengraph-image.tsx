@@ -1,5 +1,6 @@
 import { renderOgImage, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-template";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { isValidPromoCode } from "@/lib/promo-code";
 
 export const alt = "Referred by a Partner — ImNotAnAttorney";
 export const size = OG_SIZE;
@@ -12,11 +13,14 @@ function truncate(s: string, max = 24): string {
 
 export default async function Image({ params }: { params: Promise<{ code: string }> }) {
   const { code } = await params;
-  if (!/^[A-Z0-9]{2,20}$/i.test(code)) {
+  const toggleOn = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
+  if (!isValidPromoCode(code)) {
     return renderOgImage({
-      title: "Referred by a partner.",
-      subtitle: "Court date reminders and what to expect\nat your hearing.",
-      category: "Court Prep",
+      title: toggleOn ? "Set up your court check-in." : "Referred by a partner.",
+      subtitle: toggleOn
+        ? "Court check-in prompts, court date reminders,\nand what to expect at your hearing."
+        : "Court date reminders and what to expect\nat your hearing.",
+      category: toggleOn ? "Court Check-In" : "Court Prep",
     });
   }
   let partnerName = "a trusted partner";
@@ -27,13 +31,15 @@ export default async function Image({ params }: { params: Promise<{ code: string
       .from("partners")
       .select("company, name, check_in_enabled")
       .eq("promo_code", code.toUpperCase())
+      .eq("status", "approved")
       .maybeSingle();
     if (data) {
       partnerName = truncate(data.company || data.name);
       checkInEnabled = data.check_in_enabled === true;
     }
-  } catch {}
-  const toggleOn = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
+  } catch (e) {
+    console.warn("[OG:/r] partner lookup failed:", e);
+  }
   const useCheckIn = toggleOn && checkInEnabled;
   return renderOgImage({
     title: useCheckIn
