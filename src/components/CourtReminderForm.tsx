@@ -17,7 +17,13 @@ interface CourtReminderFormProps {
   compactMode?: boolean;
   requirePhone?: boolean;
   submitLabel?: string;
-  redirectTo?: (token: string) => string;
+  /**
+   * Absolute same-origin path to navigate to after successful submit. Must
+   * be a precomputed string (not a function) so this prop stays serializable
+   * across the Server -> Client Component boundary. Falls back to
+   * `/prep/{token}` when omitted.
+   */
+  redirectTo?: string;
   requireConsent?: boolean;
 }
 
@@ -88,7 +94,7 @@ export function CourtReminderForm({
       // restrict post-submit navigation to same-origin absolute paths.
       // Reject protocol-relative `//host` destinations, which browsers
       // interpret as navigating to another origin on the current scheme.
-      const proposed = redirectTo ? redirectTo(token) : `/prep/${token}`;
+      const proposed = redirectTo ?? `/prep/${token}`;
       const dest = typeof proposed === "string"
         && proposed.startsWith("/")
         && !proposed.startsWith("//")
