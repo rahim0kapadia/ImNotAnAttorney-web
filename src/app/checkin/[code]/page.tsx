@@ -1,3 +1,4 @@
+import { cache } from "react";
 import type { Metadata } from "next";
 import { redirect, notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -8,19 +9,30 @@ function truncateName(name: string, max = 24): string {
   return name.length > max ? name.slice(0, max - 1) + "…" : name;
 }
 
+/** Shared partner query -- React.cache() deduplicates within a single request. */
+const getPartnerByCode = cache(async (code: string) => {
+  const supabase = createAdminClient();
+  const { data } = await supabase
+    .from("partners")
+    .select("name, company, promo_code, status, check_in_enabled")
+    .eq("promo_code", code.toUpperCase())
+    .eq("status", "approved")
+    .limit(1)
+    .maybeSingle();
+  return data;
+});
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ code: string }>;
 }): Promise<Metadata> {
+  if (process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED !== "true") {
+    return { title: "Not Found | ImNotAnAttorney", robots: { index: false, follow: false } };
+  }
+
   const { code } = await params;
-  const supabase = createAdminClient();
-  const { data: partner } = await supabase
-    .from("partners")
-    .select("name, company")
-    .eq("promo_code", code.toUpperCase())
-    .eq("status", "approved")
-    .maybeSingle();
+  const partner = await getPartnerByCode(code);
   const referrer = truncateName(partner?.company || partner?.name || "a trusted partner");
   const title = `Set up your court check-in — ${referrer}`;
   const description = "Court check-in prompts, court date reminders, and what to expect at your hearing.";
@@ -45,18 +57,11 @@ export default async function CheckInSignupPage({ params, searchParams }: PagePr
   const { code } = await params;
   const { charge, rec } = await searchParams;
 
-  const supabase = createAdminClient();
-  const { data: partner } = await supabase
-    .from("partners")
-    .select("name, company, promo_code, status, check_in_enabled")
-    .eq("promo_code", code.toUpperCase())
-    .eq("status", "approved")
-    .limit(1)
-    .maybeSingle();
+  const partner = await getPartnerByCode(code);
 
   if (!partner) notFound();
   if (!partner.promo_code) notFound();
-  if (!partner.check_in_enabled) {
+  if (partner.check_in_enabled === false) {
     redirect(`/court-date/${code}`);
   }
 
