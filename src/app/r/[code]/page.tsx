@@ -59,12 +59,10 @@ export async function generateMetadata({
 
 interface PageProps {
   params: Promise<{ code: string }>;
-  searchParams: Promise<{ sub?: string; fromCheckin?: string }>;
 }
 
-export default async function ReferralPage({ params, searchParams }: PageProps) {
+export default async function ReferralPage({ params }: PageProps) {
   const { code } = await params;
-  const sp = await searchParams;
 
   const partner = await getPartnerByCode(code);
 
@@ -95,8 +93,7 @@ export default async function ReferralPage({ params, searchParams }: PageProps) 
   // updating the corresponding callers simultaneously.
   if (
     process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true" &&
-    isCheckInMode(partner) &&
-    sp.fromCheckin !== "1"
+    isCheckInMode(partner)
   ) {
     redirect(`/checkin/${code}`);
   }
