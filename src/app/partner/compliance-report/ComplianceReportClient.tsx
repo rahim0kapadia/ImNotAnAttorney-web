@@ -238,8 +238,8 @@ export function ComplianceReportClient({
             : "This report shows court-date reminder activity across your clients. Your account is in Referral mode. Check-in workflows are off."}
         </p>
 
-        {/* Summary Stats — grid layout adapts to 5 cards (referral) or 6 (check-in) */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        {/* Summary Stats — 4 cards (referral): 2-col mobile → 4-col md; 6 cards (check-in): 2-col mobile → 3-col md */}
+        <div className={`grid gap-4 mb-8 ${checkInEnabled ? "grid-cols-2 md:grid-cols-3" : "grid-cols-2 md:grid-cols-4"}`}>
           <StatCard label="Total Defendants" value={totalDefendants} />
           <StatCard label="Active" value={activeCount} />
           <StatCard label="Completed" value={completedCount} />
