@@ -9,7 +9,7 @@
  * Sends one-time confirmation to client when transitioning from null -> set.
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { requirePartnerAuth } from "@/lib/partner-helpers";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { validateCheckInDays, formatDaysDisplay, sortCheckInDays } from "@/lib/check-in-schedule";
@@ -35,19 +35,22 @@ export async function PATCH(
   // Audit log every attempt so we can detect UI drift (button should be hidden).
   if (!partner.check_in_enabled) {
     console.warn("[Schedule] Referral-mode partner attempted schedule set", {
-      partner_id: partner.id, client_id: id,
+      partner_id: partner.id,
+      promo_code: partner.promo_code,
+      client_id: id,
     });
-    createAdminClient()
-      .from("partner_events")
-      .insert({
-        partner_id: partner.id,
-        event_type: "schedule_denied_referral_mode",
-        metadata: { client_id: id },
-      })
-      .then(
-        () => {},
-        (e: unknown) => console.error("[Schedule] Event insert failed:", e),
-      );
+    after(async () => {
+      try {
+        const adminSupabase = createAdminClient();
+        await adminSupabase.from("partner_events").insert({
+          partner_id: partner.id,
+          event_type: "schedule_denied_referral_mode",
+          metadata: { client_id: id, promo_code: partner.promo_code },
+        });
+      } catch (e) {
+        console.error("[Schedule] partner_events insert failed:", e);
+      }
+    });
     return NextResponse.json(
       { error: "Check-in scheduling is not available in Referral mode" },
       { status: 403 },

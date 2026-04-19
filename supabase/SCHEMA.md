@@ -936,6 +936,24 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | created_at | timestamptz | Row creation timestamp |
 | locked_at | timestamptz | Commission lock timestamp (45-day holdback), added migration 20260414a |
 
+#### `partner_events`
+Funnel + audit event log per partner. Service-role write only via `createAdminClient()`. Added migration 20260414g. CHECK constraint on `event_type` widened 20260417b.
+
+| Column | Type | Purpose |
+|------, |------|---------|
+| id | uuid (PK) | Auto-generated |
+| partner_id | uuid (FK) | Referring partner (NOT NULL) |
+| event_type | text (CHECK) | One of: `link_click`, `quiz_start`, `quiz_complete`, `purchase`, `schedule_denied_referral_mode` |
+| metadata | jsonb | Event payload (e.g., `{ client_id, promo_code }` for schedule-denied; UTM + referer for funnel events) |
+| created_at | timestamptz | Row creation timestamp |
+
+**`event_type` values and meaning:**
+- `link_click`, `quiz_start`, `quiz_complete`, `purchase`, conversion funnel (migration 20260414g). Powers `partner_conversion_funnel(p_partner_id)` RPC.
+- `schedule_denied_referral_mode`, audit trail for PATCH /api/partner/clients/[id]/schedule attempts by partners with `check_in_enabled=false` (referral mode). Added migration 20260417b. Writes happen via `after()` so they don't gate the 403 response.
+
+Index: `idx_partner_events_funnel(partner_id, event_type, created_at)`.
+RLS: enabled. No public policies, service_role only.
+
 #### `sms_log`
 SMS delivery audit log. Mirrors `email_log` pattern. Service-role write only via `createAdminClient()`.
 

@@ -12,6 +12,38 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * Referral cookie + nonce-CSP prefixes. Each prefix corresponds to one Next.js
+ * route group:
+ *   - "r"          -> src/app/r/[code]         (generic referral landing)
+ *   - "checkin"    -> src/app/checkin/[code]   (partner check-in landing)
+ *   - "court-date" -> src/app/court-date/[code] (court-date capture landing)
+ * Exclusive — a request path cannot hit more than one prefix; first match wins.
+ */
+const REFERRAL_PREFIXES = ["r", "checkin", "court-date"] as const;
+
+/**
+ * Build the Content-Security-Policy header for a given nonce + Supabase
+ * connect-src. Used by both setReferralCookie() (for referral/check-in/court-date
+ * routes) and the generic page-route path, so they stay in lockstep.
+ */
+function buildCsp(nonce: string, supabaseConnectSrc: string): string {
+  return [
+    "default-src 'self'",
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://js.stripe.com https://vercel.live`,
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: https:",
+    "font-src 'self'",
+    `connect-src 'self' https://api.stripe.com https://vercel.live ${supabaseConnectSrc} https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com`,
+    "frame-src https://js.stripe.com https://hooks.stripe.com",
+    "frame-ancestors 'none'",
+    "object-src 'none'",
+    "worker-src 'self'",
+    "base-uri 'self'",
+    "form-action 'self' https://checkout.stripe.com",
+  ].join("; ");
+}
+
+/**
  * HMAC-SHA256 timing-safe comparison.
  * Hashes both values with a fixed key, then compares the fixed-length digests.
  * Eliminates the length oracle present in XOR-based approaches.
@@ -58,20 +90,7 @@ function setReferralCookie(
 
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   const supabaseConnectSrc = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://*.supabase.co";
-  const cspHeader = [
-    "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://js.stripe.com https://vercel.live`,
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: https:",
-    "font-src 'self'",
-    `connect-src 'self' https://api.stripe.com https://vercel.live ${supabaseConnectSrc} https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com`,
-    "frame-src https://js.stripe.com https://hooks.stripe.com",
-    "frame-ancestors 'none'",
-    "object-src 'none'",
-    "worker-src 'self'",
-    "base-uri 'self'",
-    "form-action 'self' https://checkout.stripe.com",
-  ].join("; ");
+  const cspHeader = buildCsp(nonce, supabaseConnectSrc);
 
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-nonce", nonce);
@@ -214,7 +233,8 @@ export async function middleware(req: NextRequest) {
   // setReferralCookie(). Helper forwards nonce into REQUEST headers so
   // Server Components can read it via headers().get("x-nonce").
   // Task 10 (bondsman-modes v2): uniform /r, /checkin, /court-date handling.
-  for (const prefix of ["r", "checkin", "court-date"]) {
+  // Exclusive prefixes — first match wins.
+  for (const prefix of REFERRAL_PREFIXES) {
     if (pathname.startsWith(`/${prefix}/`) && !pathname.startsWith(`/${prefix}/api`)) {
       const response = setReferralCookie(req, pathname, prefix);
       if (response) return response;
@@ -227,20 +247,7 @@ export async function middleware(req: NextRequest) {
   // Scope Supabase connect-src to the specific project URL when available
   const supabaseConnectSrc = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://*.supabase.co";
 
-  const cspHeader = [
-    "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://js.stripe.com https://vercel.live`,
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: https:",
-    "font-src 'self'",
-    `connect-src 'self' https://api.stripe.com https://vercel.live ${supabaseConnectSrc} https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com`,
-    "frame-src https://js.stripe.com https://hooks.stripe.com",
-    "frame-ancestors 'none'",
-    "object-src 'none'",
-    "worker-src 'self'",
-    "base-uri 'self'",
-    "form-action 'self' https://checkout.stripe.com",
-  ].join("; ");
+  const cspHeader = buildCsp(nonce, supabaseConnectSrc);
 
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-nonce", nonce);

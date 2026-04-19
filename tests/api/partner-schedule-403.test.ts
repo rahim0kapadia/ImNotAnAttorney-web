@@ -32,6 +32,11 @@ const currentPartner: {
 
 // When true, the court_reminders lookup returns a matching client row
 // (positive path). Referral-mode test never reaches the lookup.
+//
+// `check_in_days` is non-empty so `wasNull` is false in the positive-path
+// test, which skips the sendEmail/sendSMS branch. That keeps the positive
+// path assertion narrow ("!== 403") and stable against unrelated changes
+// to the confirmation-send flow.
 const reminderRow = {
   id: "r_1",
   first_name: "Test",
@@ -40,7 +45,7 @@ const reminderRow = {
   notification_prefs: null,
   sms_consent_at: null,
   token: "tok_abc",
-  check_in_days: null,
+  check_in_days: ["MON"],
   partner_promo_code: "BOND123",
 };
 
@@ -114,6 +119,13 @@ vi.mock("@/lib/sms", () => ({
   capSMS: (s: string) => s,
 }));
 
+// after() runs post-response on Vercel; in tests, mock it to execute the
+// callback immediately (pattern mirrors tests/api/cron-check-in-filter.test.ts).
+vi.mock("next/server", async () => {
+  const actual = await vi.importActual<typeof import("next/server")>("next/server");
+  return { ...actual, after: (fn: () => Promise<void> | void) => fn() };
+});
+
 import { PATCH } from "@/app/api/partner/clients/[id]/schedule/route";
 import { NextRequest } from "next/server";
 
@@ -136,7 +148,6 @@ beforeEach(() => {
 
 describe("PATCH /api/partner/clients/[id]/schedule — referral-mode 403 (Task 7)", () => {
   it("returns 403 with explicit error message when partner.check_in_enabled is false", async () => {
-    currentPartner.check_in_enabled = false;
     const res = await invoke({ check_in_days: ["MON", "THU"] });
     expect(res.status).toBe(403);
     const json = await res.json();
@@ -144,8 +155,9 @@ describe("PATCH /api/partner/clients/[id]/schedule — referral-mode 403 (Task 7
   });
 
   it("inserts a partner_events audit row (event_type=schedule_denied_referral_mode) on 403", async () => {
-    currentPartner.check_in_enabled = false;
     await invoke({ check_in_days: ["MON"] });
+    // let the after() microtask run
+    await new Promise((r) => setTimeout(r, 0));
     const audit = calls.find(
       (c) => c.table === "partner_events" && c.op === "insert",
     );
@@ -153,12 +165,15 @@ describe("PATCH /api/partner/clients/[id]/schedule — referral-mode 403 (Task 7
     expect(audit!.payload).toMatchObject({
       partner_id: "p_1",
       event_type: "schedule_denied_referral_mode",
-      metadata: { client_id: "r_1" },
+      metadata: { client_id: "r_1", promo_code: "BOND123" },
     });
+    // Belt-and-suspenders: the audit insert must NOT chain any .eq()/.in() filters.
+    // Locks the insert shape so a future refactor that accidentally turns this
+    // into an upsert-like filtered insert fails loudly.
+    expect(audit!.filters.length).toBe(0);
   });
 
   it("does NOT update court_reminders when in referral mode", async () => {
-    currentPartner.check_in_enabled = false;
     await invoke({ check_in_days: ["MON"] });
     const reminderUpdate = calls.find(
       (c) => c.table === "court_reminders" && c.op === "update",
@@ -172,6 +187,8 @@ describe("PATCH /api/partner/clients/[id]/schedule — referral-mode 403 (Task 7
     // Key invariant: no 403 when check-in is enabled. The positive-path write
     // target (court_reminders.update) is validated by other tests in the
     // project; here we only care that the referral-mode gate does not trip.
+    // reminderRow.check_in_days is non-empty so wasNull=false → the
+    // sendEmail/sendSMS branch is skipped. Keeps the assertion narrow.
     expect(res.status).not.toBe(403);
   });
 });
