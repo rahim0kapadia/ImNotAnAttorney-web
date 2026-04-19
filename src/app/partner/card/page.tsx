@@ -13,6 +13,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { computePartnerUrl } from "@/lib/partner-mode";
+import { BondsmanValueStack } from "@/components/partner/BondsmanValueStack";
 
 export default function BailPacketCard() {
   const router = useRouter();
@@ -152,20 +153,23 @@ export default function BailPacketCard() {
         </div>
       </div>
 
-      {/* Screen-only: bondsman-facing value panel (hidden in print) */}
+      {/* Screen-only: side-by-side bondsman value + client-gets panels (hidden in print) */}
       <div className="print:hidden bg-zinc-950 pt-8 px-4">
-        <aside className="print:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-6 max-w-lg mx-auto">
-          <h2 className="text-amber-400 font-bold mb-3 text-sm uppercase tracking-wider">
-            What your client gets when they scan
-          </h2>
-          <ul className="text-zinc-300 text-sm space-y-2 list-disc pl-5">
-            <li>A 3-minute quiz about their specific charge</li>
-            <li>Their judge&apos;s sentencing patterns (actual numbers)</li>
-            <li>A list of questions for their attorney</li>
-            <li>Free court-date reminders until their hearing &mdash; we text them, you get copied</li>
-            <li>A 10% discount on any paid tier (because you sent them)</li>
-          </ul>
-        </aside>
+        <div className="max-w-5xl mx-auto grid gap-6 lg:grid-cols-2 mb-6">
+          <BondsmanValueStack />
+          <aside className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+            <h2 className="text-amber-400 font-bold mb-3 text-sm uppercase tracking-wider">
+              What your client gets when they scan
+            </h2>
+            <ul className="text-zinc-300 text-sm space-y-2 list-disc pl-5">
+              <li>A 3-minute quiz about their specific charge</li>
+              <li>Their judge&apos;s sentencing patterns (actual numbers)</li>
+              <li>A list of questions for their attorney</li>
+              <li>Free court-date reminders until their hearing &ndash; we text them, you get copied</li>
+              <li>A 10% discount on any paid tier (because you sent them)</li>
+            </ul>
+          </aside>
+        </div>
       </div>
 
       {/* Screen preview wrapper */}

@@ -14,6 +14,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { computePartnerUrl } from "@/lib/partner-mode";
+import { BondsmanValueStack } from "@/components/partner/BondsmanValueStack";
 
 export default function ComplianceChecklist() {
   const router = useRouter();
@@ -135,22 +136,25 @@ export default function ComplianceChecklist() {
         </div>
       </div>
 
-      {/* Screen-only: bondsman-facing value panel + mode note (hidden in print) */}
+      {/* Screen-only: side-by-side bondsman value + sheet-does panels (hidden in print) */}
       <div className="print:hidden bg-zinc-950 pt-8 px-4">
-        <aside className="print:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-6 max-w-lg mx-auto">
-          <h2 className="text-amber-400 font-bold mb-3 text-sm uppercase tracking-wider">
-            What this sheet does for you
-          </h2>
-          <ul className="text-zinc-300 text-sm space-y-2 list-disc pl-5">
-            <li>Documents every bail condition in writing (surety audit trail)</li>
-            <li>Client signs it at jail desk &mdash; proof of notice if they FTA</li>
-            <li>QR goes to your branded reminder page &mdash; clients sign up in 60 seconds</li>
-            <li>You get copied on every reminder we send &mdash; zero extra work</li>
-            <li>Tracks who signed up vs. who didn&apos;t &mdash; shows in your dashboard</li>
-          </ul>
-        </aside>
-        <p className="print:hidden text-xs text-zinc-500 text-center mb-2">
-          Currently printing: {partner.check_in_enabled ? "Check-In mode — daily prompts + reminders" : "Referral mode — court-date reminders only"}.
+        <div className="max-w-5xl mx-auto grid gap-6 lg:grid-cols-2 mb-6">
+          <BondsmanValueStack />
+          <aside className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+            <h2 className="text-amber-400 font-bold mb-3 text-sm uppercase tracking-wider">
+              What this sheet does for you
+            </h2>
+            <ul className="text-zinc-300 text-sm space-y-2 list-disc pl-5">
+              <li>Documents every bail condition in writing (surety audit trail)</li>
+              <li>Client signs it at jail desk &ndash; proof of notice if they FTA</li>
+              <li>QR goes to your branded reminder page &ndash; clients sign up in 60 seconds</li>
+              <li>You get copied on every reminder we send &ndash; zero extra work</li>
+              <li>Tracks who signed up vs. who didn&apos;t &ndash; shows in your dashboard</li>
+            </ul>
+          </aside>
+        </div>
+        <p className="max-w-5xl mx-auto text-xs text-zinc-400 text-center mb-2">
+          Currently printing: {partner.check_in_enabled ? "Check-In mode \u2014 daily prompts + reminders" : "Referral mode \u2014 court-date reminders only"}.
           {" "}
           <a href="/partner/dashboard" className="underline">Switch before printing</a>
         </p>
