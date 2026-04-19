@@ -14,6 +14,11 @@ interface CourtReminderFormProps {
   chargeType?: string;
   recommendedTier?: string;
   partnerPromoCode: string;
+  compactMode?: boolean;
+  requirePhone?: boolean;
+  submitLabel?: string;
+  redirectTo?: (token: string) => string;
+  requireConsent?: boolean;
 }
 
 const CHARGE_OPTIONS = Object.entries(CHARGE_DISPLAY_NAMES).map(([slug, label]) => ({
@@ -25,12 +30,19 @@ export function CourtReminderForm({
   chargeType,
   recommendedTier,
   partnerPromoCode,
+  compactMode,
+  requirePhone,
+  submitLabel,
+  redirectTo,
+  requireConsent,
 }: CourtReminderFormProps) {
   const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [courtDate, setCourtDate] = useState("");
   const [countyState, setCountyState] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
   const [charge, setCharge] = useState(chargeType || "");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -51,13 +63,15 @@ export function CourtReminderForm({
         body: JSON.stringify({
           first_name: firstName,
           email,
-          charge_type: charge,
-          county_state: countyState,
+          phone: requirePhone ? phone : undefined,
+          charge_type: compactMode ? (chargeType || "other") : charge,
+          county_state: compactMode ? undefined : countyState,
           court_date: courtDate,
           recommended_tier: recommendedTier,
           partner_promo_code: partnerPromoCode,
-          check_in_days: checkInIdk ? null : (checkInDays.length > 0 ? checkInDays : undefined),
-          check_in_idk: checkInIdk ? true : undefined,
+          check_in_days: compactMode ? undefined : (checkInIdk ? null : (checkInDays.length > 0 ? checkInDays : undefined)),
+          check_in_idk: compactMode ? undefined : (checkInIdk ? true : undefined),
+          consent: requireConsent ? consent : undefined,
         }),
       });
 
@@ -69,7 +83,8 @@ export function CourtReminderForm({
       }
 
       const { token } = await res.json();
-      router.push(`/prep/${token}`);
+      const dest = redirectTo ? redirectTo(token) : `/prep/${token}`;
+      router.push(dest);
     } catch {
       setError("Connection error. Please try again.");
       setSubmitting(false);
@@ -93,7 +108,7 @@ export function CourtReminderForm({
         />
       </div>
 
-      {showChargeField && (
+      {!compactMode && showChargeField && (
         <div>
           <label htmlFor="chargeType" className="block text-sm font-medium text-zinc-300 mb-1">
             What are you charged with?
@@ -130,7 +145,7 @@ export function CourtReminderForm({
         />
       </div>
 
-      {partnerPromoCode && (
+      {!compactMode && partnerPromoCode && (
         <div className="mt-4">
           <CheckInDayPicker
             value={checkInDays}
@@ -154,20 +169,22 @@ export function CourtReminderForm({
         </div>
       )}
 
-      <div>
-        <label htmlFor="countyState" className="block text-sm font-medium text-zinc-300 mb-1">
-          County & State
-        </label>
-        <input
-          id="countyState"
-          type="text"
-          required
-          value={countyState}
-          onChange={(e) => setCountyState(e.target.value)}
-          className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none"
-          placeholder="e.g. Pinellas County, FL"
-        />
-      </div>
+      {!compactMode && (
+        <div>
+          <label htmlFor="countyState" className="block text-sm font-medium text-zinc-300 mb-1">
+            County & State
+          </label>
+          <input
+            id="countyState"
+            type="text"
+            required
+            value={countyState}
+            onChange={(e) => setCountyState(e.target.value)}
+            className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none"
+            placeholder="e.g. Pinellas County, FL"
+          />
+        </div>
+      )}
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-1">
@@ -184,16 +201,48 @@ export function CourtReminderForm({
         />
       </div>
 
+      {requirePhone && (
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-zinc-300 mb-1">
+            Mobile phone
+          </label>
+          <input
+            id="phone"
+            type="tel"
+            required
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full px-4 py-3 min-h-[44px] bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none"
+            placeholder="(555) 123-4567"
+            autoComplete="tel"
+          />
+          <p className="text-xs text-zinc-400 mt-1">Where we text your check-in prompts.</p>
+        </div>
+      )}
+
+      {requireConsent && (
+        <label className="flex items-start gap-3 cursor-pointer min-h-[44px] py-2">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            required
+            className="mt-1 h-5 w-5 rounded border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
+          />
+          <span className="text-sm text-zinc-400">
+            I agree to text and email from ImNotAnAttorney about my court date and
+            check-ins. Message/data rates may apply. Reply STOP to opt out.{" "}
+            <a href="/privacy" className="text-amber-400 underline">Privacy policy</a>.
+          </span>
+        </label>
+      )}
+
       {error && (
         <p className="text-red-400 text-sm" role="alert">{error}</p>
       )}
 
-      <button
-        type="submit"
-        disabled={submitting}
-        className="w-full px-6 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-      >
-        {submitting ? "Setting up..." : "Set Up My Court Prep"}
+      <button type="submit" disabled={submitting} className="w-full px-6 py-4 min-h-[44px] bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+        {submitting ? "Setting up..." : (submitLabel || "Set Up My Court Prep")}
       </button>
 
       <p className="text-zinc-500 text-xs text-center">

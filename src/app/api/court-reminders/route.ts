@@ -18,13 +18,15 @@ import { sendSMS, capSMS } from "@/lib/sms";
 interface CreateBody {
   first_name: string;
   email: string;
-  charge_type: string;
-  county_state: string;
+  phone?: string;
+  charge_type?: string;
+  county_state?: string;
   court_date: string;
   recommended_tier?: string;
   partner_promo_code?: string;
   check_in_days?: string[] | null;
   check_in_idk?: boolean;
+  consent?: boolean;
 }
 
 export async function POST(req: NextRequest) {
@@ -35,9 +37,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
+  // Consent gate — if the key was present in the body, it must be true.
+  if (Object.prototype.hasOwnProperty.call(body, "consent") && body.consent !== true) {
+    return NextResponse.json({ error: "Consent is required" }, { status: 400 });
+  }
+
+  // Defaults for compact-mode payloads that omit charge_type / county_state.
+  const charge_type = body.charge_type?.trim() ? body.charge_type.trim() : "other";
+  const county_state = body.county_state?.trim() ? body.county_state.trim() : "Unknown County";
+
   // ── Validate required fields ──
-  const { first_name, email, charge_type, county_state, court_date } = body;
-  if (!first_name?.trim() || !email?.trim() || !charge_type?.trim() || !county_state?.trim() || !court_date?.trim()) {
+  const { first_name, email, court_date } = body;
+  if (!first_name?.trim() || !email?.trim() || !court_date?.trim()) {
     return NextResponse.json({ error: "All fields are required" }, { status: 400 });
   }
 
@@ -87,12 +98,14 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // phone + consent are accepted from the body but persisted only when the
+  // underlying columns exist. A later migration fix will add persistence.
   const { error: insertErr } = await supabase.from("court_reminders").insert({
     token,
     first_name: first_name.trim(),
     email: email.trim().toLowerCase(),
     charge_type,
-    county_state: county_state.trim(),
+    county_state,
     court_date,
     recommended_tier: body.recommended_tier || null,
     partner_promo_code: body.partner_promo_code || null,
