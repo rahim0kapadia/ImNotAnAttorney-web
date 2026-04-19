@@ -35,6 +35,77 @@ async function timingSafeCompare(a: string, b: string): Promise<boolean> {
   return result === 0;
 }
 
+/**
+ * Set the ref cookie (and optional ref_sub from ?sub=) + attach a fresh CSP
+ * nonce to BOTH request and response headers for the given `/${prefix}/[code]`
+ * route. Returns null if pathname doesn't match `/${prefix}/[code]` shape so
+ * the caller can fall through to the next prefix or the generic CSP path.
+ *
+ * Request-header propagation is load-bearing: Server Components read the
+ * nonce via headers().get("x-nonce"), which only sees request headers — not
+ * response headers. Skipping the request-header set breaks inline scripts
+ * on these routes under strict CSP.
+ */
+function setReferralCookie(
+  req: NextRequest,
+  pathname: string,
+  prefix: string,
+): NextResponse | null {
+  const re = new RegExp(`^/${prefix}/([^/]+)`);
+  const codeMatch = pathname.match(re);
+  if (!codeMatch) return null;
+  const code = codeMatch[1].toUpperCase();
+
+  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  const supabaseConnectSrc = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://*.supabase.co";
+  const cspHeader = [
+    "default-src 'self'",
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://js.stripe.com https://vercel.live`,
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: https:",
+    "font-src 'self'",
+    `connect-src 'self' https://api.stripe.com https://vercel.live ${supabaseConnectSrc} https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com`,
+    "frame-src https://js.stripe.com https://hooks.stripe.com",
+    "frame-ancestors 'none'",
+    "object-src 'none'",
+    "worker-src 'self'",
+    "base-uri 'self'",
+    "form-action 'self' https://checkout.stripe.com",
+  ].join("; ");
+
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("x-nonce", nonce);
+  requestHeaders.set("Content-Security-Policy", cspHeader);
+
+  const response = NextResponse.next({ request: { headers: requestHeaders } });
+
+  response.cookies.set("ref", code, {
+    httpOnly: false,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 90 * 24 * 60 * 60, // 90 days
+    path: "/",
+  });
+
+  const url = new URL(req.url);
+  const sub = url.searchParams.get("sub");
+  if (sub) {
+    const cleanSub = sub.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 50);
+    if (cleanSub) {
+      response.cookies.set("ref_sub", cleanSub, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 90 * 24 * 60 * 60,
+        path: "/",
+      });
+    }
+  }
+
+  response.headers.set("Content-Security-Policy", cspHeader);
+  return response;
+}
+
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
@@ -136,58 +207,17 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // ── Referral cookie for /r/[code] routes ──────────────────────
+  // ── Referral / check-in / court-date cookie + CSP ────────────
   // In Next.js 16, cookies().set() is not allowed in Server Components.
   // Middleware is the correct place to set cookies for page routes.
-  if (pathname.startsWith("/r/") && !pathname.startsWith("/r/api")) {
-    const codeMatch = pathname.match(/^\/r\/([^/]+)/);
-    if (codeMatch) {
-      const code = codeMatch[1].toUpperCase();
-      const response = NextResponse.next();
-      response.cookies.set("ref", code, {
-        httpOnly: false,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 90 * 24 * 60 * 60, // 90 days
-        path: "/",
-      });
-      // Also handle sub-ID tracking
-      const url = new URL(req.url);
-      const sub = url.searchParams.get("sub");
-      if (sub) {
-        const cleanSub = sub.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 50);
-        if (cleanSub) {
-          response.cookies.set("ref_sub", cleanSub, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            maxAge: 90 * 24 * 60 * 60,
-            path: "/",
-          });
-        }
-      }
-      // Still need CSP nonce, add it to this response
-      const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
-      const supabaseConnectSrc = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://*.supabase.co";
-      const cspHeader = [
-        "default-src 'self'",
-        `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://js.stripe.com https://vercel.live`,
-        "style-src 'self' 'unsafe-inline'",
-        "img-src 'self' data: https:",
-        "font-src 'self'",
-        `connect-src 'self' https://api.stripe.com https://vercel.live ${supabaseConnectSrc} https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com`,
-        "frame-src https://js.stripe.com https://hooks.stripe.com",
-        "frame-ancestors 'none'",
-        "object-src 'none'",
-        "worker-src 'self'",
-        "base-uri 'self'",
-        "form-action 'self' https://checkout.stripe.com",
-      ].join("; ");
-      const requestHeaders = new Headers(req.headers);
-      requestHeaders.set("x-nonce", nonce);
-      requestHeaders.set("Content-Security-Policy", cspHeader);
-      response.headers.set("Content-Security-Policy", cspHeader);
-      return response;
+  // All three prefixes share identical cookie + nonce logic — handled by
+  // setReferralCookie(). Helper forwards nonce into REQUEST headers so
+  // Server Components can read it via headers().get("x-nonce").
+  // Task 10 (bondsman-modes v2): uniform /r, /checkin, /court-date handling.
+  for (const prefix of ["r", "checkin", "court-date"]) {
+    if (pathname.startsWith(`/${prefix}/`) && !pathname.startsWith(`/${prefix}/api`)) {
+      const response = setReferralCookie(req, pathname, prefix);
+      if (response) return response;
     }
   }
 

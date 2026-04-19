@@ -30,6 +30,30 @@ export async function PATCH(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
+  // Task 7 (bondsman-modes v2): block schedule writes for referral-mode partners.
+  // Referral mode = check_in_enabled:false — no check-in ops available on this partner.
+  // Audit log every attempt so we can detect UI drift (button should be hidden).
+  if (!partner.check_in_enabled) {
+    console.warn("[Schedule] Referral-mode partner attempted schedule set", {
+      partner_id: partner.id, client_id: id,
+    });
+    createAdminClient()
+      .from("partner_events")
+      .insert({
+        partner_id: partner.id,
+        event_type: "schedule_denied_referral_mode",
+        metadata: { client_id: id },
+      })
+      .then(
+        () => {},
+        (e: unknown) => console.error("[Schedule] Event insert failed:", e),
+      );
+    return NextResponse.json(
+      { error: "Check-in scheduling is not available in Referral mode" },
+      { status: 403 },
+    );
+  }
+
   let body: { check_in_days: string[] | null };
   try {
     body = await req.json();
