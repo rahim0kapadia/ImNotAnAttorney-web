@@ -120,6 +120,60 @@ export async function GET(req: NextRequest) {
       .eq("success", true)
       .gte("created_at", monthStart.toISOString());
 
+    // RemindersOnYourBehalf feed, last 7 days of sms_log for this partner.
+    // Two-step to keep privacy tight: fetch log rows, then batch-fetch only
+    // the court_reminders we need for first_name + last initial. Mapping
+    // by id from court_reminders because sms_log.court_reminder_id is the
+    // canonical join.
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const { data: recentSms } = await supabase
+      .from("sms_log")
+      .select("id, created_at, category, court_reminder_id")
+      .eq("partner_id", partner.id)
+      .eq("category", "court_reminder")
+      .eq("success", true)
+      .gte("created_at", sevenDaysAgo)
+      .order("created_at", { ascending: false })
+      .limit(10);
+
+    interface ReminderFeedItem {
+      sentAt: string;
+      clientLabel: string;
+      action: string;
+    }
+
+    const reminderFeedItems: ReminderFeedItem[] = [];
+    const crIds = (recentSms ?? [])
+      .map((s) => s.court_reminder_id as string | null)
+      .filter((id): id is string => !!id);
+    const crNameById = new Map<string, { first: string | null; last: string | null }>();
+    if (crIds.length > 0) {
+      const { data: crRows } = await batchedInQuery<{
+        id: string;
+        first_name: string | null;
+        last_name: string | null;
+      }>(supabase, {
+        table: "court_reminders",
+        select: "id, first_name, last_name",
+        inColumn: "id",
+        ids: crIds,
+      });
+      for (const row of crRows) {
+        crNameById.set(row.id, { first: row.first_name, last: row.last_name });
+      }
+    }
+    for (const s of recentSms ?? []) {
+      const names = s.court_reminder_id ? crNameById.get(s.court_reminder_id) : null;
+      const first = names?.first?.trim() || "A client";
+      const lastInitial = names?.last?.trim()?.[0];
+      const clientLabel = lastInitial ? `${first} ${lastInitial}.` : first;
+      reminderFeedItems.push({
+        sentAt: s.created_at,
+        clientLabel,
+        action: "Court-date reminder delivered",
+      });
+    }
+
     return NextResponse.json({
       partner: {
         id: partner.id,
@@ -151,6 +205,7 @@ export async function GET(req: NextRequest) {
       clientsActive,
       remindersSentThisMonth: remindersSentThisMonth ?? 0,
       monthLabel,
+      reminderFeedItems,
       courtClients,
       checkInSummary,
       referrals: referrals || [],

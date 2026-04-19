@@ -26,6 +26,7 @@ import { NotificationSettings } from "@/components/partner/NotificationSettings"
 import { WorkflowToggle } from "@/components/partner/WorkflowToggle";
 import { FlipBanner } from "@/components/partner/FlipBanner";
 import { ForfeitureSavedHero } from "@/components/partner/ForfeitureSavedHero";
+import { RemindersOnYourBehalf, type ReminderFeedItem } from "@/components/partner/RemindersOnYourBehalf";
 import { formatDate } from "@/lib/format";
 import { tierDisplayName } from "@/lib/tiers";
 import { formatCents } from "@/lib/format";
@@ -86,6 +87,7 @@ export default function PartnerDashboard() {
   const [clientsActive, setClientsActive] = useState(0);
   const [remindersSentThisMonth, setRemindersSentThisMonth] = useState(0);
   const [monthLabel, setMonthLabel] = useState("");
+  const [reminderFeedItems, setReminderFeedItems] = useState<ReminderFeedItem[]>([]);
   const [courtClients, setCourtClients] = useState<CourtClient[]>([]);
   const [checkInSummary, setCheckInSummary] = useState<Record<string, { count: number; lastCheckIn: string | null }>>({});
   const [showAddClient, setShowAddClient] = useState(false);
@@ -111,6 +113,7 @@ export default function PartnerDashboard() {
       setClientsActive(data.clientsActive ?? 0);
       setRemindersSentThisMonth(data.remindersSentThisMonth ?? 0);
       setMonthLabel(data.monthLabel ?? "");
+      setReminderFeedItems(data.reminderFeedItems || []);
       setCourtClients(data.courtClients || []);
       setCheckInSummary(data.checkInSummary || {});
     } catch {
@@ -246,6 +249,8 @@ export default function PartnerDashboard() {
                 </ol>
               </section>
             )}
+
+            {clientsActive > 0 && <RemindersOnYourBehalf items={reminderFeedItems} />}
           </>
         )}
 
