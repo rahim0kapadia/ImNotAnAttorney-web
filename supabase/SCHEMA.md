@@ -432,6 +432,49 @@ Resend inbound webhook storage.
 | quadrant | text | Gold Mine / Red Ocean / Risky Bet / Dead Zone |
 | status | text | `identified` → `queued` → `in-progress` → `published` / `declined` |
 
+**Uniqueness (2026-04-19, migration `20260419a_content_gaps_open_partial_unique.sql`):** The original full-table `UNIQUE (charge_type_slug, pain_point_slug)` was dropped and replaced with a PARTIAL unique index `idx_content_gaps_open_charge_pain_unique` scoped to OPEN gaps:
+
+```
+UNIQUE (charge_type_slug, pain_point_slug) NULLS NOT DISTINCT
+  WHERE status IN ('identified','in-progress') AND has_blog_post = false
+```
+
+This allows the same (charge, pain) pair to have multiple historical rows (e.g., a `published` gap followed by a newly-re-`identified` gap) while still serializing auto-seeding races in `blog-ops/scripts/match-blog.mjs`'s `ensureContentGap()` and `src/lib/demand/score-demand.ts`'s content-gap upsert. Callers MUST NOT use PostgREST `onConflict: "charge_type_slug,pain_point_slug"` (42P10: no matching unique constraint) — use find-then-update-else-insert with a 23505 fallback instead. `NULLS NOT DISTINCT` ensures (`charge`, `NULL` pain) serialize correctly.
+
+#### `abandoned_questions` (2026-04-18, migration `20260418a_abandoned_questions.sql`)
+
+Storage for Reddit/Quora questions where the community's only answer is some variant of "hire a lawyer" (`defer_ratio >= 0.5`). Feeds the `/blog-pipeline` abandoned-question engine (Phase 2 of the 2026-04-18 plan).
+
+| Column | Type | Purpose |
+|------, |------|---------|
+| id | bigserial (PK) | Auto-generated |
+| source | text (NOT NULL, CHECK IN ('quora','reddit')) | Source platform |
+| source_url | text (NOT NULL) | Canonical URL; `UNIQUE (source, source_url)` |
+| question_text | text (NOT NULL) | Raw question body |
+| charge_type_slug | text | Nullable; classified charge |
+| pain_point_slug | text | Nullable; classified pain point |
+| total_answers | integer (NOT NULL, default 0) | Total answers observed |
+| defer_count | integer (NOT NULL, default 0) | Answers matching defer_patterns |
+| defer_ratio | numeric(4,3) GENERATED STORED | `defer_count/total_answers` (`1.000` when `total_answers=0`) |
+| top_answer_upvotes | integer | Nullable; highest observed upvotes |
+| matched_blog_slug | text | Nullable; set by `match-blog.mjs` |
+| match_confidence | smallint | Nullable; 0-10 |
+| status | text (NOT NULL, default 'pending', CHECK) | `pending` \| `blog-needed` \| `answered` \| `skipped` \| `failed` |
+| answered_at | timestamptz | Nullable; set on post |
+| answered_url | text | Nullable; URL of posted answer |
+| discovered_at | timestamptz (NOT NULL, default now()) | Row created |
+| updated_at | timestamptz (NOT NULL, default now()) | Auto-updated via trigger |
+| raw_meta | jsonb | Nullable; Playwright scrape payload |
+
+**Indexes:**
+- `abandoned_questions_pending_idx` — `(status, defer_ratio DESC, discovered_at DESC) WHERE status = 'pending'` (pipeline consumer ordering).
+- `abandoned_questions_source_idx` — `(source, discovered_at DESC)` (per-platform dashboards).
+- `abandoned_questions_charge_idx` — `(charge_type_slug) WHERE charge_type_slug IS NOT NULL`.
+
+**Trigger:** `abandoned_questions_updated_at` BEFORE UPDATE → `updated_at = now()`.
+
+**RLS:** enabled with no policies → default-deny for anon/authenticated. Service role bypasses RLS for pipeline writes.
+
 #### `demand_scores`
 
 | Column | Type | Purpose |

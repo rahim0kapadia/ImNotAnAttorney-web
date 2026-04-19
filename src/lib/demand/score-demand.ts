@@ -661,16 +661,70 @@ export async function scoreDemand(supabase: SupabaseClient): Promise<ScoreResult
     console.log(`[score-demand] Upserted ${scoresUpserted} demand scores`);
   }
 
-  // ── Upsert content gaps ──
+  // ── Upsert content gaps (find-then-update-else-insert) ──
+  //
+  // Migration 20260419a dropped the full-table UNIQUE (charge_type_slug,
+  // pain_point_slug) and replaced it with a PARTIAL unique index scoped to
+  // OPEN gaps (status in identified/in-progress AND has_blog_post=false).
+  // PostgREST's onConflict cannot target partial unique indexes with WHERE
+  // clauses, so we replace the single upsert with a row-by-row find-update
+  // or insert, catching 23505 on a concurrent race.
   let gapsUpserted = 0;
   if (gaps.length) {
-    const { error } = await supabase
-      .from("content_gaps")
-      .upsert(gaps, { onConflict: "charge_type_slug,pain_point_slug" });
-    if (error) {
-      throw new Error(`[score-demand] Error upserting content gaps: ${error.message}`);
+    const gapUpdateFields = (g: ContentGapRow) => ({
+      demand_quadrant: g.demand_quadrant,
+      demand_score: g.demand_score,
+      has_blog_post: g.has_blog_post,
+      gap_score: g.gap_score,
+      suggested_title: g.suggested_title,
+      suggested_keywords: g.suggested_keywords,
+      article_type: g.article_type,
+      updated_at: new Date().toISOString(),
+    });
+    const findLatestByChargePain = (g: ContentGapRow) => {
+      let q = supabase
+        .from("content_gaps")
+        .select("id")
+        .eq("charge_type_slug", g.charge_type_slug);
+      q = g.pain_point_slug == null
+        ? q.is("pain_point_slug", null)
+        : q.eq("pain_point_slug", g.pain_point_slug);
+      return q.order("updated_at", { ascending: false }).limit(1);
+    };
+    for (const gap of gaps) {
+      const { data: existing, error: selErr } = await findLatestByChargePain(gap);
+      if (selErr) {
+        throw new Error(`[score-demand] select content_gap: ${selErr.message}`);
+      }
+      if (existing && existing.length) {
+        const { error: updErr } = await supabase
+          .from("content_gaps")
+          .update(gapUpdateFields(gap))
+          .eq("id", existing[0].id);
+        if (updErr) {
+          throw new Error(`[score-demand] update content_gap id=${existing[0].id}: ${updErr.message}`);
+        }
+      } else {
+        const { error: insErr } = await supabase.from("content_gaps").insert(gap);
+        if (insErr && insErr.code === "23505") {
+          const { data: race } = await findLatestByChargePain(gap);
+          if (race && race.length) {
+            const { error: raceUpdErr } = await supabase
+              .from("content_gaps")
+              .update(gapUpdateFields(gap))
+              .eq("id", race[0].id);
+            if (raceUpdErr) {
+              throw new Error(`[score-demand] race-update content_gap id=${race[0].id}: ${raceUpdErr.message}`);
+            }
+          } else {
+            throw new Error(`[score-demand] insert 23505 but no winning row for ${gap.charge_type_slug}:${gap.pain_point_slug ?? "null"}`);
+          }
+        } else if (insErr) {
+          throw new Error(`[score-demand] insert content_gap: ${insErr.message}`);
+        }
+      }
+      gapsUpserted++;
     }
-    gapsUpserted = gaps.length;
     console.log(`[score-demand] Upserted ${gapsUpserted} content gaps`);
   }
 
