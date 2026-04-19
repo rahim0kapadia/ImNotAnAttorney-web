@@ -29,7 +29,7 @@ import { formatDate } from "@/lib/format";
 import { tierDisplayName } from "@/lib/tiers";
 import { formatCents } from "@/lib/format";
 import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
-import { computePartnerUrl } from "@/lib/partner-mode";
+import { computePartnerUrl, isCheckInMode } from "@/lib/partner-mode";
 import { type Partner } from "@/lib/partner-data";
 
 interface CourtClient {
@@ -141,6 +141,9 @@ export default function PartnerDashboard() {
   // Bondsman-modes v2 feature flag. When off, link is always /r/{code}.
   // When on, link routes to mode-specific preview (checkin/* vs court-date/*).
   const toggleEnabled = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
+  // NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true" ternary is the toggle gate;
+  // computePartnerUrl itself is env-free. Do NOT remove this guard without
+  // updating the corresponding callers simultaneously.
   const referralUrl = partner.promo_code
     ? toggleEnabled
       ? computePartnerUrl(
@@ -149,7 +152,7 @@ export default function PartnerDashboard() {
         )
       : `${SITE_URL}/r/${partner.promo_code}`
     : "";
-  const checkInEnabled = Boolean(partner.check_in_enabled);
+  const checkInEnabled = isCheckInMode(partner);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">

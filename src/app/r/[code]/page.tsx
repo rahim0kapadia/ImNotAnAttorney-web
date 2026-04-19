@@ -15,6 +15,7 @@ import Link from "next/link";
 import { BridgePage } from "@/components/BridgePage";
 import { getPartnerByCode } from "@/lib/partner-by-code";
 import { truncateName } from "@/lib/truncate-name";
+import { isCheckInMode } from "@/lib/partner-mode";
 
 export async function generateMetadata({
   params,
@@ -89,9 +90,12 @@ export default async function ReferralPage({ params, searchParams }: PageProps) 
     );
   }
 
+  // NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true" ternary is the toggle gate;
+  // computePartnerUrl itself is env-free. Do NOT remove this guard without
+  // updating the corresponding callers simultaneously.
   if (
     process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true" &&
-    partner.check_in_enabled === true &&
+    isCheckInMode(partner) &&
     sp.fromCheckin !== "1"
   ) {
     redirect(`/checkin/${code}`);

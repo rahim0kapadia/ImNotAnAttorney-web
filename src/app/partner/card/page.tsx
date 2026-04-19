@@ -99,6 +99,9 @@ export default function BailPacketCard() {
     );
   }
 
+  // NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true" ternary is the toggle gate;
+  // computePartnerUrl itself is env-free. Do NOT remove this guard without
+  // updating the corresponding callers simultaneously.
   const toggleEnabled = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
   const baseUrl = "https://imnotanattorney.com";
   const fullUrl = toggleEnabled
