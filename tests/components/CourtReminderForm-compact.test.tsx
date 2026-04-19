@@ -66,6 +66,10 @@ describe("<CourtReminderForm /> compact-mode rendering", () => {
     expect(html).toContain('id="phone"');
     expect(html).toContain('type="tel"');
     expect(html).toContain('inputMode="numeric"');
+    // React's renderToStaticMarkup preserves camelCase for `maxLength` (and
+    // `inputMode`) when the prop value is coerced through the numeric/string
+    // path — verified by grepping the actual rendered HTML. Lowercase
+    // serialization only applies to HTML-parsed attributes, not JSX output.
     expect(html).toContain('maxLength="20"');
     // Pattern attr — regex contents can vary slightly on escape, match the key chars.
     expect(html).toMatch(/pattern="[^"]*0-9[^"]*"/);

@@ -109,10 +109,17 @@ export function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-/** Normalize phone to E.164 format (+1XXXXXXXXXX). Strips formatting, prepends +1 for bare 10-digit. */
+/** Normalize phone to E.164 format (+1XXXXXXXXXX). Strips formatting,
+ * accepts a leading "+" (drops it before the digit check), then:
+ *   - bare 10 digits  → prepends +1
+ *   - 11 digits starting with "1" (e.g. "+15551234567" → "15551234567")
+ *                      → prepends "+" so isValidPhone's /^\+1\d{10}$/ matches
+ * Anything else is returned as-is (will fail isValidPhone).
+ */
 export function normalizePhone(raw: string): string {
-  const stripped = raw.replace(/[\s\-\(\)\.]/g, "");
+  const stripped = raw.replace(/[\s\-\(\)\.]/g, "").replace(/^\+/, "");
   if (/^\d{10}$/.test(stripped)) return "+1" + stripped;
+  if (/^1\d{10}$/.test(stripped)) return "+" + stripped;
   return stripped;
 }
 

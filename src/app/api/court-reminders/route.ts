@@ -56,10 +56,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  // Consent gate — if the key was present in the body, it must be exactly boolean true.
-  if (Object.prototype.hasOwnProperty.call(body, "consent") && body.consent !== true) {
-    return NextResponse.json({ error: "consent must be boolean true" }, { status: 400 });
-  }
+  // Consent is only meaningful when coupled with a phone number (SMS opt-in).
+  // The phone-coupled gate below enforces `consent === true` whenever a phone
+  // is provided; callers that omit phone can pass any consent value (including
+  // false/undefined/string) without being rejected at the top level.
 
   // Defaults for compact-mode payloads that omit charge_type / county_state.
   const charge_type = body.charge_type?.trim() ? body.charge_type.trim() : "other";
@@ -150,7 +150,9 @@ export async function POST(req: NextRequest) {
     first_name: first_name.trim(),
     email: email.trim().toLowerCase(),
     phone: normalizedPhone,
-    sms_consent_at: normalizedPhone && body.consent === true ? new Date().toISOString() : null,
+    // Invariant: phone-coupled gate above already guarantees consent===true
+    // whenever normalizedPhone is non-null, so phone presence implies consent.
+    sms_consent_at: normalizedPhone ? new Date().toISOString() : null,
     charge_type,
     county_state,
     court_date,

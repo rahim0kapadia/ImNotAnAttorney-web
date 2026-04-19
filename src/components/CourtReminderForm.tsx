@@ -86,8 +86,12 @@ export function CourtReminderForm({
       // Guard against a caller-supplied redirectTo that returns an external
       // URL or a relative path — route.push accepts them but we want to
       // restrict post-submit navigation to same-origin absolute paths.
+      // Reject protocol-relative `//host` destinations, which browsers
+      // interpret as navigating to another origin on the current scheme.
       const proposed = redirectTo ? redirectTo(token) : `/prep/${token}`;
-      const dest = typeof proposed === "string" && proposed.startsWith("/")
+      const dest = typeof proposed === "string"
+        && proposed.startsWith("/")
+        && !proposed.startsWith("//")
         ? proposed
         : `/prep/${token}`;
       router.push(dest);
@@ -217,7 +221,7 @@ export function CourtReminderForm({
             type="tel"
             required
             inputMode="numeric"
-            pattern="[0-9\-\(\)\.\s]+"
+            pattern="[0-9\-\(\)\.\s+]+"
             maxLength={20}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}

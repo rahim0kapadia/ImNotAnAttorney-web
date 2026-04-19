@@ -1,11 +1,14 @@
 /**
  * Unit tests for POST /api/court-reminders compact-mode behaviour.
  *
- * Covers quality-review deltas on commit 31faf161:
+ * Covers quality-review deltas on commit 31faf161 + round-2 deltas:
  *   - Persist phone + sms_consent_at when phone is provided and consent is true
- *   - Reject when phone provided without consent (400)
+ *   - Reject when phone provided without consent=true (400), whether consent
+ *     is the wrong type ("true" string) or explicitly false
  *   - Reject when phone fails isValidPhone (400)
- *   - Reject when consent key is present but not strictly true (400)
+ *   - Accept {consent:false} with no phone (top-level consent gate removed;
+ *     consent only enforced when a phone is present)
+ *   - Accept a leading "+" in phone ("+15551234567") and normalize to E.164
  *
  * Mocks: @/lib/supabase/admin, @/lib/email, @/lib/sms, @/lib/notification-prefs.
  * No network, no database, no Resend/SMS side effects.
@@ -102,16 +105,35 @@ describe("POST /api/court-reminders — compact-mode consent + phone", () => {
     expect(calls.find((c) => c.op === "insert")).toBeUndefined();
   });
 
-  it("returns 400 with a specific message when consent key is present but not strictly true", async () => {
+  it("accepts {consent:false} when no phone is provided (top-level gate removed)", async () => {
     const res = await POST(buildReq({
       first_name: "Jane",
       email: "jane@example.com",
       court_date: futureDate,
-      consent: "true", // wrong type, must be boolean true
+      consent: false,
+      // no phone — consent is only enforced when a phone number is present.
+    }));
+    expect(res.status).toBe(200);
+
+    const insertCall = calls.find((c) => c.op === "insert");
+    expect(insertCall).toBeDefined();
+    const payload = insertCall!.payload as Record<string, unknown>;
+    expect(payload.phone).toBeNull();
+    expect(payload.sms_consent_at).toBeNull();
+  });
+
+  it("returns 400 when phone is provided and consent is the wrong type (string 'true')", async () => {
+    const res = await POST(buildReq({
+      first_name: "Jane",
+      email: "jane@example.com",
+      court_date: futureDate,
+      phone: "5551234567",
+      consent: "true", // wrong type — phone-coupled gate still rejects
     }));
     expect(res.status).toBe(400);
     const body = await res.json();
-    expect(body.error).toBe("consent must be boolean true");
+    expect(body.error).toBe("Consent required for SMS notifications");
+    expect(calls.find((c) => c.op === "insert")).toBeUndefined();
   });
 
   it("returns 400 when phone is not a valid US 10-digit number", async () => {
@@ -151,6 +173,23 @@ describe("POST /api/court-reminders — compact-mode consent + phone", () => {
     // Compact-mode defaults applied.
     expect(payload.charge_type).toBe("other");
     expect(payload.county_state).toBe("Unknown County");
+  });
+
+  it("accepts a leading '+' in phone and normalizes to E.164", async () => {
+    const res = await POST(buildReq({
+      first_name: "Jane",
+      email: "jane@example.com",
+      court_date: futureDate,
+      phone: "+15551234567",
+      consent: true,
+    }));
+    expect(res.status).toBe(200);
+
+    const insertCall = calls.find((c) => c.op === "insert");
+    expect(insertCall).toBeDefined();
+    const payload = insertCall!.payload as Record<string, unknown>;
+    expect(payload.phone).toBe("+15551234567");
+    expect(typeof payload.sms_consent_at).toBe("string");
   });
 
   it("does not set sms_consent_at when phone is omitted (no SMS opt-in)", async () => {
