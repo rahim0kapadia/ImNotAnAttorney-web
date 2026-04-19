@@ -33,12 +33,12 @@ export async function generateMetadata({
       ? (partner.check_in_enabled
           ? `Set up your court check-in — ${referrer}`
           : `Court date reminders + hearing prep — ${referrer}`)
-      : `Court Prep for Your Case -- Referred by ${referrer}`;
+      : `Know what they know — ${referrer} sent you`;
     const description = toggleOn
       ? (partner.check_in_enabled
           ? "Court check-in prompts, court date reminders, and what to expect at your hearing."
           : "Court date reminders and what to expect at your hearing.")
-      : `${partner.name} from ${partner.company || "a trusted referral partner"} trusts this service.`;
+      : `${partner.name} at ${partner.company || "your bondsman"} sends clients here before every court date.`;
     return {
       title: `${title} | ImNotAnAttorney`,
       description,
@@ -47,8 +47,8 @@ export async function generateMetadata({
     };
   }
 
-  const defaultTitle = "Court Prep for Your Case";
-  const defaultDescription = "Understand your charges. Get the right questions for your attorney.";
+  const defaultTitle = "Know what they know";
+  const defaultDescription = "The legal system has a file on you. We help you build one on them.";
   return {
     title: `${defaultTitle} | ImNotAnAttorney`,
     description: `${defaultDescription} Legal information -- not legal advice.`,
@@ -71,17 +71,17 @@ export default async function ReferralPage({ params }: PageProps) {
       <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4">
         <div className="max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">
-            This referral link isn&apos;t active
+            The link worked. The code didn&apos;t.
           </h1>
           <p className="text-zinc-400 mb-8">
-            The link you followed may have expired or is no longer available.
-            You can still check out our services directly.
+            Your bondsman&apos;s referral code expired or was typed slightly off.
+            You can still get your case questions &mdash; start here.
           </p>
           <Link
             href="/"
             className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors"
           >
-            Visit ImNotAnAttorney
+            Decode my case
           </Link>
         </div>
       </main>
@@ -119,18 +119,6 @@ export default async function ReferralPage({ params }: PageProps) {
 
   // Referral cookie is set by middleware (Next.js 16 -- cookies().set() not allowed in Server Components)
 
-  // daysUntilCourt sourcing: the bridge is a PRE-CONVERSION landing page. The
-  // client has just arrived via partner referral link -- no case row, no
-  // court_reminders row, no session token tied to a court date yet. All such
-  // rows are created downstream (quiz -> intake -> CourtReminderForm).
-  // No ?token= param or cookie currently carries a court date at this stage
-  // either. Leave undefined; the countdown nudge in <BridgePage> is skipped.
-  // If a future flow attaches a case/court_reminder to the bridge (e.g. the
-  // client returns via a personalized link), wire the earliest future
-  // court_date here and compute:
-  //   Math.ceil((new Date(court_date).getTime() - Date.now()) / 86400000)
-  const daysUntilCourt: number | undefined = undefined;
-
   return (
     <BridgePage
       partnerName={partner.name}
@@ -138,7 +126,6 @@ export default async function ReferralPage({ params }: PageProps) {
       city={partner.city}
       promoCode={partner.promo_code!}
       checkInEnabled={partner.check_in_enabled}
-      daysUntilCourt={daysUntilCourt}
     />
   );
 }

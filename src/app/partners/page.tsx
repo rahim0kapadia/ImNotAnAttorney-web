@@ -52,16 +52,17 @@ export default function PartnersPage() {
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-24 text-center">
         <FadeInUp>
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            Earn {xRayEarning} Every Time a
+            Help a Defendant. Earn a Commission.
             <br />
-            <span className="text-amber-400">Defendant Uses Your Code</span>
+            <span className="text-amber-400">Keep Your Clients Prepared for Court.</span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-4">
-            Your referrals get free court prep, date reminders and hearing guidance.
-            You earn up to 20% on every product they purchase. No selling required.
+            For bondsmen, paralegals, advocates, and content creators who work
+            with defendants every day. You refer, we deliver court prep and
+            case intelligence &mdash; and you earn 10&ndash;20% on every purchase.
           </p>
           <p className="text-sm text-zinc-500 mb-8">
-            Bondsmen, paralegals, content creators, advocates, anyone can partner.
+            Built for bondsmen, paralegals, content creators, and community advocates &mdash; the people already in front of defendants every day.
           </p>
           <a
             href="#apply"
@@ -69,6 +70,11 @@ export default function PartnersPage() {
           >
             Get My Partner Code
           </a>
+          <div>
+            <Link href="/partners/bondsman" className="inline-flex items-center justify-center px-6 py-3 mt-4 border border-amber-500 text-amber-400 rounded-xl hover:bg-amber-500/10 transition-colors">
+              Bail bondsman? &rarr; See your program
+            </Link>
+          </div>
         </FadeInUp>
       </section>
 
@@ -95,19 +101,14 @@ export default function PartnersPage() {
         <p className="text-center text-zinc-400 text-sm mt-4">
           One X-Ray referral = {xRayEarning}. Five referrals a month = {xRayFiveMonthly} in passive income.
         </p>
-        <p className="text-center mt-4">
-          <Link href="/partners/bondsman" className="text-amber-400 hover:text-amber-300 text-sm">
-            Bail bondsman? See our bondsman-specific page &rarr;
-          </Link>
-        </p>
       </section>
 
-      {/* Why This Works */}
+      {/* What Your Referrals Actually Get */}
       <section className="bg-zinc-900/50 border-t border-b border-zinc-700 py-16">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <FadeInUp>
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">
-              Why Defendants Buy
+              What Your Referrals Actually Get
             </h2>
             <p className="text-zinc-300 text-lg mb-8">
               Your clients are in crisis. Their attorney isn&apos;t calling back.

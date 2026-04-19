@@ -113,8 +113,11 @@ export default function ComplianceChecklist() {
       {/* Screen-only toolbar */}
       <div className="print:hidden bg-zinc-950 border-b border-zinc-800 px-6 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-white font-bold text-lg">Compliance Checklist</h1>
-          <p className="text-zinc-400 text-sm">Print and hand to every client at bonding.</p>
+          <h1 className="text-white font-bold text-lg">Your bail conditions sheet</h1>
+          <p className="text-zinc-400 text-sm">
+            One page. Your branding. Their conditions in writing, signed at the jail desk.
+            When they skip court, this sheet proves you told them. Surety audits love it.
+          </p>
         </div>
         <div className="flex gap-3">
           <button
@@ -132,8 +135,29 @@ export default function ComplianceChecklist() {
         </div>
       </div>
 
+      {/* Screen-only: bondsman-facing value panel + mode note (hidden in print) */}
+      <div className="print:hidden bg-zinc-950 pt-8 px-4">
+        <aside className="print:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-6 max-w-lg mx-auto">
+          <h2 className="text-amber-400 font-bold mb-3 text-sm uppercase tracking-wider">
+            What this sheet does for you
+          </h2>
+          <ul className="text-zinc-300 text-sm space-y-2 list-disc pl-5">
+            <li>Documents every bail condition in writing (surety audit trail)</li>
+            <li>Client signs it at jail desk &mdash; proof of notice if they FTA</li>
+            <li>QR goes to your branded reminder page &mdash; clients sign up in 60 seconds</li>
+            <li>You get copied on every reminder we send &mdash; zero extra work</li>
+            <li>Tracks who signed up vs. who didn&apos;t &mdash; shows in your dashboard</li>
+          </ul>
+        </aside>
+        <p className="print:hidden text-xs text-zinc-500 text-center mb-2">
+          Currently printing: {partner.check_in_enabled ? "Check-In mode — daily prompts + reminders" : "Referral mode — court-date reminders only"}.
+          {" "}
+          <a href="/partner/dashboard" className="underline">Switch before printing</a>
+        </p>
+      </div>
+
       {/* Screen preview wrapper */}
-      <div className="print:hidden bg-zinc-950 min-h-screen flex items-start justify-center py-8 px-4">
+      <div className="print:hidden bg-zinc-950 min-h-screen flex items-start justify-center pb-8 px-4">
         <div
           className="bg-white rounded-lg shadow-2xl shadow-amber-500/10"
           style={{

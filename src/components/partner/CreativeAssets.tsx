@@ -73,7 +73,7 @@ export function CreativeAssets({ promoCode, referralUrl, checkInEnabled }: Creat
 
   return (
     <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
-      <h2 className="text-xl font-bold mb-4">Creative Assets</h2>
+      <h2 className="text-xl font-bold mb-4">Flyers &amp; cards to print</h2>
       <p className="text-sm text-zinc-400 mb-4">
         Pre-written content for social media, email, and in-person conversations.
         Your code and link are already filled in, just copy and send.

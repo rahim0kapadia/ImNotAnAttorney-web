@@ -27,8 +27,8 @@ const HOW_IT_WORKS_STEPS = [
     description: "Defendants get 10% off. No selling, no explaining.",
   },
   {
-    title: "Watch Commissions Roll In",
-    description: "Real-time dashboard. Monthly payouts.",
+    title: "See What You've Earned (and What You've Prevented)",
+    description: "Dashboard shows commission AND FTA-prevention count per client. Monthly payouts, NET-30, your choice of method.",
   },
 ];
 
@@ -49,14 +49,19 @@ export default function BondsmanPartnersPage() {
       {/* Hero */}
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-24 text-center">
         <FadeInUp>
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            You Bond Out Defendants Every Day.
+          <h1 className="font-display text-4xl md:text-5xl font-bold mb-4 leading-tight">
+            Every Forfeiture Is a Client
             <br />
-            <span className="text-amber-400">Each One Needs This.</span>
+            Who Didn&apos;t Show Up to Court.
           </h1>
-          <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-8">
-            Hand them a code at bonding. They get 10% off. You earn up to 20%
-            commission on every purchase. No selling. No follow-up.
+          <p className="text-xl text-zinc-300 mb-4">
+            Free court-date reminders and hearing prep for every defendant you
+            bond out. Built to cut your FTA rate &mdash; the one number that decides
+            whether this month ends in profit or forfeiture.
+          </p>
+          <p className="text-zinc-400 text-sm mb-8">
+            (You also earn 10&ndash;20% when they buy case prep. But that&apos;s not why
+            you&apos;re here.)
           </p>
           <a
             href="#apply"
@@ -65,6 +70,64 @@ export default function BondsmanPartnersPage() {
             Get My Partner Code
           </a>
         </FadeInUp>
+      </section>
+
+      {/* Forfeiture Math */}
+      <section className="max-w-4xl mx-auto px-4 py-12 border-t border-zinc-800">
+        <h2 className="font-display text-3xl font-bold mb-6 text-center">
+          The Math Every Bondsman Already Knows
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="text-center">
+            <p className="text-3xl font-bold text-amber-400">$5,000&ndash;$10,000</p>
+            <p className="text-zinc-400 text-sm mt-2">Average bond forfeiture per event</p>
+          </div>
+          <div className="text-center">
+            <p className="text-3xl font-bold text-amber-400">15&ndash;20%</p>
+            <p className="text-zinc-400 text-sm mt-2">Industry FTA rate</p>
+          </div>
+          <div className="text-center">
+            <p className="text-3xl font-bold text-amber-400">$0</p>
+            <p className="text-zinc-400 text-sm mt-2">Your cost if we prevent ONE forfeiture a year</p>
+          </div>
+        </div>
+        <p className="text-zinc-300 text-center max-w-2xl mx-auto">
+          Every defendant you bond out gets automated court-date reminders,
+          pre-hearing checklists, and a &ldquo;what to wear / what to bring / where to park&rdquo;
+          brief &mdash; for free &mdash; pre-tagged to you. One prevented no-show a year pays
+          for the next ten years of this partnership. We don&apos;t charge you. Ever.
+        </p>
+      </section>
+
+      {/* Data Depth, Trust Signal */}
+      <section className="py-16">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <FadeInUp>
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">
+              Backed by Real Data
+            </h2>
+            <p className="text-zinc-300 text-lg mb-8">
+              Our reports draw from{" "}
+              <strong className="text-amber-400">595,851 federal sentencing records</strong>,{" "}
+              <strong className="text-amber-400">15,386 judge profiles</strong>,{" "}
+              officer employment histories across 3 states, and 30,000+ police
+              encounter records. Every finding links to a verified source.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { stat: "595,851", label: "Federal sentencing records" },
+                { stat: "15,386", label: "Judge profiles" },
+                { stat: "52", label: "Jurisdictions covered" },
+                { stat: "4,699", label: "Statutes verified" },
+              ].map((item) => (
+                <div key={item.label} className="bg-zinc-900/50 rounded-lg border border-zinc-700 p-4">
+                  <div className="font-display text-2xl font-bold text-amber-400">{item.stat}</div>
+                  <div className="text-xs text-zinc-400 mt-1">{item.label}</div>
+                </div>
+              ))}
+            </div>
+          </FadeInUp>
+        </div>
       </section>
 
       {/* How It Works */}
@@ -77,30 +140,43 @@ export default function BondsmanPartnersPage() {
         </div>
       </section>
 
-      {/* Commission Table */}
-      <section className="max-w-5xl mx-auto px-6 py-16">
-        <FadeInUp>
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-8">Commission Per Sale</h2>
-        </FadeInUp>
-        <PartnerCommissionTable />
-        <p className="text-center text-zinc-400 text-sm mt-4">
-          One X-Ray referral = {xRayEarning}. Five referrals a month = {xRayFiveMonthly} in passive income.
-        </p>
-      </section>
-
-      {/* Why This Works */}
-      <section className="bg-zinc-900/50 border-t border-b border-zinc-700 py-16">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <FadeInUp>
-            <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">Why Defendants Buy</h2>
-            <p className="text-zinc-300 text-lg mb-8">
-              Your clients are in crisis. Their attorney isn&apos;t calling back.
-              They don&apos;t understand their charges. They&apos;re scared.
-              ImNotAnAttorney gives them the one thing they need most:
-              <strong className="text-amber-400"> the right questions to ask.</strong>
+      {/* Differentiator */}
+      <section className="max-w-4xl mx-auto px-4 py-12 border-t border-zinc-800">
+        <h2 className="font-display text-3xl font-bold mb-6 text-center">
+          Why We&apos;re Not the 10th Referral Program You&apos;ve Been Pitched
+        </h2>
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-xl font-bold text-amber-400 mb-2">The white-label shell</h3>
+            <p className="text-zinc-300">
+              Your clients see YOUR logo, not ours, on every page they visit
+              after booking. Upload once in the dashboard, done.
             </p>
-          </FadeInUp>
-          <PartnerWhyItWorks />
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-amber-400 mb-2">The data nobody else has</h3>
+            <p className="text-zinc-300">
+              Our reports pull from 595,851 federal sentencing records and 15,386
+              judge profiles. The reminder apps are hollow &mdash; scheduled texts and
+              nothing else. We give defendants real prep because our system runs
+              on real court data.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-amber-400 mb-2">The QR-code jail-release flyer</h3>
+            <p className="text-zinc-300">
+              Print it. Hand it at bonding. Defendant scans, enrolls themselves,
+              you never touch a keyboard. You look tech-savvy without doing tech.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-amber-400 mb-2">Built by defendants, for defendants&apos; allies</h3>
+            <p className="text-zinc-300">
+              We&apos;re still fighting our own cases. That&apos;s why we stay anonymous &mdash;
+              and why we understand your clients&apos; reality better than any SaaS
+              vendor chasing a category they&apos;ve only read about.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -131,6 +207,38 @@ export default function BondsmanPartnersPage() {
         </div>
       </section>
 
+      {/* Commission Table */}
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <FadeInUp>
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-8">Commission Per Sale</h2>
+        </FadeInUp>
+        <PartnerCommissionTable />
+        <p className="text-center text-zinc-400 text-sm mt-4">
+          One X-Ray referral = {xRayEarning}. Five referrals a month = {xRayFiveMonthly} in passive income.
+        </p>
+      </section>
+
+      {/* Why This Works */}
+      <section className="bg-zinc-900/50 border-t border-b border-zinc-700 py-16">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <FadeInUp>
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">Why This Works Where Other Vendors Don&apos;t</h2>
+            <p className="text-zinc-300 text-lg mb-4">
+              You&apos;ve been pitched reminder apps before. They all have the same
+              problem: they need YOU to enter the client, push the notifications,
+              chase setup. More unpaid work.
+            </p>
+            <p className="text-zinc-300 text-lg">
+              We flip it. You hand the defendant a QR code at booking. They scan,
+              enter their case info, and our system takes over &mdash; court reminders,
+              hearing prep, the whole track. You do nothing. Your FTA rate drops
+              anyway. That&apos;s the entire pitch.
+            </p>
+          </FadeInUp>
+          <PartnerWhyItWorks />
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-3xl mx-auto px-6 py-16">
         <FadeInUp>
@@ -149,6 +257,10 @@ export default function BondsmanPartnersPage() {
             </p>
           </FadeInUp>
           <PartnerApplicationForm source="bondsman" />
+          <p className="text-zinc-500 text-sm text-center italic mt-8">
+            We stay masked because our files aren&apos;t closed &mdash; and that&apos;s exactly
+            why we can read yours. &mdash; INAA team.
+          </p>
         </div>
       </section>
 

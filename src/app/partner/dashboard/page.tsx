@@ -175,7 +175,7 @@ export default function PartnerDashboard() {
       </header>
 
       <div className="max-w-4xl mx-auto px-6 py-8 space-y-8">
-        <h1 className="font-display text-2xl font-bold">Partner Dashboard</h1>
+        <h1 className="font-display text-2xl font-bold">Your Dashboard</h1>
         {error && (
           <div role="alert" className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg text-sm">
             {error}
@@ -272,7 +272,7 @@ export default function PartnerDashboard() {
 
         {/* 2. Ready-to-Send Messages */}
         <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
-          <h2 className="text-xl font-bold mb-4">Ready-to-Send Messages</h2>
+          <h2 className="text-xl font-bold mb-4">Texts to send your clients</h2>
           <MessageTemplates
             promoCode={partner.promo_code || ""}
             referralUrl={referralUrl}
@@ -301,9 +301,9 @@ export default function PartnerDashboard() {
 
         {/* 7. Recent Activity */}
         <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
-          <h2 className="text-xl font-bold mb-4">Recent Activity</h2>
+          <h2 className="text-xl font-bold mb-4">Clients you&apos;ve referred</h2>
           {referrals.length === 0 ? (
-            <p className="text-zinc-400">No referrals yet. Share your code to get started.</p>
+            <p className="text-zinc-400">No clients yet. Text your link to the next one you bond out &mdash; we handle the rest.</p>
           ) : (
             <div className="space-y-2">
               {referrals.slice(0, 20).map((r) => (
@@ -339,7 +339,7 @@ export default function PartnerDashboard() {
 
         {/* 9. Profile */}
         <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
-          <h2 className="text-xl font-bold mb-4">Profile</h2>
+          <h2 className="text-xl font-bold mb-4">Your info (shows on every flyer)</h2>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <p className="text-zinc-400">Name</p>

@@ -73,6 +73,11 @@ function getRecommendation(
   timing: string,
   concern: string,
 ): RecommendedTier {
+  // UPL GUARD: Reason strings must NEVER include specific § numbers, named case citations,
+  // or predictive statements about this defendant's outcome. Use "commonly" / "typical" /
+  // "in the range" qualifiers. The "worried about the outcome" follow-up branch especially
+  // must stay on information side — do not respond with outcome-predictive language.
+
   // Private attorney + no communication + months in → X-Ray upsell
   // Situation warrants forensic-level analysis, they're paying for an attorney
   // who isn't delivering, so full discovery + judge intel + 35-50 questions
@@ -84,10 +89,11 @@ function getRecommendation(
     return {
       slug: FALLBACK_XRAY,
       reason:
-        "You\u2019ve invested in a private attorney but aren\u2019t getting answers. " +
-        "The X-Ray gives you the full forensic analysis \u2014 discovery documents, " +
-        "judge intel, prosecution weaknesses \u2014 plus 35\u201350 questions that " +
-        "make your attorney impossible to ignore.",
+        "You\u2019ve already invested $5,000\u201325,000 in a private attorney who isn\u2019t communicating. " +
+        "The gap between a prepared defense and an under-prepared one at sentencing is commonly 18\u201336 months of custody. " +
+        "The X-Ray is the forensic layer your attorney should have built: every discovery document cross-referenced, " +
+        "your specific judge\u2019s sentencing patterns, 35\u201350 questions pulled from the facts of your case. " +
+        "Not opinions. A documented methodology applied to your record.",
     };
   }
 
@@ -101,9 +107,9 @@ function getRecommendation(
     return {
       slug: FALLBACK_INTEL,
       reason:
-        "With a public defender handling dozens of cases, you need your own " +
-        "intelligence. This is a comprehensive research brief on your judge, " +
-        "your charges, and the specific questions that force attention to YOUR case.",
+        "Public defenders commonly carry 80\u2013300 open cases. Average prep time per case is under 7 hours. " +
+        "Your case deserves its own intelligence layer. The Intelligence Brief gives you a briefing on your judge, " +
+        "your prosecutor, and your charges \u2014 plus 15\u201325 questions built to force the conversations your attorney doesn\u2019t have time to start.",
     };
   }
 
@@ -114,7 +120,10 @@ function getRecommendation(
   ) {
     return {
       slug: FALLBACK_INTEL,
-      reason: "Your charges are serious and your attorney needs to hear the right questions. This gives you the full intelligence picture.",
+      reason:
+        "Public defenders commonly carry 80\u2013300 open cases. Average prep time per case is under 7 hours. " +
+        "Your case deserves its own intelligence layer. The Intelligence Brief gives you a briefing on your judge, " +
+        "your prosecutor, and your charges \u2014 plus 15\u201325 questions built to force the conversations your attorney doesn\u2019t have time to start.",
     };
   }
 
@@ -122,22 +131,32 @@ function getRecommendation(
   if (attorney === "none" || concern === "no-communication") {
     return {
       slug: FALLBACK_DECODER,
-      reason: "You need clarity on your case and the exact questions to bring to any attorney you meet with.",
+      reason:
+        "First conviction collateral consequences are commonly measured in years of lost earnings, not dollars of fine. " +
+        "The Case Decoder walks through your specific charges, the prosecution\u2019s typical strategy, and 10\u201315 questions " +
+        "that make your attorney\u2019s first offer harder to defend.",
     };
   }
 
   // Has attorney, wants quick prep → charge-specific Playbook
   if (chargeSlug !== "other" && isValidTier(chargeSlug)) {
+    const chargeLabel =
+      CHARGE_OPTIONS.find((o) => o.slug === chargeSlug)?.label ?? "criminal";
     return {
       slug: chargeSlug,
-      reason: "You have an attorney. This gives you the specific questions they hope you never ask, tailored to your exact charge type.",
+      reason:
+        `Most first-time ${chargeLabel} defendants accept the first offer. The questions in this playbook are the ones that force a better one \u2014 ` +
+        "sourced from 33,000+ classified opinions and the judicial patterns our system already tracks.",
     };
   }
 
   // "Other" charges → Case Decoder (no generic playbook)
   return {
     slug: FALLBACK_DECODER,
-    reason: "We'll research your specific charges and give you 10-15 targeted questions for your attorney.",
+    reason:
+      "First conviction collateral consequences are commonly measured in years of lost earnings, not dollars of fine. " +
+      "The Case Decoder walks through your specific charges, the prosecution\u2019s typical strategy, and 10\u201315 questions " +
+      "that make your attorney\u2019s first offer harder to defend.",
   };
 }
 
@@ -186,15 +205,30 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
     if (!tier) return null;
     const originalPrice = tier.price / 100;
     const discountedPrice = Math.round(originalPrice * 0.9 * 100) / 100;
-    const savings = (originalPrice - discountedPrice).toFixed(2);
 
     return (
       <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4 py-16">
         <div className="max-w-lg w-full">
+          <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
+            <span>ImNotAnAttorney</span>
+            <span>Introduced by <span className="text-zinc-300">{partnerName}</span></span>
+          </div>
+
           <h2 className="text-2xl font-bold text-center mb-2">
-            Here&apos;s what to consider
+            Based on your answers, start here:
           </h2>
-          <p className="text-zinc-400 text-center mb-8">{rec.reason}</p>
+          <p className="text-zinc-400 text-center mb-6">{rec.reason}</p>
+          <p className="text-zinc-500 text-center text-xs mb-8">
+            Introduced by {partnerName}. Your {promoCode} discount is already applied below.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 mb-6">
+            <span>15,386 judges indexed</span>
+            <span>&bull;</span>
+            <span>33,000+ opinions classified</span>
+            <span>&bull;</span>
+            <span>Every citation verified to source</span>
+          </div>
 
           <div className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
             <h3 className="text-xl font-bold text-amber-400 mb-2">{tier.name}</h3>
@@ -207,17 +241,22 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               <span className="text-3xl font-bold text-white">
                 ${discountedPrice.toFixed(2)}
               </span>
+              <span className="text-amber-400 text-sm font-medium">
+                via {partnerName}
+              </span>
             </div>
 
-            <p className="text-amber-400 text-sm font-medium mb-6">
-              Code <span className="font-mono">{promoCode}</span> saves you ${savings}
-            </p>
+            <ul className="text-zinc-300 text-sm space-y-2 mb-6 border-l-2 border-zinc-700 pl-4">
+              <li>Full {tier.name} delivered to your inbox</li>
+              <li>Free court-date reminders through your case (partner benefit)</li>
+              <li>If the first deliverable doesn&apos;t give you questions your attorney can&apos;t easily answer, refund &mdash; no argument.</li>
+            </ul>
 
             <Link
               href={`/checkout?tier=${rec.slug}&ref=${promoCode}`}
               className="block w-full text-center px-6 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 transition-colors"
             >
-              Get Started
+              Start My {tier.name}
             </Link>
 
             {/* Divider */}
@@ -238,12 +277,11 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               Court date reminders + what to expect at your hearing.
             </p>
 
-            <Link
-              href="/services"
-              className="block text-center text-zinc-400 text-sm mt-4 hover:text-zinc-400"
-            >
-              See other options
-            </Link>
+            {rec.slug !== "case-decoder" && (
+              <p className="text-zinc-500 text-sm text-center mt-4">
+                Not sure yet? Start with the <Link href={`/r/${promoCode}/case-decoder`} className="text-zinc-300 underline hover:text-amber-400">Case Decoder</Link> for $177 &mdash; refund if it doesn&apos;t help.
+              </p>
+            )}
           </div>
 
           <p className="text-center text-zinc-400 text-xs mt-6">
@@ -259,6 +297,11 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
     return (
       <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4 py-16">
         <div className="max-w-lg w-full">
+          <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
+            <span>ImNotAnAttorney</span>
+            <span>Introduced by <span className="text-zinc-300">{partnerName}</span></span>
+          </div>
+
           {/* Progress bar */}
           <div className="w-full bg-zinc-800 rounded-full h-1.5 mb-8">
             <div
@@ -284,7 +327,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
           </div>
 
           <p className="text-center text-zinc-400 text-xs mt-8">
-            {partnerName}&apos;s code <span className="font-mono text-amber-400">{promoCode}</span> is applied automatically.
+            Code <span className="font-mono text-amber-400">{promoCode}</span> is applied automatically.
           </p>
         </div>
       </div>
@@ -301,6 +344,11 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4 py-16">
       <div className="max-w-lg w-full">
+        <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
+          <span>ImNotAnAttorney</span>
+          <span>Introduced by <span className="text-zinc-300">{partnerName}</span></span>
+        </div>
+
         {/* Progress bar */}
         <div className="w-full bg-zinc-800 rounded-full h-1.5 mb-8">
           <div

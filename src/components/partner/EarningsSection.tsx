@@ -34,7 +34,7 @@ export function EarningsSection({ partner, earnings, payouts }: EarningsSectionP
 
   return (
     <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
-      <h2 className="text-xl font-bold mb-4">Your Earnings</h2>
+      <h2 className="text-xl font-bold mb-4">What you&apos;ve earned</h2>
 
       {/* Commission Tier */}
       <div className="mb-4 flex items-center gap-4">

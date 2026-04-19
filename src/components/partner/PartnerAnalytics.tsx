@@ -35,7 +35,7 @@ export function PartnerAnalytics({ analytics }: PartnerAnalyticsProps) {
   if (monthly.length === 0 && by_tier.length === 0) {
     return (
       <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
-        <h2 className="text-xl font-bold mb-4">Analytics</h2>
+        <h2 className="text-xl font-bold mb-4">Your numbers</h2>
         <p className="text-zinc-400">
           Analytics will appear here once you start earning commissions.
         </p>

@@ -12,8 +12,6 @@
  * what they're getting from us (not from the bondsman). When
  * `checkInEnabled=true` (default, bondsman is running check-ins), we
  * omit that line to avoid overlap with the bondsman's communication.
- * Also accepts an optional `daysUntilCourt` to render a subtle
- * countdown nudge that primes the "prepare early" frame.
  */
 import Link from "next/link";
 import { TrustBadges } from "@/components/TrustBadges";
@@ -25,10 +23,9 @@ interface BridgePageProps {
   city?: string | null;
   promoCode: string;
   checkInEnabled?: boolean;
-  daysUntilCourt?: number;
 }
 
-export function BridgePage({ partnerName, company, city, promoCode, checkInEnabled = true, daysUntilCourt }: BridgePageProps) {
+export function BridgePage({ partnerName, company, city, promoCode, checkInEnabled = true }: BridgePageProps) {
   let displayName = partnerName;
   if (company && city) displayName = `${partnerName} from ${company}, ${city}`;
   else if (company) displayName = `${partnerName} from ${company}`;
@@ -41,20 +38,17 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
         <div className="max-w-lg text-center">
           <FadeInUp delay={0}>
             <h1 className="font-display text-3xl md:text-4xl font-bold mb-6 leading-tight">
-              <span className="text-amber-400 break-words">{displayName}</span> referred you.
+              <span className="text-amber-400 break-words">{displayName}</span>
               <br />
-              Here&apos;s why.
+              sends every client here before their first court date.
             </h1>
           </FadeInUp>
 
           <FadeInUp delay={0.1}>
             <p className="text-lg text-zinc-300 mb-4">
-              They see a lot of people go through what you&apos;re going through.
-              The ones who do best are the ones who show up to their attorney
-              prepared with the right questions.
-            </p>
-            <p className="text-lg text-zinc-300 mb-4">
-              This service researches your case and gives you exactly that.
+              They&apos;ve watched thousands of defendants walk into court unprepared
+              and thousands walk in with the right questions. The second group does
+              better. Every time.
             </p>
             {!checkInEnabled && (
               <p className="text-lg text-zinc-300 mb-4">
@@ -70,18 +64,15 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
 
           <FadeInUp delay={0.15}>
             <p className="text-amber-400 font-bold text-lg mb-2 break-words">
-              Because {displayName} sent you, 10% off case analysis is built in.
+              {displayName} put you on the partner-referral list.
             </p>
             <p className="text-zinc-400 text-sm mb-2">
-              Already applied at checkout. No code to remember.
+              That means 10% is already taken off before you see any price.
+              Nothing to enter. Nothing to remember.
             </p>
-            {typeof daysUntilCourt === "number" && daysUntilCourt > 0 && (
-              <p className="text-zinc-400 text-xs mb-6">
-                Your court date is {daysUntilCourt} day{daysUntilCourt === 1 ? "" : "s"} away. Most people who prepare early get a second meeting with their attorney.
-              </p>
-            )}
             <p className="text-zinc-400 text-xs mb-6">
-              15,386 judges researched. 33,000+ cases analyzed.
+              15,386 judges profiled. 33,000+ cases analyzed.
+              Your judge is probably in there.
             </p>
             <TrustBadges variant="compact" />
           </FadeInUp>
@@ -92,11 +83,11 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
                 href={`/r/${promoCode}/quiz`}
                 className="inline-block px-8 py-4 min-h-[44px] bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20 transition-all"
               >
-                See My Case&apos;s Questions
+                Know what they know &rarr;
               </Link>
             </div>
             <p className="text-zinc-500 text-sm mt-8">
-              ImNotAnAttorney provides legal information and questions, not legal advice.
+              We give you questions. We don&apos;t give you advice. Your attorney does that.
             </p>
           </FadeInUp>
         </div>

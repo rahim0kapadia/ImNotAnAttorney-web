@@ -92,6 +92,20 @@ function getComplianceRate(client: ComplianceClient, clientCheckIns: number): st
   return `${Math.min(clientCheckIns, scheduled)} / ${scheduled} (${pct}%)`;
 }
 
+// Status label mapping — database values stay the same, only display changes.
+function statusLabel(status: string): string {
+  switch (status) {
+    case "active":
+      return "On track";
+    case "completed":
+      return "Court closed";
+    case "unsubscribed":
+      return "Opted out of reminders";
+    default:
+      return status;
+  }
+}
+
 // ── Component ──────────────────────────────────────────────────
 export function ComplianceReportClient({
   partner,
@@ -207,7 +221,7 @@ export function ComplianceReportClient({
               onClick={() => window.print()}
               className="px-4 py-2 bg-amber-500 text-black font-bold rounded-lg text-sm hover:bg-amber-400 cursor-pointer"
             >
-              Print / Save as PDF
+              Print for surety
             </button>
           </div>
         </div>
@@ -215,10 +229,10 @@ export function ComplianceReportClient({
         {/* Report Header */}
         <header className="text-center mb-8 print:mb-4">
           <h1 className="text-2xl font-bold print:text-black">
-            Defendant Management Report
+            Defendant Compliance &amp; Court-Appearance Program
           </h1>
-          <p className="text-lg mt-1 print:text-gray-800">
-            {partner.company || partner.name}
+          <p className="text-sm text-zinc-400 print:text-gray-700 mt-1">
+            Automated reminder and check-in system operated by {partner.company || partner.name}
           </p>
           <p className="text-zinc-400 text-sm mt-1 print:text-gray-600">
             Generated{" "}
@@ -234,8 +248,8 @@ export function ComplianceReportClient({
         {/* Mode-aware intro copy (Task 27, bondsman modes v2) */}
         <p className="text-zinc-400 mb-6 print:text-gray-600">
           {checkInEnabled
-            ? "This report shows check-in compliance and court-date reminder activity across your clients."
-            : "This report shows court-date reminder activity across your clients. Your account is in Referral mode. Check-in workflows are off."}
+            ? `${partner.company || partner.name} operates a defendant compliance program for every client bonded out. Every client receives court-date reminders. Check-in mode is enabled for all active clients.`
+            : `${partner.company || partner.name} operates an automated court-date reminder program for every defendant bonded out. All active clients receive 48-hour, 24-hour, and morning-of reminders by text and email.`}
         </p>
 
         {/* Summary Stats — 4 cards (referral): 2-col mobile → 4-col md; 6 cards (check-in): 2-col mobile → 3-col md */}
@@ -243,7 +257,7 @@ export function ComplianceReportClient({
           <StatCard label="Total Defendants" value={totalDefendants} />
           <StatCard label="Active" value={activeCount} />
           <StatCard label="Completed" value={completedCount} />
-          <StatCard label="Reminders Sent" value={totalReminders} />
+          <StatCard label="Reminders Delivered" value={totalReminders} />
           {checkInEnabled && (
             <>
               <StatCard label="Check-Ins" value={totalCheckIns} />
@@ -262,7 +276,9 @@ export function ComplianceReportClient({
         {/* Per-defendant table */}
         {filteredClients.length === 0 ? (
           <p className="text-center text-zinc-400 py-12 print:text-gray-500">
-            No defendants in the selected date range.
+            {clients.length === 0
+              ? "No clients enrolled yet. Every client you bond out starting today will appear here."
+              : "No clients in the selected date range. Select a different date range or pick \"All Time\" for the full history."}
           </p>
         ) : (
           <div className="overflow-x-auto">
@@ -353,6 +369,23 @@ export function ComplianceReportClient({
           </div>
         )}
 
+        {/* Signature block for surety auditors */}
+        <div className="mt-8 pt-6 border-t border-zinc-700 print:border-gray-400">
+          <p className="text-sm text-zinc-400 print:text-gray-700 mb-6">
+            I certify this report accurately reflects my office&apos;s compliance activity for the period shown.
+          </p>
+          <div className="grid grid-cols-2 gap-8 text-sm">
+            <div>
+              <div className="border-b border-zinc-600 print:border-gray-500 h-8"></div>
+              <p className="text-zinc-500 print:text-gray-600 mt-1">Signature</p>
+            </div>
+            <div>
+              <div className="border-b border-zinc-600 print:border-gray-500 h-8"></div>
+              <p className="text-zinc-500 print:text-gray-600 mt-1">Date</p>
+            </div>
+          </div>
+        </div>
+
         {/* Footer */}
         <footer className="mt-8 pt-4 border-t border-zinc-800 print:border-gray-300 text-center text-sm text-zinc-400 print:text-gray-500">
           <p>Report generated by ImNotAnAttorney Court Prep Platform</p>
@@ -399,7 +432,7 @@ function StatusBadge({ status }: { status: string }) {
     <span
       className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${styles[status] || styles.active}`}
     >
-      {status}
+      {statusLabel(status)}
     </span>
   );
 }

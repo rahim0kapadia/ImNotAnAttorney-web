@@ -59,7 +59,7 @@ export function PaymentSettingsForm({
 
   return (
     <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
-      <h2 className="text-xl font-bold mb-4">Payment Settings</h2>
+      <h2 className="text-xl font-bold mb-4">Where to send your money</h2>
       <form onSubmit={handleSaveSettings} className="space-y-4">
         <div>
           <label htmlFor="pay-method" className="block text-sm text-zinc-400 mb-1">

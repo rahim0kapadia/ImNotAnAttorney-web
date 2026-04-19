@@ -52,7 +52,7 @@ export function ComplianceKit() {
 
   return (
     <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
-      <h2 className="text-xl font-bold mb-4">Compliance Kit</h2>
+      <h2 className="text-xl font-bold mb-4">Surety audit packet</h2>
       <p className="text-sm text-zinc-400 mb-6">
         Stay compliant with these guidelines. Using approved language protects
         you and builds trust with defendants.

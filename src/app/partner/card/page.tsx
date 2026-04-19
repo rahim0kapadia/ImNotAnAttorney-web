@@ -125,27 +125,51 @@ export default function BailPacketCard() {
       {/* Screen-only toolbar */}
       <div className="print:hidden bg-zinc-950 border-b border-zinc-800 px-6 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-white font-bold text-lg">Bail Packet Insert</h1>
-          <p className="text-zinc-400 text-sm">Print this page and include it in every bail packet.</p>
+          <h1 className="text-white font-bold text-lg">Your bail packet insert</h1>
+          <p className="text-zinc-400 text-sm">
+            Every client you bond out walks home with this in their packet. One sheet. Your branding.
+            Keeps them on their court date &mdash; so the bond stays posted.
+          </p>
         </div>
-        <div className="flex gap-3">
-          <button
-            onClick={() => router.push("/partner/dashboard")}
-            className="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors cursor-pointer"
-          >
-            Back to Dashboard
-          </button>
-          <button
-            onClick={() => window.print()}
-            className="px-6 py-2 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 transition-colors cursor-pointer"
-          >
-            Print Insert
-          </button>
+        <div className="flex flex-col items-end gap-2">
+          <p className="print:hidden text-xs text-zinc-500 mb-2">
+            Most partners print 20-40 inserts a month. One prevented no-show covers the next 10 years of ink.
+          </p>
+          <div className="flex gap-3">
+            <button
+              onClick={() => router.push("/partner/dashboard")}
+              className="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors cursor-pointer"
+            >
+              Back to Dashboard
+            </button>
+            <button
+              onClick={() => window.print()}
+              className="px-6 py-2 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 transition-colors cursor-pointer"
+            >
+              Print Insert
+            </button>
+          </div>
         </div>
       </div>
 
+      {/* Screen-only: bondsman-facing value panel (hidden in print) */}
+      <div className="print:hidden bg-zinc-950 pt-8 px-4">
+        <aside className="print:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-6 max-w-lg mx-auto">
+          <h2 className="text-amber-400 font-bold mb-3 text-sm uppercase tracking-wider">
+            What your client gets when they scan
+          </h2>
+          <ul className="text-zinc-300 text-sm space-y-2 list-disc pl-5">
+            <li>A 3-minute quiz about their specific charge</li>
+            <li>Their judge&apos;s sentencing patterns (actual numbers)</li>
+            <li>A list of questions for their attorney</li>
+            <li>Free court-date reminders until their hearing &mdash; we text them, you get copied</li>
+            <li>A 10% discount on any paid tier (because you sent them)</li>
+          </ul>
+        </aside>
+      </div>
+
       {/* Screen preview wrapper */}
-      <div className="print:hidden bg-zinc-950 min-h-screen flex items-start justify-center py-8 px-4">
+      <div className="print:hidden bg-zinc-950 min-h-screen flex items-start justify-center pb-8 px-4">
         <div
           className="bg-white rounded-lg shadow-2xl shadow-amber-500/10"
           style={{

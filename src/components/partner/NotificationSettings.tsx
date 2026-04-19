@@ -71,7 +71,7 @@ export function NotificationSettings({ hasPhone }: NotificationSettingsProps) {
   return (
     <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold">Notification Preferences</h2>
+        <h2 className="text-lg font-bold">When we text or email you</h2>
         {saved && <span className="text-green-400 text-xs">Saved</span>}
       </div>
       <div className="space-y-3">

@@ -123,6 +123,12 @@ export default function PartnerTermsPage() {
               <li>
                 Bid on ImNotAnAttorney brand terms in paid advertising
               </li>
+              <li>
+                Summarize, paraphrase, or verbally convey specific legal strategy
+                from INAA reports to a defendant. Partners share the link to the
+                report &mdash; defendants read and interpret it themselves, or discuss
+                with their own attorney.
+              </li>
             </ul>
           </section>
 
@@ -183,8 +189,8 @@ export default function PartnerTermsPage() {
               <li>
                 <strong className="text-zinc-300">Refunds:</strong> If a
                 purchase is refunded, the associated commission is reversed. If
-                the reversal exceeds your current balance, the negative balance
-                carries forward.
+                this creates a negative balance, we apply it to your next
+                month&apos;s earnings &mdash; we never withdraw funds from you directly.
               </li>
             </ul>
           </section>

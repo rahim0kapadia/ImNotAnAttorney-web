@@ -17,8 +17,8 @@ export async function generateMetadata({
   const partner = await getPartnerByCode(code);
   if (partner) {
     const referrer = truncateName(partner.company || partner.name);
-    const title = `Court date reminders + hearing prep — ${referrer}`;
-    const description = "Court date reminders and what to expect at your hearing.";
+    const title = `Don't miss your court date — ${referrer} sent you`;
+    const description = "Free reminders 7 days, 3 days, and day-of. Plus a walkthrough of what actually happens at your hearing.";
     return {
       title: `${title} | ImNotAnAttorney`,
       description,
@@ -49,15 +49,16 @@ export default async function CourtDatePage({ params, searchParams }: PageProps)
     return (
       <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4">
         <div className="max-w-md text-center">
-          <h1 className="text-2xl font-bold mb-4">This referral link isn&apos;t active</h1>
+          <h1 className="text-2xl font-bold mb-4">Code expired. Your court date didn&apos;t.</h1>
           <p className="text-zinc-400 mb-8">
-            The link you followed may have expired or is no longer available.
+            Your bondsman&apos;s link worked &mdash; the code on the end of it timed out.
+            You can still set up free court reminders. Start here.
           </p>
           <Link
             href="/"
             className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors"
           >
-            Visit ImNotAnAttorney
+            Set up free court reminders
           </Link>
         </div>
       </main>

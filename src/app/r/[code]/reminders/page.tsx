@@ -38,7 +38,7 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
   const supabase = createAdminClient();
   const { data: partner } = await supabase
     .from("partners")
-    .select("name, promo_code, status")
+    .select("name, company, promo_code, status")
     .eq("promo_code", code.toUpperCase())
     .eq("status", "approved")
     .limit(1)
@@ -48,6 +48,8 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
     redirect("/");
   }
 
+  const partnerDisplay = partner.company || partner.name;
+
   // Referral cookie is set by middleware (Next.js 16, cookies().set() not allowed in Server Components)
 
   return (
@@ -56,10 +58,16 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
         <div className="max-w-lg w-full">
           <FadeInUp delay={0}>
             <h1 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 leading-tight">
-              Don&apos;t miss your court date.
+              Miss court, lose your bond.
+              <br />
+              {partnerDisplay} doesn&apos;t want that. Neither do you.
             </h1>
-            <p className="text-lg text-zinc-300 text-center mb-8">
-              Free reminders + what to expect at your hearing.
+            <p className="text-lg text-zinc-300 text-center mb-4">
+              Free reminders at 7 days, 3 days, and day-of.
+              Plus a walkthrough of what actually happens at your hearing.
+            </p>
+            <p className="text-zinc-400 text-sm text-center mb-8">
+              No account. No credit card. The only thing we need is your number.
             </p>
           </FadeInUp>
 
