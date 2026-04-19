@@ -32,11 +32,12 @@ async function loadFont(
           "User-Agent":
             "Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20100101 Firefox/8.0",
         },
+        next: { revalidate: 86400 }, // 24h — avoid re-fetching fonts on every OG render
       }
     ).then((r) => r.text());
     const url = css.match(/src: url\(([^)]+)\)/)?.[1];
     if (!url) return undefined;
-    return fetch(url).then((r) => r.arrayBuffer());
+    return fetch(url, { next: { revalidate: 86400 } }).then((r) => r.arrayBuffer());
   } catch {
     return undefined;
   }
@@ -183,6 +184,20 @@ export default async function Image({ params }: { params: Promise<{ token: strin
             }}
           >
             {band}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 18,
+              fontWeight: 700,
+              color: "#a1a1aa",
+              letterSpacing: 2,
+              textTransform: "uppercase",
+              fontFamily: lato ? "Lato" : "system-ui",
+              marginTop: 12,
+            }}
+          >
+            Defense Check &middot; Self-Assessment
           </div>
         </div>
 

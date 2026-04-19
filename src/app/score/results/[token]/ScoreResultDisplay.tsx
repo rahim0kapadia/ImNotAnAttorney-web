@@ -50,14 +50,14 @@ export function ScoreResultDisplay({
         </div>
         <p className={`mt-4 text-lg font-bold ${textClass}`}>{band}</p>
         <p className="mt-2 text-sm text-zinc-400">
-          Someone shared their Masked Researcher&apos;s First Read with you &mdash; formerly the Defense Milestone Score. Here&apos;s what the researchers flagged.
+          Someone shared their Masked Researcher&apos;s First Read with you. Here&apos;s what the researchers flagged &mdash; self-assessed from ten answers, not a case analysis.
         </p>
       </div>
 
       <InternalMemo
         fileRef={fileRef}
         date={memoDate}
-        subject={`${chargeLabel} \u00b7 ${band}`}
+        subject={`${chargeLabel} \u00b7 ${band} (self-assessed)`}
         findings={observations}
         headingLevel="h2"
         ariaLabel={`Shared Masked Researcher's First Read for a ${chargeLabel} case, ${band} band`}

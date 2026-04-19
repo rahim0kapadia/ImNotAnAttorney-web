@@ -49,7 +49,7 @@ export function AnimatedScoreArc({ score, maxScore = 100, size = 200 }: Animated
       aria-valuenow={score}
       aria-valuemin={0}
       aria-valuemax={maxScore}
-      aria-label={`Defense Milestone Score: ${score} out of ${maxScore}`}
+      aria-label={`Masked Researcher's First Read, score ${score} out of ${maxScore}`}
     >
       <svg
         ref={ref}

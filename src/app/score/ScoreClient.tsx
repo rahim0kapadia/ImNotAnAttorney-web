@@ -21,13 +21,57 @@ import { useReducedMotion, AnimatePresence, motion, LazyMotion, domAnimation } f
  * but is acceptable for a display-only identifier.
  */
 function makeLocalFileRef(): string {
-  const slug = Math.random().toString(36).slice(2, 8).toUpperCase();
-  return `ABN-${slug || "UNKNOWN"}`;
+  // Pad to 6 chars so low-entropy Math.random draws (e.g. 0.5 → "i") still
+  // produce a visually stable FILE-REF. Not cryptographic.
+  const raw = Math.random().toString(36).slice(2).toUpperCase();
+  const slug = (raw + "XXXXXX").slice(0, 6);
+  return `ABN-${slug}`;
 }
 
 /** Today's date as ISO (YYYY-MM-DD) for the memo header. */
 function todayIso(): string {
   return new Date().toISOString().slice(0, 10);
+}
+
+/**
+ * Pull a single anonymized cluster stat into the memo body so the signature
+ * lands as confirmation of an existing tribe rather than an orphan tagline.
+ * Returns undefined when insufficient stats are available and the memo should
+ * render without the note.
+ */
+function buildClusterNote(
+  chargeType: string,
+  stats: {
+    totalCompletions: number;
+    insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null };
+  } | null,
+): string | undefined {
+  if (!stats || stats.totalCompletions < 50) return undefined;
+  const label = (s: string) => s || "criminal defense";
+  const chargeLabel = label(
+    (
+      {
+        dui: "DUI",
+        "drug-possession": "drug possession",
+        "drug-trafficking": "trafficking",
+        "probation-violation": "probation violation",
+        "white-collar": "white collar",
+        "sex-offense": "sex offense",
+        "federal-criminal": "federal",
+        "self-defense": "self-defense",
+        "other-felony": "felony",
+        "other-misdemeanor": "misdemeanor",
+      } as Record<string, string>
+    )[chargeType] || "",
+  );
+  const { pctNoMotions, pctNeverDiscovery } = stats.insights;
+  if (pctNoMotions !== null && pctNoMotions >= 30) {
+    return `Cross-reference: ${pctNoMotions}% of ${chargeLabel} files in this cluster show the same no-motions pattern.`;
+  }
+  if (pctNeverDiscovery !== null && pctNeverDiscovery >= 30) {
+    return `Cross-reference: ${pctNeverDiscovery}% of ${chargeLabel} files in this cluster never received discovery.`;
+  }
+  return undefined;
 }
 
 /**
@@ -356,7 +400,7 @@ function getLoadingSteps(chargeType: string): string[] {
   const label = chargeLabel[chargeType] || chargeType;
   return [
     `Checking motion filing benchmarks for ${label} cases...`,
-    "Analyzing communication frequency against attorney accountability standards...",
+    "Comparing your answers against documented defense preparation patterns...",
     "Comparing discovery receipt timeline to case stage...",
     "Evaluating defense milestone completion rate...",
     "Drafting your Masked Researcher's First Read...",
@@ -387,8 +431,8 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const [shareError, setShareError] = useState<string | null>(null);
   // Memo header values, stable for the lifetime of this rendered result.
   // Re-run only if the underlying result score changes, which means a new run.
-  const fileRef = useMemo(() => makeLocalFileRef(), [result.score, result.band]);
-  const memoDate = useMemo(() => todayIso(), [result.score, result.band]);
+  const fileRef = useMemo(() => makeLocalFileRef(), [result]);
+  const memoDate = useMemo(() => todayIso(), [result]);
   const appendRef = (url: string) => {
     if (!blogRef) return url;
     return url.includes("?") ? `${url}&ref=${blogRef}` : `${url}?ref=${blogRef}`;
@@ -496,7 +540,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   }
 
   return (
-    <div className="mt-8 space-y-6" tabIndex={-1} ref={scoreRef} aria-label={`Your Defense Milestone Score is ${result.score} out of 100, rated ${result.band}`}>
+    <div className="mt-8 space-y-6" tabIndex={-1} ref={scoreRef} aria-label={`Your Masked Researcher’s First Read, score ${result.score} out of 100, ${result.band} band`}>
       {/* 1. SCORE ARC, Animated SVG arc with color transition by band */}
       <div className="text-center">
         <div className="mx-auto">
@@ -528,8 +572,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         <InternalMemo
           fileRef={fileRef}
           date={memoDate}
-          subject={`${getChargeLabel(answers.chargeType)} \u00b7 ${result.band}`}
+          subject={`${getChargeLabel(answers.chargeType)} \u00b7 ${result.band} (self-assessed)`}
           findings={result.observations}
+          clusterNote={buildClusterNote(answers.chargeType, stats)}
+          teaser="Additional findings pending \u2014 delivered by secure channel."
         />
       </div>
 
@@ -646,7 +692,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         <div className="rounded-xl border border-amber-500/40 bg-amber-500/5 p-6">
           <p className="text-lg font-bold text-white">{bandEmailHeadlines[result.band] || "Get your free Defense Gap Report, the 10 questions that change how your next attorney meeting goes."}</p>
           <p className="mt-2 text-base text-zinc-300">
-            Based on your score, we&apos;ll send your personalized Defense Gap Report immediately. No pitch. No sales sequence. After that: practical information about your case stage, never more than once a week. Unsubscribe any time, one click.
+            Based on your score, we&apos;ll send your personalized Defense Gap Report immediately. No cold pitch. Case-stage intelligence weekly, one-click unsubscribe anytime.
           </p>
           <form onSubmit={async (e) => {
             e.preventDefault();
@@ -912,7 +958,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               <p className="text-center text-xs text-zinc-400 mb-3">Know someone facing charges? Send them the free quiz.</p>
               <ShareButtons
                 url={shareUrl!}
-                title={`Defense Milestone Score: ${result.band}`}
+                title={`Masked Researcher’s First Read: ${result.band}`}
                 heading=""
                 subheading=""
                 shareText={`I just scored my criminal defense in 60 seconds, free, no email. Worth checking if you have a case: ${shareUrl}`}
@@ -1145,7 +1191,7 @@ export default function ScoreClient() {
         {/* Pre-quiz hero, compact: tool-name badge + H1 + subtitle only */}
         <div className="text-center">
           <span className="mb-4 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-400">
-            The Masked Researcher&apos;s First Read &middot; Free &middot; 60 seconds
+            Defense Check &middot; A Masked Researcher&apos;s First Read &middot; Free
           </span>
           <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
             {prefillCharge

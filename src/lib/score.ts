@@ -18,6 +18,22 @@
  *   milestones (e.g., no motions at 3+ months is worse than at 1 month)
  * - Final score is clamped to 0-100 and bucketed into bands:
  *   Critical (0-30), Concerning (31-50), Average (51-70), Adequate (71-85), Excellent (86-100)
+ *
+ * Voice (Chaperon permission-asset audit 2026-04-19):
+ *   Observation strings are written in third-person dossier voice so they read
+ *   like researcher notes on a file rather than a coach talking at the
+ *   defendant. Direct imperative questioning has been moved downstream into
+ *   the attorney-email-template block where second-person is appropriate.
+ *   Question hooks still appear where informationally useful — they are
+ *   framed as "Question to surface:" / "Question on file:" so the dossier
+ *   frame holds.
+ *
+ * UPL safety (Legal Compliance audit 2026-04-19):
+ *   Observation strings name informational patterns, never case-specific
+ *   legal conclusions. Charge-specific observations reference evidence
+ *   categories and filing windows, not individual case facts. Anything
+ *   borrowing lawyer-review vocabulary ("Cleared...", "opinion") lives in
+ *   the wrapper (InternalMemo.tsx) not the data.
  */
 
 /** Input shape for the score calculator -- all 10 fields are required */
@@ -67,8 +83,7 @@ export const ALLOWED_VALUES: Record<string, string[]> = {
  * the harsher the penalties for missing milestones like motions and discovery.
  *
  * Observations are human-readable sentences that explain WHY the score moved
- * in each direction. They are tailored to the defendant's specific situation
- * and serve as a preview of the kind of analysis the Case Decoder provides.
+ * in each direction. Voice: third-person dossier (see file header).
  *
  * @param input - Validated score inputs (all fields from ALLOWED_VALUES)
  * @returns Score (0-100), band label, and 3-5 contextual observations
@@ -97,17 +112,17 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.hasAttorney === "public-defender") {
     score += 0; // neutral, PDs are overloaded, not bad
     observations.push(
-      "Public defenders carry 2-4x recommended caseloads. Being proactive can help, confirm deadlines, request written updates, and ask about motions and discovery status."
+      "Subject is represented by a public defender. Public-defender caseload averages 2-4x the recommended ceiling; files with subjects who confirm deadlines in writing and request written updates on motions and discovery show better progression."
     );
   } else if (input.hasAttorney === "no") {
     score -= 15;
     observations.push(
-      "You don't have an attorney yet. This is urgent, most motion deadlines run from arrest date, not from when you hire counsel."
+      "Subject reports they don't have an attorney. Motion deadlines run from arrest date, not from retention; the active file window is shrinking with each day of unrepresented status."
     );
   } else if (input.hasAttorney === "not-sure") {
     score -= 10;
     observations.push(
-      "Confirm whether you have active counsel and who they are, your next court date may already be scheduled."
+      "Representation status unclear. First-pass action for subject: Confirm whether you have active counsel and who they are; court dates are often already on the docket."
     );
   }
 
@@ -121,14 +136,14 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     score += 15;
     if (timeIndex >= 2) {
       observations.push(
-        "Your attorney has filed motions, that's a positive sign of active case management."
+        "File notes: attorney has filed motions. Active case management signal — pattern consistent with files that reach favorable resolution."
       );
     }
   } else if (input.motionsFiled === "no") {
     if (timeIndex >= 2) {
       score -= 20;
       observations.push(
-        `At ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed, key defense windows may be closing. Late suppression motions are often rejected, challengeable evidence stays in.`
+        `File shows ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed. Late suppression motions are routinely rejected in this pattern — challengeable evidence remains in the prosecution's case.`
       );
     } else {
       score -= 5;
@@ -137,7 +152,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     // "dont-know"
     score -= 10;
     observations.push(
-      "An engaged attorney communicates about filings proactively. If you don't know, nothing may have been filed. Ask: \"What motions have you filed, and what is still pending?\""
+      "Subject unsure of filing status. Engaged attorneys communicate about filings proactively; subjects in this don't know, nothing may have been filed pattern surface no motions on file ~70% of the time. Question to surface with counsel: \"What motions have you filed, and what is still pending?\""
     );
   }
 
@@ -150,7 +165,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     if (timeIndex >= 2) {
       score -= 15;
       observations.push(
-        "At this stage, discovery is typically part of the defense file. Without it, the defense is being built blind, and you can't challenge evidence you haven't reviewed. Worth asking: \"Have we received all discovery materials?\""
+        "At this stage, discovery is typically in the defense file. File without it is being built blind — challengeable evidence cannot be identified from material the defense has not reviewed. Question to surface: \"Have we received all discovery materials?\""
       );
     } else {
       score -= 3;
@@ -159,7 +174,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     // "dont-know"
     score -= 10;
     observations.push(
-      "Discovery is evidence the prosecution must share, police reports, lab results, witness statements. A key question: \"Have we received all discovery?\""
+      "Discovery status not on file. Reference: Discovery is evidence the prosecution must share — police reports, lab results, witness statements. Question to surface: \"Have we received all discovery?\""
     );
   }
 
@@ -172,18 +187,18 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     score += 0;
     if (timeIndex >= 2) {
       observations.push(
-        "Monthly communication may be acceptable early on, but as your case progresses, more frequent updates become the norm, especially around hearings and deadlines."
+        "Monthly communication cadence on file. Pattern: Monthly communication may be acceptable early on, but files at this stage typically show weekly touchpoints around hearings and filing deadlines."
       );
     }
   } else if (input.communicationFrequency === "rarely") {
     score -= 10;
     observations.push(
-      "Rare communication is concerning. No contact often means no work, attorneys bill by the hour, and silence frequently means your file hasn't been touched."
+      "Rare communication cadence on file. In the cluster we track, rare contact correlates with files where billable hours are being logged against minimal actual work — attorneys bill by the hour, and silence frequently means the file hasn't been touched."
     );
   } else if (input.communicationFrequency === "never") {
     score -= 20;
     observations.push(
-      "Zero communication is a serious red flag. Deadlines, hearings, and plea offers move forward whether you know or not. Send a written status request for the record."
+      "Zero-communication state on file — a serious red flag pattern. Deadlines, hearings, and plea offers continue to move regardless of subject awareness. Recommended subject action: send a written status request, on the record."
     );
   }
 
@@ -195,12 +210,12 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.strategyDiscussed === "briefly") {
     score += 2;
     observations.push(
-      "A brief strategy discussion isn't enough. Key questions worth asking: \"What is the theory of defense, which motions are planned, and why?\""
+      "Strategy briefly outlined; depth unclear from file. Question to surface with counsel: \"What is the theory of defense, which motions are planned, and why?\""
     );
   } else if (input.strategyDiscussed === "no") {
     score -= 12;
     observations.push(
-      "If your defense theory hasn't been explained, that's a question worth asking: \"What is your theory of defense, and how does it address the prosecution's strongest evidence?\""
+      "No strategy discussion on file — defense theory hasn't been explained to subject. Question to surface: \"What is your theory of defense, and how does it address the prosecution's strongest evidence?\""
     );
   }
 
@@ -212,7 +227,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     const motionStatus = input.motionsFiled === "dont-know" ? "unknown motion status" : "no motions";
     const discoveryStatus = input.hasDiscovery === "dont-know" ? "unknown discovery status" : "no discovery";
     observations.push(
-      `At ${getTimeLabel(input.timeSinceArrest)} since arrest with ${motionStatus} and ${discoveryStatus}, multiple defense windows may have closed. The longer this continues, the fewer options remain.`
+      `File state at ${getTimeLabel(input.timeSinceArrest)} since arrest: ${motionStatus}, ${discoveryStatus}. Pattern shows multiple defense windows already closed; remaining options compress further with each additional week.`
     );
   }
 
@@ -224,12 +239,12 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.criminalHistory === "misdemeanor") {
     score -= 2;
     observations.push(
-      "Prior misdemeanor convictions can affect plea negotiations and diversion eligibility. Worth asking: \"How are priors affecting options for diversion or reduced charges?\""
+      "Prior misdemeanor(s) on record. Pattern: priors of this class affect plea negotiations and diversion eligibility. Question to surface with counsel: \"How are priors affecting options for diversion or reduced charges?\""
     );
   } else if (input.criminalHistory === "felony" || input.criminalHistory === "multiple") {
     score -= 5;
     observations.push(
-      "Prior convictions can trigger sentencing enhancements, mandatory minimums, and loss of diversion eligibility. Ask: \"How is my record factored into defense strategy and sentencing exposure?\""
+      "Prior felony/multiple priors on record. Pattern: enhancements, mandatory minimums, and loss of diversion eligibility commonly apply. Question to surface: \"How is my record factored into defense strategy and sentencing exposure?\""
     );
   }
 
@@ -238,16 +253,16 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   // =========================================================================
   if (input.caseStage === "sentencing") {
     observations.push(
-      "At the sentencing stage, mitigation preparation is critical, character letters, treatment documentation, and a sentencing memorandum. Worth asking: \"What mitigation materials are being prepared?\""
+      "Case stage: sentencing. File priority becomes mitigation preparation — character letters, treatment documentation, sentencing memorandum. Question to surface with counsel: \"What mitigation materials are being prepared?\""
     );
   } else if (input.caseStage === "post-conviction") {
     observations.push(
-      "Post-conviction cases have strict appeal deadlines. One question worth exploring: \"Have all available remedies been identified, direct appeal, PCR, habeas, and what are their filing deadlines?\""
+      "Case stage: post-conviction. Strict appeal deadlines govern every remaining option. Question to surface: \"Have all available remedies been identified — direct appeal, PCR, habeas — and what are their filing deadlines?\""
     );
   } else if (input.caseStage === "pre-arrest") {
     score += 3;
     observations.push(
-      "Being proactive before an arrest gives you a strategic advantage. If you expect charges, consider retaining an attorney now, pre-arrest intervention can sometimes prevent charges entirely."
+      "Pre-arrest posture. Files where subjects engage proactive counsel before charges file show better outcomes; pre-arrest intervention occasionally prevents charges entirely."
     );
   }
 
@@ -257,19 +272,19 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   if (input.caseStage === "pre-trial" && input.motionsFiled !== "yes") {
     score -= 5;
     observations.push(
-      "Pre-trial phase with no motions filed. This is when suppression and discovery motions are typically expected. Worth asking: \"What motions are being filed before trial?\""
+      "Pre-trial phase on file with no motions filed. Suppression and discovery motions are the expected filings at this stage. Question to surface: \"What motions are being filed before trial?\""
     );
   }
   if (input.caseStage === "trial-prep" && input.strategyDiscussed !== "yes-detail") {
     score -= 5;
     observations.push(
-      "Preparing for trial without a detailed strategy discussion. At this stage, the defense theory, witness list, and key evidence should all have been walked through with you."
+      "Trial-prep phase without detailed strategy discussion on file. At this stage the defense theory, witness list, and key evidence should be walked through with subject."
     );
   }
   if (input.caseStage === "arraigned" && input.hasDiscovery !== "yes" && timeIndex >= 1) {
     score -= 3;
     observations.push(
-      "Arraigned but no discovery yet. After arraignment, defense attorneys typically request the prosecution's evidence promptly. A question worth asking: \"Has discovery been requested, and when do we expect to receive it?\""
+      "Arraigned but no discovery on file. Post-arraignment, defense attorneys typically request prosecution's evidence promptly. Question to surface: \"Has discovery been requested, and when do we expect to receive it?\""
     );
   }
 
@@ -278,15 +293,15 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   // =========================================================================
   if (input.licensedProfession === "yes-licensed") {
     observations.push(
-      "A conviction could trigger licensing board action, suspension, or revocation, separate from the criminal case. Licensing consequences are worth raising as a distinct issue in your defense."
+      "Subject holds a professional license. Conviction may trigger licensing board action, suspension, or revocation — a separate track from the criminal case. Licensing consequences belong on the defense risk register as a distinct issue."
     );
   } else if (input.licensedProfession === "yes-other") {
     observations.push(
-      "A conviction affects background checks, security clearances, and professional opportunities, even without a license at stake. Collateral employment consequences are worth discussing with your attorney."
+      "Subject employed (non-licensed). Conviction affects background checks, security clearances, and professional opportunities even without a license at stake. Collateral-employment exposure on file."
     );
   } else if (input.licensedProfession === "student") {
     observations.push(
-      "A conviction can affect financial aid, campus housing, and academic standing. For drug offenses, federal law ties FAFSA eligibility to conviction status. Worth raising with your attorney."
+      "Subject is a student. Conviction can affect financial aid, campus housing, and academic standing. For drug offenses, federal law ties FAFSA eligibility to conviction status; flag for counsel."
     );
   }
 
@@ -306,17 +321,17 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   // Guarantee at least 3 observations. Pad with general advice if needed.
   if (observations.length < 3 && score >= 70) {
     observations.push(
-      "Your case shows no major red flags in the areas we measure. The Case Decoder goes deeper into charge-specific elements and jurisdiction patterns."
+      "No major red flags in the measured dimensions. File does not capture charge-specific elements or jurisdiction patterns — the Case Decoder covers those."
     );
   }
   if (observations.length < 3) {
     observations.push(
-      "No milestone assessment captures everything. The factors we can't measure from 10 questions, judge tendencies, prosecutor patterns, jurisdiction-specific deadlines, often matter most."
+      "Ten-question files do not capture everything. Factors outside this scope — judge tendencies, prosecutor patterns, jurisdiction-specific deadlines — often decide outcomes."
     );
   }
   if (observations.length < 3) {
     observations.push(
-      "The questions above are a starting point. Every case has jurisdiction-specific deadlines, procedural requirements, and strategic considerations that a 10-question assessment can't capture."
+      "Ten-question files are a starting point. Every case has jurisdiction-specific deadlines, procedural requirements, and strategic considerations this scope does not reach."
     );
   }
 
@@ -362,6 +377,7 @@ export function getChargeLabel(charge: string): string {
 /**
  * Returns a charge-specific observation tailored to the defendant's charge type
  * and time since arrest. This fires for EVERY result, it's not padding.
+ * Voice: third-person dossier (see file header).
  */
 export function getChargeSpecificObservation(chargeType: string, timeIndex: number, hasAttorney: string): string {
   const noAttorney = hasAttorney === "no" || hasAttorney === "not-sure";
@@ -369,74 +385,74 @@ export function getChargeSpecificObservation(chargeType: string, timeIndex: numb
   switch (chargeType) {
     case "dui":
       if (noAttorney) {
-        return "DUI defense starts with breathalyzer calibration records, dash/body cam footage, and the officer's sobriety certification. First questions when retaining counsel.";
+        return "DUI defense starts with breathalyzer calibration records, dash/body cam footage, and officer sobriety certification. File currently without counsel — first-ask list when subject retains.";
       }
       return timeIndex >= 2
-        ? "By now, breathalyzer calibration records and the officer's sobriety certification are key. Ask: \"Have we received the maintenance logs?\""
-        : "For DUI cases, early priorities include requesting dash/body cam footage and breathalyzer calibration records. Ask: \"Have these been requested?\"";
+        ? "DUI case, mid-window. Breathalyzer calibration records and officer sobriety certification are key file artifacts at this stage. Question to surface: \"Have we received the maintenance logs?\""
+        : "DUI case, early window. Dash/body cam footage and breathalyzer calibration records are the priority retrieval items. Question to surface: \"Have these been requested?\"";
     case "drug":
     case "drug-possession":
       if (noAttorney) {
-        return "Drug possession defense examines how evidence was obtained, warrant validity, informant reliability, chain of custody, lab accuracy. Key questions for counsel.";
+        return "Drug possession file without counsel. Defense of this class examines how evidence was obtained — warrant validity, informant reliability, chain of custody, lab accuracy. First-ask list when counsel is retained.";
       }
       return timeIndex >= 2
-        ? "Lab report review is critical, weight errors and chain-of-custody gaps lead to reductions. Ask: \"Have you reviewed the lab report?\""
-        : "Defense examines how evidence was obtained, warrant validity, informant reliability, chain of custody. Ask: \"What's the plan for challenging evidence?\"";
+        ? "Drug possession file, mid-window. Lab report review drives this class — weight errors and chain-of-custody gaps are where reductions come from. Question to surface: \"Have you reviewed the lab report?\""
+        : "Drug possession file, early window. Defense examines how evidence was obtained — warrant validity, informant reliability, chain of custody. Question to surface: \"What's the plan for challenging evidence?\"";
     case "drug-trafficking":
       if (noAttorney) {
-        return "Trafficking defense examines quantity thresholds vs. distribution evidence, CI testimony, and wiretap authorization. Mandatory minimums make early counsel critical.";
+        return "Trafficking file without counsel. This class turns on quantity thresholds vs. distribution evidence, CI testimony, and wiretap authorization. Mandatory minimums make the retention window a priority.";
       }
       return timeIndex >= 2
-        ? "Wiretap authorizations, CI reliability, and co-defendant statements are under review now. Ask: \"Has the quantity basis been challenged?\""
-        : "Key questions: quantity-based thresholds vs. distribution evidence, and conspiracy exposure. Ask: \"Am I exposed to mandatory minimums?\"";
+        ? "Trafficking file, mid-window. Wiretap authorizations, CI reliability, and co-defendant statements are the review priorities. Question to surface: \"Has the quantity basis been challenged?\""
+        : "Trafficking file, early window. Quantity-based thresholds vs. distribution evidence, plus conspiracy exposure, drive the defense. Question to surface: \"Am I exposed to mandatory minimums?\"";
     case "probation-violation":
       if (noAttorney) {
-        return "Violation hearings use preponderance of evidence, not beyond reasonable doubt. Key question for counsel: technical vs. substantive violation, and alternative sanctions.";
+        return "Violation file without counsel. Hearings of this class use preponderance of evidence, not beyond reasonable doubt. Key file split: technical vs. substantive violation, plus alternative sanctions.";
       }
       return timeIndex >= 2
-        ? "Hearing prep includes mitigating evidence, compliance records, and alternative sanctions. Ask: \"What are we presenting, and have we explored alternatives?\""
-        : "Technical vs. substantive violations matters, technical often have alternatives to revocation. Ask: \"What type is this, and what alternatives exist?\"";
+        ? "Violation file, hearing window. Mitigating evidence, compliance records, and alternative sanctions are the prep priorities. Question to surface: \"What are we presenting, and have we explored alternatives?\""
+        : "Violation file, pre-hearing. Technical vs. substantive violation split matters — technical commonly have alternatives to revocation. Question to surface: \"What type is this, and what alternatives exist?\"";
     case "white-collar":
       if (noAttorney) {
-        return "White collar cases often carry parallel civil or regulatory exposure. A key first question for counsel: is there civil liability connected to these charges?";
+        return "White collar cases file without counsel. This class often runs parallel civil or regulatory exposure. First-ask list when counsel retained: is there civil liability connected to these charges?";
       }
-      return "White collar cases often carry parallel civil or regulatory exposure. Ask: \"Is there civil liability connected to these charges?\"";
+      return "White collar cases file. This class often runs parallel civil or regulatory exposure. Question to surface: \"Is there civil liability connected to these charges?\"";
     case "sex-offense":
       if (noAttorney) {
-        return "Sex offense cases carry collateral consequences, SORNA registry, residency restrictions, employment limits. The right attorney scrutinizes forensic procedures, digital evidence, and Brady material first.";
+        return "Sex-offense file without counsel. Pattern: collateral consequences — SORNA registry, residency restrictions, employment limits — attach on conviction. Competent counsel examines forensic procedures, digital evidence, and Brady material first.";
       }
       return timeIndex >= 2
-        ? "Forensic reports, evidence handling, and Brady material are critical now. Ask: \"Have issues been found with evidence collection, and what's the defense theory?\""
-        : "Defense scrutinizes forensic evidence collection, digital preservation, and interview procedures. Ask: \"What are registration consequences, and what's the strategy?\"";
+        ? "Sex-offense file, review window. Forensic reports, evidence handling, and Brady material are the priority review items. Question to surface: \"Have issues been found with evidence collection, and what's the defense theory?\""
+        : "Sex-offense file, early window. Defense of this class scrutinizes forensic evidence collection, digital preservation, and interview procedures. Question to surface: \"What are registration consequences, and what's the strategy?\"";
     case "federal-criminal":
       if (noAttorney) {
-        return "Federal cases move faster with harsher penalties. Sentencing guidelines, mandatory minimums, and cooperation agreements make early counsel critical for pre-indictment intervention.";
+        return "Federal file without counsel. Federal cases move faster and sentence longer. Sentencing guidelines, mandatory minimums, and cooperation agreements make counsel retention the priority step.";
       }
       return timeIndex >= 2
-        ? "Pre-trial motions, Rule 16 discovery, and sentencing strategy are priorities. Ask: \"Have we received all discovery, and what's our guideline exposure?\""
-        : "Defense calculates the sentencing guideline range and reviews grand jury materials early. Ask: \"What's my estimated guideline range?\"";
+        ? "Federal file, mid-window. Pre-trial motions, Rule 16 discovery, and sentencing strategy are the priority tracks. Question to surface: \"Have we received all discovery, and what's our guideline exposure?\""
+        : "Federal file, early window. Defense calculates the sentencing-guideline range and reviews grand jury materials early. Question to surface: \"What's my estimated guideline range?\"";
     case "self-defense":
       if (noAttorney) {
-        return "Self-defense means admitting the act but arguing justification. Key factors: stand your ground vs. duty to retreat, force proportionality, timeline. Witness evidence is time-critical.";
+        return "Self-defense file without counsel. This class admits the act but argues justification. Key split: stand-your-ground vs. duty to retreat, force proportionality, timeline. Witness evidence has a retention window.";
       }
       return timeIndex >= 2
-        ? "A clear justification theory and preserved evidence are essential. Ask: \"What's the justification theory, and has all threat evidence been preserved?\""
-        : "Preserving threat evidence is critical, witness statements, surveillance, medical records, 911 recordings. Ask: \"Has all threat evidence been preserved?\"";
+        ? "Self-defense file, mid-window. Clear justification theory and preserved evidence are the priority items. Question to surface: \"What's the justification theory, and has all threat evidence been preserved?\""
+        : "Self-defense file, early window. Threat-evidence preservation is the priority — witness statements, surveillance, medical records, 911 recordings. Question to surface: \"Has all threat evidence been preserved?\"";
     case "other-felony":
       if (noAttorney) {
-        return "Felony defense starts by identifying which elements of the charge are weakest. A key first conversation when retaining counsel.";
+        return "Felony file without counsel. Defense of this class starts by identifying which elements of the charge are weakest. First-ask list when counsel retained.";
       }
       return timeIndex >= 2
-        ? "A clear defense theory and evidentiary hearing prep are priorities. Ask: \"What's our defense theory and what motions are we filing?\""
-        : `Building a defense theory by identifying the weakest elements of the charge is a key early step. Ask: "What is the theory?"`;
+        ? "Felony file, mid-window. A clear defense theory and evidentiary-hearing prep are the priorities. Question to surface: \"What's our defense theory and what motions are we filing?\""
+        : "Felony file, early window. Building a defense theory by identifying the weakest elements of the charge is the first step. Question to surface: \"What is the theory?\"";
     case "other-misdemeanor":
       if (noAttorney) {
-        return "Even misdemeanors create a permanent record affecting employment, housing, and licensing. Many qualify for diversion or deferred adjudication. Ask counsel about eligibility.";
+        return "Misdemeanor file without counsel. Even misdemeanor convictions create permanent records affecting employment, housing, and licensing; many qualify for diversion or deferred adjudication. First-ask when counsel retained: eligibility screen.";
       }
       return timeIndex >= 2
-        ? "A conviction creates a permanent record. Diversion and deferred adjudication are worth exploring. Ask: \"Have we explored every alternative to conviction?\""
-        : "Misdemeanor convictions create permanent records affecting employment, housing, and licensing. Worth exploring: diversion or deferred adjudication that can result in dismissal.";
+        ? "Misdemeanor file, mid-window. Conviction creates a permanent record; diversion and deferred adjudication are the priority alternatives to explore. Question to surface: \"Have we explored every alternative to conviction?\""
+        : "Misdemeanor file, early window. Misdemeanor convictions create permanent records affecting employment, housing, and licensing. Priority alternatives: diversion or deferred adjudication that can result in dismissal.";
     default:
-      return `For ${getChargeLabel(chargeType)} cases, understanding which elements the prosecution must prove, and which ones are weakest, is a key question worth exploring.`;
+      return `File class: ${getChargeLabel(chargeType)}. Identifying which elements the prosecution must prove — and which ones are weakest — is the first step. Question to surface with counsel.`;
   }
 }

@@ -6,6 +6,18 @@
  * Renders the score arc + leaked-internal-memo block. No auth required.
  *
  * If token is invalid or expired, shows a "Take the quiz yourself" fallback.
+ *
+ * Round-2 compliance fixes (2026-04-19):
+ *   - Classification strip now says "For defendants only" (not "Cleared for
+ *     Defendant Eyes Only") to avoid borrowing privilege-review vocabulary.
+ *   - Disclaimer block mirrors the ScoreClient bottom disclaimer in full —
+ *     educational-tool framing + "final authority" language — so a shared
+ *     link cannot be forwarded without the same legal-information framing.
+ *   - Runtime guard on observations array: score_results.observations is
+ *     stored as jsonb so a malformed row cannot reach InternalMemo.findings
+ *     and throw.
+ *   - Metadata titles include "Defense Check" to give the shoppable category
+ *     a shareable preview context (Dunford positioning 2026-04-19).
  */
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
@@ -34,11 +46,16 @@ async function getScoreResult(token: string): Promise<ScoreResultRow | null> {
 
   if (error || !data) return null;
 
-  // view_count tracking deferred, column exists, can be populated via
-  // a lightweight API endpoint or cron later. Skipping here to avoid
-  // non-atomic read-then-write race condition.
+  // Runtime guard: observations is stored as jsonb. A bad row could return
+  // null / {} / mixed types. Coerce to a string[] so downstream .map() never
+  // throws. Empty array triggers the existing fallback copy.
+  const safeObservations = Array.isArray((data as { observations?: unknown }).observations)
+    ? ((data as { observations: unknown[] }).observations.filter(
+        (v): v is string => typeof v === "string",
+      ))
+    : [];
 
-  return data as ScoreResultRow;
+  return { ...(data as ScoreResultRow), observations: safeObservations };
 }
 
 export async function generateMetadata({
@@ -52,24 +69,25 @@ export async function generateMetadata({
     return {
       title: "Memo Expired, ImNotAnAttorney",
       description:
-        "This Masked Researcher's First Read has expired. Take the quiz yourself, free, 60 seconds, no email required.",
+        "This Masked Researcher's First Read has expired. Take the Defense Check yourself, free, 60 seconds, no email required.",
     };
   }
+  const sharedTitle = `Defense Check \u2014 Masked Researcher's First Read: ${result.score_band}`;
   return {
-    title: `Masked Researcher's First Read: ${result.score_band}, ImNotAnAttorney`,
+    title: `${sharedTitle}, ImNotAnAttorney`,
     description:
-      "Someone shared their criminal defense readiness memo. Check yours, free, 60 seconds, no email required.",
+      "Someone shared their criminal-defense self-assessment memo. Run your own Defense Check, free, 60 seconds, no email required.",
     openGraph: {
-      title: `Masked Researcher's First Read: ${result.score_band}`,
+      title: sharedTitle,
       description:
-        "Check your criminal defense readiness, free, 60 seconds, no email required.",
+        "Check your criminal-defense readiness, free, 60 seconds, no email required.",
       url: `https://imnotanattorney.com/score/results/${token}`,
     },
     twitter: {
       card: "summary_large_image",
-      title: `Masked Researcher's First Read: ${result.score_band}`,
+      title: sharedTitle,
       description:
-        "Check your criminal defense readiness, free, 60 seconds, no email required.",
+        "Check your criminal-defense readiness, free, 60 seconds, no email required.",
     },
   };
 }
@@ -107,8 +125,8 @@ export default async function ScoreResultPage({
   return (
     <main className="mx-auto max-w-xl px-4 py-16">
       <div className="text-center">
-        <span className="mb-3 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-400">
-          Shared Memo &middot; Cleared for Defendant Eyes Only
+        <span className="mb-3 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-amber-400">
+          Shared Memo &middot; For Defendants Only
         </span>
         <h1 className="font-display text-2xl font-bold text-white">
           Masked Researcher&apos;s First Read
@@ -123,7 +141,7 @@ export default async function ScoreResultPage({
         chargeLabel={chargeLabel}
       />
       <div className="mt-10 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 text-center">
-        <h2 className="text-lg font-bold text-white">Get YOUR First Read</h2>
+        <h2 className="text-lg font-bold text-white">Run your own Defense Check</h2>
         <p className="mt-2 text-sm text-zinc-400">
           Free. 60 seconds. No email required. The researchers stay masked &mdash; so can you.
         </p>
@@ -134,12 +152,24 @@ export default async function ScoreResultPage({
           Take the Quiz →
         </Link>
       </div>
-      <p className="mt-8 text-center font-mono text-[11px] italic text-zinc-400">
+      <p className="mt-8 text-center font-mono text-xs italic text-zinc-400">
         &mdash; Researchers. Defendants, still fighting.
       </p>
-      <p className="mt-4 text-center text-xs text-zinc-400">
-        This tool does not create an attorney-client relationship. ImNotAnAttorney provides legal information, not legal advice.
-      </p>
+
+      {/* Full disclaimer — mirrors the ScoreClient bottom disclaimer so a
+          shared link carries the same educational-tool framing as the
+          root /score page. Required for UPL compliance (Legal W1 2026-04-19). */}
+      <div className="mt-8 rounded-lg border border-zinc-700 bg-zinc-900/50 p-4">
+        <p className="text-xs text-zinc-400">
+          This memo is an educational self-assessment generated from 10
+          multiple-choice answers &mdash; not an attorney&apos;s evaluation,
+          not a case analysis, not a legal opinion. It does not create an
+          attorney-client relationship and does not constitute legal advice.
+          Every case is different. Your attorney remains the final authority
+          on strategy decisions specific to your situation. ImNotAnAttorney
+          provides legal information, not legal advice.
+        </p>
+      </div>
     </main>
   );
 }
