@@ -269,21 +269,27 @@ export function ComplianceReportClient({
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="text-left border-b border-zinc-700 print:border-gray-300">
-                  <th className="pb-2 pr-3 font-semibold">Name</th>
-                  <th className="pb-2 pr-3 font-semibold">Charge</th>
-                  <th className="pb-2 pr-3 font-semibold">Court Date</th>
-                  <th className="pb-2 pr-3 font-semibold">Status</th>
-                  <th className="pb-2 pr-3 font-semibold text-right">
+                  <th scope="col" className="pb-2 pr-3 font-semibold">Name</th>
+                  <th scope="col" className="pb-2 pr-3 font-semibold">Charge</th>
+                  <th scope="col" className="pb-2 pr-3 font-semibold">Court Date</th>
+                  <th scope="col" className="pb-2 pr-3 font-semibold">Status</th>
+                  <th scope="col" className="pb-2 pr-3 font-semibold text-right">
                     Reminders
                   </th>
                   {checkInEnabled && (
                     <>
-                      <th className="pb-2 pr-3 font-semibold text-right">
+                      <th scope="col" className="pb-2 pr-3 font-semibold text-right">
                         Check-Ins
                       </th>
-                      <th className="pb-2 pr-3 font-semibold">Last Check-In</th>
-                      <th scope="col" className="px-4 py-3 font-semibold text-zinc-200">Schedule</th>
-                      <th scope="col" className="px-4 py-3 font-semibold text-zinc-200">Compliance</th>
+                      <th scope="col" className="pb-2 pr-3 font-semibold">
+                        Last Check-In
+                      </th>
+                      <th scope="col" className="pb-2 pr-3 font-semibold">
+                        Schedule
+                      </th>
+                      <th scope="col" className="pb-2 pr-3 font-semibold">
+                        Compliance
+                      </th>
                     </>
                   )}
                 </tr>
@@ -322,10 +328,10 @@ export function ComplianceReportClient({
                               ? formatDateShort(ci.lastCheckIn)
                               : "--"}
                           </td>
-                          <td className="px-4 py-3 text-zinc-400 text-sm">
+                          <td className="py-2 pr-3 text-zinc-400 print:text-gray-600">
                             {formatDaysDisplay(c.check_in_days) || "\u2014"}
                             {c.check_in_source && (
-                              <span className="block text-xs text-zinc-400">
+                              <span className="block text-xs text-zinc-400 print:text-gray-500">
                                 {c.check_in_source === "client"
                                   ? "set by client"
                                   : c.check_in_source === "partner"
@@ -334,7 +340,7 @@ export function ComplianceReportClient({
                               </span>
                             )}
                           </td>
-                          <td className="px-4 py-3 text-zinc-300 font-medium">
+                          <td className="py-2 pr-3 text-zinc-300 font-medium">
                             {getComplianceRate(c, ci?.count ?? 0)}
                           </td>
                         </>

@@ -3,8 +3,13 @@
  * (Task 27, bondsman modes v2).
  *
  * Invariants locked here:
- *   - checkInMode="disabled" MUST NOT render the words "check-in",
- *     "missed", or "schedule" anywhere in the output (case-insensitive).
+ *   - checkInMode="disabled" MUST NOT render the specific check-in-feature
+ *     strings the component emits: "check-in compliance" (enabled intro),
+ *     "last check-in" / "check-in source" (table columns/labels), "set by
+ *     bondsman" / "set by client" (source attribution), "compliance rate"
+ *     (stat card). Generic words like "check-in"/"missed"/"schedule" are
+ *     too broad — the referral-mode intro itself says "Check-in workflows
+ *     are off." so a bare .not.toContain("check-in") would false-positive.
  *   - checkInMode="disabled" renders the referral-mode intro copy that
  *     points at court-date reminder activity + "Referral mode".
  *   - checkInMode="enabled" renders the full bondsman-mode intro that
@@ -60,20 +65,19 @@ function render(checkInMode: "enabled" | "disabled"): string {
 describe("<ComplianceReportClient /> mode gating (bondsman-modes v2)", () => {
   it("referral mode (disabled): omits all check-in-specific strings", () => {
     const html = render("disabled").toLowerCase();
-    // The referral-mode intro mentions "check-in workflows are off" — that's
-    // allowed and expected. To keep the invariant tight we scan the HTML
-    // EXCLUDING the known referral-mode intro sentence and then check that
-    // no other "check-in" / "missed" / "schedule" strings remain.
-    const referralIntro =
-      "this report shows court-date reminder activity across your clients. your account is in referral mode. check-in workflows are off.";
-    const stripped = html.split(referralIntro).join("");
-    // Now the stripped markup MUST NOT mention check-in features.
-    expect(stripped).not.toContain("check-in");
-    expect(stripped).not.toContain("missed");
-    expect(stripped).not.toContain("schedule");
-    // Column headers that are check-in-specific MUST be absent.
-    expect(stripped).not.toContain("compliance rate");
-    expect(stripped).not.toContain("last check-in");
+    // Assert against the SPECIFIC phrases the component emits in enabled mode,
+    // not bare words. "check-in" / "missed" / "schedule" are too broad —
+    // "Check-in workflows are off." is the referral-mode intro itself.
+    //
+    // Enabled-only strings (grep ComplianceReportClient.tsx for each):
+    expect(html).not.toContain("check-in compliance"); // enabled intro
+    expect(html).not.toContain("compliance rate");     // StatCard label
+    expect(html).not.toContain("last check-in");       // table header
+    expect(html).not.toContain("set by bondsman");     // check_in_source label
+    expect(html).not.toContain("set by client");       // check_in_source label
+    // The enabled-mode "Check-Ins" StatCard + table header must also be absent.
+    // Rendered HTML is lowercased above, so compare against the lowercase form.
+    expect(html).not.toContain(">check-ins<");         // header/label cell
   });
 
   it("referral mode (disabled): renders the referral-mode intro copy", () => {

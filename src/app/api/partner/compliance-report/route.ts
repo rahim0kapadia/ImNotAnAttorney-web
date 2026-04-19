@@ -81,6 +81,16 @@ export async function GET(req: NextRequest) {
     // Task 27 (bondsman modes v2): surface mode so the client can gate every
     // check-in-specific UI element. Boolean() guards against SELECT drift that
     // leaves `check_in_enabled` undefined (same guard pattern as /api/partner/dashboard).
+    //
+    // Warn loudly when the column is undefined (not just falsy) — `false` is a
+    // real, intentional value; `undefined` means the SELECT list drifted out of
+    // sync with partner-helpers. We want the noise in logs, not a silent
+    // default-to-referral-mode.
+    if (partner.check_in_enabled === undefined) {
+      console.warn(
+        "[ComplianceReport] partner.check_in_enabled undefined; defaulting to 'disabled'",
+      );
+    }
     const checkInMode: "enabled" | "disabled" = Boolean(partner.check_in_enabled)
       ? "enabled"
       : "disabled";

@@ -6,43 +6,58 @@
 //
 // Intentionally idempotent. Do NOT run in CI without E2E_SEED_READY=1 gate.
 // Mirrors scripts/apply-migration-20260417b.mjs pattern.
+//
+// Prod guard: refuses to run unless E2E_SEED_CONFIRMED=1. This script writes
+// to the production Supabase (shared DB) — the confirmation env var is the
+// one and only affordance for "yes, I understand what I'm about to do."
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { query, end } from "./lib/db.mjs";
 
+if (process.env.E2E_SEED_CONFIRMED !== "1") {
+  console.error("Refusing to seed without E2E_SEED_CONFIRMED=1");
+  process.exit(2);
+}
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const sqlPath = path.resolve(__dirname, "..", "e2e", "seed-partners.sql");
 const sql = fs.readFileSync(sqlPath, "utf8");
 
-await query(sql);
-console.log("seed applied: E2EBOND + E2EREFE");
+// try/finally guarantees the pg client is released even if any INSERT,
+// verification, or invariant check throws. Previous version leaked the
+// connection on any thrown error.
+try {
+  await query(sql);
+  console.log("seed applied: E2EBOND + E2EREFE");
 
-// Verify both rows exist with expected check_in_enabled values.
-const rows = await query(
-  `SELECT promo_code, check_in_enabled, status, source
-     FROM partners
-    WHERE promo_code IN ('E2EBOND', 'E2EREFE')
-    ORDER BY promo_code;`,
-);
-console.log("verify:", JSON.stringify(rows, null, 2));
+  // Verify both rows exist with expected check_in_enabled values.
+  const rows = await query(
+    `SELECT promo_code, check_in_enabled, status, source
+       FROM partners
+      WHERE promo_code IN ('E2EBOND', 'E2EREFE')
+      ORDER BY promo_code;`,
+  );
+  console.log("verify:", JSON.stringify(rows, null, 2));
 
-if (rows.length !== 2) {
-  console.error("INVARIANT BROKEN: expected 2 seeded rows, got", rows.length);
-  process.exit(1);
+  if (rows.length !== 2) {
+    console.error("INVARIANT BROKEN: expected 2 seeded rows, got", rows.length);
+    process.exit(1);
+  }
+
+  const bond = rows.find((r) => r.promo_code === "E2EBOND");
+  const refe = rows.find((r) => r.promo_code === "E2EREFE");
+
+  if (!bond || bond.check_in_enabled !== true) {
+    console.error("INVARIANT BROKEN: E2EBOND.check_in_enabled must be true", bond);
+    process.exit(1);
+  }
+  if (!refe || refe.check_in_enabled !== false) {
+    console.error("INVARIANT BROKEN: E2EREFE.check_in_enabled must be false", refe);
+    process.exit(1);
+  }
+
+  console.log("OK: seed idempotent + both rows in expected mode");
+} finally {
+  await end();
 }
-
-const bond = rows.find((r) => r.promo_code === "E2EBOND");
-const refe = rows.find((r) => r.promo_code === "E2EREFE");
-
-if (!bond || bond.check_in_enabled !== true) {
-  console.error("INVARIANT BROKEN: E2EBOND.check_in_enabled must be true", bond);
-  process.exit(1);
-}
-if (!refe || refe.check_in_enabled !== false) {
-  console.error("INVARIANT BROKEN: E2EREFE.check_in_enabled must be false", refe);
-  process.exit(1);
-}
-
-console.log("OK: seed idempotent + both rows in expected mode");
-await end();

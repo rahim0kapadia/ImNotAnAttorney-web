@@ -16,30 +16,36 @@
  */
 
 import { test, expect } from "@playwright/test";
-
-test.skip(!process.env.E2E_SEED_READY, "needs seeded partners — run scripts/seed-e2e-partners.mjs first");
+import * as cheerio from "cheerio";
 
 const BASE = "https://imnotanattorney.com";
 const REFERRAL_CODE = "E2EREFE";
 const CHECKIN_CODE = "E2EBOND";
 
 /**
- * Pull an attribute off the first matching meta tag in the raw HTML.
- * Playwright's locator matches the rendered DOM, which is fine, but the
- * og:image tag lives in the document head and a plain regex on the HTML
- * string is the simplest path.
+ * Pull the `content` attribute off the first matching meta tag. Uses cheerio
+ * (already a project dep) rather than regex so we don't hand-roll HTML parsing
+ * — attribute order, quote style, and self-closing vs not all just work.
  */
 function parseMeta(html: string, property: string): string | null {
-  // Match either <meta property="..." content="..."> or <meta name="...">
-  const re = new RegExp(
-    `<meta\\s+[^>]*(?:property|name)=["']${property}["'][^>]*content=["']([^"']+)["']`,
-    "i",
+  const $ = cheerio.load(html);
+  return (
+    $(`meta[property="${property}"]`).attr("content") ||
+    $(`meta[name="${property}"]`).attr("content") ||
+    null
   );
-  const m = html.match(re);
-  return m ? m[1] : null;
 }
 
 test.describe("OG preview wiring (Task 30)", () => {
+  // Top-level test.skip() is a no-op under @playwright/test — skip must run
+  // inside a describe/beforeEach to actually skip the tests.
+  test.beforeEach(() => {
+    test.skip(
+      !process.env.E2E_SEED_READY,
+      "needs seeded partners — run scripts/seed-e2e-partners.mjs first",
+    );
+  });
+
   test("/checkin/{code}/opengraph-image returns a PNG", async ({ request }) => {
     const res = await request.get(`${BASE}/checkin/${CHECKIN_CODE}/opengraph-image`);
     expect(res.status()).toBe(200);

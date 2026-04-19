@@ -16,12 +16,19 @@
 
 import { test, expect } from "@playwright/test";
 
-test.skip(!process.env.E2E_SEED_READY, "needs seeded partner (E2EREFE) — run scripts/seed-e2e-partners.mjs first");
-
 const BASE = "https://imnotanattorney.com";
 const PARTNER_CODE = "E2EREFE";
 
 test.describe("Referral bridge (Task 29)", () => {
+  // Top-level test.skip() is a no-op under @playwright/test — skip must run
+  // inside a describe/beforeEach to actually skip the tests.
+  test.beforeEach(() => {
+    test.skip(
+      !process.env.E2E_SEED_READY,
+      "needs seeded partner (E2EREFE) — run scripts/seed-e2e-partners.mjs first",
+    );
+  });
+
   test("bridge renders for referral-mode partner without showing promo code", async ({ page }) => {
     await page.goto(`${BASE}/r/${PARTNER_CODE}`);
 

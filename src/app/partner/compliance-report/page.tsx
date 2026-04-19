@@ -67,6 +67,13 @@ export default function ComplianceReportPage() {
   // return checkInMode (old-deploy fallback or schema drift). Referral mode is
   // the safer default — worst case the client sees the referral-mode copy
   // instead of the check-in dashboard, never the other way around.
+  //
+  // Warn when the server returned something we don't recognize — the two
+  // legitimate values are "enabled" and "disabled"; anything else is a signal
+  // that the API payload shape drifted and we silently fell back.
+  if (data.checkInMode !== "enabled" && data.checkInMode !== "disabled") {
+    console.warn("[ComplianceReport] unexpected checkInMode:", data.checkInMode);
+  }
   const checkInMode: "enabled" | "disabled" =
     data.checkInMode === "enabled" ? "enabled" : "disabled";
 
