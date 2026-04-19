@@ -24,6 +24,15 @@ interface ReminderContext {
   partnerCompany?: string;
 }
 
+/**
+ * Fallback for the "Unknown County" sentinel written by compact-mode signup
+ * flows (see src/app/api/court-reminders/route.ts). Email subjects and bodies
+ * should read naturally, not leak the placeholder string into customer inboxes.
+ */
+function displayCounty(countyState: string): string {
+  return countyState && countyState !== "Unknown County" ? countyState : "your county";
+}
+
 function prepUrl(token: string) {
   return `${SITE_URL}/prep/${token}`;
 }
@@ -48,7 +57,7 @@ export function reminder14d(ctx: ReminderContext): { subject: string; html: stri
   const safeName = escapeHtml(ctx.firstName);
   const chargeName = CHARGE_DISPLAY_NAMES[ctx.chargeType] || "your hearing";
   return {
-    subject: `Your court date is in 2 weeks, ${ctx.countyState}`,
+    subject: `Your court date is in 2 weeks, ${displayCounty(ctx.countyState)}`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">${safeName}, your court date is in 2 weeks.</h1>
       <p style="${pStyle}">We know this is stressful. Here's what helps: being prepared.</p>
@@ -63,7 +72,7 @@ export function reminder14d(ctx: ReminderContext): { subject: string; html: stri
 export function reminder7d(ctx: ReminderContext): { subject: string; html: string } {
   const safeName = escapeHtml(ctx.firstName);
   return {
-    subject: `1 week until your court date, ${ctx.countyState}`,
+    subject: `1 week until your court date, ${displayCounty(ctx.countyState)}`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">1 week, ${safeName}.</h1>
       <p style="${pStyle}">Your hearing is next week. Now's the time to prepare, review what to expect, plan what to bring, and make sure you know when and where to show up.</p>
@@ -95,7 +104,7 @@ export function reminder3d(ctx: ReminderContext): { subject: string; html: strin
 export function reminder1d(ctx: ReminderContext): { subject: string; html: string } {
   const safeName = escapeHtml(ctx.firstName);
   return {
-    subject: `Tomorrow: ${ctx.countyState} Court`,
+    subject: `Tomorrow: ${displayCounty(ctx.countyState)} Court`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">Tomorrow, ${safeName}.</h1>
       <p style="${pStyle}">Arrive 30 minutes early. Bring your ID and any documents your attorney asked for. Dress like you take your case seriously.</p>

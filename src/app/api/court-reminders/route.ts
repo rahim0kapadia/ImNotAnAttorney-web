@@ -8,7 +8,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, normalizePhone, isValidPhone } from "@/lib/site";
 import { randomUUID } from "crypto";
 import type { CourtReminder } from "@/lib/court-reminders";
 import { validateCheckInDays, sortCheckInDays } from "@/lib/check-in-schedule";
@@ -19,7 +19,26 @@ interface CreateBody {
   first_name: string;
   email: string;
   phone?: string;
+  /**
+   * Charge-type slug (see CHARGE_DISPLAY_NAMES).
+   *
+   * Defaults to "other" when omitted or blank — compact-mode signup flows
+   * (e.g. /checkin/[code]) post without a charge picker, since the bondsman
+   * partner has already pre-qualified the client. "other" is a documented
+   * bucket in the taxonomy, not a mystery value; downstream analytics that
+   * segment by charge_type will see it as generic and should not treat it
+   * as a "missing" or "bug" signal.
+   */
   charge_type?: string;
+  /**
+   * "County, ST" string.
+   *
+   * Defaults to "Unknown County" when omitted or blank. Compact-mode flows
+   * skip the county prompt to keep the form at 3 fields. Downstream consumers
+   * (email templates, prep page, prep-data jurisdiction queries) must fall
+   * back gracefully when they see this literal — they will NOT treat it as a
+   * real jurisdiction.
+   */
   county_state?: string;
   court_date: string;
   recommended_tier?: string;
@@ -37,9 +56,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  // Consent gate — if the key was present in the body, it must be true.
+  // Consent gate — if the key was present in the body, it must be exactly boolean true.
   if (Object.prototype.hasOwnProperty.call(body, "consent") && body.consent !== true) {
-    return NextResponse.json({ error: "Consent is required" }, { status: 400 });
+    return NextResponse.json({ error: "consent must be boolean true" }, { status: 400 });
   }
 
   // Defaults for compact-mode payloads that omit charge_type / county_state.
@@ -55,6 +74,30 @@ export async function POST(req: NextRequest) {
   // Basic email validation
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+  }
+
+  // ── Phone validation + consent coupling ──
+  // When a phone is provided we (a) validate it via normalizePhone/isValidPhone
+  // and (b) require consent === true. The client's `requireConsent` prop is
+  // advisory UX; the server enforces this rule regardless so partner-mode
+  // flows cannot silently bypass SMS consent.
+  const rawPhone = body.phone?.trim() ?? "";
+  let normalizedPhone: string | null = null;
+  if (rawPhone.length > 0) {
+    const normalized = normalizePhone(rawPhone);
+    if (!isValidPhone(normalized)) {
+      return NextResponse.json(
+        { error: "Enter a valid 10-digit US phone number" },
+        { status: 400 }
+      );
+    }
+    if (body.consent !== true) {
+      return NextResponse.json(
+        { error: "Consent required for SMS notifications" },
+        { status: 400 }
+      );
+    }
+    normalizedPhone = normalized;
   }
 
   // Court date must be in the future
@@ -98,12 +141,16 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // phone + consent are accepted from the body but persisted only when the
-  // underlying columns exist. A later migration fix will add persistence.
+  // Persist phone + sms_consent_at. Columns were added in migration
+  // 20260414a_sms_notification_prefs.sql — any earlier "columns don't exist"
+  // comment here was stale. sms_consent_at is the audit timestamp proving the
+  // user affirmatively consented at signup time (required for A2P compliance).
   const { error: insertErr } = await supabase.from("court_reminders").insert({
     token,
     first_name: first_name.trim(),
     email: email.trim().toLowerCase(),
+    phone: normalizedPhone,
+    sms_consent_at: normalizedPhone && body.consent === true ? new Date().toISOString() : null,
     charge_type,
     county_state,
     court_date,

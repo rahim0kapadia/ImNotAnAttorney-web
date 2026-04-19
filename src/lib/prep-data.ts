@@ -9,8 +9,17 @@ function escapeIlike(input: string): string {
   return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
 }
 
-/** Extract 2-letter state code from "County, ST" format. */
+/**
+ * Extract 2-letter state code from "County, ST" format.
+ *
+ * Short-circuits on the "Unknown County" sentinel written by compact-mode
+ * signup flows (see src/app/api/court-reminders/route.ts) — returning null
+ * prevents downstream jurisdiction queries from filtering on the literal
+ * placeholder (e.g. `.eq("jurisdiction", "Unknown County")`), which would
+ * silently return no rows and leak the placeholder into diagnostics.
+ */
 export function parseStateCode(countyState: string): string | null {
+  if (!countyState || countyState === "Unknown County") return null;
   return countyState.split(",").pop()?.trim() || null;
 }
 

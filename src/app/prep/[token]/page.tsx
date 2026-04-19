@@ -43,8 +43,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const chargeName = CHARGE_DISPLAY_NAMES[data.charge_type] || "Criminal Charges";
+  // Compact-mode signups write "Unknown County" as a sentinel. Fall back to a
+  // readable string for the metadata title so customer tabs don't read
+  // "Court Prep, Unknown County | ImNotAnAttorney".
+  const countyDisplay = data.county_state && data.county_state !== "Unknown County"
+    ? data.county_state
+    : "your county";
   return {
-    title: `Court Prep, ${data.county_state} | ImNotAnAttorney`,
+    title: `Court Prep, ${countyDisplay} | ImNotAnAttorney`,
     description: `Your court date is ${data.court_date}. Here's what to expect and how to prepare.`,
     openGraph: {
       title: `Court Prep, ${chargeName}`,
@@ -119,7 +125,12 @@ export default async function PrepPage({ params }: PageProps) {
 
   const chargeName = CHARGE_DISPLAY_NAMES[reminder.charge_type] || "Criminal Charges";
   const stateCode = parseStateCode(reminder.county_state);
-  const stateName = stateCode || reminder.county_state;
+  // Fall back to "your county" when county_state is blank or the
+  // "Unknown County" sentinel written by compact-mode signup flows. Never leak
+  // the placeholder into visible render.
+  const hasRealCounty = reminder.county_state && reminder.county_state !== "Unknown County";
+  const stateName = stateCode || (hasRealCounty ? reminder.county_state : "your county");
+  const countyDisplay = hasRealCounty ? reminder.county_state : "your county";
 
   // Fetch aggregate data for data-driven sections
   const prepData = await queryPrepData(reminder.charge_type, reminder.county_state);
@@ -177,7 +188,7 @@ export default async function PrepPage({ params }: PageProps) {
               <p className="text-5xl font-bold text-amber-400 mb-2">{daysUntil} day{daysUntil !== 1 ? "s" : ""}</p>
               <p className="text-xl text-zinc-300">
                 {courtDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
-                {", "}{reminder.county_state}
+                {", "}{countyDisplay}
               </p>
             </>
           )}

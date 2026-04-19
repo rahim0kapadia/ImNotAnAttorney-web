@@ -83,7 +83,13 @@ export function CourtReminderForm({
       }
 
       const { token } = await res.json();
-      const dest = redirectTo ? redirectTo(token) : `/prep/${token}`;
+      // Guard against a caller-supplied redirectTo that returns an external
+      // URL or a relative path — route.push accepts them but we want to
+      // restrict post-submit navigation to same-origin absolute paths.
+      const proposed = redirectTo ? redirectTo(token) : `/prep/${token}`;
+      const dest = typeof proposed === "string" && proposed.startsWith("/")
+        ? proposed
+        : `/prep/${token}`;
       router.push(dest);
     } catch {
       setError("Connection error. Please try again.");
@@ -210,6 +216,9 @@ export function CourtReminderForm({
             id="phone"
             type="tel"
             required
+            inputMode="numeric"
+            pattern="[0-9\-\(\)\.\s]+"
+            maxLength={20}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className="w-full px-4 py-3 min-h-[44px] bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none"
@@ -221,18 +230,25 @@ export function CourtReminderForm({
       )}
 
       {requireConsent && (
-        <label className="flex items-start gap-3 cursor-pointer min-h-[44px] py-2">
+        <label
+          htmlFor="consent"
+          className="flex items-start gap-3 cursor-pointer min-h-[44px] py-2"
+        >
           <input
+            id="consent"
             type="checkbox"
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
             required
+            aria-describedby="consent-desc"
             className="mt-1 h-5 w-5 rounded border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
           />
           <span className="text-sm text-zinc-400">
-            I agree to text and email from ImNotAnAttorney about my court date and
-            check-ins. Message/data rates may apply. Reply STOP to opt out.{" "}
-            <a href="/privacy" className="text-amber-400 underline">Privacy policy</a>.
+            <span>I agree to SMS and email communications.</span>
+            <span id="consent-desc" className="block text-xs text-zinc-400 mt-1">
+              Message/data rates may apply. Reply STOP to opt out.{" "}
+              <a href="/privacy" className="text-amber-400 underline">Privacy policy</a>.
+            </span>
           </span>
         </label>
       )}
@@ -241,7 +257,11 @@ export function CourtReminderForm({
         <p className="text-red-400 text-sm" role="alert">{error}</p>
       )}
 
-      <button type="submit" disabled={submitting} className="w-full px-6 py-4 min-h-[44px] bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+      <button
+        type="submit"
+        disabled={submitting}
+        className="w-full px-6 py-4 min-h-[44px] bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+      >
         {submitting ? "Setting up..." : (submitLabel || "Set Up My Court Prep")}
       </button>
 
