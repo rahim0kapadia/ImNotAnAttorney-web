@@ -27,6 +27,7 @@ import { WorkflowToggle } from "@/components/partner/WorkflowToggle";
 import { FlipBanner } from "@/components/partner/FlipBanner";
 import { ForfeitureSavedHero } from "@/components/partner/ForfeitureSavedHero";
 import { RemindersOnYourBehalf, type ReminderFeedItem } from "@/components/partner/RemindersOnYourBehalf";
+import { PeerBenchmark, type PeerBenchmarkData } from "@/components/partner/PeerBenchmark";
 import { formatDate } from "@/lib/format";
 import { tierDisplayName } from "@/lib/tiers";
 import { formatCents } from "@/lib/format";
@@ -88,6 +89,7 @@ export default function PartnerDashboard() {
   const [remindersSentThisMonth, setRemindersSentThisMonth] = useState(0);
   const [monthLabel, setMonthLabel] = useState("");
   const [reminderFeedItems, setReminderFeedItems] = useState<ReminderFeedItem[]>([]);
+  const [peerBenchmark, setPeerBenchmark] = useState<PeerBenchmarkData | null>(null);
   const [courtClients, setCourtClients] = useState<CourtClient[]>([]);
   const [checkInSummary, setCheckInSummary] = useState<Record<string, { count: number; lastCheckIn: string | null }>>({});
   const [showAddClient, setShowAddClient] = useState(false);
@@ -114,6 +116,7 @@ export default function PartnerDashboard() {
       setRemindersSentThisMonth(data.remindersSentThisMonth ?? 0);
       setMonthLabel(data.monthLabel ?? "");
       setReminderFeedItems(data.reminderFeedItems || []);
+      setPeerBenchmark(data.peerBenchmark ?? null);
       setCourtClients(data.courtClients || []);
       setCheckInSummary(data.checkInSummary || {});
     } catch {
@@ -352,6 +355,9 @@ export default function PartnerDashboard() {
 
         {/* 5. Earnings + Tier Progress */}
         <EarningsSection partner={partner} earnings={earnings} payouts={payouts} />
+
+        {/* 5b. Peer Benchmark, only when >= 10 eligible bondsman peers (API-guarded) */}
+        {peerBenchmark && <PeerBenchmark data={peerBenchmark} />}
 
         {/* 6. Analytics */}
         <PartnerAnalytics analytics={analytics} />

@@ -174,6 +174,27 @@ export async function GET(req: NextRequest) {
       });
     }
 
+    // PeerBenchmark data (bondsman-only). Hide entirely when peer_count < 10
+    // so we don't show comparisons against a handful of peers.
+    interface PeerBenchmarkRpc {
+      my_reminders_30d: number;
+      my_active_clients: number;
+      peer_median_reminders_30d: number;
+      peer_median_active_clients: number;
+      my_rank_percentile: number | null;
+      peer_count: number;
+    }
+    let peerBenchmark: PeerBenchmarkRpc | null = null;
+    if (partner.source === "bondsman") {
+      const { data: benchmark } = await supabase.rpc("partner_peer_benchmark", {
+        p_partner_id: partner.id,
+      });
+      const b = benchmark as PeerBenchmarkRpc | null;
+      if (b && b.peer_count >= 10) {
+        peerBenchmark = b;
+      }
+    }
+
     return NextResponse.json({
       partner: {
         id: partner.id,
@@ -206,6 +227,7 @@ export async function GET(req: NextRequest) {
       remindersSentThisMonth: remindersSentThisMonth ?? 0,
       monthLabel,
       reminderFeedItems,
+      peerBenchmark,
       courtClients,
       checkInSummary,
       referrals: referrals || [],
